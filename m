@@ -2,118 +2,407 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D360662BA48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:54:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C94762BA55
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:55:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238598AbiKPKyy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:54:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36080 "EHLO
+        id S239018AbiKPKz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:55:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233381AbiKPKya (ORCPT
+        with ESMTP id S238994AbiKPKyv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:54:30 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40456218F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:16 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id v1so29185300wrt.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:16 -0800 (PST)
+        Wed, 16 Nov 2022 05:54:51 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3424127CC8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:49 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id d3so21304755ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xjfAlgkUXxYtzoLU7VIB+TYqOioSKKQPDA1pUqCpVu0=;
-        b=cU1vl1wb9/+TR+df56vzBSep6BtCgw/w1ou/y4xJ01/kIfP781OY1I1bx2P3rCOEPT
-         KRP5pITCwoBCJUnyMlUKvSiM0D4tk5qzZzm+Kwb29saYC58u7vCPsNYcqyyGhKLl4zkb
-         ecJj0gF9PHuETu3hBnE/odbCda01pwpkCa2OcRD4TBbTwL4M4K5a316eY6NqAuc7Qx69
-         gIS5gDNd4M/BDthkDa7y6oxG2Aqi6dDhrqWfih4kmiwMs7JySUpb47mmPmBU632jmZFi
-         srcpsV+qm5P+fWDDXVOS1wPHcNvXVqkLbSPsWIvSljncS9BUOaNKfAO5r0vHVLFhmDFx
-         fgCQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/wwS1WpMtgPz84fk4z3RYo3L8Si5NAXcY3z6ElnGDnI=;
+        b=pjASv5LiSIwCojxz6IS35/bdflsSswIu38mhsspRvTB39iUOgV3HXpCmDXurnMWIOb
+         EznoqSntkVVsYVLloxin+COZ3HOtNiBafzBtUJqd6CewXzoXntZLKaHvMyrez6wV3oui
+         4Nlcr0opJLnJFYJUZUuzm9CHidK7Nvh1Vu/h374bwLB841u7lyYaOPXJOI03bnlg+sE7
+         mlXONzNNscf+ifo+12N52SBibiDQ0elzCYRoPLmautNg8JeWwY3jpresUvqk5j+yFwoo
+         p8NPrveE3q2OXQmw1/AD19fTTSRr77gVYI78A780EkvpLaDfz76ps5BcsYWCQji5UVtg
+         enuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xjfAlgkUXxYtzoLU7VIB+TYqOioSKKQPDA1pUqCpVu0=;
-        b=qx6nHxG+RFEXf3h2uYKu2xutwJTDwf/LtKL3ppF2MlbjtbxTJz/hJhYWtfyp1ZGZcD
-         kTUOP64KE/Ro4RygHYU9strD+gjP3pJyOSPUZvjekwM875Sme2QDWzm5S1ryL7lklXv+
-         SGJOlVDBiNqsNJ6Edl0RwSeAZzRPso9cKsQsr6PXQZ9K5RsWxRAAHJWAVgOp+Nx3uAQ7
-         a4Ou1ixunXtHyV/rzt61oVJDZPEMDzMUiKSYUWH1m+ve99K/487Gd5xweTaEWulmon07
-         GVyBQePiLvOP7Dva8zMgyxIvjJdjYcSL7qNmF6xmkB7Vs3fqr4SAy9cr64MtuTYgS9h/
-         OKjA==
-X-Gm-Message-State: ANoB5pnUUakwKlFDD2blDlnx/emPMmxp5nj9m/0uWnZq0LZwLYmnxUps
-        IuCdB7ciCn49qRX0QIdhqjjbQsVj6SMRZg==
-X-Google-Smtp-Source: AA0mqf7CV+Kqd4WkRCfWQMJorXUGaiEDIGHXzxMqiN1OWEBRsS2gYX0FVGNL8cOqVh1s/xZtDg3+Qg==
-X-Received: by 2002:adf:e444:0:b0:236:489b:8c81 with SMTP id t4-20020adfe444000000b00236489b8c81mr13518978wrm.649.1668595394849;
-        Wed, 16 Nov 2022 02:43:14 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id t8-20020adff048000000b002238ea5750csm18010846wro.72.2022.11.16.02.43.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:43:14 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 16 Nov 2022 11:43:12 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8550-mtp: enable adsp, cdsp & mdss
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/wwS1WpMtgPz84fk4z3RYo3L8Si5NAXcY3z6ElnGDnI=;
+        b=q663x677WfkrL+1UM3DhH4Bo3DYZC/pIfPcQwmnGlWZipmRCR1bOmZJQhSviPZWpD1
+         EHc08uIBPOclB1dFo9UhIdqN+yMlxxOjouxt6XGp+KkPyThzQQt2xyvHgZWpHEi6vxNi
+         y97Am+BY4TvEdIg77Q/20IM9+1JrBiD5L1/s+gjZ0kdhtah/cfMy9rRXxmACw7jn5E3+
+         ab7uc9IPCKdVC7xYeZH57UaRbPav5nKpYHVd9sQw4q7FYEk+ecUu2GcMzbXAqkppYPiw
+         mtuFnqGPt1MZ7eN23IAdPMPpmxcqIfMN15YiDRYEte3kzPEEea+6TZcG+hJVNRqlcu/V
+         5xug==
+X-Gm-Message-State: ANoB5pkqp9uLENDz8Zi+8X3UUHyP0RPrdeG0kyv1TsIcz4moNz67axGP
+        CnLPsxuw0WmHfZdWH1WgBGgfqA==
+X-Google-Smtp-Source: AA0mqf6AzjdNFSGNVPplbICKbg+4I+SEXfaS8BvNdFzZ02aBAROm6JOK4jiHW1825OekID+yiAxNnw==
+X-Received: by 2002:a2e:94cb:0:b0:277:3df:90d0 with SMTP id r11-20020a2e94cb000000b0027703df90d0mr7372526ljh.234.1668595427342;
+        Wed, 16 Nov 2022 02:43:47 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id u2-20020ac258c2000000b004996fbfd75esm2528744lfo.71.2022.11.16.02.43.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 02:43:46 -0800 (PST)
+Message-ID: <0505aac0-b861-d8ed-e310-b2723dd1871c@linaro.org>
+Date:   Wed, 16 Nov 2022 11:43:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-3-379eec11d841@linaro.org>
-References: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-0-379eec11d841@linaro.org>
-In-Reply-To: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-0-379eec11d841@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: clean up 'regulator-allowed-modes'
+ indentation
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-X-Mailer: b4 0.10.1
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221116102054.4673-1-johan+linaro@kernel.org>
+ <20221116102054.4673-3-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116102054.4673-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the aDSP, cDSP and MPSS firmware and "Devicetree" firmware paths
-for the SM8550 MTP platform.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index d4c8d5b2497e..be06e25409c3 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -376,6 +376,24 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm8550/adsp.mbn";
-+	qcom,dtb-firmware-name = "qcom/sm8550/adsp_dtb.mbn";
-+};
-+
-+&remoteproc_cdsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm8550/cdsp.mbn";
-+	qcom,dtb-firmware-name = "qcom/sm8550/cdsp_dtb.mbn";
-+};
-+
-+&remoteproc_mpss {
-+	status = "okay";
-+	firmware-name = "qcom/sm8550/modem.mbn";
-+	qcom,dtb-firmware-name = "qcom/sm8550/modem_dtb.mbn";
-+};
-+
- &sdhc_2 {
- 	status = "okay";
- 
+On 16/11/2022 11:20, Johan Hovold wrote:
+> When recently adding the missing 'regulator-allowed-modes' properties it
+> appears that the binding example with its four-spaces indentation
+> (corresponding to a single tab, which is still to little) was copied
+> verbatim.
+> 
+> Drop the unnecessary first line break after 'regulator-allowed-modes'
+> properties and indent the single remaining continuation line properly.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
--- 
-b4 0.10.1
+Konrad
+>   arch/arm64/boot/dts/qcom/sa8155p-adp.dts      | 20 ++++++++-----------
+>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 20 ++++++++-----------
+>   arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 10 ++++------
+>   .../qcom/sm6350-sony-xperia-lena-pdx213.dts   | 10 ++++------
+>   .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 10 ++++------
+>   .../dts/qcom/sm8150-sony-xperia-kumano.dtsi   | 10 ++++------
+>   .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 10 ++++------
+>   arch/arm64/boot/dts/qcom/sm8350-hdk.dts       | 20 ++++++++-----------
+>   8 files changed, 44 insertions(+), 66 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> index 01ac460d910e..952acfc04adc 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> @@ -136,9 +136,8 @@ vreg_l5a_0p88: ldo5 {
+>   			regulator-max-microvolt = <880000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7a_1p8: ldo7 {
+> @@ -154,9 +153,8 @@ vreg_l10a_2p96: ldo10 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l11a_0p8: ldo11 {
+> @@ -263,9 +261,8 @@ vreg_l5c_1p2: ldo5 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7c_1p8: ldo7 {
+> @@ -281,9 +278,8 @@ vreg_l8c_1p2: ldo8 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l10c_3p3: ldo10 {
+> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> index 6c29d7d757e0..51805106f542 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -90,9 +90,8 @@ vreg_l3c: ldo3 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l4c: ldo4 {
+> @@ -108,9 +107,8 @@ vreg_l6c: ldo6 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7c: ldo7 {
+> @@ -126,9 +124,8 @@ vreg_l10c: ldo10 {
+>   			regulator-max-microvolt = <2504000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l17c: ldo17 {
+> @@ -137,9 +134,8 @@ vreg_l17c: ldo17 {
+>   			regulator-max-microvolt = <2504000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   	};
+>   
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index f09810e3d956..551768f97729 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -170,9 +170,8 @@ vreg_l7c: ldo7 {
+>   			regulator-max-microvolt = <2504000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l13c: ldo13 {
+> @@ -195,9 +194,8 @@ vreg_l3d: ldo3 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l4d: ldo4 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts b/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
+> index 20f35623d1ef..94f77d376662 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
+> @@ -231,9 +231,8 @@ pm6150l_l6: ldo6 {
+>   			regulator-max-microvolt = <2950000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   
+>   		};
+>   
+> @@ -254,9 +253,8 @@ pm6150l_l9: ldo9 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   
+>   		};
+>   
+> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> index 1cb14051ab1b..c456e9594ea5 100644
+> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> @@ -282,9 +282,8 @@ vreg_l6e: ldo6 {
+>   			regulator-max-microvolt = <2950000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -				<RPMH_REGULATOR_MODE_LPM
+> -				 RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7e: ldo7 {
+> @@ -304,9 +303,8 @@ vreg_l9e: ldo9 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -				<RPMH_REGULATOR_MODE_LPM
+> -				 RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l10e: ldo10 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+> index fb6e5a140c9f..c958a8b16730 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+> @@ -348,9 +348,8 @@ vreg_l6c_2p9: ldo6 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7c_3p0: ldo7 {
+> @@ -370,9 +369,8 @@ vreg_l9c_2p9: ldo9 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l10c_3p3: ldo10 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> index 2a223ed50102..38746f248969 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> @@ -317,9 +317,8 @@ vreg_l6c_2p9: ldo6 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7c_2p85: ldo7 {
+> @@ -342,9 +341,8 @@ vreg_l9c_2p9: ldo9 {
+>   			regulator-max-microvolt = <2960000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l10c_3p3: ldo10 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> index 69ae6503c2f6..26a608144886 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> @@ -107,9 +107,8 @@ vreg_l5b_0p88: ldo5 {
+>   			regulator-max-microvolt = <888000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l6b_1p2: ldo6 {
+> @@ -118,9 +117,8 @@ vreg_l6b_1p2: ldo6 {
+>   			regulator-max-microvolt = <1208000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l7b_2p96: ldo7 {
+> @@ -129,9 +127,8 @@ vreg_l7b_2p96: ldo7 {
+>   			regulator-max-microvolt = <2504000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   
+>   		vreg_l9b_1p2: ldo9 {
+> @@ -140,9 +137,8 @@ vreg_l9b_1p2: ldo9 {
+>   			regulator-max-microvolt = <1200000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   			regulator-allow-set-load;
+> -			regulator-allowed-modes =
+> -			    <RPMH_REGULATOR_MODE_LPM
+> -			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   	};
+>   
