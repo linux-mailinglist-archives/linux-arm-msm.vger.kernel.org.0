@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82F6A62B74E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:11:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87F8762B758
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:12:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233149AbiKPKLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:11:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46582 "EHLO
+        id S233007AbiKPKL4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:11:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232785AbiKPKLt (ORCPT
+        with ESMTP id S233058AbiKPKLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:11:49 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C7C2181D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:11:48 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id g12so28859231wrs.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:11:48 -0800 (PST)
+        Wed, 16 Nov 2022 05:11:50 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5E324F1A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:11:49 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id h9so29106499wrt.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:11:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DomrnSm96zSkZhM662uK9kmnG2CwT9HGpFGat7R0RuE=;
-        b=L0HLr2ApuBLN9ODseDtZ7fQx7rZUezBQWIvjTICqT7R+u/7cKpEPy7RXegSlBKXAYY
-         S+avTR1gK22gih/ALc29dC5mOnMF6FfUGjozpf0xtpxkQ8mym67TZEv+t3tP6l9iB50T
-         TFZI1XF+zW0ZhKYWlIx92fa20YTDXxlizOiFYyVe+rAW4k58VaXtJNfKAH9n/hm6U+rj
-         m/ZnKIiwcnUzTN2m90xauNeqauP2Bqy9O6IYCP/FGJqvz6QME3Vj9VZNLHzb5W1ENIWO
-         dBAk2jR/DEH4VEIS2XpjlkdCYTZj4o/kEwSn2A51t9ZSczuta+k7iGka9Qzx/DklIVqe
-         jejA==
+        bh=VBLFfpuYzGwgHiIgmRksJJfjyWbMcIkXPEI0JtdHAgc=;
+        b=E9OGNwlxBGugaTZ7cl1i+RM4u7NF8JNxQAcVNkYohJjc1dGfLkXj0IsPcGsTvqnbao
+         z3aD3MBh41ssAllpNEb4BmNlP98uuyL+MSvYHewAylnGeC3Co7QlOPO3D6XeIweyblq9
+         cO7TcpFa7Ym7LG87mixQonkX7mSKeuDrIGrmYpqtQoB9vS7fJRjgGnxHdXDf3va8lR/+
+         mTKDUljTUxlmos6TuAHeNA2PsolL9f7bEbTM/mKDfo3DOJIR6HIdNWKx85yFoKnntZwo
+         ohMRILZ8o/tF1SDkOa5wNF1eb7TZUzBFjMbL8CBdjwdcrrBYZ7P8ah9W9jqnZF7lcmHV
+         unVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DomrnSm96zSkZhM662uK9kmnG2CwT9HGpFGat7R0RuE=;
-        b=aHufTeukDPJ8tdvke0GZwqjWmiTOdO03ny/0FZblx27hX6TEeR+DjmvdPu5iLGWZOR
-         /jTPp50c42nA4ZHm9INva71oxHWC+bfVctGxNWz1c24JeRkk465IApWXlYiBkeV9JPRh
-         5+wbPXqaIoi0tU+Fx4nMGKSWBWBF12Qq+8dOrywlvSK7981jWRS6XXieoTlW+m4galLp
-         e9JPsly31m/+j5Kzv6Sb613kbHd6B2QBxwvRzQ5hfM5IDOxYykcnaIopo1GkSW9C6uvN
-         CC0k+If6Z19MFBx0zEtu3edZ/8mfbRV5/WfUnp/dsGgYS5rxIY2ZtvYwx+hGFQ8l7y4b
-         HgXw==
-X-Gm-Message-State: ANoB5pmsfPpcgIKYN4O3KVd0iWTS+3wfkLszQpL4RcM5IHGTnWMuiLeh
-        /MGt+arysUIDwIaWOGL8Wv7t0Q==
-X-Google-Smtp-Source: AA0mqf46L3aO5Wq2TgigsokvsrVab1bV5ZmAtx/l2FRYWi6zJ/iR3zRqhDoHxoAWdmBbFIDhjfZO9w==
-X-Received: by 2002:a5d:4810:0:b0:22e:3659:2d92 with SMTP id l16-20020a5d4810000000b0022e36592d92mr13278929wrq.604.1668593507966;
-        Wed, 16 Nov 2022 02:11:47 -0800 (PST)
+        bh=VBLFfpuYzGwgHiIgmRksJJfjyWbMcIkXPEI0JtdHAgc=;
+        b=Mq2x9h6013zOwbdmKAg1C1PVrGdNlEBAr11SqjKa3t9xkL0rOdfq7ol6NMkHCUzIfP
+         kcB0vEtAeKkTGFHtq0Y++XbfgWrIPtzEyHoQOMJHy3rNmkn5XWRxj4j/f9Dz97+jfr/b
+         TzCGjdPl3B8B/65hLZOW9Xjmd3WnGXeoUBABDTl98LkIxjtGH/xWg219NtLHu5tJ5Cr5
+         hz77FF2l/Sdm1ZddIhRgB9hCW1zHOh/IDwG+jT15k83ei3z4awNHkANJEm3FM1epL7Tf
+         65MPTOw+fPPw2RAgK+D4L2Vw6QLpLtvKdltLpEWC6N4qE/aJq+oFvMM++Thy5bQX+bbT
+         7UQg==
+X-Gm-Message-State: ANoB5pntKX3dh/F4rD+CcGBBEV32NLrHhgl+xBmf6VqJUnGmg81XLbID
+        CLttpKnbrHkZHZJ4IFmwZPe2Ng==
+X-Google-Smtp-Source: AA0mqf67BDpZ8h0XiJsmLizFY7Aa6egS8/MBdPM5GdJT1i1IHJ4mldiWcZ+Dm2j07ccNTRbLfW9bVQ==
+X-Received: by 2002:a05:6000:12d1:b0:236:6e2a:ac17 with SMTP id l17-20020a05600012d100b002366e2aac17mr13307315wrx.345.1668593508782;
+        Wed, 16 Nov 2022 02:11:48 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05600c350c00b003c6bd91caa5sm1741752wmq.17.2022.11.16.02.11.47
+        by smtp.gmail.com with ESMTPSA id h12-20020a05600c350c00b003c6bd91caa5sm1741752wmq.17.2022.11.16.02.11.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:11:47 -0800 (PST)
+        Wed, 16 Nov 2022 02:11:48 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 16 Nov 2022 11:11:35 +0100
-Subject: [PATCH 6/7] pinctrl: qcom: spmi-gpio: add support for pm8550 gpio control
+Date:   Wed, 16 Nov 2022 11:11:36 +0100
+Subject: [PATCH 7/7] pinctrl: qcom: spmi-gpio: add support for pmr735d gpio
+ control
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-spmi-v1-6-6338a2b4b241@linaro.org>
+Message-Id: <20221114-narmstrong-sm8550-upstream-spmi-v1-7-6338a2b4b241@linaro.org>
 References: <20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org>
 In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org>
 To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -81,37 +82,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the pm8550, pm8550b, pm8550ve, pm8550vs & pmk8550 gpio
-controllers providing GPIO control over SPMI.
+Add support for the pmr735d gpio controller providing GPIO control over SPMI.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index 89695b5a2ce7..f758522d035e 100644
+index f758522d035e..66d6d7ffbd43 100644
 --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
 +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1221,6 +1221,10 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
- 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
- 	{ .compatible = "qcom,pm8450-gpio", .data = (void *) 4 },
-+	{ .compatible = "qcom,pm8550-gpio", .data = (void *) 12 },
-+	{ .compatible = "qcom,pm8550b-gpio", .data = (void *) 12 },
-+	{ .compatible = "qcom,pm8550ve-gpio", .data = (void *) 8 },
-+	{ .compatible = "qcom,pm8550vs-gpio", .data = (void *) 6 },
- 	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
- 	{ .compatible = "qcom,pm8941-gpio", .data = (void *) 36 },
- 	/* pm8950 has 8 GPIOs with holes on 3 */
-@@ -1232,6 +1236,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pmi8994-gpio", .data = (void *) 10 },
- 	{ .compatible = "qcom,pmi8998-gpio", .data = (void *) 14 },
- 	{ .compatible = "qcom,pmk8350-gpio", .data = (void *) 4 },
-+	{ .compatible = "qcom,pmk8550-gpio", .data = (void *) 6 },
- 	{ .compatible = "qcom,pmm8155au-gpio", .data = (void *) 10 },
- 	/* pmp8074 has 12 GPIOs with holes on 1 and 12 */
+@@ -1242,6 +1242,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
  	{ .compatible = "qcom,pmp8074-gpio", .data = (void *) 12 },
+ 	{ .compatible = "qcom,pmr735a-gpio", .data = (void *) 4 },
+ 	{ .compatible = "qcom,pmr735b-gpio", .data = (void *) 4 },
++	{ .compatible = "qcom,pmr735d-gpio", .data = (void *) 2 },
+ 	/* pms405 has 12 GPIOs with holes on 1, 9, and 10 */
+ 	{ .compatible = "qcom,pms405-gpio", .data = (void *) 12 },
+ 	/* pmx55 has 11 GPIOs with holes on 3, 7, 10, 11 */
 
 -- 
 b4 0.10.1
