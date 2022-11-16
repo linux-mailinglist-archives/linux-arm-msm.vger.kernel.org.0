@@ -2,149 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9E5362B131
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 03:17:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47B1362B15D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 03:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231147AbiKPCRr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 21:17:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42702 "EHLO
+        id S229560AbiKPCgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 21:36:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230175AbiKPCRq (ORCPT
+        with ESMTP id S231492AbiKPCgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 21:17:46 -0500
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0468D12ACB;
-        Tue, 15 Nov 2022 18:17:44 -0800 (PST)
-Received: from kwepemi500011.china.huawei.com (unknown [172.30.72.56])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NBmnD0gTXzqSSy;
-        Wed, 16 Nov 2022 10:13:52 +0800 (CST)
-Received: from [10.67.103.39] (10.67.103.39) by kwepemi500011.china.huawei.com
- (7.221.188.124) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Wed, 16 Nov
- 2022 10:17:36 +0800
-Message-ID: <6374483F.3060604@hisilicon.com>
-Date:   Wed, 16 Nov 2022 10:17:35 +0800
-From:   Wei Xu <xuwei5@hisilicon.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+        Tue, 15 Nov 2022 21:36:06 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E86B31EE3;
+        Tue, 15 Nov 2022 18:36:04 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AG2M3LR006378;
+        Wed, 16 Nov 2022 02:35:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/wZDpuE91CllGHxN7CVleKANvN3PHHDtLtCAsPlzH90=;
+ b=aY5CljOJzHuRN56luzluHbZ+wA/pyiwHsO8GmTGCDKkQ4xhffnwRo+BtVoZxuYh8U+V8
+ 4GolIPVeqUoNT19cuUWnWUhL94jWvD/zwAiWIynv5Zv0Ms4JERDZGKQLteS/rlgkWy9Z
+ N5jyYlzi/Ky7FrAHVSuNsUnP8RKo+HSI6nYr/J2hySvcGJ4chH7oCHGy5XcXQo6RATnO
+ tBUVBDFUzsBXanNBdQMHyGzQIi98WSk2hRqeaDE3/Xgm55Zo4bhqlrfq2Yhux9UdTxr8
+ H2xsBJHOYJLYybppy07Jk5Mx4kTxBWb03g8Zc43VaNZ/SOJ0mlyf1uh4xCVgo/t7+UuH 1Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvkw1rc9a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 02:35:58 +0000
+Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AG2UUFT008128;
+        Wed, 16 Nov 2022 02:35:57 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3kt4jm6d6j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 02:35:57 +0000
+Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AG2Zte5013677;
+        Wed, 16 Nov 2022 02:35:57 GMT
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 2AG2ZvUt013698
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 02:35:57 +0000
+Received: from [10.216.30.230] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 15 Nov
+ 2022 18:35:52 -0800
+Message-ID: <4a27136e-a6e3-a932-a063-cbcdebb9485e@quicinc.com>
+Date:   Wed, 16 Nov 2022 08:05:28 +0530
 MIME-Version: 1.0
-To:     Pierre Gondois <pierre.gondois@arm.com>,
-        <linux-kernel@vger.kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Tsahee Zidenberg <tsahee@annapurnalabs.com>,
-        Antoine Tenart <atenart@kernel.org>,
-        Brijesh Singh <brijeshkumar.singh@amd.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Tom Lendacky <thomas.lendacky@amd.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        William Zhang <william.zhang@broadcom.com>,
-        Anand Gore <anand.gore@broadcom.com>,
-        Kursad Oney <kursad.oney@broadcom.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chester Lin <clin@suse.com>,
-        =?UTF-8?B?QW5kcmVhcyBGw6RyYmVy?= <afaerber@suse.de>,
-        Matthias Brugger <mbrugger@suse.com>,
-        NXP S32 Linux Team <s32@nxp.com>,
-        Chanho Min <chanho.min@lge.com>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        <UNGLinuxDriver@microchip.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Jisheng Zhang <jszhang@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        Viorel Suman <viorel.suman@nxp.com>,
-        Abel Vesa <abelvesa@kernel.org>, Ming Qian <ming.qian@nxp.com>,
-        Shijie Qin <shijie.qin@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-        Shenwei Wang <shenwei.wang@nxp.com>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Adam Ford <aford173@gmail.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>, Li Jun <jun.li@nxp.com>,
-        Markus Niebel <Markus.Niebel@ew.tq-group.com>,
-        Joakim Zhang <qiangqing.zhang@nxp.com>,
-        Marek Vasut <marex@denx.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Alexander Stein <alexander.stein@ew.tq-group.com>,
-        Paul Elder <paul.elder@ideasonboard.com>,
-        Martin Kepplinger <martink@posteo.de>,
-        David Heidelberg <david@ixit.cz>,
-        Oliver Graute <oliver.graute@kococonnector.com>,
-        Liu Ying <victor.liu@nxp.com>, Jacky Bai <ping.bai@nxp.com>,
-        Clark Wang <xiaoning.wang@nxp.com>,
-        Wei Fang <wei.fang@nxp.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Vadym Kochan <vadym.kochan@plvision.eu>,
-        Sameer Pujar <spujar@nvidia.com>,
-        Akhil R <akhilrajeev@nvidia.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Sumit Gupta <sumitg@nvidia.com>,
-        Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Ashish Mhetre <amhetre@nvidia.com>,
-        Johan Jonker <jbx6244@gmail.com>,
-        Christopher Obbard <chris.obbard@collabora.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Aswani Reddy <aswani.reddy@samsung.com>,
-        Shashank Prashar <s.prashar@samsung.com>,
-        Andi Shyti <andi@etezian.org>, <devicetree@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
-        <linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-realtek-soc@lists.infradead.org>,
-        <linux-renesas-soc@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>
-Subject: Re: [PATCH v2 09/23] arm64: dts: Update cache properties for hisilicon
-References: <20221107155825.1644604-1-pierre.gondois@arm.com> <20221107155825.1644604-10-pierre.gondois@arm.com>
-In-Reply-To: <20221107155825.1644604-10-pierre.gondois@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v3] clk: qcom: gcc-sc8280xp: add cxo as parent for three
+ ufs ref clks
+To:     Bjorn Andersson <andersson@kernel.org>, <sboyd@kernel.org>
+CC:     <johan@kernel.org>, <bmasney@redhat.com>, <agross@kernel.org>,
+        <mturquette@baylibre.com>, <ahalaney@redhat.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221115152956.21677-1-quic_shazhuss@quicinc.com>
+ <20221115171342.v37vq4cqe7pxatlk@builder.lan>
+Content-Language: en-US
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <20221115171342.v37vq4cqe7pxatlk@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.103.39]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500011.china.huawei.com (7.221.188.124)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 815sP-xyYAK5Pw4MOzQBRd_D8Savvjm3
+X-Proofpoint-GUID: 815sP-xyYAK5Pw4MOzQBRd_D8Savvjm3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-15_08,2022-11-15_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 clxscore=1015 spamscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211160016
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -152,206 +96,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
 
-On 2022/11/7 23:57, Pierre Gondois wrote:
-> The DeviceTree Specification v0.3 specifies that the cache node
-> 'compatible' and 'cache-level' properties are 'required'. Cf.
-> s3.8 Multi-level and Shared Cache Nodes
-> The 'cache-unified' property should be present if one of the
-> properties for unified cache is present ('cache-size', ...).
-> 
-> Update the Device Trees accordingly.
-> 
-> Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
 
-Applied to the HiSilicon arm64 dt tree.
-Thanks!
-
-Best Regards,
-Wei
-
-> ---
->  arch/arm64/boot/dts/hisilicon/hi3660.dtsi |  2 ++
->  arch/arm64/boot/dts/hisilicon/hi6220.dtsi |  2 ++
->  arch/arm64/boot/dts/hisilicon/hip05.dtsi  |  4 ++++
->  arch/arm64/boot/dts/hisilicon/hip06.dtsi  |  4 ++++
->  arch/arm64/boot/dts/hisilicon/hip07.dtsi  | 16 ++++++++++++++++
->  5 files changed, 28 insertions(+)
+On 11/15/2022 10:43 PM, Bjorn Andersson wrote:
+> On Tue, Nov 15, 2022 at 08:59:56PM +0530, Shazad Hussain wrote:
+>> The three UFS reference clocks, gcc_ufs_ref_clkref_clk for external
+>> UFS devices, gcc_ufs_card_clkref_clk and gcc_ufs_1_card_clkref_clk for
+>> two PHYs are all sourced from CXO.
+>>
+>> Added parent_data for all three reference clocks described above to
+>> reflect that all three clocks are sourced from CXO to have valid
+>> frequency for the ref clock needed by UFS controller driver.
+>>
+>> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+>> Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
+>> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+>> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+>> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>> Tested-by: Andrew Halaney <ahalaney@redhat.com>
+>> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+>> Reviewed-by: Reviewed-by: Brian Masney <bmasney@redhat.com>
 > 
-> diff --git a/arch/arm64/boot/dts/hisilicon/hi3660.dtsi b/arch/arm64/boot/dts/hisilicon/hi3660.dtsi
-> index 8343d0cedde3..a57f35eb5ef6 100644
-> --- a/arch/arm64/boot/dts/hisilicon/hi3660.dtsi
-> +++ b/arch/arm64/boot/dts/hisilicon/hi3660.dtsi
-> @@ -203,10 +203,12 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
->  
->  		A53_L2: l2-cache0 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		A73_L2: l2-cache1 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-> index ae0a7cfeeb47..f6d3202b0d1a 100644
-> --- a/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-> +++ b/arch/arm64/boot/dts/hisilicon/hi6220.dtsi
-> @@ -186,10 +186,12 @@ cpu7: cpu@103 {
->  
->  		CLUSTER0_L2: l2-cache0 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		CLUSTER1_L2: l2-cache1 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/hisilicon/hip05.dtsi b/arch/arm64/boot/dts/hisilicon/hip05.dtsi
-> index 7b2abd10d3d6..5b2b1bfd0d2a 100644
-> --- a/arch/arm64/boot/dts/hisilicon/hip05.dtsi
-> +++ b/arch/arm64/boot/dts/hisilicon/hip05.dtsi
-> @@ -211,18 +211,22 @@ cpu15: cpu@20303 {
->  
->  		cluster0_l2: l2-cache0 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster1_l2: l2-cache1 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster2_l2: l2-cache2 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster3_l2: l2-cache3 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/hisilicon/hip06.dtsi b/arch/arm64/boot/dts/hisilicon/hip06.dtsi
-> index 2f8b03b0d365..291c2ee38288 100644
-> --- a/arch/arm64/boot/dts/hisilicon/hip06.dtsi
-> +++ b/arch/arm64/boot/dts/hisilicon/hip06.dtsi
-> @@ -211,18 +211,22 @@ cpu15: cpu@10303 {
->  
->  		cluster0_l2: l2-cache0 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster1_l2: l2-cache1 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster2_l2: l2-cache2 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster3_l2: l2-cache3 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/hisilicon/hip07.dtsi b/arch/arm64/boot/dts/hisilicon/hip07.dtsi
-> index 1a16662f8867..b8746fb959b5 100644
-> --- a/arch/arm64/boot/dts/hisilicon/hip07.dtsi
-> +++ b/arch/arm64/boot/dts/hisilicon/hip07.dtsi
-> @@ -842,66 +842,82 @@ cpu63: cpu@70303 {
->  
->  		cluster0_l2: l2-cache0 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster1_l2: l2-cache1 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster2_l2: l2-cache2 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster3_l2: l2-cache3 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster4_l2: l2-cache4 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster5_l2: l2-cache5 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster6_l2: l2-cache6 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster7_l2: l2-cache7 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster8_l2: l2-cache8 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster9_l2: l2-cache9 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster10_l2: l2-cache10 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster11_l2: l2-cache11 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster12_l2: l2-cache12 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster13_l2: l2-cache13 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster14_l2: l2-cache14 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  
->  		cluster15_l2: l2-cache15 {
->  			compatible = "cache";
-> +			cache-level = <2>;
->  		};
->  	};
->  
+> Really-really-reviewed-by?  >
+My bad, thanks for pointing it Bjorn :)
 > 
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> 
+> 
+> @Stephen, could you please pick this for clk-fixes?
+> 
+> Thanks,
+> Bjorn
+> 
+>> ---
+>> Changes since v2:
+>> -  Tweaked commit message and added R-b T-b from v2
+>>
+>> v2 of this patch can be found at
+>> https://lore.kernel.org/all/20221115102217.6381-1-quic_shazhuss@quicinc.com/
+>>
+>> v1 of this patch can be found at
+>> https://lore.kernel.org/all/20221030142333.31019-1-quic_shazhuss@quicinc.com/
+>>
+>> used below patches for verification on next-20221114
+>> https://lore.kernel.org/lkml/20221104092045.17410-2-johan+linaro@kernel.org/
+>> https://lore.kernel.org/lkml/20221104092045.17410-3-johan+linaro@kernel.org/
+>> https://lore.kernel.org/lkml/20221111113732.461881-1-thierry.reding@gmail.com/
+>>
+>>   drivers/clk/qcom/gcc-sc8280xp.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+>> index a18ed88f3b82..b3198784e1c3 100644
+>> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+>> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+>> @@ -5364,6 +5364,8 @@ static struct clk_branch gcc_ufs_1_card_clkref_clk = {
+>>   		.enable_mask = BIT(0),
+>>   		.hw.init = &(const struct clk_init_data) {
+>>   			.name = "gcc_ufs_1_card_clkref_clk",
+>> +			.parent_data = &gcc_parent_data_tcxo,
+>> +			.num_parents = 1,
+>>   			.ops = &clk_branch2_ops,
+>>   		},
+>>   	},
+>> @@ -5432,6 +5434,8 @@ static struct clk_branch gcc_ufs_card_clkref_clk = {
+>>   		.enable_mask = BIT(0),
+>>   		.hw.init = &(const struct clk_init_data) {
+>>   			.name = "gcc_ufs_card_clkref_clk",
+>> +			.parent_data = &gcc_parent_data_tcxo,
+>> +			.num_parents = 1,
+>>   			.ops = &clk_branch2_ops,
+>>   		},
+>>   	},
+>> @@ -5848,6 +5852,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
+>>   		.enable_mask = BIT(0),
+>>   		.hw.init = &(const struct clk_init_data) {
+>>   			.name = "gcc_ufs_ref_clkref_clk",
+>> +			.parent_data = &gcc_parent_data_tcxo,
+>> +			.num_parents = 1,
+>>   			.ops = &clk_branch2_ops,
+>>   		},
+>>   	},
+>> -- 
+>> 2.38.0
+>>
