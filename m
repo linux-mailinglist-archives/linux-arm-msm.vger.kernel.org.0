@@ -2,116 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 845A662C16D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:53:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6266262C179
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:55:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233302AbiKPOxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 09:53:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43564 "EHLO
+        id S229834AbiKPOzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 09:55:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230507AbiKPOw4 (ORCPT
+        with ESMTP id S229863AbiKPOzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:52:56 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8393F056;
-        Wed, 16 Nov 2022 06:51:29 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 740DD61E6F;
-        Wed, 16 Nov 2022 14:51:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73A5C433D7;
-        Wed, 16 Nov 2022 14:51:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668610288;
-        bh=ua2SmIHmfrN/HL4JmO/Y+Pm6lBJ0aqfUQvZIhIz5SZM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NqiCT6mXuKeFWWqBBNmLM0BHcHxB/B9ds35B2R9jcwntjfGBqPZO6cvCYxXjQy+k7
-         I2ncPP1RznmLkNGQwlJ128FdRzKPa4CFRQOm6P9nYCQY3cGVDqg3iKiRliDtnYO4D1
-         HMjaKbpwvjn8+AzPVpw/AzitRti1I7pmzsNXNqgklnNgnjPGNfUuD5Lj42fPgUkJKn
-         hlzDujD47bcjc0BLLKKqqqOJfYC+lXQym9Wd14AZMX1CUuV8mA/PvN00qTH1e6/b7G
-         K3XWIj8lou0D75QtOysU3dSKWWqZPhKdwyD2SwdxIgYqkN7gqHVDFxIoWWsjroiPpw
-         3OrOA0T5dd96A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ovJkh-0003Pi-63; Wed, 16 Nov 2022 15:50:59 +0100
-Date:   Wed, 16 Nov 2022 15:50:59 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Wed, 16 Nov 2022 09:55:14 -0500
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBA31176;
+        Wed, 16 Nov 2022 06:55:13 -0800 (PST)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-13b103a3e5dso20356785fac.2;
+        Wed, 16 Nov 2022 06:55:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8zAenYPukXRa6WH1FuI7zU9MyK95VuVbiFaqQ0TR08s=;
+        b=2hUjrJwAhho8mbQtdYiZBjr5RD7oCQFXapkF5d3TUlYP0GKAjP7ajd+sI3jaS0wwv/
+         Nn3+BNcNIhK+H88dGjyLQYF+YGiCqONk0cMJSE29vahKBLTcumvrM6oPYCvIGMViOrcN
+         /+7ncYOD82VrSDwLB9tRtvG0wCMhApLtsFJeuIbhpUk/1x+KtUEhU1dv3YmMxrIsl4dr
+         LZzCedv8QI5fwzpqw5Tm7Sabrb/O/o63GwVIAsAzebvSdeo7PP0xX4VY5NQacbarlyfa
+         VZKZrQxSW8+NgaSNmMaxk3wn+0aDrUeUYYdf5yDNPJ/o8oSGax0qRiygQO+fIj53yxtj
+         f4kA==
+X-Gm-Message-State: ANoB5pmcCH4/F6zVsvdLv1vFQ8HFn4W91Kj4EAsjTDYBwaQSYQQqqNGP
+        RY0Gy21FXbZ22H7cwiNOjg==
+X-Google-Smtp-Source: AA0mqf7escxT2CNeYstvMXHT5yuoqZ3X8aVm6oVk8h7yhvc/q0jTKxEFAhHiMSNzAvSsDAliZPgxew==
+X-Received: by 2002:a05:6870:e412:b0:13c:d709:204 with SMTP id n18-20020a056870e41200b0013cd7090204mr1829034oag.125.1668610512903;
+        Wed, 16 Nov 2022 06:55:12 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id t26-20020a9d749a000000b0066c44b4f2d6sm6763094otk.43.2022.11.16.06.55.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 06:55:12 -0800 (PST)
+Received: (nullmailer pid 3836759 invoked by uid 1000);
+        Wed, 16 Nov 2022 14:55:14 -0000
+Date:   Wed, 16 Nov 2022 08:55:14 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     quic_srivasam@quicinc.com, Banajit Goswami <bgoswami@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>, quic_plai@quicinc.com,
         Rob Herring <robh+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: sm8350-hdk: enable PCIe devices
-Message-ID: <Y3T405atm45IMsGa@hovoldconsulting.com>
-References: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
- <20221110183158.856242-9-dmitry.baryshkov@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v2 08/11] ASoC: dt-bindings: qcom,q6prm: Split to
+ separate schema
+Message-ID: <166861051295.3836684.17078819887827826854.robh@kernel.org>
+References: <20221115120235.167812-1-krzysztof.kozlowski@linaro.org>
+ <20221115120235.167812-9-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221110183158.856242-9-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221115120235.167812-9-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 10, 2022 at 09:31:58PM +0300, Dmitry Baryshkov wrote:
-> Enable PCIe0 and PCIe1 hosts found on SM8350 HDK board.
+
+On Tue, 15 Nov 2022 13:02:32 +0100, Krzysztof Kozlowski wrote:
+> The APR/GPR bindings with services got complicated so move out the Q6PRM
+> service to its own binding.  Previously the compatible was documented in
+> qcom,apr.yaml.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->  arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> index 0fcf5bd88fc7..d3c851ec3501 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> @@ -222,6 +222,26 @@ &mpss {
->  	firmware-name = "qcom/sm8350/modem.mbn";
->  };
->  
-> +&pcie0 {
-> +	status = "okay";
-> +};
-> +
-> +&pcie0_phy {
-> +	status = "okay";
+> Cc: quic_srivasam@quicinc.com
+> Cc: quic_plai@quicinc.com
+> ---
+>  .../devicetree/bindings/sound/qcom,q6prm.yaml | 50 +++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6prm.yaml
+> 
 
-The 'status' property should generally go last.
-
-> +	vdda-phy-supply = <&vreg_l5b_0p88>;
-> +	vdda-pll-supply = <&vreg_l6b_1p2>;
-> +};
-> +
-> +&pcie1 {
-> +	status = "okay";
-> +};
-> +
-> +&pcie1_phy {
-> +	status = "okay";
-
-Same here.
-
-> +	vdda-phy-supply = <&vreg_l5b_0p88>;
-> +	vdda-pll-supply = <&vreg_l6b_1p2>;
-> +};
-> +
->  &qupv3_id_0 {
->  	status = "okay";
->  };
-
-Johan
+Reviewed-by: Rob Herring <robh@kernel.org>
