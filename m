@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8414662BA99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:01:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 098E162BB0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:11:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237599AbiKPLBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:01:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41440 "EHLO
+        id S239073AbiKPLLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:11:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238774AbiKPLAr (ORCPT
+        with ESMTP id S239061AbiKPLL0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:00:47 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A37423E94
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:48:39 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l14so29247221wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:48:38 -0800 (PST)
+        Wed, 16 Nov 2022 06:11:26 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F43391C7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:57:59 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id h9so29304918wrt.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:57:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJpNB4o6sq/KoJPxbv4+HnBkm66WaeN+eBfhYyJgn4g=;
-        b=UeYzRKm/WhtHDkCjsXfmP7gUPfeiY7xA8g2hujjlhyX3DeE+PbdvVRoL+pald37lTr
-         /g3n4PTJ3xewNd2bIDUjBsNLOqvBM6uas/KDPqND5VCGkNirUyLwXowDZUrNon7psvT9
-         nCQCytL03SRgg1zzL34yafwk1GH23FEpkNv+0rWHiY6DmFjYMcLE1H+IXWkTDqX3/w8E
-         A7GvFWgTnaJSemUFCsbBUNDAQF/85p/ueVyfyBozS3g93ylZ1VRcpSPzQJYGfb3OxR9A
-         qWf2uI/5ur8kUonjwul4oYmHp+t9FKxIsGYCmc8fA82y5mSvCRYiTspWY0QDRLhZf3Mp
-         U7pQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hBCkLhCRqVmaPTqUxxl/AYAsKRro7tO8FF+xV1WMFvM=;
+        b=sRNCqI5cmmFzz7JYD6J3P1xBg94DEzNRlvVngsv+chCHPDj/yG0U7Slqt7lJNnttsi
+         MMxk9zFP0rcEPkHqZhIQg7hZoZbspOEo/QVM1hu15T0Z/lBRK7MMBs0ZxJi4OKbnQO0k
+         r8njnuYeH5k+oH93+fjIUpCnAHbSmaoEj8PG32D/tZguxzRnpcq952C/4g8McKItWT3o
+         7ou68yFk7Gn4bGwllcFPK0xurPqpbEvM0Ebu+FCofumsYGxezuo54B9zq1EwPahci18N
+         U1Uz3qXsT656mi0t/4jbu19Tl/qS0SiAdQwgaEn240GmAt3BgGwvp/FUqp2JLwCRsXz4
+         eeeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xJpNB4o6sq/KoJPxbv4+HnBkm66WaeN+eBfhYyJgn4g=;
-        b=DFEaKS8Q4276TwQ+ayoV41rRwMcKWJCmxO3T11lSYaQA0+UfMEpky6Da1IuAz1J+gp
-         ERxr55XFDIlSpmaCWhMXUfDIsann6ynha8qo+jf0Y9OdQldwS7T84cXZ7IgE2NYthkgj
-         xFHgtF5ryWlQIIjtAXZH2QqcVk/dc9dn4Vhr+Vk4xCH7cLTvJQ3SJ4Pc/3zz+qKvsbqd
-         LpVsdh9/71zjXQmQ8MKmO2pQSGedUsDpv+tsj30x07AkTg9nCAjaI/FTgPWOc19LTae/
-         q3MrattbL8h9ekEbz2Bpb9qxizC+fVfZ38fOKziwoB4ECil0TSWFYYAI2NieWlHdkhug
-         DzfQ==
-X-Gm-Message-State: ANoB5pkrYNlzQ9AmAw6YOBK3S3M3OeMpECO0+VmZT+Ika00x6w9dJ7Bq
-        FzcydtSkr/FRR4qoHHzrxfafNg==
-X-Google-Smtp-Source: AA0mqf5P1fAqx7LVazRB/UIa2Da3c2VrKrrT68FCZfvUAr+DHQjG4v5dxecYZymSaLMDkrjZkVa7AA==
-X-Received: by 2002:a5d:4846:0:b0:236:5aa8:a07e with SMTP id n6-20020a5d4846000000b002365aa8a07emr13910605wrs.437.1668595717609;
-        Wed, 16 Nov 2022 02:48:37 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id n1-20020a05600c4f8100b003cf78aafdd7sm1833012wmq.39.2022.11.16.02.48.36
+        bh=hBCkLhCRqVmaPTqUxxl/AYAsKRro7tO8FF+xV1WMFvM=;
+        b=FcKHa+XPO7pwrBK/cp8vGihc3uR3FGDBx5zmAIrvGbmLCNNNZHj+LeZRnzb2UemEY6
+         B/q9OntLMbdVSx10s+kQFbmaOIB/64mtxMUlz+5HJy1zs53A3j7g3jlqfUbgGV0DAJyq
+         4Uj53p20tav/Q+83LtIYtC8UL5MtZrQ9/C0hJbUqZcmBivqpbxETSrLrkKQYLAYbem8D
+         LOu6tJ37ayKABJM0Zm3r/qAJPe34h3UZzWxcbq49we4pBogiTRSEPhBddn3PVfsRM/KS
+         drZfT2akmqXCROVLGNCeKrse4F/K4MQ7PZS+cnJsSfEjDNtr5Be4J2FuhBKZg1C1pgHx
+         D5Tw==
+X-Gm-Message-State: ANoB5pk0eUApnptygczBUgLtTJnwM4cy1uRz5Tcfoi7AQzdHq5BEz3hn
+        6F3eAxN90rVkwjwZiXPZnYEpjg==
+X-Google-Smtp-Source: AA0mqf632jI0KK8mGZvNda0VwpT9Zr+Fjxyfb8L7VCi5IIpxobDc7gFSMPd1jtezCmzDfzdOMFFXCg==
+X-Received: by 2002:a5d:568b:0:b0:236:8322:4bf1 with SMTP id f11-20020a5d568b000000b0023683224bf1mr13120973wrv.119.1668596277689;
+        Wed, 16 Nov 2022 02:57:57 -0800 (PST)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p13-20020adfe60d000000b00236e9755c02sm14935053wrm.111.2022.11.16.02.57.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:48:37 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 16 Nov 2022 11:48:35 +0100
-Subject: [PATCH] arm64: dts: qcom: sm8550: add QCrypto nodes
+        Wed, 16 Nov 2022 02:57:57 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
+Subject: [PATCH 0/4] pinctrl: qcom: Add support for SM8550
+Date:   Wed, 16 Nov 2022 12:57:20 +0200
+Message-Id: <20221116105724.2600349-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20221115-topic-sm8550-upstream-dts-qce-v1-0-fe750dfa90f6@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -75,72 +75,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the QCE and Crypto BAM DMA nodes.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Depends on:
-
-- QCE new socs support [1]
-- SM8550 QCE bindings [2]
-- SM8550 base DT [3]
+This patchset adds pinctrl support for the new Qualcomm SM8550 SoC,
+One thing needed by SM8550 is the i2c specific pull feature.
 
 To: Andy Gross <agross@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Linus Walleij <linus.walleij@linaro.org>
 To: Rob Herring <robh+dt@kernel.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
 Cc: devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 
-[1] https://lore.kernel.org/all/20220920114051.1116441-1-bhupesh.sharma@linaro.org/
-[2] https://lore.kernel.org/all/20221114-narmstrong-sm8550-upstream-qce-v1-0-31b489d5690a@linaro.org/
-[3] https://lore.kernel.org/all/20221116103146.2556846-1-abel.vesa@linaro.org/
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+Abel Vesa (2):
+  dt-bindings: pinctrl: qcom: Add SM8550 pinctrl bindings
+  pinctrl: qcom: Add SM8550 pinctrl driver
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 07ba709ca35f..a490b705ce5c 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1372,6 +1372,30 @@ mmss_noc: interconnect@1780000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		cryptobam: dma-controller@1dc4000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x0 0x01dc4000 0x0 0x28000>;
-+			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			qcom,controlled-remotely;
-+			iommus = <&apps_smmu 0x480 0x0>,
-+				 <&apps_smmu 0x481 0x0>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "memory";
-+		};
-+
-+		crypto: crypto@1de0000 {
-+			compatible = "qcom,sm8550-qce";
-+			reg = <0x0 0x01dfa000 0x0 0x6000>;
-+			dmas = <&cryptobam 4>, <&cryptobam 5>;
-+			dma-names = "rx", "tx";
-+			iommus = <&apps_smmu 0x480 0x0>,
-+				 <&apps_smmu 0x481 0x0>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "memory";
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0x0 0x01f40000 0x0 0x20000>;
+Neil Armstrong (2):
+  dt-bindings: pinctrl: qcom,tlmm-common: document i2c pull property
+  pinctrl: qcom: add support for i2c specific pull feature
 
----
-base-commit: a237afe452d9079aa024e465642b4cde0a04c7ff
-change-id: 20221115-topic-sm8550-upstream-dts-qce-7f4fe79e0375
+ .../bindings/pinctrl/qcom,sm8550-pinctrl.yaml |  184 ++
+ .../bindings/pinctrl/qcom,tlmm-common.yaml    |    3 +
+ drivers/pinctrl/qcom/Kconfig                  |   10 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c            |   20 +
+ drivers/pinctrl/qcom/pinctrl-msm.h            |    1 +
+ drivers/pinctrl/qcom/pinctrl-sm8550.c         | 1789 +++++++++++++++++
+ 7 files changed, 2008 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8550-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8550.c
 
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
+
