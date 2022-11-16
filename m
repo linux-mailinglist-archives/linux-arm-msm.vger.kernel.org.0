@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B11E062BF51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:22:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9550562BF61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:27:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233777AbiKPNWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 08:22:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39524 "EHLO
+        id S232455AbiKPN1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 08:27:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237236AbiKPNWd (ORCPT
+        with ESMTP id S231927AbiKPN1R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 08:22:33 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61EA45086
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:22:27 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id r127-20020a1c4485000000b003cfdd569507so576613wma.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:22:27 -0800 (PST)
+        Wed, 16 Nov 2022 08:27:17 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F53F593
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:15 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id k8so29937716wrh.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sHca22LgXYrNlrGnPkySJcOl1jAzkArg0xTiVqkll6g=;
-        b=CI/Vugssw++YPfThkn1FKNuih9hkIdMRL/AfJImdRc2E9Bt5HUjeCpC1UByiJs1SY7
-         PiaZCNx8YLenQ2ZXIso4aiCFahxR5VeZYVAC/X9Er6Fvs/xskyVaG0IRG9FGEHmSH9dI
-         haOt4Zo9AwSJ0lhtJw5C45yWFsYyXWBC8ThJg8FDxC8ZwyecgyHVbSZd/KKOWljecdxn
-         F9P8OJkhwFAeAJ4UetV7E9vabOrQQJvo+DwMGojNoBewC+ePag0fKswTUOXieVPERHCi
-         U7ddeiLWouDZMa0dWrQO4jspaSUrbMMDm2sYnDWcptPCAirtQ2wBOEzgjxwK6EUtH79i
-         zMbg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=79X4mvUkSDO2GIWyfQ/uVOL0ox4FD7HfQwYq5sKfqpw=;
+        b=HqZs9cR09FUQo2fjDNltumJBgGtIzdcx9KC3Ausf/rXusZPUbo/tcsmj3dF0YgncUQ
+         hLag64l87Wi1TOJlHCa0qcc2j8P699zDULuIO1O7sd5qJ65l3KYs0KuvyG7Eva6sac8X
+         qSxoxcQdZvg+YUAFGR1uSUGAF1bFEyaQ+Hm9ee0oBh8NvZ7eWVteApVgKhlf/IqlVehT
+         loG22iVA57CwXoj4JXAs7klVM/aoj2BjSMIlLbWuwglTPi0L7qchWied1jAcIqgIlsxt
+         vjky5enc9pygHK3qhY0dNeVxo7Ogl4F5icqc5FCQ1FaC1TsSthqSEVBKJr/5RxMAwNQh
+         sLaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sHca22LgXYrNlrGnPkySJcOl1jAzkArg0xTiVqkll6g=;
-        b=C/L7FuydmsjAh2HHvLfqUkQr1ip/7Mm30jCQVZHxO7jLf8J8RVpU5BR62nlP6VBAE3
-         c4M3PS6RQufJFIE9uFEz8XKzbD8iDWEa81hYZIbl8M8myHU5HYe/EQF0RYVQS8qGFk53
-         X3LC3//v2oWgPO3Q9JPisB9MIJcohShW1C7c1bGhiRfesKmOahu0TqFLQH4vKQEdiJEb
-         I8dHj9ZVWgtzCsJstKWkfTBx+DgCRop0A+04+bEfD6vsB/cGt9eDluj0hheDCmmm0ZE6
-         RKBVuu+0OnH+ARaE8KDEUxkn9tHp58YBBzBKyUaDRqFuM/AeRg6vlJZVeM79gsg2jVOL
-         qb7A==
-X-Gm-Message-State: ANoB5pn2p0F/RJ1UXwPBkbpQG2/iKmyw0B9ZJObwhRtem+dIkw2UNPKB
-        TW85OD3kuWy1/ISeCMerpP6s4g==
-X-Google-Smtp-Source: AA0mqf71IAstJnWNoFFb3080abKMj1I+/JX3WJystRMl1+Xs7S98iXdrAQc/CP4mHZOmPsLsFGouYg==
-X-Received: by 2002:a05:600c:12ca:b0:3cf:98e8:3e48 with SMTP id v10-20020a05600c12ca00b003cf98e83e48mr2182134wmd.56.1668604946253;
-        Wed, 16 Nov 2022 05:22:26 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=79X4mvUkSDO2GIWyfQ/uVOL0ox4FD7HfQwYq5sKfqpw=;
+        b=D9buzoRHr6bVbOsHnkotmq5OMJEKe0Gix1QryibRXHHTjGQQM5mW8ViADI3vMLbhYM
+         stX/nlzAG59o5oi6PhSwdiUHKUzFYcjVI8uSPjD78Tr6kfLTcexAD/tih1l6G3u0fsAt
+         lrdt4lSRmY2HI8zjDI4dOOrhp7z+w2HhOqRUYHyKGLWRnCBdMlNeaLkMqXsz3cZRixSN
+         M1cR0uwWiFCRSMueTbtH7q0oeyb6Rs0yeQvY4tkFvtNQ+1cMRq/gm37KORlF6GHWSzvw
+         qlKKYtW5HoHQLc7yRSWGADKT2oeMVBoIkGAznP+G2UN4mQNa/DFmVp7NQWZSMBEpqGaW
+         ncuw==
+X-Gm-Message-State: ANoB5pkhsrItspi6wbj8fHd8G0w6LqnDKpe6kxka3Wtx/ihPDlXUicVL
+        ecyBpFMRuF0zPQjHcd2QeS/WEQ==
+X-Google-Smtp-Source: AA0mqf6EJ88AVHmgVrucPAHzCduRu/Jk8rVuOe2mSMLkBqqhdPWzD1uNA1xLwSwpYNs3DyxScE35tQ==
+X-Received: by 2002:adf:e9cc:0:b0:236:75a8:58d with SMTP id l12-20020adfe9cc000000b0023675a8058dmr14286551wrn.295.1668605234208;
+        Wed, 16 Nov 2022 05:27:14 -0800 (PST)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id e17-20020a05600c4e5100b003cfa81e2eb4sm2322074wmq.38.2022.11.16.05.22.25
+        by smtp.gmail.com with ESMTPSA id k25-20020a05600c1c9900b003cf4d99fd2asm2425710wms.6.2022.11.16.05.27.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 05:22:25 -0800 (PST)
+        Wed, 16 Nov 2022 05:27:13 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,61 +57,40 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: Add USB PHYs and HC nodes
-Date:   Wed, 16 Nov 2022 15:22:12 +0200
-Message-Id: <20221116132212.2842655-3-abel.vesa@linaro.org>
+Subject: [RFC PATCH 0/2] arm64: dts: qcom: sm8550: Add eUSB2 repeater
+Date:   Wed, 16 Nov 2022 15:27:04 +0200
+Message-Id: <20221116132706.2852434-1-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221116132212.2842655-1-abel.vesa@linaro.org>
-References: <20221116132212.2842655-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable USB HC and PHYs nodes on SM8550 MTP board.
+This patchset adds the PMIC eUSB2 repeater and references it via
+usb-repeater property in the MTP's eUSB2 PHY.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+This patchset depends following patchsets:
+[1] https://lore.kernel.org/all/20221116103146.2556846-1-abel.vesa@linaro.org/
+[2] https://lore.kernel.org/all/20221116114526.2679041-1-abel.vesa@linaro.org/
+[3] https://lore.kernel.org/all/20221116123019.2753230-1-abel.vesa@linaro.org/
+[4] https://lore.kernel.org/all/20221116132212.2842655-1-abel.vesa@linaro.org/
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index d4c8d5b2497e..757cf4f7f195 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -417,3 +417,25 @@ data-pins {
- &uart7 {
- 	status = "okay";
- };
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdd-supply = <&vreg_l1e_0p88>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3f_0p91>;
-+};
+Abel Vesa (1):
+  arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
+
+Neil Armstrong (1):
+  arm64: dts: qcom: pm8550b: Add eUSB2 repeater node
+
+ arch/arm64/boot/dts/qcom/pm8550b.dtsi   | 5 +++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 7 +++++++
+ 2 files changed, 12 insertions(+)
+
 -- 
 2.34.1
 
