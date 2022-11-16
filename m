@@ -2,95 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9ADD62BE69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD97B62BE73
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:42:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232531AbiKPMlP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 07:41:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
+        id S235900AbiKPMmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 07:42:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231310AbiKPMlM (ORCPT
+        with ESMTP id S233574AbiKPMmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 07:41:12 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C361AE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:41:10 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id bs21so29717224wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:41:10 -0800 (PST)
+        Wed, 16 Nov 2022 07:42:36 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B62B3C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:42:35 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id p8so29276736lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kj6hNhybTnNcaQ6fHwD5wQp+bSb1uN49o9Qhpb0mU/M=;
-        b=JXj4UKYDsUshc3XLgQ7MmVkB/P2oryJsLHPKCUIjCMT0YsKuK9+02NWyGvDlo52zW4
-         1Xy3pinI0Gnu4lyWrQ95s3ka6veCMJ26Nfmbj5mciBNEWEfObs1uU7bEqIsdFdeJ5NKA
-         VWP0tgHtYMOEvGq3dq7yqWS79BB7P4toRljT496asOfYMxhG4Jtn1d0vcdvPajWbag6b
-         preKi5InoXeEyd5O2+RM8EYkg14zVlgqHBbPVloIJHMwzbguZ4cWC+n+j8kgeSQpCUMa
-         0xJxwVLfa5efEx0qnxC+VW5ZUTwhIjPjV+2+hlgdpWncRGoCtJFo/6ZjD9H+blEa7LBi
-         3TSA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RrPGeIjext5JNhSVxUCmWbpHHI7jtSW713ZjQuNCGds=;
+        b=WDh3HKx5Bbx3SNMUBfff+9Vn1uQRJCaKUyLSwYr0MaYWIgPJ3aia9Xr5zcIQYdHffi
+         hshDECtFkRmWXDDISQHxcyS+m3/vtKPZV2HKpbkqxR8ZRLyxycB2swacTLoQ38i04V3y
+         /oM6lEwjBr/KGyiULiiyHX8Pzv2f5tdwv23gYIgynjZJa+zAE8WNNdH16vJgK+mwWhoe
+         oNkbQub3hnkOiIzdlZoI3Pmvf4Dg5mZbLzufjPXA1eFuL7bHEaF506kWNYDCXbvMQKTz
+         eqSrDTKqQMNeoaP3PGeBZsLiHqx+mHn2Bz1+nkZ924CnIldtts1N7DYrF/1N1L71tHlS
+         O2TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kj6hNhybTnNcaQ6fHwD5wQp+bSb1uN49o9Qhpb0mU/M=;
-        b=bTwAusKeSlC8nM4CKnj1TM+MQdVhL5G7CLjY5bzvfs3MMO8xArQ9Z9AaruJx0G7AHo
-         mjcnQHfLmKKvXkaeUsOkVzLzB5ohXjLJG+sfczCqWSD11Ecb/Z7ev271Y4aNGEWEgIXy
-         7KVCU5PJ7pq5i3xS9SPf6wBAQiHXFUny/iIO3MZi9AXOsyU5+1xTqjdl18/WipRzsftQ
-         l/iaBDkEzpVxwrKL5IDtYUYzEi7xOxwnSpEt2z4QvmBAkcsdwmI2O4e0RDQxhezc76OD
-         9kakZMBqZTxXS9wzCnnJnCTBeYm4fEbdedFZDk8WPp3dr+Q57H9PjoVe5g24UyM5tB7b
-         JGKw==
-X-Gm-Message-State: ANoB5pmuW5KXUXNgMd+SGvUGSguZOMMXRLWE9McXOTpJexTR7IsISGjA
-        +G4gr8yCn+52O+6M1FPwvD5QNA==
-X-Google-Smtp-Source: AA0mqf6wAPtBCIWUO7xTE+Ndf6MWifSBF9p4upBE+m3tekmqE8ZTbTipAhhpV91Uze9eu28Qj3VbQQ==
-X-Received: by 2002:adf:edc2:0:b0:236:774e:5b78 with SMTP id v2-20020adfedc2000000b00236774e5b78mr13970233wro.351.1668602469398;
-        Wed, 16 Nov 2022 04:41:09 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id j6-20020a05600c1c0600b003a3170a7af9sm2231764wms.4.2022.11.16.04.41.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 04:41:09 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] dt-bindings: firmware: document Qualcomm SM8550 SCM
-Date:   Wed, 16 Nov 2022 14:40:38 +0200
-Message-Id: <20221116124038.2769028-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RrPGeIjext5JNhSVxUCmWbpHHI7jtSW713ZjQuNCGds=;
+        b=jxC1i/Evo5r3XGs4JJYgOH0rR0zcq7TIsGuNo4LdjSYoCpPM8cc6/gZq5x14FoBU6M
+         TntaYuQhTdP2foDBFMO35kYBIF1taqeMFYv4Ns7Nb3P12iTpyclNAElbjNWKs0WATqyZ
+         ofKeZ6VERx3lkGCkI1RZbaesBW9vjdNLnTV3DltSXJMFtZC+uyVQmAxSSJ0m3/kDEk1D
+         jT5QgpoWjB6mpk7f2UDQjLSBcpbVGv1Jq6qRREIUE/RqvkZnf0u2jzgVHFMorD4THbto
+         4euNIVveY9KDNNywvnaLJmEXguISGjTeCSX74DJ/nYHMVA4lcogPxiDmgo7v7nwh3Juu
+         yMIg==
+X-Gm-Message-State: ANoB5plvvy5OEtCjK56azz2G9NwUTZqTb7oE3bcTgxyWIW1SlRk2XpG0
+        9Mha2rvLU8mmVQo5H6vqHHzZxA==
+X-Google-Smtp-Source: AA0mqf5GIerHpKxp4+yhreyljTRcuU66KevxYftRVwqsSVK/66JE2J4JF24GEpo2o7Oo+9BDksDG5w==
+X-Received: by 2002:ac2:530c:0:b0:4b4:aed7:4aa5 with SMTP id c12-20020ac2530c000000b004b4aed74aa5mr1169682lfh.447.1668602553331;
+        Wed, 16 Nov 2022 04:42:33 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id e2-20020a056512090200b004ac393ecc34sm2587943lft.302.2022.11.16.04.42.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 04:42:32 -0800 (PST)
+Message-ID: <aa3234a5-1beb-65ef-90fc-95d16d6730c9@linaro.org>
+Date:   Wed, 16 Nov 2022 13:42:31 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221116101314.52887-1-krzysztof.kozlowski@linaro.org>
+ <20221116101314.52887-3-krzysztof.kozlowski@linaro.org>
+ <7605af5f-a828-5df7-48b8-b543edb0f9b1@linaro.org>
+ <bde68c28-bf4c-405f-ef2a-f56db7654d25@linaro.org>
+ <1ce84668-5f21-5e62-6a02-be7c6e79012e@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1ce84668-5f21-5e62-6a02-be7c6e79012e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for Qualcomm SM8550 SCM.
+On 16/11/2022 12:17, Konrad Dybcio wrote:
+> 
+> 
+> On 16/11/2022 11:40, Krzysztof Kozlowski wrote:
+>> On 16/11/2022 11:20, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 16/11/2022 11:13, Krzysztof Kozlowski wrote:
+>>>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>>
+>>>> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
+>>>> LPASS pin controller.
+>>>>
+>>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>
+>>>> ---
+>>>>
+>>>> Changes since v2:
+>>>> 1. Use lower-case hex.
+>>>>
+>>>> Changes since v1:
+>>>> 1. Whitespace cleanups.
+>>>> 2. Correct include - do not use deprecated one.
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
+>>>>    1 file changed, 295 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> index 4b0a1eee8bd9..747440d0445a 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> @@ -15,6 +15,7 @@
+>>>>    #include <dt-bindings/interconnect/qcom,sm8450.h>
+>>>>    #include <dt-bindings/soc/qcom,gpr.h>
+>>>>    #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>>> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>>>>    #include <dt-bindings/thermal/thermal.h>
+>>>>    
+>>>>    / {
+>>>> @@ -2097,6 +2098,212 @@ compute-cb@3 {
+>>>>    			};
+>>>>    		};
+>>>>    
+>>>> +		wsa2macro: codec@31e0000 {
+>>>> +			compatible = "qcom,sm8450-lpass-wsa-macro";
+>>>> +			reg = <0 0x031e0000 0 0x1000>;
+>>>> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>>> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>>> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>>> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>>> +				 <&vamacro>;
+>>>> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+>>>> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>>> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>>>> +			assigned-clock-rates = <19200000>, <19200000>;
+>>>> +
+>>>> +			#clock-cells = <0>;
+>>>> +			clock-output-names = "wsa2-mclk";
+>>>> +			#sound-dai-cells = <1>;
+>>> I think I'm being a bit too picky, but #-cells could go as the last
+>>> bunch of properties.
+>>
+>> I was thinking about this as well, but some of other codecs which are
+>> very similar (also "macro") do not have pinctrls and this makes them
+>> unified with additions at the end.
+>>
+>> Are you sure you still prefer alphabetical order?
+> Thinking about it, IMO it makes sense to add things "roughly where they 
+> belong", a.k.a if there was a codec that for whatever reason also 
+> required a power domain, we would stick it somewhere in the middle and 
+> not at the end..
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+OK, I'll re-order these.
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index 25688571ee7c..7b753acb85d5 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -53,6 +53,7 @@ properties:
-           - qcom,scm-sm8250
-           - qcom,scm-sm8350
-           - qcom,scm-sm8450
-+          - qcom,scm-sm8550
-           - qcom,scm-qcs404
-       - const: qcom,scm
- 
--- 
-2.34.1
+Best regards,
+Krzysztof
 
