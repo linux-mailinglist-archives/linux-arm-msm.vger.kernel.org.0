@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EF2D62B9EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:48:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CBE962BA03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:49:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238934AbiKPKsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:48:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59078 "EHLO
+        id S238854AbiKPKtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:49:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238974AbiKPKsF (ORCPT
+        with ESMTP id S238887AbiKPKtX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:48:05 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5058848772;
-        Wed, 16 Nov 2022 02:35:42 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id bj12so42926905ejb.13;
-        Wed, 16 Nov 2022 02:35:42 -0800 (PST)
+        Wed, 16 Nov 2022 05:49:23 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A6DF2CE07
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:38:13 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id d6so28792342lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZfF5H7OlX+Ehk6ts6kc2Re3wIjyOZLFN9LUYQD5Q15M=;
-        b=U/uD1d/2Wjuu25fimzOIP49QGtcRNDST/oFYv+Z8ZhiJoE2vQrSrFxiLacjUKtAngb
-         SiGHZ8uzIl4O7IzY2x3J0UfFPhEG3aQY6H3YKDeeEy1U25zjaVR5gynDxWqvcQs3ZkFR
-         t8a3gygO+JVcD2x6p1xBgCzdYKH9snze/KSz2fOceABefkYcnnIPpyrjJI+wI+71cRMH
-         cYeAN9ZaSUN9yPm0DLwjoCxDoq1mZ/Epj+Q2K2LI2H4VjHg/ViNRuo2hWk6BTUWajeE5
-         LOvDsR9kwTqcxmEE5sytC0pHxhgEsNJ6GbUqtwZ5cmHd4xoZzxYuTXinbXEOqU/tiJ95
-         BtoQ==
+        bh=LqCc/GOgSVJZ5AurbG5SzvEMTnpnV++hf1m1Zs8crF4=;
+        b=wrwFH1SyiJKUYiqgDrci0/DfqgYLKXKWCtZuFhUGdVy5Wpz52Gq0+3AjBV2Lgf44Gl
+         uao7HjQbNLdEFFb1wBUxrWJt2SLwWuSE0NJdHcNZ4l0EsiGMx1Lqneme/HZB98+ObvSE
+         xdAzSVB1AIH9y2bTYjOrlh111umaQafeuNat9J2A/Rzpq5ILaxx8ki4YASlq5OeNp2Du
+         8TW8hFDJWxnxglhkMr39HA4SEhSF5ENPur0dyQGVJw+cGYhrZZixRAsQT3CwAz0ODRYi
+         Esg/tJQZ7PjGlIKeqhXMTL/1GbnLY+fOygQpJBODZWqbDlxumTO/GHPQjCGAyYqkJXgx
+         u7iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZfF5H7OlX+Ehk6ts6kc2Re3wIjyOZLFN9LUYQD5Q15M=;
-        b=o5M7zynh3RADkjMWl2W7IiQ8KL1ZE+3nGm/h2FfsLLdpcc3pmu/I9P7iQSg4LW0Tft
-         GhK7A1zQSWF69vlkJLw30VQ3bAdk/YiUyoxQWoBnegcC1ZMfsg68zV+JcuRnH01ko9U1
-         VpfK3Nj7Tpf1Kzwdb3UuIY+/yDD4Fs4qF7pKnj84uLbCon3i52VZzj4MH/9loHqSVX5m
-         Zki1Msl8M1O6/3c3CP0cySNCsRj39r9GTFVOgQszoFDxZv4HLQvuThq/SkQXlpiieX2Q
-         +buUlLin9ccHK89kbeLSy7PFOXVp11lwOUGHgLSFQ7sxfeE1Esr4p2/WDWtl+oP/4mnp
-         vpMA==
-X-Gm-Message-State: ANoB5pnGvde0YheynGbQyVpGXbXjST3SP87aV2WnYNGw3w5/tU15fJBT
-        KAlkL7o//lDBHNxGNhPOJghMI3zxZT0=
-X-Google-Smtp-Source: AA0mqf6kSY6gPS6yfpKaa5qoUDtPjmZS/yWQjgb6foff2z7DWFURXJ88wzapywoRgciG97yTxRRI9w==
-X-Received: by 2002:a17:907:2350:b0:78d:9c2f:bf78 with SMTP id we16-20020a170907235000b0078d9c2fbf78mr17153920ejb.594.1668594940541;
-        Wed, 16 Nov 2022 02:35:40 -0800 (PST)
-Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id b14-20020aa7dc0e000000b00462e1d8e914sm7241163edu.68.2022.11.16.02.35.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:35:39 -0800 (PST)
-Date:   Wed, 16 Nov 2022 11:35:37 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     linus.walleij@linaro.org, brgl@bgdev.pl,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
-        ahalaney@redhat.com, echanude@redhat.com,
-        nicolas.dechesne@linaro.org
-Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
-Message-ID: <Y3S8+cZO379Oiyce@orome>
-References: <20221114202943.2389489-1-bmasney@redhat.com>
- <Y3S5sZIVi2DPua0p@orome>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LqCc/GOgSVJZ5AurbG5SzvEMTnpnV++hf1m1Zs8crF4=;
+        b=7u0AGDxmDXMxsF545ZzUlgIzvk3oXkxLStq/ulczFEVoiNOPuq3M8LEgHpjVMTOuKs
+         9jH7CdSDpmCjLAzZ0kGfvPq5s4eekCuRzGXrRjeCKiqnDI1Mp4zb9PqdgMVsnfAdVyfg
+         ukcheGXl7FApi8xTu7X4cnILw6qQ8h6n54fkQ0fkDmd6jVKq7MtFKCcEwcoKpk6BSout
+         SO6E29xHCSwjFASf8vs+75eNoWHQWyy2LALf9qrQvkajbi+x8DbzQ7OwtzNXO3WI7stj
+         f6t6ZeCs5uR3qGMrF205HT74QxlCWoQ1OfyeOyHlN55v/7RFDiPILlDOvydiLrbIIu8h
+         FISQ==
+X-Gm-Message-State: ANoB5pnUIPTmE5gyf5fTNXTvnVQrnPnQlPRmoI5laGNVkOZHOSvLE5fW
+        dDcHI8Jxe2+I15Xti3w9Aa22Ew==
+X-Google-Smtp-Source: AA0mqf7v4ql1my2L29OuYX6RCZqNvFLQrc4yTzeJ9zjilyuGHO0KOUdc0oA5P2JzUFg65NIsJ0GoYw==
+X-Received: by 2002:a05:6512:2a87:b0:4ac:5faa:654d with SMTP id dt7-20020a0565122a8700b004ac5faa654dmr6412409lfb.684.1668595091820;
+        Wed, 16 Nov 2022 02:38:11 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id t12-20020a2e8e6c000000b0027755f52a94sm2938078ljk.80.2022.11.16.02.38.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 02:38:11 -0800 (PST)
+Message-ID: <56d54377-aa0d-8e2f-cf8e-5b3a3a414534@linaro.org>
+Date:   Wed, 16 Nov 2022 11:38:04 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="cAHYK1Crg6nEop4T"
-Content-Disposition: inline
-In-Reply-To: <Y3S5sZIVi2DPua0p@orome>
-User-Agent: Mutt/2.2.8 (2022-11-05)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 5/6] i2c: qcom-geni: add desc struct to prepare support
+ for I2C Master Hub variant
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-0-64449106a148@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-5-64449106a148@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-5-64449106a148@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,134 +81,166 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---cAHYK1Crg6nEop4T
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 16, 2022 at 11:21:37AM +0100, Thierry Reding wrote:
-> On Mon, Nov 14, 2022 at 03:29:43PM -0500, Brian Masney wrote:
-> > Note that this is a RFC patch and not meant to be merged. I looked into
-> > a problem with linux-next-20221110 on the Qualcomm SA8540P automotive
-> > board (sc8280xp) where the UFS host controller would fail to probe due
-> > to repeated probe deferrals when trying to get reset-gpios via
-> > devm_gpiod_get_optional().
-> >=20
-> > of_get_named_gpiod_flags() returns -EPROBE_DEFER, which is caused by
-> > of_gpiochip_match_node_and_xlate() returning 0 since the of_xlate funct=
-ion
-> > pointer is not set for the qcom,sc8280xp-tlmm pinctrl driver. The
-> > pinctrl driver doesn't define one, so of_gpiochip_add() should
-> > automatically setup of_gpio_simple_xlate() on it's behalf. This doesn't
-> > happen since the fwnode member on the struct gpiochip is set to null
-> > when of_gpiochip_add() is called. Let's work around this by ensuring
-> > that it's set if available.
-> >=20
-> > Note that this broke sometime within the last few weeks within
-> > linux-next and I haven't bisected this. I'm posting this in the hopes
-> > that someone may know offhand which patch(es) may have broken this.
-> >=20
-> > Signed-off-by: Brian Masney <bmasney@redhat.com>
-> > ---
-> >  drivers/gpio/gpiolib.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> > index 11fb7ec883e9..8bec66008869 100644
-> > --- a/drivers/gpio/gpiolib.c
-> > +++ b/drivers/gpio/gpiolib.c
-> > @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc=
-, void *data,
-> >  	 * Assign fwnode depending on the result of the previous calls,
-> >  	 * if none of them succeed, assign it to the parent's one.
-> >  	 */
-> > -	gdev->dev.fwnode =3D dev_fwnode(&gdev->dev) ?: fwnode;
-> > +	gc->fwnode =3D gdev->dev.fwnode =3D dev_fwnode(&gdev->dev) ?: fwnode;
->=20
-> This doesn't look right to me. Looking at the documentation of
-> gc->fwnode and how it is used, the purpose of this is to allow
-> explicitly overriding the fwnode that the GPIO chip will use.
->=20
-> So really this should not be used beyond the initial registration
-> in gpiochip_add_data_with_key(). If the above patch fixes anything,
-> then I suspect somebody is using gc->fwnode outside of this
-> registration.
->=20
-> Looking at gpiolib, the only remaining place that seems to do this is
-> the gpio-reserved-ranges handling code, in which case, the below on top
-> of my initial patch might fix that. That might explain why MSM is still
-> seeing issues.
->=20
-> --- >8 ---
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index 11fb7ec883e9..d692ad5c5a27 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -447,10 +447,11 @@ static unsigned long *gpiochip_allocate_mask(struct=
- gpio_chip *gc)
-> =20
->  static unsigned int gpiochip_count_reserved_ranges(struct gpio_chip *gc)
->  {
-> +	struct fwnode_handle *fwnode =3D dev_fwnode(&gc->gpiodev->dev);
->  	int size;
-> =20
->  	/* Format is "start, count, ..." */
-> -	size =3D fwnode_property_count_u32(gc->fwnode, "gpio-reserved-ranges");
-> +	size =3D fwnode_property_count_u32(fwnode, "gpio-reserved-ranges");
->  	if (size > 0 && size % 2 =3D=3D 0)
->  		return size;
-> =20
-> @@ -471,6 +472,7 @@ static int gpiochip_alloc_valid_mask(struct gpio_chip=
- *gc)
-> =20
->  static int gpiochip_apply_reserved_ranges(struct gpio_chip *gc)
->  {
-> +	struct fwnode_handle *fwnode =3D dev_fwnode(&gc->gpiodev->dev);
->  	unsigned int size;
->  	u32 *ranges;
->  	int ret;
-> @@ -483,7 +485,7 @@ static int gpiochip_apply_reserved_ranges(struct gpio=
-_chip *gc)
->  	if (!ranges)
->  		return -ENOMEM;
-> =20
-> -	ret =3D fwnode_property_read_u32_array(gc->fwnode, "gpio-reserved-range=
-s", ranges, size);
-> +	ret =3D fwnode_property_read_u32_array(fwnode, "gpio-reserved-ranges", =
-ranges, size);
->  	if (ret) {
->  		kfree(ranges);
->  		return ret;
-> --- >8 ---
->=20
-> I don't have a good idea about the Lenovo X13 issue, though, but I
-> haven't looked at ACPI at all since I don't have any hardware to test
-> on.
+On 16/11/2022 11:21, Neil Armstrong wrote:
+> The I2C Master Hub is a stripped down version of the GENI Serial Engine
+> QUP Wrapper Controller but only supporting I2C serial engines without
+> DMA support.
+> 
+> Those I2C serial engines variants have some requirements:
+> - a separate "core" clock
+> - doesn't support DMA, thus no memory interconnect path
+> - fixed FIFO size not discoverable in the HW_PARAM_0 register
+> 
+> This adds a desc struct specifying all those requirements which
+> will be used in a next change when adding the I2C Master Hub
+> serial engine compatible.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Ah... looks like that device was actually a Thinkpad X13*s*, which is
-based on a Qualcomm chip, so maybe this patch fixes that one, too. It
-does use gpio-reserved-ranges, so seems at least likely.
-
-Thierry
-
---cAHYK1Crg6nEop4T
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmN0vPgACgkQ3SOs138+
-s6Gglw/+KVnw7BuUhbeGDzN3JVl64OYcwz1syDvc/+w6J27C0o2R06hPOjRPMtof
-hiOQPAaTdtUqDjM5tsi77Cslhwt7wOVwLOLvJ0XzA2agearmoIv+M1+De2tbIpmL
-726JCNYZhgDBjy0PrRvDK1y5/nA6lc5+U9rRIz1p0SNx414SIxUspu5IwnbuyABj
-8hB9V9LzVOwDE5wr88Rp7NrrKYoMbmsY4DlzFY8pa8nmhDtr1gxXtFVY3tqDEG21
-qc9BlegBlAC1e/TulKQcbwOJNASrNZaAyZNR/99YXIWg0brJjP4pCimkiuicPkGk
-fUYggbEgiBoIfb+U5XRHxYfgiugchH0opKzhuixdiiL5lzD0RgWtCYatCsofOuYo
-q8qcJ9V4Ah+c6LOM/Y2yNz8sr/NqBV7DWqesEm0PdCovSHsnLxrHYe1qbktiiKof
-nBCQe2zoHGurMQ1K+O4awbzFnlgRw9XA4faG3hgfzrkLepmZcDC0nApXBFVvFfl+
-rdn89/ZShjiWdkUwrE6mFg+dFWSbUICGb9HluOYrSvnlA/als7ovOtSpW3vrkiEC
-GO/GNELpm+LcyMOEiHFr3ZcDM5pSTk/G3qCav55YNgi+KUISTKcGGWjpc28sDqQY
-s7P0W/nKgQGBZq7Y9Az9iNfzmcrmy3ibMGAZ4m6fnVR/7CEawBA=
-=eSq5
------END PGP SIGNATURE-----
-
---cAHYK1Crg6nEop4T--
+Konrad
+>   drivers/i2c/busses/i2c-qcom-geni.c | 50 +++++++++++++++++++++++++++++++++++---
+>   1 file changed, 47 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 84a77512614d..75dd0718c5a1 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -88,6 +88,7 @@ struct geni_i2c_dev {
+>   	int cur_wr;
+>   	int cur_rd;
+>   	spinlock_t lock;
+> +	struct clk *core_clk;
+>   	u32 clk_freq_out;
+>   	const struct geni_i2c_clk_fld *clk_fld;
+>   	int suspended;
+> @@ -100,6 +101,13 @@ struct geni_i2c_dev {
+>   	bool abort_done;
+>   };
+>   
+> +struct geni_i2c_desc {
+> +	bool has_core_clk;
+> +	char *icc_ddr;
+> +	bool no_dma_support;
+> +	unsigned int tx_fifo_depth;
+> +};
+> +
+>   struct geni_i2c_err_log {
+>   	int err;
+>   	const char *msg;
+> @@ -764,6 +772,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	u32 proto, tx_depth, fifo_disable;
+>   	int ret;
+>   	struct device *dev = &pdev->dev;
+> +	const struct geni_i2c_desc *desc = NULL;
+>   
+>   	gi2c = devm_kzalloc(dev, sizeof(*gi2c), GFP_KERNEL);
+>   	if (!gi2c)
+> @@ -776,6 +785,14 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	if (IS_ERR(gi2c->se.base))
+>   		return PTR_ERR(gi2c->se.base);
+>   
+> +	desc = device_get_match_data(&pdev->dev);
+> +
+> +	if (desc && desc->has_core_clk) {
+> +		gi2c->core_clk = devm_clk_get(dev, "core");
+> +		if (IS_ERR(gi2c->core_clk))
+> +			return PTR_ERR(gi2c->core_clk);
+> +	}
+> +
+>   	gi2c->se.clk = devm_clk_get(dev, "se");
+>   	if (IS_ERR(gi2c->se.clk) && !has_acpi_companion(dev))
+>   		return PTR_ERR(gi2c->se.clk);
+> @@ -819,7 +836,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	gi2c->adap.dev.of_node = dev->of_node;
+>   	strscpy(gi2c->adap.name, "Geni-I2C", sizeof(gi2c->adap.name));
+>   
+> -	ret = geni_icc_get(&gi2c->se, "qup-memory");
+> +	ret = geni_icc_get(&gi2c->se, desc ? desc->icc_ddr : "qup-memory");
+>   	if (ret)
+>   		return ret;
+>   	/*
+> @@ -829,12 +846,17 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	 */
+>   	gi2c->se.icc_paths[GENI_TO_CORE].avg_bw = GENI_DEFAULT_BW;
+>   	gi2c->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
+> -	gi2c->se.icc_paths[GENI_TO_DDR].avg_bw = Bps_to_icc(gi2c->clk_freq_out);
+> +	if (!desc || desc->icc_ddr)
+> +		gi2c->se.icc_paths[GENI_TO_DDR].avg_bw = Bps_to_icc(gi2c->clk_freq_out);
+>   
+>   	ret = geni_icc_set_bw(&gi2c->se);
+>   	if (ret)
+>   		return ret;
+>   
+> +	ret = clk_prepare_enable(gi2c->core_clk);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = geni_se_resources_on(&gi2c->se);
+>   	if (ret) {
+>   		dev_err(dev, "Error turning on resources %d\n", ret);
+> @@ -844,10 +866,15 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	if (proto != GENI_SE_I2C) {
+>   		dev_err(dev, "Invalid proto %d\n", proto);
+>   		geni_se_resources_off(&gi2c->se);
+> +		clk_disable_unprepare(gi2c->core_clk);
+>   		return -ENXIO;
+>   	}
+>   
+> -	fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
+> +	if (desc && desc->no_dma_support)
+> +		fifo_disable = false;
+> +	else
+> +		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
+> +
+>   	if (fifo_disable) {
+>   		/* FIFO is disabled, so we can only use GPI DMA */
+>   		gi2c->gpi_mode = true;
+> @@ -859,6 +886,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	} else {
+>   		gi2c->gpi_mode = false;
+>   		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+> +
+> +		/* I2C Master Hub Serial Elements doesn't have the HW_PARAM_0 register */
+> +		if (!tx_depth && desc)
+> +			tx_depth = desc->tx_fifo_depth;
+> +
+> +		if (!tx_depth) {
+> +			dev_err(dev, "Invalid TX FIFO depth\n");
+> +			return -EINVAL;
+> +		}
+> +
+>   		gi2c->tx_wm = tx_depth - 1;
+>   		geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
+>   		geni_se_config_packing(&gi2c->se, BITS_PER_BYTE,
+> @@ -867,6 +904,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   		dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+>   	}
+>   
+> +	clk_disable_unprepare(gi2c->core_clk);
+>   	ret = geni_se_resources_off(&gi2c->se);
+>   	if (ret) {
+>   		dev_err(dev, "Error turning off resources %d\n", ret);
+> @@ -932,6 +970,8 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>   		gi2c->suspended = 1;
+>   	}
+>   
+> +	clk_disable_unprepare(gi2c->core_clk);
+> +
+>   	return geni_icc_disable(&gi2c->se);
+>   }
+>   
+> @@ -944,6 +984,10 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	ret = clk_prepare_enable(gi2c->core_clk);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = geni_se_resources_on(&gi2c->se);
+>   	if (ret)
+>   		return ret;
+> 
