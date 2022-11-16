@@ -2,179 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0121D62C2DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:44:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9468362C2FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:50:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231656AbiKPPoR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:44:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55806 "EHLO
+        id S232515AbiKPPuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:50:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232392AbiKPPoL (ORCPT
+        with ESMTP id S229617AbiKPPuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:44:11 -0500
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA1915FD5;
-        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-141ca09c2fbso10905273fac.6;
-        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wMo6J/xzRkf1qXE2NKBwI6pYJF06fUQVfFkcN76kkF8=;
-        b=O0elWtFf+jqfYVUr+llAdKZs1NG6xr9bZG+uO5RTaHPeYAU6We9tOiKrOqzuhRHOFH
-         gksLtoxHXnRl3jWCDAE8w3RdQfM9DSQ6Disx/9EC6UAIp9lHH0oNNv9wU1HOIQujv/ez
-         2UmigPR3r7J0h0FiZm81XyjHctWUvbqXqHuTQIgXrVYh6l14dLkUmdVixZok/WsVdyij
-         N/5IKjmo5BSoIAvec/QT0iw+u3DPg7zrfnztVgU/qWqIjPzDaWfFu8037E1PBVUjJGfu
-         CVJmkiBwMfxd05GwNpIpakdTyu8noqdg85hXl92UTsFzos3v/ow92jLRxTOzBbCLvrcn
-         Kcbw==
-X-Gm-Message-State: ANoB5pnMQ3wMdCueK0uTYiCLmDBCvrVqoozieUTHIrS1cepMsPLZeHEu
-        tUOmlXs1eAM0oiFXhfuErf8zgxoEVQ==
-X-Google-Smtp-Source: AA0mqf54pkgBbUpdwKOrjUT6QhVYiAi0ssoyyBFQndLmit2Qvve+VkWtQ12mUZTMUwvVfGPtCp7sdw==
-X-Received: by 2002:a05:6870:be97:b0:132:712d:75cb with SMTP id nx23-20020a056870be9700b00132712d75cbmr1977748oab.145.1668613447117;
-        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j59-20020a9d17c1000000b0066da36d2c45sm2641748otj.22.2022.11.16.07.44.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 07:44:06 -0800 (PST)
-Received: (nullmailer pid 48656 invoked by uid 1000);
-        Wed, 16 Nov 2022 15:44:08 -0000
-Date:   Wed, 16 Nov 2022 09:44:08 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 16 Nov 2022 10:50:07 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E177C31EF1;
+        Wed, 16 Nov 2022 07:50:06 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGEj6c2013000;
+        Wed, 16 Nov 2022 15:49:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=AWF8+ANn5cDDNGbG8TM4977fbxuWawnaMgYwg93Yi58=;
+ b=Xaf9FyTtjiY92p1vJ5yAMaXuXy2DpgJxVAxs4NNIgcofkCFWAWpNxYSt79AG8sTm/uGC
+ Yxu5CRNjGOR3TO5No+MPsRwWm4duY/n4PziKXNNSzO9KIvNgU4aCl2yqX4+/zfo/dRZ0
+ NPPOUx03urTJsgvIVNrrxXMOHsZ1TvyYX2ap11if4NKkRnnkpBOafctIuo50iKH5kkow
+ ulDaZjm73kmmnKu5YqdwwNmcaHIHAoyf1dh6kCSsAJrKjnINsp1dXgrfEge3rWZVDS3o
+ 8ZnokbOgTuqKWotqs/DaunfYvdioQy8s8BubbPfcIYEYmqxlKLFUhH0b6/hgsWoVuFHw CQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw1w686j4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 15:49:59 +0000
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AGFnwWP030314;
+        Wed, 16 Nov 2022 15:49:58 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 3kutpd133q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 15:49:58 +0000
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AGFlp2Z027991;
+        Wed, 16 Nov 2022 15:49:58 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 2AGFnwP6030309
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 15:49:58 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 16 Nov 2022 07:49:54 -0800
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH 08/10] dt-bindings: phy: Add qcom,snps-eusb2-phy schema
- file
-Message-ID: <20221116154408.GA4193429-robh@kernel.org>
-References: <20221116120157.2706810-1-abel.vesa@linaro.org>
- <20221116120157.2706810-9-abel.vesa@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Shazad Hussain" <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>,
+        "Johan Hovold" <johan@kernel.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Subject: [PATCH v9 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
+Date:   Wed, 16 Nov 2022 21:19:30 +0530
+Message-ID: <20221116154932.17127-1-quic_ppareek@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221116120157.2706810-9-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KXTot_2BGlRLTQ7SB1brQRJ8P36dWpbQ
+X-Proofpoint-GUID: KXTot_2BGlRLTQ7SB1brQRJ8P36dWpbQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ mlxlogscore=864 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211160110
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 02:01:55PM +0200, Abel Vesa wrote:
-> The SM8550 SoC uses Synopsis eUSB2 PHY. Add a dt-binding schema
-> for the new driver.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  .../bindings/phy/qcom,snps-eusb2-phy.yaml     | 84 +++++++++++++++++++
->  1 file changed, 84 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
-> new file mode 100644
-> index 000000000000..d6a4bdd0cd42
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
-> @@ -0,0 +1,84 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/phy/qcom,snps-eusb2-phy.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm SNPS eUSB2 phy controller
-> +
-> +maintainers:
-> +  - Abel Vesa <abel.vesa@linaro.org>
-> +
-> +description:
-> +  eUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8550-snps-eusb2-phy
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +  clocks:
-> +    items:
-> +      - description: ref src
+Changes in v9:
+ - Enabled ufs_mem_hc/ufs_mem_phy nodes(John)
+ - Corrected the indentation of 'regulator-allowed-modes' properties.
 
-parent to 'ref'? If so, parent clocks don't go in 'clocks'.
+Changes in v8:
+ - Changed the schema of the regulators(Krzysztof)
+ - Removed node remoteproc_adsp(Andrew)
+ - Removed TODO comment for node usb_0_dwc3(Andrew)
+ - Added Reviewed-by/Tested-by(Eric)
 
-> +      - description: ref
-> +
-> +  clock-names:
-> +    items:
-> +      - const: ref_src
-> +      - const: ref
-> +
-> +  usb-repeater:
-> +    description:
-> +      Phandle to eUSB2 to USB 2.0 repeater
-> +
-> +  vdd-supply:
-> +    description:
-> +      Phandle to 0.88V regulator supply to PHY digital circuit.
-> +
-> +  vdda12-supply:
-> +    description:
-> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
-> +
-> +  resets:
-> +    maxItems: 1
-> +    description:
-> +      Phandle to reset to phy block.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#phy-cells"
-> +  - clocks
-> +  - clock-names
-> +  - vdd-supply
-> +  - vdda12-supply
-> +  - resets
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sm8550.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/clock/qcom,tcsrcc-sm8550.h>
-> +
-> +    usb_1_hsphy: phy@88e3000 {
-> +        compatible = "qcom,sm8550-snps-eusb2-phy";
-> +        reg = <0x88e3000 0x154>;
-> +        #phy-cells = <0>;
-> +
-> +        clocks = <&rpmhcc RPMH_CXO_PAD_CLK>,
-> +                 <&tcsrcc TCSR_USB2_CLKREF_EN>;
-> +        clock-names = "ref_src", "ref";
-> +
-> +        vdd-supply = <&vreg_l1e_0p88>;
-> +        vdda12-supply = <&vreg_l3e_1p2>;
-> +
-> +        resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +    };
-> -- 
-> 2.34.1
-> 
-> 
+Changes in v7:
+ - Put the smpi bus related pmic changes in sseparate dtsi files(Konrad)
+ - Mention allowed regulator modes via DT property regulator-allowed-modes
+   (Konrad and Brian)
+ - Remove unused ldo nodes vreg_l3c and vreg_l10c(Shazad)
+
+Changes in v6:
+ - Introduced the new dts for the board, rather than moving common nodes
+   between this one and SA8295 ADP board into dtsi file(Bjorn)
+ - Drop 'adp' term to imply it being unrelated with ADP board(Internal
+   discussion with Bjorn)
+ - Removed Acked-by(Krzysztof) tag in dt-binding document, due to content
+   change.
+ - Not including Reviewed-by(Krzysztof), because of the content change.
+
+Changes in v5:
+ - Moved the usb and ufs nodes from sa8540p-adp.dtsi file to respective
+   board specific dts files: sa8295p-adp.dts and sa8540p-adp-ride.dts.
+   Took inputs from Shazad Hussain in this regard(John)
+ - Added more description of the board differences(John)
+ - Not including Reviewed-by for Krzysztof, because of the new changes to
+   be reviewed.
+ - Removed Reported-by tag(John).
+
+Changes in v4:
+- Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
+- Removed usb_1 relared nodes, as usb1 doesn't have any port connected
+   on Qdrive3 board.
+- Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
+
+Changes in v3:
+ - Added Acked-by tag (Krzysztof)
+ - Renamed dtsi to sa8540p-adp.dtsi (John)
+ - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
+ - Added cover letter
+
+Changes in v2:
+ - Make dt-binding patch as the first one in the patch set
+ - Add , after year 2022, in the license header
+
+Initial version:
+ - Move the common nodes to sa8540p-adp.dtsi, and create qrive-3 board
+   specific file sa8540p-adp-ride.dts.
+
+Parikshit Pareek (2):
+  dt-bindings: arm: qcom: Document additional sa8540p device
+  arm64: dts: qcom: add SA8540P ride(Qdrive-3)
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/pm8450a.dtsi         |  77 ++++++
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     | 219 ++++++++++++++++++
+ 4 files changed, 298 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8450a.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+
+-- 
+2.17.1
+
