@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3467C62C542
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:47:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CEE462C54F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:49:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233652AbiKPQrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 11:47:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
+        id S239192AbiKPQtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 11:49:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239179AbiKPQqz (ORCPT
+        with ESMTP id S239180AbiKPQsw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 11:46:55 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC04B489
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:43:29 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id o4so30714355wrq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:43:29 -0800 (PST)
+        Wed, 16 Nov 2022 11:48:52 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D93C459FC0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:45:38 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id c25so22553982ljr.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:45:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mg8BLiZDIrzFPjEBwBabss46gMI5R4ZVMU35uXlxBTI=;
-        b=KnJCcAVeeUt+Fp6/dBLi9wQ6HmYy4ECIsa0htd/xLYsi0wV4oCcQyxg7IItoR6BGi+
-         8tfSvt/eb/KCS9MXTHQhfmVU7UrOtUrewcsq8jO8AHepF/J1TFgImgFxX4K3ZD7tPrko
-         4LYKkSSVqWxBlHZj1MtD2cuorY/+pCKM6PwYog6tPSHqAyqIc2bZ4o7ZjcB8Wpxi+lma
-         c6reVYAO0UFzN06dGWd/qLDX1TV7G6KEmvwbwVR8U5qC6wolEUZW+Hd1O3NICjd4kEt8
-         1vJLL5rHfKBnBqvM27mvou/9rvIuDEjHDc8VMJ/mC+bTaJChPXebtdgTmY+T9rpdohUC
-         x+Yg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lpHyPkDpsRozn0AtOsKM9S7D+d9GvrcKAUSTyqZHDGg=;
+        b=fmapstHOEOOXztW3n9wWjB69xQ8C+4OEi/RhLBWvn5thfb0TR8UOWwocX2j6cCizkg
+         MFLZdVAfENfCbW5FClp1uZNCifu6470eP8rbm/prBV2Mlnh6iO3OAEEyyOSP9UHfiYNn
+         mz9MT96rdE4vVtoFrjVKqDQZRc3hMj8fNDO1uPSZe2PPh6jRCQbY39MGKWlQAZm4OmMj
+         PBnjs1+B2OaQ6W8BoKEU8dB2f1HjLGDyEiGgGhXwVBOvmDGMICA+65W2bCSBj7duMj04
+         4BTfNaBqGq42nURcc7QAyiATV2tQahwI/ez3PKdvRznFgw0VgH01Han9ObhmXEbh7skl
+         64Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mg8BLiZDIrzFPjEBwBabss46gMI5R4ZVMU35uXlxBTI=;
-        b=csgLAwnyisaMLVSPJtCsGthLAMsFdxfujOuTU9wHCUtqzkAjudZUQIityxZ003n/J5
-         o4OfivyolAfxrfT83IAk6FnLY+a417Fr4PF7F2jM3Q6bEmpOMUoD8XOzDgHXe+RxjJx8
-         5ozA/cK55Qd1XQJwxV9qjWPEZ56DdSNCC+4vJ4WaBqNGtglfXB5rC6B/m+cyNB1WIP+f
-         inL21jqKS5m8FB0OsyOzUi9lK3KMfVH837J4xg6aMFKbRm88ffNs+6YNHohZtNvET3by
-         YOcBrpN3+QD5vOSEDJcMSJjTuqKtJyrN7rMhM9zERmOBxZVJh2XRoZWxBpIuhE+nOZu0
-         AG0w==
-X-Gm-Message-State: ANoB5pnDI8ZVzel/ZMP2eHBM9ee+g+wuyykZWHI3NptAsWOOCsJXg0Uv
-        UcNKIVKe4UjowrjLTjs7CxNcDw==
-X-Google-Smtp-Source: AA0mqf67LYFft+QXALi0Jd02t0VVrQxSWwTomK8ABv/hJAyUdTyZxAU3mSFgojXlQs4DZjMVOpvqCg==
-X-Received: by 2002:a05:6000:136e:b0:236:783e:5947 with SMTP id q14-20020a056000136e00b00236783e5947mr14185234wrz.168.1668617008098;
-        Wed, 16 Nov 2022 08:43:28 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id p6-20020a1c5446000000b003b47e75b401sm2507531wmi.37.2022.11.16.08.43.26
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lpHyPkDpsRozn0AtOsKM9S7D+d9GvrcKAUSTyqZHDGg=;
+        b=fwpCDp2soB7qlCLctOjojoRfR4F81254tunkyyDC0JkDwbhFyO6Ni7lmrw2eOHrGMk
+         hilwYNRN0Bob3+FclVK59O3cOoLyvvuObL+5Ta0VBTXkXVXNxxk0TA1/2dMWCqAUGiNR
+         ud2S2Cy6SQVXJ8nC9ldLFIRLBEs2cqjwKOPneGnp9FDWXNsvdSGe3Kwiwr93TOKPmidE
+         71xTVeNk/TthwVXqQuxBQjZb5FP/31x+OV8Mzv3tzgdpSTV2HQV0xNrX7MuIqame+7XS
+         XJVKvD9cIqjh0/SkxbtynUteBzLqh7D2rCFS5LKgn5GwJotUrRaRfoNvzEfbSiDRUahF
+         Iffg==
+X-Gm-Message-State: ANoB5pko6LsRQR166hJKD4+vqVWb0HmS0XitYVGbgG/j8x3vYfbfCMBZ
+        wUpmPJR11uWNVdE9j5kOkjTcLKmEOzra5J/Q
+X-Google-Smtp-Source: AA0mqf6SsU5kpjeZhugqBx765fzZIdK7aLH98X2Kk2/h9+YJ0GzILaHOZKbvd3izXsXKVWPoOw3i+Q==
+X-Received: by 2002:a2e:a4a4:0:b0:26e:61e:af25 with SMTP id g4-20020a2ea4a4000000b0026e061eaf25mr8779183ljm.275.1668617137298;
+        Wed, 16 Nov 2022 08:45:37 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id q23-20020a056512211700b004a2588520f5sm2676238lfr.166.2022.11.16.08.45.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 08:43:27 -0800 (PST)
-Message-ID: <6fe6723b-842e-7a56-a15c-6b7e044c7d45@linaro.org>
-Date:   Wed, 16 Nov 2022 16:43:26 +0000
+        Wed, 16 Nov 2022 08:45:36 -0800 (PST)
+Message-ID: <5298da29-4f97-5bab-7252-380a15c06b71@linaro.org>
+Date:   Wed, 16 Nov 2022 17:45:29 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
 Subject: Re: [PATCH v6 5/7] arm64: dts: qcom:
  sdm845-db845c-navigation-mezzanine: Add navigation mezzanine dts
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, robert.foss@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, robh+dt@kernel.org,
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, mchehab@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
         vladimir.zapolskiy@linaro.org
 Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
@@ -70,8 +69,9 @@ Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
 References: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
  <20221116162801.546737-6-bryan.odonoghue@linaro.org>
  <730467dc-419f-bcb6-c4d8-24951b4dde62@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <730467dc-419f-bcb6-c4d8-24951b4dde62@linaro.org>
+ <6fe6723b-842e-7a56-a15c-6b7e044c7d45@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <6fe6723b-842e-7a56-a15c-6b7e044c7d45@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,18 +84,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 16:39, Konrad Dybcio wrote:
-> I know you're just moving things around, but.. any reason this thing is 
-> still disabled?
+
+
+On 16/11/2022 17:43, Bryan O'Donoghue wrote:
+> On 16/11/2022 16:39, Konrad Dybcio wrote:
+>> I know you're just moving things around, but.. any reason this thing 
+>> is still disabled?
+>>
+>> Konrad
+>>> +
+>>> +        port {
+>>> +            ov7251_ep: endpoint {
+>>> +                data-lanes = <0 1>;
+>>> +/*                remote-endpoint = <&csiphy3_ep>; */ 
 > 
-> Konrad
->> +
->> +        port {
->> +            ov7251_ep: endpoint {
->> +                data-lanes = <0 1>;
->> +/*                remote-endpoint = <&csiphy3_ep>; */ 
+> Because so is the remote-endpoint here.
+Ok, but is there anything special preventing you from adding
 
-Because so is the remote-endpoint here.
+csiphy3_ep: endpoing {
+};
 
----
-bod
+under port@3 in 845 and have it working? Does it need more driver changes?
+
+Konrad
+> 
+> ---
+> bod
