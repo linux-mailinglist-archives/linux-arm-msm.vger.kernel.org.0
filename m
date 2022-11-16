@@ -2,121 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D9AE62BA08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D0B762BA1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:52:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238905AbiKPKty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:49:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58834 "EHLO
+        id S230179AbiKPKwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:52:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237885AbiKPKtZ (ORCPT
+        with ESMTP id S233142AbiKPKvc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:49:25 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAAC9B4A5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:38:38 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id p8so28811100lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:38:37 -0800 (PST)
+        Wed, 16 Nov 2022 05:51:32 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CAA752891
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:40:18 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id a29so28827314lfj.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:40:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/sFXZNnC1r3n2agymwGJrvkUkPxxvd0733cgDv6oszs=;
-        b=zJCwjGUVoIWq0gTmFIs+O6sXzOcBM9+ANna4bVaIB/QZxF25vfCGHQLDyrrpdipDvI
-         qTU/L7lh6MFZaCVyLm/pWshXFhIs26+IGBgjemBKN+sW2wQqcfju28WuQygnkmzeN2nS
-         hcJgH8m5GYiXQeMx0EUdsybCg1NbQWgBusJqRk9MnugqyXwNGglzYNbSU0GpHSUfsE7T
-         PfrF+KmAxpHdVTaIhUx8UwGCytj6e49055fcg0Fe3qNQvhwhi3aqEmpt9QOlE+JzYb4Q
-         2B4fmmx1XeQ6D3oV8lBL/7t84l2ZTwbuvUlnJ73+FUWHMeAfHe1x2cF/xjiO6MAwkBbk
-         Km1A==
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q5arRNEzeZmyjcIxb0J9Ia9IkpqFKY/qEalRnuGlZPo=;
+        b=AUBOm9BP50OfpbVXPPBIHmkCgP1NJev70bSUdhsEOQq4AM7FErUK6wWRFf6RuVPBrr
+         ARaEcAzSXMcWgmBz9XRNQ/gJ1Omz572yZJ2Aee15mMgei7lO85PWTuw4Uo38XTOga7bv
+         qYxdard31IkDKjKcP9WV2DSFHOhoL8R3kl4RFHGa0t1YoBB6Ptpx3Y/HfPPpCtwYe8gd
+         MuZA/5kJBOk+q70UO6mo9KKXbX/JLsiUuRkg6PJ3nx0Z4miRTw1X9BDUb2yY/hMqyW1B
+         5kck6QMDyfjJsJ6hU1QTC4eyMGzZHdzGhjnvpGxHTCNP6lqVfnZBjFgJANqXOD62E141
+         J18w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/sFXZNnC1r3n2agymwGJrvkUkPxxvd0733cgDv6oszs=;
-        b=F3EhRKfWwsSwcV2JPbwGUT2M/dZkaaU8aHCavCkORMr7nlXQVqBEQNDMyaeqDf213U
-         6LefLmd7imEmD6jk5i836OOkSp/gK1fVCa67iz2uy78kCsoEtNXRrmCKFndwcA4OV+KR
-         PCL5hF5sHs4D9UMpCW2fy92VjIEWJbrGZRiq6mGmd+891Zb/tstn1+Jy5PiXXc0yEwm1
-         fKDveJ1AsT099SgVsbtzcfeZ8lTxinlb6CB34ZRYYckGyPRHgUYNjPlGvlLjSKJ4VklX
-         dT2ErLsBQENpwhcWk0ju/0dARnCqXaNg5lLkyvXnndf45h3T4keUj2MeJmKMr6+6aPyi
-         g7pQ==
-X-Gm-Message-State: ANoB5pnopcZ/bJuAbsdMdwR08n2Bi4IiCf5bzMFMp0VMInQO5SdAHffm
-        TZTCfuJP3Vr0lmDth5bT20aNbA==
-X-Google-Smtp-Source: AA0mqf4kqe7dYOt417HutmC/BY8vX8YJnqNTsxyQz8kbZy9Ylm0Z9ZSsUUlPlh7QdGDgc6EsV0emTA==
-X-Received: by 2002:a05:6512:1042:b0:4a2:2aad:95c4 with SMTP id c2-20020a056512104200b004a22aad95c4mr8277336lfb.110.1668595116379;
-        Wed, 16 Nov 2022 02:38:36 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id p24-20020a2eb118000000b002772b70c1acsm2941048ljl.21.2022.11.16.02.38.35
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q5arRNEzeZmyjcIxb0J9Ia9IkpqFKY/qEalRnuGlZPo=;
+        b=U2ZMI6wvkIcq/3L1tvFn2gEUmmxmT9LxFOAcWvzhX65SOUaOUuNY5MOoXT7Ope9z55
+         bOebwSMElecDAoFSJo6mkclj8Y0tapfMCBN+GgSD84oQlAAveRemHetwFxujZi9qQw+u
+         KfAVIVYCrEbYnB4ET9+yjHj1Zt4WF5w96U2btwxE4qKZ+WwVJyQ2eVEE+7Cas5o+FYNw
+         0x+vsO3gsqjWDCLeB62pFvg8T2GtKOxhYvq7gvb7ldH6HBW2mPx833pFBI5U8H6nu095
+         Dj+n34ULfrmOTMKZPVI0zPpYy/ibXV8iIDz4a6T8EUcJ/ZGcw0aksrzZMBAfYT8Sn9/L
+         pNRw==
+X-Gm-Message-State: ANoB5pnYfA9WkU8p5iF+50zffFFaX1wDJKSs+T/BtGpaeWaFo+C4TsvP
+        shnBg8qhuUXWallYkpG1daerXA==
+X-Google-Smtp-Source: AA0mqf6YoduX3Hvycoq2nH3KppUunH72l9zKBO4zSS68VxXoAK22YdieVasPPe2cdhrbxs+vx3MveA==
+X-Received: by 2002:a05:6512:3f01:b0:4a6:396d:a06a with SMTP id y1-20020a0565123f0100b004a6396da06amr7577079lfa.514.1668595216946;
+        Wed, 16 Nov 2022 02:40:16 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id d25-20020a19e619000000b00494706193adsm2534950lfh.208.2022.11.16.02.40.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 02:38:36 -0800 (PST)
-Message-ID: <e99dc990-5e20-3a9a-1710-482e9c0a1c54@linaro.org>
-Date:   Wed, 16 Nov 2022 11:38:29 +0100
+        Wed, 16 Nov 2022 02:40:16 -0800 (PST)
+Message-ID: <75550e08-cbec-2d4a-429f-c94e0803fcc1@linaro.org>
+Date:   Wed, 16 Nov 2022 11:40:15 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 6/6] i2c: qcom-geni: add support for I2C Master Hub
- variant
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-0-64449106a148@linaro.org>
- <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-6-64449106a148@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-6-64449106a148@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp/sa8540p: add SoundWire and
+ LPASS
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, andersson@kernel.org
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221115170242.150246-1-srinivas.kandagatla@linaro.org>
+ <20221115170242.150246-3-srinivas.kandagatla@linaro.org>
+ <5ff80fe0-eb23-9db0-ab75-189da5977901@linaro.org>
+In-Reply-To: <5ff80fe0-eb23-9db0-ab75-189da5977901@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 16/11/2022 09:10, Krzysztof Kozlowski wrote:
+> On 15/11/2022 18:02, Srinivas Kandagatla wrote:
+>> Add LPASS Codecs along with SoundWire controller for TX, RX, WSA and VA macros
+>> along with LPASS LPI pinctrl node.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 324 +++++++++++++++++++++++++
+>>  1 file changed, 324 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index e3cdd8bccb0c..a87d58bee1e0 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -11,6 +11,7 @@
+>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>>  #include <dt-bindings/power/qcom-rpmpd.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/sound/qcom,q6afe.h>
+>>  #include <dt-bindings/thermal/thermal.h>
+>>  #include <dt-bindings/soc/qcom,gpr.h>
+>>  
+>> @@ -1115,6 +1116,9 @@ usb_2_ssphy1: phy@88f1e00 {
+>>  			};
+>>  		};
+>>  
+>> +		sound: sound {
+>> +		};
+> 
+> sound node is not part of SoC.
+> 
 
+To clarify - I meant to put it outside of soc node.
 
-On 16/11/2022 11:21, Neil Armstrong wrote:
-> The I2C Master Hub is a stripped down version of the GENI Serial Engine
-> QUP Wrapper Controller but only supporting I2C serial engines without
-> DMA support.
-> 
-> This adds the I2C Master Hub serial engine compatible along the
-> specific requirements in a new desc struct passed throug the device
-> match data.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Best regards,
+Krzysztof
 
-Konrad
->   drivers/i2c/busses/i2c-qcom-geni.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 75dd0718c5a1..bfe75038bc14 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -1026,8 +1026,16 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
->   									NULL)
->   };
->   
-> +const struct geni_i2c_desc i2c_master_hub = {
-> +	.has_core_clk = true,
-> +	.icc_ddr = NULL,
-> +	.no_dma_support = true,
-> +	.tx_fifo_depth = 16,
-> +};
-> +
->   static const struct of_device_id geni_i2c_dt_match[] = {
->   	{ .compatible = "qcom,geni-i2c" },
-> +	{ .compatible = "qcom,geni-i2c-master-hub", .data = &i2c_master_hub },
->   	{}
->   };
->   MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
-> 
