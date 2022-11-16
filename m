@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4A5A62BE37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:37:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6121A62BE3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:37:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbiKPMhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 07:37:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53004 "EHLO
+        id S232099AbiKPMhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 07:37:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239082AbiKPMg5 (ORCPT
+        with ESMTP id S239091AbiKPMg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 07:36:57 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06842A183
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:36:23 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id gv23so11002766ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:36:22 -0800 (PST)
+        Wed, 16 Nov 2022 07:36:58 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72591CFC9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:36:24 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id bj12so43649940ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KZBT8P6Dv4DO8+VutzfmTjw2eFqXhFXatHTYor7MjsU=;
-        b=hlQNk0rVp3sE85UQqVnwNbaSG3QuiVGpipf/JeuKhOANQCdtms+INmd4MyRonzImhL
-         NUi2yie/KzREDVos/KrGeq2GPvdmgJgC9a8ZfgkMRp+sv1rBnlbOA9KM6d8L6j5xdhSZ
-         Zoiy+q0RgUIABxqUTWbIwQWYMpLdjX1ovBvNpOU16Qlp7E3Fgr53z3/dKeZV+1dl8OUV
-         qkyIq8K8QgVkJio3qrqhpamZpHL5EtnUrBDGplun79N2WJfkV/aFnzq2ZOoED1kDqqJE
-         rUZZrWkwDp49YaVbf/sriTK4UqZackZ+IqOqi/MdbOz2vfEC4KD/GtiVt/beTThn4A5m
-         PxKw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wJ4LXLUuVrv6zFSflxxTlPtNIH6eGmu9CDdhaBfrfx0=;
+        b=A7n6QEdSnW3L7+Ik5Q4uPU1+XXtD8goFQDsGeVGFQyK9sBClQKDr1r8+ceINCFzxq4
+         ZPdjxR86y7o6PECHIeKjo5SaRMfDmS2NQwIttaICi53RxavpcMhsaQxZgs9bOj/U5IIf
+         EVq+j1QgCQhfLbJ2vJSOmlV66e22dPb9nt5fvdvZyd7qTDPlQOH9TbVIHdUaqI7V/Gsn
+         fEwsj1sdujNCVEpQS8Q3trQxvolqWrad3Wn/8S3lii65hMjLmWije09J3QFhUtJI8LCq
+         MDm8kPtT3x7nEA+E6SO8ci9yo38JtuRWiLKxhuQOM+Ai+D/8eNTsFlvZ/lKBCfop/s73
+         /HrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KZBT8P6Dv4DO8+VutzfmTjw2eFqXhFXatHTYor7MjsU=;
-        b=7fkGaT9QxBdHIMPDShKckitp9snZz68Cc80Yr28r3VRu57cS7L2iJGw2Xi64KtN0NJ
-         xDdro6y2Q03FjukQ6HsU5B4MeIkNoJKrhMZpaVgjGzLz2mtzRniVwSS1ANOgwTr6FLrK
-         v6TAE1tXBi6We1ZOlCq7sStbtVDQG90c48cXhyIS0nYOasaQ+adNuOly64p1AWZyDa6r
-         l4+1qEHDoTeFRFV4cclBtspB2rjpIogK8TueuSWCTiIBRpMoOiCjUyeX3n8YQiCMnQDq
-         jeabaft8exjOwKo7G4yoIZSXQSI+1BxIAaEkaDElfFSY1PjrNpc0q+WEctJeY93W9iSe
-         IVaA==
-X-Gm-Message-State: ANoB5plo4Eji0VTucrgDsgy2YMcmiuU4kkJqTf2SK8XkQDCDEXetRDJ+
-        ame3Yh6sK02lF8YA/qxsYHdS32NpBRt0csQ3
-X-Google-Smtp-Source: AA0mqf4I/YjZAzS1pjS8ZmT2wdWov+a4rkd9ETVSHA0x7+nwD2F7Hmk5eG3SVjUQrmdM4onxSJs0/Q==
-X-Received: by 2002:a17:906:5f88:b0:7ad:92fa:589e with SMTP id a8-20020a1709065f8800b007ad92fa589emr16970948eju.668.1668602181186;
-        Wed, 16 Nov 2022 04:36:21 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wJ4LXLUuVrv6zFSflxxTlPtNIH6eGmu9CDdhaBfrfx0=;
+        b=4trL3ERgqjRAmIK0gSfU8MwEUMGKEJisb04ynAIOJUNPT/cEXOLhrV8Wa5EiBf2jte
+         hrc/BvfK40UvN1gU47qtIgxgtbZUbqCTXmQe2HIbMnBWKxjBy/PpIKSCaqhwzT/FytAa
+         cy5Xecb1+ph5muoRo8xRU89SQH5bH8JKTn144bwZDjqQ/OwMlhpd2+fL3Y4r/PfqatGv
+         LRcRcoCs83iCrI5Tf8fFw9HRj6FrrboaiLyXrN5Id+rgf6M+l2JPH9bwav7cieqe6hUx
+         GvaTQH618zGqKnP3yzcBeYT/3fKF1gu7apBPOVhVY/pcyht8zCoay8C/DVjZHC+/Jruf
+         yA9w==
+X-Gm-Message-State: ANoB5pk4NsSiwaPhxE/0+rNPSkbkHAH1V8otazD6p80YzWaffDmSiGcS
+        r/2sE5tcC+z9TcIEcVY51/wvfUQSUpHmUAxe
+X-Google-Smtp-Source: AA0mqf69fFJxYsqpCdCIH07Vnmsmmae/PINzR1v/fHy04rT9WpQycvoBe3mQcAgvzcFC8yDJB+tOsA==
+X-Received: by 2002:a17:907:76ec:b0:78d:5966:b093 with SMTP id kg12-20020a17090776ec00b0078d5966b093mr18665190ejc.343.1668602183064;
+        Wed, 16 Nov 2022 04:36:23 -0800 (PST)
 Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id cb13-20020a170906a44d00b007abafe43c3bsm6773346ejb.86.2022.11.16.04.36.19
+        by smtp.gmail.com with ESMTPSA id cb13-20020a170906a44d00b007abafe43c3bsm6773346ejb.86.2022.11.16.04.36.21
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 16 Nov 2022 04:36:20 -0800 (PST)
+        Wed, 16 Nov 2022 04:36:22 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -58,11 +59,14 @@ Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/4] dt-bindings: mmc: sdhci-msm: Document SM8350 SDHCI
-Date:   Wed, 16 Nov 2022 13:36:09 +0100
-Message-Id: <20221116123612.34302-1-konrad.dybcio@linaro.org>
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH v2 2/4] arm64: dts: qcom: sm8350: Add SDHCI2
+Date:   Wed, 16 Nov 2022 13:36:10 +0100
+Message-Id: <20221116123612.34302-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+In-Reply-To: <20221116123612.34302-1-konrad.dybcio@linaro.org>
+References: <20221116123612.34302-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,29 +79,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the SDHCI on SM8350.
+Add and configure the SDHCI host responsible for (mostly) SD Card and
+its corresponding pins' sleep states.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The setup is *literally* 1:1 with 8450 (bar SDR50/104 may not be
+broken).
+
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Changes in v2:
-- pick up a-b
+No changes in v2.
 
- Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 79 ++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-index 12def0f57e3e..31dfaff0048d 100644
---- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-+++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-@@ -49,6 +49,7 @@ properties:
-               - qcom,sm6375-sdhci
-               - qcom,sm8150-sdhci
-               - qcom,sm8250-sdhci
-+              - qcom,sm8350-sdhci
-               - qcom,sm8450-sdhci
-           - const: qcom,sdhci-msm-v5 # for sdcc version 5.0
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 552c0da3c479..9a118112facb 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1761,6 +1761,46 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 204>;
+ 			wakeup-parent = <&pdc>;
  
++			sdc2_default_state: sdc2-default-state {
++				clk-pins {
++					pins = "sdc2_clk";
++					drive-strength = <16>;
++					bias-disable;
++				};
++
++				cmd-pins {
++					pins = "sdc2_cmd";
++					drive-strength = <16>;
++					bias-pull-up;
++				};
++
++				data-pins {
++					pins = "sdc2_data";
++					drive-strength = <16>;
++					bias-pull-up;
++				};
++			};
++
++			sdc2_sleep_state: sdc2-sleep-state {
++				clk-pins {
++					pins = "sdc2_clk";
++					drive-strength = <2>;
++					bias-disable;
++				};
++
++				cmd-pins {
++					pins = "sdc2_cmd";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++
++				data-pins {
++					pins = "sdc2_data";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++			};
++
+ 			qup_uart3_default_state: qup-uart3-default-state {
+ 				rx-pins {
+ 					pins = "gpio18";
+@@ -2329,6 +2369,45 @@ compute-cb@8 {
+ 			};
+ 		};
+ 
++		sdhc_2: sdhci@8804000 {
++			compatible = "qcom,sm8350-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0 0x08804000 0 0x1000>;
++
++			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
++				 <&gcc GCC_SDCC2_APPS_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "iface", "core", "xo";
++			resets = <&gcc GCC_SDCC2_BCR>;
++			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
++			iommus = <&apps_smmu 0x4a0 0x0>;
++			power-domains = <&rpmhpd SM8350_CX>;
++			operating-points-v2 = <&sdhc2_opp_table>;
++			bus-width = <4>;
++			dma-coherent;
++
++			status = "disabled";
++
++			sdhc2_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-202000000 {
++					opp-hz = /bits/ 64 <202000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++			};
++		};
++
+ 		usb_1_hsphy: phy@88e3000 {
+ 			compatible = "qcom,sm8350-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-7nm-phy";
 -- 
 2.38.1
 
