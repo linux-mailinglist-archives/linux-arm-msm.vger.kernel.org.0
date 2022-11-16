@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5E2162C1FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:12:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 145B462C207
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:15:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233106AbiKPPMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33068 "EHLO
+        id S231501AbiKPPPX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:15:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233026AbiKPPMV (ORCPT
+        with ESMTP id S231937AbiKPPPW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:12:21 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 395384B990
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:12:19 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id x102so11771412ede.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:12:19 -0800 (PST)
+        Wed, 16 Nov 2022 10:15:22 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ADE12A955
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:15:20 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id x102so11786517ede.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:15:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L4JWHsacmKOLJbtsxb09gPiCVKUXWi5qKeYY8tIGW2w=;
-        b=Zf06awfW1h+IwXXvbut1ZECzJZpX/+PFwFK+mll67kFEv+rToBTvY8E47tas5dz3KE
-         HgtI0ofCdmDh9jV8Ygm70FtbIBd8LaRah3xJTuredDdpuh9M2XxjzMaiwNTl9a6eakgL
-         Mc2tageOYcqaDmzPrn+Y2SfJBIg09OTvERR/SWhbLqR6S1hW/opsGSZgvFeYTpYKTf6g
-         mkZcOTsbptkC4knOFOaazEgmBS3HlMgL574Sbbcpx7myMVDLdBuAoajVKEEEhIKTmwFK
-         TrE5NrjvGYO8rjLXB6XhCd68D7hOHFJNUaZaqcDYE0XZzhAUo/j/fRfrfqx/8ELv/LmR
-         GZ6g==
+        bh=VAiScu0A/OxpX4a2oX6D/FIveYVf3qqaaB+wmGydj5M=;
+        b=PTUHl+Au4+Vz1HKo1Rt1nvCydumQgoqb2hudTcV1AfxZJAAv7lHCVDozpQvh/zNBR8
+         OeIkiZHhWg5a+4uCqhGVjKGK9IRBoubSQRC6UQzi3Ss6fqEs2tb7HMmhxrb3NtmQU/TP
+         YbjJYF3yYlB4PZ3oGptSRvhWFGEjLdTowY9xp7d8Yc4oMbqGRhUIuQ+fU2KSB93PbOwU
+         f7S9ecbnsPmZuc1q38K/qJ7vWbhJI8hl8Ctonhp4/Nb6UOqkJBJ/muA9rZVA0Rq8FNoJ
+         9a0AOWHvxK3hgLWr74vT5KVa1MJ6mXwgLSH3FiZPDqJjUHPwnc1vd0HN3u0Os/M9Ik0n
+         dfVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=L4JWHsacmKOLJbtsxb09gPiCVKUXWi5qKeYY8tIGW2w=;
-        b=mEPVsd+C2MAoX0+Vjs1YaLC1wsacrbJsU81DKFOSIwlm2t89q/gTK17+J2yVCsHlFV
-         t2rIQkN0Ih66PMh74mb3YN+oVXMngiNkMNOeINtjSvItTVJGdQjJVfz/qOA9hCdNItfK
-         LzX2aobdEC+1O8tCpyVBxIIBpx6KV22HDTMJoWptlcsFgt/sNlpOVw1vn+z3dR7sK2FB
-         2Ak5GlLVmdjxhGrEsl0BnQHNgSvZGuIuplPOELfsHtFrBSg4viPlqQmO+i6A/J9PL9Ww
-         81m6xRo+lgb1S0ZwTJP5GQb840cRVgMq3uvq0pd6oIBJwmjzF7j3NGpffI71JFwTP6PG
-         uA1Q==
-X-Gm-Message-State: ANoB5pn8nB5jbP2hFdXOsm3d5cVLLdlFPQMwzaaxopxKLObI5ih10BDn
-        YT6eINOAkOSheGPvcavX3H7+8Q==
-X-Google-Smtp-Source: AA0mqf7IaPOpaR1gwvBM+zdaE3UjkrlAjP9qXvkMlHuvvHNxfG78wYu8zKCAWkzD+3MGm1CLB8PmvQ==
-X-Received: by 2002:a05:6402:1c85:b0:458:c339:4229 with SMTP id cy5-20020a0564021c8500b00458c3394229mr19307625edb.393.1668611537809;
-        Wed, 16 Nov 2022 07:12:17 -0800 (PST)
+        bh=VAiScu0A/OxpX4a2oX6D/FIveYVf3qqaaB+wmGydj5M=;
+        b=yTYnUbu58hl6O40dWghM441q+T4JhWHWYyZwZyKLKhSncReDpfeTKG2hE/L3OLfXQS
+         QyO8ufOMCUiCm/glIdeQ4jS1NBP9D6QomPo7GkBTOycmRhl3HYiwnhoR+4qwZxAxLXd5
+         s3dD6Kqnzz7i1KxnX7gLNLhxuk0OtWwif2WA5Ylk3hry3TXVCMcssFS5rQtLLHh6zw7C
+         5SSgXURYInxq1P/rkrroFsBcd6TPwAV8eAleSHK56pX/z5G9AdA1+x2oOPgheBzMYfmp
+         70kZZC+XqSX3G/A3vOmIfmOLFT8vNOVDxLZrxf6o+C3nPwt6z1dEs0c/MdZFtEdN4Ibv
+         EPsg==
+X-Gm-Message-State: ANoB5pnNsXrUq3o0khxj+naxxtDa3ZtyeCfNrRf5GNYp1VqISjcQIYPA
+        EJr86XyyljiBMyN1LoDfIZPcqw==
+X-Google-Smtp-Source: AA0mqf6+IT5jLok2SDEEK1BiM1zaCRSiAZxaKHYSrckQ/7wBvFmB+xrN5/lKu7B6gAksggg1Rr7LrA==
+X-Received: by 2002:a05:6402:2903:b0:467:65a2:f635 with SMTP id ee3-20020a056402290300b0046765a2f635mr19162747edb.106.1668611718625;
+        Wed, 16 Nov 2022 07:15:18 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id g18-20020a17090604d200b0078a543e9301sm6834312eja.200.2022.11.16.07.12.16
+        by smtp.gmail.com with ESMTPSA id y14-20020aa7ccce000000b0045b4b67156fsm7662517edt.45.2022.11.16.07.15.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 07:12:17 -0800 (PST)
-Message-ID: <a48a4b81-2491-5662-077e-8d6916066a0b@linaro.org>
-Date:   Wed, 16 Nov 2022 16:12:09 +0100
+        Wed, 16 Nov 2022 07:15:18 -0800 (PST)
+Message-ID: <24f8eafa-4da3-f3a6-faff-163d173bae50@linaro.org>
+Date:   Wed, 16 Nov 2022 16:15:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: msm8953: Add device tree for
- Motorola G5 Plus
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: msm8953: Add device tree for Xiaomi
+ Mi A2 Lite
 To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Alejandro Tafalla <atafalla@dnyon.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-hardening@vger.kernel.org
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221116145616.17884-1-luca@z3ntu.xyz>
- <20221116145616.17884-4-luca@z3ntu.xyz>
+ <20221116145616.17884-5-luca@z3ntu.xyz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116145616.17884-4-luca@z3ntu.xyz>
+In-Reply-To: <20221116145616.17884-5-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,37 +84,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 16/11/2022 15:56, Luca Weiss wrote:
-> From: Sireesh Kodali <sireeshkodali1@gmail.com>
+> From: Alejandro Tafalla <atafalla@dnyon.com>
 > 
-> Add device tree for the Motorola G5 Plus (potter) smartphone. This
+> Add device tree for the Xiaomi Mi A2 Lite (daisy) smartphone. This
 > device is based on Snapdragon 625 (msm8953) SoC.
 > 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> Signed-off-by: Alejandro Tafalla <atafalla@dnyon.com>
 > ---
 >   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../boot/dts/qcom/msm8953-motorola-potter.dts | 306 ++++++++++++++++++
->   2 files changed, 307 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/msm8953-motorola-potter.dts
+>   .../boot/dts/qcom/msm8953-xiaomi-daisy.dts    | 316 ++++++++++++++++++
+>   2 files changed, 317 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index a0b537414593..21a6a7b5a2cf 100644
+> index 21a6a7b5a2cf..6a80a36465f7 100644
 > --- a/arch/arm64/boot/dts/qcom/Makefile
 > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-grandmax.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
+> @@ -22,6 +22,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
 >   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
 >   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
 >   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
 >   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
 >   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-motorola-potter.dts b/arch/arm64/boot/dts/qcom/msm8953-motorola-potter.dts
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
 > new file mode 100644
-> index 000000000000..3957dabf651e
+> index 000000000000..8ddf075ccda4
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-motorola-potter.dts
-> @@ -0,0 +1,306 @@
+> +++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+> @@ -0,0 +1,316 @@
 > +// SPDX-License-Identifier: GPL-2.0-only
+I only noticed now, but 8953 dtsi is BSD3. I'm not an expert on 
+licenses, but this sounds fishy..
+
 > +/*
 > + * Copyright (c) 2022 The Linux Foundation. All rights reserved.
 > + */
@@ -129,11 +128,11 @@ On 16/11/2022 15:56, Luca Weiss wrote:
 > +#include "pmi8950.dtsi"
 > +
 > +/ {
-> +	model = "Motorola G5 Plus";
-> +	compatible = "motorola,potter", "qcom,msm8953";
+> +	model = "Xiaomi Mi A2 Lite";
+> +	compatible = "xiaomi,daisy", "qcom,msm8953";
 > +	chassis-type = "handset";
 > +	qcom,msm-id = <293 0>;
-> +	qcom,board-id = <0x46 0x83a0>;
+> +	qcom,board-id= <0x1000b 0x9>;
 > +
 > +	chosen {
 > +		#address-cells = <2>;
@@ -142,10 +141,10 @@ On 16/11/2022 15:56, Luca Weiss wrote:
 > +
 > +		framebuffer@90001000 {
 > +			compatible = "simple-framebuffer";
-> +			reg = <0 0x90001000 0 (2220 * 1920 * 3)>;
+> +			reg = <0 0x90001000 0 (1920 * 2280 * 3)>;
 > +
 > +			width = <1080>;
-> +			height = <1920>;
+> +			height = <2280>;
 > +			stride = <(1080 * 3)>;
 > +			format = "r8g8b8";
 > +
@@ -176,36 +175,46 @@ On 16/11/2022 15:56, Luca Weiss wrote:
 > +
 > +	reserved-memory {
 > +		/delete-node/ memory@85b00000;
-Same comment as in 1/8.
+Same comment as in 2/8.
 
 > +
-> +		memory@84300000 {
-> +			reg = <0x0 0x84300000 0x0 0x2000000>;
+> +		memory@84b00000 {
+> +			reg = <0x0 0x84a00000 0x0 0x1900000>;
 > +			no-map;
 > +		};
 > +
-> +		memory@90001000 {
-> +			reg = <0x0 0x90001000 0x0 (1080 * 1920 * 3)>;
+> +		adsp_fw_mem: memory@8d600000 {
+> +			reg = <0x0 0x8d600000 0x0 0x1200000>;
 > +			no-map;
 > +		};
 > +
-> +		memory@aefd2000 {
-> +			reg = <0x0 0xaefd2000 0x0 0x2e000>;
+> +		/delete-node/ memory@8e700000;
+> +		wcnss_fw_mem: memory@8e800000 {
+> +			reg = <0x0 0x8e800000 0x0 0x700000>;
 > +			no-map;
 > +		};
+> +	};
 > +
-> +		memory@eefe4000 {
-> +			reg = <0x0 0xeefe4000 0x0 0x1c000>;
-> +			no-map;
-> +		};
+> +	sensors: i2c-sensors {
+> +		compatible = "i2c-gpio";
+> +		sda-gpios = <&tlmm 14 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+> +		scl-gpios = <&tlmm 15 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+gpio14/15 sounds like BLSP1_QUP4 I2C? Any reason not to use it?
+
+
+> +		i2c-gpio,delay-us = <2>;        /* ~100 kHz */
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
 > +
-> +		ramoops@ef000000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xef000000 0x0 0x80000>;
-> +			console-size = <0x40000>;
-> +			ftrace-size = <0>;
-> +			record-size = <0x3f800>;
-> +			pmsg-size = <0x800>;
+> +		lsm6dsl@6a {
+> +			compatible = "st,lsm6dsl";
+> +			reg = <0x6a>;
+> +			vdd-supply = <&pm8953_l10>;
+> +			vddio-supply = <&pm8953_l6>;
+> +
+> +			mount-matrix = "-1", "0", "0",
+> +					"0", "-1", "0",
+> +					"0", "0", "1";
 > +		};
 > +	};
 > +
@@ -225,24 +234,39 @@ Same comment as in 1/8.
 > +	status = "okay";
 > +};
 > +
+> +&i2c_2 {
+> +	status = "okay";
+> +
+> +	speaker_codec: audio-codec@3a {
+> +		compatible = "maxim,max98927";
+> +		reg = <0x3a>;
+> +
+> +		reset-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+> +
+> +		vmon-slot-no = <1>;
+> +		imon-slot-no = <1>;
+> +		interleave_mode = <0>;
+> +
+> +		#sound-dai-cells = <0>;
+> +	};
+> +};
+> +
 > +&i2c_3 {
 > +	status = "okay";
 > +
-> +	touchscreen@20 {
-> +		reg = <0x20>;
-> +		compatible = "syna,rmi4-i2c";
+> +	touchscreen@38 {
+> +		compatible = "edt,edt-ft5406";
+> +		reg = <0x38>;
 > +
 > +		interrupt-parent = <&tlmm>;
 > +		interrupts = <65 IRQ_TYPE_EDGE_FALLING>;
 > +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ts_reset>;
+> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
 > +
-> +		vdd-supply = <&pm8953_l22>;
-> +		vio-supply = <&pm8953_l6>;
+> +		vcc-supply = <&pm8953_l10>;
 > +
-> +		syna,reset-delay-ms = <200>;
-> +		syna,startup-delay-ms = <500>;
+> +		touchscreen-size-x = <1080>;
+> +		touchscreen-size-y = <2280>;
 > +	};
 > +};
 > +
@@ -252,10 +276,9 @@ Same comment as in 1/8.
 > +};
 > +
 > +&pmi8950_wled {
-> +	qcom,current-limit-microamp = <25000>;
-> +	qcom,num-strings = <3>;
-> +	qcom,external-pfet;
-> +	qcom,cabc;
+> +	qcom,current-limit-microamp = <20000>;
+> +	qcom,ovp-milivolt = <29500>;
+> +	qcom,num-strings = <2>;
 > +
 > +	status = "okay";
 > +};
@@ -263,6 +286,7 @@ Same comment as in 1/8.
 > +&rpm_requests {
 > +	regulators {
 > +		compatible = "qcom,rpm-pm8953-regulators";
+> +
 > +		vdd_s1-supply = <&vph_pwr>;
 > +		vdd_s2-supply = <&vph_pwr>;
 > +		vdd_s3-supply = <&vph_pwr>;
@@ -297,8 +321,8 @@ Same comment as in 1/8.
 > +		};
 > +
 > +		pm8953_l2: l2 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1000000>;
+> +			regulator-min-microvolt = <975000>;
+> +			regulator-max-microvolt = <1225000>;
 > +		};
 > +
 > +		pm8953_l3: l3 {
@@ -308,18 +332,15 @@ Same comment as in 1/8.
 > +		};
 > +
 > +		pm8953_l5: l5 {
-> +			/* May fix sdcard detection */
-So does it, or does it not?
-Please keep the boolean regulator properties below min/max.
-
-Konrad
-> +			regulator-always-on;
 > +			regulator-min-microvolt = <1800000>;
 > +			regulator-max-microvolt = <1800000>;
 > +		};
 > +
 > +		pm8953_l6: l6 {
 > +			regulator-always-on;
+Please move it down.
+
+Konrad
 > +			regulator-min-microvolt = <1800000>;
 > +			regulator-max-microvolt = <1800000>;
 > +		};
@@ -340,28 +361,24 @@ Konrad
 > +		};
 > +
 > +		pm8953_l10: l10 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
+> +			regulator-always-on;
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
 > +		};
 > +
 > +		pm8953_l11: l11 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3000000>;
+> +			regulator-min-microvolt = <2950000>;
+> +			regulator-max-microvolt = <2950000>;
 > +		};
 > +
 > +		pm8953_l12: l12 {
 > +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3000000>;
+> +			regulator-max-microvolt = <2950000>;
 > +		};
 > +
 > +		pm8953_l13: l13 {
-> +			regulator-min-microvolt = <3075000>;
+> +			regulator-min-microvolt = <3125000>;
 > +			regulator-max-microvolt = <3125000>;
-> +		};
-> +
-> +		pm8953_l15: l15 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
 > +		};
 > +
 > +		pm8953_l16: l16 {
@@ -370,8 +387,8 @@ Konrad
 > +		};
 > +
 > +		pm8953_l17: l17 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3000000>;
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
 > +		};
 > +
 > +		pm8953_l19: l19 {
@@ -393,34 +410,28 @@ Konrad
 > +};
 > +
 > +&sdhc_1 {
-> +	vmmc-supply = <&pm8953_l8>;
-> +	vqmmc-supply = <&pm8953_l5>;
-> +
 > +	status = "okay";
 > +};
 > +
 > +&sdhc_2 {
-> +	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-> +
 > +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_off>;
+> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
 > +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
 > +
-> +	vmmc-supply = <&pm8953_l11>;
-> +	vqmmc-supply = <&pm8953_l12>;
+> +	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
 > +
 > +	status = "okay";
 > +};
 > +
 > +&tlmm {
-> +	gpio-reserved-ranges = <1 2>, <96 4>, <111 1>, <126 1>;
+> +	gpio-reserved-ranges = <0 4>, <16 4>, <135 4>;
+> +};
 > +
-> +	ts_reset: ts-reset-state {
-> +		pins = "gpio64";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
+> +&uart_0 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart_console_active>;
+> +
+> +	status = "okay";
 > +};
 > +
 > +&usb3 {
