@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF3C662C076
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:07:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 918E062C07D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:08:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233840AbiKPOHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 09:07:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41824 "EHLO
+        id S234016AbiKPOIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 09:08:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233880AbiKPOHT (ORCPT
+        with ESMTP id S229617AbiKPOHr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:07:19 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA3221B9EB;
-        Wed, 16 Nov 2022 06:05:22 -0800 (PST)
+        Wed, 16 Nov 2022 09:07:47 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA4F22B14;
+        Wed, 16 Nov 2022 06:06:55 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3E19B61E15;
-        Wed, 16 Nov 2022 14:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94B6C433C1;
-        Wed, 16 Nov 2022 14:05:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5592261E0E;
+        Wed, 16 Nov 2022 14:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129FCC433D6;
+        Wed, 16 Nov 2022 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668607521;
-        bh=R8UCmC2PII2RGSBxpsMRtJ4RLUVrVzZ8ARuUjOc0CLo=;
+        s=k20201202; t=1668607614;
+        bh=0ZZmHsE+ZetUyx3SQZEkVcL6Y/AmL4g/cMMkXY/RiXY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bfG1n1t/4pXfJpmdenAxdRhMapuo09xYup27Ck8KCVIhUwO+IbhstQSbmy8bk5bRQ
-         sVouTNIntNsthevLuBt4FBh6N5oAww7Nyfhm2bnk9oFiIWZc/xWMhoHST1dpMRB3MZ
-         xpJjWB+0579QwIScULLQ1M0WdDlDwgUncCYiM43QyUkI/JI5rXV1UEhpG0c/rP9cQK
-         +67hv8F5FH5kmvBmXmY21DpLq6A3S/xQTP+AOGwSPkmB6uHWJOu73xJwRVLABOUaJm
-         6pyDtcuK2msLIhbvL63deTiclPQoDyd8e5eKjPAiZ6WpClAOMaBhxzErV36C3alZq7
-         O+Euh/xk09Vrg==
-Date:   Wed, 16 Nov 2022 14:05:15 +0000
+        b=VtbMqZakYHn3Co/wX/hjghGULqHCgGdJmfDYNZIQE+CAqa1AN237fEAVvDP69b9WZ
+         zFN5TTdEfILBHh6LpcNDdMU2VUJSRPNeSAlKNMUAR1WQ2/dRr9lybRxuv68QrDrVGq
+         zWF//scHJ50CuA+a2Cj51yoeCA1XfqqvKuQtB19Dqg9MkugQ24GwSiq54GLkEm1SPW
+         SrdpW369mu3dEMWEjGFSYIjvJ6tfaZPO3+QK25BTn4u0EGl+MIugs/ZzrH6PTQ+hWS
+         MW9diP2TDQaM5kG1NpxM/+vXOLRu+J9cFVo9CKAxo01E4V5JUbY71cp8LvahIQFzV1
+         lwIYzeKRRLahQ==
+Date:   Wed, 16 Nov 2022 14:06:48 +0000
 From:   Lee Jones <lee@kernel.org>
 To:     Luca Weiss <luca@z3ntu.xyz>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -44,15 +44,15 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: rename extcon node
- name
-Message-ID: <Y3TuGzPnU6LTWzSm@google.com>
-References: <20221031175717.942237-1-luca@z3ntu.xyz>
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: support more
+ types
+Message-ID: <Y3TueOD5UvRbw3WY@google.com>
+References: <20221031173933.936147-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221031175717.942237-1-luca@z3ntu.xyz>
+In-Reply-To: <20221031173933.936147-1-luca@z3ntu.xyz>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,19 +64,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon, 31 Oct 2022, Luca Weiss wrote:
 
-> extcon is a Linux-specific name and shouldn't be a part of the dts. Make
-> it be called usb-detect@ instead.
+> * 'adc@' is either spmi-iadc or spmi-vadc
+> * 'charger@' is either pm8941-charger or pm8941-coincell
+> * 'usb-vbus-regulator@' is usb-vbus-regulator
+> * 'vibrator@' is now in yaml format, so add it
 > 
 > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
-> This patch builds on top of
-> https://lore.kernel.org/linux-arm-msm/20221031173933.936147-1-luca@z3ntu.xyz/
-> But could also be applied without, if conflicts are resolved.
+> Changes since v1:
+> * Change dcdc@ to usb-vbus-regulator@
+> * Link to pm8xxx-vib.yaml
 > 
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml  | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
 
-Applied, thanks.
+I fixed up the subject line for you and applied, thanks.
 
 -- 
 Lee Jones [李琼斯]
