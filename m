@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1412262BFF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:48:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B24862BFFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:49:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233440AbiKPNsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 08:48:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60990 "EHLO
+        id S233496AbiKPNtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 08:49:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233202AbiKPNr4 (ORCPT
+        with ESMTP id S233325AbiKPNs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 08:47:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1539F47321;
-        Wed, 16 Nov 2022 05:47:26 -0800 (PST)
+        Wed, 16 Nov 2022 08:48:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467183B9;
+        Wed, 16 Nov 2022 05:48:26 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1EBD4B81D8B;
-        Wed, 16 Nov 2022 13:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB2DC433D6;
-        Wed, 16 Nov 2022 13:47:23 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 976A361E11;
+        Wed, 16 Nov 2022 13:48:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013DFC433C1;
+        Wed, 16 Nov 2022 13:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668606443;
-        bh=bavOCPpVZflXom3L9vcP5a3uEurFEDRZ8UR6FNwwCmA=;
+        s=k20201202; t=1668606505;
+        bh=ykLJzDbZ0kLjeXVlSh0iMDNUh5L05twFQdQJECK6oD4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pXif7wxmNT79tjEng+ImaLf/4H1bkm1YD8QpwPUPC6xO8b+K6NW4Os4jhX69CLVRP
-         +I6//JUaDwv6BPzM/Y89q3BmzgkpVg332u/FxC1M7MvMnY2YT1h8uRQOtyo6ADJe/6
-         lM7/WfhzIqEsDDfXSguCfEXlea5P47Z3mRnPkhhReByrI1IO09wmqqEbkIPZHp3fWi
-         ye1mBzuZ8MGjw1moEImnyQkKbl7zuqNxP+QsPVOLl3cdW6g4crDBlKB1dYDvsfegE/
-         ozPpeeQNe76B+lMXDdT8Ac4bQSWZZQD2r/bM8njLEZHe9udoxpuCRTWmD4gSsBOXRS
-         uWM6CE4UXsxDw==
+        b=kKplzgjgN7NEtioBogzf7iLbgGXq5f2YbUKP9+VfrxBALv9PWGXO/V26m4/YnCl3t
+         i0lqiSdjaBiBrahsvFOUFjIsAWHcmSm+C2TEYujcv//IBnbm22G+QRWMlb+qLfTdiS
+         jbmERyYDq/m9KS3Stl4iGfEz0xXMTvk5yrZwoV2Aqd5hjwlP+W2RZiJFV4o0kPYgX2
+         cU+bzbKMaHqz3wfZA9JUXh+zPI2BLIW9ghlLBjm7/DeJF5f18ZIq1yppNzhepQsFza
+         gxOMqd1Z9aELNQ9EAjmU42ehPpH1M0CiF+MhKzZffSmYPj0MvsEWTr8viCFfQCmJr3
+         7Ed2YEnFAgfnQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1ovIkg-0002js-6x; Wed, 16 Nov 2022 14:46:54 +0100
-Date:   Wed, 16 Nov 2022 14:46:54 +0100
+        id 1ovIlf-0002kn-Fh; Wed, 16 Nov 2022 14:47:55 +0100
+Date:   Wed, 16 Nov 2022 14:47:55 +0100
 From:   Johan Hovold <johan@kernel.org>
 To:     Abel Vesa <abel.vesa@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -48,15 +48,15 @@ Cc:     Andy Gross <agross@kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org
-Subject: Re: [PATCH 04/10] dt-bindings: phy: qcom,qmp-usb: Document SM8550
+Subject: Re: [PATCH 06/10] dt-bindings: phy: qcom,qmp-pcie: Document SM8550
  compatible
-Message-ID: <Y3TpzgQ1JaFs5sNk@hovoldconsulting.com>
+Message-ID: <Y3TqCx2aQDswgFBb@hovoldconsulting.com>
 References: <20221116120157.2706810-1-abel.vesa@linaro.org>
- <20221116120157.2706810-5-abel.vesa@linaro.org>
+ <20221116120157.2706810-7-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221116120157.2706810-5-abel.vesa@linaro.org>
+In-Reply-To: <20221116120157.2706810-7-abel.vesa@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -66,25 +66,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 02:01:51PM +0200, Abel Vesa wrote:
-> Add the SM8550 compatible to the list.
+On Wed, Nov 16, 2022 at 02:01:53PM +0200, Abel Vesa wrote:
+> Add SM8550 both G4 and G3 dual lane compatible strings, also add the
+> qref supply, the power domains, the reg entries and increase the number
+> of allowed clocks needed to support the mentioned platform.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml       | 1 +
->  1 file changed, 1 insertion(+)
+>  .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        | 38 +++++++++++++++++--
+>  1 file changed, 35 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> index 0c6b3ba7346b..cba2a252baf8 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> @@ -37,6 +37,7 @@ properties:
->        - qcom,sm8350-qmp-usb3-phy
->        - qcom,sm8350-qmp-usb3-uni-phy
->        - qcom,sm8450-qmp-usb3-phy
-> +      - qcom,sm8550-qmp-usb3-phy
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
+> index 62045dcfb20c..e5752ad93f0a 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
+> @@ -32,6 +32,8 @@ properties:
+>        - qcom,sm8250-qmp-modem-pcie-phy
+>        - qcom,sm8450-qmp-gen3x1-pcie-phy
+>        - qcom,sm8450-qmp-gen4x2-pcie-phy
+> +      - qcom,sm8550-qmp-gen3x2-pcie-phy
+> +      - qcom,sm8550-qmp-gen4x2-pcie-phy
 
-This one too should be based on sc8280xp rather than the legacy binding
-scheme.
+Here too, don't add new compatibles to the legacy bindings, but rather
+base it on the sc8280xp binding.
 
 Johan
