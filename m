@@ -2,113 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B70362B7F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:25:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9496462B7FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:26:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbiKPKY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:24:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33024 "EHLO
+        id S233549AbiKPK0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:26:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238860AbiKPKYT (ORCPT
+        with ESMTP id S233312AbiKPKZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:24:19 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93A892FC25
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:22:52 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id c1so28759065lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:22:52 -0800 (PST)
+        Wed, 16 Nov 2022 05:25:33 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4BBC6F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:23:25 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id a11-20020a05600c2d4b00b003cf6f5fd9f1so1112420wmg.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9NS4gwSDhOkL+YOO4Yac7+z3Uk669hHhGemqfXEb/Y0=;
-        b=jTbk8uFW2qmr1yT1BvBLGimsjD+aEpDxNsaqK/IQha0TKn0vcdGY2u2017LXBweFXu
-         3p4wKI8lYJczJYjXvAZe5zX+wSUjK37n9m2LjBq9KMSApUDLU4PMIL3OHHhugm9YmeF0
-         GBcvIVkJcHoQfG3eLb63atIDSmdiOrSFoW92WeKyUQhyI35GUChHpleEpQ5vKGXwZ/lC
-         zvxhqO+pWxp0DXfNm2PRYCbEgbbA6OyVyApwv6glBrdrT2+eSTuANCOkufOB+ZN/nA+W
-         BUdle2xExMow8i3gEwizRt/4OMUzfTgEs1uniWjQmvHf5ikg+VvdNtKJ9FD0aFktLS2+
-         fETw==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=x7py6mi0lPrXpoT/UEU3W14w7Ytzg8VNL85KSYeqwsg=;
+        b=dNPG7gu2ThnWowq75sXV4e/n7es/K3g+mYFwCNLTGmIBXhFUDsiEZG5o3gMcFZMeht
+         s6SOXozu4XZmye+jOXCckMpNH0sRk65GdYOPhvR1pxL67Cx6ndroRylLxW6e/CqpabPL
+         cqMwmfW6VgXT7HTP4+vXNcRpIKsqNGdJ31aJew2D59gQRe4+ubykTqJOB8nhn5rFKn1s
+         jLzpHgo/qN3MkYYllIQXYKUh2oPLqROGxnrJ0Hn0VWgpWe48YxXVeY9y8yWOM4WAtw4E
+         G7Mi33qDPdxRz2P5BWfEi6hQUimw6EvxR4up/xjhkkvrm5U0ze9PfgN0YqhbMMjBxBAQ
+         volg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9NS4gwSDhOkL+YOO4Yac7+z3Uk669hHhGemqfXEb/Y0=;
-        b=VqM/57GtTsj/Y8dTF/Wxr5v4W9xXu3eerM23p64bYNit/fyPyg47gHKPrVycWtG49N
-         MmEANb/YOZmi2IBW/bDjtRSwjnyHVQ63qzqCXxRssrDMBgK0EchTMg/P8ESlKK9fTWpy
-         Gubp26CZhP9zIZPOhXHZ6Rszw61r/8G0fzKPprI4ZGWuo40rrlc5EBKR6+RRmBGl1g84
-         songfApAsD5H1oDrzf6VC2696WlBmhiywQNbkdFc7aFEgDS8M9MzneSOgeS0bxqQE2sW
-         f8HS0tYQb8BEKjcTAzA5Vk17B39uMY2Am58WBsS7UCIY9ebrP51eghek8rYOej7SMUef
-         hjpg==
-X-Gm-Message-State: ANoB5plwqWw1YTwCvyMtC+vypWUH+CMPy7jr9A0qpD1gu8cRTY2PlMqi
-        7RFlLSSwhuFi46wUniZR0dpA7g==
-X-Google-Smtp-Source: AA0mqf7ZTYi3hn/J0wxTVBbrKDY7/qh61IahmRtldN7M9nItS/ze2scTM///yC5joq7+fUIhnJowMA==
-X-Received: by 2002:ac2:4bca:0:b0:4a9:f2e3:3cf0 with SMTP id o10-20020ac24bca000000b004a9f2e33cf0mr6782672lfq.545.1668594170926;
-        Wed, 16 Nov 2022 02:22:50 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id b21-20020a05651c033500b0027722e99323sm2934578ljp.5.2022.11.16.02.22.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 02:22:50 -0800 (PST)
-Message-ID: <16de0a02-e7d7-87d1-c877-e32de46bfc28@linaro.org>
-Date:   Wed, 16 Nov 2022 11:22:44 +0100
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x7py6mi0lPrXpoT/UEU3W14w7Ytzg8VNL85KSYeqwsg=;
+        b=T8rv0UNO1TIDyLfzwUNB8oLKYjA7kbshuJkib5qoO795DcKcoAiz+nZVBmKe/IP6WB
+         DUvCGBchaXVGUNubhbVOlW12igzx+AQaftD5YQZ2kLMJxpq27r0AvTAbxsJynocvRn9I
+         jSyku4rKDW438WvgIiKunqr+gSHDMfZAYO5qv04wXFbCVolWbRKj2TkCHmu4fGUeSmtM
+         A18tEaHq98ZZ/U/9bXF996vhJqsw4uWUPBscuv6ZB7MsEliMr9d6ej3GGh6EDv052tC6
+         kGA9gkTzGFao/YLTJZ5YcTTLOtHJR72udxTTXHP+sFzaJZuoVau3xuX6Ftow7/2LBYr5
+         a8Ag==
+X-Gm-Message-State: ANoB5plHM1OuNgePt1fyzyVFbQAhzfF1gEqUE8C5dMuftzF/rZtk4ryf
+        1Drz3xtaQ0yjZFok/Pwyh8WbuQ==
+X-Google-Smtp-Source: AA0mqf4xiwOJUkEoB007nGLeW9HqkdWpWH3suFDlQCL2ExHsuhb/57tfI6I3NQvc0I/uPHdWkZvlbg==
+X-Received: by 2002:a05:600c:18a1:b0:3cf:a9d5:36c7 with SMTP id x33-20020a05600c18a100b003cfa9d536c7mr1675397wmp.13.1668594189956;
+        Wed, 16 Nov 2022 02:23:09 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id i9-20020adfefc9000000b00228dbf15072sm14927047wrp.62.2022.11.16.02.23.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 02:23:09 -0800 (PST)
+Subject: [PATCH 0/4] crypto: qcom-qce: add support for SM8550
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 7/7] pinctrl: qcom: spmi-gpio: add support for pmr735d
- gpio control
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAAu6dGMC/w3MwQqDMAwA0F+RnBdoWgvDv6k1aMFGl8xdxH9fju/ybjDWxgbTcIPyr1k7xEGvAe
+ pWZGVsixtiiJGIRpSi3b56yIrW3zkHvE43l46fyshLopRHSiFE8GQuxjhrkbp5I9e+P88fg5YubnUA AAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 16 Nov 2022 11:23:07 +0100
+Message-Id: <20221114-narmstrong-sm8550-upstream-qce-v1-0-31b489d5690a@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lee Jones <lee@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org>
- <20221114-narmstrong-sm8550-upstream-spmi-v1-7-6338a2b4b241@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v1-7-6338a2b4b241@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This adds the necessary bindings and driver changes to enable
+the Qualcomm Crypto engine on the SM8550 SoC.
 
+Dependencies:
+- https://lore.kernel.org/all/20220920114051.1116441-1-bhupesh.sharma@linaro.org/
 
-On 16/11/2022 11:11, Neil Armstrong wrote:
-> Add support for the pmr735d gpio controller providing GPIO control over SPMI.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-Any particular reason this could not be a part of the previous patch?
+--
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Vinod Koul <vkoul@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Herbert Xu <herbert@gondor.apana.org.au>
+To: "David S. Miller" <davem@davemloft.net>
+To: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-crypto@vger.kernel.org
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-For the addition itself:
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Abel Vesa (1):
+      dt-bindings: dma: qcom,bam-dma: Add 'interconnects' and 'interconnect-names'
 
-Konrad
->   drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> index f758522d035e..66d6d7ffbd43 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> @@ -1242,6 +1242,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
->   	{ .compatible = "qcom,pmp8074-gpio", .data = (void *) 12 },
->   	{ .compatible = "qcom,pmr735a-gpio", .data = (void *) 4 },
->   	{ .compatible = "qcom,pmr735b-gpio", .data = (void *) 4 },
-> +	{ .compatible = "qcom,pmr735d-gpio", .data = (void *) 2 },
->   	/* pms405 has 12 GPIOs with holes on 1, 9, and 10 */
->   	{ .compatible = "qcom,pms405-gpio", .data = (void *) 12 },
->   	/* pmx55 has 11 GPIOs with holes on 3, 7, 10, 11 */
-> 
+Neil Armstrong (3):
+      dt-bindings: qcom-qce: document clocks and clock-names as optional
+      dt-bindings: qcom-qce: document sm8550 compatible
+      crypto: qce: core: Add new compatibles for SM8550
+
+ Documentation/devicetree/bindings/crypto/qcom-qce.yaml  | 3 +--
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
+ drivers/crypto/qce/core.c                               | 1 +
+ 3 files changed, 10 insertions(+), 2 deletions(-)
+---
+base-commit: 8931ecbe1f2017471608e262dd2914ce376155a4
+change-id: 20221114-narmstrong-sm8550-upstream-qce-ed3135413002
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
