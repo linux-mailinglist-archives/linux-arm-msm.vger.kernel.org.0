@@ -2,442 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 145B462C207
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:15:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7225762C215
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:16:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231501AbiKPPPX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:15:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
+        id S233467AbiKPPQh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:16:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231937AbiKPPPW (ORCPT
+        with ESMTP id S233424AbiKPPQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:15:22 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ADE12A955
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:15:20 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id x102so11786517ede.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:15:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VAiScu0A/OxpX4a2oX6D/FIveYVf3qqaaB+wmGydj5M=;
-        b=PTUHl+Au4+Vz1HKo1Rt1nvCydumQgoqb2hudTcV1AfxZJAAv7lHCVDozpQvh/zNBR8
-         OeIkiZHhWg5a+4uCqhGVjKGK9IRBoubSQRC6UQzi3Ss6fqEs2tb7HMmhxrb3NtmQU/TP
-         YbjJYF3yYlB4PZ3oGptSRvhWFGEjLdTowY9xp7d8Yc4oMbqGRhUIuQ+fU2KSB93PbOwU
-         f7S9ecbnsPmZuc1q38K/qJ7vWbhJI8hl8Ctonhp4/Nb6UOqkJBJ/muA9rZVA0Rq8FNoJ
-         9a0AOWHvxK3hgLWr74vT5KVa1MJ6mXwgLSH3FiZPDqJjUHPwnc1vd0HN3u0Os/M9Ik0n
-         dfVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VAiScu0A/OxpX4a2oX6D/FIveYVf3qqaaB+wmGydj5M=;
-        b=yTYnUbu58hl6O40dWghM441q+T4JhWHWYyZwZyKLKhSncReDpfeTKG2hE/L3OLfXQS
-         QyO8ufOMCUiCm/glIdeQ4jS1NBP9D6QomPo7GkBTOycmRhl3HYiwnhoR+4qwZxAxLXd5
-         s3dD6Kqnzz7i1KxnX7gLNLhxuk0OtWwif2WA5Ylk3hry3TXVCMcssFS5rQtLLHh6zw7C
-         5SSgXURYInxq1P/rkrroFsBcd6TPwAV8eAleSHK56pX/z5G9AdA1+x2oOPgheBzMYfmp
-         70kZZC+XqSX3G/A3vOmIfmOLFT8vNOVDxLZrxf6o+C3nPwt6z1dEs0c/MdZFtEdN4Ibv
-         EPsg==
-X-Gm-Message-State: ANoB5pnNsXrUq3o0khxj+naxxtDa3ZtyeCfNrRf5GNYp1VqISjcQIYPA
-        EJr86XyyljiBMyN1LoDfIZPcqw==
-X-Google-Smtp-Source: AA0mqf6+IT5jLok2SDEEK1BiM1zaCRSiAZxaKHYSrckQ/7wBvFmB+xrN5/lKu7B6gAksggg1Rr7LrA==
-X-Received: by 2002:a05:6402:2903:b0:467:65a2:f635 with SMTP id ee3-20020a056402290300b0046765a2f635mr19162747edb.106.1668611718625;
-        Wed, 16 Nov 2022 07:15:18 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id y14-20020aa7ccce000000b0045b4b67156fsm7662517edt.45.2022.11.16.07.15.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 07:15:18 -0800 (PST)
-Message-ID: <24f8eafa-4da3-f3a6-faff-163d173bae50@linaro.org>
-Date:   Wed, 16 Nov 2022 16:15:11 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 4/8] arm64: dts: qcom: msm8953: Add device tree for Xiaomi
- Mi A2 Lite
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Alejandro Tafalla <atafalla@dnyon.com>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 16 Nov 2022 10:16:31 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C304FF8D;
+        Wed, 16 Nov 2022 07:16:29 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 63C0561E8A;
+        Wed, 16 Nov 2022 15:16:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B84C433D7;
+        Wed, 16 Nov 2022 15:16:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668611788;
+        bh=jKQagBl3R/KyglvVGmZThplHX13NVZHVD0eA64HEDv8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NnwLFx90LSeoBcxta8H7gv+Sanbem74/0z1L+R5yOZ3Ow40dhoOj1w9FNYs05lW8P
+         y/XJnO0/gu8Yu7ThFSadP2H8GGxELu5+A6dOSfaCVqOr9QVD7eOM5XU3mKA9io06U4
+         vkn35h4qk5LESmJTfrUT8Dm/8k1ZcGDY31vMVw2nhYQ0yWpYZTqgGgiQ6UF3iVzjQq
+         XyCt59n20IiDCK4Zu0HItTf6myPL3Wiyxe2vmY5gfHBYYurJKGiE57LB0fUU1FUfUO
+         rf/GWHW5NOWjK1EhdWUBomOT6Mt992KrlckGZNIsXvD+aM9vxvjASu99Y2GvwjC4VB
+         QV7ATgyjlMuXQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ovK8s-0003i4-IV; Wed, 16 Nov 2022 16:15:59 +0100
+Date:   Wed, 16 Nov 2022 16:15:58 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221116145616.17884-1-luca@z3ntu.xyz>
- <20221116145616.17884-5-luca@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116145616.17884-5-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v7 2/4] phy: qcom-qmp-ufs: provide symbol clocks
+Message-ID: <Y3T+rj1hACqSBrC4@hovoldconsulting.com>
+References: <20221110151748.795767-1-dmitry.baryshkov@linaro.org>
+ <20221110151748.795767-3-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221110151748.795767-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16/11/2022 15:56, Luca Weiss wrote:
-> From: Alejandro Tafalla <atafalla@dnyon.com>
+On Thu, Nov 10, 2022 at 06:17:46PM +0300, Dmitry Baryshkov wrote:
+> Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
+> ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
+> provider to let other devices link these clocks through the DT.
 > 
-> Add device tree for the Xiaomi Mi A2 Lite (daisy) smartphone. This
-> device is based on Snapdragon 625 (msm8953) SoC.
-> 
-> Signed-off-by: Alejandro Tafalla <atafalla@dnyon.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../boot/dts/qcom/msm8953-xiaomi-daisy.dts    | 316 ++++++++++++++++++
->   2 files changed, 317 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+
+I was not CCed on this revision of this series either.
+
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 64 +++++++++++++++++++++++++
+>  1 file changed, 64 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 21a6a7b5a2cf..6a80a36465f7 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -22,6 +22,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
-> new file mode 100644
-> index 000000000000..8ddf075ccda4
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
-> @@ -0,0 +1,316 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-I only noticed now, but 8953 dtsi is BSD3. I'm not an expert on 
-licenses, but this sounds fishy..
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 189103d1bd18..78d7daf34667 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -1023,6 +1023,66 @@ static int qmp_ufs_clk_init(struct qmp_ufs *qmp)
+>  	return devm_clk_bulk_get(dev, num, qmp->clks);
+>  }
+>  
+> +static void phy_clk_release_provider(void *res)
+> +{
+> +	of_clk_del_provider(res);
+> +}
+> +
+> +#define UFS_SYMBOL_CLOCKS 3
+> +
+> +static int phy_symbols_clk_register(struct qmp_ufs *qmp, struct device_node *np)
 
-> +/*
-> + * Copyright (c) 2022 The Linux Foundation. All rights reserved.
-> + */
-> +/dts-v1/;
-> +
-> +#include "msm8953.dtsi"
-> +#include "pm8953.dtsi"
-> +#include "pmi8950.dtsi"
-> +
-> +/ {
-> +	model = "Xiaomi Mi A2 Lite";
-> +	compatible = "xiaomi,daisy", "qcom,msm8953";
-> +	chassis-type = "handset";
-> +	qcom,msm-id = <293 0>;
-> +	qcom,board-id= <0x1000b 0x9>;
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		framebuffer@90001000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x90001000 0 (1920 * 2280 * 3)>;
-> +
-> +			width = <1080>;
-> +			height = <2280>;
-> +			stride = <(1080 * 3)>;
-> +			format = "r8g8b8";
-> +
-> +			power-domains = <&gcc MDSS_GDSC>;
-> +
-> +			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-> +				 <&gcc GCC_MDSS_AXI_CLK>,
-> +				 <&gcc GCC_MDSS_VSYNC_CLK>,
-> +				 <&gcc GCC_MDSS_MDP_CLK>,
-> +				 <&gcc GCC_MDSS_BYTE0_CLK>,
-> +				 <&gcc GCC_MDSS_PCLK0_CLK>,
-> +				 <&gcc GCC_MDSS_ESC0_CLK>;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_key_default>;
-> +
-> +		key-volume-up {
-> +			label = "Volume Up";
-> +			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		/delete-node/ memory@85b00000;
-Same comment as in 2/8.
+Since you're adding a new function, please use the common prefix and
+reordering the terms and dropping the redundant "symbols" should make it
+more readable:
 
-> +
-> +		memory@84b00000 {
-> +			reg = <0x0 0x84a00000 0x0 0x1900000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_fw_mem: memory@8d600000 {
-> +			reg = <0x0 0x8d600000 0x0 0x1200000>;
-> +			no-map;
-> +		};
-> +
-> +		/delete-node/ memory@8e700000;
-> +		wcnss_fw_mem: memory@8e800000 {
-> +			reg = <0x0 0x8e800000 0x0 0x700000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	sensors: i2c-sensors {
-> +		compatible = "i2c-gpio";
-> +		sda-gpios = <&tlmm 14 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-> +		scl-gpios = <&tlmm 15 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-gpio14/15 sounds like BLSP1_QUP4 I2C? Any reason not to use it?
+	qmp_ufs_register_clocks()
 
+> +{
+> +	struct clk_hw_onecell_data *clk_data;
+> +	struct clk_hw *hw;
+> +	char name[64];
+> +	int ret;
+> +
+> +	clk_data = devm_kzalloc(qmp->dev,
+> +				struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS),
+> +				GFP_KERNEL);
+> +	if (!clk_data)
+> +		return -ENOMEM;
+> +
+> +	clk_data->num = UFS_SYMBOL_CLOCKS;
+> +
+> +	snprintf(name, sizeof(name), "%s::rx_symbol_0", dev_name(qmp->dev));
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[0] = hw;
+> +
+> +	snprintf(name, sizeof(name), "%s::rx_symbol_1", dev_name(qmp->dev));
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[1] = hw;
+> +
+> +	snprintf(name, sizeof(name), "%s::tx_symbol_0", dev_name(qmp->dev));
+> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	clk_data->hws[2] = hw;
+> +
+> +	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/*
+> +	 * Roll a devm action because the clock provider is the child node, but
+> +	 * the child node is not actually a device.
+> +	 */
 
-> +		i2c-gpio,delay-us = <2>;        /* ~100 kHz */
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		lsm6dsl@6a {
-> +			compatible = "st,lsm6dsl";
-> +			reg = <0x6a>;
-> +			vdd-supply = <&pm8953_l10>;
-> +			vddio-supply = <&pm8953_l6>;
-> +
-> +			mount-matrix = "-1", "0", "0",
-> +					"0", "-1", "0",
-> +					"0", "0", "1";
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
-> +&hsusb_phy {
-> +	vdd-supply = <&pm8953_l3>;
-> +	vdda-pll-supply = <&pm8953_l7>;
-> +	vdda-phy-dpdm-supply = <&pm8953_l13>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&i2c_2 {
-> +	status = "okay";
-> +
-> +	speaker_codec: audio-codec@3a {
-> +		compatible = "maxim,max98927";
-> +		reg = <0x3a>;
-> +
-> +		reset-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
-> +
-> +		vmon-slot-no = <1>;
-> +		imon-slot-no = <1>;
-> +		interleave_mode = <0>;
-> +
-> +		#sound-dai-cells = <0>;
-> +	};
-> +};
-> +
-> +&i2c_3 {
-> +	status = "okay";
-> +
-> +	touchscreen@38 {
-> +		compatible = "edt,edt-ft5406";
-> +		reg = <0x38>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <65 IRQ_TYPE_EDGE_FALLING>;
-> +
-> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +
-> +		vcc-supply = <&pm8953_l10>;
-> +
-> +		touchscreen-size-x = <1080>;
-> +		touchscreen-size-y = <2280>;
-> +	};
-> +};
-> +
-> +&pm8953_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
-> +};
-> +
-> +&pmi8950_wled {
-> +	qcom,current-limit-microamp = <20000>;
-> +	qcom,ovp-milivolt = <29500>;
-> +	qcom,num-strings = <2>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&rpm_requests {
-> +	regulators {
-> +		compatible = "qcom,rpm-pm8953-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +		vdd_s2-supply = <&vph_pwr>;
-> +		vdd_s3-supply = <&vph_pwr>;
-> +		vdd_s4-supply = <&vph_pwr>;
-> +		vdd_s5-supply = <&vph_pwr>;
-> +		vdd_s6-supply = <&vph_pwr>;
-> +		vdd_s7-supply = <&vph_pwr>;
-> +		vdd_l1-supply = <&pm8953_s3>;
-> +		vdd_l2_l3-supply = <&pm8953_s3>;
-> +		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-> +		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-> +		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-> +
-> +		pm8953_s1: s1 {
-> +			regulator-min-microvolt = <863000>;
-> +			regulator-max-microvolt = <1152000>;
-> +		};
-> +
-> +		pm8953_s3: s3 {
-> +			regulator-min-microvolt = <1224000>;
-> +			regulator-max-microvolt = <1224000>;
-> +		};
-> +
-> +		pm8953_s4: s4 {
-> +			regulator-min-microvolt = <1896000>;
-> +			regulator-max-microvolt = <2048000>;
-> +		};
-> +
-> +		pm8953_l1: l1 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1100000>;
-> +		};
-> +
-> +		pm8953_l2: l2 {
-> +			regulator-min-microvolt = <975000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +
-> +		pm8953_l3: l3 {
-> +			regulator-min-microvolt = <925000>;
-> +			regulator-max-microvolt = <925000>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		pm8953_l5: l5 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +
-> +		pm8953_l6: l6 {
-> +			regulator-always-on;
-Please move it down.
+I know you just copied this from one of the other drivers, but perhaps
+rephrase as "can be a child node". You can just drop the second clause
+(no node *is* a device).
 
-Konrad
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
+> +	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
+> +}
 > +
-> +		pm8953_l7: l7 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1900000>;
-> +		};
-> +
-> +		pm8953_l8: l8 {
-> +			regulator-min-microvolt = <2900000>;
-> +			regulator-max-microvolt = <2900000>;
-> +		};
-> +
-> +		pm8953_l9: l9 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3300000>;
-> +		};
-> +
-> +		pm8953_l10: l10 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +
-> +		pm8953_l11: l11 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +
-> +		pm8953_l12: l12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +
-> +		pm8953_l13: l13 {
-> +			regulator-min-microvolt = <3125000>;
-> +			regulator-max-microvolt = <3125000>;
-> +		};
-> +
-> +		pm8953_l16: l16 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +
-> +		pm8953_l17: l17 {
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +
-> +		pm8953_l19: l19 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1350000>;
-> +		};
-> +
-> +		pm8953_l22: l22 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +
-> +		pm8953_l23: l23 {
-> +			regulator-min-microvolt = <975000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +	};
+> +static const struct phy_ops qcom_qmp_ufs_ops = {
+> +	.power_on	= qmp_ufs_enable,
+> +	.power_off	= qmp_ufs_disable,
+> +	.owner		= THIS_MODULE,
 > +};
+
+As I've already pointed out once, the above phy_ops struct hunk does not
+belong in this patch and is just some left over after you rebased on
+phy-next that must be removed.
+
+>  static int qmp_ufs_parse_dt_legacy(struct qmp_ufs *qmp, struct device_node *np)
+>  {
+>  	struct platform_device *pdev = to_platform_device(qmp->dev);
+> @@ -1135,6 +1195,10 @@ static int qmp_ufs_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_node_put;
+>  
+> +	ret = phy_symbols_clk_register(qmp, np);
+> +	if (ret)
+> +		goto err_node_put;
 > +
-> +&sdhc_1 {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_2 {
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
-> +
-> +	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <16 4>, <135 4>;
-> +};
-> +
-> +&uart_0 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart_console_active>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&usb3_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
+>  	qmp->phy = devm_phy_create(dev, np, &qcom_qmp_ufs_phy_ops);
+>  	if (IS_ERR(qmp->phy)) {
+>  		ret = PTR_ERR(qmp->phy);
+
+Johan
