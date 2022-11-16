@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1787962BA22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:52:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E43262BA43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:54:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbiKPKwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:52:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59030 "EHLO
+        id S238999AbiKPKyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:54:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233507AbiKPKvr (ORCPT
+        with ESMTP id S232991AbiKPKy2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:51:47 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05FAA53EC3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:40:36 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id s8so11691723lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:40:35 -0800 (PST)
+        Wed, 16 Nov 2022 05:54:28 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1375341980
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:14 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id g12so28994588wrs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IrEmjsTbAyDmmBQzrCearRz15mEY8+dkhhS8wuiqwIc=;
-        b=oSPKtTYfLJybeX72768VldvDuwzRqmwegGx3Q/jvM4rkT8co9OSV8XP1mfBHMzuUlY
-         +eGzAuWYXDhYvUbqo01ynO7+8PpciToTFiNkT/QNIWB2ObZDbP1/dIEwmFySUJVjxhcz
-         jjrSGQh8o+mlJOQtlkfO6BJRqVSxK5grVINXAtOUm+iue4wfzKp35C2KEwc4+yhQWD+t
-         6J71QxRe4Q49zrHO+QaX6n0siUuAyp8JefBkky73ppwVhvgL/1eGG3pmxjPJ5z5DL5Rv
-         I9MhKS1ssVKEfAJKV2ZC+dx+B5c2OgyEcLID+XtlVFMBfJFdHyhUEZxVpkmw0YnB7GrS
-         CO+g==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=okM9Wiovfxx2M89jLoRegEEMGS+MvapreaG9LEAz58o=;
+        b=d2piSQ/40HvtMwtfAwnyDyxe3TYG3DctQms+bf0T4E0Ix9PSsX1/ounfD6Gx6WGw2p
+         nhgY3OGm8JCHgqCsCAwi5cAR7ygYpgrfQp+50+vzxEq52Lc8z5KpCp/jdRL87pLPb5/w
+         76Fji47KDrSApPjR0dHJOsxVQieT9V/1+l/D6k8NAptQ4IACVCQ0SI0VK0xVlDN1gnqc
+         0O801DnzltiZSj/yjOfeR5R4fslNZg7ZtdLOOBQR/+D2xOnJKOIgjVXpXi2BG8XBeMKs
+         ssQLOf5+ecGAaF3PWEQKKAon4PvLBuLLmKdmXA4WkBb8kzXWqJ6fZmC8TUZRDpPskQwI
+         x0oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IrEmjsTbAyDmmBQzrCearRz15mEY8+dkhhS8wuiqwIc=;
-        b=aKQiq8Qv58dSwotLupClNgkx7MvJqigZyEaoMSujWeGwxu8Vn6zBtmT7vgVjaybdDB
-         PCf0A8oV493xEpqvwezFbdCBLGY2DcLJhCzwOtjRFZv2ZlmdWC51Q5eyrE5JuckfyHqn
-         rMvcLMDfYT8d1WkjMUVTxBR5mMhP06JLeaaRhI9DGJmWCiov7M/YPvKbFq+f5pKTlKP1
-         f0H/GcA4bXyG4Wej7No0zRKzdzHoP3dbrok0ZOP6UvLvxsuPMCoFhTjhlktq8IV5gOAP
-         yXlnxKdArC/QuiVl4mnOcsvtoU1f44GlqVMfusqUq7w4RBO/7V6igyU+cAoFq6mC1O6n
-         fi6A==
-X-Gm-Message-State: ANoB5plk1eyHJbh3kIDkEocRx3BxzHgVQ+Py9Sp9/6gvuOx2USOvG2sW
-        3Di0RtQFY+LiM5gm5Hj9XGq1CQ==
-X-Google-Smtp-Source: AA0mqf6kAVPGcxhQm2lTBQE3ixDmuOtL3+QW0/MU0REJATG9RTcN14q9xz0kF+rwktinT6xgfQfQXg==
-X-Received: by 2002:a19:911a:0:b0:4a2:7e2a:d2e1 with SMTP id t26-20020a19911a000000b004a27e2ad2e1mr7921522lfd.641.1668595234329;
-        Wed, 16 Nov 2022 02:40:34 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id o20-20020ac25e34000000b004b40c2fccfdsm2542042lfg.59.2022.11.16.02.40.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 02:40:33 -0800 (PST)
-Message-ID: <bde68c28-bf4c-405f-ef2a-f56db7654d25@linaro.org>
-Date:   Wed, 16 Nov 2022 11:40:32 +0100
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=okM9Wiovfxx2M89jLoRegEEMGS+MvapreaG9LEAz58o=;
+        b=UA2RzVma9qKZ6h3k4VuuTdQ5g5fhmpaGaQ4mJXDiTq3QT5vBpp87v8QEBoCPnBF79Z
+         5LY6JczCNmJNerfEan9JqqfD5pgkODdks9GxZs2HF03wyxofA7tfDQtyZgYMTSZcz5ot
+         LEdnefPNhKsYKhJQ4zeC0NURkfRVkTzJcCGIuvQ6CuZVm2swMWTHgK0JSLs2nXj1nR7t
+         HrZXtGekX/oEBuaWmOhC7SUcSd7yDMJeQwaFji4oo8uf3D2Q38ze54f/15lqukEifDyi
+         jW90Ju5HQtBaN2BAWBORAo69mjKjKpbshpWgC9Ob3EaR5SAX3MBytN92R+uoQ1FUIh8Z
+         0L6w==
+X-Gm-Message-State: ANoB5pluWQMTH4Kc5n4DwoznlJ+70oAy1Y/0VHCg6IZnHksJTCahnFsg
+        gWR5XmVvyiCOxk9uZOMV9vEqkkk8qzm4Tg==
+X-Google-Smtp-Source: AA0mqf5cBNvOEYTLCSWxA180ibJxOfn0Al19NUVt6kYS0j9LSgcAoNL0kd0Ax8bi3ymr4mhhPjMYag==
+X-Received: by 2002:a5d:4a4d:0:b0:241:784b:1e2e with SMTP id v13-20020a5d4a4d000000b00241784b1e2emr11615361wrs.434.1668595392560;
+        Wed, 16 Nov 2022 02:43:12 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id t8-20020adff048000000b002238ea5750csm18010846wro.72.2022.11.16.02.43.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 02:43:12 -0800 (PST)
+Subject: [PATCH 0/3] arm64: dts: qcom: Add ADSP, CDSP & MDSS support to SM8550 and MTP board
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAL2+dGMC/w3MOw7DIAwA0KtEnmsJqKzQ3oaAlSCFj2zSJcrdy/iWd4OyZFb4LjcI/7LmVifsa4
+ F4hLoz5jQNzjhnrSUcreeIWjyRwavrEA4F01AULm1wlxaRnKe0Guv5/YFZbUEZNwk1HjOr13k+zx/Z cYVCewAAAA==
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 16 Nov 2022 11:43:09 +0100
+Message-Id: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-0-379eec11d841@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20221116101314.52887-1-krzysztof.kozlowski@linaro.org>
- <20221116101314.52887-3-krzysztof.kozlowski@linaro.org>
- <7605af5f-a828-5df7-48b8-b543edb0f9b1@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7605af5f-a828-5df7-48b8-b543edb0f9b1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,160 +76,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 11:20, Konrad Dybcio wrote:
-> 
-> 
-> On 16/11/2022 11:13, Krzysztof Kozlowski wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
->> LPASS pin controller.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Changes since v2:
->> 1. Use lower-case hex.
->>
->> Changes since v1:
->> 1. Whitespace cleanups.
->> 2. Correct include - do not use deprecated one.
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
->>   1 file changed, 295 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 4b0a1eee8bd9..747440d0445a 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -15,6 +15,7 @@
->>   #include <dt-bindings/interconnect/qcom,sm8450.h>
->>   #include <dt-bindings/soc/qcom,gpr.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->>   #include <dt-bindings/thermal/thermal.h>
->>   
->>   / {
->> @@ -2097,6 +2098,212 @@ compute-cb@3 {
->>   			};
->>   		};
->>   
->> +		wsa2macro: codec@31e0000 {
->> +			compatible = "qcom,sm8450-lpass-wsa-macro";
->> +			reg = <0 0x031e0000 0 0x1000>;
->> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&vamacro>;
->> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
->> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->> +			assigned-clock-rates = <19200000>, <19200000>;
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "wsa2-mclk";
->> +			#sound-dai-cells = <1>;
-> I think I'm being a bit too picky, but #-cells could go as the last 
-> bunch of properties.
+This adds support for the aDSP, cDSP and MPSS Subsystems found in
+the SM8550 SoC.
 
-I was thinking about this as well, but some of other codecs which are
-very similar (also "macro") do not have pinctrls and this makes them
-unified with additions at the end.
+The aDSP, cDSP and MPSS needs:
+- smp2p support nodes to get event back from the subsystems
+- remoteproc nodes with glink-edge subnodes providing all needed
+resources to start and run the subsystems
 
-Are you sure you still prefer alphabetical order?
+In addition, the MPSS Subsystem needs a rmtfs_mem dedicated
+memory zone.
 
-> 
-> 
->> +
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&wsa2_swr_active>;
->> +		};
->> +
->> +		/* WSA2 */
->> +		swr4: soundwire-controller@31f0000 {
->> +			reg = <0 0x031f0000 0 0x2000>;
->> +			compatible = "qcom,soundwire-v1.7.0";
->> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&wsa2macro>;
->> +			clock-names = "iface";
->> +
->> +			qcom,din-ports = <2>;
->> +			qcom,dout-ports = <6>;
->> +
->> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +
->> +			#sound-dai-cells = <1>;
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
->> +		};
->> +
->> +		rxmacro: codec@3200000 {
->> +			compatible = "qcom,sm8450-lpass-rx-macro";
->> +			reg = <0 0x3200000 0 0x1000>;
->> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&vamacro>;
->> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
->> +
->> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->> +			assigned-clock-rates = <19200000>, <19200000>;
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "mclk";
->> +			#sound-dai-cells = <1>;
->> +
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&rx_swr_active>;
->> +		};
->> +
->> +		swr1: soundwire-controller@3210000 {
->> +			reg = <0 0x3210000 0 0x2000>;
->> +			compatible = "qcom,soundwire-v1.7.0";
-> Some nodes have reg and compatible flipped.
+Finally the firmwares file paths are added in the MTP board DT.
 
-Ack
+For the MPSS to successfully start the MPSS DSM driver [3]
+will be needed.
 
-> 
->> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&rxmacro>;
->> +			clock-names = "iface";
->> +			label = "RX";
->> +			qcom,din-ports = <0>;
->> +			qcom,dout-ports = <5>;
->> +
+This patchset depends on:
+- bindings changes at [1]
+- base SM8550 DT at [2]
 
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-(...)
+[1] https://lore.kernel.org/all/20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org/
+[2] https://lore.kernel.org/all/20221116103146.2556846-1-abel.vesa@linaro.org/
+[3] https://lore.kernel.org/all/20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org/
 
->>   		apps_smmu: iommu@15000000 {
->>   			compatible = "qcom,sm8450-smmu-500", "arm,mmu-500";
->>   			reg = <0 0x15000000 0 0x100000>;
->> @@ -3507,6 +3799,9 @@ lpass_ag_noc: interconnect@3c40000 {
->>   		};
->>   	};
->>   
->> +	sound: sound {
->> +	};
-> You asked another folk working on sa8540p to not include sound in the 
-> SoC dtsi.
+---
+Abel Vesa (1):
+      arm64: dts: qcom: sm8550: Add interconnect path to SCM node
 
-I asked not to put it in soc node. It can be in DTSI, but not under soc.
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8550: add adsp, cdsp & mdss support nodes
+      arm64: dts: qcom: sm8550-mtp: enable adsp, cdsp & mdss
+
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  18 ++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi    | 338 ++++++++++++++++++++++++++++++++
+ 2 files changed, 356 insertions(+)
+---
+base-commit: a237afe452d9079aa024e465642b4cde0a04c7ff
+change-id: 20221115-topic-sm8550-upstream-dts-remoteproc-5285d7018e39
 
 Best regards,
-Krzysztof
-
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
