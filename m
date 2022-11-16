@@ -2,70 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6CAB62B775
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:15:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8742662B782
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:17:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233751AbiKPKPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:15:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48482 "EHLO
+        id S232125AbiKPKRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:17:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233766AbiKPKPO (ORCPT
+        with ESMTP id S230330AbiKPKQ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:15:14 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1AA1F2E4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:14:49 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id bs21so29100923wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:14:48 -0800 (PST)
+        Wed, 16 Nov 2022 05:16:58 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2065EB489
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:16:57 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id y16so29092449wrt.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9lifyfXA295mihX2r7vWA6JAuXbVFTG/mVbl2IkBKU=;
-        b=KMkZzUofwqTd9LIIitc8I0NW6vOWh6qpfD/qHYkkIUNJLA2CRW3QWmjDE/htYfH/cJ
-         kTHTtufaDXfuTf6tScKzbujOzseqjn9ApuFTvUq83EqQHBYQDfREO1E2UrWpPMK44seF
-         32NHqFDEojsnbD8rOH6HjYSPTT9kZwqQXrcegs5gaLzOYVGugHbu6lxFBzYFwmJtoWgT
-         HVVbnYgirsvZPsX+HtuI7bqjq5xBRrluuPy/4/UrXHFlQfGO7rOztnfe0HYS6N3Pd4ws
-         6CbV8k8B50nSdB5Y/ztC/5Z1oLd2a9Ysjya0BRuEUs6z0Awj5aX9W8h/ekI8xPkru7Dx
-         Ad8w==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=SYky1sC+yYpT0jV8uhMC/5SyRMiJ5AfjSnC52D3jHp0=;
+        b=bxJqZmMJmklaIMoPN/UfaDEYom0oT2ayFgTQ1b2kddVy9sFEyaRsfQ5KqbH/GKSQS2
+         cA1hylsElDz+OxlgMslRLlT5oas67FfAFpWL5u2CrWU08XugFcsDKf5wiAxChc3BAjdc
+         6CcHTFLsxZZccNCa1WQhi7LdQ7maQyCmzpzFNgju/++Ltr54pgDwf5I+ehUp9SE+9Phu
+         A7gMR+byUGh/o6XoGRhhDHOQzC+pyP51JcLvh8XmgD2O63i3inMWSaQe5jr9xtkU4k4a
+         3v833XfjqKA5i2JEaFHpIsZ5Q4gdZcNEIGu9RS/EcLbi48Wu74yxxU9b3STpoSt6x8dU
+         OdJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/9lifyfXA295mihX2r7vWA6JAuXbVFTG/mVbl2IkBKU=;
-        b=M5IDjAEfUjAtG4DWGVsM3gikbtiaxEd2pwmJPsIli2SoYsi4dhpeWxpd+ho1Kd2rha
-         coKwPmbLDVYc2XkjbdnzHSkjxeeVt0HkKr9EyA7unh2LZq5GEpvHe74RqBK62qdzRjPa
-         IsjwzHjyps2qJTrv3hTDwqjrIz06j+drLr5ript4EEEqvr14JZcGKIGrc7FzC8U/DPfj
-         6sUa6AbwV6TOoDGnzCkwBJEypDDLaXbZF1hzTwXprROQ8nuTzO4HfwfyL/2X/11b5X2O
-         XiYb5HM7WafHWJy5XN3WGXmw9xIrun3n+P0tf/P4jkD7nbqWqXMw5wTHnVI5raTRRNId
-         4Ptw==
-X-Gm-Message-State: ANoB5pn4qEVbrqox4ZdJCy8+FfqINP/vlvCTahyq1/D49ExJ+R5uQrls
-        dz+AN7fKOpHE884o8A0ZB6fZCA==
-X-Google-Smtp-Source: AA0mqf4e4tYIJodK7l0wsRLg5MahI7aiIc6YIhTLZrAkqE183FudMIcJ/Jxj3OoiNP3lMP1xqYeQ9Q==
-X-Received: by 2002:adf:f211:0:b0:23a:43b7:cdd5 with SMTP id p17-20020adff211000000b0023a43b7cdd5mr13193768wro.387.1668593687630;
-        Wed, 16 Nov 2022 02:14:47 -0800 (PST)
+        bh=SYky1sC+yYpT0jV8uhMC/5SyRMiJ5AfjSnC52D3jHp0=;
+        b=K1ZYmglMZoVq+lbFo3rLblX61KjX8b1yN7fREyh7kev2iGkSp8TYaJEHaTBWsqCuFK
+         tpTky+VUMhe/IcG5kSnjUMthSvwWk+Nx7Hre0WnXUTozlU9BeEVZYJ0mzq6EqZWJoaoH
+         uITAuP1g4HtkxiDBo2hTrpdlmUsrCPvzPF0yhzwfukzzLkr10HxpOIo+TySp0Qy++6LH
+         tKPPo639xW1xO3r2zeddrqxsG9HPZoRHdix3fTOMfq1IjZexAyACKvG07q4AqPChi7tl
+         /X3WpovGPVF+9PQa8xslkWXLYfUiWUwlHNRJ0sDL+Zw/QB6JO+K2/TMWwnb/MdcXjbH1
+         im0w==
+X-Gm-Message-State: ANoB5plTXRvDp0P2BX+TOBC2w7labVor274Eo2WdnHGDNhsckW+8v81m
+        6j2H/tJ7q8B9asV18kABiMGx4GuzAydBag==
+X-Google-Smtp-Source: AA0mqf5Oj2v5/klDxE8Qeui759eu0PP781LebTzAWOULR+D1EYxLNXgsTSjvz8iIH8jFWTbXpUqCvg==
+X-Received: by 2002:adf:e543:0:b0:236:91d0:1f with SMTP id z3-20020adfe543000000b0023691d0001fmr13742500wrm.33.1668593815565;
+        Wed, 16 Nov 2022 02:16:55 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id f23-20020a1c6a17000000b003c65c9a36dfsm1454970wmc.48.2022.11.16.02.14.46
+        by smtp.gmail.com with ESMTPSA id c4-20020a5d4f04000000b0023672104c24sm15081007wru.74.2022.11.16.02.16.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:14:47 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 16 Nov 2022 11:14:45 +0100
-Subject: [PATCH] dt-bindings: interconnect: qcom-bwmon: document SM8550
- compatibles
+        Wed, 16 Nov 2022 02:16:55 -0800 (PST)
+Subject: [PATCH 0/2] soc: qcom: Add support for Qualcomm Modem Processing SubSystem DSM memory
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-bwmon-v1-0-b6dd08927f35@linaro.org>
+X-b4-tracking: H4sIAJO4dGMC/w3MwQ6CMAwA0F8hPduETWbQnzHdqLCEFtKKF8K/u+O7vBOcrbLDqzvB+Fe9btoQbh
+ 2UhXRmrFMzxD7GEMKASib+tU1ndBlT6vHYm5kEZXd/Ty4YQxnuY3mkzzNDmzI5YzbSsrRLj3W9rj8v B6AaegAAAA==
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 16 Nov 2022 11:16:51 +0100
+Message-Id: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        devicetree@vger.kernel.org
 X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -76,53 +77,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This documents the compatibles used to describe the Bandwidth Monitors
-present on the SM8550 platform.
+The Qualcomm SM8550 SoC Modem Processing SubSystem requires that a memory
+region named DSM should be shared with the Application Processor SubSystem.
 
-A BWMON v4 IP monitors the CPU bandwidth, and a v5 does the LLCC
-bandwidth monitoring.
+This adds bindings for this MPSS DSM memory and driver implementation to
+share this memory region with the Modem Processing SubSystem.
 
-This is described this by adding "llcc" and "cpu" into the compatible
-strings to differentiate the BWMON IPs.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Andy Gross <agross@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@somainline.org>
-To: Georgi Djakov <djakov@kernel.org>
 To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Frank Rowand <frowand.list@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-pm@vger.kernel.org
 Cc: devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
 ---
- .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml         | 5 +++++
- 1 file changed, 5 insertions(+)
+Neil Armstrong (2):
+      dt-bindings: reserved-memory: document Qualcomm MPSS DSM memory
+      soc: qcom: add MDSS DSM memory driver
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-index be29e0b80995..00b635662697 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-@@ -26,8 +26,13 @@ properties:
-           - enum:
-               - qcom,sc7280-cpu-bwmon
-               - qcom,sdm845-bwmon
-+              - qcom,sm8550-cpu-bwmon
-           - const: qcom,msm8998-bwmon
-       - const: qcom,msm8998-bwmon       # BWMON v4
-+      - items:
-+          - enum:
-+              - qcom,sm8550-llcc-bwmon
-+          - const: qcom,sc7280-llcc-bwmon
-       - const: qcom,sc7280-llcc-bwmon   # BWMON v5
-       - const: qcom,sdm845-llcc-bwmon   # BWMON v5
- 
-
+ .../reserved-memory/qcom,mpss-dsm-mem.yaml         | 37 +++++++++
+ drivers/of/platform.c                              |  1 +
+ drivers/soc/qcom/Kconfig                           | 10 +++
+ drivers/soc/qcom/Makefile                          |  1 +
+ drivers/soc/qcom/mpss_dsm_mem.c                    | 95 ++++++++++++++++++++++
+ 5 files changed, 144 insertions(+)
 ---
 base-commit: 3c1f24109dfc4fb1a3730ed237e50183c6bb26b3
-change-id: 20221114-narmstrong-sm8550-upstream-bwmon-a7c6227fab6d
+change-id: 20221114-narmstrong-sm8550-upstream-mpss_dsm-21c438c65f9b
 
 Best regards,
 -- 
