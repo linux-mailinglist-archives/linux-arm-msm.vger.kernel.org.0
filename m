@@ -2,74 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB95462B9D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:45:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8146962B9E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:47:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238879AbiKPKps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:45:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
+        id S233719AbiKPKrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:47:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238810AbiKPKof (ORCPT
+        with ESMTP id S239105AbiKPKrU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:44:35 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C403E0A2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:32:48 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id j16so28749786lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:32:47 -0800 (PST)
+        Wed, 16 Nov 2022 05:47:20 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 508C445EE2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:35:10 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id z14so29021525wrn.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:35:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oOHDUKetXbquoF6rjSkZdyFBCGGAbYCnf7e6hUKdFrE=;
-        b=WLpJi3JcWVBgWisNzho4+Wf5a8Y9OalXRQn/Rh2bCuyE8OKcQB5bi2GoJFmx5JGdWn
-         /TY2qx1KGejWBeS2s70GyyO/BtRvE+O4Dn2iJQSIepvm7ookyIjENy6avzyhnfSrddlV
-         6pGqnFNcAHMBl/n9m58IR1ohYILQmRJY/7imUiynjryGDisEOHKa7c1d0oe1nB36E7H3
-         nfrMboRDYRrIPc9Rl2mbTNBsyOkn5Bt7sJ7i5wjDARXLCl84txK/6VIDLSyJEQ2jLCzT
-         WgKIQR45KojIWLlMEP4Sm3pEYFMphVeio2b4W+hq98MXOv8lZ8FjmJBjyyVRmPzNobIr
-         C26Q==
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sQgFoK8cOPk+aS6uvHgGsxqyaP/eeSCg5EmIN7/zyIQ=;
+        b=oSgWTksrFOQyCIHLqT1fD98tKsflrC4rq+dc06OSRC7CEnIttQYkvjcdc+ebABf4Sm
+         TjDupkAZLp/9qwNBxz/zpjab+P2h+MnZ7hZIk/NA3LtTgcoBkPWRVntiHRZ+K4uSg74/
+         wTSOpg0Mm8xTryJ4ML4Ld5jxZ3fBG6PtPqRhVrplc1NaKxuGlHC7FPaIQOYk8V9YMsSD
+         +SIT2ra6pqrLlkPAk2qp+XmM/l0qf1wsRDiT/sshQn+bWVlO8FZazH1t3E9PCCEi64Yy
+         LrFLB+6vtbuc0FyPvUdLJXEGXV8gtvxdfhyRG4xyRKtwfWZI/SPT6wLtMZH46bI8uTNA
+         mqiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oOHDUKetXbquoF6rjSkZdyFBCGGAbYCnf7e6hUKdFrE=;
-        b=uu/+j5GSee6kD5WA5/XY53vQkdD1Z72APKARb+04JVG0S0ziJpWv78fBMt5KS92Czn
-         Pnoa+XdfExCxIGdqPx2JMlQfmGYrHUhNGL24nCYOMoTXPdl5GZAA5VDXnN+TtZtvvisO
-         I6ioj6nZPCR/14gxOvg2m0EIY97Wwo/F95pV/NK51cx7evyKW7KEyirWbp4F6xhwe/VR
-         A++3iULLuyLogPzp9DMbrcZiDygUSgx1R9IQUevGezFNmNM00C54qyE3+dh2yJ3WAFDV
-         355piNPmdu2PJR2YLF9sFs3Ucq3ajVX7OYjzISu9zbqxiJI8N/SCeKRBVwYcsa9oHruw
-         a5PQ==
-X-Gm-Message-State: ANoB5plm0/Dx21BD02gX+5RHna9K5qzCaWZHXmbWCS/LnatRXvXq3ReT
-        JbF7qGOQKcJt5twjktd8jWoaiw==
-X-Google-Smtp-Source: AA0mqf7CWMlw4VeAF0f/wy6kDEyOsFD5FT+ac2NoilUfXgWdkWSRvuwfNjCeTVKYa9xMN3q+iAKrgg==
-X-Received: by 2002:a05:6512:1dc:b0:4a2:8836:c07d with SMTP id f28-20020a05651201dc00b004a28836c07dmr6619708lfp.661.1668594766437;
-        Wed, 16 Nov 2022 02:32:46 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id v26-20020ac2593a000000b00492b494c4e8sm2541052lfi.298.2022.11.16.02.32.45
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sQgFoK8cOPk+aS6uvHgGsxqyaP/eeSCg5EmIN7/zyIQ=;
+        b=GTEXB7GIRU0YL6uOkNF/smqTBlVwFA5YOmylUy8sbEzNWOYHQtGTHYYNLUR5zmbf5K
+         5fx9Q9mKqk2FKZiowonFqy2bOMcEqpnLQfQhYV9cRIWNzGASly8BXdMLIsVKv1d5QpKu
+         Scl9yyt4rmHWNKmKD7jm5/hHdhEJpUXGSkwI+M2qXDUPvIMyteBoNwTbM7qmEG8gwwQp
+         fx+4flio90Amkbj7KNLIcewZNn92wLy19xrkSNK4uC+XSNqjpLX9GGcXwOSS2lP7csJX
+         c7FhpWHHMpZK4Fk0H5ovfpFv41YR8my7FuGsLXkPTPSPJU4et0E6KUPzKZ2zU2pS8JTY
+         UPlQ==
+X-Gm-Message-State: ANoB5pnHibdxdRGrB9D+yvleYnbqxC0NFlW9yj7tOBEG4yhbT+zdSiiO
+        wjnSl68DlMtnOiNqAI3lSdQD2g==
+X-Google-Smtp-Source: AA0mqf71a/71TLKyRyM8vG9iLuHPkKm/gjm9e18hX4KS/ptMHJEPv25qtY7A4tiwpbqv5x9+ukzfmA==
+X-Received: by 2002:a05:6000:1373:b0:236:c206:b2b1 with SMTP id q19-20020a056000137300b00236c206b2b1mr13293273wrz.624.1668594908845;
+        Wed, 16 Nov 2022 02:35:08 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:2a03:71a6:7a9d:9c71? ([2a01:e0a:982:cbb0:2a03:71a6:7a9d:9c71])
+        by smtp.gmail.com with ESMTPSA id by11-20020a056000098b00b002258235bda3sm14842417wrb.61.2022.11.16.02.35.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 02:32:46 -0800 (PST)
-Message-ID: <3c2b2155-c4a5-306e-87a2-396eecdc239b@linaro.org>
-Date:   Wed, 16 Nov 2022 11:32:39 +0100
+        Wed, 16 Nov 2022 02:35:08 -0800 (PST)
+Message-ID: <9572fc1b-3b13-bb7b-bfdd-3e06a46dedf0@linaro.org>
+Date:   Wed, 16 Nov 2022 11:35:07 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 4/6] soc: qcom: geni-se: add support for I2C Master Hub
- wrapper variant
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH 7/7] pinctrl: qcom: spmi-gpio: add support for pmr735d
+ gpio control
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-0-64449106a148@linaro.org>
- <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-4-64449106a148@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-4-64449106a148@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Lee Jones <lee@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-spmi-v1-7-6338a2b4b241@linaro.org>
+ <16de0a02-e7d7-87d1-c877-e32de46bfc28@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+Reply-To: neil.armstrong@linaro.org
+In-Reply-To: <16de0a02-e7d7-87d1-c877-e32de46bfc28@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -80,45 +88,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+On 16/11/2022 11:22, Konrad Dybcio wrote:
+> 
+> 
+> On 16/11/2022 11:11, Neil Armstrong wrote:
+>> Add support for the pmr735d gpio controller providing GPIO control over SPMI.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> Any particular reason this could not be a part of the previous patch?
 
-On 16/11/2022 11:21, Neil Armstrong wrote:
-> The I2C Master Hub is a stripped down version of the GENI Serial Engine
-> QUP Wrapper Controller but only supporting I2C serial engines without
-> DMA support.
-> 
-> This adds the clock list for the I2C Master Hub variant to a new desc
-> struct then passes it through the I2C Master Hub compatible match data.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+I thought it would be cleaner splitting them by family names, but yeah they could be squashed, same for bindings.
 
-Konrad
->   drivers/soc/qcom/qcom-geni-se.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index f4f54d92a01a..8430a0192bb9 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -930,8 +930,18 @@ static const struct geni_se_desc qup_desc = {
->   	.num_clks = ARRAY_SIZE(qup_clks),
->   };
->   
-> +static const char * const i2c_master_hub_clks[] = {
-> +	"s-ahb",
-> +};
-> +
-> +static const struct geni_se_desc i2c_master_hub_desc = {
-> +	.clks = i2c_master_hub_clks,
-> +	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
-> +};
-> +
->   static const struct of_device_id geni_se_dt_match[] = {
->   	{ .compatible = "qcom,geni-se-qup", .data = &qup_desc },
-> +	{ .compatible = "qcom,geni-se-i2c-master-hub", .data = &i2c_master_hub_desc },
->   	{}
->   };
->   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
+> For the addition itself:
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Thanks!
+Neil
 > 
+> Konrad
+>>   drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+>> index f758522d035e..66d6d7ffbd43 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+>> @@ -1242,6 +1242,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+>>       { .compatible = "qcom,pmp8074-gpio", .data = (void *) 12 },
+>>       { .compatible = "qcom,pmr735a-gpio", .data = (void *) 4 },
+>>       { .compatible = "qcom,pmr735b-gpio", .data = (void *) 4 },
+>> +    { .compatible = "qcom,pmr735d-gpio", .data = (void *) 2 },
+>>       /* pms405 has 12 GPIOs with holes on 1, 9, and 10 */
+>>       { .compatible = "qcom,pms405-gpio", .data = (void *) 12 },
+>>       /* pmx55 has 11 GPIOs with holes on 3, 7, 10, 11 */
+>>
+
