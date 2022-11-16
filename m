@@ -2,94 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA4E62B6F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:54:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA05B62B6FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:56:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbiKPJyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 04:54:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
+        id S230340AbiKPJ4L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 04:56:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbiKPJyX (ORCPT
+        with ESMTP id S229908AbiKPJ4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 04:54:23 -0500
+        Wed, 16 Nov 2022 04:56:09 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7367F1759D;
-        Wed, 16 Nov 2022 01:54:20 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AG641K2005817;
-        Wed, 16 Nov 2022 09:54:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=SLKxYZqGxj167jz0sYj8WG4KNM9owQ7O91/mF4XQLl8=;
- b=YLQCh+QoW6vmIwOBdH63QykX5FQvZjjzYG9rm5AYSFU1iWWMUcUHF1qAbnEKI3DA9sSe
- ORjavcwQfbHtHLKaasSb1yhCER+uGq/9PNuB5niZGCVPcrTT2Lk144I2KcY9kP6dyL8o
- Ag65ZkVOwofRKEhjxvUE19H13xIGrt0qot7mtOIrydn9hg3OCfxWDh4J9wj1F5Qvji3p
- KjDZUEA/5SK27BIImuItmqOhEXO8Y9B2hP5VOhxowlWljKIL9kDDT/PrvUPadeQSu3cX
- w0NiZT3a3U/DEJJJnrnrTgUL+lxrwt58tweEyEjz0SxqIL8FQqu8ZaXI3B7Evz4KZ9Cv Zg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvt928nf9-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F96D635F;
+        Wed, 16 Nov 2022 01:56:09 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AG8DXG0011111;
+        Wed, 16 Nov 2022 09:55:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AZYBM7yo5DAFdaVrtM8YSBmdlBbwjY0NigrJe0QAl2I=;
+ b=QSRU7oeGFRv6gCjmY2WWvnQ888VSbBumaynIhZcXg4sJDdsX7do66ZvJXGx/4T/QYtSV
+ /mLH8/LW9gR31CEerNTGFRLnSBpz+vFoLZPg4N5bO8IpF1G4w8AnKyTf+5BbEk0DrREX
+ ZUcdpXFQJkfyyekZiMHxGsucn8goLTdbqMTNDY7a133X/Xw+RAlw0zVguYJKj5nhIkKM
+ Mu0JmzPUG6/Sq3IUyQ6K+B09wNsvLbUqLfuBi+jfb879oAxRCsuV245yZPXAHQfCW5+M
+ 1IcNEsAfElnXorF/ZdXtPQxECkEKKdQIuwyvKKfuvUD7GkqOwD6oV0UBRAawWKNSCorS lw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvt9d8n4e-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 09:54:14 +0000
-Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AG9j99o012178;
-        Wed, 16 Nov 2022 09:54:13 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 3kutnequck-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 09:54:13 +0000
-Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AG9peZN020815;
-        Wed, 16 Nov 2022 09:54:13 GMT
+        Wed, 16 Nov 2022 09:55:33 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 2AG9sDiI023266
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AG9tXkB031962
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 09:54:13 +0000
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 16 Nov 2022 01:54:09 -0800
-Date:   Wed, 16 Nov 2022 15:24:05 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
+        Wed, 16 Nov 2022 09:55:33 GMT
+Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
+ 2022 01:55:29 -0800
+Message-ID: <da77b6f8-a511-4e3d-ba59-ca4c41415312@quicinc.com>
+Date:   Wed, 16 Nov 2022 15:25:26 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_pas: disable wakeup on probe
+ fail or remove
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "Brian Masney" <bmasney@redhat.com>
-Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
-Message-ID: <20221116095405.GA16833@hu-ppareek-blr.qualcomm.com>
-References: <20221116075207.32363-1-quic_ppareek@quicinc.com>
- <20221116075207.32363-3-quic_ppareek@quicinc.com>
- <Y3ScYKVYIVyj/mG0@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <Y3ScYKVYIVyj/mG0@hovoldconsulting.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221111115414.153961-1-luca.weiss@fairphone.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20221111115414.153961-1-luca.weiss@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
-X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hFIq7TZRebjQ1Gov3h16LvPmXZSu7zVn
-X-Proofpoint-ORIG-GUID: hFIq7TZRebjQ1Gov3h16LvPmXZSu7zVn
+X-Proofpoint-ORIG-GUID: i7DjL4hW_YA6R5gDFurFX4kJ4vPO0ujD
+X-Proofpoint-GUID: i7DjL4hW_YA6R5gDFurFX4kJ4vPO0ujD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-11-15_08,2022-11-15_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- phishscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999
- impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211160070
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 phishscore=0 clxscore=1011 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211160070
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,43 +86,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 09:16:32AM +0100, Johan Hovold wrote:
-> On Wed, Nov 16, 2022 at 01:22:07PM +0530, Parikshit Pareek wrote:
-> > Introduce the Qualcomm SA8540P ride automotive platform, also known as
-> > Qdrive-3 development board.
-> > 
-> > This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
-> > regulators, debug UART, PMICs, remoteprocs and USB.
-> > 
-> > The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
-> > been created for PMIC, so that it can be used for future SA8540P based
-> > boards.
-> > 
-> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+Hey Luca,
+
+Thanks for the patch.
+
+On 11/11/22 17:24, Luca Weiss wrote:
+> Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
+> the subsequent probe fail.
 > 
-> > +&ufs_mem_hc {
-> > +	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
-> > +
-> > +	vcc-supply = <&vreg_l17c>;
-> > +	vcc-max-microamp = <800000>;
-> > +	vccq-supply = <&vreg_l6c>;
-> > +	vccq-max-microamp = <900000>;
-> > +
-> > +	status = "disabled";
-> > +};
-> > +
-> > +&ufs_mem_phy {
-> > +	vdda-phy-supply = <&vreg_l8g>;
-> > +	vdda-pll-supply = <&vreg_l3g>;
-> > +
-> > +	status = "disabled";
-> > +};
+> [    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
+> [    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
+> [    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
+> [    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
+> [    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
+> [    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
 > 
-> Why are these disabled? This should be mentioned somewhere (e.g. commit
-> message and/or comment) or you can drop the nodes until support is in
-> place.
-My bad. Happened by mistake.
+> Fix this by disabling wakeup in both cases so the driver can properly
+> probe on the next try.
 > 
-> Johan
-Regards,
-Parikshit Pareek
+> Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
+> Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>   drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 6afd0941e552..d830bf13c32c 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -557,6 +557,7 @@ static int adsp_probe(struct platform_device *pdev)
+>   	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+>   free_rproc:
+>   	rproc_free(rproc);
+> +	device_init_wakeup(adsp->dev, false);
+
+You would want to do ^^ before rproc free since adsp is a
+private data of rproc struct.
+
+>   
+>   	return ret;
+>   }
+> @@ -573,6 +574,7 @@ static int adsp_remove(struct platform_device *pdev)
+>   	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
+>   	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
+>   	rproc_free(adsp->rproc);
+> +	device_init_wakeup(adsp->dev, false);
+
+ditto.
+
+>   
+>   	return 0;
+>   }
+
+- Sibi
