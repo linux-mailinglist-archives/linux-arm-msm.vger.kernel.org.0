@@ -2,108 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AB9462C4E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:42:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D422662C52F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:44:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238853AbiKPQms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 11:42:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54572 "EHLO
+        id S238882AbiKPQo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 11:44:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238992AbiKPQmd (ORCPT
+        with ESMTP id S238758AbiKPQoY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 11:42:33 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2868453EF6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:38:40 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id k2so45485160ejr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:38:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YfQDGT6R1zLF2Oy7Ehp9rzHcZaDotWmnvHUFLRH62Qs=;
-        b=eOqihTHSsLpvjGBrNlv6S0iTYi2H3XEIwFTkYZHgnEsXXqFUG44tyhlNgwipWVgtZU
-         s3M3cL8oxF9bt/BlJWAsSecFwXIt2dPj7ratY9zSv4LJGVNkiKeKk8eXiguKGJomMder
-         VkYJd4VcVyCk09wVcnwQqcMsrH4xOzfhw4BTcLYub9xx1QTxsEM6XKNiNuuvx7WmFJ3i
-         nGNmGzGzKjEHiooDPCabn3skkfeABKU+NfDlmmsZWTOJpP1h1Q16zS0Is1L9ftU8bKrp
-         KrRePDG+XUYp7RdNq3IB9LQF+IwjN/Mosrecu9NfDzihdpUw6UoHt1hgYBa13GP5Rb14
-         fSMw==
+        Wed, 16 Nov 2022 11:44:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2FAF0E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:39:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1668616777;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=MKOWgS4WzWGeD29Cp2SqGUWIo6TLQiVsvbTZsJFncDE=;
+        b=gGyQpVvrdHKnOgrBCVtVn0W5xusHkneeDqIUWPm5PmxjtsrIJUYe/1uhorwh1vdh4BIgKG
+        DkNxW3SkjC4cSy6mJujP901A4E+I684l2UABQ8Q9M921ljVVy0e18OXyE7QQA2gG2wVP5v
+        JM+/bMhKX0QKzqOVYg0HVOtjsHGtFWU=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-586-o3cIMlXkOjq2a3Xu3AgjXA-1; Wed, 16 Nov 2022 11:39:35 -0500
+X-MC-Unique: o3cIMlXkOjq2a3Xu3AgjXA-1
+Received: by mail-oi1-f199.google.com with SMTP id be25-20020a056808219900b0035ad466a313so4605443oib.17
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:39:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YfQDGT6R1zLF2Oy7Ehp9rzHcZaDotWmnvHUFLRH62Qs=;
-        b=GfwN2HUzLb/hrZSnQrufAsSNZUENLmI3ImJgYhHmkXJN0CE1SVi7kFchkDkzIpfDpe
-         RkX+ube6LJQau/cf2WhiIVkf+0RUVlZXoLQACKC2jllefrJlXJmmj06SColYt38/ZOu2
-         UisLpAkw1ZC9l/Ug9QmwcQOfXsNAW0Gc0VLEE2rOuRezb8T/EqCW7nHIZ5jrWpO2ngaK
-         RmXiB8dY1jmL96jLJRcAG5p+sqifzBC0MoX61T2lQA3ynJMGNKncVAAvkRDzS+k5VAB0
-         H+K1o9E9T9Hge3vnfBCeZloqk3yEZCU6Hfb4rbNr75hwN8lSPT1wgpZ0YctX7P6dm5NZ
-         FDLw==
-X-Gm-Message-State: ANoB5pnNqI4Triwdd6PHfkrd0WVBH1v+R2D5LsEspPdMH7pJhZhyNC4a
-        2KX6x/+6sxKA19Th4HNEiVMyxA==
-X-Google-Smtp-Source: AA0mqf6qWZtMXPzt9VQ/gUELXq1NQKxvRgvnG6c8O6RhRyRPqVMu6+j2aeaYJ8g8wYt23utY1cgPbg==
-X-Received: by 2002:a17:906:ae53:b0:78b:15dc:2355 with SMTP id lf19-20020a170906ae5300b0078b15dc2355mr18101034ejb.306.1668616718631;
-        Wed, 16 Nov 2022 08:38:38 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id kv20-20020a17090778d400b007adf125cde4sm7218190ejc.13.2022.11.16.08.38.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 08:38:38 -0800 (PST)
-Message-ID: <54808a37-a1e9-1bf0-1767-2a20a5395d80@linaro.org>
-Date:   Wed, 16 Nov 2022 17:38:30 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MKOWgS4WzWGeD29Cp2SqGUWIo6TLQiVsvbTZsJFncDE=;
+        b=Xekm9qemAjXJoc/vRqGkOKKnOZrK4uK4UAYVEjYk8WSbneOkHS+wDHBQViBBzMKK5A
+         k/V6T/oJR8/IIQ40BHW41lKtrRMDAMi3w63yZjR2o9PzjUa8VAZpNcHiudRa1L4VZq+7
+         j+73Wk32BCjdkdDHc2tZceRj6wIVvfwlNW41oljNsn2FP0WZK4CFTHG5xuNPFvvsjbX5
+         hNNdHI/prURQGcXAA1zgVPuRhtMWdqFqo9VW+XCjNFbpzltalvZcKcy8r2ovRwxame5w
+         UBjRVEqv2PvorAsWf5733iLxO+tv1dQUbIv87YAqkJXWlH5hU8Zj9Nnq+h+MrfzXdlo4
+         LhXQ==
+X-Gm-Message-State: ANoB5plLirCw1uI/SAXs8CzV26ke0Z6Q5j1GL0bFCLNa510h4m9T+Fmq
+        C8v/JG5QtoaWb/pSpsb0e4RNafZl1fFPu7WSJC8gZYa3WtU4cOymTNxpH9wlaKERq0ZeJwTcZzL
+        XNwNvB3glm5FcF6L4gst+ffrUeg==
+X-Received: by 2002:a05:6808:e8f:b0:354:faf3:50da with SMTP id k15-20020a0568080e8f00b00354faf350damr1980352oil.277.1668616774735;
+        Wed, 16 Nov 2022 08:39:34 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6vju2UH23y6HBeQfTVdhTw+4CIus9JPj07In0i4uuXVN8AgOK8z5b0UgszlTIBqN39zYn3oA==
+X-Received: by 2002:a05:6808:e8f:b0:354:faf3:50da with SMTP id k15-20020a0568080e8f00b00354faf350damr1980334oil.277.1668616774459;
+        Wed, 16 Nov 2022 08:39:34 -0800 (PST)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
+        by smtp.gmail.com with ESMTPSA id e18-20020a9d7312000000b0066c3bbe927esm6804869otk.21.2022.11.16.08.39.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 08:39:34 -0800 (PST)
+Date:   Wed, 16 Nov 2022 10:39:31 -0600
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Javier Martinez Canillas <javierm@redhat.com>
+Cc:     linux-kernel@vger.kernel.org,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, John Stultz <jstultz@google.com>,
+        Peter Robinson <pbrobinson@redhat.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Enric Balletbo i Serra <eballetbo@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Brian Masney <bmasney@redhat.com>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v2 2/4] driver core: Set deferred probe timeout to 0 if
+ modules are disabled
+Message-ID: <20221116163931.ob7szcnjx65c7gz7@halaney-x13s>
+References: <20221116115348.517599-1-javierm@redhat.com>
+ <20221116120043.519614-1-javierm@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v6 3/7] arm64: dts: qcom: sdm845-db845c: Drop redundant
- reg = in port
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, mchehab@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
-        vladimir.zapolskiy@linaro.org
-Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
- <20221116162801.546737-4-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116162801.546737-4-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221116120043.519614-1-javierm@redhat.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16/11/2022 17:27, Bryan O'Donoghue wrote:
-> The reg for the port is specified in the dtsi. Remove from the db845c dts.
+On Wed, Nov 16, 2022 at 01:00:43PM +0100, Javier Martinez Canillas wrote:
+> There is no point to schedule the work queue to timeout the deferred probe
+> if all the initcalls are done and modules are not enabled. The default for
+> this case is already 0 but can be overridden by the deferred_probe_timeout
+> parameter. Let's just disable to avoid queuing a work that is not needed.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->   arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
->   1 file changed, 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index 7c88312333c22..8a98f3e86b41d 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -1186,7 +1186,6 @@ &camss {
->   
->   	ports {
->   		port@0 {
-> -			reg = <0>;
->   			csiphy0_ep: endpoint {
->   				data-lanes = <0 1 2 3>;
->   				remote-endpoint = <&ov8856_ep>;
+> (no changes since v1)
+> 
+>  drivers/base/dd.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+> index 040b4060f903..1e8f1afeac98 100644
+> --- a/drivers/base/dd.c
+> +++ b/drivers/base/dd.c
+> @@ -350,8 +350,10 @@ static int deferred_probe_initcall(void)
+>  	flush_work(&deferred_probe_work);
+>  	initcalls_done = true;
+>  
+> -	if (!IS_ENABLED(CONFIG_MODULES))
+> +	if (!IS_ENABLED(CONFIG_MODULES)) {
+> +		driver_deferred_probe_timeout = 0;
+>  		fw_devlink_drivers_done();
+> +	}
+>  
+
+Potentially a stupid suggestion, but would it make sense to take out
+the ability to actually set that param if !CONFIG_MODULES? Then
+driver_deferred_probe_timeout would be the default value already.
+
+>  	/*
+>  	 * Trigger deferred probe again, this time we won't defer anything
+> -- 
+> 2.38.1
+> 
+
