@@ -2,69 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEA6B62C28D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:29:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE5E462C2B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:35:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233565AbiKPP3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:29:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47144 "EHLO
+        id S230203AbiKPPf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:35:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234653AbiKPP32 (ORCPT
+        with ESMTP id S229489AbiKPPf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:29:28 -0500
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 291901E725;
-        Wed, 16 Nov 2022 07:29:27 -0800 (PST)
-Received: by mail-ot1-f54.google.com with SMTP id a13-20020a9d6e8d000000b00668d65fc44fso10601331otr.9;
-        Wed, 16 Nov 2022 07:29:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cLCzckP4DZJLigh6uqQZLXPP0BctbxitUX+h3b1cBFs=;
-        b=yMCa3MzsQBH7bxtrSRPGM8ipdzhi3oqM5RSJJPu4hWJMvoxx/cZK7eyELbmETSZQgG
-         tfasTunkPjMrE27MaJ/EyouFtdfrtrMmqCeECymc52mxsV7Zw+0NCCBkzzUBZiPgz6jS
-         VgAJPyoFh2dD/sQbKuCZ7vKkj9b749qeFPN6SaFYo6340+teKi1LfnH8bxYARjHkc6pu
-         VVnGJ9PcdVubARBCGFwlWvxIXFHSLSP9uJys4jRwBVVs0Yy/P3k3LYKf20mQ4Ils5tJm
-         6gbjNC1FE44aQGahXoPV9AviwtKKNwXR6oLQCPLOODIFfgISAtOk5kNookA+SvXAlzPK
-         TyAA==
-X-Gm-Message-State: ANoB5pkjwhue/DVhspfRV1l44IsTWRv3HCSQAKqSVzS2fRwJbLAykLR7
-        XcU3S4mIq3DhEfuy2C6ws5y1siEuZg==
-X-Google-Smtp-Source: AA0mqf4P0aJNSqcTZm5Qyjqu1YvFIAsxgQQqtjolMrC4rlaQIkKdRb6zA7FHl+CjFaNqbCoWEu/oFw==
-X-Received: by 2002:a05:6830:d13:b0:661:b84c:6b0a with SMTP id bu19-20020a0568300d1300b00661b84c6b0amr10834817otb.186.1668612566371;
-        Wed, 16 Nov 2022 07:29:26 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g8-20020a056870d20800b0012d6f3d370bsm8042595oac.55.2022.11.16.07.29.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 07:29:25 -0800 (PST)
-Received: (nullmailer pid 4083492 invoked by uid 1000);
-        Wed, 16 Nov 2022 15:29:23 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Wed, 16 Nov 2022 10:35:28 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0F11180B;
+        Wed, 16 Nov 2022 07:35:27 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGDFiDp027890;
+        Wed, 16 Nov 2022 15:35:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4bgSVWe2DupxOwRr4EOFbsHDsofmk+PFg9oISOvq07w=;
+ b=AcC0d+H6Ykx45QyKTs91JvR5oMly//xnEMmuafbJ+4j5AFxQqRpBhfUI3lY3qBvo35U+
+ w2tVbt3T66tD+Ep+qW3ZkpgjSikFo66wyZtdYgGVaD8PwpvmkCCd336cOSdWyxZfnQ4M
+ Ar3WwuMqL9aOOQhxnO41GD6zp+hpdLrdriRjtnOdgSkQj4uC7LndSiM0kvzTHbMqXHzZ
+ XVR9iQerh42i3I0+TNT2BrflTvF4cOOEGaFDyOhGC8PPouo4Op2/OMHyryA6juE16+27
+ Vxnx1ZDH/LaQunuf9GW73GokZgHsU1esihFCQnR4bvRdhIBM/6n/Bcl6DxIl7L3kXSd1 Dw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw03a8bcj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 15:35:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGFZNNY015031
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 15:35:23 GMT
+Received: from [10.216.25.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
+ 2022 07:35:19 -0800
+Message-ID: <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
+Date:   Wed, 16 Nov 2022 07:35:16 -0800
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221116120157.2706810-9-abel.vesa@linaro.org>
-References: <20221116120157.2706810-1-abel.vesa@linaro.org>
- <20221116120157.2706810-9-abel.vesa@linaro.org>
-Message-Id: <166861224970.4037717.4752810880647292636.robh@kernel.org>
-Subject: Re: [PATCH 08/10] dt-bindings: phy: Add qcom,snps-eusb2-phy schema file
-Date:   Wed, 16 Nov 2022 09:29:23 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 2/3] drm/msm/disp/dpu1: add helper to know if display
+ is pluggable
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <robdclark@chromium.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <quic_vpolimer@quicinc.com>
+References: <1668609040-2549-1-git-send-email-quic_kalyant@quicinc.com>
+ <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
+ <e049f5b1-da41-6854-4731-b6697770ffde@linaro.org>
+ <6b1907db-3fdb-8fe0-e5e3-21ea17021925@quicinc.com>
+ <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nvibYndKs-Sx2SNACmfVRs8TtFf1DTqK
+X-Proofpoint-ORIG-GUID: nvibYndKs-Sx2SNACmfVRs8TtFf1DTqK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211160107
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -72,43 +88,98 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 16 Nov 2022 14:01:55 +0200, Abel Vesa wrote:
-> The SM8550 SoC uses Synopsis eUSB2 PHY. Add a dt-binding schema
-> for the new driver.
+
+On 11/16/2022 7:18 AM, Dmitry Baryshkov wrote:
+> On 16/11/2022 18:11, Abhinav Kumar wrote:
+>>
+>>
+>> On 11/16/2022 7:08 AM, Dmitry Baryshkov wrote:
+>>> On 16/11/2022 17:30, Kalyan Thota wrote:
+>>>> Since DRM encoder type for few encoders can be similar
+>>>> (like eDP and DP) find out if the interface supports HPD
+>>>> from encoder bridge to differentiate between builtin
+>>>> and pluggable displays.
+>>>>
+>>>> Changes in v1:
+>>>> - add connector type in the disp_info (Dmitry)
+>>>> - add helper functions to know encoder type
+>>>> - update commit text reflecting the change
+>>>>
+>>>> Changes in v2:
+>>>> - avoid hardcode of connector type for DSI as it may not be true 
+>>>> (Dmitry)
+>>>> - get the HPD information from encoder bridge
+>>>>
+>>>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 ++++++
+>>>>   2 files changed, 22 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> index 9c6817b..be93269 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> @@ -15,6 +15,7 @@
+>>>>   #include <drm/drm_crtc.h>
+>>>>   #include <drm/drm_file.h>
+>>>>   #include <drm/drm_probe_helper.h>
+>>>> +#include <drm/drm_bridge.h>
+>>>>   #include "msm_drv.h"
+>>>>   #include "dpu_kms.h"
+>>>> @@ -217,6 +218,21 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>>>>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>>>>   };
+>>>> +bool dpu_encoder_is_pluggable(struct drm_encoder *encoder)
+>>>> +{
+>>>> +    struct drm_bridge *bridge;
+>>>> +    int ops = 0;
+>>>> +
+>>>> +    if (!encoder)
+>>>> +        return false;
+>>>> +
+>>>> +    /* Get last bridge in the chain to determine pluggable state */
+>>>> +    drm_for_each_bridge_in_chain(encoder, bridge)
+>>>> +        if (!drm_bridge_get_next_bridge(bridge))
+>>>> +            ops = bridge->ops;
+>>>> +
+>>>> +    return ops & DRM_BRIDGE_OP_HPD;
+>>>
+>>> No. This is not what you should be checking (hint: polled connectors 
+>>> also can be pluggable).
+>>>
+>>> Please check the type of the actual connector connected to this encoder.
+>>>
+>>
+>> Even if we check the connector type as DSI or eDP that does not 
+>> necessarily mean its built-in.
+>>
+>> We can even use DSI or eDP as a pluggable display.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  .../bindings/phy/qcom,snps-eusb2-phy.yaml     | 84 +++++++++++++++++++
->  1 file changed, 84 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> Well, I don't think so. eDP and DSI connectors are not pluggable per 
+> design. One can use them so, but they are not thought to be used this 
+> way. Unlike e.g. HDMI, DP, VGA, etc.
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+We have had many products where we used HDMI as the primary display 
+where the HPD line was disconnected in the design, so now if we 
+generalize all HDMI connectors to be pluggable we can never enable color 
+management on those even though DSI is not even used in that product.
 
-yamllint warnings/errors:
+Thats why I felt we should rely on the HPD_OPS as that way we know that 
+it will be set only if HPD will be used.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.example.dts:18:18: fatal error: dt-bindings/clock/qcom,gcc-sm8550.h: No such file or directory
-   18 |         #include <dt-bindings/clock/qcom,gcc-sm8550.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1492: dt_binding_check] Error 2
+Wouldnt it be just better to also check polling displays to complete 
+this check? Is there a way to do it?
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+> I would say LVDS, eDP, DSI, DPI and SPI can be assumed to be constantly 
+> plugged.
+> 
+> Compare this with Composite, SVIDEO, 9PinDIN, TV. They can be assumed to 
+> be external even if they do not have the HPD (or even polling). And 
+> these connectors usually don't have it.
+> 
+>>
+>> Thats why we thought of this check.
+>>
