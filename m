@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5961462C49A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:36:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A18A562C49D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233854AbiKPQgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 11:36:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
+        id S233914AbiKPQgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 11:36:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233670AbiKPQfe (ORCPT
+        with ESMTP id S233950AbiKPQfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 11:35:34 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F350D5B5A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:07 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id w14so30759716wru.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:07 -0800 (PST)
+        Wed, 16 Nov 2022 11:35:37 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF0F5B58A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:09 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id g12so30547482wrs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w9qHD2IlY8HDaN9Np6/rFRle6GqA3vYAg1s62WKFjkM=;
-        b=COAZcUAYfTWSVH8kk6tXeN3WUHw4vgBo7fuFefw4wP72pYk2VIZIpM6X2CLI5rXX+C
-         2hVIhnNPFl+7zr9N3QPyx89Nt1KNxDiiTzY7XCeS28KJYfPKmDzhzDmtBq44ZJDFwBTp
-         n/zhY/54CgiIWFSKFTwyc9EypSo0WiqXbxmXfTmRrtf27Wm+Lex6R6dGu0ec9TTlGIE4
-         fQUct3Ss3GUYBo9jFrNQGiPv9tD2jKgNBFqHxK2bYe9gnu01o66ygovgor9qfJRJsOQW
-         uNNBgdWuN8qSaoKcAsQzJcQF36Ok+1hP97h1b48ci2aHaYkAd0NbljMS/yVC8R1U1yYQ
-         cW6Q==
+        bh=hcJ7ckAKj+TSphLa5849tAwMuokA6a0ep+HYiPX+3Ow=;
+        b=oHrKRxA04iAj9pCWnrSypLG0zSX8qs7AKEP1cV75mt845OUgUPjn98qqiZV+wZVp5K
+         1RqwZNTolKt05H9r06VS3GOFABjlUkuuV0mBP4HU3XH6Jk/arfQWUxmVWpysL7KzEQXD
+         JOWuyVzValnVzqawhEUZGPtMItgQTgJQMpYbTkFYAb4h7i0GKzlW23wagsFE0eT7c199
+         NRkWI1i1FEmw6mkXmcPBbnAvVjUyPNQl8xfEFhaeH73bsd8qacILFUF6KUadGI93XYCo
+         qs+JRHAWnDMgAoqH6Eo6uPWVmKZHds+NwuCWgGqKF5a5foV44suoQql+OFxiJIXGZjWA
+         t1QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w9qHD2IlY8HDaN9Np6/rFRle6GqA3vYAg1s62WKFjkM=;
-        b=QvtjrndpeOD1hRL7gC0bT8tre4+XNZgkVKWYDbB/5GVrjZ+lL9N4z1oPwbhFxd9anh
-         7zwevq+57SNhcrSjX5vE1kX/v/9QrNXQPF+juFWMbwB48twwjHMaaAU6Q3CrjydC2RhS
-         n5tmvdcpkvt9npI99IRkNVlcYZw8sjlXnqRJIpUAvBmBDxgTRV8O0nMO6D21tIjMx+fE
-         6C8O+iBcIgun6UFG2qbsEJL7sDNw16NvKDxPAsxSrdmwTFGr4DP2pOnEZYp9qjwxdeOi
-         mKUkwp3QnFeouB9cn/98ZcX0bjEf8qYqfWmlcFOxzF1LdaZQ/B0eYPRnaTcKWVpB6V9E
-         DIXg==
-X-Gm-Message-State: ANoB5pmsYnKeHnDxn3Tu6dVbFpdgWBT2XWfqiIE/KUabvu+JSN3EPKTZ
-        mlWIAgcWpxGh9aDww/meMDYi+w==
-X-Google-Smtp-Source: AA0mqf7gLFmA+Luc3GP1ks5uoTyYHqk/bPEKSZ8ppyDjOQQ4amQt5jRn+X5OeSV6hfjgAV4T5bpXuw==
-X-Received: by 2002:a5d:4fce:0:b0:22e:4704:d042 with SMTP id h14-20020a5d4fce000000b0022e4704d042mr14270753wrw.547.1668616086587;
-        Wed, 16 Nov 2022 08:28:06 -0800 (PST)
+        bh=hcJ7ckAKj+TSphLa5849tAwMuokA6a0ep+HYiPX+3Ow=;
+        b=yCpmvxRuc+w1vcpMj2zWrOGwnZ7hq/LgjfpX2zDKDBfv6iSLWXkXGc1MhWuC/duDEN
+         WBrMbrFZ9SJ5UehESUH5CDjxkrg31LluR13ktTZoajB1kNnK7psaDBgRUBQrC55OhrnX
+         dH6ofixweaAs+Bc0Xalnywjp/KiGzPjruhUa3q4X+DZWZp8DeQJ5579l9BWehe9BIEeW
+         f3b7uWniUrSYFI+vrXIxwv+Kajc5mHkavuDA0ZJplxACN5nqIXYcCL+idsf1Issh541C
+         uAJbVIlEFuvW4zJvYQiBg1MZUPhF+0RTykQnH5oGFxrsB0csXiDwfxZPnMN/24bfqIw+
+         3KGg==
+X-Gm-Message-State: ANoB5pk51174Kd/D4hyHYricPg35CFB2cgeySMD0y9LAQqPEIyiiogKO
+        ECJ+pVR4xnk9gpfsIizFZ+q/OA==
+X-Google-Smtp-Source: AA0mqf4Y4K/3mnENkTauwej3hcP2V4HHKRPFC1ohXK+hhIDxruJ77ArB06OzOzGTiAFnogCyEUdnHQ==
+X-Received: by 2002:adf:fc8f:0:b0:22e:362e:570a with SMTP id g15-20020adffc8f000000b0022e362e570amr13591485wrr.127.1668616088209;
+        Wed, 16 Nov 2022 08:28:08 -0800 (PST)
 Received: from localhost.localdomain (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s3-20020adfecc3000000b0022e653f5abbsm15459168wro.69.2022.11.16.08.28.05
+        by smtp.gmail.com with ESMTPSA id s3-20020adfecc3000000b0022e653f5abbsm15459168wro.69.2022.11.16.08.28.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 08:28:06 -0800 (PST)
+        Wed, 16 Nov 2022 08:28:07 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@somainline.org,
@@ -60,10 +60,11 @@ Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
         laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH v6 1/7] arm64: dts: qcom: sdm845: Define the number of available ports
-Date:   Wed, 16 Nov 2022 16:27:55 +0000
-Message-Id: <20221116162801.546737-2-bryan.odonoghue@linaro.org>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v6 2/7] arm64: dts: qcom: sdm845-db845c: Drop redundant address-cells, size-cells declaration
+Date:   Wed, 16 Nov 2022 16:27:56 +0000
+Message-Id: <20221116162801.546737-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
 References: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
@@ -71,49 +72,37 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The number of available ports is SoC specific so we should define it in the
-SoC dtsi. For the case of the sdm845 that is 4 CSI PHYs => four ports.
+sdm845.dtsi camss already defines the address-cells and size-cells for
+camss, no need to replicate in sdm845-db845c.dts.
 
+Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 1a257f6728874..29e6d64e74c97 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4368,6 +4368,22 @@ camss: camss@a00000 {
- 			ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+				};
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 3e7ceb0861eb0..7c88312333c22 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1185,8 +1185,6 @@ &camss {
+ 	status = "ok";
  
+ 	ports {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+ 		port@0 {
+ 			reg = <0>;
+ 			csiphy0_ep: endpoint {
 -- 
 2.34.1
 
