@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1479562BC02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:33:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BD8F62BC09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:34:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiKPLdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:33:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48916 "EHLO
+        id S233612AbiKPLeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:34:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbiKPLdI (ORCPT
+        with ESMTP id S233658AbiKPLd2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:33:08 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D92092716E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:01 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id h186-20020a1c21c3000000b003cfe48519a6so1405425wmh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:01 -0800 (PST)
+        Wed, 16 Nov 2022 06:33:28 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC47209BD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:21 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id i21so26079045edj.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=deWWLgeMCQoKDaS5hv4W5na/Wiux01L+zworhjyK4u4=;
-        b=vsxrpOPk+XiN1na4OeDcRayOvu6qrYWgBUniKawA2JAO09iJ1UWKNafuCbiQNPL3+4
-         3Jcmu7/9aMRQjifSRz1Vj+DOGUf2O2/Sz++g3W44OCnZn2E8D+GzuKs4jlgSzn37lyPk
-         9/Mj+/r1rMg7K7e7FAt1t/4dT1CmzH+sHj852jswx7aj2j9YgdIBgTZFMUE+3EESl0GE
-         oY8u9zHS3Mwc6mgLNfPPTenkr/JQSwVlVDIV1RctSEFZg10x49k2o9vTe/56mgplBh2l
-         XUYUIWjFwGKumbl7q8eHM0+2EOGm1KToc3Dj16jLJSSFtmh5tAB2hJcuzUU2hNdd1flw
-         KMYg==
+        bh=j+J/SdbEViUXyY/VUeChCmLVo4mO3vOtwEtzDloRYdM=;
+        b=okELnb8eaaNB4E50NsZrZ3lFPDMdazxFdqdxxo7Mlbjixnr+uCKtrFGa19w9DSkMGb
+         R+/WVwkLC2gtw9QJOAbw79wc2iQZJ+RoYQOiLgCJtsB/l1WQs4llY0gH1gYO5yc8qFO6
+         771fN2VMS8hM+U24hy+Fgx/iXkJ6fkL6AnDoaf/wm0k56hN7AlnFadAAtitTFpo0Oy0m
+         iXIsUvu8vxF/RqJlToxl5kxYCKy6ChSbESvptsvf5X/revOnbLZ4KtSCeB54xsjGB829
+         HCQKmJcSmEhnl0rP78HyOrQh1axS6PwrsR2LyNZcdSxS2yk21ob1EYxhiyEcFe/RXCTG
+         OcFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=deWWLgeMCQoKDaS5hv4W5na/Wiux01L+zworhjyK4u4=;
-        b=dnbBol3g2R5vYyMTyeNaPBdVf/39hErdcZGaRviDFJ4c6NbMZwOB4blyWPIHIRNOoQ
-         u+wLiDCuuiVRbo6WBoBHPVxU/PvDQGs5QM6IW8eGq0kzCQ6SEgeuMvJkMmuKmYBr/pzr
-         vbTYc2zh0hHkmfzatq5puKDYmHVb5tDBlhy2MVpZPrR6heB1Nyde4WuItHPQrnxH0+Q4
-         WrMJRBsZGitdC736+4IuUTTG8oAT0dpeGijItmidAagh3c82pNNfjhzyJ9sYl0FTN8Xc
-         HN5f1LYX43W6/lEums4lpqvJiiU/mIawSo7Z3JNIeKZgergblCtyOF1KZDUTuSGe+pkU
-         xM2A==
-X-Gm-Message-State: ANoB5pnVttbP7wrdM0yEM4gdBg9Mq+i2Jt5de+Vx82auRnH+/ilNjgUu
-        OSaMj2nP28OFWGIka1oq0dSAJw==
-X-Google-Smtp-Source: AA0mqf5uU2QNn8WJ8LWiwzO+RxWTCkuVbDcnphjCpOZACF8oJO9R86AYicF6Ce+2oEjncu9s0UxNFw==
-X-Received: by 2002:a05:600c:41ca:b0:3cf:9a6a:c72a with SMTP id t10-20020a05600c41ca00b003cf9a6ac72amr1818295wmh.168.1668597780321;
-        Wed, 16 Nov 2022 03:23:00 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id ay6-20020a05600c1e0600b003cfd42821dasm1972894wmb.3.2022.11.16.03.22.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 03:22:59 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: rpmh-rsc: Avoid unnecessary checks on irq-done response
-Date:   Wed, 16 Nov 2022 13:22:46 +0200
-Message-Id: <20221116112246.2640648-2-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221116112246.2640648-1-abel.vesa@linaro.org>
-References: <20221116112246.2640648-1-abel.vesa@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=j+J/SdbEViUXyY/VUeChCmLVo4mO3vOtwEtzDloRYdM=;
+        b=iw5ukLcqS9O0SR4PGVENPC621u6ADcD5MLVtW8IZmYFwPxw0pEYymYBq6g2cGewqbb
+         KHOOCihyfhMHq5ER4WXRKQwTF21LijzTgu1vlbAdeRsXTDdyhh+r8+75s6f577ys+0er
+         8wxyl3d45vbjJv0LE4AQwL9kOaNIQryBixEI8EdoNRKIhn0gaZStnfnjwc9vXDwjMFxh
+         lYuzxCBbXJ5tlSOgmHxgsmnv+yMzNg927Eg9iuLzfZVL2lLadWZTIJe46OR+DS+Bdr0s
+         ySXMUJ0W4PX054Lij5rRTiq/CtKc50bdsXr2UZiJNVPqWjSdHeSacXSqeflQmwC3PE9B
+         +jsw==
+X-Gm-Message-State: ANoB5plcNp1payib4QlBNV5zhZNxZ+nuWy6sGIEkAwbtQgpS9UFWazS7
+        7rDGkMq9ldnEZ2Wy7Ku2fb81lg==
+X-Google-Smtp-Source: AA0mqf6L3j4K6l4ggeXY5ki7+jE24lD4ek/f3w9lIh1wqj/7sbPQNOdA2Ov7fo0tAySe3mJw9qGO1A==
+X-Received: by 2002:a05:6402:1495:b0:461:b506:6b8a with SMTP id e21-20020a056402149500b00461b5066b8amr18646832edv.208.1668597799798;
+        Wed, 16 Nov 2022 03:23:19 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id 2-20020a170906218200b007aed2057ea1sm6151124eju.167.2022.11.16.03.23.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 03:23:19 -0800 (PST)
+Message-ID: <9472d09b-b586-a687-86e9-feb0ad5972b6@linaro.org>
+Date:   Wed, 16 Nov 2022 12:23:12 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 3/9] clk: qcom: Add LUCID_OLE PLL type for SM8550
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20221116104716.2583320-1-abel.vesa@linaro.org>
+ <20221116104716.2583320-4-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116104716.2583320-4-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,175 +79,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RSC interrupt is issued only after the request is complete. For
-fire-n-forget requests, the irq-done interrupt is sent after issuing the
-RPMH request and for response-required request, the interrupt is
-triggered only after all the requests are complete.
 
-These unnecessary checks in the interrupt handler issues AHB reads from
-a critical path. Lets remove them and clean up error handling in
-rpmh_request data structures.
 
-Co-developed-by: Lina Iyer <ilina@codeaurora.org>
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/soc/qcom/rpmh-internal.h |  4 +---
- drivers/soc/qcom/rpmh-rsc.c      | 22 +++-------------------
- drivers/soc/qcom/rpmh.c          | 10 ++--------
- drivers/soc/qcom/trace-rpmh.h    | 11 ++++-------
- 4 files changed, 10 insertions(+), 37 deletions(-)
+On 16/11/2022 11:47, Abel Vesa wrote:
+> Add a LUCID_OLE PLL type for SM8550 SoC from Qualcomm.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-index 0160c1669583..e3cf1beff803 100644
---- a/drivers/soc/qcom/rpmh-internal.h
-+++ b/drivers/soc/qcom/rpmh-internal.h
-@@ -59,7 +59,6 @@ struct tcs_group {
-  * @cmd: the payload that will be part of the @msg
-  * @completion: triggered when request is done
-  * @dev: the device making the request
-- * @err: err return from the controller
-  * @needs_free: check to free dynamically allocated request object
-  */
- struct rpmh_request {
-@@ -67,7 +66,6 @@ struct rpmh_request {
- 	struct tcs_cmd cmd[MAX_RPMH_PAYLOAD];
- 	struct completion *completion;
- 	const struct device *dev;
--	int err;
- 	bool needs_free;
- };
- 
-@@ -144,7 +142,7 @@ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv,
- void rpmh_rsc_invalidate(struct rsc_drv *drv);
- void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv);
- 
--void rpmh_tx_done(const struct tcs_request *msg, int r);
-+void rpmh_tx_done(const struct tcs_request *msg);
- int rpmh_flush(struct rpmh_ctrlr *ctrlr);
- 
- #endif /* __RPM_INTERNAL_H__ */
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index cc24874d0a95..0f8b2249f889 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -439,10 +439,9 @@ static void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
- static irqreturn_t tcs_tx_done(int irq, void *p)
- {
- 	struct rsc_drv *drv = p;
--	int i, j, err = 0;
-+	int i;
- 	unsigned long irq_status;
- 	const struct tcs_request *req;
--	struct tcs_cmd *cmd;
- 
- 	irq_status = readl_relaxed(drv->tcs_base + drv->regs[RSC_DRV_IRQ_STATUS]);
- 
-@@ -451,22 +450,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 		if (WARN_ON(!req))
- 			goto skip;
- 
--		err = 0;
--		for (j = 0; j < req->num_cmds; j++) {
--			u32 sts;
--
--			cmd = &req->cmds[j];
--			sts = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_STATUS], i, j);
--			if (!(sts & CMD_STATUS_ISSUED) ||
--			   ((req->wait_for_compl || cmd->wait) &&
--			   !(sts & CMD_STATUS_COMPL))) {
--				pr_err("Incomplete request: %s: addr=%#x data=%#x",
--				       drv->name, cmd->addr, cmd->data);
--				err = -EIO;
--			}
--		}
--
--		trace_rpmh_tx_done(drv, i, req, err);
-+		trace_rpmh_tx_done(drv, i, req);
- 
- 		/*
- 		 * If wake tcs was re-purposed for sending active
-@@ -491,7 +475,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 		spin_unlock(&drv->lock);
- 		wake_up(&drv->tcs_wait);
- 		if (req)
--			rpmh_tx_done(req, err);
-+			rpmh_tx_done(req);
- 	}
- 
- 	return IRQ_HANDLED;
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 3a53ed99d03c..08e09642d7f5 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -76,19 +76,13 @@ static struct rpmh_ctrlr *get_rpmh_ctrlr(const struct device *dev)
- 	return &drv->client;
- }
- 
--void rpmh_tx_done(const struct tcs_request *msg, int r)
-+void rpmh_tx_done(const struct tcs_request *msg)
- {
- 	struct rpmh_request *rpm_msg = container_of(msg, struct rpmh_request,
- 						    msg);
- 	struct completion *compl = rpm_msg->completion;
- 	bool free = rpm_msg->needs_free;
- 
--	rpm_msg->err = r;
--
--	if (r)
--		dev_err(rpm_msg->dev, "RPMH TX fail in msg addr=%#x, err=%d\n",
--			rpm_msg->msg.cmds[0].addr, r);
--
- 	if (!compl)
- 		goto exit;
- 
-@@ -194,7 +188,7 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
- 	} else {
- 		/* Clean up our call by spoofing tx_done */
- 		ret = 0;
--		rpmh_tx_done(&rpm_msg->msg, ret);
-+		rpmh_tx_done(&rpm_msg->msg);
- 	}
- 
- 	return ret;
-diff --git a/drivers/soc/qcom/trace-rpmh.h b/drivers/soc/qcom/trace-rpmh.h
-index feb0cb455e37..12b676b20cb2 100644
---- a/drivers/soc/qcom/trace-rpmh.h
-+++ b/drivers/soc/qcom/trace-rpmh.h
-@@ -14,16 +14,15 @@
- 
- TRACE_EVENT(rpmh_tx_done,
- 
--	TP_PROTO(struct rsc_drv *d, int m, const struct tcs_request *r, int e),
-+	TP_PROTO(struct rsc_drv *d, int m, const struct tcs_request *r),
- 
--	TP_ARGS(d, m, r, e),
-+	TP_ARGS(d, m, r),
- 
- 	TP_STRUCT__entry(
- 			 __string(name, d->name)
- 			 __field(int, m)
- 			 __field(u32, addr)
- 			 __field(u32, data)
--			 __field(int, err)
- 	),
- 
- 	TP_fast_assign(
-@@ -31,12 +30,10 @@ TRACE_EVENT(rpmh_tx_done,
- 		       __entry->m = m;
- 		       __entry->addr = r->cmds[0].addr;
- 		       __entry->data = r->cmds[0].data;
--		       __entry->err = e;
- 	),
- 
--	TP_printk("%s: ack: tcs-m: %d addr: %#x data: %#x errno: %d",
--		  __get_str(name), __entry->m, __entry->addr, __entry->data,
--		  __entry->err)
-+	TP_printk("%s: ack: tcs-m: %d addr: %#x data: %#x",
-+		  __get_str(name), __entry->m, __entry->addr, __entry->data)
- );
- 
- TRACE_EVENT(rpmh_send_msg,
--- 
-2.34.1
-
+Konrad
+>   drivers/clk/qcom/clk-alpha-pll.c | 16 ++++++++++++++++
+>   drivers/clk/qcom/clk-alpha-pll.h |  5 +++++
+>   2 files changed, 21 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 1973d79c9465..f9e4cfd7261c 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -155,6 +155,22 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+>   		[PLL_OFF_TEST_CTL_U] = 0x30,
+>   		[PLL_OFF_TEST_CTL_U1] = 0x34,
+>   	},
+> +	[CLK_ALPHA_PLL_TYPE_LUCID_OLE] = {
+> +		[PLL_OFF_OPMODE] = 0x04,
+> +		[PLL_OFF_STATE] = 0x08,
+> +		[PLL_OFF_STATUS] = 0x0c,
+> +		[PLL_OFF_L_VAL] = 0x10,
+> +		[PLL_OFF_ALPHA_VAL] = 0x14,
+> +		[PLL_OFF_USER_CTL] = 0x18,
+> +		[PLL_OFF_USER_CTL_U] = 0x1c,
+> +		[PLL_OFF_CONFIG_CTL] = 0x20,
+> +		[PLL_OFF_CONFIG_CTL_U] = 0x24,
+> +		[PLL_OFF_CONFIG_CTL_U1] = 0x28,
+> +		[PLL_OFF_TEST_CTL] = 0x2c,
+> +		[PLL_OFF_TEST_CTL_U] = 0x30,
+> +		[PLL_OFF_TEST_CTL_U1] = 0x34,
+> +		[PLL_OFF_TEST_CTL_U2] = 0x38,
+> +	},
+>   	[CLK_ALPHA_PLL_TYPE_RIVIAN_EVO] = {
+>   		[PLL_OFF_OPMODE] = 0x04,
+>   		[PLL_OFF_STATUS] = 0x0c,
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+> index f9524b3fce6b..2bdae362c827 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -18,6 +18,7 @@ enum {
+>   	CLK_ALPHA_PLL_TYPE_AGERA,
+>   	CLK_ALPHA_PLL_TYPE_ZONDA,
+>   	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
+> +	CLK_ALPHA_PLL_TYPE_LUCID_OLE,
+>   	CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
+>   	CLK_ALPHA_PLL_TYPE_DEFAULT_EVO,
+>   	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
+> @@ -38,6 +39,8 @@ enum {
+>   	PLL_OFF_TEST_CTL,
+>   	PLL_OFF_TEST_CTL_U,
+>   	PLL_OFF_TEST_CTL_U1,
+> +	PLL_OFF_TEST_CTL_U2,
+> +	PLL_OFF_STATE,
+>   	PLL_OFF_STATUS,
+>   	PLL_OFF_OPMODE,
+>   	PLL_OFF_FRAC,
+> @@ -160,7 +163,9 @@ extern const struct clk_ops clk_alpha_pll_zonda_ops;
+>   extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
+>   extern const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops;
+>   extern const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops;
+> +#define clk_alpha_pll_fixed_lucid_ole_ops clk_alpha_pll_fixed_lucid_evo_ops
+>   extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
+> +#define clk_alpha_pll_postdiv_lucid_ole_ops clk_alpha_pll_postdiv_lucid_evo_ops
+>   
+>   extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
+>   #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
