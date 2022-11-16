@@ -2,108 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F36162BC12
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:35:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0860462BC1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:37:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233295AbiKPLf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:35:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51464 "EHLO
+        id S229801AbiKPLhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:37:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238363AbiKPLez (ORCPT
+        with ESMTP id S238631AbiKPLgj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:34:55 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677636325
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:24:49 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id ay14-20020a05600c1e0e00b003cf6ab34b61so1374388wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:24:49 -0800 (PST)
+        Wed, 16 Nov 2022 06:36:39 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7F64FFB0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:25:52 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id g12so29053872lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eaZIGmhlSt4bb2PboaWPrcqCkWnS6+lutvhxb6emR9k=;
-        b=Ddw5NydZXQcX0NwfPyAZKsm9oOttqr5A2ScRh37JywbX9olE69Bxsonkl9EvgDG+DC
-         pkdFZZbBbqfAcCXHYPYQyUTysbnJdV8wiLngWdFUHBTdEeR/YHbkYvSnMvl7AwxJlRUU
-         5w8wvjnveQ0TszAInpBo9frD63uuqtgIrRbboGGxx218caRExsuoAgrzH8Lgfs/fY1IV
-         6c9qVtLoAWXiKmPTcfiitZtUj2NEXB3HdxnhvjJdX4HYjc6wgyzap0D8eoxUTc0GfBGX
-         s5CboNuOn/f9sxW55/QEgdvVsiygwfc0/zhfGhKGjQQd+ibn6tPVIhT2uhc/RgoTZPh0
-         QXfA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L2rlqB9dtWxMHvWlubEptAwyw8MkkCffrMyTQ3/iTRw=;
+        b=suzZJZsBAEPH0Zk6zqO6pp+Ffdyxk3lABz1rUxjYxu4b5owYiKL2mOnHHQFFyNjk0v
+         A8ElvNP8E/VABpNVNHT/x1JZ82azjTIdcqXaccdtDapUvWfqoS4D2aDeSDVGQiK9OElH
+         YQN6ulLLs/aaWl6F7I0RFLhC1+ETxGqeEwN8Dw4rKfi7OKO2TN4JRsff2Wwhohn0rzcn
+         4vYqU3Eix6DULtEU2gcIEQkSduXXdlwEaE2zH0J5jrhuQ4C/FVY83MUmgPmUi1hBtIV3
+         df8WokBwliCmXuPjLr9cHaTuOLdAcB4hkkIqWsIJBoB/MMjprceIs/R9lM+TogETQ7gh
+         r2OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eaZIGmhlSt4bb2PboaWPrcqCkWnS6+lutvhxb6emR9k=;
-        b=QVrGU8bPNMED8Xg+JhNjItNa8LbTVjDRpqUHFPujP3eoeR6sMddyYKQyDJ8Tb3d3mq
-         S88SJu3xUIlcUR+uFyx3wNzEgNtWsy8Eg/ey07Ec2+DVP6moVemO49vcfsxxOFFUE1wR
-         71e8NDkNcJ0pyaLR3oUgLwNbzKMdwk7kDFi5oWS//5eqje7Zxx8p76EFwoX8CSfFUR1M
-         LeaYAyMzz01JBx4RifKtDKfTHXiJQQ5vDyDRvEAmF46lZEmHvzLMo/iHDlHCE8YbW+1i
-         2GbVxDav0ZIH1RLHX7rvL1NfKiC4ihEBtlMC9LfOrDMu71n97e1oUZBfBvz3rU7kedxL
-         LrhQ==
-X-Gm-Message-State: ANoB5pmcW6Ey6OP8VDbVbTzgFJIGTxSolTMtVj/bkIAvYkN/w0OP6gz/
-        V7yf2eQY5xlw9HMxAE2V6LcrisHCeXpkmw==
-X-Google-Smtp-Source: AA0mqf5XIDgzmTuMe/8E7z2fjEPelfVyRq3S+4AhFI47N98ODFGwgTy7tmBGfAaAlJGxOK+FWJFbUA==
-X-Received: by 2002:a05:600c:792:b0:3cf:6a83:bd19 with SMTP id z18-20020a05600c079200b003cf6a83bd19mr1825745wmo.29.1668597887979;
-        Wed, 16 Nov 2022 03:24:47 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05600c350c00b003c6bd91caa5sm1988806wmq.17.2022.11.16.03.24.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 03:24:47 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] soc: qcom: socinfo: Add SM8550 ID
-Date:   Wed, 16 Nov 2022 13:24:38 +0200
-Message-Id: <20221116112438.2643607-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L2rlqB9dtWxMHvWlubEptAwyw8MkkCffrMyTQ3/iTRw=;
+        b=Mozhu4XzCfoHemhpWJIP2bl5Rb8EP9QjyGtVD1XiLwljtP3ywXDeTqzIRdozhATtns
+         nxKOt1ZKfXkQrEaIoG8Hm2RJX6jkMUcYN57vDi8c6qr4NnDMVfXZSo5fiXCVjOtJuEcK
+         RfeDbcE+rMisfYo9jT5VjXV9d2W9olvHrFsx6yChIojM08mshuzvxFSkhuOLKo2GcYAF
+         7uKX6fO+omzkFkGZxiABA80JAJFkRy70l5iZGAUf3js/5Nkn3EApnl0cEC92q6wODUh7
+         lqRp0xDX/OfFxLF4m61inAIo9g1M80AJMhLXefVyQhceI33+jYgY8NiSUizUU3kWsIAs
+         Mgsw==
+X-Gm-Message-State: ANoB5pkIZhhTCnHIAdq6UiU09JSmS2PhXKpU5o9wF9kFuu7bwBQUqBIj
+        N9e+cjioo0ynLPRj6hzCD4vC4Q==
+X-Google-Smtp-Source: AA0mqf6d8upCA6YJlUptNdCFQ/tAl7Q1bgWx3Hrd49SBpOkqVTaJaLhVbGMDAjxyP20jh8Y4hLCdcw==
+X-Received: by 2002:a19:6505:0:b0:4ac:d6e4:41cf with SMTP id z5-20020a196505000000b004acd6e441cfmr6608962lfb.102.1668597951283;
+        Wed, 16 Nov 2022 03:25:51 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id t21-20020a2e8e75000000b0027711dbd000sm2862385ljk.69.2022.11.16.03.25.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 03:25:50 -0800 (PST)
+Message-ID: <eb716ced-668f-4255-93ad-05f6bad8b83f@linaro.org>
+Date:   Wed, 16 Nov 2022 12:25:49 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] dt-bindings: dma: qcom: gpi: add compatible for sm8550
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-gpi-v1-0-33b28a227c5d@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-gpi-v1-0-33b28a227c5d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the ID for the Qualcomm SM8550 SoC.
+On 16/11/2022 11:13, Neil Armstrong wrote:
+> The Qualcomm SM8550 uses GPI DMA for its GENI interface. Add a compatible
+> string for it in the documentation by using the SM6350 as fallback.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/soc/qcom/socinfo.c         | 1 +
- include/dt-bindings/arm/qcom,ids.h | 1 +
- 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 545934aead43..bf8d4e7dd7fc 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -335,6 +335,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(IPQ6005) },
- 	{ qcom_board_id(QRB5165) },
- 	{ qcom_board_id(SM8450) },
-+	{ qcom_board_id(SM8550) },
- 	{ qcom_board_id(SM7225) },
- 	{ qcom_board_id(SA8295P) },
- 	{ qcom_board_id(SA8540P) },
-diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-index 8b1a0f43bd93..c2f7593c4fbb 100644
---- a/include/dt-bindings/arm/qcom,ids.h
-+++ b/include/dt-bindings/arm/qcom,ids.h
-@@ -140,6 +140,7 @@
- #define QCOM_ID_SC7280			487
- #define QCOM_ID_SC7180P			495
- #define QCOM_ID_SM6375			507
-+#define QCOM_ID_SM8550			519
- #define QCOM_ID_QRU1000			539
- #define QCOM_ID_QDU1000			545
- #define QCOM_ID_QDU1010			587
--- 
-2.34.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
