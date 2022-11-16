@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C81C162BBAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:26:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7331762BBDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:27:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238341AbiKPL0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:26:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42100 "EHLO
+        id S233281AbiKPL13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:27:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239115AbiKPLZl (ORCPT
+        with ESMTP id S239305AbiKPL1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:25:41 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D91A1B0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:16:31 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id s8so11826148lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:16:31 -0800 (PST)
+        Wed, 16 Nov 2022 06:27:04 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FF0648762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:17:40 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id s12so26022653edd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qtt5iQyuun+aYchyK4oCgJSc0xTXNRkk++OYQe9BFFA=;
-        b=zrp0um+zg+Xx8L+hZRBscnd04oU9Au5aRn7hZnIuDOV24paVdL2LAtdz+ZACpuLOkQ
-         Ihwo/6kZi6pta1zGZzTShOFYiQRpP31WZMLP9j8Byzn3laQktX+sanP2Ov//QLCljcpt
-         +znqVGwaE8kkr8x981kwE/LjLcLYX2GzF1yWt5dOrP5jQPyXvPqeHqacDKKOEeljFrbG
-         lpdJy/PRVfzG7ibcxrOaCghln8hZhwu84WbqzdgPOqPxmXXpHnjR1ShIf2Jf/cre0hlF
-         9DcWTMeK1PDHnDjmDQorjMs/e/HzVgMMP0PdMtrDA9tEZRiZhJxqfsQJccdm78zTrKZX
-         IRBQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h6FBVuaNcgYE9TpGhXZnNgXgw+q9HRa9+1FBHZRkSlI=;
+        b=Aio+ikiUd1IME8lwqmNXpJHmSRcpX8HLZLyJxfjtJPJzYGrBvDHT10yyUteRT8F9on
+         L22X8Yk/4eCgq/REaOzifQ3yyjq6WDbK48SSa1541n9vYjsOa7JVxXIV26TMhtL7jLn1
+         P9cnG1aKT+esNfCKrgVNvWrH1BnzEFxxXtCvDrPASi1HFdb2525dFMwrICEeJxgWaLJO
+         dtoXN5b2VQBMd2O0Bn7L1R/FAWcHJOnnX9ANoSxN39X/C6f/Ek/rjAbaNxxcEtQMsaFv
+         Yy+8gqKzqCjN+AqYXuXdvcuwNuKs7QnDkyN2sr5gc5Pd1+5pVGedxLfmfZmYTXn5AZuJ
+         f9Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qtt5iQyuun+aYchyK4oCgJSc0xTXNRkk++OYQe9BFFA=;
-        b=g2d5lzz0+D6K4sJ6ewDDqbDAuRuwyEvt/YU9G7vfiMJm8LtAySzUYTyoC3ogb1pKKm
-         051UGVAJ3EpyNQ2vHAW8ZZlAk2JO2KHAc+wc7kMOVnZIPh3vrJTKqGwRIFeRLws8c77N
-         Ix/xIFPALOAgevPmndvOcweNZRjcYZyZa214fIu4zWthOYRf7NyDWVVodIo8mtZYpDS5
-         6/yCKK2HLiMONH7va4VlyEApriWyrwn1PZD5UcAi1FtRIfuGuBzZaZZAz6t1wwzXJJl+
-         XKP1+tipotOg7pYnmvFXddB6Pbm80hFw1Dq/pdHZpPiJd+xogIzGCeNeSvyeLYh4Gnm1
-         TRJg==
-X-Gm-Message-State: ANoB5pk0QSZks6qHh0x58ap3MhlI0sQShe/QsZvm5og5CeLw7aJctC23
-        FHlfWRqDvbaw7RrtzhTykqkcIg==
-X-Google-Smtp-Source: AA0mqf7FtWJOaUGu171nqAPAG+zdf7rfwaOniaHNOL5wur4Byphw9QHkphNSurYRtpLnlBxNoq/1NA==
-X-Received: by 2002:ac2:4e13:0:b0:4b3:ec7a:6752 with SMTP id e19-20020ac24e13000000b004b3ec7a6752mr7777961lfr.79.1668597389601;
-        Wed, 16 Nov 2022 03:16:29 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a3-20020a05651c030300b0026fd3d906d7sm2942390ljp.133.2022.11.16.03.16.28
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=h6FBVuaNcgYE9TpGhXZnNgXgw+q9HRa9+1FBHZRkSlI=;
+        b=M/ktbdxxBXzocBEHUrd3ikdIA8qFwev4FFI8mBxY11FYKDnpe/z6cF1gqKpRciRUsz
+         skti6nNR7c7nY0ACK7h31DXfct/szfNHrn9zsyCsXo8UReWETOANwkDMQMYObZZYYqWP
+         M0gUUpmespah1klNriOL1gCzGYOkF8DQ+rr0dmAm8ps+XqbOTZAFpaqoQsviq+9NlcKO
+         sx1j0JnJZFaxEbZeAn/wYNXINcji9fVma3nicvGjuqMuOZ+FcKgAxEibYMXJlyZ3DcfF
+         8XZzU4b5YuH1gOSTOqfPDpTT+17ccg7ZmdRXSE4E4yL1zZvM5YzFH/Jey+IIW9ojCu1q
+         jw5w==
+X-Gm-Message-State: ANoB5pl8dqIFZLIKkBpy8aH5hz4GH5upI3FujVTNBWR3MaOk6m0Ys9h0
+        AxXAFaOyj8J+hntOpNMG+q4KTA==
+X-Google-Smtp-Source: AA0mqf76To+GPD2WhRt0+pnqyavhRA9ldPGOGBncYFd7Zo1zmmQ2eKDqff0D23dZudP6KWrHwVf5iQ==
+X-Received: by 2002:a05:6402:c10:b0:461:9193:7278 with SMTP id co16-20020a0564020c1000b0046191937278mr19182535edb.220.1668597458559;
+        Wed, 16 Nov 2022 03:17:38 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id e20-20020a170906315400b0077b2b0563f4sm6810643eje.173.2022.11.16.03.17.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 03:16:29 -0800 (PST)
-Message-ID: <f3338d53-a0bf-9fc4-fcee-959e2b9a7e22@linaro.org>
-Date:   Wed, 16 Nov 2022 12:16:28 +0100
+        Wed, 16 Nov 2022 03:17:38 -0800 (PST)
+Message-ID: <1ce84668-5f21-5e62-6a02-be7c6e79012e@linaro.org>
+Date:   Wed, 16 Nov 2022 12:17:31 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 3/7] dt-bindings: mfd: qcom,spmi-pmic: document pmr735d
-Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lee Jones <lee@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org>
- <20221114-narmstrong-sm8550-upstream-spmi-v1-3-6338a2b4b241@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v1-3-6338a2b4b241@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221116101314.52887-1-krzysztof.kozlowski@linaro.org>
+ <20221116101314.52887-3-krzysztof.kozlowski@linaro.org>
+ <7605af5f-a828-5df7-48b8-b543edb0f9b1@linaro.org>
+ <bde68c28-bf4c-405f-ef2a-f56db7654d25@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <bde68c28-bf4c-405f-ef2a-f56db7654d25@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,14 +81,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 11:11, Neil Armstrong wrote:
-> Document compatible for the pmr735d SPMI PMIC.
+
+
+On 16/11/2022 11:40, Krzysztof Kozlowski wrote:
+> On 16/11/2022 11:20, Konrad Dybcio wrote:
+>>
+>>
+>> On 16/11/2022 11:13, Krzysztof Kozlowski wrote:
+>>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>
+>>> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
+>>> LPASS pin controller.
+>>>
+>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> ---
+>>>
+>>> Changes since v2:
+>>> 1. Use lower-case hex.
+>>>
+>>> Changes since v1:
+>>> 1. Whitespace cleanups.
+>>> 2. Correct include - do not use deprecated one.
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
+>>>    1 file changed, 295 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> index 4b0a1eee8bd9..747440d0445a 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> @@ -15,6 +15,7 @@
+>>>    #include <dt-bindings/interconnect/qcom,sm8450.h>
+>>>    #include <dt-bindings/soc/qcom,gpr.h>
+>>>    #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>>>    #include <dt-bindings/thermal/thermal.h>
+>>>    
+>>>    / {
+>>> @@ -2097,6 +2098,212 @@ compute-cb@3 {
+>>>    			};
+>>>    		};
+>>>    
+>>> +		wsa2macro: codec@31e0000 {
+>>> +			compatible = "qcom,sm8450-lpass-wsa-macro";
+>>> +			reg = <0 0x031e0000 0 0x1000>;
+>>> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&vamacro>;
+>>> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+>>> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>>> +			assigned-clock-rates = <19200000>, <19200000>;
+>>> +
+>>> +			#clock-cells = <0>;
+>>> +			clock-output-names = "wsa2-mclk";
+>>> +			#sound-dai-cells = <1>;
+>> I think I'm being a bit too picky, but #-cells could go as the last
+>> bunch of properties.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+> I was thinking about this as well, but some of other codecs which are
+> very similar (also "macro") do not have pinctrls and this makes them
+> unified with additions at the end.
+> 
+> Are you sure you still prefer alphabetical order?
+Thinking about it, IMO it makes sense to add things "roughly where they 
+belong", a.k.a if there was a codec that for whatever reason also 
+required a power domain, we would stick it somewhere in the middle and 
+not at the end..
 
-I think this should be squashed.
 
-Best regards,
-Krzysztof
+> 
+>>
+>>
+>>> +
+>>> +			pinctrl-names = "default";
+>>> +			pinctrl-0 = <&wsa2_swr_active>;
+>>> +		};
+>>> +
+>>> +		/* WSA2 */
+>>> +		swr4: soundwire-controller@31f0000 {
+>>> +			reg = <0 0x031f0000 0 0x2000>;
+>>> +			compatible = "qcom,soundwire-v1.7.0";
+>>> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			clocks = <&wsa2macro>;
+>>> +			clock-names = "iface";
+>>> +
+>>> +			qcom,din-ports = <2>;
+>>> +			qcom,dout-ports = <6>;
+>>> +
+>>> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
+>>> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
+>>> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
+>>> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>>> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>>> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>>> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
+>>> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>>> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>>> +
+>>> +			#sound-dai-cells = <1>;
+>>> +			#address-cells = <2>;
+>>> +			#size-cells = <0>;
+>>> +		};
+>>> +
+>>> +		rxmacro: codec@3200000 {
+>>> +			compatible = "qcom,sm8450-lpass-rx-macro";
+>>> +			reg = <0 0x3200000 0 0x1000>;
+>>> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&vamacro>;
+>>> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+>>> +
+>>> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>>> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>>> +			assigned-clock-rates = <19200000>, <19200000>;
+>>> +
+>>> +			#clock-cells = <0>;
+>>> +			clock-output-names = "mclk";
+>>> +			#sound-dai-cells = <1>;
+>>> +
+>>> +			pinctrl-names = "default";
+>>> +			pinctrl-0 = <&rx_swr_active>;
+>>> +		};
+>>> +
+>>> +		swr1: soundwire-controller@3210000 {
+>>> +			reg = <0 0x3210000 0 0x2000>;
+>>> +			compatible = "qcom,soundwire-v1.7.0";
+>> Some nodes have reg and compatible flipped.
+> 
+> Ack
+> 
+>>
+>>> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			clocks = <&rxmacro>;
+>>> +			clock-names = "iface";
+>>> +			label = "RX";
+>>> +			qcom,din-ports = <0>;
+>>> +			qcom,dout-ports = <5>;
+>>> +
+> 
+> 
+> (...)
+> 
+>>>    		apps_smmu: iommu@15000000 {
+>>>    			compatible = "qcom,sm8450-smmu-500", "arm,mmu-500";
+>>>    			reg = <0 0x15000000 0 0x100000>;
+>>> @@ -3507,6 +3799,9 @@ lpass_ag_noc: interconnect@3c40000 {
+>>>    		};
+>>>    	};
+>>>    
+>>> +	sound: sound {
+>>> +	};
+>> You asked another folk working on sa8540p to not include sound in the
+>> SoC dtsi.
+> 
+> I asked not to put it in soc node. It can be in DTSI, but not under soc.
+Oh okay, then I misread that, sorry.
 
+
+Konrad
+> 
+> Best regards,
+> Krzysztof
+> 
