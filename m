@@ -2,146 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD0962BB35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:16:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F095262BB3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:17:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239153AbiKPLQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:16:40 -0500
+        id S239090AbiKPLRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:17:48 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238938AbiKPLQW (ORCPT
+        with ESMTP id S239098AbiKPLRV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:16:22 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8637713D5F;
-        Wed, 16 Nov 2022 03:04:05 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2D18BB81CD3;
-        Wed, 16 Nov 2022 11:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EF2C433D6;
-        Wed, 16 Nov 2022 11:04:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668596642;
-        bh=f9cz4x++pwxP/IsN9a6YZJDb1JLe80UCfjGruxH/j6o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oRXEvAznRVrzEUAMN+WnD0RqJ/MIm6KP11GoMbGXkObMHjq0VHkI82HwIt2vniBZL
-         V1m27Wij7U/J/iPABmteT/l3B3F8ny3Q7w/mGP2OhCxEifkzTIyVZ5AyjJkV3bzga2
-         nK5CSfY7xwM1gCzz1oU1aoj0tMEsWMGUZ7jOK7ceuGifczZs7pC0FXooPKwxR2Xf8S
-         ja19Qj2dfIoWYh0Ymy2p6IjjrUAgdhcZ7JHKvEM3ClqJEBiKilZdCE+k7EVNTX+MVO
-         9R2hRkdb5V8qp9okOGXeXO3cF0W0OY2ODn8q2ES4K9WhPypWtA6KrymfkQUul2XgAH
-         xiiNDwrZcXouw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ovGCa-0006dh-NH; Wed, 16 Nov 2022 12:03:32 +0100
-Date:   Wed, 16 Nov 2022 12:03:32 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp/sa8540p: add gpr node
-Message-ID: <Y3TDhB+QcdAcFfaB@hovoldconsulting.com>
-References: <20221115170242.150246-1-srinivas.kandagatla@linaro.org>
- <20221115170242.150246-2-srinivas.kandagatla@linaro.org>
+        Wed, 16 Nov 2022 06:17:21 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02175B87B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:05:30 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id t25-20020a1c7719000000b003cfa34ea516so2626344wmi.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:05:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TqJhaI2f39O+mx8H8+knTybOAJrfRfd7YGQks+65llo=;
+        b=TXKEyU7XKIOG8NGPkuFoUzgNzeuky6U6Q7L0T/BnPdocMdJxgsmgF1cZCtgX5Jq/3Z
+         9gxOWCpGKXS4MNb1iVsrxnZy9Tr2Kwo0II+8rj97Wpvazs3dAX9Vgx1g7k8TLZ7IR0W6
+         igfCQr9ZgizHo9tZGQJZJ1Jxdg8YZSUGOk64CeC3TJLRgNYF/YvlMEhwFSScPG59bJEB
+         xEqz/yj6ulTS+11d3GTQ50PQjkSR+iMVPiCpdkeIL2tEXTFM+iluzVi9KOOqzQPDw/51
+         x+HjbyvFL9CS3xZMqcBgOroXhkuZFhZqSbWVWlQvAgTO7vbUZb3QDhMwEAoO8F2nqywh
+         eunQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TqJhaI2f39O+mx8H8+knTybOAJrfRfd7YGQks+65llo=;
+        b=jjRg8GrCghq+ongNt8wNRqW/eYSTVzNGwowFmnDY+SIFOxZzuDEx7+Lsz7xnii2vzN
+         FEAnr81y1DQGSbJ6re7bldyXaQl+A3fcutQW/F/TrHaXRbZ8sg2/ZV/lhWFxgKMPAOqJ
+         Cmv2mWgpzjaoDEuM7dG4GllS5BCOSlofaFLgRyOMHzSPLyCWpSNyz1g5yDrh0/R+MaW8
+         Nks6mJaECKsQ4mCVwPIBzSz7gAy6Fh7wOHMAm3Tvz2bUWCb7mhfCTu7PurjvaqdM5MzD
+         cTqkK/3G8SqKxShCcBpxulwOgK6/SjDvocnNLKmNI3Mpo/1babYS0MpKfS7Oso7lCaky
+         +gFg==
+X-Gm-Message-State: ANoB5pm4TedLmlKx/js3kVIIYDU4G9lXVF08CHf48MGyaTxFRb3aGEXX
+        PZksoa5fQ6TkXQB/vBp2YFY5lg==
+X-Google-Smtp-Source: AA0mqf4OybDC4xV1zlil6w6c8LALL5eJsPs/3cBj72/cAY3sCLm/zoCQIli6TjrgBd/FKkJDpuZoMA==
+X-Received: by 2002:a05:600c:792:b0:3cf:6a83:bd19 with SMTP id z18-20020a05600c079200b003cf6a83bd19mr1773328wmo.29.1668596729522;
+        Wed, 16 Nov 2022 03:05:29 -0800 (PST)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id i6-20020a05600c354600b003cf894c05e4sm1806231wmq.22.2022.11.16.03.05.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 03:05:29 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/2] regulator: qcom-rpmh: Add support for PM8550
+Date:   Wed, 16 Nov 2022 13:05:13 +0200
+Message-Id: <20221116110515.2612515-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221115170242.150246-2-srinivas.kandagatla@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 15, 2022 at 05:02:40PM +0000, Srinivas Kandagatla wrote:
-> Add GPR node along with APM(Audio Process Manager) and PRM(Proxy
+This patchset adds regulator support for the new Qualcomm PM8550 PMIC.
 
-Perhaps spell out GPR as well.
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
 
-> resource Manager) audio services.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 40 ++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index c32bcded2aef..e3cdd8bccb0c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -12,6 +12,7 @@
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/thermal/thermal.h>
-> +#include <dt-bindings/soc/qcom,gpr.h>
+Abel Vesa (2):
+  regulator: qcom,rpmh: Add compatible for PM8550
+  regulator: qcom-rpmh: Add support for PM8550 regulators
 
-Please keep the include directives sorted.
+ .../regulator/qcom,rpmh-regulator.yaml        | 29 ++++++-
+ drivers/regulator/qcom-rpmh-regulator.c       | 81 +++++++++++++++++++
+ 2 files changed, 107 insertions(+), 3 deletions(-)
 
->  
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -1152,6 +1153,45 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  
->  				label = "lpass";
->  				qcom,remote-pid = <2>;
-> +
-> +				gpr {
-> +					compatible = "qcom,gpr";
-> +					qcom,glink-channels = "adsp_apps";
-> +					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
+-- 
+2.34.1
 
-I'd move the address and size cells properties above the vendor ones.
-
-> +					qcom,intents = <512 20>;
-> +
-> +					q6apm: q6apm {
-> +						reg = <GPR_APM_MODULE_IID>;
-> +						compatible = "qcom,q6apm";
-
-Please move compatible before reg throughout.
-
-> +						#sound-dai-cells = <0>;
-> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-> +						q6apmdai: dais {
-> +							compatible = "qcom,q6apm-dais";
-> +							#sound-dai-cells = <1>;
-> +							iommus = <&apps_smmu 0x0c01 0x0>;
-> +						};
-> +
-> +						q6apmbedai: bedais {
-> +							compatible = "qcom,q6apm-lpass-dais";
-> +							#sound-dai-cells = <1>;
-> +						};
-> +					};
-> +
-> +					q6prm: q6prm {
-> +						reg = <GPR_PRM_MODULE_IID>;
-> +						compatible = "qcom,q6prm";
-> +						#clock-cells = <2>;
-> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-> +						q6prmcc: cc {
-> +							compatible = "qcom,q6prm-lpass-clocks";
-> +							#clock-cells = <2>;
-> +						};
-> +					};
-> +
-
-Stray new line.
-
-> +				};
-> +
-
-Same here.
-
->  			};
->  		};
-
-Johan
