@@ -2,114 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A595162BF67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:27:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E158762BF6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 14:28:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233290AbiKPN1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 08:27:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
+        id S233539AbiKPN2g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 08:28:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232584AbiKPN1U (ORCPT
+        with ESMTP id S233525AbiKPN14 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 08:27:20 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 475666557
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:18 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso1594343wme.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:18 -0800 (PST)
+        Wed, 16 Nov 2022 08:27:56 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D43143AE7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:55 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id v17so26521903edc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 05:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QJfT8V+NqewZoYxYDtMjJqC1DFWvFQHR8X1dCFOjEZU=;
-        b=f13k4pD/fvQANLAy4Rl4VRQrJZv7lW5CORV54ubO5IWhGt/hRPcUYi2jJoN+IdX406
-         dDU2IYvCcFdRqWBHSt5QuCGFIdpflfsmPDT0o46CD5QUKdUs1m3tMYSTbIrFGQM8bTVu
-         BKYcCbNvpT541em+NVMAEirV02oiVaUt8iJc9o0f20rvnzWTDkJWSJKTvztiIEocqIoI
-         OSf8BqJvp5uK6swKAHvKHVif7Tzw7lbIV6VPBYBCKW68ZAabdX3DsWogzqB9QpPPIilC
-         fZ0RGWVH6zfTgtl5dlVrZcOVLCttlnC/XftCQwfN60N83u4fM7PBI0o7TI/diI6UwRoZ
-         a7Wg==
+        bh=l7n/++2Ra6h2v7Wvi16whBljKU1AOEc4Bg+41whL+y0=;
+        b=xrMYOn7BgRfD9DcteMgTTy5w/2PfGpDLky7B91NlkBrLrA3EeSMYYm1cKiRZJxsYHa
+         MrD8O12oPTyiO4Pn74cMlbsKbGV13flf9ZPXlFdoqDkOiQnfkitf65lYqcvbwwNpglgQ
+         DzQdrLjHXiUGZNC70Zyef2R88iqjiJWxvxieHQi6GX80OZaafT3ooo+37kLLvGU7gAyV
+         1zltPvowqd7CRp2ql80vpsRjppYIBn/EVFkAjLpeqIm3tgiNt4+j/zMTterzuEiWfPa3
+         Xwl1h3N3xOeZrH+xH/H5RG+x5XLHnFyiYxj/hVU7Pbao0uSDK0OXtrGX0/nEXIPCh6XX
+         Kj1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QJfT8V+NqewZoYxYDtMjJqC1DFWvFQHR8X1dCFOjEZU=;
-        b=Av/M1d6gQN4fLn1S4VayekZVWH0DG3Krurk8wsLktJi9PkSbHJCE/Y7q+2nnXiVUYt
-         965juhOKAOBoioYU7yT9PktmR62tvweTXJajojgkZKlvilSilJQvCs9kOgL2J5ETH+ED
-         O5n+EKSNi0Oo6xDWhyzHa1Q0c8mzkAmwzSe+mH4ioGenw0PoF8XEf6Z7QI4zTaHFgSkp
-         h1LqUlwlZ1QnZoOynKapd4v328lnIDoZFZsPticvPvQvDPqpp+TuYx/TOdSS9yFggriL
-         1VXuAhXjEOov+C+46O2HwbzUqsNLn5vu44KyTOMqYoCxCa4/IpYByCECG3Xnao5MLuDS
-         Vz4A==
-X-Gm-Message-State: ANoB5pkoEHr8HEOQAdgwTcZRZX42Vz4cc57G5kaIahcTYeAi/RHhytWX
-        8a6iiYi6oZwwV2qbSgNPxWbruA==
-X-Google-Smtp-Source: AA0mqf7B1X2HqsCe8qopaV8np3w9eMq+fXBTFFWnQguzWdyuqjsKpwmk9TCK/9xf66N21FewaPtgIA==
-X-Received: by 2002:a05:600c:24b:b0:3cf:8e58:4a0c with SMTP id 11-20020a05600c024b00b003cf8e584a0cmr2092869wmj.199.1668605236617;
-        Wed, 16 Nov 2022 05:27:16 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id k25-20020a05600c1c9900b003cf4d99fd2asm2425710wms.6.2022.11.16.05.27.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 05:27:16 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=l7n/++2Ra6h2v7Wvi16whBljKU1AOEc4Bg+41whL+y0=;
+        b=Z9o8RIHH+rUkAdOqUQdyMjvHmQbJ0jrmbXkqebi2B5NsU9FoaG4LF9Ks7nq8ySuZVv
+         QjOOA5laYfPBNf9TgsOIcPWJO8iHD1OBCR7uE2awYyWw/h1IrdQtB3W0jI7E69LDJolr
+         II9bEqtR6Ticlf+kQlTFYGbRrgSUH4VmlJeWBimVe0ioafD9yH/5O54+q9KrkWr3szva
+         uVLc4b4WlI89toa3GNDlY33AdPKepoWHWzad1aQP9x4BR8ioZx6kKJYxQows4XAuyK+N
+         SQ/IauzfmBmCteOjZZZvzUiPq2ZH50/JnJT2AsL7mpGGgOpZrox2GQItlB+WHPV+tJYb
+         Vivw==
+X-Gm-Message-State: ANoB5pkFuZ4veW11hB9hIhNQvOm0WnoVY87exChXawml5zk35ni3ZFft
+        l/fcj2fCV0wHPi9XX5bXNIa0NA==
+X-Google-Smtp-Source: AA0mqf4yGh0tO6kvUQv/wiTIvRzBpbV9FBnSF3tZpKE3eLzDDo78NB5H6CDy2CXNbHDq82ryd9UXdQ==
+X-Received: by 2002:aa7:c90c:0:b0:461:bacd:c85d with SMTP id b12-20020aa7c90c000000b00461bacdc85dmr18476234edt.278.1668605273900;
+        Wed, 16 Nov 2022 05:27:53 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id 3-20020a170906300300b0079800b8173asm6816929ejz.158.2022.11.16.05.27.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 05:27:53 -0800 (PST)
+Message-ID: <d94a7dbe-fa26-686d-9051-3ed52f063dd9@linaro.org>
+Date:   Wed, 16 Nov 2022 14:27:46 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550: Add USB PHYs and controller
+ nodes
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [RFC PATCH 2/2] arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
-Date:   Wed, 16 Nov 2022 15:27:06 +0200
-Message-Id: <20221116132706.2852434-3-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221116132706.2852434-1-abel.vesa@linaro.org>
-References: <20221116132706.2852434-1-abel.vesa@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221116132212.2842655-1-abel.vesa@linaro.org>
+ <20221116132212.2842655-2-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116132212.2842655-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the PMIC eUSB2 repeater node and add the usb-repeater
-property to the eUSB2 PHY to allow it to be controlled by the
-PHY driver.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 757cf4f7f195..539d75c0566f 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -414,6 +414,11 @@ data-pins {
- 	};
- };
- 
-+&pm8550b_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_1p8>;
-+	vdd3-supply = <&vreg_l5b_3p1>;
-+};
-+
- &uart7 {
- 	status = "okay";
- };
-@@ -429,6 +434,8 @@ &usb_1_dwc3 {
- &usb_1_hsphy {
- 	status = "okay";
- 
-+	usb-repeater = <&pm8550b_eusb2_repeater>;
-+
- 	vdd-supply = <&vreg_l1e_0p88>;
- 	vdda12-supply = <&vreg_l3e_1p2>;
- };
--- 
-2.34.1
+On 16/11/2022 14:22, Abel Vesa wrote:
+> Add USB host controller and PHY nodes.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 99 ++++++++++++++++++++++++++++
+>   1 file changed, 99 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 07ba709ca35f..1b62395fe101 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1460,6 +1460,105 @@ opp-202000000 {
+>   			};
+>   		};
+>   
+> +		usb_1_hsphy: phy@88e3000 {
+> +			compatible = "qcom,sm8550-snps-eusb2-phy";
+> +			reg = <0x0 0x088e3000 0x0 0x154>;
+> +			status = "disabled";
+Status last.
 
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +		};
+> +
+> +		usb_1_qmpphy: phy-wrapper@88e9000 {
+> +			compatible = "qcom,sm8550-qmp-usb3-phy";
+> +			reg = <0x0 0x088e9000 0x0 0x200>,
+> +			      <0x0 0x088e8000 0x0 0x20>;
+
+> +			status = "disabled";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+Move these four down, please.
+
+> +
+> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +				 <&rpmhcc RPMH_CXO_PAD_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> +			clock-names = "aux", "ref_clk_src", "com_aux";
+> +
+> +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> +				<&gcc GCC_USB3_PHY_PRIM_BCR>;
+Indentation seems off.
+
+> +			reset-names = "phy", "common";
+> +			power-domains = <&gcc USB3_PHY_GDSC>;
+> +
+> +			usb_1_ssphy: phy@88e9200 {
+> +				reg = <0x0 0x088e9200 0x0 0x200>,
+> +				      <0x0 0x088e9400 0x0 0x200>,
+> +				      <0x0 0x088e9c00 0x0 0x400>,
+> +				      <0x0 0x088e9600 0x0 0x200>,
+> +				      <0x0 0x088e9800 0x0 0x200>,
+> +				      <0x0 0x088e9a00 0x0 0x100>;
+> +				#phy-cells = <0>;
+> +				#clock-cells = <0>;
+> +				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +				clock-names = "pipe0";
+> +				clock-output-names = "usb3_phy_pipe_clk_src";
+> +			};
+> +		};
+> +
+> +		usb_1: usb@a6f8800 {
+> +			compatible = "qcom,sm8550-dwc3", "qcom,dwc3";
+> +			reg = <0x0 0x0a6f8800 0x0 0x400>;
+
+> +			status = "disabled";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+Move these four down, please.
+
+> +
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +				 <&tcsr TCSR_USB3_CLKREF_EN>;
+> +			clock-names = "cfg_noc",
+> +				      "core",
+> +				      "iface",
+> +				      "sleep",
+> +				      "mock_utmi",
+> +				      "xo";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <200000000>;
+> +
+> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 15 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 14 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "hs_phy_irq",
+> +					  "ss_phy_irq",
+> +					  "dm_hs_phy_irq",
+> +					  "dp_hs_phy_irq";
+> +
+> +			power-domains = <&gcc USB30_PRIM_GDSC>;
+> +
+> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
+> +
+> +			usb_1_dwc3: usb@a600000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0x0 0x0a600000 0x0 0xcd00>;
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +				iommus = <&apps_smmu 0x40 0x0>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+> +				snps,usb3_lpm_capable;
+> +				phys = <&usb_1_ssphy>,
+> +				       <&usb_1_hsphy>;
+> +				phy-names = "usb3-phy",
+> +					    "usb2-phy";
+No need for newlines here and in phys =
+
+Konrad
+> +			};
+> +		};
+> +
+>   		pdc: interrupt-controller@b220000 {
+>   			compatible = "qcom,sm8550-pdc", "qcom,pdc";
+>   			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
