@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C62562C253
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:21:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3900962C25D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:22:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234556AbiKPPVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:21:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37926 "EHLO
+        id S236176AbiKPPWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:22:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233106AbiKPPUs (ORCPT
+        with ESMTP id S234785AbiKPPV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:20:48 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C4C528A1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:20:45 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z18so27031161edb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:20:45 -0800 (PST)
+        Wed, 16 Nov 2022 10:21:59 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61B0532F0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:21:56 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id c25so22227669ljr.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:21:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w3tKT9JL0CFd5EPETFeT0UHrQt4bDGBRmE+/nysWuPY=;
-        b=ydjttCyqUmWnfO7IC8bX9+YyUG0zAw9c5VYiZc7lb6VijSWJyzcJBIyDymaNyoOI9y
-         VtCTo21V7o0ds+jOILsqmEXdtigvQCEXwbTCSsXYUHYD83w0Bc/2N5tFvyxGGXNe8waQ
-         VRY3xJItdGVWftgvufjpXgn5GdQ6gidWbdVGt2RVHjGoVyal+zHUjjs5O5nPsQUMUPGZ
-         vnS9myfFH/faBPMdelsdSWt6ipV7QtsmBU3VQ81p8AGcm3j86P3+SKW6kbYVLF4TgwGg
-         y8jgxNHM8u4ssd3WHUVNNDs2n55hrifkZqLVywD1hjReESZ+iBP3bdHOOOkog6PpYNZm
-         jLMA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4hyX3SOmdhZkf4G5iVnyyDhT1r2OXQYrZj5d/iATSVs=;
+        b=soelfGRwwyZEyt+ov+wYiQU4I/2pIW1PXpqo77jn/XCKLaXW+e0aKxMNUegxuZBRpx
+         wbgZsOWiO1LyDn3UUzAA74lCnWLkqaaGYre1CP07CERjnZUdlILnl4MMCvfGcYxWYbZL
+         merR+yr+5T7bWK7gbsJxGuQna1Rb5oMbgru8ObPHC2ESFqE0MYb2Qish7SMaJhRu2Mpf
+         ERWLixTO+f4+YlHt1qnkkaX8QrxCYoe8PpdObt5mqWrsmDSPBu4P2y5iUbPyqEEndoBC
+         VuuvPC9DvXNVNIAto+ki+O/YNsVdSeak7xxYzYKjn20TWNh0X9FB1YcOTAhANkrJGw2H
+         2oog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w3tKT9JL0CFd5EPETFeT0UHrQt4bDGBRmE+/nysWuPY=;
-        b=d5R9ATkvBGeX4qHkZCoe1CRkc85VHmUYAGQmoEBAWV/DmQ4MW44wMu8QbbnBd4uCzq
-         rlE7GLELnyiE7Ng66/8p0OFhzB+ouleu3jmzmod5Naz7RK7bJy3jwQAfxyU8KvZmBmoR
-         1lbcDTxyHaS0ZCm8kpnvWfKrJKeFMX+ezbef7xFbABlkwNTEU+DpBoeRWjB9BvtatNjq
-         xRkDPv+hMs3QMruznPeLMGq6Kzl7RZfNu2OlEgT9h7RsFqT59W+ApkNgVyfC49MysTGN
-         lzID4wQ4J303QvnRklD9O43v4+mjBUEU5ff02wh1sZyZktC40PBIce+NsrJ6hLT/Hdk/
-         P4Bw==
-X-Gm-Message-State: ANoB5pmzgwGrfx5lFf6c/Vf5XfS4tWnQUMuY5xKLoOe8i7Xp570cSOHa
-        iqdhKJXh7FLSIN+aWIf6h0bcHA==
-X-Google-Smtp-Source: AA0mqf4rCK0LfFrQ0LoSkmM3gxPSblTJAuPY0wWCouYaI8NnPWVXvckLblYI1RzkyLry2N6aHZXE0w==
-X-Received: by 2002:a50:ec12:0:b0:461:d5af:e9ea with SMTP id g18-20020a50ec12000000b00461d5afe9eamr18799263edr.403.1668612044189;
-        Wed, 16 Nov 2022 07:20:44 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id g17-20020a170906539100b007ae1e528390sm6891216ejo.163.2022.11.16.07.20.42
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4hyX3SOmdhZkf4G5iVnyyDhT1r2OXQYrZj5d/iATSVs=;
+        b=IgooiSDv6tjUJK/EFanZW9dxsYvffOqBzPjVtrd9pNlRcbXAZvDtXiBmu4CwD0S0Br
+         WACjJxQXQzKdJ3Jm8ww7IElxbLcneAY46ClGYBLfl311EqS4YYT5OWG5w90BB2t3xEW/
+         ZdvtlaYqtuY+DVcutRtA/8MfpqtnIj16/wcwCO7QrZ2Zg2+g/lMxwPOS9J9be8z6wMxe
+         edIrmxVyt3hcl7qqevzx2ABuJjk0+8wHeo3pUQ+0qopXlaoQ2vSi9LNSZ9NP5PPADcdC
+         4H+2dEDJE4RKm2hrBOf7MtjxRUnXx6g8Dk3+X9mG/wU0kwwzQRuBddxUGymbM5oF7aJb
+         hiKg==
+X-Gm-Message-State: ANoB5pktSgrG01Cj0Oie5AYoJ2SLCIFmZA8pVqCO8xPGhKoaHR3lT+ms
+        EHn9I82G8NlT20fZj47at4cqyzuR5jvJj12U
+X-Google-Smtp-Source: AA0mqf7eBPZsx75iWgNI31G3IMkd8p9EZfm72Rcb0mEbFlHRRLNmGoT1rQD7Cips6s1u1sAjJjOIrg==
+X-Received: by 2002:a05:651c:98c:b0:277:81ff:b8c4 with SMTP id b12-20020a05651c098c00b0027781ffb8c4mr7428478ljq.260.1668612115113;
+        Wed, 16 Nov 2022 07:21:55 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id k11-20020a05651210cb00b004a1e592837esm2649900lfg.140.2022.11.16.07.21.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 07:20:43 -0800 (PST)
-Message-ID: <4ecc40d5-29fa-0045-4b93-2480107db607@linaro.org>
-Date:   Wed, 16 Nov 2022 16:20:36 +0100
+        Wed, 16 Nov 2022 07:21:54 -0800 (PST)
+Message-ID: <a839e03c-33d5-59ba-8623-cbafccc8b0b8@linaro.org>
+Date:   Wed, 16 Nov 2022 18:21:54 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8953: Add device tree for Xiaomi
- Redmi 5 Plus
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Eugene Lepshy <fekz115@gmail.com>,
-        Gianluca Boiano <morf3089@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v7 2/4] phy: qcom-qmp-ufs: provide symbol clocks
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-hardening@vger.kernel.org
-References: <20221116145616.17884-1-luca@z3ntu.xyz>
- <20221116145616.17884-8-luca@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116145616.17884-8-luca@z3ntu.xyz>
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+References: <20221110151748.795767-1-dmitry.baryshkov@linaro.org>
+ <20221110151748.795767-3-dmitry.baryshkov@linaro.org>
+ <Y3T+rj1hACqSBrC4@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y3T+rj1hACqSBrC4@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,374 +85,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16/11/2022 15:56, Luca Weiss wrote:
-> From: Eugene Lepshy <fekz115@gmail.com>
+On 16/11/2022 18:15, Johan Hovold wrote:
+> On Thu, Nov 10, 2022 at 06:17:46PM +0300, Dmitry Baryshkov wrote:
+>> Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
+>> ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
+>> provider to let other devices link these clocks through the DT.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
 > 
-> Add device tree for the Xiaomi Redmi 5 Plus (vince) smartphone. This
-> device is based on Snapdragon 625 (msm8953) SoC.
+> I was not CCed on this revision of this series either.
 > 
-> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
-> Co-developed-by: Gianluca Boiano <morf3089@gmail.com>
-> Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../boot/dts/qcom/msm8953-xiaomi-vince.dts    | 330 ++++++++++++++++++
->   2 files changed, 331 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
+>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 64 +++++++++++++++++++++++++
+>>   1 file changed, 64 insertions(+)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> index 189103d1bd18..78d7daf34667 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> @@ -1023,6 +1023,66 @@ static int qmp_ufs_clk_init(struct qmp_ufs *qmp)
+>>   	return devm_clk_bulk_get(dev, num, qmp->clks);
+>>   }
+>>   
+>> +static void phy_clk_release_provider(void *res)
+>> +{
+>> +	of_clk_del_provider(res);
+>> +}
+>> +
+>> +#define UFS_SYMBOL_CLOCKS 3
+>> +
+>> +static int phy_symbols_clk_register(struct qmp_ufs *qmp, struct device_node *np)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 9517638b2fdd..bed490c095dd 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -25,6 +25,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-tissot.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-vince.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
-> new file mode 100644
-> index 000000000000..da029aaa99a1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
-> @@ -0,0 +1,330 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/dts-v1/;
-> +
-> +#include "msm8953.dtsi"
-> +#include "pm8953.dtsi"
-> +#include "pmi8950.dtsi"
-> +#include <dt-bindings/leds/common.h>
-> +
-> +/ {
-> +	model = "Xiaomi Redmi 5 Plus";
-> +	compatible = "xiaomi,vince", "qcom,msm8953";
-> +	chassis-type = "handset";
-> +	qcom,msm-id = <293 0>;
-> +	qcom,board-id= <0x1000b 0x08>;
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_key_default>;
-> +
-> +		key-volume-up {
-> +			label = "volume_up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		/delete-node/ memory@85b00000;
-> +		memory@84a00000 {
-> +			reg = <0x0 0x84a00000 0x0 0x1900000>;
-> +			no-map;
-> +		};
-> +
-> +		cont_splash_mem: memory@90001000 {
-> +			reg = <0x0 0x90001000 0x0 (1080 * 2160 * 3)>;
-> +			no-map;
-> +		};
-> +
-> +		/delete-node/ memory@8d600000;
-> +		adsp_fw_mem: memory@8d600000 {
-> +			reg = <0x0 0x8d600000 0x0 0x1200000>;
-> +			no-map;
-> +		};
-> +
-> +		/delete-node/ memory@8e700000;
-> +		wcnss_fw_mem: memory@8e800000 {
-> +			reg = <0x0 0x8e800000 0x0 0x700000>;
-> +			no-map;
-> +		};
-> +
-> +		ramoops@9ff00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0x9ff00000 0x0 0x100000>;
-> +			record-size = <0x1000>;
-> +			console-size = <0x80000>;
-> +			ftrace-size = <0x1000>;
-> +			pmsg-size = <0x8000>;
-> +		};
-> +	};
-> +
-> +	i2c-gpio {
-> +		compatible = "i2c-gpio";
-> +		sda-gpios = <&tlmm 14 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-> +		scl-gpios = <&tlmm 15 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-> +		i2c-gpio,delay-us = <2>;        /* ~100 kHz */
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		imu@6a {
-> +			compatible = "st,lsm6dsl";
-> +			reg = <0x6a>;
-> +			vdd-supply = <&pm8953_l10>;
-> +			vddio-supply = <&pm8953_l6>;
-> +			mount-matrix = "1", "0", "0",
-> +					"0", "-1", "0",
-> +					"0", "0", "1";
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
-> +&hsusb_phy {
-> +	vdd-supply = <&pm8953_l3>;
-> +	vdda-pll-supply = <&pm8953_l7>;
-> +	vdda-phy-dpdm-supply = <&pm8953_l13>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&i2c_2 {
-> +	status = "okay";
-> +
-> +	led-controller@45 {
-> +		compatible = "awinic,aw2013";
-> +		reg = <0x45>;
-> +
-> +		vcc-supply = <&pm8953_l10>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		led@0 {
-> +			reg = <0>;
-> +			led-max-microamp = <5000>;
-> +			function = LED_FUNCTION_INDICATOR;
-> +			color = <LED_COLOR_ID_WHITE>;
-> +		};
-> +	};
-> +};
-> +
-> +&i2c_3 {
-> +	status = "okay";
-> +
-> +	touchscreen@20 {
-> +		reg = <0x20>;
-> +		compatible = "syna,rmi4-i2c";
-> +		interrupts-parent = <&tlmm>;
-> +		interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_FALLING>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		vdd-supply = <&pm8953_l10>;
-> +		vio-supply = <&pm8953_l6>;
-> +
-> +		pinctrl-names = "init", "suspend";
-> +		pinctrl-0 = <&ts_reset_active &ts_int_active>;
-> +		pinctrl-1 = <&ts_reset_suspend &ts_int_suspend>;
-> +		syna,reset-delay-ms = <200>;
-> +		syna,startup-delay-ms = <500>;
-> +
-> +		rmi4-f01@1 {
-> +			reg = <0x01>;
-> +			syna,nosleep-mode = <1>;
-> +		};
-> +
-> +		rmi4-f12@12 {
-> +			reg = <0x12>;
-> +			syna,rezero-wait-ms = <20>;
-> +			syna,sensor-type = <1>;
-> +			touchscreen-x-mm = <68>;
-> +			touchscreen-y-mm = <122>;
-> +		};
-> +	};
-> +};
-> +
-> +&pm8953_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
-> +};
-> +
-> +&pmi8950_wled {
-> +	qcom,current-limit-microamp = <20000>;
-> +	qcom,ovp-millivolt = <29600>;
-> +	qcom,num-strings = <2>;
-> +	qcom,external-pfet;
-> +	qcom,cabc;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&rpm_requests {
-> +	regulators {
-> +		compatible = "qcom,rpm-pm8953-regulators";
-> +		vdd_s1-supply = <&vph_pwr>;
-> +		vdd_s2-supply = <&vph_pwr>;
-> +		vdd_s3-supply = <&vph_pwr>;
-> +		vdd_s4-supply = <&vph_pwr>;
-> +		vdd_s5-supply = <&vph_pwr>;
-> +		vdd_s6-supply = <&vph_pwr>;
-> +		vdd_s7-supply = <&vph_pwr>;
-> +		vdd_l1-supply = <&pm8953_s3>;
-> +		vdd_l2_l3-supply = <&pm8953_s3>;
-> +		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-> +		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-> +		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-> +
-> +		pm8953_s1: s1 {
-> +			regulator-min-microvolt = <870000>;
-> +			regulator-max-microvolt = <1156000>;
-> +		};
-> +
-> +		pm8953_s3: s3 {
-> +			regulator-min-microvolt = <984000>;
-> +			regulator-max-microvolt = <1224000>;
-> +		};
-Please add a newline after each node.
+> Since you're adding a new function, please use the common prefix and
+> reordering the terms and dropping the redundant "symbols" should make it
+> more readable:
+> 
+> 	qmp_ufs_register_clocks()
+> 
+>> +{
+>> +	struct clk_hw_onecell_data *clk_data;
+>> +	struct clk_hw *hw;
+>> +	char name[64];
+>> +	int ret;
+>> +
+>> +	clk_data = devm_kzalloc(qmp->dev,
+>> +				struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS),
+>> +				GFP_KERNEL);
+>> +	if (!clk_data)
+>> +		return -ENOMEM;
+>> +
+>> +	clk_data->num = UFS_SYMBOL_CLOCKS;
+>> +
+>> +	snprintf(name, sizeof(name), "%s::rx_symbol_0", dev_name(qmp->dev));
+>> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+>> +	if (IS_ERR(hw))
+>> +		return PTR_ERR(hw);
+>> +
+>> +	clk_data->hws[0] = hw;
+>> +
+>> +	snprintf(name, sizeof(name), "%s::rx_symbol_1", dev_name(qmp->dev));
+>> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+>> +	if (IS_ERR(hw))
+>> +		return PTR_ERR(hw);
+>> +
+>> +	clk_data->hws[1] = hw;
+>> +
+>> +	snprintf(name, sizeof(name), "%s::tx_symbol_0", dev_name(qmp->dev));
+>> +	hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
+>> +	if (IS_ERR(hw))
+>> +		return PTR_ERR(hw);
+>> +
+>> +	clk_data->hws[2] = hw;
+>> +
+>> +	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_data);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	/*
+>> +	 * Roll a devm action because the clock provider is the child node, but
+>> +	 * the child node is not actually a device.
+>> +	 */
+> 
+> I know you just copied this from one of the other drivers, but perhaps
+> rephrase as "can be a child node". You can just drop the second clause
+> (no node *is* a device).
 
-(+delete nodes by referencing their label, check licensing and check if 
-i2c-gpio is necessary as in the rest of the patches)
+Ack, thanks for the suggestion.
 
-Konrad
-> +		pm8953_s4: s4 {
-> +			regulator-min-microvolt = <1900000>;
-> +			regulator-max-microvolt = <2050000>;
-> +		};
-> +		pm8953_l1: l1 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1100000>;
-> +		};
-> +		pm8953_l2: l2 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +		pm8953_l3: l3 {
-> +			regulator-min-microvolt = <925000>;
-> +			regulator-max-microvolt = <925000>;
-> +		};
-> +		pm8953_l5: l5 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8953_l6: l6 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8953_l7: l7 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1900000>;
-> +		};
-> +		pm8953_l8: l8 {
-> +			regulator-min-microvolt = <2900000>;
-> +			regulator-max-microvolt = <2900000>;
-> +		};
-> +		pm8953_l9: l9 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3300000>;
-> +		};
-> +		pm8953_l10: l10 {
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +		pm8953_l11: l11 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8953_l12: l12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8953_l13: l13 {
-> +			regulator-min-microvolt = <3125000>;
-> +			regulator-max-microvolt = <3125000>;
-> +		};
-> +		pm8953_l16: l16 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8953_l17: l17 {
-> +			regulator-min-microvolt = <2750000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +		pm8953_l19: l19 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1380000>;
-> +		};
-> +		pm8953_l22: l22 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +		};
-> +		pm8953_l23: l23 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +	};
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_2 {
-> +	vmmc-supply = <&pm8953_l11>;
-> +	vqmmc-supply = <&pm8953_l12>;
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <16 4>, <135 4>;
-> +
-> +	ts_reset_active: ts-reset-active-state {
-> +		pins = "gpio64";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	ts_reset_suspend: ts-reset-suspend-state {
-> +		pins = "gpio64";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	ts_int_active: ts-int-active-state {
-> +		pins = "gpio65";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	ts_int_suspend: ts-int-suspend-state {
-> +		pins = "gpio65";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-down;
-> +	};
-> +};
-> +
-> +&uart_0 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart_console_active>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&usb3_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
+> 
+>> +	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
+>> +}
+>> +
+>> +static const struct phy_ops qcom_qmp_ufs_ops = {
+>> +	.power_on	= qmp_ufs_enable,
+>> +	.power_off	= qmp_ufs_disable,
+>> +	.owner		= THIS_MODULE,
+>> +};
+> 
+> As I've already pointed out once, the above phy_ops struct hunk does not
+> belong in this patch and is just some left over after you rebased on
+> phy-next that must be removed.
+
+Oops. I'll fix this during the next respin.
+
+> 
+>>   static int qmp_ufs_parse_dt_legacy(struct qmp_ufs *qmp, struct device_node *np)
+>>   {
+>>   	struct platform_device *pdev = to_platform_device(qmp->dev);
+>> @@ -1135,6 +1195,10 @@ static int qmp_ufs_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		goto err_node_put;
+>>   
+>> +	ret = phy_symbols_clk_register(qmp, np);
+>> +	if (ret)
+>> +		goto err_node_put;
+>> +
+>>   	qmp->phy = devm_phy_create(dev, np, &qcom_qmp_ufs_phy_ops);
+>>   	if (IS_ERR(qmp->phy)) {
+>>   		ret = PTR_ERR(qmp->phy);
+> 
+> Johan
+
+-- 
+With best wishes
+Dmitry
+
