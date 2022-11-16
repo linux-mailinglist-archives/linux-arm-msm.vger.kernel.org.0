@@ -2,161 +2,383 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 127C862C1E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:08:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7283762C1F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:11:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233677AbiKPPIw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:08:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
+        id S233199AbiKPPK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:10:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234379AbiKPPIr (ORCPT
+        with ESMTP id S233002AbiKPPKx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:08:47 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5907B4509F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:08:41 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id r12so29975712lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:08:41 -0800 (PST)
+        Wed, 16 Nov 2022 10:10:53 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEBAC45086
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:10:51 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id gv23so12083751ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=adyqmGjM2/t88ETfaCdsoHxVWXhSjmQ/Vu2VudXPCUc=;
-        b=c8VfFr4bwKX5GqribNfHQoZpMGRMbhtwz0/3nHn25OW7yTWV2y1hbIRp7ej30MKYEI
-         B+EDI/dHDMS4GrpH2uiNdrlgvVWp0m9dwnQi6URa6cinXq9cgobrHeic3m8kVnFncLQX
-         2ATypZjLaeMjPagjxdDbFnNKjv/tbAbfnrvq2mE+Od4SMmOemsvzJMGUbhNYp47WSh8U
-         SQge65+D9h0WUnKgNB/QCdwh+EbJIXMJiWAKWPLhKvMQ8q96JbKmO7K61YxmKaXKmoiy
-         Qq+kKcxfoN/nhm5Wx2Ei39iagnnr45S5pWe7qohShl0phcp+OmaDRt5oNqfDDcQznIM6
-         yhAg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0brBV+aNc25BP0Dg0H7hvJ4GG7kd5dDtU1dPveJx/xA=;
+        b=HT+bqVCUacMQvbynW96YuRiYbeCmbevZE19cQH7dDCL0s+hHeFYWWzEd+ygrx0r5zk
+         oEknLOj15hIQuLHOnCO/bp+5xWXRiHvfQXYLI42i2ZT7Tap/lbJyhFKWQL5e+laKvacf
+         dfNB9IDNiaRCuz8VEVlkPuZoyjnvpmgSlt+VsHTYMpv1j7NRaoTMWhCInOm6pZOQx3oF
+         35ffCBaCEZd/iOVECXn91Ls2O0gTBQIE3LpDXod7lko0wTqeCMvakXD4R45MHug6njtA
+         u4M13435C9A7kIxYU+8KQGrPnPyQMxeqONWiRHVrW5fGdeuaWgaakcIwOTHpS/2oqdYt
+         KW7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=adyqmGjM2/t88ETfaCdsoHxVWXhSjmQ/Vu2VudXPCUc=;
-        b=yvTxNng1/j4XYwr5h1IO0urGY2JfRw9kNnWV5SuNxvX6eleKQTpyzAa6bKHJDvAEyL
-         QcuEt2D41oFcNpnf5TYDSyzJymLMpbGHzZR3LMr4vpWdmSrzD6z6JwkVYO8aXgEaZIfx
-         WpALH5DYZiqUeZgPGXaYsbmzMC66Cmu8pyaHL9GvfIkf0YWedBk61NM2+kVV0s6q+Tl/
-         dyZ2YWOr+DIpJCa7DLIcnF83YcPGNPAy3zkulw0lMNbKPbTsEsJhXQ4NGmVvtCuxcQLU
-         lEMWeSWgLsI+TEiBP6hDt6LYWcL36Q8oRduNqPjHZAV5mzw3f2OW3gUgmgwE2vJUMhy4
-         zdnQ==
-X-Gm-Message-State: ANoB5pkxrz97j9LMV4l1mFz/QgKVTv7wb7HXQ3m+nrkLHrH1wwFIiniT
-        gTJAKTP7m0NC7G00Kn54CR8+qw==
-X-Google-Smtp-Source: AA0mqf62VyZdW4auUMnIXeVYdnC6S01JYtnXZYf5j6edhD/d7LSZvVxnROe6RVTCDX1scp9U+j/H8g==
-X-Received: by 2002:a05:6512:1308:b0:4b2:1e88:41bb with SMTP id x8-20020a056512130800b004b21e8841bbmr8370954lfu.117.1668611319711;
-        Wed, 16 Nov 2022 07:08:39 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b24-20020a056512071800b004b15bc0ff63sm2621645lfs.277.2022.11.16.07.08.39
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0brBV+aNc25BP0Dg0H7hvJ4GG7kd5dDtU1dPveJx/xA=;
+        b=QCJDUwn9DbTfCU92G6+aR7rYTM8dIyXyk+ELzArWrrheONDdIcjZxlZJYaY9XfPsAD
+         yd6ufgDehG7MZHHS6c9WD0iAswf3AMX+2dRhrpCTqtrO4zPSwnWOx8aeCLjCrK7cufS6
+         pz+Xpdz8xfNbbanBwOfWNCEOU1NnTAtiB13W3GbBXwR/xjV2jXj68c3Z5qo/8KQZAYhP
+         8IBDEMaMiHQX/SV04HQmuE83T5JQ5nVBW3owRdlDAEKG37v/HGg47oRyIzV+JHn02h+Q
+         G0g19BTsUr5v2lX+fDK/lfxRQ513Hwoes5f9vhq2x4E7VTpAxmh9vq+ztQgRxb1jc2V+
+         TjeA==
+X-Gm-Message-State: ANoB5pmgG9d/mtlZvHA4c+hO1rMb9AqPxqEVC/LVqT+prVTcAispDWzr
+        PqhKYlhQ3HLGQt3zuMdK99DeZw==
+X-Google-Smtp-Source: AA0mqf45Lm1EHubZA8sV1l1+PyI8Ch4aKulzmN8LdptkNlLZsJIcRSv/w+zFDP6haJF+ZSHvRSr9Cg==
+X-Received: by 2002:a17:906:61b:b0:7ae:3684:84b0 with SMTP id s27-20020a170906061b00b007ae368484b0mr17573989ejb.622.1668611450269;
+        Wed, 16 Nov 2022 07:10:50 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id r10-20020a17090609ca00b0078d3f96d293sm6969403eje.30.2022.11.16.07.10.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 07:08:39 -0800 (PST)
-Message-ID: <e049f5b1-da41-6854-4731-b6697770ffde@linaro.org>
-Date:   Wed, 16 Nov 2022 18:08:38 +0300
+        Wed, 16 Nov 2022 07:10:49 -0800 (PST)
+Message-ID: <fabf801f-0897-2436-74fb-4f48fe1b8a21@linaro.org>
+Date:   Wed, 16 Nov 2022 16:10:42 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 2/3] drm/msm/disp/dpu1: add helper to know if display
- is pluggable
-Content-Language: en-GB
-To:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-References: <1668609040-2549-1-git-send-email-quic_kalyant@quicinc.com>
- <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 2/8] arm64: dts: qcom: sdm450: Add device tree for
+ Motorola Moto G6
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Julian Braha <julianbraha@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hardening@vger.kernel.org
+References: <20221116145616.17884-1-luca@z3ntu.xyz>
+ <20221116145616.17884-3-luca@z3ntu.xyz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116145616.17884-3-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 17:30, Kalyan Thota wrote:
-> Since DRM encoder type for few encoders can be similar
-> (like eDP and DP) find out if the interface supports HPD
-> from encoder bridge to differentiate between builtin
-> and pluggable displays.
+
+
+On 16/11/2022 15:56, Luca Weiss wrote:
+> From: Julian Braha <julianbraha@gmail.com>
 > 
-> Changes in v1:
-> - add connector type in the disp_info (Dmitry)
-> - add helper functions to know encoder type
-> - update commit text reflecting the change
+> Add device tree for the Motorola Moto G6 (ali) smartphone. This device
+> is based on Snapdragon 450 (sdm450) SoC which is a variant of MSM8953.
 > 
-> Changes in v2:
-> - avoid hardcode of connector type for DSI as it may not be true (Dmitry)
-> - get the HPD information from encoder bridge
-> 
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Signed-off-by: Julian Braha <julianbraha@gmail.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 ++++++
->   2 files changed, 22 insertions(+)
+>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>   .../boot/dts/qcom/sdm450-motorola-ali.dts     | 256 ++++++++++++++++++
+>   2 files changed, 257 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 9c6817b..be93269 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -15,6 +15,7 @@
->   #include <drm/drm_crtc.h>
->   #include <drm/drm_file.h>
->   #include <drm/drm_probe_helper.h>
-> +#include <drm/drm_bridge.h>
->   
->   #include "msm_drv.h"
->   #include "dpu_kms.h"
-> @@ -217,6 +218,21 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->   	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->   };
->   
-> +bool dpu_encoder_is_pluggable(struct drm_encoder *encoder)
-> +{
-> +	struct drm_bridge *bridge;
-> +	int ops = 0;
-> +
-> +	if (!encoder)
-> +		return false;
-> +
-> +	/* Get last bridge in the chain to determine pluggable state */
-> +	drm_for_each_bridge_in_chain(encoder, bridge)
-> +		if (!drm_bridge_get_next_bridge(bridge))
-> +			ops = bridge->ops;
-> +
-> +	return ops & DRM_BRIDGE_OP_HPD;
-
-No. This is not what you should be checking (hint: polled connectors 
-also can be pluggable).
-
-Please check the type of the actual connector connected to this encoder.
-
-> +}
->   
->   bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
->   {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 9e7236e..691ab57 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -224,4 +224,10 @@ void dpu_encoder_cleanup_wb_job(struct drm_encoder *drm_enc,
->    */
->   bool dpu_encoder_is_valid_for_commit(struct drm_encoder *drm_enc);
->   
-> +/**
-> + * dpu_encoder_is_pluggable - find if the encoder is of type pluggable
-> + * @drm_enc:    Pointer to previously created drm encoder structure
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index d7669a7cee9f..a0b537414593 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -115,6 +115,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-crd.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-lenovo-thinkpad-x13s.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sda660-inforce-ifc6560.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm450-motorola-ali.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts b/arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts
+> new file mode 100644
+> index 000000000000..62874306fc24
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts
+> @@ -0,0 +1,256 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
 > + */
-> +bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc);
+> +/dts-v1/;
 > +
->   #endif /* __DPU_ENCODER_H__ */
+> +#include "msm8953.dtsi"
+> +#include "pm8953.dtsi"
+> +#include "pmi8950.dtsi"
+> +
+> +/ {
+> +	model = "Motorola Moto G6";
+> +	compatible = "motorola,ali", "qcom,sdm450";
+> +	chassis-type = "handset";
+> +	qcom,msm-id = <338 0>;
+> +	qcom,board-id = <0x41 0xb1a0>,
+> +			<0x42 0xb1a0>,
+> +			<0x43 0xc100>,
+> +			<0x42 0xb1b0>,
+> +			<0x43 0xc200>,
+> +			<0x44 0xc200>,
+> +			<0x42 0xb200>,
+> +			<0x43 0xb200>;
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		key-volume-up {
+> +			label = "volume_up";
+> +			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		/delete-node/ memory@85b00000;
+Please assign it a label and delete the node by referencing it, 
+otherwise we don't know what you're removing.
 
--- 
-With best wishes
-Dmitry
+> +		memory@84300000 {
+> +			no-map;
+> +			reg = <0x0 0x84300000 0x0 0x2000000>;
+reg first, please.
 
+> +		};
+> +
+> +		ramoops@ef000000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0xef000000 0x0 0xC0000>;
+No uppsercase hex, please.
+
+Konrad
+> +			console-size = <0x40000>;
+> +		};
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +&hsusb_phy {
+> +	vdd-supply = <&pm8953_l3>;
+> +	vdda-pll-supply = <&pm8953_l7>;
+> +	vdda-phy-dpdm-supply = <&pm8953_l13>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&i2c_3 {
+> +	status = "okay";
+> +
+> +	touchscreen@38 {
+> +		compatible = "edt,edt-ft5406";
+> +		reg = <0x38>;
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <65 IRQ_TYPE_EDGE_FALLING>;
+> +		vcc-supply = <&pm8953_l10>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ts_int_active &ts_reset_active>;
+> +
+> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+> +		touchscreen-size-x = <1080>;
+> +		touchscreen-size-y = <2160>;
+> +	};
+> +};
+> +
+> +&pm8953_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&pmi8950_wled {
+> +	qcom,num-strings = <3>;
+> +	qcom,external-pfet;
+> +	qcom,cabc;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-pm8953-regulators";
+> +
+> +		vdd_s1-supply = <&vph_pwr>;
+> +		vdd_s2-supply = <&vph_pwr>;
+> +		vdd_s3-supply = <&vph_pwr>;
+> +		vdd_s4-supply = <&vph_pwr>;
+> +		vdd_s5-supply = <&vph_pwr>;
+> +		vdd_s6-supply = <&vph_pwr>;
+> +		vdd_s7-supply = <&vph_pwr>;
+> +		vdd_l1-supply = <&pm8953_s3>;
+> +		vdd_l2_l3-supply = <&pm8953_s3>;
+> +		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
+> +		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
+> +		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
+> +
+> +		pm8953_s1: s1 {
+> +			regulator-min-microvolt = <795000>;
+> +			regulator-max-microvolt = <1081000>;
+> +		};
+> +
+> +		pm8953_s3: s3 {
+> +			regulator-min-microvolt = <1224000>;
+> +			regulator-max-microvolt = <1224000>;
+> +		};
+> +
+> +		pm8953_s4: s4 {
+> +			regulator-min-microvolt = <1900000>;
+> +			regulator-max-microvolt = <2050000>;
+> +		};
+> +
+> +		pm8953_l1: l1 {
+> +			regulator-min-microvolt = <1000000>;
+> +			regulator-max-microvolt = <1100000>;
+> +		};
+> +
+> +		pm8953_l2: l2 {
+> +			regulator-min-microvolt = <975000>;
+> +			regulator-max-microvolt = <1225000>;
+> +		};
+> +
+> +		pm8953_l3: l3 {
+> +			regulator-min-microvolt = <925000>;
+> +			regulator-max-microvolt = <925000>;
+> +		};
+> +
+> +		pm8953_l5: l5 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l6: l6 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l7: l7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1900000>;
+> +		};
+> +
+> +		pm8953_l8: l8 {
+> +			regulator-min-microvolt = <2900000>;
+> +			regulator-max-microvolt = <2900000>;
+> +		};
+> +
+> +		pm8953_l9: l9 {
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3300000>;
+> +		};
+> +
+> +		pm8953_l10: l10 {
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
+> +		};
+> +
+> +		pm8953_l11: l11 {
+> +			regulator-min-microvolt = <2950000>;
+> +			regulator-max-microvolt = <2950000>;
+> +		};
+> +
+> +		pm8953_l12: l12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2950000>;
+> +		};
+> +
+> +		pm8953_l13: l13 {
+> +			regulator-min-microvolt = <3125000>;
+> +			regulator-max-microvolt = <3125000>;
+> +		};
+> +
+> +		pm8953_l16: l16 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l17: l17 {
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
+> +		};
+> +
+> +		pm8953_l19: l19 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1350000>;
+> +		};
+> +
+> +		pm8953_l22: l22 {
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <2850000>;
+> +		};
+> +
+> +		pm8953_l23: l23 {
+> +			regulator-min-microvolt = <975000>;
+> +			regulator-max-microvolt = <1225000>;
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc_1 {
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on  &sdc1_rclk_on>;
+> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_off>;
+> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <95 5>, <111 1>, <126 1>;
+> +
+> +	ts_int_active: ts-int-active-state {
+> +		pins = "gpio65";
+> +		function = "gpio";
+> +		drive-strength = <8>;
+> +		bias-pull-up;
+> +	};
+> +
+> +	ts_reset_active: ts-reset-active-state {
+> +		pins = "gpio64";
+> +		function = "gpio";
+> +		drive-strength = <0x08>;
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +};
+> +
+> +&usb3_dwc3 {
+> +	dr_mode = "peripheral";
+> +};
