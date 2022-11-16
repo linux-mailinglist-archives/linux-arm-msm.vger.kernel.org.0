@@ -2,127 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A6C862B823
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:28:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B07FD62B84F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:29:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233819AbiKPK2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:28:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33730 "EHLO
+        id S233584AbiKPK3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:29:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238937AbiKPK1M (ORCPT
+        with ESMTP id S229495AbiKPK3K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:27:12 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620E03F045;
-        Wed, 16 Nov 2022 02:23:55 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id gv23so10205845ejb.3;
-        Wed, 16 Nov 2022 02:23:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dx8zMsCqJ/b5ENIL96HeAHIr3J2YawLRjwQyFl5N+RQ=;
-        b=jPLN+BH98o/JEHL6iTFpp4qDwAWctKDajXMtaaU0/5+TPBFu9N0ksiE5QThbVxMFzq
-         cBvhTUppolBlNowINNzIYSXJ4Fu884K1BlAf99XMwG55uQPGgbk27rutGYFd+guav8jc
-         Mm+AAaY86NgxdJRCSyJxppnzzAetp09w+oXQVIQlyXyqGX+qmvtL0hOEcjWyBTcHligm
-         FTVxksEohFRVNAmM7Uo+G1Fs+TAvTuYeDUo1H1FvxS5fKdRDnJ8NUiXH/nu0oPYSTyGI
-         tRHqKLYY1SwGtatN0a/PE1JNQGvL7DXGCYY/lT6PHgoHwF2tLl9hZQ9ycBfU/Iey//dx
-         pWcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dx8zMsCqJ/b5ENIL96HeAHIr3J2YawLRjwQyFl5N+RQ=;
-        b=leRMOOLZlXp2bFJnqf1aiHxs2120+LL7VvfM4/6Nt+hYeq05DBSew3hia8Rw5++F1k
-         /PZLJtOghVMOrHtEBAazJ53aIqHJpupa/XBInJTQGo5R6VO1VQMdsDSJw8SaG6VLGTDL
-         s0f9vR8mlkp8i9EcxtZMmslaFZUQgM7hTtWKfBDOO0uF5OZe7zZVLcd7paexjxRbsLtd
-         MdMz5Ou3141XkwBd1K2yWaf6TmVekbN5XqBFes7vqve0qZEaSem1G+duCAUCQN8grW/L
-         2ifrNRYGSDJmz4ATMsedCdmBk4FEMv3N70BNxtTuMQwuUq/PhY59IYlF4MbX7Ng8IcGR
-         yx0A==
-X-Gm-Message-State: ANoB5pkd1lpYAXp14nsE8fjDCw7lm7N5N4luxyglUw7mAQRdf9N1ibQ/
-        vOkQTQ1e1OaitH7Y53R+GHt75AeGAuA=
-X-Google-Smtp-Source: AA0mqf6cW5MNv6KVaRLzN4SpGw31D3kQqzuQfbSTzfslBdRMvqZB/AB7e6dlr3tsr0H1J1qcDVgeFA==
-X-Received: by 2002:a17:907:20c2:b0:7ae:967a:50bb with SMTP id qq2-20020a17090720c200b007ae967a50bbmr17188059ejb.383.1668594233480;
-        Wed, 16 Nov 2022 02:23:53 -0800 (PST)
-Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id i9-20020aa7c709000000b004588ef795easm7361126edq.34.2022.11.16.02.23.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 02:23:52 -0800 (PST)
-Date:   Wed, 16 Nov 2022 11:23:51 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Brian Masney <bmasney@redhat.com>, linus.walleij@linaro.org,
-        brgl@bgdev.pl, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        psodagud@quicinc.com, quic_shazhuss@quicinc.com,
-        quic_ppareek@quicinc.com, ahalaney@redhat.com, echanude@redhat.com,
-        nicolas.dechesne@linaro.org
-Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
-Message-ID: <Y3S6NyPwN8wbwJDI@orome>
-References: <20221114202943.2389489-1-bmasney@redhat.com>
- <7420da17-d6d6-10e6-c87e-d3dc37d17ffb@linaro.org>
- <CAKXuJqgckbmikXwFi0g3P3Db5jvyst+xhQBcPoV7mA2XStVVzA@mail.gmail.com>
+        Wed, 16 Nov 2022 05:29:10 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B194D2FC19;
+        Wed, 16 Nov 2022 02:25:49 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4D3A361BFB;
+        Wed, 16 Nov 2022 10:25:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ED3C433D7;
+        Wed, 16 Nov 2022 10:25:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668594348;
+        bh=sRkzPw2tQ0bFhCiQdFtyKxy2q3DB99dBo/dIdUpImyw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bzNgl2XvWlYUH5ldwswLfJHn7kdmaLJCLdIXDegIkkwwceUN708LMCKN+/sYttXkc
+         C/M1lX1BjFe9eVAAA5IuN6inrCIbgKD7gk8h/lwNN7T1EgnHeBzdms8QAcmv3X+WYp
+         ekzCoLQjczHOCjul90Prl5XyFbUd7noCsdofXLYLtLO39QLFt2c2Va8oMR/S9VA4Z3
+         IvyUsAXmrCbFAtSmTeOOFNjc4f1PGjU2ARq27BfUSsWHcNxOmrnos+TFjKXkgbBTSL
+         O4OVGk9W+QZnOqG1i9/3GC60waj3Ba5onlXql3gauih1jVXzd61PpAlDdekcdWSh5P
+         4Nd/AhgqiSpzg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ovFba-0001Ie-NS; Wed, 16 Nov 2022 11:25:18 +0100
+Date:   Wed, 16 Nov 2022 11:25:18 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>
+Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
+Message-ID: <Y3S6joPSdF37r4li@hovoldconsulting.com>
+References: <20221116075207.32363-1-quic_ppareek@quicinc.com>
+ <20221116075207.32363-3-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="sDjlB8ktuswCuIRX"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAKXuJqgckbmikXwFi0g3P3Db5jvyst+xhQBcPoV7mA2XStVVzA@mail.gmail.com>
-User-Agent: Mutt/2.2.8 (2022-11-05)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20221116075207.32363-3-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Nov 16, 2022 at 01:22:07PM +0530, Parikshit Pareek wrote:
+> Introduce the Qualcomm SA8540P ride automotive platform, also known as
+> Qdrive-3 development board.
+> 
+> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
+> regulators, debug UART, PMICs, remoteprocs and USB.
+> 
+> The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
+> been created for PMIC, so that it can be used for future SA8540P based
+> boards.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> Tested-by: Brian Masney <bmasney@redhat.com>
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Tested-by: Eric Chanudet <echanude@redhat.com>
+> Reviewed-by: Eric Chanudet <echanude@redhat.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile         |   1 +
+>  arch/arm64/boot/dts/qcom/pm8450a.dtsi     |  77 ++++++++
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 221 ++++++++++++++++++++++
+>  3 files changed, 299 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8450a.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> 
+> +&apps_rsc {
+> +	regulators-0 {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
 
---sDjlB8ktuswCuIRX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +		vreg_l6c: ldo6 {
+> +			regulator-name = "vreg_l6c";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes =
+> +			    <RPMH_REGULATOR_MODE_LPM
+> +			     RPMH_REGULATOR_MODE_HPM>;
 
-On Tue, Nov 15, 2022 at 04:02:38PM -0600, Steev Klimaszewski wrote:
-> Hi,
->=20
-> Others in the thread pointed to Thierry's patch, but on the Lenovo
-> Thinkpad X13s, that patch did *not* fix the issue, and with it
-> applied, the X13s still immediately reboots as soon as exiting EFI
-> services.  With this patch applied, the X13s does *not* reboot after
-> exiting EFI services, so thank you for this patch.
->=20
-> Tested-by: Steev Klimaszewski <steev@kali.org> #Lenovo Thinkpad X13s
+The indentation here is off, but I noticed that you've probably just
+copied that from the existing devicetree sources. I just sent a couple
+of patches to clean that up:
 
-Do you happen to know what driver the X13s is using? As mentioned in
-another email, I don't think overriding gc->fwnode at this point is the
-right thing to do, so I suspect this field might be used unexpectedly in
-some other place, so I'd like to take a closer look at that.
+	https://lore.kernel.org/lkml/20221116102054.4673-1-johan+linaro@kernel.org/
 
-Thierry
+You can drop the first newline and indent the continuation line properly
+using tabs (and spaces).
 
---sDjlB8ktuswCuIRX
-Content-Type: application/pgp-signature; name="signature.asc"
+> +			regulator-allow-set-load;
+> +		};
 
------BEGIN PGP SIGNATURE-----
+> +		vreg_l17c: ldo17 {
+> +			regulator-name = "vreg_l17c";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <2504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes =
+> +			    <RPMH_REGULATOR_MODE_LPM
+> +			     RPMH_REGULATOR_MODE_HPM>;
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmN0ujYACgkQ3SOs138+
-s6Ekeg//fsV8Vbkdcv+e3uObyH4LDXM7h9VfB1Faav6WkstVescdfRFUNkrMOUL4
-Nihw+XJQPHhacVnR12e1smY2zHeMeMHK1AgzHxQZIhuFIKrDNJ1ygehsKwMWPsSO
-wBjpeViQ7LujjK7URvYmzv0mV2ElHDetWwHleY6RmFWuZujrUB895EBPBlyfcYPx
-FSsuHc4ll6mVq0JRQBlcSWwaQy1+5svJTeIBv4BFJhDVXH8M5W/sKDT7r6xNfIuI
-ciBHrR7J6K1fKKBpJMqFnrxVv247KM7KStmr+CqaL2+SRTeQQgqqlzHhBRxX/MbC
-PgsmIV22A8CSrK7QTce8YTdZSYOPNVNEGiD15WhIliLtZ6SiZl7V4u63iEIx6xbF
-tca7tdifI5EErHNb32liEmcig8FH7ulkTkZ//glZMR/jFnSzzYozUCa27rT29kvs
-g+IMTMxwSfPEONuo00yWPqgRYqE5jJFYxNAEXy59igVe/Vf+GznoIuYT/uoqZqzc
-D28ruTziw82/Q2+V1aeE/GdT3G2IBr/ClCoHJP5s9kXuZvRZxjHY7D0T1KkiigXw
-47xGGjoS6eY5Ws4JbKNFpLoYLIuhSJ2Zu7K8JO7kHs2t5p3kxvhh8miARVUHLYfg
-DDj95W/w4KgFl67HAKGP66FeKrtbjj6s3mNnlZBsEkQuP1cO46w=
-=sbMU
------END PGP SIGNATURE-----
+Here too.
 
---sDjlB8ktuswCuIRX--
+> +			regulator-allow-set-load;
+> +		};
+> +	};
+
+Johan
