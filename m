@@ -2,97 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 285F462BC79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:50:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13D2462BC73
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:49:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbiKPLtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:49:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
+        id S229489AbiKPLtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:49:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238363AbiKPLsw (ORCPT
+        with ESMTP id S239094AbiKPLs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:48:52 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBE527901
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:42 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso1381157wme.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:42 -0800 (PST)
+        Wed, 16 Nov 2022 06:48:26 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E412CE1B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:15 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id bj12so43283682ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S+UI06IPOgRMVIESi3GLzjOf40d1AmEV9uLkRiNjtuo=;
-        b=A9czFxYmv+BrypnMBUkyh8Km4vBg5EYc3a+R5rTDIjUWdBLVYgfLfl2c7zq0YzPk9E
-         bJO3PXnpIcJR8mgyRCG7qu11VLmwZSGpge6Z5EdDsLxiSZPsnZTnGwymBG5rLxV8ldUm
-         M0+gWt/po+z4FURRmoiiTwgNFWbRCl72xqC4TnW854oz5Laz9XNI0vmzs+BNWe+lrefi
-         m9Sz9mTuNAiNyHKK1qBZevAf+STycNiQc/B3D1tMbps4cpKDetViziShfm9ABDKueIVZ
-         uar0sCJOQXNDwqQHBdKHvhnw6ggRF9S2lGpsW6Op1ecj+kK0f3aNVWOpEX3yybH2HwKU
-         Xt0w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lFpitQZPCSWmV4KA7TF9v27Tmab4o5r/cI7HcmDfwD0=;
+        b=BdcT7uFZ8E89eJyftSJmR4Mc8UNEcplvKOVj45D0zWF8CdKH1o9+DB/M1NZEMVIU5M
+         HjKqRuc9cyq2KKSEgV7rteWepSGrfTWXQMLRKG10dGoprBaLxC8TKoyk6P2YtWQj+A9W
+         U9Fzf9QwYI3cpEtfMa45weQq6F128DYDb3Iaokg3xKY5+vVStTBBOZ3mI4GmRCFAdxVb
+         iuLRzOwt2frl5LJxDumsS2mrEmAYD0Fmqyk7s+mdQuCt5vVylF2Eki0xxGvVSMJ5A3G1
+         4Dz6dXV/UB7q4DOHQFKOZp31siFyLkZRl0Dviqrg4jYY1tYRQ2PB+mjdGmqeo8fgVgi3
+         jUAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S+UI06IPOgRMVIESi3GLzjOf40d1AmEV9uLkRiNjtuo=;
-        b=dP2GyJlgCSkHuo0mXB5CGZsi5Rw1DeRlB+Ed/I5CYcXBx+1lfkrLdnWbFjw8TDIBbE
-         kOs5TOoUk/IPsDqNSEOpp8w2uqMV3racAneuPsjTl1PdhlWes8N6paP8zdAYFPQdM8b+
-         3AQNqeAPFWQXJeiVUJDG7YrthbGn1BJGtPcZbrxesyfUdaQ+SHtuifu84CUr7ujQI+qD
-         8qdFVPKBAhao/IbPFfq+b/hm6Nze8cpRjRIUAzfZRcqMNErK6BdOMo2UPawBeb/fFcKQ
-         T2fZDWgfXS3uTU1w3ySNVJUIfruiBr1j/U/HAPAPNYIliwlclW0m4zJRe7hjl2wR+uQi
-         WT8w==
-X-Gm-Message-State: ANoB5pkzfHT+BPv+wNeNNFt9pcP6OUjlWGsbFOK1sMLZ9F0CCdICrKVP
-        mP6RmuWK9FCtPnfk7kTng2x5R5g8dZst8Q==
-X-Google-Smtp-Source: AA0mqf6Rixak2ZCNitFJXBnK2HRRKmAOj5RoEvpudtMQVbDetXo+M4SVJ3/FSuwo5CQh5LGPHI2VQw==
-X-Received: by 2002:a1c:7c15:0:b0:3cf:a85d:2ab2 with SMTP id x21-20020a1c7c15000000b003cfa85d2ab2mr1851326wmc.43.1668598541441;
-        Wed, 16 Nov 2022 03:35:41 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id f23-20020a1c6a17000000b003c65c9a36dfsm1665325wmc.48.2022.11.16.03.35.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 03:35:41 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lFpitQZPCSWmV4KA7TF9v27Tmab4o5r/cI7HcmDfwD0=;
+        b=qAIYbgy7GTU64MT3VGtdLivzNnqDlf1nKi7gmYLXBYH1uoblwslNc17kPlSCV8R0wc
+         RdJHfvPl7xNMFL4a3pJxWt1DYyhtYyFKbkE3+067SIihs+h2Rk1gs/DataOB4spiG6hJ
+         x9IeT5WXumtdFCFuo7t/6SBaE5pX+O4bAxZfn4Eb/YTWgk9MX9OQdSuSKNcG041l6e7Y
+         2yCmOFK7AwNRUNOFoLk5gjQ0cXg8O2V+qg9DDSHJmIUuDJpQjkyMGBKUg6/1CfzDvl0s
+         T0Fl+23xFU5JoVbLhC6SMWPYFQ1BLJA9c1dDcRFpN0AxkXw3zO9X2un4LY5SSKiAE7z2
+         9W7A==
+X-Gm-Message-State: ANoB5pmyGcw38u5JSJJLUnxtxqSyczR0IS+/2r1CYA1ZDH0UBftDnAeP
+        qBkdtc4hcAat/4pD9dAEqYvuWQ==
+X-Google-Smtp-Source: AA0mqf4RPlD4qaXv5hV8z02A2OS0cAmFX5lc4FTfvdfIDr+PYkSDp3IyOpwiJnvwFKktNfibc/XuzA==
+X-Received: by 2002:a17:906:66da:b0:7a5:f8a5:6f84 with SMTP id k26-20020a17090666da00b007a5f8a56f84mr16753704ejp.569.1668598514103;
+        Wed, 16 Nov 2022 03:35:14 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id ft31-20020a170907801f00b0078d9cd0d2d6sm6907537ejc.11.2022.11.16.03.35.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 03:35:13 -0800 (PST)
+Message-ID: <340c0769-d51f-88df-5cd5-02c3337a24c0@linaro.org>
+Date:   Wed, 16 Nov 2022 12:35:07 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 2/2] soc: qcom: rpmhpd: Add SM8550 power domains
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] dt-bindings: mailbox: qcom-ipcc: Add compatible for SM8550
-Date:   Wed, 16 Nov 2022 13:34:57 +0200
-Message-Id: <20221116113457.2660792-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221116111745.2633074-1-abel.vesa@linaro.org>
+ <20221116111745.2633074-3-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116111745.2633074-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for SM8550 mailbox.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-index baca4786ff94..0e0706ad2cb0 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-@@ -29,6 +29,7 @@ properties:
-           - qcom,sm8250-ipcc
-           - qcom,sm8350-ipcc
-           - qcom,sm8450-ipcc
-+          - qcom,sm8550-ipcc
-           - qcom,sc7280-ipcc
-       - const: qcom,ipcc
- 
--- 
-2.34.1
+On 16/11/2022 12:17, Abel Vesa wrote:
+> Add the power domains exposed by RPMH in the Qualcomm SM8550 platform.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+>   drivers/soc/qcom/rpmhpd.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> index 7af68cd720f5..4c2d2c296790 100644
+> --- a/drivers/soc/qcom/rpmhpd.c
+> +++ b/drivers/soc/qcom/rpmhpd.c
+> @@ -372,6 +372,29 @@ static const struct rpmhpd_desc sm8450_desc = {
+>   	.num_pds = ARRAY_SIZE(sm8450_rpmhpds),
+>   };
+>   
+> +/* SM8550 RPMH powerdomains */
+> +static struct rpmhpd *sm8550_rpmhpds[] = {
+> +	[SM8550_CX] = &cx,
+> +	[SM8550_CX_AO] = &cx_ao,
+> +	[SM8550_EBI] = &ebi,
+> +	[SM8550_GFX] = &gfx,
+> +	[SM8550_LCX] = &lcx,
+> +	[SM8550_LMX] = &lmx,
+> +	[SM8550_MMCX] = &mmcx_w_cx_parent,
+> +	[SM8550_MMCX_AO] = &mmcx_ao_w_cx_parent,
+> +	[SM8550_MSS] = &mss,
+> +	[SM8550_MX] = &mx,
+> +	[SM8550_MX_AO] = &mx_ao,
+> +	[SM8550_MXC] = &mxc,
+> +	[SM8550_MXC_AO] = &mxc_ao,
+> +	[SM8550_NSP] = &nsp,
+> +};
+> +
+> +static const struct rpmhpd_desc sm8550_desc = {
+> +	.rpmhpds = sm8550_rpmhpds,
+> +	.num_pds = ARRAY_SIZE(sm8550_rpmhpds),
+> +};
+> +
+>   /* QDU1000/QRU1000 RPMH powerdomains */
+>   static struct rpmhpd *qdu1000_rpmhpds[] = {
+>   	[QDU1000_CX] = &cx,
+> @@ -477,6 +500,7 @@ static const struct of_device_id rpmhpd_match_table[] = {
+>   	{ .compatible = "qcom,sm8250-rpmhpd", .data = &sm8250_desc },
+>   	{ .compatible = "qcom,sm8350-rpmhpd", .data = &sm8350_desc },
+>   	{ .compatible = "qcom,sm8450-rpmhpd", .data = &sm8450_desc },
+> +	{ .compatible = "qcom,sm8550-rpmhpd", .data = &sm8550_desc },
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, rpmhpd_match_table);
