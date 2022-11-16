@@ -2,92 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A0E662C1AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:00:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98B5762C1B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:01:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233991AbiKPPA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:00:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51488 "EHLO
+        id S233922AbiKPPBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:01:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234423AbiKPPAG (ORCPT
+        with ESMTP id S233774AbiKPPBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:00:06 -0500
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B4BC4FF9B;
-        Wed, 16 Nov 2022 06:59:12 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id p8-20020a056830130800b0066bb73cf3bcso10535673otq.11;
-        Wed, 16 Nov 2022 06:59:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GG2Tq6+Rxp6EDqdTHOj4cP+DRbjq8GgFfl9nEQ/66eA=;
-        b=RMCvW2/2vAzxUisgM6R9wZ/Sg6AjeCxl+dlYDQq9atGKiF94z4vjoFY9cadue/yDkk
-         PmTBBgbfPX+MlUfZZIezy7+ulPjJJS3xs+diz7kMyIYGmAozqock/kqlcyh4J/cB0sak
-         jJ0nTun/Y713YTWbmI5XIrizLvAVhWzkZbrmfStFskwf4ssJX3koWPuNesrQXK+zmm8r
-         /FmGkFJLdfB7Cor36rsT1gRk0hufT3u4eGmU5mBLOS85jX13jVFrkRg1Fk8GAkYLjpld
-         lkOPD4YEMADGZYgg/ToT3/J9a7uBHi8B4SRf71PcbQcn7CSfMKNy+dflMhT0Nqu7GgWT
-         miPQ==
-X-Gm-Message-State: ANoB5pm1EPAPt3vCnyQYZv/BkFD5PrK8+szm2sJjS4dbv50avd+SPb6s
-        ZOjCLBrSB07S608qQZVl/g==
-X-Google-Smtp-Source: AA0mqf48FvjuD+IAwK/1wfbeBhUiVH98RSb0f3PIpqZwv0iDrLwWktAN4jSPD17kbnAnznZU+hLEoA==
-X-Received: by 2002:a05:6830:1d90:b0:663:bd3a:2e4b with SMTP id y16-20020a0568301d9000b00663bd3a2e4bmr11237196oti.157.1668610751657;
-        Wed, 16 Nov 2022 06:59:11 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j21-20020a544815000000b0035aa617156bsm6135435oij.17.2022.11.16.06.59.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 06:59:11 -0800 (PST)
-Received: (nullmailer pid 3849197 invoked by uid 1000);
-        Wed, 16 Nov 2022 14:59:12 -0000
-Date:   Wed, 16 Nov 2022 08:59:12 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     loic.poulain@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        quic_jesszhan@quicinc.com, vinod.koul@linaro.org, sean@poorly.run,
-        linux-kernel@vger.kernel.org, quic_kalyant@quicinc.com,
-        dmitry.baryshkov@linaro.org, freedreno@lists.freedesktop.org,
-        quic_abhinavk@quicinc.com, airlied@linux.ie, andersson@kernel.org,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_khsieh@quicinc.com,
-        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, daniel@ffwll.ch,
-        Jonathan Marek <jonathan@marek.ca>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        agross@kernel.org, dianders@chromium.org,
-        bjorn.andersson@linaro.org, vkoul@kernel.org
-Subject: Re: [PATCH v2 01/12] dt-bindings: display: msm: Add qcom,sm8350-dpu
- binding
-Message-ID: <166861075192.3849132.17933292251888324677.robh@kernel.org>
-References: <20221115133105.980877-1-robert.foss@linaro.org>
- <20221115133105.980877-2-robert.foss@linaro.org>
+        Wed, 16 Nov 2022 10:01:38 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F41123;
+        Wed, 16 Nov 2022 07:01:36 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3A5BBB81DC0;
+        Wed, 16 Nov 2022 15:01:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2DBC433C1;
+        Wed, 16 Nov 2022 15:01:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668610893;
+        bh=fW6w1idZxb4pYL1tbNrDvO8loV3/4f3FgP5oo/YyO6M=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=JSJe6RakS/RPXPxgiSMPkYUBiJScY9c29XGPMrvHoW8P7kbElGJzqyvuwpEnMgkpH
+         q1DP4iVi91j4L2/j+DcbyhdwgZYm3usqMrlNMysi9ew1zzywExVElPCP7Tu3T164Ri
+         dzKnmjtTgq2cejT1M9jSYvw2hGxzTzAC2/DvoscV0oDEUed8vHHN2JcXiARwe6+ZPg
+         75L6Cyu8xFMxZOtytnFYO69g0rrjlcC045SRQbKx7vW/uXIp8Gdz8IkH4SRTvtBp2H
+         kIe7Xa2Ii5y2so0zZElZeCpctGytnGaVWymG+l3zvm9ZVPcNFb/XUXRt9DbCwOwdGj
+         JTLkyg5iTxbRg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>
+In-Reply-To: <20221116102054.4673-1-johan+linaro@kernel.org>
+References: <20221116102054.4673-1-johan+linaro@kernel.org>
+Subject: Re: (subset) [PATCH 0/2] arm64: dts: qcom: clean up 'regulator-allowed-modes' indentation
+Message-Id: <166861089087.540847.301727183033006932.b4-ty@kernel.org>
+Date:   Wed, 16 Nov 2022 15:01:30 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221115133105.980877-2-robert.foss@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.11.0-dev-8af31
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 15 Nov 2022 14:30:54 +0100, Robert Foss wrote:
-> Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema for DPU device
-> tree bindings
+On Wed, 16 Nov 2022 11:20:52 +0100, Johan Hovold wrote:
+> When reviewing a new devicetree for sa8540p-ride I noticed that the
+> indentation for the 'regulator-allowed-modes' properties was off and
+> realised that this had been copied from the recent patches adding the
+> missing modes properties.
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->  .../bindings/display/msm/qcom,sm8350-dpu.yaml | 120 ++++++++++++++++++
->  1 file changed, 120 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml
+> Let's clean up the binding example and current devicetree sources to
+> avoid this pattern being reproduced further.
 > 
+> [...]
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Applied to
+
+   broonie/regulator.git for-next
+
+Thanks!
+
+[1/2] regulator: dt-bindings: qcom,rpmh: clean up example indentation
+      commit: b8dfb3bed5524589052dafa0e4d6c4e25ae11544
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
