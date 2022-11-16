@@ -2,99 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24EDC62C104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94E7562C10E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:38:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233195AbiKPOhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 09:37:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
+        id S231777AbiKPOiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 09:38:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233254AbiKPOhM (ORCPT
+        with ESMTP id S232126AbiKPOis (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:37:12 -0500
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADA82983E;
-        Wed, 16 Nov 2022 06:37:11 -0800 (PST)
-Received: by mail-oi1-f177.google.com with SMTP id r76so18646832oie.13;
-        Wed, 16 Nov 2022 06:37:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IFqEVeiOGdmdH2PP7fid7uM73jsm1VRTwjrkKfa7rbQ=;
-        b=cUpTPwFKWkHskXgDPRWwEqANmkQ6miU+ppLvDuNxpCey4dpEVyJdqx6NoxsKF81U9h
-         da1P+XLmqxF2itiql++Ota7T4LfygDEjpZgX0I19cgGdTvxmTMCufn6qOPef+3AduZII
-         +y1cVRyeJopH6EWAngyvhKo4urheNldyhnGwTGDZQHWQntDG/mzgou4t/Gt5oPi9Xozf
-         6HJahfr/vzNen6/tdriWeZiupKmSOluyxS2IypQdUVIIjs7pIKIr1fHr7M/Qnd1Uv0GX
-         EcQTwIB39NkeT7kZNp59imxV1saMRgQuT+n2oi7RsY9YP7Jt2Buj7U2cmVsdfpEZvomp
-         117w==
-X-Gm-Message-State: ANoB5pmDqkDVb5M9+fULrslNK3ZT9sDdyk30VpT96jXGgu3n2xLckk64
-        Z7T7VOjlzhrXnIfHB6Q3NQ==
-X-Google-Smtp-Source: AA0mqf6xFdK5qLXwDeKCyPu+fMM2QIrZuIBwEkqqZio1DIOYzfGje42p2s8TKZrMX+gIgDSiB4jcCw==
-X-Received: by 2002:a05:6808:1486:b0:35a:3662:c693 with SMTP id e6-20020a056808148600b0035a3662c693mr1630798oiw.192.1668609430601;
-        Wed, 16 Nov 2022 06:37:10 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w6-20020a056830110600b0066d12f2441esm6633468otq.27.2022.11.16.06.37.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 06:37:09 -0800 (PST)
-Received: (nullmailer pid 3814691 invoked by uid 1000);
-        Wed, 16 Nov 2022 14:37:12 -0000
-Date:   Wed, 16 Nov 2022 08:37:11 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        Andy Gross <agross@kernel.org>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        devicetree@vger.kernel.org, quic_srivasam@quicinc.com,
-        quic_plai@quicinc.com, Liam Girdwood <lgirdwood@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Wed, 16 Nov 2022 09:38:48 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB222700;
+        Wed, 16 Nov 2022 06:38:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1494061E58;
+        Wed, 16 Nov 2022 14:38:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6889AC433D6;
+        Wed, 16 Nov 2022 14:38:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668609526;
+        bh=806tl/QndXB0wVKw4pYwW3gzI2QMaLxTZtaoVS0cosA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cRKZe6t5Tl59Bj/6LffUgj7hg2bKlst+S86PFiuyf4p9OCBjHCrThV4pfcv3nopmC
+         Ts2Zia1Vz8tyhaXCDwb4pBVq5Kr2N2klT828gGofk4U0zeqWnLIv4g6k0xY6rqRnuj
+         LJMKqmH49Yrwq0nBKQx3Ys9yJsigq2J7mtxKHLae66199UcR8jqTyHeHaPU08IifDc
+         byyRANpOQ8lUYpzjFzEUI1KGVqcx/obpz0euSuGbblmSvgMW57DcrT1J2b24ROVCZ1
+         O3rGHKX2t8NxNZ0X6Yfy5xlo04/tT4ca36MelOfxXe8t9lIY+lyC0pdz64Rh+FA0qs
+         CGGV108LapqMw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ovJYO-0003GW-1t; Wed, 16 Nov 2022 15:38:16 +0100
+Date:   Wed, 16 Nov 2022 15:38:16 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2 03/11] ASoC: dt-bindings: qcom,apr: Correct and extend
- example
-Message-ID: <166860939523.3813949.14489034056819986470.robh@kernel.org>
-References: <20221115120235.167812-1-krzysztof.kozlowski@linaro.org>
- <20221115120235.167812-4-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/8] dt-bindings: PCI: qcom: Add sm8350 to bindings
+Message-ID: <Y3T12JK1CHELFQHY@hovoldconsulting.com>
+References: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
+ <20221110183158.856242-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221115120235.167812-4-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20221110183158.856242-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 15 Nov 2022 13:02:27 +0100, Krzysztof Kozlowski wrote:
-> Correct the APR/GPR example:
-> 1. Use consistent 4-space indentation,
-> 2. Add required properties to services nodes, so the binding check
->    passes once schema for these services is improved,
-> 3. Add few other properties as APR/GPR is part of a GLINK edge:
->    qcom,glink-channels and qcom,intents.
-> 4. Drop unnecessary services, to make the example compact.
+On Thu, Nov 10, 2022 at 09:31:51PM +0300, Dmitry Baryshkov wrote:
+> Add bindings for two PCIe hosts on SM8350 platform. The only difference
+> between them is in the aggre0 clock, which warrants the oneOf clause for
+> the clocks properties.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 46 +++++++++++++++++++
+>  1 file changed, 46 insertions(+)
 > 
-> Changes since v1:
-> 1. New patch.
-> 
-> Cc: quic_srivasam@quicinc.com
-> Cc: quic_plai@quicinc.com
-> ---
->  .../bindings/soc/qcom/qcom,apr.yaml           | 61 ++++++++++++-------
->  1 file changed, 39 insertions(+), 22 deletions(-)
-> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 54f07852d279..502c15f7dd96 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -32,6 +32,7 @@ properties:
+>        - qcom,pcie-sdm845
+>        - qcom,pcie-sm8150
+>        - qcom,pcie-sm8250
+> +      - qcom,pcie-sm8350
+>        - qcom,pcie-sm8450-pcie0
+>        - qcom,pcie-sm8450-pcie1
+>        - qcom,pcie-ipq6018
+> @@ -185,6 +186,7 @@ allOf:
+>                - qcom,pcie-sc8180x
+>                - qcom,pcie-sc8280xp
+>                - qcom,pcie-sm8250
+> +              - qcom,pcie-sm8350
+>                - qcom,pcie-sm8450-pcie0
+>                - qcom,pcie-sm8450-pcie1
+>      then:
+> @@ -540,6 +542,49 @@ allOf:
+>            items:
+>              - const: pci # PCIe core reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-sm8350
+> +    then:
+> +      oneOf:
+> +          # Unfortunately the "optional" aggre0 clock is used in the middle of the list
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+As Krzysztof mentioned, you can just move it last (and the driver will
+still enable aggre0 before aggre1 if that's a concern).
+
+> +        - properties:
+> +            clocks:
+> +              maxItems: 9
+> +            clock-names:
+> +              items:
+> +                - const: aux # Auxiliary clock
+> +                - const: cfg # Configuration clock
+> +                - const: bus_master # Master AXI clock
+> +                - const: bus_slave # Slave AXI clock
+> +                - const: slave_q2a # Slave Q2A clock
+> +                - const: tbu # PCIe TBU clock
+> +                - const: ddrss_sf_tbu # PCIe SF TBU clock
+> +                - const: aggre0 # Aggre NoC PCIe0 AXI clock
+> +                - const: aggre1 # Aggre NoC PCIe1 AXI clock
+
+Have you verified that you actually need the bus clock for the second
+controller here?
+
+> +        - properties:
+> +            clocks:
+> +              maxItems: 8
+> +            clock-names:
+> +              items:
+> +                - const: aux # Auxiliary clock
+> +                - const: cfg # Configuration clock
+> +                - const: bus_master # Master AXI clock
+> +                - const: bus_slave # Slave AXI clock
+> +                - const: slave_q2a # Slave Q2A clock
+> +                - const: tbu # PCIe TBU clock
+> +                - const: ddrss_sf_tbu # PCIe SF TBU clock
+> +                - const: aggre1 # Aggre NoC PCIe1 AXI clock
+> +      properties:
+> +        resets:
+> +          maxItems: 1
+> +        reset-names:
+> +          items:
+> +            - const: pci # PCIe core reset
+> +
+
+Johan
