@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A18A562C49D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1141962C49F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:36:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233914AbiKPQgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 11:36:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45926 "EHLO
+        id S238860AbiKPQgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 11:36:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233950AbiKPQfh (ORCPT
+        with ESMTP id S238819AbiKPQfi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 11:35:37 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF0F5B58A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:09 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id g12so30547482wrs.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:09 -0800 (PST)
+        Wed, 16 Nov 2022 11:35:38 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A7559FFF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:10 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id t1so12282048wmi.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hcJ7ckAKj+TSphLa5849tAwMuokA6a0ep+HYiPX+3Ow=;
-        b=oHrKRxA04iAj9pCWnrSypLG0zSX8qs7AKEP1cV75mt845OUgUPjn98qqiZV+wZVp5K
-         1RqwZNTolKt05H9r06VS3GOFABjlUkuuV0mBP4HU3XH6Jk/arfQWUxmVWpysL7KzEQXD
-         JOWuyVzValnVzqawhEUZGPtMItgQTgJQMpYbTkFYAb4h7i0GKzlW23wagsFE0eT7c199
-         NRkWI1i1FEmw6mkXmcPBbnAvVjUyPNQl8xfEFhaeH73bsd8qacILFUF6KUadGI93XYCo
-         qs+JRHAWnDMgAoqH6Eo6uPWVmKZHds+NwuCWgGqKF5a5foV44suoQql+OFxiJIXGZjWA
-         t1QQ==
+        bh=l2yrtDb+E17YJ14nztoAekcY9mfRuwg5HacrFZ02FDk=;
+        b=jA4Ylm6B/fsZ0yagjS+EpEJam9Jqty62n37wWr2ZLhA4LBp55sBVUTU9toRdeNaI2X
+         yW6UZR0tP+0eHhyQvgEwVoC53cAKGy0GOc09P+s3sT0SKaREHNQiLv/ib3bChue0B86s
+         G6a1eEwrUipac0ZVlUPEO72ewXHHWi+eswDCnaWd7Tf2oJ0kUgna/6z0pk7CkzXntObu
+         s0ACcbuqr1CTe/8a99baXoQzPxUGyVPSAcc4wQz6fEUNvrFnX0JZTMlz0bZhpGVl4WMZ
+         bUCF6PUrxoNnFufsVHjfbax52Y5bDgUohumuGVOd9jfz3cwcg+WOnuCbDsT4OQKIb9lD
+         kx/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hcJ7ckAKj+TSphLa5849tAwMuokA6a0ep+HYiPX+3Ow=;
-        b=yCpmvxRuc+w1vcpMj2zWrOGwnZ7hq/LgjfpX2zDKDBfv6iSLWXkXGc1MhWuC/duDEN
-         WBrMbrFZ9SJ5UehESUH5CDjxkrg31LluR13ktTZoajB1kNnK7psaDBgRUBQrC55OhrnX
-         dH6ofixweaAs+Bc0Xalnywjp/KiGzPjruhUa3q4X+DZWZp8DeQJ5579l9BWehe9BIEeW
-         f3b7uWniUrSYFI+vrXIxwv+Kajc5mHkavuDA0ZJplxACN5nqIXYcCL+idsf1Issh541C
-         uAJbVIlEFuvW4zJvYQiBg1MZUPhF+0RTykQnH5oGFxrsB0csXiDwfxZPnMN/24bfqIw+
-         3KGg==
-X-Gm-Message-State: ANoB5pk51174Kd/D4hyHYricPg35CFB2cgeySMD0y9LAQqPEIyiiogKO
-        ECJ+pVR4xnk9gpfsIizFZ+q/OA==
-X-Google-Smtp-Source: AA0mqf4Y4K/3mnENkTauwej3hcP2V4HHKRPFC1ohXK+hhIDxruJ77ArB06OzOzGTiAFnogCyEUdnHQ==
-X-Received: by 2002:adf:fc8f:0:b0:22e:362e:570a with SMTP id g15-20020adffc8f000000b0022e362e570amr13591485wrr.127.1668616088209;
-        Wed, 16 Nov 2022 08:28:08 -0800 (PST)
+        bh=l2yrtDb+E17YJ14nztoAekcY9mfRuwg5HacrFZ02FDk=;
+        b=pR0HnWn6d65P0M96CstJi0KX2PhOoxYUN1ggtVBm9WWFd0XBegoNr0B0s5X97v8C0K
+         euRxD51cjZ6y8q7vgnipCeG5luxJTCDP7n0z7WXpvGSE2qwIFcQwWZro5S3dtCfpasEq
+         zscbzBDj5jr5YgjNtik+TQ0CtsuZaLKWHaq9oNhNOdSuSS9lwRkftqGd0BIKvLbITyEs
+         jNnmdV8M5gcEtvWJlzfGUoTn0q6FnL/IhGt/Hxhx/MNJpZKSc8omdF1AGfGdh2tvnQOp
+         Iywhm8s2biZps75LrYFXlU4TW/53ZwyZZiEcvZBW38WKDEPF+09UY8Pn/USr5eOSAlUm
+         /47w==
+X-Gm-Message-State: ANoB5pmsG5pgCh7/hwpQrMRRGdHphaGC1VCg/s0PAHbxhwqkF16Biwms
+        ocvwl/UE4h5fYc3j/oBUAOvUVw==
+X-Google-Smtp-Source: AA0mqf7FLQ7pGi8n1zk4Lo6Yj0DBywiEf3DnPj/vIyssyMQY+nvUaMwGePb0HuzYWVGIKN4x/RBEHA==
+X-Received: by 2002:a05:600c:3ac4:b0:3cf:77b7:61e6 with SMTP id d4-20020a05600c3ac400b003cf77b761e6mr2633072wms.162.1668616089540;
+        Wed, 16 Nov 2022 08:28:09 -0800 (PST)
 Received: from localhost.localdomain (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s3-20020adfecc3000000b0022e653f5abbsm15459168wro.69.2022.11.16.08.28.06
+        by smtp.gmail.com with ESMTPSA id s3-20020adfecc3000000b0022e653f5abbsm15459168wro.69.2022.11.16.08.28.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 08:28:07 -0800 (PST)
+        Wed, 16 Nov 2022 08:28:09 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@somainline.org,
@@ -60,11 +60,10 @@ Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
         laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v6 2/7] arm64: dts: qcom: sdm845-db845c: Drop redundant address-cells, size-cells declaration
-Date:   Wed, 16 Nov 2022 16:27:56 +0000
-Message-Id: <20221116162801.546737-3-bryan.odonoghue@linaro.org>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 3/7] arm64: dts: qcom: sdm845-db845c: Drop redundant reg = in port
+Date:   Wed, 16 Nov 2022 16:27:57 +0000
+Message-Id: <20221116162801.546737-4-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
 References: <20221116162801.546737-1-bryan.odonoghue@linaro.org>
@@ -79,30 +78,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-sdm845.dtsi camss already defines the address-cells and size-cells for
-camss, no need to replicate in sdm845-db845c.dts.
+The reg for the port is specified in the dtsi. Remove from the db845c dts.
 
-Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 3e7ceb0861eb0..7c88312333c22 100644
+index 7c88312333c22..8a98f3e86b41d 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1185,8 +1185,6 @@ &camss {
- 	status = "ok";
+@@ -1186,7 +1186,6 @@ &camss {
  
  	ports {
--		#address-cells = <1>;
--		#size-cells = <0>;
  		port@0 {
- 			reg = <0>;
+-			reg = <0>;
  			csiphy0_ep: endpoint {
+ 				data-lanes = <0 1 2 3>;
+ 				remote-endpoint = <&ov8856_ep>;
 -- 
 2.34.1
 
