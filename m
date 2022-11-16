@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88A5B62B50C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 09:23:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C82662B543
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 09:32:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238863AbiKPIXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 03:23:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56422 "EHLO
+        id S233082AbiKPIcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 03:32:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238814AbiKPIXU (ORCPT
+        with ESMTP id S238938AbiKPIbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 03:23:20 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6A32C108
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 00:21:35 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id x21so20821386ljg.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 00:21:35 -0800 (PST)
+        Wed, 16 Nov 2022 03:31:45 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B171D2A711
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 00:29:05 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id p8so28346943lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 00:29:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hOhON3c92uOQG/q5cu0aF5WgWtMVsl/yA7D31IBRUvA=;
-        b=v3xeJRqsQ25HIf13rxAwKE+/6/K6rqVfZRhQyECOPVLQ7icsDHkVtYjpCaFYlBRba+
-         NnfDliMvRv8EowYlm8UwXF9AIhq8ryISGJdbQenYBhP6zVJtE0p+U4akJ5FyAwrVvi7r
-         55VMwNJQKFbqLHdk7qLf7DSYhxiny765h7f/AVAYyeLz7eQ4wT0uUBXajTaiLoQi/2IX
-         bhUnvVgWKY9wzj4ijwOxGT+VGTI9msc9yehCwaf5tJArF+DEerMe+OtlIyXDwqItc81r
-         OyU0W+2HuIm03oNHNP07ue7gC/NBDMUE/Tjj4xxMFKKsFBuNZlrTpwIia4lUGEVlYQdQ
-         6q9Q==
+        bh=hOjQ8ZqJCJ4XjyB8rqTKWkM81Yey0vtzEtDeEu0P90I=;
+        b=ddQzH/c2j2Si8AIuiK1A0Rq1ixXSilknotZ052ApAz7qYx9AV+DoM07IK4rHpZFrUy
+         sy/B8x0Y38ioefWRDHtuYSuioS2LzeZqfFeob32keLihp0F/Xy3RzMo7BIuq2Wx2pBhk
+         XkjbdberdCUJXyB5BgWf1HuPpVnRI0mpNcmCll6Uvjk2X4xO1QY/IpvH3r++aa7pev12
+         Juh57ArZguG+lA8VDe/w4FPfAGN+p8oILuuU5n950cCaVi1muIXyZ1QCmr3b/vwsHR0J
+         SnL/Zmme82PHBh2IHfi9g5a7ZgmDwvkx08SxceQEIDe/xMa9JubBjjt5QIaOSW7nfXT3
+         sTtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hOhON3c92uOQG/q5cu0aF5WgWtMVsl/yA7D31IBRUvA=;
-        b=oWKbbnBTXCAmhHGjxw0JjgQ56aHmQyrfv07RW2GH8nxHVrpA+b834NtRZeWsbDkv3W
-         raRlJ8aV6cYMNGocxynWSf3ATuWwLoLgMqfuKFgTLsFyO7NzE36SwyqmUQo/6shuUrmC
-         TfJKs1tnML39ZHX02iMxk5PYEoo3jgmxlIx+LqKWD8sLmyXbJdmHGZzJ3im8jm07AYFu
-         kEv32ZiVEnpYOnIH1S4yRAUPSOBHGgYYx6HLrPCkMrUD51V3zMl0h8GGFp6KxSTXBx5V
-         ytev+WWdTdNgB7xnNOjsGB9px1gZ9QODLOCP3ACYaEwE02fBBkaCNsivE0m8/MLc/ilo
-         OaHA==
-X-Gm-Message-State: ANoB5pnciVCZoO8ecZFr/Hv0sTdSDNIRc9cfV2QJQwliGX9Nj7fyIEVt
-        pV0bt8b7UIb/79QGqBcblC05wQ==
-X-Google-Smtp-Source: AA0mqf7D9jtRcm31IK4h9nEOJcLgzidioIPjn0kKfE18WRLFBDH5aYRGy0EDuLZaRrezjI86pj58Ig==
-X-Received: by 2002:a2e:94cb:0:b0:277:3df:90d0 with SMTP id r11-20020a2e94cb000000b0027703df90d0mr7184219ljh.234.1668586893685;
-        Wed, 16 Nov 2022 00:21:33 -0800 (PST)
+        bh=hOjQ8ZqJCJ4XjyB8rqTKWkM81Yey0vtzEtDeEu0P90I=;
+        b=J0cR4cccK6wGwmhhwX0ELm2ZnWocezpWsMeOUMMuRpMKg2RU3BgFOcAmTBCV169ABR
+         AbWujK5Sk3NtsW5uct/lc36k0E8LwjCM9taQ5F4DowbloGOKaEiH+TYLtMAzjf3mtTEx
+         xQ8nDPUlrAV4BmUXJfzmfOlk65LRz32IfNxmO86qck4M8tGT3qm1dZrF3CcF5MRgU38L
+         k0LdN5WTVrLzY6Wj2DTPY/rheY8RMmj1uBAOqHRlmeXWlHJXeackLk+z9CJqtJtGFqxd
+         NiA91ceX7BKWmjNA/EdvIk+HTm4hRwnC0DEFBFJ2OXRJbZ4wgKUVb+FPtYzU9cc/Cqca
+         Fw1w==
+X-Gm-Message-State: ANoB5pmVZA2t72tiCGMzne8MhMmdtP99Jv/kAxEM3S1FWI/Wej+5hi32
+        lU74UwS1S2TyFP4X8/O1IVvGkg==
+X-Google-Smtp-Source: AA0mqf7rULVHcsf3HCvYdqj87GhYFRO63xMUx9uE9UbMvF2N35rMtDdJ3PniuUJlyYcTUYRDVJUddw==
+X-Received: by 2002:a19:5051:0:b0:499:8e29:2763 with SMTP id z17-20020a195051000000b004998e292763mr7780310lfj.137.1668587344089;
+        Wed, 16 Nov 2022 00:29:04 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id e5-20020ac25465000000b00492dbf809e8sm2485379lfn.118.2022.11.16.00.21.32
+        by smtp.gmail.com with ESMTPSA id w26-20020ac254ba000000b0049c29389b98sm2490272lfk.151.2022.11.16.00.29.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 00:21:33 -0800 (PST)
-Message-ID: <a7dac56d-0fb0-b45f-a722-4cac8d1f777e@linaro.org>
-Date:   Wed, 16 Nov 2022 09:21:32 +0100
+        Wed, 16 Nov 2022 00:29:03 -0800 (PST)
+Message-ID: <7083614f-578c-7ed9-5f6b-c64718747dea@linaro.org>
+Date:   Wed, 16 Nov 2022 09:29:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 1/4] dt-bindings: mmc: sdhci-msm: Document SM8350 SDHCI
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8350-sagami: Wire up SDHCI2
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
@@ -65,10 +65,12 @@ Cc:     patches@linaro.org, Ulf Hansson <ulf.hansson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
 References: <20221115172828.14372-1-konrad.dybcio@linaro.org>
+ <20221115172828.14372-4-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221115172828.14372-1-konrad.dybcio@linaro.org>
+In-Reply-To: <20221115172828.14372-4-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,12 +84,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 15/11/2022 18:28, Konrad Dybcio wrote:
-> Document the SDHCI on SM8350.
+> Adjust regulators, add required pin setup and finally enable SDHCI2
+> to get the SD Card slot going on Sagami Xperias.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 30 ++++++++++++++++++-
+>  1 file changed, 29 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> index a428ce31ab4e..fdf95b763cf4 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> @@ -312,7 +312,8 @@ pm8350c_l8: ldo8 {
+>  		pm8350c_l9: ldo9 {
+>  			regulator-name = "pm8350c_l9";
+>  			regulator-min-microvolt = <2960000>;
+> -			regulator-max-microvolt = <3008000>;
+> +			/* Originally max = 3008000 but SDHCI expects 2960000 */
+> +			regulator-max-microvolt = <2960000>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> @@ -558,6 +559,19 @@ &qupv3_id_2 {
+>  	status = "okay";
+>  };
+>  
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_active>;
+> +	pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_sleep>;
+> +	vmmc-supply = <&pm8350c_l9>;
+> +	vqmmc-supply = <&pm8350c_l6>;
+> +	no-sdio;
+> +	no-mmc;
+> +	status = "okay";
+> +};
+> +
+> +
 
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Only one blank line.
 
 Best regards,
 Krzysztof
