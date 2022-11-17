@@ -2,144 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9158A62D49D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 09:05:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A06D362D4AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 09:07:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239304AbiKQIF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 03:05:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51692 "EHLO
+        id S239437AbiKQIHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 03:07:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiKQIF0 (ORCPT
+        with ESMTP id S239425AbiKQIHA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 03:05:26 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BAFB716E5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 00:05:25 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id l14so2398266wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 00:05:25 -0800 (PST)
+        Thu, 17 Nov 2022 03:07:00 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA6871F1E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 00:06:59 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id v1so2303931wrt.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 00:06:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iKXYExdFPBk6x5LL48YmrBCt/Ex+r4UJ3aXw7toOApc=;
-        b=JbcW44dILJwm0wi2gWylt6XUA0QoEFA2sBCQ9vchinitjnk2CVTPOoED5IVzakXcko
-         Mum8HNtrKiWiAXYGrXGaNNeIRt6YWRHbT7YmpbhopIX3X9pWf0KBztjMvyE43SMRyxYY
-         uyVi7BAZdhRiFt73AtL74DeKif/2MjxAIjBvP6k1BoE6pRLSxsQxLknREs311LxHFSRZ
-         Z9vdG21Mby0rs/9Q1EIFLfxIaJauGzqoMEMLS7u5qDo6nJb5CT+rroC4LWaxeRNHYW1r
-         TjG/UEXMPyINJ/TZ+vawpX+rhK03JrFPZdQbdyX65J9otSrnVeEIeSh34fzH1m66qSC6
-         sIYQ==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LbRTiKNw92Ee+1b4C3YYFV4rUTYbBfHXEQTVRGxB8K0=;
+        b=YEUxhIvwNLSEyaevRqAqDbLFOcHB+hlOkXbIq4aS1RVO0zI5RZ3HWM+tUclgOH9JZ7
+         kaS+ynCCLgCLoZec1AarloUM8RxUzaaGax3abu8IfAP/47NjR2qJJ6UYYMJ+3FvG4xNJ
+         fsr2DBW3tJ7D2djf5OPf394Hi/EQHsHY265NMN17TwgrJ/6Zsv5ijivwz6mb2zp9iqVr
+         GoMzcpxJCto9b3/qGFm27wcd2qXKbBHzMGAN/WGyUy11pOySgTVqKPIMfjzb6v3Ig86K
+         rJ5OC5KrxD/P+c/5fSxhi/UOFdbeOZF9FmQLxT82EoL8gChlRCu6P5CgyAx8Tt7mMQBL
+         49ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iKXYExdFPBk6x5LL48YmrBCt/Ex+r4UJ3aXw7toOApc=;
-        b=wpV0yRLWPrqZXhJfPnj0+poLpBrceEOvuQQMazx8GSZfKFwCyh/tTPmggdqOOLUDXQ
-         ADLZCjBbk1oDUGCztmLyqqVuBRvGv+NnfNtaQbZsm9Wl0mek8hawo2C2aR8Bln2O68ca
-         g8rZ6HkLpknb9f6RHR7YOCaQxUKnMAbamWoLgyunDfOgGxwPbEl4CzsL/pKkJ0QkAnzo
-         RAM4Mnko2Yufo5y1ody7Z39I1JObKqBisMqpMp6oX2lGvgVjy92qINi7VXzTUFFF9gZ8
-         nRnjebhlev+aSsUV3Gta3O7Tr9+WehldyA+k/ZP5LBiYndWxzpTcs7uS/lrWCJB25Tg+
-         RXNQ==
-X-Gm-Message-State: ANoB5pna/K753L3WiA2Xyo77VjBc9wOISzF3zvdtYgP2TUdTBr6zu9BU
-        x8oj3Y6awbiroKsFSgNf6EaX0Q==
-X-Google-Smtp-Source: AA0mqf4z1Vw0osU9THOIqfd9q3COzRk87Bb9SpjfWJEe8ARfejulNJEeCFJYH4ns55QzuC7Fx9ys2A==
-X-Received: by 2002:a5d:440a:0:b0:238:3dc7:2adc with SMTP id z10-20020a5d440a000000b002383dc72adcmr708168wrq.160.1668672324057;
-        Thu, 17 Nov 2022 00:05:24 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05600c4f4400b003cffd3c3d6csm452796wmq.12.2022.11.17.00.05.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 00:05:23 -0800 (PST)
-Date:   Thu, 17 Nov 2022 10:05:22 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/9] clk: qcom: gdsc: Add configurable poll timeout
-Message-ID: <Y3XrQrnT0dxTvc5S@linaro.org>
-References: <20221116104716.2583320-1-abel.vesa@linaro.org>
- <20221116104716.2583320-3-abel.vesa@linaro.org>
- <9c5b6037-c962-81d3-41c1-a9ec459c9adc@linaro.org>
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LbRTiKNw92Ee+1b4C3YYFV4rUTYbBfHXEQTVRGxB8K0=;
+        b=p42pky5LqegnXKk5Qc1Q3v08oRboyjFIWu+srg8XpjxDWmlYRrDXiiaAI8apIlCYlE
+         AKivD8C/KLSbYJjYYVVj9rsXvC8DJ0bcB65IW0hy1VbklKW4RIQOkJYOb2a3gAxVc+n2
+         rSj8XM2Jn1h1EPZ+TPD1BWj2CMogjsyTHweVNCQcGxKrUGEdwHPlp7Jgrj6hFsXk6wez
+         e5yAevxOympBLLnmyXyUTEiAJJVgSuLkL8QfjPidBAvs+gNs5IuJOAhAVRi8Tv8uhp78
+         pk0sHgHjGL7V2SzQ6zVIxIoA9Rp5gRocOYtSPehqqutIouv57vpVamwsbXv2ktEOhG5o
+         rCgw==
+X-Gm-Message-State: ANoB5pkh+IGeBd1qe/AMN92B9XxSENg0919e8tCD0UfkOTcprHUCPp4g
+        yGexK17DiGNZ8A+mtY34OZ8woQ==
+X-Google-Smtp-Source: AA0mqf4ZeAm5v63sFB1ue0O1rCuSr9Ker30/XMjXG0JEU1vGy71om73E8lAPBoWdhIOxA0I08OHCcw==
+X-Received: by 2002:a5d:68c1:0:b0:236:8a38:4deb with SMTP id p1-20020a5d68c1000000b002368a384debmr694397wrw.487.1668672417764;
+        Thu, 17 Nov 2022 00:06:57 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b? ([2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b])
+        by smtp.gmail.com with ESMTPSA id v3-20020a1cf703000000b003cf774c31a0sm4414524wmh.16.2022.11.17.00.06.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 00:06:57 -0800 (PST)
+Message-ID: <cb94a2f5-6521-19b5-ca30-c68ffd2068a4@linaro.org>
+Date:   Thu, 17 Nov 2022 09:06:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9c5b6037-c962-81d3-41c1-a9ec459c9adc@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: Add compatible for
+ sm8550
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-tsens-v1-0-0e169822830f@linaro.org>
+ <4dd96db7-b667-7b8f-f80d-a250ac63f223@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <4dd96db7-b667-7b8f-f80d-a250ac63f223@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-11-16 12:19:09, Konrad Dybcio wrote:
-> 
-> 
-> On 16/11/2022 11:47, Abel Vesa wrote:
-> > Depending on the platform, the poll timeout delay might be different,
-> > so allow the platform specific drivers to specify their own values.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   drivers/clk/qcom/gdsc.c | 5 ++++-
-> >   drivers/clk/qcom/gdsc.h | 1 +
-> >   2 files changed, 5 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > index 0f21a8a767ac..3753f3ef7241 100644
-> > --- a/drivers/clk/qcom/gdsc.c
-> > +++ b/drivers/clk/qcom/gdsc.c
-> > @@ -107,7 +107,7 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
-> >   	do {
-> >   		if (gdsc_check_status(sc, status))
-> >   			return 0;
-> > -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
-> > +	} while (ktime_us_delta(ktime_get(), start) < sc->poll_timeout);
-> What about the second usage of TIMEOUT_US (in gdsc_toggle_logic)? Is it fine
-> for that to be the default value?
+Hi,
 
-The usleep you mention is not really for polling the state.
-So I think it should stay as is. Who knows, maybe in the future we will
-need to have the configurable as well, but as a toggle delay rather than
-a status poll timeout.
+On 16/11/2022 12:26, Krzysztof Kozlowski wrote:
+> On 16/11/2022 11:09, Neil Armstrong wrote:
+>> The Qualcomm SM8550 platform has three instances of the tsens block,
+>> add a compatible for these instances.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>> To: Andy Gross <agross@kernel.org>
+>> To: Bjorn Andersson <andersson@kernel.org>
+>> To: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> To: Amit Kucheria <amitk@kernel.org>
+>> To: Thara Gopinath <thara.gopinath@gmail.com>
+>> To: "Rafael J. Wysocki" <rafael@kernel.org>
+>> To: Daniel Lezcano <daniel.lezcano@linaro.org>
+>> To: Zhang Rui <rui.zhang@intel.com>
+>> To: Rob Herring <robh+dt@kernel.org>
+>> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: linux-pm@vger.kernel.org
+>> Cc: devicetree@vger.kernel.org
+>> Cc: linux-kernel@vger.kernel.org
+>> ---
+>>   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> index f0bd4b979e28..09dbd96d380e 100644
+>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> @@ -58,6 +58,7 @@ properties:
+>>                 - qcom,sm8250-tsens
+>>                 - qcom,sm8350-tsens
+>>                 - qcom,sm8450-tsens
+>> +              - qcom,sm8550-tsens
+> 
+> alOf:if:then should be updated.
 
-I added this configurable poll timeout just because I saw that
-downstream, each driver has different values. And it kind of makes sense,
-because the state machine inside the GDSC might be different between
-platforms, and so, it might take different time to reach a certain on/off
-state.
+I thought the -v2 fallback would be enough since 8450 isn't present either in the alOf:if:then either.
+
+Anyway, will fix this.
 
 Thanks,
-Abel
+Neil
 
 > 
+> Best regards,
+> Krzysztof
 > 
-> Konrad
-> >   	if (gdsc_check_status(sc, status))
-> >   		return 0;
-> > @@ -454,6 +454,9 @@ static int gdsc_init(struct gdsc *sc)
-> >   	if (ret)
-> >   		goto err_disable_supply;
-> > +	if (!sc->poll_timeout)
-> > +		sc->poll_timeout = 500;
-> > +
-> >   	return 0;
-> >   err_disable_supply:
-> > diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> > index 803512688336..9a1e1fb3d12f 100644
-> > --- a/drivers/clk/qcom/gdsc.h
-> > +++ b/drivers/clk/qcom/gdsc.h
-> > @@ -36,6 +36,7 @@ struct gdsc {
-> >   	struct generic_pm_domain	*parent;
-> >   	struct regmap			*regmap;
-> >   	unsigned int			gdscr;
-> > +	unsigned int			poll_timeout;
-> >   	unsigned int			collapse_ctrl;
-> >   	unsigned int			collapse_mask;
-> >   	unsigned int			gds_hw_ctrl;
+
