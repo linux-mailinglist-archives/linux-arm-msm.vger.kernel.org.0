@@ -2,93 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65C9062D5F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:09:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C801562D618
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:12:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239738AbiKQJJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 04:09:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37264 "EHLO
+        id S239703AbiKQJMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 04:12:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239729AbiKQJJt (ORCPT
+        with ESMTP id S239783AbiKQJLv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 04:09:49 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6786DCEC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:09:48 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j4so1860884lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:09:48 -0800 (PST)
+        Thu, 17 Nov 2022 04:11:51 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA50B5ADCE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:11:50 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id s12so1615908edd.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tLB7LJXnnfAW92AEsrUtvLDVqopJCLCs4/6lAI87UUg=;
-        b=y2oMxqLdH9dvX+z0E2zWB/mu5bfmTV0cg1QWyqDHocbbE14iSn25avNuxhlOfXO7L4
-         XQQvBdpx7q+cbVGdeZF9jGJVAPw4yGQ20v9EED9snb/i3kqLYMSTKsFwD8nJPMqGUUQN
-         tJ10wdZ4syvUEEt86Q6075CL8xmhBgDEKdEGURwttlQctpzS/ddNQs0ZSBm7DFFfAkQJ
-         TlC8p34qU0rI2YQ+h+cs/5P/VMRGjAW6I8Kr5Lal3XYulNfBPCO+ugzpJrnANJVjXr5D
-         eEgsQt0ZcwUCD7oenY8rsd1Bx6q8AzuKnTs1q3j/uZIFF2/liPYq/p4eOoC1gEAX/sM1
-         MWRw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+F5iWVcgnrdzqTiY9j1QAUnZy3iVsRC/Wh3sHGCZWi4=;
+        b=LtX/g1RMQt9cXSVGVKP2MDWN/mkziWFTZKiIJ7o7mBkv9dOl7AWs6ncE364jyZC3/s
+         i4fLe7LgA9RebQlMYnJb/mmNer/NvTtD47XChEughsfBHOjVHSe8ZeTot75HEF+F+HSa
+         GAICHpYZWfWF/bH4Z0sAowijk7vY4kn/89NQHZpTDCLxVwlreQO6Pz0L6eHnkvl+qvFu
+         7zmCRpd6EWGARfEm9duTUOWY799ji5srlcmX93hogx/MR6Hy/tARrg1eHeDKuEZz/8eN
+         /BFoAbWI7Vavbp6K8WZzBLt5wO84dED+GCxiGVSfrk2RXAqZRE7gnhCYO5s0jUDmk1/k
+         QqlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tLB7LJXnnfAW92AEsrUtvLDVqopJCLCs4/6lAI87UUg=;
-        b=Vigu8zX6k5oTnFdh/zIUc5a4yv2DSrEJHzN5hjOw4fL/z1o9H5CUQLfJbjfKRPk3us
-         12LdHr5uJ3eP/+6DviQtq4IV8la4jhIvkqkDitv7bo0ZbfS9C5N8xQGuPye66GFcYiaP
-         nSY/Q4HrSD8SKi8PU0TUjzbNI5+eoiaqHlH7PimdvpTG3IGooCl6A5ON16zeUEwsYBWb
-         1oumI3XJ1lDHpasNZS7oo8LN2YJ/7J5JQTWZjhhHv6BHSJnTvhYuj7YQuuVlu4NdmT8N
-         c5gihK8CNPrOl4F/VxnD62SvkiUHZgBaiYVzniP5ye0GkzJxeW86xTq9EFBLCtpT0Ekb
-         XlNw==
-X-Gm-Message-State: ANoB5pmS3HfYB4XfeY3wRJxUN+BkIHBQbJRSMSIBQUpckJUA6/kI0sh6
-        HTkiFj9qV36X5OGyZEk/9reXRg==
-X-Google-Smtp-Source: AA0mqf6r5Zldh8oskQVxhWZjjFU41fp1Ye1oscq3Ewk7VOK7s/YkxZIlYws+JSH8J/R7E9xLTDj8qQ==
-X-Received: by 2002:a05:6512:3b0d:b0:4b4:7cb4:f932 with SMTP id f13-20020a0565123b0d00b004b47cb4f932mr553349lfv.243.1668676187910;
-        Thu, 17 Nov 2022 01:09:47 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id 13-20020a2e164d000000b00277078d4504sm92653ljw.13.2022.11.17.01.09.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 01:09:47 -0800 (PST)
-Message-ID: <ad350d24-4954-ecf7-4d1f-3a2f784c212f@linaro.org>
-Date:   Thu, 17 Nov 2022 10:09:46 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+F5iWVcgnrdzqTiY9j1QAUnZy3iVsRC/Wh3sHGCZWi4=;
+        b=ld6GueoM/4KNjQBxWK7+mppz14jo6T8rWpqlFNaSqoprR+v/9/udCyiVQgSiD/VXKe
+         x1esPAggl6t5/3iZoSrv2f0EA+P0RlqKOUPn6UXVLNpRuyOLkD8y+CMv2GRoO9ZD8P58
+         Ve9HmiNNUyZRU+auxcAH8j5yO6LdTmCdPO5n0olYObN/iq9j9v/yeTghMwJu/p4dcrVn
+         YDilsO32rhEK3Uj9j+eg5ouSgIQQFBf2NPoAvTmjvnfnpPFUhFhT7YOi1M0HO1JhIgMi
+         oDvYRPo73x/bZHbmLa5oSqDvuLmnxsi+RELFuzrLwPyk6wFxN2f0ojTzooXqjAO7xWfn
+         lNag==
+X-Gm-Message-State: ANoB5pmJPV8nWUVhTTSAS+MPQSPSB323iMYrrMZvm436HpoJ4fSHLmEr
+        kBcFajadzZ/0j+sMP16TQ/si2Ztr1eQIAaCzEiQFgQ==
+X-Google-Smtp-Source: AA0mqf5DYdrMDRZrvgQEFjePMZc8XLtptBPspZwl6bU4dGYxj8+nqW7gHSkJWAsBBEQqNHFdnkwrNIe+8V0lQ3SebxI=
+X-Received: by 2002:aa7:d5c9:0:b0:463:c64e:bc75 with SMTP id
+ d9-20020aa7d5c9000000b00463c64ebc75mr1361975eds.205.1668676309518; Thu, 17
+ Nov 2022 01:11:49 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6/9] dt-bindings: clock: qcom,rpmh: Add CXO PAD clock IDs
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+References: <20221116093939.20111-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221116093939.20111-1-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 17 Nov 2022 10:11:37 +0100
+Message-ID: <CACRpkdZ36JLN_Y7QV5agoCMBf83AH-TCwAvo+yzX6NdkSDS1iQ@mail.gmail.com>
+Subject: Re: [GIT PULL] pinctrl: dt-bindings: qcom: Second convertions for v6.2
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20221116104716.2583320-1-abel.vesa@linaro.org>
- <20221116104716.2583320-7-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221116104716.2583320-7-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 11:47, Abel Vesa wrote:
-> The SM8550 has a new fixed divider as child clock of CXO
-> called CXO_PAD, so add IDs for it.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Wed, Nov 16, 2022 at 10:39 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
+> Continuation of my cleanups - second, last round based on previous pull request.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Pulled into the pin control tree for v6.2, thanks!
 
-Best regards,
-Krzysztof
-
+Yours,
+Linus Walleij
