@@ -2,85 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 357B762DEA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:48:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17E4962DEC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:58:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240323AbiKQOsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 09:48:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43414 "EHLO
+        id S239839AbiKQO5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 09:57:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240180AbiKQOsi (ORCPT
+        with ESMTP id S240205AbiKQO5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 09:48:38 -0500
-X-Greylist: delayed 1187 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 17 Nov 2022 06:48:35 PST
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B33E308;
-        Thu, 17 Nov 2022 06:48:24 -0800 (PST)
-Date:   Thu, 17 Nov 2022 14:48:19 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1668696502; x=1668955702;
-        bh=dS2uiDSZKMvuJWEBxvTbd4Wb9ikgFCZTHfkeHw4tYO4=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=aZW2BGhBXhazUeSELNvdB1B4l1xKbyJ95eM642n5uKk/RnYr6quGkNcfRC0fltp7k
-         DfYA+AHWTotUSq8Wa0JjJV85Sg4u9YyZpcNhjWO3mmYxVqwzKpWhF5zP/lEFPL1JbD
-         vsWevXkyIJ0jzXGs0Cs2JWPwStzQ0Vr/cY8FinxrNKxBrgb32GFtFVVVclWX06oSAW
-         E6uCyKRK5qBZYqq60IbSFPcGaaT0Il6WSFkZLQ+KbgUdXxaFoS+X+8ql7m1zox/WbS
-         sTvJsIrJr3YeaKP4/BNqYnzeO4RUjhk8O3LHMchLZ4X2Rk+TKKF8aQwniPDUXR4wQu
-         0t4JG1xRhdIow==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-grandmax: Add properties function and color for keyled
-Message-ID: <20221117144717.17886-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Thu, 17 Nov 2022 09:57:25 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C4B76162
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:57:21 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id be13so3212629lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:57:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UdCfv431jqwhM+KQDL4GlLi43icmR8iSXxt/gu6+Rys=;
+        b=bJEOYJfW0rPbshF9PevRR/1b2MUlMwGPv9+wzegp26kkKXz8OGV00PoqtO/hZPQ4NY
+         gMPiuDdgIKSsQn4xC5PNlFinxOoqwdoDzzEPgy+jo8LS/luRy/in73v+KWvbKvjKTTbS
+         ujFrqIpfBrbAth+G3xhpPy4t3HP0CCnOSKpm2k/jgfuFWkN+zDkcSyC5jQGpa/Mj/ooW
+         tyT8QckqWM5o/vh8kSZY8Kx0nlmoZnHNg6zIYfH1qUal+73CeqEeGfS3L3jkVV2hq7E5
+         bejJKH1vQR5DcvTaYvI/r29KUPRl5OF8daRNht81IVG17V+E09l9dT9UiJd7mrAN7Uod
+         ee0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UdCfv431jqwhM+KQDL4GlLi43icmR8iSXxt/gu6+Rys=;
+        b=7mF4yUGtXIWUrStxa24lyHfLVQi+d358eRQqg/aOmBua0diAEpVNGwWLQOnaogAlaB
+         nkMs9rlpf8m/2D57Q+I6ftPcZVl5rWofQnSIzdEsmf3aNTx/NoXVfpxuUUP1TV1TvMOT
+         5Trc9+TsDQ/rbIZQ6ZOA/jWgz5/LWVnk6/X7BOrag0TBFfW2qANE4o+i96FxCvbX40Cu
+         0OQeitbe0deBHtlPaw0Rt86NS1KU7dQaDcF7DU3GZ1FmcvXCs2ZlvwsoZc1euOKdOhGH
+         p8IE/XzR3oVhrU6rcNGBqu9ldTSAOi2JtPT35ExeKwP2ZVUgK8b+VXvurXHQvyjVy9lp
+         oUqw==
+X-Gm-Message-State: ANoB5plU9772hmkKALraeeoYfxWIrW9LVECqkmGqQ6TIszXXqfRUpofc
+        uyUZSoMB6hJRCuL0hcprYA4+qg==
+X-Google-Smtp-Source: AA0mqf5HMqFOprUrMQnUCqgvwsJ2g3LSERRqqOVcIoJZdsRxNdb+AYnvNJd+sDHEhnT7NKIuQg3wTg==
+X-Received: by 2002:a05:6512:c29:b0:4b1:b061:4815 with SMTP id z41-20020a0565120c2900b004b1b0614815mr959380lfu.18.1668697039485;
+        Thu, 17 Nov 2022 06:57:19 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id b12-20020ac247ec000000b004a93b8508edsm181303lfp.181.2022.11.17.06.57.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 06:57:18 -0800 (PST)
+Message-ID: <b5fcd010-76bf-9ec3-bf52-6ed51c655afa@linaro.org>
+Date:   Thu, 17 Nov 2022 15:57:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2 10/13] arm64: dts: qcom: sm8450: add spmi node
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211209103505.197453-1-vkoul@kernel.org>
+ <20211209103505.197453-11-vkoul@kernel.org>
+ <5035b6a3-164b-afa0-b714-4deb886f9f90@linaro.org>
+ <9f696023-f2b4-ccd0-34a0-6f4d5848e862@linaro.org>
+ <8c1428a6-f268-cb03-3e55-887d30236924@linaro.org>
+ <3af48606-731f-6047-92ca-80435f401ae3@linaro.org>
+ <d5726896-e62b-d19d-454b-700dd1c42222@linaro.org>
+ <CAA8EJpovd0D154QUG1_EtCnCrffJBt+SPWQtLEZWb=dc_PLGjA@mail.gmail.com>
+ <Y1jGjCU47+tOBLus@matsya>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <Y1jGjCU47+tOBLus@matsya>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-keyled is white, and used as touchkey LEDs.
-Add properties function and color for keyled.
-
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts b/arch/a=
-rm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-index bc7134698978..042ec55d447d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
-@@ -29,8 +29,12 @@ / {
-=20
- =09gpio-leds {
- =09=09compatible =3D "gpio-leds";
--=09=09keyled {
-+=09=09led-keyled {
-+=09=09=09function =3D LED_FUNCTION_KBD_BACKLIGHT;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+
- =09=09=09gpios =3D <&msmgpio 60 GPIO_ACTIVE_HIGH>;
-+
- =09=09=09pinctrl-names =3D "default";
- =09=09=09pinctrl-0 =3D <&gpio_leds_default>;
- =09=09};
---=20
-2.30.2
 
 
+On 26/10/2022 07:33, Vinod Koul wrote:
+> On 24-10-22, 21:58, Dmitry Baryshkov wrote:
+>> On Mon, 24 Oct 2022 at 21:56, Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>> On 24/10/2022 12:48, Dmitry Baryshkov wrote:
+>>>> On 24/10/2022 19:46, Krzysztof Kozlowski wrote:
+>>>>> On 24/10/2022 12:45, Dmitry Baryshkov wrote:
+>>>>>> On 24/10/2022 17:56, Krzysztof Kozlowski wrote:
+>>>>>>> On 09/12/2021 05:35, Vinod Koul wrote:
+>>>>>>>> Add the spmi bus as found in the SM8450 SoC
+>>>>>>>>
+>>>>>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>>>>>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>>>>>> ---
+>>>>>>>>     arch/arm64/boot/dts/qcom/sm8450.dtsi | 18 ++++++++++++++++++
+>>>>>>>>     1 file changed, 18 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>>>>> index f75de777f6ea..b80e34fd3fe1 100644
+>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>>>>> @@ -645,6 +645,24 @@ pdc: interrupt-controller@b220000 {
+>>>>>>>>                            interrupt-controller;
+>>>>>>>>                    };
+>>>>>>>>
+>>>>>>>> +         spmi_bus: spmi@c42d000 {
+>>>>>>>> +                 compatible = "qcom,spmi-pmic-arb";
+>>>>>>>> +                 reg = <0x0 0x0c400000 0x0 0x00003000>,
+>>>>>>>> +                       <0x0 0x0c500000 0x0 0x00400000>,
+>>>>>>>> +                       <0x0 0x0c440000 0x0 0x00080000>,
+>>>>>>>> +                       <0x0 0x0c4c0000 0x0 0x00010000>,
+>>>>>>>> +                       <0x0 0x0c42d000 0x0 0x00010000>;
+>>>>>>>
+>>>>>>> This is a patch from December 2021. Is there anything blocking it from
+>>>>>>> being merged?
+>>>>>>>
+>>>>>>> The same applies to several other patches here.
+>>>>>>
+>>>>>> As far as I know, Stephen still didn't pick up the spmi-pmic-arb support
+>>>>>> for the PMIC on the SM8450 platform. Thus we also can not merge the DT
+>>>>>> parts.
+>>>>>
+>>>>> Why we cannot merge DTS? How is DTS with new nodes depending on any
+>>>>> driver changes?
+>>>>
+>>>> In this particular case, there was an open question, what should be the
+>>>> bindings for the PMIC ARB v7.
+>>>
+>>> Ah, so it is about PMIC ARB v7 bindings? Then it's reasonable to wait
+>>> with this one. I just had an impression that it's about driver changes...
+>>
+>> Yes, it's about binding. Thus we have been waiting for quite some time.
+> 
+> Yes sadly Steven has stopped responding to emails or IRC.. I am not
+> sure whats going on!
+> 
+> Even the SPMI tree is not being actively maintained with only few
+> patches which were picked in last cycle since this year!
+It's in -next now and 8450 boots and works fine. If the binding 
+situation has been resolved, I say merge this ASAP! :)
+
+Konrad
+> 
