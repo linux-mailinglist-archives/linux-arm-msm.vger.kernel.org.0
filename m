@@ -2,108 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C94A62E1A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 17:26:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D34BC62E286
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 18:05:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240602AbiKQQ0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 11:26:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35104 "EHLO
+        id S240387AbiKQRFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 12:05:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239820AbiKQQ0Z (ORCPT
+        with ESMTP id S240307AbiKQRFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 11:26:25 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B82BBE33;
-        Thu, 17 Nov 2022 08:25:12 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id D78D3CE1E7F;
-        Thu, 17 Nov 2022 16:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA29C433C1;
-        Thu, 17 Nov 2022 16:25:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668702308;
-        bh=Z0xBqZcccm8SbVQrnC5CSdtczjQ3AfNDFzFjDM6WrAc=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=ZqKl3wWu7HA5rheHtNtCjwIkojZDp/bll/jjsfgjdxy6sMKWqMauxH3cOkjmoIAEA
-         J3t10xflavu1kM/j1mq7Ff8FaoFOLz+TzXDRD1qTmWfvT+HMEDD/ij8GpSznUXEuKR
-         5CAprSniDajdEiztK25t9dOkn6KFkBuuIHYsWQk40xTRnhBZK2RHyBTHoY+oragxER
-         IjNaUEewT4SZkl0FlWR+iCR3Sq8Lxravlzx9jrTWeb46ysi4fkl9hPUjNY5E5gsgg4
-         eM6iuk9VKnL7+wt+HqUDoULRHVDm2ecgJleLrjjgGUyveMvPEosCJqiGDFjXXn2zDo
-         kg4E0vQjnNQMQ==
-Message-ID: <59715ef2-3335-7f8e-54f1-c4315ceba232@kernel.org>
-Date:   Thu, 17 Nov 2022 18:25:03 +0200
+        Thu, 17 Nov 2022 12:05:03 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0589F73407
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 09:05:01 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id g2so1223123wrv.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 09:05:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z5YzaVX692xNQHy7JextiJs22gCvsGFaf17mRFu01f0=;
+        b=rdxQsuVRgYXAnE5PzydAusyFiXb6L0FkB8j+unRFH10XWUUCgfs/PKiZwtsznuAg5/
+         JqY1LeSgs/E95ExPb59eGyUT3dAkn76dol+Y+zGNxTJPUSRtD64eVhCELo7Dy5fmnhjL
+         G9mHO5ye51ulMyVIRw3rWXbB8B8wKOmnlhKz69d8nR8em9djDU+s0evyQ/mQuawBcaw+
+         jqW/8Fv1fSfP2qPST7/qYR7L7U9+n9rH/gnv015WuU/KC0sQWho2i02+JgWT8OY6P78v
+         lHYFE5/ttfhUNMaCHP7ERdEc/pgme0Rt+KuThIPgQPENmjygcqViEV/klEQwcUXvuQcj
+         mihQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z5YzaVX692xNQHy7JextiJs22gCvsGFaf17mRFu01f0=;
+        b=urcDZ3b4gQNyJS8Ycp3r3pwU6twfUyvRI/o7Qbxn6sZw5jncnIQkMQ2xgLLugZb4dZ
+         2oGUPG7RmN2JiUN/lrnpSVqcPf342vnj0V/cWWT1Q8+SO+gKg8fLzHQsX8532IMb9dl9
+         dQzWu8gbnhYOFbWHug4xQOPdEMeBExRlnvSCBOdkY/qUhmVTRqDQpdcoxLLloEEvKbQr
+         8yFVDgXSqSqtjuSjtNaz4fto3BNITVw0mSfXKMLSoiPal+0m89AdydXwkh5n8gPhGtK/
+         9GPtm79ao0kv/hsCvftcQankZLDUeSBN4Snmm1d+OvchLtVrCi8+bPODUj7LKFB7TwUq
+         r0RQ==
+X-Gm-Message-State: ANoB5pmpZy4U0zsVEDNJm3fwmEARR3ad/If2hCScpyucnn3dl9zCHGOE
+        vjC2roib9VGVvZYoTfDrgFSUIE8LFNiGGQ==
+X-Google-Smtp-Source: AA0mqf6RoByX41Vu5Bsqe5wcES9V/i2R41Nw5XK4RjbOUbPyt+w6Tovi9HbqEClCqzOjRqzcucAkiA==
+X-Received: by 2002:a5d:5d0d:0:b0:236:ea0d:e49b with SMTP id ch13-20020a5d5d0d000000b00236ea0de49bmr2093974wrb.472.1668704700304;
+        Thu, 17 Nov 2022 09:05:00 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id l13-20020a5d668d000000b00236488f62d6sm1396225wru.79.2022.11.17.09.04.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 09:04:59 -0800 (PST)
+Subject: [PATCH v5 0/2] arm: qcom: mdm9615: second round of bindings and DT fixes
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 00/10] interconnect: osm-l3: SC8280XP L3 and DDR
- scaling
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIALlpdmMC/43NTWrDMBAF4KsErasyo79UXfUeJYuxPIkFshyk1BCC756hu5JFvRreg/fNQ3Vumb
+ v6PDxU4zX3vFQJ/u2g0kT1wjqPkpUBYxDA63mcY0Cvr7mmWyv6TnPRaM8+4Qe50ZKS6UCd9dCopknG
+ 9acUKafcb0u7/75aUc73P+qKGjSkIQEENmThq+RKbXlf2kWdRFzNHsWIEmw8czgSuIFfFLtHsaKwZ3
+ A+OBeP+KK4PYoTxQXrjY0YE8Y/yrZtT7d5kPCQAQAA
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Thu, 17 Nov 2022 18:04:57 +0100
+Message-Id: <20221005-mdm9615-pinctrl-yaml-v5-0-910019fb8b9b@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Mike Tipton <quic_mdtipton@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221111032515.3460-1-quic_bjorande@quicinc.com>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20221111032515.3460-1-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lee Jones <lee@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.11.22 5:25, Bjorn Andersson wrote:
-> The SC8280XP currently shows depressing results in memory benchmarks.
-> Fix this by introducing support for the platform in the OSM (and EPSS)
-> L3 driver and support for the platform in the bwmon binding.
-> 
-> Then add the necessary nodes and values throughout the sc8280xp and
-> sa8540p dtsi files to make the various devices on these platforms scale
-> both L3, memory bus and DDR.
+This is a second round of bindings & DT fixes for the MDM9615 platform.
 
-Good stuff! Thanks Bjorn!
+This second round focuses on less trivial changes like pinctrl & regulators bindings,
+the remaining work will mainly be fixing the qcom,kpss-timer/qcom,msm-timer situation and
+add bindings for qcom,lcc-mdm9615, qcom,kpss-gcc & swir,mangoh-iotport-spi.
 
-I plan to merge everything except the dts patches, that should go
-through the qcom tree.
+Dependencies: None
 
-BR,
-Georgi
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v5:
+- Fixed bindings invalid id after rename
+- Fixed invalid ref path to qcom,rpm-regulator.yaml from qcom,rpm.yaml bindings
+- Link to v4: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org
 
+Changes in v4:
+- Removed applied patches
+- Removed "-ipc" from bindings file name and removed IPC from title & description
+- Added the review tags from v3 after file renaming & title/description change, after Lee's acceptation
+- Link to v3: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org
 
-> Bjorn Andersson (10):
->    interconnect: qcom: osm-l3: Use platform-independent node ids
->    interconnect: qcom: osm-l3: Squash common descriptors
->    interconnect: qcom: osm-l3: Add per-core EPSS L3 support
->    interconnect: qcom: osm-l3: Simplify osm_l3_set()
->    dt-bindings: interconnect: Add sm8350, sc8280xp and generic OSM L3
->      compatibles
->    arm64: dts: qcom: Align with generic osm-l3/epss-l3
->    arm64: dts: qcom: sc8280xp: Add epss_l3 node
->    arm64: dts: qcom: sc8280xp: Set up L3 scaling
->    dt-bindings: interconnect: qcom,msm8998-bwmon: Add sc8280xp bwmon
->      instances
->    arm64: dts: qcom: sc8280xp: Add bwmon instances
-> 
->   .../interconnect/qcom,msm8998-bwmon.yaml      |   5 +
->   .../bindings/interconnect/qcom,osm-l3.yaml    |  24 ++-
->   arch/arm64/boot/dts/qcom/sa8540p.dtsi         |  39 +++++
->   arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
->   arch/arm64/boot/dts/qcom/sc7280.dtsi          |   2 +-
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 152 ++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
->   arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +-
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
->   drivers/interconnect/qcom/osm-l3.c            | 126 ++++-----------
->   10 files changed, 252 insertions(+), 104 deletions(-)
-> 
+Changes in v3:
+- Path 1: Removed from serie because applied
+- Path 2: None
+- Path 3: Added reviewed-by tag
+- Path 4: Fixed dt-schema title and added unevaluatedProperties
+- Path 5: Various schema fixes, uses same naming as other dt-schema for qcom regulators
+- New patch added changing regulators names of msm8660 to conform to bindings
+- Link to v2: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org
 
+Changes in v2:
+- Rebased on v6.1-rc1
+- Patch 1: Fixed bindings and aligned with Krysztof's series
+- Patch 2: Rewrote patch title and added reviewed-by tag
+- Patch 3: Added reviewed-by tag
+- Patch 4: Moved to end, added support for (regulators|-regulators) sudnode
+- Patch 5: Fixed schema description and added missing unevaluatedProperties in patternProperties
+- Patch 6: Dropped & squashed with patch 4
+- Link to v1: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org
+
+---
+Neil Armstrong (2):
+      dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
+      dt-bindings: soc: qcom: convert non-smd RPM bindings to dt-schema
+
+ Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+ .../bindings/regulator/qcom,rpm-regulator.yaml     | 128 ++++++++++
+ .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
+ 3 files changed, 229 insertions(+), 283 deletions(-)
+---
+base-commit: 19d64985796125c5e3820c3db995c5df6d13d6dc
+change-id: 20221005-mdm9615-pinctrl-yaml-13f5c18a4d3a
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
