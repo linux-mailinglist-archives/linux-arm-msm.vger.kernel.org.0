@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08A2462D867
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:51:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A34A462D872
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:52:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234508AbiKQKvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 05:51:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40952 "EHLO
+        id S239237AbiKQKwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 05:52:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233502AbiKQKvV (ORCPT
+        with ESMTP id S234851AbiKQKwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 05:51:21 -0500
+        Thu, 17 Nov 2022 05:52:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE65118369
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:50:28 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8228013F61
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:50:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1668682227;
+        s=mimecast20190719; t=1668682230;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=GBLjqaxD9YXzB2a0G4EC2tB+BR3145svbgGOvljSx80=;
-        b=NVocBVwJMBCdj6ZEl6AzbeQUJIChGglCHAl2lod3/8JfSuuDeGwU7XSVaYND1wf+CcWHrJ
-        XmVYOjYVRoSTru3bB7lUfJpMoD4iiTRQm4XNnWqKBOdD5xnkizpz4ngkTR4TdhLGmIpNhS
-        TZK8WsxpHCw0kTdob9VgS/SZMlhwnK8=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=x6n9un+DF1STb0f8Wt45FFfORAUWPZZjfWdP+jBOFAw=;
+        b=IGz8/5Yx70KGnfHXmFSM3h2LAPA9ScSjg9V6BfDkK2CDmGiPRmEb4BDfAAgwehcLYmdil9
+        VkyJ9Tgil6ARowkDEddwAxTk8CpM67+1sHa9QldpgPue11TAiIlHw6lARG+yY0C/1iuNXI
+        ku4oY1VC/ok8KrhjHZNg1HOCsLSUPP4=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-18-aX3qVgrNPEGX9gvdMkdHmA-1; Thu, 17 Nov 2022 05:50:26 -0500
-X-MC-Unique: aX3qVgrNPEGX9gvdMkdHmA-1
-Received: by mail-qv1-f71.google.com with SMTP id nn2-20020a056214358200b004bb7bc3dfdcso1226346qvb.23
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:50:26 -0800 (PST)
+ us-mta-246-YMwVhKv8OzifxKDlhpu-Dg-1; Thu, 17 Nov 2022 05:50:28 -0500
+X-MC-Unique: YMwVhKv8OzifxKDlhpu-Dg-1
+Received: by mail-qt1-f200.google.com with SMTP id w27-20020a05622a191b00b003a56c0e1cd0so1320232qtc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:50:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GBLjqaxD9YXzB2a0G4EC2tB+BR3145svbgGOvljSx80=;
-        b=drjiG38B4hjnKeigZholi7AsPtbAjAqhhm1yctHHmJ4Rj+Iiw5lHegr+3F85gSGJvm
-         d+SWA/1HD2S77rOuBzSxCSSqLbvg8ON8C95PLyehRvzMhx7C1fPcqzUFmJDB3NiRrFzK
-         JOhtnj8zJzvHX9/dRFkU5H3XuhTaDmMtAVcubZLMOpYI+WliqatY7jRiu9AwkHDxpnYn
-         b9VpKwK8VkBFnTHj4gLnYjNHLfXEfyxdJLtNx4RY7ye/zEt6QW1n2s79gS1Sg7C/HYn6
-         rwFL9d05H9vxQGmRnWarTBRbdzyOKnbug9hKW0dC9i/5KRElpovamO3bfOCNXCB+k4jX
-         lJYw==
-X-Gm-Message-State: ANoB5pkvkvQSZdv2NZSEkrmwErkoD5MFRozoFMAHxElcPS5qOEMq/Ki0
-        q62pqAQekWPWFqaM4T1rEVveJ6QyX/UaloHUGMkNkQFnYRO7KHSrRPJGgCyPq3i8hRUvroJgR4D
-        1EWOi9b7YUwLDI5DcmowycAjsuA==
-X-Received: by 2002:ac8:4e47:0:b0:3a5:c306:324 with SMTP id e7-20020ac84e47000000b003a5c3060324mr1650356qtw.116.1668682226064;
-        Thu, 17 Nov 2022 02:50:26 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf5Hp8ueJ2odeFAiwGWASh3iAkry+xnk/8bkoOGXMK9ipdlHU+fDlbp30euEWUKaHFyqpmn8jQ==
-X-Received: by 2002:ac8:4e47:0:b0:3a5:c306:324 with SMTP id e7-20020ac84e47000000b003a5c3060324mr1650342qtw.116.1668682225822;
-        Thu, 17 Nov 2022 02:50:25 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=x6n9un+DF1STb0f8Wt45FFfORAUWPZZjfWdP+jBOFAw=;
+        b=EGlBDEDgtXP4ho1J22/yjFIXna1LEGgvpnVeqeSvI72hNs79ZXB7IkD5CNWH+J7nsd
+         ILGYpgmwgUYafw0syvHGag6b4JyEOKcrIBGlMk/2MDggvkaiYhJcoo4Mit0gBSyjlUjK
+         6MiHrzBOrTzbEt+YnW/+sV5Jdj48SPoiEtVDzN6GEXX1LOeSBckCWd7JxGNES4BBevhC
+         +n44Z6J4vqg9LJTxR21PDTTWEh4FyFOx8GwwCO1+1BTk09bsGBOAUHR/aOyWm+o11M1f
+         NYYLLxISzMJGK5KzhfUyEIbxTjB8EoJPLv4ZKvz98tKxoQqsTwRn2tAaz/KSsmPFYFyA
+         /+xQ==
+X-Gm-Message-State: ANoB5pkkRnraW8VKlRBvIzOHWvXTmc4mtw2gldKr8VH/nuxlO9iXpagl
+        /UoKqvSNTPkVAwf/DG+A6PzFEsj+3aXl9iYfTeqqqngtwdPGuNQG5p8tw2LestXgeregfUpGh67
+        26Lj67tH/kFNJbcQp7uakS2mv6A==
+X-Received: by 2002:ac8:741a:0:b0:3a5:2932:3a77 with SMTP id p26-20020ac8741a000000b003a529323a77mr1561852qtq.591.1668682228225;
+        Thu, 17 Nov 2022 02:50:28 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf7q5r/FX9thYRsL+y5bwss1yFZk9BsIvNayz/qC38oOghK204AtAl8ETLODAyxsuBJu8fXOWQ==
+X-Received: by 2002:ac8:741a:0:b0:3a5:2932:3a77 with SMTP id p26-20020ac8741a000000b003a529323a77mr1561843qtq.591.1668682228025;
+        Thu, 17 Nov 2022 02:50:28 -0800 (PST)
 Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id i15-20020a05620a248f00b006fa9d101775sm236022qkn.33.2022.11.17.02.50.24
+        by smtp.gmail.com with ESMTPSA id i15-20020a05620a248f00b006fa9d101775sm236022qkn.33.2022.11.17.02.50.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 02:50:25 -0800 (PST)
+        Thu, 17 Nov 2022 02:50:27 -0800 (PST)
 From:   Brian Masney <bmasney@redhat.com>
 To:     andersson@kernel.org
 Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -62,10 +63,12 @@ Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-scsi@vger.kernel.org
-Subject: [PATCH 0/2] qcom: add basic interconnect support to UFS
-Date:   Thu, 17 Nov 2022 05:49:55 -0500
-Message-Id: <20221117104957.254648-1-bmasney@redhat.com>
+Subject: [PATCH 1/2] scsi: ufs: ufs-qcom: add basic interconnect support
+Date:   Thu, 17 Nov 2022 05:49:56 -0500
+Message-Id: <20221117104957.254648-2-bmasney@redhat.com>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221117104957.254648-1-bmasney@redhat.com>
+References: <20221117104957.254648-1-bmasney@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -79,63 +82,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch set adds very basic support for the interconnect framework
-to the Qualcomm portion of the UFS framework since the firmware on
-these platforms expects the interconnect votes to be present. The
-maximum throughput is requested to match what's already done in a few
-other drivers.
+The firmware on the Qualcomm platforms expects the interconnect votes to
+be present. Let's add very basic support where the maximum throughput is
+requested to match what's done in a few other drivers.
 
-Here's the relevant entries from the interconnect_summary file in
-debugfs that shows the two ICC paths are setup for the first UFS
-host controller on the SA8540p automotive board (sc8280xp).
+This will not break boot on systems where the interconnects and
+interconnect-names properties are not specified in device tree for UFS
+since the interconnect framework will silently return.
 
- node                                  tag          avg         peak
---------------------------------------------------------------------
-xm_ufs_mem                                            0   4294967295
-  1d84000.ufs                            0            0   4294967295
-qns_a1noc_snoc                                        0   4294967295
-  1d84000.ufs                            0            0   4294967295
-qnm_gemnoc_cnoc                                     115   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0            0        40000
-  884000.serial                          0          115          115
-qhs_ufs_mem_cfg                                       0   4294967295
-  1d84000.ufs                            0            0   4294967295
-chm_apps                                            115   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0            0        40000
-  884000.serial                          0          115          115
-qnm_snoc_sf                                     1000000   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0      1000000      2500000
-qns_gem_noc_cnoc                                    115   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0            0        40000
-  884000.serial                          0          115          115
-qns_llcc                                        1000000   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0      1000000      2500000
-llcc_mc                                         1000000   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0      1000000      2500000
-ebi                                             1000000   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0      1000000      2500000
-qnm_aggre1_noc                                        0   4294967295
-  1d84000.ufs                            0            0   4294967295
-qns_gemnoc_sf                                   1000000   4294967295
-  1d84000.ufs                            0            0   4294967295
-  a6f8800.usb                            0      1000000      2500000
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+---
+ drivers/ufs/host/ufs-qcom.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-
-Brian Masney (2):
-  scsi: ufs: ufs-qcom: add basic interconnect support
-  arm64: dts: qcom: sc8280xp: add interconnect properties to ufs nodes
-
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi |  8 ++++++++
- drivers/ufs/host/ufs-qcom.c            | 25 +++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
-
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 8ad1415e10b6..55bf8dd88985 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -7,6 +7,7 @@
+ #include <linux/time.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
++#include <linux/interconnect.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+@@ -936,6 +937,22 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
+ 	.deassert = ufs_qcom_reset_deassert,
+ };
+ 
++static int ufs_qcom_icc_init(struct device *dev, char *pathname)
++{
++	struct icc_path *path;
++	int ret;
++
++	path = devm_of_icc_get(dev, pathname);
++	if (IS_ERR(path))
++		return dev_err_probe(dev, PTR_ERR(path), "failed to acquire interconnect path\n");
++
++	ret = icc_set_bw(path, 0, UINT_MAX);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "failed to set bandwidth request\n");
++
++	return 0;
++}
++
+ /**
+  * ufs_qcom_init - bind phy with controller
+  * @hba: host controller instance
+@@ -991,6 +1008,14 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 			err = dev_err_probe(dev, PTR_ERR(host->generic_phy), "Failed to get PHY\n");
+ 			goto out_variant_clear;
+ 		}
++
++		err = ufs_qcom_icc_init(dev, "ufs-ddr");
++		if (err)
++			goto out_variant_clear;
++
++		err = ufs_qcom_icc_init(dev, "cpu-ufs");
++		if (err)
++			goto out_variant_clear;
+ 	}
+ 
+ 	host->device_reset = devm_gpiod_get_optional(dev, "reset",
 -- 
 2.38.1
 
