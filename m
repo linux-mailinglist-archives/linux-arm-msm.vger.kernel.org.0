@@ -2,217 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B05F62DBF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:51:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D489A62DBFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:52:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234824AbiKQMvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 07:51:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
+        id S234614AbiKQMwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 07:52:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234875AbiKQMu4 (ORCPT
+        with ESMTP id S239598AbiKQMvp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 07:50:56 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F40956EF8;
-        Thu, 17 Nov 2022 04:50:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C1EF661B9D;
-        Thu, 17 Nov 2022 12:50:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C55C433C1;
-        Thu, 17 Nov 2022 12:50:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668689454;
-        bh=1a06KWkjecMLhklDpZ9gKeF7p20g4Jg+8/l7J4th3DA=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=uQI8fJZvy/OqooWhKanaVet9mE1ia1m3MLLCP+ziuc+YrxxG1wjEWmBMHRE+c9Yh6
-         70AppzRVhOi62bnRaG7siA6th40i0k9/wcDaZf7+zv5mGuJU+IJhlpnA9Z1Qv1KoHI
-         II+0zQl3O7t72CieDMEWj1Vnj3HgYWhAr9U9kpDYbi8nQNVv2wRNvcUuSLEWjJ4IoJ
-         t7nY5hdgphyln3QPfvoSHL/n6rivxlYMZgFepxJClwWUosNArIT/FXEPlIU6jIa9U5
-         FNwJsI+kbYRgQ+dfYhNKZhOqma/90AWQJgtHCVYaocmc0PNQyQtrKsJC2L2BepJHQS
-         9I4lP8KCPt10Q==
-Message-ID: <429fd44a-34e1-be31-2c6c-c1106e3c98cb@kernel.org>
-Date:   Thu, 17 Nov 2022 14:50:47 +0200
+        Thu, 17 Nov 2022 07:51:45 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939D157B48
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:51:41 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id h12so2540164ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:51:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ivOtpXTOVxqAUn1+lH6HKSHAv64mRXc3v+PCvhSh3nM=;
+        b=jCOO/9/1ZgQUAToy/jlfSV/3OEUGI6uZiLwvNVaOGz8jE8IZ3zHrQ/QCxv1m/P5efU
+         RhxqS6Y4LwUGVy7G22ZyeVaWp9U8qSQnkI4CLp5EEhgn+p3Jmws70lg5gsIffMsnOyjO
+         gVTlx5toTuKOg2R56XWkdR6UiMlzYMCAqcsxKvg1ofH4BaHRr1cftJOnAFK5kUrYFGEx
+         Rt2dw+EiKDdA3R6KWrsNF5fwdOU6FR/qDxUSIo+/cHHfv+/TU7Q+h8VJgi7qwu8k0Yrq
+         aAJeUZSndB3/8SSaUh8eo8QLvVD1NBYjqu3/JgYpCVUel99eObeBMpDy3Fsskfrqj80b
+         uxqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ivOtpXTOVxqAUn1+lH6HKSHAv64mRXc3v+PCvhSh3nM=;
+        b=8KuiQqNzbRLNelD61BuU246yWWKlGpkkkPVX0JAwAoJ01xvOGaWd09oaHSMQNrHaVS
+         gttpmjCssz2xUQFGy04QKwqvbuYUfvyM/5K1mS7hUqvGzL7/dCX6w0qVpTn51VoVE39l
+         rJ/ppNYNTxymkpGxd6ECePMoeBpyTsrFO3+1X2F/KCGrhn5ifnVraktOqVNGNCj08X/n
+         U6BH7i6goHYGr6uKV0EwMQtoOPvsv4c7SEYaUuu+qaVJT75MbT1toBSWEGB8svCmEyiN
+         hK1DYLAWd6QfWLAVDJBHCL2N2TPo9M7y0xAKXozuMQw2KUVTjiLMrrNUBgd4vhNl9kiR
+         qp7A==
+X-Gm-Message-State: ANoB5pn1B7LEpK3neXdoHJ29/0K/ceEWX6XDbRK1Yp0FhqQetw7Vo08Z
+        3t3xu6MBUPAsagxmEUV8cIIFpg==
+X-Google-Smtp-Source: AA0mqf5txKZD1DtAJuOvDYd5A5Lz3o/9OuyIeJ6s9Hg+26PK3VHEPiIPbuMHEN2xQuGxdqE38Tq0Tw==
+X-Received: by 2002:a05:651c:150c:b0:277:c7c:c573 with SMTP id e12-20020a05651c150c00b002770c7cc573mr956141ljf.316.1668689499998;
+        Thu, 17 Nov 2022 04:51:39 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id m7-20020a056512358700b004b4b69af17dsm133528lfr.214.2022.11.17.04.51.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 04:51:39 -0800 (PST)
+Message-ID: <76560659-7c90-3846-c250-24bfb072ec0e@linaro.org>
+Date:   Thu, 17 Nov 2022 13:51:38 +0100
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom: Add SM8550 to binding
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 03/10] arm64: dts: qcom: Add pm8010 pmic dtsi
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, kw@linux.com,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20221116123505.2760397-1-abel.vesa@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20221116123505.2760397-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Rob Herring <robh@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221116103146.2556846-1-abel.vesa@linaro.org>
+ <20221116103146.2556846-4-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221116103146.2556846-4-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abel,
-
-On 16.11.22 14:35, Abel Vesa wrote:
-> Add the SM8550 platform to the binding.
+On 16/11/2022 11:31, Abel Vesa wrote:
+> From: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Add nodes for pm8010 in separate dtsi file.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->   .../devicetree/bindings/pci/qcom,pcie.yaml    | 96 +++++++++++++++++++
->   1 file changed, 96 insertions(+)
+>  arch/arm64/boot/dts/qcom/pm8010.dtsi | 84 ++++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8010.dtsi
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index 54f07852d279..efa01a8411c4 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -34,6 +34,8 @@ properties:
->         - qcom,pcie-sm8250
->         - qcom,pcie-sm8450-pcie0
->         - qcom,pcie-sm8450-pcie1
-> +      - qcom,pcie-sm8550-pcie0
-> +      - qcom,pcie-sm8550-pcie1
->         - qcom,pcie-ipq6018
->   
->     reg:
-> @@ -92,6 +94,10 @@ properties:
->     power-domains:
->       maxItems: 1
->   
-> +  enable-gpios:
-> +    description: GPIO controlled connection to ENABLE# signal
-> +    maxItems: 1
-> +
->     perst-gpios:
->       description: GPIO controlled connection to PERST# signal
->       maxItems: 1
-> @@ -187,6 +193,8 @@ allOf:
->                 - qcom,pcie-sm8250
->                 - qcom,pcie-sm8450-pcie0
->                 - qcom,pcie-sm8450-pcie1
-> +              - qcom,pcie-sm8550-pcie0
-> +              - qcom,pcie-sm8550-pcie1
->       then:
->         properties:
->           reg:
-> @@ -601,6 +609,92 @@ allOf:
->             items:
->               - const: pci # PCIe core reset
->   
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-sm8550-pcie0
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 11
-> +          maxItems: 11
-> +        clock-names:
-> +          items:
-> +            - const: pipe # PIPE clock
-> +            - const: pipe_mux # PIPE MUX
-> +            - const: phy_pipe # PIPE output clock
-> +            - const: ref # REFERENCE clock
-> +            - const: aux # Auxiliary clock
-> +            - const: cfg # Configuration clock
-> +            - const: bus_master # Master AXI clock
-> +            - const: bus_slave # Slave AXI clock
-> +            - const: slave_q2a # Slave Q2A clock
-> +            - const: ddrss_sf_tbu # PCIe SF TBU clock
-> +            - const: aggre0 # Aggre NoC PCIe0 AXI clock
-> +        interconnects:
-> +          maxItems: 1
-> +        interconnect-names:
-> +          const: icc_path
-> +        iommus:
-> +          maxItems: 1
-> +        iommu-map:
-> +          maxItems: 2
-> +        power-domains:
-> +          maxItems: 1
-> +        power-domain-names:
-> +          const: gdsc
-> +        resets:
-> +          maxItems: 1
-> +        reset-names:
-> +          items:
-> +            - const: pci # PCIe core reset
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-sm8550-pcie1
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 12
-> +          maxItems: 12
-> +        clock-names:
-> +          items:
-> +            - const: pipe # PIPE clock
-> +            - const: pipe_mux # PIPE MUX
-> +            - const: phy_pipe # PIPE output clock
-> +            - const: ref # REFERENCE clock
-> +            - const: aux # Auxiliary clock
-> +            - const: cfg # Configuration clock
-> +            - const: bus_master # Master AXI clock
-> +            - const: bus_slave # Slave AXI clock
-> +            - const: slave_q2a # Slave Q2A clock
-> +            - const: ddrss_sf_tbu # PCIe SF TBU clock
-> +            - const: aggre1 # Aggre NoC PCIe1 AXI clock
-> +            - const: cnoc_pcie_sf_axi # Config NoC PCIe1 AXI clock
-> +        interconnects:
-> +          maxItems: 1
-> +        interconnect-names:
-> +          const: icc_path
+> diff --git a/arch/arm64/boot/dts/qcom/pm8010.dtsi b/arch/arm64/boot/dts/qcom/pm8010.dtsi
+> new file mode 100644
+> index 000000000000..0ea641e12209
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm8010.dtsi
+> @@ -0,0 +1,84 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
 
-The name of the path is too generic. Probably something like "pcie-mem" or "pcie-ddr" would be
-more appropriate to indicate that this is for requesting bandwidth on the path between PCIE and
-DDR memory.
+Any reason why this is licensed BSD-3 clause? It's not a recommended
+license (2 clause is). Same for other patches.
 
-Thanks,
-Georgi
-
-> +        iommus:
-> +          maxItems: 1
-> +        iommu-map:
-> +          maxItems: 2
-> +        power-domains:
-> +          maxItems: 1
-> +        power-domain-names:
-> +          const: gdsc
-> +        resets:
-> +          maxItems: 2
-> +        reset-names:
-> +          items:
-> +            - const: pci # PCIe core reset
-> +            - const: pcie_1_link_down_reset # PCIe link down reset
+> +/*
+> + * Copyright (c) 2022, Linaro Limited
+> + */
 > +
->     - if:
->         properties:
->           compatible:
-> @@ -672,6 +766,8 @@ allOf:
->                 - qcom,pcie-sm8250
->                 - qcom,pcie-sm8450-pcie0
->                 - qcom,pcie-sm8450-pcie1
-> +              - qcom,pcie-sm8550-pcie0
-> +              - qcom,pcie-sm8550-pcie1
->       then:
->         oneOf:
->           - properties:
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +/ {
+> +	thermal-zones {
+> +		pm8010-m-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8010_m_temp_alarm>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +			};
+> +		};
+> +
+> +		pm8010-n-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8010_n_temp_alarm>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +
+
+Just one blank line.
+
+
+Best regards,
+Krzysztof
 
