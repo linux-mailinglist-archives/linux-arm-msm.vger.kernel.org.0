@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87CF062DACA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:28:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51CC762DB0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:38:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239682AbiKQM2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 07:28:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52822 "EHLO
+        id S239655AbiKQMiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 07:38:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240131AbiKQM1a (ORCPT
+        with ESMTP id S234823AbiKQMit (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 07:27:30 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C77725E2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:27:02 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id w15-20020a17090a380f00b0021873113cb4so1347335pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:27:02 -0800 (PST)
+        Thu, 17 Nov 2022 07:38:49 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9EEB725DB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:38:48 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id q9so1651256pfg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:38:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=+rPHgMoeBIfRXBLmmqXq8TEde2WOOk6YMN7EVwcUy60=;
-        b=jraek21ZocfnSN2KKIGasOmN8gKjHqXSUz8NcmyELSBiCWmxen4F2EqzsD08jEgVcH
-         ZtpsK6DVh9mUUeXjmlpJ42VgRm27yJpsZm+zDOYqN9e41mFolyVSokRrXcR2abrA8p9M
-         i+F9IKBVgWsdapAaQQocLaj5ArZPZU5xQiEtITwD8F7bhTB5kWDP9mexfzDA1Imu/Yq4
-         FpAElabcEz306VyQQylkSKk7oKwjRDDZjlFgZAJvGLioBH+UabAx8w4o9TEJ+gLOhW0j
-         4Hyz+zrGHUxTLuo3oBDtciZyvmnVNhZUK1lnCexJqPw/cMiO0JJoGj9uwQ0/8t+Euoqg
-         A8YQ==
+        bh=zp3c04UgsO642CTDLrQtBDqG8kkhqKp0rcovQL+99UI=;
+        b=IdGUNhLwGzU6Ft16WaaDI69WkZxTSnWWMFM5OCfCjwJp6AYTlRKK8yEYeEBXfQpzAn
+         ZwQb4qA1/IFweomkA/ECAhRqA4U01wUuafmgn6Qa9F9ktepp04hp8xQrAzH/kT/KVbNs
+         ZzyfjwzErH6r/TzqvbFIDYg5LREwJ28M1rw20fir0tKQOYEL3IWwpSwdn38FrjgzhFI7
+         9FYu4SJvvaD6rkDwNrsTWjiz4I1r07qeWCDUkRVVDcoDj3wwcR9VYPqfWBmSzUjTpcIm
+         611qXXCmSvpYGc1TA+nRL6Pzun4MN7R0UsfCiRYEKntVXs7/p5+BHqQu16hPCOk8kDFf
+         8rXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+rPHgMoeBIfRXBLmmqXq8TEde2WOOk6YMN7EVwcUy60=;
-        b=s3cNuA3c7O1Gi3/XR43Sayv1MRIFNopENK/GCYxhfWjT6xXrDga0o7nu782RL9iJxY
-         3g9HdBhP9YjXJJHHCAe9W5nOyw8mIYOk/X6AU1Od98ZahUVCvUAe+oI9V2GXBRZ//86/
-         XLMSvq8QICTEk+kW4KqMt4cKBfowkN7QIUBHO0WIjkCkNzPPmLCjSCsVfE+Y96c0jAP/
-         u5wPpUnOLq+2lWccvSKh7X8WhbawCn1/bt+0Kt9VCOVuiEQcuWGYoXqip9Ex1+OJ68w0
-         B2yEgi39IJKe1pEz7YR7CUVzBtagSR2ILukGmZ31HHgwKBkogtfEuFsx6WGz2Yr0NPDU
-         q/1w==
-X-Gm-Message-State: ANoB5pkyUbGG07nTJZd97FFjXVe4yArRkftxmbo/P7Kc2dJTTtbAJoTQ
-        aWCSateSqk5sD5h8hi7IqIIb
-X-Google-Smtp-Source: AA0mqf6rUjKuiCOVlt+yrgJUR5Kc/Kug2qkXh0mr42woayKeSiYzvFqGdvDjKpJ7M1KI3ty5P0PH3w==
-X-Received: by 2002:a17:90b:2809:b0:212:e8da:fc3f with SMTP id qb9-20020a17090b280900b00212e8dafc3fmr8269891pjb.189.1668688022120;
-        Thu, 17 Nov 2022 04:27:02 -0800 (PST)
+        bh=zp3c04UgsO642CTDLrQtBDqG8kkhqKp0rcovQL+99UI=;
+        b=UfD21jpx7VcY+CCmI2De9XA8/uK7U9946vwxAmDAiFLIjQWp618NxbRDSYcr1UAVkX
+         gyFuCf4C6b/eJ+QJ060QqPE4vP2Kgpy+nQdXWvrOxqMFaCea7v7Vw+bGTZ1L9lyfQlM8
+         +8F/ehytEWtg6AwYKRvTQ8SIzyRVwIHAm7pnVcwBANp3vsSbjJsB/Gtxm0/4Zv8fwioI
+         VKXNpTxqPhdNfCfx19BqmkFRLluljtbmYfyuiTkSYIagE20VQuIf+HaARr3F9L4vue+g
+         l/CpqD9VWW8tPYrLswPRp8duH4w2MgYAadnSOKyHjaqUjPY/O+Yx0S4bl2iP6vs4UTT8
+         mkoA==
+X-Gm-Message-State: ANoB5pnByFCd4Qs49kiBDv65daenoVKPhxxonPXsRxmrwJF6l45iJgVA
+        zc93PaF5iaf2SibzonU5S7PJ
+X-Google-Smtp-Source: AA0mqf4hm3wB6rMWKzlah1bNY3uCQyjDr05R8iD4P68ORutJSUYHKw2sKcDzbo3XAcxAPjfPAntBmA==
+X-Received: by 2002:a62:442:0:b0:55f:8da3:71d2 with SMTP id 63-20020a620442000000b0055f8da371d2mr2808498pfe.37.1668688728266;
+        Thu, 17 Nov 2022 04:38:48 -0800 (PST)
 Received: from thinkpad ([117.193.208.31])
-        by smtp.gmail.com with ESMTPSA id i9-20020a635409000000b00476d1385265sm889905pgb.25.2022.11.17.04.26.56
+        by smtp.gmail.com with ESMTPSA id p12-20020a170902eacc00b00177f82f0789sm1181514pld.198.2022.11.17.04.38.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 04:27:01 -0800 (PST)
-Date:   Thu, 17 Nov 2022 17:56:54 +0530
+        Thu, 17 Nov 2022 04:38:47 -0800 (PST)
+Date:   Thu, 17 Nov 2022 18:08:41 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
-        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh@kernel.org>, andersson@kernel.org
-Subject: Re: [PATCH v4 01/12] dt-bindings: iio: qcom: adc7-pm8350: Allow
- specifying SID for channels
-Message-ID: <20221117122654.GH93179@thinkpad>
-References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
- <20221103095810.64606-2-manivannan.sadhasivam@linaro.org>
- <b97f6cd7-6d4a-f0d6-7aea-bab16de96621@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     andersson@kernel.org, viresh.kumar@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
+        robh+dt@kernel.org, johan@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
+Message-ID: <20221117123841.GI93179@thinkpad>
+References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+ <20221117101903.sw3hxaruj5sfhybw@bogus>
+ <20221117111207.GA93179@thinkpad>
+ <20221117115203.356vexlpca746o6m@bogus>
+ <20221117115807.GF93179@thinkpad>
+ <20221117120846.yhmilsndw2bmmvnv@bogus>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b97f6cd7-6d4a-f0d6-7aea-bab16de96621@linaro.org>
+In-Reply-To: <20221117120846.yhmilsndw2bmmvnv@bogus>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -80,53 +81,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 01:14:00PM +0100, Krzysztof Kozlowski wrote:
-> On 03/11/2022 10:57, Manivannan Sadhasivam wrote:
-> > As per the new ADC7 architecture used by the Qualcomm PMICs, each PMIC
-> > has the static Slave ID (SID) assigned by default. The primary PMIC
-> > PMK8350 is responsible for collecting the temperature/voltage data from
-> > the slave PMICs and exposing them via it's registers.
+On Thu, Nov 17, 2022 at 12:08:46PM +0000, Sudeep Holla wrote:
+> On Thu, Nov 17, 2022 at 05:28:07PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Nov 17, 2022 at 11:52:03AM +0000, Sudeep Holla wrote:
+> > > On Thu, Nov 17, 2022 at 04:42:07PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Thu, Nov 17, 2022 at 10:19:03AM +0000, Sudeep Holla wrote:
+> > > > > 
+> > > > > Why do you need the above 3 changes if the below(4/4) will ensure
+> > > > > cpufreq_get(cpu) returns the clock frequency. I was expecting to drop the
+> > > > > whole "confusing" clock bindings and the unnecessary clock provider.
+> > > > > 
+> > > > > Can't we just use cpufreq_get(cpu) ?
+> > > > > 
+> > > > 
+> > > > This can be possible for OPP implementations for the CPUs but not for other
+> > > > peripherals making use of OPP framework like GPU etc... Moreover this may end
+> > > > up with different code path for CPUs and other peripherals inside OPP framework.
+> > > > 
+> > > 
+> > > Fair enough, you can use this for non-CPU devices. But you are adding this for
+> > > CPUs here. Is the consumer unaware that this is a CPU or non-CPU device ?
+> > > If so, make sense. Otherwise, it is unnecessary to go through the clk
+> > > framework to get CPU frequency.
+> > > 
 > > 
-> > For getting the measurements from the slave PMICs, PMK8350 uses the
-> > channel ID encoded with the SID of the relevant PMIC. So far, the
-> > dt-binding for the slave PMIC PM8350 assumed that there will be only
-> > one PM8350 in a system. So it harcoded SID 1 with channel IDs.
-> > 
-> > But this got changed in platforms such as Lenovo X13s where there are a
-> > couple of PM8350 PMICs available. So to address multiple PM8350s, change
-> > the binding to accept the SID specified by the user and use it for
-> > encoding the channel ID.
-> > 
-> > It should be noted that, even though the SID is static it is not
-> > globally unique. Only the primary PMIC has the unique SID id 0.
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Acked-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
+> > The consumer here is the OPP framework and yes it doesn't have the knowledge of
+> > the device it is dealing with (for this context).
 > 
-> This was never sent to IIO maintainers, so now next is failing.
-> 
+> Ah OK, I thought it is something else. Does this mean OPP is tied with clk
+> framework or clock bindings ? Is this for some specific feature ?
 
-I missed it since there was only one bindings patch and rest all were dts :/
+AFAIK, OPP framework needs to know the current frequency of the device it is
+dealing with for setting the device's OPP. So it uses clk_get_rate() of the
+first clock of the device. If the clock is not available, then it uses the
+frequency in the first entry of the OPP table (since it is going to be the
+minimum freq of the device).
 
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
-> 
+As you can see, the clk_get_rate() is eminent for switching the OPPs and since
+OPP framework doesn't know what device it is dealing with, it cannot use
+cpufreq_get().
 
-The problem was that I didn't rebase my patches on top of linux-next/Bjorn's
-for-next at that time but used v6.1-rcX. So I did not see the example in
-spmi-vadc.
+> Or is it
+> compulsory for all the devices using OPP ? Just wondering how this affects
+> SCMI which doesn't use or provide clocks yet.
+
+Is SCMI node itself has the OPP tables? Or the consumer nodes of the SCMI?
+
+TLDR; If you tell OPP framework to set a new OPP for a device, it needs to the
+know the current frequency of the device. And it is not manadatory now, but in
+the future maybe.
 
 Thanks,
 Mani
 
-> Best regards,
-> Krzysztof
-> 
+> -- 
+> Regards,
+> Sudeep
 
 -- 
 மணிவண்ணன் சதாசிவம்
