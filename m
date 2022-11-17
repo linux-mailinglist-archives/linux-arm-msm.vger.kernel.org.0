@@ -2,201 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85EEA62DFC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 16:26:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49D8662DFDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 16:31:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239367AbiKQP0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 10:26:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
+        id S234724AbiKQPbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 10:31:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240360AbiKQP0A (ORCPT
+        with ESMTP id S231608AbiKQPbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 10:26:00 -0500
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B0D91038;
-        Thu, 17 Nov 2022 07:23:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668698607; x=1700234607;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=i5U2I/Je0lxjUKBPeid0EVndcscZ2WmO/V+wNe8oICY=;
-  b=ihkBMFRyXFF+M1ObtTMPg1zSAgCb3vRtLSU3YmOuXoQLSTJWnsQ7gD59
-   R0K9hoeJ4JEgqHfVs7oTNazth9Yu04LgK23qYrjjWzBKrGZvv71iW/UpM
-   XLPO2uKtggnUC3yTxZpXypFLUAm0M+PZUfRHRETm9aJuiiNu0jftp9oXL
-   zrNHtQKu33Xul1FmdE2LMkvmJx2mXX7LLWe+488i4g22mKHdiHIYJy8Dd
-   B3cZ4W6/FtDxfrSksMY9yVKOdbbsE/PSU37CHuW/xUEoETSPLeK7ltJff
-   bDVWHa8Ws221eSJwow7ONH3ZEgF2TPdvOEjUb9Stlbig0ccsZ79CexleZ
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="399165799"
-X-IronPort-AV: E=Sophos;i="5.96,171,1665471600"; 
-   d="scan'208";a="399165799"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 07:23:26 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="617646063"
-X-IronPort-AV: E=Sophos;i="5.96,171,1665471600"; 
-   d="scan'208";a="617646063"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.35.99])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 07:23:22 -0800
-Message-ID: <e0685dab-fe66-11f5-237c-f1da59e6ef5a@intel.com>
-Date:   Thu, 17 Nov 2022 17:23:17 +0200
+        Thu, 17 Nov 2022 10:31:24 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC563F012
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 07:31:22 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id p8so3333423lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 07:31:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2ZDPP+aUXlZemByZePEOYfbPXmIJ7PrfAxeoclG9vKA=;
+        b=Ls8lqLlbSmZ3nDW91wC00qBfwO+G/ZR0QKdhCiZD8afsSdScPioce3STIi1JipVF2h
+         DWGPr8nO420ko9tRE9jVqbuwSEum10pccwYMckN6j/X6OyMuggrwlUX6grzEdhrftRDt
+         28tuko8xJbX/FXa9eiUwiDWOdbKctULqli4Ax9mdPqQGdqnWaQNSvCovO50aV4mRIKqr
+         8ZwPMo5nHmIqbTy6qK68XSBLNerWnPFtaBWC/64cOmcUs84ZYsH+xXJmxuA4+kdv3rlz
+         +F1GqeQ9ZfqS4bI8SCQXmTaL7KjQoomNKY6C6NHPkqf5wvKTfiUl2S9aqH6txJTiLvAJ
+         qiVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ZDPP+aUXlZemByZePEOYfbPXmIJ7PrfAxeoclG9vKA=;
+        b=cGGYx9W3RwtH0mpsHV6wemI69b78JmO894J6YDh/B4C2UbN+j+UIaL60BfD0UZ+Qqj
+         2fx6GCX/2ufoKvCOeEkRou2mw8xmP5BtKCHztGhiCRphGmX8D3/d/YGCbZ+uJoKsqlde
+         UybNbgLy3BuSe7mQgxfbA5AV+WggfgNtC/vznyeGQpzIM/lgSnKV7U6Y4FIpggWMRNmY
+         Thrie8bP4pWTXfesjedqzEKGNBoz2OkGgRu5322QTVS6QQ9bVfMUgpje1TFMXCpDaawu
+         6HqGp0o9V4Yj7+/dw8cXG7zNYDUwHmTqkSzWBKy3tJfbg0ix7WjXAq7l6+3c+5nK11we
+         wBCg==
+X-Gm-Message-State: ANoB5plJYHnYUObB94DQEbti+yplAnYbNPhllyunExE3dxId/ujJsoAb
+        MhHiZIvs2P7QOGOQ7b98X2uAVw==
+X-Google-Smtp-Source: AA0mqf6RlDxCX7aqxKe4kbGzIpCYGdKKByTw5/epkfsWWgWGVUK44nQD0oz21XmFFBmgYhkCzfs8Tg==
+X-Received: by 2002:ac2:4843:0:b0:4a2:1169:3934 with SMTP id 3-20020ac24843000000b004a211693934mr1140697lfy.279.1668699081228;
+        Thu, 17 Nov 2022 07:31:21 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id x12-20020a19f60c000000b0048b26d4bb64sm200669lfe.40.2022.11.17.07.31.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 07:31:20 -0800 (PST)
+Message-ID: <89e0f9b7-e06d-ea26-6e45-d22a74371f4b@linaro.org>
+Date:   Thu, 17 Nov 2022 16:31:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.5.0
-Subject: Re: [PATCH V1] mmc: core: Wait for 1ms after enabling the clocks post
- voltage switch
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: simplify if:then:
+ clauses
 Content-Language: en-US
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Sarthak Garg <quic_sartgarg@quicinc.com>
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        "Darrick J. Wong" <djwong@kernel.org>,
-        "Jason A. Donenfeld" <Jason@zx2c4.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-References: <20221117094859.20582-1-quic_sartgarg@quicinc.com>
- <CAPDyKFqLjKOUwbAY5KXWK7g2xcWBQLW09nYoeVCxarfJPGNrTg@mail.gmail.com>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <CAPDyKFqLjKOUwbAY5KXWK7g2xcWBQLW09nYoeVCxarfJPGNrTg@mail.gmail.com>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20221117130254.378109-1-krzysztof.kozlowski@linaro.org>
+ <Y3ZFDRI6ypg18S27@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y3ZFDRI6ypg18S27@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/11/22 13:07, Ulf Hansson wrote:
-> On Thu, 17 Nov 2022 at 10:49, Sarthak Garg <quic_sartgarg@quicinc.com> wrote:
+On 17/11/2022 15:28, Stephan Gerhold wrote:
+> On Thu, Nov 17, 2022 at 02:02:54PM +0100, Krzysztof Kozlowski wrote:
+>> Most of the device-specific compatibles have generic fallbacks like
+>> qcom,tsens-v1 or qcom,tsens-v2.  The if:then: block mentions these
+>> fallbacks, so drop redundant entries for specific compatibles.
 >>
->> As per spec we should wait for 1ms after providing the SD clock to the
->> card again as part of voltage switch sequence but there seems to be a
->> violation here. Clocks are getting gated before 1ms as part of
->> sdhci_set_ios function where we try to reset SD Clock Enable by
->> resetting SDHCI_CLOCK_CARD_EN bit in SDHCI_CLOCK_CONTROL register
->> leading to voltage switch failures for specific SD cards.
->> Below ftraces also confirms the above understanding :
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
->> 9.511367: mmc_host_set_uhs_voltage: mmc1 called
->> 9.511369: mmc_set_ios: mmc1: clock 0Hz busmode 2 powermode 2 cs 0
->> Vdd 18 width 1 timing 0
->> 9.511370: sdhci_set_ios: mmc1 called
->> 9.511370: sdhci_set_ios: mmc1 setting clock ios->clock: 0 host->clock:
->> 400000
->> 9.511372: sdhci_msm_set_clock: mmc1 clock: 0
->> 9.511394: sdhci_set_ios: mmc1 gating clocks by writing
->> ~SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
->> 9.511413: sdhci_msm_set_clock: mmc1 clock: 0
->> 9.511423: mmc_set_signal_voltage: mmc1 called
->> 9.533816: mmc_set_ios: mmc1: clock 400000Hz busmode 2 powermode 2 cs 0
->> Vdd 18 width 1 timing 0
->> 9.533820: sdhci_set_ios: mmc1 called
->> 9.533822: sdhci_set_ios: mmc1 setting clock ios->clock: 400000
->> host->clock: 0
->> 9.533826: sdhci_msm_set_clock: mmc1 clock: 400000
->> 9.533925: sdhci_enable_clk: mmc1 Enabling clocks by writing
->> SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
->> 9.533950: sdhci_set_ios: mmc1 gating clocks by writing
->> ~SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
->> 9.533973: sdhci_msm_set_clock: mmc1 clock: 400000
->> 9.534043: sdhci_enable_clk: mmc1 Enabling clocks by writing
->> SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
->> 9.534045: mmc_host_set_uhs_voltage: mmc1 Done
->>
->> Wait for 1ms after enabling the clock post voltage switch to make sure
->> clock is kept alive for alteast 1ms as per spec.
->>
->> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-> 
-> I don't know the exact behaviour of sdhci around this, so I will defer
-> to Adrian's input for that.
-
-sdhci_set_ios() seems to be mucking around with the clock way
-more than necessary.  I'll go over it and see what can be done.
-
-> 
-> However, let me point out that in mmc_set_uhs_voltage() we are trying
-> to take the 1ms into account. More precisely, after
-> mmc_host_set_uhs_voltage() has been called to switch the voltage to
-> 1.8V and to re-enable the clock, mmc_set_uhs_voltage() does a
-> "mmc_delay(1)" and then it calls the ->card_busy() ops to check that
-> card doesn't signal busy by holding DAT0 low.
-> 
-> I understand that the code in mmc_set_uhs_voltage(), expects the host
-> to be rather dumb from the HW perspective, which may not always be the
-> case. Although, I would rather avoid introducing new host flags, along
-> what you propose in the $subject patch. If this can't be managed in
-> sdhci, without some new help from the mmc core, I would rather suggest
-> that we introduce a new host callback that can be used to replace the
-> entire part in mmc_host_set_uhs_voltage() (or something along those
-> lines).
-> 
-> Kind regards
-> Uffe
-> 
 >> ---
->>  drivers/mmc/core/core.c  | 4 ++++
->>  drivers/mmc/host/sdhci.c | 3 +++
->>  include/linux/mmc/host.h | 1 +
->>  3 files changed, 8 insertions(+)
 >>
->> diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
->> index a1efda85c6f2..d63e00aab6cb 100644
->> --- a/drivers/mmc/core/core.c
->> +++ b/drivers/mmc/core/core.c
->> @@ -1181,6 +1181,8 @@ int mmc_host_set_uhs_voltage(struct mmc_host *host)
->>         host->ios.clock = 0;
->>         mmc_set_ios(host);
+>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>  .../devicetree/bindings/thermal/qcom-tsens.yaml  | 16 ----------------
+>>  1 file changed, 16 deletions(-)
 >>
->> +       host->doing_signal_voltage_switch = true;
->> +
->>         if (mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_180))
->>                 return -EAGAIN;
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> index f0bd4b979e28..c9949713f714 100644
+>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> @@ -118,12 +118,7 @@ allOf:
+>>            contains:
+>>              enum:
+>>                - qcom,ipq8064-tsens
+>> -              - qcom,mdm9607-tsens
+>> -              - qcom,msm8916-tsens
+>>                - qcom,msm8960-tsens
+>> -              - qcom,msm8974-tsens
+>> -              - qcom,msm8976-tsens
+>> -              - qcom,qcs404-tsens
+>>                - qcom,tsens-v0_1
+>>                - qcom,tsens-v1
+>>      then:
+> 
+> FWIW: I submitted the same patch for this part a couple of months ago,
+> it was never applied for some reason:
+> https://lore.kernel.org/linux-arm-msm/20220627131415.2868938-2-stephan.gerhold@kernkonzept.com/
+
+Indeed, somehow Daniel didn't take it. Your patch should go instead, if
+you rebase and include new hunks (like my patch).
+
+> 
+>> @@ -140,17 +135,6 @@ allOf:
+>>          compatible:
+>>            contains:
+>>              enum:
+>> -              - qcom,msm8953-tsens
+>> -              - qcom,msm8996-tsens
+>> -              - qcom,msm8998-tsens
+>> -              - qcom,sc7180-tsens
+>> -              - qcom,sc7280-tsens
+>> -              - qcom,sc8180x-tsens
+>> -              - qcom,sdm630-tsens
+>> -              - qcom,sdm845-tsens
+>> -              - qcom,sm8150-tsens
+>> -              - qcom,sm8250-tsens
+>> -              - qcom,sm8350-tsens
+>>                - qcom,tsens-v2
+>>      then:
+>>        properties:
 >>
->> @@ -1189,6 +1191,8 @@ int mmc_host_set_uhs_voltage(struct mmc_host *host)
->>         host->ios.clock = clock;
->>         mmc_set_ios(host);
->>
->> +       host->doing_signal_voltage_switch = false;
->> +
->>         return 0;
->>  }
->>
->> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
->> index fb6e9a81f198..ac7c254eef4b 100644
->> --- a/drivers/mmc/host/sdhci.c
->> +++ b/drivers/mmc/host/sdhci.c
->> @@ -2312,6 +2312,9 @@ void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
->>                 host->ops->set_clock(host, ios->clock);
->>                 host->clock = ios->clock;
->>
->> +               if (mmc->doing_signal_voltage_switch)
->> +                       usleep_range(1000, 1250);
->> +
->>                 if (host->quirks & SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK &&
->>                     host->clock) {
->>                         host->timeout_clk = mmc->actual_clock ?
->> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
->> index 8fdd3cf971a3..06c88cd7a8bf 100644
->> --- a/include/linux/mmc/host.h
->> +++ b/include/linux/mmc/host.h
->> @@ -521,6 +521,7 @@ struct mmc_host {
->>         bool                    hsq_enabled;
->>
->>         u32                     err_stats[MMC_ERR_MAX];
->> +       bool                    doing_signal_voltage_switch;
->>         unsigned long           private[] ____cacheline_aligned;
->>  };
->>
->> --
->> 2.17.1
->>
+> 
+> This part was not present back then though. Looks like this was
+> introduced recently in "dt-bindings: thermal: tsens: Add ipq8074
+> compatible".
+> 
+> I don't mind if you take this patch instead of mine. Feel free to add my
+> 
+> Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+> 
+> Thanks,
+> Stephan
+
+Best regards,
+Krzysztof
 
