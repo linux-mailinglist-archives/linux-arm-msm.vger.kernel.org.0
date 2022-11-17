@@ -2,84 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1390D62DA48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:09:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D36A362DA70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 13:14:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240121AbiKQMJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 07:09:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38920 "EHLO
+        id S240048AbiKQMOH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 07:14:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240131AbiKQMIy (ORCPT
+        with ESMTP id S240033AbiKQMOF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 07:08:54 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 769976EB5E;
-        Thu, 17 Nov 2022 04:08:51 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9481B13D5;
-        Thu, 17 Nov 2022 04:08:57 -0800 (PST)
-Received: from bogus (unknown [10.57.6.137])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0CAE03FA31;
-        Thu, 17 Nov 2022 04:08:48 -0800 (PST)
-Date:   Thu, 17 Nov 2022 12:08:46 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, viresh.kumar@linaro.org,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        robh+dt@kernel.org, johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
-Message-ID: <20221117120846.yhmilsndw2bmmvnv@bogus>
-References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
- <20221117101903.sw3hxaruj5sfhybw@bogus>
- <20221117111207.GA93179@thinkpad>
- <20221117115203.356vexlpca746o6m@bogus>
- <20221117115807.GF93179@thinkpad>
+        Thu, 17 Nov 2022 07:14:05 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08EE5697FD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:14:04 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id be13so2489460lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 04:14:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ASBsFKuEewNKcc6V+qvTiKWEIdGA8lGcj9oKMILA6C4=;
+        b=OizyyH6jpymDfxwhYPY1ZjQFuGm0wI/ZDUGRXv1NCePlEDzBGbsF41N4kxwKCwOR/2
+         e5GmFmlcmmGQpgpJBo3/cTLMniH9hKGI4XD2tJQEoqZGDiU7TXlbdrTgDxqbaqR7/DQ6
+         EBgJwlEKOv2902yamK5JTxU6rPh5xvfL/sY8uq+as8YQK5d2wmjlzqETCctnfvl5Kng+
+         NM2VmNfUdNxxOskq0jtSjtqClKKGm1Yg+aSa8DBCUbMXwyS8YgGroYDEKJsDMDuMIHW4
+         vYfgu43ba+XoKO6nSq5Q7Qp2YJr4l59hK5cbYN4TSYVDK9/Z+iHiT4EE+OFus1YuXgeW
+         nf+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ASBsFKuEewNKcc6V+qvTiKWEIdGA8lGcj9oKMILA6C4=;
+        b=HPzxh/6oDIEO7rabCr4dY9C7zLpiK1aNtE/J/T31oRiWw249ySkIk9cAGEO4c5JVP1
+         oY8gAHUxVmKeoN4DB+8XGr3c9pcxly+p9vGIOg6Aeg4LNKek02e/P0O+J5jz6ePvKUDJ
+         nthCOcv6Mowg5j+ACy7CBPEHrBnhRAh0f6h3UERT7/ajkyOIchGbP/k9mHWUCWZ6kZ7w
+         0XEiXmM5Mio0DRg59UaQq23Uxa2GejxTjhunDEPlR853m/jIMhG/j83V5n9XT+mZRa/r
+         ip5Tnj8qMogVpG/kH75Vg56y+q3hpOkEOJpkynEYgjwedIGMb4zMNgKgWc6lISk13oP1
+         hn7w==
+X-Gm-Message-State: ANoB5pmFlXuWyhF3PjiWczthljNYVieuiKXt/qHrt90VLuj/7ZBUYzCm
+        n3vd2XbDaGImqK0yoQ0a42ZNgA==
+X-Google-Smtp-Source: AA0mqf5NZECC0LuCmmfm6KLExVXnB+sUDNzVGLvI44r5THoEJgGAEx5Ir3NqDp6WOQ93SDt85//lEw==
+X-Received: by 2002:a05:6512:a93:b0:4a2:6337:872d with SMTP id m19-20020a0565120a9300b004a26337872dmr801504lfu.35.1668687242409;
+        Thu, 17 Nov 2022 04:14:02 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id m12-20020ac24acc000000b004a240eb0217sm118535lfp.251.2022.11.17.04.14.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 04:14:01 -0800 (PST)
+Message-ID: <b97f6cd7-6d4a-f0d6-7aea-bab16de96621@linaro.org>
+Date:   Thu, 17 Nov 2022 13:14:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221117115807.GF93179@thinkpad>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v4 01/12] dt-bindings: iio: qcom: adc7-pm8350: Allow
+ specifying SID for channels
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
+        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        steev@kali.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>, andersson@kernel.org
+References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
+ <20221103095810.64606-2-manivannan.sadhasivam@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221103095810.64606-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 05:28:07PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Nov 17, 2022 at 11:52:03AM +0000, Sudeep Holla wrote:
-> > On Thu, Nov 17, 2022 at 04:42:07PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Nov 17, 2022 at 10:19:03AM +0000, Sudeep Holla wrote:
-> > > > 
-> > > > Why do you need the above 3 changes if the below(4/4) will ensure
-> > > > cpufreq_get(cpu) returns the clock frequency. I was expecting to drop the
-> > > > whole "confusing" clock bindings and the unnecessary clock provider.
-> > > > 
-> > > > Can't we just use cpufreq_get(cpu) ?
-> > > > 
-> > > 
-> > > This can be possible for OPP implementations for the CPUs but not for other
-> > > peripherals making use of OPP framework like GPU etc... Moreover this may end
-> > > up with different code path for CPUs and other peripherals inside OPP framework.
-> > > 
-> > 
-> > Fair enough, you can use this for non-CPU devices. But you are adding this for
-> > CPUs here. Is the consumer unaware that this is a CPU or non-CPU device ?
-> > If so, make sense. Otherwise, it is unnecessary to go through the clk
-> > framework to get CPU frequency.
-> > 
+On 03/11/2022 10:57, Manivannan Sadhasivam wrote:
+> As per the new ADC7 architecture used by the Qualcomm PMICs, each PMIC
+> has the static Slave ID (SID) assigned by default. The primary PMIC
+> PMK8350 is responsible for collecting the temperature/voltage data from
+> the slave PMICs and exposing them via it's registers.
 > 
-> The consumer here is the OPP framework and yes it doesn't have the knowledge of
-> the device it is dealing with (for this context).
+> For getting the measurements from the slave PMICs, PMK8350 uses the
+> channel ID encoded with the SID of the relevant PMIC. So far, the
+> dt-binding for the slave PMIC PM8350 assumed that there will be only
+> one PM8350 in a system. So it harcoded SID 1 with channel IDs.
+> 
+> But this got changed in platforms such as Lenovo X13s where there are a
+> couple of PM8350 PMICs available. So to address multiple PM8350s, change
+> the binding to accept the SID specified by the user and use it for
+> encoding the channel ID.
+> 
+> It should be noted that, even though the SID is static it is not
+> globally unique. Only the primary PMIC has the unique SID id 0.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
 
-Ah OK, I thought it is something else. Does this mean OPP is tied with clk
-framework or clock bindings ? Is this for some specific feature ? Or is it
-compulsory for all the devices using OPP ? Just wondering how this affects
-SCMI which doesn't use or provide clocks yet.
+This was never sent to IIO maintainers, so now next is failing.
 
--- 
-Regards,
-Sudeep
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
+
+Best regards,
+Krzysztof
+
