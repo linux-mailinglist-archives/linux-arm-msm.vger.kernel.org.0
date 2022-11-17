@@ -2,492 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42B9F62D7C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:13:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1353762D7D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:19:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233223AbiKQKNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 05:13:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52202 "EHLO
+        id S239451AbiKQKTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 05:19:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239397AbiKQKNi (ORCPT
+        with ESMTP id S229931AbiKQKTJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 05:13:38 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D915C6417
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:13:35 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id g12so2924992wrs.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:13:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MGNm9+INncbAj3PVloRV4toI1FS4UuWlLi59o7JDz2M=;
-        b=qNc7fyxitNPVXXgqrEPWvl4LxLCKxEvb8NKKfB//vYWc7DZLYCZo0ke4qY/zZwXoEw
-         9KVa770hR31mIyHoWFRm+Dzx94ONQLDZ2GjPMniKSyJiUce+yh14zLt56VCGJVGKnkjv
-         IBlBLJyVHyzbmckEWQ3eTJHoMT5xAADWi5sDS5ItQALG9T5h/Vo1n4Htk4mKqEMuIr+9
-         t77Q/ko2jazVY3O6D035ODb4cyIAa4qoZ7nNzi39FsF7Hb+G+gP7r2ABlepXXAg6MZKU
-         2SMnuH9lMOEYNeULw6lruoEw+p5aDNB9e+MuN5/6BwV75GrZW4PMPHGeFLJ2Ek4fq8pR
-         XyZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MGNm9+INncbAj3PVloRV4toI1FS4UuWlLi59o7JDz2M=;
-        b=Aow1hKZrU8sYBvjDLqkwqrJxvSceAVRKZTl1tzuZnaerJRxxf6dWtKi+eN2slWVSw2
-         fkXqlIRujJAJIf7Io7iYB3KiVTrr+PQpdSeMDE51fIl7GhBiE8VQOtNZHoaHttIjKvVl
-         xKhakeWl1d447QPRR8kfY2QK0WPz5QM8n1OoMgJxPQwrtwHH7ZdCOIxefWe/vUeNmOHd
-         g4u4lW/S0zpEMigDq3Fq8Ej1nTfPYyqzy5ti0Xao30w3fKq/wVDGYxpW1V3gTGgOVRbK
-         FovAE+0k/GLbbz8NCdmD+KTFmojGlPsTnrkmYPDTz/bTYaRu6U0iJOkixg4OVAADdl/Y
-         nj1Q==
-X-Gm-Message-State: ANoB5pkqjLtOn0C9Tw8a9g/g+kBiZ2yrJfpoCvXz8Fq3v6GsmSxeGXeD
-        Y/Ix9F9AKk8pBBuZcwr5dM4+Bw==
-X-Google-Smtp-Source: AA0mqf66AlKmbN0Qd1ghU5kyRXBkz6WsJCdRAU+Msf8wC7/fZQ5PcmUdm6Yo4WZ2PQ0iMlCSQLWEvA==
-X-Received: by 2002:a05:6000:1148:b0:236:71cd:1a71 with SMTP id d8-20020a056000114800b0023671cd1a71mr1003680wrx.712.1668680014355;
-        Thu, 17 Nov 2022 02:13:34 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b? ([2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b])
-        by smtp.gmail.com with ESMTPSA id p6-20020a1c5446000000b003b47e75b401sm4956887wmi.37.2022.11.17.02.13.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 02:13:33 -0800 (PST)
-Message-ID: <360dee55-8c40-2d65-ed4a-d14e66c92f9d@linaro.org>
-Date:   Thu, 17 Nov 2022 11:13:33 +0100
+        Thu, 17 Nov 2022 05:19:09 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7404E4D5ED;
+        Thu, 17 Nov 2022 02:19:08 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5170F13D5;
+        Thu, 17 Nov 2022 02:19:14 -0800 (PST)
+Received: from bogus (unknown [10.57.6.137])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4AE583F73B;
+        Thu, 17 Nov 2022 02:19:06 -0800 (PST)
+Date:   Thu, 17 Nov 2022 10:19:03 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, viresh.kumar@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>, robh+dt@kernel.org,
+        johan@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
+Message-ID: <20221117101903.sw3hxaruj5sfhybw@bogus>
+References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: add adsp, cdsp & mdss
- support nodes
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-0-379eec11d841@linaro.org>
- <20221115-topic-sm8550-upstream-dts-remoteproc-v1-2-379eec11d841@linaro.org>
- <f4f53117-7f60-6f22-0e0f-bb4f8ee1ea9f@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <f4f53117-7f60-6f22-0e0f-bb4f8ee1ea9f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 12:45, Konrad Dybcio wrote:
+On Thu, Nov 17, 2022 at 11:01:41AM +0530, Manivannan Sadhasivam wrote:
+> Hello,
 > 
+> This series adds clock provider support to the Qcom CPUFreq driver for
+> supplying the clocks to the CPU cores in Qcom SoCs.
 > 
-> On 16/11/2022 11:43, Neil Armstrong wrote:
->> This adds support for the aDSP, cDSP and MPSS Subsystems found in
->> the SM8550 SoC.
->>
->> The aDSP, cDSP and MPSS needs:
->> - smp2p support nodes to get event back from the subsystems
->> - remoteproc nodes with glink-edge subnodes providing all needed
->>    resources to start and run the subsystems
->>
->> In addition, the MPSS Subsystem needs a rmtfs_mem dedicated
->> memory zone.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
-> The title and commit message are misleading, you're either adding support or adding nodes. There is no such thing as "support nodes".
-
-Yep you're right,
-
+> The Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
+> clocks to the CPU cores. But this is not represented clearly in devicetree.
+> There is no clock coming out of the CPUFreq HW node to the CPU. This created
+> an issue [1] with the OPP core when a recent enhancement series was submitted.
+> Eventhough the issue got fixed in the OPP framework in the meantime, that's
+> not a proper solution and this series aims to fix it properly.
 > 
-> The code looks good though, so with that fixed:
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Will fix for v2.
-
-
-Thanks,
-Neil
-
+> There was also an attempt made by Viresh [2] to fix the issue by moving the
+> clocks supplied to the CPUFreq HW node to the CPU. But that was not accepted
+> since those clocks belong to the CPUFreq HW node only.
 > 
-> Konrad
+> The proposal here is to add clock provider support to the Qcom CPUFreq HW
+> driver to supply clocks to the CPUs that comes out of the EPSS/OSM block.
+> This correctly reflects the hardware implementation.
 > 
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 337 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 337 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> index 9e00778bb600..cac3adc4504f 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> @@ -543,6 +543,15 @@ adspslpi_mem: adspslpi-region@9ea00000 {
->>           /* Linux kernel image is loaded at 0xa8000000 */
->> +        rmtfs_mem: rmtfs-region@d4a80000 {
->> +            compatible = "qcom,rmtfs-mem";
->> +            reg = <0x0 0xd4a80000 0x0 0x280000>;
->> +            no-map;
->> +
->> +            qcom,client-id = <1>;
->> +            qcom,vmid = <15>;
->> +        };
->> +
->>           mpss_dsm_mem: mpss-dsm-region@d4d00000 {
->>               compatible = "qcom,mpss-dsm-mem";
->>               reg = <0x0 0xd4d00000 0x0 0x3300000>;
->> @@ -635,6 +644,89 @@ hyp_ext_reserved_mem: hyp-ext-reserved-region@ff700000 {
->>           };
->>       };
->> +    smp2p-adsp {
->> +        compatible = "qcom,smp2p";
->> +        qcom,smem = <443>, <429>;
->> +        interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
->> +                         IPCC_MPROC_SIGNAL_SMP2P
->> +                         IRQ_TYPE_EDGE_RISING>;
->> +        mboxes = <&ipcc IPCC_CLIENT_LPASS
->> +                IPCC_MPROC_SIGNAL_SMP2P>;
->> +
->> +        qcom,local-pid = <0>;
->> +        qcom,remote-pid = <2>;
->> +
->> +        smp2p_adsp_out: master-kernel {
->> +            qcom,entry-name = "master-kernel";
->> +            #qcom,smem-state-cells = <1>;
->> +        };
->> +
->> +        smp2p_adsp_in: slave-kernel {
->> +            qcom,entry-name = "slave-kernel";
->> +            interrupt-controller;
->> +            #interrupt-cells = <2>;
->> +        };
->> +    };
->> +
->> +    smp2p-cdsp {
->> +        compatible = "qcom,smp2p";
->> +        qcom,smem = <94>, <432>;
->> +        interrupts-extended = <&ipcc IPCC_CLIENT_CDSP
->> +                         IPCC_MPROC_SIGNAL_SMP2P
->> +                         IRQ_TYPE_EDGE_RISING>;
->> +        mboxes = <&ipcc IPCC_CLIENT_CDSP
->> +                IPCC_MPROC_SIGNAL_SMP2P>;
->> +
->> +        qcom,local-pid = <0>;
->> +        qcom,remote-pid = <5>;
->> +
->> +        smp2p_cdsp_out: master-kernel {
->> +            qcom,entry-name = "master-kernel";
->> +            #qcom,smem-state-cells = <1>;
->> +        };
->> +
->> +        smp2p_cdsp_in: slave-kernel {
->> +            qcom,entry-name = "slave-kernel";
->> +            interrupt-controller;
->> +            #interrupt-cells = <2>;
->> +        };
->> +    };
->> +
->> +    smp2p-modem {
->> +        compatible = "qcom,smp2p";
->> +        qcom,smem = <435>, <428>;
->> +        interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
->> +                         IPCC_MPROC_SIGNAL_SMP2P
->> +                         IRQ_TYPE_EDGE_RISING>;
->> +        mboxes = <&ipcc IPCC_CLIENT_MPSS
->> +                IPCC_MPROC_SIGNAL_SMP2P>;
->> +
->> +        qcom,local-pid = <0>;
->> +        qcom,remote-pid = <1>;
->> +
->> +        smp2p_modem_out: master-kernel {
->> +            qcom,entry-name = "master-kernel";
->> +            #qcom,smem-state-cells = <1>;
->> +        };
->> +
->> +        smp2p_modem_in: slave-kernel {
->> +            qcom,entry-name = "slave-kernel";
->> +            interrupt-controller;
->> +            #interrupt-cells = <2>;
->> +        };
->> +
->> +        ipa_smp2p_out: ipa-ap-to-modem {
->> +            qcom,entry-name = "ipa";
->> +            #qcom,smem-state-cells = <1>;
->> +        };
->> +
->> +        ipa_smp2p_in: ipa-modem-to-ap {
->> +            qcom,entry-name = "ipa";
->> +            interrupt-controller;
->> +            #interrupt-cells = <2>;
->> +        };
->> +    };
->> +
->>       soc: soc@0 {
->>           #address-cells = <2>;
->>           #size-cells = <2>;
->> @@ -1388,6 +1480,48 @@ tcsr: clock-controller@1fc0000 {
->>               #reset-cells = <1>;
->>           };
->> +        remoteproc_mpss: remoteproc@4080000 {
->> +            compatible = "qcom,sm8550-mpss-pas";
->> +            reg = <0x0 0x04080000 0x0 0x4040>;
->> +
->> +            interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_modem_in 3 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_modem_in 7 IRQ_TYPE_EDGE_RISING>;
->> +            interrupt-names = "wdog", "fatal", "ready", "handover",
->> +                      "stop-ack", "shutdown-ack";
->> +
->> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
->> +            clock-names = "xo";
->> +
->> +            power-domains = <&rpmhpd SM8550_CX>,
->> +                    <&rpmhpd SM8550_MSS>;
->> +            power-domain-names = "cx", "mss";
->> +
->> +            interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
->> +
->> +            memory-region = <&mpss_mem &q6_mpss_dtb_mem>;
->> +
->> +            qcom,qmp = <&aoss_qmp>;
->> +
->> +            qcom,smem-states = <&smp2p_modem_out 0>;
->> +            qcom,smem-state-names = "stop";
->> +
->> +            status = "disabled";
->> +
->> +            glink-edge {
->> +                interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
->> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
->> +                                 IRQ_TYPE_EDGE_RISING>;
->> +                mboxes = <&ipcc IPCC_CLIENT_MPSS
->> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
->> +                label = "mpss";
->> +                qcom,remote-pid = <1>;
->> +            };
->> +        };
->> +
->>           lpass_lpiaon_noc: interconnect@7400000 {
->>               compatible = "qcom,sm8550-lpass-lpiaon-noc";
->>               reg = <0x0 0x07400000 0x0 0x19080>;
->> @@ -2865,12 +2999,215 @@ system-cache-controller@25000000 {
->>               interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
->>           };
->> +        remoteproc_adsp: remoteproc@30000000 {
->> +            compatible = "qcom,sm8550-adsp-pas";
->> +            reg = <0x0 0x30000000 0x0 0x100>;
->> +
->> +            interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
->> +            interrupt-names = "wdog", "fatal", "ready",
->> +                      "handover", "stop-ack";
->> +
->> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
->> +            clock-names = "xo";
->> +
->> +            power-domains = <&rpmhpd SM8550_LCX>,
->> +                    <&rpmhpd SM8550_LMX>;
->> +            power-domain-names = "lcx", "lmx";
->> +
->> +            interconnects = <&lpass_lpicx_noc MASTER_LPASS_PROC 0 &mc_virt SLAVE_EBI1 0>;
->> +
->> +            memory-region = <&adspslpi_mem &q6_adsp_dtb_mem>;
->> +
->> +            qcom,qmp = <&aoss_qmp>;
->> +
->> +            qcom,smem-states = <&smp2p_adsp_out 0>;
->> +            qcom,smem-state-names = "stop";
->> +
->> +            status = "disabled";
->> +
->> +            remoteproc_adsp_glink: glink-edge {
->> +                interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
->> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
->> +                                 IRQ_TYPE_EDGE_RISING>;
->> +                mboxes = <&ipcc IPCC_CLIENT_LPASS
->> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
->> +
->> +                label = "lpass";
->> +                qcom,remote-pid = <2>;
->> +
->> +                fastrpc {
->> +                    compatible = "qcom,fastrpc";
->> +                    qcom,glink-channels = "fastrpcglink-apps-dsp";
->> +                    label = "adsp";
->> +                    #address-cells = <1>;
->> +                    #size-cells = <0>;
->> +
->> +                    compute-cb@3 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <3>;
->> +                        iommus = <&apps_smmu 0x1003 0x80>,
->> +                                 <&apps_smmu 0x1063 0x0>;
->> +                    };
->> +
->> +                    compute-cb@4 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <4>;
->> +                        iommus = <&apps_smmu 0x1004 0x80>,
->> +                             <&apps_smmu 0x1064 0x0>;
->> +                    };
->> +
->> +                    compute-cb@5 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <5>;
->> +                        iommus = <&apps_smmu 0x1005 0x80>,
->> +                             <&apps_smmu 0x1065 0x0>;
->> +                    };
->> +
->> +                    compute-cb@6 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <6>;
->> +                        iommus = <&apps_smmu 0x1006 0x80>,
->> +                                 <&apps_smmu 0x1066 0x0>;
->> +                    };
->> +
->> +                    compute-cb@7 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <7>;
->> +                        iommus = <&apps_smmu 0x1007 0x80>,
->> +                                 <&apps_smmu 0x1067 0x0>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->>           nsp_noc: interconnect@320c0000 {
->>               compatible = "qcom,sm8550-nsp-noc";
->>               reg = <0x0 0x320C0000 0x0 0xE080>;
->>               #interconnect-cells = <2>;
->>               qcom,bcm-voters = <&apps_bcm_voter>;
->>           };
->> +
->> +        remoteproc_cdsp: remoteproc@32300000 {
->> +            compatible = "qcom,sm8550-cdsp-pas";
->> +            reg = <0x0 0x32300000 0x0 0x1400000>;
->> +
->> +            interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
->> +                          <&smp2p_cdsp_in 3 IRQ_TYPE_EDGE_RISING>;
->> +            interrupt-names = "wdog", "fatal", "ready",
->> +                      "handover", "stop-ack";
->> +
->> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
->> +            clock-names = "xo";
->> +
->> +            power-domains = <&rpmhpd SM8550_CX>,
->> +                    <&rpmhpd SM8550_MXC>,
->> +                    <&rpmhpd SM8550_NSP>;
->> +            power-domain-names = "cx", "mxc", "nsp";
->> +
->> +            interconnects = <&nsp_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
->> +
->> +            memory-region = <&cdsp_mem &q6_cdsp_dtb_mem>;
->> +
->> +            qcom,qmp = <&aoss_qmp>;
->> +
->> +            qcom,smem-states = <&smp2p_cdsp_out 0>;
->> +            qcom,smem-state-names = "stop";
->> +
->> +            status = "disabled";
->> +
->> +            glink-edge {
->> +                interrupts-extended = <&ipcc IPCC_CLIENT_CDSP
->> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
->> +                                 IRQ_TYPE_EDGE_RISING>;
->> +                mboxes = <&ipcc IPCC_CLIENT_CDSP
->> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
->> +
->> +                label = "cdsp";
->> +                qcom,remote-pid = <5>;
->> +
->> +                fastrpc {
->> +                    compatible = "qcom,fastrpc";
->> +                    qcom,glink-channels = "fastrpcglink-apps-dsp";
->> +                    label = "cdsp";
->> +                    #address-cells = <1>;
->> +                    #size-cells = <0>;
->> +
->> +
->> +                    compute-cb@1 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <1>;
->> +                        iommus = <&apps_smmu 0x1961 0x0>,
->> +                             <&apps_smmu 0x0c01 0x20>,
->> +                             <&apps_smmu 0x19c1 0x10>;
->> +                    };
->> +
->> +                    compute-cb@2 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <2>;
->> +                        iommus = <&apps_smmu 0x1962 0x0>,
->> +                             <&apps_smmu 0x0c02 0x20>,
->> +                             <&apps_smmu 0x19c2 0x10>;
->> +                    };
->> +
->> +                    compute-cb@3 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <3>;
->> +                        iommus = <&apps_smmu 0x1963 0x0>,
->> +                             <&apps_smmu 0x0c03 0x20>,
->> +                             <&apps_smmu 0x19c3 0x10>;
->> +                    };
->> +
->> +                    compute-cb@4 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <4>;
->> +                        iommus = <&apps_smmu 0x1964 0x0>,
->> +                             <&apps_smmu 0x0c04 0x20>,
->> +                             <&apps_smmu 0x19c4 0x10>;
->> +                    };
->> +
->> +                    compute-cb@5 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <5>;
->> +                        iommus = <&apps_smmu 0x1965 0x0>,
->> +                             <&apps_smmu 0x0c05 0x20>,
->> +                             <&apps_smmu 0x19c5 0x10>;
->> +                    };
->> +
->> +                    compute-cb@6 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <6>;
->> +                        iommus = <&apps_smmu 0x1966 0x0>,
->> +                             <&apps_smmu 0x0c06 0x20>,
->> +                             <&apps_smmu 0x19c6 0x10>;
->> +                    };
->> +
->> +                    compute-cb@7 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <7>;
->> +                        iommus = <&apps_smmu 0x1967 0x0>,
->> +                             <&apps_smmu 0x0c07 0x20>,
->> +                             <&apps_smmu 0x19c7 0x10>;
->> +                    };
->> +
->> +                    compute-cb@8 {
->> +                        compatible = "qcom,fastrpc-compute-cb";
->> +                        reg = <8>;
->> +                        iommus = <&apps_smmu 0x1968 0x0>,
->> +                             <&apps_smmu 0x0c08 0x20>,
->> +                             <&apps_smmu 0x19c8 0x10>;
->> +                    };
->> +
->> +                    /* note: secure cb9 in downstream */
->> +                };
->> +            };
->> +        };
->>       };
->>       thermal-zones {
->>
+> The clock provider is a simple one that just provides the frequency of the
+> clocks supplied to each frequency domain in the SoC using .recalc_rate()
+> callback. The frequency supplied by the driver will be the actual frequency
+> that comes out of the EPSS/OSM block after the DCVS operation. This frequency
+> is not same as what the CPUFreq framework has set but it is the one that gets
+> supplied to the CPUs after throttling by LMh.
+> 
+> This series has been tested on SM8450 based dev board with the OPP hack removed
+> and hence there is a DTS change only for that platform. Once this series gets
+> accepted, rest of the platform DTS can also be modified and finally the hack on
+> the OPP core can be dropped.
+> 
+> Thanks,
+> Mani
+> 
+> [1] https://lore.kernel.org/lkml/YsxSkswzsqgMOc0l@hovoldconsulting.com/
+> [2] https://lore.kernel.org/lkml/20220801054255.GA12039@thinkpad/t/
+> 
+> Changes in v7:
+> 
+> * Added a patch that returns the throttled frequency for cpufreq_driver->get()
+>   callback (Sudeep & Viresh)
+> * Added error check for kasprintf and allocated the clk name locally
+> 
+> Changes in v6:
+> 
+> * Removed the local variable clk_name (Matthias)
+> * Added the clock id to the error message of devm_clk_hw_register()
+> 
+> Changes in v5:
+> 
+> * Switched to Hz unit for the CPU clocks
+> 
+> Changes in v4:
+> 
+> * Rebased on top of cpufreq/arm/linux-next branch
+> 
+> Changes in v3:
+> 
+> * Submitted the cpufreq driver cleanup patches as a separate series as
+>   suggested by Viresh
+> * Removed static keyword from clk_init_data declaration
+> 
+> Changes in v2:
+> 
+> * Moved the qcom_cpufreq_data allocation to probe
+> * Added single clock provider with multiple clks for each freq domain
+> * Moved soc_data to qcom_cpufreq struct
+> * Added Rob's review for binding
+> 
+> Manivannan Sadhasivam (4):
+>   dt-bindings: cpufreq: cpufreq-qcom-hw: Add cpufreq clock provider
+>   arm64: dts: qcom: sm8450: Supply clock from cpufreq node to CPUs
+>   cpufreq: qcom-hw: Add CPU clock provider support
 
+Why do you need the above 3 changes if the below(4/4) will ensure
+cpufreq_get(cpu) returns the clock frequency. I was expecting to drop the
+whole "confusing" clock bindings and the unnecessary clock provider.
+
+Can't we just use cpufreq_get(cpu) ?
+
+-- 
+Regards,
+Sudeep
