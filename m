@@ -2,115 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BCF262D0C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 02:44:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E547D62D21F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 05:08:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233502AbiKQBo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 20:44:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
+        id S234430AbiKQEIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 23:08:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232825AbiKQBo0 (ORCPT
+        with ESMTP id S234615AbiKQEHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 20:44:26 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C49E25D4;
-        Wed, 16 Nov 2022 17:44:25 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id g24so246651plq.3;
-        Wed, 16 Nov 2022 17:44:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EDFRO4ir4ILg9SYyImo6kJHYqgKoQ77M/+5NG4Igr1I=;
-        b=DiYy7g7FrHEWrc0tBV5wiCg1bpw+Gjmdk9uzx0JRFnRaLbgdVd+7R9sTnKp5t8iJQm
-         WurTM2UP9HczRUJD1zwlouS3gR1bZZp3ozJUMvrMLKw9jXSDinVqcRp5zK54bPUopcNh
-         GCuoNu6yCzey/rprSqhDl0oXg+8QT1w9w8QYONv+i57esurXzTfooN1HJrAartTB+pIR
-         4nZfRV+S9hcTgwZUa7Qnsmo2t28pEIGOuXoSBg39NAukzXYLyLT0+UoqGtO2EGcYA7SE
-         wiwUfCR6en+dIz5qtmzj7BZllh0KOGu0nczXp6snALGDAUNARumTaAJfA7b9eUM+opcJ
-         pPuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EDFRO4ir4ILg9SYyImo6kJHYqgKoQ77M/+5NG4Igr1I=;
-        b=nGEinXTjU0kyZ23PmKQNVr/eTjKNlq33KcuXe56GCoTHHj9fuN8oq0Z4Wvnf7+RoX0
-         evuGDRWnQYqGc+L2TW3P7XFdeYRBFGsgpOw1aif6v3W9MjZeDQg6FAwJuiNRYUO2fmkN
-         P4EjXF8Wi6OmfxcXwXTl9dh6E5NLNXSydaB0gSvywR5pEd3KwavrFv8QtRQUJ2Yg+K+Z
-         4Zvu5wZMvyrd8n5qaVQl/O+zPQUhQQb1EYnv6VgPPQkgg/FgKTQZ7EeT1qCXR4RPFe12
-         0oLwchtK5/tqc+9BaXenU4dyFoB60hKN5IX6qfmlpKy/PjtIwpPF7ZNsk2JTKyqXPZ9F
-         wV4w==
-X-Gm-Message-State: ANoB5plzEy5qIIa6sYIGlL5FTubdig2x5CeNHL/S0nAliUFw0yza/tOg
-        CmT+N3Sngpkl/E47Zqe8PkEFfOaEeUU=
-X-Google-Smtp-Source: AA0mqf4tdjWO8Pv9D2HuJldcSRJNLFIJHgHoRyepomoy6EuCUurPitYdjAVOD4Ub0kWjY8N7yyiCdg==
-X-Received: by 2002:a17:902:e212:b0:180:a0e6:f81b with SMTP id u18-20020a170902e21200b00180a0e6f81bmr559101plb.78.1668649464441;
-        Wed, 16 Nov 2022 17:44:24 -0800 (PST)
-Received: from localhost.localdomain (2001-b400-e2d1-d066-3cca-666c-d593-6ca1.emome-ip6.hinet.net. [2001:b400:e2d1:d066:3cca:666c:d593:6ca1])
-        by smtp.gmail.com with ESMTPSA id u13-20020a170902e80d00b001869f2120a6sm13064337plg.108.2022.11.16.17.44.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 17:44:24 -0800 (PST)
-From:   Owen Yang <ecs.taipeikernel@gmail.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Harvey <hunge@google.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Owen Yang <ecs.taipeikernel@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] Adding DT binding for zombie
-Date:   Thu, 17 Nov 2022 09:43:07 +0800
-Message-Id: <20221117094251.2.Ibfc4751e4ba044d1caa1f88a16015e7c45c7db65@changeid>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20221117094251.1.I74849cf9699b8ff2e47f6028e28861101297549b@changeid>
-References: <20221117094251.1.I74849cf9699b8ff2e47f6028e28861101297549b@changeid>
+        Wed, 16 Nov 2022 23:07:33 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D268C4B987;
+        Wed, 16 Nov 2022 20:04:34 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AH1HuMR002667;
+        Thu, 17 Nov 2022 04:04:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=a++KL7xdar/RCqLS/mDi5J1eJ4XJgWkYEqifd2iF3Rw=;
+ b=NmdNbQnOvxXy3CB8NNyBGLW1Dk62cVu40WGRTeYR9vNW9j/pSBffkdNGvkNee5sQO2eP
+ R2AF50BYGuR3fyrywsG0ZIx6tqvW/LGnzOJz5Qjh3wViDO/jq786m9h8S07PCewmMvGP
+ 1axFkvF94fIPgYBd6iakzRnRxMnSEvRG46vbsk+BGIojg+tpJN6iye7dtM2eSqctjPAj
+ xnAwqf57IGW32UetcbcJQq/qvJNx+w3rR27h6z/DERbSavZWFUkA2m9EQ6UGTFgEck3d
+ yx02RhKbSzcFCec3E+HSFcOpclTdNST/QM6kvhMVy4XGW2JVVl2QCCi/yLOrOkg4/utt Tw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw94q0sk9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 17 Nov 2022 04:04:25 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AH44O6j020231
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 17 Nov 2022 04:04:24 GMT
+Received: from [10.216.25.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
+ 2022 20:04:19 -0800
+Message-ID: <a6e0e71a-c696-57e0-7829-6511578a453b@quicinc.com>
+Date:   Wed, 16 Nov 2022 20:04:16 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/hdmi: remove unnecessary NULL check
+Content-Language: en-US
+To:     Dan Carpenter <error27@gmail.com>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+CC:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        <kernel-janitors@vger.kernel.org>
+References: <Y2o0TKZ5WRYnQXna@kili>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <Y2o0TKZ5WRYnQXna@kili>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 53_u3boPsp7LYsw0zoLpVv2lKVRlYKA_
+X-Proofpoint-ORIG-GUID: 53_u3boPsp7LYsw0zoLpVv2lKVRlYKA_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 clxscore=1011 spamscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211170027
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-    creating first device tree binding for zombie case.
 
-    Documentation/devicetree/bindings/arm/qcom.yaml
 
-    Series-to: LKML <linux-kernel@vger.kernel.org>
-    Series-cc: Douglas Anderson <dianders@chromium.org>
-    Series-cc: Bob Moragues <moragues@chromium.org>
-    Series-cc: Harvey <hunge@google.com>
+On 11/15/2022 5:03 AM, Dan Carpenter wrote:
+> This code was refactored in commit 69a88d8633ec ("drm/msm/hdmi: move
+> resource allocation to probe function") and now the "hdmi" pointer can't
+> be NULL.  Checking causes a Smatch warning:
+> 
+>      drivers/gpu/drm/msm/hdmi/hdmi.c:141 msm_hdmi_init()
+>      warn: variable dereferenced before check 'hdmi' (see line 119)
+> 
+> Signed-off-by: Dan Carpenter <error27@gmail.com>
 
-Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
----
+Can you please add the fixes tag to point to the commit you have 
+referenced in the commit message?
 
- Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+LTGM,
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index c15a729a6852..878ecfbc1baa 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -578,6 +578,16 @@ properties:
-               - qcom,sm8350-mtp
-           - const: qcom,sm8350
- 
-+      - description: Google Zombie
-+        items:
-+          - const: google,zombie
-+          - const: qcom,sc7280
-+
-+      - description: Google Zombie with LTE
-+        items:
-+          - const: google,zombie-sku512
-+          - const: qcom,sc7280
-+
- additionalProperties: true
- 
- ...
--- 
-2.17.1
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
+> ---
+>   drivers/gpu/drm/msm/hdmi/hdmi.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 7001fabd0977..4d3fdc806bef 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -138,8 +138,7 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+>   	return 0;
+>   
+>   fail:
+> -	if (hdmi)
+> -		msm_hdmi_destroy(hdmi);
+> +	msm_hdmi_destroy(hdmi);
+>   
+>   	return ret;
+>   }
