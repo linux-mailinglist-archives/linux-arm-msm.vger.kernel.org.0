@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 630CC62D2C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 06:32:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2CA662D32D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 07:04:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239277AbiKQFcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 00:32:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38380 "EHLO
+        id S233725AbiKQGEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 01:04:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239155AbiKQFcR (ORCPT
+        with ESMTP id S233752AbiKQGEf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 00:32:17 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F1915EFB5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 21:32:15 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id 136so1061240pga.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 21:32:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s/wG+QZxohAkdtGSCZUjkm9USP+zFO96InHp16ZHrwI=;
-        b=ixACoPOpJAo1XabXh0ai5MRohX1nfzDnP+c3V/0XnhmxGFg9bQBQKfx+bZehp287Iw
-         tA3P29CfXHaYoVJc84FH804TqJsKSMCHH+XEKIP8es2QGKWIF6FaPN6T06uxw5ElSWor
-         uC858F1alnV9dw8S4CnNniwA4xXYNdRYDBuhKAp/c0zFibfw8o5w5cCUZQ3C2HiVXZXP
-         u7s9g9NjsbtZ6eouMmxS5QE3oG9Q9tb0Mt0azDxuaPIi0uSDAsaDBjil3E/ohOPY1IuR
-         qGu0f/xw32dKzdn6OD6Gso6yELEF3y7GOjJ+3xZj4QZjic7iii/3BT/MwI+xE8deUsnQ
-         A1MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s/wG+QZxohAkdtGSCZUjkm9USP+zFO96InHp16ZHrwI=;
-        b=F9m3ZZgfh6yhL/KBytbcP/A3+yfWUUal9ezgytjj5kE85fT/syu7OlcDTXchpaEHhx
-         uTGYjgpUIinbZwGH4V7eCM+hRvnmlC5Nyd7T4dR/lbtfQrsA0WPyQPRP3h+P1CdIVQcj
-         A681VudhNWts6kDyqnSb7+mmcfn2UZGDNHfcrgQolfD5GUZmYOj3kahpcK8dISrLmaCE
-         51AiiT/lL29MmEvk5qGz34DyB9+aj7vYG/UC0hEFhWsqbcJWqqLPa92Xyx2EGtyFHtoj
-         yAqdGUQ6tRoKlz3LUqNZpC7cSKhomruj4V7wRg0Nth9dPrCU51fZ2B6gqUYlPWdPPy43
-         5V0g==
-X-Gm-Message-State: ANoB5pkS0VM9L38KLwc8btsMkzI09AocjS9azVdEi4b0pc4EX6A/40Uj
-        fdM9yzkeFnURxfmKSbnabQXK
-X-Google-Smtp-Source: AA0mqf58iastmjBB+zzq+C4PzyZynXX4kCV+//2vj/rUp30PGh3mRnFTGwdxVoLZwfLF7t7g/CesdA==
-X-Received: by 2002:a05:6a00:1a48:b0:56c:b4d3:906e with SMTP id h8-20020a056a001a4800b0056cb4d3906emr1510909pfv.10.1668663134822;
-        Wed, 16 Nov 2022 21:32:14 -0800 (PST)
-Received: from localhost.localdomain ([117.193.208.31])
-        by smtp.gmail.com with ESMTPSA id q4-20020a17090311c400b001865c298588sm96600plh.258.2022.11.16.21.32.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 21:32:13 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, viresh.kumar@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        robh+dt@kernel.org
-Cc:     johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        stable@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH v7 4/4] cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()
-Date:   Thu, 17 Nov 2022 11:01:45 +0530
-Message-Id: <20221117053145.10409-5-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
-References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        Thu, 17 Nov 2022 01:04:35 -0500
+Received: from mxct.zte.com.cn (mxct.zte.com.cn [58.251.27.85])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 693FF27FEB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 22:04:33 -0800 (PST)
+Received: from mxde.zte.com.cn (unknown [10.35.20.121])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mxct.zte.com.cn (FangMail) with ESMTPS id 4NCTrv4XLnz1Drr
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 14:04:31 +0800 (CST)
+Received: from mxus.zte.com.cn (unknown [10.207.168.7])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mxde.zte.com.cn (FangMail) with ESMTPS id 4NCTrb2fMWzBf6LG
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 14:04:15 +0800 (CST)
+Received: from mxhk.zte.com.cn (unknown [192.168.250.137])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mxus.zte.com.cn (FangMail) with ESMTPS id 4NCTrV5bVNz9tyD7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 14:04:10 +0800 (CST)
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4NCTrQ0NVfz8R041;
+        Thu, 17 Nov 2022 14:04:06 +0800 (CST)
+Received: from xaxapp01.zte.com.cn ([10.88.40.50])
+        by mse-fl2.zte.com.cn with SMTP id 2AH63WUf079891;
+        Thu, 17 Nov 2022 14:03:32 +0800 (+08)
+        (envelope-from ye.xingchen@zte.com.cn)
+Received: from mapi (xaxapp01[null])
+        by mapi (Zmail) with MAPI id mid31;
+        Thu, 17 Nov 2022 14:03:34 +0800 (CST)
+Date:   Thu, 17 Nov 2022 14:03:34 +0800 (CST)
+X-Zmail-TransId: 2af96375ceb6ffffffffc4c4508b
+X-Mailer: Zmail v1.0
+Message-ID: <202211171403340042731@zte.com.cn>
+Mime-Version: 1.0
+From:   <ye.xingchen@zte.com.cn>
+To:     <andersson@kernel.org>
+Cc:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: =?UTF-8?B?W1BBVENIXSBjbGs6IHFjb206IGhmcGxsOiB1c2UKCiBkZXZtX3BsYXRmb3JtX2dldF9hbmRfaW9yZW1hcF9yZXNvdXJjZSgp?=
+Content-Type: text/plain;
+        charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 2AH63WUf079891
+X-Fangmail-Gw-Spam-Type: 0
+X-FangMail-Miltered: at cgslv5.04-192.168.251.14.novalocal with ID 6375CEEE.000 by FangMail milter!
+X-FangMail-Envelope: 1668665071/4NCTrv4XLnz1Drr/6375CEEE.000/10.35.20.121/[10.35.20.121]/mxde.zte.com.cn/<ye.xingchen@zte.com.cn>
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6375CEEE.000/4NCTrv4XLnz1Drr
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,UNPARSEABLE_RELAY autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,87 +71,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The cpufreq_driver->get() callback is supposed to return the current
-frequency of the CPU and not the one requested by the CPUFreq core.
-Fix it by returning the frequency that gets supplied to the CPU after
-the DCVS operation of EPSS/OSM.
+From: Minghao Chi <chi.minghao@zte.com.cn>
 
-Cc: stable@vger.kernel.org # v5.15
-Fixes: 2849dd8bc72b ("cpufreq: qcom-hw: Add support for QCOM cpufreq HW driver")
-Reported-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Convert platform_get_resource(), devm_ioremap_resource() to a single
+call to devm_platform_get_and_ioremap_resource(), as this is exactly
+what this function does.
+
+Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 42 +++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 13 deletions(-)
+ drivers/clk/qcom/hfpll.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 1faa325d3e52..62f36c76e26c 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -131,7 +131,35 @@ static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
- 	return 0;
- }
- 
-+static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
-+{
-+	unsigned int lval;
-+
-+	if (qcom_cpufreq.soc_data->reg_current_vote)
-+		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_current_vote) & 0x3ff;
-+	else
-+		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_domain_state) & 0xff;
-+
-+	return lval * xo_rate;
-+}
-+
-+/* Get the current frequency of the CPU (after throttling) */
- static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
-+{
-+	struct qcom_cpufreq_data *data;
-+	struct cpufreq_policy *policy;
-+
-+	policy = cpufreq_cpu_get_raw(cpu);
-+	if (!policy)
-+		return 0;
-+
-+	data = policy->driver_data;
-+
-+	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-+}
-+
-+/* Get the frequency requested by the cpufreq core for the CPU */
-+static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
+index 5ff7f5a60620..f4d78003d189 100644
+--- a/drivers/clk/qcom/hfpll.c
++++ b/drivers/clk/qcom/hfpll.c
+@@ -47,7 +47,6 @@ static const struct regmap_config hfpll_regmap_config = {
+
+ static int qcom_hfpll_probe(struct platform_device *pdev)
  {
- 	struct qcom_cpufreq_data *data;
- 	const struct qcom_cpufreq_soc_data *soc_data;
-@@ -292,18 +320,6 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
- 	}
- }
- 
--static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
--{
--	unsigned int lval;
--
--	if (qcom_cpufreq.soc_data->reg_current_vote)
--		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_current_vote) & 0x3ff;
--	else
--		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_domain_state) & 0xff;
--
--	return lval * xo_rate;
--}
--
- static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
- {
- 	struct cpufreq_policy *policy = data->policy;
-@@ -347,7 +363,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
- 	 * If h/w throttled frequency is higher than what cpufreq has requested
- 	 * for, then stop polling and switch back to interrupt mechanism.
- 	 */
--	if (throttled_freq >= qcom_cpufreq_hw_get(cpu))
-+	if (throttled_freq >= qcom_cpufreq_get_freq(cpu))
- 		enable_irq(data->throttle_irq);
- 	else
- 		mod_delayed_work(system_highpri_wq, &data->throttle_work,
+-	struct resource *res;
+ 	struct device *dev = &pdev->dev;
+ 	void __iomem *base;
+ 	struct regmap *regmap;
+@@ -70,8 +69,7 @@ static int qcom_hfpll_probe(struct platform_device *pdev)
+ 	if (!h)
+ 		return -ENOMEM;
+
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	base = devm_ioremap_resource(dev, res);
++	base = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+
 -- 
 2.25.1
-
