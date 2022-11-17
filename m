@@ -2,131 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1353762D7D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:19:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF76962D7FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:27:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239451AbiKQKTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 05:19:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54580 "EHLO
+        id S234793AbiKQK1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 05:27:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229931AbiKQKTJ (ORCPT
+        with ESMTP id S234765AbiKQK1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 05:19:09 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7404E4D5ED;
-        Thu, 17 Nov 2022 02:19:08 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5170F13D5;
-        Thu, 17 Nov 2022 02:19:14 -0800 (PST)
-Received: from bogus (unknown [10.57.6.137])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4AE583F73B;
-        Thu, 17 Nov 2022 02:19:06 -0800 (PST)
-Date:   Thu, 17 Nov 2022 10:19:03 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, viresh.kumar@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        Sudeep Holla <sudeep.holla@arm.com>, robh+dt@kernel.org,
-        johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
-Message-ID: <20221117101903.sw3hxaruj5sfhybw@bogus>
-References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+        Thu, 17 Nov 2022 05:27:30 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E292532DE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:27:29 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id s24so2093716ljs.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:27:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9kynY50ckiw0RzKQXKaPoaoAm91QSwXd4fLVfpMm4e0=;
+        b=qei0nzvmfzHhFzvLpeh2XvFtLPoO3C6JaIH7olZAhujhgIhGDAtQWExPnqO4l6iQnt
+         qJvZs+Rzv/EGieAd6m29GfntY34jMeKImzZJzvqyAKxdW1FAJauhGOtkXAYU2RxZDmYe
+         ksukKt07+zeDvu/GEDBAakV6MOqm34dInbD79VFlPWxIvZKD2HJejvrAjZEKTgHbKie5
+         kkjZapVNwX3dlIhHtgQ1VPNHDKb+QczHNW6ip9E4yPPC+8hDvnXKKf9KUovZkUksvB6/
+         GpKoX5Zu6ADrNfHw8Zioi4h+SspRvNYSXXHN+HKErwPtM6Ga5WSf6i9v02UQ5YpuGF2y
+         OXtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kynY50ckiw0RzKQXKaPoaoAm91QSwXd4fLVfpMm4e0=;
+        b=JAKzWYPGjU4szemHaIHoqAx+9j4Tkn7kB4cDwuhs3yDWgRktzTMCLLxHtZ7vXRip/K
+         0Vj7ccGzjDekVXBexK4I6u/5AE7t0KTmNi+6z67nE46AvtzljkjROGnEKYF0oUP98mdq
+         /oONHks4qXMDJDTHDp0ZgXwqA9idBZU+k8mCzLiILfOZZZQXLRXlp1dy4Ht+ETc9Srah
+         NdtMdSoofxB/0nPXhlvWf9oqnVtZVmHmBPvO1ySOris16FSzdfi/JV3iRh96gLI6sNiq
+         eB6b4hOKwXCPiUvSt/e/kwwbjEAOpwH5DeqzZkyjOKoHnsD6t0ZNj4TjCxoXY4U/gey4
+         VHAg==
+X-Gm-Message-State: ANoB5pkEEPgqJb/Or8ibC262pTv38gbpmttvHvigoZUf6VBq9AfUa5Xc
+        fsPpkbc4gJ+Rca9N8CjPTkN/Eg==
+X-Google-Smtp-Source: AA0mqf40gp0JWS9vrbYpcdERZdh+kArkyDdZuUk9mw4xv2UGpAVsutP2+H25Kj2gJE925TQqyDK/vw==
+X-Received: by 2002:a2e:9f47:0:b0:277:1273:f3b8 with SMTP id v7-20020a2e9f47000000b002771273f3b8mr720385ljk.178.1668680847373;
+        Thu, 17 Nov 2022 02:27:27 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id h1-20020a19ca41000000b0049476667228sm84417lfj.65.2022.11.17.02.27.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 02:27:26 -0800 (PST)
+Message-ID: <a51164de-eb2b-497c-8f07-a5cd734e293d@linaro.org>
+Date:   Thu, 17 Nov 2022 11:27:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/9] dt-bindings: clock: Add SM8550 GCC clock bindings
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20221116104716.2583320-1-abel.vesa@linaro.org>
+ <20221116104716.2583320-2-abel.vesa@linaro.org>
+ <c298fd71-22e9-98c5-14c6-88b078687b3d@linaro.org>
+ <Y3YBpXIjDELtit0k@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y3YBpXIjDELtit0k@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 11:01:41AM +0530, Manivannan Sadhasivam wrote:
-> Hello,
+On 17/11/2022 10:40, Abel Vesa wrote:
+> On 22-11-17 10:08:05, Krzysztof Kozlowski wrote:
+>> On 16/11/2022 11:47, Abel Vesa wrote:
+>>> Add device tree bindings for global clock controller on SM8550 SoCs.
+>>
+>> Subject: drop second, redundant "bindings".
 > 
-> This series adds clock provider support to the Qcom CPUFreq driver for
-> supplying the clocks to the CPU cores in Qcom SoCs.
+> Sure thing, will drop.
 > 
-> The Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
-> clocks to the CPU cores. But this is not represented clearly in devicetree.
-> There is no clock coming out of the CPUFreq HW node to the CPU. This created
-> an issue [1] with the OPP core when a recent enhancement series was submitted.
-> Eventhough the issue got fixed in the OPP framework in the meantime, that's
-> not a proper solution and this series aims to fix it properly.
+>>
+>>>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>>  .../bindings/clock/qcom,gcc-sm8550.yaml       |  88 +++++++
+>>>  include/dt-bindings/clock/qcom,gcc-sm8550.h   | 231 ++++++++++++++++++
+>>>  2 files changed, 319 insertions(+)
+>>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8550.yaml
+>>>  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8550.h
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8550.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8550.yaml
+>>> new file mode 100644
+>>> index 000000000000..a2468167c8ab
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8550.yaml
+>>> @@ -0,0 +1,88 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-sm8550.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Global Clock & Reset Controller Binding for SM8550
+>>
+>> You need to base on recent bindings. See commit ece3c3198182a1.
+>>
 > 
-> There was also an attempt made by Viresh [2] to fix the issue by moving the
-> clocks supplied to the CPUFreq HW node to the CPU. But that was not accepted
-> since those clocks belong to the CPUFreq HW node only.
+> Yep, will do.
 > 
-> The proposal here is to add clock provider support to the Qcom CPUFreq HW
-> driver to supply clocks to the CPUs that comes out of the EPSS/OSM block.
-> This correctly reflects the hardware implementation.
+>>> +
+>>> +maintainers:
+>>> +  - Bjorn Andersson <andersson@kernel.org>
+>>> +
+>>> +description: |
+>>> +  Qualcomm global clock control module which supports the clocks, resets and
+>>> +  power domains on SM8550
+>>
+>> Ditto
+>>
+>>> +
+>>> +  See also:
+>>> +  - dt-bindings/clock/qcom,gcc-sm8550.h
+>>
+>> Ditto
+>>
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,sm8550-gcc
+>>> +
+>>> +  clocks:
+>>> +    items:
+>>> +      - description: Board XO source
+>>> +      - description: Sleep clock source
+>>> +      - description: PCIE 0 Pipe clock source (Optional clock)
+>>
+>> Drop "(Optional clock)"
 > 
-> The clock provider is a simple one that just provides the frequency of the
-> clocks supplied to each frequency domain in the SoC using .recalc_rate()
-> callback. The frequency supplied by the driver will be the actual frequency
-> that comes out of the EPSS/OSM block after the DCVS operation. This frequency
-> is not same as what the CPUFreq framework has set but it is the one that gets
-> supplied to the CPUs after throttling by LMh.
+> Sure, will drop. I based this on SM8450, but maybe that also needs an
+> update.
 > 
-> This series has been tested on SM8450 based dev board with the OPP hack removed
-> and hence there is a DTS change only for that platform. Once this series gets
-> accepted, rest of the platform DTS can also be modified and finally the hack on
-> the OPP core can be dropped.
+>>
+>>> +      - description: PCIE 1 Pipe clock source (Optional clock)
+>>> +      - description: PCIE 1 Phy Auxiliary clock source (Optional clock)
+>>> +      - description: UFS Phy Rx symbol 0 clock source (Optional clock)
+>>> +      - description: UFS Phy Rx symbol 1 clock source (Optional clock)
+>>> +      - description: UFS Phy Tx symbol 0 clock source (Optional clock)
+>>> +      - description: USB3 Phy wrapper pipe clock source (Optional clock)
+>>> +    minItems: 2
+>>
+>> This does not look correct. Why clocks of GCC are inputs clocks to GCC?
 > 
-> Thanks,
-> Mani
-> 
-> [1] https://lore.kernel.org/lkml/YsxSkswzsqgMOc0l@hovoldconsulting.com/
-> [2] https://lore.kernel.org/lkml/20220801054255.GA12039@thinkpad/t/
-> 
-> Changes in v7:
-> 
-> * Added a patch that returns the throttled frequency for cpufreq_driver->get()
->   callback (Sudeep & Viresh)
-> * Added error check for kasprintf and allocated the clk name locally
-> 
-> Changes in v6:
-> 
-> * Removed the local variable clk_name (Matthias)
-> * Added the clock id to the error message of devm_clk_hw_register()
-> 
-> Changes in v5:
-> 
-> * Switched to Hz unit for the CPU clocks
-> 
-> Changes in v4:
-> 
-> * Rebased on top of cpufreq/arm/linux-next branch
-> 
-> Changes in v3:
-> 
-> * Submitted the cpufreq driver cleanup patches as a separate series as
->   suggested by Viresh
-> * Removed static keyword from clk_init_data declaration
-> 
-> Changes in v2:
-> 
-> * Moved the qcom_cpufreq_data allocation to probe
-> * Added single clock provider with multiple clks for each freq domain
-> * Moved soc_data to qcom_cpufreq struct
-> * Added Rob's review for binding
-> 
-> Manivannan Sadhasivam (4):
->   dt-bindings: cpufreq: cpufreq-qcom-hw: Add cpufreq clock provider
->   arm64: dts: qcom: sm8450: Supply clock from cpufreq node to CPUs
->   cpufreq: qcom-hw: Add CPU clock provider support
+> Well, it is not a GCC clock. It is a fixed-clock fed into GCC.
+> The name is taken from downstream, but I'm pretty sure the HW clock is
+> named so. So I think we should keep it as is.
 
-Why do you need the above 3 changes if the below(4/4) will ensure
-cpufreq_get(cpu) returns the clock frequency. I was expecting to drop the
-whole "confusing" clock bindings and the unnecessary clock provider.
+I don't get it. The "PCIE 0 Pipe clock source" is defined here in this
+header:
++#define GCC_PCIE_0_PIPE_CLK_SRC	41
+so what do you mean it is not GCC clock?
 
-Can't we just use cpufreq_get(cpu) ?
+Second thing, you have only one GCC, so how these clocks can be
+optional? Either they are there or they are not. Optional means usually
+that you have two devices having same compatible and they can operate a
+bit differently or some pins are not connected. It's not the case here.
 
--- 
-Regards,
-Sudeep
+Best regards,
+Krzysztof
+
