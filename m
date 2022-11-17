@@ -2,151 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3343662D8AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 12:00:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA8C762D8B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 12:01:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239685AbiKQLAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 06:00:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46924 "EHLO
+        id S239726AbiKQLBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 06:01:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234882AbiKQLAG (ORCPT
+        with ESMTP id S239421AbiKQLAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 06:00:06 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D2A36B237;
-        Thu, 17 Nov 2022 02:57:45 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AH6nwhY000845;
-        Thu, 17 Nov 2022 10:57:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=F0pGU1BlNM79za83vEB5fdDsZRyTyENXL11lu+0vAWI=;
- b=XnKTGrX5RA3CffErTysra0/6A8G5d11s16zOCoGIxx4eVBEhps9KX0LmTBXUCzyLFtHc
- 6DDsR1ON+HaoAqtLbfoX2R2Fn9auQpcG3MYWJBoNVkR4NSMy46v6b/94niuqQuyQ85gZ
- HwXXy/fNNsPQPb+udjW7xGjAvI/y6Ycev0K+AITeweBw0xobn/pFZizlCUtidkegOi82
- m5hdjsrSUI7qB6W2pUcH1qJWd3JysP3n4xEGuB4L4DSfQsr6TAGxGdqT3PAccDIYYGff
- JC0GsysjYG0LYHRtbO3ccA2PVXsjSwVRQ5LR+qCom5qZD3GTo9idq9wCd6DCg68SFUMC 4A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kwg1mrt8e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Nov 2022 10:57:39 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AHAvcFd011626
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Nov 2022 10:57:38 GMT
-Received: from [10.216.1.87] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 17 Nov
- 2022 02:57:32 -0800
-Message-ID: <ee436c31-6b38-4c1c-8d40-865e57750e6f@quicinc.com>
-Date:   Thu, 17 Nov 2022 16:27:28 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v3] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "Rob Clark" <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
+        Thu, 17 Nov 2022 06:00:25 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07FE312775
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:58:52 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id a15so2208958ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:58:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GmKcDm7hddmC/x4qiaZJDVe0loHtuACJqTTAG7FSgII=;
+        b=p51ZwemdiBWYVixFemwKQeNFdvrcnE7Od76T1rNvhrukAot/C+POHfwKajWdn6N5BU
+         dUjIOwjULWKBOS3ulKnlRPqbcsf3E0LGwqKip5PqnpIfdeYz07/ZwWTCHiOhc7cORrsg
+         kC7TEkw8oBIJAxF8diOb70F21m3H7pkaS+aG4clKTX4Y4jaAzhf+7o/bHRvPV0aJGXy6
+         vtDtFd4IYT41Dt6iHyZ92hbuCnSlB2DD5hyAySRTErBd0LceFP8U3BS/eDN97TMJW3I2
+         Nyk0n1EfvMwPMTRqqFK4tnUFmeuQVXZACwnMJgbjJxYr/QT+lglIIM05FYtXf1EP7qRB
+         Dciw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GmKcDm7hddmC/x4qiaZJDVe0loHtuACJqTTAG7FSgII=;
+        b=Hpz1soGot1h9RotCfpNmFak/8IFde+t66YDCD+JuiyiX1iJoqZBUq4xg9fKG2vpoBn
+         XEF5ocroUedH4OtMMO4s5MQg0NjIW8+Tp0zu4jwDh77pfUVURiAQYUJzTpJ39/11vmO/
+         DmI3abuOsUex1ddon/niMyGmazeG8lRAszFvCH15SKkmsVbZjFXLXemx1S+xK4Q1nrOU
+         wj1v9gkpw8DyuKrxRPBBr6lXKB6g8faFx8S8DmJRAX1XeiuYpG26AX9ct5hzEo7q9zWI
+         /H9uuQtblGQFH3yX/OPjOMrJfEvu2t4c9mB7uHQkyKVVIH67QO5FTOvYd7V0bqM0MCYT
+         7BdQ==
+X-Gm-Message-State: ANoB5pmAg0f/ZEALrMRMSCfr2caHvbGRhmdlSH4e6YlSwTelQJ82oqCe
+        VdILuRzEeu2I1xS69/caU3Xj66xnP45ZMhWb
+X-Google-Smtp-Source: AA0mqf6jXayNUYuYVM/Q2O9jVhnf8jCQmWn9Jur7Dg3gxDEdyjQAxO00cv2p5RDoW6obLrAprLCfcg==
+X-Received: by 2002:a2e:a553:0:b0:277:665c:eb4c with SMTP id e19-20020a2ea553000000b00277665ceb4cmr772966ljn.287.1668682730109;
+        Thu, 17 Nov 2022 02:58:50 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id d7-20020a193847000000b00499cf3e3edcsm89123lfj.296.2022.11.17.02.58.48
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 17 Nov 2022 02:58:49 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20221115154637.1613968-1-robdclark@gmail.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20221115154637.1613968-1-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UL_coQY-6jlE9drln0tJpKU__dSx8ogz
-X-Proofpoint-ORIG-GUID: UL_coQY-6jlE9drln0tJpKU__dSx8ogz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-17_06,2022-11-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- phishscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211170083
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] arm64: dts: qcom: msm8994: Drop spi-max-frequency from SPI host
+Date:   Thu, 17 Nov 2022 11:58:44 +0100
+Message-Id: <20221117105845.13644-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/15/2022 9:16 PM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
->
-> If we get an error (other than -ENOENT) we need to propagate that up the
-> stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up
-> end up claiming that we support all the OPPs which is not likely to be
-> true (and on some generations impossible to be true, ie. if there are
-> conflicting OPPs).
->
-> v2: Update commit msg, gc unused label, etc
-> v3: Add previously missing \n's
->
-> Fixed: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 +++++-------
->   1 file changed, 5 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 7fe60c65a1eb..ebe9599a8316 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1931,7 +1931,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
->   
->   	if (val == UINT_MAX) {
->   		DRM_DEV_ERROR(dev,
-> -			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
-> +			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
->   			fuse);
->   		return UINT_MAX;
->   	}
-> @@ -1941,7 +1941,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
->   
->   static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
->   {
-> -	u32 supp_hw = UINT_MAX;
-> +	u32 supp_hw;
->   	u32 speedbin;
->   	int ret;
->   
-> @@ -1953,15 +1953,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
->   	if (ret == -ENOENT) {
->   		return 0;
->   	} else if (ret) {
-> -		DRM_DEV_ERROR(dev,
-> -			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
-> -			      ret);
-> -		goto done;
-> +		dev_err_probe(dev, ret,
-> +			      "failed to read speed-bin. Some OPPs may not be supported by hardware\n");
-> +		return ret;
->   	}
->   
->   	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
->   
-> -done:
->   	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
->   	if (ret)
->   		return ret;
+This is a device property, not a bus host one.
 
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index adcea31a0c68..9ff9d35496d2 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -554,7 +554,6 @@ blsp1_spi1: spi@f9923000 {
+ 			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+-			spi-max-frequency = <19200000>;
+ 			dmas = <&blsp1_dma 12>, <&blsp1_dma 13>;
+ 			dma-names = "tx", "rx";
+ 			pinctrl-names = "default", "sleep";
+@@ -692,7 +691,6 @@ blsp2_spi4: spi@f9966000 {
+ 			clocks = <&gcc GCC_BLSP2_QUP4_SPI_APPS_CLK>,
+ 				 <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
+-			spi-max-frequency = <19200000>;
+ 			dmas = <&blsp2_dma 18>, <&blsp2_dma 19>;
+ 			dma-names = "tx", "rx";
+ 			pinctrl-names = "default", "sleep";
+-- 
+2.38.1
 
--Akhil.
