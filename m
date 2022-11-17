@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE39F62D920
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 12:13:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A91C62D955
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 12:24:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234673AbiKQLNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 06:13:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54758 "EHLO
+        id S239449AbiKQLYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 06:24:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239378AbiKQLMy (ORCPT
+        with ESMTP id S234299AbiKQLYJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 06:12:54 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D6F6D48F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 03:12:15 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id be13so2261703lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 03:12:15 -0800 (PST)
+        Thu, 17 Nov 2022 06:24:09 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4D243E0A5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 03:24:07 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso1600491pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 03:24:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u3PS+VtSrFrxLksaUjnv7uLieMcy5jFloUEXJRVxtOw=;
-        b=dWMhfGpYSMRZJAxIILk4u5bI3xKHNpB9c8PUTWjK131B/VgIL8hqAbEfGulPqqM5It
-         1p9LZFgipPZkjqITTGFLt91nhdzY+NI6Y6AeU6jL2KIvSA2m/n5ofvO15gkfD2GA9Acx
-         NOuyF2A5Yw/vaypN6gXmPzzH6jhw7KY+r4eOzoaHt55o4o8Q+Bns6mFoR4GW2j+0eXVf
-         7wuVSgL/uBUbnndzuTIE4SXhg6RBndCsY8eH/lldeBJiJwV9Ei+zrXn6KywDaN9fjTyc
-         kDsfGeHJGEzvPYdUhZgUaZ+a9zuJWKOwZ1AX60FX1dzFQq7/ufkBqwxYzyKQj3mdR8Ke
-         m4fQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i+s6Ug5M5MNLeX0nDma7SaMLHMCJkt7UhOngWgPpU1U=;
+        b=wNNgQ/ujNH4aMiqD04braFOKKTznPN8QXWqPUL3WqXaFDSCXmvcc72WiGKxO5PEz36
+         xr/Fsvt7CyfIlnQTopNyjDouuyuKapNzxa5lfXtmpt2sycPaGWyX0EdziRTw7AeU7bDh
+         Ux9A5wbvnBFZRUGKmZW+3Jl6qaDWzrIylvnwr8ybkHCNkYKgqJ7scbe2Y2GLWKqi0kYZ
+         b9bicqYYE5bY0OT0dnHBY7WtfjClSSQnDvQBc1TUuPHwgyYdGL5p8mciOmma+hF6g9Ua
+         NSa0LHXavdxR3GUMlBJkUCnAUEMYheSUTtC21D2raVEAXfdVDkMFi1qniRW9Mrk7RPDg
+         fEXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u3PS+VtSrFrxLksaUjnv7uLieMcy5jFloUEXJRVxtOw=;
-        b=O212DfPYIiTS3bbRN6tc8LgmPSDtAKSw+xe9tI/2lNm+grKXO7dLMrgScGCud+Ccv3
-         xkb8mpJcsQrQ1rlmdLR7t+eaMiGoD4kI04HxvljP1GiVbyW8nCkeh9jPdEM3sEbGRFTw
-         5thwxk1bo2LVu/Z5oilkkUmOpV8cFrK+8TzB+6SgNBg1BBPlLmVl27LVtkZH+OiLoIlv
-         bgBAC9bfWpZ7lVIcA5VJDgBeqU6201ywQTfNety9DFla3pd7MxtRuO97EiydE966UYYn
-         B0zsvn7l//MGTWqX2JFjLBlBRM88p45OThm+S6KZSI65wV9U4nU3M8iZj4QUhVqvpy6T
-         YQtQ==
-X-Gm-Message-State: ANoB5pldiLw/XhjEs/MhJR8hMcJssSLyIQWRQhT6EgDHu7ninbbxw3k4
-        e2XWj/bF7KrH5Ywxc8TsWKMAyA==
-X-Google-Smtp-Source: AA0mqf5N4xGvnBI+PoB5w8yEjy1UI3IH54OWh4czbWfAtjvgFBUfw9FYA92M5a7b3uV7o7xGW8+3hQ==
-X-Received: by 2002:a05:6512:3c83:b0:4a2:3a78:106d with SMTP id h3-20020a0565123c8300b004a23a78106dmr677594lfv.419.1668683534199;
-        Thu, 17 Nov 2022 03:12:14 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m22-20020a0565120a9600b004a608ec6d8csm102436lfu.27.2022.11.17.03.12.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 03:12:13 -0800 (PST)
-Message-ID: <ebd7e9f1-da9b-253d-0053-2327fd86e7f1@linaro.org>
-Date:   Thu, 17 Nov 2022 12:12:12 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i+s6Ug5M5MNLeX0nDma7SaMLHMCJkt7UhOngWgPpU1U=;
+        b=i5HnXbh697nWPbmBzA9oiXjjCjsQ2F8u6u4y0v98LRIMQw2xyPJelo5CnTJfbEiofQ
+         qf5y9YSjD1RzozPVoXHU23Um9yulbsUyMpO2X77z/e7vPfvEd+QJx67FAu+Hosp4gOFC
+         15yG0JAYqfjZ6aJuzKegp6NDCpy++tPSv3bLfgQNKxWa62ub9s8crpOkqv4qXusXKkAw
+         /fIlG/E8SgrRxJgm/k1rZixaHLcUQZbfBgt1aTjj2g+5EjqWFoArVKf1kQmeEpMaB74v
+         CITI6zjQyMHIatpRQbsROzSnzj6tiMaRqzpnpWUVzusWroTaHTAk4K+XhDjrxaT3Nhw6
+         RjmQ==
+X-Gm-Message-State: ANoB5pnZQoz3zucXiyRhXx073mAFa2Za5hOxdw7Q965Wyl5H98q+UF2q
+        /Enh8eDSChgRT4E5MgREaieDxg==
+X-Google-Smtp-Source: AA0mqf560Kd2vqBW3wj4OBZezqM8uLWOdkM4wwz1Qay/d9Jm9v2iltTJxm4b4e7pw4JfhJOSm6zreg==
+X-Received: by 2002:a17:90a:62c2:b0:20d:bc7f:4fee with SMTP id k2-20020a17090a62c200b0020dbc7f4feemr8385860pjs.168.1668684247332;
+        Thu, 17 Nov 2022 03:24:07 -0800 (PST)
+Received: from localhost ([122.172.85.60])
+        by smtp.gmail.com with ESMTPSA id iz9-20020a170902ef8900b001754cfb5e21sm1062247plb.96.2022.11.17.03.24.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 03:24:05 -0800 (PST)
+Date:   Thu, 17 Nov 2022 16:54:03 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
+Message-ID: <20221117112403.haffuclwooudvgwz@vireshk-i7>
+References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+ <20221117101903.sw3hxaruj5sfhybw@bogus>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 0/2] qcom: add basic interconnect support to UFS
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jejb@linux.ibm.com,
-        martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-References: <20221117104957.254648-1-bmasney@redhat.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221117104957.254648-1-bmasney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221117101903.sw3hxaruj5sfhybw@bogus>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,22 +74,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/11/2022 11:49, Brian Masney wrote:
-> This patch set adds very basic support for the interconnect framework
-> to the Qualcomm portion of the UFS framework since the firmware on
-> these platforms expects the interconnect votes to be present. The
-> maximum throughput is requested to match what's already done in a few
-> other drivers.
+On 17-11-22, 10:19, Sudeep Holla wrote:
+> Why do you need the above 3 changes if the below(4/4) will ensure
+> cpufreq_get(cpu) returns the clock frequency. I was expecting to drop the
+> whole "confusing" clock bindings and the unnecessary clock provider.
 > 
-> Here's the relevant entries from the interconnect_summary file in
-> debugfs that shows the two ICC paths are setup for the first UFS
-> host controller on the SA8540p automotive board (sc8280xp).
+> Can't we just use cpufreq_get(cpu) ?
 
-I wonder whether this is solving the same or orthogonal problem as my
-old patchset here:
+https://lore.kernel.org/lkml/cover.1657695140.git.viresh.kumar@linaro.org/
 
-https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+The basic idea (need) here was to fix the DT and let the CPU nodes have clock
+related properties, which are missing currently.
 
-Best regards,
-Krzysztof
+The context can be seen in the above thread.
 
+-- 
+viresh
