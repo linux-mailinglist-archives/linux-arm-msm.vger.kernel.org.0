@@ -2,86 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02BB962D746
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:42:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7627762D74F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:44:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239444AbiKQJmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 04:42:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33422 "EHLO
+        id S234669AbiKQJoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 04:44:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233096AbiKQJmu (ORCPT
+        with ESMTP id S233270AbiKQJob (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 04:42:50 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FC9C6CA34
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:42:49 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id h9so2920681wrt.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:42:49 -0800 (PST)
+        Thu, 17 Nov 2022 04:44:31 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D69261C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:44:29 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id a15so1984901ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:44:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=RDiUNyLGINz4bNu2tXJbnzRCWz4xt6nCkosMidGCTP8=;
-        b=cz6WIWe+HoeDjkfbCmslmgKChcNsPwENznXpyNBg1TtWpVKg8olK7v/JN34IYRuNgJ
-         OvNEz3xnWoOVX6cQ1KwosDCfA3rAgcq6FSvn7zZWD6gttC75OryysFw3nkoekBrWOMw6
-         ZU/LI7wMiAek3JORckRPy+72qvQcbXIf6KdlhQXupsNNEeOHDpAaP37tKLiHiQKKRFo+
-         rBx1Aclv5Ru2RhSAInr5AcxD0RiuWVwbwA7wv/sJzv889bjha/WH6lE0xTbb5K+22rjJ
-         Z54gFbCot5qgxUGtcyfUVGcd57AVFm4vI0EvU4FwQ59KeZI87VBKX5dZ3eYwTsNeKJCQ
-         q3PA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hD1jbAlBvTF7SKXVWN3tM9czI4aFJszt8w8SXv5RNHE=;
+        b=T2Yk+dxzJHSPwNAgoVJGwixHAGi/ROC8GnFpC77iF2fqtmYewon14vgnngK6AqiSuQ
+         mbWJXcX97Z8G1BpNKARPQ19yMtpvZHHa6bUhluAyj/WHwfJAvXUkMHKikGUycZ5OFBkM
+         vYFwIzyVQGkht6FyhEL6wzkXN2ALSgqdGFYOzHDr/t46LIBCEybY852ggeCflMy8/FLh
+         qjY8/oiclFPjUVvelW+rEWdbe7944TXc2JoaGiv9FaF+iX1jsTwQCDcwMW0cF/C5V98z
+         AUSAFS0wyO2fAyEjb6DO4IXmoy9PolcT/ig8ePnnN1mn42GRllErxNtfbs57fCBHTn3t
+         dtEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RDiUNyLGINz4bNu2tXJbnzRCWz4xt6nCkosMidGCTP8=;
-        b=RLIyisqTfX0BqdXvTzTQ2dHMFTZESEYqFv8sJjtJy9N9x5uQ2HAFeBGFljD57o2cwB
-         rLiHlYPIw9mLvIQHX6ln31a/4n5DIttQaV1EDNZEnJSQhO/dHajGOf17dDZVpYgj0ZeR
-         yl9ZZWTKp/Qf6XSrTV8M6F74wINpWuztU+k2DMyKXs1Yki2ytEvapoe8HoQq5ZddGBQi
-         V0dW8ipYyhC79bcZNcZrABAYRa+61EdP03jAL2yxvY1Vc6EHykGRc//TS7pGJibhzGAZ
-         jm93syorc08TWXwf/vVoCfxlyyV28gRZobtwAFACOFy4JK1GS88mr62rJvHqsZEm3Mst
-         iofg==
-X-Gm-Message-State: ANoB5pnKzUfo/wYsF8kpXOOrYTTMGTQuCJhQQxvh65EZlVLbGd10+1x/
-        yKk8RoAW7n/4vUg1lFmVq/h40w==
-X-Google-Smtp-Source: AA0mqf5jf9a9rEXaGNrcCFERlvcfuQMmTx6Hk/1vl5s7IQ1reFpApijantaTxFMBZcTfVkwmFZx4Tw==
-X-Received: by 2002:a5d:4ccb:0:b0:236:d611:4fcf with SMTP id c11-20020a5d4ccb000000b00236d6114fcfmr943748wrt.192.1668678168139;
-        Thu, 17 Nov 2022 01:42:48 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b? ([2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b])
-        by smtp.gmail.com with ESMTPSA id u12-20020adfdb8c000000b002367ad808a9sm471058wri.30.2022.11.17.01.42.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 01:42:47 -0800 (PST)
-Message-ID: <8edb4848-105a-26a1-63e7-137526445d18@linaro.org>
-Date:   Thu, 17 Nov 2022 10:42:46 +0100
+        bh=hD1jbAlBvTF7SKXVWN3tM9czI4aFJszt8w8SXv5RNHE=;
+        b=KGUu0NH0ZWlSi3IyoM66W4mECF96F9sUFmtd7N2kJWdyJ+f/mTbh50oqXDOxf3oXP4
+         Sm+nR53rVAa/hbsXk3XM9sYA68UE9y8rSrfs8HZZEoHcaZrnYdFKtnXdTWyrcvQ6QFw2
+         embHLAH2I2qEfq88sEJM43uWv2vyhcULiL7rX82jajbahdMdIdrbTXtIIgad/5kdoiWd
+         pdo8gbbb7igxCaPFsKwb/dEZy44vB0al2yBS+PCZsBDXH6YRnIlmNkvJhKzev0He+6/2
+         Dg1nO118Z+GLgFc0TIEAvLQWb8Ae1j9m5+Xk5HzVXTeeNiEELx6daF6UmbwzAxsu4op7
+         wvQg==
+X-Gm-Message-State: ANoB5pmHVU2ARbGXxUfzQwrJ3MkjJyawE+87+Co2896SxmPhuE72dSIb
+        d5H0OVtwUx4wiEcVMpgrRxkfCfkUFsQLz/JV
+X-Google-Smtp-Source: AA0mqf4eRbnTAVBZt51qmXyW73W+8vA5ceD6Xn/gDQlwmCKhCNhrcFyk3O3Q53ffQoES6B/K20ACUA==
+X-Received: by 2002:a05:651c:2cf:b0:26e:9721:880c with SMTP id f15-20020a05651c02cf00b0026e9721880cmr668881ljo.68.1668678267662;
+        Thu, 17 Nov 2022 01:44:27 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id a23-20020a2eb557000000b002770f0a742bsm105312ljn.41.2022.11.17.01.44.26
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 17 Nov 2022 01:44:27 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] SM6350 SMMUv2
+Date:   Thu, 17 Nov 2022 10:44:20 +0100
+Message-Id: <20221117094422.11000-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/4] dt-bindings: qcom-qce: document sm8550 compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-qce-v1-0-31b489d5690a@linaro.org>
- <20221114-narmstrong-sm8550-upstream-qce-v1-3-31b489d5690a@linaro.org>
- <51f5ee2c-bf25-71ab-594d-2da18a44d3b6@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <51f5ee2c-bf25-71ab-594d-2da18a44d3b6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,22 +68,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 12:54, Krzysztof Kozlowski wrote:
-> On 16/11/2022 11:23, Neil Armstrong wrote:
->> This documents the compatible used for QCE on SM8550.
->>
-> 
-> So we have a dedicated compatible... This should be squashed with
-> previous one, added allOf:if:then making clocks optional only for this
-> platform (assuming that my understanding of "enable=exclusive control"
-> is correct).
+Hi,
 
-I'll wait until the dependent patchset is refreshed and a fallback plan decided.
+SM6350 has a SMMUv2-compatible(-ish, obviously) instance that
+is responsible for working with Adreno and its GMU.
 
-Neil
+Recently, it was decided that there is no point in adding more
+mmu-500 compatibles to the driver, however after chatting with
+Dmitry on IRC, it was concluded that it's okay to add that for v2, as
+these older implementations can vary so much from SoC to SoC that
+having a common compatible is really not feasible..
 
-> 
-> Best regards,
-> Krzysztof
-> 
+Konrad Dybcio (2):
+  dt-bindings: arm-smmu: Add SM6350 GPU SMMUv2
+  iommu/arm-smmu-qcom: Add SM6350 SMMUv2
+
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 ++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c            | 1 +
+ 2 files changed, 3 insertions(+)
+
+-- 
+2.38.1
 
