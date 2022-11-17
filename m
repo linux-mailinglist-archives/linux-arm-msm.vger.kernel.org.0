@@ -2,92 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E26F62DE71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:41:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B093362DE7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:44:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240387AbiKQOlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 09:41:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
+        id S240051AbiKQOoH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 09:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240474AbiKQOkl (ORCPT
+        with ESMTP id S239939AbiKQOnc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 09:40:41 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8705DBAB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:39:40 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id j16so3072134lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:39:40 -0800 (PST)
+        Thu, 17 Nov 2022 09:43:32 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0313B1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:43:29 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id d3so3013314ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:43:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hhqHTIdakMdpvgIm6p6wrgckSR+qp6nVKOdBw1n2NYA=;
-        b=RJSBSDT6way2QB6z7HOF4VHWQBZ9FM3sbXcO8/5CIix4Mp/vZMTmZLxUkLjNqtf1In
-         0vpKyapKN6tjlgUmXV9npaTLNABbXAkVOWSAeEBCZqbMrofXlF8zh6m6mHHtIV4XgWfB
-         IbXeXtGIaInF3qUbtgheXdOd/AWwMzj8iLF0isC5t5oBmmCQTBy7nklFHT7b0oxn6Yzv
-         1wIsBiVpdUG5vkX+Gy1/dfqhk/S/u5ziz3S82tjNRvMDfCJ59L/R5iJIVB1iuZWBt6FK
-         tH1acOcewQWWB0gA4+iapqwA/CI81cIWsXxy/YP0o+gVyLmpeZl2nGs6H3EthqQSST+a
-         Faow==
+        bh=HQLQpf3kqVigsxlHZz3VInqB29DX3Of3V5vUpblQjaE=;
+        b=cgEyuXJ9bSA2nbbeLhNB/uy9KIR0uK9QNQwKu5wOFqsIeCJ9+AwrtgI/d2KpiRUTs8
+         GWR0arDbaBDl0MVo+Dtx+mM+bkRFgxla9SBM0YbFI/3nSOFb+8Is86Tw5fnv5gkSJ2Q0
+         JLE142Ah2VMsEeKe+AwVz0lN65TV9i+LF9txiuORSY/fseVNcQq2GSMjPyvlATNAHPKF
+         IC9nlrDeLffvuvallMwZZp1vqnYLr57l9yiD3i6+srDDJID4MPV0jwUDy1H5wA7tVctv
+         ker2R3Gq398hxtYIKX8wRSWHsQgY2FrPFCBqmbLxkyggfbkIRr+TuN0bnB/iIfOAynYj
+         SGxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hhqHTIdakMdpvgIm6p6wrgckSR+qp6nVKOdBw1n2NYA=;
-        b=F+d2YJxRFvTNggZkdxloHE0eGzWtgvsE0JpbxDocvhhIHqa6mV7JUWAikQBbdh5nBC
-         DQmEkP/33rrJBoiUTaRVbBnPwet9ZJ+qbDEhc9ZkzUeQ0kNvj+8vpDOVYXcvt3IXQz1+
-         tFR39efo/w4iR/W1kiK/S7z1UCbGpu0LnzlUYIA9w2IpfqdzCSwymy95VxMsUu8xsKzs
-         AK0E/SBrkSr+vLzo2wC8BKCWMwIkG4OM2Xelfefphqql86YXOiz8GsqAaSwEJYh0eYCv
-         MiXV+qvemuXA8WLYdN0RCBak/TY7ebl/3SIHUugIxqyV/vp5VLy+n7xBlG7MpcAeivL1
-         gm3Q==
-X-Gm-Message-State: ANoB5pkmjMEmcYp1yjcVkOelYZ/wfVp+vBcP5/EZG6vuRj+6YHKAUXEO
-        woAWTJQi08rocomKoXgfozG2DA==
-X-Google-Smtp-Source: AA0mqf4NaGpugqjSDrrmrqo3jAPO3q9RsT21DAZOI0kv5akXE5GBfutYL6Bg/02pvozfY5G9BEbmeA==
-X-Received: by 2002:a19:a405:0:b0:4b0:8644:2951 with SMTP id q5-20020a19a405000000b004b086442951mr953840lfc.93.1668695978726;
-        Thu, 17 Nov 2022 06:39:38 -0800 (PST)
+        bh=HQLQpf3kqVigsxlHZz3VInqB29DX3Of3V5vUpblQjaE=;
+        b=3cvasoAhqqqvIjyxG8NP8bN5HBYe4HS9Z1mgDKBZj2t34MuVT+F8k2nBMfGDnIUs4z
+         FEiWk/ZSotVrZLXUId5SVWLYtq4+FbrTVze9hLSg/twNKG2tsp91iRW9UboH3If5PZGO
+         DZlILD0aTH9BN90+hWZK7C5jazJ+3tpf5WT/CUXIg2Xk4U9PIJDtLA2/wuDfsoGd8/Ny
+         J2Irvng4Jtv7s2d90I0hhLwdhawlQq6F9Xo+TN0N00dceGSV+nkdv6Cmzdf20xLeBdWH
+         PBe2gCs2fADlis6YNBihrDpBGP9L9KhAmnBx34QCG1x6t1FOMzMcwYiRyXU0ZZ8qDKNr
+         H13g==
+X-Gm-Message-State: ANoB5pkMZpGg7STj48sPJKxgiw2abGckU3gYjLGyjH8bMYmyyHyR5lLK
+        Vw51soO2/9tYB0JrsenRRVMa7sgLHq9LNBMQ
+X-Google-Smtp-Source: AA0mqf6KhLVQFBsdyDJL/myJ+eCpADXPNWOU/Inb33v6Vdhy3hm3CLZ95yi7AADthY2wEk9Y5+1DFA==
+X-Received: by 2002:a2e:9456:0:b0:278:eef5:8d19 with SMTP id o22-20020a2e9456000000b00278eef58d19mr1023924ljh.429.1668696207539;
+        Thu, 17 Nov 2022 06:43:27 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n25-20020a195519000000b004ae394b6a6fsm173335lfe.246.2022.11.17.06.39.36
+        by smtp.gmail.com with ESMTPSA id k20-20020ac24f14000000b0049ad315cfc3sm176956lfr.162.2022.11.17.06.43.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 06:39:37 -0800 (PST)
-Message-ID: <23a4623d-4bc3-72cf-f56d-ad6737594977@linaro.org>
-Date:   Thu, 17 Nov 2022 15:39:36 +0100
+        Thu, 17 Nov 2022 06:43:27 -0800 (PST)
+Message-ID: <2cfdec0d-4c03-012a-df29-6d92cd87bab5@linaro.org>
+Date:   Thu, 17 Nov 2022 15:43:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 6/9] dt-bindings: PCI: qcom: document IPQ8074 Gen3 port
+Subject: Re: [PATCH 1/6] dt-bindings: qcom: geni-se: document I2C Master Hub
+ wrapper variant
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
-        lpieralisi@kernel.org, kw@linux.com, svarbanov@mm-sol.com,
-        shawn.guo@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221116214841.1116735-1-robimarko@gmail.com>
- <20221116214841.1116735-6-robimarko@gmail.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-0-64449106a148@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-1-64449106a148@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221116214841.1116735-6-robimarko@gmail.com>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v1-1-64449106a148@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 22:48, Robert Marko wrote:
-> IPQ8074 has one Gen2 and one Gen3 PCIe port, with Gen2 already supported.
-> Document Gen3 port which uses the same controller as IPQ6018.
+On 16/11/2022 11:21, Neil Armstrong wrote:
+> The I2C Master Hub is a stripped down version of the GENI Serial Engine
+> QUP Wrapper Controller but only supporting I2C serial engines without
+> DMA support.
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
+> This documents the variant compatible and forbids UART and SPI sub-nodes,
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Do not use "This commit/patch".
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
+
+> and removes requirement for the Master AHB clock and iommu property.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 43 ++++++++++++++++++----
+>  1 file changed, 35 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> index 2bf5293fc995..6657e74df629 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> @@ -21,20 +21,15 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,geni-se-qup
+> +      - qcom,geni-se-i2c-master-hub
+>  
+>    reg:
+>      description: QUP wrapper common register address and length.
+>      maxItems: 1
+>  
+> -  clock-names:
+> -    items:
+> -      - const: m-ahb
+> -      - const: s-ahb
+> +  clock-names: true
+
+minItems: 1, maxItems: 2, instead.
+
+>  
+> -  clocks:
+> -    items:
+> -      - description: Master AHB Clock
+> -      - description: Slave AHB Clock
+> +  clocks: true
+
+minItems: 1, maxItems: 2, instead.
+
+>  
+>    "#address-cells":
+>      const: 2
+> @@ -81,6 +76,38 @@ patternProperties:
+>      description: GENI Serial Engine based UART Controller.
+>      $ref: /schemas/serial/qcom,serial-geni-qcom.yaml#
+>  
+> +if:
+
+Put it under allOf, to avoid re-indenting when number of if's grow.
+
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        const: qcom,geni-se-i2c-master-hub
+> 
 
 Best regards,
 Krzysztof
