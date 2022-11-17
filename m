@@ -2,82 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E547D62D21F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 05:08:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEC0862D2B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 06:31:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234430AbiKQEIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 23:08:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
+        id S233742AbiKQFb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 00:31:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234615AbiKQEHd (ORCPT
+        with ESMTP id S229451AbiKQFb5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 23:07:33 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D268C4B987;
-        Wed, 16 Nov 2022 20:04:34 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AH1HuMR002667;
-        Thu, 17 Nov 2022 04:04:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=a++KL7xdar/RCqLS/mDi5J1eJ4XJgWkYEqifd2iF3Rw=;
- b=NmdNbQnOvxXy3CB8NNyBGLW1Dk62cVu40WGRTeYR9vNW9j/pSBffkdNGvkNee5sQO2eP
- R2AF50BYGuR3fyrywsG0ZIx6tqvW/LGnzOJz5Qjh3wViDO/jq786m9h8S07PCewmMvGP
- 1axFkvF94fIPgYBd6iakzRnRxMnSEvRG46vbsk+BGIojg+tpJN6iye7dtM2eSqctjPAj
- xnAwqf57IGW32UetcbcJQq/qvJNx+w3rR27h6z/DERbSavZWFUkA2m9EQ6UGTFgEck3d
- yx02RhKbSzcFCec3E+HSFcOpclTdNST/QM6kvhMVy4XGW2JVVl2QCCi/yLOrOkg4/utt Tw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw94q0sk9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Nov 2022 04:04:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AH44O6j020231
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Nov 2022 04:04:24 GMT
-Received: from [10.216.25.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
- 2022 20:04:19 -0800
-Message-ID: <a6e0e71a-c696-57e0-7829-6511578a453b@quicinc.com>
-Date:   Wed, 16 Nov 2022 20:04:16 -0800
+        Thu, 17 Nov 2022 00:31:57 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477F4532C6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 21:31:56 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso900257pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 21:31:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7oPr2c5sFjkGMsgr2UPxb1pE9bvOecjFKXm2LmIgOts=;
+        b=D156S2K69hV/6I7Gnhas5LRMf/1HeHCRR6mF9kHXuGKmbVj+03aTzr9DUECHUOXQha
+         2Vfu7ELiV13A6ODirlbwv3BmXf6udj+Oe+gQKOOEI05PfKFipqvM8FrFKc1Dw0cXOBhV
+         2HmVnvpEtF3QVsXMIRkNEl+ni+O7w/DPOqyerfNlU0Bt2aldI7MLSwjLevjfvLJKwVEY
+         DQZ7SU/cxtR6L6MyDmT8dicCsfcZP1hk86DbBQG2H4m8u8xk0hHj+BdzwJErD/c3S8fC
+         f+eu5r+uIDGRTBeUwd4jia0qn+v64ncYmMGpoQtzONp+palhU1fRWxds6B3KCTrGsP1p
+         TFhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7oPr2c5sFjkGMsgr2UPxb1pE9bvOecjFKXm2LmIgOts=;
+        b=oZlaHVcM9WE+s7WOOFco+ky6Wmg048yn0mYB5lMG8nBk4ieWxjwKplVqesLDi3o3Xb
+         ejcu1LBH34fx4EdeH/WFgs4EHGCqwxu+cJSF/F/aky7SS3Xl28yL4VULe1BqutyQ6GGk
+         xj6fiCaL0Y3RG0b/aNsnWhSw/XHsnYPYEoOzqwGatNWhf9134OVfApczoQQarPS8uAUO
+         34hAztdtU5bWxrFPFTrXXO+wDZk9jy3zB4H3hVyFaUFOzanBAIvbGjI+ZafMnhRmxGTq
+         mE6gbSxM2+3sfhM5xYnZl1Qa9pjDoKAS9mCdBPW4rKM0r/DKiP9/FPDaGfcRWKmYjUub
+         pVmg==
+X-Gm-Message-State: ANoB5pk+CdVVOZkF+DvHc0KmS0q2rV2oI+iiiM1pPIqvcQLiCSgeuaOU
+        WQvg+i5W8Xn7FNq7pvywAwZ2
+X-Google-Smtp-Source: AA0mqf7M4odCBsOw9ycvH+5mwO2zaa78y+/Y+XY0Cny6ZmRSUdTkjtaAoOkKpU93SzgySuz9tG37BA==
+X-Received: by 2002:a17:90a:bb16:b0:200:2d7f:18c2 with SMTP id u22-20020a17090abb1600b002002d7f18c2mr1211167pjr.106.1668663115721;
+        Wed, 16 Nov 2022 21:31:55 -0800 (PST)
+Received: from localhost.localdomain ([117.193.208.31])
+        by smtp.gmail.com with ESMTPSA id q4-20020a17090311c400b001865c298588sm96600plh.258.2022.11.16.21.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 21:31:54 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, viresh.kumar@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
+        robh+dt@kernel.org
+Cc:     johan@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
+Date:   Thu, 17 Nov 2022 11:01:41 +0530
+Message-Id: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/hdmi: remove unnecessary NULL check
-Content-Language: en-US
-To:     Dan Carpenter <error27@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-CC:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <Y2o0TKZ5WRYnQXna@kili>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <Y2o0TKZ5WRYnQXna@kili>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 53_u3boPsp7LYsw0zoLpVv2lKVRlYKA_
-X-Proofpoint-ORIG-GUID: 53_u3boPsp7LYsw0zoLpVv2lKVRlYKA_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 bulkscore=0 clxscore=1011 spamscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211170027
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,40 +72,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
 
+This series adds clock provider support to the Qcom CPUFreq driver for
+supplying the clocks to the CPU cores in Qcom SoCs.
 
-On 11/15/2022 5:03 AM, Dan Carpenter wrote:
-> This code was refactored in commit 69a88d8633ec ("drm/msm/hdmi: move
-> resource allocation to probe function") and now the "hdmi" pointer can't
-> be NULL.  Checking causes a Smatch warning:
-> 
->      drivers/gpu/drm/msm/hdmi/hdmi.c:141 msm_hdmi_init()
->      warn: variable dereferenced before check 'hdmi' (see line 119)
-> 
-> Signed-off-by: Dan Carpenter <error27@gmail.com>
+The Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
+clocks to the CPU cores. But this is not represented clearly in devicetree.
+There is no clock coming out of the CPUFreq HW node to the CPU. This created
+an issue [1] with the OPP core when a recent enhancement series was submitted.
+Eventhough the issue got fixed in the OPP framework in the meantime, that's
+not a proper solution and this series aims to fix it properly.
 
-Can you please add the fixes tag to point to the commit you have 
-referenced in the commit message?
+There was also an attempt made by Viresh [2] to fix the issue by moving the
+clocks supplied to the CPUFreq HW node to the CPU. But that was not accepted
+since those clocks belong to the CPUFreq HW node only.
 
-LTGM,
+The proposal here is to add clock provider support to the Qcom CPUFreq HW
+driver to supply clocks to the CPUs that comes out of the EPSS/OSM block.
+This correctly reflects the hardware implementation.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+The clock provider is a simple one that just provides the frequency of the
+clocks supplied to each frequency domain in the SoC using .recalc_rate()
+callback. The frequency supplied by the driver will be the actual frequency
+that comes out of the EPSS/OSM block after the DCVS operation. This frequency
+is not same as what the CPUFreq framework has set but it is the one that gets
+supplied to the CPUs after throttling by LMh.
 
-> ---
->   drivers/gpu/drm/msm/hdmi/hdmi.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> index 7001fabd0977..4d3fdc806bef 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> @@ -138,8 +138,7 @@ static int msm_hdmi_init(struct hdmi *hdmi)
->   	return 0;
->   
->   fail:
-> -	if (hdmi)
-> -		msm_hdmi_destroy(hdmi);
-> +	msm_hdmi_destroy(hdmi);
->   
->   	return ret;
->   }
+This series has been tested on SM8450 based dev board with the OPP hack removed
+and hence there is a DTS change only for that platform. Once this series gets
+accepted, rest of the platform DTS can also be modified and finally the hack on
+the OPP core can be dropped.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/lkml/YsxSkswzsqgMOc0l@hovoldconsulting.com/
+[2] https://lore.kernel.org/lkml/20220801054255.GA12039@thinkpad/t/
+
+Changes in v7:
+
+* Added a patch that returns the throttled frequency for cpufreq_driver->get()
+  callback (Sudeep & Viresh)
+* Added error check for kasprintf and allocated the clk name locally
+
+Changes in v6:
+
+* Removed the local variable clk_name (Matthias)
+* Added the clock id to the error message of devm_clk_hw_register()
+
+Changes in v5:
+
+* Switched to Hz unit for the CPU clocks
+
+Changes in v4:
+
+* Rebased on top of cpufreq/arm/linux-next branch
+
+Changes in v3:
+
+* Submitted the cpufreq driver cleanup patches as a separate series as
+  suggested by Viresh
+* Removed static keyword from clk_init_data declaration
+
+Changes in v2:
+
+* Moved the qcom_cpufreq_data allocation to probe
+* Added single clock provider with multiple clks for each freq domain
+* Moved soc_data to qcom_cpufreq struct
+* Added Rob's review for binding
+
+Manivannan Sadhasivam (4):
+  dt-bindings: cpufreq: cpufreq-qcom-hw: Add cpufreq clock provider
+  arm64: dts: qcom: sm8450: Supply clock from cpufreq node to CPUs
+  cpufreq: qcom-hw: Add CPU clock provider support
+  cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()
+
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 12 +++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  9 ++
+ drivers/cpufreq/qcom-cpufreq-hw.c             | 87 ++++++++++++++++---
+ 3 files changed, 95 insertions(+), 13 deletions(-)
+
+-- 
+2.25.1
+
