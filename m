@@ -2,180 +2,492 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AED262D76D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:49:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42B9F62D7C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 11:13:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234267AbiKQJtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 04:49:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37758 "EHLO
+        id S233223AbiKQKNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 05:13:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbiKQJt3 (ORCPT
+        with ESMTP id S239397AbiKQKNi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 04:49:29 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C19BB877;
-        Thu, 17 Nov 2022 01:49:28 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AH935J3001073;
-        Thu, 17 Nov 2022 09:49:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=mXyp3kuz6+raj/Kj/BPH6q/i8EriXCANwM6ExVdaBaY=;
- b=eC1sBSIAa4z0dgRUSgCpnx+p5g4R277LLYvaw1SMqJpOxDMK0gb9wQGK378zCE2HSlBq
- wYI/tnV9m6dZmL1epc+yN3/Xt7xguHWAD7wlz8PFNl7KNeaUm77ZdFe7m6+xJcX+LfqE
- mveOL4KBNemPwIP900G9l9fMM754oV6XmqJ26EC34cpae0SyqhQPLsO7AwVd2wlKAh+G
- NkcafyIhdRRhXEFFQ8jdj0r2phRZ2fLQGhYEcAKxg5flS55Gl31tmCt36ALJdbV35yvq
- ZA8JzAHjwdctVtK9cqwzdnSt5VBBpbyKpBw94+1Q/TxoECFc616fpBg+qJQF0HEQuUCf cw== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kwfcb0hc4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 17 Nov 2022 09:49:17 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AH9nCJ3014247;
-        Thu, 17 Nov 2022 09:49:12 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3kt4jm2fk8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 17 Nov 2022 09:49:12 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AH9nCG9014241;
-        Thu, 17 Nov 2022 09:49:12 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 2AH9nC8w014240;
-        Thu, 17 Nov 2022 09:49:12 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
-        id 8A9495001D8; Thu, 17 Nov 2022 15:19:11 +0530 (+0530)
-From:   Sarthak Garg <quic_sartgarg@quicinc.com>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        Sarthak Garg <quic_sartgarg@quicinc.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        "Darrick J. Wong" <djwong@kernel.org>,
-        "Jason A. Donenfeld" <Jason@zx2c4.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Subject: [PATCH V1] mmc: core: Wait for 1ms after enabling the clocks post voltage switch
-Date:   Thu, 17 Nov 2022 15:18:48 +0530
-Message-Id: <20221117094859.20582-1-quic_sartgarg@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: E8iSzsCjZO6PhuCyrhhC2LzKyzTpc9z0
-X-Proofpoint-GUID: E8iSzsCjZO6PhuCyrhhC2LzKyzTpc9z0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-17_06,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211170075
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Thu, 17 Nov 2022 05:13:38 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D915C6417
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:13:35 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id g12so2924992wrs.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 02:13:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MGNm9+INncbAj3PVloRV4toI1FS4UuWlLi59o7JDz2M=;
+        b=qNc7fyxitNPVXXgqrEPWvl4LxLCKxEvb8NKKfB//vYWc7DZLYCZo0ke4qY/zZwXoEw
+         9KVa770hR31mIyHoWFRm+Dzx94ONQLDZ2GjPMniKSyJiUce+yh14zLt56VCGJVGKnkjv
+         IBlBLJyVHyzbmckEWQ3eTJHoMT5xAADWi5sDS5ItQALG9T5h/Vo1n4Htk4mKqEMuIr+9
+         t77Q/ko2jazVY3O6D035ODb4cyIAa4qoZ7nNzi39FsF7Hb+G+gP7r2ABlepXXAg6MZKU
+         2SMnuH9lMOEYNeULw6lruoEw+p5aDNB9e+MuN5/6BwV75GrZW4PMPHGeFLJ2Ek4fq8pR
+         XyZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MGNm9+INncbAj3PVloRV4toI1FS4UuWlLi59o7JDz2M=;
+        b=Aow1hKZrU8sYBvjDLqkwqrJxvSceAVRKZTl1tzuZnaerJRxxf6dWtKi+eN2slWVSw2
+         fkXqlIRujJAJIf7Io7iYB3KiVTrr+PQpdSeMDE51fIl7GhBiE8VQOtNZHoaHttIjKvVl
+         xKhakeWl1d447QPRR8kfY2QK0WPz5QM8n1OoMgJxPQwrtwHH7ZdCOIxefWe/vUeNmOHd
+         g4u4lW/S0zpEMigDq3Fq8Ej1nTfPYyqzy5ti0Xao30w3fKq/wVDGYxpW1V3gTGgOVRbK
+         FovAE+0k/GLbbz8NCdmD+KTFmojGlPsTnrkmYPDTz/bTYaRu6U0iJOkixg4OVAADdl/Y
+         nj1Q==
+X-Gm-Message-State: ANoB5pkqjLtOn0C9Tw8a9g/g+kBiZ2yrJfpoCvXz8Fq3v6GsmSxeGXeD
+        Y/Ix9F9AKk8pBBuZcwr5dM4+Bw==
+X-Google-Smtp-Source: AA0mqf66AlKmbN0Qd1ghU5kyRXBkz6WsJCdRAU+Msf8wC7/fZQ5PcmUdm6Yo4WZ2PQ0iMlCSQLWEvA==
+X-Received: by 2002:a05:6000:1148:b0:236:71cd:1a71 with SMTP id d8-20020a056000114800b0023671cd1a71mr1003680wrx.712.1668680014355;
+        Thu, 17 Nov 2022 02:13:34 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b? ([2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b])
+        by smtp.gmail.com with ESMTPSA id p6-20020a1c5446000000b003b47e75b401sm4956887wmi.37.2022.11.17.02.13.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 02:13:33 -0800 (PST)
+Message-ID: <360dee55-8c40-2d65-ed4a-d14e66c92f9d@linaro.org>
+Date:   Thu, 17 Nov 2022 11:13:33 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: add adsp, cdsp & mdss
+ support nodes
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221115-topic-sm8550-upstream-dts-remoteproc-v1-0-379eec11d841@linaro.org>
+ <20221115-topic-sm8550-upstream-dts-remoteproc-v1-2-379eec11d841@linaro.org>
+ <f4f53117-7f60-6f22-0e0f-bb4f8ee1ea9f@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <f4f53117-7f60-6f22-0e0f-bb4f8ee1ea9f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per spec we should wait for 1ms after providing the SD clock to the
-card again as part of voltage switch sequence but there seems to be a
-violation here. Clocks are getting gated before 1ms as part of
-sdhci_set_ios function where we try to reset SD Clock Enable by
-resetting SDHCI_CLOCK_CARD_EN bit in SDHCI_CLOCK_CONTROL register
-leading to voltage switch failures for specific SD cards.
-Below ftraces also confirms the above understanding :
+On 16/11/2022 12:45, Konrad Dybcio wrote:
+> 
+> 
+> On 16/11/2022 11:43, Neil Armstrong wrote:
+>> This adds support for the aDSP, cDSP and MPSS Subsystems found in
+>> the SM8550 SoC.
+>>
+>> The aDSP, cDSP and MPSS needs:
+>> - smp2p support nodes to get event back from the subsystems
+>> - remoteproc nodes with glink-edge subnodes providing all needed
+>>    resources to start and run the subsystems
+>>
+>> In addition, the MPSS Subsystem needs a rmtfs_mem dedicated
+>> memory zone.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> The title and commit message are misleading, you're either adding support or adding nodes. There is no such thing as "support nodes".
 
-9.511367: mmc_host_set_uhs_voltage: mmc1 called
-9.511369: mmc_set_ios: mmc1: clock 0Hz busmode 2 powermode 2 cs 0
-Vdd 18 width 1 timing 0
-9.511370: sdhci_set_ios: mmc1 called
-9.511370: sdhci_set_ios: mmc1 setting clock ios->clock: 0 host->clock:
-400000
-9.511372: sdhci_msm_set_clock: mmc1 clock: 0
-9.511394: sdhci_set_ios: mmc1 gating clocks by writing
-~SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
-9.511413: sdhci_msm_set_clock: mmc1 clock: 0
-9.511423: mmc_set_signal_voltage: mmc1 called
-9.533816: mmc_set_ios: mmc1: clock 400000Hz busmode 2 powermode 2 cs 0
-Vdd 18 width 1 timing 0
-9.533820: sdhci_set_ios: mmc1 called
-9.533822: sdhci_set_ios: mmc1 setting clock ios->clock: 400000
-host->clock: 0
-9.533826: sdhci_msm_set_clock: mmc1 clock: 400000
-9.533925: sdhci_enable_clk: mmc1 Enabling clocks by writing
-SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
-9.533950: sdhci_set_ios: mmc1 gating clocks by writing
-~SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
-9.533973: sdhci_msm_set_clock: mmc1 clock: 400000
-9.534043: sdhci_enable_clk: mmc1 Enabling clocks by writing
-SDHCI_CLOCK_CARD_EN to SDHCI_CLOCK_CONTROL register
-9.534045: mmc_host_set_uhs_voltage: mmc1 Done
+Yep you're right,
 
-Wait for 1ms after enabling the clock post voltage switch to make sure
-clock is kept alive for alteast 1ms as per spec.
+> 
+> The code looks good though, so with that fixed:
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Will fix for v2.
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
----
- drivers/mmc/core/core.c  | 4 ++++
- drivers/mmc/host/sdhci.c | 3 +++
- include/linux/mmc/host.h | 1 +
- 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
-index a1efda85c6f2..d63e00aab6cb 100644
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1181,6 +1181,8 @@ int mmc_host_set_uhs_voltage(struct mmc_host *host)
- 	host->ios.clock = 0;
- 	mmc_set_ios(host);
- 
-+	host->doing_signal_voltage_switch = true;
-+
- 	if (mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_180))
- 		return -EAGAIN;
- 
-@@ -1189,6 +1191,8 @@ int mmc_host_set_uhs_voltage(struct mmc_host *host)
- 	host->ios.clock = clock;
- 	mmc_set_ios(host);
- 
-+	host->doing_signal_voltage_switch = false;
-+
- 	return 0;
- }
- 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index fb6e9a81f198..ac7c254eef4b 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2312,6 +2312,9 @@ void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-+		if (mmc->doing_signal_voltage_switch)
-+			usleep_range(1000, 1250);
-+
- 		if (host->quirks & SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK &&
- 		    host->clock) {
- 			host->timeout_clk = mmc->actual_clock ?
-diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-index 8fdd3cf971a3..06c88cd7a8bf 100644
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -521,6 +521,7 @@ struct mmc_host {
- 	bool			hsq_enabled;
- 
- 	u32			err_stats[MMC_ERR_MAX];
-+	bool			doing_signal_voltage_switch;
- 	unsigned long		private[] ____cacheline_aligned;
- };
- 
--- 
-2.17.1
+Thanks,
+Neil
+
+> 
+> Konrad
+> 
+>>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 337 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 337 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> index 9e00778bb600..cac3adc4504f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> @@ -543,6 +543,15 @@ adspslpi_mem: adspslpi-region@9ea00000 {
+>>           /* Linux kernel image is loaded at 0xa8000000 */
+>> +        rmtfs_mem: rmtfs-region@d4a80000 {
+>> +            compatible = "qcom,rmtfs-mem";
+>> +            reg = <0x0 0xd4a80000 0x0 0x280000>;
+>> +            no-map;
+>> +
+>> +            qcom,client-id = <1>;
+>> +            qcom,vmid = <15>;
+>> +        };
+>> +
+>>           mpss_dsm_mem: mpss-dsm-region@d4d00000 {
+>>               compatible = "qcom,mpss-dsm-mem";
+>>               reg = <0x0 0xd4d00000 0x0 0x3300000>;
+>> @@ -635,6 +644,89 @@ hyp_ext_reserved_mem: hyp-ext-reserved-region@ff700000 {
+>>           };
+>>       };
+>> +    smp2p-adsp {
+>> +        compatible = "qcom,smp2p";
+>> +        qcom,smem = <443>, <429>;
+>> +        interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+>> +                         IPCC_MPROC_SIGNAL_SMP2P
+>> +                         IRQ_TYPE_EDGE_RISING>;
+>> +        mboxes = <&ipcc IPCC_CLIENT_LPASS
+>> +                IPCC_MPROC_SIGNAL_SMP2P>;
+>> +
+>> +        qcom,local-pid = <0>;
+>> +        qcom,remote-pid = <2>;
+>> +
+>> +        smp2p_adsp_out: master-kernel {
+>> +            qcom,entry-name = "master-kernel";
+>> +            #qcom,smem-state-cells = <1>;
+>> +        };
+>> +
+>> +        smp2p_adsp_in: slave-kernel {
+>> +            qcom,entry-name = "slave-kernel";
+>> +            interrupt-controller;
+>> +            #interrupt-cells = <2>;
+>> +        };
+>> +    };
+>> +
+>> +    smp2p-cdsp {
+>> +        compatible = "qcom,smp2p";
+>> +        qcom,smem = <94>, <432>;
+>> +        interrupts-extended = <&ipcc IPCC_CLIENT_CDSP
+>> +                         IPCC_MPROC_SIGNAL_SMP2P
+>> +                         IRQ_TYPE_EDGE_RISING>;
+>> +        mboxes = <&ipcc IPCC_CLIENT_CDSP
+>> +                IPCC_MPROC_SIGNAL_SMP2P>;
+>> +
+>> +        qcom,local-pid = <0>;
+>> +        qcom,remote-pid = <5>;
+>> +
+>> +        smp2p_cdsp_out: master-kernel {
+>> +            qcom,entry-name = "master-kernel";
+>> +            #qcom,smem-state-cells = <1>;
+>> +        };
+>> +
+>> +        smp2p_cdsp_in: slave-kernel {
+>> +            qcom,entry-name = "slave-kernel";
+>> +            interrupt-controller;
+>> +            #interrupt-cells = <2>;
+>> +        };
+>> +    };
+>> +
+>> +    smp2p-modem {
+>> +        compatible = "qcom,smp2p";
+>> +        qcom,smem = <435>, <428>;
+>> +        interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+>> +                         IPCC_MPROC_SIGNAL_SMP2P
+>> +                         IRQ_TYPE_EDGE_RISING>;
+>> +        mboxes = <&ipcc IPCC_CLIENT_MPSS
+>> +                IPCC_MPROC_SIGNAL_SMP2P>;
+>> +
+>> +        qcom,local-pid = <0>;
+>> +        qcom,remote-pid = <1>;
+>> +
+>> +        smp2p_modem_out: master-kernel {
+>> +            qcom,entry-name = "master-kernel";
+>> +            #qcom,smem-state-cells = <1>;
+>> +        };
+>> +
+>> +        smp2p_modem_in: slave-kernel {
+>> +            qcom,entry-name = "slave-kernel";
+>> +            interrupt-controller;
+>> +            #interrupt-cells = <2>;
+>> +        };
+>> +
+>> +        ipa_smp2p_out: ipa-ap-to-modem {
+>> +            qcom,entry-name = "ipa";
+>> +            #qcom,smem-state-cells = <1>;
+>> +        };
+>> +
+>> +        ipa_smp2p_in: ipa-modem-to-ap {
+>> +            qcom,entry-name = "ipa";
+>> +            interrupt-controller;
+>> +            #interrupt-cells = <2>;
+>> +        };
+>> +    };
+>> +
+>>       soc: soc@0 {
+>>           #address-cells = <2>;
+>>           #size-cells = <2>;
+>> @@ -1388,6 +1480,48 @@ tcsr: clock-controller@1fc0000 {
+>>               #reset-cells = <1>;
+>>           };
+>> +        remoteproc_mpss: remoteproc@4080000 {
+>> +            compatible = "qcom,sm8550-mpss-pas";
+>> +            reg = <0x0 0x04080000 0x0 0x4040>;
+>> +
+>> +            interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_modem_in 3 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_modem_in 7 IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "wdog", "fatal", "ready", "handover",
+>> +                      "stop-ack", "shutdown-ack";
+>> +
+>> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
+>> +            clock-names = "xo";
+>> +
+>> +            power-domains = <&rpmhpd SM8550_CX>,
+>> +                    <&rpmhpd SM8550_MSS>;
+>> +            power-domain-names = "cx", "mss";
+>> +
+>> +            interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+>> +
+>> +            memory-region = <&mpss_mem &q6_mpss_dtb_mem>;
+>> +
+>> +            qcom,qmp = <&aoss_qmp>;
+>> +
+>> +            qcom,smem-states = <&smp2p_modem_out 0>;
+>> +            qcom,smem-state-names = "stop";
+>> +
+>> +            status = "disabled";
+>> +
+>> +            glink-edge {
+>> +                interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+>> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
+>> +                                 IRQ_TYPE_EDGE_RISING>;
+>> +                mboxes = <&ipcc IPCC_CLIENT_MPSS
+>> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +                label = "mpss";
+>> +                qcom,remote-pid = <1>;
+>> +            };
+>> +        };
+>> +
+>>           lpass_lpiaon_noc: interconnect@7400000 {
+>>               compatible = "qcom,sm8550-lpass-lpiaon-noc";
+>>               reg = <0x0 0x07400000 0x0 0x19080>;
+>> @@ -2865,12 +2999,215 @@ system-cache-controller@25000000 {
+>>               interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+>>           };
+>> +        remoteproc_adsp: remoteproc@30000000 {
+>> +            compatible = "qcom,sm8550-adsp-pas";
+>> +            reg = <0x0 0x30000000 0x0 0x100>;
+>> +
+>> +            interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "wdog", "fatal", "ready",
+>> +                      "handover", "stop-ack";
+>> +
+>> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
+>> +            clock-names = "xo";
+>> +
+>> +            power-domains = <&rpmhpd SM8550_LCX>,
+>> +                    <&rpmhpd SM8550_LMX>;
+>> +            power-domain-names = "lcx", "lmx";
+>> +
+>> +            interconnects = <&lpass_lpicx_noc MASTER_LPASS_PROC 0 &mc_virt SLAVE_EBI1 0>;
+>> +
+>> +            memory-region = <&adspslpi_mem &q6_adsp_dtb_mem>;
+>> +
+>> +            qcom,qmp = <&aoss_qmp>;
+>> +
+>> +            qcom,smem-states = <&smp2p_adsp_out 0>;
+>> +            qcom,smem-state-names = "stop";
+>> +
+>> +            status = "disabled";
+>> +
+>> +            remoteproc_adsp_glink: glink-edge {
+>> +                interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+>> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
+>> +                                 IRQ_TYPE_EDGE_RISING>;
+>> +                mboxes = <&ipcc IPCC_CLIENT_LPASS
+>> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +
+>> +                label = "lpass";
+>> +                qcom,remote-pid = <2>;
+>> +
+>> +                fastrpc {
+>> +                    compatible = "qcom,fastrpc";
+>> +                    qcom,glink-channels = "fastrpcglink-apps-dsp";
+>> +                    label = "adsp";
+>> +                    #address-cells = <1>;
+>> +                    #size-cells = <0>;
+>> +
+>> +                    compute-cb@3 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <3>;
+>> +                        iommus = <&apps_smmu 0x1003 0x80>,
+>> +                                 <&apps_smmu 0x1063 0x0>;
+>> +                    };
+>> +
+>> +                    compute-cb@4 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <4>;
+>> +                        iommus = <&apps_smmu 0x1004 0x80>,
+>> +                             <&apps_smmu 0x1064 0x0>;
+>> +                    };
+>> +
+>> +                    compute-cb@5 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <5>;
+>> +                        iommus = <&apps_smmu 0x1005 0x80>,
+>> +                             <&apps_smmu 0x1065 0x0>;
+>> +                    };
+>> +
+>> +                    compute-cb@6 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <6>;
+>> +                        iommus = <&apps_smmu 0x1006 0x80>,
+>> +                                 <&apps_smmu 0x1066 0x0>;
+>> +                    };
+>> +
+>> +                    compute-cb@7 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <7>;
+>> +                        iommus = <&apps_smmu 0x1007 0x80>,
+>> +                                 <&apps_smmu 0x1067 0x0>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>>           nsp_noc: interconnect@320c0000 {
+>>               compatible = "qcom,sm8550-nsp-noc";
+>>               reg = <0x0 0x320C0000 0x0 0xE080>;
+>>               #interconnect-cells = <2>;
+>>               qcom,bcm-voters = <&apps_bcm_voter>;
+>>           };
+>> +
+>> +        remoteproc_cdsp: remoteproc@32300000 {
+>> +            compatible = "qcom,sm8550-cdsp-pas";
+>> +            reg = <0x0 0x32300000 0x0 0x1400000>;
+>> +
+>> +            interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
+>> +                          <&smp2p_cdsp_in 3 IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "wdog", "fatal", "ready",
+>> +                      "handover", "stop-ack";
+>> +
+>> +            clocks = <&rpmhcc RPMH_CXO_CLK>;
+>> +            clock-names = "xo";
+>> +
+>> +            power-domains = <&rpmhpd SM8550_CX>,
+>> +                    <&rpmhpd SM8550_MXC>,
+>> +                    <&rpmhpd SM8550_NSP>;
+>> +            power-domain-names = "cx", "mxc", "nsp";
+>> +
+>> +            interconnects = <&nsp_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
+>> +
+>> +            memory-region = <&cdsp_mem &q6_cdsp_dtb_mem>;
+>> +
+>> +            qcom,qmp = <&aoss_qmp>;
+>> +
+>> +            qcom,smem-states = <&smp2p_cdsp_out 0>;
+>> +            qcom,smem-state-names = "stop";
+>> +
+>> +            status = "disabled";
+>> +
+>> +            glink-edge {
+>> +                interrupts-extended = <&ipcc IPCC_CLIENT_CDSP
+>> +                                 IPCC_MPROC_SIGNAL_GLINK_QMP
+>> +                                 IRQ_TYPE_EDGE_RISING>;
+>> +                mboxes = <&ipcc IPCC_CLIENT_CDSP
+>> +                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +
+>> +                label = "cdsp";
+>> +                qcom,remote-pid = <5>;
+>> +
+>> +                fastrpc {
+>> +                    compatible = "qcom,fastrpc";
+>> +                    qcom,glink-channels = "fastrpcglink-apps-dsp";
+>> +                    label = "cdsp";
+>> +                    #address-cells = <1>;
+>> +                    #size-cells = <0>;
+>> +
+>> +
+>> +                    compute-cb@1 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <1>;
+>> +                        iommus = <&apps_smmu 0x1961 0x0>,
+>> +                             <&apps_smmu 0x0c01 0x20>,
+>> +                             <&apps_smmu 0x19c1 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@2 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <2>;
+>> +                        iommus = <&apps_smmu 0x1962 0x0>,
+>> +                             <&apps_smmu 0x0c02 0x20>,
+>> +                             <&apps_smmu 0x19c2 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@3 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <3>;
+>> +                        iommus = <&apps_smmu 0x1963 0x0>,
+>> +                             <&apps_smmu 0x0c03 0x20>,
+>> +                             <&apps_smmu 0x19c3 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@4 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <4>;
+>> +                        iommus = <&apps_smmu 0x1964 0x0>,
+>> +                             <&apps_smmu 0x0c04 0x20>,
+>> +                             <&apps_smmu 0x19c4 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@5 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <5>;
+>> +                        iommus = <&apps_smmu 0x1965 0x0>,
+>> +                             <&apps_smmu 0x0c05 0x20>,
+>> +                             <&apps_smmu 0x19c5 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@6 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <6>;
+>> +                        iommus = <&apps_smmu 0x1966 0x0>,
+>> +                             <&apps_smmu 0x0c06 0x20>,
+>> +                             <&apps_smmu 0x19c6 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@7 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <7>;
+>> +                        iommus = <&apps_smmu 0x1967 0x0>,
+>> +                             <&apps_smmu 0x0c07 0x20>,
+>> +                             <&apps_smmu 0x19c7 0x10>;
+>> +                    };
+>> +
+>> +                    compute-cb@8 {
+>> +                        compatible = "qcom,fastrpc-compute-cb";
+>> +                        reg = <8>;
+>> +                        iommus = <&apps_smmu 0x1968 0x0>,
+>> +                             <&apps_smmu 0x0c08 0x20>,
+>> +                             <&apps_smmu 0x19c8 0x10>;
+>> +                    };
+>> +
+>> +                    /* note: secure cb9 in downstream */
+>> +                };
+>> +            };
+>> +        };
+>>       };
+>>       thermal-zones {
+>>
 
