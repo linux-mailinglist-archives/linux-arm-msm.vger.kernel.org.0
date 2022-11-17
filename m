@@ -2,492 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75F6B62E28A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 18:05:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 794D462E2AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 18:15:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240442AbiKQRFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 12:05:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37202 "EHLO
+        id S240731AbiKQRPq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 12:15:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240426AbiKQRFF (ORCPT
+        with ESMTP id S240200AbiKQRPo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 12:05:05 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40436EB52
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 09:05:03 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so1602522wma.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 09:05:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N5Ryprh7INnYwEtfy/xDhGiGrWh5FcZUA7FWgXw35ws=;
-        b=sGCSlt1AcSQME45b1HFD0d1SPJmVwyxzPolYcWNIBPFpeQ4EItyY+526cqO6Umqw0p
-         m4Df/Kx/pJaIZUXaHye2f0ZT7MxnseWAGtc8Pk5gzMPEs5vUVIxwCdw92hJQk47LKIPk
-         pNmZtr4AKuWg0Tds1+URomrSQ4KpHriftT1uTKTlqTMIwm2c++XTYVU3xgy2WVgyJX71
-         5DXlZ55PRRTLSzKR+CtCkX+dXhb/OZcM40s299UikaxYEGnYiXwFsSfN+HdnAmkol7KR
-         P7B4RAUlDXzgKAaF+wtDU9xyWXJMGmByiIzvu0Rd+WTfoJocV43RN+u4XdWM+qRbhdMM
-         Qzrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N5Ryprh7INnYwEtfy/xDhGiGrWh5FcZUA7FWgXw35ws=;
-        b=N4SXBcJFoeyUZ7NKWItDBZDSBzXAy/hjx3+qxnIa3TP12VZ9jcn7ejDERoXqZk9eiX
-         BNADkdtejCbzYYsJv/75ds1THJgSu10P+1sldFWDCdtVh44zjpZQBYHgfi3nHG+h/mny
-         ujZ8yKq+Z4qX1vhN+VmgHZcFK19db0wnnUQzeAcAOmxQohLAgTSlZrWRb1tw5yxpCNOG
-         qZejKc19aK1kpoImP8H8ip6+3vkvix1r4cOXryOBX9ew4TT7awAAsyXLAqlSuW/otmbh
-         edCGvO8H3WUQO/d+RuScC4huPmrOTZntwXf1C+BdU1pwp3swxskymeno3nE8mAmoTTWU
-         42lA==
-X-Gm-Message-State: ANoB5pmPT4g5reag2Uibf82J+vVKUb6P7XUxsWr/Eir3SMVEqUi4b6ZN
-        XQICGju25vfv63S2p9gL1DP6RrFLbQjQ8A==
-X-Google-Smtp-Source: AA0mqf60he8/JjAFjXsplpl+tSa9YJ3ESm0E1P1mhXc1Ei55Xcr2vHXqoZm9YLlFJx1RYa+q9tTvSw==
-X-Received: by 2002:a05:600c:2108:b0:3cf:aae0:802a with SMTP id u8-20020a05600c210800b003cfaae0802amr2393105wml.112.1668704702086;
-        Thu, 17 Nov 2022 09:05:02 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id l13-20020a5d668d000000b00236488f62d6sm1396225wru.79.2022.11.17.09.05.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 09:05:01 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 17 Nov 2022 18:04:59 +0100
-Subject: [PATCH v5 2/2] dt-bindings: soc: qcom: convert non-smd RPM bindings to
- dt-schema
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221005-mdm9615-pinctrl-yaml-v5-2-910019fb8b9b@linaro.org>
-References: <20221005-mdm9615-pinctrl-yaml-v5-0-910019fb8b9b@linaro.org>
-In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v5-0-910019fb8b9b@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+        Thu, 17 Nov 2022 12:15:44 -0500
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D0EB16586
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 09:15:43 -0800 (PST)
+Date:   Thu, 17 Nov 2022 17:15:26 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1668705338; x=1668964538;
+        bh=dW92NfqJF9I5odBniSAN3HdOJVVBTtflw7kZQiRR6D8=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=KlkGvxw6ftiz2mNoE9miBobvV1zFeKvvM2HwSC/Jjh+qx9h+1/rzgH30rQ06maH2J
+         Wg/m+tTo0V4GZoE9pEjC9cJmvOmCjRwOMRyoKAL4S86a4tBJ0o9VLnpocjBxX1L2yw
+         jkAbQ7BmnobI4TP/sfX4VM46H5DpAGMj294p9KGDUTpI57mW2KGBMBmBixOJP1joeF
+         FZA943yFVU3hqOJo9sxyVzrXG15eJ/JqRVzVFGex6WYQzg8xEk2pTzY91aDaEnzyG9
+         UevOrmhK6Sn4QQcUKmU+jU2SUOA3/phKg/aoFDDOkwDJ5qoMGOjMNYH1mbu03urWt0
+         WAPstBe57vL7g==
+To:     linux-clk@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Nikita Travkin <nikita@trvn.ru>,
+        Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
-X-Mailer: b4 0.10.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "open list:QUALCOMM CLOCK DRIVERS" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: [PATCH] clk: qcom: gcc-msm8939: Add rates to the GP clocks
+Message-ID: <20221117171343.24216-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the non-SMD RPM node bindings to dt-schema, the old txt bindings
-are now removed since all bindings were converted.
+Similar to msm8916, msm8939 has (at least) 6 "General Purpose" clocks that
+can be muxed to SoC pins. These clocks are:
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Lee Jones <lee@kernel.org>
+GP_CLK{0, 1} : GPIO_{31, 32} (Belongs to CAMSS according to Linux)
+GP_CLK_{1-3}{A, B} : GPIO_{49-51, 97, 12, 13} (Belongs to GCC itself)
+GP_MN : GPIO_110 (Doesn't seem to be described in gcc,
+    ignored in this patch)
+
+Those clocks may be used as e.g. PWM sources for external peripherals.
+Add more frequencies to the table for those clocks so it's possible
+for arbitrary peripherals to make use of them.
+
+Reference: https://lore.kernel.org/r/20220612145955.385787-5-nikita@trvn.ru
+
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 ---
- Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
- .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
- 2 files changed, 101 insertions(+), 283 deletions(-)
+ drivers/clk/qcom/gcc-msm8939.c | 35 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom-rpm.txt b/Documentation/devicetree/bindings/mfd/qcom-rpm.txt
-deleted file mode 100644
-index b823b8625243..000000000000
---- a/Documentation/devicetree/bindings/mfd/qcom-rpm.txt
-+++ /dev/null
-@@ -1,283 +0,0 @@
--Qualcomm Resource Power Manager (RPM)
--
--This driver is used to interface with the Resource Power Manager (RPM) found in
--various Qualcomm platforms. The RPM allows each component in the system to vote
--for state of the system resources, such as clocks, regulators and bus
--frequencies.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,rpm-apq8064"
--		    "qcom,rpm-msm8660"
--		    "qcom,rpm-msm8960"
--		    "qcom,rpm-ipq8064"
--		    "qcom,rpm-mdm9615"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: base address and size of the RPM's message ram
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: three entries specifying the RPM's:
--		    1. acknowledgement interrupt
--		    2. error interrupt
--		    3. wakeup interrupt
--
--- interrupt-names:
--	Usage: required
--	Value type: <string-array>
--	Definition: must be the three strings "ack", "err" and "wakeup", in order
--
--- qcom,ipc:
--	Usage: required
--	Value type: <prop-encoded-array>
--
--	Definition: three entries specifying the outgoing ipc bit used for
--		    signaling the RPM:
--		    - phandle to a syscon node representing the apcs registers
--		    - u32 representing offset to the register within the syscon
--		    - u32 representing the ipc bit within the register
--
--
--= SUBNODES
--
--The RPM exposes resources to its subnodes. The below bindings specify the set
--of valid subnodes that can operate on these resources.
--
--== Regulators
--
--Regulator nodes are identified by their compatible:
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,rpm-pm8058-regulators"
--		    "qcom,rpm-pm8901-regulators"
--		    "qcom,rpm-pm8921-regulators"
--		    "qcom,rpm-pm8018-regulators"
--		    "qcom,rpm-smb208-regulators"
--
--- vdd_l0_l1_lvs-supply:
--- vdd_l2_l11_l12-supply:
--- vdd_l3_l4_l5-supply:
--- vdd_l6_l7-supply:
--- vdd_l8-supply:
--- vdd_l9-supply:
--- vdd_l10-supply:
--- vdd_l13_l16-supply:
--- vdd_l14_l15-supply:
--- vdd_l17_l18-supply:
--- vdd_l19_l20-supply:
--- vdd_l21-supply:
--- vdd_l22-supply:
--- vdd_l23_l24_l25-supply:
--- vdd_ncp-supply:
--- vdd_s0-supply:
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--	Usage: optional (pm8058 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- lvs0_in-supply:
--- lvs1_in-supply:
--- lvs2_in-supply:
--- lvs3_in-supply:
--- mvs_in-supply:
--- vdd_l0-supply:
--- vdd_l1-supply:
--- vdd_l2-supply:
--- vdd_l3-supply:
--- vdd_l4-supply:
--- vdd_l5-supply:
--- vdd_l6-supply:
--- vdd_s0-supply:
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--	Usage: optional (pm8901 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_l1_l2_l12_l18-supply:
--- vdd_l3_l15_l17-supply:
--- vdd_l4_l14-supply:
--- vdd_l5_l8_l16-supply:
--- vdd_l6_l7-supply:
--- vdd_l9_l11-supply:
--- vdd_l10_l22-supply:
--- vdd_l21_l23_l29-supply:
--- vdd_l24-supply:
--- vdd_l25-supply:
--- vdd_l26-supply:
--- vdd_l27-supply:
--- vdd_l28-supply:
--- vdd_ncp-supply:
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_s7-supply:
--- vdd_s8-supply:
--- vin_5vs-supply:
--- vin_lvs1_3_6-supply:
--- vin_lvs2-supply:
--- vin_lvs4_5_7-supply:
--	Usage: optional (pm8921 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vin_lvs1-supply:
--- vdd_l7-supply:
--- vdd_l8-supply:
--- vdd_l9_l10_l11_l12-supply:
--	Usage: optional (pm8018 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--The regulator node houses sub-nodes for each regulator within the device. Each
--sub-node is identified using the node's name, with valid values listed for each
--of the pmics below.
--
--pm8058:
--	l0, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15,
--	l16, l17, l18, l19, l20, l21, l22, l23, l24, l25, s0, s1, s2, s3, s4,
--	lvs0, lvs1, ncp
--
--pm8901:
--	l0, l1, l2, l3, l4, l5, l6, s0, s1, s2, s3, s4, lvs0, lvs1, lvs2, lvs3,
--	mvs
--
--pm8921:
--	s1, s2, s3, s4, s7, s8, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
--	l12, l14, l15, l16, l17, l18, l21, l22, l23, l24, l25, l26, l27, l28,
--	l29, lvs1, lvs2, lvs3, lvs4, lvs5, lvs6, lvs7, usb-switch, hdmi-switch,
--	ncp
--
--pm8018:
--	s1, s2, s3, s4, s5, , l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
--	l12, l14, lvs1
--
--smb208:
--	s1a, s1b, s2a, s2b
--
--The content of each sub-node is defined by the standard binding for regulators -
--see regulator.txt - with additional custom properties described below:
--
--=== Switch-mode Power Supply regulator custom properties
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <empty>
--	Definition: enable pull down of the regulator when inactive
--
--- qcom,switch-mode-frequency:
--	Usage: required
--	Value type: <u32>
--	Definition: Frequency (Hz) of the switch-mode power supply;
--		    must be one of:
--		    19200000, 9600000, 6400000, 4800000, 3840000, 3200000,
--		    2740000, 2400000, 2130000, 1920000, 1750000, 1600000,
--		    1480000, 1370000, 1280000, 1200000
--
--- qcom,force-mode:
--	Usage: optional (default if no other qcom,force-mode is specified)
--	Value type: <u32>
--	Definition: indicates that the regulator should be forced to a
--		   particular mode, valid values are:
--		   QCOM_RPM_FORCE_MODE_NONE - do not force any mode
--		   QCOM_RPM_FORCE_MODE_LPM - force into low power mode
--		   QCOM_RPM_FORCE_MODE_HPM - force into high power mode
--		   QCOM_RPM_FORCE_MODE_AUTO - allow regulator to automatically
--					      select its own mode based on
--					      realtime current draw, only for:
--					      pm8921 smps and ftsmps
--
--- qcom,power-mode-hysteretic:
--	Usage: optional
--	Value type: <empty>
--	Definition: select that the power supply should operate in hysteretic
--		    mode, instead of the default pwm mode
--
--=== Low-dropout regulator custom properties
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <empty>
--	Definition: enable pull down of the regulator when inactive
--
--- qcom,force-mode:
--	Usage: optional
--	Value type: <u32>
--	Definition: indicates that the regulator should not be forced to any
--		   particular mode, valid values are:
--		   QCOM_RPM_FORCE_MODE_NONE - do not force any mode
--		   QCOM_RPM_FORCE_MODE_LPM - force into low power mode
--		   QCOM_RPM_FORCE_MODE_HPM - force into high power mode
--		   QCOM_RPM_FORCE_MODE_BYPASS - set regulator to use bypass
--						mode, i.e.  to act as a switch
--						and not regulate, only for:
--						pm8921 pldo, nldo and nldo1200
--
--=== Negative Charge Pump custom properties
--
--- qcom,switch-mode-frequency:
--	Usage: required
--	Value type: <u32>
--	Definition: Frequency (Hz) of the switch mode power supply;
--		    must be one of:
--		    19200000, 9600000, 6400000, 4800000, 3840000, 3200000,
--		    2740000, 2400000, 2130000, 1920000, 1750000, 1600000,
--		    1480000, 1370000, 1280000, 1200000
--
--= EXAMPLE
--
--	#include <dt-bindings/mfd/qcom-rpm.h>
--
--	rpm@108000 {
--		compatible = "qcom,rpm-msm8960";
--		reg = <0x108000 0x1000>;
--		qcom,ipc = <&apcs 0x8 2>;
--
--		interrupts = <0 19 0>, <0 21 0>, <0 22 0>;
--		interrupt-names = "ack", "err", "wakeup";
--
--		regulators {
--			compatible = "qcom,rpm-pm8921-regulators";
--			vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
--
--			s1 {
--				regulator-min-microvolt = <1225000>;
--				regulator-max-microvolt = <1225000>;
--
--				bias-pull-down;
--
--				qcom,switch-mode-frequency = <3200000>;
--			};
--
--			pm8921_s4: s4 {
--				regulator-min-microvolt = <1800000>;
--				regulator-max-microvolt = <1800000>;
--
--				qcom,switch-mode-frequency = <1600000>;
--				bias-pull-down;
--
--				qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
--			};
--		};
--	};
--
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-new file mode 100644
-index 000000000000..b00be9e01206
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-@@ -0,0 +1,101 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Resource Power Manager (RPM)
-+
-+description:
-+  This driver is used to interface with the Resource Power Manager (RPM) found
-+  in various Qualcomm platforms. The RPM allows each component in the system
-+  to vote for state of the system resources, such as clocks, regulators and bus
-+  frequencies.
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,rpm-apq8064
-+      - qcom,rpm-msm8660
-+      - qcom,rpm-msm8960
-+      - qcom,rpm-ipq8064
-+      - qcom,rpm-mdm9615
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 3
-+
-+  interrupt-names:
-+    items:
-+      - const: ack
-+      - const: err
-+      - const: wakeup
-+
-+  qcom,ipc:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to a syscon node representing the APCS registers
-+          - description: u32 representing offset to the register within the syscon
-+          - description: u32 representing the ipc bit within the register
-+    description:
-+      Three entries specifying the outgoing ipc bit used for signaling the RPM.
-+
-+patternProperties:
-+  "^regulators(-[01])?$":
-+    type: object
-+    $ref: /schemas/regulator/qcom,rpm-regulator.yaml#
-+    unevaluatedProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - qcom,ipc
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/mfd/qcom-rpm.h>
-+
-+    rpm@108000 {
-+      compatible = "qcom,rpm-msm8960";
-+      reg = <0x108000 0x1000>;
-+      qcom,ipc = <&apcs 0x8 2>;
-+
-+      interrupts = <GIC_SPI 19 IRQ_TYPE_NONE>, <GIC_SPI 21 IRQ_TYPE_NONE>, <GIC_SPI 22 IRQ_TYPE_NONE>;
-+      interrupt-names = "ack", "err", "wakeup";
-+
-+      regulators {
-+        compatible = "qcom,rpm-pm8921-regulators";
-+        vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
-+
-+        s1 {
-+          regulator-min-microvolt = <1225000>;
-+          regulator-max-microvolt = <1225000>;
-+
-+          bias-pull-down;
-+
-+          qcom,switch-mode-frequency = <3200000>;
-+        };
-+
-+        pm8921_s4: s4 {
-+          regulator-min-microvolt = <1800000>;
-+          regulator-max-microvolt = <1800000>;
-+
-+          qcom,switch-mode-frequency = <1600000>;
-+          bias-pull-down;
-+
-+          qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
-+        };
-+      };
-+    };
+diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.=
+c
+index af608f165896..712073f9dc69 100644
+--- a/drivers/clk/qcom/gcc-msm8939.c
++++ b/drivers/clk/qcom/gcc-msm8939.c
+@@ -1033,7 +1033,20 @@ static struct clk_rcg2 cci_clk_src =3D {
+ =09},
+ };
+=20
++/*
++ * This is a frequency table for "General Purpose" clocks.
++ * These clocks can be muxed to the SoC pins and may be used by
++ * external devices. They're often used as PWM source.
++ *
++ * See comment at ftbl_gcc_gp1_3_clk.
++ */
+ static const struct freq_tbl ftbl_gcc_camss_gp0_1_clk[] =3D {
++=09F(10000,   P_XO,    16,  1, 120),
++=09F(100000,  P_XO,    16,  1,  12),
++=09F(500000,  P_GPLL0, 16,  1, 100),
++=09F(1000000, P_GPLL0, 16,  1,  50),
++=09F(2500000, P_GPLL0, 16,  1,  20),
++=09F(5000000, P_GPLL0, 16,  1,  10),
+ =09F(100000000, P_GPLL0, 8, 0, 0),
+ =09F(200000000, P_GPLL0, 4, 0, 0),
+ =09{ }
+@@ -1198,7 +1211,29 @@ static struct clk_rcg2 crypto_clk_src =3D {
+ =09},
+ };
+=20
++/*
++ * This is a frequency table for "General Purpose" clocks.
++ * These clocks can be muxed to the SoC pins and may be used by
++ * external devices. They're often used as PWM source.
++ *
++ * Please note that MND divider must be enabled for duty-cycle
++ * control to be possible. (M !=3D N) Also since D register is configured
++ * with a value multiplied by 2, and duty cycle is calculated as
++ *                             (2 * D) % 2^W
++ *                DutyCycle =3D ----------------
++ *                              2 * (N % 2^W)
++ * (where W =3D .mnd_width)
++ * N must be half or less than maximum value for the register.
++ * Otherwise duty-cycle control would be limited.
++ * (e.g. for 8-bit NMD N should be less than 128)
++ */
+ static const struct freq_tbl ftbl_gcc_gp1_3_clk[] =3D {
++=09F(10000,   P_XO,    16,  1, 120),
++=09F(100000,  P_XO,    16,  1,  12),
++=09F(500000,  P_GPLL0, 16,  1, 100),
++=09F(1000000, P_GPLL0, 16,  1,  50),
++=09F(2500000, P_GPLL0, 16,  1,  20),
++=09F(5000000, P_GPLL0, 16,  1,  10),
+ =09F(19200000, P_XO, 1, 0,=090),
+ =09{ }
+ };
+--=20
+2.30.2
 
--- 
-b4 0.10.1
+
