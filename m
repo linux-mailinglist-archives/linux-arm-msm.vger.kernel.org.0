@@ -2,266 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB65562D691
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:22:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6007962D6A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 10:24:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239981AbiKQJWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 04:22:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46094 "EHLO
+        id S239326AbiKQJYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 04:24:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239856AbiKQJWQ (ORCPT
+        with ESMTP id S239925AbiKQJXo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 04:22:16 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AD706D4B7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:22:14 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id k8so2767046wrh.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:22:14 -0800 (PST)
+        Thu, 17 Nov 2022 04:23:44 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C5C7617A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:23:07 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id g7so1852545lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 01:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6m78l9IaVxaTvBMu17pNeI8t9aYUg1HUks8PTQkt/w=;
-        b=cU1u5TeUd7pXtv5hfYqYwWEm56Vzet0MEwXKsY4rM0tRmCgiWW9gOxeJkaKg+zgBvj
-         2gO7twkpElxkZeKN6JEkwdlkOXwPCkn84qYMWfArb1klRtgB7p5CCmHUdgUn6d19NCWf
-         y/XLzgbIA/Ehqoa0Pd9qJepq23hfJWoVbWfzuYwWp/uiJNwYJrv2xC6xRh5/kEdZKpiO
-         TWb7v8XDQ1F7VFH44AOueCD3BR5pOKcQx7sPp43EnYrBuoVQXQEj0TmtfJSPmfsuKVGL
-         jmLLJIS/SPaJb3BlYisUKN0E7ugYTW3l1mGd8cwTiT5bEculvCduqpTyaMN+R0BXrZ4C
-         NwhA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=moN6KHYbdG/Z4IisuTSl+R5V5aPET/l8Rjzbwgo1qiA=;
+        b=SPJV0CHvwWkdFKqyvd3WpOzIWZWSjVO7qYRQt12x55t36GQyJ7862UtICr58yvksuY
+         0ZE7/PX9Hvt6F9aUp3Q27qOD90gmvbcCZ6ZLkBY1eOhTITdHM9jT2aIepQSvrlZjQaK+
+         BRUANqK79cZrxmYPphcYf+EoWqdryNg8vO2jsKChMS6BJkvF26BzO6IKAW+uHsO/m96f
+         ffBtLoJxT2VGTmr+hA38/y/9ShlOGrJT7m2RCq3ees9e+iVxLjNhBVZnPQfyIOGfM60y
+         uD6hwYK1QDoMWG5wi32dvSwh02aL5ebbHM2um9D5MRzD5NwYTOPIFaQzyBCkdM1JdE+k
+         3TkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L6m78l9IaVxaTvBMu17pNeI8t9aYUg1HUks8PTQkt/w=;
-        b=nFAXTo0pDXVxbbYK0ow7I9+WXIep6BXjdGO1mAfb/W/jvgqKJVhYZT3MVhxUPeQnb+
-         HYF3oW9AQYuM4aMr8jVWcrDQyYYaSXzkx7YQK/KhmEy3wEBcmtv1qsRzZ0r0yjohUWE2
-         RWAbdXDJxyjg40lwI0LSNCOfu97vqXYvjbvdkZSs41PUbDHuIeJE4sK5nGiRPLpuL4+J
-         0sECOBpiA5Al1S+kZ1dDsuxcoSfzlt8p5Gw8hKIF6z6r707BafulhBvXgq4EqAXhbhub
-         vcWjHzTo7VwpJIoLWQ76iK5u95Z0jh9erqNu58gUvtGapDyS4QzXjz8o+nUWETHZ+iFx
-         gp7Q==
-X-Gm-Message-State: ANoB5pmkRI+Ke9o9F/uD3zeNP6r6QjbicrtG8Ipjhb7KCt4lYNLrX0vX
-        rAdIaBRwXJ7T5jXJsM/zC8KTKQ==
-X-Google-Smtp-Source: AA0mqf4kcCGxig0Fs7BJ8ojQf85ICkT2DwH/9eVOjQKcfvTKcu8DcroaUciX2+T3bCRMzxNZzUZAJg==
-X-Received: by 2002:a5d:4241:0:b0:236:57cf:1b6f with SMTP id s1-20020a5d4241000000b0023657cf1b6fmr917387wrr.153.1668676932728;
-        Thu, 17 Nov 2022 01:22:12 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b? ([2a01:e0a:982:cbb0:aad5:8d14:a22f:2e8b])
-        by smtp.gmail.com with ESMTPSA id n14-20020a05600c3b8e00b003b4c979e6bcsm5529516wms.10.2022.11.17.01.22.11
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=moN6KHYbdG/Z4IisuTSl+R5V5aPET/l8Rjzbwgo1qiA=;
+        b=XTbiOX24C0H2gSWM1qlEtSnvU2L7qghDNvWnvZDqgwS9eVXaVKczkoVP6HX98PH8FH
+         Ux17APk77cbHTJpAnTjf/9RJHiwiAxxfMTGXynjikzUqr9dgieV+drcYtq7siitS+aQc
+         JS2ggE4KNyiFVlnNyHlIWTlmZTenzw3zP4J+hxoe4qi3zhrPyBjrofYZX4ijvgtFMpiR
+         0WFHFPcIKAFzyt2CqDKV1X/SylzzgvjYLUDKTlkVhT8XfNwjW9t5d5Rc+1ydFLW6qZOZ
+         dVdAQfXlyfyGaNiDngd5vFYBe5mYycPp1yE2R9ZHqZmYIi7Uvcdx0NsBlPUbk9zTPvun
+         52Xg==
+X-Gm-Message-State: ANoB5pn/FtED1l26V1lvv3dJ9IZdKluxMKf6N5il1WrrRO2c6wfA1OQu
+        AM22KZTZapHHhfwc+m4GKF6bpg==
+X-Google-Smtp-Source: AA0mqf6FtIUZgijIAa3c32/SuuDTu5zyBG3bUfwJ4xptof8kulXHdhgEiKlnk6AwSZ8JJTZcv7hvFQ==
+X-Received: by 2002:a05:6512:49a:b0:4aa:da5d:dfd8 with SMTP id v26-20020a056512049a00b004aada5ddfd8mr647737lfq.677.1668676986196;
+        Thu, 17 Nov 2022 01:23:06 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id bd4-20020a05651c168400b0027628240ff7sm92899ljb.135.2022.11.17.01.23.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 01:22:12 -0800 (PST)
-Message-ID: <daa4b852-5452-9363-3bc8-16a7637cc8bb@linaro.org>
-Date:   Thu, 17 Nov 2022 10:22:11 +0100
+        Thu, 17 Nov 2022 01:23:05 -0800 (PST)
+Message-ID: <5d1b9912-8de1-6f71-8a79-66d02d50842e@linaro.org>
+Date:   Thu, 17 Nov 2022 10:23:01 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: adsp: document sm8550
- adsp, cdsp & mpss compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 2/9] clk: qcom: gdsc: Add configurable poll timeout
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     devicetree@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org>
- <20221114-narmstrong-sm8550-upstream-remoteproc-v1-1-104c34cb3b91@linaro.org>
- <b6eac577-f3a7-d1a4-f492-74782c2e5ff1@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <b6eac577-f3a7-d1a4-f492-74782c2e5ff1@linaro.org>
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20221116104716.2583320-1-abel.vesa@linaro.org>
+ <20221116104716.2583320-3-abel.vesa@linaro.org>
+ <9c5b6037-c962-81d3-41c1-a9ec459c9adc@linaro.org>
+ <Y3XrQrnT0dxTvc5S@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <Y3XrQrnT0dxTvc5S@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 13:28, Krzysztof Kozlowski wrote:
-> On 16/11/2022 11:20, Neil Armstrong wrote:
->> This documents the compatible for the component used to boot the
->> aDSP, cDSP and MPSS on the SM8550 SoC.
+
+
+On 17/11/2022 09:05, Abel Vesa wrote:
+> On 22-11-16 12:19:09, Konrad Dybcio wrote:
 >>
->> The SM8550 boot process on SM8550 now requires a secondary "Devicetree"
->> firmware to be passed along the main Firmware, and the cDSP a new power
->> domain named "NSP".
 >>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   .../devicetree/bindings/remoteproc/qcom,adsp.yaml  | 60 +++++++++++++++++++++-
->>   1 file changed, 59 insertions(+), 1 deletion(-)
+>> On 16/11/2022 11:47, Abel Vesa wrote:
+>>> Depending on the platform, the poll timeout delay might be different,
+>>> so allow the platform specific drivers to specify their own values.
+>>>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>>    drivers/clk/qcom/gdsc.c | 5 ++++-
+>>>    drivers/clk/qcom/gdsc.h | 1 +
+>>>    2 files changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>>> index 0f21a8a767ac..3753f3ef7241 100644
+>>> --- a/drivers/clk/qcom/gdsc.c
+>>> +++ b/drivers/clk/qcom/gdsc.c
+>>> @@ -107,7 +107,7 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+>>>    	do {
+>>>    		if (gdsc_check_status(sc, status))
+>>>    			return 0;
+>>> -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
+>>> +	} while (ktime_us_delta(ktime_get(), start) < sc->poll_timeout);
+>> What about the second usage of TIMEOUT_US (in gdsc_toggle_logic)? Is it fine
+>> for that to be the default value?
+> 
+> The usleep you mention is not really for polling the state.
+> So I think it should stay as is. Who knows, maybe in the future we will
+> need to have the configurable as well, but as a toggle delay rather than
+> a status poll timeout.
+> 
+> I added this configurable poll timeout just because I saw that
+> downstream, each driver has different values. And it kind of makes sense,
+> because the state machine inside the GDSC might be different between
+> platforms, and so, it might take different time to reach a certain on/off
+> state.
+> 
+> Thanks,
+> Abel
+Okay, thanks for explaining
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> 
 >>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> index db9e0f0c2bea..678cb73f10de 100644
->> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> @@ -55,6 +55,9 @@ properties:
->>         - qcom,sm8450-cdsp-pas
->>         - qcom,sm8450-mpss-pas
->>         - qcom,sm8450-slpi-pas
->> +      - qcom,sm8550-adsp-pas
->> +      - qcom,sm8550-cdsp-pas
->> +      - qcom,sm8550-mpss-pas
->>   
->>     reg:
->>       maxItems: 1
->> @@ -116,8 +119,13 @@ properties:
->>       $ref: /schemas/types.yaml#/definitions/string
->>       description: Firmware name for the Hexagon core
->>   
->> +  qcom,dtb-firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string
->> +    description: Devicetree Firmware name for the Hexagon core
-> 
-> Not sure about this one.
-> 
-> Rob,
-> Don't we want rather to have multiple items in firmware-name?
-> 
-> 
->> +
->>     memory-region:
->> -    maxItems: 1
->> +    minItems: 1
->> +    maxItems: 2
->>       description: Reference to the reserved-memory for the Hexagon core
->>   
->>     qcom,qmp:
->> @@ -212,6 +220,9 @@ allOf:
->>                 - qcom,sm8450-cdsp-pas
->>                 - qcom,sm8450-slpi-pas
->>                 - qcom,sm8450-mpss-pas
->> +              - qcom,sm8550-adsp-pas
->> +              - qcom,sm8550-cdsp-pas
->> +              - qcom,sm8550-mpss-pas
->>       then:
->>         properties:
->>           clocks:
->> @@ -327,6 +338,8 @@ allOf:
->>                 - qcom,sm8450-adsp-pas
->>                 - qcom,sm8450-cdsp-pas
->>                 - qcom,sm8450-slpi-pas
->> +              - qcom,sm8550-adsp-pas
->> +              - qcom,sm8550-cdsp-pas
->>       then:
->>         properties:
->>           interrupts:
->> @@ -347,6 +360,7 @@ allOf:
->>                 - qcom,sm8150-mpss-pas
->>                 - qcom,sm8350-mpss-pas
->>                 - qcom,sm8450-mpss-pas
->> +              - qcom,sm8550-mpss-pas
->>       then:
->>         properties:
->>           interrupts:
->> @@ -448,6 +462,7 @@ allOf:
->>                 - qcom,sm8150-mpss-pas
->>                 - qcom,sm8350-mpss-pas
->>                 - qcom,sm8450-mpss-pas
->> +              - qcom,sm8550-mpss-pas
->>       then:
->>         properties:
->>           power-domains:
->> @@ -475,6 +490,7 @@ allOf:
->>                 - qcom,sm8350-slpi-pas
->>                 - qcom,sm8450-adsp-pas
->>                 - qcom,sm8450-slpi-pas
->> +              - qcom,sm8550-adsp-pas
->>       then:
->>         properties:
->>           power-domains:
->> @@ -504,6 +520,25 @@ allOf:
->>               - const: cx
->>               - const: mxc
->>   
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sm8550-cdsp-pas
->> +    then:
->> +      properties:
->> +        power-domains:
->> +          items:
->> +            - description: CX power domain
->> +            - description: MXC power domain
->> +            - description: NSP power domain
->> +        power-domain-names:
->> +          items:
->> +            - const: cx
->> +            - const: mxc
->> +            - const: nsp
->> +
-> 
-> You also need to update entry for resets. I think it is missing.
-
-Hmm no, no resets needed for sm8550.
-
-> 
->>     - if:
->>         properties:
->>           compatible:
->> @@ -573,6 +608,29 @@ allOf:
->>         properties:
->>           qcom,qmp: false
->>   
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sm8550-adsp-pas
->> +              - qcom,sm8550-cdsp-pas
->> +              - qcom,sm8550-mpss-pas
->> +    then:
->> +      properties:
->> +        memory-region:
->> +          minItems: 2
->> +          description:
->> +            First entry is a phandle for a reserved memory area that holds
->> +            the main Firmware for authentication, and second entry a phandle for a
->> +            reserved memory area that holds the Devicetree Firmware for authentication.
-> 
-> Instead of minItems and description:
->    items:
->      - description: Main Firmware for auth....
->      - description: Devicetree Firmware....
-
-Ack
-
-> 
->> +    else:
->> +      properties:
->> +        qcom,dtb-firmware-name: false
->> +
->> +        memory-region:
->> +          maxItems: 1
->> +
-
-I'll rebase on top of 20221116155416.164239-1-krzysztof.kozlowski@linaro.org.
-
-Seems I should perhaps add a separate qcom,sm8550-pas.yaml right, or adding the qcom,sm6350-pas.yam would be ok ?
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Thanks,
-Neil
-
+>>
+>> Konrad
+>>>    	if (gdsc_check_status(sc, status))
+>>>    		return 0;
+>>> @@ -454,6 +454,9 @@ static int gdsc_init(struct gdsc *sc)
+>>>    	if (ret)
+>>>    		goto err_disable_supply;
+>>> +	if (!sc->poll_timeout)
+>>> +		sc->poll_timeout = 500;
+>>> +
+>>>    	return 0;
+>>>    err_disable_supply:
+>>> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+>>> index 803512688336..9a1e1fb3d12f 100644
+>>> --- a/drivers/clk/qcom/gdsc.h
+>>> +++ b/drivers/clk/qcom/gdsc.h
+>>> @@ -36,6 +36,7 @@ struct gdsc {
+>>>    	struct generic_pm_domain	*parent;
+>>>    	struct regmap			*regmap;
+>>>    	unsigned int			gdscr;
+>>> +	unsigned int			poll_timeout;
+>>>    	unsigned int			collapse_ctrl;
+>>>    	unsigned int			collapse_mask;
+>>>    	unsigned int			gds_hw_ctrl;
