@@ -2,556 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A491E62DDBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:16:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2B9C62DE20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 15:31:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235786AbiKQOQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Nov 2022 09:16:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47426 "EHLO
+        id S239583AbiKQObq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Nov 2022 09:31:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240317AbiKQOQY (ORCPT
+        with ESMTP id S239133AbiKQObp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Nov 2022 09:16:24 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BB672987
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:16:20 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id kt23so5348616ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 06:16:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U5cS9nqr5rAd4hwsFX5SVt8LkKZ5u86E9Sxsnqkok3E=;
-        b=odAFJJQuOJDT6LIyvCQ81jC7THS9snaqZj0vPNHHO4U0SzQf5SBJoAaC9GzlIX1RUM
-         UgEfjnsWtyY80qabTaqQFZ6jymafAdop/MF5KpBrpjk8FLVhkdycu1qJ2802w8p2YrA6
-         EuS/3Uu/ebdQRhynosF3sij1g+c5QhFn0kol8ae8lpocb6QDE+Yeewmlk4nx1H8jhBLM
-         /eNqjK4J48qRGsXV19BMH6EOPnhcjlkFagqpsdPMtRtJjU8TCuJ9U82csskAjpcPlyDu
-         7nsl4oC0/dbHd1KGpRWHOoDZNDUL5vfkkXz66zNQwi3oTn5hQnXN1j4650rzn+mayhTg
-         7rMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U5cS9nqr5rAd4hwsFX5SVt8LkKZ5u86E9Sxsnqkok3E=;
-        b=seXKPZcFzu5ZXlfBmNnrHCW0sSLQUOPBlT8GKCkBje0faU7zAHrCwDvVVQM5mkyw2x
-         v3teMWlvrRyInEvgpRkIk6nOvLHG0RMOzMb6VR87UA5hi5k+st/8AztHqO1f2I9yOatc
-         t67CHgxKi29MSmFCgtt/qFb1Ti1dwS+zO/TUNeZXGq8sTEdBDEVgjezu/8biNyLIV1Co
-         AEXkQmyUfhTCL2H74hCg20+JEt7XTMv5EPmqVCw6vgAp4fAzvio5PO+DwNVWdd/AAGnF
-         Ema0W1n62tAEF5xfGj7S9S9w1rBPL5qSSI/jM12VoxOVmYCEKdIYInJuJWVgihoRTV8j
-         uHvQ==
-X-Gm-Message-State: ANoB5pkG89tGpgd5E61bZ+UfttKzCD9bsBZHhcpesjkXqhUh+ZMT9n2e
-        UhJ99ewfSBYMqAmyqcKwDe4XkYINESyQtF9Y
-X-Google-Smtp-Source: AA0mqf7j5IOnbTiFENJOyEPXBicv3MOIZR2rnX8YCISCZ9OTd0wRnF/F/zZ7tnGLqNgWCcennRMywQ==
-X-Received: by 2002:a17:906:4804:b0:7a8:3ecb:bd62 with SMTP id w4-20020a170906480400b007a83ecbbd62mr2307514ejq.721.1668694579013;
-        Thu, 17 Nov 2022 06:16:19 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id e24-20020a170906315800b0078d793e7927sm432543eje.4.2022.11.17.06.16.17
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 17 Nov 2022 06:16:18 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thu, 17 Nov 2022 09:31:45 -0500
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B3012A940;
+        Thu, 17 Nov 2022 06:31:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1668695315;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=w+x7AFEzmypSUrxRznSvHQYfvNLPiaPgfXtyx9kN1pU=;
+    b=PYJUaDwP87PMnWIGgwgw5R/VaqBgRy36dmcnCdw2JvS4aBZH1GLNaTqcxvGMmLNcsB
+    9ksQ/6/abEF0hw81PfNyS09MZoFBlqR/+8hsOu+HITd+WKsJfpvrEoAUT737whQuklWM
+    L9ZAVUplngu1wSR1i6Mtkb+Cv1IDdu0OES8YAkUIdl6Ck8THcOMxXd1CrSfDBzI70t8n
+    jle4Gp9u6xIRe3r2hFsFyNlWxSeqxoWSRJJ2y0ZP5ZQ2GSOd28TnuaJAq7QGgglnmWD2
+    a75lfd8gdbpwoVmT4U548/znRAhldSkY/ABLo4nDMdU1nGHKeVBOh39pNDxbQWPr+tlJ
+    ssTA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWyvDI"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
+    with ESMTPSA id Yce349yAHESZKMF
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 17 Nov 2022 15:28:35 +0100 (CET)
+Date:   Thu, 17 Nov 2022 15:28:29 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8450-nagara: Add gpio line names for TLMM
-Date:   Thu, 17 Nov 2022 15:16:13 +0100
-Message-Id: <20221117141613.19942-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: simplify if:then:
+ clauses
+Message-ID: <Y3ZFDRI6ypg18S27@gerhold.net>
+References: <20221117130254.378109-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221117130254.378109-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
-        version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sony ever so graciously provides GPIO line names in their downstream
-kernel (though sometimes they are not 100% accurate and you can judge
-that by simply looking at them and with what drivers they are used).
+On Thu, Nov 17, 2022 at 02:02:54PM +0100, Krzysztof Kozlowski wrote:
+> Most of the device-specific compatibles have generic fallbacks like
+> qcom,tsens-v1 or qcom,tsens-v2.  The if:then: block mentions these
+> fallbacks, so drop redundant entries for specific compatibles.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../devicetree/bindings/thermal/qcom-tsens.yaml  | 16 ----------------
+>  1 file changed, 16 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index f0bd4b979e28..c9949713f714 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -118,12 +118,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,ipq8064-tsens
+> -              - qcom,mdm9607-tsens
+> -              - qcom,msm8916-tsens
+>                - qcom,msm8960-tsens
+> -              - qcom,msm8974-tsens
+> -              - qcom,msm8976-tsens
+> -              - qcom,qcs404-tsens
+>                - qcom,tsens-v0_1
+>                - qcom,tsens-v1
+>      then:
 
-Add these to the PDX223&224 DTSIs to better document the hardware.
+FWIW: I submitted the same patch for this part a couple of months ago,
+it was never applied for some reason:
+https://lore.kernel.org/linux-arm-msm/20220627131415.2868938-2-stephan.gerhold@kernkonzept.com/
 
-Diff between 223 and 224:
-< 	gpio-line-names = "NC", /* GPIO_0 */
-< 			  "NC",
-< 			  "NC",
-< 			  "NC",
-> 	gpio-line-names = "TELE_SPI_MISO", /* GPIO_0 */
-> 			  "TELE_SPI_MOSI",
-> 			  "TELE_SPI_CLK",
-> 			  "TELE_SPI_CS_N",
-< 			  "PM8010_2_RESET_N",
-> 			  "NC",
-< 			  "NC",
-> 			  "UWIDEC_PWR_EN",
-< 			  "TOF_RST_N",
-> 			  "NC"
-< 			  "QLINK1_REQ",
-< 			  "QLINK1_EN", /* GPIO_160 */
-< 			  "QLINK1_WMSS_RESET_N",
-> 			  "NC",
-> 			  "NC", /* GPIO_160 */
-> 			  "NC",
-The tele lens setup is different on 1 IV and 5 IV and power wiring
-is different for some lenses, so it makes sense. As for QLINK, no
-idea.
+> @@ -140,17 +135,6 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,msm8953-tsens
+> -              - qcom,msm8996-tsens
+> -              - qcom,msm8998-tsens
+> -              - qcom,sc7180-tsens
+> -              - qcom,sc7280-tsens
+> -              - qcom,sc8180x-tsens
+> -              - qcom,sdm630-tsens
+> -              - qcom,sdm845-tsens
+> -              - qcom,sm8150-tsens
+> -              - qcom,sm8250-tsens
+> -              - qcom,sm8350-tsens
+>                - qcom,tsens-v2
+>      then:
+>        properties:
+> 
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 213 ++++++++++++++++++
- .../qcom/sm8450-sony-xperia-nagara-pdx224.dts | 213 ++++++++++++++++++
- 2 files changed, 426 insertions(+)
+This part was not present back then though. Looks like this was
+introduced recently in "dt-bindings: thermal: tsens: Add ipq8074
+compatible".
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-index 3ab145877094..b83500316a81 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-@@ -12,3 +12,216 @@ / {
- 	model = "Sony Xperia 1 IV";
- 	compatible = "sony,pdx223", "qcom,sm8450";
- };
-+
-+&tlmm {
-+	gpio-line-names = "NC", /* GPIO_0 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "WLC_I2C_SDA",
-+			  "WLC_I2C_SCL",
-+			  "NC",
-+			  "PM8010_1_RESET_N",
-+			  "WLC_INT_N",
-+			  "NC",
-+			  "NC", /* GPIO_10 */
-+			  "PM8010_2_RESET_N",
-+			  "DISP_ERR_FG",
-+			  "HALL_INT_N",
-+			  "ALS_PROX_INT_N",
-+			  "IMU1_INT",
-+			  "TS_I2C_SDA",
-+			  "TS_I2C_SCL",
-+			  "DISP_RESET_N",
-+			  "DISP_VDDR_EN",
-+			  "TS_RESET_N", /* GPIO_20 */
-+			  "TS_INT_N",
-+			  "NC",
-+			  "TELEC_PWR_EN",
-+			  "CAM1_RESET_N",
-+			  "LEO_CAM0_RESET_N",
-+			  "DEBUG_UART_TX",
-+			  "DEBUG_UART_RX",
-+			  "FP_SPI_MISO",
-+			  "FP_SPI_MOSI",
-+			  "FP_SPI_CLK", /* GPIO_30 */
-+			  "FP_SPI_CS_N",
-+			  "NFC_I2C_SDA",
-+			  "NFC_I2C_SCL",
-+			  "NFC_EN",
-+			  "NFC_CLK_REQ",
-+			  "NFC_ESE_SPI_MISO",
-+			  "NFC_ESE_SPI_MOSI",
-+			  "NFC_ESE_SPI_CLK",
-+			  "NFC_ESE_SPI_CS",
-+			  "FP_INT_N", /* GPIO_40 */
-+			  "NC",
-+			  "FP_RESET_N",
-+			  "WCD_RST_N",
-+			  "NC",
-+			  "NFC_DWL_REQ",
-+			  "NFC_IRQ",
-+			  "FORCE_USB_BOOT",
-+			  "APPS_I2C_1_SDA",
-+			  "APPS_I2C_1_SCL",
-+			  "SBU_SW_OE", /* GPIO_50 */
-+			  "SBU_SW_SEL",
-+			  "SPK_AMP_I2C_SDA",
-+			  "SPK_AMP_I2C_SCL",
-+			  "NC",
-+			  "NC",
-+			  "CAMSENSOR_I2C_SDA",
-+			  "CAMSENSOR_I2C_SCL",
-+			  "GNSS_ELNA_EN0",
-+			  "NC",
-+			  "NC", /* GPIO_60 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "RGBC_IR_INT",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC", /* GPIO_70 */
-+			  "NC",
-+			  "HAP_I2C_SDA",
-+			  "HAP_I2C_SCL",
-+			  "HAP_RST_N",
-+			  "HAP_INT_N",
-+			  "HST_BT_UART_CTS",
-+			  "HST_BT_UART_RFR",
-+			  "HST_BT_UART_TX",
-+			  "HST_BT_UART_RX",
-+			  "HST_WLAN_EN", /* GPIO_80 */
-+			  "HST_BT_EN",
-+			  "HST_SW_CTRL",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "DISP_VSYNC",
-+			  "NC",
-+			  "NC",
-+			  "HW_ID_0",
-+			  "HW_ID_1", /* GPIO_90 */
-+			  "USB_CC_DIR",
-+			  "TRAY_DET",
-+			  "SW_SERVICE",
-+			  "PCIE0_RESET_N",
-+			  "PCIE0_CLK_REQ_N",
-+			  "PCIE0_WAKE_N",
-+			  "OIS_ENABLE_WIDE",
-+			  "DEBUG_GPIO0",
-+			  "NC",
-+			  "CAM_MCLK0", /* GPIO_100 */
-+			  "CAM_MCLK1",
-+			  "CAM_MCLK2",
-+			  "CAM_MCLK3",
-+			  "NC",
-+			  "NC",
-+			  "TOF_RST_N",
-+			  "CAM_SOF",
-+			  "NC",
-+			  "AFEXPTMG_TELE",
-+			  "CCI_I2C0_SDA", /* GPIO_110 */
-+			  "CCI_I2C0_SCL",
-+			  "CCI_I2C1_SDA",
-+			  "CCI_I2C1_SCL",
-+			  "CCI_I2C2_SDA",
-+			  "CCI_I2C2_SCL",
-+			  "NC",
-+			  "CAM2_RESET_N",
-+			  "NC",
-+			  "EXT_VD0_XVS",
-+			  "CAM3_RESET_N", /* GPIO_120 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "RF_ID_EXTENSION_2",
-+			  "HAP_I2S_CLK",
-+			  "HAP_I2S_DOUT",
-+			  "HAP_TRG1",
-+			  "HAP_I2S_SYNC",
-+			  "UIM1_DATA", /* GPIO_130 */
-+			  "UIM1_CLK",
-+			  "UIM1_RESET",
-+			  "TRAY_DET",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RESET",
-+			  "UIM2_PRESENT",
-+			  "SM_RFFE0_CLK",
-+			  "SM_RFFE0_DATA",
-+			  "SM_RFFE1_CLK", /* GPIO_140 */
-+			  "SM_RFFE1_DATA",
-+			  "SM_MSS_GRFC4",
-+			  "HST_AS_EN",
-+			  "LAA_RX_EN",
-+			  "NC",
-+			  "SM_RFFE4_CLK",
-+			  "SM_RFFE4_DATA",
-+			  "WLAN_COEX_UART1_RX",
-+			  "WLAN_COEX_UART1_TX",
-+			  "RF_LCD_ID_EN", /* GPIO_150 */
-+			  "RF_ID_EXTENSION",
-+			  "SM_MSS_GRFC12",
-+			  "NFC_COLD_RST",
-+			  "NC",
-+			  "NC",
-+			  "SDR1_QLINK0_REQ",
-+			  "SDR1_QLINK0_EN",
-+			  "SDR1_QLINK0_WMSS_RESET_N",
-+			  "QLINK1_REQ",
-+			  "QLINK1_EN", /* GPIO_160 */
-+			  "QLINK1_WMSS_RESET_N",
-+			  "SDR2_QLINK2_REQ",
-+			  "SDR2_QLINK2_EN",
-+			  "SDR2_QLINK2_WMSS_RESET_N",
-+			  "WCD_SWR_TX_CLK",
-+			  "WCD_SWR_TX_DATA0",
-+			  "WCD_SWR_TX_DATA1",
-+			  "WCD_SWR_RX_CLK",
-+			  "WCD_SWR_RX_DATA0",
-+			  "WCD_SWR_RX_DATA1", /* GPIO_170 */
-+			  "SM_DMIC1_CLK",
-+			  "SM_DMIC1_DATA",
-+			  "SM_DMIC2_CLK",
-+			  "SM_DMIC2_DATA",
-+			  "SPK_AMP_I2S_CLK",
-+			  "SPK_AMP_I2S_WS",
-+			  "NC",
-+			  "NC",
-+			  "WCD_SWR_TX_DATA2",
-+			  "SPK_AMP_I2S_ASP_DIN", /* GPIO_180 */
-+			  "SPK_AMP_I2S_ASP_DOUT",
-+			  "SPK_AMP_INT_N",
-+			  "SPK_AMP_RESET_N",
-+			  "HST_BT_WLAN_SLIMBUS_CLK",
-+			  "HST_BT_WLAN_SLIMBUS_DAT0",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "MAG_I2C_SDA", /* GPIO_190 */
-+			  "MAG_I2C_SCL",
-+			  "IMU_SPI_MISO",
-+			  "IMU_SPI_MOSI",
-+			  "IMU_SPI_CLK",
-+			  "IMU_SPI_CS_N",
-+			  "SENSOR_I2C_SDA",
-+			  "SENSOR_I2C_SCL",
-+			  "OIS_TELE_I2C_SDA",
-+			  "OIS_TELE_I2C_SCL",
-+			  "NC", /* GPIO_200 */
-+			  "OIS_ENABLE_TELE",
-+			  "HST_BLE_UART_TX",
-+			  "HST_BLE_UART_RX",
-+			  "HSTP_CLK_CFG_SEL",
-+			  "NC",
-+			  "APPS_I2C_0_SDA",
-+			  "APPS_I2C_0_SCL",
-+			  "CCI_I2C3_SDA",
-+			  "CCI_I2C3_SCL";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
-index 0d64d3c0afed..13c2fc4bccfc 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
-@@ -19,3 +19,216 @@ imx563_vdig_vreg: imx563-vdig-regulator {
- 		enable-active-high;
- 	};
- };
-+
-+&tlmm {
-+	gpio-line-names = "TELE_SPI_MISO", /* GPIO_0 */
-+			  "TELE_SPI_MOSI", /* SONY says NC, but it only makes sense this way.. */
-+			  "TELE_SPI_CLK",
-+			  "TELE_SPI_CS_N",
-+			  "WLC_I2C_SDA",
-+			  "WLC_I2C_SCL",
-+			  "NC",
-+			  "PM8010_1_RESET_N",
-+			  "WLC_INT_N",
-+			  "NC",
-+			  "NC", /* GPIO_10 */
-+			  "NC",
-+			  "DISP_ERR_FG",
-+			  "HALL_INT_N",
-+			  "ALS_PROX_INT_N",
-+			  "IMU1_INT",
-+			  "TS_I2C_SDA",
-+			  "TS_I2C_SCL",
-+			  "DISP_RESET_N",
-+			  "DISP_VDDR_EN",
-+			  "TS_RESET_N", /* GPIO_20 */
-+			  "TS_INT_N",
-+			  "UWIDEC_PWR_EN",
-+			  "TELEC_PWR_EN",
-+			  "CAM1_RESET_N",
-+			  "LEO_CAM0_RESET_N",
-+			  "DEBUG_UART_TX",
-+			  "DEBUG_UART_RX",
-+			  "FP_SPI_MISO",
-+			  "FP_SPI_MOSI",
-+			  "FP_SPI_CLK", /* GPIO_30 */
-+			  "FP_SPI_CS_N",
-+			  "NFC_I2C_SDA",
-+			  "NFC_I2C_SCL",
-+			  "NFC_EN",
-+			  "NFC_CLK_REQ",
-+			  "NFC_ESE_SPI_MISO",
-+			  "NFC_ESE_SPI_MOSI",
-+			  "NFC_ESE_SPI_CLK",
-+			  "NFC_ESE_SPI_CS",
-+			  "FP_INT_N", /* GPIO_40 */
-+			  "NC",
-+			  "FP_RESET_N",
-+			  "WCD_RST_N",
-+			  "NC",
-+			  "NFC_DWL_REQ",
-+			  "NFC_IRQ",
-+			  "FORCE_USB_BOOT",
-+			  "APPS_I2C_1_SDA",
-+			  "APPS_I2C_1_SCL",
-+			  "SBU_SW_OE", /* GPIO_50 */
-+			  "SBU_SW_SEL",
-+			  "SPK_AMP_I2C_SDA",
-+			  "SPK_AMP_I2C_SCL",
-+			  "NC",
-+			  "NC",
-+			  "CAMSENSOR_I2C_SDA",
-+			  "CAMSENSOR_I2C_SCL",
-+			  "GNSS_ELNA_EN0",
-+			  "NC",
-+			  "NC", /* GPIO_60 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "RGBC_IR_INT",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC", /* GPIO_70 */
-+			  "NC",
-+			  "HAP_I2C_SDA",
-+			  "HAP_I2C_SCL",
-+			  "HAP_RST_N",
-+			  "HAP_INT_N",
-+			  "HST_BT_UART_CTS",
-+			  "HST_BT_UART_RFR",
-+			  "HST_BT_UART_TX",
-+			  "HST_BT_UART_RX",
-+			  "HST_WLAN_EN", /* GPIO_80 */
-+			  "HST_BT_EN",
-+			  "HST_SW_CTRL",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "DISP_VSYNC",
-+			  "NC",
-+			  "NC",
-+			  "HW_ID_0",
-+			  "HW_ID_1", /* GPIO_90 */
-+			  "USB_CC_DIR",
-+			  "TRAY_DET",
-+			  "SW_SERVICE",
-+			  "PCIE0_RESET_N",
-+			  "PCIE0_CLK_REQ_N",
-+			  "PCIE0_WAKE_N",
-+			  "OIS_ENABLE_WIDE",
-+			  "DEBUG_GPIO0",
-+			  "NC",
-+			  "CAM_MCLK0", /* GPIO_100 */
-+			  "CAM_MCLK1",
-+			  "CAM_MCLK2",
-+			  "CAM_MCLK3",
-+			  "NC",
-+			  "NC",
-+			  "NC", /* SONY didn't rename this, but there's no ToF so it's likely NC */
-+			  "CAM_SOF",
-+			  "NC",
-+			  "AFEXPTMG_TELE",
-+			  "CCI_I2C0_SDA", /* GPIO_110 */
-+			  "CCI_I2C0_SCL",
-+			  "CCI_I2C1_SDA",
-+			  "CCI_I2C1_SCL",
-+			  "CCI_I2C2_SDA",
-+			  "CCI_I2C2_SCL",
-+			  "NC",
-+			  "CAM2_RESET_N",
-+			  "NC",
-+			  "EXT_VD0_XVS",
-+			  "CAM3_RESET_N", /* GPIO_120 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "RF_ID_EXTENSION_2",
-+			  "HAP_I2S_CLK",
-+			  "HAP_I2S_DOUT",
-+			  "HAP_TRG1",
-+			  "HAP_I2S_SYNC",
-+			  "UIM1_DATA", /* GPIO_130 */
-+			  "UIM1_CLK",
-+			  "UIM1_RESET",
-+			  "TRAY_DET",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RESET",
-+			  "UIM2_PRESENT",
-+			  "SM_RFFE0_CLK",
-+			  "SM_RFFE0_DATA",
-+			  "SM_RFFE1_CLK", /* GPIO_140 */
-+			  "SM_RFFE1_DATA",
-+			  "SM_MSS_GRFC4",
-+			  "HST_AS_EN",
-+			  "LAA_RX_EN",
-+			  "NC",
-+			  "SM_RFFE4_CLK",
-+			  "SM_RFFE4_DATA",
-+			  "WLAN_COEX_UART1_RX",
-+			  "WLAN_COEX_UART1_TX",
-+			  "RF_LCD_ID_EN", /* GPIO_150 */
-+			  "RF_ID_EXTENSION",
-+			  "SM_MSS_GRFC12",
-+			  "NFC_COLD_RST",
-+			  "NC",
-+			  "NC",
-+			  "SDR1_QLINK0_REQ",
-+			  "SDR1_QLINK0_EN",
-+			  "SDR1_QLINK0_WMSS_RESET_N",
-+			  "NC",
-+			  "NC", /* GPIO_160 */
-+			  "NC",
-+			  "SDR2_QLINK2_REQ",
-+			  "SDR2_QLINK2_EN",
-+			  "SDR2_QLINK2_WMSS_RESET_N",
-+			  "WCD_SWR_TX_CLK",
-+			  "WCD_SWR_TX_DATA0",
-+			  "WCD_SWR_TX_DATA1",
-+			  "WCD_SWR_RX_CLK",
-+			  "WCD_SWR_RX_DATA0",
-+			  "WCD_SWR_RX_DATA1", /* GPIO_170 */
-+			  "SM_DMIC1_CLK",
-+			  "SM_DMIC1_DATA",
-+			  "SM_DMIC2_CLK",
-+			  "SM_DMIC2_DATA",
-+			  "SPK_AMP_I2S_CLK",
-+			  "SPK_AMP_I2S_WS",
-+			  "NC",
-+			  "NC",
-+			  "WCD_SWR_TX_DATA2",
-+			  "SPK_AMP_I2S_ASP_DIN", /* GPIO_180 */
-+			  "SPK_AMP_I2S_ASP_DOUT",
-+			  "SPK_AMP_INT_N",
-+			  "SPK_AMP_RESET_N",
-+			  "HST_BT_WLAN_SLIMBUS_CLK",
-+			  "HST_BT_WLAN_SLIMBUS_DAT0",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "MAG_I2C_SDA", /* GPIO_190 */
-+			  "MAG_I2C_SCL",
-+			  "IMU_SPI_MISO",
-+			  "IMU_SPI_MOSI",
-+			  "IMU_SPI_CLK",
-+			  "IMU_SPI_CS_N",
-+			  "SENSOR_I2C_SDA",
-+			  "SENSOR_I2C_SCL",
-+			  "OIS_TELE_I2C_SDA",
-+			  "OIS_TELE_I2C_SCL",
-+			  "NC", /* GPIO_200 */
-+			  "OIS_ENABLE_TELE",
-+			  "HST_BLE_UART_TX",
-+			  "HST_BLE_UART_RX",
-+			  "HSTP_CLK_CFG_SEL",
-+			  "NC",
-+			  "APPS_I2C_0_SDA",
-+			  "APPS_I2C_0_SCL",
-+			  "CCI_I2C3_SDA",
-+			  "CCI_I2C3_SCL";
-+};
--- 
-2.38.1
+I don't mind if you take this patch instead of mine. Feel free to add my
 
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
+Thanks,
+Stephan
