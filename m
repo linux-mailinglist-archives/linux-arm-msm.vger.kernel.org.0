@@ -2,93 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB71F62F60E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 14:30:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFEA062F60F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 14:30:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241772AbiKRNa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 08:30:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50506 "EHLO
+        id S241827AbiKRNad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 08:30:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241173AbiKRNaU (ORCPT
+        with ESMTP id S241899AbiKRNa2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 08:30:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE2E72129;
-        Fri, 18 Nov 2022 05:30:17 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8BFE062527;
-        Fri, 18 Nov 2022 13:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1507AC433C1;
-        Fri, 18 Nov 2022 13:30:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668778217;
-        bh=DVByPI99cziskeMpw3/H3Sw35EfmuI4W+QBBcElCutc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q9ycSFlGC0m5cG9RlAnwnYROpSROstzfMcobdK7fyIuqni/nBCox5zZU8Zxm5JPQU
-         0NKbCmOwLN6yHLstgSag0cb2GLcS31zJxM9bJyFPJoQbzVy0V+liMcYT8YrNRwTQeL
-         qSmMkZ5+8tMznQrISNGyBBCqpy/mixDrZFEFn29bfIz6oaPXPdMENCV02yPhFm3bUK
-         OvRzNp9qluquzn86ncaH7paGu3Fl+Wb1WI3H/owbh/Ebept7Fs7ZUMT0DXwOR40Mrr
-         GFtFiDEUOAwpp8v8bklsGXmYphMFUeCoL9ls0we38VSPdLs4lerFm/lfDqQXfsdhW6
-         /XmJuSgBbZbLQ==
-Date:   Fri, 18 Nov 2022 13:30:10 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fri, 18 Nov 2022 08:30:28 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 607048C4AA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:30:26 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id bs21so9251643wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hvGy1RBLPA4RoB0q/hgxQNJ5odPvVqvFEN2bRcxK1LE=;
+        b=xpaEjALrqfSp+mTAO0gQ6yHBsq5ccytVh2ERoq30ogytxvEijsa3RHELjySs7+FjoN
+         Uv1ot8MMdZ/Z/5aIFiYEmnECZsfTP9rslnxCrU8/TAogsu2CG9VWdIliLTnHXS1ePyeB
+         1W3dbqdp2iL7iICKxBK5rZoZT1AwTNfrKKC23/gJh5cR+dLtv8MmIR+Mxn0YpUWtkVaN
+         gBhZDunw7fZWqi93mqU/H2do812JP0E6m76Jxs1QfAi3knI8sD4iCdF/isBgouns8I0a
+         uNyFzvFD8KzFB0mhMBdIaqQF5/xM4FHyKvQxkJTXqx5+TpY0YFYatJswyGCVFHD7Y0fB
+         ASGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hvGy1RBLPA4RoB0q/hgxQNJ5odPvVqvFEN2bRcxK1LE=;
+        b=pHEBwNWgZiGkyrF1my2jSyDRFwuXxoDZGwYwtSkmjuzwhoF72EVibnzTtJcHAUtFiU
+         YfUmlu/RSUMUAYYebM0+xiSkaaZH3a4TMGwqafBFL5nTnEy8KqBQKN92sD3VKA1AIYkr
+         URg5KwQgl9yEZPX8OFU1VMtS5DCsRAyj3Oqf0axq8F86VhgRVoUq5hpSVUfuqSHNbCnA
+         hU+vv0XATusuNgiRA5/LIOBbhdsjElJ49c0SkHEuM4AxOLgse/09ed10bdYQiLpRQCoq
+         RQ39crM/yrjICisBnVhdwHjdLCfLwWHKyhy6lCWSuFbN6UUxtuMAGfdtYGGrj36KLlSh
+         HMSA==
+X-Gm-Message-State: ANoB5pnta3jD6IgjBJgDfOB8Kx6/l0D/bzOkZwJDFZo4NAh4zUAzNSt3
+        7S8f+kIf9V7kb+zKyLiDVE4p7w==
+X-Google-Smtp-Source: AA0mqf7xCdPe4dhV4KoB9LkmxibOxBYqIGkCJl+rXNT9kR29ONKHPpAqZrkYtt7iL48CIXRx+pY+4w==
+X-Received: by 2002:a5d:4fcd:0:b0:241:792e:bdf9 with SMTP id h13-20020a5d4fcd000000b00241792ebdf9mr4130545wrw.540.1668778224856;
+        Fri, 18 Nov 2022 05:30:24 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f7cc:460c:56ae:45a? ([2a01:e0a:982:cbb0:f7cc:460c:56ae:45a])
+        by smtp.gmail.com with ESMTPSA id c12-20020adffb4c000000b0022a3a887ceasm3612872wrs.49.2022.11.18.05.30.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 05:30:24 -0800 (PST)
+Message-ID: <ad9d2e4f-1d60-15e7-dc2d-e7e32b0ec855@linaro.org>
+Date:   Fri, 18 Nov 2022 14:30:23 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] dt-bindings: reserved-memory: document Qualcomm MPSS
+ DSM memory
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Vinod Koul <vkoul@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v1 00/10] iommu/arm-smmu-qcom: Rework Qualcomm SMMU
- bindings and implementation
-Message-ID: <20221118133009.GA4046@willie-the-truck>
-References: <20221114170635.1406534-1-dmitry.baryshkov@linaro.org>
- <e3c8121a-5234-1051-40c7-3989189badfa@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e3c8121a-5234-1051-40c7-3989189badfa@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-1-158dc2bb6e96@linaro.org>
+ <38fff21b-3e75-13f9-664e-a115bc527b67@linaro.org>
+ <9aa23650-6ae1-3844-7cf3-6812dc023c11@linaro.org>
+ <dfec6a0b-86c6-fb61-51f6-d1e400a6f5ef@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <dfec6a0b-86c6-fb61-51f6-d1e400a6f5ef@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 01:41:24PM +0100, Krzysztof Kozlowski wrote:
-> On 14/11/2022 18:06, Dmitry Baryshkov wrote:
-> > The main goal of this patchset is to define a generic qcom,smmu-500
-> > binding to be used by newer Qualcomm platforms instead of defining each
-> > and every SoC line with no actual differences between the compats.
-> > 
-> > While preparing this change it was required to cleanup the existing
-> > bindings and to rework the way the arm-smmu-qcom implementation handles
-> > binding to IOMMU devices.
-> > 
-> > Changes since RFC v2:
-> >  - Dropped the dts patch, picked up by Bjorn
-> >  - Fixed minor nits in commit messages and in-file comments (noted by
-> >    Krzysztof and Richard Acayan)
-> > 
-> > Changes since RFC v1:
-> >  - Added the dts patch fixing order of clocks in msm8996.dtsi
-> >  - Fixed the DT bot errors
-> >  - Added separate clause for Google Cheza devices
+On 18/11/2022 11:45, Krzysztof Kozlowski wrote:
+> On 17/11/2022 10:47, Neil Armstrong wrote:
+>>>
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    const: qcom,mpss-dsm-mem
+>>>
+>>> Why do we need dedicated binding and compatible for it instead of using
+>>> memory-region phandle in the device?
+>>
+>> So like rmtfs, this memory zone is shared between APPS and the MPSS subsystem.
+>>
+>> Like rmtfs it makes no sense to link it to the MPSS PAS, since it's only a launcher,
+>> it doesn't represent the MPSS subsystem.
 > 
-> Please continue the version numbering. RFC is also a patch and also a
-> version. This is v3. Your next will be v4.
+> This also does not represent a device. Memory region is not a device, so
+> this is as well not correct representation of hardware.
 
-I queued this already, so hopefully there won't be a next version!
+I never used the term device so far, but a shared memory region with a platform
+specific process to share the region between subsystems.
 
-Will
+> 
+>>
+>> In the PAS startup process, the resources are released from APPS once the MPSS subsystem
+>> is running, which is not the case with the MPSS DSM where it must be shared during the whole
+>> lifetime of the system.
+> 
+> I don't think that PAS releases the region. I checked the
+> qcom_q6v5_pas.c and there is only ioremap. The device stays loaded thus
+> the memory stays mapped.
+Yes PAS does release the firmware region when the firmware is started,
+qcom_scm_pas_metadata_release() does that.
+
+> 
+> We have already three of such "memory region devices" and we keep
+> growing it. It's not scalable.
+
+If we want to properly describe this, we must then represent the MPSS subsystem
+and associate this memory region.
+
+> 
+> Best regards,
+> Krzysztof
+
+Thanks,
+Neil
+
+> 
+
