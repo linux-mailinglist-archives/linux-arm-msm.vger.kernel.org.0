@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58D4962FA1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:21:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F5362FA2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiKRQVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 11:21:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43508 "EHLO
+        id S235220AbiKRQYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 11:24:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233543AbiKRQVI (ORCPT
+        with ESMTP id S234216AbiKRQYw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 11:21:08 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F0EB922CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:21:07 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id a15so7369247ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:21:07 -0800 (PST)
+        Fri, 18 Nov 2022 11:24:52 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D49490AF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:24:51 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id l8so7354021ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:24:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mjnqvZvoLJRruPXTecNFKm0hhbTgEsvXWGcm3Dhr9+E=;
-        b=YRZudXVeLLu3eAEiGezFVHFfMIQpdfUYU3iAHhHAUaaJLNdqrIPuAkTEuw3TgRPkXR
-         mEtU4mUyleui4ZNj7xU5UOMasba2WiEYDcCxTF0iB6lhZ+ZyiZCBByW8iB7zIU6aAdwv
-         8J7HK2jSXilyScrjTQFThZhYQs97oiUyEQCeKLTEDdDEPdwnTQKKtGIUB5OY1p9lRnKQ
-         4tEgx5hSj0X7923zaCsxz/Fz7DPwq/oPjlSorKlEOMq0f894jTFayEzwOJunSMlH0WMq
-         JJ+fJT+90GKdAlU6GLIEF8k6/+9b5eraYjDLDLdaG6ilU8YQ9vuzPg6VeuNnsArvKLbh
-         9uwQ==
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TyvEqZNJ/MRi1G8+a46Jw9oIBcHIz45goT0ItOFpL6k=;
+        b=AZVccVwGjF3Vxy7sxVUW8prhfRscUTczTjzZe6fpzB+s12ve3OBjdTgsekqRUV3dUY
+         du3wJD+Atk+RcvhaG3hEPj+8BUQlM+jopsSOS2DYixYFbH9ub4f7yKQX8b+2V/moKpg4
+         Zw+u5UbXccgPVhjzpNoJNUO10H9Th8+JSUmXEsjF9uqeBSdDkKNTaQ9p+yGGwc9Fcu1q
+         jYdNYkwfHy2wg815374Dze6x98QYVcn9z5fRR8h+WkimYLPHnh2je8825+gtKamGn6FK
+         Sss+xcIulhWWFxreh7RKC2LQi2cgf+3tuHUiAZQoiwEG6HPD1pm8p0avBF9aK7ySOgPN
+         Hkzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mjnqvZvoLJRruPXTecNFKm0hhbTgEsvXWGcm3Dhr9+E=;
-        b=CesDmxtDOAnTuAibdTkHp2w1yWff9c6pi95D6XERTFPPI4v7biX+1MRlaAvX4O2HIu
-         9uXpNoscsyRo2kfYM8fb5aCc26QyFe2FIHSmRFk0t1qRZBj/czTTknozsCGsQEmYpwGM
-         EiPSzDfbE8aiujH2ESb/UM7m1W8o4vJhf3/NJc5DKcysyKs1V8LghiRNleGiKlv5K4FO
-         tGYPAArhzjY5HZ+13z6/ldDtMZMEZf5X/k/gGhKpKZsOYoasmW2DX4S1lEY/7ThkryeV
-         mx1dKc6G37O1BPcTMo/cwy36bE+Lb7hGMq9/sJZwLXx+9FgS8XWPUDGJTVjwlcjSvrh6
-         orSA==
-X-Gm-Message-State: ANoB5pm3YVV02lA2y6nhOqLM+E2dtGElT2gVHmG0iQm5TGRCS6zgkR/1
-        1QmEi2ou7iN6XnDYLOa+rTGVlw==
-X-Google-Smtp-Source: AA0mqf5MDZ8n8aOqGyUjyf5Z4PQZnVdF3dQdUdGagTqmUi8FiWFnrvqAXqHOmN9vC36zzvrrZKWnkA==
-X-Received: by 2002:a2e:b5d4:0:b0:279:5fa:8e7c with SMTP id g20-20020a2eb5d4000000b0027905fa8e7cmr2654551ljn.62.1668788465509;
-        Fri, 18 Nov 2022 08:21:05 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id u10-20020ac258ca000000b00499bf7605afsm718252lfo.143.2022.11.18.08.21.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 08:21:04 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TyvEqZNJ/MRi1G8+a46Jw9oIBcHIz45goT0ItOFpL6k=;
+        b=dpkhScv6daKkXYpIc0JtAdK9QMjowQjbjFlIgRd8tkkL5mrPH6FEhzdWxaS6qBlEA1
+         Cb5E6381K2GkLZAUihq9zNiUox4vrO8MEOhPurA3BYRy8YIug9v/TvfIwkpKSEh7DG8R
+         SFoziOgBKfQKeSuodSXxEP76Rm2Dd5pJlpKgtmFXwy15dhMg0VBvQ5DK5gxiYrbKaQDa
+         JA6QYDP8KNwrRQlc5c9dwYuJVyoHWgWL5llf9mTXUZn1hGw6q7l1r7aoKW7toiB6UQrJ
+         p6SkhInADEbKwrsIG2w/Yp6Atisk+35mYsgf7UM5OwkvDMH3G+nVsUpZPxH8rOyRdWFZ
+         m9yQ==
+X-Gm-Message-State: ANoB5pmGzovBVJ5ZsJvYAJxXsPGVFKGE7wtCXtEvJ3C7s5BYvIK8DZ3F
+        pxa/HIyqIFLF+t4PYWYTL6sS7A==
+X-Google-Smtp-Source: AA0mqf4rJCEmefb/9vbDfhMOh/I4HZfeXCgo54yyLoE8CtCIOwEz8eHs4DpWhU8WfEwaQUk5zP+9WQ==
+X-Received: by 2002:a2e:bd0c:0:b0:277:10c2:e7ce with SMTP id n12-20020a2ebd0c000000b0027710c2e7cemr2918150ljq.370.1668788689586;
+        Fri, 18 Nov 2022 08:24:49 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id t7-20020a056512030700b004979ec19380sm714550lfp.285.2022.11.18.08.24.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 08:24:49 -0800 (PST)
+Message-ID: <d2fac789-4064-2c8a-5527-0da5b348a29d@linaro.org>
+Date:   Fri, 18 Nov 2022 17:24:47 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/4] dt-bindings: pinctrl: qcom: Add SM8550 pinctrl
+ bindings
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Abel Vesa <abel.vesa@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom,sdm845-pinctrl: add GPIO hogs
-Date:   Fri, 18 Nov 2022 17:21:01 +0100
-Message-Id: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh@kernel.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
+References: <20221116105724.2600349-1-abel.vesa@linaro.org>
+ <20221116105724.2600349-2-abel.vesa@linaro.org>
+ <368cd281-b461-e668-0b57-cbb83f5b8086@linaro.org>
+ <e825bfbb-dc77-016a-3f56-9474aef06085@linaro.org>
+Content-Language: en-US
+In-Reply-To: <e825bfbb-dc77-016a-3f56-9474aef06085@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,51 +84,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow GPIO hogs in pin controller node.  qcom/sdm845-cheza.dtsi already
-uses it.
+On 18/11/2022 17:10, Krzysztof Kozlowski wrote:
+>>> +
+>>> +  "^.+-hog(-[0-9]+)?$":
+>>> +    type: object
+>>> +    properties:
+>>> +      gpio-hog: true
+>>> +      gpios: true
+>>> +      input: true
+>>> +      output-high: true
+>>> +      output-low: true
+>>> +      line-name: true
+>>
+>> Keep properties sorted by name (just like gpio-hog.yaml).
+>>
+>> I wonder if we could add this to the common TLMM schema. It will appear
+>> in multiple places.
+> 
+> Answering to myself - this would require moving the 'state'
+> patternProperties part to the common schema, so maybe later... Looks
+> fine with changes about ordering.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pinctrl/qcom,sdm845-pinctrl.yaml        | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+If Rob likes my solution here:
+https://lore.kernel.org/linux-arm-msm/20221118162101.145267-1-krzysztof.kozlowski@linaro.org/T/#u
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-index c9627777ceb3..57bac7f7a4fc 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-@@ -48,6 +48,11 @@ patternProperties:
-             $ref: "#/$defs/qcom-sdm845-tlmm-state"
-         additionalProperties: false
- 
-+  "-hog(-[0-9]+)?$":
-+    $ref: /schemas/gpio/gpio-hog.yaml
-+    type: object
-+    unevaluatedProperties: false
-+
- $defs:
-   qcom-sdm845-tlmm-state:
-     type: object
-@@ -117,6 +122,7 @@ additionalProperties: false
- 
- examples:
-   - |
-+    #include <dt-bindings/gpio/gpio.h>
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
- 
-     pinctrl@3400000 {
-@@ -130,6 +136,12 @@ examples:
-         gpio-ranges = <&tlmm 0 0 151>;
-         wakeup-parent = <&pdc_intc>;
- 
-+        ap-suspend-l-hog {
-+            gpio-hog;
-+            gpios = <126 GPIO_ACTIVE_LOW>;
-+            output-low;
-+        };
-+
-         cci0-default-state {
-             pins = "gpio17", "gpio18";
-             function = "cci_i2c";
--- 
-2.34.1
+then please go with similar way. It allows to skip listing the properties.
+
+Best regards,
+Krzysztof
 
