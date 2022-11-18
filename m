@@ -2,240 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EA0062F4F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 13:34:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DD5E62F504
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 13:36:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234724AbiKRMes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 07:34:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45946 "EHLO
+        id S241659AbiKRMgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 07:36:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241846AbiKRMeb (ORCPT
+        with ESMTP id S241721AbiKRMgZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 07:34:31 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A679588F9A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:34:23 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id x21so6567401ljg.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:34:23 -0800 (PST)
+        Fri, 18 Nov 2022 07:36:25 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB588CFD9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:36:08 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id r12so8029859lfp.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:36:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KgzFpCzI8B2uXD6MokXq+lK9vzCjNqEEJmXSaPDrhbY=;
-        b=jBPMlBm3DNRITFRa2ci3giO9q+xRos8iH0QVb+s8XacjOXIEmPG3VurZt4BdkKuUBB
-         DTs+muxaynTU2wAZuK+8vNYBBljixPF6XSISk0PJLqHi5WPqOqfXaaAC6kqed+yHcPVi
-         Z/VG7o6EfV9aBT1zO3/9hYDIPGMqg5TWvDW4osi8nQ/wVyvgf+GWRbcBlz29HpaUgEbX
-         ZDcProPwoZrrjENIqnB8/Fhql6yg/L3TszRb7gurxGqKSCtevWq2HsvQmNlIXPu+hfOQ
-         hBgtlLJIfPnEXLw+HQrN5GE3udIK+SEguTF4RZxAV+NxQ5yA8x7lz0IfGxVOqMlNWwU7
-         qEmA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cdtOWroELQJIWa4ogi8rXDaEyRIp/3m317/ZVv8U8mI=;
+        b=gcdoFMSgJ69cwq2ZZn7iEiz5VfeA5hEbmIiei5tverZWgEmex5v0nEGH4w5QL82HgN
+         0zUyOxdTlgKG/0D0iSw9NO4CesjcZ7e1DvYZhHz9S/OctljK0udXzSyjDUjtHFpvzhjc
+         XrWdCHoaj/0XL3I6YvuANwkQmPXt8Nx7aHBJlKUZks8j68RjT18aUUvRzN8VzLE28cOm
+         1XjuzIT2hjpCnHFeBwJNs/lZAZRwFK0E7xuQCbCY+Dg4CEnnh5eEG86Dxuu5zzofIGYG
+         v9WpMigTFH0ifC1Ln7Sig90LStYIf8T01OlfRcIuu19JhIS/HL5DdDDapyXk8I4xvJxG
+         Hrhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KgzFpCzI8B2uXD6MokXq+lK9vzCjNqEEJmXSaPDrhbY=;
-        b=QlR47wIAzYbnvE0mZgaW2o58wuOJeTL3zzepfx+I0HFB7rtSrAprVS6QZx9NfnL0Iz
-         thtdi0L8R5FpUA7sF1sp0ACR9qB4l7bPHSeQhaIq/3tTI83LEJzPrLLLURx9a38NLree
-         f7ZZUO8unx3Hi009TNCHOq+OdJBs2ZxyOySesEImdkvWt7AsxZuDkCotEkUd1Q32BjUN
-         A529GknveKch7tN34xMD0BfENG9yy9NlujXycNAj9X0rQHQGWafqOvAdSA0zRaL0bz3r
-         +wwQgScuYMi09ZXLmazh/eOtSS+xjniwdug3SOZ5GVwDCc7VyUdCHg/ordClQqpnbYT5
-         yM8A==
-X-Gm-Message-State: ANoB5pmM7P1plgRR3msHo/oGNq6Ftgl2manA76aZdDJ+lRUdG1SHZR90
-        JXDzREGh3+gdfENU8HNy215Rfg==
-X-Google-Smtp-Source: AA0mqf6KxcK5wCNohwnNhQpc+G4qT5ssBFPbM5UwddedcYyJujnxufqKb9YY8FvOx8uoo1RTyYcG2Q==
-X-Received: by 2002:a05:651c:1993:b0:26c:4fb:b084 with SMTP id bx19-20020a05651c199300b0026c04fbb084mr2310631ljb.383.1668774863204;
-        Fri, 18 Nov 2022 04:34:23 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m10-20020a19434a000000b004ac088fdfd2sm645833lfj.85.2022.11.18.04.34.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 04:34:22 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 7/7] dt-bindings: remoteproc: qcom,sdx55-pas: split into separate file
-Date:   Fri, 18 Nov 2022 13:34:02 +0100
-Message-Id: <20221118123402.95784-8-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221118123402.95784-1-krzysztof.kozlowski@linaro.org>
-References: <20221118123402.95784-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdtOWroELQJIWa4ogi8rXDaEyRIp/3m317/ZVv8U8mI=;
+        b=6VY/2gy+NdoekOEnRyH62ca0UsTcJS++NA97Jr6U03ELNTpOTdlJ2uAlctgB0xKv/O
+         SlP2XAY1TN3YeoibhO1ZfaSVwk7PJqO5TDL8OrO6/X9zdvL/gXFfl9mNG1Y3oMAwF8Nl
+         P4d23euBAo2VkG6XB0w8yw+CfekPYrzLvXsmhn6O40MRXvnxpVhN4L21cS/BMQ26yyi2
+         6ax/JEKBF1p+kyNsF+w+AA9MheAb/+Pf+c2fdoH0Gw+WuslHhiqEwEVrLLJYmXvEe5H+
+         MFSkUWQ+WOgNOeaQyJH8eun6eM65TqIfeBkvs6ELmUZCLqCXarbidkRH/agJjbSarqOo
+         Sa6Q==
+X-Gm-Message-State: ANoB5pnVlyjHvPOhOxrihlrrZDlzSZK1B8bUoSAnscYboAvztq0QUGgb
+        VDk9QRMGVKI5WhO6qUnpyy1Biw==
+X-Google-Smtp-Source: AA0mqf7/qS3VtKs/HUHAaKu2eUfDph73XqMra7QwDqXGfo+Bj21zBYJduejC7cw7QFT0lBeGfUqiug==
+X-Received: by 2002:a19:6558:0:b0:4ac:fbf2:12ab with SMTP id c24-20020a196558000000b004acfbf212abmr2272252lfj.384.1668774966434;
+        Fri, 18 Nov 2022 04:36:06 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id v8-20020ac25608000000b004afd23cf7eesm641128lfd.168.2022.11.18.04.36.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 04:36:05 -0800 (PST)
+Message-ID: <5858e2ce-9b13-b694-a6d3-3f8553936dab@linaro.org>
+Date:   Fri, 18 Nov 2022 14:36:05 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v3 1/3] drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
+Content-Language: en-GB
+To:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+References: <1668773807-19598-1-git-send-email-quic_kalyant@quicinc.com>
+ <1668773807-19598-2-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1668773807-19598-2-git-send-email-quic_kalyant@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split SDX55 remote processor Peripheral Authentication Service bindings
-into their own file to reduce complexity and make maintenance easier.
+On 18/11/2022 15:16, Kalyan Thota wrote:
+> Pin each crtc with one encoder. This arrangement will
+> disallow crtc switching between encoders and also will
+> facilitate to advertise certain features on crtc based
+> on encoder type.
+> 
+> Changes in v1:
+> - use drm_for_each_encoder macro while iterating through
+>    encoder list (Dmitry)
+> 
+> Changes in v2:
+> - make sure no encoder miss to have a crtc (Dmitry)
+> - revisit various factors in deciding the crtc count
+>    such as num_mixers, num_sspp (Dmitry)
+> 
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 7a5fabc..4784db8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -763,7 +763,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+>   	drm_for_each_encoder(encoder, dev)
+>   		num_encoders++;
+>   
+> -	max_crtc_count = min(catalog->mixer_count, num_encoders);
+> +	max_crtc_count = num_encoders;
+>   
+>   	/* Create the planes, keeping track of one primary/cursor per crtc */
+>   	for (i = 0; i < catalog->sspp_count; i++) {
+> @@ -795,22 +795,25 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+>   			primary_planes[primary_planes_idx++] = plane;
+>   	}
+>   
+> -	max_crtc_count = min(max_crtc_count, primary_planes_idx);
+> +	/*
+> +	 * All the platforms should have at least 1 primary plane for an
+> +	 * encoder. The below warn should help in setting up the catalog
+> +	 */
+> +	WARN_ON(num_encoders > primary_planes_idx);
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+WARN_ON(max_crtc_count > primary_planes_idx)
 
----
+We do not care about encoders number, we care about CRTCs number here.
 
-Changes since v1:
-1. New patch.
----
- .../bindings/remoteproc/qcom,adsp.yaml        |   4 -
- .../bindings/remoteproc/qcom,sdx55-pas.yaml   | 101 ++++++++++++++++++
- 2 files changed, 101 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
+With that fixed:
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index bb7646446881..28e37d47d57b 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -30,7 +30,6 @@ properties:
-       - qcom,sdm660-adsp-pas
-       - qcom,sdm845-adsp-pas
-       - qcom,sdm845-cdsp-pas
--      - qcom,sdx55-mpss-pas
- 
-   reg:
-     maxItems: 1
-@@ -197,7 +196,6 @@ allOf:
-             enum:
-               - qcom,sc7180-mpss-pas
-               - qcom,sc7280-mpss-pas
--              - qcom,sdx55-mpss-pas
-     then:
-       properties:
-         interrupts:
-@@ -275,7 +273,6 @@ allOf:
-           contains:
-             enum:
-               - qcom,sc7280-mpss-pas
--              - qcom,sdx55-mpss-pas
-     then:
-       properties:
-         power-domains:
-@@ -335,7 +332,6 @@ allOf:
-               - qcom,qcs404-cdsp-pas
-               - qcom,qcs404-wcss-pas
-               - qcom,sdm660-adsp-pas
--              - qcom,sdx55-mpss-pas
-     then:
-       properties:
-         qcom,qmp: false
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
-new file mode 100644
-index 000000000000..cbeaa00ca4d4
---- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
-@@ -0,0 +1,101 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sdx55-pas.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SDX55 Peripheral Authentication Service
-+
-+maintainers:
-+  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-+
-+description:
-+  Qualcomm SDX55 SoC Peripheral Authentication Service loads and boots firmware
-+  on the Qualcomm DSP Hexagon cores.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sdx55-mpss-pas
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: XO clock
-+
-+  clock-names:
-+    items:
-+      - const: xo
-+
-+  interrupts:
-+    minItems: 6
-+
-+  interrupt-names:
-+    minItems: 6
-+
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+      - description: MSS power domain
-+
-+  power-domain-names:
-+    items:
-+      - const: cx
-+      - const: mss
-+
-+  qcom,qmp:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the AOSS side-channel message RAM.
-+
-+  smd-edge: false
-+
-+required:
-+  - compatible
-+  - reg
-+
-+allOf:
-+  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    remoteproc@4080000 {
-+        compatible = "qcom,sdx55-mpss-pas";
-+        reg = <0x04080000 0x4040>;
-+
-+        clocks = <&rpmhcc RPMH_CXO_CLK>;
-+        clock-names = "xo";
-+
-+        interrupts-extended = <&intc GIC_SPI 250 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready", "handover",
-+                          "stop-ack", "shutdown-ack";
-+
-+        memory-region = <&mpss_adsp_mem>;
-+
-+        power-domains = <&rpmhpd SDX55_CX>, <&rpmhpd SDX55_MSS>;
-+        power-domain-names = "cx", "mss";
-+
-+        qcom,smem-states = <&modem_smp2p_out 0>;
-+        qcom,smem-state-names = "stop";
-+
-+        glink-edge {
-+            interrupts = <GIC_SPI 114 IRQ_TYPE_EDGE_RISING>;
-+            label = "mpss";
-+            mboxes = <&apcs 15>;
-+            qcom,remote-pid = <1>;
-+
-+            /* ... */
-+        };
-+    };
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>   
+>   	/* Create one CRTC per encoder */
+> -	for (i = 0; i < max_crtc_count; i++) {
+> +	i = 0;
+> +	drm_for_each_encoder(encoder, dev) {
+>   		crtc = dpu_crtc_init(dev, primary_planes[i], cursor_planes[i]);
+>   		if (IS_ERR(crtc)) {
+>   			ret = PTR_ERR(crtc);
+>   			return ret;
+>   		}
+>   		priv->crtcs[priv->num_crtcs++] = crtc;
+> +		encoder->possible_crtcs = 1 << drm_crtc_index(crtc);
+> +		i++;
+>   	}
+>   
+> -	/* All CRTCs are compatible with all encoders */
+> -	drm_for_each_encoder(encoder, dev)
+> -		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
+> -
+>   	return 0;
+>   }
+>   
+
 -- 
-2.34.1
+With best wishes
+Dmitry
 
