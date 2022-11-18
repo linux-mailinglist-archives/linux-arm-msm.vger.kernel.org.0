@@ -2,209 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F30C662F92C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 16:20:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6655562F943
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 16:28:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242257AbiKRPUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 10:20:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43960 "EHLO
+        id S242225AbiKRP2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 10:28:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242249AbiKRPUj (ORCPT
+        with ESMTP id S242088AbiKRP2k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 10:20:39 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E647B2CE1D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 07:20:37 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id l12so8694371lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 07:20:37 -0800 (PST)
+        Fri, 18 Nov 2022 10:28:40 -0500
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA126456C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 07:28:39 -0800 (PST)
+Received: by mail-il1-x136.google.com with SMTP id i5so2660677ilc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 07:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Kb/6Z6Nz1gnb2z7GznvPxvyQcocsubtScHtnufLzpH8=;
-        b=IHUJ4ViWC3qk37qn4GHyU/n75i6gHrjzDdr27nQHRmtg8yU0ept4ffxn0ShutbkedG
-         X74NoeRHZy6eQCVmdZaI9ExK+lFrtN/K1DRB6pTQkNJpdBsxFhlmNduBJJsIFf2OfBMF
-         qOEhH7Yi6iO+kU7ynIF8gxPqfgblX95IgJsb8RhfhkeHvZDiCwN7Jy/GuAzZ6PDiC1Td
-         do5gR14EgDv7tcxzIEMAnAp/sXFuAZAAUKIYkvvXP8Uo/juNRUD1WhsZPNmPyGh/P14p
-         90GvG4by3mFnrwHesXMPMtNyuxSkX4h+y/fH+P/q/K5SA13yLtUa3iCJV2gzvxFUPHAJ
-         hEnQ==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V3r1rBEjB59P7Hp9rGdtjQJ0ITi8NZo801rMdyiF4HU=;
+        b=G+PzEFfAhMqQSIaM94usPBm+ze8W/n7MqO76Y1A3SsmdmZNsRJR4K38aX8qjnGNxLe
+         yaHwhUn3hbQVPmGCo96jqLkb3TamQXkTlCN8qtTYA79D8j14Kdlt9KEZE+UvSQrRQwZl
+         XN3osX0KOX7aMFWMp/Hd0xyTG7q+NC2QRuMbE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Kb/6Z6Nz1gnb2z7GznvPxvyQcocsubtScHtnufLzpH8=;
-        b=zsKggkeP4zn6+CFDmSz413VcfuDJmOF7oKLHDDwaGnkAIqhV/8q3UluVM8hvNsbBn9
-         1iF7QUsseils1S70saCf0JfIhzahiwwEpsBO9hYqJh9GaVpP5nictUtzmYE2WKCXjK4O
-         Ba965ihzvIdS+XOaWj9XrqKJjyyWU21EPo2z1PYhyh2dzzt0lQIfyBpGvr7UXoN/TC9K
-         A5GpfLOdB6VHsoEsToKvEA+joeZtgZplBM+hD33UP59hed2KtL8nb3glmlHF3kUAoIJK
-         3VP9Q1UTBdpdRLtv2Mx1dBXGeaqKchvavQs76qijUW+CuO73UL+k7+tIm86TY0dyTWPN
-         vaGg==
-X-Gm-Message-State: ANoB5plY4op3fwP/Yk6Kkh+zXiua4UCE1RUmVPpmh8Mg4OJrhIVd6Azw
-        pXswkVNC66Nok41Oo95k9LgO3S1ZPfqZ1N88
-X-Google-Smtp-Source: AA0mqf4OcdskkBwdfhW7fzDIEeecphOYfbsANRyvspW90OYHyg0Y408+8wUWBURzNqtp+MYhtMy7xQ==
-X-Received: by 2002:ac2:5de7:0:b0:4af:f58e:a7a0 with SMTP id z7-20020ac25de7000000b004aff58ea7a0mr2457830lfq.507.1668784835927;
-        Fri, 18 Nov 2022 07:20:35 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id 12-20020ac25f0c000000b004948ddb4e4dsm690597lfq.301.2022.11.18.07.20.34
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 18 Nov 2022 07:20:35 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8350-sagami: Add GPIO line names for PMIC GPIOs
-Date:   Fri, 18 Nov 2022 16:20:28 +0100
-Message-Id: <20221118152028.59312-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.37.1 (Apple Git-137.1)
-In-Reply-To: <20221118152028.59312-1-konrad.dybcio@linaro.org>
-References: <20221118152028.59312-1-konrad.dybcio@linaro.org>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V3r1rBEjB59P7Hp9rGdtjQJ0ITi8NZo801rMdyiF4HU=;
+        b=oj1U51WlcaM0EBBzhA9POkw6Z57GiY7MRRRrWZrgUF2h+dRkY0Lo0n0bHKTmtw8O6e
+         eprDm5Mdtptyh3NcOtqcfZALhIHvRmOqqNIzQmg9+tojBl9mbjyRZlgTGCmb1RkQcY/r
+         OvWbU3m3TnWQ49zrEsaCHgyEjDmXX82bFx4NNbCi9TA9Abxw3Fvai3Z8Ozb30rrv5i7h
+         RGV4BWGe04yfftJ59TYPZr9VmZVhsLG2jjTIwIZMKIaGDpM/Twjw2USLddVkEPqku7W7
+         1Zi/MwY90kdgNPz0bFeZcKCm6AfnN0Pv5lEOiGg4QmM0UMkC6CmIRx35lY5iSZMItlhU
+         g6XQ==
+X-Gm-Message-State: ANoB5pnrawq0r971acbn4O8YFnV6P2tp51dJhp8DNOXGtqcZ95nn7Ukz
+        VtpZc3yNLo7uC/wKzIDlsDAWdMESPRtGFw==
+X-Google-Smtp-Source: AA0mqf6C3biW+ByQBq4hcoGxLWTV//5gPtXVCzNfAg0J28ZfiqPApQ/2Us66xTCumk0l7fvllDWDPg==
+X-Received: by 2002:a05:6e02:c0d:b0:300:b1ee:c196 with SMTP id d13-20020a056e020c0d00b00300b1eec196mr3614368ile.237.1668785319286;
+        Fri, 18 Nov 2022 07:28:39 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id o7-20020a056e02092700b003027f923d29sm1351073ilt.39.2022.11.18.07.28.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 07:28:38 -0800 (PST)
+Date:   Fri, 18 Nov 2022 15:28:38 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add a new herobrine Pro SKU
+Message-ID: <Y3ekpgpRxgFwEeo0@google.com>
+References: <20221118073017.26128-1-quic_rjendra@quicinc.com>
+ <20221118073017.26128-2-quic_rjendra@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221118073017.26128-2-quic_rjendra@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sony ever so graciously provides GPIO line names in their downstream
-kernel (though sometimes they are not 100% accurate and you can judge
-that by simply looking at them and with what drivers they are used).
+Hi Rajendra,
 
-Add these to the PDX213&214 DTSIs to better document the hardware.
+On Fri, Nov 18, 2022 at 01:00:17PM +0530, Rajendra Nayak wrote:
 
-Diff between 223 and 224:
+> Subject: arm64: dts: qcom: sc7280: Add a new herobrine Pro SKU
 
-pm8350b
-< 	gpio-line-names = "NC", /* GPIO_1 */
-> 	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
-< 			  "NC",
-> 			  "CAM_PWR_LD_EN",
+nit: this adds the herobrine *CRD* Pro SKU (though other Pro SKUs
+might follow), so 'CRD' should be part of the subject
 
-pm8350c
-< 			  "NC",
-> 			  "WLC_TXPWR_EN",
+uber-nit: 'new' is redundant in this context
 
-Which is due to different camera power wiring on 213 and lack of an
-additional SLG51000 PMIC on 214.
+> Some of the qualcomm qcard based herobrine devices can come with
+> a Pro variant of the chipset with some qcard level changes like
+> the smps9 from pm8350c which is ganged up with smps7 and smps8,
+> so we just end up removing smps9 from the herobrine pro sku dtsi.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 23 +++++++++++++++++++
- .../qcom/sm8350-sony-xperia-sagami-pdx215.dts | 21 +++++++++++++++++
- .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 20 ++++++++++++++++
- 3 files changed, 64 insertions(+)
+This is a very long sentence :)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-index cc650508dc2d..e6824c8c2774 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-@@ -17,3 +17,26 @@ &framebuffer {
- 	height = <2520>;
- 	stride = <(1080 * 4)>;
- };
-+
-+&pm8350b_gpios {
-+	gpio-line-names = "NC", /* GPIO_1 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "SNAPSHOT_N",
-+			  "NC",
-+			  "NC",
-+			  "FOCUS_N";
-+};
-+
-+&pm8350c_gpios {
-+	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
-+			  "FL_STROBE_TRIG_TELE",
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "RGBC_IR_PWR_EN",
-+			  "NC",
-+			  "NC",
-+			  "WIDEC_PWR_EN";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
-index d4afaa393c9a..c6f402c3ef35 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dts
-@@ -68,6 +68,15 @@ slg51000_a_ldo7: ldo7 {
- };
- 
- &pm8350b_gpios {
-+	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
-+			  "NC",
-+			  "NC",
-+			  "NC",
-+			  "SNAPSHOT_N",
-+			  "CAM_PWR_LD_EN",
-+			  "NC",
-+			  "FOCUS_N";
-+
- 	cam_pwr_a_cs: cam-pwr-a-cs-state {
- 		pins = "gpio1";
- 		function = "normal";
-@@ -78,6 +87,18 @@ cam_pwr_a_cs: cam-pwr-a-cs-state {
- 	};
- };
- 
-+&pm8350c_gpios {
-+	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
-+			  "FL_STROBE_TRIG_TELE",
-+			  "NC",
-+			  "WLC_TXPWR_EN",
-+			  "NC",
-+			  "RGBC_IR_PWR_EN",
-+			  "NC",
-+			  "NC",
-+			  "WIDEC_PWR_EN";
-+};
-+
- &tlmm {
- 	gpio-line-names = "APPS_I2C_0_SDA", /* GPIO_0 */
- 			  "APPS_I2C_0_SCL",
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-index 8f32b2799bcb..d73e1f3fa501 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-@@ -534,6 +534,26 @@ &mpss {
- 	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
- };
- 
-+&pm8350_gpios {
-+	gpio-line-names = "ASSIGN1_THERM", /* GPIO_1 */
-+			  "LCD_ID",
-+			  "SDR_MMW_THERM",
-+			  "RF_ID",
-+			  "NC",
-+			  "FP_LDO_EN",
-+			  "SP_ARI_PWR_ALARM",
-+			  "NC",
-+			  "G_ASSIST_N",
-+			  "PM8350_OPTION"; /* GPIO_10 */
-+};
-+
-+&pmk8350_gpios {
-+	gpio-line-names = "NC", /* GPIO_1 */
-+			  "NC",
-+			  "VOL_DOWN_N",
-+			  "PMK8350_OPTION";
-+};
-+
- &pmk8350_rtc {
- 	status = "okay";
- };
--- 
-2.38.1
+> We then use it to create a new dts for the Pro variant of the
+> herobrine CRD.
 
+Using 'we' is a a bit colloquial for a commit message, how a about
+something like this: 'Add a .dtsi for pro skus that deletes the
+smps9 node and include it from the new dts for the CRD Pro'.
+
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>  .../dts/qcom/sc7280-herobrine-crd-pro.dts     | 35 +++++++++++++++++++
+>  .../dts/qcom/sc7280-herobrine-pro-sku.dtsi    |  8 +++++
+>  3 files changed, 44 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index afe496a93f94..c5ac51c3a383 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -108,6 +108,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd-pro.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
+> new file mode 100644
+> index 000000000000..fe6b228e9e4b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
+> @@ -0,0 +1,35 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * sc7280 CRD 3+ Pro board device tree source
+> + *
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "sc7280-herobrine-crd.dts"
+> +#include "sc7280-herobrine-pro-sku.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. sc7280 CRD Pro platform (rev5+)";
+> +	compatible = "google,hoglin-sku1536", "qcom,sc7280";
+> +
+> +	/* FIXED REGULATORS */
+> +
+> +	/*
+> +	 * On most herobrine boards PPVAR_SYS directly provides VREG_EDP_BL.
+> +	 * However, on CRD there's an extra regulator in the way. Since this
+> +	 * is expected to be uncommon, we'll leave the "vreg_edp_bl" label
+> +	 * in the baseboard herobrine.dtsi point at "ppvar_sys" and then
+> +	 * make a "_crd" specific version here.
+> +	 */
+> +	vreg_edp_bl_crd: vreg-edp-bl-crd-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_edp_bl_crd";
+> +
+> +		gpio = <&pm8350c_gpios 6 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_bl_reg_en>;
+> +
+> +		vin-supply = <&ppvar_sys>;
+> +	};
+> +};
+
+Why is this node needed here, doesn't it already exist by including
+'sc7280-herobrine-crd.dts'?
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
+> new file mode 100644
+> index 000000000000..fb4bbe8aeda0
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
+> @@ -0,0 +1,8 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Google Herobrine dts fragment for PRO SKUs
+> + *
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/delete-node/ &vreg_s9c_0p676;
+> -- 
+> 2.17.1
+> 
