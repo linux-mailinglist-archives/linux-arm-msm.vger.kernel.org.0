@@ -2,66 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B1262F8A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 16:02:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71A6662F8B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 16:03:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235084AbiKRPCa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 10:02:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60218 "EHLO
+        id S242244AbiKRPC7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 10:02:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242199AbiKRPBn (ORCPT
+        with ESMTP id S242528AbiKRPCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 10:01:43 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4762A7C2E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 06:58:20 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id w14so9636054wru.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 06:58:20 -0800 (PST)
+        Fri, 18 Nov 2022 10:02:23 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1876891C24
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 06:59:20 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id d3so7117041ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 06:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nw23Nf2ywm0G6Jdy8jtkPxH6JRwBmcWd0JpF48UwDnA=;
-        b=EfbDeo6h2MKp54ozSgIaeVTNnyv1UmDOJvMSjDWuUlhiM1DGNEcXVI5Py3MrQm/mTB
-         EPOgxoTUuHZYEn5QzkIboSMSVIRx//32C3hmhPLM6XxeUI2CpG9kzHoaEg0AyWpHoQSU
-         tkZilxvZKh/9BQImtaalXAX5rv1QFRpcaDPk2waLrk0dFvM04sAXXDJMtgT0c/nFgm0J
-         4qU4JPPc8eobijy13xR3EZfDU7fjGvniswS3wWOXkY0SmQH5x/yM6Kwe2Hvh6jyb4NHZ
-         eZa4DBCbRiuKCexlah52t3UT1w1leBDFv9X/3u0kjRMeke4zPKKzaiyr16cEFZ4GK/dB
-         PkrQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B1vkUR8YAnqZ4Gmspjd5PeeHcLQng8YjSz/aBrIzt54=;
+        b=avQqepXRGOMiCl/xMFE1uP/3KA3LEqmoXTWV2qVo5CzBMncRUwuCWGtnUnuMvdToNM
+         B+YFFJbg96NijW3YLMDb4bdq05Sqg1zRQgZqRNHbXfXDNHDqoH65Ob6EVqhO55npKSKr
+         /c6psYoFn0TbhFKWu/M69CM0+anrMCj9/lwekt4ldc4c4Omo8ndMAdDazTRsy4sxRV0O
+         nSb6TVl8ctRxFaUVELfIEB+RRZ4rnQoqIgVC8CBf3gYy/NVSAe2QUMPL7tFtPyAJbT8S
+         V2kF+8mzFb9KybABlu/F3zQ0cA+9ehmKsF5yUmH2JOwDlfU+40la3HtUbwlY26kZy14q
+         tdyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Nw23Nf2ywm0G6Jdy8jtkPxH6JRwBmcWd0JpF48UwDnA=;
-        b=2j+29d5MvLDT4m9k2mpdIsccC4RBTfigwGr/KtrXsX6zDFTqCf1Mlg2A+qF7yleemW
-         3/lbmnF2oQncXdkwZDiLYXXO1xrGuKmu14KIzydpVR3NFpL6QCF+ihyw5weJmX/1+eWZ
-         d5Oj23G54K/LTZLwu+jE0dLpN1Wsxwu1rqNhZfiOpT4RrWslQJBEp2npYLTNKqp4NnmA
-         VeUO2P9IGnxfc1wAXbvQLqqH4vko95l7xVqV3AqkmihN95zdpYfNVXc6h1rAVl37tDM1
-         hkOzKD6W5abSzjDttAIohGIWzMc0Apv7eWi4bchaJgKz7xzYdr3Ojtg8lWKyGrdyQDaE
-         Otkw==
-X-Gm-Message-State: ANoB5pmwR1s90vzAMupVisUbZZpKKw1Cqt1kuvquNSoYv0d6iqLZqii/
-        JJcOM53yt9cVqJNAfvc8HXwPeg==
-X-Google-Smtp-Source: AA0mqf4+t3xWJIqhJSWh3vn3rZsaF4mL/rObMjJPqCSIHYtK1YNzB8OFep9EeMGw+ZKrtpe+MXV3ow==
-X-Received: by 2002:a5d:4ac4:0:b0:22c:f296:1120 with SMTP id y4-20020a5d4ac4000000b0022cf2961120mr4322781wrs.369.1668783499360;
-        Fri, 18 Nov 2022 06:58:19 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:f7cc:460c:56ae:45a? ([2a01:e0a:982:cbb0:f7cc:460c:56ae:45a])
-        by smtp.gmail.com with ESMTPSA id o9-20020a056000010900b00228692033dcsm3676836wrx.91.2022.11.18.06.58.18
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B1vkUR8YAnqZ4Gmspjd5PeeHcLQng8YjSz/aBrIzt54=;
+        b=RgaUeK2Sudpdcx4NtJKD+XMVsViTlTsALa+DVCD6drB6OM6O+vi9fqd6NgZdaLLdsl
+         heJL0dNhLMle/Ps/yanafHR7H05ov80xFyV1ohKAWFJYNBz7pUQLVGIIm2unF9J+kNHU
+         JeW2n9Lvstj4mVyJh777QeMGNOq397SGrucYgh4h94IeSTwYlQjTby3uenYOgfq2Z5WN
+         IJXBAjUXrs3xv9I4VY6yuHYQEndDTxX6BA9bJksyu42UKxt5fsyLr6W5ELEOjXbdQgWm
+         REe+YLEbJAQMBmwe4Pu3HbAlske5eB1gg0NgcDYTHoLTyhaZ34CdFx8NkNvChPM6aQ2M
+         Y67g==
+X-Gm-Message-State: ANoB5pkuR9Ks2TPTA+8jcaHYiPU7Rxns8+KXBepcIByVWXYSfxf9rlHM
+        NGo/hIQXbKktUmTBYOVUVJaEjA==
+X-Google-Smtp-Source: AA0mqf6GOZ/jnDHS1zP/HsD2n03gp75MP8J2C6vKYU7NIKBJa2NY4Bgj/FYE4/p+K29m0IE8doUnvA==
+X-Received: by 2002:a2e:b631:0:b0:277:890a:f1cc with SMTP id s17-20020a2eb631000000b00277890af1ccmr2643117ljn.395.1668783558496;
+        Fri, 18 Nov 2022 06:59:18 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id t14-20020a056512208e00b004ae24559388sm686908lfr.111.2022.11.18.06.59.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 06:58:19 -0800 (PST)
-Message-ID: <15ac1d06-5da7-ebd2-92ff-764c8df803a1@linaro.org>
-Date:   Fri, 18 Nov 2022 15:58:18 +0100
+        Fri, 18 Nov 2022 06:59:17 -0800 (PST)
+Message-ID: <3a84d45c-6550-7ae2-2511-9f61d15894d1@linaro.org>
+Date:   Fri, 18 Nov 2022 15:59:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
+ Thunderbird/102.4.2
 Subject: Re: [PATCH 03/10] arm64: dts: qcom: Add pm8010 pmic dtsi
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
+To:     neil.armstrong@linaro.org, Abel Vesa <abel.vesa@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -73,108 +69,52 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 References: <20221116103146.2556846-1-abel.vesa@linaro.org>
  <20221116103146.2556846-4-abel.vesa@linaro.org>
  <76560659-7c90-3846-c250-24bfb072ec0e@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <76560659-7c90-3846-c250-24bfb072ec0e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <15ac1d06-5da7-ebd2-92ff-764c8df803a1@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <15ac1d06-5da7-ebd2-92ff-764c8df803a1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/11/2022 13:51, Krzysztof Kozlowski wrote:
-> On 16/11/2022 11:31, Abel Vesa wrote:
->> From: Neil Armstrong <neil.armstrong@linaro.org>
+On 18/11/2022 15:58, Neil Armstrong wrote:
+> On 17/11/2022 13:51, Krzysztof Kozlowski wrote:
+>> On 16/11/2022 11:31, Abel Vesa wrote:
+>>> From: Neil Armstrong <neil.armstrong@linaro.org>
+>>>
+>>> Add nodes for pm8010 in separate dtsi file.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/pm8010.dtsi | 84 ++++++++++++++++++++++++++++
+>>>   1 file changed, 84 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/pm8010.dtsi
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/pm8010.dtsi b/arch/arm64/boot/dts/qcom/pm8010.dtsi
+>>> new file mode 100644
+>>> index 000000000000..0ea641e12209
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/pm8010.dtsi
+>>> @@ -0,0 +1,84 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
 >>
->> Add nodes for pm8010 in separate dtsi file.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/pm8010.dtsi | 84 ++++++++++++++++++++++++++++
->>   1 file changed, 84 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/pm8010.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/pm8010.dtsi b/arch/arm64/boot/dts/qcom/pm8010.dtsi
->> new file mode 100644
->> index 000000000000..0ea641e12209
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/pm8010.dtsi
->> @@ -0,0 +1,84 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
+>> Any reason why this is licensed BSD-3 clause? It's not a recommended
+>> license (2 clause is). Same for other patches.
 > 
-> Any reason why this is licensed BSD-3 clause? It's not a recommended
-> license (2 clause is). Same for other patches.
+> Probably a bad copy-paste from other existing files.
+> 
+> While checking, the majority of arch/arm64/boot/dts/qcom/pm*.dtsi uses BSD-3-Clause
+> so it seems this was done for quite a while now.
 
-Probably a bad copy-paste from other existing files.
+If it is derivative work (of upstrea, downstream), then you might have
+to keep BSD-3. But if not, how about changing it to BSD-2?
 
-While checking, the majority of arch/arm64/boot/dts/qcom/pm*.dtsi uses BSD-3-Clause
-so it seems this was done for quite a while now.
-
-> 
->> +/*
->> + * Copyright (c) 2022, Linaro Limited
->> + */
->> +
->> +#include <dt-bindings/interrupt-controller/irq.h>
->> +#include <dt-bindings/spmi/spmi.h>
->> +
->> +/ {
->> +	thermal-zones {
->> +		pm8010-m-thermal {
->> +			polling-delay-passive = <100>;
->> +			polling-delay = <0>;
->> +
->> +			thermal-sensors = <&pm8010_m_temp_alarm>;
->> +
->> +			trips {
->> +				trip0 {
->> +					temperature = <95000>;
->> +					hysteresis = <0>;
->> +					type = "passive";
->> +				};
->> +
->> +				trip1 {
->> +					temperature = <115000>;
->> +					hysteresis = <0>;
->> +					type = "hot";
->> +				};
->> +			};
->> +		};
->> +
->> +		pm8010-n-thermal {
->> +			polling-delay-passive = <100>;
->> +			polling-delay = <0>;
->> +
->> +			thermal-sensors = <&pm8010_n_temp_alarm>;
->> +
->> +			trips {
->> +				trip0 {
->> +					temperature = <95000>;
->> +					hysteresis = <0>;
->> +					type = "passive";
->> +				};
->> +
->> +				trip1 {
->> +					temperature = <115000>;
->> +					hysteresis = <0>;
->> +					type = "hot";
->> +				};
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +
-> 
-> Just one blank line.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Best regards,
+Krzysztof
 
