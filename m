@@ -2,80 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA81462EF2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:24:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42F4F62EF45
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:28:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241409AbiKRIYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 03:24:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
+        id S241440AbiKRI2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 03:28:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241392AbiKRIYu (ORCPT
+        with ESMTP id S241391AbiKRI2a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 03:24:50 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 965AA68C5B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:24:45 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id w14so8110243wru.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:24:45 -0800 (PST)
+        Fri, 18 Nov 2022 03:28:30 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B360BCF2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:28:24 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id c25so5871770ljr.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:28:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GiBxSrL28JGP0DNg6s8GgXKGYTQyCsmgm2nfUqqKcn0=;
-        b=r9D596iI5oH2Q20YxqLfmXNZWeSrDF+EeAgL8EC45v2B0xm5tb1c2LpX8OKlnVp7aE
-         ULNvkfHu5Ocbi5YL4H/Mln5dGws81C/eAckKlZ25Ss6IVeyxE+RRkeOnwVc0avbpJCGv
-         Dw7JyLiM6LIuSXOZ/ujnutUiBm7WauQxeYNdHxhR5+vK+sdAkhdwV+BKs6G4ZeigTZ3A
-         6sXxKgbzsA67/5GpBsKNv+Y7VemYH2/fWz4Ewlb6NbPsxfw9plx6xK2HNGNKvbb2+RMg
-         8pSGY+ko2IPUeBN3pyXYFXjnkU5Xl0j79pOg1S9fxeS5AZFCeSypmbbhZJLdhRgOFyYv
-         1dyA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MrA5CDs46lQZm6VaAVmPmV1Nyk9XIySNq9lvhXdo7k8=;
+        b=yIT6wd8Tn/4EigMdSev3RTx1dShvONUZ1o2LJic5y3UzW8LgMuG7uFp80Y8Mw7p+2i
+         u+Hx+MWiciMmXSYnrFx98cxa4sbmSAURAUt99p8E3r2tMmF0ygoLGxcFQPJrif3jPMLj
+         y0DxRVohO6j383Jju+uqZkJFVPAKCT7G1d+SNz0aRrDl59ec+iH3SvLunNJnRAN3fFHp
+         uj/yuz8SV/cGRRKi6lGP5BHU+Y9YeVlbn5zwGo+B4clkg1nQfYqsfFdJXz60NiVE7C5x
+         xoWYk/DHjlYtipany3Ms311spap+ZgR86DO9tnSirVslPkUYj7drcMZpd/Ds56w7qUSX
+         eO2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GiBxSrL28JGP0DNg6s8GgXKGYTQyCsmgm2nfUqqKcn0=;
-        b=IQVW/iaxW4yV0dJFdREJvIe0TwLh4EK1Ml3xiwwQC3ZI1SX6TcIEuR88HTYc+ELIcR
-         LbUgblcA0BbKZqXPNbeomeCxu2JFEk0hcZVz8lDOS+EmSSDtW2iwDoNNgC4BuM3m6l/p
-         uHg3GeU1SzB4P943ow+u0GnqPvQVA0lAJlq/DmS8JnSRlgX80PIxy421dbQSuFQOAVIF
-         Q4c0vDFHltZ78o0uYlervByeuB2OLKRCBKaOCZvpWjoRoh+kdrwV74RggcPt925xjLg/
-         JCroBqoaWA3k0M5DBoBJCwooc8lqMLU/F8OMaRnHiEXd5gVhBgM6y8oresMXnRyTafx8
-         MoMA==
-X-Gm-Message-State: ANoB5pmabH32AdSZIXz05AqnOSzVvSfofDLPqqDhm14iBZ6U7VSJH+UG
-        ZA6FSuRpc+RBeKteF0fzIRH+J8Mm45npUg==
-X-Google-Smtp-Source: AA0mqf44oDusQvGEljhwkHzIV7/Bt4Y6ek1XYFTCEPTD1VQ6CwTtSS02BM2BGvCWXRmFCaB15PQY5w==
-X-Received: by 2002:a5d:5960:0:b0:241:bd31:fecc with SMTP id e32-20020a5d5960000000b00241bd31feccmr2088932wri.635.1668759884009;
-        Fri, 18 Nov 2022 00:24:44 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05600c4f4400b003cffd3c3d6csm4070084wmq.12.2022.11.18.00.24.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 00:24:43 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 18 Nov 2022 09:24:40 +0100
-Subject: [PATCH v2 3/3] pinctrl: qcom: spmi-gpio: add support for pm8550 & pmr735d
- gpio control
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MrA5CDs46lQZm6VaAVmPmV1Nyk9XIySNq9lvhXdo7k8=;
+        b=2i1Nye0dF16jonlZlM9fgyiPcCC8vNDEjt5TXSV6AbseCCwew+HpSYswCNgaiC3Bej
+         3KM0AvdSBNEa4WxuUhCE1cVf7NebCk9XIYaVEYqm39Yf9DT6Zq4lZ+VEJv0DhMMILWkY
+         Pr+RQv7nIViCn+FRa0HJBzDm7DJsubJLxF1p7H4lXYCOQEGXPG1ZrhXz+YjnDY+OkJ5y
+         jV0HCLSxj0z+9mZDu2WorfJ8sqhvgW8lwGgpCWSYi29Qhwo6xRvuLiwBMR+WCrNsHcPU
+         PKAFj4TT0335rxH23IaI5D/H86ANN2FTWP3TDgW76vPRfk2WXCvqOjrR0b+8k06OVoBh
+         t0ew==
+X-Gm-Message-State: ANoB5plA4vb4yhrkaehwwcrfHpI270DXnB5bqSgbFq+sA+KdOHmgArew
+        Wqzcf9yRCDqhZbr8iv9fnHqD1g==
+X-Google-Smtp-Source: AA0mqf4FSTsj7jWLGFDuUM1KolU0pAAAlYx7n+VRF6tfHUnjgf3Tz4kJo9qfndGCbN01BGn3foVCSQ==
+X-Received: by 2002:a2e:9052:0:b0:26e:eeb:f9cf with SMTP id n18-20020a2e9052000000b0026e0eebf9cfmr2211769ljg.480.1668760070041;
+        Fri, 18 Nov 2022 00:27:50 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id g27-20020a2eb0db000000b0026bf0d71b1esm573326ljl.93.2022.11.18.00.27.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 00:27:49 -0800 (PST)
+Message-ID: <06ac1c86-22f7-97ff-bf59-6fb0994dfcc5@linaro.org>
+Date:   Fri, 18 Nov 2022 09:27:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-spmi-v2-3-b839bf2d558a@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [RFC PATCH 1/9] dt-bindings: drop redundant part of title of
+ shared bindings
+Content-Language: en-US
+To:     Conor Dooley <conor@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-X-Mailer: b4 0.10.1
+        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        netdev@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        linux-usb@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-watchdog@vger.kernel.org
+References: <20221117123850.368213-1-krzysztof.kozlowski@linaro.org>
+ <20221117123850.368213-2-krzysztof.kozlowski@linaro.org>
+ <Y3Z0w6JH1f5zgwvW@spud>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y3Z0w6JH1f5zgwvW@spud>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,44 +93,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550 & pmr735d
-gpio controllers providing GPIO control over SPMI.
+On 17/11/2022 18:52, Conor Dooley wrote:
+> On Thu, Nov 17, 2022 at 01:38:42PM +0100, Krzysztof Kozlowski wrote:
+>> The Devicetree bindings document does not have to say in the title that
+>> it is a "binding", but instead just describe the hardware.  For shared
+>> (re-usable) schemas, name them all as "common properties".
+> 
+> 
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> index 1ab416c83c8d..d2de3d128b73 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> @@ -4,7 +4,7 @@
+>>  $id: http://devicetree.org/schemas/clock/qcom,gcc.yaml#
+>>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>>  
+>> -title: Qualcomm Global Clock & Reset Controller Common Bindings
+>> +title: Qualcomm Global Clock & Reset Controller common parts
+>>  
+>>  maintainers:
+>>    - Stephen Boyd <sboyd@kernel.org>
+> 
+> 
+>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+>> index cf9c2f7bddc2..20ac432dc683 100644
+>> --- a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+>> @@ -4,7 +4,7 @@
+>>  $id: http://devicetree.org/schemas/opp/opp-v2-base.yaml#
+>>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>>  
+>> -title: Generic OPP (Operating Performance Points) Common Binding
+>> +title: Generic OPP (Operating Performance Points) common parts
+>>  
+>>  maintainers:
+>>    - Viresh Kumar <viresh.kumar@linaro.org>
+> 
+> Hey Krzysztof,
+> 
+> Hopefully I've not overlooked something obvious, but it wasnt noted in
+> the commit message - how come these two are "parts" rather than
+> "properties"? The opp one at least don't seem to have much more than
+> properties and patterProperties in it.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+They should be properties, will fix in v2.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index 8c31a8f6b7e4..d65c9f2ece73 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1219,6 +1219,10 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
- 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
- 	{ .compatible = "qcom,pm8450-gpio", .data = (void *) 4 },
-+	{ .compatible = "qcom,pm8550-gpio", .data = (void *) 12 },
-+	{ .compatible = "qcom,pm8550b-gpio", .data = (void *) 12 },
-+	{ .compatible = "qcom,pm8550ve-gpio", .data = (void *) 8 },
-+	{ .compatible = "qcom,pm8550vs-gpio", .data = (void *) 6 },
- 	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
- 	{ .compatible = "qcom,pm8941-gpio", .data = (void *) 36 },
- 	/* pm8950 has 8 GPIOs with holes on 3 */
-@@ -1230,11 +1234,13 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	{ .compatible = "qcom,pmi8994-gpio", .data = (void *) 10 },
- 	{ .compatible = "qcom,pmi8998-gpio", .data = (void *) 14 },
- 	{ .compatible = "qcom,pmk8350-gpio", .data = (void *) 4 },
-+	{ .compatible = "qcom,pmk8550-gpio", .data = (void *) 6 },
- 	{ .compatible = "qcom,pmm8155au-gpio", .data = (void *) 10 },
- 	/* pmp8074 has 12 GPIOs with holes on 1 and 12 */
- 	{ .compatible = "qcom,pmp8074-gpio", .data = (void *) 12 },
- 	{ .compatible = "qcom,pmr735a-gpio", .data = (void *) 4 },
- 	{ .compatible = "qcom,pmr735b-gpio", .data = (void *) 4 },
-+	{ .compatible = "qcom,pmr735d-gpio", .data = (void *) 2 },
- 	/* pms405 has 12 GPIOs with holes on 1, 9, and 10 */
- 	{ .compatible = "qcom,pms405-gpio", .data = (void *) 12 },
- 	/* pmx55 has 11 GPIOs with holes on 3, 7, 10, 11 */
 
--- 
-b4 0.10.1
+Best regards,
+Krzysztof
+
