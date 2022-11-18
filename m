@@ -2,54 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 982D862FE1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 20:41:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CE0662FED0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 21:27:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235454AbiKRTld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 14:41:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54774 "EHLO
+        id S230158AbiKRU1h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 15:27:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235313AbiKRTlR (ORCPT
+        with ESMTP id S229940AbiKRU1g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 14:41:17 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 541CB8FE72
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 11:41:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E0D0F62761
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 19:41:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EDEC433D7;
-        Fri, 18 Nov 2022 19:41:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668800470;
-        bh=posWlieo1HSkWlOFf28tzyqA6SJP9dICLx1Oja9VN1U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=uxfkf96ws4hTQIOMAxWB6fSW1AeGR3M+tedJmd+hLs8YbZTVwPyD5mQRk3ddhshjN
-         wtL4jTt8dywv14Zn3U89haALOPgLt99cRQZKDmu4+lVi7knSgVfM1z3lcx5dSp4yqT
-         NNdhKGrRqwxkG1ZEqkuMwHE84KCyyq6LD5DAokUvThXTyoGzfjJM9+zLVrd8O0zSEy
-         xSXX3bRrcfqLef6Aj8Y8CXrfmP6zhwuhJEkbjcJ3BXfht5yOmYfUj8eVmt/LrYV0xs
-         Z1sGW+mzWAqDy5Bbei2bbn85h5inKbzOk7R2krBENhvCpjNXrkQCHooM94vZpGEaIN
-         QRZtpHAz1B2OQ==
-From:   Will Deacon <will@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>, patches@linaro.org
-Subject: Re: [PATCH 0/2] SM6350 SMMUv2
-Date:   Fri, 18 Nov 2022 19:40:44 +0000
-Message-Id: <166878100009.1783378.10278950075023196223.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20221117094422.11000-1-konrad.dybcio@linaro.org>
-References: <20221117094422.11000-1-konrad.dybcio@linaro.org>
+        Fri, 18 Nov 2022 15:27:36 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40AF1333
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 12:27:34 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id n188so4679775iof.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 12:27:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=j6b228sSBdmEe622PJPDcidu4wKiIoq5NrJur1C1NIQ=;
+        b=Rp2BQyogGJZQ7ZJZU5zktR/shwNgmYdk+YIhpqwuoI1mEaAsPi6k4IGEGidbqcsErp
+         0amawcgipK1ioOyWiU/787JHnl9fgdRHjZv9gQE+OL3KOGlcI8HWVTbO9eAtWkRm+PYU
+         EDs8AG73P2oeMBc/EOKlKeCXmggbkHjUzGX14=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j6b228sSBdmEe622PJPDcidu4wKiIoq5NrJur1C1NIQ=;
+        b=GY25wqJUoGMrOHcB/1n8TRei2ldGsgK0RnZxivsPCFhq6dphyO4eccME94Sfqkt6EP
+         rDKtv36+GsBzhZ0wuwXOMZS5H7mcvp75GWYsEfTF2ynPJ3vgiXHtcgW3VNa6o860uQeX
+         rSqlNe4Xr/o5lSDmEfqNy0Y2+0eC+J7G4JVVsFRbon3CJU2o/YnpZTR83QDVTIRiANcU
+         ONf6wNcCC63lHwND2soC2P8N3/SSw+qTOK6h75EW0dp0J9x59Ddkrm7qxJ38a+maSreB
+         UOD12qpa032jPNkD6RbTcpabwIIk63/mGVKt5kC2nhX312JTS5Q4lb3Gu39o1MX8XC2V
+         PSmA==
+X-Gm-Message-State: ANoB5plx2KMbmSyYskHFqhoeS5gPJVr0ciu9mWtFltob0H2Tekc9PYY5
+        MIynKDXPxBi/yEk/7BmLra79Ww==
+X-Google-Smtp-Source: AA0mqf7OCpSwusxcSllfX3v77am0db2DyFyUduQIBkL2WKNHjBjLxPzprfSPv7kIZaIu2CsVhWh+LA==
+X-Received: by 2002:a5e:df46:0:b0:6bb:e329:fcd7 with SMTP id g6-20020a5edf46000000b006bbe329fcd7mr4127553ioq.206.1668803253589;
+        Fri, 18 Nov 2022 12:27:33 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id o8-20020a056e0214c800b002f9f44625fbsm1512925ilk.52.2022.11.18.12.27.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 12:27:33 -0800 (PST)
+Date:   Fri, 18 Nov 2022 20:27:32 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>
+Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
+ max latencies
+Message-ID: <Y3fqtMKzRMAI7ivW@google.com>
+References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,29 +78,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Nov 2022 10:44:20 +0100, Konrad Dybcio wrote:
-> SM6350 has a SMMUv2-compatible(-ish, obviously) instance that
-> is responsible for working with Adreno and its GMU.
+On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
+> In ASPM driver, LTR threshold scale and value are updated based on
+> tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
+> LTR threshold scale and value are greater values than max snoop/non-snoop
+> value.
 > 
-> Recently, it was decided that there is no point in adding more
-> mmu-500 compatibles to the driver, however after chatting with
-> Dmitry on IRC, it was concluded that it's okay to add that for v2, as
-> these older implementations can vary so much from SoC to SoC that
-> having a common compatible is really not feasible..
+> Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+> reported snoop/no-snoop values is greater than or equal to
+> LTR_L1.2_THRESHOLD value.
 > 
-> [...]
+> Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> 
+> I am taking this patch forward as prasad is no more working with our org.
+> changes since v6:
+> 	- Rebasing with pci/next.
+> changes since v5:
+> 	- no changes, just reposting as standalone patch instead of reply to
+> 	  previous patch.
+> Changes since v4:
+> 	- Replaced conditional statements with min and max.
+> changes since v3:
+> 	- Changed the logic to include this condition "snoop/nosnoop
+> 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
+> Changes since v2:
+> 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+> Changes since v1:
+> 	- Added missing variable declaration in v1 patch
+> ---
+>  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+> 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index 928bf64..2bb8470 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  {
+>  	struct pci_dev *child = link->downstream, *parent = link->pdev;
+>  	u32 val1, val2, scale1, scale2;
+> +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
+>  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+>  	u32 ctl1 = 0, ctl2 = 0;
+>  	u32 pctl1, pctl2, cctl1, cctl2;
+> +	u16 ltr;
+> +	u16 max_snoop_lat, max_nosnoop_lat;
+>  
+>  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+>  		return;
+>  
+> +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+> +	if (!ltr)
+> +		return;
+> +
+> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+> +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+> +
+> +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
+> +
+> +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
+> +
+> +	/* choose the greater max scale value between snoop and no snoop value*/
+> +	max_scale = max(max_snp_scale, max_nsnp_scale);
+> +
+> +	/* choose the greater max value between snoop and no snoop scales */
+> +	max_val = max(max_snp_val, max_nsnp_val);
 
-Applied to will (for-joerg/arm-smmu/bindings), thanks!
+I suppose the goal is to dermine the max of snoop/no-snoop latency. Taking the
+max of scale and value separately won't yield the correct result when the scale
+is different for snoop vs no-snoop. Instead you need to convert scale + value
+to ns and determine the max of that (as done for 't_power_on').
 
-[1/2] dt-bindings: arm-smmu: Add SM6350 GPU SMMUv2
-      https://git.kernel.org/will/c/5a47cb4df38b
-[2/2] iommu/arm-smmu-qcom: Add SM6350 SMMUv2
-      https://git.kernel.org/will/c/3811a7283a0a
+> +
+>  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+>  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+>  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	 */
+>  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+>  	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> +
+> +	/*
+> +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+> +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
+> +	 */
+> +	scale = min(scale, max_scale);
+> +	value = min(value, max_val);
 
-Cheers,
--- 
-Will
+This is wrong for the same reason as above, as Bjorn also pointed out in an earlier
+comment.
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+Even with the values calculated correctly I'm not sure it this is the right
+thing to do, but I know little about LTR. In any case this patch reduces
+power consumption of the Kioxia NVMe significantly, essentially by
+programming an LTR_L1.2_THRESHOLD of 0ns instead of 86ns.
+
+I just came across Bjorn's recent 'PCI/ASPM: Fix L1SS issues' series [1] that
+corrects the LTR_L1.2_THRESHOLD calculation and landed upstream, unfortunately
+it doesn't magically fix the issues with the Kioxia NVMe :(
+
+[1] https://lore.kernel.org/lkml/ca836507-50ca-13bc-ef88-7f69b1333c99@linux.intel.com/T/#m3f223b7e582052159de7538bcaf2bea6d2071472
