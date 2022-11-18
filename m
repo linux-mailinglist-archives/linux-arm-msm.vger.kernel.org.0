@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A37E62F02D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:54:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64FD062F03A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241591AbiKRIyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 03:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45882 "EHLO
+        id S232532AbiKRI5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 03:57:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241622AbiKRIx4 (ORCPT
+        with ESMTP id S241462AbiKRI5C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 03:53:56 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B9963CE6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:53:53 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id cl5so8197558wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:53:53 -0800 (PST)
+        Fri, 18 Nov 2022 03:57:02 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B363263CC9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:57:00 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id ja4-20020a05600c556400b003cf6e77f89cso6080468wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:57:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QZM+/eA5EeYgU6vVbsCp5elFhU52KA03Cvx4YSfR2fc=;
-        b=ISJ9rEXISkwZ7jZ+xw2nFd42wbqUUrS9KtVTxT0F8TpEmfuvVTuyKqSH0dN6xVGn+d
-         YbokNeDKP3b3NA9Ltkhxx46muzphG6zJ6ewb7Od+5r6q2D9TlmM0PZl/mxrAuzQ4LuXv
-         8YWmFY/ZXPCUKYwaSfpnHXVvlDVWiDpLuD2gNo0IQMit37lppX1xq8zdHlWAlIoRaIJx
-         fp1jyYlGZ9aTvXsyHwuIDNUvliQXnn/rJ33QUwWJVT/YzrUfV1s0cGUkem4U2VGproNR
-         EezPg1IHfsJ6jQx/NNHvJ6EV61rDEPhm+4hmpKQCOVX4YO/71yIiky67pG2/HUXzBVT7
-         ctiw==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q1kOW8Zv0Np4otaz9P31FD9vjazCm0/Q7hJnXznvk8U=;
+        b=G0t14pfZ6HAEJjoZQjg8wIOPAedDJ+YgOr0BU68ZXxHM8ybVXaOd8SbBTcY+wtIPb+
+         JFSla7CSJ0icoNmtiPN+sxubusDxlueoHtUzTotsucJdUVF/Stp03TJoQ2+giPdIF098
+         I0QMLp2N/s/bnMWMu3WtQ91YGHcdq26coHdL69loeWf0H+nCYJi6+DjJfMRPdh+iPVxv
+         D6UwgcMBz+XmOnitK+rVeWG8t3JZWf08qBjUb7N4+k/I4VWGggaBgpqLKPbuz4tP/asX
+         Tsb36Now+A+t5VljTLdCBqON2DsySMKmqOf2EjTgF9rEMLdsF8eZMeX5/GgO2AB3ihuK
+         umzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QZM+/eA5EeYgU6vVbsCp5elFhU52KA03Cvx4YSfR2fc=;
-        b=1CH61ZQxnenSoKaqfWHf01GUKu89Rl3ZjTCiVyOzLspljwrtgXOHQknmZgYpTYBPHB
-         8cgU3PLr4R+qSYN/fDxtlecaLUfXPqoHh7th6F53L+9Or0AYxsVpnVyu2ftULhWr9X2X
-         TR7T/UxBMWwLEUbMJZKpds4vh6wVAczkExvI+YjC03QXL3KhRsA2sutZsRsbq+2QCURT
-         TS5qCt6aJIvKIDFSYL9kU7mbEuLh1st1R1mMcTYtebm/ExCcrckEadwoe3v5JwsUGDWA
-         gYvMp1Q5+5a4Q3cyTo7je2YRXYCgF6gEaIb5PvDVu8TslEcZYBq+VmHEc1xn/EjvRzzo
-         EZ6A==
-X-Gm-Message-State: ANoB5pkb5oSyXkEY0f0+hHDwXEhhrkXpPNqCLvgkwQo+S7JvjOIgsXfS
-        fGewb8UCvspgAVkArk0LoX9/yQ==
-X-Google-Smtp-Source: AA0mqf49sAoUGo4U6vUD/SoNWKrkDJHvMZdu1vEWWxXTQLuO4XuQTJtsxKvr4nx0BFStN2Yb/56KAg==
-X-Received: by 2002:adf:ea0b:0:b0:236:695b:6275 with SMTP id q11-20020adfea0b000000b00236695b6275mr3789781wrm.116.1668761631867;
-        Fri, 18 Nov 2022 00:53:51 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id a13-20020a5d53cd000000b002383edcde09sm2971264wrw.59.2022.11.18.00.53.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 00:53:51 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 18 Nov 2022 09:53:49 +0100
-Subject: [PATCH v2 2/2] soc: qcom: add MDSS DSM memory driver
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q1kOW8Zv0Np4otaz9P31FD9vjazCm0/Q7hJnXznvk8U=;
+        b=0wj7xSUfQK3oLuKNbzPDAshsLMOJNK6dsv4BfjNfuoBaERSCbYNQ7hicDfGo+zkj13
+         td1o2GOZctHKw6CI9pBL1Ks0VIkdZT/0PXVlZ1W3/pILrEhZ9ppka62MHhKNcKvFkdnv
+         I5wT+jcjYmGzvx36jnnD19bE7cvGyXcRm40Fn4vGPK+HnBKEG5bZyZTQjgIXkomt6/3q
+         NsQ7OA0GxocMjjfepcL36wdA9o3/03YnWwB4v3ThNjY84GaFzaQ8Qy+vNNHiNT0sij2M
+         J3cJ/hlEA41cDwfx5ncYYbBUipBv/LYQ2k+0abNLRIjORn88tgm7dnAnZPfiC1teCPzA
+         eACA==
+X-Gm-Message-State: ANoB5pmNWU8zus+RR3adrE7WVETia9sY13GGR/ODZ59azinP2TCmWUiO
+        y0yf79lsrVNsaP0F2jgXYgvXMw==
+X-Google-Smtp-Source: AA0mqf7aU3sYbBqKcTbkgAjuGCOJkCx5lVhg5h8ag0Pb++K/j5PtquzcyBt2t1XqTMWFzmQyiBzkRQ==
+X-Received: by 2002:a05:600c:4a9a:b0:3c6:d811:6cff with SMTP id b26-20020a05600c4a9a00b003c6d8116cffmr7923234wmp.43.1668761819090;
+        Fri, 18 Nov 2022 00:56:59 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f7cc:460c:56ae:45a? ([2a01:e0a:982:cbb0:f7cc:460c:56ae:45a])
+        by smtp.gmail.com with ESMTPSA id z5-20020a056000110500b0022cc3e67fc5sm2994295wrw.65.2022.11.18.00.56.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 00:56:58 -0800 (PST)
+Message-ID: <2c1f2d88-99ed-c0a2-02f9-02b4bc4429ea@linaro.org>
+Date:   Fri, 18 Nov 2022 09:56:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-2-f7c65d6f0e55@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-0-f7c65d6f0e55@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-0-f7c65d6f0e55@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: document pm8550,
+ pm8550b, pm8550ve, pm8550vs, pmk8550, pm8010 & pmr735d
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-X-Mailer: b4 0.10.1
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-spmi-v2-1-b839bf2d558a@linaro.org>
+ <f20a8dff-fb51-4000-dbb6-29cb8b0d223d@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <f20a8dff-fb51-4000-dbb6-29cb8b0d223d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,166 +90,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a driver for the Qualcomm Modem Processing SubSystem DSM memory
-used to assign such regions of memory with remote MPSS processors.
+On 18/11/2022 09:52, Konrad Dybcio wrote:
+> 
+> 
+> On 18/11/2022 09:24, Neil Armstrong wrote:
+>> Document compatible for the pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550.
+>> pm8010 & pmr735d SPMI PMICs
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+> Didn't checkpatch complain about the length of this patch's subject?
 
-This memory zone is shared between the APPS and the MPSS subsystem,
-and must be configured during the whole lifetime of the system.
+No, not even with --strict
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/of/platform.c           |  1 +
- drivers/soc/qcom/Kconfig        | 10 +++++
- drivers/soc/qcom/Makefile       |  1 +
- drivers/soc/qcom/mpss_dsm_mem.c | 95 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 107 insertions(+)
+> I propose:
+> 
+> dt-bindings: mfd: qcom,spmi-pmic: document SM8550 PMICs
+> 
+> or
+> 
+> dt-bindings: mfd: qcom,spmi-pmic: document PMICs bundled with SM8550
 
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 3507095a69f6..d4bb03292f45 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -505,6 +505,7 @@ EXPORT_SYMBOL_GPL(of_platform_default_populate);
- 
- static const struct of_device_id reserved_mem_matches[] = {
- 	{ .compatible = "phram" },
-+	{ .compatible = "qcom,mpss-dsm-mem" },
- 	{ .compatible = "qcom,rmtfs-mem" },
- 	{ .compatible = "qcom,cmd-db" },
- 	{ .compatible = "qcom,smem" },
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 024e420f1bb7..7624a8af56bf 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -95,6 +95,16 @@ config QCOM_QMI_HELPERS
- 	tristate
- 	depends on NET
- 
-+config QCOM_MPSS_DSM_MEM
-+	tristate "Qualcomm Modem Processing SubSystem DSM memory driver"
-+	depends on ARCH_QCOM
-+	select QCOM_SCM
-+	help
-+	  The Qualcomm Modem Processing SubSystem DSM memory driver is used to
-+	  assign regions of DSM memory with remote MPSS processors.
-+
-+	  Say y here if you intend to boot the modem remoteproc.
-+
- config QCOM_RMTFS_MEM
- 	tristate "Qualcomm Remote Filesystem memory driver"
- 	depends on ARCH_QCOM
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index d66604aff2b0..0d0e850f1a18 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -16,6 +16,7 @@ qcom_rpmh-y			+= rpmh-rsc.o
- qcom_rpmh-y			+= rpmh.o
- obj-$(CONFIG_QCOM_SMD_RPM)	+= smd-rpm.o
- obj-$(CONFIG_QCOM_SMEM) +=	smem.o
-+obj-$(CONFIG_QCOM_MPSS_DSM_MEM) += mpss_dsm_mem.o
- obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
- obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
- obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
-diff --git a/drivers/soc/qcom/mpss_dsm_mem.c b/drivers/soc/qcom/mpss_dsm_mem.c
-new file mode 100644
-index 000000000000..5584bd101aee
---- /dev/null
-+++ b/drivers/soc/qcom/mpss_dsm_mem.c
-@@ -0,0 +1,95 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022 Linaro Ltd.
-+ */
-+
-+#include <linux/kernel.h>
-+#include <linux/err.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of.h>
-+#include <linux/of_reserved_mem.h>
-+#include <linux/slab.h>
-+#include <linux/qcom_scm.h>
-+
-+struct qcom_mpss_dsm_mem {
-+	phys_addr_t addr;
-+	phys_addr_t size;
-+
-+	unsigned int perms;
-+};
-+
-+static int qcom_mpss_dsm_mem_probe(struct platform_device *pdev)
-+{
-+	struct device_node *node = pdev->dev.of_node;
-+	struct qcom_scm_vmperm perm;
-+	struct reserved_mem *rmem;
-+	struct qcom_mpss_dsm_mem *mpss_dsm_mem;
-+	int ret;
-+
-+	if (!qcom_scm_is_available())
-+		return -EPROBE_DEFER;
-+
-+	rmem = of_reserved_mem_lookup(node);
-+	if (!rmem) {
-+		dev_err(&pdev->dev, "failed to acquire memory region\n");
-+		return -EINVAL;
-+	}
-+
-+	mpss_dsm_mem = kzalloc(sizeof(*mpss_dsm_mem), GFP_KERNEL);
-+	if (!mpss_dsm_mem)
-+		return -ENOMEM;
-+
-+	mpss_dsm_mem->addr = rmem->base;
-+	mpss_dsm_mem->size = rmem->size;
-+
-+	perm.vmid = QCOM_SCM_VMID_MSS_MSA;
-+	perm.perm = QCOM_SCM_PERM_RW;
-+
-+	mpss_dsm_mem->perms = BIT(QCOM_SCM_VMID_HLOS);
-+	ret = qcom_scm_assign_mem(mpss_dsm_mem->addr, mpss_dsm_mem->size,
-+				  &mpss_dsm_mem->perms, &perm, 1);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "assign memory failed\n");
-+		return ret;
-+	}
-+
-+	dev_set_drvdata(&pdev->dev, mpss_dsm_mem);
-+
-+	return 0;
-+}
-+
-+static int qcom_mpss_dsm_mem_remove(struct platform_device *pdev)
-+{
-+	struct qcom_mpss_dsm_mem *mpss_dsm_mem = dev_get_drvdata(&pdev->dev);
-+	struct qcom_scm_vmperm perm;
-+
-+	perm.vmid = QCOM_SCM_VMID_HLOS;
-+	perm.perm = QCOM_SCM_PERM_RW;
-+
-+	qcom_scm_assign_mem(mpss_dsm_mem->addr, mpss_dsm_mem->size,
-+			    &mpss_dsm_mem->perms, &perm, 1);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id qcom_mpss_dsm_mem_of_match[] = {
-+	{ .compatible = "qcom,mpss-dsm-mem" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, qcom_mpss_dsm_mem_of_match);
-+
-+static struct platform_driver qcom_mpss_dsm_mem_driver = {
-+	.probe = qcom_mpss_dsm_mem_probe,
-+	.remove = qcom_mpss_dsm_mem_remove,
-+	.driver  = {
-+		.name  = "qcom_mpss_dsm_mem",
-+		.of_match_table = qcom_mpss_dsm_mem_of_match,
-+	},
-+};
-+
-+module_platform_driver(qcom_mpss_dsm_mem_driver);
-+
-+MODULE_AUTHOR("Linaro Ltd");
-+MODULE_DESCRIPTION("Qualcomm DSM memory driver");
-+MODULE_LICENSE("GPL");
+I'll change to of these if I need to resend,
 
--- 
-b4 0.10.1
+Thanks,
+Neil
+
+> 
+> 
+> Konrad
+>>   Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> index c8362efd4345..8c9b042b4f30 100644
+>> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> @@ -43,6 +43,7 @@ properties:
+>>             - qcom,pm8004
+>>             - qcom,pm8005
+>>             - qcom,pm8009
+>> +          - qcom,pm8010
+>>             - qcom,pm8019
+>>             - qcom,pm8028
+>>             - qcom,pm8110
+>> @@ -54,6 +55,10 @@ properties:
+>>             - qcom,pm8350
+>>             - qcom,pm8350b
+>>             - qcom,pm8350c
+>> +          - qcom,pm8550
+>> +          - qcom,pm8550b
+>> +          - qcom,pm8550ve
+>> +          - qcom,pm8550vs
+>>             - qcom,pm8841
+>>             - qcom,pm8909
+>>             - qcom,pm8916
+>> @@ -70,10 +75,12 @@ properties:
+>>             - qcom,pmi8998
+>>             - qcom,pmk8002
+>>             - qcom,pmk8350
+>> +          - qcom,pmk8550
+>>             - qcom,pmm8155au
+>>             - qcom,pmp8074
+>>             - qcom,pmr735a
+>>             - qcom,pmr735b
+>> +          - qcom,pmr735d
+>>             - qcom,pms405
+>>             - qcom,pmx55
+>>             - qcom,pmx65
+>>
+
