@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 276F362FDD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 20:16:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DE9862FDE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 20:23:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242432AbiKRTQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 14:16:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43730 "EHLO
+        id S235043AbiKRTXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 14:23:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242153AbiKRTQN (ORCPT
+        with ESMTP id S234971AbiKRTXD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 14:16:13 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3F04B99C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 11:16:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1668798970; x=1700334970;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=4c0RnUr6SOsHxsYhuejWyDU/paf7akST0jijN6gV6T4=;
-  b=sdApPgKux3ZsVrX7F2se8jXeb+BItYD1njI1BChK5Yj+FQ6zvtHuQ7kI
-   FlinFYxus/RnJx29kj9mhBsJFUdSpFASgW6XMLMfotTQxjAWWw21U8DgJ
-   8RaLtdl7EMRp2+u9HrAgwr+wWo/2uHSd76CiF06mr+P2jFhSnUOm4YTHk
-   E=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Nov 2022 11:16:09 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2022 11:16:09 -0800
-Received: from [10.71.111.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 18 Nov
- 2022 11:16:08 -0800
-Message-ID: <fd363264-8f91-6155-6a74-1dd3b12e7cdd@quicinc.com>
-Date:   Fri, 18 Nov 2022 11:15:49 -0800
+        Fri, 18 Nov 2022 14:23:03 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6369965855;
+        Fri, 18 Nov 2022 11:23:02 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AIFuDVb018305;
+        Fri, 18 Nov 2022 19:22:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=8jQiITS0fM+Mr8QA6U5AC4uhe77ah3q3akm+ii7AUok=;
+ b=Nps2RCLqPMRy+svbtsMjtzVgpZN3vX5EdValZHodW6s0aXCMuCZwV1NFS1m84BnXUlVG
+ y7N9LHQkryYHBxy6dkFqGHNuWRLJ+V/GzbjNOadGW/V2bycVtk385N4WbluHHZuZ+Mwu
+ a2XzYon7NPlLpaws1KkqSIdyiXZdhDNjdk8FQQ2ydMLIDw+O44WORjsdYBNImQFBaj/v
+ Au2OjSrLZqXcZMjsCfVi0KWxvTa/8AFonEBf8Akr8VdK6OqbQSW3Nw4XZai0DVmyzpmU
+ nSJYciddcPU6eR2iy2uP+re5uBLkK/NOzNmGUd/k/gNDI77BRJJc/LyLvLIF/lo021h3 AA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kx0s5jpka-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 18 Nov 2022 19:22:58 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AIJMv65012082
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 18 Nov 2022 19:22:58 GMT
+Received: from hu-molvera-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 18 Nov 2022 11:22:57 -0800
+From:   Melody Olvera <quic_molvera@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH v4 0/2] Add base device tree files for QDU1000/QRU1000
+Date:   Fri, 18 Nov 2022 11:22:39 -0800
+Message-ID: <20221118192241.29384-1-quic_molvera@quicinc.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [RFC PATCH 1/3] drm: Introduce color fill properties for drm
- plane
-To:     Daniel Vetter <daniel@ffwll.ch>
-CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Simon Ser <contact@emersion.fr>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_abhinavk@quicinc.com>, <daniel.vetter@ffwll.ch>,
-        <laurent.pinchart@ideasonboard.com>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <20221028225952.160-2-quic_jesszhan@quicinc.com>
- <eddf4726-3d7e-601a-51ac-03adb2dd822b@linaro.org>
- <fqY-wVvRxd553E0flH80_NaZMpmiVTIdhvu6F31qM9T4yQ0L5fbT9JiixWIhDcDAt3Hxy1roQxwntvgVEnqm5WK6dzEIKqXnlLRcywGhYH4=@emersion.fr>
- <Y2uwjKCN4KGzm3aN@phenom.ffwll.local>
- <ee755c43-434a-a990-0efa-ed5c6baa237e@linaro.org>
- <Y2uyOcVbadRwr9/O@phenom.ffwll.local>
- <1f291321-1319-f6d8-b2cb-85ddbe970766@quicinc.com>
- <Y24ZsAhAscVJd4Uf@phenom.ffwll.local>
-Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <Y24ZsAhAscVJd4Uf@phenom.ffwll.local>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PYEGCMpp9j5scYSVBju68TGMPmqAh0_m
+X-Proofpoint-ORIG-GUID: PYEGCMpp9j5scYSVBju68TGMPmqAh0_m
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-18_06,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 mlxlogscore=519 suspectscore=0 impostorscore=0
+ adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211180115
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,114 +79,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds the base device tree files and DTS support for the
+Qualcomm QDU1000 and QRU1000 IDP SoCs, including the clocks, tlmm, smmu,
+regulators, mmc, interconnects, cpufreq, and qup. 
+
+This patchset is based off of [1] which adds support for the PMIC arb used
+on these SoCs. It also requires the dt-bindings from [2-10].
+
+The Qualcomm Technologies, Inc. Distributed Unit 1000 and Radio Unit
+1000 are new SoCs meant for enabling Open RAN solutions. See more at
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qualcomm_5g_ran_platforms_product_brief.pdf
+
+[1] https://lore.kernel.org/all/20220914165212.3705892-3-vkoul@kernel.org/
+[2] https://lore.kernel.org/all/20221118181826.28269-2-quic_molvera@quicinc.com/
+[3] https://lore.kernel.org/all/20221118182039.29236-2-quic_molvera@quicinc.com/
+[4] https://lore.kernel.org/all/20221118182245.31035-1-quic_molvera@quicinc.com/
+[5] https://lore.kernel.org/all/20221026190534.4004945-2-quic_molvera@quicinc.com/
+[6] https://lore.kernel.org/all/20221118182416.4920-1-quic_molvera@quicinc.com/
+[7] https://lore.kernel.org/all/20221118182439.10670-1-quic_molvera@quicinc.com/
+[8] https://lore.kernel.org/all/20221118182512.10916-1-quic_molvera@quicinc.com/
+[9] https://lore.kernel.org/all/20221118182535.11156-1-quic_molvera@quicinc.com/
+[10] https://lore.kernel.org/all/20221118182614.11774-1-quic_molvera@quicinc.com/
+
+Changes from v3:
+- added PCIE and USB clocks
+- added missing qdu1000 compats
+
+Changes from v2:
+- Revised device nodes to match updated dt-bindings
+- Revised rpmh-rsc bindings to allow for generic regulator nodes
+- Updated soc ordering
+- Moved clock node to DTS files
+- Updated regulator nodes to be generic
+- Removed some unnecessary whitespace
+
+Melody Olvera (2):
+  arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+  arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+
+ arch/arm64/boot/dts/qcom/Makefile        |    2 +
+ arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  266 ++++
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 1406 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qru1000-idp.dts |  266 ++++
+ arch/arm64/boot/dts/qcom/qru1000.dtsi    |   27 +
+ 5 files changed, 1967 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
 
 
-On 11/11/2022 1:45 AM, Daniel Vetter wrote:
-> On Wed, Nov 09, 2022 at 05:44:37PM -0800, Jessica Zhang wrote:
->>
->>
->> On 11/9/2022 5:59 AM, Daniel Vetter wrote:
->>> On Wed, Nov 09, 2022 at 04:53:45PM +0300, Dmitry Baryshkov wrote:
->>>> On 09/11/2022 16:52, Daniel Vetter wrote:
->>>>> On Tue, Nov 08, 2022 at 06:25:29PM +0000, Simon Ser wrote:
->>>>>> On Saturday, October 29th, 2022 at 13:23, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
->>>>>>
->>>>>>> On 29/10/2022 01:59, Jessica Zhang wrote:
->>>>>>>
->>>>>>>> Add support for COLOR_FILL and COLOR_FILL_FORMAT properties for
->>>>>>>> drm_plane. In addition, add support for setting and getting the values
->>>>>>>> of these properties.
->>>>>>>>
->>>>>>>> COLOR_FILL represents the color fill of a plane while COLOR_FILL_FORMAT
->>>>>>>> represents the format of the color fill. Userspace can set enable solid
->>>>>>>> fill on a plane by assigning COLOR_FILL to a uint64_t value, assigning
->>>>>>>> the COLOR_FILL_FORMAT property to a uint32_t value, and setting the
->>>>>>>> framebuffer to NULL.
->>>>>>>
->>>>>>> I suppose that COLOR_FILL should override framebuffer rather than
->>>>>>> requiring that FB is set to NULL. In other words, if color_filL_format
->>>>>>> is non-zero, it would make sense to ignore the FB. Then one can use the
->>>>>>> color_fill_format property to quickly switch between filled plane and
->>>>>>> FB-backed one.
->>>>>>
->>>>>> That would be inconsistent with the rest of the KMS uAPI. For instance,
->>>>>> the kernel will error out if CRTC has active=0 but a connector is still
->>>>>> linked to the CRTC. IOW, the current uAPI errors out if the KMS state
->>>>>> is inconsistent.
->>>>>
->>>>> So if the use-case here really is to solid-fill a plane (and not just
->>>>> provide a background color for the crtc overall), then I guess we could
->>>>> also extend addfb to make that happen. We've talked in the past about
->>>>> propertery-fying framebuffer objects, and that would sort out this uapi
->>>>> wart. And I agree the color fill vs PLANE_ID issue is a bit ugly at least.
->>>>>
->>>>> But if the use-cases are all background color then just doing the crtc
->>>>> background color would be tons simpler (and likely also easier to support
->>>>> for more hardware).
->>>>
->>>> No. The hardware supports multiple color-filled planes, which do not have to
->>>> cover the whole CRTC.
->>>
->>> The use case here means the userspace use-case. What the hw can do on any
->>> given chip kinda doesnt matter, which is why I'm asking. KMD uapi is not
->>> meant to reflect 100% exactly what a specific chip can do, but instead:
->>> - provide features userspace actually needs. If you want per-plane fill,
->>>     you need userspace that makes use of per-plane fill, and if all you have
->>>     is crtc background, then that's it.
->>
->> Hey Daniel,
->>
->> The userspace use case we're trying to support is the Android HWC SOLID_FILL
->> hint here [1], which is specifying per-plane fill.
-> 
-> Does surfaceflinger actually use this for more than background fills? Yes
-> I'm annoying, but if we can simplify the kernel driver implementation
-> burden by asking compositors to do the math and simplify things, then I
-> think we should.
+base-commit: 147307c69ba4441ee90c1f8ce8edf5df4ea60f67
+prerequisite-patch-id: 71560eb092532bd776fd114ce98f47a04d6d1419
+prerequisite-patch-id: c39bef976384eacd3ff0c28168bca355e3c1609d
+prerequisite-patch-id: ea9b02a15cff4d70f7c6942a6fad3214adf0175c
+prerequisite-patch-id: f8cc7d94d174033226b5fc222284c9db61f78680
+prerequisite-patch-id: 6a546e15d9d98fe441daed1889bd416658b3a6ec
+prerequisite-patch-id: e927a2eb2f856c847f6fecf4cf750039ead05fad
+prerequisite-patch-id: 58e23632fbba1fe4c8879d5313c6a1091fb5d2c1
+prerequisite-patch-id: 5bc60b1a424af0297cfd64647c41cb3d3e76acc2
+prerequisite-patch-id: 0a0f671fae0526d96f745ff1329b0ff8cbec1082
+-- 
+2.38.1
 
-AFAIK surfaceflinger allows apps to use this for cases beyond just 
-background fill -- an app, for example, can pass the hint for a plane 
-that only partially covers a screen and the driver would be expected to 
-fill just that ROI.
-
-> 
-> We also need an open source implementation for this that works and is
-> tested end-to-end. There's the drm_hwc project, but last time I've checked
-> there's really not much happpening there unfortunately.
-
-FWIW, Simon mentioned in a separate reply that Wayland supports a 1x1 FB 
-support protocol [1] for a similar purpose as this RFC series. I can 
-also create an IGT test meanwhile showing an example of E2E usage.
-
-Thanks,
-
-Jessica
-
-[1] 
-https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/104
-
-> -Daniel
-> 
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->> [1] https://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/graphics/composer/aidl/android/hardware/graphics/composer3/Composition.aidl#52
->>
->>> - we should create uapi with an eye towards what's actually possible on a
->>>     reasonable set of drivers and hw. Sometimes that means a slightly more
->>>     restricted set so that it's possible to implement in more places,
->>>     especially if that restricted feature set still gets the job done for
->>>     userspace.
->>>
->>> Cheers, Daniel
->>> -- 
->>> Daniel Vetter
->>> Software Engineer, Intel Corporation
->>> http://blog.ffwll.ch
-> 
-> -- 
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
