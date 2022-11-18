@@ -2,254 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB21562F526
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 13:41:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22E8B62F530
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 13:41:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241941AbiKRMlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 07:41:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52440 "EHLO
+        id S241473AbiKRMln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 07:41:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241934AbiKRMk5 (ORCPT
+        with ESMTP id S241159AbiKRMl3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 07:40:57 -0500
+        Fri, 18 Nov 2022 07:41:29 -0500
 Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD27B72135
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:40:55 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id u2so6633837ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:40:55 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9122A8CFD1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:41:28 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id u11so6615419ljk.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 04:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8WE/u9tZOiYp5XnpTK4zACGyHGGTIoHPFzXWbuKlnI=;
-        b=JiNxHFMjg0MvK6nZZ10piyuS96/ljLLujdbV/XSU6rC7vhDzvyxsOVbC9yAgEvqdBF
-         AEGImJM7Jv1ROchOG2/89OiSO/J6rbNPvUIi5xqWbxjaGHAm+d4RVsgW2B0q2MOKof63
-         V5fu1sR+/BPvNdWpK5hzRxCRUQrvHCEbhtZK2yk5ATha1nFftzZOrl6QPuq0NZ3baN1D
-         ycjKlEbGFRHqQ9jB5vVaPjiklX3Sr3TblRIcTbNpITsRNZ4gCeS/+7R14MrnK/PsY9qw
-         X2Gcg5M1mh/VV9uh/BRIwKEk7geEmE4I/4YTGFX6F6MUlBIH0G7dKoCBySSFCqHDVqiO
-         /WKQ==
+        bh=a0FTR6z372a+SVrLNdiUVE4A/1f4Z98NLhqS2FM1hNo=;
+        b=QnzB1ZH6VzQ0SLGmOAUmv3pmPocgdO13g3DtWTWwEn8nRE3cPWSWXQOxY8k83pafaf
+         N31xZiPAIoZkn9fGTakPcTAn53BQjMyQ6HpL+7GvJkxiKI2g/aH4CCHwlQv/6VoK86EF
+         FJ5IGH1EFa4kOtzYAAY+P5lAFl0PUoPXDPBRpU2qcdXXE8m0JWJQddbzBvdAfM9A8yYn
+         OjADxR7h4ROKMVswYG3IiTU2vLOHB85tKDb51F10/h+8vxGYhi+lkUXIQFWcwOC6zv2M
+         uribWNj+76MEqHaPJAcoz7KbimeKaxv8n/fdoPG64qvt22qd1kEhNBP8cl74+kY4/aaQ
+         syXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8WE/u9tZOiYp5XnpTK4zACGyHGGTIoHPFzXWbuKlnI=;
-        b=eXuAqw/dyWCMpvG51JM1DMtWGL1C64bkcYMTsjar6kZg7A0TD4OJkDfxqEbgafOKt9
-         v9VabKV2QMjelpXoDkH4G/DvbX78dt79lcWZmmUIApQ6B6NvLCzkgKKX+w9nh01JwcNb
-         cd0acvZ47ymi1w2Qlf/lJuUFf6MHIEsNPr5Yjh0N79TKfjZ4b11qmPobYmXvRF3YZTHr
-         /XLMkhS7iU7s+CI36g0oYvS4clDC01ys0XGt85+5ja6kXDLyUFdmEvpTs+lztD9kynPW
-         93wCkHsuSsUxI6hz7m1GTmL0BP4kFG8PgW4xgz83dunCRQIPbKvR6XpOM/0y5nWEZYft
-         wcWQ==
-X-Gm-Message-State: ANoB5plwkTDu3QxwdmslhcMjXk/5VBHuwfdeGBlPTfvc2mleNgmbYh0W
-        K4b95JPTcf+bIC60ALZkLWQXcQ==
-X-Google-Smtp-Source: AA0mqf4nbHcm9nnkgG+UKIVDD8oMyJEYqAH2H1JDLHq9fJDN/Hjmi0rPJCq+0/lqvYMyZUoJWFUoAg==
-X-Received: by 2002:a2e:7e0a:0:b0:277:6f0:5239 with SMTP id z10-20020a2e7e0a000000b0027706f05239mr2256879ljc.186.1668775254038;
-        Fri, 18 Nov 2022 04:40:54 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u2-20020a2eb802000000b0027718ee951dsm638342ljo.37.2022.11.18.04.40.53
+        bh=a0FTR6z372a+SVrLNdiUVE4A/1f4Z98NLhqS2FM1hNo=;
+        b=UcsPRvkSYe0KlkEDfy6oV78MIuGW4//WhEDMvIo/EA/kd9fzrP7nio6wCiANUgxg10
+         cRdCuxIfavaT1yR/HdMCPkQh6do85GPKfhhd95TduuDPB3BIoFY4Vk4rmfomjufBMZnS
+         jWF+RRRBLJ+ymukcM4Rmm7w/SrPbHJzKP+fdpC5I5e5LYzpr964PdOsdzXC4fX5t19We
+         I7y87TCLReCQ8Z6M8pqrcsjsQLLCtt2Xaon+l7Fm4ZNnFk9JlkLtXfXHj7R77rtzYFqX
+         XMuLlxTcFpUB/1IvA5vMKIpnJOLVU4CTB8yCZDWpRbzHM9x9E+HmS13E5Fp7DUYBVZkx
+         6WBg==
+X-Gm-Message-State: ANoB5plL6XFhqQNhPD2V0qtJnzKIVaIuXI2HvVe+7Rw24nzxJci9cRJn
+        /h2zSJ7Z8nQ+nMHBiOBZzA8lRg==
+X-Google-Smtp-Source: AA0mqf7lErewth5EE2F868DAY6P5GOZSlqtM+eYuoc5OY1KVNj+hLDTJG51LiKE+OKuZfsP2eJgs5g==
+X-Received: by 2002:a2e:8e6e:0:b0:277:92e:e088 with SMTP id t14-20020a2e8e6e000000b00277092ee088mr2309263ljk.140.1668775286907;
+        Fri, 18 Nov 2022 04:41:26 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id y21-20020ac24215000000b004947984b385sm644590lfh.87.2022.11.18.04.41.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 04:40:53 -0800 (PST)
-Message-ID: <7da502e9-f52b-34ce-7911-988e2c356ef9@linaro.org>
-Date:   Fri, 18 Nov 2022 14:40:53 +0200
+        Fri, 18 Nov 2022 04:41:26 -0800 (PST)
+Message-ID: <e3c8121a-5234-1051-40c7-3989189badfa@linaro.org>
+Date:   Fri, 18 Nov 2022 13:41:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v3 3/3] drm/msm/disp/dpu1: add color management support
- for the crtc
-Content-Language: en-GB
-To:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-References: <1668773807-19598-1-git-send-email-quic_kalyant@quicinc.com>
- <1668773807-19598-4-git-send-email-quic_kalyant@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1668773807-19598-4-git-send-email-quic_kalyant@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v1 00/10] iommu/arm-smmu-qcom: Rework Qualcomm SMMU
+ bindings and implementation
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20221114170635.1406534-1-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221114170635.1406534-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 15:16, Kalyan Thota wrote:
-> Add color management support for the crtc provided there are
-> enough dspps that can be allocated from the catalog.
+On 14/11/2022 18:06, Dmitry Baryshkov wrote:
+> The main goal of this patchset is to define a generic qcom,smmu-500
+> binding to be used by newer Qualcomm platforms instead of defining each
+> and every SoC line with no actual differences between the compats.
 > 
-> Changes in v1:
-> - cache color enabled state in the dpu crtc obj (Dmitry)
-> - simplify dspp allocation while creating crtc (Dmitry)
-> - register for color when crtc is created (Dmitry)
+> While preparing this change it was required to cleanup the existing
+> bindings and to rework the way the arm-smmu-qcom implementation handles
+> binding to IOMMU devices.
 > 
-> Changes in v2:
-> - avoid primary encoders in the documentation (Dmitry)
+> Changes since RFC v2:
+>  - Dropped the dts patch, picked up by Bjorn
+>  - Fixed minor nits in commit messages and in-file comments (noted by
+>    Krzysztof and Richard Acayan)
 > 
-> Changes in v3:
-> - add ctm for builtin encoders (Dmitry)
-> 
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Changes since RFC v1:
+>  - Added the dts patch fixing order of clocks in msm8996.dtsi
+>  - Fixed the DT bot errors
+>  - Added separate clause for Google Cheza devices
 
-With two minor nits (stated below) fixed:
+Please continue the version numbering. RFC is also a patch and also a
+version. This is v3. Your next will be v4.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 5 +++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    | 6 ++++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 7 +++++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 7 ++++++-
->   4 files changed, 18 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 4170fbe..6cacaaf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1571,7 +1571,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
->   
->   /* initialize crtc */
->   struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
-> -				struct drm_plane *cursor)
-> +				struct drm_plane *cursor, bool ctm)
->   {
->   	struct drm_crtc *crtc = NULL;
->   	struct dpu_crtc *dpu_crtc = NULL;
-> @@ -1583,6 +1583,7 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
->   
->   	crtc = &dpu_crtc->base;
->   	crtc->dev = dev;
-> +	dpu_crtc->color_enabled = ctm;
->   
->   	spin_lock_init(&dpu_crtc->spin_lock);
->   	atomic_set(&dpu_crtc->frame_pending, 0);
-> @@ -1604,7 +1605,7 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
->   
->   	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
->   
-> -	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
-> +	drm_crtc_enable_color_mgmt(crtc, 0, dpu_crtc->color_enabled, 0);
->   
->   	/* save user friendly CRTC name for later */
->   	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 539b68b..1ec9517 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -136,6 +136,7 @@ struct dpu_crtc_frame_event {
->    * @enabled       : whether the DPU CRTC is currently enabled. updated in the
->    *                  commit-thread, not state-swap time which is earlier, so
->    *                  safe to make decisions on during VBLANK on/off work
-> + * @color_enabled : whether crtc supports color management
->    * @feature_list  : list of color processing features supported on a crtc
->    * @active_list   : list of color processing features are active
->    * @dirty_list    : list of color processing features are dirty
-> @@ -164,7 +165,7 @@ struct dpu_crtc {
->   	u64 play_count;
->   	ktime_t vblank_cb_time;
->   	bool enabled;
-> -
-> +	bool color_enabled;
-
-Keep the empty line after color_enabled please.
-
->   	struct list_head feature_list;
->   	struct list_head active_list;
->   	struct list_head dirty_list;
-> @@ -269,10 +270,11 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc);
->    * @dev: dpu device
->    * @plane: base plane
->    * @cursor: cursor plane
-> + * @ctm: ctm flag
->    * @Return: new crtc object or error
->    */
->   struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
-> -			       struct drm_plane *cursor);
-> +			       struct drm_plane *cursor, bool ctm);
->   
->   /**
->    * dpu_crtc_register_custom_event - api for enabling/disabling crtc event
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 574f2b0..102612c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -572,6 +572,7 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->   static struct msm_display_topology dpu_encoder_get_topology(
->   			struct dpu_encoder_virt *dpu_enc,
->   			struct dpu_kms *dpu_kms,
-> +			struct dpu_crtc *dpu_crtc,
->   			struct drm_display_mode *mode)
->   {
->   	struct msm_display_topology topology = {0};
-> @@ -600,7 +601,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   	else
->   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->   
-> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
-> +	if (dpu_crtc->color_enabled) {
->   		if (dpu_kms->catalog->dspp &&
->   			(dpu_kms->catalog->dspp_count >= topology.num_lm))
->   			topology.num_dspp = topology.num_lm;
-> @@ -635,6 +636,7 @@ static int dpu_encoder_virt_atomic_check(
->   	struct drm_display_mode *adj_mode;
->   	struct msm_display_topology topology;
->   	struct dpu_global_state *global_state;
-> +	struct dpu_crtc *dpu_crtc;
->   	int i = 0;
->   	int ret = 0;
->   
-> @@ -645,6 +647,7 @@ static int dpu_encoder_virt_atomic_check(
->   	}
->   
->   	dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +	dpu_crtc = to_dpu_crtc(crtc_state->crtc);
->   	DPU_DEBUG_ENC(dpu_enc, "\n");
->   
->   	priv = drm_enc->dev->dev_private;
-> @@ -670,7 +673,7 @@ static int dpu_encoder_virt_atomic_check(
->   		}
->   	}
->   
-> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
-> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, dpu_crtc, adj_mode);
->   
->   	/* Reserve dynamic resources now. */
->   	if (!ret) {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 4784db8..b57e261 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -747,6 +747,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   
->   	int primary_planes_idx = 0, cursor_planes_idx = 0, i, ret;
->   	int max_crtc_count;
-> +
->   	dev = dpu_kms->dev;
->   	priv = dev->dev_private;
->   	catalog = dpu_kms->catalog;
-> @@ -804,7 +805,11 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   	/* Create one CRTC per encoder */
->   	i = 0;
->   	drm_for_each_encoder(encoder, dev) {
-> -		crtc = dpu_crtc_init(dev, primary_planes[i], cursor_planes[i]);
-> +		bool _ctm = false;
-> +		if (catalog->dspp_count && dpu_encoder_is_builtin(encoder) &&
-> +			encoder->encoder_type != DRM_MODE_ENCODER_VIRTUAL)
-
-The last condition should be handled in the dpu_encoder_is_bultin()
-
-> +			_ctm = true;
-> +		crtc = dpu_crtc_init(dev, primary_planes[i], cursor_planes[i], _ctm);
->   		if (IS_ERR(crtc)) {
->   			ret = PTR_ERR(crtc);
->   			return ret;
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
