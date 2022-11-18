@@ -2,107 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA65A62FA6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:38:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 406CB62FA80
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:42:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbiKRQip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 11:38:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55216 "EHLO
+        id S242174AbiKRQmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 11:42:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235270AbiKRQio (ORCPT
+        with ESMTP id S242145AbiKRQmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 11:38:44 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77B506204A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:38:43 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id j4so9122088lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:38:43 -0800 (PST)
+        Fri, 18 Nov 2022 11:42:11 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED2869DE5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:42:09 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id x21so7415707ljg.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:42:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=//tIyOnKPA/iZeg3Et4uYN9NmJnJYA0WTAZ1QiP08n8=;
-        b=vKdrftphtMtov+8nlbBce6xE5zlGdHxeDTePcVcvufdsz77Yfps0DeXayZrmIOM3CF
-         ICuPDaCEsuf9SmG4WLgQm4Hp31jctQPoNDGoyxfsuF/Iq7//1AIYUDlMH6vZBKQ48Gk1
-         wYkCI6ul0gXegOxFElSAlFiFP2gGLNwr+lfSXY3BjbQwIJMWI4FzzJOOeSFCAdpidimj
-         cWyeTpNSzEcmTnStP9Z0WxldfLqUtw6cuw4M/pAWHiyTGJn6tVKv1bc7ZCaX00tnmUQL
-         0z+t1iLuReVzr3+1QxXNmbENNzFmIU82+3jvVUhybQP0ZshXj8OR4UfV8nq3Y/kdTwa0
-         FqLA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x7yxRPpkQlxtFzHM7bHG1/Tzv/+e3IcCGQCZXSEVD+0=;
+        b=wJVKA/nwQz03xEDCkQCELWQ9MDDPlVrqUPd4GxJpaTktRUscHD6sxk90EMix+jk3jA
+         W3iWQzEjeCM3HRpDJVF7TXH8EbofaMSZckwrLp827U964n2Hx67j55knk4+oalEk2TSP
+         JaAVKIH2MM586IXMtvobq7wF68edYxQyHl/gcWw+VY8g5XIJuWKxcy4uCBUczNjq6Nw4
+         KSCgJ2Q0GboN5NDnRtqW3rHhlAI9qL2Ooup75sT/EoxwVBeYQAQgHmdPYB1bLe4MJvdi
+         Um83etlYeuoqqeI2PKK7QbxnH3GR3hc0m/r/0FNy+f0ZaWin6SatEf+IDTwrdj26bkJG
+         cJig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=//tIyOnKPA/iZeg3Et4uYN9NmJnJYA0WTAZ1QiP08n8=;
-        b=Cs4jHATHRyh3O5ruggN6YLZ+LQdJzk2FvInWTVyq6t9vf0pomkLnEUnbSZO+elSjrj
-         QCccJO2hP8xnYuAFhyQPB8R5OOEwzhjI2PwzuCmEUH7o3+hiwI2FpsEX5N9Y5tFrESdK
-         0CKqaFOfnubKUR8HxAxhcB0tsKlHzShCwfgrKIsEaWytYGNiQXUTIEqBdyPcTag0mMNB
-         9reOs28SNtiWnwtDkj8mvTEPhctWeXFByicaSHCCJ3zaPqcgrV2DpZIM6S8mAemx+R0s
-         A2se3Gg97m5CaM824Lq69wlm3DsvG5hI4EIK8Or7rbW4NuDRu4pICFk1okbZnEx7dq7T
-         v0Hg==
-X-Gm-Message-State: ANoB5pmI23yj0d77T6IQY5kmlg6CU+GzcNWDDegz02483HPatAayM4po
-        +5xn11ixFRm2cI4GlBegQIsb2A==
-X-Google-Smtp-Source: AA0mqf67eaKlAXmxGcQbSZPBKb/PDZ/zIfqG8B4OZOOEkWap6/wMTj9F/yrMbuK1asszhID7j7JRWw==
-X-Received: by 2002:ac2:58ee:0:b0:4b4:af5d:1e22 with SMTP id v14-20020ac258ee000000b004b4af5d1e22mr2552908lfo.660.1668789521735;
-        Fri, 18 Nov 2022 08:38:41 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n25-20020a195519000000b004ae394b6a6fsm724080lfe.246.2022.11.18.08.38.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 08:38:41 -0800 (PST)
-Message-ID: <137c685c-f889-e29f-af0f-67c3395fc7f4@linaro.org>
-Date:   Fri, 18 Nov 2022 18:38:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v4 0/2] Add data-lanes and link-frequencies to dp_out
- endpoint
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x7yxRPpkQlxtFzHM7bHG1/Tzv/+e3IcCGQCZXSEVD+0=;
+        b=mOdntuI8n//VjmOoYlc36+Xc1er6XaLwPuaqSSGHxlGnFIRm8bEwyR7NxfPttLVStQ
+         jbPpwBSZbUwzoZ5SRpRiXWViZKN9BJyv2M8NoJZrogadybKCfKd9Fsu7hG3LZiCMbQnW
+         h0lu/JU0Axg+bVXGjH1452N13dorZFz1i5VEjn4x0X7gBjZJdHAJ86+wdh1xM7M2kWy5
+         8qedcWLB43L2T3mwEPEreIw2OUOaK1QzlocYKGNRTLuMd0s/mwvtIx7Wyhh3Pwh5M3Em
+         LYNRGvUHroNoSXXuCWtNaJ5+eRUUf7U0DBuHGyLQm7T4RVsU0HW+N93m+Tl3sHaO97gF
+         i1Gg==
+X-Gm-Message-State: ANoB5pk6ECTNWFA6Xel5pzGOtCW6goX0A6GqwuZ/wrGY7kjn43U24iVh
+        4/1A6p5wkWOvDIixlITyWvVnWw==
+X-Google-Smtp-Source: AA0mqf7L+sWAhQN2Sr2Z3V3AFYQtJQkH3M8XMLjZDcJ2Fh+QAyEE4ABxI+Ej8IYpG63ePR2D56WcSw==
+X-Received: by 2002:a2e:a9a7:0:b0:26e:2de:49ad with SMTP id x39-20020a2ea9a7000000b0026e02de49admr3025781ljq.511.1668789728074;
+        Fri, 18 Nov 2022 08:42:08 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id e13-20020a05651236cd00b004b4bab7d5a9sm420324lfs.46.2022.11.18.08.42.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 08:42:07 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <1668789389-14617-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1668789389-14617-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: [RFT PATCH v2 1/2] arm64: dts: qcom: sdm845-db845c: drop unneeded qup_spi0_default
+Date:   Fri, 18 Nov 2022 17:42:00 +0100
+Message-Id: <20221118164201.321147-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 18:36, Kuogee Hsieh wrote:
-> Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
-> functions to DP driver.
-> 
-> Kuogee Hsieh (2):
->    arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
->      endpoint
->    drm/msm/dp: add support of max dp link rate
-> 
->   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   |  9 +++++++-
->   arch/arm64/boot/dts/qcom/sc7180.dtsi           |  5 ----
->   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 10 +++++++-
->   arch/arm64/boot/dts/qcom/sc7280.dtsi           |  6 +----
->   drivers/gpu/drm/msm/dp/dp_display.c            |  4 ++++
->   drivers/gpu/drm/msm/dp/dp_panel.c              |  7 +++---
->   drivers/gpu/drm/msm/dp/dp_panel.h              |  1 +
->   drivers/gpu/drm/msm/dp/dp_parser.c             | 32 +++++++++++++++++++-------
->   drivers/gpu/drm/msm/dp/dp_parser.h             |  2 ++
->   9 files changed, 53 insertions(+), 23 deletions(-)
+The qup_spi0_default pin override is exactly the same as one already in
+sdm845.dtsi.
 
-NAK. See comments to v3. They all apply to v4, except the removed pr_err.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+---
+
+Cc: Doug Anderson <dianders@chromium.org>
+
+Changes since v1:
+1. New patch.
+---
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 02dcf75c0745..56a7afb697ed 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1274,11 +1274,3 @@ ov7251_ep: endpoint {
+ 		};
+ 	};
+ };
+-
+-/* PINCTRL - additions to nodes defined in sdm845.dtsi */
+-&qup_spi0_default {
+-	config {
+-		drive-strength = <6>;
+-		bias-disable;
+-	};
+-};
 -- 
-With best wishes
-Dmitry
+2.34.1
 
