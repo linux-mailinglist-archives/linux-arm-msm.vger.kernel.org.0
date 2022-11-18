@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 406C762EFFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:46:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AB4E62F019
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:52:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241669AbiKRIqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 03:46:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36882 "EHLO
+        id S241615AbiKRIw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 03:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241564AbiKRIpZ (ORCPT
+        with ESMTP id S241582AbiKRIwW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 03:45:25 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC6D8EB60
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:45:14 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id l14so8235984wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:45:14 -0800 (PST)
+        Fri, 18 Nov 2022 03:52:22 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0CC5F64
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:52:20 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id d20so5913491ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w96//s+DKsR2vwyM7MoWsFHf/kzUOoVxQJ2TCTp4km0=;
-        b=DnhRcHytlKZdpIe7HWqKcQIIDDjOZeQNBkYi30Mx0bixpzGTuFiAqWiJ99uMMfGsaA
-         4NDc+N1Qtnk/YmstKjX1dx3phSOnJPXzmZ2T2zSST8ljyzAItu1ILKaM1X2TglNrtkut
-         g7qlEd6uDUbY9KgAG8I/ZZQ/iHqm4zESzm7vPc4wazBwEm+Fud8lZtYXtLJX7Aj6z5fv
-         WubAcpU3mXc01QXy25fxn9Ig1ir1oeMIVmvImKYdtxfd3gpUu9McGPdvMBNRx7ijmanx
-         OFD8wv6cJN6FcEH7w2IELz84L+IzxjeiIMhtKQJUq69Nwv+CVQAp85lkh4NbUNfz2nIe
-         7fhA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5p5jpjzU8KIpwuBIIbbPSInj8EzgA3wKPkdmINuLKtg=;
+        b=db2Z79k+R0PPpeWdUSc/JMVjsPy6YDciEXKcDVGaNXEx8/LLfBnc1OvUw96yb4Sx7y
+         ccf2nWiE+lGced1G4AYq5OSfnWvibHvEGbT/bKgmxxGhYow52XhXZONuIY64C1BrwvO+
+         Ql1n6T82176cc6ZwfFRO1wFIar8u5uYpPeFQiz2mT29d/Rf/HcAaJqGGtQS4QjqivkfQ
+         s5ZJNt4ZIr4CylsP4G08wdnhOw+xeY30lx81He3VBCP24on/gpEwfhjSOGCO6xi1/YAh
+         jZtPxIB1hSIi4QynZi/03qeB1Z47W2P88Bn+2q4qfeu1UWV8nL4M03UXXxSSJngv2vad
+         Eu0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w96//s+DKsR2vwyM7MoWsFHf/kzUOoVxQJ2TCTp4km0=;
-        b=5y/NQ6+v+EZfrlCfqEfzZmTXeaWvkjHfxaz1qt+sAAoqUBPHU/WmDT+LFTrGTzHTeb
-         Y/7pwV6CWizsHS9gHditTanBCzQMr9uabSf877N7L3gRX+QGGUsjN5kb6yLDwu2a+vbG
-         0TPfStqnsRGFwrhu69Zy72MUmSDMbWmxztNBc5rDytCQx7Y8KqZ0G0tC2qfZGhFU92HN
-         DFdmjaYBgJSdQTrqfbunyrhqOylH8Fgrt68n3ROGj1PA9OFzS9/h9ucKYWS0o9G9DJr/
-         u4bNEwAX5avqw2OEbTQK8bdpeYxtJH2WMtMlk+wFlC1AavVJhE2uXsKZ5HayWr4VGVTZ
-         qdjg==
-X-Gm-Message-State: ANoB5pnrouBxEfplDRwOgLcDHvZdFxylmdFCgiEL2i8g3RyLfvIAVq5z
-        YXX4ngwo9UmrIm2PXpyF3MmzBQ==
-X-Google-Smtp-Source: AA0mqf4UrgmJznGeTqnfuDCPYSbngfFUCa87fNs5LatjAlNgWXjIBdIO3SEYK8xxIFJ4fNKPsm5SEg==
-X-Received: by 2002:a05:6000:70f:b0:22e:41c5:7ef7 with SMTP id bs15-20020a056000070f00b0022e41c57ef7mr3707513wrb.332.1668761113472;
-        Fri, 18 Nov 2022 00:45:13 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id v18-20020a5d6112000000b00236e834f050sm2960284wrt.35.2022.11.18.00.45.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 00:45:13 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 18 Nov 2022 09:45:10 +0100
-Subject: [PATCH v2 6/6] i2c: qcom-geni: add support for I2C Master Hub variant
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5p5jpjzU8KIpwuBIIbbPSInj8EzgA3wKPkdmINuLKtg=;
+        b=6Ker1poQt6Xm7QAylcfsm0Q2LSbmg7mqGn5IeOOJt0+N6Sa2InlGyagxcKvd5bXNKT
+         l5mQY0L0vD72W9+mV9AxObqrQsSx9uOjCIxMBhLCTOurUADJtVBp6CP2Tvn59UQ/ubl7
+         5pUHLT0YwJ9EevhJhgd86OXZsCvu/h0gSTK2DP7/WTrktIl4XmpH9oaicEWARotwLdAd
+         wm8TfX7KkKq5dDP2AHSNSdHjOC7usZd0bFSyqcYyejpmJjsqS20tcVyQaqQyqJ54TYd/
+         +IMHimT8Xw5vH/f5bJdYwPY+OwC93EUrV6pFGy0AexJhHTdErh8YYUvaJE4PnRHkvFWf
+         6EpA==
+X-Gm-Message-State: ANoB5plqaX17oU0Q9H/iaL0Xgo/EUcoAl8K7ucvbxYAnyingHuhMZNg1
+        s8QJ1TCVTAru1BOA42QLeREaEhUHwEnZFW1S
+X-Google-Smtp-Source: AA0mqf7NInPVwoinRrtQdIS7u2cBmY3U/epKgvk6kp0InWRF1xtlD+pB+TnUychIW1T9LFDhcHb72w==
+X-Received: by 2002:a2e:c52:0:b0:277:9bf:9411 with SMTP id o18-20020a2e0c52000000b0027709bf9411mr2012257ljd.504.1668761539235;
+        Fri, 18 Nov 2022 00:52:19 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id k4-20020ac257c4000000b004a2511b8224sm573648lfo.103.2022.11.18.00.52.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Nov 2022 00:52:18 -0800 (PST)
+Message-ID: <f20a8dff-fb51-4000-dbb6-29cb8b0d223d@linaro.org>
+Date:   Fri, 18 Nov 2022 09:52:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-6-aadaa6997b28@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-0-aadaa6997b28@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-0-aadaa6997b28@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: document pm8550,
+ pm8550b, pm8550ve, pm8550vs, pmk8550, pm8010 & pmr735d
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org
-X-Mailer: b4 0.10.1
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-spmi-v2-1-b839bf2d558a@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v2-1-b839bf2d558a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,40 +85,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The I2C Master Hub is a stripped down version of the GENI Serial Engine
-QUP Wrapper Controller but only supporting I2C serial engines without
-DMA support.
 
-Add the I2C Master Hub serial engine compatible along the specific
-requirements in a new desc struct passed through the device match data.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 18/11/2022 09:24, Neil Armstrong wrote:
+> Document compatible for the pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550.
+> pm8010 & pmr735d SPMI PMICs
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Didn't checkpatch complain about the length of this patch's subject?
+I propose:
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 75dd0718c5a1..bfe75038bc14 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -1026,8 +1026,16 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
- 									NULL)
- };
- 
-+const struct geni_i2c_desc i2c_master_hub = {
-+	.has_core_clk = true,
-+	.icc_ddr = NULL,
-+	.no_dma_support = true,
-+	.tx_fifo_depth = 16,
-+};
-+
- static const struct of_device_id geni_i2c_dt_match[] = {
- 	{ .compatible = "qcom,geni-i2c" },
-+	{ .compatible = "qcom,geni-i2c-master-hub", .data = &i2c_master_hub },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
+dt-bindings: mfd: qcom,spmi-pmic: document SM8550 PMICs
 
--- 
-b4 0.10.1
+or
+
+dt-bindings: mfd: qcom,spmi-pmic: document PMICs bundled with SM8550
+
+
+Konrad
+>   Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> index c8362efd4345..8c9b042b4f30 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -43,6 +43,7 @@ properties:
+>             - qcom,pm8004
+>             - qcom,pm8005
+>             - qcom,pm8009
+> +          - qcom,pm8010
+>             - qcom,pm8019
+>             - qcom,pm8028
+>             - qcom,pm8110
+> @@ -54,6 +55,10 @@ properties:
+>             - qcom,pm8350
+>             - qcom,pm8350b
+>             - qcom,pm8350c
+> +          - qcom,pm8550
+> +          - qcom,pm8550b
+> +          - qcom,pm8550ve
+> +          - qcom,pm8550vs
+>             - qcom,pm8841
+>             - qcom,pm8909
+>             - qcom,pm8916
+> @@ -70,10 +75,12 @@ properties:
+>             - qcom,pmi8998
+>             - qcom,pmk8002
+>             - qcom,pmk8350
+> +          - qcom,pmk8550
+>             - qcom,pmm8155au
+>             - qcom,pmp8074
+>             - qcom,pmr735a
+>             - qcom,pmr735b
+> +          - qcom,pmr735d
+>             - qcom,pms405
+>             - qcom,pmx55
+>             - qcom,pmx65
+> 
