@@ -2,114 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31F5362FA2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D28B062FA63
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 17:37:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235220AbiKRQYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 11:24:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
+        id S241673AbiKRQhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 11:37:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234216AbiKRQYw (ORCPT
+        with ESMTP id S235329AbiKRQgv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 11:24:52 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D49490AF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:24:51 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id l8so7354021ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 08:24:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TyvEqZNJ/MRi1G8+a46Jw9oIBcHIz45goT0ItOFpL6k=;
-        b=AZVccVwGjF3Vxy7sxVUW8prhfRscUTczTjzZe6fpzB+s12ve3OBjdTgsekqRUV3dUY
-         du3wJD+Atk+RcvhaG3hEPj+8BUQlM+jopsSOS2DYixYFbH9ub4f7yKQX8b+2V/moKpg4
-         Zw+u5UbXccgPVhjzpNoJNUO10H9Th8+JSUmXEsjF9uqeBSdDkKNTaQ9p+yGGwc9Fcu1q
-         jYdNYkwfHy2wg815374Dze6x98QYVcn9z5fRR8h+WkimYLPHnh2je8825+gtKamGn6FK
-         Sss+xcIulhWWFxreh7RKC2LQi2cgf+3tuHUiAZQoiwEG6HPD1pm8p0avBF9aK7ySOgPN
-         Hkzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TyvEqZNJ/MRi1G8+a46Jw9oIBcHIz45goT0ItOFpL6k=;
-        b=dpkhScv6daKkXYpIc0JtAdK9QMjowQjbjFlIgRd8tkkL5mrPH6FEhzdWxaS6qBlEA1
-         Cb5E6381K2GkLZAUihq9zNiUox4vrO8MEOhPurA3BYRy8YIug9v/TvfIwkpKSEh7DG8R
-         SFoziOgBKfQKeSuodSXxEP76Rm2Dd5pJlpKgtmFXwy15dhMg0VBvQ5DK5gxiYrbKaQDa
-         JA6QYDP8KNwrRQlc5c9dwYuJVyoHWgWL5llf9mTXUZn1hGw6q7l1r7aoKW7toiB6UQrJ
-         p6SkhInADEbKwrsIG2w/Yp6Atisk+35mYsgf7UM5OwkvDMH3G+nVsUpZPxH8rOyRdWFZ
-         m9yQ==
-X-Gm-Message-State: ANoB5pmGzovBVJ5ZsJvYAJxXsPGVFKGE7wtCXtEvJ3C7s5BYvIK8DZ3F
-        pxa/HIyqIFLF+t4PYWYTL6sS7A==
-X-Google-Smtp-Source: AA0mqf4rJCEmefb/9vbDfhMOh/I4HZfeXCgo54yyLoE8CtCIOwEz8eHs4DpWhU8WfEwaQUk5zP+9WQ==
-X-Received: by 2002:a2e:bd0c:0:b0:277:10c2:e7ce with SMTP id n12-20020a2ebd0c000000b0027710c2e7cemr2918150ljq.370.1668788689586;
-        Fri, 18 Nov 2022 08:24:49 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id t7-20020a056512030700b004979ec19380sm714550lfp.285.2022.11.18.08.24.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 08:24:49 -0800 (PST)
-Message-ID: <d2fac789-4064-2c8a-5527-0da5b348a29d@linaro.org>
-Date:   Fri, 18 Nov 2022 17:24:47 +0100
+        Fri, 18 Nov 2022 11:36:51 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 482CC5DBA4;
+        Fri, 18 Nov 2022 08:36:50 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AIFvG58010273;
+        Fri, 18 Nov 2022 16:36:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=mpogp5vCRgOwp1WQwdYOuCzU/UBrZghEL1GxZdyqrV8=;
+ b=QxKd2kVGQwzR8jlINF784WMDfODnUuV9Df0ex4fXlHn8Cbufu0bAB5XIbA3dN3gTBYPp
+ bY2Ga2P/ghvEUbG7ECMdQIgPweCykS4rMspGkVHOESG0mq55zNfPDI5g4EeoLEF61iXq
+ gOtZFu3BII2evSw2ZVO1D3G2tsknw1NVs6ETATCJFUdzAhp6/TbL56rSflsuVURtZx66
+ NY2ERdOqb85fqtWtX9LzrUDrZxJIbE3CTTY/ELrGc5kyNUZ1YFJ1U1yPFoJeoXIMzsO7
+ nkwvfWKn4VCRvF+A3zFPb9jtwGIAO+Gb4691Wu2wqgYlbLgmJxzpJkHJid7sYpgqqoUQ QQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kx0n1j61r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 18 Nov 2022 16:36:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AIGac8C019001
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 18 Nov 2022 16:36:38 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 18 Nov 2022 08:36:38 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 0/2] Add data-lanes and link-frequencies to dp_out endpoint
+Date:   Fri, 18 Nov 2022 08:36:27 -0800
+Message-ID: <1668789389-14617-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/4] dt-bindings: pinctrl: qcom: Add SM8550 pinctrl
- bindings
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
-References: <20221116105724.2600349-1-abel.vesa@linaro.org>
- <20221116105724.2600349-2-abel.vesa@linaro.org>
- <368cd281-b461-e668-0b57-cbb83f5b8086@linaro.org>
- <e825bfbb-dc77-016a-3f56-9474aef06085@linaro.org>
-Content-Language: en-US
-In-Reply-To: <e825bfbb-dc77-016a-3f56-9474aef06085@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eieNp9a2o0jYlWfpvAUsaNzZ8D-fdAxJ
+X-Proofpoint-GUID: eieNp9a2o0jYlWfpvAUsaNzZ8D-fdAxJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-18_04,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 suspectscore=0
+ mlxlogscore=798 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211180096
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 17:10, Krzysztof Kozlowski wrote:
->>> +
->>> +  "^.+-hog(-[0-9]+)?$":
->>> +    type: object
->>> +    properties:
->>> +      gpio-hog: true
->>> +      gpios: true
->>> +      input: true
->>> +      output-high: true
->>> +      output-low: true
->>> +      line-name: true
->>
->> Keep properties sorted by name (just like gpio-hog.yaml).
->>
->> I wonder if we could add this to the common TLMM schema. It will appear
->> in multiple places.
-> 
-> Answering to myself - this would require moving the 'state'
-> patternProperties part to the common schema, so maybe later... Looks
-> fine with changes about ordering.
+Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
+functions to DP driver.
 
-If Rob likes my solution here:
-https://lore.kernel.org/linux-arm-msm/20221118162101.145267-1-krzysztof.kozlowski@linaro.org/T/#u
+Kuogee Hsieh (2):
+  arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
+    endpoint
+  drm/msm/dp: add support of max dp link rate
 
-then please go with similar way. It allows to skip listing the properties.
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   |  9 +++++++-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi           |  5 ----
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 10 +++++++-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi           |  6 +----
+ drivers/gpu/drm/msm/dp/dp_display.c            |  4 ++++
+ drivers/gpu/drm/msm/dp/dp_panel.c              |  7 +++---
+ drivers/gpu/drm/msm/dp/dp_panel.h              |  1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c             | 32 +++++++++++++++++++-------
+ drivers/gpu/drm/msm/dp/dp_parser.h             |  2 ++
+ 9 files changed, 53 insertions(+), 23 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
