@@ -2,141 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5703862F5E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 14:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 250A662F5E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 14:26:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241578AbiKRNZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 08:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47072 "EHLO
+        id S235301AbiKRN0i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 08:26:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241357AbiKRNZn (ORCPT
+        with ESMTP id S235210AbiKRN0i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 08:25:43 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A826185A29
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:25:41 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id d6so8178986lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:25:41 -0800 (PST)
+        Fri, 18 Nov 2022 08:26:38 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D8977219
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:26:37 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id j15so8584209wrq.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 05:26:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kapE2v0JHZ02uPRIVgcnwVxONruhv1mLma4lDZtjiEY=;
-        b=OHwDoo02uokIDLnPvOVtvTnpKIMNMMhALrAvNb33Cu4xUwcksguGzcgQq5VREzrXy8
-         ttRx2CYhUniEGztgoEI2dgohx4KtlC6G9UGDb38BusYNh5lC1Sw0gLevpzw775xkv4mu
-         qw5nrSgoy5YkvSPgDxoDaRUfJS3hTmHnkyy8ydNOuCgeh/KKyZoPSChIhk5U8fC0OL42
-         7JYdBA+TqeY8eFAL5Gg6zmvohjn+UmBkZ8W3pPcMm497im2UCQHsGhWr/etziebTaBTr
-         Y0H/CXcdJ1XmR8f4C2sdijrtHlZFN6nwASIFSG7YkY3aQZm6GZIX2z6AiZBkVJzBG33Y
-         H7SQ==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=e5MiF9TMHxw5V5hyXlLxWTx5c5LNTg+L6bdroac28KQ=;
+        b=tXf7R2BbLdciR0aWHCW1fcHe8ymozuqrc0GToPKat0J6HPiGqJXpeTNjP8EZo7cAe5
+         ghQt0EqEWMd9qkLjwYOnHmFc0kbNN+kfPUxJHNCIdbdWB0uvnyEh8xkWZhiQ4DDxjT3A
+         ur1Aswxlx+ThA6gWcFoCN+/Den71gN3VX41Yrt0RgRVFE9XznpJzx0Zuvw85Mm103JzQ
+         yNUMhdt63vJif5OdEI5gsbkC6CKUjsYVWwa20xF+0WESaKVjQUiZYlJIWopmce8LAwWh
+         /YhIMyzDF2gZ4VnM9LqOgGKdRieJ+pairfYiDNYjRhkRKU8Mv4GgIY2o3egiR3sWW3g6
+         V23Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kapE2v0JHZ02uPRIVgcnwVxONruhv1mLma4lDZtjiEY=;
-        b=TJO7l2/ixfllQ+xPQljQuiXr9T/bOk6291868jBHgDEZlQYDlLOlAdloAF0Gg1GsQk
-         6Ta45fUdpxrY4YhQdAaQBhY//QgOC8mLRr6PZCZFpqV538IoWbqJRRKq7RbHMZRnnpyW
-         i1LffiT1Go3zwAC41QGtXAc0C7u04Fd3/e9NrkslrIiuQRGt0O8kDS74Z9V+x+J9FkZ4
-         uFw1n8hviQgD1OWK5i21y85sIrb8fGvcGPX8i/7/4sswTN2Uh3eQsYibzMcOY4GfwRn8
-         eUr3AyQD/mo/a/dOx9XZqHuoFOebcX+PYEZkU1vKWMJOVwHybEQOlMsS8url3GltSxtO
-         Yfjg==
-X-Gm-Message-State: ANoB5pmAxf9gRoVV2V8oHfh2FAnK9Ng14fkNZAEF08rbDuNwqI5IGDYC
-        ahwuTjwCYIwME/edXcF8isdFzQ==
-X-Google-Smtp-Source: AA0mqf5CN40n3DpardgQJrh0reklw6pNVlXFRZU2ODOjtE+Aesqg8qbKiQtpENZvULHSNciz4rGgbA==
-X-Received: by 2002:ac2:434a:0:b0:4a2:46f8:24bc with SMTP id o10-20020ac2434a000000b004a246f824bcmr2333336lfl.180.1668777939898;
-        Fri, 18 Nov 2022 05:25:39 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id n4-20020ac24904000000b00492d064e8f8sm656734lfi.263.2022.11.18.05.25.38
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e5MiF9TMHxw5V5hyXlLxWTx5c5LNTg+L6bdroac28KQ=;
+        b=DQ7e0ZMfuoo/7kPbSaaL2LX3R8lbC8p6rj9cnSx8S35AUxIqP3Ilr5k/fbndr14iiS
+         VkqH6KeunkC/3a3U2wVlTEXdRknUFhTYy7pad9NCn3FnftkXjyW5EZCYSxIbK7bC8aj9
+         bFwIWVQ47GJ1xkGSMae6Ck3bx4gZ3TUQNoCz+Yg+pEIlqx/jM4biJqYxLW5eQOVwhRDo
+         xNDI4GWy9MwpaicVOeelwuq9zPY28VLZIYde0Y0qYYJw05U4M+cEcDUh/ddZ0Rl5+l/F
+         vjozqBl9waO60K68DMOv1IaC0vzKL2toGQTTtgTRNDP537HH91RHLlZhWvpFUPjGplj6
+         f83Q==
+X-Gm-Message-State: ANoB5pkHC0KDkoGIIc0uoi6GMnRNtTCSHTGqDFtZtei/B+vbu/MJvtiN
+        pJLGFhewloHFvfuqid8IbIqUAA==
+X-Google-Smtp-Source: AA0mqf4kDgGIKWcnXZDZaS3yoafhs9FZKkJ73tJd4mzLPQeKB2/wrtXUa5UWiLDIZJgyTQVdB0iEUQ==
+X-Received: by 2002:a5d:6b08:0:b0:236:4b06:bbb1 with SMTP id v8-20020a5d6b08000000b002364b06bbb1mr4280526wrw.303.1668777995737;
+        Fri, 18 Nov 2022 05:26:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f7cc:460c:56ae:45a? ([2a01:e0a:982:cbb0:f7cc:460c:56ae:45a])
+        by smtp.gmail.com with ESMTPSA id s18-20020adfdb12000000b00241727795c4sm4356779wri.63.2022.11.18.05.26.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 05:25:39 -0800 (PST)
-Message-ID: <cf1dcebb-d56e-c222-0e08-e0e658ba41ab@linaro.org>
-Date:   Fri, 18 Nov 2022 14:25:37 +0100
+        Fri, 18 Nov 2022 05:26:35 -0800 (PST)
+Message-ID: <3cd03d3e-b521-8050-b8fa-a521310f1e5b@linaro.org>
+Date:   Fri, 18 Nov 2022 14:26:34 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 07/15] tty: serial: qcom-geni-serial: remove unneeded tabs
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: reserved-memory: document Qualcomm
+ MPSS DSM memory
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20221118122539.384993-1-brgl@bgdev.pl>
- <20221118122539.384993-8-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221118122539.384993-8-brgl@bgdev.pl>
+        Frank Rowand <frowand.list@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-0-f7c65d6f0e55@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-1-f7c65d6f0e55@linaro.org>
+ <0e8ed125-beba-8f74-b3aa-728e9dc5a09d@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <0e8ed125-beba-8f74-b3aa-728e9dc5a09d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 18/11/2022 13:25, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 18/11/2022 11:46, Krzysztof Kozlowski wrote:
+> On 18/11/2022 09:53, Neil Armstrong wrote:
+>> Document the Qualcomm Modem Processing SubSystem DSM shared memory.
+>>
+>> This memory zone is shared between the APPS and the MPSS subsystem,
+>> and must be configured during the whole lifetime of the system.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   .../reserved-memory/qcom,mpss-dsm-mem.yaml         | 37 ++++++++++++++++++++++
+>>   1 file changed, 37 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,mpss-dsm-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,mpss-dsm-mem.yaml
+>> new file mode 100644
+>> index 000000000000..226d0dfc422c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,mpss-dsm-mem.yaml
+>> @@ -0,0 +1,37 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/reserved-memory/qcom,mpss-dsm-mem.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Modem Processing SubSystem DSM Memory
+>> +
 > 
-> Remove redundant indentation in struct member assignment.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Discussion in v1 is still going. Memory region is not a device.
 
-Konrad
->   drivers/tty/serial/qcom_geni_serial.c | 24 ++++++++++++------------
->   1 file changed, 12 insertions(+), 12 deletions(-)
+Nowhere is was affirmed this was a device.
+
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 22c1869c60f4..39041538e5d2 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -138,26 +138,26 @@ static struct uart_driver qcom_geni_uart_driver;
->   static struct qcom_geni_serial_port qcom_geni_uart_ports[GENI_UART_PORTS] = {
->   	[0] = {
->   		.uport = {
-> -				.iotype = UPIO_MEM,
-> -				.ops = &qcom_geni_uart_pops,
-> -				.flags = UPF_BOOT_AUTOCONF,
-> -				.line = 0,
-> +			.iotype = UPIO_MEM,
-> +			.ops = &qcom_geni_uart_pops,
-> +			.flags = UPF_BOOT_AUTOCONF,
-> +			.line = 0,
->   		},
->   	},
->   	[1] = {
->   		.uport = {
-> -				.iotype = UPIO_MEM,
-> -				.ops = &qcom_geni_uart_pops,
-> -				.flags = UPF_BOOT_AUTOCONF,
-> -				.line = 1,
-> +			.iotype = UPIO_MEM,
-> +			.ops = &qcom_geni_uart_pops,
-> +			.flags = UPF_BOOT_AUTOCONF,
-> +			.line = 1,
->   		},
->   	},
->   	[2] = {
->   		.uport = {
-> -				.iotype = UPIO_MEM,
-> -				.ops = &qcom_geni_uart_pops,
-> -				.flags = UPF_BOOT_AUTOCONF,
-> -				.line = 2,
-> +			.iotype = UPIO_MEM,
-> +			.ops = &qcom_geni_uart_pops,
-> +			.flags = UPF_BOOT_AUTOCONF,
-> +			.line = 2,
->   		},
->   	},
->   };
+> Best regards,
+> Krzysztof
+> 
+
