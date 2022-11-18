@@ -2,164 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3098F62EE69
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 08:31:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D19462EF24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 09:24:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241271AbiKRHbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 02:31:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47542 "EHLO
+        id S241361AbiKRIYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 03:24:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241089AbiKRHbK (ORCPT
+        with ESMTP id S241369AbiKRIYs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 02:31:10 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A23C7EC90;
-        Thu, 17 Nov 2022 23:31:06 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AI4hxTm019229;
-        Fri, 18 Nov 2022 07:31:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=k/q75UzrGFjIZAukfAPHyXsyPAGqWWGzVpeqOlV5SII=;
- b=RDx6Ie0B7clYzg3NYq/QHU+C/yMOAAhcCWhFrUqlRYW//r2wPK/qdZhmda1W0wrVXUw0
- ptKIhjGR2pJq2GkW8j0vlt3uIABelAE2l6GJHirPrud3S7Ye+TIS7tT+NnUZak/NZvZc
- Brd0uCYTpNc6Aqqk6nTbbJedZRVyea5CFefC3kAk+H5Zkzr5ZeIUYc5KRQaRTNmA80KI
- /JGDVJI1lFq+jYMgzk/VRsmUkz5LIPVyQUSyYN/IVgfsUolAJLa8Gj4yrMjeXA5ICRkT
- tPT2K5Osf+iAhTLT3B08h9iTSDu9lzFDuqEFHr4W36muFPwWnn7NEhgfv43L5ec42mWQ gw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kx0u7rpyg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Nov 2022 07:31:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AI7Ux4R019266
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 18 Nov 2022 07:30:59 GMT
-Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 17 Nov 2022 23:30:55 -0800
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dianders@chromium.org>,
-        <mka@chromium.org>, Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7280: Add a new herobrine Pro SKU
-Date:   Fri, 18 Nov 2022 13:00:17 +0530
-Message-ID: <20221118073017.26128-2-quic_rjendra@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20221118073017.26128-1-quic_rjendra@quicinc.com>
-References: <20221118073017.26128-1-quic_rjendra@quicinc.com>
+        Fri, 18 Nov 2022 03:24:48 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939F964A3C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:24:42 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id t4so3096810wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 00:24:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZCj0dVvQrIlDStuTc/HtBM39cFcNUtJEg5lczvmxgKs=;
+        b=F85IL8T5v6/v6K9gxmj0dgpbGs9+fO/f3+r3qSY4Hozja7efqI6Vm+NbDBE+2UMfpE
+         vwKNorHV3pnCq2+pRfEVaB6hoJiOGBjYp1nW5hZHJPAHgxSYmpNyyuEjIjU3Zu2Dlx/o
+         gmsxg8Q6dKERAB3nm2BdA4YD8t9GwlWE7JAX1CLLmfNjZMTe83A//tIpT+iHAOJ4ru/7
+         9vjVZlhPFnyRE85o7MomceBIGHTONen+iMU9mWQMC6O0evJWMupsZl0z8H6BtoMdMW1p
+         roDHIWkoZGhosof6vdwNG/5rp+VZgzIKQIv3pin5b2vFZSbzpkvjRWxT9i1wVBNXEaiY
+         q1Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZCj0dVvQrIlDStuTc/HtBM39cFcNUtJEg5lczvmxgKs=;
+        b=wbgV2h0FhkFmBUKDqssz/co0ks8SqxbvmVpQdL7Q3DUTqwOEN4eXuE1VB1AQH8jGPx
+         NhhbMF8kwEUD2AnH+jYy/OQPgIM1Ja5sAuXAnS57a97ZTnUQz8mtsOvH4D0oqLyyT5fx
+         d30th3KQzpzpKuznVwNtP8VUFn3/Fpb+M7ySmxyQSWBfwgoLhFvtTnGWbiNNkiEP/mH7
+         fTCjP0TmRGt8l4FoKXdSlDZ8cyqoHmOF51xGLwPFdvNkVNCvPQb9lKIphPWdHvBLZ2Xl
+         ddBGQ3OKZ2r/ozcn747xLcDEYpf6kbHw9xonGngv+4E3kvS3UCQEY5ZgUJ4dymEavvDl
+         E9Aw==
+X-Gm-Message-State: ANoB5pnUReoyo4xZ5HbYzA3Uq3LJjRuEG/XGklhi5Aj5RzdiaFcdGB8r
+        +oUEY5/9QD0SiBcpAaYEbo/7KqPYMcvO9Q==
+X-Google-Smtp-Source: AA0mqf6Cca8aNYchWphhM5cN8e96CVy2ffjRIXxBbWHKFM/S+BV6+W6wZgIbDJB8mjWcBU9cdyao/Q==
+X-Received: by 2002:a05:600c:19d0:b0:3cf:e7b7:d87d with SMTP id u16-20020a05600c19d000b003cfe7b7d87dmr7241767wmq.95.1668759881064;
+        Fri, 18 Nov 2022 00:24:41 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id m4-20020a05600c4f4400b003cffd3c3d6csm4070084wmq.12.2022.11.18.00.24.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 00:24:40 -0800 (PST)
+Subject: [PATCH v2 0/3] qcom: add support for SPMI PMICs found on SM8550 platforms
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: W3toO81nt22qUyYkq-gwtLBrLqrrAI4W
-X-Proofpoint-ORIG-GUID: W3toO81nt22qUyYkq-gwtLBrLqrrAI4W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-17_06,2022-11-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=647
- malwarescore=0 bulkscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211180050
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAEVBd2MC/42NQQqDMBBFr1Jm3SkmatGueo/SRRIHHTCJZFQo4t079ARdfd6H//4BQoVJ4HE5oN
+ DOwjkp2OsFwuTSSMiDMtjKWmNMg8mVKGvJaUSJXdtWuC3K5CLKEhkHG/q+p9AOwYBavBNCX1wKk3rS
+ Ns9aTixrLp/f6240Xv8f7AYrvNd156xvvG3Mc2bd5FsuI7zP8/wCRyhngNQAAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Fri, 18 Nov 2022 09:24:37 +0100
+Message-Id: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some of the qualcomm qcard based herobrine devices can come with
-a Pro variant of the chipset with some qcard level changes like
-the smps9 from pm8350c which is ganged up with smps7 and smps8,
-so we just end up removing smps9 from the herobrine pro sku dtsi.
-We then use it to create a new dts for the Pro variant of the
-herobrine CRD.
+The SM8550 based platforms sports a bunch of new PMICs:
+- pm8550
+- pm8550b
+- pm8550ve
+- pm8550vs
+- pmk8550
+- pmr735d
+- pm8010
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+With GPIO support on:
+- pm8550
+- pm8550b
+- pm8550ve
+- pm8550vs
+- pmk8550
+- pmr735d
+
+This documents bindings for those SPMI PMIC and adds compatible in the
+PMIC pinctrl driver for GPIO support.
+
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Lee Jones <lee@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Stephen Boyd <sboyd@kernel.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
 ---
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../dts/qcom/sc7280-herobrine-crd-pro.dts     | 35 +++++++++++++++++++
- .../dts/qcom/sc7280-herobrine-pro-sku.dtsi    |  8 +++++
- 3 files changed, 44 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
+Changes in v2:
+- Squashed patch 3 & 2 into 1, added Reviewed-by from Krzysztof
+- Squashed patch 5 into 4, added Reviewed-by from Krzysztof
+- Squashed patch 7 into 6, added Reviewed-by from Konrad
+- Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-spmi-v1-0-6338a2b4b241@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index afe496a93f94..c5ac51c3a383 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -108,6 +108,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd-pro.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
-new file mode 100644
-index 000000000000..fe6b228e9e4b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dts
-@@ -0,0 +1,35 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * sc7280 CRD 3+ Pro board device tree source
-+ *
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include "sc7280-herobrine-crd.dts"
-+#include "sc7280-herobrine-pro-sku.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. sc7280 CRD Pro platform (rev5+)";
-+	compatible = "google,hoglin-sku1536", "qcom,sc7280";
-+
-+	/* FIXED REGULATORS */
-+
-+	/*
-+	 * On most herobrine boards PPVAR_SYS directly provides VREG_EDP_BL.
-+	 * However, on CRD there's an extra regulator in the way. Since this
-+	 * is expected to be uncommon, we'll leave the "vreg_edp_bl" label
-+	 * in the baseboard herobrine.dtsi point at "ppvar_sys" and then
-+	 * make a "_crd" specific version here.
-+	 */
-+	vreg_edp_bl_crd: vreg-edp-bl-crd-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_edp_bl_crd";
-+
-+		gpio = <&pm8350c_gpios 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&edp_bl_reg_en>;
-+
-+		vin-supply = <&ppvar_sys>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
-new file mode 100644
-index 000000000000..fb4bbe8aeda0
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-pro-sku.dtsi
-@@ -0,0 +1,8 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Google Herobrine dts fragment for PRO SKUs
-+ *
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/delete-node/ &vreg_s9c_0p676;
+---
+Neil Armstrong (3):
+      dt-bindings: mfd: qcom,spmi-pmic: document pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550, pm8010 & pmr735d
+      dt-bindings: pinctrl: qcom,pmic-gpio: document pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550 & pmr735d
+      pinctrl: qcom: spmi-gpio: add support for pm8550 & pmr735d gpio control
+
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml        |  7 +++++++
+ .../devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml    | 18 ++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c               |  6 ++++++
+ 3 files changed, 31 insertions(+)
+---
+base-commit: 8274e19d9db1019f8fac39cf46da6680513fd5d3
+change-id: 20221114-narmstrong-sm8550-upstream-spmi-d2c999ec5dc1
+
+Best regards,
 -- 
-2.17.1
-
+Neil Armstrong <neil.armstrong@linaro.org>
