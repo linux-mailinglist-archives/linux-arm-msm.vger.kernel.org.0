@@ -2,58 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57AF062ED26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 06:20:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A97362ED5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 06:57:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240746AbiKRFUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 00:20:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
+        id S241009AbiKRF5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 00:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240580AbiKRFUT (ORCPT
+        with ESMTP id S229510AbiKRF5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 00:20:19 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE9E6E561;
-        Thu, 17 Nov 2022 21:20:19 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C0C26B82293;
-        Fri, 18 Nov 2022 05:20:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 722FEC433D6;
-        Fri, 18 Nov 2022 05:20:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668748816;
-        bh=mP4/veKAzM1jDiDRDAX0XkfzBPnPYLCw1dOUugeWDpo=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=D9hxhMiTpI+iOriuyaRd2KaxvFboIuSITuHxF1yFXmNRafc3Dv/ztCi2ztajLuGw5
-         HXmWw1tzBEb+n8xdtZxJxI5kl6eJmaz2not8fz0lg9yYBUfvcJ8PGiKw1B+M1CaxXW
-         NO/5lTEKe2OIuclx7KiF28DZ2VAuA2OjquGtBIsBO44293DjETrmqft6P1IRGCjH01
-         ZQZLIWqcSCY7ZOvbyGRFUCJYLSl6G//DrPoDBoQVTaYgDD+9cJYvdn6OlphH8eiYBU
-         EP48TacITqzHT+bh2/idsFZ72zlN1kjNoEzAGrz16l2f6TQWoaX8g6HdaobCDVnwdH
-         N0gLmGA3Y6Png==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4D480E270D5;
-        Fri, 18 Nov 2022 05:20:16 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 18 Nov 2022 00:57:35 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE598CB94
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 21:57:34 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id 4so3725187pli.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Nov 2022 21:57:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0a1jjRfviTq5Xt2/NZLcpPRBi+hPaTFIWtK7i+Uba+o=;
+        b=lR4PSzbHtutX868gOZ71DV6BQ3XgJC0Tep7WH5FyBG4eniWNoVFrPI94BAD7cDkCuc
+         soYmtc4O+B7WyrBOg0gSmEfrmrosmxx0OAyDaaQkjjV2/OTjLDjzg3cLMV39Bbgihhmn
+         cJZXz1/5zY5/+BPehzeTHwI8XEc2SPHVsoXfdmAHEoWzAT7ptygWnCzBdRI/3KrIYA9Z
+         92QjwE1rdSIvMVJfzVBZGftN9cr1eBl+1yPakH9TEFAVfJspeVbHGz2b+KHU9D5bH/7D
+         Olu9tgYBxVXjE695WqsJqh6C5Py2eHRlo82AVxlIdQI7vSVMFx4+y5GMOzN/bow5MQ9E
+         Vhog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0a1jjRfviTq5Xt2/NZLcpPRBi+hPaTFIWtK7i+Uba+o=;
+        b=qPj6izCGlGBGLFzIQgtSfuEx5QE5fkdhfFr+NzwMllRKzyclm73GQCqbN4odYZ3/n9
+         /Ec+YSxZu9k0K3C2HlThyymt0wPWnH7xr2+Qkpqa0LyBzC4z1BWTvIrMS0CCEuYKLam6
+         6PIfiKmecrAzSYzv6WKguS/KS/dBhOLdtAWBhE+hJbK+7md+FOVs1rfn5wuvlNsU5EUL
+         lKT3mFgotN75vNI9gnbyLa48Nd5wWqinCDmx2XNQrE6l5WAz18GTPt364nTPlXLYEsWk
+         CxxnqX0Xk35dR17a90cqMUwC5Kh0LnKj1yb+xCgDs/KGyR16aIk3hTOe9ymXin5z5djq
+         AUNg==
+X-Gm-Message-State: ANoB5plGGuDbyA2u8AAYtO8i7atHU6poTxseXDHRaHknO0cDy/XCIzEF
+        lF+ut0azWNjLi2FSVji5hjrDVA==
+X-Google-Smtp-Source: AA0mqf7ZHCPYnYkcNX51xnBzNH8aRazEuukSXxWjRjt+qHEp7z32tE3pgG3H7A3HLPNIXczCaCL7Cg==
+X-Received: by 2002:a17:902:da87:b0:184:fa22:8b67 with SMTP id j7-20020a170902da8700b00184fa228b67mr6009281plx.149.1668751053815;
+        Thu, 17 Nov 2022 21:57:33 -0800 (PST)
+Received: from localhost ([122.172.85.60])
+        by smtp.gmail.com with ESMTPSA id q9-20020a170902bd8900b00176d347e9a7sm2486743pls.233.2022.11.17.21.57.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 21:57:32 -0800 (PST)
+Date:   Fri, 18 Nov 2022 11:27:30 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
+Message-ID: <20221118055730.yrzpuih3zfko5c2q@vireshk-i7>
+References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
+ <20221117101903.sw3hxaruj5sfhybw@bogus>
+ <20221117112403.haffuclwooudvgwz@vireshk-i7>
+ <20221117120145.ou2pg7obxnwlsc36@bogus>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/5] dt-bindings: net: ipq4019-mdio: document IPQ6018
- compatible
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166874881630.4500.14407842263163608974.git-patchwork-notify@kernel.org>
-Date:   Fri, 18 Nov 2022 05:20:16 +0000
-References: <20221114194734.3287854-1-robimarko@gmail.com>
-In-Reply-To: <20221114194734.3287854-1-robimarko@gmail.com>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221117120145.ou2pg7obxnwlsc36@bogus>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,36 +76,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This series was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Mon, 14 Nov 2022 20:47:30 +0100 you wrote:
-> Document IPQ6018 compatible that is already being used in the DTS along
-> with the fallback IPQ4019 compatible as driver itself only gets probed
-> on IPQ4019 and IPQ5018 compatibles.
+On 17-11-22, 12:01, Sudeep Holla wrote:
+> Thanks for the link. Sorry I still don't get the complete picture. Who are
+> the consumers of these clock nodes if not cpufreq itself.
 > 
-> This is also required in order to specify which platform require clock to
-> be defined and validate it in schema.
-> 
-> [...]
+> I am going to guess, so other device(like inter-connect) with phandle into
+> CPU device perhaps ? Also I assume it will have phandle to non-CPU device
+> and hence we need generic device clock solution. Sorry for the noise, but
+> I still find having both clocks and qcom,freq-domain property is quite
+> confusing but I am fine as I understand it bit better now.
 
-Here is the summary with links:
-  - [v2,1/5] dt-bindings: net: ipq4019-mdio: document IPQ6018 compatible
-    https://git.kernel.org/netdev/net-next/c/cbe5f7c0fbcd
-  - [v2,2/5] dt-bindings: net: ipq4019-mdio: add IPQ8074 compatible
-    https://git.kernel.org/netdev/net-next/c/05c1cbb96f3d
-  - [v2,3/5] dt-bindings: net: ipq4019-mdio: require and validate clocks
-    https://git.kernel.org/netdev/net-next/c/e50c50367d98
-  - [v2,4/5] dt-bindings: net: ipq4019-mdio: document required clock-names
-    https://git.kernel.org/netdev/net-next/c/4a8c14384fa9
-  - [v2,5/5] arm64: dts: qcom: ipq8074: add SoC specific compatible to MDIO
-    (no matching commit)
+Lemme try to explain what the initial problem was, because of which I suggested
+the DT to be fixed, even if no one is going to use it as a client.
 
-You are awesome, thank you!
+The OPP core provides two features:
+
+- Parsing of the OPP table and provide the data to the client.
+- Ability to switch the OPPs, i.e. configuring all resources.
+
+qcom-cpufreq-hw driver uses both of these, but in a tricky way (like Tegra30).
+It used the OPP core to parse the data, along with "opp-hz" property and switch
+the OPPs by calling dev_pm_opp_set_opp(). But it doesn't want
+dev_pm_opp_set_opp() to change the clock rate, but configure everything else.
+
+Now the OPP core needs to distinguish platforms for valid and invalid
+configurations, to make sure something isn't broken. For example a developer
+wants to change the OPP along with frequency and passes a valid OPP table. But
+forgets to set the clock entry in device's node. This is an error and the OPP
+core needs to report it. There can be more of such issues with different
+configurations.
+
+Also, as Mani explained, if the OPP core is required to switch the OPPs, then it
+needs to know the initial frequency of the device to see if we are going up or
+down the frequency graph. And so it will do a clk_get_rate() if there is
+"opp-hz" available.
+
+
+What we did in case of Tegra30 (commit 1b195626) is provide a .config_clks
+helper, which does nothing. So the OPP core doesn't need to know if frequency is
+programmed or not.
+
+The same can not be done for Qcom right now as the CPU node doesn't have the clk
+property though it has "opp-hz".
+
+Weather we have a user in kernel (OS) or not, shouldn't decide how the DT looks
+like. The DT should clearly define what the hardware looks like, irrespective of
+the users. The CPU has a clock and it should be mentioned. If the OPP core
+chooses to use that information, then it is a fine expectation to have.
+
+And so we are here. Most likely no one will ever do clk_set_rate() on this new
+clock, which is fine, though OPP core will likely do clk_get_rate() here.
+
+Hope I was able to clarify few things here.
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+viresh
