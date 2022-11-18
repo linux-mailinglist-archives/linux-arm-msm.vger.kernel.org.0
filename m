@@ -2,80 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7916162F086
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 10:08:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D758B62F0A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Nov 2022 10:12:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241720AbiKRJII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 04:08:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56000 "EHLO
+        id S241776AbiKRJMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Nov 2022 04:12:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241717AbiKRJIF (ORCPT
+        with ESMTP id S241786AbiKRJMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 04:08:05 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBA982BF7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 01:08:03 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id a15so5993104ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 01:08:03 -0800 (PST)
+        Fri, 18 Nov 2022 04:12:00 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E6B1788B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 01:11:55 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id z20so4780960edc.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 01:11:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uBmzyPSGKKw3Z9p4krM6pUy3zktMa1Sg6jbiYWSYWJ0=;
-        b=bIPU1hmqkk7O7NRuIdeJaV14+gTHgRWrI+1l/ML9TVw6d1tbIft6SNOum26IpoPyzh
-         l+XgDZB6onqLweoQchJTPOiixkm6Afm0Dg+aMcURnPuCmuSPJK34sl/ev0k9ksqw8Ey9
-         x3ECUGoyS7vOI0e58WcBtuTdAq7rdsZ3Vv7+xSRtkGATXxgqjjFsUqkrGMhq/C6uUz3X
-         EwfWAimj6Hv38yGBk/qEh8WEuB4N3Q0XV2wrtLGGrWcwMdXpzMIhpecuNZiYjTrxzWEl
-         d2FbPFd2l8tfUxA0Ld4T4inMLxluNZxGQ6bdXsanVohSwsGFmgn7nrWij/hvyhLYV2wb
-         iQcA==
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jRa/PoxgqDRwmd3eIz//88s67gtNdYgRfX+YpZPu+BM=;
+        b=pGDB+b0kZ/sQIJwkZVnS6mJ7ZHtv/wyTZg8nv9lMsZgqMRY3qSg3K4iYahUKU1UPMy
+         6oxTtEbLtTIgMekKU6EGmV8xG8HOBX/eBx+zPYrgtTyt4MexT81gGPMcpve6KrHdllvi
+         cAcT6AIjTv8pDRpLwf+HUKK/70BCiuZnkcpOm1e3f8Z+KVwdAD/dCjajmZ+YRdlPbnPQ
+         gws48p64W7rF9njDLmrxgIoy8e+puJXk/Mu0Xg9vsi/JGcFXXOJI2nfrAPA1dnNWUR0P
+         7VRGUTU3T2yg/LEmo20Tw7wpQv7cLZ6SSctEkUQXLss2NLsRH1POhLQBisnIX/fuxy7C
+         yQZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uBmzyPSGKKw3Z9p4krM6pUy3zktMa1Sg6jbiYWSYWJ0=;
-        b=cHHhylJx09nG0WAMCa4ez+0WMnQM3kdiWbahVzU82P8ICyEFR7edHpTSaI9R9m214b
-         L6GHLVSwEMP2rgpYYPZgYMwao5/HjUIuwPUObBNg4Z17Nmg6GXM8sNdux7JZax3hIwQ/
-         qgIYdJWB9lrTVwzatO7n4i0eF67d9jsFjcIiZa0hxHR4Fm0DmmUuPHxpD9DNGcjOnWSE
-         XrrO22MQ7bb42gmJmv7fPJJSJP2aV1rYt6y4pRH96O+5UgYL+EMw971izIi+1AinzSQb
-         GBSJ3CSPUipyMRdg8giOakIan3rjTldOpw7UIvh71dQZvEH5MflUbDGRk+xt7K6W5yRs
-         XtLw==
-X-Gm-Message-State: ANoB5pmIMjtGN7rgeu0eg6l1PqXbkpSGeIbgCMvWD4/pq19pQc0fuRlZ
-        1sCEhtC9S47/Pad5j907qOFoKw==
-X-Google-Smtp-Source: AA0mqf5XLhxbfIInkDX6ibdotI8Yq2b5nKdCDO0EcLCr8D3CblqL9hZK84IAUCcp0ISMucXbqykUnA==
-X-Received: by 2002:a05:651c:b99:b0:277:c41:d44b with SMTP id bg25-20020a05651c0b9900b002770c41d44bmr2383974ljb.326.1668762481768;
-        Fri, 18 Nov 2022 01:08:01 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id q8-20020a056512210800b004979db5aa5bsm580516lfr.223.2022.11.18.01.08.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Nov 2022 01:08:01 -0800 (PST)
-Message-ID: <0a1a3f62-f00d-79d6-9982-686fa7590cfa@linaro.org>
-Date:   Fri, 18 Nov 2022 10:08:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/6] dt-bindings: qcom: geni-se: document I2C Master
- Hub wrapper variant
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jRa/PoxgqDRwmd3eIz//88s67gtNdYgRfX+YpZPu+BM=;
+        b=IB3+VycCF2IriVOp+Z7JeL9hhdq20EV7GHCB158f5hNWeu2lwF6hKaprTIQk8gYFc5
+         lSRfm91sh2sYLjdl5rBwoF3ekCzKd7ZGcgSwyOJST/sBc4oPNIb70RZhdxCo/5ap2MC6
+         5+m5JzC028B0PcYmArx6jxvYsEICR5aCB278dRpNDvHcxx9JkLBKLiEbXo2vekyQNDzg
+         +xj5kedfem2w476fci1WBbKDxVYry5ltT+CZhcYe6EFJ41/9g4Zabso6UcIHpEDQiZEh
+         26e9AlhcYiIgGrGH/r0gSeHgZAngZYFBtr63VVMs5NIU1LxKrgni9BT+ho6Zmt0pvoD+
+         nA+Q==
+X-Gm-Message-State: ANoB5plKJ/RP1yj3MromOnfbXMSDa8E3xn2s9Ur1MQhqPJMNWSVJ86n7
+        AMO+DvfC8/i3154vMd+eXWj2hjcWZc88zQ==
+X-Google-Smtp-Source: AA0mqf60UCoSoZCOMJgwUY56vTLWRzaG7YSp6S3dpTy4oD84LYoA1zTvMRFEHxf21XoMxzZMW30VRQ==
+X-Received: by 2002:aa7:d593:0:b0:461:de5e:ba52 with SMTP id r19-20020aa7d593000000b00461de5eba52mr5304051edq.177.1668762713858;
+        Fri, 18 Nov 2022 01:11:53 -0800 (PST)
+Received: from otso.arnhem.chello.nl (k10064.upc-k.chello.nl. [62.108.10.64])
+        by smtp.gmail.com with ESMTPSA id v15-20020aa7dbcf000000b0046182b3ad46sm1535647edt.20.2022.11.18.01.11.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 01:11:53 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-0-aadaa6997b28@linaro.org>
- <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-1-aadaa6997b28@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-1-aadaa6997b28@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] remoteproc: qcom_q6v5_pas: disable wakeup on probe fail or remove
+Date:   Fri, 18 Nov 2022 10:08:15 +0100
+Message-Id: <20221118090816.100012-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,19 +78,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 09:45, Neil Armstrong wrote:
-> The I2C Master Hub is a stripped down version of the GENI Serial Engine
-> QUP Wrapper Controller but only supporting I2C serial engines without
-> DMA support.
-> 
-> Document the variant compatible, forbid UART and SPI sub-nodes,
-> and remove requirement for the Master AHB clock and iommu property.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
+the subsequent probe fail.
 
+[    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
+[    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
+[    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
+[    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
+[    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
+[    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fix this by disabling wakeup in both cases so the driver can properly
+probe on the next try.
 
-Best regards,
-Krzysztof
+Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
+Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+* move new line before rproc_free which frees 'adsp' as well
+* pick up tags
+
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 6afd0941e552..67f5152e2398 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -556,6 +556,7 @@ static int adsp_probe(struct platform_device *pdev)
+ detach_proxy_pds:
+ 	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ free_rproc:
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(rproc);
+ 
+ 	return ret;
+@@ -572,6 +573,7 @@ static int adsp_remove(struct platform_device *pdev)
+ 	qcom_remove_sysmon_subdev(adsp->sysmon);
+ 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
+ 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(adsp->rproc);
+ 
+ 	return 0;
+-- 
+2.38.1
 
