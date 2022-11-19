@@ -2,79 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDCFA630C57
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Nov 2022 06:58:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A37B630C7F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Nov 2022 07:38:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbiKSF6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Nov 2022 00:58:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43118 "EHLO
+        id S229606AbiKSGiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Nov 2022 01:38:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbiKSF6g (ORCPT
+        with ESMTP id S229470AbiKSGh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Nov 2022 00:58:36 -0500
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8035523160;
-        Fri, 18 Nov 2022 21:58:32 -0800 (PST)
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.57])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NDjcW482yzmVw7;
-        Sat, 19 Nov 2022 13:58:03 +0800 (CST)
-Received: from kwepemm600005.china.huawei.com (7.193.23.191) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 19 Nov 2022 13:58:29 +0800
-Received: from ubuntu1804.huawei.com (10.67.175.30) by
- kwepemm600005.china.huawei.com (7.193.23.191) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 19 Nov 2022 13:58:28 +0800
-From:   Hui Tang <tanghui20@huawei.com>
-To:     <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <airlied@gmail.com>,
-        <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <yusongping@huawei.com>
-Subject: [PATCH] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
-Date:   Sat, 19 Nov 2022 13:55:18 +0800
-Message-ID: <20221119055518.179937-1-tanghui20@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Sat, 19 Nov 2022 01:37:58 -0500
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F560B4F1C;
+        Fri, 18 Nov 2022 22:37:56 -0800 (PST)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-142612a5454so7803925fac.2;
+        Fri, 18 Nov 2022 22:37:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLYrlsSUJ/3iV70MlNgEm3O6sI1BB8dOzm7Fo6KqsgM=;
+        b=cNFOo+VqMgo+mnOiJFXxMwMeFQLoitwcWJzIOOFWlhDZn66wiP2M4eBUI7NktrM1uC
+         yaoxkbPYDfgg1iDxd9fZ4xi9O867toY85OU0FO1wgrIcYtErgNqSkIaDFS1yLEWy06Ze
+         Nw1/AIkSKmJKMc018JElW0dxYRL+GkqGyoV263phPIjoXOrycZ0f4UAzEZVysgHM2sCC
+         u3DTAZg7k0XUYqkROhzjmjl20OPHdLpF2N4VWXL/gTSjK7lRgBotEJdsiOLa4wIH6cX7
+         RdwHdpMT7MwsU0JqQ6wxuSX6BvrKyH1TcIs0CmWyKM61aIq78ZXPr1jlmFDGDcT3Hvct
+         8DkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cLYrlsSUJ/3iV70MlNgEm3O6sI1BB8dOzm7Fo6KqsgM=;
+        b=JNHys+KzBdTEcO+lu28uAqacEaqwIcH0i2GzKSxcghntUK/4R7o/SeDGb1I0oPJaSv
+         NzPtsfL3SkUm8js6oLcoQs1/j97FJjIET5w0pWacBv44whuB3KozQQdDdXKFYhKMiVO/
+         0VB1nKwlNgZLdRrAb/AQUHKEZIAUE7WyCpEj7/3NkDMDGktUBB535ET3umx2HWa346YC
+         brAwTW67rpiC0RKIgsQLVgnGDh5AoApOXhNO5yKx1Idmh3TbE8g4SoaZJoxzLKcmI6tb
+         rQ3S/vh84woLhkahSqJbZilb9S/j/RoYzgpV1U1/gHmqjMbI+NfIKvnCRMvzisGcEyjc
+         91MA==
+X-Gm-Message-State: ANoB5pkTMheAmDzaX7Zo7GdTJ5Px/iv+4+rRAv5RbpNS0zwCEuYcw1vj
+        AA+t9Qr68koZ7h6vo1/JFzP7w4KsyilzC19Vfxw=
+X-Google-Smtp-Source: AA0mqf4YHBgpQyRnlsR8IJwpaWfoiK6RVHKjHFNz8PNwpwXg9+N4cVuAs+273DwuP7yKjh9Nyq4wN2dl85vztU/s7dM=
+X-Received: by 2002:a05:6870:9591:b0:13a:eee0:b499 with SMTP id
+ k17-20020a056870959100b0013aeee0b499mr378364oao.83.1668839875548; Fri, 18 Nov
+ 2022 22:37:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.67.175.30]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemm600005.china.huawei.com (7.193.23.191)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221118223728.1721589-1-robh@kernel.org>
+In-Reply-To: <20221118223728.1721589-1-robh@kernel.org>
+From:   Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Date:   Sat, 19 Nov 2022 07:37:43 +0100
+Message-ID: <CAMhs-H99X9aV7cdotCPar6g50KXL+qNS+jM16Tveq9nxfUY4Rg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: Add missing start and/or end of line regex anchors
+To:     Rob Herring <robh@kernel.org>
+Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Yangtao Li <tiny.windzz@gmail.com>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Javier Martinez Canillas <javier@dowhile0.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Daniel Mack <zonque@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-pci@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-spi@vger.kernel.org, linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
-be NULL and will cause null pointer derefrence later.
+On Fri, Nov 18, 2022 at 11:38 PM Rob Herring <robh@kernel.org> wrote:
+>
+> json-schema patterns by default will match anywhere in a string, so
+> typically we want at least the start or end anchored. Fix the obvious
+> cases where the anchors were forgotten.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml         | 2 +-
 
-Therefore, it might be better to check it and directly return -ENOMEM.
+Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-Fixes: 77b001acdcfe ("drm/msm/dpu: add the writeback connector layer")
-Signed-off-by: Hui Tang <tanghui20@huawei.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-index 088ec990a2f2..2a5a68366582 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-@@ -70,6 +70,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
- 	int rc = 0;
- 
- 	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
-+	if (!dpu_wb_conn)
-+		return -ENOMEM;
- 
- 	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
- 
--- 
-2.17.1
-
+Thanks,
+    Sergio Paracuellos
