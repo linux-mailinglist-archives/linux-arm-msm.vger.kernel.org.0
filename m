@@ -2,194 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FBC9630672
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Nov 2022 01:10:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDCFA630C57
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Nov 2022 06:58:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237613AbiKSAKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Nov 2022 19:10:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
+        id S229615AbiKSF6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Nov 2022 00:58:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237478AbiKSAJt (ORCPT
+        with ESMTP id S229506AbiKSF6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Nov 2022 19:09:49 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C66A65A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 15:33:03 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id a29so10583605lfj.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Nov 2022 15:33:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZW/KVp2AUxGQEWc2f/qSxCfb9I/iYgRFf9DDe1VokY=;
-        b=jeYxOBAae0nkZMhCajRWxNl4BsHIp/gJUcfUlzn4W//+IRNZdt4c+u4xkFcSSrbpF4
-         sh037Zjjh6OBFnXtZv+L9j+5jwN0QKPZYxbyNd0iVqa6l+skXoNYza9N/xnry4guT1n1
-         JKAYszaPm8LSW405Fg3GX108MPQgibCf63zG4K/d7lfbEBaF/OPiBxSqiEQDyWn0V89u
-         3s/LkPs2lOO7+dT0hFtLBww8jCLoHgxPEgyNI/Y2eBpse3FLvWGxCCOhrA25KKbVtkLp
-         ICnFJYDcnPyMQ3lTLyzzP6PnPu0dA/hI/rzUWoZ52tMD651+ax1umuzGfsq5zPTCwWLM
-         zhIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZZW/KVp2AUxGQEWc2f/qSxCfb9I/iYgRFf9DDe1VokY=;
-        b=le1pgzey+mduR+nD574qHs1BIGnryubppp0OSdlUAtFktz9bE80zSwcHqzjhDZieio
-         O7xZMKmMsb/fknIN8+oLZ5Jk9G2xW2VF3VJPNZ9pJdZU8zFW+Tctap2mW+iuuZPYsvGp
-         OZbEZN1u03Gjp4lFYKEseqWcMzutXwrgW1PZhqZYGGvBUht5DXeUANMAged3lDQt7SIi
-         7IVwTEfaNE9uEFtXuwquC5dKOJ7YXdXx6cKwdFGeATo5R7bIkLIoSaPVdYpsjOfX081O
-         owAiL0D37PyCdZsHFq5GAj4DpwYuCYcTtWBJHmHjztVbzw9kYHK1rPioaNj+aBXegd59
-         WkPw==
-X-Gm-Message-State: ANoB5pmKYmbH6j7msMO2+BKhbNvMq2t9Ggg/8i6UrU3/w4wTEl/yXnxB
-        Tp2nTWBQHJXNlGVaMWzzToxTEQ==
-X-Google-Smtp-Source: AA0mqf4jXbJTDhzUsg9iV+s2DbbmtyvSGp9egr4e4Kb0jNBK31FGHn1NPHnPzzzMdZbTag2CRNWLMA==
-X-Received: by 2002:ac2:593c:0:b0:4b2:2cff:8448 with SMTP id v28-20020ac2593c000000b004b22cff8448mr2869937lfi.252.1668814381687;
-        Fri, 18 Nov 2022 15:33:01 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id k13-20020ac257cd000000b004947f8b6266sm843900lfo.203.2022.11.18.15.32.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 15:33:01 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v4 8/8] arm64: dts: qcom: sm8350-hdk: enable PCIe devices
-Date:   Sat, 19 Nov 2022 01:32:42 +0200
-Message-Id: <20221118233242.2904088-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221118233242.2904088-1-dmitry.baryshkov@linaro.org>
-References: <20221118233242.2904088-1-dmitry.baryshkov@linaro.org>
+        Sat, 19 Nov 2022 00:58:36 -0500
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8035523160;
+        Fri, 18 Nov 2022 21:58:32 -0800 (PST)
+Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NDjcW482yzmVw7;
+        Sat, 19 Nov 2022 13:58:03 +0800 (CST)
+Received: from kwepemm600005.china.huawei.com (7.193.23.191) by
+ dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Sat, 19 Nov 2022 13:58:29 +0800
+Received: from ubuntu1804.huawei.com (10.67.175.30) by
+ kwepemm600005.china.huawei.com (7.193.23.191) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Sat, 19 Nov 2022 13:58:28 +0800
+From:   Hui Tang <tanghui20@huawei.com>
+To:     <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <yusongping@huawei.com>
+Subject: [PATCH] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
+Date:   Sat, 19 Nov 2022 13:55:18 +0800
+Message-ID: <20221119055518.179937-1-tanghui20@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.67.175.30]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ kwepemm600005.china.huawei.com (7.193.23.191)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PCIe0 and PCIe1 hosts found on SM8350 HDK board.
+Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
+be NULL and will cause null pointer derefrence later.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Therefore, it might be better to check it and directly return -ENOMEM.
+
+Fixes: 77b001acdcfe ("drm/msm/dpu: add the writeback connector layer")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
 ---
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 80 +++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index 69ae6503c2f6..bff75602303c 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -234,6 +234,39 @@ &mpss {
- 	firmware-name = "qcom/sm8350/modem.mbn";
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+index 088ec990a2f2..2a5a68366582 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+@@ -70,6 +70,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+ 	int rc = 0;
  
-+&pcie0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_default_state>;
-+
-+	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	vdda-phy-supply = <&vreg_l5b_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_default_state>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l5b_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -245,6 +278,53 @@ &slpi {
+ 	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
++	if (!dpu_wb_conn)
++		return -ENOMEM;
  
- &tlmm {
- 	gpio-reserved-ranges = <52 8>;
-+
-+	pcie0_default_state: pcie0-default-state {
-+		perst-pins {
-+			pins = "gpio94";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio95";
-+			function = "pcie0_clkreqn";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio96";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie1_default_state: pcie1-default-state {
-+		perst-pins {
-+			pins = "gpio97";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio98";
-+			function = "pcie1_clkreqn";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio99";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- };
+ 	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
  
- &uart2 {
 -- 
-2.35.1
+2.17.1
 
