@@ -2,120 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 417486312BA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 07:52:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EA2363136A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 11:45:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229454AbiKTGwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 01:52:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
+        id S229499AbiKTKpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 05:45:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiKTGwY (ORCPT
+        with ESMTP id S229576AbiKTKpl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 01:52:24 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B493C942D5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Nov 2022 22:52:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BD26460BFF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 06:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233D0C4314D
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 06:52:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668927140;
-        bh=unX76QKH95pBc8VMtK0DMu4SdkXMf/gkRIw9iatMLXc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JHz0T5yDc36FyNAnp++6tNSmk6dj1fmNPPnFwJ/GbuaQ5q+FbAixvEvnzapVM1GYU
-         5BKSSHWhZFtzPt9KD0aUDPusKHcMmZ6svhGnlD+8BSAkbrTd6UQ+qmVmNf1PNPU5wt
-         ckoa/XLszalnfnAKop2Rz+R+BdBvTymcRJFw/VyYu4e0VrkLidpTckYQrGdRmsuOVX
-         yBP0Knq9FCx/CFlh4OB/xK/ZgCN1cCA86mYSFLr8YkRH8Ar92R1SouSnum0pYGwajX
-         KQuBfi9ikzeC6O4tGvw2yv48N4dOPjcVTpbzzaqbDd+amWFylJXATpm+C+f1EEid4w
-         Bycke5StjDlnQ==
-Received: by mail-vk1-f172.google.com with SMTP id m18so4289016vka.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Nov 2022 22:52:20 -0800 (PST)
-X-Gm-Message-State: ANoB5pl4Uom3QXrc75mlDKAb8WOXLlY13MTNCMfDlHKu8vk5L7CfpY4i
-        9htijId+/LJ9hZWi5ofoFeXudL3XfYFUHjJow0L0JA==
-X-Google-Smtp-Source: AA0mqf5arwI+1Ek3mx3soz8ohE6WHnF+dcjdCqRzErREao2c5D+qmuXG9A9UQ0DaiieR0JHZqysHYs4Di4jY3Ome4F4=
-X-Received: by 2002:a1f:5f50:0:b0:3ae:dce4:457 with SMTP id
- t77-20020a1f5f50000000b003aedce40457mr7127292vkb.26.1668927138878; Sat, 19
- Nov 2022 22:52:18 -0800 (PST)
+        Sun, 20 Nov 2022 05:45:41 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC5DB7EBFD
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:45:39 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id k19so11711583lji.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:45:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AfjrrvM401chLEEhFMdPRN1cmntaerpR7WncWJ1zIxk=;
+        b=JKN6r9dWXQYuszA/XTYDpyFWqOeIvK6wyxmzY6q3jw8yfWCtz6/LihuAcDmuIm5vLC
+         OklP/dG2lHYcL+OF44gjxgbtLenFfKjpYaXOeNImtI2C1KiqFFtTYhue0aKzJhGaDJUR
+         ooEtdNmdle27iw5JmKz3Z6yRfAJ9PTXo9X1P9jy0zic3Y/aJh3Jb0hX9uU7jsM9VwX0f
+         6tCPuiA0+uXgZKhNCuAVVcx9BEjoBH6FcW5m+OpfoMNm876kDzNRiJD6mgUegubg9e2i
+         jEmaDriCZ7x0p8x0aLxnjcKna9Ketv5KZJidYcM84FzSzu2r7ih2sddY51tc3aInTvwt
+         Hhdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AfjrrvM401chLEEhFMdPRN1cmntaerpR7WncWJ1zIxk=;
+        b=aLdAlVABpRiTFHQgCGdF5LlS4xutYcK4/0eJTmpBdrl9FCxlJwdsL2HcLPecUsA//E
+         jFPfNuRw4Z7mmqHphXAKzDNzmWtOZa5T2BOTo6+KgGuObx7NvwbvC/pn99XFQpctrQFD
+         MWEDNfIqWy0I9cYEeDiS0PyElHRPVCwegeDfdBy21+DSjZfKvpzBFD7S5AkXFZZYr+vl
+         N7gF4uthAVRGUphp4b7PgJXxYrgc5OAD4DDo1W+6OtqJQZ8HguVhKfGOymP4196PnRlw
+         klF+PxZDZvmbU3PezqeqdYikbZA+bw/8kWFRSL15irX2KXY6h5z3cGScyerRa8BC1ydY
+         JhJg==
+X-Gm-Message-State: ANoB5plYsKsAgUaT6mY4BJW0em20RhWnZamOIUPROtQX2lBL5Mx9x7P7
+        1PzuvGmB+yEgN7Yy5G+JOMtH9Q==
+X-Google-Smtp-Source: AA0mqf7Ikj766/Ppw8jqYgYPMnH7OLugdvbfXSlNGYM0DawOyXuEDHvpcP6izLnUHKK9xV166S9wug==
+X-Received: by 2002:a2e:be88:0:b0:26e:8e6f:3c4 with SMTP id a8-20020a2ebe88000000b0026e8e6f03c4mr4544861ljr.113.1668941138030;
+        Sun, 20 Nov 2022 02:45:38 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a7-20020a056512374700b00492f0f66956sm1485066lfs.284.2022.11.20.02.45.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Nov 2022 02:45:37 -0800 (PST)
+Message-ID: <94f23d11-dfa3-fd86-32ed-937c78592f20@linaro.org>
+Date:   Sun, 20 Nov 2022 11:45:36 +0100
 MIME-Version: 1.0
-References: <20221114-narmstrong-sm8550-upstream-tsens-v1-0-0e169822830f@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-tsens-v1-0-0e169822830f@linaro.org>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Sun, 20 Nov 2022 12:22:07 +0530
-X-Gmail-Original-Message-ID: <CAHLCerPKz9cP5di+8VeaLgO8mmh1Nj5x3fC70otyhPDONFVwaA@mail.gmail.com>
-Message-ID: <CAHLCerPKz9cP5di+8VeaLgO8mmh1Nj5x3fC70otyhPDONFVwaA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: Add compatible for sm8550
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] dt-bindings: firmware: scm: Add QDU1000/QRU1000
+ compatible
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20221118182614.11774-1-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221118182614.11774-1-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 3:40 PM Neil Armstrong
-<neil.armstrong@linaro.org> wrote:
->
-> The Qualcomm SM8550 platform has three instances of the tsens block,
-> add a compatible for these instances.
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+On 18/11/2022 19:26, Melody Olvera wrote:
+> Add compatible for scm driver for QDU1000 and QRU1000 platforms. These drivers
+> only require the compatible field, so update the bindings accordingly for
+> these platforms.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+> This patch is separated out from [1] and includes
+> changes addressing comments from that patch set.
+> 
+> [1] https://lore.kernel.org/all/20221026190549.4005703-2-quic_molvera@quicinc.com/
 
-Acked-by: Amit Kucheria <amitk@kernel.org>
+Then this is a v4. Please always include the changelog.
 
-> ---
-> To: Andy Gross <agross@kernel.org>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konrad.dybcio@somainline.org>
-> To: Amit Kucheria <amitk@kernel.org>
-> To: Thara Gopinath <thara.gopinath@gmail.com>
-> To: "Rafael J. Wysocki" <rafael@kernel.org>
-> To: Daniel Lezcano <daniel.lezcano@linaro.org>
-> To: Zhang Rui <rui.zhang@intel.com>
-> To: Rob Herring <robh+dt@kernel.org>
-> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-pm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index f0bd4b979e28..09dbd96d380e 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -58,6 +58,7 @@ properties:
->                - qcom,sm8250-tsens
->                - qcom,sm8350-tsens
->                - qcom,sm8450-tsens
-> +              - qcom,sm8550-tsens
->            - const: qcom,tsens-v2
->
->        - description: v2 of TSENS with combined interrupt
->
-> ---
-> base-commit: 3c1f24109dfc4fb1a3730ed237e50183c6bb26b3
-> change-id: 20221114-narmstrong-sm8550-upstream-tsens-dfaec218c321
->
-> Best regards,
-> --
-> Neil Armstrong <neil.armstrong@linaro.org>
+Did you implement the changes requested? If they are no changes, then
+review would stay the same as before.
+
+> 
+>  .../devicetree/bindings/firmware/qcom,scm.yaml        | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> index 25688571ee7c..71012d43a32f 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -38,6 +38,7 @@ properties:
+>            - qcom,scm-msm8994
+>            - qcom,scm-msm8996
+>            - qcom,scm-msm8998
+> +          - qcom,scm-qdu1000
+>            - qcom,scm-sc7180
+>            - qcom,scm-sc7280
+>            - qcom,scm-sc8280xp
+> @@ -82,6 +83,16 @@ properties:
+>      description: TCSR hardware block
+>  
+>  allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,scm-qdu1000
+> +    then:
+> +      properties:
+> +        clocks: false
+> +        clock-names: false
+> +
+>    - if:
+>        properties:
+>          compatible:
+> 
+> base-commit: 147307c69ba4441ee90c1f8ce8edf5df4ea60f67
+
+Best regards,
+Krzysztof
+
