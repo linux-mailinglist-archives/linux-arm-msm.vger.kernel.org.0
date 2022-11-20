@@ -2,89 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5818963143B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 14:01:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16B96631464
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 14:41:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbiKTNBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 08:01:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42168 "EHLO
+        id S229519AbiKTNlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 08:41:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbiKTNBu (ORCPT
+        with ESMTP id S229478AbiKTNla (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 08:01:50 -0500
-Received: from smtp.smtpout.orange.fr (smtp-17.smtpout.orange.fr [80.12.242.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9C320BF5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 05:01:49 -0800 (PST)
-Received: from pop-os.home ([86.243.100.34])
-        by smtp.orange.fr with ESMTPA
-        id wjxAo2gcMCoWhwjxDotLEw; Sun, 20 Nov 2022 14:01:48 +0100
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 20 Nov 2022 14:01:48 +0100
-X-ME-IP: 86.243.100.34
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] mfd: qcom_rpm: Use devm_of_platform_populate() to simplify code
-Date:   Sun, 20 Nov 2022 14:01:43 +0100
-Message-Id: <fd997dc92b9cee219e9c55e22959a94f4bbf570b.1668949256.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr>
-References: <e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr>
+        Sun, 20 Nov 2022 08:41:30 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F30F23172;
+        Sun, 20 Nov 2022 05:41:29 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id l8so11891615ljh.13;
+        Sun, 20 Nov 2022 05:41:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PNF/kNtbO6GK1B3nzJQq6Q9EeflceLft+xrnXuyeMeo=;
+        b=DDnt9gVC5ya+migDiScvg5lZuWSaBByLu4liDWKPFUASHA939CLQMs8PBoBNeTvCxm
+         iUA5oZEFkRe5SJ5gSTq5DJq/2p5l5pwIQxaje7pi3vV7Lr0X1u0JBChXgmjeMcEUrvuV
+         eFYbATH1bILvOcXPPvJKNxzu7A4zZxjLe2bNpO5JNmQzzoidDxwFf7dHNlC4oVulvFqC
+         cysGz1VOplPYltdogRf1A8Jd4B4+NdlkK7AFJJ9phLznqORla6nY1P7PMZ8gkR6Ex4/A
+         6HwNJsVUwB+Iyja+4J9FTAI5sKKuMU1Qd61Tg2yv8XzqHjoHDAf3S/3RR+kwogpdfetb
+         CHXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PNF/kNtbO6GK1B3nzJQq6Q9EeflceLft+xrnXuyeMeo=;
+        b=z4SJuZlmTzb6T/2AtV8pMddgnrCbEMQt7+zePff6A5ux+PywsAwka1NVsti+oZ+rm5
+         QTqt0a0/csUNz6GJ6vFX3whbDOquNAp4nrhGsGo+k+j8hHakIGP+8nZjfgWBIixoepfY
+         Ybag9xBQrU/q1iC2jgnxr2YI9UCLrwHIitVv5GUlnv8jDPsUlCh+Y5T2cLNyiCB6C8q4
+         Dm4i6ZmTIc7NBZKL2PO5Z2KK9+gHPJYY8LMn7SXwgjn92bDp/EjSuI1DQlgf/3w8iXcR
+         deV2G0PcFd70dqG2tGRIWkdCij5YqfXIqt/B1TVoULlq+iPhfkp0wmNhfa/nNy8YQwQi
+         XQUA==
+X-Gm-Message-State: ANoB5pnWqVZrG7c478cqcNaHYnHs9Llt7wi+sezH8mXdVnbEsrnRcRUn
+        DBeMe8MZk+TF9YK59VTsVYiq6Tf/x3w=
+X-Google-Smtp-Source: AA0mqf61XDCq0NCQSdMy3bngtqan9E4X4cICS/OiRi0bwydYg4UvH5qZxFbhuWbViFRaeJQWlIK6/A==
+X-Received: by 2002:a05:651c:2002:b0:278:a1bc:ad26 with SMTP id s2-20020a05651c200200b00278a1bcad26mr4853728ljo.235.1668951687554;
+        Sun, 20 Nov 2022 05:41:27 -0800 (PST)
+Received: from localhost.localdomain (cds73.neoplus.adsl.tpnet.pl. [83.30.168.73])
+        by smtp.gmail.com with ESMTPSA id m3-20020a056512114300b004afac783b5esm1536287lfg.238.2022.11.20.05.41.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Nov 2022 05:41:26 -0800 (PST)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Adam Skladowski <a_skl39@protonmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jason Wang <wangborong@cdjrlc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Add SM6115 MDSS/DPU support
+Date:   Sun, 20 Nov 2022 14:37:35 +0100
+Message-Id: <20221120133744.24808-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_of_platform_populate() instead of hand-writing it.
-This simplifies the code.
+This patch series add support for MDSS and DPU block found on SM6115.
+These patches were tested on Xiaomi Redmi 9T smartphone.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-This changes the order of the clean-ups if the .remove() function is called
-but it looks fine to me.
----
- drivers/mfd/qcom_rpm.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+Adam Skladowski (2):
+  dt-bindings: display/msm: add support for the display on SM6115
+  drm/msm/disp/dpu1: add support for display on SM6115
 
-diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-index ea5eb94427c4..8fea0e511550 100644
---- a/drivers/mfd/qcom_rpm.c
-+++ b/drivers/mfd/qcom_rpm.c
-@@ -672,21 +672,11 @@ static int qcom_rpm_probe(struct platform_device *pdev)
- 	if (ret)
- 		dev_warn(&pdev->dev, "failed to mark wakeup irq as wakeup\n");
- 
--	return of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
--}
--
--static int qcom_rpm_remove(struct platform_device *pdev)
--{
--	struct qcom_rpm *rpm = dev_get_drvdata(&pdev->dev);
--
--	of_platform_depopulate(&pdev->dev);
--
--	return 0;
-+	return devm_of_platform_populate(&pdev->dev);
- }
- 
- static struct platform_driver qcom_rpm_driver = {
- 	.probe = qcom_rpm_probe,
--	.remove = qcom_rpm_remove,
- 	.driver  = {
- 		.name  = "qcom_rpm",
- 		.of_match_table = qcom_rpm_of_match,
+ .../bindings/display/msm/qcom,sm6115-dpu.yaml |  87 ++++++++
+ .../display/msm/qcom,sm6115-mdss.yaml         | 187 ++++++++++++++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  87 ++++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                |   5 +
+ 6 files changed, 368 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+
 -- 
-2.34.1
+2.25.1
 
