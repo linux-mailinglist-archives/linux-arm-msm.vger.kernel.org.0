@@ -2,287 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C432C63146A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 14:41:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B13A6631479
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 14:53:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbiKTNlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 08:41:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52370 "EHLO
+        id S229598AbiKTNxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 08:53:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbiKTNlk (ORCPT
+        with ESMTP id S229524AbiKTNxP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 08:41:40 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605D0248F7;
-        Sun, 20 Nov 2022 05:41:39 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id d6so15247519lfs.10;
-        Sun, 20 Nov 2022 05:41:39 -0800 (PST)
+        Sun, 20 Nov 2022 08:53:15 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E553E032;
+        Sun, 20 Nov 2022 05:53:11 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id k2so6504003qkk.7;
+        Sun, 20 Nov 2022 05:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7NV4kQ8eKvRD4PAVvmUHP86c4szhs9EY9GpSQ3ky8pQ=;
-        b=iVKq4T7M7XVVB17LHpy1J57rdy0o1B5JfcYvwVr2DktOWHDnV2eDy3zQbMWfhQtUN0
-         85evydbHAe340AfNNTDPa5nNWq/o2Z7m7c7hXfDnw1WOY4vwTYACXHgXuKr575/KsTZo
-         ZKPgg5jM+E5COxDBhp7/dAM/wsMwwRf0J2im76ropnrZhj3/wdR3LCUiAqocpFMVDJTb
-         A9Twl+NfvJmOS2qouuCQWIp3PcHRKGmdZfWIlNgrpoecQHmxZxbsDCs9nWTjKSbuMjVV
-         R7XjjtJXnBxkPMTn1w6TVljHrbfSiWPcotQFAEFzK/dNuhSon/NYKb60ELueCIHSG+6w
-         AoQQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R3o7MxftPnsiuByCDpeTAo1VzY2DRAHijDZ+Q9Ek5VE=;
+        b=JIVFY4robx7oRRUQfCLInbCxqPNNQRhFvRFnSzYIldrdG2Je2WB2jAJK7by2FAyGkd
+         AclJ4+pXvNKd3bNZrE1MOULb31JbFqHgy5mXs4qao1kSwz+0d7uXTIk7E8t7rzKZgE+C
+         svWAWmtiT1mr6y8ZLgSxKiiFC+DqvkDkZWvb5uAqYhf01luNS1B3nwOfHl/0VuJ+eZEN
+         NMvaeM7Mfii8P4clfnTRfFf0udrY44fA0mGlLxkhnv7c0dDeJ/eVlbkxawEYq9dBiQw5
+         tKxoSnSrS2k7jerbcuo6Vzh9DzzMOXTXQWwsaWsJYrGVMPtjX3UyjfW1PyvR/BacjkLC
+         Z5lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7NV4kQ8eKvRD4PAVvmUHP86c4szhs9EY9GpSQ3ky8pQ=;
-        b=t4vXTer4AeqpsLLmr3kEbsnZhMXhmJYcRGqRqJNdW7DkyrWXZWLBblLj2ttLJM8ShN
-         de558RyCA+Uxg6T2K518PzYj5xBE989B8OGorkYrW/VDqjb8uFpbyi5G71aMJYxdYwTg
-         Q02DUIH9SAfr1oRMMZnew7LDkiXeOli1oWCbOnXH1m/tvqPhv5jfOtOqSuDcNGWNvOSB
-         m2+kwwA35OJjvW9ByFfQyIq7/M5ubWnpECdd+oODyHkfUD4a0XSb4aE9mKZQqE8oWKrk
-         1F7SSZtbhrpG4B7grcBPCciFtppzgdGyqhYz8R/sIynOjQkzvbp4X+EBJGaVpX+hYDMc
-         oFjQ==
-X-Gm-Message-State: ANoB5pmlcSqXf03jsuJmacEQJp3LKq/Ynp1jds1+Lt6izu7C3f8GyrSa
-        ytIRxokdBqehCZq2M2/aq7HpbgfK3Rt4vg==
-X-Google-Smtp-Source: AA0mqf5iTGoo0khCWPyJNg4hwhMKo7YT5jvrDlpcLTIVeM53nFXaFyvqtbJYlQDSIS7c9rGnzhNwCA==
-X-Received: by 2002:ac2:5486:0:b0:4a2:34d5:9929 with SMTP id t6-20020ac25486000000b004a234d59929mr5267185lfk.31.1668951697570;
-        Sun, 20 Nov 2022 05:41:37 -0800 (PST)
-Received: from localhost.localdomain (cds73.neoplus.adsl.tpnet.pl. [83.30.168.73])
-        by smtp.gmail.com with ESMTPSA id m3-20020a056512114300b004afac783b5esm1536287lfg.238.2022.11.20.05.41.35
+        bh=R3o7MxftPnsiuByCDpeTAo1VzY2DRAHijDZ+Q9Ek5VE=;
+        b=QeASsXc7VrgZLViaS6FkG8360Cy71a3zECntKcuiEbP3aFZknnJpuMkVXCnx0w0IeR
+         DCMV+PWRaGp5fjW1Ux3V6zfaJc0WFzpWoqlbvmXXNqO9OS2zCApBdG7c6kuSg0/+btku
+         lv4fGT67iaIEFtqTYi+0CiHsnbB9LHG6HQtXOQ0gUvJSITV66bSP6NJQoFMhnhE+gXWv
+         6D6v08S5s8sQqTsAWLKAEFwuFGSVtnzAmEHmkAsa77da0m6cCVCRoJootnaEaPHOlT/l
+         p7H3ClNFQfFxDkspII37YsaaFzwBNW2o6/SQ15rf/JwZiM/jCoI0vtqlyDWQFIpardwT
+         Gfjw==
+X-Gm-Message-State: ANoB5pllgWw2Nax09psLNaoWOAqRV1e+anzjguu3Iqyi9uuujP7+FTdo
+        QZODEt2pacUXmWKsb800NMdxKDrwkAI=
+X-Google-Smtp-Source: AA0mqf6lqRt0pi9+3h33Jkhzmoe8fof4ax9VZl7N0LFXcDLx5t4h1eFk7Zl7LZYKqldtMBKSAXnLLA==
+X-Received: by 2002:a05:620a:1427:b0:6f9:ffc7:a9e4 with SMTP id k7-20020a05620a142700b006f9ffc7a9e4mr838228qkj.277.1668952390120;
+        Sun, 20 Nov 2022 05:53:10 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id s6-20020a05620a254600b006e07228ed53sm6523055qko.18.2022.11.20.05.53.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 05:41:37 -0800 (PST)
-From:   Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+        Sun, 20 Nov 2022 05:53:09 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date:   Sun, 20 Nov 2022 05:53:08 -0800
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Adam Skladowski <a_skl39@protonmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jason Wang <wangborong@cdjrlc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] drm/msm/disp/dpu1: add support for display on SM6115
-Date:   Sun, 20 Nov 2022 14:37:37 +0100
-Message-Id: <20221120133744.24808-3-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221120133744.24808-1-a39.skl@gmail.com>
-References: <20221120133744.24808-1-a39.skl@gmail.com>
+        Jean Delvare <jdelvare@suse.com>,
+        Yangtao Li <tiny.windzz@gmail.com>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Javier Martinez Canillas <javier@dowhile0.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Daniel Mack <zonque@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-pci@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-spi@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: Add missing start and/or end of line regex
+ anchors
+Message-ID: <20221120135308.GA1787641@roeck-us.net>
+References: <20221118223728.1721589-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221118223728.1721589-1-robh@kernel.org>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add required display hw catalog changes for SM6115.
+On Fri, Nov 18, 2022 at 04:37:27PM -0600, Rob Herring wrote:
+> json-schema patterns by default will match anywhere in a string, so
+> typically we want at least the start or end anchored. Fix the obvious
+> cases where the anchors were forgotten.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+> Acked-by: Mark Brown <broonie@kernel.org>
+> ---
+>  .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml       | 2 +-
+>  Documentation/devicetree/bindings/hwmon/adt7475.yaml          | 4 ++--
 
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 87 +++++++++++++++++++
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 +
- drivers/gpu/drm/msm/msm_mdss.c                |  5 ++
- 4 files changed, 94 insertions(+)
+For hwmon: 
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 1ce237e18506..4fed544c1356 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -321,6 +321,18 @@ static const struct dpu_caps sc7180_dpu_caps = {
- 	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
- };
- 
-+static const struct dpu_caps sm6115_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.max_mixer_blendstages = 0x4,
-+	.qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
-+	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
-+	.ubwc_version = DPU_HW_UBWC_VER_20,
-+	.has_dim_layer = true,
-+	.has_idle_pc = true,
-+	.max_linewidth = 2160,
-+	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-+};
-+
- static const struct dpu_caps sm8150_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
-@@ -475,6 +487,19 @@ static const struct dpu_mdp_cfg sc8180x_mdp[] = {
- 	},
- };
- 
-+static const struct dpu_mdp_cfg sm6115_mdp[] = {
-+	{
-+	.name = "top_0", .id = MDP_TOP,
-+	.base = 0x0, .len = 0x494,
-+	.features = 0,
-+	.highest_bank_bit = 0x1,
-+	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
-+		.reg_off = 0x2AC, .bit_off = 0},
-+	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
-+		.reg_off = 0x2AC, .bit_off = 8},
-+	},
-+};
-+
- static const struct dpu_mdp_cfg sm8250_mdp[] = {
- 	{
- 	.name = "top_0", .id = MDP_TOP,
-@@ -852,6 +877,16 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- 		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
- };
- 
-+static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
-+				_VIG_SBLK("0", 2, DPU_SSPP_SCALER_QSEED3LITE);
-+
-+static const struct dpu_sspp_cfg sm6115_sspp[] = {
-+	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
-+		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-+	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
-+		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-+};
-+
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
- 				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE);
- static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
-@@ -1590,6 +1625,35 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
- 	.bw_inefficiency_factor = 120,
- };
- 
-+static const struct dpu_perf_cfg sm6115_perf_data = {
-+	.max_bw_low = 3100000,
-+	.max_bw_high = 4000000,
-+	.min_core_ib = 2400000,
-+	.min_llcc_ib = 800000,
-+	.min_dram_ib = 800000,
-+	.min_prefill_lines = 24,
-+	.danger_lut_tbl = {0xff, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-+		.entries = sc7180_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-+		.entries = sc7180_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-+		.entries = sc7180_qos_nrt
-+		},
-+		/* TODO: macrotile-qseed is different from macrotile */
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
-+};
-+
- static const struct dpu_perf_cfg sm8150_perf_data = {
- 	.max_bw_low = 12800000,
- 	.max_bw_high = 12800000,
-@@ -1801,6 +1865,28 @@ static const struct dpu_mdss_cfg sc7180_dpu_cfg = {
- 	.mdss_irqs = IRQ_SC7180_MASK,
- };
- 
-+static const struct dpu_mdss_cfg sm6115_dpu_cfg = {
-+	.caps = &sm6115_dpu_caps,
-+	.mdp_count = ARRAY_SIZE(sm6115_mdp),
-+	.mdp = sm6115_mdp,
-+	.ctl_count = ARRAY_SIZE(qcm2290_ctl),
-+	.ctl = qcm2290_ctl,
-+	.sspp_count = ARRAY_SIZE(sm6115_sspp),
-+	.sspp = sm6115_sspp,
-+	.mixer_count = ARRAY_SIZE(qcm2290_lm),
-+	.mixer = qcm2290_lm,
-+	.dspp_count = ARRAY_SIZE(qcm2290_dspp),
-+	.dspp = qcm2290_dspp,
-+	.pingpong_count = ARRAY_SIZE(qcm2290_pp),
-+	.pingpong = qcm2290_pp,
-+	.intf_count = ARRAY_SIZE(qcm2290_intf),
-+	.intf = qcm2290_intf,
-+	.vbif_count = ARRAY_SIZE(sdm845_vbif),
-+	.vbif = sdm845_vbif,
-+	.perf = &sm6115_perf_data,
-+	.mdss_irqs = IRQ_SC7180_MASK,
-+};
-+
- static const struct dpu_mdss_cfg sm8150_dpu_cfg = {
- 	.caps = &sm8150_dpu_caps,
- 	.mdp_count = ARRAY_SIZE(sdm845_mdp),
-@@ -1935,6 +2021,7 @@ static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
- 	{ .hw_rev = DPU_HW_VER_510, .dpu_cfg = &sc8180x_dpu_cfg},
- 	{ .hw_rev = DPU_HW_VER_600, .dpu_cfg = &sm8250_dpu_cfg},
- 	{ .hw_rev = DPU_HW_VER_620, .dpu_cfg = &sc7180_dpu_cfg},
-+	{ .hw_rev = DPU_HW_VER_630, .dpu_cfg = &sm6115_dpu_cfg},
- 	{ .hw_rev = DPU_HW_VER_650, .dpu_cfg = &qcm2290_dpu_cfg},
- 	{ .hw_rev = DPU_HW_VER_720, .dpu_cfg = &sc7280_dpu_cfg},
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 38aa38ab1568..3b645d5aa9aa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -44,6 +44,7 @@
- #define DPU_HW_VER_510	DPU_HW_VER(5, 1, 1) /* sc8180 */
- #define DPU_HW_VER_600	DPU_HW_VER(6, 0, 0) /* sm8250 */
- #define DPU_HW_VER_620	DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
-+#define DPU_HW_VER_630	DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
- #define DPU_HW_VER_650	DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
- #define DPU_HW_VER_720	DPU_HW_VER(7, 2, 0) /* sc7280 */
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index f3660cd14f4f..b71199511a52 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1292,6 +1292,7 @@ static const struct of_device_id dpu_dt_match[] = {
- 	{ .compatible = "qcom,sc7180-dpu", },
- 	{ .compatible = "qcom,sc7280-dpu", },
- 	{ .compatible = "qcom,sc8180x-dpu", },
-+	{ .compatible = "qcom,sm6115-dpu", },
- 	{ .compatible = "qcom,sm8150-dpu", },
- 	{ .compatible = "qcom,sm8250-dpu", },
- 	{}
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 6a4549ef34d4..86b28add1fff 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -280,6 +280,10 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 		/* UBWC_2_0 */
- 		msm_mdss_setup_ubwc_dec_20(msm_mdss, 0x1e);
- 		break;
-+	case DPU_HW_VER_630:
-+		/* UBWC_2_0 */
-+		msm_mdss_setup_ubwc_dec_20(msm_mdss, 0x11f);
-+		break;
- 	case DPU_HW_VER_720:
- 		msm_mdss_setup_ubwc_dec_40(msm_mdss, UBWC_3_0, 6, 1, 1, 1);
- 		break;
-@@ -509,6 +513,7 @@ static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,sc7180-mdss" },
- 	{ .compatible = "qcom,sc7280-mdss" },
- 	{ .compatible = "qcom,sc8180x-mdss" },
-+	{ .compatible = "qcom,sm6115-mdss" },
- 	{ .compatible = "qcom,sm8150-mdss" },
- 	{ .compatible = "qcom,sm8250-mdss" },
- 	{}
--- 
-2.25.1
+Acked-by: Guenter Roeck <linux@roeck-us.net>
 
+>  .../bindings/opp/allwinner,sun50i-h6-operating-points.yaml    | 4 ++--
+>  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml         | 2 +-
+>  .../devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml        | 2 +-
+>  Documentation/devicetree/bindings/regulator/max8660.yaml      | 2 +-
+>  .../devicetree/bindings/regulator/maxim,max77802.yaml         | 2 +-
+>  Documentation/devicetree/bindings/regulator/regulator.yaml    | 2 +-
+>  .../devicetree/bindings/regulator/rohm,bd9576-regulator.yaml  | 2 +-
+>  Documentation/devicetree/bindings/sound/renesas,rsnd.yaml     | 2 +-
+>  .../devicetree/bindings/spi/nvidia,tegra210-quad.yaml         | 2 +-
+>  11 files changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> index a11e1b867379..3c00ad09eeaa 100644
+> --- a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> +++ b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> @@ -38,7 +38,7 @@ properties:
+>      type: object
+>  
+>      patternProperties:
+> -      'cpu@[0-9a-f]+':
+> +      '^cpu@[0-9a-f]+$':
+>          type: object
+>  
+>          properties:
+> diff --git a/Documentation/devicetree/bindings/hwmon/adt7475.yaml b/Documentation/devicetree/bindings/hwmon/adt7475.yaml
+> index ea595102a86e..051c976ab711 100644
+> --- a/Documentation/devicetree/bindings/hwmon/adt7475.yaml
+> +++ b/Documentation/devicetree/bindings/hwmon/adt7475.yaml
+> @@ -61,7 +61,7 @@ patternProperties:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      enum: [0, 1]
+>  
+> -  "adi,pin(5|10)-function":
+> +  "^adi,pin(5|10)-function$":
+>      description: |
+>        Configures the function for pin 5 on the adi,adt7473 and adi,adt7475. Or
+>        pin 10 on the adi,adt7476 and adi,adt7490.
+> @@ -70,7 +70,7 @@ patternProperties:
+>        - pwm2
+>        - smbalert#
+>  
+> -  "adi,pin(9|14)-function":
+> +  "^adi,pin(9|14)-function$":
+>      description: |
+>        Configures the function for pin 9 on the adi,adt7473 and adi,adt7475. Or
+>        pin 14 on the adi,adt7476 and adi,adt7490
+> diff --git a/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml b/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> index 385b0692261c..51f62c3ae194 100644
+> --- a/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> +++ b/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> @@ -41,7 +41,7 @@ required:
+>    - nvmem-cells
+>  
+>  patternProperties:
+> -  "opp-[0-9]+":
+> +  "^opp-[0-9]+$":
+>      type: object
+>  
+>      properties:
+> @@ -49,7 +49,7 @@ patternProperties:
+>        clock-latency-ns: true
+>  
+>      patternProperties:
+> -      "opp-microvolt-.*": true
+> +      "^opp-microvolt-speed[0-9]$": true
+>  
+>      required:
+>        - opp-hz
+> diff --git a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> index d60f43fd9c5a..e63e6458cea8 100644
+> --- a/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/mediatek,mt7621-pcie.yaml
+> @@ -31,7 +31,7 @@ properties:
+>      maxItems: 2
+>  
+>  patternProperties:
+> -  'pcie@[0-2],0':
+> +  '^pcie@[0-2],0$':
+>      type: object
+>      $ref: /schemas/pci/pci-bus.yaml#
+>  
+> diff --git a/Documentation/devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml b/Documentation/devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml
+> index 0f18cceba3d5..5a0d64d3ae6b 100644
+> --- a/Documentation/devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml
+> +++ b/Documentation/devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml
+> @@ -65,7 +65,7 @@ properties:
+>      maxItems: 1
+>  
+>  patternProperties:
+> -  'usb@[0-1],0':
+> +  '^usb@[0-1],0$':
+>      type: object
+>  
+>      description:
+> diff --git a/Documentation/devicetree/bindings/regulator/max8660.yaml b/Documentation/devicetree/bindings/regulator/max8660.yaml
+> index 9c038698f880..4d550ca396eb 100644
+> --- a/Documentation/devicetree/bindings/regulator/max8660.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/max8660.yaml
+> @@ -24,7 +24,7 @@ properties:
+>      type: object
+>  
+>      patternProperties:
+> -      "regulator-.+":
+> +      "^regulator-.+$":
+>          $ref: "regulator.yaml#"
+>  
+>      additionalProperties: false
+> diff --git a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
+> index 71138c611b6c..b704f05ea454 100644
+> --- a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
+> @@ -77,7 +77,7 @@ patternProperties:
+>        regulator-initial-mode: false
+>  
+>      patternProperties:
+> -      regulator-state-(standby|mem|disk):
+> +      "^regulator-state-(standby|mem|disk)$":
+>          type: object
+>          additionalProperties: true
+>          properties:
+> diff --git a/Documentation/devicetree/bindings/regulator/regulator.yaml b/Documentation/devicetree/bindings/regulator/regulator.yaml
+> index 6e8aa9eed3aa..53b81d8a2d41 100644
+> --- a/Documentation/devicetree/bindings/regulator/regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/regulator.yaml
+> @@ -231,7 +231,7 @@ patternProperties:
+>    ".*-supply$":
+>      description: Input supply phandle(s) for this node
+>  
+> -  regulator-state-(standby|mem|disk):
+> +  "^regulator-state-(standby|mem|disk)$":
+>      type: object
+>      description:
+>        sub-nodes for regulator state in Standby, Suspend-to-RAM, and
+> diff --git a/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml b/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml
+> index 7cb74cc8c5d9..54be194bb244 100644
+> --- a/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/rohm,bd9576-regulator.yaml
+> @@ -21,7 +21,7 @@ description: |
+>    regulator-voutl1, regulator-vouts1
+>  
+>  patternProperties:
+> -  "regulator-.+":
+> +  "^regulator-.+$":
+>      type: object
+>      description:
+>        Properties for single regulator.
+> diff --git a/Documentation/devicetree/bindings/sound/renesas,rsnd.yaml b/Documentation/devicetree/bindings/sound/renesas,rsnd.yaml
+> index 679a246dd666..7df40c38e865 100644
+> --- a/Documentation/devicetree/bindings/sound/renesas,rsnd.yaml
+> +++ b/Documentation/devicetree/bindings/sound/renesas,rsnd.yaml
+> @@ -115,7 +115,7 @@ properties:
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      patternProperties:
+> -      port(@[0-9a-f]+)?:
+> +      '^port(@[0-9a-f]+)?$':
+>          $ref: audio-graph-port.yaml#
+>          unevaluatedProperties: false
+>  
+> diff --git a/Documentation/devicetree/bindings/spi/nvidia,tegra210-quad.yaml b/Documentation/devicetree/bindings/spi/nvidia,tegra210-quad.yaml
+> index 6b733e5c1163..899100e783c9 100644
+> --- a/Documentation/devicetree/bindings/spi/nvidia,tegra210-quad.yaml
+> +++ b/Documentation/devicetree/bindings/spi/nvidia,tegra210-quad.yaml
+> @@ -48,7 +48,7 @@ properties:
+>        - const: tx
+>  
+>  patternProperties:
+> -  "@[0-9a-f]+":
+> +  "@[0-9a-f]+$":
+>      type: object
+>  
+>      properties:
