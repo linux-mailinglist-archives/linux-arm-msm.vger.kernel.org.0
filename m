@@ -2,136 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BE356310F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Nov 2022 21:46:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 417486312BA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 07:52:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234897AbiKSUqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Nov 2022 15:46:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51548 "EHLO
+        id S229454AbiKTGwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 01:52:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235049AbiKSUqo (ORCPT
+        with ESMTP id S229447AbiKTGwY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Nov 2022 15:46:44 -0500
-Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1AC313D21;
-        Sat, 19 Nov 2022 12:46:42 -0800 (PST)
-Date:   Sat, 19 Nov 2022 20:46:32 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1668890800; x=1669150000;
-        bh=RZgjb9/5OQctpPzuTFDZDZE4FEfMwb4kqi0lsraby84=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=ARKQ8VA9knhvcAfXpsxDnxrvqNwZOf1eeKlNoLCZILlbyINeCmEyiGBmm3yOIzHND
-         rs+0f/vrgcVtTdKQO58lwfH8N9hSjeU1oQtKAyW8vh8oRfAMWuNblgHmBzZjXXrBqD
-         4eJfFC7RntzQedsBVPZ0CyDPLu4WJr8/6u2uirxeIgod1EuBxKRHq0Qxa152g8GTSd
-         uXLX11E1cMFF9Ddg2BkpB1fRMUi94M2rDMYQek29QPDr1Vlp8Qm4W2OZDLLFP0uVKH
-         Eahkap9GnP3C4uVFZ0L50KQ7qI0sywNMnanQGVuz3a1PdiVdw8i0VdVhJAzLIIKR1O
-         IUMUaw3Fd4GWg==
-To:     linux-kernel@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v2 3/3] arm64: dts: qcom: msm8916-acer-a1-724: Add accelerometer/magnetometer
-Message-ID: <20221119204424.94341-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20221119204209.94125-1-linmengbo0689@protonmail.com>
-References: <20221119204209.94125-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Sun, 20 Nov 2022 01:52:24 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B493C942D5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Nov 2022 22:52:21 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BD26460BFF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 06:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233D0C4314D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 06:52:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668927140;
+        bh=unX76QKH95pBc8VMtK0DMu4SdkXMf/gkRIw9iatMLXc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=JHz0T5yDc36FyNAnp++6tNSmk6dj1fmNPPnFwJ/GbuaQ5q+FbAixvEvnzapVM1GYU
+         5BKSSHWhZFtzPt9KD0aUDPusKHcMmZ6svhGnlD+8BSAkbrTd6UQ+qmVmNf1PNPU5wt
+         ckoa/XLszalnfnAKop2Rz+R+BdBvTymcRJFw/VyYu4e0VrkLidpTckYQrGdRmsuOVX
+         yBP0Knq9FCx/CFlh4OB/xK/ZgCN1cCA86mYSFLr8YkRH8Ar92R1SouSnum0pYGwajX
+         KQuBfi9ikzeC6O4tGvw2yv48N4dOPjcVTpbzzaqbDd+amWFylJXATpm+C+f1EEid4w
+         Bycke5StjDlnQ==
+Received: by mail-vk1-f172.google.com with SMTP id m18so4289016vka.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Nov 2022 22:52:20 -0800 (PST)
+X-Gm-Message-State: ANoB5pl4Uom3QXrc75mlDKAb8WOXLlY13MTNCMfDlHKu8vk5L7CfpY4i
+        9htijId+/LJ9hZWi5ofoFeXudL3XfYFUHjJow0L0JA==
+X-Google-Smtp-Source: AA0mqf5arwI+1Ek3mx3soz8ohE6WHnF+dcjdCqRzErREao2c5D+qmuXG9A9UQ0DaiieR0JHZqysHYs4Di4jY3Ome4F4=
+X-Received: by 2002:a1f:5f50:0:b0:3ae:dce4:457 with SMTP id
+ t77-20020a1f5f50000000b003aedce40457mr7127292vkb.26.1668927138878; Sat, 19
+ Nov 2022 22:52:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20221114-narmstrong-sm8550-upstream-tsens-v1-0-0e169822830f@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-tsens-v1-0-0e169822830f@linaro.org>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Sun, 20 Nov 2022 12:22:07 +0530
+X-Gmail-Original-Message-ID: <CAHLCerPKz9cP5di+8VeaLgO8mmh1Nj5x3fC70otyhPDONFVwaA@mail.gmail.com>
+Message-ID: <CAHLCerPKz9cP5di+8VeaLgO8mmh1Nj5x3fC70otyhPDONFVwaA@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: Add compatible for sm8550
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Iconia Talk S uses a Bosch BMC150 accelerometer/magnetometer combo.
-The chip provides two separate I2C devices for the accelerometer
-and magnetometer that are already supported by the bmc150-accel
-and bmc150-magn driver.
+On Wed, Nov 16, 2022 at 3:40 PM Neil Armstrong
+<neil.armstrong@linaro.org> wrote:
+>
+> The Qualcomm SM8550 platform has three instances of the tsens block,
+> add a compatible for these instances.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- .../boot/dts/qcom/msm8916-acer-a1-724.dts     | 38 +++++++++++++++++++
- 1 file changed, 38 insertions(+)
+Acked-by: Amit Kucheria <amitk@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/=
-boot/dts/qcom/msm8916-acer-a1-724.dts
-index acd909551a75..3461a39ee866 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-@@ -6,6 +6,7 @@
-=20
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-=20
- /*
-  * NOTE: The original firmware from Acer can only boot 32-bit kernels.
-@@ -51,6 +52,35 @@ usb_id: usb-id {
- =09};
- };
-=20
-+&blsp_i2c2 {
-+=09status =3D "okay";
-+
-+=09accelerometer@10 {
-+=09=09compatible =3D "bosch,bmc150_accel";
-+=09=09reg =3D <0x10>;
-+=09=09interrupt-parent =3D <&msmgpio>;
-+=09=09interrupts =3D <115 IRQ_TYPE_EDGE_RISING>;
-+
-+=09=09vdd-supply =3D <&pm8916_l17>;
-+=09=09vddio-supply =3D <&pm8916_l6>;
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&accel_int_default>;
-+
-+=09=09mount-matrix =3D "0", "-1", "0",
-+=09=09=09       "-1", "0", "0",
-+=09=09=09       "0", "0", "1";
-+=09};
-+
-+=09magnetometer@12 {
-+=09=09compatible =3D "bosch,bmc150_magn";
-+=09=09reg =3D <0x12>;
-+
-+=09=09vdd-supply =3D <&pm8916_l17>;
-+=09=09vddio-supply =3D <&pm8916_l6>;
-+=09};
-+};
-+
- &blsp1_uart2 {
- =09status =3D "okay";
- };
-@@ -199,6 +229,14 @@ l18 {
- };
-=20
- &msmgpio {
-+=09accel_int_default: accel-int-default-state {
-+=09=09pins =3D "gpio115";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107";
- =09=09function =3D "gpio";
---=20
-2.30.2
-
-
+> ---
+> To: Andy Gross <agross@kernel.org>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@somainline.org>
+> To: Amit Kucheria <amitk@kernel.org>
+> To: Thara Gopinath <thara.gopinath@gmail.com>
+> To: "Rafael J. Wysocki" <rafael@kernel.org>
+> To: Daniel Lezcano <daniel.lezcano@linaro.org>
+> To: Zhang Rui <rui.zhang@intel.com>
+> To: Rob Herring <robh+dt@kernel.org>
+> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-pm@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index f0bd4b979e28..09dbd96d380e 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -58,6 +58,7 @@ properties:
+>                - qcom,sm8250-tsens
+>                - qcom,sm8350-tsens
+>                - qcom,sm8450-tsens
+> +              - qcom,sm8550-tsens
+>            - const: qcom,tsens-v2
+>
+>        - description: v2 of TSENS with combined interrupt
+>
+> ---
+> base-commit: 3c1f24109dfc4fb1a3730ed237e50183c6bb26b3
+> change-id: 20221114-narmstrong-sm8550-upstream-tsens-dfaec218c321
+>
+> Best regards,
+> --
+> Neil Armstrong <neil.armstrong@linaro.org>
