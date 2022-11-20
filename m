@@ -2,80 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FCC8631503
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 16:47:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71852631534
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 17:41:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiKTPrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 10:47:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52728 "EHLO
+        id S229702AbiKTQlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 11:41:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbiKTPra (ORCPT
+        with ESMTP id S229454AbiKTQle (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 10:47:30 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792C1F21;
-        Sun, 20 Nov 2022 07:47:27 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d1so4385351wrs.12;
-        Sun, 20 Nov 2022 07:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=phxWAWN6RFOZILWUELs+CtSL4mhtXipbV6LGQCU4x9A=;
-        b=Zk/hEWohRKl7NoWnQIqZa6QSrvfeaOITUdtB2WBO/h9tt/JjVWHH+dXSsIlHPujtWJ
-         7bR60K9/aYLtgsFdsxpra004l8GRUpsqlWK+nWEWWUFsU41bkjrx2Flxr+7VnY3TQJhf
-         c4m9fynDD6V4oblVuKDivJIFBwN3SW/BoTxfdtJcTC75r1hmuuRbNAW80J5AnI4T78sV
-         LBmAodvRoEuXAtkih0nlfIWaiv5OXEspQWUzbCF+ifqla9XTKJ5SImNXJnqJrwwmTgzu
-         f19i653b/g0Ks/BNn6Mg5K+VXBVe5XK8VMruWgpf487Vs5k8OWbfZ5lBvh8QLuZNH+8g
-         zb6A==
+        Sun, 20 Nov 2022 11:41:34 -0500
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3615626488;
+        Sun, 20 Nov 2022 08:41:33 -0800 (PST)
+Received: by mail-ot1-f53.google.com with SMTP id p27-20020a056830319b00b0066d7a348e20so6054616ots.8;
+        Sun, 20 Nov 2022 08:41:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=phxWAWN6RFOZILWUELs+CtSL4mhtXipbV6LGQCU4x9A=;
-        b=HxKbgLh5IAS51w14Xu+TIQ2uHJxgA+0VKw50PneCdj046vLxthGvv/Wxt3AvQlCpd1
-         gxCAp5Ww3dHury5SzUjHYTNYkXI8NTiE9UsDJtKZZ+9lHdaTX9tdU8QRJpRIXhp5ImaH
-         fhrtJmMyiHMKhTg2PjiR9ATbKfkN+/EtEb7cjVt+zhYR4OAHhUOqz115F5dH4ANzR1Ke
-         Lipo3VQqn9ylzlNTd1Ycd6GUIYIwiQkUwS93WWpNTofaETbtQmDq+f3EWG2vbePmVRIs
-         rn3uXCX0w1yVIj2eTtdFiQRjBMSH8PH6pjqSCnh7oROEmqlPNeanMSUiyna5t9sR4muZ
-         F0bw==
-X-Gm-Message-State: ANoB5pnKS9cmS3I0imBLSB7kvC2wfSgsW3CDjzmmk/ckgjyiibhWH9lU
-        cI42GH5kCqbqKpBzTmnBiVid5+gE07g=
-X-Google-Smtp-Source: AA0mqf6xnkqQnQfUHctZhRxImHLViJZZuZz2Od3ef/eFyMFibOUIOsiLnK2/7A3TVpH1AhbmXGnw3A==
-X-Received: by 2002:adf:ff83:0:b0:236:6824:c227 with SMTP id j3-20020adfff83000000b002366824c227mr9131970wrr.510.1668959245848;
-        Sun, 20 Nov 2022 07:47:25 -0800 (PST)
-Received: from localhost.localdomain ([95.183.227.98])
-        by smtp.gmail.com with ESMTPSA id e18-20020adfdbd2000000b0022da3977ec5sm8974094wrj.113.2022.11.20.07.47.23
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=veASM1Ru8k6BEeQlnYaoITQx/GQvi6pXHnL18k1poTo=;
+        b=zvCojk/0ymvQGcrApCxtK0NJOtGD6HOTs53DjDm45+Z/cM+8vYqVHlGfjnPiGQLjmf
+         FQl3VTzD/u+DzD13K3/1Ko4tj5rVZTVqCsZdPSNEkiPNb7LOPbpqyD02LFY5iKscJNvc
+         WMr3kTgqQtx+HDuyGvuizaXVJnyJcvBreNSu+3KO3nhuP8aaLoPcEP58QyOsX6pjw8OF
+         jxoBXWKtUj0udcgT0rJ5ZWSL/2AxCCBa/ZiQVl2UAcPbM6VSK7ngn2yoD6VkyEy/wxBE
+         uVNsyWmd3Inip1vhDhS4pODDY1jwyC4w96XxHvD8InWMPxqxDnQWxn0pCyC5yuy/UZ8j
+         EKrA==
+X-Gm-Message-State: ANoB5plahgxZwTJtjCvWD/WeCPNYGgmRXeue/lmpidFuWABQaM7l06fh
+        6ttSUnbDFxDO1etVlAdXi+0AiFeS/w==
+X-Google-Smtp-Source: AA0mqf5lC0lP3+FtTjyt1UTtsFHeF9vc2w+gpHK+byaFWtEnCNtq0+ey+OkENKCa7dcNcZ81HZCswA==
+X-Received: by 2002:a9d:4c93:0:b0:66d:6164:16f5 with SMTP id m19-20020a9d4c93000000b0066d616416f5mr7947867otf.207.1668962492446;
+        Sun, 20 Nov 2022 08:41:32 -0800 (PST)
+Received: from robh_at_kernel.org ([2605:ef80:80f8:5cb3:df5a:23c3:86fb:15a6])
+        by smtp.gmail.com with ESMTPSA id f14-20020a056870210e00b0012752d3212fsm4748295oae.53.2022.11.20.08.41.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 07:47:25 -0800 (PST)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
+        Sun, 20 Nov 2022 08:41:32 -0800 (PST)
+Received: (nullmailer pid 3177849 invoked by uid 1000);
+        Sun, 20 Nov 2022 16:41:33 -0000
+Date:   Sun, 20 Nov 2022 10:41:33 -0600
+From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alejandro Tafalla <atafalla@dnyon.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH 1/8] dt-bindings: power: supply: Add DT schema for Qualcomm SMBCHG
-Date:   Sun, 20 Nov 2022 18:46:26 +0300
-Message-Id: <20221120154625.57095-1-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <dfaf7a35-25bb-8201-42bc-73ca280fcb69@linaro.org>
-References: 
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sdm845-pinctrl: add GPIO hogs
+Message-ID: <20221120164133.GA3166916-robh@kernel.org>
+References: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,96 +69,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 8 Aug 2022 11:42:34 +0300, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
-> On 08/08/2022 10:34, Yassine Oudjana wrote:
-> > From: Yassine Oudjana <y.oudjana@protonmail.com>
-> > 
-> > Add DT schema for the switch-mode battery charger found on Qualcomm
-> > PMICs such as PMI8994. Due to lack of documentation, some interrupt
-> > descriptions might be inaccurate.
-> > 
-> > Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> > ---
-> >  .../bindings/power/supply/qcom,smbchg.yaml    | 205 ++++++++++++++++++
-> >  MAINTAINERS                                   |   8 +
-> >  2 files changed, 213 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml b/Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml
-> > new file mode 100644
-> > index 000000000000..d825a9c10b3e
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml
-> > @@ -0,0 +1,205 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only or BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/power/supply/qcom,smbchg.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm PMIC Switch-Mode Battery Charger
-> > +
-> > +maintainers:
-> > +  - Yassine Oudjana <y.oudjana@protonmail.com>
-> > +  - Alejandro Tafalla <atafalla@dnyon.com>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,pmi8994-smbchg
-> > +      - qcom,pmi8996-smbchg
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  monitored-battery:
-> > +    description: |
-> > +      phandle of battery characteristics node.
-> > +      The charger uses the following properties:
-> > +      - charge-term-current-microamp
-> > +      - constant-charge-current-max-microamp
-> > +      - voltage-max-design-microvolt
-> > +      The constant-charge-current-max-microamp and voltage-max-design-microvolt
-> > +      properties must be set.
-> > +      See Documentation/devicetree/bindings/power/supply/battery.yaml
-> > +
-> > +  interrupts:
-> > +    items:
-> > +      - description: Charger error
-> > +      - description: Charger inhibited
-> > +      - description: Charger precharge safety timer timeout
-> > +      - description: Charger charge safety timer timeout
-> > +      - description: Charger pre to fast charging switch threshold reached
-> > +      - description: Charger recharge threshold reached
-> > +      - description: Charger taper threshold reached
-> > +      - description: Charger charge termination threshold reached
-> > +      - description: Battery hot
-> > +      - description: Battery warm
-> > +      - description: Battery cold
-> > +      - description: Battery cool
-> > +      - description: Battery overvoltage
-> > +      - description: Battery low
-> > +      - description: Battery missing
-> > +      - description: Battery thermistor missing # unconfirmed
-> > +      - description: USB input undervolt
-> > +      - description: USB input overvolt
-> > +      - description: USB input source detected
-> > +      - description: OTG regulator failure
-> > +      - description: OTG regulator overcurrent
-> > +      - description: Automatic input current limiting done
-> > +      - description: USB ID pin changed
-> > +      - description: DC input undervolt
-> > +      - description: DC input overvolt
-> > +      - description: Power OK
-> > +      - description: Temperature shutdown
-> > +      - description: Watchdog timeout
-> > +      - description: Flash failure
-> > +      - description: OTST2 # unknown
-> > +      - description: OTST3 # unknown
+On Fri, Nov 18, 2022 at 05:21:01PM +0100, Krzysztof Kozlowski wrote:
+> Allow GPIO hogs in pin controller node.  qcom/sdm845-cheza.dtsi already
+> uses it.
 > 
-> It seems you listed register interrupts, not physical pins. This should
-> be interrupt lines.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,sdm845-pinctrl.yaml        | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+> index c9627777ceb3..57bac7f7a4fc 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+> @@ -48,6 +48,11 @@ patternProperties:
+>              $ref: "#/$defs/qcom-sdm845-tlmm-state"
+>          additionalProperties: false
+>  
+> +  "-hog(-[0-9]+)?$":
+> +    $ref: /schemas/gpio/gpio-hog.yaml
 
-I'm not sure what I'm supposed to do here. I couldn't find an interrupt-lines
-property used anywhere so that's not what you meant, right?
+You can drop this and just do:
 
+required:
+  - gpio-hog
+
+As that's what selects the hog schema. Kind of an odd pattern I guess. 
+We could make gpio.yaml define hog nodes instead I suppose.
+
+> +    type: object
+> +    unevaluatedProperties: false
+> +
