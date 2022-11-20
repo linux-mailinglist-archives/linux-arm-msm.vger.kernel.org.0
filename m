@@ -2,62 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71852631534
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 17:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08685631546
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 17:53:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbiKTQlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 11:41:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34680 "EHLO
+        id S229595AbiKTQxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 11:53:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiKTQle (ORCPT
+        with ESMTP id S229517AbiKTQxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 11:41:34 -0500
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3615626488;
-        Sun, 20 Nov 2022 08:41:33 -0800 (PST)
-Received: by mail-ot1-f53.google.com with SMTP id p27-20020a056830319b00b0066d7a348e20so6054616ots.8;
-        Sun, 20 Nov 2022 08:41:33 -0800 (PST)
+        Sun, 20 Nov 2022 11:53:22 -0500
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F2C72E9EB;
+        Sun, 20 Nov 2022 08:53:22 -0800 (PST)
+Received: by mail-ot1-f54.google.com with SMTP id p10-20020a9d76ca000000b0066d6c6bce58so6065267otl.7;
+        Sun, 20 Nov 2022 08:53:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=veASM1Ru8k6BEeQlnYaoITQx/GQvi6pXHnL18k1poTo=;
-        b=zvCojk/0ymvQGcrApCxtK0NJOtGD6HOTs53DjDm45+Z/cM+8vYqVHlGfjnPiGQLjmf
-         FQl3VTzD/u+DzD13K3/1Ko4tj5rVZTVqCsZdPSNEkiPNb7LOPbpqyD02LFY5iKscJNvc
-         WMr3kTgqQtx+HDuyGvuizaXVJnyJcvBreNSu+3KO3nhuP8aaLoPcEP58QyOsX6pjw8OF
-         jxoBXWKtUj0udcgT0rJ5ZWSL/2AxCCBa/ZiQVl2UAcPbM6VSK7ngn2yoD6VkyEy/wxBE
-         uVNsyWmd3Inip1vhDhS4pODDY1jwyC4w96XxHvD8InWMPxqxDnQWxn0pCyC5yuy/UZ8j
-         EKrA==
-X-Gm-Message-State: ANoB5plahgxZwTJtjCvWD/WeCPNYGgmRXeue/lmpidFuWABQaM7l06fh
-        6ttSUnbDFxDO1etVlAdXi+0AiFeS/w==
-X-Google-Smtp-Source: AA0mqf5lC0lP3+FtTjyt1UTtsFHeF9vc2w+gpHK+byaFWtEnCNtq0+ey+OkENKCa7dcNcZ81HZCswA==
-X-Received: by 2002:a9d:4c93:0:b0:66d:6164:16f5 with SMTP id m19-20020a9d4c93000000b0066d616416f5mr7947867otf.207.1668962492446;
-        Sun, 20 Nov 2022 08:41:32 -0800 (PST)
+        bh=aoQ4zuyTd7evirB3DHF86QcOknBwVYfLo01LRkadhOQ=;
+        b=u0CZTlhYPZ5ckXtB/w2AhrovL27QJCgeBEjvlW4zaByxMdJbTB/vcVEKc7b3va21st
+         pyOIo01WLrqMq816N8Q1LgQwqzkH8VFL7MQUpjD23FBNPyr0HCMc+COLi57tpQa9jfIq
+         7Cnk0zz/LFHDUu4TU9s7guZM9YUDLHPfmjTMPmYrOrQ2VqjzKQzBdufHMiAhDG04yWh7
+         b7Y6/EhjRtNWhiuKVIk979WD3IExGEFGld1xFbvZjzRP5HfRe8Qy1oUALqbWFytixbqs
+         V7swzXYQKQyBnJs9oy9k4n/BLRLBJ4031AVk5efkASn1qJbEVbayweDP079yQsvxudV8
+         bmvg==
+X-Gm-Message-State: ANoB5pl9zog/Il5BR5Eypzj4A9GsAX5iYxgK8SF9kbsHb3ONQQu2nqMe
+        JGDY3xgrNm9xY3tsJnyfufdD17TIPQ==
+X-Google-Smtp-Source: AA0mqf7VoumVeOat8gcKUatjmfqniX6zO3MOiPw3zmmtuxnZ2rqYap6OXiFNILEtWXSN+2z5E8jX9A==
+X-Received: by 2002:a9d:7e9a:0:b0:66c:6096:1878 with SMTP id m26-20020a9d7e9a000000b0066c60961878mr634215otp.203.1668963201355;
+        Sun, 20 Nov 2022 08:53:21 -0800 (PST)
 Received: from robh_at_kernel.org ([2605:ef80:80f8:5cb3:df5a:23c3:86fb:15a6])
-        by smtp.gmail.com with ESMTPSA id f14-20020a056870210e00b0012752d3212fsm4748295oae.53.2022.11.20.08.41.31
+        by smtp.gmail.com with ESMTPSA id k5-20020a056870d0c500b0014185b2b3d5sm2833328oaa.18.2022.11.20.08.53.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 08:41:32 -0800 (PST)
-Received: (nullmailer pid 3177849 invoked by uid 1000);
-        Sun, 20 Nov 2022 16:41:33 -0000
-Date:   Sun, 20 Nov 2022 10:41:33 -0600
+        Sun, 20 Nov 2022 08:53:20 -0800 (PST)
+Received: (nullmailer pid 3191260 invoked by uid 1000);
+        Sun, 20 Nov 2022 16:53:22 -0000
+Date:   Sun, 20 Nov 2022 10:53:22 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, agross@kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        andersson@kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
+        krzysztof.kozlowski@linaro.org, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        patches@linaro.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sdm845-pinctrl: add GPIO hogs
-Message-ID: <20221120164133.GA3166916-robh@kernel.org>
-References: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] dt-bindings: msm/dsi: Don't require vdds-supply on 10nm
+ PHY
+Message-ID: <166896320103.3191204.6491707287483372164.robh@kernel.org>
+References: <20221116163218.42449-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221116163218.42449-1-konrad.dybcio@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -69,34 +74,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 05:21:01PM +0100, Krzysztof Kozlowski wrote:
-> Allow GPIO hogs in pin controller node.  qcom/sdm845-cheza.dtsi already
-> uses it.
+
+On Wed, 16 Nov 2022 17:32:18 +0100, Konrad Dybcio wrote:
+> On some SoCs (hello SM6350) vdds-supply is not wired to any smd-rpm
+> or rpmh regulator, but instead powered by the VDD_MX/mx.lvl line,
+> which is voted for in the DSI ctrl node.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../bindings/pinctrl/qcom,sdm845-pinctrl.yaml        | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>  Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-> index c9627777ceb3..57bac7f7a4fc 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-> @@ -48,6 +48,11 @@ patternProperties:
->              $ref: "#/$defs/qcom-sdm845-tlmm-state"
->          additionalProperties: false
->  
-> +  "-hog(-[0-9]+)?$":
-> +    $ref: /schemas/gpio/gpio-hog.yaml
 
-You can drop this and just do:
-
-required:
-  - gpio-hog
-
-As that's what selects the hog schema. Kind of an odd pattern I guess. 
-We could make gpio.yaml define hog nodes instead I suppose.
-
-> +    type: object
-> +    unevaluatedProperties: false
-> +
+Acked-by: Rob Herring <robh@kernel.org>
