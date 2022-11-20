@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DCB631376
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 11:51:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01DE563137E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Nov 2022 11:58:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbiKTKvF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Nov 2022 05:51:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40688 "EHLO
+        id S229714AbiKTK6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Nov 2022 05:58:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbiKTKvE (ORCPT
+        with ESMTP id S229706AbiKTK6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Nov 2022 05:51:04 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C428B866
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:51:03 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id d3so11728071ljl.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:51:03 -0800 (PST)
+        Sun, 20 Nov 2022 05:58:11 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1990A8C081
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:58:10 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id b3so14974780lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 02:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MD/aDEMiTsY3yltE9lY/nF7UISvnsQa9yhMUv8ugeGo=;
-        b=aPviQmrOAW3eIY8m7OB92kUFi22k3BdcvMicsL9ZMqPs+nWdu0V3U2ZRnOkVh5PT6m
-         W/Z6pVeOQPA6t1floLF+z7X3K8I2QQW80CEsOWf3GYfrDyUh7hSiOGtGpu8TEAymfHRZ
-         LKDljkvElo62d2NGGx2u/rrOVCV2+uaycjDn8PLxa2o+R4NUMU8jNRn0yw4Br4K4MC8S
-         p4c4U3eFwXpFMHYBbbtwoQ8mvJL9CrDRFE9jNNL7Teb24cJHuwU1BfmM/lwlz2hqoDTX
-         OujMFKETAFLZQXlP/L60ACV9zHRiaToVqwnQqu+9aZN0IaUyOoWRgRlVEVFMAJPTkkwS
-         hZnA==
+        bh=uUXSxOgsLMhzEpNkySjXy0kcuEKDN5qHgUfta7WCO3Y=;
+        b=EXVtfntCJeagfksD+ZV0+0lxJVaPUf6tg3iMPra+nz9Idd0OaYGTetInQxd1uLpC0J
+         PKeHAk92Y8E5XQZLAYId2FG5jbf6zECdv0o3PvyxGQAk3p/2WgD7B6sR+cui7znJo146
+         UzDw7EqWNyzomV3WPrTMX5N4iC9zQ0JqBuRu1ZDI1F3Hk9o2EG2+FfFE/83tvLn5zLIM
+         M0PJroW+uWvMRq4SkRjtbuxVwD86JUjo6MSZiXivxF3019exQj1oGdPhZybPs6PZx+Vy
+         hIHhhD+6zd5tM7PfOQNa7t/aJGHlqhKEC5nCItw/Glb17jEKiwTqotBSifYJEXbIHey3
+         EyVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MD/aDEMiTsY3yltE9lY/nF7UISvnsQa9yhMUv8ugeGo=;
-        b=mZ8PLXMfjcZtgupLVN4yvGWzmQHzFb/+lBWc4KmU77x/IhRJChXaNy7NtbpbK5iSiY
-         n0y9CrlK8FJKhhil6poy0coTxTEdd4OMaFHUKfKUROJ7RdEW8qaCvAD3KhSEs8b9sR0C
-         MU47szD6ugnJETpviTmIY+qLFC0+uLHSenmz0DPhcJpyL7PKWGmUv5eBfWnPNt8ITKgm
-         r28pBpIZnXufohYopwJiWCVPotLpBKrmQ2EiFHRbO+TdFQNGb97e2d/FFkg8+oPdhzhM
-         0PxyFw7Jr1EyLWFzCh0qWlVCrcmQWnWt6itqqcL767fhF6q2kbqf5ea/zsW4oMIY+05p
-         PUlQ==
-X-Gm-Message-State: ANoB5pkBc74ARUCd0vyevVpfMldY/UVoM4fWpreMRIqhvuI9buBNMfW7
-        CAF5S1ZuJamKrAvxNC3c7yQb4A==
-X-Google-Smtp-Source: AA0mqf4S0gZL/5jiqZOE1CraCz/s3w5qTX4gS0hM54SY+oE7urs7KfvUlrBWUVS0Ry0vVjoz//gITg==
-X-Received: by 2002:a05:651c:1079:b0:277:3592:c2c0 with SMTP id y25-20020a05651c107900b002773592c2c0mr4779585ljm.81.1668941461690;
-        Sun, 20 Nov 2022 02:51:01 -0800 (PST)
+        bh=uUXSxOgsLMhzEpNkySjXy0kcuEKDN5qHgUfta7WCO3Y=;
+        b=LgbAT+9vMp4sNIPxVbfdmq4PZ+wROrV/jiwYHv4taL3kuM2q+J45fYSPbttbBOxB7h
+         G/KTA7ZwWkjPfdPp222SsNJr0KfkJjVnL6tGh1omfdpQ8l8ixYxSTgwXQ07u1M4z6CBB
+         Opia4lVa8naDms+vayoxHXZGYOkGEtJkdonRzUN1M7MiVsp5GXgi/S7gIAPUbeLK+O31
+         YckoRRHhJHaOveFVHDEMXZ5iTaQNYV0xzHSwQgYV3ndubIsBPL5FXdythCILsFpMW2tD
+         OjkfNXF7XHyMnfSqGmWImjnR857MM8bu4I2a2UhVjyH7M9NkW4Rkl2OZIjgIZLVJbK4/
+         LqQw==
+X-Gm-Message-State: ANoB5pm4t3GrBATwNP8orfpHMgAXFvm3mHoY8PgqqFK55NGgV209vdz9
+        MTf3PIamJglKXWJ+ZZzeA2LvcA==
+X-Google-Smtp-Source: AA0mqf4Mu65ldzDouhPwdjiSlJOg3hhY43q41zeKYBqg+S5wU0FjJx/xB5x5rYnFAP77xZ7jB/3z5g==
+X-Received: by 2002:a05:6512:3ca4:b0:4b4:b5c2:647c with SMTP id h36-20020a0565123ca400b004b4b5c2647cmr4574684lfv.42.1668941888449;
+        Sun, 20 Nov 2022 02:58:08 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m14-20020a056512358e00b004b01305732bsm1493997lfr.216.2022.11.20.02.51.00
+        by smtp.gmail.com with ESMTPSA id d20-20020a056512369400b004a2c3fd32edsm1486897lfs.144.2022.11.20.02.58.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Nov 2022 02:51:01 -0800 (PST)
-Message-ID: <7f7a2966-62d1-c1e9-63c9-201881c9a3a6@linaro.org>
-Date:   Sun, 20 Nov 2022 11:51:00 +0100
+        Sun, 20 Nov 2022 02:58:07 -0800 (PST)
+Message-ID: <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
+Date:   Sun, 20 Nov 2022 11:58:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: msm8916-acer-a1-724: Add initial
- device tree
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl
 Content-Language: en-US
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221119204209.94125-1-linmengbo0689@protonmail.com>
- <20221119204414.94287-1-linmengbo0689@protonmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221118182039.29236-1-quic_molvera@quicinc.com>
+ <20221118182039.29236-2-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221119204414.94287-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20221118182039.29236-2-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,80 +83,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/11/2022 21:46, Lin, Meng-Bo wrote:
-> Acer Iconia Talk S A1-724 is a tablet using the MSM8916 SoC released
-> in 2014.
+On 18/11/2022 19:20, Melody Olvera wrote:
+> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
 > 
-> Note: The original firmware from Acer can only boot 32-bit kernels.
-> To boot arm64 kernels it is necessary to flash 64-bit TZ/HYP firmware
-> with EDL, e.g. taken from the DragonBoard 410c. This works because Acer
-> didn't set up (firmware) secure boot.
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
+>  1 file changed, 134 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
 > 
-> Add a device tree for with initial support for:
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+> new file mode 100644
+> index 000000000000..cb0c496d8666
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+> @@ -0,0 +1,134 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
+> +
+> +maintainers:
+> +  - Melody Olvera <quic_molvera@quicinc.com>
+> +
+> +description: |
+> +  This Top Level Mode Multiplexer block (TLMM) is found in the QDU1000 and
+> +  QRU1000 platforms.
 
-Thank you for your patch. There is something to discuss/improve.
+It's better to keep consistent style which allows to do easy
+search/replace, than to have new files using their own sentences. So
+keep it the same as was unified in few recent commits.
 
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
 > +
-> +/ {
-> +	model = "Acer Iconia Talk S A1-724";
-> +	compatible = "acer,a1-724", "qcom,msm8916";
-> +	chassis-type = "tablet";
+> +properties:
+> +  compatible:
+> +    const: qcom,qdu1000-tlmm
 > +
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +	};
+> +  reg:
+> +    maxItems: 1
 > +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  "#interrupt-cells": true
+> +  gpio-controller: true
 > +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +
-> +		label = "GPIO Buttons";
-> +
-> +		button-volume-up {
-> +			label = "Volume Up";
-> +			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +		};
-> +	};
-> +
-> +	usb_id: usb-id {
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb_id_default>;
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&pm8916_resin {
-> +	status = "okay";
+> +  gpio-reserved-ranges:
+> +    minItems: 1
+> +    maxItems: 75
 
-status is the last property
+Technically you can have up to 76 separate ranges (151 GPIOs).
 
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +};
-> +
-> +&pm8916_vib {
-> +	status = "okay";
-> +};
-> +
-> +&pronto {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-
-Here as well and in all other places.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
