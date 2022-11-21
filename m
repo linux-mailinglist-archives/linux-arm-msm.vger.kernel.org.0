@@ -2,74 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2EBB631A81
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:43:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45FB1631A8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:47:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229984AbiKUHnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 02:43:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54588 "EHLO
+        id S229653AbiKUHrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 02:47:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229995AbiKUHnE (ORCPT
+        with ESMTP id S229894AbiKUHrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 02:43:04 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C733EAB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:43:02 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id x102so15084181ede.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:43:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1TUVIyfnzpJrJjjktkuqFcVCWlSjqMueZ8oSh19wEx0=;
-        b=u8HULqbgDO1V1jjNHkBZ+tyxbUE+H5slR0LHOlbfeZAo3EEj10DJVA0a7eNayrx8QE
-         qkAIPnZN/1pyhj7djHgxGa6H6GOEPzp/BK4X9QN1iUaQzkZv42i3cBJppROe/Ej/iZ3E
-         DrQx85QkfKzETnYKoXMc/xsfBK04j9UbGhery64BTRSdObqu0tUQYDhy/q1NdZpfw1aY
-         6ZBdw+RMjZ8k2siwz+RcwlWJnWHhxYnldUPd4gqHu6++LVwVBmdtRmk885K7XmSv09fm
-         WbY3hF41oKOfCmenytGGcYFTMJYtm8wOhq+6nnTuT0a8an7eKvRjiv2AKO21kjqiN3Zo
-         tiUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1TUVIyfnzpJrJjjktkuqFcVCWlSjqMueZ8oSh19wEx0=;
-        b=KuPkzQhLYrA7FSncCjFONollamZ8Efd1QaJxzjmIfulSGSEZaKAaoPvols2xDEq97P
-         TE0Z4TtAAxDCZxHxOzMvVenbe79U45spLcZZ/DdF77q2LiD7n3F8G2h8dhWhUS7YPmuD
-         RKTn48ZVy+PkMUtdijtKVgPvqS8plxpe8kNF3WPklJdY+cwFSIq808qeWW7L1gdEukBc
-         egG+HIVr1cTBptjXHZzqNX6WYi3Ytkx5IqqknH9Y/eMnmxQKOu6AlzZ5xa9g66+1GEYp
-         ELVvPaw/bzN0UdVZNg2/q1MFrJCMEx7TV6qVOXARlZMkTbJb719OARay3YJtByE3JRi9
-         lrYw==
-X-Gm-Message-State: ANoB5plXbAKydQxa/Je1YfsTtHaS/6SRRIugz97TzTXdKuA4ooFbs/Hv
-        9uR86CkXRTUN68u42sMqUQJdjrvqjeswwQ==
-X-Google-Smtp-Source: AA0mqf70Zc1BNt2e8y7KjZG/3WSjRLleM/arnX0rg2ndkyr3oTK5dpqVHh4yYqJ77f04oWtSKx3tnA==
-X-Received: by 2002:a05:6402:2a09:b0:461:30d8:6742 with SMTP id ey9-20020a0564022a0900b0046130d86742mr14964115edb.172.1669016580728;
-        Sun, 20 Nov 2022 23:43:00 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id e10-20020a170906648a00b007adade0e9easm4667280ejm.85.2022.11.20.23.42.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Nov 2022 23:42:59 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 21 Nov 2022 08:42:58 +0100
-Message-Id: <COHSZZ9A5570.1P4NTXRE9IRZR@otso>
-Cc:     <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH] interconnect: qcom: icc-rpmh: Fix an error handling
- path in qcom_icc_rpmh_probe()
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Christophe JAILLET" <christophe.jaillet@wanadoo.fr>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Georgi Djakov" <djakov@kernel.org>
-X-Mailer: aerc 0.13.0
-References: <ec929c37c655ede7bb42e426354093c8a1377a0b.1668947686.git.christophe.jaillet@wanadoo.fr>
-In-Reply-To: <ec929c37c655ede7bb42e426354093c8a1377a0b.1668947686.git.christophe.jaillet@wanadoo.fr>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Mon, 21 Nov 2022 02:47:02 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FF06EB0;
+        Sun, 20 Nov 2022 23:46:58 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C0E360DBB;
+        Mon, 21 Nov 2022 07:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664F2C433C1;
+        Mon, 21 Nov 2022 07:46:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669016817;
+        bh=jG4j8KgJyQC/+rnV3jJ8fSMV3b8HphQv1Xahnz08T+M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QnXy1IrVs/9dnbwaydjyZJu/4Wl4uRlCj3qkFUSSqd/0jbvAnxSGNoEUhxYci35Is
+         gGgMwoh+D85PlwyUvQ0PLftBFekdV4dd/ogyxeE5N3Q8JJke9x0FEfaB/gpn7HDW8c
+         Pum4lWeKX9O1az2P1i/K8k6VceaGwkMxgde759z9G6w6oq9ulQOZcV8SfHhwJvRxxu
+         UMIBwyKXfk9em21f/AjJVPWb+sKKtFhKj8W5yzAtUqHtPz0jc5GE+Y3DORtP0UpgQG
+         JiOUnGgy7h9lJIFM/UDMY8zC1QBeI2oeoVWjlUswPJKUxmSuVA76o85ySNDMFmhkW4
+         /KuPd5xLDqD3A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ox1Vb-00069e-Ir; Mon, 21 Nov 2022 08:46:27 +0100
+Date:   Mon, 21 Nov 2022 08:46:27 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sc8280xp/sa8540p: add gpr node
+Message-ID: <Y3ss05yM1077yPcy@hovoldconsulting.com>
+References: <20221119164425.86014-1-srinivas.kandagatla@linaro.org>
+ <20221119164425.86014-2-srinivas.kandagatla@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221119164425.86014-2-srinivas.kandagatla@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,50 +59,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Christophe,
-
-On Sun Nov 20, 2022 at 1:35 PM CET, Christophe JAILLET wrote:
-> If of_platform_populate() fails, some resources need to be freed as alrea=
-dy
-> done in the other error handling paths.
->
-> Fixes: 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child NoC dev=
-ice probe")
-
-I believe the same needs to be applied to icc-rpm.c.
-
-Also there shouldn't be an empty line here between Fixes: and Signed-off-by=
-:
-
-Regards
-Luca
-
->
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+On Sat, Nov 19, 2022 at 04:44:23PM +0000, Srinivas Kandagatla wrote:
+> Add GPR node along with APM(Audio Process Manager) and PRM(Proxy
+> resource Manager) audio services.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > ---
->  drivers/interconnect/qcom/icc-rpmh.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/=
-qcom/icc-rpmh.c
-> index fd17291c61eb..5168bbf3d92f 100644
-> --- a/drivers/interconnect/qcom/icc-rpmh.c
-> +++ b/drivers/interconnect/qcom/icc-rpmh.c
-> @@ -235,8 +235,11 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev=
-)
->  	platform_set_drvdata(pdev, qp);
-> =20
->  	/* Populate child NoC devices if any */
-> -	if (of_get_child_count(dev->of_node) > 0)
-> -		return of_platform_populate(dev->of_node, NULL, NULL, dev);
-> +	if (of_get_child_count(dev->of_node) > 0) {
-> +		ret =3D of_platform_populate(dev->of_node, NULL, NULL, dev);
-> +		if (ret)
-> +			goto err;
-> +	}
-> =20
->  	return 0;
->  err:
-> --=20
-> 2.34.1
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 40 ++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index c32bcded2aef..a610c12103bf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -12,6 +12,7 @@
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/thermal/thermal.h>
+> +#include <dt-bindings/soc/qcom,gpr.h>
 
+Again, please keep the includes sorted.
+
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -1152,9 +1153,48 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+>  
+>  				label = "lpass";
+>  				qcom,remote-pid = <2>;
+> +
+> +				gpr {
+> +					compatible = "qcom,gpr";
+> +					qcom,glink-channels = "adsp_apps";
+> +					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
+> +					qcom,intents = <512 20>;
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					q6apm: service@1 {
+> +						compatible = "qcom,q6apm";
+> +						reg = <GPR_APM_MODULE_IID>;
+> +						#sound-dai-cells = <0>;
+> +						qcom,protection-domain = "avs/audio",
+> +									 "msm/adsp/audio_pd";
+> +						q6apmdai: dais {
+> +							compatible = "qcom,q6apm-dais";
+> +							iommus = <&apps_smmu 0x0c01 0x0>;
+> +						};
+> +
+> +						q6apmbedai: bedais {
+> +							compatible = "qcom,q6apm-lpass-dais";
+> +							#sound-dai-cells = <1>;
+> +						};
+> +					};
+> +
+> +					q6prm: service@2 {
+> +						compatible = "qcom,q6prm";
+> +						reg = <GPR_PRM_MODULE_IID>;
+> +						qcom,protection-domain = "avs/audio",
+> +									 "msm/adsp/audio_pd";
+> +						q6prmcc: clock-controller {
+> +							compatible = "qcom,q6prm-lpass-clocks";
+> +							clock-controller;
+> +							#clock-cells = <2>;
+> +						};
+> +					};
+> +				};
+>  			};
+>  		};
+>  
+> +
+
+Drop the stray newline.
+
+>  		usb_0_qmpphy: phy-wrapper@88ec000 {
+>  			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
+>  			reg = <0 0x088ec000 0 0x1e4>,
+
+Johan
