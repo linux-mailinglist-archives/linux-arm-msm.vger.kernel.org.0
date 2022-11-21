@@ -2,94 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B84A631C99
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 10:15:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 780C4631C9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 10:16:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230102AbiKUJPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 04:15:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
+        id S230124AbiKUJQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 04:16:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbiKUJPk (ORCPT
+        with ESMTP id S230115AbiKUJQA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 04:15:40 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92EBE2EF77
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 01:15:38 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id p8so17848687lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 01:15:38 -0800 (PST)
+        Mon, 21 Nov 2022 04:16:00 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4BD8F3C2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 01:15:56 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id g12so17904500lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 01:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=edGTmU1jMBO60TkSFZa7W5D8f6ttu0/8Kyu/xHgBnxc=;
-        b=sDNFLcT38brmo4xJZO980qL17IOrn3ecWr/mJPLysHzcsbd2N9OOoOV4Gf+Xt66/Vt
-         gmF95Pu1f0vn+MtdlHkq7oZdHDmQvk8M/mASCQE7JhWmEO+86kChBdLrpymgabkLbdWj
-         ll+x70ykq6NUrI0NeuVUzgAn2n6lxIT016TogWD1ysioOaOLqppe/3ZcXchl77Pdcjbn
-         n7LOCWyIWHIgKmNSkI/YP+f+mBQdgPRwu/kmDWSHw6k4rEpc0eUWkbRV5157EMVwh1rr
-         2bhz4vxRVu8pqTF/nO0PD2f94s06H2FbpV0b7NWQm9LMq1rC1C5OBqKeEwPCNAyVNlxa
-         YzVA==
+        bh=ED+4pFnm4r1myo082q8s2RiXAUBBce2NzIjaMvHPOhY=;
+        b=Yc60WvrnfhC71Z0ceHwo7MLEzxAaEGTK56NppJPGtPRVUVY6yJYDGrpvow+iv5BHbI
+         EMnrppKfMi7mQxlyQa6guhd3d7GYOmQThaL0OA9owIQZdkztw5RPWFx05/y0yYk1XDEY
+         eAj9RXFVZm+7LOQG3XwJ+NouoFQ4/De27BRN+LTqG9TPHEqtkM+L//CfXnFdEHTZhw+k
+         nP1AhnL3G++x9Eefzl++PemM5vWk+CQzQQCMo1rCYwGRMYWS1PhD7R1ugtJE93btXQui
+         tOv8x0lVu/pCfseg43fKdU9YtN8sypOc/U/2/zd3OOakZ2qsFsPKvAvQF+LaA7WZDmUP
+         Ckhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=edGTmU1jMBO60TkSFZa7W5D8f6ttu0/8Kyu/xHgBnxc=;
-        b=17JFmzrWpcAdasjZIpAvD0gIFwqijVqkRwh4680Wgjgle8ns+TRd/p2K/DraG3J6S1
-         NidzUFP4H+SeTtmMJyziYH7WbRJFfJey9ssjIJFmdwoD+MHKXMDDADzNtRcVikVy7pE9
-         sEMunEPzCiu3gH87E5Yw1UfRMfmf09Tju8BK1MaxJXh3t7p6L3nyktjLdroN3FAB0fNH
-         4+BazmeOcoGVJTG9yFzpuKB9clj/FVidjM0rMbLMUaWB1VZ7PPezfj6GCQl2l+8+0yNc
-         Rc+v+Dhl9wgV4CSJylV7+bg4f50y65jKEkhXdY/p+kJjTNui9AKc6pkkawUuemrse+uP
-         wswg==
-X-Gm-Message-State: ANoB5pmrGS5L4R1qO5UstYqV4+Ahtj/N9BED7jWbdKcChvvWNIkcrhwZ
-        nt3NEiouRTXG/I2EHrc8Go3Wsg==
-X-Google-Smtp-Source: AA0mqf7X74FVmnUcC8FTUQTvF39/oyLCQR97ZwpZL+K4q7KohKadZDBpN1MMAue4vWvn3ows6jt+/g==
-X-Received: by 2002:ac2:4209:0:b0:499:f8e4:6dd0 with SMTP id y9-20020ac24209000000b00499f8e46dd0mr5881644lfh.162.1669022136906;
-        Mon, 21 Nov 2022 01:15:36 -0800 (PST)
+        bh=ED+4pFnm4r1myo082q8s2RiXAUBBce2NzIjaMvHPOhY=;
+        b=6RY5P7cPhA4oe7AjqNL7LRhFh4kMiuLg3RE0C/nQv51xWSUYBT1xlvQfaBZAiFXIGz
+         WPUnqV/gUgL6tGnq7+IM3iDZg4ZG6lcLydu5dhJkQqsqu49gOXebdBnUrLokSKP8Zp5X
+         Ati4uiJjy8XSnVOZ0me0T+frQKFVYOJtJK6rxpPFEpm7rjaemfus0wFuK0G6vpvtr6br
+         IL+UiWOw+y5j5aBVvUJAy+as8ykGhhGfcyI02alHIeMaGm6jkelifEiQj/l1pQQTl5eH
+         wDKXKFLRPZ41GHyU05H9/8bvU/4XC7OXbAw9E2eKn8t0N86wtaIKEzafYMIxJArkPh/H
+         eZ1w==
+X-Gm-Message-State: ANoB5pltcpuFZP4PYAxffzmscpZmxW6/4TQRJHW6SRiC9e3ZVYiswt9c
+        SQDW1RgEHZpHoG0UCIhEtEcFWA==
+X-Google-Smtp-Source: AA0mqf4gL4Cl+NTvzZBmZRmEDhKwxEG0X+kqBBvlCBNMKG5gCBdruiqYFv0LFRCqtQ5V2uKYDDmomw==
+X-Received: by 2002:a05:6512:49a:b0:4aa:da5d:dfd8 with SMTP id v26-20020a056512049a00b004aada5ddfd8mr6247739lfq.677.1669022154330;
+        Mon, 21 Nov 2022 01:15:54 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id dw7-20020a0565122c8700b004a91df49508sm1952179lfb.177.2022.11.21.01.15.35
+        by smtp.gmail.com with ESMTPSA id m13-20020a056512014d00b0048ad4c718f3sm1947324lfo.30.2022.11.21.01.15.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 01:15:36 -0800 (PST)
-Message-ID: <9d2dfd82-88f4-3c41-fe0f-ab38ac2760dd@linaro.org>
-Date:   Mon, 21 Nov 2022 10:15:35 +0100
+        Mon, 21 Nov 2022 01:15:53 -0800 (PST)
+Message-ID: <640b934d-75f7-9ca4-d6bb-ebc792fa97d5@linaro.org>
+Date:   Mon, 21 Nov 2022 10:15:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/9] dt-bindings: arm: qcom: document new
- msm8953-family devices
+Subject: Re: [PATCH 1/5] dt-bindings: vendor-prefixes: Add GPLUS
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221119203758.888207-1-luca@z3ntu.xyz>
- <20221119203758.888207-2-luca@z3ntu.xyz>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stanislav Jakubek <stano.jakubek@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20221119202316.93142-1-linmengbo0689@protonmail.com>
+ <20221119202618.93451-1-linmengbo0689@protonmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221119203758.888207-2-luca@z3ntu.xyz>
+In-Reply-To: <20221119202618.93451-1-linmengbo0689@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/11/2022 21:37, Luca Weiss wrote:
-> Document the various phones added in upcoming patches. Also allow
-> qcom,msm-id and qcom,board-id for msm8953 and sdm450.
+On 19/11/2022 21:27, Lin, Meng-Bo wrote:
+> Add vendor prefix for GPLUS.
+> https://www.gplus.com.tw
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> ---
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
