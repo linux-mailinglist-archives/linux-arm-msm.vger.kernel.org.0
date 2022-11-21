@@ -2,156 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 536BD632B8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 18:55:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9902632BF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 19:19:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbiKURz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 12:55:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
+        id S231483AbiKUSTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 13:19:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230415AbiKURz1 (ORCPT
+        with ESMTP id S231366AbiKUSS6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 12:55:27 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC32D32AC;
-        Mon, 21 Nov 2022 09:55:24 -0800 (PST)
+        Mon, 21 Nov 2022 13:18:58 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4ABCB6A0;
+        Mon, 21 Nov 2022 10:18:51 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id 6so11880175pgm.6;
+        Mon, 21 Nov 2022 10:18:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669053324; x=1700589324;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=qfsa8AbMabrYEp+ISD3eb3o1sx27qrYMkB2inZEHjBw=;
-  b=ShAPLAOcKWM+5VyOVw+JzL5kp0IrmDdXZCcvRBYhqKIJx2vEJq5o66r4
-   gUq01KfJWM4XhskXz/Sw60K/Od3k5QZTEkYOv6XCfmoFbvMZKQkqD91bs
-   ITjx070s5qwZDP5k6b+XTqtgrWYzXbrvWz71zqVhBwEPBkZrWdmQbhWzW
-   Q=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 21 Nov 2022 09:55:23 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2022 09:55:09 -0800
-Received: from [10.110.33.239] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 21 Nov
- 2022 09:55:08 -0800
-Message-ID: <76219489-99cc-7f2e-7df6-b11f6a2c1933@quicinc.com>
-Date:   Mon, 21 Nov 2022 11:55:07 -0600
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+on0BIC3CWKsQ/zQgT7Zq7kaAAA97DJzG1xxvLCYCd0=;
+        b=Y2s0QwXYrb3JZrFrFOem8gxmiYnaXcD53JwjtTM5LgVmhPSgCom9h6ZoSMmFC8EWVX
+         ydMHZcweTpXZyt2CHQhQ40CDwQNLJs70jFsGZlp9wzZ17FSg0DZtTdWCvNXTJQ43Xc6Z
+         qHp6p6sn1SOzrTC1s+ktxqpx28mB7O3KrQ5t7/2JEMdXCQw/ucP5sYtbUxudMJtvR/2x
+         xvDIz3Y9dTEPRVM2McBBEfPfpnvb2rGw2w0pc2p8DRQwML8/0yk9rvpR6QGB+IOq7plS
+         2krvaNLFAOfEsiW8MP1iLUyRS+OgM4z2RhvigUKReEn3dHZ9JJ4kQHRUsrFeyBp8cD7F
+         NEjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+on0BIC3CWKsQ/zQgT7Zq7kaAAA97DJzG1xxvLCYCd0=;
+        b=HLaItxqZu0nQU+H9zy/KuagW219qC7n19dB9b9hNgbe4L7Iur/g1pg9njMleousQxk
+         S6rxWREO8RhwfQwtJZ8kDrhVtFD93///wpNxL4jQsG7hivy8Cwk7YxMxSKCWXnvD3WqN
+         JnV7bPHAzl/q/39IYW7oHeGD9z0MxJ7SJbmHxMwp7n+TJ3I1Q+aLM1TSlCVO2SMzf/F6
+         KkSWR5fJkUjn8XHsh3hL4HmDhHz6TqgyoHF1whmYMAfS8ItBa8PUWOOra/TxGcJb6+F7
+         NAtP63O6qH40GMCxK4YO7MYNgXl+Qn1JVW6FaT9AjmMqF4CG4N7jkRi2xfqtUVitInDt
+         no0g==
+X-Gm-Message-State: ANoB5pm4Dy+0qfkt9hO1lLxeN9DwUfvqCK0Ae/ztDXy8WdZk6H0JjzNb
+        9EWvzB/rUCV0OQUDEBqo5nsDE7MuCQbRhr5jZrw=
+X-Google-Smtp-Source: AA0mqf7LqN1T/OFto2jVhaNxZ2yGDqc/xRjAOptQIyQmYXhv8nQeAlkd38TMX7ofEDomjM8uh4mAaGxiaYXcFihRecU=
+X-Received: by 2002:a63:2f46:0:b0:477:4a13:f38e with SMTP id
+ v67-20020a632f46000000b004774a13f38emr2304423pgv.131.1669054730967; Mon, 21
+ Nov 2022 10:18:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 3/3] interconnect: qcom: Add QDU1000/QRU1000
- interconnect driver
-Content-Language: en-US
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Andy Gross <agross@kernel.org>,
+References: <20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com>
+ <20221103-upstream-goodix-reset-v2-5-2c38fb03a300@theobroma-systems.com>
+In-Reply-To: <20221103-upstream-goodix-reset-v2-5-2c38fb03a300@theobroma-systems.com>
+From:   Fabio Estevam <festevam@gmail.com>
+Date:   Mon, 21 Nov 2022 15:18:32 -0300
+Message-ID: <CAOMZO5BzWsHAy7KjZe+KEiXVq-Mfpggqjk0vswuzx7nkups3gA@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 5/7] arm64: dts: imx: fix touchscreen reset GPIO polarity
+To:     Quentin Schulz <foss+kernel@0leil.net>,
+        "Angus Ainslie (Purism)" <angus@akkea.ca>,
+        David Jander <david@protonic.nl>
+Cc:     Shawn Guo <shawnguo@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Samuel Holland <samuel@sholland.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Bastien Nocera <hadess@hadess.net>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221118182245.31035-1-quic_molvera@quicinc.com>
- <20221118182245.31035-4-quic_molvera@quicinc.com>
- <6b68b7c2-e070-0a88-35ee-2060dcbdee91@wanadoo.fr>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <6b68b7c2-e070-0a88-35ee-2060dcbdee91@wanadoo.fr>
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+[Adding Angus and David]
 
-
-On 11/20/2022 6:19 AM, Christophe JAILLET wrote:
-> Le 18/11/2022 à 19:22, Melody Olvera a écrit :
->> Add interconnect provider driver for Qualcomm QDU1000 and QRU1000
->> platforms.
->>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>   drivers/interconnect/qcom/Kconfig   |    9 +
->>   drivers/interconnect/qcom/Makefile  |    2 +
->>   drivers/interconnect/qcom/qdu1000.c | 1079 +++++++++++++++++++++++++++
->>   drivers/interconnect/qcom/qdu1000.h |   95 +++
->>   4 files changed, 1185 insertions(+)
->>   create mode 100644 drivers/interconnect/qcom/qdu1000.c
->>   create mode 100644 drivers/interconnect/qcom/qdu1000.h
->>
+On Mon, Nov 21, 2022 at 3:12 PM Quentin Schulz <foss+kernel@0leil.net> wrote:
 >
-> [...]
+> From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
 >
->> +static int qnoc_probe(struct platform_device *pdev)
->> +{
->> +    int ret;
->> +
->> +    ret = qcom_icc_rpmh_probe(pdev);
->> +    if (ret)
->> +        dev_err(&pdev->dev, "failed to register ICC provider\n");
->> +
->> +    return ret;
->> +}
->> +
->> +static int qnoc_remove(struct platform_device *pdev)
->> +{
->> +    struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
->> +
->> +    icc_nodes_remove(&qp->provider);
->> +    icc_provider_del(&qp->provider);
+> The reset line is active low for the Goodix touchscreen controller so
+> let's fix the polarity in the Device Tree node.
 >
-> qcom_icc_rpmh_remove()?
+> Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+> ---
+>  arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts         | 2 +-
+>  arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> (more future proof, less verbose and more consistent with qcom_icc_rpmh_probe() in the probe)
+> diff --git a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> index 9fbbbb556c0b3..df7e5ae9698e1 100644
+> --- a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> +++ b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> @@ -107,7 +107,7 @@ touchscreeen@5d {
+>                 interrupt-parent = <&gpio1>;
+>                 interrupts = <8 IRQ_TYPE_NONE>;
+>                 irq-gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;
+> -               reset-gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+> +               reset-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+>         };
 >
-> CJ
-
-Good call. Does it make sense to just set the .probe and .remove functions as
-qcom_icc_rpmh_probe() and qcom_icc_rpmh_remove(), respectively? Probe function
-is just reporting if qcom_icc_rpmh_probe fails.
-
-Thanks,
-Melody
+>         temp-sense@70 {
+> diff --git a/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts b/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> index 6445c6b90b5bb..b038300812b1e 100644
+> --- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> +++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> @@ -542,7 +542,7 @@ touchscreen@5d {
+>                 pinctrl-0 = <&pinctrl_ts>;
+>                 interrupt-parent = <&gpio3>;
+>                 interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+> -               reset-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+> +               reset-gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+>                 irq-gpios = <&gpio3 0 GPIO_ACTIVE_HIGH>;
+>                 touchscreen-size-x = <720>;
+>                 touchscreen-size-y = <1440>;
 >
->> +
->> +    return 0;
->> +}
->> +
->> +static const struct of_device_id qnoc_of_match[] = {
->> +    { .compatible = "qcom,qdu1000-clk-virt",
->> +      .data = &qdu1000_clk_virt
->> +    },
->> +    { .compatible = "qcom,qdu1000-gem-noc",
->> +      .data = &qdu1000_gem_noc
->> +    },
->> +    { .compatible = "qcom,qdu1000-mc-virt",
->> +      .data = &qdu1000_mc_virt
->> +    },
->> +    { .compatible = "qcom,qdu1000-system-noc",
->> +      .data = &qdu1000_system_noc
->> +    },
->> +    { }
->> +};
->> +MODULE_DEVICE_TABLE(of, qnoc_of_match);
->> +
->> +static struct platform_driver qnoc_driver = {
->> +    .probe = qnoc_probe,
->> +    .remove = qnoc_remove,
->> +    .driver = {
->> +        .name = "qnoc-qdu1000",
->> +        .of_match_table = qnoc_of_match,
->> +    },
->> +};
->
-> [...]
->
-
+> --
+> b4 0.10.1
