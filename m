@@ -2,121 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78053632175
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:58:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86E3E63225C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 13:38:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231130AbiKUL6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 06:58:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
+        id S231345AbiKUMiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 07:38:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231285AbiKUL6H (ORCPT
+        with ESMTP id S231487AbiKUMiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 06:58:07 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46048B848
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:57:58 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id kt23so27924588ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:57:58 -0800 (PST)
+        Mon, 21 Nov 2022 07:38:01 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A613B5C43
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 04:37:58 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id r129-20020a1c4487000000b003d0283bf132so202366wma.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 04:37:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amarulasolutions.com; s=google;
+        d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MBbsIuonafwREhzlZL+FNmZyLBn3gGtNW8dW5Tq4ubo=;
-        b=rMXy/vvwEhXKozlAX1RwrPPT42CNokrusCoQoaRmpnG1Qk15lltVbnd3j2iAUlPdCs
-         ti02LF5TBqoq6YtuHwOVTeMM8V3j9A/NyTYlxdqupHWMVJXHr1OdUGXBc1PgZ4MAwDHo
-         jBrJsSHfGHJvwDXnWS7nntzTuJE+2sCrNmMBY=
+        bh=OfJ6ReGcbvudqGx5aWnlLmh808mEmKwe4YM900G8GoU=;
+        b=bhLvzu/iY7Mjd1xlH9twYzc2DCTHHIuR6cmeB16W+qrctjI2VgehKZyGjhsb0y/s9Q
+         rb5YPfiHqcjgLHbMXVp1UA7FFBV5n7zmRJIowCr2t4gxPwYHqilNJKTuooB3QAcZFDKk
+         fZPBYxMNpqfIMW4A5i2NiTps5MXN74532w65v0P6trMHqwWrfavqhd07zEWt36odoyfn
+         4ZHkqB9bGKS91KyjTFGnfRiCUkjx9qVv3VGl8kFEL6Oy+w8gJ+FQWT1UgfYoNk4Wjtj3
+         +WY+DtEaJYy5UC5YzyvXglazmcTU9wPC4nUtmeIyCSRMxit9IPjY7hrBVMj9Kwo3Wn3C
+         1kKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MBbsIuonafwREhzlZL+FNmZyLBn3gGtNW8dW5Tq4ubo=;
-        b=OF3IGsGvVwEsNO14ER7/dTeCwxJLf1D0Y/8kUl6FQ+IQvV5x24cyWtIbXh8rk0m454
-         y7oShW59ivZzjogTO61dI0sEJr4iarHchv1OgwaCMJbUd8Wzf9CQxWX24gTfh43yqUQv
-         ovv510Ks9N4Ej1bl45FTMaroevo2syP0BRa2aGCpYbyH35o/daYOhebKHNdlFREcztna
-         gPbgabyXc7roBjL73xPyYVScqnt/QWKex+7AKZavJ7yuW+mA1jZ3bMH8CGVnzrRTwS9o
-         rzq2Jvqlje+VpGINAve1jwRpRQV0tvp9vtqj9sc93xU+o6oUoFDRm6Y4n+ewc4eAntHW
-         q4KA==
-X-Gm-Message-State: ANoB5pnQowtXHy8xgtYX1yeck9mJIhR9XwUvwPCmucIe9YCD+lcxJdGD
-        ehTd67JpO7DMdNuiwb9VHjdANw==
-X-Google-Smtp-Source: AA0mqf4GqPNprIWVxYHjPd6mEdI7a0BfxK3crJG0H7ykmiHCidUbmzKoQBMNZ5VBRsnmPvjpZMda8Q==
-X-Received: by 2002:a17:906:2342:b0:78d:9e77:1f8c with SMTP id m2-20020a170906234200b0078d9e771f8cmr6710101eja.236.1669031876837;
-        Mon, 21 Nov 2022 03:57:56 -0800 (PST)
-Received: from tom-ThinkPad-T14s-Gen-2i (net-188-217-55-94.cust.vodafonedsl.it. [188.217.55.94])
-        by smtp.gmail.com with ESMTPSA id k19-20020aa7c053000000b00456c6b4b777sm5037181edo.69.2022.11.21.03.57.55
+        bh=OfJ6ReGcbvudqGx5aWnlLmh808mEmKwe4YM900G8GoU=;
+        b=NWPS41/bd9DQ+auYYTD/p/D8q3i6n4kvBImGICfqdxvxzyV9Nn4EqH3bNouGGugQzA
+         bi0wmO7W7mRoXxrogJllDjk03fzWnWSpUaaGAp/ZJhBtHc5QrEjfMCR96i4703AcK0Sz
+         r4KBU9pqA+DAs9p9HZe7UwHEj4wjzUyJg/iJyEpSL7axdv1ntqujfZQCUpDMNfCHpEjP
+         mSdUjRyYpAic4tzUbjcFeLEoj++KMzOQtUdlNUIk8KH0231qIEwlArdx/CNcvdHfG1pZ
+         BQCr1R4ykTwMJu0AO35wmxqCY8vQX9BoFRf7zu6o2/E4nePDGK+sZWxMl4bE2SKwkSHs
+         EPKA==
+X-Gm-Message-State: ANoB5pnWwSeoAyiAaEkVjYAg594N3u7JCBNKqs+aYY/Ae+pydocM+wk/
+        U4px2HQNrp3tbpue97/BMLl1DQ==
+X-Google-Smtp-Source: AA0mqf5JngN/dT4Kr7SbrPWvWx3miCH34ldho+VQ75xmRL5193rxCxFZa4xfx0c7V+FzhXpY/pFlwQ==
+X-Received: by 2002:a1c:7401:0:b0:3cf:934b:b7ad with SMTP id p1-20020a1c7401000000b003cf934bb7admr1734188wmc.22.1669034276591;
+        Mon, 21 Nov 2022 04:37:56 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id e21-20020a05600c219500b003cf894dbc4fsm13496353wme.25.2022.11.21.04.37.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 03:57:56 -0800 (PST)
-Date:   Mon, 21 Nov 2022 12:57:54 +0100
-From:   Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
-To:     Wang Yufen <wangyufen@huawei.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, sumit.semwal@linaro.org,
-        christian.koenig@amd.com, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
-Subject: Re: [PATCH] i2c: qcom-geni: fix error return code in
- geni_i2c_gpi_xfer
-Message-ID: <20221121115754.GA39395@tom-ThinkPad-T14s-Gen-2i>
-References: <1669025872-44226-1-git-send-email-wangyufen@huawei.com>
+        Mon, 21 Nov 2022 04:37:56 -0800 (PST)
+Date:   Mon, 21 Nov 2022 14:37:54 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH 1/2] ufs: host: ufs-qcom: Clear qunipro_g4_sel for HW
+ version major 5
+Message-ID: <Y3txIoDn3hFBXt0Y@linaro.org>
+References: <20221116121732.2731448-1-abel.vesa@linaro.org>
+ <20221116121732.2731448-2-abel.vesa@linaro.org>
+ <57b0669c-3826-dc33-36a4-2d8220da768a@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1669025872-44226-1-git-send-email-wangyufen@huawei.com>
+In-Reply-To: <57b0669c-3826-dc33-36a4-2d8220da768a@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Wang,
-
-On Mon, Nov 21, 2022 at 06:17:52PM +0800, Wang Yufen wrote:
-> Fix to return a negative error code from the gi2c->err instead of
-> 0.
+On 22-11-16 13:28:53, Konrad Dybcio wrote:
 > 
-> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
-> Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 1 -
->  1 file changed, 1 deletion(-)
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 84a7751..8fce98b 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -626,7 +626,6 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->  			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
->  				gi2c->cur->flags, gi2c->cur->addr);
->  			gi2c->err = -ETIMEDOUT;
-> -			goto err;
+> On 16/11/2022 13:17, Abel Vesa wrote:
+> > On SM8550, depending on the Qunipro, we can run with G5 or G4.
+> > For now, when the major version is 5 or above, we go with G5.
+> > Therefore, we need to specifically tell UFS HC that.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   drivers/ufs/host/ufs-qcom.c | 4 ++++
+> >   drivers/ufs/host/ufs-qcom.h | 2 ++
+> >   2 files changed, 6 insertions(+)
+> > 
+> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > index ca60a5b0292b..72334aefe81c 100644
+> > --- a/drivers/ufs/host/ufs-qcom.c
+> > +++ b/drivers/ufs/host/ufs-qcom.c
+> > @@ -227,6 +227,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+> >   	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
+> >   		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+> >   		   REG_UFS_CFG1);
+> > +
+> > +	if (host->hw_ver.major == 0x05)
+> > +		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+> > +
+> >   	/* make sure above configuration is applied before we return */
+> >   	mb();
+> >   }
+> > diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> > index 751ded3e3531..10621055bf7f 100644
+> > --- a/drivers/ufs/host/ufs-qcom.h
+> > +++ b/drivers/ufs/host/ufs-qcom.h
+> > @@ -36,6 +36,7 @@ enum {
+> >   	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
+> >   	REG_UFS_PARAM0                      = 0xD0,
+> >   	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
+> > +	REG_UFS_CFG0                        = 0xD8,
+> Are you sure these two should point to the same register? Maybe it deserves
+> some kind of a comment?
 
+The REG_UFS_PA_LINK_STARTUP_TIMER is used by non qunipro variants. (UFS
+versions below 2.x)
 
-Looks good to me.
-Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasoluitons.com>
+The REG_UFS_CFG0 is used by qunipro variants. (UFS versions above 2.x).
 
-Regards,
-Tommaso
+Will add a comment to the later one that would look like this:
+"/* Found on UFS versions above 2.x only */"
 
->  		}
->  
->  		if (gi2c->err) {
-> -- 
-> 1.8.3.1
+Thanks,
+Abel
+
 > 
-
--- 
-Tommaso Merciai
-Embedded Linux Engineer
-tommaso.merciai@amarulasolutions.com
-__________________________________
-
-Amarula Solutions SRL
-Via Le Canevare 30, 31100 Treviso, Veneto, IT
-T. +39 042 243 5310
-info@amarulasolutions.com
-www.amarulasolutions.com
+> Konrad
+> >   	REG_UFS_CFG1                        = 0xDC,
+> >   	REG_UFS_CFG2                        = 0xE0,
+> >   	REG_UFS_HW_VERSION                  = 0xE4,
+> > @@ -75,6 +76,7 @@ enum {
+> >   /* bit definitions for REG_UFS_CFG1 register */
+> >   #define QUNIPRO_SEL		BIT(0)
+> > +#define QUNIPRO_G4_SEL		BIT(5)
+> >   #define UFS_PHY_SOFT_RESET	BIT(1)
+> >   #define UTP_DBG_RAMS_EN		BIT(17)
+> >   #define TEST_BUS_EN		BIT(18)
