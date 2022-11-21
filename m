@@ -2,106 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 170AA632E61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 22:03:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 875A9632E72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 22:09:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiKUVDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 16:03:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
+        id S229627AbiKUVJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 16:09:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiKUVDu (ORCPT
+        with ESMTP id S229631AbiKUVI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 16:03:50 -0500
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD8AD9078;
-        Mon, 21 Nov 2022 13:03:48 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 6242A5C006C;
-        Mon, 21 Nov 2022 16:03:47 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Mon, 21 Nov 2022 16:03:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1669064627; x=1669151027; bh=+2N0DmXIa5
-        pM+9pnA2EKqjRscO0wecWm5AymMd2/ZBM=; b=Ac/WV9cmKRAKBtHxLJgYdmRKv6
-        FAvEr3UvELi60H4Dh+KmnRRnyQB5qbjNi+wlLUQH9uNGTqRz+gpPV7ZeWzg359/+
-        +O5BWD00ndKJzZ9P/QnjQKf0nEbRTlJtddECVOklZuaJytp6xDn0SEsim7C3ATQt
-        9ru2aeUfyBMRpThbWME7Up7/grS95Ih7iMpEMyCLR9XJhQ4Reon23BiwZec2Sa7Y
-        TxgqGIw4f1laHlzLcMIi7zAhNM6TvYXpcquwyTgD8HUdsGI0QWQPmRksrsH3/h9U
-        pDvGIallSwOnjadz1sYfN/vZo7gmKiNTDDhchPOeXgMZBUHvk1lRQ70HSDrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1669064627; x=1669151027; bh=+2N0DmXIa5pM+9pnA2EKqjRscO0w
-        ecWm5AymMd2/ZBM=; b=tYryUQjVqm1AJLM8R+S2TwmfoRRWyNek5RFJKSfJQhsg
-        JUQHAqK+GParL49Rrzqy1kpQVpDQGgOnvzjQlWGaPAN7Solby8k7FpttTvyn9KaG
-        26AjI+YZtat2gfc1Yfw8MPbajWNx8gmP6bhy1HSRmcuxqVlFILUNy0v3gKY37dFX
-        HlOsw3WG8vVaz87ca/SDdGr+FbsJiaMftpwylnbR1R20SmCAGqR10IzOQJjO5aGq
-        SigjPiiw6ngbmCHAGlVe9i4IdusKWl1ThlaNUaIxRz2OA9cQu6RuFptfIMviH8wW
-        EEgA69dXU1kSQgYWK2USKMZ8vWxYKNHMNGo6QCsBkw==
-X-ME-Sender: <xms:s-d7Yw8rT1m4n47wIB_cpqUHzssn0yM8cGV57cye8koWEKZn3BT6lA>
-    <xme:s-d7Y4vrLiMfSrEfp72JyyiEiuHtr5aR4nOjXYSmTgc380h4wikEkoXA4-0ouoKCV
-    ckEjM7WMeyE2Ibz9nE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrheeigddugeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:s-d7Y2CEHcgYRfjnjHIV2eKxld5jNg1HhXymAj1hPcInaUgrKM99Qg>
-    <xmx:s-d7YwcJ40bL5tB-uEx06uvHvw2JG2C4jWlLfI6gdAS5XVXEWTt1qg>
-    <xmx:s-d7Y1Pmfsmnrph5U-BGr9EgdnqZ-lcA8HDScHGVZXMA5cuUT4_Y3w>
-    <xmx:s-d7Y43b6YN_ytjK-xtxmFrwnmCqAeM5mivBi5F3pA20m7ltHV8wvQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 26184B60098; Mon, 21 Nov 2022 16:03:47 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
-Mime-Version: 1.0
-Message-Id: <0fe4e95c-1b55-4ed6-be55-8949bd2a4e90@app.fastmail.com>
-In-Reply-To: <9e0cebc4-0ee3-c316-01b3-5131298d70ce@quicinc.com>
-References: <20221017143450.9161-1-quic_saipraka@quicinc.com>
- <20221024120929.41241e07@gandalf.local.home>
- <2f19ea9c-10e6-d0f7-2fc9-fb0f896bfc64@quicinc.com>
- <9e0cebc4-0ee3-c316-01b3-5131298d70ce@quicinc.com>
-Date:   Mon, 21 Nov 2022 22:03:26 +0100
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        "Steven Rostedt" <rostedt@goodmis.org>
-Cc:     "Masami Hiramatsu" <mhiramat@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux-Arch <linux-arch@vger.kernel.org>, quic_satyap@quicinc.com
-Subject: Re: [PATCH] asm-generic/io: Add _RET_IP_ to MMIO trace for more accurate debug
- info
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 21 Nov 2022 16:08:59 -0500
+Received: from smtp.smtpout.orange.fr (smtp-27.smtpout.orange.fr [80.12.242.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A4ECC661B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 13:08:48 -0800 (PST)
+Received: from [192.168.1.18] ([86.243.100.34])
+        by smtp.orange.fr with ESMTPA
+        id xE22ozk4OuZP6xE22oT8A1; Mon, 21 Nov 2022 22:08:46 +0100
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Mon, 21 Nov 2022 22:08:46 +0100
+X-ME-IP: 86.243.100.34
+Message-ID: <2e4c6ee6-d8d5-b4fe-ab60-cb6f440c2dee@wanadoo.fr>
+Date:   Mon, 21 Nov 2022 22:08:45 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] interconnect: qcom: icc-rpmh: Fix an error handling path
+ in qcom_icc_rpmh_probe()
+Content-Language: fr
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <ec929c37c655ede7bb42e426354093c8a1377a0b.1668947686.git.christophe.jaillet@wanadoo.fr>
+ <COHSZZ9A5570.1P4NTXRE9IRZR@otso>
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <COHSZZ9A5570.1P4NTXRE9IRZR@otso>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 21, 2022, at 16:53, Sai Prakash Ranjan wrote:
-> On 10/26/2022 7:17 PM, Sai Prakash Ranjan wrote:
+Le 21/11/2022 à 08:42, Luca Weiss a écrit :
+> Hi Christophe,
+> 
+> On Sun Nov 20, 2022 at 1:35 PM CET, Christophe JAILLET wrote:
+>> If of_platform_populate() fails, some resources need to be freed as already
+>> done in the other error handling paths.
+>>
+>> Fixes: 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child NoC device probe")
+> 
+> I believe the same needs to be applied to icc-rpm.c.
 
->> 
->> 
->> Thanks for the ack, with this I believe Arnd can take it through his 
->> tree like last time.
->> 
->
->
-> Can we take this patch atleast for 6.2-rc1?
->
+I'll give it a look and send a v2.
 
-Applied now, thanks for the reminder,
+CJ
 
-      Arnd
+> 
+> Also there shouldn't be an empty line here between Fixes: and Signed-off-by:
+> 
+> Regards
+> Luca
+> 
+>>
+>> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+>> ---
+>>   drivers/interconnect/qcom/icc-rpmh.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+>> index fd17291c61eb..5168bbf3d92f 100644
+>> --- a/drivers/interconnect/qcom/icc-rpmh.c
+>> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+>> @@ -235,8 +235,11 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>>   	platform_set_drvdata(pdev, qp);
+>>   
+>>   	/* Populate child NoC devices if any */
+>> -	if (of_get_child_count(dev->of_node) > 0)
+>> -		return of_platform_populate(dev->of_node, NULL, NULL, dev);
+>> +	if (of_get_child_count(dev->of_node) > 0) {
+>> +		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+>> +		if (ret)
+>> +			goto err;
+>> +	}
+>>   
+>>   	return 0;
+>>   err:
+>> -- 
+>> 2.34.1
+> 
+> 
+
