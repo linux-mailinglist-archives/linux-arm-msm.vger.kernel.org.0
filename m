@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E9976323F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:39:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93618632403
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:40:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231405AbiKUNjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 08:39:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46402 "EHLO
+        id S231200AbiKUNkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 08:40:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231343AbiKUNjX (ORCPT
+        with ESMTP id S231290AbiKUNkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 08:39:23 -0500
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D941DAFE5D;
-        Mon, 21 Nov 2022 05:38:47 -0800 (PST)
-Date:   Mon, 21 Nov 2022 13:38:33 +0000
+        Mon, 21 Nov 2022 08:40:37 -0500
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10773B406B;
+        Mon, 21 Nov 2022 05:40:33 -0800 (PST)
+Date:   Mon, 21 Nov 2022 13:40:23 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1669037926; x=1669297126;
-        bh=kfk6bVEV/JyzyHMeoamDSd9as4fQPubMKRh8Hzvf9Ks=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=L/XaJhZD62TIcWJXINUUdKibeAUQ7Cw4kRK9ig//L8eGNIX1ZYRV1X1+Er84ZUYml
-         +TpExwwkAuCbnnfmvGAOIHQX4OW8xlnn3/MH9JLtwlSB4Oie7VWsJ14F9S41yZ0VB5
-         4XzJ7sKPtn0SUca4TXPxEHdCZ76xtDRd8POlctBcQNlAO3os0BeGGANPPgEqoZQGro
-         elt+kHEOHEbWueXuQu9wSfac1r14ynpeeiLXD03tvOJ2by9GxfJvIYUO0ij/BmJwus
-         pzqEW3nMzKiQo0rHX3Q2bMua2XdqaegI6dwYU14qK56Zsw9TkJZGkLxSgf0JMmv3Sr
-         0y8awmOqJGmUQ==
+        s=protonmail3; t=1669038031; x=1669297231;
+        bh=jfqqTP5BWjnX4gaBhfE4ZQlDKqyMGBo+E5+/v+guTYs=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=seYKx5s5KimrgxeKVGCkSowytDe/oHHCETnHjpTM1KLvdHsQ2luAZNQbiMatW676D
+         /OVEaLZz3103Gj79oolvvvv2P6DuXWt5MdXJmoJ+XQRXkqJjziMa2rK/JL34Zh1TCw
+         jinIqJSworOFK2gSqlgXSTEKxz9GcY+EL6x118xY5cBW6LrEN/PvLGxnwZ4WUlp05a
+         42qJ6banUV9u5PkzrdlvD2rCi5DcMIJwv15eMGpMFxGkl7+4Y2B0P+EjzElVxPelcr
+         SOkTIWpXuZgNKHu9BNgyGi9IwBkcs+KgSucpJiURchYXVdOS+AONpDG0k9x7HU7z6I
+         pBqLicMMiPV6Q==
 To:     linux-kernel@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -37,44 +38,48 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephan Gerhold <stephan@gerhold.net>,
         Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v4 0/3] arm64: dts: qcom: msm8916-acer-a1-724: Add initial device tree
-Message-ID: <20221121133732.207820-1-linmengbo0689@protonmail.com>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 1/3] dt-bindings: qcom: Document msm8916-acer-a1-724
+Message-ID: <20221121133924.208155-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20221121133732.207820-1-linmengbo0689@protonmail.com>
+References: <20221121133732.207820-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v4: Sort properties in l11.
-v3: Set property status =3D "okay"; as the last property.
-Reword the bindings patch.
-v2: Fix a typo in dt-bindings commit message
+Document the new acer,a1-724 device tree bindings used in its device tree.
 
-Acer Iconia Talk S A1-724 is a tablet using the MSM8916 SoC released
-in 2014.
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Note: The original firmware from Acer can only boot 32-bit kernels.
-To boot arm64 kernels it is necessary to flash 64-bit TZ/HYP firmware
-with EDL, e.g. taken from the DragonBoard 410c. This works because Acer
-didn't set up (firmware) secure boot.
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentatio=
+n/devicetree/bindings/arm/qcom.yaml
+index 463509f0f23a..83f6748979a9 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -180,6 +180,7 @@ properties:
+=20
+       - items:
+           - enum:
++              - acer,a1-724
+               - alcatel,idol347
+               - asus,z00l
+               - huawei,g7
+--=20
+2.30.2
 
-Add a device tree for with initial support for:
-
-- GPIO keys
-- pm8916-vibrator
-- SDHCI (internal and external storage)
-- USB Device Mode
-- UART
-- WCNSS (WiFi/BT)
-- Regulators
-- Bosch BMC150 accelerometer/magnetometer
 
