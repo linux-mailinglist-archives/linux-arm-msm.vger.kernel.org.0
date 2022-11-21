@@ -2,97 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9847463194E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 06:04:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A24C631956
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 06:08:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiKUFEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 00:04:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59498 "EHLO
+        id S229475AbiKUFI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 00:08:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbiKUFEk (ORCPT
+        with ESMTP id S229600AbiKUFIx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 00:04:40 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0753F18381
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 21:04:40 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id 130so10303568pfu.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 21:04:40 -0800 (PST)
+        Mon, 21 Nov 2022 00:08:53 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E322251A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 21:08:49 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id v3-20020a17090ac90300b00218441ac0f6so12396852pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 21:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qrMqh8nIzBj0rcQAnGuTQVL6D8xs7vnCoBc93q4h/+Q=;
-        b=G2rBkk0qVJF3gkH+xd86yQYplumpJ4CWmeia7/qm7d/KfvA7PdsJ6ovCRo+XIC3zPI
-         1A5ecQL1IBKcu7KNXCFsz0jFVTrS00cnoUmKEoG7Ehwq9g9b+4RbaSnDTZX0i7vJVNut
-         +uKAch8R9y4hl06kAzL7iTL9FacKYxAG04VBEp90gNCay0oEC2W/IWrzERCBC/HRzfmR
-         agM9tDUICiuxJlFeybHhUvyxo4wt8zVCTGrWWd25e4CDP3d4IpiUq/fgpyElUXiihB6R
-         3h4a7mW4EPjQdoTBRKOanM73rtkLwxC31yV7RiBRMw2O/bn1XWG8bcZVDWX1PS9ZCpl1
-         Rc6g==
+        bh=oM4t9dSTJRNYdl1z0tkjCktIi2YLG2NdBqaOTxJOnfw=;
+        b=LWtOZYu4jsTpQIJaiOHNEV7J1U5Hekz/2o745TGAHoP4cneloLCtSQcf2+7QCorM2v
+         /xUrXy8tc3AyizxEql9WLY1OdpX3pQbIVxJtcFYql5RA3M4NDSaLMbPVj5dbObnT+KSU
+         mczGTwZmAOwUux/wZ8ifvi0F01VtKfJ2/n71J43DQXUfTPipabpUdKiLGhjOMu1er+fR
+         qpGgEsviAEicpqjzPwJSF+kZar5OCuUon7HJXQSuacsEE6kvxwtPpgVtTm/A/sLEJVHN
+         qxeu2eQb8ByOQLwRwijUs3sPFsoh7Q/NUQWZepaz/G6oM8gj5IAM41nqgSYfzxRnFHnj
+         8Fkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qrMqh8nIzBj0rcQAnGuTQVL6D8xs7vnCoBc93q4h/+Q=;
-        b=mARCoYafmASZEVcvMg7GTAlT+KWhnqpHBqNR9ZZcDenkTGI6XcBkpsa0PyeKH+rO8M
-         YBz2mErAGx6edqVqIt701xZDgy9evXY3TefABJrBPLaa9jml0OkgLHgVpQRSb9flBo0p
-         Sctd3sQxRdqmFZIhO7jW9/2qofZNamDdKv3EmOiXB+G5hP1DdjfLRRLIsHg1gq5VNY4L
-         KmFU5DYoDUZRG9b1+/SzjlyHphUlXpO0JUHbN800aBiOBUPew7RtILM+CtDblulztMcB
-         4MnoeQXNygZOi/1UgMvQm06jNXSksGdYK+sdFqoJjYTWnRJ2/cnSYj7ABVoVcr9M28x1
-         6Mqg==
-X-Gm-Message-State: ANoB5pkc5S1F0fhseivKU6KgzEdaQWuCDDhi9ihkFPplYlXOv3o8SQ3U
-        EdDznmF/g/lGNNhJsItvxppwTGyir0g6yA==
-X-Google-Smtp-Source: AA0mqf6WyJjqtln70CdGw/0GblSJQ3FaM0LyNWl8qeG/M7Yq5tlQd2wsisHPLyH0dVVe/WH5WsIhzw==
-X-Received: by 2002:aa7:942f:0:b0:56b:a149:1d89 with SMTP id y15-20020aa7942f000000b0056ba1491d89mr735135pfo.83.1669007079516;
-        Sun, 20 Nov 2022 21:04:39 -0800 (PST)
+        bh=oM4t9dSTJRNYdl1z0tkjCktIi2YLG2NdBqaOTxJOnfw=;
+        b=1kQepQECtEuw/n6ALp4Nvk7jtGgx7e5DlsiniMExbM66jtVloM0ny7K1oDsYTWRx3a
+         lrntargyHXLeSvvaY8xmZorD2CGuvFTh+Aly+SAP4eTfQQ0OfR9iSTIWw4F7QKYqR7BE
+         /K4yYYhr22XpP70XmbAZ0QcF/JCc5guIROLiG5CsVw4K/FfdIh6qakVPsMwPBVvfc+2v
+         oBs9D1PVkNKLh8EG6KveKP/455EffabM4q9dxCmL6Mj7HpyfOM58H0+gw0vE2FuQPU2J
+         HLh630UZyNnTd9MB8J70zZL8jmqIhB4JZ+IjSp38DxoYYJ7y854qrsLGJ5X3seee8X67
+         PG2A==
+X-Gm-Message-State: ANoB5pndSpkfkFLgXSjkn9aM6r2QadVPdpSGIEXcqTPZC3+6pWvbnf7D
+        mxV4T4CLjs8uaMA1CpYL9j6l8Q==
+X-Google-Smtp-Source: AA0mqf7JM7TMYC6I8OTgp5yVOi9dOvfTXAD2akuhU7ByBbq+4L3OQY/x8/g9Bql+etELz/ggxI+lHw==
+X-Received: by 2002:a17:90a:b706:b0:212:e75b:1602 with SMTP id l6-20020a17090ab70600b00212e75b1602mr18701960pjr.139.1669007329319;
+        Sun, 20 Nov 2022 21:08:49 -0800 (PST)
 Received: from localhost ([122.172.85.60])
-        by smtp.gmail.com with ESMTPSA id d4-20020a170902cec400b0017f64ab80e5sm8574461plg.179.2022.11.20.21.04.36
+        by smtp.gmail.com with ESMTPSA id z7-20020aa79f87000000b005625d5ae760sm7895356pfr.11.2022.11.20.21.08.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 21:04:36 -0800 (PST)
-Date:   Mon, 21 Nov 2022 10:34:34 +0530
+        Sun, 20 Nov 2022 21:08:48 -0800 (PST)
+Date:   Mon, 21 Nov 2022 10:38:46 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        stable@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [PATCH v7 4/4] cpufreq: qcom-hw: Fix the frequency returned by
- cpufreq_driver->get()
-Message-ID: <20221121050434.5qyp46vkc5aj6nxe@vireshk-i7>
-References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
- <20221117053145.10409-5-manivannan.sadhasivam@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Yangtao Li <tiny.windzz@gmail.com>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Javier Martinez Canillas <javier@dowhile0.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Daniel Mack <zonque@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-pci@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-spi@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: Add missing start and/or end of line regex
+ anchors
+Message-ID: <20221121050846.m7w52iygltb5xivt@vireshk-i7>
+References: <20221118223728.1721589-1-robh@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221117053145.10409-5-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20221118223728.1721589-1-robh@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-11-22, 11:01, Manivannan Sadhasivam wrote:
-> The cpufreq_driver->get() callback is supposed to return the current
-> frequency of the CPU and not the one requested by the CPUFreq core.
-> Fix it by returning the frequency that gets supplied to the CPU after
-> the DCVS operation of EPSS/OSM.
+On 18-11-22, 16:37, Rob Herring wrote:
+> json-schema patterns by default will match anywhere in a string, so
+> typically we want at least the start or end anchored. Fix the obvious
+> cases where the anchors were forgotten.
 > 
-> Cc: stable@vger.kernel.org # v5.15
-> Fixes: 2849dd8bc72b ("cpufreq: qcom-hw: Add support for QCOM cpufreq HW driver")
-> Reported-by: Sudeep Holla <sudeep.holla@arm.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 42 +++++++++++++++++++++----------
->  1 file changed, 29 insertions(+), 13 deletions(-)
+>  .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml       | 2 +-
+>  Documentation/devicetree/bindings/hwmon/adt7475.yaml          | 4 ++--
+>  .../bindings/opp/allwinner,sun50i-h6-operating-points.yaml    | 4 ++--
+>  .../devicetree/bindings/pci/mediatek,mt7621-pcie.yaml         | 2 +-
+>  .../devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml        | 2 +-
+>  Documentation/devicetree/bindings/regulator/max8660.yaml      | 2 +-
+>  .../devicetree/bindings/regulator/maxim,max77802.yaml         | 2 +-
+>  Documentation/devicetree/bindings/regulator/regulator.yaml    | 2 +-
+>  .../devicetree/bindings/regulator/rohm,bd9576-regulator.yaml  | 2 +-
+>  Documentation/devicetree/bindings/sound/renesas,rsnd.yaml     | 2 +-
+>  .../devicetree/bindings/spi/nvidia,tegra210-quad.yaml         | 2 +-
+>  11 files changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> index a11e1b867379..3c00ad09eeaa 100644
+> --- a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> +++ b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+> @@ -38,7 +38,7 @@ properties:
+>      type: object
+>  
+>      patternProperties:
+> -      'cpu@[0-9a-f]+':
+> +      '^cpu@[0-9a-f]+$':
+>          type: object
+>  
+>          properties:
 
-A fix should always be the first patch in the series as it needs to be
-backported.
+> diff --git a/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml b/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> index 385b0692261c..51f62c3ae194 100644
+> --- a/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> +++ b/Documentation/devicetree/bindings/opp/allwinner,sun50i-h6-operating-points.yaml
+> @@ -41,7 +41,7 @@ required:
+>    - nvmem-cells
+>  
+>  patternProperties:
+> -  "opp-[0-9]+":
+> +  "^opp-[0-9]+$":
+>      type: object
+>  
+>      properties:
+> @@ -49,7 +49,7 @@ patternProperties:
+>        clock-latency-ns: true
+>  
+>      patternProperties:
+> -      "opp-microvolt-.*": true
+> +      "^opp-microvolt-speed[0-9]$": true
+>  
+>      required:
+>        - opp-hz
 
-I can reorder this if it won't break anything for this time.
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
 -- 
 viresh
