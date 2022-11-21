@@ -2,78 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B756663257D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 15:21:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A573632588
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 15:22:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230243AbiKUOVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 09:21:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33540 "EHLO
+        id S229490AbiKUOWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 09:22:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbiKUOVX (ORCPT
+        with ESMTP id S229585AbiKUOWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 09:21:23 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A937660
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 06:21:22 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id x17so6629573wrn.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 06:21:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=S7hedYyJck7S40GQNVuxUMsekgFy29NM0N0jYTBt/lM=;
-        b=zVbmQbnSPh5H16h9TA+WCKAe67FLRAfwB9SbjuJQLmRhMZaY40M8NXjD+ynDdOD8uk
-         V5PW8gdBQ8Q1hd9uS4z93YsdifIGHkCi0omA1OXvJVXWubhplJ/fLlAbmBYuxYPvO8pz
-         Ngm8bcTs6xSz0J6d/Z5xF/EV+aorG92Di1O/s8NZo0OdtfHVN3CIrFODdxjLQybQjPr7
-         hRiTamLmvlurx6D9VCjOQT5gQK90widvYMt19a+54pAn++DIFAF+wLysL3nx62VeRXO+
-         Nx1fAT0J1ThVr2OuJfetqWr308CkfQH9lJVQefPLbgWAA1QS6JMhHfMGk6tglZ1YVR/2
-         wapg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S7hedYyJck7S40GQNVuxUMsekgFy29NM0N0jYTBt/lM=;
-        b=iG/7vAKmrJdMpCyEZ2ti2Pl43Ismh3dpTO3cyL8HZFWc3da/c47jFgGAYV2YOnGKlY
-         p+dkQV1i19ozVrWjn90g9baYoJ2m0TUcf6Cf4GkVZQEJjm3XeFRiWf04bTeO5NYUPpqt
-         /gfWBp6uYKy86+0TwgTSAh7IQtMp5LhG3h9/oCa14gwLo6/7d/SC555dSNWmaQts4O+J
-         ztk21F/P2E68QcwibJ3THPBnzeqHOQ2xgc1PCxuFSJlNGrdmUpZ36rHQcuz/49wcxmch
-         hHnPGVdXKNkWHe+y4/Ot4HKgqaTwuKLWupwF1aSPES18sbfhviYc3w9DCkmczdDaba5Y
-         9new==
-X-Gm-Message-State: ANoB5plUbDXd0yhMDG5Ve79TZoDh5E43TUgLwBzi7PqweG7aWxZrEFku
-        wgCZNCYrcEDAR7yOmCZUv0ERMw==
-X-Google-Smtp-Source: AA0mqf7HNcjZmmNjuyl+rVD7pAZOe6rCi3/Rl+yaLwB8vV0U4AYPVEHQAjEy9ewuMpTgoErqo0YOCg==
-X-Received: by 2002:a5d:538b:0:b0:241:c3c2:24cf with SMTP id d11-20020a5d538b000000b00241c3c224cfmr2708312wrv.587.1669040481041;
-        Mon, 21 Nov 2022 06:21:21 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id c20-20020a7bc854000000b003b476cabf1csm13880142wml.26.2022.11.21.06.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 06:21:19 -0800 (PST)
-Date:   Mon, 21 Nov 2022 16:21:18 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [RFC PATCH 1/3] usb: Add USB repeater generic framework
-Message-ID: <Y3uJXlz0EOSyBzts@linaro.org>
-References: <20221116123019.2753230-1-abel.vesa@linaro.org>
- <20221116123019.2753230-2-abel.vesa@linaro.org>
- <71ced60f-d43b-003a-843d-c2a8364dbf79@collabora.com>
+        Mon, 21 Nov 2022 09:22:40 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE031121;
+        Mon, 21 Nov 2022 06:22:36 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B1DA6126C;
+        Mon, 21 Nov 2022 14:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A0AC433C1;
+        Mon, 21 Nov 2022 14:22:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669040555;
+        bh=7FCnuULVVR720/Z8cmKwHyUcR9KpvBB36hU267VS2Jc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BoCuh3MxQmdnGuhI+b/zF5e6f2AWwukQApG2V1cr+T0DZiAvK+7+F2rmGKdHSNDz7
+         LU73Sqd0CnM9bEhIWRzUAeAR5Pz01Ez7YvOQFB0eCriT12kvA7fBeBA6AHijzivox6
+         ESRc9E2DmePd90L4GHU6XeBYKLzgjz4GBauTfZE5kq/0T2+i9B8xW2Xi084D0mEwg4
+         aBxqULfVGhPtynTDlHN83d7U33LquF6l2dYyNBK0cszIH6hVA6VnVgHY/0rseV5v30
+         tMEG0I7Yp124nf0VqNl70pGhkL7xb8dpazS1kR+eItEtoW8kFsiuU88FiKoS7D2eac
+         hbBrUwKBoW1qw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ox7gU-00007K-8S; Mon, 21 Nov 2022 15:22:06 +0100
+Date:   Mon, 21 Nov 2022 15:22:06 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: sc8280xp: add audio support
+Message-ID: <Y3uJjo820Ij3aKAr@hovoldconsulting.com>
+References: <20221121130403.161817-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <71ced60f-d43b-003a-843d-c2a8364dbf79@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20221121130403.161817-1-srinivas.kandagatla@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,94 +58,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-11-18 09:59:43, Andrzej Pietrasiewicz wrote:
-> Hi Abel,
+On Mon, Nov 21, 2022 at 01:04:00PM +0000, Srinivas Kandagatla wrote:
+> This patchset adds audio support for sc8280xp Lenovo x13s.
+> Support for Headset Playback/Capture, Speaker Playback and DMIC is
+> tested.
 > 
-> W dniu 16.11.2022 o 13:30, Abel Vesa pisze:
-> > With more SoCs moving towards eUSB2,
+> A prebuit ASoC topology file available at
+> https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin
 > 
-> Can you name a few?
-
-Right now, for SoCs, I can only name the SM8550 from Qualcomm. But I
-would think there will be more from now on, not just from Qualcomm.
-
-But I found a couple of more repeaters already existent. Like TUSB2E11
-or TUSB2E22 from TI or PTN3222 from NXP. I'm not sure if they are used
-already alongside any specific SoC though (yet).
-
-Anyway, I can rephrase that.
-
 > 
-> such platforms will have to use
-> > a USB 2.0 compliance repeater. This repeater HW-wise usually deals with
-> > level shifting, but depending on the implementation it can do much more.
-> > So add a ganeric USB framework that would allow either a generic PHY or
-> > some USB host controller to control and get a repeater from a devicetree
-> > phandle. This framework will further be used by platform specific
-> > drivers to register the repeater and implement platform specific ops.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   drivers/usb/Kconfig             |   2 +
-> >   drivers/usb/Makefile            |   2 +
-> >   drivers/usb/repeater/Kconfig    |   9 ++
-> >   drivers/usb/repeater/Makefile   |   6 +
-> >   drivers/usb/repeater/repeater.c | 198 ++++++++++++++++++++++++++++++++
-> >   include/linux/usb/repeater.h    |  78 +++++++++++++
-> >   6 files changed, 295 insertions(+)
-> >   create mode 100644 drivers/usb/repeater/Kconfig
-> >   create mode 100644 drivers/usb/repeater/Makefile
-> >   create mode 100644 drivers/usb/repeater/repeater.c
-> >   create mode 100644 include/linux/usb/repeater.h
-> > 
+> Thanks to Johan and Kryz for reviewing v2.
 > 
-> <snip>
+> Changes since v2:
+> 	- removed lots of stray lines.
+> 	- ordered include files.
+> 	- moved all the nodes before pinctrl
+> 	- fixed subject line to include x13s.
+> 	- rebased to latest qcom dts branch.
 > 
-> > diff --git a/include/linux/usb/repeater.h b/include/linux/usb/repeater.h
-> > new file mode 100644
-> > index 000000000000..e68e0936f1e5
-> > --- /dev/null
-> > +++ b/include/linux/usb/repeater.h
-> > @@ -0,0 +1,78 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +/*
-> > + * USB Repeater defines
-> > + */
-> > +
-> > +#ifndef __LINUX_USB_REPEATER_H
-> > +#define __LINUX_USB_REPEATER_H
-> > +
-> > +struct usb_repeater {
-> > +	struct device		*dev;
-> > +	const char		*label;
-> > +	unsigned int		 flags;
-> > +
-> > +	struct list_head	head;
+> Thanks,
+> Srini
 > 
-> This member serves the purpose of a list _entry_, no?
-> The _head_ is static LIST_HEAD(usb_repeater_list);
-> Maybe call it "entry"?
+> Srinivas Kandagatla (3):
+>   arm64: dts: qcom: sc8280xp/sa8540p: add gpr node
+>   arm64: dts: qcom: sc8280xp/sa8540p: add SoundWire and LPASS
 
-Sure thing. Will do.
+Only noticed now, but the commit prefix here should just be:
 
+	arm64: dts: qcom: sc8280xp: ...
+
+sa8540p is based on sc8280xp but you don't have to point that out in
+every commit (there was one exception where I was also updating the
+sa8540p dtsi due to platform differences).
+
+>   arm64: dts: qcom: sc8280xp-x13s: Add soundcard support
 > 
-> > +	int	(*reset)(struct usb_repeater *rptr, bool assert);
-> > +	int	(*init)(struct usb_repeater *rptr);
-> > +	int	(*power_on)(struct usb_repeater *rptr);
-> > +	int	(*power_off)(struct usb_repeater *rptr);
-> 
-> Would you document these ops somehow? Potential driver writers need to
-> understand when they are called and what they are supposed to do.
-> In particular, how do these relate to what's in "Embedded USB2 (eUSB2)
-> Physical Layer Supplement to the USB Revision 2.0 Specification"?
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 213 +++++++++++
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 359 ++++++++++++++++++
+>  2 files changed, 572 insertions(+)
 
-Yes. Will document them appropriately.
-
-> 
-> Regards,
-> 
-> Andrzej
-
-Thanks,
-Abel
-
+Johan
