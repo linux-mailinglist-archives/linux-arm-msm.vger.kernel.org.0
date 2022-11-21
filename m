@@ -2,186 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 944D8632A5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 18:07:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98FD1632AB3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 18:19:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230227AbiKURHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 12:07:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57178 "EHLO
+        id S231497AbiKURT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 12:19:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230482AbiKURHL (ORCPT
+        with ESMTP id S230518AbiKURTJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 12:07:11 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C0ACB9EE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 09:07:07 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id k19so15222708lji.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 09:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rJQWLAZ4mdjMtlFjO7Mbh6mixzKo427eR1BTd1zJu8w=;
-        b=xm7lgVvTD8LiKUqo3lDgCROpVlzaUp5xR5oj/uRiSHOTCPkwI4ffK97ZDk4rAoIAHu
-         fVz6Lld5vc+StslDX8RTWnty/GGnaFYtvbJRFiPzzJ5l6tT7PfRlFKjNMcq4Qnuf+Oid
-         dbsUBp92BrrHS4gsjNnaBqtxcpyNJQv1bYODwQ6DqeE/cy4x/sfwOmwVeNUqZlUkACsO
-         Gr4GIZdS17SkCPci1YrZxAtXxJqTkk+gSJm99H92s4uJTlkg1OQ5o9MTpiGWoaSD6Xsf
-         6LETMkR8MSmJ72+cpP9MGYtzd8x3+5/LZKtPqxzCcKk+L2NVJJMUNb8h0xX4hzo9Jggx
-         hPwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rJQWLAZ4mdjMtlFjO7Mbh6mixzKo427eR1BTd1zJu8w=;
-        b=1+ZhSr/5nqACvMpKcjYKOiTJYfplrdlPD1IaRxAR/7RnYmaXnVffUN+puIubKt+3cu
-         NqctzYcDr6dh22yWeDIZlizSMntKzOoImmb+Gj8FTU05/GRvycK9KQWoLUD1iPEIJzmD
-         /hd/+pk5+H6ADXM6m7iRKnLvHjTHPbPRTafP9Jq5pOGYhVM5fNbceHL10hCXpggLt1/n
-         zqDfM07HMXB5HXgvUhNFwdoe5PIyNadfN8LYbLSenhmqtgxE7mE+TOKynz5S6cNojXne
-         F/iyOoKq5jgcLCbU/N2jTAjQD/I+F62uKO2jYYoRAikYg0QBFt+YgIVLLc1aExHfXQEw
-         vX/A==
-X-Gm-Message-State: ANoB5pnmZZC52llB7b1GRqTqq8VEzVbT4XmWw7MNBErJ82UQWbOhCib3
-        +Y3nduwm92ajo40I2yG8T8KCCg==
-X-Google-Smtp-Source: AA0mqf6h+6xPI2dxU9CA3hVBJILkn7hxLyyKv1N7KNTixcKNfyb9AQn+ztPktj067WOaqKu+Ldpt/Q==
-X-Received: by 2002:a05:651c:205:b0:26c:5e3a:44d7 with SMTP id y5-20020a05651c020500b0026c5e3a44d7mr6573052ljn.471.1669050426022;
-        Mon, 21 Nov 2022 09:07:06 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v10-20020a2e87ca000000b0027712379ec8sm1552281ljj.28.2022.11.21.09.07.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 09:07:05 -0800 (PST)
-Message-ID: <1419e9da-98f7-c477-9f07-4b54e82be4c4@linaro.org>
-Date:   Mon, 21 Nov 2022 18:07:04 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/8] dt-bindings: power: supply: Add DT schema for
- Qualcomm SMBCHG
-Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Mon, 21 Nov 2022 12:19:09 -0500
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77B5A11A10;
+        Mon, 21 Nov 2022 09:17:44 -0800 (PST)
+Received: (Authenticated sender: foss@0leil.net)
+        by mail.gandi.net (Postfix) with ESMTPSA id AE28E6000D;
+        Mon, 21 Nov 2022 17:17:34 +0000 (UTC)
+From:   Quentin Schulz <foss+kernel@0leil.net>
+To:     Shawn Guo <shawnguo@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alejandro Tafalla <atafalla@dnyon.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Samuel Holland <samuel@sholland.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-References: <20221120154625.57095-1-y.oudjana@protonmail.com>
- <795deac4-71fe-d40b-a3b6-855eb3875ad1@linaro.org>
- <1H1PLR.S9UFOHIJCU6S@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1H1PLR.S9UFOHIJCU6S@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fabio Estevam <festevam@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Bastien Nocera <hadess@hadess.net>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        devicetree@vger.kernel.org
+Subject: [PATCH RFC v2 0/7] fix reset line polarity for Goodix touchscreen controllers
+Date:   Mon, 21 Nov 2022 18:17:17 +0100
+Message-Id: <20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.10.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/11/2022 11:36, Yassine Oudjana wrote:
-> 
-> On Mon, Nov 21 2022 at 09:26:59 +01:00:00, Krzysztof Kozlowski 
-> <krzysztof.kozlowski@linaro.org> wrote:
->> On 20/11/2022 16:46, Yassine Oudjana wrote:
->>>>>  +  interrupts:
->>>>>  +    items:
->>>>>  +      - description: Charger error
->>>>>  +      - description: Charger inhibited
->>>>>  +      - description: Charger precharge safety timer timeout
->>>>>  +      - description: Charger charge safety timer timeout
->>>>>  +      - description: Charger pre to fast charging switch 
->>>>> threshold reached
->>>>>  +      - description: Charger recharge threshold reached
->>>>>  +      - description: Charger taper threshold reached
->>>>>  +      - description: Charger charge termination threshold reached
->>>>>  +      - description: Battery hot
->>>>>  +      - description: Battery warm
->>>>>  +      - description: Battery cold
->>>>>  +      - description: Battery cool
->>>>>  +      - description: Battery overvoltage
->>>>>  +      - description: Battery low
->>>>>  +      - description: Battery missing
->>>>>  +      - description: Battery thermistor missing # unconfirmed
->>>>>  +      - description: USB input undervolt
->>>>>  +      - description: USB input overvolt
->>>>>  +      - description: USB input source detected
->>>>>  +      - description: OTG regulator failure
->>>>>  +      - description: OTG regulator overcurrent
->>>>>  +      - description: Automatic input current limiting done
->>>>>  +      - description: USB ID pin changed
->>>>>  +      - description: DC input undervolt
->>>>>  +      - description: DC input overvolt
->>>>>  +      - description: Power OK
->>>>>  +      - description: Temperature shutdown
->>>>>  +      - description: Watchdog timeout
->>>>>  +      - description: Flash failure
->>>>>  +      - description: OTST2 # unknown
->>>>>  +      - description: OTST3 # unknown
->>>>
->>>>  It seems you listed register interrupts, not physical pins. This 
->>>> should
->>>>  be interrupt lines.
->>>
->>>  I'm not sure what I'm supposed to do here. I couldn't find an 
->>> interrupt-lines
->>>  property used anywhere so that's not what you meant, right?
->>
->> Are these physical interrupt lines this device has, register offsets 
->> or
->> virtual interrupts (e.g. passed via irq_chip)? Definitely not the 
->> first
->> and rather offsets for qpnpint_irq_domain_translate. Devicetree is not
->> for describing register layout of devices. IOW, register layout does 
->> not
->> change on different boards, because the device is exactly the same, so
->> there is no point to put it into DTS.
->>
-> 
-> So how would I describe the interrupts then? Or if you are saying I 
-> shouldn't have these interrupts in DT at all, how would I get them and 
-> register handlers for them in the driver? the PMIC arbiter takes 4 
-> interrupt cells, 3 of which are these offsets specifying the peripheral 
-> and interrupt. All other PMIC peripherals currently described in DT 
-> (examples being qcom,pm8916-wcd-analog-codec, qcom,pm8941-pwrkey and 
-> qcom-wled) have their interrupts (if any) described this way, with the 
-> only exceptions perhaps being the GPIO and MPP controllers which are 
-> themselves interrupt controllers. Changing the way PMIC peripheral 
-> interrupts are described would require changing PMIC arbiter bindings 
-> and code which I believe is out of the scope of this patch series.
+From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
 
-I don't think this would touch PMIC arbiter bindings, rather the PMIC
-itself. Usually complex devices (like PMICs) have one few physical
-interrupt lines and many registers related to some specific interrupts.
-For example:
-1. One IRQ line,
-2. Register with bits for overvoltage, undervoltage, vharger error etc.
+The Goodix touchscreen controller has a reset line active low. It happens to
+also be used to configure its i2c address at runtime. If the reset line is
+incorrectly asserted, the address will be wrongly configured. This cost me a few
+hours, trying to figure out why the touchscreen wouldn't work.
 
-Now how the MFD child device accesses them. Since this is strictly
-related to hardware programming model, it's not something you put to
-Devicetree. Instead parent device (PMIC) registers IRQ chip for its one
-interrupt line with several Linux (or virtual) interrupts. The children
-then just get a virtual IRQ from the parent (PMIC) and setup a
-handler(s) for them.
+The driver is "asserting" this reset GPIO by setting its output to 0, probably
+to reflect the physical state of the line. However, this relies on the fact that
+the Device Tree node setting the reset line polarity to active high, which is
+incorrect since the reset is active low in hardware.
 
-You will find some examples for this, just grep for regmap_irq_get_virq,
-for the drivers using regmap_irq_chip (or irq_create_mapping for
-non-regmaps).
+To fix this inconsistency, the polarity is inverted to not confuse the user
+about the reset line polarity.
 
-Since it is *one* device - the PMIC and its child like charger - the
-register layout is fixed thus I think these virtual (or Linux)
-interrupts are fixed as well.
+This is marked as RFC because it breaks DT compatibility and I cannot test ACPI
+support. Do we also make this patch series only one patchset since the DT
+patches depend on the driver patch and vice-versa? In which tree would this go?
 
-I don't know why Qualcomm PMIC for SPMI is done differently.
+I'm all ears if there's a better way to handle this. We could document this in
+the DT binding but this kinda breaks the promise we make that the DT is not
+bound to the driver implementation.
+
+Thanks,
+Quentin
+
+To: Bastien Nocera <hadess@hadess.net>
+To: Hans de Goede <hdegoede@redhat.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Shawn Guo <shawnguo@kernel.org>
+To: Sascha Hauer <s.hauer@pengutronix.de>
+To: Pengutronix Kernel Team <kernel@pengutronix.de>
+To: Fabio Estevam <festevam@gmail.com>
+To: NXP Linux Team <linux-imx@nxp.com>
+To: Chen-Yu Tsai <wens@csie.org>
+To: Jernej Skrabec <jernej.skrabec@gmail.com>
+To: Samuel Holland <samuel@sholland.org>
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Heiko Stuebner <heiko@sntech.de>
+Cc: linux-input@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-sunxi@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-rockchip@lists.infradead.org
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+---
+Changes in v2:
+- implemented ACPI support as suggested by Hans,
+- removed Qcom SC7180 Trogdor-based devices changes as they are not using this Goodix driver,
+- added comment on how to read gpiod_request_output and the GPIO DT polarity,
+- Link to v1: https://lore.kernel.org/r/20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com
+
+---
+Quentin Schulz (7):
+      Input: goodix - fix reset polarity
+      ARM: dts: imx: fix touchscreen reset GPIO polarity
+      ARM: dts: sunxi: fix touchscreen reset GPIO polarity
+      arm64: dts: allwinner: fix touchscreen reset GPIO polarity
+      arm64: dts: imx: fix touchscreen reset GPIO polarity
+      arm64: dts: qcom: fix touchscreen reset GPIO polarity
+      arm64: dts: rockchip: fix touchscreen reset GPIO polarity
+
+ arch/arm/boot/dts/imx6q-kp.dtsi                    |  2 +-
+ arch/arm/boot/dts/imx6ul-kontron-bl-43.dts         |  2 +-
+ arch/arm/boot/dts/sun7i-a20-wexler-tab7200.dts     |  2 +-
+ .../dts/allwinner/sun50i-a64-amarula-relic.dts     |  2 +-
+ .../allwinner/sun50i-a64-oceanic-5205-5inmfd.dts   |  2 +-
+ .../boot/dts/allwinner/sun50i-a64-pinephone.dtsi   |  2 +-
+ .../boot/dts/allwinner/sun50i-a64-pinetab.dts      |  2 +-
+ arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts    |  2 +-
+ .../boot/dts/freescale/imx8mq-librem5-devkit.dts   |  2 +-
+ arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts    |  2 +-
+ arch/arm64/boot/dts/rockchip/px30-evb.dts          |  2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi |  2 +-
+ arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts   |  2 +-
+ drivers/input/touchscreen/goodix.c                 | 45 +++++++++++++++++-----
+ 14 files changed, 48 insertions(+), 23 deletions(-)
+---
+base-commit: 84368d882b9688bfac77ce48d33b1e20a4e4a787
+change-id: 20221103-upstream-goodix-reset-aa1c65994f57
 
 Best regards,
-Krzysztof
-
+-- 
+Quentin Schulz <quentin.schulz@theobroma-systems.com>
