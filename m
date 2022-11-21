@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76B34632EAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 22:23:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F35632EDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 22:32:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbiKUVXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 16:23:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46706 "EHLO
+        id S231318AbiKUVbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 16:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiKUVXJ (ORCPT
+        with ESMTP id S231148AbiKUVbf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 16:23:09 -0500
+        Mon, 21 Nov 2022 16:31:35 -0500
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68D2C627C8;
-        Mon, 21 Nov 2022 13:23:08 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E296868B;
+        Mon, 21 Nov 2022 13:31:34 -0800 (PST)
 Received: from g550jk.arnhem.chello.nl (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C3425D04E7;
-        Mon, 21 Nov 2022 21:22:36 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id E313BD040D;
+        Mon, 21 Nov 2022 21:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1669065757; bh=SjJ1/BOuKvdYofR75HAG8ro+NKLiwQoEBC7P8NdaGYA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=aQpgYgCXhJjOYFv6GnDNMz1w1sAEfxK00aTRkN50Kw/CZD8uaqpeb/mA4yxgtKd5S
-         k//djHs6BE3PdqQ3xA/1WveGxYXs8IC2XoZiU3C1hbj5ZZPDFnJgyhfAlKjxbD3nzC
-         Hgrv2Klhq3SbApgOrYmq5Na1mhxE77VT0jc2EW08=
+        t=1669066263; bh=2kQEDLnxydBtnrXW4wyJ8ZCEZ/tqkyS1WnCU+hJ/Fkw=;
+        h=From:To:Cc:Subject:Date;
+        b=oC0eEKeizh+Ot4fLWu6mdYf8u1+UJAk3P56bo9FHIopY8EYM/SOAdEoELzU6+s+VC
+         wWdzLnl2cdAT02ftRdpkIA8brXzDj0ArO7hkalzPRLpqjI9Cfe8bjEZuimq2RVoHmg
+         Lc/YNY5Nb/t1d+jIs4Ir32e9Yy68GtP5Jsa51tfk=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -33,105 +33,47 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] ARM: dts: qcom: msm8974-*: re-add remoteproc supplies
-Date:   Mon, 21 Nov 2022 22:22:26 +0100
-Message-Id: <20221121212226.321514-2-luca@z3ntu.xyz>
+Subject: [PATCH 1/2] ARM: dts: qcom: msm8974-castor: Fix touchscreen init
+Date:   Mon, 21 Nov 2022 22:30:19 +0100
+Message-Id: <20221121213019.324558-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221121212226.321514-1-luca@z3ntu.xyz>
-References: <20221121212226.321514-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=1.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As part of a recent cleanup commit, the remoteproc supplies for adsp and
-modem were removed from msm8974.dtsi and now need to be set in the
-device dts. Do so.
+On some devices a higher delay is needed, otherwise touchscreen probe
+fails.
 
-Fixes: f300826d27be ("ARM: dts: qcom-msm8974: Sort and clean up nodes")
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
-Changes in v2:
-* rebase, should compile now due to added previous patch
+Two simple patches that have been sitting around in msm8974-mainline
+tree for a while.
 
- .../boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts   | 11 +++++++++++
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi | 11 +++++++++++
- .../qcom-msm8974pro-sony-xperia-shinano-castor.dts    | 11 +++++++++++
- 3 files changed, 33 insertions(+)
+ .../arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 6daceaa87802..c8e91985fbec 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -343,6 +343,17 @@ led@5 {
- 	};
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8841-regulators {
- 		compatible = "qcom,rpm-pm8841-regulators";
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 5a70683d9103..d4a1708117a1 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -213,6 +213,17 @@ &pm8941_wled {
- 	qcom,num-strings = <2>;
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8841-regulators {
- 		compatible = "qcom,rpm-pm8841-regulators";
 diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 2c33f84a6e4e..36044130a739 100644
+index 36044130a739..2725bd343f3a 100644
 --- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
 +++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -318,6 +318,17 @@ led@7 {
- 	};
- };
+@@ -122,7 +122,7 @@ synaptics@2c {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&ts_int_pin>;
  
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+};
-+
- &rpm_requests {
- 	pm8841-regulators {
- 		compatible = "qcom,rpm-pm8841-regulators";
+-		syna,startup-delay-ms = <10>;
++		syna,startup-delay-ms = <100>;
+ 
+ 		rmi-f01@1 {
+ 			reg = <0x1>;
 -- 
 2.38.1
 
