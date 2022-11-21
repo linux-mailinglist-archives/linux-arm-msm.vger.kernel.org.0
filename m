@@ -2,80 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AEF86329A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 17:35:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2BFE6329B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 17:37:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbiKUQem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 11:34:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57606 "EHLO
+        id S229698AbiKUQhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 11:37:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbiKUQef (ORCPT
+        with ESMTP id S230481AbiKUQgn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 11:34:35 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F9164A26
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 08:34:34 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id a29so19600990lfj.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 08:34:34 -0800 (PST)
+        Mon, 21 Nov 2022 11:36:43 -0500
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1BDC7239
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 08:36:37 -0800 (PST)
+Received: by mail-il1-x133.google.com with SMTP id bp12so5880825ilb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 08:36:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oLPxPT/ez55qwQtV+SkxKyABW1GmxAMlzf1SH869HGc=;
-        b=u6hup9OTpwsYNdfPj0KkeCiopyWC5GBXLjvb4rUlz7SQmsEJyGG7rwtghv3pSngYrP
-         kX46P4iip9hJVQCQblutCV6T2sG2kvZl9cMDSofJWHE6fQxbbrZ0NVHPR6V6mjNVeE55
-         YiqhLoz44OMGgWRKIr0k1+vsNCOlVhY6qvCqemszGj2QjsePVSpLazdekTAFNkfyWgua
-         5krqYtfRidcU72VjJuTcFltP4ebumzg/uHm2ZigjgGikQYbnl1JH62GzxtOelrm99ABm
-         M/2teDoLjepO1ieakzO4TNm4H57uvgGX0Nbz18OyX0hyrzM01Wuv2yD/faJo5ejhx6jq
-         lsNg==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cp2GUaJ4Q+axhxXC6f2KvKPg06VkSSSruHyJ/Tswgd0=;
+        b=CK+teSe8L6CR9pYTU6D/tJpcZa1FXXOXPrRcYCLyEdQr0jhYE1AlxU8IUbtfZON5IP
+         jJdiaaYDssxtAdo18KG8wC2QzpNZS8LIHP9DwQ/xg1UDkEUn6Kh4qihynbX6tXY3KcBi
+         UWA7VDSgg1Y9s2n7P3flwLNuh0PhDWPVm/HuQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLPxPT/ez55qwQtV+SkxKyABW1GmxAMlzf1SH869HGc=;
-        b=mlwS68vLZhlo5rJ3XpbJWa59CWSEjXy3m9qgPGt+ks8eUpav9SNP8bvuKr3U8m+vKN
-         tR68Us/KZAQDfBnhp5eznbj664NsYJa60l4DR4U4egore0tTmcOLjZuxMlIrP5mPrZP5
-         7VcvNazaQ6wpYbQ7xPM+55crCePIcy3Id90g2CEXV+JyB29nq/oyF/1248qyailZ4n7s
-         2xG8rIzjou9TxA+ElQT7jeMXlYdkyv8CYZYFt7EKuYWpFgDQ26BeIJ8ySJx1CVxSWSKZ
-         JpKEqrAha6iKEV1sC2ce12xWt07RJxx7b3T05MY530oDCBgj/BWD0Dn3NSeg1bkb7DQN
-         nyNQ==
-X-Gm-Message-State: ANoB5pl3plvgdB4QVH5i9+QVXDTDbdWD+Kra+h3S+LRKgoxHbMMZy9f3
-        JM+yZCyTgv0cKLuCknBtgdNX0w==
-X-Google-Smtp-Source: AA0mqf6q18BM7XpFsuKlzTo8yn08h/4aqehlKnIklUNOwvJiugO5IJ2gOEsHuGPxQMmZZko9LRc8OQ==
-X-Received: by 2002:ac2:47fc:0:b0:4a2:2f31:12bf with SMTP id b28-20020ac247fc000000b004a22f3112bfmr6787809lfp.550.1669048473094;
-        Mon, 21 Nov 2022 08:34:33 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a25-20020a056512201900b00492dbf809e8sm2077689lfb.118.2022.11.21.08.34.32
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cp2GUaJ4Q+axhxXC6f2KvKPg06VkSSSruHyJ/Tswgd0=;
+        b=6hEbsOKaY9MyJNv71cL0xdHa6mRQtbQoQ2uMV+ASy6p6hAGlIcsEtjsYYYj4ebozEN
+         TvUH9cAthBRsuMXZPUspLEcYcwO/Q6cca7hB/SnGOLpCCvdi+rnbhDnua9eDWbr1Cs7e
+         eOeRZJRoU3jtqWTFF1oVY8eToWtxBOUGfF/eQXQgPZNVav54cZt1h3ov/L9KMrsDR0DM
+         T3cHnB74f1H+PJywyJU6LSTqF++PU03PBtYvmZCDvca5/SxGEHUYuOYTsu0+ENmp91TH
+         D7Rps8ADwzlgacoGgdgJdAxY/hc5+dKbb3s06tJ8a6CJ693JG9IQfDL3CjOoxqkbwVXI
+         PxEA==
+X-Gm-Message-State: ANoB5pn6UH5zafNv2Ze9vwA4Ne5PVZOLgbAlemUmpjnws4sAh6p+Hc3t
+        P5945cdGFQ2JxJZkg8+OfZOhbKNqIF8hNg==
+X-Google-Smtp-Source: AA0mqf4FMjBrQHyDsYVl/MrxmyHkHgvXCKjaxSVSllVw7TdnFWn/bEbZtu13JPJTQBiYzVj6VXTORw==
+X-Received: by 2002:a92:d089:0:b0:302:52b7:a5cb with SMTP id h9-20020a92d089000000b0030252b7a5cbmr649867ilh.241.1669048596896;
+        Mon, 21 Nov 2022 08:36:36 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id b24-20020a5d8918000000b0069e1bcbddaesm4445716ion.16.2022.11.21.08.36.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 08:34:32 -0800 (PST)
-Message-ID: <a461416c-e8c1-002b-efae-fa56723fb148@linaro.org>
-Date:   Mon, 21 Nov 2022 17:34:31 +0100
+        Mon, 21 Nov 2022 08:36:36 -0800 (PST)
+Date:   Mon, 21 Nov 2022 16:36:35 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Document the sc7280 CRD
+ Pro boards
+Message-ID: <Y3upE5FfSW+jgQXT@google.com>
+References: <20221121043437.21925-1-quic_rjendra@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v4 1/3] dt-bindings: interconnect: Add rpmh virt devices
-Content-Language: en-US
-To:     Georgi Djakov <djakov@kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221118182245.31035-1-quic_molvera@quicinc.com>
- <20221118182245.31035-2-quic_molvera@quicinc.com>
- <3bc11449-bd5f-f4c4-98da-ebc0d7c8b309@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <3bc11449-bd5f-f4c4-98da-ebc0d7c8b309@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221121043437.21925-1-quic_rjendra@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,44 +70,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/11/2022 16:23, Georgi Djakov wrote:
-> Hi Melody,
+On Mon, Nov 21, 2022 at 10:04:36AM +0530, Rajendra Nayak wrote:
+> Add compatibles for the Pro SKU of the sc7280 CRD boards
+> which come with a Pro variant of the qcard.
+> The Pro qcard variant has smps9 from pm8350c ganged up with
+> smps7 and smps8.
 > 
-> On 18.11.22 20:22, Melody Olvera wrote:
->> Add documentation for virtual rpmh devices. These interconnects
->> are not controlled by the application processor and thus
->> require separate bindings. Also, move compatibles for sm8450 to
->> this document and add them for QDU1000/QRU1000 platforms.
->>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>   .../bindings/interconnect/qcom,rpmh-virt.yaml | 55 +++++++++++++++++++
->>   .../bindings/interconnect/qcom,rpmh.yaml      |  2 -
->>   2 files changed, 55 insertions(+), 2 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->> new file mode 100644
->> index 000000000000..5cbaa51df863
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->> @@ -0,0 +1,55 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-virt.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm RPMh Virtual Network-On-Chip Interconnect
->> +
->> +maintainers:
->> +  - Georgi Djakov <georgi.djakov@linaro.org>
-> 
-> This email is not valid anymore, so please replace it with djakov@kernel.org.
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 
-It's still listed in bindings maintainers, so people copy what is there.
-Can you update your emails? Mailmap is also missing.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
