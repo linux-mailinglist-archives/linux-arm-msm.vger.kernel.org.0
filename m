@@ -2,68 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C35B7632312
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:04:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CBE763231A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:07:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbiKUNEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 08:04:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48348 "EHLO
+        id S229490AbiKUNHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 08:07:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbiKUNEW (ORCPT
+        with ESMTP id S229460AbiKUNHX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 08:04:22 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92BE24092F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:04:21 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id cl5so19766808wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:04:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8JTMxU+6gfRPvxZA59rbrUjR3s8BRx+fpfpTMx5IUg4=;
-        b=kYRi09O4jMyvtQMcpFEVv+DDGspQBWH7zGviGjCMIAcjarbUS1gGLq61SvS+ZzLV1T
-         JzE0ZEQPK/9FoH28jK0KaFvRMjBwus853Gu9fqI7hZxacQ9pmyNwJ+IM9a31TmQ0cDM8
-         570Pwfoc67fJN9pb5L4W6KC2qCVo6w+C90pJfiWE+y4wQJwsLL22lSRicnXXrAe/pY9w
-         HNVthFNcb/Hp0VYKPh6n3ISKv8Tk5iBqrMMmXcZhpNCCbi0fVmX2iFHP5W6MgEcrYVaJ
-         GGsjvU4DhhuFZGUBmAotz4cZ/rpPD43qTLUFHRyaRBJURGrFJljiy+tWAYjCI6Ng0ez3
-         rbuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8JTMxU+6gfRPvxZA59rbrUjR3s8BRx+fpfpTMx5IUg4=;
-        b=mQu4F5T8yriFzeTzMMbsg1zokp/O219I4SUI7Rv5WyC48OhJj8ebGyha7+FBnSlonD
-         YEPJggaJpJLu4tfjA8EbNlZ3eg3teby54mTUs+ZWtm+AngZPKZb0XacpseWS3LCUvjxR
-         gC4uGbWIkFYv+iT97WSj347DkSWPBKBazz1ud3VfVWv2o56dXOKA+uKK5f2ziJ4cqWTj
-         BXBbfdxADhNsDFCmV6jGfxltRTFS6dDVyeGhSaqFGe368ciWr4+11HEoRU15Ukfn2xey
-         fRFBTlnrrXX8vnLp5thj11IQ6GzqUG4dRSofJcHvwYK7GToE+otD9ZCSscdv12p8cj+F
-         t3Kg==
-X-Gm-Message-State: ANoB5pnTcYZDWQC5SA4NGSINwj29iw7Ql9gO5J9mnFpzwszh5KKmnKcM
-        i0NLw+3MJ8yRf2vYQRepKIPiXQ==
-X-Google-Smtp-Source: AA0mqf4R9hDYMQjc2bmedtpvyefpFFaRyELlTtys6lBQsksmrbw8BZzkzR34uFNdw1IPuwxQtzP4Mg==
-X-Received: by 2002:adf:de0a:0:b0:241:cdf6:6a81 with SMTP id b10-20020adfde0a000000b00241cdf66a81mr1045965wrm.243.1669035860013;
-        Mon, 21 Nov 2022 05:04:20 -0800 (PST)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id a13-20020a5d53cd000000b002383edcde09sm11133898wrw.59.2022.11.21.05.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 05:04:19 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sc8280xp-x13s: Add soundcard support
-Date:   Mon, 21 Nov 2022 13:04:03 +0000
-Message-Id: <20221121130403.161817-4-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221121130403.161817-1-srinivas.kandagatla@linaro.org>
-References: <20221121130403.161817-1-srinivas.kandagatla@linaro.org>
+        Mon, 21 Nov 2022 08:07:23 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77AD74047F;
+        Mon, 21 Nov 2022 05:07:21 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ALCHOs4021350;
+        Mon, 21 Nov 2022 13:05:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=B12Jgx6vlRKuMa3MkvoWuhcUaCtEvn2NOcaMR+Bqmig=;
+ b=h1GjlOuJ6CcimigvfXICHuwMYIEa3WzLo5iTrlQ+xJKvR2KMmPslAr/jZw4xGJ6JAIWq
+ ZdeBGLF/OMHtiyFd5O9sITU54H9aASsqrbD09WC+Ufl8Xqp9oGgvgAdxONtTZodEIE8+
+ tSJxtQ6lwoOX1Wez229IVI4WPAe+MaLqJnBlcscQV2X+i08DM5IgyNdLneMUORmVIWDl
+ nxWQMsvv+l19wv5i8EGXCobeZOWYS1F8zUmqrSM4cfS6iRbdWEUu7UBnIyJdWseNKXX2
+ 63Tv8QVSGudOW18fJYezpvwHkljRLQMv44gqTSEpGNuIIhi1rfs9gx7dqBlTWAk6OnxW RA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxrf0vkcp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 13:05:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ALD5MXg001195
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 13:05:22 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 21 Nov 2022 05:05:16 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>, <lgirdwood@gmail.co>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH] ASoC: soc-pcm.c: Add NULL check in BE reparenting
+Date:   Mon, 21 Nov 2022 18:34:55 +0530
+Message-ID: <1669035895-12036-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _mLjRdFN8d9TJmNWN3kazx4spO0V-gFH
+X-Proofpoint-ORIG-GUID: _mLjRdFN8d9TJmNWN3kazx4spO0V-gFH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-21_13,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
+ clxscore=1011 impostorscore=0 mlxlogscore=949 malwarescore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211210102
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -73,286 +78,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for SoundCard on X13s. This patch adds support for Headset
-Playback, record and 2 DMICs on the Panel along with the regulators
-required for powering up the LPASS codecs.
+Add NULL check in dpcm_be_reparent API, to handle
+kernel NULL pointer dereference error.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 ---
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 213 ++++++++++++++++++
- 1 file changed, 213 insertions(+)
+ sound/soc/soc-pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 568c6be1ceaa..eefa22ea1ed7 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -172,6 +172,14 @@ vreg_wwan: regulator-wwan {
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 493f003..a7810c7 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1247,6 +1247,8 @@ static void dpcm_be_reparent(struct snd_soc_pcm_runtime *fe,
+ 		return;
  
- 		regulator-boot-on;
- 	};
-+
-+	vreg_vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VPH_VCC3R9";
-+		regulator-min-microvolt = <3900000>;
-+		regulator-max-microvolt = <3900000>;
-+		regulator-always-on;
-+	};
- };
+ 	be_substream = snd_soc_dpcm_get_substream(be, stream);
++	if (!be_substream)
++		return;
  
- &apps_rsc {
-@@ -181,6 +189,13 @@ pmc8280-1-rpmh-regulators {
- 
- 		vdd-l3-l5-supply = <&vreg_s11b>;
- 
-+		vreg_s10b: smps10 {
-+			regulator-name = "vreg_s10b";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_s11b: smps11 {
- 			regulator-name = "vreg_s11b";
- 			regulator-min-microvolt = <1272000>;
-@@ -188,6 +203,13 @@ vreg_s11b: smps11 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_s12b: smps12 {
-+			regulator-name = "vreg_s12b";
-+			regulator-min-microvolt = <984000>;
-+			regulator-max-microvolt = <984000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l3b: ldo3 {
- 			regulator-name = "vreg_l3b";
- 			regulator-min-microvolt = <1200000>;
-@@ -216,6 +238,7 @@ vreg_l6b: ldo6 {
- 	pmc8280c-rpmh-regulators {
- 		compatible = "qcom,pm8350c-rpmh-regulators";
- 		qcom,pmic-id = "c";
-+		vdd-bob-supply = <&vreg_vph_pwr>;
- 
- 		vreg_l1c: ldo1 {
- 			regulator-name = "vreg_l1c";
-@@ -237,6 +260,13 @@ vreg_l13c: ldo13 {
- 			regulator-max-microvolt = <3072000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_bob: bob {
-+			regulator-name = "vreg_bob";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
- 	};
- 
- 	pmc8280-2-rpmh-regulators {
-@@ -596,6 +626,161 @@ &remoteproc_nsp0 {
- 	status = "okay";
- };
- 
-+&soc {
-+	wcd938x: codec {
-+		compatible = "qcom,wcd9380-codec";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wcd_default>;
-+		reset-gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <1>;
-+
-+		vdd-buck-supply = <&vreg_s10b>;
-+		vdd-rxtx-supply = <&vreg_s10b>;
-+		vdd-io-supply = <&vreg_s10b>;
-+		vdd-mic-bias-supply = <&vreg_bob>;
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+	};
-+};
-+
-+&sound {
-+	compatible = "qcom,sc8280xp-sndcard";
-+	model = "SC8280XP-LENOVO-X13S";
-+	audio-routing =
-+		"SpkrLeft IN", "WSA_SPK1 OUT",
-+		"SpkrRight IN", "WSA_SPK2 OUT",
-+		"IN1_HPHL", "HPHL_OUT",
-+		"IN2_HPHR", "HPHR_OUT",
-+		"AMIC2", "MIC BIAS2",
-+		"VA DMIC0", "MIC BIAS1",
-+		"VA DMIC1", "MIC BIAS1",
-+		"VA DMIC2", "MIC BIAS3",
-+		"TX DMIC0", "MIC BIAS1",
-+		"TX DMIC1", "MIC BIAS2",
-+		"TX DMIC2", "MIC BIAS3",
-+		"TX SWR_ADC1", "ADC2_OUTPUT";
-+
-+	wcd-playback-dai-link {
-+		link-name = "WCD Playback";
-+		cpu {
-+			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wcd-capture-dai-link {
-+		link-name = "WCD Capture";
-+		cpu {
-+			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 1>, <&swr2 0>, <&txmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wsa-dai-link {
-+		link-name = "WSA Playback";
-+		cpu {
-+			sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&wsamacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	va-dai-link {
-+		link-name = "VA Capture";
-+		cpu {
-+			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+
-+		codec {
-+			sound-dai = <&vamacro 0>;
-+		};
-+	};
-+};
-+
-+&swr0 {
-+	left_spkr: wsa8830-left@0,1 {
-+		compatible = "sdw10217020200";
-+		reg = <0 1>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_1_sd_n_default>;
-+		powerdown-gpios = <&tlmm 178 GPIO_ACTIVE_LOW>;
-+		#thermal-sensor-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		#sound-dai-cells = <0>;
-+		vdd-supply = <&vreg_s10b>;
-+	};
-+
-+	right_spkr: wsa8830-right@0,2{
-+		compatible = "sdw10217020200";
-+		reg = <0 2>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_2_sd_n_default>;
-+		powerdown-gpios = <&tlmm 179 GPIO_ACTIVE_LOW>;
-+		#thermal-sensor-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		#sound-dai-cells = <0>;
-+		vdd-supply = <&vreg_s10b>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	wcd_rx: wcd9380-rx@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	wcd_tx: wcd9380-tx@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <1 1 2 3>;
-+	};
-+};
-+
-+&vamacro {
-+	pinctrl-0 = <&dmic01_default>, <&dmic02_default>;
-+	pinctrl-names = "default";
-+	vdd-micb-supply = <&vreg_s10b>;
-+	qcom,dmic-sample-rate = <600000>;
-+};
-+
- &usb_0 {
- 	status = "okay";
- };
-@@ -808,6 +993,26 @@ qup2_i2c5_default: qup2-i2c5-default-state {
- 		drive-strength = <16>;
- 	};
- 
-+	spkr_1_sd_n_default: spkr-1-sd-n-default-state {
-+		perst-n-pins {
-+			pins = "gpio178";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+			output-high;
-+		};
-+	};
-+
-+	spkr_2_sd_n_default: spkr-2-sd-n-default-state {
-+		perst-n-pins {
-+			pins = "gpio179";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+			output-high;
-+		};
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		int-n-pins {
- 			pins = "gpio182";
-@@ -830,4 +1035,12 @@ reset-n-pins {
- 			drive-strength = <16>;
- 		};
- 	};
-+
-+	wcd_default: wcd-default-state {
-+		reset-pins {
-+			pins = "gpio106";
-+			function = "gpio";
-+			bias-disable;
-+		};
-+	};
- };
+ 	for_each_dpcm_fe(be, stream, dpcm) {
+ 		if (dpcm->fe == fe)
 -- 
-2.25.1
+2.7.4
 
