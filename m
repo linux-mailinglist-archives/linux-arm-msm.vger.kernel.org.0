@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9DEA631AB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:54:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53248631ABD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:54:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbiKUHyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 02:54:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59350 "EHLO
+        id S229935AbiKUHyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 02:54:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbiKUHyU (ORCPT
+        with ESMTP id S229924AbiKUHyV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 02:54:20 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 366616C705
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:06 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id ft34so26463332ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:06 -0800 (PST)
+        Mon, 21 Nov 2022 02:54:21 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C25456DFCA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:08 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id z18so15033532edb.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GT9ErDbClBtlo66hqT2klzySCTqQIgR/TIVfNl1Gg+Y=;
-        b=O8QBYlAGTTApUL6TLXRC+RdaXgjr6tjZq/PDzzK6ry8Y4u+YJOmeMB5Bn7NTt1qSBi
-         Fukr5kVtdZ4oP8jT3o5Y4ig2M23vgoSWxqsEKX17jKqWA1nakj+jDvHCYj3zVMtgXt4L
-         6w3BeLQUjC/HSQg6TnRYqaWM1WO8NI8d0YViYJ+vy0UvKzyKtMySsWpp99tt08PwS7Vh
-         0/xED8W60TuQkxU12/G2BNND3IPn28OjtYxeXPDUHtbs4zYNN81rhzun5rLMy8kSU1GK
-         QygY7zjiZdOTBVHWAttgYDOf2YlF1/SdqxTmuvWrr2LRwf4fhLC8LAIsuE8j8fh1D7Fu
-         RzQg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kiTahGJp5BwkW45h0evRK0m7WBfA+FTavHc+14F8Q6k=;
+        b=Fbp0AxACKS8CAE/SBA8rm9/wpXCVuYn2cLIKmBN2cwXvTBZ8cBNUzgS9GzQsEZTvgz
+         xDysiTk0l38Sen0EFby6Xdq4pq7t7UbZbSTHj9SV2DEjplzUaqAOBvxx473prmGvDIH3
+         pDQKeifqiSNj7pFTSrjSPVPCcUAs1AwLIEGQ2iYoCjz0wJzSKFiNVlw10AVTx5+jbHLd
+         jfTzfbqdy41gqsnbbchrWdhMrmv4WWpDrb9HH+Gz9mG/gNwEYZ1UyrnO758z6X4oYUKY
+         Zf9jfzSB0soh1fYHQYWb2pCWwKNaPADCCWHN9gmADUkhxVe4aAj4T+UTCJmbOBIJR3gZ
+         kyhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GT9ErDbClBtlo66hqT2klzySCTqQIgR/TIVfNl1Gg+Y=;
-        b=sDsymlz8JngrQc6aK8UImllhp6vJDJQ5rsGbKVZDJSJRq8+e7mqAFL/cv6hXFGE4F6
-         jBIXT4pj85n/notZJ9bi1EabWduXZc8QepqIKJmV4GQGJqv6fgb4h8/uZPrBI+uPGifv
-         FdVSo/xYeQcGUvB48EzSxr+GcgWbvbtU3SeIUVedCW9OU9RjD2OHoJvDk3jmRdkqWgTa
-         JiGjo0Y7LEl+IpD5D9Mo6pJvSrroh1ydfKMhcAIPjEYvckGXd8T35o+4z/haDyRrEIsq
-         l0V193DoDYeaOynFAJSZm9jeCfmYm0MwsiJb8RuICCIu5/HipmOsRWxYy+8mzbserQbr
-         jIdg==
-X-Gm-Message-State: ANoB5pm6Cm6i/BRMSUHeAtqVOyM4EVJGIiz04umHwWDqlbc4M8w4bhN6
-        erbVCgyJlwc3BMJlCkRqm0J8X1S8925SQA==
-X-Google-Smtp-Source: AA0mqf62uSlXNxPTJw3z57ahsIMBOuTXwZwsI5C/DqMRrKONDTY65VHgWF2pcKCOJRSKeBBt/r1gHA==
-X-Received: by 2002:a17:906:2804:b0:78d:e7c0:a2b with SMTP id r4-20020a170906280400b0078de7c00a2bmr14766006ejc.273.1669017244575;
-        Sun, 20 Nov 2022 23:54:04 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kiTahGJp5BwkW45h0evRK0m7WBfA+FTavHc+14F8Q6k=;
+        b=QxT7xBf0FlUrO5cqcNGZcqgA1OxYWmzKEqeWnsSgKtMKmJ415mC0VElGmAqU6AOMxu
+         knYh7fygDk++noTx2emXOgmAG/FVLMxrv04L0HuoR6sKxXbXbbPAWLaFb4KZRRhnx9Yh
+         QQMt9txMRiomy3wZi4hXzV9SQdnqXA3BGk3DHoPc7heil79kJLC+Ib6ATi2tYEkzU+z9
+         jedvxckZ2OGEfAzdypjpAweNoj1P7bsF+fqpVEf69drAp2YwnAlIGKrwdKVsumkYM2uS
+         BnXDsZF3PCmCMCZ/6zjTLW8WthjlpgSYjM7YTnDXS1drgExFs5auHfTf6jyKkOM5XhfD
+         PVpw==
+X-Gm-Message-State: ANoB5pltGScUPtFN0ViCQU8J/5Wi8Im7B9tq5k/ZYiYh1wZs0D0So903
+        f/ZwmHWh2jHSFNGC9gtGjsJbulUiYcCqaQ==
+X-Google-Smtp-Source: AA0mqf68X2rG94HvlxmwMgwl8VDjwy7o+Swe2xsIZEO6D4w5z89zdepIoH51M1SC6Scpxs74VGycQQ==
+X-Received: by 2002:a05:6402:449b:b0:459:2b41:3922 with SMTP id er27-20020a056402449b00b004592b413922mr8083835edb.160.1669017247096;
+        Sun, 20 Nov 2022 23:54:07 -0800 (PST)
 Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id o11-20020a170906860b00b007ad4a555499sm4700805ejx.204.2022.11.20.23.54.03
+        by smtp.gmail.com with ESMTPSA id o11-20020a170906860b00b007ad4a555499sm4700805ejx.204.2022.11.20.23.54.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 23:54:04 -0800 (PST)
+        Sun, 20 Nov 2022 23:54:06 -0800 (PST)
 From:   Luca Weiss <luca.weiss@fairphone.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -58,20 +59,18 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add sm6350 compatible
-Date:   Mon, 21 Nov 2022 08:53:55 +0100
-Message-Id: <20221121075358.76582-1-luca.weiss@fairphone.com>
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 2/3] phy: qcom-qmp-combo: Add config for SM6350
+Date:   Mon, 21 Nov 2022 08:53:56 +0100
+Message-Id: <20221121075358.76582-2-luca.weiss@fairphone.com>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221121075358.76582-1-luca.weiss@fairphone.com>
+References: <20221121075358.76582-1-luca.weiss@fairphone.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,25 +78,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the compatible describing the combo phy found on SM6350.
+Add the tables and config for the combo phy found on SM6350.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 98 +++++++++++++++++++++++
+ 1 file changed, 98 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-index 97a7ecafbf85..68aecb638870 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-@@ -18,6 +18,7 @@ properties:
-       - qcom,sc8180x-qmp-usb3-dp-phy
-       - qcom,sc8280xp-qmp-usb43dp-phy
-       - qcom,sdm845-qmp-usb3-dp-phy
-+      - qcom,sm6350-qmp-usb3-dp-phy
-       - qcom,sm8250-qmp-usb3-dp-phy
-   reg:
-     items:
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index ba9d761ec49a..c93867da7b1a 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -325,6 +325,66 @@ static const struct qmp_phy_init_tbl qmp_v3_usb3_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
+ };
+ 
++static const struct qmp_phy_init_tbl sm6350_usb3_rx_tbl[] = {
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0f),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4e),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL4, 0x18),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x77),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_SIGDET_CNTRL, 0x03),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_SIGDET_DEGLITCH_CNTRL, 0x16),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_MODE_00, 0x05),
++	QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x75),
++};
++
++static const struct qmp_phy_init_tbl sm6350_usb3_pcs_tbl[] = {
++	/* FLL settings */
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL2, 0x83),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_L, 0x09),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_H_TOL, 0xa2),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_MAN_CODE, 0x40),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL1, 0x02),
++
++	/* Lock Det settings */
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG1, 0xd1),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG2, 0x1f),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG3, 0x47),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_POWER_STATE_CONFIG2, 0x1b),
++
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0xcc),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_V0, 0x9f),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_V1, 0x9f),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_V2, 0xb7),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_V3, 0x4e),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_V4, 0x65),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXMGN_LS, 0x6b),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0d),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V1, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V1, 0x0d),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V2, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V2, 0x0d),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V3, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V3, 0x1d),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V4, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V4, 0x0d),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_LS, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_LS, 0x0d),
++
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RATE_SLEW_CNTRL, 0x02),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK, 0x04),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_TSYNC_RSYNC_TIME, 0x44),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK, 0x04),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_L, 0x40),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_H, 0x00),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_WAIT_TIME, 0x75),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_LFPS_TX_ECSTART_EQTLOCK, 0x86),
++	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
++};
++
+ static const struct qmp_phy_init_tbl sm8150_usb3_serdes_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SSC_EN_CENTER, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SSC_PER1, 0x31),
+@@ -1126,6 +1186,40 @@ static const struct qmp_phy_combo_cfg sdm845_usb3dpphy_cfg = {
+ 	.dp_cfg                 = &sc7180_dpphy_cfg,
+ };
+ 
++static const struct qmp_phy_cfg sm6350_usb3phy_cfg = {
++	.type			= PHY_TYPE_USB3,
++	.lanes			= 2,
++
++	.serdes_tbl		= qmp_v3_usb3_serdes_tbl,
++	.serdes_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_serdes_tbl),
++	.tx_tbl			= qmp_v3_usb3_tx_tbl,
++	.tx_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_tx_tbl),
++	.rx_tbl			= sm6350_usb3_rx_tbl,
++	.rx_tbl_num		= ARRAY_SIZE(sm6350_usb3_rx_tbl),
++	.pcs_tbl		= sm6350_usb3_pcs_tbl,
++	.pcs_tbl_num		= ARRAY_SIZE(sm6350_usb3_pcs_tbl),
++	.clk_list		= qmp_v3_phy_clk_l,
++	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
++	.reset_list		= msm8996_usb3phy_reset_l,
++	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
++	.vreg_list		= qmp_phy_vreg_l,
++	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
++	.regs			= qmp_v3_usb3phy_regs_layout,
++
++	.start_ctrl		= SERDES_START | PCS_START,
++	.pwrdn_ctrl		= SW_PWRDN,
++	.phy_status		= PHYSTATUS,
++
++	.has_pwrdn_delay	= true,
++	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
++	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
++};
++
++static const struct qmp_phy_combo_cfg sm6350_usb3dpphy_cfg = {
++	.usb_cfg		= &sm6350_usb3phy_cfg,
++	.dp_cfg			= &sc7180_dpphy_cfg,
++};
++
+ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
+ 	.type			= PHY_TYPE_USB3,
+ 	.lanes			= 2,
+@@ -2753,6 +2847,10 @@ static const struct of_device_id qmp_combo_of_match_table[] = {
+ 		.compatible = "qcom,sdm845-qmp-usb3-dp-phy",
+ 		.data = &sdm845_usb3dpphy_cfg,
+ 	},
++	{
++		.compatible = "qcom,sm6350-qmp-usb3-dp-phy",
++		.data = &sm6350_usb3dpphy_cfg,
++	},
+ 	{
+ 		.compatible = "qcom,sm8250-qmp-usb3-dp-phy",
+ 		.data = &sm8250_usb3dpphy_cfg,
 -- 
 2.38.1
 
