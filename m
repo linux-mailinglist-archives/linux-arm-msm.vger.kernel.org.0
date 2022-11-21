@@ -2,95 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0100A631AF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:07:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3614C631B02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:10:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229777AbiKUIHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 03:07:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40430 "EHLO
+        id S229955AbiKUIKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 03:10:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiKUIHh (ORCPT
+        with ESMTP id S229715AbiKUIKi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 03:07:37 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F95FF58B;
-        Mon, 21 Nov 2022 00:07:36 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 45DEB60EF8;
-        Mon, 21 Nov 2022 08:07:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D821C433C1;
-        Mon, 21 Nov 2022 08:07:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669018055;
-        bh=JUZxOMccjGBqhxXgnzu5UUE3t55AOpU4fuF6iENXJVg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=C7MMghyWerVrHyBAzc/S5wRhLzYhd7exfpqeiwKzZxTZTTxET6hK5R6nHfib2K+j/
-         cLOXcE8TGu7jMOvIUREzYC0SxQyxoMlwkWzisARrPTKIEeMx/UdaaC/6Ax6o752qGP
-         FP0FlDBzXsCbMnrKH9ZWw9BBCVR20bFVU6IhnpBFi1nxmNvf4At+ot3nMOzMJrhl4Y
-         T69Zq1lfr/Z0ilvEFyMjvoxLwmO76qRmOqEukXTVLsf1FEILQvh81KWyec0OJy6I4U
-         1YwV6ecI5wEIhV+hjc592jKhL4P40FbJeKgBZiMpugucY9EBZOxRlAyW6AFxn97rdT
-         kmzSfXukj4Fig==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ox1pZ-0006OI-Ka; Mon, 21 Nov 2022 09:07:05 +0100
-Date:   Mon, 21 Nov 2022 09:07:05 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add sm6350
- compatible
-Message-ID: <Y3sxqUu0dnaQfdFY@hovoldconsulting.com>
-References: <20221121075358.76582-1-luca.weiss@fairphone.com>
+        Mon, 21 Nov 2022 03:10:38 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478741CFD2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 00:10:37 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id p8so17627811lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 00:10:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TJc97tVz8Np7zrJgaUJukwhYzlchMMe5Vq2+9jU6jbQ=;
+        b=SpEAlxuayCmwUcK99ZovqDDz9D6NcYrSo+wxdtokbur947YGUw14kXFRonYWdq+JVw
+         E45Cd9MJy4T7jERoOYj5xFPVOUxEJLwofAPRhkvTSyvDik11obECn5AQDoBz0zJMPH/z
+         bQNfEqKDwWsq6f2LZs1CbPciuN9E3DdhopGdvqc9PJ0ozQ1U55EQfHONoJvK48FbGe6b
+         bQGzVMoGSHimVLwIcCNziHnWknVHzwysHHTTm+ENHaZZUCL2vstJ2SgXY+TkUy2okHMi
+         93bqbgugM6pWwkmHTBNYoeAG5LPH4dzzGFAaPxM3byxbYTO3nTf3JhCXP8/l0jFbL09J
+         ChyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJc97tVz8Np7zrJgaUJukwhYzlchMMe5Vq2+9jU6jbQ=;
+        b=UvzFcRFdloslAhgAdJ2abaTK1zc+OXBq6rSuHDcSwYkmIYC4ZqnaZqVCkr8hcifIMO
+         H04zqti1uAv2lLCrteE8+9UK9GZA9ronqZPPPEtCSTxM5pbumuideIC3VfK/s8z2+p9i
+         GgnOKcFrGLAA21Atyz2O7Oi21z++jquc6FtFAFYNPfhVhY55wQRcWZWnc/CcY9ZpQ1QE
+         ovMRycf2sBuSIWKmuMrlI3/B6r9wpvLf3aCY+suibYO4LIjBp59QrR0CDcQFLk3t9gzR
+         NHXE3w7qw210xv1GFCZ74MDyk8o6IZX9JJOJ3kYLKSTdOJ7dNgFZnM50mugi+fLC9XR8
+         TOSA==
+X-Gm-Message-State: ANoB5plymBqzqO9+eepwT/Klv6ifwpWUPvq0lWT0G5lVE/op3Wbeu0Jb
+        /MYVQ3pnRdazqon9834I6Gtzsg==
+X-Google-Smtp-Source: AA0mqf6KyeCKxMLGMfC55yIqgtSo3LQr+b32lyA0Ozz84vLlkwY2J3VVUUkHRRbpBTAhUetGzTs6cA==
+X-Received: by 2002:a19:2d52:0:b0:4b1:dc42:6f85 with SMTP id t18-20020a192d52000000b004b1dc426f85mr5261719lft.568.1669018235579;
+        Mon, 21 Nov 2022 00:10:35 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id g16-20020a19ee10000000b004b18830af7asm1917126lfb.54.2022.11.21.00.10.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Nov 2022 00:10:35 -0800 (PST)
+Message-ID: <cf20ac7b-ede5-2e2c-247e-f32f1fc7f6be@linaro.org>
+Date:   Mon, 21 Nov 2022 09:10:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121075358.76582-1-luca.weiss@fairphone.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sdm845-pinctrl: add GPIO hogs
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>
+References: <20221118162101.145267-1-krzysztof.kozlowski@linaro.org>
+ <20221120164133.GA3166916-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221120164133.GA3166916-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 08:53:55AM +0100, Luca Weiss wrote:
-> Add the compatible describing the combo phy found on SM6350.
+On 20/11/2022 17:41, Rob Herring wrote:
+> On Fri, Nov 18, 2022 at 05:21:01PM +0100, Krzysztof Kozlowski wrote:
+>> Allow GPIO hogs in pin controller node.  qcom/sdm845-cheza.dtsi already
+>> uses it.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/pinctrl/qcom,sdm845-pinctrl.yaml        | 12 ++++++++++++
+>>  1 file changed, 12 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+>> index c9627777ceb3..57bac7f7a4fc 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+>> @@ -48,6 +48,11 @@ patternProperties:
+>>              $ref: "#/$defs/qcom-sdm845-tlmm-state"
+>>          additionalProperties: false
+>>  
+>> +  "-hog(-[0-9]+)?$":
+>> +    $ref: /schemas/gpio/gpio-hog.yaml
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> You can drop this and just do:
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> index 97a7ecafbf85..68aecb638870 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> @@ -18,6 +18,7 @@ properties:
->        - qcom,sc8180x-qmp-usb3-dp-phy
->        - qcom,sc8280xp-qmp-usb43dp-phy
->        - qcom,sdm845-qmp-usb3-dp-phy
-> +      - qcom,sm6350-qmp-usb3-dp-phy
->        - qcom,sm8250-qmp-usb3-dp-phy
->    reg:
->      items:
+> required:
+>   - gpio-hog
+> 
+> As that's what selects the hog schema. Kind of an odd pattern I guess. 
+> We could make gpio.yaml define hog nodes instead I suppose.
 
-The current USB3-DP bindings are broken and we should no be adding
-further compatibles here. Please consider rebasing on:
+Thanks, that's much less code.
 
-	https://lore.kernel.org/all/20221115144005.2478-1-johan+linaro@kernel.org/
 
-Johan
+Best regards,
+Krzysztof
+
