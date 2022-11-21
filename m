@@ -2,137 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C1EE632408
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:41:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31BF6632443
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:50:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbiKUNk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 08:40:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44344 "EHLO
+        id S230271AbiKUNug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 08:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbiKUNkj (ORCPT
+        with ESMTP id S230264AbiKUNue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 08:40:39 -0500
-Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch [185.70.40.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D311DB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:40:38 -0800 (PST)
-Date:   Mon, 21 Nov 2022 13:40:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1669038037; x=1669297237;
-        bh=AhqCCaLvPKm6+EzCNox2qptaiFM8dp9eaZqm0qf77Bk=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=gxiyJOuZfm/DwaSnC5aZFzEao2aHeb2XubnxJxy2gKnyTjlsg4PKPge+9wHrdwQqg
-         11d5/jiT4A7VCv35rjk/29cTfx0HP3mIrUIrx5rXkPq+0wfmHsXLFYv8oCd6McAZaN
-         To4TaDTQFqBUHldRXYNi1liN227W+wUPNaeTCBn1H/4bVagnMhgAAqdKJtHKci0VzP
-         f11ve1w3eFT98r9bOOVYZSLw864iOQ9b3JzgXyv8yeQWJOsW/bRRkDt0ST0swsG3lc
-         HAq6+OlQYsYJMdmLuLBTONQaVKkpN/q+M3vdGpyFj3qvTdEnLA4J2lnXzT2v7rf4y4
-         DzXWgqU1EaVUg==
-To:     linux-kernel@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 21 Nov 2022 08:50:34 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3391E65B9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:50:32 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id p8so18883437lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:50:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QAt4YvIoyvYsFbo41kBZWP010rGTy75faIZV5/NcsYg=;
+        b=gzXIwUVXy1V7XBQQSTVPLPMyWs9eNUDdabh6yxCweLVXP0Y6xCGvLuky1A0pLGKMjt
+         EctDlYTbYh7atokrbgwkF3m2WoN7dkhcH7eiHwuD6hIwTy1XYNrBtCasY/E1VSWfLZsA
+         qROPXRiGVWnFpDVL1oWnB+qU1HMkJyretUNyK0pF9ynXE8ztKFR2X+MKbQSWzG+etLcv
+         cd+tK5t5IdGz8GGE5nuKL8KVDePd/hPi3oUWcbnV4YrMIgtkL3zDWxCdDFvXFVWC6aYo
+         SD28pL5bCy7dSkI2BrRaxkrt/OjbWOmyvPF7MksBJExMLpXWvMN/Fgoon8cJfwkhmTHZ
+         wzqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QAt4YvIoyvYsFbo41kBZWP010rGTy75faIZV5/NcsYg=;
+        b=4dzRkv1OSPSpoCKqdQsTYKtqLGL4UDBdtwcgNb1yx1qppfG7e+nbNPfx83tK2FLbzu
+         xj0b91fEKTg7lZ9QpJpfOSd7if+NUas3Lpj+Z5+KbPvc2n7S0sOQv2OT9yKUlnj8wvRR
+         XQQmFZDbr8DGno07xYWKQ3NHv78Oka1vA3ZA0qL8BacG+NrFITjPQJr3VP8vtQCYHOtK
+         ZGg0lIy7YA3hLX9swpgq+wjzsLL25cGTMwLgVs2QbQu4fDKGiAVyunCE+d8CWMy8pnFS
+         0Kp+yH5vFeOKl3VwuL2vl8mKZVyGn1rxTqAG9z+dWINL8kHi2GNdWTYY8U4zmlMieOGx
+         QD8A==
+X-Gm-Message-State: ANoB5plC3TOqLftalocy/1c6ctP9qzxcB7Y4VPITkmz5rYPsHJxcBYEp
+        7HDVRr8aNWmvcGzjwHF+6gYIAA==
+X-Google-Smtp-Source: AA0mqf5TYxFBqqdBHMjFqcmXaZTC/TwSnfK8gpf3JY5xoq27k5W77KUczLzcmKQ1hGAgM6fJhOjrew==
+X-Received: by 2002:a05:6512:2109:b0:4a2:5f7b:840a with SMTP id q9-20020a056512210900b004a25f7b840amr3125371lfr.577.1669038630507;
+        Mon, 21 Nov 2022 05:50:30 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id 21-20020ac24835000000b004a2588520f5sm2027721lft.166.2022.11.21.05.50.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Nov 2022 05:50:30 -0800 (PST)
+Message-ID: <e0835b03-c409-ef0b-501b-176251bc1725@linaro.org>
+Date:   Mon, 21 Nov 2022 14:50:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 03/10] arm64: dts: qcom: Add pm8010 pmic dtsi
+Content-Language: en-US
+To:     neil.armstrong@linaro.org, Abel Vesa <abel.vesa@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v4 3/3] arm64: dts: qcom: msm8916-acer-a1-724: Add accelerometer/magnetometer
-Message-ID: <20221121133945.208263-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20221121133732.207820-1-linmengbo0689@protonmail.com>
-References: <20221121133732.207820-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221116103146.2556846-1-abel.vesa@linaro.org>
+ <20221116103146.2556846-4-abel.vesa@linaro.org>
+ <76560659-7c90-3846-c250-24bfb072ec0e@linaro.org>
+ <15ac1d06-5da7-ebd2-92ff-764c8df803a1@linaro.org>
+ <3a84d45c-6550-7ae2-2511-9f61d15894d1@linaro.org>
+ <081732c9-5e8e-b68e-c2bd-20724ca1a5d5@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <081732c9-5e8e-b68e-c2bd-20724ca1a5d5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Iconia Talk S uses a Bosch BMC150 accelerometer/magnetometer combo.
-The chip provides two separate I2C devices for the accelerometer
-and magnetometer that are already supported by the bmc150-accel
-and bmc150-magn driver.
+On 21/11/2022 14:29, neil.armstrong@linaro.org wrote:
+>>>> Any reason why this is licensed BSD-3 clause? It's not a recommended
+>>>> license (2 clause is). Same for other patches.
+>>>
+>>> Probably a bad copy-paste from other existing files.
+>>>
+>>> While checking, the majority of arch/arm64/boot/dts/qcom/pm*.dtsi uses BSD-3-Clause
+>>> so it seems this was done for quite a while now.
+>>
+>> If it is derivative work (of upstrea, downstream), then you might have
+>> to keep BSD-3. But if not, how about changing it to BSD-2?
+> 
+> It's definitely a derivative work from upstream pm*.dtsi files with BSD-3-Clause
+> licence.
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/msm8916-acer-a1-724.dts     | 38 +++++++++++++++++++
- 1 file changed, 38 insertions(+)
+OK.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/=
-boot/dts/qcom/msm8916-acer-a1-724.dts
-index 593051ea92b6..bea0d022dd9a 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-@@ -6,6 +6,7 @@
-=20
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-=20
- /*
-  * NOTE: The original firmware from Acer can only boot 32-bit kernels.
-@@ -51,6 +52,35 @@ usb_id: usb-id {
- =09};
- };
-=20
-+&blsp_i2c2 {
-+=09status =3D "okay";
-+
-+=09accelerometer@10 {
-+=09=09compatible =3D "bosch,bmc150_accel";
-+=09=09reg =3D <0x10>;
-+=09=09interrupt-parent =3D <&msmgpio>;
-+=09=09interrupts =3D <115 IRQ_TYPE_EDGE_RISING>;
-+
-+=09=09vdd-supply =3D <&pm8916_l17>;
-+=09=09vddio-supply =3D <&pm8916_l6>;
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&accel_int_default>;
-+
-+=09=09mount-matrix =3D "0", "-1", "0",
-+=09=09=09       "-1", "0", "0",
-+=09=09=09       "0", "0", "1";
-+=09};
-+
-+=09magnetometer@12 {
-+=09=09compatible =3D "bosch,bmc150_magn";
-+=09=09reg =3D <0x12>;
-+
-+=09=09vdd-supply =3D <&pm8916_l17>;
-+=09=09vddio-supply =3D <&pm8916_l6>;
-+=09};
-+};
-+
- &blsp1_uart2 {
- =09status =3D "okay";
- };
-@@ -199,6 +229,14 @@ l18 {
- };
-=20
- &msmgpio {
-+=09accel_int_default: accel-int-default-state {
-+=09=09pins =3D "gpio115";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107";
- =09=09function =3D "gpio";
---=20
-2.30.2
-
+Best regards,
+Krzysztof
 
