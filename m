@@ -2,69 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F962632DCE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 21:19:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFD09632E0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 21:38:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231923AbiKUUTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 15:19:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34786 "EHLO
+        id S230338AbiKUUia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 15:38:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbiKUUTP (ORCPT
+        with ESMTP id S230235AbiKUUi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 15:19:15 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0FEFCFE97;
-        Mon, 21 Nov 2022 12:19:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669061954; x=1700597954;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=lJjPPfqtwXDOZTz8w4nKeTkIpxh4baLgRuhX2/yvNOE=;
-  b=C386iROQu47t7+Iq/NVP1NVfQI+DRcY85+BuSs4xD0kl84zW9F336Efu
-   p1Ad+hmTawi67GSyobrCd4pPyR1vb1k8wllo/SGvdWbFDszlS+r847uxA
-   pc6J8YmZvON1tkz4HBFQqgf6NyYIbPZZsA7ZA+LFfnC6dy1gCWJH5mEug
-   k=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Nov 2022 12:19:14 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2022 12:19:13 -0800
+        Mon, 21 Nov 2022 15:38:28 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0C12B638;
+        Mon, 21 Nov 2022 12:38:27 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ALJwB53013099;
+        Mon, 21 Nov 2022 20:38:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2s7pXi2xUsgbOBd1b9tQo4sZBnUzWsGimUNCwDl4Zpk=;
+ b=CMBzv5WxP0ts7Aiw3eVevRMbmVBwu03PHXZ24mTxGjAnv7n+MALAkfudj/LZEHW8/Brr
+ iZXlmJVHfE9alXlIZqMqn7OFwYRTnTyr9mYAccgUN6eX0e7U1P/em//HPGEtgzSNaa6T
+ QrSN3TxfsBx2lccqiPG2O5C6CuWSiPtolJ3j574VNFAGMCTQB5hZ+l3OrQBENVOi6K+k
+ vnVDFxcImTH0SCSLLayAGFsda/0bHUXsya0qsKuAgyr2xl1QkoUJ/t7+Ww/K9Wux1Nc7
+ GY1QYZNajwk59TtMBm1vzgs5I47bBIzN8Obk3TUStFD4g0giaYJ150DcxO0/2J7vHfoF fQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxreanp27-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 20:38:24 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ALKcNwW021435
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 20:38:23 GMT
 Received: from [10.110.33.239] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 21 Nov
- 2022 12:19:12 -0800
-Message-ID: <bb5f2000-1e54-fc37-a596-0a3dafdbff57@quicinc.com>
-Date:   Mon, 21 Nov 2022 14:19:11 -0600
+ 2022 12:38:22 -0800
+Message-ID: <faf2d137-efab-93ab-f325-1fa507f166a7@quicinc.com>
+Date:   Mon, 21 Nov 2022 14:38:21 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v4 1/2] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
- clocks
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Michael Turquette" <mturquette@baylibre.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Taniya Das <quic_tdas@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221118181826.28269-1-quic_molvera@quicinc.com>
- <20221118181826.28269-2-quic_molvera@quicinc.com>
- <a5afd699-64a5-4034-88d2-95035e08c9c7@linaro.org>
+References: <20221118182039.29236-1-quic_molvera@quicinc.com>
+ <20221118182039.29236-2-quic_molvera@quicinc.com>
+ <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
 From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <a5afd699-64a5-4034-88d2-95035e08c9c7@linaro.org>
+In-Reply-To: <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VOVa4yK0u1eg-27HiKTjzsWHhre2rJWS
+X-Proofpoint-ORIG-GUID: VOVa4yK0u1eg-27HiKTjzsWHhre2rJWS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-21_16,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
+ phishscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211210155
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,118 +89,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/20/2022 5:06 AM, Krzysztof Kozlowski wrote:
-> On 18/11/2022 19:18, Melody Olvera wrote:
->> Add device tree bindings for global clock controller on QDU1000 and
->> QRU1000 SoCs.
+On 11/20/2022 4:58 AM, Krzysztof Kozlowski wrote:
+> On 18/11/2022 19:20, Melody Olvera wrote:
+>> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
 >>
 >> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >> ---
->>  .../bindings/clock/qcom,gcc-qdu1000.yaml      |  70 ++++++++
->>  include/dt-bindings/clock/qcom,gcc-qdu1000.h  | 170 ++++++++++++++++++
->>  2 files changed, 240 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
->>  create mode 100644 include/dt-bindings/clock/qcom,gcc-qdu1000.h
+>>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
+>>  1 file changed, 134 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
 >>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
 >> new file mode 100644
->> index 000000000000..90935a6795ee
+>> index 000000000000..cb0c496d8666
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
->> @@ -0,0 +1,70 @@
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>> @@ -0,0 +1,134 @@
 >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 >> +%YAML 1.2
 >> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,gcc-qdu1000.yaml#
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
 >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 >> +
->> +title: Qualcomm Global Clock & Reset Controller for QDU1000 and QRU1000
->> +
->> +allOf:
->> +  - $ref: qcom,gcc.yaml#
+>> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
 >> +
 >> +maintainers:
 >> +  - Melody Olvera <quic_molvera@quicinc.com>
 >> +
 >> +description: |
->> +  Qualcomm global clock control module which supports the clocks, resets and
->> +  power domains on QDU1000 and QRU1000
-> Keep the same style as existing files. They were cleaned up recently.
->
->> +
->> +  See also:
->> +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
-> Keep the same style, so missing '::', drop '- '.
+>> +  This Top Level Mode Multiplexer block (TLMM) is found in the QDU1000 and
+>> +  QRU1000 platforms.
+> It's better to keep consistent style which allows to do easy
+> search/replace, than to have new files using their own sentences. So
+> keep it the same as was unified in few recent commits.
 
-Got it.
+Ok... Just making sure that's what you want. Last PS you gave comments to change
+the wording of this description to remove "This binding describes..." as we've done
+in all the other qcom pinctrl/tlmm bindings. I can change the wording back to the
+original, just want to be clear here.
 
 >
+>> +allOf:
+>> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
 >> +
 >> +properties:
 >> +  compatible:
->> +    items:
->> +      - const: qcom,gcc-qdu1000
-> SM8550 is coming with proper style of compatible, so let's do the same
-> also here: qcom,qdu1000-gcc
-> (and file name matching it)
-
-Ok... this is fine if we're moving to a new style. sm8550 seems to have the file
-name wrong in last PS.
-
->
->
->> +      - const: syscon
-> I don't see usage of it as syscon. Which parts of GCC are needed for whom?
-
-I think I got this from another binding. We can remove.
-
->
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +      - description: Sleep clock source
->> +      - description: PCIE 0 Pipe clock source
->> +      - description: PCIE 0 Phy Auxiliary clock source
->> +      - description: USB3 Phy wrapper pipe clock source
->> +    minItems: 2
-> Same question as for SM8550 - why inputs are flexible? Either you have
-> these or you do not.
-
-Fair enough. We have these clocks so we can remove minItems.
-
->
->> +
->> +  '#clock-cells':
->> +    const: 1
->> +
->> +  '#reset-cells':
->> +    const: 1
->> +
->> +  '#power-domain-cells':
->> +    const: 1
-> Missing ref to gcc.yaml. Drop all properties provided by gcc.yaml.
-
-Got it.
-
->
+>> +    const: qcom,qdu1000-tlmm
 >> +
 >> +  reg:
 >> +    maxItems: 1
 >> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - '#clock-cells'
->> +  - '#reset-cells'
-> Drop these required by gcc.yaml.
+>> +  interrupts: true
+>> +  interrupt-controller: true
+>> +  "#interrupt-cells": true
+>> +  gpio-controller: true
+>> +
+>> +  gpio-reserved-ranges:
+>> +    minItems: 1
+>> +    maxItems: 75
+> Technically you can have up to 76 separate ranges (151 GPIOs).
 
-Ack.
+Fair enough. I can fix this.
 
 Thanks,
 Melody
 >
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >
 >
 > Best regards,
