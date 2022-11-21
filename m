@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5118663208E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0F36632094
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:29:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbiKUL3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 06:29:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57078 "EHLO
+        id S229951AbiKUL3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 06:29:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230395AbiKUL2c (ORCPT
+        with ESMTP id S229495AbiKUL3L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 06:28:32 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69239186E5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:22:54 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id l12so18317300lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:22:54 -0800 (PST)
+        Mon, 21 Nov 2022 06:29:11 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0BF5B948A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:23:55 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id r8so3545983ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:23:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=K36rHttUXqipmCdXq23O2OGPfeZt634/W4wWM3JG2Lk=;
-        b=mXt0M2zct1dnVh3lcPxi7UmGqsWD3dg/a8w+svjsbPEs9i88Wf1d3HwAKk/lCzqp2l
-         cvwW2YfXDGwyxeFNVfWqldpGFSRLuvdTzcicHU601RiMnWBxllSu9V3pnQbZ89YmVxJS
-         oQOh6FH8c7UpgnCtCHSnk+9tNWYeGkkLuq60FmxEGqJkPBY+V4McNvE69gWhqUvEAJuV
-         baoLsm37VkP+iHvukHQhH6vpVC5iGqV7jW4xkoHrMtLff/wCrn1cSdfL2nkEfAXxNx/F
-         skci3RtTZyvjuZIGKitBkybyxuf17kstjrR/ov/sLdbJbZpuz5fmevbp0iIr0oVp8Lmf
-         N18Q==
+        bh=d1hGOwFF0QOaziSceA+/kHlNJfHPDOB+lxzerxjy37o=;
+        b=YJggKpNFJMfD36AY7M96yLXiFYjsPS9oSWYw5ibweyqMc6ggvkWBDLZjKQ83ZQMMVP
+         +eskohJ9QvWrIxPl1/JTg7qU78bDg7VUHkWZXh8UE3odnBpAOS02WupeYx1uWwIOCpHD
+         Pa71ENGsyNFTJ+4Z5vm92AMNQo2pqk7Ob5oVcL18SoSCI/LoUfuzUgYWvp454xiWLTkH
+         V9LN9tDVb1tDGTvpOPD8loXSx3hZ5OadJM3qf9dOcQ8U8wSAN9r3B6F6HfOm8AugbOOI
+         7tjJV3S2SWa6T8owV7VDSedJt1H1gIkEAHvcD0psTRcawWZT1PmD9SqZPFXZq/CwGL6K
+         9FgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K36rHttUXqipmCdXq23O2OGPfeZt634/W4wWM3JG2Lk=;
-        b=VIl4SB/VVJBy4SKVt841gbLVtTXAQsy7ISsKYgmZ+IyRwvuiNp9PgEXoDUrmOip6jx
-         JJT0t6EdAsoSC9kaS9C3Aj2aGY+G6UWx8lF5Ssg5R640GoovD5ooTIVMGbK0ING3Ma7B
-         GhQE1kaps4mgOvFbY1eVgSnyni3f3ZeZW6nqyqfV7xtfC0jHVgtXBuLmh/6QneD4KAf8
-         j1t1IJ3HqhFEnQLYHwcegDwZgvJhZEGJFHU+HuAQp5YVaUL/ZLK3q4p84q2RcM3B6Kuw
-         GFuvylY5+9ig6L0nH6Ln1nki1XfyhfAeSgbkfY41SsRNNPYRSkbElM92z/ZMWjAeiuHo
-         bfBw==
-X-Gm-Message-State: ANoB5pkRYqKgIs1kCYqsS/ewv8IG+WY/FOvcXeE9v6qo2AhiywDN/tXo
-        2KsW/XkNGQFDYHVF8zMKzC5NJA==
-X-Google-Smtp-Source: AA0mqf61tQmfKjVq8RvAAStA86Nq8poqfJTtaBWzYwXodyJF0I7qJtagWsotr2qvZR3relWeiewZ8w==
-X-Received: by 2002:a05:6512:3d8c:b0:497:a160:ed29 with SMTP id k12-20020a0565123d8c00b00497a160ed29mr5431720lfv.423.1669029772854;
-        Mon, 21 Nov 2022 03:22:52 -0800 (PST)
+        bh=d1hGOwFF0QOaziSceA+/kHlNJfHPDOB+lxzerxjy37o=;
+        b=wciIiOCaNLRZz/7SUFSwzOBvruu3Nu4Hw7kipBSBeTrdJqg+4XKJHFGC2OVeiQcSV3
+         PzfzyYGN5CPeZ77fYdcrh9aU1EfvoCNKxdvv2Il/bipJ5Uro2EBlmHACuJ9V9DPtoSEf
+         GMXsRsYVfvritrJCpcjYOvDjDFyKuHB1JU7P8twOmknob9kEQKO/kP8Umg0O927vDqIc
+         CEpTQEm3o1CO/YY+qfHHjpCtNVpRG5BAk+YQJbXII2eaAInLx+zxYngaXAJqZ61/4l6D
+         Lv/lybdO2t8tQG3F0rjdRkMtpgu5cdCFVDvkKNU28XXaMyM/ZeIwuSfl/jPWklloX28G
+         ObaQ==
+X-Gm-Message-State: ANoB5pmeEVaUJlzT7qKFUgtHGY9bZhO30Bjix4tkZrS5zLi1ImfI/wkH
+        ROor2Tc2U6ivaZeoaH1Ca5F6PQ==
+X-Google-Smtp-Source: AA0mqf5Gy6Om8GCoWWSM+y5Gu90BLj8vZ4RsuzPdzhzC3Pz48PdN39Vc+SL0UNZKWidA5ntFxgVyNw==
+X-Received: by 2002:a2e:3807:0:b0:277:b3a:43dc with SMTP id f7-20020a2e3807000000b002770b3a43dcmr5051173lja.411.1669029834066;
+        Mon, 21 Nov 2022 03:23:54 -0800 (PST)
 Received: from [192.168.1.101] (95.49.32.48.neoplus.adsl.tpnet.pl. [95.49.32.48])
-        by smtp.gmail.com with ESMTPSA id u24-20020a2e9b18000000b002637c04b472sm1439005lji.83.2022.11.21.03.22.51
+        by smtp.gmail.com with ESMTPSA id k8-20020a05651210c800b0048a982ad0a8sm1980583lfg.23.2022.11.21.03.23.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 03:22:52 -0800 (PST)
-Message-ID: <ca7f36e2-e53e-db2b-bb0b-28de649bcb70@linaro.org>
-Date:   Mon, 21 Nov 2022 12:22:50 +0100
+        Mon, 21 Nov 2022 03:23:53 -0800 (PST)
+Message-ID: <729600fb-e2e6-5ae8-514b-2847501b1c14@linaro.org>
+Date:   Mon, 21 Nov 2022 12:23:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add initial
- device tree
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add
+ touchscreen
 Content-Language: en-US
 To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
         linux-kernel@vger.kernel.org
@@ -72,15 +72,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
 References: <20221119202316.93142-1-linmengbo0689@protonmail.com>
- <20221119202639.93559-1-linmengbo0689@protonmail.com>
+ <20221119202649.93613-1-linmengbo0689@protonmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221119202639.93559-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20221119202649.93613-1-linmengbo0689@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,289 +89,81 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 19.11.2022 21:27, Lin, Meng-Bo wrote:
-> GPLUS FL8005A is a tablet using the MSM8916 SoC released in 2015.
-> 
-> Add a device tree for with initial support for:
-> 
-> - GPIO keys
-> - GPIO LEDs
-> - pm8916-vibrator
-> - SDHCI (internal and external storage)
-> - USB Device Mode
-> - UART
-> - WCNSS (WiFi/BT)
-> - Regulators
+> FL8005A uses a Focaltech FT5402 touchscreen that is connected to
+> blsp_i2c5. Add it to the device tree.
 > 
 > Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/msm8916-gplus-fl8005a.dts   | 239 ++++++++++++++++++
->  2 files changed, 240 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+>  .../boot/dts/qcom/msm8916-gplus-fl8005a.dts   | 44 +++++++++++++++++++
+>  1 file changed, 44 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index afe496a93f94..5a2dcf726159 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -9,6 +9,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-gplus-fl8005a.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-huawei-g7.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
 > diff --git a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
-> new file mode 100644
-> index 000000000000..bed1fe984287
-> --- /dev/null
+> index bed1fe984287..cc81880f7c42 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
 > +++ b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
-> @@ -0,0 +1,239 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
+> @@ -65,6 +65,32 @@ usb_id: usb-id {
+>  	};
+>  };
+>  
+> +&blsp_i2c5 {
+> +	status = "okay";
 > +
-> +/dts-v1/;
+> +	touchscreen@38 {
+> +		/* Actually ft5402 */
+> +		compatible = "edt,edt-ft5406";
+> +		reg = <0x38>;
 > +
-> +#include "msm8916-pm8916.dtsi"
+> +		interrupt-parent = <&msmgpio>;
+> +		interrupts = <13 IRQ_TYPE_EDGE_FALLING>;
 > +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/leds/common.h>
+> +		reset-gpios = <&msmgpio 12 GPIO_ACTIVE_LOW>;
 > +
-> +/ {
-> +	model = "GPLUS FL8005A";
-> +	compatible = "gplus,fl8005a", "qcom,msm8916";
-> +	chassis-type = "tablet";
+> +		vcc-supply = <&pm8916_l17>;
+> +		iovcc-supply = <&pm8916_l6>;
 > +
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
+> +		touchscreen-size-x = <800>;
+> +		touchscreen-size-y = <500>;
+> +		touchscreen-inverted-x;
+> +		touchscreen-swapped-x-y;
 > +
 > +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +
-> +		label = "GPIO Buttons";
-> +
-> +		button-volume-up {
-> +			label = "Volume Up";
-> +			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +		};
+> +		pinctrl-0 = <&touchscreen_default>;
 > +	};
+> +};
 > +
-> +	gpio-leds {
-> +		compatible = "gpio-leds";
+>  &blsp1_uart2 {
+>  	status = "okay";
+>  };
+> @@ -229,6 +255,24 @@ gpio_leds_default: gpio-led-default-state {
+>  		bias-disable;
+>  	};
+>  
+> +	touchscreen_default: touchscreen-default-state {
+> +		touchscreen-pins {
+> +			pins = "gpio13";
+> +			function = "gpio";
 > +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +
-> +		led-red {
-> +			function = LED_FUNCTION_CHARGING;
-> +			color = <LED_COLOR_ID_RED>;
-> +			gpios = <&msmgpio 117 GPIO_ACTIVE_HIGH>;
-> +			retain-state-suspended;
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
 > +
-> +		led-green {
-> +			function = LED_FUNCTION_CHARGING;
-> +			color = <LED_COLOR_ID_GREEN>;
-> +			gpios = <&msmgpio 118 GPIO_ACTIVE_HIGH>;
-> +			retain-state-suspended;
+> +		reset-pins {
+> +			pins = "gpio12";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			bias-disable;
 > +		};
-> +	};
-> +
-> +	usb_id: usb-id {
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb_id_default>;
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&pm8916_resin {
-> +	status = "okay";
-> +	linux,code = <KEY_VOLUMEDOWN>;
-Status should go last, everywhere.
+These subnodes are not sorted in any way, neither alphabetically nor
+GPIO-no wise. Please swap them.
 
-> +};
-> +
-> +&pm8916_vib {
-> +	status = "okay";
-> +};
-> +
-> +&pronto {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
-> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
-> +};
-> +
-> +&sdhc_2 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
-> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
-> +
-> +	cd-gpios = <&msmgpio 38 GPIO_ACTIVE_LOW>;
-> +};
-> +
-> +&usb {
-> +	status = "okay";
-> +	extcon = <&usb_id>, <&usb_id>;
-> +};
-> +
-> +&usb_hs_phy {
-> +	extcon = <&usb_id>;
-> +};
-These two usb properties are not sorted properly.
+With that:
 
-> +
-> +&smd_rpm_regulators {
-> +	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-> +	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-> +	vdd_l7-supply = <&pm8916_s4>;
-> +
-> +	s3 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1300000>;
-> +	};
-> +
-> +	s4 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2100000>;
-> +	};
-> +
-> +	l1 {
-> +		regulator-min-microvolt = <1225000>;
-> +		regulator-max-microvolt = <1225000>;
-> +	};
-> +
-> +	l2 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +	};
-> +
-> +	l4 {
-> +		regulator-min-microvolt = <2050000>;
-> +		regulator-max-microvolt = <2050000>;
-> +	};
-> +
-> +	l5 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l6 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l7 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l8 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2900000>;
-> +	};
-> +
-> +	l9 {
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l10 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2800000>;
-> +	};
-> +
-> +	l11 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +		regulator-allow-set-load;
-> +		regulator-system-load = <200000>;
-Please swap the two properties.
-
-Other than that, LGTM
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 > +	};
 > +
-> +	l12 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +	};
-> +
-> +	l13 {
-> +		regulator-min-microvolt = <3075000>;
-> +		regulator-max-microvolt = <3075000>;
-> +	};
-> +
-> +	l14 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l15 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l16 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l17 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +	};
-> +
-> +	l18 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2700000>;
-> +	};
-> +};
-> +
-> +&msmgpio {
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio107";
-> +		function = "gpio";
-> +
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_leds_default: gpio-led-default-state {
-> +		pins = "gpio117", "gpio118";
-> +		function = "gpio";
-> +
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	usb_id_default: usb-id-default-state {
-> +		pins = "gpio110";
-> +		function = "gpio";
-> +
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +};
+>  	usb_id_default: usb-id-default-state {
+>  		pins = "gpio110";
+>  		function = "gpio";
