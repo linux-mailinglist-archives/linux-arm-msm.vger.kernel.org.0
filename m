@@ -2,256 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 480906320CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:37:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E83566320FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:44:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231331AbiKULhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 06:37:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33722 "EHLO
+        id S230253AbiKULor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 06:44:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231546AbiKULhV (ORCPT
+        with ESMTP id S231345AbiKULoi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 06:37:21 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C884D5C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:34:51 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id g12so19371840wrs.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:34:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s7KJL1UHEfqYYcbaMMu5gVL2ZdsXqxCdHp8dhaDUxAc=;
-        b=Y+Ao8Ssl/PgYRjHvOexJPzfy7W1t0Em4oDTazRT3OlL48rQbCyyXL4XV9iCYWsmAWS
-         g6+Ror+18d/G4guu7r4mL85Ns1V0e/3tepmyBgdmbY1sw4vZ+AMi8MP7k7df5mVmTIm4
-         E5iGtMfBpAPRXlFmQ+vXgQW2x25ZjYOk8s7XN/37Ta8nAz3bE1UnerJckAncdOekVGp9
-         RLt51wg3RDsR7wxYPgTOEgVwmu7FHINeX0080MXpkBhVF4+T7Qij7FbHPx+26iG2sBxM
-         C5KdS3pWdM/JHLGY4XNNU5lk9AL+ZvoFo429Jwk6ay6cZ6zu52S0pWKyQgxOQ7EnvZFW
-         y3Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s7KJL1UHEfqYYcbaMMu5gVL2ZdsXqxCdHp8dhaDUxAc=;
-        b=bq3DfJnKHCiBno9Snl+XZCqwGD13VF4+eR35rA1Ya7pdJrF/DoxL4JaxE/tOnMOPQm
-         xVswnVpxXoYKSKnnAYS72JYWZICboO50eUp+kUP72sYNCrJ1GfYWqLGOtvibrQErzB/5
-         iwXEDRnykWYtNTvkXAHsf+Toqf8SmhqPTd7LJvP+QkMDI+zfLoxmKBO7YNCSWjxOwsBO
-         URB59BTul9myV+iNssOPS3qnkkWOgu+bbAKdeCoTNvQpVYm994qRyhX9AtwFhU9cK20R
-         8KEnqkUiCYUivOinVK1UHZaNPz7qYwrQJScOuvO/Si68UhL4UCos4XiG1Jj4qjlN+xhY
-         XPWg==
-X-Gm-Message-State: ANoB5pkjn+3o4y6yUqPXRQcj/J40ysrHSgEpX02nwjSDuqdEB7ssw/lU
-        Jd8dVK5ZUFfqIMYAhawbg0sHjg==
-X-Google-Smtp-Source: AA0mqf6nLw/yNkmhj/joOo1kj7Xm2ofODX+FtF3VAPGcV8PO8nDaG2OLEHLL0Bz8ZeELKKo505+xBw==
-X-Received: by 2002:adf:b606:0:b0:22e:2efe:3176 with SMTP id f6-20020adfb606000000b0022e2efe3176mr10610673wre.241.1669030489607;
-        Mon, 21 Nov 2022 03:34:49 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id i3-20020adffc03000000b00241b2b23cd5sm13201902wrr.54.2022.11.21.03.34.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 03:34:49 -0800 (PST)
-Message-ID: <005c42c1-226b-093d-c6f2-b3c850d31177@linaro.org>
-Date:   Mon, 21 Nov 2022 11:34:48 +0000
+        Mon, 21 Nov 2022 06:44:38 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99D481024;
+        Mon, 21 Nov 2022 03:44:37 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C33F01FB;
+        Mon, 21 Nov 2022 03:44:43 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 03D9A3F587;
+        Mon, 21 Nov 2022 03:44:34 -0800 (PST)
+Message-ID: <6ad8d02b-6dc5-6c25-c798-1270af655d41@arm.com>
+Date:   Mon, 21 Nov 2022 11:44:33 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc8280xp: Add soundcard support
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v1 1/9] dt-bindings: arm: Add support for DSB element
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221119164425.86014-1-srinivas.kandagatla@linaro.org>
- <20221119164425.86014-4-srinivas.kandagatla@linaro.org>
- <Y3swkpNTE2EaNqDq@hovoldconsulting.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <Y3swkpNTE2EaNqDq@hovoldconsulting.com>
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1669018873-4718-1-git-send-email-quic_taozha@quicinc.com>
+ <1669018873-4718-2-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1669018873-4718-2-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Johan,
+On 21/11/2022 08:21, Tao Zhang wrote:
+> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
+> Bit) element for TPDA. Specifies the DSB element size supported
+> by each monitor connected to the aggregator on each port. Should
+> be specified in pairs (port, dsb element size).
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> index c46ddea..e3b58b5 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> @@ -58,6 +58,13 @@ properties:
+>       minItems: 1
+>       maxItems: 2
+>   
+> +  qcom,dsb-elem-size:
 
-On 21/11/2022 08:02, Johan Hovold wrote:
-> On Sat, Nov 19, 2022 at 04:44:25PM +0000, Srinivas Kandagatla wrote:
->> Add support for SoundCard on X13s. This patch adds support for Headset
->> Playback, record and 2 DMICs on the Panel along with the regulators
->> required for powering up the LPASS codecs.
-> 
-> Subject prefix should include "x13s":
-> 
-> 	arm64: dts: qcom: sc8280xp-x13s: ...
-> 
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 217 ++++++++++++++++++
->>   1 file changed, 217 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->> index b2b744bb8a53..f1f93fc4fa2d 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> 
->> @@ -346,6 +378,163 @@ edp_bl_pwm: edp-bl-pwm-state {
->>   	};
->>   };
->>   
->> +&soc {
->> +	wcd938x: codec {
->> +		compatible = "qcom,wcd9380-codec";
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&wcd_default>;
->> +		reset-gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
->> +		#sound-dai-cells = <1>;
->> +
->> +		vdd-buck-supply = <&vreg_s10b>;
->> +		vdd-rxtx-supply = <&vreg_s10b>;
->> +		vdd-io-supply = <&vreg_s10b>;
->> +		vdd-mic-bias-supply = <&vreg_bob>;
->> +		qcom,micbias1-microvolt = <1800000>;
->> +		qcom,micbias2-microvolt = <1800000>;
->> +		qcom,micbias3-microvolt = <1800000>;
->> +		qcom,micbias4-microvolt = <1800000>;
->> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
->> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
->> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->> +		qcom,rx-device = <&wcd_rx>;
->> +		qcom,tx-device = <&wcd_tx>;
->> +	};
->> +};
-> 
-> Please move all the sound nodes above the "/* PINCTRL */" marker and try
-> to maintain the sort order (by node name).
+minor nit: Couldn't this be qcom,dsb-element-size ? Its not too long 
+from what we have and is more meaningful.
 
-Yes, I did miss this indeed, its now fixed in v3.
+Otherwise,
 
-Will send v3 along with other fixes.
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 
---srini
-> 
->> +
->> +&sound {
-> 
-> ...
-> 
->> +};
->> +
->> +&swr0 {
->> +	left_spkr: wsa8830-left@0,1 {
->> +		compatible = "sdw10217020200";
->> +		reg = <0 1>;
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&spkr_1_sd_n_default>;
->> +		powerdown-gpios = <&tlmm 178 GPIO_ACTIVE_LOW>;
->> +		#thermal-sensor-cells = <0>;
->> +		sound-name-prefix = "SpkrLeft";
->> +		#sound-dai-cells = <0>;
->> +		vdd-supply = <&vreg_s10b>;
->> +	};
->> +
->> +	right_spkr: wsa8830-right@0,2{
->> +		compatible = "sdw10217020200";
->> +		reg = <0 2>;
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&spkr_2_sd_n_default>;
->> +		powerdown-gpios = <&tlmm 179 GPIO_ACTIVE_LOW>;
->> +		#thermal-sensor-cells = <0>;
->> +		sound-name-prefix = "SpkrRight";
->> +		#sound-dai-cells = <0>;
->> +		vdd-supply = <&vreg_s10b>;
->> +	};
->> +};
->> +
->> +
-> 
-> Stray newline.
-> 
->> +&swr1 {
->> +	status = "okay";
->> +
->> +	wcd_rx: wcd9380-rx@0,4 {
->> +		compatible = "sdw20217010d00";
->> +		reg = <0 4>;
->> +		qcom,rx-port-mapping = <1 2 3 4 5 6>;
->> +
-> 
-> Stray newline.
-> 
->> +	};
->> +};
->> +
->> +&swr2 {
->> +	status = "okay";
->> +
->> +	wcd_tx: wcd9380-tx@0,3 {
->> +		compatible = "sdw20217010d00";
->> +		reg = <0 3>;
->> +		qcom,tx-port-mapping = <1 1 2 3>;
->> +	};
->> +};
->> +
->> +&vamacro {
->> +	pinctrl-0 = <&dmic01_default>, <&dmic02_default>;
->> +	pinctrl-names = "default";
->> +	vdd-micb-supply = <&vreg_s10b>;
->> +	qcom,dmic-sample-rate = <600000>;
->> +};
->> +
->>   &tlmm {
->>   	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->>   
->> @@ -369,6 +558,14 @@ reset {
->>   		};
->>   	};
->>   
->> +	wcd_default: wcd-default-state {
->> +		reset-pins {
->> +			pins = "gpio106";
->> +			function = "gpio";
->> +			bias-disable;
->> +		};
->> +	};
->> +
-> 
-> Please try to keep the nodes sorted by name (i.e. move it last).
-> 
->>   	qup0_i2c4_default: qup0-i2c4-default-state {
->>   		pins = "gpio171", "gpio172";
->>   		function = "qup4";
->> @@ -383,6 +580,26 @@ qup2_i2c5_default: qup2-i2c5-default-state {
->>   		drive-strength = <16>;
->>   	};
->>   
->> +	spkr_1_sd_n_default: spkr-1-sd-n-default-state {
->> +		perst-n-pins {
->> +			pins = "gpio178";
->> +			function = "gpio";
->> +			drive-strength = <16>;
->> +			bias-disable;
->> +			output-high;
->> +		};
->> +	};
->> +
->> +	spkr_2_sd_n_default: spkr-2-sd-n-default-state {
->> +		perst-n-pins {
->> +			pins = "gpio179";
->> +			function = "gpio";
->> +			drive-strength = <16>;
->> +			bias-disable;
->> +			output-high;
->> +		};
->> +	};
->> +
->>   	tpad_default: tpad-default-state {
->>   		int-n {
->>   			pins = "gpio182";
-> 
-> Johan
+> +    description: |
+> +      Specifies the DSB element size supported by each monitor
+> +      connected to the aggregator on each port. Should be specified
+> +      in pairs (port, dsb element size).
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +
+>     clocks:
+>       maxItems: 1
+>   
+> @@ -100,6 +107,8 @@ examples:
+>          compatible = "qcom,coresight-tpda", "arm,primecell";
+>          reg = <0x6004000 0x1000>;
+>   
+> +       qcom,dsb-elem-size = <0 32>;
+> +
+>          clocks = <&aoss_qmp>;
+>          clock-names = "apb_pclk";
+>   
+
