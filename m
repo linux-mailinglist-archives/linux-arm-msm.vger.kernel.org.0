@@ -2,122 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0754631BA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:38:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF92B631BF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:52:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbiKUIiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 03:38:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34014 "EHLO
+        id S229951AbiKUIwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 03:52:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbiKUIiI (ORCPT
+        with ESMTP id S230202AbiKUIwD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 03:38:08 -0500
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23701D336;
-        Mon, 21 Nov 2022 00:38:05 -0800 (PST)
-Received: by mail-qk1-f175.google.com with SMTP id z17so7536025qki.11;
-        Mon, 21 Nov 2022 00:38:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=majJ1avGrA5sKHgff1+tjzzyZx4Q8F2N6bTI30UoVN0=;
-        b=XYtG3qcXZlf52gle7v15TTQkORhvT49sba3oM7PqdMTxAKDHBjfdF1pljGp/7X1gnS
-         xjGAet8iSokRhVpc2ofwrYWcPTGQeGBid6PFyiAUTUoBtSjbnJuRKNsBj7Ss/iaSOQrf
-         dfTwjabUpY/bcLe0pbr/J9LqtVmKHzW6RFzfgw29ZDmqfF+BZ5ev4EcLStk+zpot8jYU
-         5V/MTRlqcwvLu7kduSo9EkSz+8OvDzBzk5MeMo3HWuxbi18FCa+MJ/PM58UrjBdmiyX2
-         YUKMYA3qCaWEwdpa2NcmhDwJNfdyhyhlmIMsz7VC3zITWwx91En5TE/hT8iwkAUVq8qK
-         hNKw==
-X-Gm-Message-State: ANoB5pkkyMAWWQby9+ws2v6gKkhCq0xfy7ksRLDzTdlM/ksbkm1M1rzf
-        we6Lr5O/g9g3WmExoZKeAxxgPW9ZX0Qa0A==
-X-Google-Smtp-Source: AA0mqf42m6RtQH9n3FrT6ck1TJ8JYf+DL91aVh89zndnYg5xcI3fw3Cqh+f19rdsFfPeepAOEMNnfw==
-X-Received: by 2002:a05:620a:150c:b0:6f8:aafe:27e7 with SMTP id i12-20020a05620a150c00b006f8aafe27e7mr15094781qkk.590.1669019884806;
-        Mon, 21 Nov 2022 00:38:04 -0800 (PST)
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
-        by smtp.gmail.com with ESMTPSA id v18-20020a05620a0f1200b006fa32a26433sm7838132qkl.38.2022.11.21.00.38.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 00:38:03 -0800 (PST)
-Received: by mail-yb1-f169.google.com with SMTP id k84so12771887ybk.3;
-        Mon, 21 Nov 2022 00:38:02 -0800 (PST)
-X-Received: by 2002:a5b:24b:0:b0:6ca:3b11:8d76 with SMTP id
- g11-20020a5b024b000000b006ca3b118d76mr16184146ybp.202.1669019882500; Mon, 21
- Nov 2022 00:38:02 -0800 (PST)
-MIME-Version: 1.0
-References: <20221118223728.1721589-1-robh@kernel.org>
-In-Reply-To: <20221118223728.1721589-1-robh@kernel.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Mon, 21 Nov 2022 09:37:51 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXevKD5uq9k+gWygy0rZ_AVjxBW1vrE_Gzzu8=mJu1vjQ@mail.gmail.com>
-Message-ID: <CAMuHMdXevKD5uq9k+gWygy0rZ_AVjxBW1vrE_Gzzu8=mJu1vjQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Add missing start and/or end of line regex anchors
-To:     Rob Herring <robh@kernel.org>
-Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Mon, 21 Nov 2022 03:52:03 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5175C7FF23;
+        Mon, 21 Nov 2022 00:51:57 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EBB58B80D5C;
+        Mon, 21 Nov 2022 08:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAD7C43145;
+        Mon, 21 Nov 2022 08:51:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669020714;
+        bh=0/FEbAx1GFTzClwrya9NO6G7aq+zFSmoJtaI7TVM8P4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=l2b+nQa9h0fZOMYnjcesQxnSVrSglrMo5ieYBrmWlCEj6v+hgw4yaXo8IUrYeErMU
+         lWaFMOY2DDRV+XC+9X/DxbLcvcqQR+H0uKNLuQQGi8Xbp+c3kvoTQVpo7ww7gHT3Uk
+         5xLY1WyJpzcotx/RfJi5B6FFrwORJzz7JwzxdmShx/9uXHcUxPKSY6eu8POPaPEkP3
+         PYlO8l05UZ+U/qhV24tJncq+/fSedRWqrRD+m0MUkab2xL5i1nt0KWdF0ashaAFnr/
+         vB/oHFPI0L9T3bC0bmQFD25qjYxk+uHwh/Es2/8x04DhV0nKDiJHszhscOq96P8iVf
+         gHW0bqxffLnAg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1ox2WS-00088D-CY; Mon, 21 Nov 2022 09:51:24 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Yangtao Li <tiny.windzz@gmail.com>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Ryder Lee <ryder.lee@mediatek.com>,
-        Jianjun Wang <jianjun.wang@mediatek.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Marek Vasut <marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Javier Martinez Canillas <javier@dowhile0.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Daniel Mack <zonque@gmail.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-pci@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-spi@vger.kernel.org, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v3 00/15] phy: qcom-qmp-combo: fix sc8280xp binding (set 3/3)
+Date:   Mon, 21 Nov 2022 09:50:43 +0100
+Message-Id: <20221121085058.31213-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.4
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 11:43 PM Rob Herring <robh@kernel.org> wrote:
-> json-schema patterns by default will match anywhere in a string, so
-> typically we want at least the start or end anchored. Fix the obvious
-> cases where the anchors were forgotten.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
+This series fixes the USB-DP PHY devicetree binding for SC8280XP and
+adds support for the new updated binding to the driver.
 
->  .../devicetree/bindings/pci/renesas,pci-rcar-gen2.yaml        | 2 +-
->  Documentation/devicetree/bindings/sound/renesas,rsnd.yaml     | 2 +-
+As the full series including the preparatory parts is over forty patches
+and I've been posting this in three parts of which this is the last one.
+In an effort to get all of these into 6.2, I've also submitted all three
+series before waiting for the previous ones to be applied. Parts one and
+two can be found here:
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+  https://lore.kernel.org/lkml/20221114081346.5116-1-johan+linaro@kernel.org/
+  https://lore.kernel.org/lkml/20221114110621.4639-1-johan+linaro@kernel.org/
 
-Gr{oetje,eeting}s,
+This last series adds a new binding for SC8280XP that drops the legacy
+child node and the (incomplete) description of register subregions.
 
-                        Geert
+As the current bindings are both incomplete and incorrect it may be
+a good idea to update also the other platforms currently supported by
+this driver to the new binding scheme. The driver can support both
+schemes during a transition period before removing the corresponding
+code (dt parsing and clock-provider registration).
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+Johan
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
+Changes in v3
+ - make new QMP header dual licensed (Rob)
+
+Changes in v2:
+ - drop quotes from old DT schema $id and $schema (Krzysztof)
+ - drop clock-output-names from new binding (Krzysztof)
+ - add QMP clock and PHY index constants in a new header
+ - drop patch moving clock registration before runtime PM enable (Dmitry)
+ - include also the corresponding dts changes
+
+
+Johan Hovold (15):
+  dt-bindings: phy: qcom,qmp-usb3-dp: rename current bindings
+  dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp binding
+  phy: qcom-qmp-combo: drop v4 reference-clock source
+  phy: qcom-qmp-combo: restructure PHY creation
+  phy: qcom-qmp-combo: generate pipe clock name
+  phy: qcom-qmp-combo: drop redundant clock structure
+  phy: qcom-qmp-combo: drop redundant clock allocation
+  phy: qcom-qmp-combo: add clock registration helper
+  phy: qcom-qmp-combo: separate clock and provider registration
+  phy: qcom-qmp-combo: clean up DP clock callbacks
+  phy: qcom-qmp-combo: rename common-register pointers
+  phy: qcom-qmp-combo: rename DP_PHY register pointer
+  phy: qcom-qmp-combo: add support for updated sc8280xp binding
+  arm64: dts: qcom: sc8280xp: fix primary USB-DP PHY reset
+  arm64: dts: qcom: sc8280xp: fix USB-DP PHY nodes
+
+ ....yaml => qcom,sc7180-qmp-usb3-dp-phy.yaml} |  25 +-
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  99 ++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  79 +--
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 530 +++++++++++-------
+ include/dt-bindings/phy/phy-qcom-qmp.h        |  20 +
+ 5 files changed, 473 insertions(+), 280 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{qcom,qmp-usb3-dp-phy.yaml => qcom,sc7180-qmp-usb3-dp-phy.yaml} (91%)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+ create mode 100644 include/dt-bindings/phy/phy-qcom-qmp.h
+
+-- 
+2.37.4
+
