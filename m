@@ -2,115 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 746A2631A91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:48:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9DEA631AB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 08:54:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbiKUHsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 02:48:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57866 "EHLO
+        id S229853AbiKUHyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 02:54:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiKUHsN (ORCPT
+        with ESMTP id S229996AbiKUHyU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 02:48:13 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CD431DCA
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:48:13 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id q1so10402996pgl.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:48:13 -0800 (PST)
+        Mon, 21 Nov 2022 02:54:20 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 366616C705
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:06 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id ft34so26463332ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Nov 2022 23:54:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IACc2gkcOz5V66qY6IE0pXOutouS3CLvlPRM7bFD3Fs=;
-        b=jiMU/+ADUNU95PVFy5dZLAzE6RJp/GSzuaToJOl3NL37TEC1ZWJJow2LIBAdf/6TrB
-         B6FmmdipjU6XKXOcDU8R0I4uTNu2IkdPqEhunYLKHw2w7dVLWFr+jvF0U1s2uLYlHUM3
-         MVV7Si07nlH6VaYYIsU+7+WfGfFc5P0MMAfQtPGbEzbxI3lBeMasQ04fi4A621Z6FFoT
-         me1fGQF2X2kscfSowpC1WW+oe5LqlJ5/G4MvNBVUZzaS585SDq+HKnKJrPw+GbtrHihX
-         oBf++bdZ6Qa65UseTIqKKAMxEi5hfNirQ/HEFVaL1zUIqXXkvA/bKqQfNRRLKsO1eM4x
-         f82Q==
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GT9ErDbClBtlo66hqT2klzySCTqQIgR/TIVfNl1Gg+Y=;
+        b=O8QBYlAGTTApUL6TLXRC+RdaXgjr6tjZq/PDzzK6ry8Y4u+YJOmeMB5Bn7NTt1qSBi
+         Fukr5kVtdZ4oP8jT3o5Y4ig2M23vgoSWxqsEKX17jKqWA1nakj+jDvHCYj3zVMtgXt4L
+         6w3BeLQUjC/HSQg6TnRYqaWM1WO8NI8d0YViYJ+vy0UvKzyKtMySsWpp99tt08PwS7Vh
+         0/xED8W60TuQkxU12/G2BNND3IPn28OjtYxeXPDUHtbs4zYNN81rhzun5rLMy8kSU1GK
+         QygY7zjiZdOTBVHWAttgYDOf2YlF1/SdqxTmuvWrr2LRwf4fhLC8LAIsuE8j8fh1D7Fu
+         RzQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IACc2gkcOz5V66qY6IE0pXOutouS3CLvlPRM7bFD3Fs=;
-        b=SVuPgReeZ5PzKb0a4kPa1cNryqdgqnQNeohgVwUJMTsAlHMWohuT+akgKz4oqosWTU
-         ZoO86o2cUXtMGHkTftXksW1ZHRHOrox0j7bUDlGl8cAmMH0Oga9y68Jtq+SzM0/2JaMT
-         Fhu/VI2GRqDnQJ/+yrOty6ZrBKOJrr+2do/tW0j65khzZXed0BZTO/DLiSCBEeCe7DOW
-         wc+BxpuENm7baelIla9irMSRK2BjrQt9OYjN57I6zrlPMqHjE/j09g2uC3y5OUXzZjsf
-         L9/bQOXa4iS4zb7aZLmABcLmykGcyVF9EiiZu0hHMYvJ3wemzoIYPyQDsZuqf7Ji8b9/
-         0J2g==
-X-Gm-Message-State: ANoB5pmOF8QLP2sQrQvZ4Dw0YLLBOLm0L3gD+I5rc+3opUTeww6ccib8
-        a8jVAzz3awSVyszb4PqAj0XF4g==
-X-Google-Smtp-Source: AA0mqf57/6MzTK8YP0wv6rPUYELOh2yI5mYTfv3pzQm6Mysb0UxKQIfTqS0N4qR6rVHFCCO2+JfZwQ==
-X-Received: by 2002:a63:4543:0:b0:46f:3dfb:8fb3 with SMTP id u3-20020a634543000000b0046f3dfb8fb3mr16528480pgk.121.1669016892545;
-        Sun, 20 Nov 2022 23:48:12 -0800 (PST)
-Received: from localhost ([122.172.85.60])
-        by smtp.gmail.com with ESMTPSA id 139-20020a621591000000b0057210dc5f23sm7918038pfv.218.2022.11.20.23.48.11
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GT9ErDbClBtlo66hqT2klzySCTqQIgR/TIVfNl1Gg+Y=;
+        b=sDsymlz8JngrQc6aK8UImllhp6vJDJQ5rsGbKVZDJSJRq8+e7mqAFL/cv6hXFGE4F6
+         jBIXT4pj85n/notZJ9bi1EabWduXZc8QepqIKJmV4GQGJqv6fgb4h8/uZPrBI+uPGifv
+         FdVSo/xYeQcGUvB48EzSxr+GcgWbvbtU3SeIUVedCW9OU9RjD2OHoJvDk3jmRdkqWgTa
+         JiGjo0Y7LEl+IpD5D9Mo6pJvSrroh1ydfKMhcAIPjEYvckGXd8T35o+4z/haDyRrEIsq
+         l0V193DoDYeaOynFAJSZm9jeCfmYm0MwsiJb8RuICCIu5/HipmOsRWxYy+8mzbserQbr
+         jIdg==
+X-Gm-Message-State: ANoB5pm6Cm6i/BRMSUHeAtqVOyM4EVJGIiz04umHwWDqlbc4M8w4bhN6
+        erbVCgyJlwc3BMJlCkRqm0J8X1S8925SQA==
+X-Google-Smtp-Source: AA0mqf62uSlXNxPTJw3z57ahsIMBOuTXwZwsI5C/DqMRrKONDTY65VHgWF2pcKCOJRSKeBBt/r1gHA==
+X-Received: by 2002:a17:906:2804:b0:78d:e7c0:a2b with SMTP id r4-20020a170906280400b0078de7c00a2bmr14766006ejc.273.1669017244575;
+        Sun, 20 Nov 2022 23:54:04 -0800 (PST)
+Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id o11-20020a170906860b00b007ad4a555499sm4700805ejx.204.2022.11.20.23.54.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 23:48:12 -0800 (PST)
-Date:   Mon, 21 Nov 2022 13:18:10 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v7 0/4] qcom-cpufreq-hw: Add CPU clock provider support
-Message-ID: <20221121074810.mbpm5feyfbcupl5r@vireshk-i7>
-References: <20221117053145.10409-1-manivannan.sadhasivam@linaro.org>
- <20221121051959.hphzjuaif423xwn6@vireshk-i7>
+        Sun, 20 Nov 2022 23:54:04 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add sm6350 compatible
+Date:   Mon, 21 Nov 2022 08:53:55 +0100
+Message-Id: <20221121075358.76582-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121051959.hphzjuaif423xwn6@vireshk-i7>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-11-22, 10:49, Viresh Kumar wrote:
-> On 17-11-22, 11:01, Manivannan Sadhasivam wrote:
-> > Hello,
-> > 
-> > This series adds clock provider support to the Qcom CPUFreq driver for
-> > supplying the clocks to the CPU cores in Qcom SoCs.
-> > 
-> > The Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
-> > clocks to the CPU cores. But this is not represented clearly in devicetree.
-> > There is no clock coming out of the CPUFreq HW node to the CPU. This created
-> > an issue [1] with the OPP core when a recent enhancement series was submitted.
-> > Eventhough the issue got fixed in the OPP framework in the meantime, that's
-> > not a proper solution and this series aims to fix it properly.
-> > 
-> > There was also an attempt made by Viresh [2] to fix the issue by moving the
-> > clocks supplied to the CPUFreq HW node to the CPU. But that was not accepted
-> > since those clocks belong to the CPUFreq HW node only.
-> > 
-> > The proposal here is to add clock provider support to the Qcom CPUFreq HW
-> > driver to supply clocks to the CPUs that comes out of the EPSS/OSM block.
-> > This correctly reflects the hardware implementation.
-> > 
-> > The clock provider is a simple one that just provides the frequency of the
-> > clocks supplied to each frequency domain in the SoC using .recalc_rate()
-> > callback. The frequency supplied by the driver will be the actual frequency
-> > that comes out of the EPSS/OSM block after the DCVS operation. This frequency
-> > is not same as what the CPUFreq framework has set but it is the one that gets
-> > supplied to the CPUs after throttling by LMh.
-> > 
-> > This series has been tested on SM8450 based dev board with the OPP hack removed
-> > and hence there is a DTS change only for that platform. Once this series gets
-> > accepted, rest of the platform DTS can also be modified and finally the hack on
-> > the OPP core can be dropped.
-> 
-> Applied. Thanks.
+Add the compatible describing the combo phy found on SM6350.
 
-I have dropped patch 2/4 now, since Mani wants to get it merged via
-SoC tree.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+index 97a7ecafbf85..68aecb638870 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+@@ -18,6 +18,7 @@ properties:
+       - qcom,sc8180x-qmp-usb3-dp-phy
+       - qcom,sc8280xp-qmp-usb43dp-phy
+       - qcom,sdm845-qmp-usb3-dp-phy
++      - qcom,sm6350-qmp-usb3-dp-phy
+       - qcom,sm8250-qmp-usb3-dp-phy
+   reg:
+     items:
 -- 
-viresh
+2.38.1
+
