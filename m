@@ -2,65 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BFD6327E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 16:25:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B76416328B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 16:54:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232173AbiKUPZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 10:25:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
+        id S229904AbiKUPx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 10:53:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232155AbiKUPZB (ORCPT
+        with ESMTP id S229585AbiKUPx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 10:25:01 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E694E0BD;
-        Mon, 21 Nov 2022 07:25:00 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 07A5CB810A4;
-        Mon, 21 Nov 2022 15:24:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248D0C433C1;
-        Mon, 21 Nov 2022 15:24:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1669044297;
-        bh=plmemg8ck/2JJiYk6N9WCm94qIUIDl5laChJjW2g7Cw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZD6NmPJsSKDjUcrRAnF9Oet4XPiBretpsjQgkgD6mqMH3wdi5doXmLHgKS/0N/itH
-         LSsIClTFQx7/80hwc10c8A9IP6RDa1UckhdZKYdBJincU1vvaQMOSfejT9GGgaBnp8
-         gY1Arvm3qsWYdLaTuHgTDHXiBkj+Q5nc6Z9xY53Y=
-Date:   Mon, 21 Nov 2022 16:24:54 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org
-Subject: Re: [PATCH v7 10/20] gunyah: rsc_mgr: Add resource manager RPC core
-Message-ID: <Y3uYRvrCZNnbDiY5@kroah.com>
-References: <20221121140009.2353512-1-quic_eberman@quicinc.com>
- <20221121140009.2353512-11-quic_eberman@quicinc.com>
+        Mon, 21 Nov 2022 10:53:58 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5887CCB690;
+        Mon, 21 Nov 2022 07:53:55 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AL8Oovb000814;
+        Mon, 21 Nov 2022 15:53:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iTFbOuUq8jlB7FYKsO2QFbHF7KSE3Y+SOGWHJJHHqfk=;
+ b=KxzyqbADG02kEFmBiyRURXOf/c2UXg0Sr7oVX9S88p3EGEoHMKoPmNMYRuUKcuOlVEJN
+ JtIxcMn5hQnapCAji9bR4Y+x0uO2KHlJnHRSeCmNwSAWoWY/XN+uQDZ4PGBGtK2ErLVf
+ q0XGfoRrOZcoiceFekkI2mx3JYYXaI0zjfi+Tc2GgbMjXfq72yTGngxIb/OkyyF2ASdJ
+ CtJ14dbpZKiwJTVj68TgctfraCl78CKyWKBn++93LhU8vl0CaQYazQ2dgwPXE6Ijzd4M
+ rhVmyeWnRnnG43ObvQsmoBiusHb1wJR7UlDMhfOmD/lJ4T6Ufy7QlN0sB65f3b09FH0E HQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxrf5myqn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 15:53:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ALFriRc013226
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 21 Nov 2022 15:53:44 GMT
+Received: from [10.50.44.157] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 21 Nov
+ 2022 07:53:41 -0800
+Message-ID: <9e0cebc4-0ee3-c316-01b3-5131298d70ce@quicinc.com>
+Date:   Mon, 21 Nov 2022 21:23:38 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121140009.2353512-11-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH] asm-generic/io: Add _RET_IP_ to MMIO trace for more
+ accurate debug info
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Steven Rostedt <rostedt@goodmis.org>, Arnd Bergmann <arnd@arndb.de>
+CC:     Masami Hiramatsu <mhiramat@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arch@vger.kernel.org>, <quic_satyap@quicinc.com>
+References: <20221017143450.9161-1-quic_saipraka@quicinc.com>
+ <20221024120929.41241e07@gandalf.local.home>
+ <2f19ea9c-10e6-d0f7-2fc9-fb0f896bfc64@quicinc.com>
+In-Reply-To: <2f19ea9c-10e6-d0f7-2fc9-fb0f896bfc64@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mSf_gyUUoxu3v3oHNGVzsqP78QKun3pf
+X-Proofpoint-ORIG-GUID: mSf_gyUUoxu3v3oHNGVzsqP78QKun3pf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-21_14,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=608 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 clxscore=1011
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211210123
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,27 +82,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 05:59:59AM -0800, Elliot Berman wrote:
-> +struct gh_rm_rpc {
-> +	struct device *dev;
-> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
-> +	struct gh_msgq msgq;
-> +	struct mbox_client msgq_client;
-> +	struct gh_rm_connection *active_rx_connection;
-> +	int last_tx_ret;
-> +
-> +	struct idr call_idr;
-> +	struct mutex call_idr_lock;
-> +
-> +	struct mutex send_lock;
-> +
-> +	struct work_struct recv_work;
-> +};
+Hi Arnd,
 
-What handles the reference counting for this object?  Shouldn't this be
-a real 'struct device' and just have a pointer to the parent?  Otherwise
-how do you know when to free this?
+On 10/26/2022 7:17 PM, Sai Prakash Ranjan wrote:
+> Hi Steve,
+> 
+> On 10/24/2022 9:39 PM, Steven Rostedt wrote:
+>> On Mon, 17 Oct 2022 20:04:50 +0530
+>> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+>>
+>>> Due to compiler optimizations like inlining, there are cases where
+>>> MMIO traces using _THIS_IP_ for caller information might not be
+>>> sufficient to provide accurate debug traces.
+>>>
+>>> 1) With optimizations (Seen with GCC):
+>>>
+>>> In this case, _THIS_IP_ works fine and prints the caller information
+>>> since it will be inlined into the caller and we get the debug traces
+>>> on who made the MMIO access, for ex:
+>>>
+>>> rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 
+>>> addr=0xffff8000087447f4
+>>> rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 val=0x0 
+>>> addr=0xffff8000087447f4
+>>>
+>>> 2) Without optimizations (Seen with Clang):
+>>>
+>>> _THIS_IP_ will not be sufficient in this case as it will print only
+>>> the MMIO accessors itself which is of not much use since it is not
+>>> inlined as below for example:
+>>>
+>>> rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+>>> rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 
+>>> addr=0xffff8000087447f4
+>>>
+>>> So in order to handle this second case as well irrespective of the 
+>>> compiler
+>>> optimizations, add _RET_IP_ to MMIO trace to make it provide more 
+>>> accurate
+>>> debug information in all these scenarios.
+>>>
+>>> Before:
+>>>
+>>> rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+>>> rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 
+>>> addr=0xffff8000087447f4
+>>>
+>>> After:
+>>>
+>>> rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 
+>>> addr=0xffff8000087447f4
+>>> rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 
+>>> width=32 val=0x0 addr=0xffff8000087447f4
+>>>
+>>> Fixes: 210031971cdd ("asm-generic/io: Add logging support for MMIO 
+>>> accessors")
+>>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+>>
+>>
+>> Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+>>
+>> What tree should this go through?
+>>
+>> -- Steve
+> 
+> 
+> Thanks for the ack, with this I believe Arnd can take it through his 
+> tree like last time.
+> 
 
-thanks,
 
-greg k-h
+Can we take this patch atleast for 6.2-rc1?
+
+Thanks,
+Sai
