@@ -2,79 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86E3E63225C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 13:38:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6670F63230B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 14:04:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbiKUMiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 07:38:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58108 "EHLO
+        id S230029AbiKUNEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 08:04:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbiKUMiB (ORCPT
+        with ESMTP id S229753AbiKUNEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 07:38:01 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A613B5C43
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 04:37:58 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id r129-20020a1c4487000000b003d0283bf132so202366wma.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 04:37:58 -0800 (PST)
+        Mon, 21 Nov 2022 08:04:20 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF586DFE4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:04:16 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id b12so5957386wrn.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 05:04:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OfJ6ReGcbvudqGx5aWnlLmh808mEmKwe4YM900G8GoU=;
-        b=bhLvzu/iY7Mjd1xlH9twYzc2DCTHHIuR6cmeB16W+qrctjI2VgehKZyGjhsb0y/s9Q
-         rb5YPfiHqcjgLHbMXVp1UA7FFBV5n7zmRJIowCr2t4gxPwYHqilNJKTuooB3QAcZFDKk
-         fZPBYxMNpqfIMW4A5i2NiTps5MXN74532w65v0P6trMHqwWrfavqhd07zEWt36odoyfn
-         4ZHkqB9bGKS91KyjTFGnfRiCUkjx9qVv3VGl8kFEL6Oy+w8gJ+FQWT1UgfYoNk4Wjtj3
-         +WY+DtEaJYy5UC5YzyvXglazmcTU9wPC4nUtmeIyCSRMxit9IPjY7hrBVMj9Kwo3Wn3C
-         1kKw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vEFzLLCkAmvtlRGpGupffHTbi3RRZZNgjCKpe17ieh4=;
+        b=eqHihs4AcVn+xQ+OVkfyxrDbP49/t1D2NXZWCE8Nf1TcMfJSpCta1cqOQTDt6U0pvr
+         uvE5pnP7ggEOiWwPWmJUaAOEcv3xDSCVTV3YsjPfyTuVO6StUfQ3zq0lVAFoNIQBmXR5
+         k81wmk0FmhO5CHmm/Rwn52+6ZnXf8FedX0f+m8bmxHFjdrGVPQiaIE6RMlxjpsMqPJhC
+         3IqCiv+zvRuhcP1OAj8gszLUzWNCo92fiweewkfz5MKMQlAWipwBrfL9cYOz2GiU0KMi
+         QbkjIqpzsycUGrgBAzD9ddqLVI6oTj5/d3bs9DOnLTrvggC15VWcUzTbxvsjWIIa++8C
+         4JRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OfJ6ReGcbvudqGx5aWnlLmh808mEmKwe4YM900G8GoU=;
-        b=NWPS41/bd9DQ+auYYTD/p/D8q3i6n4kvBImGICfqdxvxzyV9Nn4EqH3bNouGGugQzA
-         bi0wmO7W7mRoXxrogJllDjk03fzWnWSpUaaGAp/ZJhBtHc5QrEjfMCR96i4703AcK0Sz
-         r4KBU9pqA+DAs9p9HZe7UwHEj4wjzUyJg/iJyEpSL7axdv1ntqujfZQCUpDMNfCHpEjP
-         mSdUjRyYpAic4tzUbjcFeLEoj++KMzOQtUdlNUIk8KH0231qIEwlArdx/CNcvdHfG1pZ
-         BQCr1R4ykTwMJu0AO35wmxqCY8vQX9BoFRf7zu6o2/E4nePDGK+sZWxMl4bE2SKwkSHs
-         EPKA==
-X-Gm-Message-State: ANoB5pnWwSeoAyiAaEkVjYAg594N3u7JCBNKqs+aYY/Ae+pydocM+wk/
-        U4px2HQNrp3tbpue97/BMLl1DQ==
-X-Google-Smtp-Source: AA0mqf5JngN/dT4Kr7SbrPWvWx3miCH34ldho+VQ75xmRL5193rxCxFZa4xfx0c7V+FzhXpY/pFlwQ==
-X-Received: by 2002:a1c:7401:0:b0:3cf:934b:b7ad with SMTP id p1-20020a1c7401000000b003cf934bb7admr1734188wmc.22.1669034276591;
-        Mon, 21 Nov 2022 04:37:56 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id e21-20020a05600c219500b003cf894dbc4fsm13496353wme.25.2022.11.21.04.37.55
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vEFzLLCkAmvtlRGpGupffHTbi3RRZZNgjCKpe17ieh4=;
+        b=XOtkRSgpSeH6r9yC9YRz5kZgMUuwoa4mtRHeIttqFzTIKIZ76BvxytgLg8m+P+vsYP
+         rFN5jIziy4EZl9M1YG6yU8Wmv5fQQ4J2Vzh7vsPU7IAmKTsoI5Egl/mUYQVZ/ni3B74E
+         +CuuzmMIMYI82ARDZWTPjLBaDrZdpyOWQIShdHqiQjPGthmsgImpqk3CTYANNh7swT13
+         EZ+YezxY8TA0PgzZT0PHUFltkTqTsgD0eKO3IgCZtPwsCYcxM2m3ASkJopq2+anDpWVd
+         cF+hceNMidbfkxqDl3Ux6Th++2EzXaYc0GkL6cgkYE91WGHvls89eAA/O6rSy9furEeu
+         AZLw==
+X-Gm-Message-State: ANoB5pm64/uWarshReC7pB6si6xYEM6lsw46N8CkRU2lffAsJfYBKOl4
+        5JAdT22dCNqao0gpWNpyu6bxLg==
+X-Google-Smtp-Source: AA0mqf5avd6Nllh4br5WicJ/f6/ceeoinz6Q6U5GDS03HqAQEXv2oGhNaGAGT72tb3xNfaYgixohqA==
+X-Received: by 2002:adf:db4e:0:b0:241:c694:f4b9 with SMTP id f14-20020adfdb4e000000b00241c694f4b9mr7006738wrj.552.1669035855214;
+        Mon, 21 Nov 2022 05:04:15 -0800 (PST)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id a13-20020a5d53cd000000b002383edcde09sm11133898wrw.59.2022.11.21.05.04.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 04:37:56 -0800 (PST)
-Date:   Mon, 21 Nov 2022 14:37:54 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 1/2] ufs: host: ufs-qcom: Clear qunipro_g4_sel for HW
- version major 5
-Message-ID: <Y3txIoDn3hFBXt0Y@linaro.org>
-References: <20221116121732.2731448-1-abel.vesa@linaro.org>
- <20221116121732.2731448-2-abel.vesa@linaro.org>
- <57b0669c-3826-dc33-36a4-2d8220da768a@linaro.org>
+        Mon, 21 Nov 2022 05:04:14 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 0/3] arm64: dts: qcom: sc8280xp: add audio support
+Date:   Mon, 21 Nov 2022 13:04:00 +0000
+Message-Id: <20221121130403.161817-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <57b0669c-3826-dc33-36a4-2d8220da768a@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -84,67 +70,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-11-16 13:28:53, Konrad Dybcio wrote:
-> 
-> 
-> On 16/11/2022 13:17, Abel Vesa wrote:
-> > On SM8550, depending on the Qunipro, we can run with G5 or G4.
-> > For now, when the major version is 5 or above, we go with G5.
-> > Therefore, we need to specifically tell UFS HC that.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   drivers/ufs/host/ufs-qcom.c | 4 ++++
-> >   drivers/ufs/host/ufs-qcom.h | 2 ++
-> >   2 files changed, 6 insertions(+)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index ca60a5b0292b..72334aefe81c 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -227,6 +227,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
-> >   	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
-> >   		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
-> >   		   REG_UFS_CFG1);
-> > +
-> > +	if (host->hw_ver.major == 0x05)
-> > +		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
-> > +
-> >   	/* make sure above configuration is applied before we return */
-> >   	mb();
-> >   }
-> > diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> > index 751ded3e3531..10621055bf7f 100644
-> > --- a/drivers/ufs/host/ufs-qcom.h
-> > +++ b/drivers/ufs/host/ufs-qcom.h
-> > @@ -36,6 +36,7 @@ enum {
-> >   	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
-> >   	REG_UFS_PARAM0                      = 0xD0,
-> >   	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
-> > +	REG_UFS_CFG0                        = 0xD8,
-> Are you sure these two should point to the same register? Maybe it deserves
-> some kind of a comment?
+This patchset adds audio support for sc8280xp Lenovo x13s.
+Support for Headset Playback/Capture, Speaker Playback and DMIC is
+tested.
 
-The REG_UFS_PA_LINK_STARTUP_TIMER is used by non qunipro variants. (UFS
-versions below 2.x)
+A prebuit ASoC topology file available at
+https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin
 
-The REG_UFS_CFG0 is used by qunipro variants. (UFS versions above 2.x).
 
-Will add a comment to the later one that would look like this:
-"/* Found on UFS versions above 2.x only */"
+Thanks to Johan and Kryz for reviewing v2.
+
+Changes since v2:
+	- removed lots of stray lines.
+	- ordered include files.
+	- moved all the nodes before pinctrl
+	- fixed subject line to include x13s.
+	- rebased to latest qcom dts branch.
 
 Thanks,
-Abel
+Srini
 
-> 
-> Konrad
-> >   	REG_UFS_CFG1                        = 0xDC,
-> >   	REG_UFS_CFG2                        = 0xE0,
-> >   	REG_UFS_HW_VERSION                  = 0xE4,
-> > @@ -75,6 +76,7 @@ enum {
-> >   /* bit definitions for REG_UFS_CFG1 register */
-> >   #define QUNIPRO_SEL		BIT(0)
-> > +#define QUNIPRO_G4_SEL		BIT(5)
-> >   #define UFS_PHY_SOFT_RESET	BIT(1)
-> >   #define UTP_DBG_RAMS_EN		BIT(17)
-> >   #define TEST_BUS_EN		BIT(18)
+Srinivas Kandagatla (3):
+  arm64: dts: qcom: sc8280xp/sa8540p: add gpr node
+  arm64: dts: qcom: sc8280xp/sa8540p: add SoundWire and LPASS
+  arm64: dts: qcom: sc8280xp-x13s: Add soundcard support
+
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 213 +++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 359 ++++++++++++++++++
+ 2 files changed, 572 insertions(+)
+
+-- 
+2.25.1
+
