@@ -2,366 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B135631B49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:24:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63400631B5A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 09:27:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbiKUIYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 03:24:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50676 "EHLO
+        id S229928AbiKUI1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 03:27:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbiKUIX2 (ORCPT
+        with ESMTP id S229797AbiKUI1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 03:23:28 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A22411473;
-        Mon, 21 Nov 2022 00:23:11 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AL4ImMn008918;
-        Mon, 21 Nov 2022 08:23:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=VjROx97eEj4irAGrUO8O5pNis2tNTi+iu+TwHJhkuSQ=;
- b=YTmInukLmTIe4+CzmxWnw9l1pC/s3wTdfPV9B5v39+7QrOEyvCPhLf5MmAjOQl9wBM5O
- 7z2OEDXa2A94CbUL0CPhQ85Wxwx4vAOnrBeM6+FlmCTMXzknDyGtTb3vryy1RNBsXynp
- ZFMCfrNiGzAUT2NNcU71W3jAS0Vfq1yeyfrpnMuxSbsBv3Qte9Wg5429MZoxwfvi2SpU
- a7D8+hz2XYaqxBJWTCWG4Cn5lw0hIOW5IsRuMHyk1oNDdBGxrDEiF3RmyW/WicLtNxXd
- rDCIfW0OP1+5Chv+TH1QFl8eWh8A8/Pdu4kOd/N90FSkYA3sMj3+RhfVqBBlhPPW74Sm RQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxrtqbtk8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Nov 2022 08:23:01 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AL8N0sQ024586
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Nov 2022 08:23:00 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 21 Nov 2022 00:22:56 -0800
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>
-Subject: [PATCH v1 9/9] coresight-tpdm: Add nodes for timestamp request
-Date:   Mon, 21 Nov 2022 16:21:13 +0800
-Message-ID: <1669018873-4718-10-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1669018873-4718-1-git-send-email-quic_taozha@quicinc.com>
-References: <1669018873-4718-1-git-send-email-quic_taozha@quicinc.com>
+        Mon, 21 Nov 2022 03:27:04 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671176337
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 00:27:02 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id h12so13639239ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 00:27:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wYa6qiy8lMPys5blH9J/G1eMKnRjWk2O1ZKygOJRkTQ=;
+        b=Cj2/VIzR/21o/tDbTWZPg8AGCS4nhfSg7B+uN9/AR/5LGg0FRaKRyalpThYZxC53mJ
+         pnbm+WJ9fCqM1NC8ka3B5R0z2fGv7B3oc/AMH+IuYEistzWxn6NkPDevW0qDkJLQuXyZ
+         bYo8jbLfTX6skcVDVIqtgCNxIT6bzhM3f/7GortQZEwVdTwtRwQF/6vEMDST+ioPEA0v
+         kxFNTuOyCF++tItPtJImlhbwQy9qjFTkL4RnpKEPpzwir3xS3iBMNqf4BFRCi3tSOt+T
+         CjEGYpiI5z3UAwO7fSltILV2sIZ0weSNBtrk2EW++azDJJtPkoBgb0OV6y5E0LEU+c3k
+         qCaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wYa6qiy8lMPys5blH9J/G1eMKnRjWk2O1ZKygOJRkTQ=;
+        b=7u0m+HbMnDm5YimheSJ9jVBgGIC3KU2qxqZhRyubzWMYtpkgPyL/zAz8Sk9PFO8bFI
+         eEspiPZqvBVGnJNhRXNppXT4GECdFinaIfBJmBWtliU8xbunbekrljrgIUfG4rKkLKLx
+         Kae+1SkIaf7JPhmBaQKOJ/LMejAZs1Qykb4C+MRFUE3ryIgqhp8p77WeISjkTK3LnQL8
+         yM/TnJgkNAj29zplY5ZHsKs+7i5BmCuoNQAQgkMk449SYsWc4ZCYz7HPj1ccXOAYtoXz
+         b3oQoUUITgF7JXbAJJgiWDr5lkMzrWv/WR0d1swzYIgMLLqANilrq4TFJDwea2rVoh4q
+         LCmg==
+X-Gm-Message-State: ANoB5pkmNEuDeJpwy41CHG7PHghjrhUzetBHyNfi0LzJPxm84VYFo1wS
+        K4t13ic9ReJuyxN6uE+Ea2FAng==
+X-Google-Smtp-Source: AA0mqf5RPWYa6p3CjzIW6ePaZSL0+GAKbQbFHq0c225RFkodYWsPwYzdEjwB8RTo/+JQghTXRFRFow==
+X-Received: by 2002:a2e:b5ae:0:b0:277:3df:90d0 with SMTP id f14-20020a2eb5ae000000b0027703df90d0mr384156ljn.234.1669019220719;
+        Mon, 21 Nov 2022 00:27:00 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id 9-20020a2eb949000000b0026dcf0cbb97sm1379191ljs.137.2022.11.21.00.26.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Nov 2022 00:27:00 -0800 (PST)
+Message-ID: <795deac4-71fe-d40b-a3b6-855eb3875ad1@linaro.org>
+Date:   Mon, 21 Nov 2022 09:26:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 86mPlXtu-2T6AQBzTEssaKoDiT9hG4jS
-X-Proofpoint-GUID: 86mPlXtu-2T6AQBzTEssaKoDiT9hG4jS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-21_05,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211210065
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/8] dt-bindings: power: supply: Add DT schema for
+ Qualcomm SMBCHG
+Content-Language: en-US
+To:     Yassine Oudjana <yassine.oudjana@gmail.com>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alejandro Tafalla <atafalla@dnyon.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>
+References: <20221120154625.57095-1-y.oudjana@protonmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221120154625.57095-1-y.oudjana@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes to configure the timestamp request based on input
-pattern match. Each TPDM that support DSB subunit has maximum of
-n(n<7) TPR registers to configure value for timestamp request
-based on input pattern match. Eight 32 bit registers providing
-DSB interface timestamp request  pattern match comparison. And
-each TPDM that support DSB subunit has maximum of m(m<7) TPMR
-registers to configure pattern mask for timestamp request. Eight
-32 bit registers providing DSB interface timestamp request
-pattern match mask generation. Add nodes to enable/disable
-pattern timestamp and set pattern timestamp type.
+On 20/11/2022 16:46, Yassine Oudjana wrote:
+>>> +  interrupts:
+>>> +    items:
+>>> +      - description: Charger error
+>>> +      - description: Charger inhibited
+>>> +      - description: Charger precharge safety timer timeout
+>>> +      - description: Charger charge safety timer timeout
+>>> +      - description: Charger pre to fast charging switch threshold reached
+>>> +      - description: Charger recharge threshold reached
+>>> +      - description: Charger taper threshold reached
+>>> +      - description: Charger charge termination threshold reached
+>>> +      - description: Battery hot
+>>> +      - description: Battery warm
+>>> +      - description: Battery cold
+>>> +      - description: Battery cool
+>>> +      - description: Battery overvoltage
+>>> +      - description: Battery low
+>>> +      - description: Battery missing
+>>> +      - description: Battery thermistor missing # unconfirmed
+>>> +      - description: USB input undervolt
+>>> +      - description: USB input overvolt
+>>> +      - description: USB input source detected
+>>> +      - description: OTG regulator failure
+>>> +      - description: OTG regulator overcurrent
+>>> +      - description: Automatic input current limiting done
+>>> +      - description: USB ID pin changed
+>>> +      - description: DC input undervolt
+>>> +      - description: DC input overvolt
+>>> +      - description: Power OK
+>>> +      - description: Temperature shutdown
+>>> +      - description: Watchdog timeout
+>>> +      - description: Flash failure
+>>> +      - description: OTST2 # unknown
+>>> +      - description: OTST3 # unknown
+>>
+>> It seems you listed register interrupts, not physical pins. This should
+>> be interrupt lines.
+> 
+> I'm not sure what I'm supposed to do here. I couldn't find an interrupt-lines
+> property used anywhere so that's not what you meant, right?
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- drivers/hwtracing/coresight/coresight-tpdm.c | 174 +++++++++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h |  14 +++
- 2 files changed, 188 insertions(+)
+Are these physical interrupt lines this device has, register offsets or
+virtual interrupts (e.g. passed via irq_chip)? Definitely not the first
+and rather offsets for qpnpint_irq_domain_translate. Devicetree is not
+for describing register layout of devices. IOW, register layout does not
+change on different boards, because the device is exactly the same, so
+there is no point to put it into DTS.
 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index 2a0b8ed..1cc9eb0 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -49,6 +49,13 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
- 			   drvdata->base + TPDM_DSB_EDCMR(i));
- 
- 	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-+		writel_relaxed(drvdata->dsb->patt_val[i],
-+			    drvdata->base + TPDM_DSB_TPR(i));
-+		writel_relaxed(drvdata->dsb->patt_mask[i],
-+			    drvdata->base + TPDM_DSB_TPMR(i));
-+	}
-+
-+	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
- 		writel_relaxed(drvdata->dsb->trig_patt_val[i],
- 			    drvdata->base + TPDM_DSB_XPR(i));
- 		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
-@@ -56,6 +63,16 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
- 	}
- 
- 	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
-+	/* Set pattern timestamp type and enablement */
-+	if (drvdata->dsb->patt_ts) {
-+		val |= TPDM_DSB_PATT_TSENAB;
-+		if (drvdata->dsb->patt_type)
-+			val |= TPDM_DSB_PATT_TYPE;
-+		else
-+			val &= ~TPDM_DSB_PATT_TYPE;
-+	} else {
-+		val &= ~TPDM_DSB_PATT_TSENAB;
-+	}
- 	/* Set trigger timestamp */
- 	if (drvdata->dsb->trig_ts)
- 		val |= TPDM_DSB_XTRIG_TSENAB;
-@@ -444,6 +461,159 @@ static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
- 
-+static ssize_t dsb_patt_val_show(struct device *dev,
-+				      struct device_attribute *attr,
-+				      char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	ssize_t size = 0;
-+	int i = 0;
-+
-+	spin_lock(&drvdata->spinlock);
-+	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-+		size += sysfs_emit_at(buf, size,
-+				  "Index: 0x%x Value: 0x%x\n", i,
-+				  drvdata->dsb->patt_val[i]);
-+	}
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+
-+/*
-+ * value 1: Index of TPR register
-+ * value 2: Value need to be written
-+ */
-+static ssize_t dsb_patt_val_store(struct device *dev,
-+				       struct device_attribute *attr,
-+				       const char *buf,
-+				       size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long index, val;
-+
-+	if (sscanf(buf, "%lx %lx", &index, &val) != 2)
-+		return -EINVAL;
-+	if (index >= TPDM_DSB_MAX_PATT)
-+		return -EPERM;
-+
-+	spin_lock(&drvdata->spinlock);
-+	drvdata->dsb->patt_val[index] = val;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_patt_val);
-+
-+static ssize_t dsb_patt_mask_show(struct device *dev,
-+				       struct device_attribute *attr,
-+				       char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	ssize_t size = 0;
-+	int i = 0;
-+
-+	spin_lock(&drvdata->spinlock);
-+	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-+		size += sysfs_emit_at(buf, size,
-+				  "Index: 0x%x Value: 0x%x\n", i,
-+				  drvdata->dsb->patt_mask[i]);
-+	}
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+
-+/*
-+ * value 1: Index of TPMR register
-+ * value 2: Value need to be written
-+ */
-+static ssize_t dsb_patt_mask_store(struct device *dev,
-+					struct device_attribute *attr,
-+					const char *buf,
-+					size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long index, val;
-+
-+	if (sscanf(buf, "%lx %lx", &index, &val) != 2)
-+		return -EINVAL;
-+	if (index >= TPDM_DSB_MAX_PATT)
-+		return -EPERM;
-+
-+	spin_lock(&drvdata->spinlock);
-+	drvdata->dsb->patt_mask[index] = val;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_patt_mask);
-+
-+static ssize_t dsb_patt_ts_show(struct device *dev,
-+				     struct device_attribute *attr,
-+				     char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	return sysfs_emit(buf, "%u\n",
-+			 (unsigned int)drvdata->dsb->patt_ts);
-+}
-+
-+/*
-+ * value 1: Enable/Disable DSB pattern timestamp
-+ */
-+static ssize_t dsb_patt_ts_store(struct device *dev,
-+				      struct device_attribute *attr,
-+				      const char *buf,
-+				      size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long val;
-+
-+	if (kstrtoul(buf, 16, &val))
-+		return -EINVAL;
-+	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
-+		return -EPERM;
-+
-+	spin_lock(&drvdata->spinlock);
-+	if (val)
-+		drvdata->dsb->patt_ts = true;
-+	else
-+		drvdata->dsb->patt_ts = false;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_patt_ts);
-+
-+static ssize_t dsb_patt_type_show(struct device *dev,
-+				       struct device_attribute *attr, char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+
-+	return sysfs_emit(buf, "%u\n",
-+			 (unsigned int)drvdata->dsb->patt_type);
-+}
-+
-+/*
-+ * value 1: Set DSB pattern type
-+ */
-+static ssize_t dsb_patt_type_store(struct device *dev,
-+					struct device_attribute *attr,
-+					const char *buf, size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long val;
-+
-+	if (kstrtoul(buf, 16, &val))
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	if (val)
-+		drvdata->dsb->patt_type = true;
-+	else
-+		drvdata->dsb->patt_type = false;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_patt_type);
-+
- static ssize_t dsb_trig_patt_val_show(struct device *dev,
- 					   struct device_attribute *attr,
- 					   char *buf)
-@@ -593,6 +763,10 @@ static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_edge_ctrl.attr,
- 	&dev_attr_dsb_edge_ctrl_mask.attr,
-+	&dev_attr_dsb_patt_val.attr,
-+	&dev_attr_dsb_patt_mask.attr,
-+	&dev_attr_dsb_patt_ts.attr,
-+	&dev_attr_dsb_patt_type.attr,
- 	&dev_attr_dsb_trig_patt_val.attr,
- 	&dev_attr_dsb_trig_patt_mask.attr,
- 	&dev_attr_dsb_trig_ts.attr,
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 386a0e5..fa550f3 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -12,6 +12,8 @@
- /* DSB Subunit Registers */
- #define TPDM_DSB_CR		(0x780)
- #define TPDM_DSB_TIER		(0x784)
-+#define TPDM_DSB_TPR(n)		(0x788 + (n * 4))
-+#define TPDM_DSB_TPMR(n)	(0x7A8 + (n * 4))
- #define TPDM_DSB_XPR(n)		(0x7C8 + (n * 4))
- #define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
- #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
-@@ -19,8 +21,12 @@
- 
- /* Enable bit for DSB subunit */
- #define TPDM_DSB_CR_ENA		BIT(0)
-+/* Enable bit for DSB subunit pattern timestamp */
-+#define TPDM_DSB_PATT_TSENAB		BIT(0)
- /* Enable bit for DSB subunit trigger timestamp */
- #define TPDM_DSB_XTRIG_TSENAB		BIT(1)
-+/* Bit for DSB subunit pattern type */
-+#define TPDM_DSB_PATT_TYPE		BIT(2)
- /* Enable bit for DSB subunit trigger type */
- #define TPDM_DSB_TRIG_TYPE		BIT(12)
- /* Enable bit for DSB subunit perfmance mode */
-@@ -75,6 +81,10 @@
-  * @mode:             DSB programming mode
-  * @edge_ctrl:        Save value for edge control
-  * @edge_ctrl_mask:   Save value for edge control mask
-+ * @patt_val:         Save value for pattern
-+ * @patt_mask:        Save value for pattern mask
-+ * @patt_ts:          Enable/Disable pattern timestamp
-+ * @patt_type:        Set pattern type
-  * @trig_patt_val:    Save value for trigger pattern
-  * @trig_patt_mask:   Save value for trigger pattern mask
-  * @trig_ts:          Enable/Disable trigger timestamp.
-@@ -84,6 +94,10 @@ struct dsb_dataset {
- 	u32				mode;
- 	u32				edge_ctrl[TPDM_DSB_MAX_EDCR];
- 	u32				edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
-+	u32				patt_val[TPDM_DSB_MAX_PATT];
-+	u32				patt_mask[TPDM_DSB_MAX_PATT];
-+	bool			patt_ts;
-+	bool			patt_type;
- 	u32				trig_patt_val[TPDM_DSB_MAX_PATT];
- 	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
- 	bool			trig_ts;
--- 
-2.7.4
+Best regards,
+Krzysztof
 
