@@ -2,94 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DC60631F9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:09:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A16F8631FF5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 12:12:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230385AbiKULJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 06:09:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
+        id S230025AbiKULMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 06:12:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbiKULIM (ORCPT
+        with ESMTP id S229973AbiKULLi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 06:08:12 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C10B4F0A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:06:41 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id be13so18298093lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:06:41 -0800 (PST)
+        Mon, 21 Nov 2022 06:11:38 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 101CD22B03
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:07:48 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id p8so18252335lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 03:07:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vt/Wa0oZhOf8fgPaUT9nYutANNXrYJ1M3EC69Oc6bKY=;
-        b=dkjpcM/pO1IKb6CkVrne1aMXK5pKU0cbTJhHKlkx02vkdPOtEnSa8DcY0ZNFQ/Aai2
-         qH8lEQpCvc0P3JcOHif7m8xCUExRkW/i8XEAk8Xd4nF6WUgIbY7pTaOw296tyj9d0s5S
-         49bYPkzl2sPqUHIasE8UjxvT6H2A4jv1BVUikormOKd/yX2YAHV4NTeUqY3JsiBuSZsv
-         +9IxEfLYGIRpoF01ldIPFQS4uTCNTZT7q0WF2ueSIYt48kH9zXpMEhn2lViD/abJfvRE
-         ZQuEKSQZMi0x8fDazXqUX1ZYHspCB+iO3RQZ9pNytp+96JUXrCzq0pmB0EWAToKjCK2P
-         pNqA==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6p6hxbgel3Zl3rnDaE8Rz7BrvsaXOJ6kRXgbKVxVQZY=;
+        b=UnZ8onUtSogYHlZTlJXaPIEnrpdxG4Y1kXdoO6ijV1s7Cn0Rvowdwn0y2AnrpKYYFI
+         vsOdHRyh0AltgXTtb9Api6GbElPWTI5k/OVMccAsE4yGcjB1SW2JT8YnLoMgpX10hRwV
+         bObppCTCNw4OQkNPXBFZUmmfEOQKRZagIrc/NHVkVdBxlrg9mFPWL9eDStJ2j8zU69hM
+         b7Qe4mcHY2vfBzUSLsXi7FrsDIdaT18axDPPOrGeg33G65oETbsX7kkx8YiHTsj0UEeJ
+         IaFKSwZ4OGyxZHvWVX111xeyAXFfg25f/UTPisG+Szf/w728hbRDJTm9kNhhhBYAiB+e
+         LVpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vt/Wa0oZhOf8fgPaUT9nYutANNXrYJ1M3EC69Oc6bKY=;
-        b=D+9Ny56rm0B3CLU35CyhaJidnKO8wKXqGrjiNKS8aIw+zSxNowySXhYPOTXLOoQGhx
-         Dj24GvdlMEQYo4UiHgHXqJ1fDkt2ynJmCS7A5Axjmqj6yOvOqC2VCOWogI4xXnDEVSJL
-         Z3Lw+nANK1dgZWvgY6XItr+KUdLWd5JVEsvBKJ5pEQEGrS+z+ySMt5yEzFRGNq2UO1gJ
-         kuvMIMSBt1ON0iyRoW5YYo17IB1lK+QQJAfnAIbUUufZH7hDUwpFYBzz+uXPew2GOaqB
-         YXQY4DfCvGuBSQdC/Vg/LLwaf2iIDFGPedaCttdCvukItpR6KhNmd+S84bHhsk9z9dvj
-         ccqw==
-X-Gm-Message-State: ANoB5pk/lEkSpqIV1/6OM7KqCD3dpGHT6CMpmyPTtAiSYw67K/l/IKEq
-        UjbWL+TrfFT2wJTs+DUTaeosoQ==
-X-Google-Smtp-Source: AA0mqf5nUBeMC8Y3mQrtIk7tF8Nu1KTg6JLn6oA018LE9kb9lE6jW7NgPef3dUXhGdN0anp1mO8BbA==
-X-Received: by 2002:a05:6512:15a6:b0:4a2:3d2c:34ac with SMTP id bp38-20020a05651215a600b004a23d2c34acmr5515193lfb.41.1669028801206;
-        Mon, 21 Nov 2022 03:06:41 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n1-20020a05651203e100b0049313f77755sm1991521lfq.213.2022.11.21.03.06.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 03:06:40 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        netdev@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Guenter Roeck <linux@roeck-us.net>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v2 9/9] dt-bindings: drop redundant part of title (manual)
-Date:   Mon, 21 Nov 2022 12:06:15 +0100
-Message-Id: <20221121110615.97962-10-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
-References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6p6hxbgel3Zl3rnDaE8Rz7BrvsaXOJ6kRXgbKVxVQZY=;
+        b=KrWmmQLrv5CJRGP5IYMijL4W+Z78kQXOzWNvBZhy+Bfz4MD9QpFGqLyOEVr1w24bT7
+         VSiHnFvI800AzKS5SOLAT3UrXKq2UY/MsHIsdtqq/tFS7YSGIolwNhXmFiu84olv747O
+         Lul8F7PN6BFj7Wxph5eBW8OA7+kJBY4sVkLhwxfBU+DLJxZqgYgWNQkMlK4YRjPkxyG2
+         rEJcjc9JmdaGGahPoKpJyh85qwwrYZgeUe0jWujW7TvNMCSFm0nVmq65ZX+zoLn8kNGk
+         4jhAEZdBhzMtUPZUIk3s7hJkQ3Bj8iZj4BokLRneSFa2S6KMMboV62WHTXOddMigrHqV
+         vZGQ==
+X-Gm-Message-State: ANoB5pl0EqVnSUMsqlj/xXMk/50K2dSVrOn0sGF6ayYxanNYxl5OrmpR
+        Xii2q0z3KhxYLJKVkrlm1++DhQ==
+X-Google-Smtp-Source: AA0mqf4sHvDS62G2FUOiIzqtEfG1296xjYLiuyZO6zGOr5vh4J5Jw7RUbU1cZ46HdjsFZuhnic3+TA==
+X-Received: by 2002:ac2:41d4:0:b0:4af:cd2:f8d5 with SMTP id d20-20020ac241d4000000b004af0cd2f8d5mr5959364lfi.489.1669028851458;
+        Mon, 21 Nov 2022 03:07:31 -0800 (PST)
+Received: from [192.168.1.101] (95.49.32.48.neoplus.adsl.tpnet.pl. [95.49.32.48])
+        by smtp.gmail.com with ESMTPSA id x19-20020ac25dd3000000b00498fd423cc3sm1976715lfq.295.2022.11.21.03.07.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Nov 2022 03:07:30 -0800 (PST)
+Message-ID: <fed1d538-d133-6987-12d4-3f1516d519e5@linaro.org>
+Date:   Mon, 21 Nov 2022 12:07:28 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221118192241.29384-1-quic_molvera@quicinc.com>
+ <20221118192241.29384-3-quic_molvera@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221118192241.29384-3-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -98,340 +80,584 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Devicetree bindings document does not have to say in the title that
-it is a "Devicetree binding" or a "schema", but instead just describe
-the hardware.
 
-Manual updates to various binding titles, including capitalizing them.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- Documentation/devicetree/bindings/clock/cirrus,cs2000-cp.yaml   | 2 +-
- Documentation/devicetree/bindings/clock/fsl,scu-clk.yaml        | 2 +-
- .../devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml         | 2 +-
- Documentation/devicetree/bindings/example-schema.yaml           | 2 +-
- Documentation/devicetree/bindings/input/fsl,scu-key.yaml        | 2 +-
- Documentation/devicetree/bindings/input/matrix-keymap.yaml      | 2 +-
- Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml     | 2 +-
- Documentation/devicetree/bindings/net/asix,ax88178.yaml         | 2 +-
- Documentation/devicetree/bindings/net/microchip,lan95xx.yaml    | 2 +-
- Documentation/devicetree/bindings/nvmem/fsl,scu-ocotp.yaml      | 2 +-
- Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml    | 2 +-
- Documentation/devicetree/bindings/pci/pci-ep.yaml               | 2 +-
- Documentation/devicetree/bindings/phy/calxeda-combophy.yaml     | 2 +-
- Documentation/devicetree/bindings/pinctrl/fsl,scu-pinctrl.yaml  | 2 +-
- Documentation/devicetree/bindings/pinctrl/pincfg-node.yaml      | 2 +-
- Documentation/devicetree/bindings/pinctrl/pinmux-node.yaml      | 2 +-
- Documentation/devicetree/bindings/power/fsl,scu-pd.yaml         | 2 +-
- Documentation/devicetree/bindings/riscv/cpus.yaml               | 2 +-
- Documentation/devicetree/bindings/rtc/fsl,scu-rtc.yaml          | 2 +-
- Documentation/devicetree/bindings/spi/omap-spi.yaml             | 2 +-
- Documentation/devicetree/bindings/thermal/fsl,scu-thermal.yaml  | 2 +-
- Documentation/devicetree/bindings/usb/usb-device.yaml           | 2 +-
- Documentation/devicetree/bindings/watchdog/fsl,scu-wdt.yaml     | 2 +-
- 23 files changed, 23 insertions(+), 23 deletions(-)
+On 18.11.2022 20:22, Melody Olvera wrote:
+> Add DTs for Qualcomm IDP platforms using the QDU1000 and QRU1000
+> SoCs.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile        |   2 +
+>  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 266 +++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qru1000-idp.dts | 266 +++++++++++++++++++++++
+>  3 files changed, 534 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index afe496a93f94..da66d4a0a884 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -53,7 +53,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> new file mode 100644
+> index 000000000000..5aed483201fa
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> @@ -0,0 +1,266 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "qdu1000.dtsi"
+> +#include "pm8150.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. QDU1000 IDP";
+> +	compatible = "qcom,qdu1000-idp", "qcom,qdu1000";
+Missing chassis-type
 
-diff --git a/Documentation/devicetree/bindings/clock/cirrus,cs2000-cp.yaml b/Documentation/devicetree/bindings/clock/cirrus,cs2000-cp.yaml
-index 82836086cac1..d416c374e853 100644
---- a/Documentation/devicetree/bindings/clock/cirrus,cs2000-cp.yaml
-+++ b/Documentation/devicetree/bindings/clock/cirrus,cs2000-cp.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/clock/cirrus,cs2000-cp.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Binding CIRRUS LOGIC Fractional-N Clock Synthesizer & Clock Multiplier
-+title: CIRRUS LOGIC Fractional-N Clock Synthesizer & Clock Multiplier
- 
- maintainers:
-   - Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-diff --git a/Documentation/devicetree/bindings/clock/fsl,scu-clk.yaml b/Documentation/devicetree/bindings/clock/fsl,scu-clk.yaml
-index f2c48460a399..36d4cfc3c2f8 100644
---- a/Documentation/devicetree/bindings/clock/fsl,scu-clk.yaml
-+++ b/Documentation/devicetree/bindings/clock/fsl,scu-clk.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/clock/fsl,scu-clk.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - Clock bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - Clock Controller Based on SCU Message Protocol
- 
- maintainers:
-   - Abel Vesa <abel.vesa@nxp.com>
-diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
-index 28c13237059f..3cb996b2c9d5 100644
---- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/clock/qcom,dispcc-sc8280xp.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm Display Clock & Reset Controller Binding for SC8280XP
-+title: Qualcomm Display Clock & Reset Controller on SC8280XP
- 
- maintainers:
-   - Bjorn Andersson <bjorn.andersson@linaro.org>
-diff --git a/Documentation/devicetree/bindings/example-schema.yaml b/Documentation/devicetree/bindings/example-schema.yaml
-index 8e1a8b19d429..dfcf4c27d44a 100644
---- a/Documentation/devicetree/bindings/example-schema.yaml
-+++ b/Documentation/devicetree/bindings/example-schema.yaml
-@@ -11,7 +11,7 @@ $id: http://devicetree.org/schemas/example-schema.yaml#
- # $schema is the meta-schema this schema should be validated with.
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: An example schema annotated with jsonschema details
-+title: An Example Device
- 
- maintainers:
-   - Rob Herring <robh@kernel.org>
-diff --git a/Documentation/devicetree/bindings/input/fsl,scu-key.yaml b/Documentation/devicetree/bindings/input/fsl,scu-key.yaml
-index e6266d188266..e5a3c355ee1f 100644
---- a/Documentation/devicetree/bindings/input/fsl,scu-key.yaml
-+++ b/Documentation/devicetree/bindings/input/fsl,scu-key.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/input/fsl,scu-key.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - SCU key bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - SCU Key Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/input/matrix-keymap.yaml b/Documentation/devicetree/bindings/input/matrix-keymap.yaml
-index 6699d5e32dca..4d6dbe91646d 100644
---- a/Documentation/devicetree/bindings/input/matrix-keymap.yaml
-+++ b/Documentation/devicetree/bindings/input/matrix-keymap.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/input/matrix-keymap.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Common key matrices binding for matrix-connected key boards
-+title: Common Key Matrices on Matrix-connected Key Boards
- 
- maintainers:
-   - Olof Johansson <olof@lixom.net>
-diff --git a/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml b/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
-index 940333f2d69c..eebe372ea463 100644
---- a/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
-+++ b/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/leds/issi,is31fl319x.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: ISSI LED controllers bindings for IS31FL319{0,1,3,6,9}
-+title: ISSI LED Controllers for IS31FL319{0,1,3,6,9}
- 
- maintainers:
-   - Vincent Knecht <vincent.knecht@mailoo.org>
-diff --git a/Documentation/devicetree/bindings/net/asix,ax88178.yaml b/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-index a81dbc4792f6..768504ccbf74 100644
---- a/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-+++ b/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/net/asix,ax88178.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: The device tree bindings for the USB Ethernet controllers
-+title: ASIX AX88172/AX88772 USB Ethernet Controllers
- 
- maintainers:
-   - Oleksij Rempel <o.rempel@pengutronix.de>
-diff --git a/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml b/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-index 3715c5f8f0e0..0b97e14d947f 100644
---- a/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-+++ b/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/net/microchip,lan95xx.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: The device tree bindings for the USB Ethernet controllers
-+title: Microchip SMSC9500/LAN9530/LAN9730 USB Ethernet Controllers
- 
- maintainers:
-   - Oleksij Rempel <o.rempel@pengutronix.de>
-diff --git a/Documentation/devicetree/bindings/nvmem/fsl,scu-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/fsl,scu-ocotp.yaml
-index 682688299b26..f0a49283649d 100644
---- a/Documentation/devicetree/bindings/nvmem/fsl,scu-ocotp.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/fsl,scu-ocotp.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/nvmem/fsl,scu-ocotp.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - OCOTP bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - OCOTP Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-index df8442fb11f0..b9ce2e099ce9 100644
---- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-+++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/opp/opp-v2-qcom-level.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm OPP bindings to describe OPP nodes.
-+title: Qualcomm OPP
- 
- maintainers:
-   - Niklas Cassel <nks@flawful.org>
-diff --git a/Documentation/devicetree/bindings/pci/pci-ep.yaml b/Documentation/devicetree/bindings/pci/pci-ep.yaml
-index ccec51ab5247..d1eef4825207 100644
---- a/Documentation/devicetree/bindings/pci/pci-ep.yaml
-+++ b/Documentation/devicetree/bindings/pci/pci-ep.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/pci/pci-ep.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: PCI Endpoint Controller Schema
-+title: PCI Endpoint Controller
- 
- description: |
-   Common properties for PCI Endpoint Controller Nodes.
-diff --git a/Documentation/devicetree/bindings/phy/calxeda-combophy.yaml b/Documentation/devicetree/bindings/phy/calxeda-combophy.yaml
-index 41ee16e21f8d..d05a7c793035 100644
---- a/Documentation/devicetree/bindings/phy/calxeda-combophy.yaml
-+++ b/Documentation/devicetree/bindings/phy/calxeda-combophy.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/phy/calxeda-combophy.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Calxeda Highbank Combination PHYs binding for SATA
-+title: Calxeda Highbank Combination PHYs for SATA
- 
- description: |
-   The Calxeda Combination PHYs connect the SoC to the internal fabric
-diff --git a/Documentation/devicetree/bindings/pinctrl/fsl,scu-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/fsl,scu-pinctrl.yaml
-index 45ea565ce238..fcd729afeee1 100644
---- a/Documentation/devicetree/bindings/pinctrl/fsl,scu-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/fsl,scu-pinctrl.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/pinctrl/fsl,scu-pinctrl.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - Pinctrl bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - Pinctrl Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/pinctrl/pincfg-node.yaml b/Documentation/devicetree/bindings/pinctrl/pincfg-node.yaml
-index f5a121311f61..be81ed22a036 100644
---- a/Documentation/devicetree/bindings/pinctrl/pincfg-node.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/pincfg-node.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/pinctrl/pincfg-node.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Generic pin configuration node schema
-+title: Generic Pin Configuration Node
- 
- maintainers:
-   - Linus Walleij <linus.walleij@linaro.org>
-diff --git a/Documentation/devicetree/bindings/pinctrl/pinmux-node.yaml b/Documentation/devicetree/bindings/pinctrl/pinmux-node.yaml
-index 551df3d9b809..008c3ab7f1bb 100644
---- a/Documentation/devicetree/bindings/pinctrl/pinmux-node.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/pinmux-node.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/pinctrl/pinmux-node.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Generic pin multiplexing node schema
-+title: Generic Pin Multiplexing Node
- 
- maintainers:
-   - Linus Walleij <linus.walleij@linaro.org>
-diff --git a/Documentation/devicetree/bindings/power/fsl,scu-pd.yaml b/Documentation/devicetree/bindings/power/fsl,scu-pd.yaml
-index 1f72b18ca0fc..407b7cfec783 100644
---- a/Documentation/devicetree/bindings/power/fsl,scu-pd.yaml
-+++ b/Documentation/devicetree/bindings/power/fsl,scu-pd.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/power/fsl,scu-pd.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - Power domain bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - Power Domain Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Documentation/devicetree/bindings/riscv/cpus.yaml
-index 83ad177a9043..c6720764e765 100644
---- a/Documentation/devicetree/bindings/riscv/cpus.yaml
-+++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/riscv/cpus.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: RISC-V bindings for 'cpus' DT nodes
-+title: RISC-V CPUs
- 
- maintainers:
-   - Paul Walmsley <paul.walmsley@sifive.com>
-diff --git a/Documentation/devicetree/bindings/rtc/fsl,scu-rtc.yaml b/Documentation/devicetree/bindings/rtc/fsl,scu-rtc.yaml
-index 8c102b70d735..dd1b1abf1e1b 100644
---- a/Documentation/devicetree/bindings/rtc/fsl,scu-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/fsl,scu-rtc.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/rtc/fsl,scu-rtc.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - RTC bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - RTC Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/spi/omap-spi.yaml b/Documentation/devicetree/bindings/spi/omap-spi.yaml
-index 9952199cae11..352affa4b7f8 100644
---- a/Documentation/devicetree/bindings/spi/omap-spi.yaml
-+++ b/Documentation/devicetree/bindings/spi/omap-spi.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/spi/omap-spi.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: SPI controller bindings for OMAP and K3 SoCs
-+title: SPI Controller on OMAP and K3 SoCs
- 
- maintainers:
-   - Aswath Govindraju <a-govindraju@ti.com>
-diff --git a/Documentation/devicetree/bindings/thermal/fsl,scu-thermal.yaml b/Documentation/devicetree/bindings/thermal/fsl,scu-thermal.yaml
-index f9e4b3c8d0ee..3721c8c8ec64 100644
---- a/Documentation/devicetree/bindings/thermal/fsl,scu-thermal.yaml
-+++ b/Documentation/devicetree/bindings/thermal/fsl,scu-thermal.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/thermal/fsl,scu-thermal.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - Thermal bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - Thermal Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
-diff --git a/Documentation/devicetree/bindings/usb/usb-device.yaml b/Documentation/devicetree/bindings/usb/usb-device.yaml
-index b77960a7a37b..7a771125ec76 100644
---- a/Documentation/devicetree/bindings/usb/usb-device.yaml
-+++ b/Documentation/devicetree/bindings/usb/usb-device.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/usb/usb-device.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: The device tree bindings for the Generic USB Device
-+title: Generic USB Device
- 
- maintainers:
-   - Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-diff --git a/Documentation/devicetree/bindings/watchdog/fsl,scu-wdt.yaml b/Documentation/devicetree/bindings/watchdog/fsl,scu-wdt.yaml
-index f84c45d687d7..47701248cd8d 100644
---- a/Documentation/devicetree/bindings/watchdog/fsl,scu-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/fsl,scu-wdt.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/watchdog/fsl,scu-wdt.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: i.MX SCU Client Device Node - Watchdog bindings based on SCU Message Protocol
-+title: i.MX SCU Client Device Node - Watchdog Based on SCU Message Protocol
- 
- maintainers:
-   - Dong Aisheng <aisheng.dong@nxp.com>
--- 
-2.34.1
+> +
+> +	aliases {
+> +		serial0 = &uart7;
+> +	};
+> +
+> +	clocks {
+> +		xo_board: xo-board {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <19200000>;
+> +			clock-output-names = "xo_board";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <32000>;
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		pcie_0_pipe_clk: pcie-0-pipe-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "pcie_0_pipe_clk";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		pcie_0_phy_aux_clk: pcie-0-phy-aux-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "pcie_0_phy_aux_clk";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		usb3_phy_wrapper_pipe_clk: usb3-phy-wrapper-pipe-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "usb3_phy_wrapper_pipe_clk";
+> +			#clock-cells = <0>;
+> +		};
+Do these pipe clocks not come from QMPPHY?
 
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	ppvar_sys: ppvar-sys-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "ppvar_sys";
+Any chance you could add the voltage of this regulator here,
+so the DT can better represent the hardware?
+
+Konrad
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +
+> +		vin-supply = <&ppvar_sys>;
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +		vdd-s3-supply = <&vph_pwr>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-s6-supply = <&vph_pwr>;
+> +		vdd-s7-supply = <&vph_pwr>;
+> +		vdd-s8-supply = <&vph_pwr>;
+> +		vdd-s9-supply = <&vph_pwr>;
+> +		vdd-s10-supply = <&vph_pwr>;
+> +
+> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
+> +		vdd-l2-l10-supply = <&vph_pwr>;
+> +		vdd-l3-l4-l5-l18-supply = <&vreg_s5a_2p0>;
+> +		vdd-l6-l9-supply = <&vreg_s6a_0p9>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s4a_1p8>;
+> +		vdd-l13-l16-l17-supply = <&vph_pwr>;
+> +
+> +		vreg_s2a_0p5: smps2 {
+> +			regulator-name = "vreg_s2a_0p5";
+> +			regulator-min-microvolt = <320000>;
+> +			regulator-max-microvolt = <570000>;
+> +		};
+> +
+> +		vreg_s3a_1p05: smps3 {
+> +			regulator-name = "vreg_s3a_1p05";
+> +			regulator-min-microvolt = <950000>;
+> +			regulator-max-microvolt = <1170000>;
+> +		};
+> +
+> +		vreg_s4a_1p8: smps4 {
+> +			regulator-name = "vreg_s4a_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		vreg_s5a_2p0: smps5 {
+> +			regulator-name = "vreg_s5a_2p0";
+> +			regulator-min-microvolt = <1904000>;
+> +			regulator-max-microvolt = <2000000>;
+> +		};
+> +
+> +		vreg_s6a_0p9: smps6 {
+> +			regulator-name = "vreg_s6a_0p9";
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1128000>;
+> +		};
+> +
+> +		vreg_s7a_1p2: smps7 {
+> +			regulator-name = "vreg_s7a_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +		};
+> +
+> +		vreg_s8a_1p3: smps8 {
+> +			regulator-name = "vreg_s8a_1p3";
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +		};
+> +
+> +		vreg_l1a_0p91: ldo1 {
+> +			regulator-name = "vreg_l1a_0p91";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l2a_2p3: ldo2 {
+> +			regulator-name = "vreg_l2a_2p3";
+> +			regulator-min-microvolt = <2970000>;
+> +			regulator-max-microvolt = <3300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l3a_1p2: ldo3 {
+> +			regulator-name = "vreg_l3a_1p2";
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1260000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l5a_0p8: ldo5 {
+> +			regulator-name = "vreg_l5a_0p8";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l6a_0p91: ldo6 {
+> +			regulator-name = "vreg_l6a_0p91";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l7a_1p8: ldo7 {
+> +			regulator-name = "vreg_l7a_1p8";
+> +			regulator-min-microvolt = <1650000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +
+> +		};
+> +
+> +		vreg_l8a_0p91: ldo8 {
+> +			regulator-name = "vreg_l8a_0p91";
+> +			regulator-min-microvolt = <888000>;
+> +			regulator-max-microvolt = <925000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l9a_0p91: ldo9 {
+> +			regulator-name = "vreg_l8a_0p91";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l10a_2p95: ldo10 {
+> +			regulator-name = "vreg_l10a_2p95";
+> +			regulator-min-microvolt = <2700000>;
+> +			regulator-max-microvolt = <3544000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l11a_0p91: ldo11 {
+> +			regulator-name = "vreg_l11a_0p91";
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <1000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l12a_1p8: ldo12 {
+> +			regulator-name = "vreg_l12a_1p8";
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <1504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l14a_1p8: ldo14 {
+> +			regulator-name = "vreg_l14a_1p8";
+> +			regulator-min-microvolt = <1650000>;
+> +			regulator-max-microvolt = <1950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l15a_1p8: ldo15 {
+> +			regulator-name = "vreg_l15a_1p8";
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l16a_1p8: ldo16 {
+> +			regulator-name = "vreg_l16a_1p8";
+> +			regulator-min-microvolt = <1710000>;
+> +			regulator-max-microvolt = <1890000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l17a_3p3: ldo17 {
+> +			regulator-name = "vreg_l17a_3p3";
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3544000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l18a_1p2: ldo18 {
+> +			regulator-name = "vreg_l18a_1p2";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&uart7 {
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
+> new file mode 100644
+> index 000000000000..42eb0c33e7ba
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
+> @@ -0,0 +1,266 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "qru1000.dtsi"
+> +#include "pm8150.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. QRU1000 IDP";
+> +	compatible = "qcom,qru1000-idp", "qcom,qru1000";
+> +
+> +	aliases {
+> +		serial0 = &uart7;
+> +	};
+> +
+> +	clocks {
+> +		xo_board: xo-board {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <19200000>;
+> +			clock-output-names = "xo_board";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <32000>;
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		pcie_0_pipe_clk: pcie-0-pipe-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "pcie_0_pipe_clk";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		pcie_0_phy_aux_clk: pcie-0-phy-aux-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "pcie_0_phy_aux_clk";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		usb3_phy_wrapper_pipe_clk: usb3-phy-wrapper-pipe-clk {
+> +			compatible = "fixed-clock";
+> +			clock-frequency = <1000>;
+> +			clock-output-names = "usb3_phy_wrapper_pipe_clk";
+> +			#clock-cells = <0>;
+> +		};
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	ppvar_sys: ppvar-sys-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "ppvar_sys";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +
+> +		vin-supply = <&ppvar_sys>;
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +		vdd-s3-supply = <&vph_pwr>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-s6-supply = <&vph_pwr>;
+> +		vdd-s7-supply = <&vph_pwr>;
+> +		vdd-s8-supply = <&vph_pwr>;
+> +		vdd-s9-supply = <&vph_pwr>;
+> +		vdd-s10-supply = <&vph_pwr>;
+> +
+> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
+> +		vdd-l2-l10-supply = <&vph_pwr>;
+> +		vdd-l3-l4-l5-l18-supply = <&vreg_s5a_2p0>;
+> +		vdd-l6-l9-supply = <&vreg_s6a_0p9>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s4a_1p8>;
+> +		vdd-l13-l16-l17-supply = <&vph_pwr>;
+> +
+> +		vreg_s2a_0p5: smps2 {
+> +			regulator-name = "vreg_s2a_0p5";
+> +			regulator-min-microvolt = <320000>;
+> +			regulator-max-microvolt = <570000>;
+> +		};
+> +
+> +		vreg_s3a_1p05: smps3 {
+> +			regulator-name = "vreg_s3a_1p05";
+> +			regulator-min-microvolt = <950000>;
+> +			regulator-max-microvolt = <1170000>;
+> +		};
+> +
+> +		vreg_s4a_1p8: smps4 {
+> +			regulator-name = "vreg_s4a_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		vreg_s5a_2p0: smps5 {
+> +			regulator-name = "vreg_s5a_2p0";
+> +			regulator-min-microvolt = <1904000>;
+> +			regulator-max-microvolt = <2000000>;
+> +		};
+> +
+> +		vreg_s6a_0p9: smps6 {
+> +			regulator-name = "vreg_s6a_0p9";
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1128000>;
+> +		};
+> +
+> +		vreg_s7a_1p2: smps7 {
+> +			regulator-name = "vreg_s7a_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +		};
+> +
+> +		vreg_s8a_1p3: smps8 {
+> +			regulator-name = "vreg_s8a_1p3";
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +		};
+> +
+> +		vreg_l1a_0p91: ldo1 {
+> +			regulator-name = "vreg_l1a_0p91";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l2a_2p3: ldo2 {
+> +			regulator-name = "vreg_l2a_2p3";
+> +			regulator-min-microvolt = <2970000>;
+> +			regulator-max-microvolt = <3300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l3a_1p2: ldo3 {
+> +			regulator-name = "vreg_l3a_1p2";
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1260000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l5a_0p8: ldo5 {
+> +			regulator-name = "vreg_l5a_0p8";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l6a_0p91: ldo6 {
+> +			regulator-name = "vreg_l6a_0p91";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l7a_1p8: ldo7 {
+> +			regulator-name = "vreg_l7a_1p8";
+> +			regulator-min-microvolt = <1650000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +
+> +		};
+> +
+> +		vreg_l8a_0p91: ldo8 {
+> +			regulator-name = "vreg_l8a_0p91";
+> +			regulator-min-microvolt = <888000>;
+> +			regulator-max-microvolt = <925000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l9a_0p91: ldo9 {
+> +			regulator-name = "vreg_l8a_0p91";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l10a_2p95: ldo10 {
+> +			regulator-name = "vreg_l10a_2p95";
+> +			regulator-min-microvolt = <2700000>;
+> +			regulator-max-microvolt = <3544000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l11a_0p91: ldo11 {
+> +			regulator-name = "vreg_l11a_0p91";
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <1000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l12a_1p8: ldo12 {
+> +			regulator-name = "vreg_l12a_1p8";
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <1504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l14a_1p8: ldo14 {
+> +			regulator-name = "vreg_l14a_1p8";
+> +			regulator-min-microvolt = <1650000>;
+> +			regulator-max-microvolt = <1950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l15a_1p8: ldo15 {
+> +			regulator-name = "vreg_l15a_1p8";
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l16a_1p8: ldo16 {
+> +			regulator-name = "vreg_l16a_1p8";
+> +			regulator-min-microvolt = <1710000>;
+> +			regulator-max-microvolt = <1890000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l17a_3p3: ldo17 {
+> +			regulator-name = "vreg_l17a_3p3";
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3544000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +
+> +		vreg_l18a_1p2: ldo18 {
+> +			regulator-name = "vreg_l18a_1p2";
+> +			regulator-min-microvolt = <312000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&uart7 {
+> +	status = "okay";
+> +};
