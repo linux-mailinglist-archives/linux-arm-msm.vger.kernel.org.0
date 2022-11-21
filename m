@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B76416328B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 16:54:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0FA36328D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 16:59:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbiKUPx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 10:53:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
+        id S231460AbiKUP7V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 10:59:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbiKUPx6 (ORCPT
+        with ESMTP id S230083AbiKUP7V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 10:53:58 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5887CCB690;
-        Mon, 21 Nov 2022 07:53:55 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AL8Oovb000814;
-        Mon, 21 Nov 2022 15:53:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iTFbOuUq8jlB7FYKsO2QFbHF7KSE3Y+SOGWHJJHHqfk=;
- b=KxzyqbADG02kEFmBiyRURXOf/c2UXg0Sr7oVX9S88p3EGEoHMKoPmNMYRuUKcuOlVEJN
- JtIxcMn5hQnapCAji9bR4Y+x0uO2KHlJnHRSeCmNwSAWoWY/XN+uQDZ4PGBGtK2ErLVf
- q0XGfoRrOZcoiceFekkI2mx3JYYXaI0zjfi+Tc2GgbMjXfq72yTGngxIb/OkyyF2ASdJ
- CtJ14dbpZKiwJTVj68TgctfraCl78CKyWKBn++93LhU8vl0CaQYazQ2dgwPXE6Ijzd4M
- rhVmyeWnRnnG43ObvQsmoBiusHb1wJR7UlDMhfOmD/lJ4T6Ufy7QlN0sB65f3b09FH0E HQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxrf5myqn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Nov 2022 15:53:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ALFriRc013226
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 21 Nov 2022 15:53:44 GMT
-Received: from [10.50.44.157] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 21 Nov
- 2022 07:53:41 -0800
-Message-ID: <9e0cebc4-0ee3-c316-01b3-5131298d70ce@quicinc.com>
-Date:   Mon, 21 Nov 2022 21:23:38 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH] asm-generic/io: Add _RET_IP_ to MMIO trace for more
- accurate debug info
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Steven Rostedt <rostedt@goodmis.org>, Arnd Bergmann <arnd@arndb.de>
-CC:     Masami Hiramatsu <mhiramat@kernel.org>,
+        Mon, 21 Nov 2022 10:59:21 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B62D14FA;
+        Mon, 21 Nov 2022 07:59:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D1DF8B810E5;
+        Mon, 21 Nov 2022 15:59:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5D0C433D6;
+        Mon, 21 Nov 2022 15:59:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669046357;
+        bh=NiniSOPGKqhdfVPafjU8CKNZvdS31QSh/55JMb9zJes=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=a/XuarW4mNIbqbd7XBC2KEovRFbFI0Cn8HGxor9WCskdjYW9wP+i33fR3L/YbBAdb
+         JBToPIO95id5D7gCvcI1UKdABittIPylI7B5C0y6Hje4bNLMt0kknKdWy+buSze5G9
+         QliJMfMVSnIQdSgDXwmkUS1hM13R1DgRGSb+XUj/7hFPpXMWf9akqhod1iCCCvar9d
+         wf8EVZWfUEKSZ3v+87b0ziwJPN4WP4ebWZBKxIyPpXNFnImRFbkEQT0yCxzrkgux89
+         +tVaefxhLXHps+kJrZqFWY9j4ZnjMk7f5mdKV3dvCGelrv9EcVOXYoH0jcZWaIcjDq
+         x5hT8nHQsCNNg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub Kicinski" <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arch@vger.kernel.org>, <quic_satyap@quicinc.com>
-References: <20221017143450.9161-1-quic_saipraka@quicinc.com>
- <20221024120929.41241e07@gandalf.local.home>
- <2f19ea9c-10e6-d0f7-2fc9-fb0f896bfc64@quicinc.com>
-In-Reply-To: <2f19ea9c-10e6-d0f7-2fc9-fb0f896bfc64@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mSf_gyUUoxu3v3oHNGVzsqP78QKun3pf
-X-Proofpoint-ORIG-GUID: mSf_gyUUoxu3v3oHNGVzsqP78QKun3pf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-21_14,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=608 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 clxscore=1011
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211210123
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        <linux-acpi@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+Subject: Re: [PATCH v7 18/20] firmware: qcom_scm: Use fixed width src vm bitmap
+References: <20221121140009.2353512-1-quic_eberman@quicinc.com>
+        <20221121140009.2353512-19-quic_eberman@quicinc.com>
+Date:   Mon, 21 Nov 2022 17:59:07 +0200
+In-Reply-To: <20221121140009.2353512-19-quic_eberman@quicinc.com> (Elliot
+        Berman's message of "Mon, 21 Nov 2022 06:00:07 -0800")
+Message-ID: <874jus9u44.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,77 +87,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+Elliot Berman <quic_eberman@quicinc.com> writes:
 
-On 10/26/2022 7:17 PM, Sai Prakash Ranjan wrote:
-> Hi Steve,
-> 
-> On 10/24/2022 9:39 PM, Steven Rostedt wrote:
->> On Mon, 17 Oct 2022 20:04:50 +0530
->> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
->>
->>> Due to compiler optimizations like inlining, there are cases where
->>> MMIO traces using _THIS_IP_ for caller information might not be
->>> sufficient to provide accurate debug traces.
->>>
->>> 1) With optimizations (Seen with GCC):
->>>
->>> In this case, _THIS_IP_ works fine and prints the caller information
->>> since it will be inlined into the caller and we get the debug traces
->>> on who made the MMIO access, for ex:
->>>
->>> rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 
->>> addr=0xffff8000087447f4
->>> rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 val=0x0 
->>> addr=0xffff8000087447f4
->>>
->>> 2) Without optimizations (Seen with Clang):
->>>
->>> _THIS_IP_ will not be sufficient in this case as it will print only
->>> the MMIO accessors itself which is of not much use since it is not
->>> inlined as below for example:
->>>
->>> rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
->>> rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 
->>> addr=0xffff8000087447f4
->>>
->>> So in order to handle this second case as well irrespective of the 
->>> compiler
->>> optimizations, add _RET_IP_ to MMIO trace to make it provide more 
->>> accurate
->>> debug information in all these scenarios.
->>>
->>> Before:
->>>
->>> rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
->>> rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 
->>> addr=0xffff8000087447f4
->>>
->>> After:
->>>
->>> rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 
->>> addr=0xffff8000087447f4
->>> rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 
->>> width=32 val=0x0 addr=0xffff8000087447f4
->>>
->>> Fixes: 210031971cdd ("asm-generic/io: Add logging support for MMIO 
->>> accessors")
->>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
->>
->>
->> Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
->>
->> What tree should this go through?
->>
->> -- Steve
-> 
-> 
-> Thanks for the ack, with this I believe Arnd can take it through his 
-> tree like last time.
-> 
+> The maximum VMID for assign_mem is 63. Use a u64 to represent this
+> bitmap instead of architecture-dependent "unsigned int" which varies in
+> size on 32-bit and 64-bit platforms.
+>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>
+> Note this will have build conflicts with
+> https://lore.kernel.org/all/20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-2-f7c65d6f0e55@linaro.org/
+> which would also need an "unsigned int" -> "u64" in struct qcom_mpss_dsm_mem:perms.
+>
+>  drivers/firmware/qcom_scm.c           | 12 +++++++-----
+>  drivers/misc/fastrpc.c                |  6 ++++--
+>  drivers/net/wireless/ath/ath10k/qmi.c |  4 ++--
 
+For ath10k:
 
-Can we take this patch atleast for 6.2-rc1?
+Acked-by: Kalle Valo <kvalo@kernel.org>
 
-Thanks,
-Sai
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
