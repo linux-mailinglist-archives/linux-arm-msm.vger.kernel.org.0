@@ -2,127 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06BE8632FEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Nov 2022 23:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46C7E63324E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 02:44:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbiKUWlg convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Nov 2022 17:41:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46380 "EHLO
+        id S232343AbiKVBoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Nov 2022 20:44:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiKUWlf (ORCPT
+        with ESMTP id S232341AbiKVBoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Nov 2022 17:41:35 -0500
-X-Greylist: delayed 342 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 21 Nov 2022 14:41:34 PST
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE89BB9B8E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 14:41:34 -0800 (PST)
-Received: from [127.0.0.1] (bband-dyn193.178-41-216.t-com.sk [178.41.216.193])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 21 Nov 2022 20:44:23 -0500
+Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D091BC688F;
+        Mon, 21 Nov 2022 17:44:22 -0800 (PST)
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8150C1F8A5;
-        Mon, 21 Nov 2022 23:35:48 +0100 (CET)
-Date:   Mon, 21 Nov 2022 23:35:46 +0100
-From:   Martin Botka <martin.botka@somainline.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-CC:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_drm/msm/dpu=3A_Print_inte?= =?US-ASCII?Q?rrupt_index_in_addition_to_the_mask?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20221121222456.437815-1-marijn.suijten@somainline.org>
-References: <20221121222456.437815-1-marijn.suijten@somainline.org>
-Message-ID: <60E46E34-763F-4D03-B0CC-70B5A8AA660D@somainline.org>
-MIME-Version: 1.0
+        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4NGRrP45RCz4xVnj;
+        Tue, 22 Nov 2022 09:44:21 +0800 (CST)
+Received: from xaxapp01.zte.com.cn ([10.88.40.50])
+        by mse-fl2.zte.com.cn with SMTP id 2AM1iBT0036503;
+        Tue, 22 Nov 2022 09:44:11 +0800 (+08)
+        (envelope-from ye.xingchen@zte.com.cn)
+Received: from mapi (xaxapp02[null])
+        by mapi (Zmail) with MAPI id mid31;
+        Tue, 22 Nov 2022 09:44:12 +0800 (CST)
+Date:   Tue, 22 Nov 2022 09:44:12 +0800 (CST)
+X-Zmail-TransId: 2afa637c296c6f907602
+X-Mailer: Zmail v1.0
+Message-ID: <202211220944121776425@zte.com.cn>
+Mime-Version: 1.0
+From:   <ye.xingchen@zte.com.cn>
+To:     <agross@kernel.org>
+Cc:     <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <chi.minghao@zte.com.cn>
+Subject: =?UTF-8?B?W1BBVENIXSBzcGk6IHVzZSBkZXZtX3BsYXRmb3JtX2dldF9hbmRfaW9yZW1hcF9yZXNvdXJjZSgp?=
 Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 2AM1iBT0036503
+X-Fangmail-Gw-Spam-Type: 0
+X-FangMail-Miltered: at cgslv5.04-192.168.250.138.novalocal with ID 637C2975.001 by FangMail milter!
+X-FangMail-Envelope: 1669081461/4NGRrP45RCz4xVnj/637C2975.001/10.5.228.133/[10.5.228.133]/mse-fl2.zte.com.cn/<ye.xingchen@zte.com.cn>
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 637C2975.001/4NGRrP45RCz4xVnj
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_PASS,UNPARSEABLE_RELAY autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Minghao Chi <chi.minghao@zte.com.cn>
 
+Convert platform_get_resource(), devm_ioremap_resource() to a single
+call to devm_platform_get_and_ioremap_resource(), as this is exactly
+what this function does.
 
-On November 21, 2022 11:24:55 PM GMT+01:00, Marijn Suijten <marijn.suijten@somainline.org> wrote:
->The mask only describes the `irq_idx % 32` part, making it generally
->impossible to deduce what interrupt is being enabled/disabled.  Since
->`debug/core_irq` in debugfs (and other prints) also include the full
->`DPU_IRQ_IDX()` value, print the same full value here for easier
->correlation instead of only adding the `irq_idx / 32` part.
->
->Furthermore, make the dbgstr messages more consistent.
->
->Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->---
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 12 ++++++------
-> 1 file changed, 6 insertions(+), 6 deletions(-)
->
->diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->index cf1b6d84c18a..64589a9c2c51 100644
->--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->@@ -252,9 +252,9 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-> 
-> 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
-> 	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
->-		dbgstr = "DPU IRQ already set:";
->+		dbgstr = "already ";
-> 	} else {
->-		dbgstr = "DPU IRQ enabled:";
->+		dbgstr = "";
-> 
-> 		cache_irq_mask |= DPU_IRQ_MASK(irq_idx);
-> 		/* Cleaning any pending interrupt */
->@@ -268,7 +268,7 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-> 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
-> 	}
-> 
->-	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
->+	pr_debug("DPU IRQ %d %senabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
-> 			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
-> 
-> 	return 0;
->@@ -301,9 +301,9 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-> 
-> 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
-> 	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
->-		dbgstr = "DPU IRQ is already cleared:";
->+		dbgstr = "already ";
-> 	} else {
->-		dbgstr = "DPU IRQ mask disable:";
->+		dbgstr = "";
-> 
-> 		cache_irq_mask &= ~DPU_IRQ_MASK(irq_idx);
-> 		/* Disable interrupts based on the new mask */
->@@ -317,7 +317,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-> 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
-> 	}
-> 
->-	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
->+	pr_debug("DPU IRQ %d %sdisabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
-> 			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
-> 
-> 	return 0;
+Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+---
+ drivers/spi/spi-qup.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Looks good to me.
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 678dc51ef017..71fc65e094e7 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1003,8 +1003,7 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	int ret, irq, size;
 
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
+ 	dev = &pdev->dev;
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	base = devm_ioremap_resource(dev, res);
++	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+
+-- 
+2.25.1
