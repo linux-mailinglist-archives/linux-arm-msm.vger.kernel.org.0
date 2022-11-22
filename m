@@ -2,71 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72A65633CDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 13:49:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 263F3633CCC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 13:47:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbiKVMtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 07:49:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54832 "EHLO
+        id S233024AbiKVMrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 07:47:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbiKVMtl (ORCPT
+        with ESMTP id S233237AbiKVMrH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 07:49:41 -0500
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A26606AB;
-        Tue, 22 Nov 2022 04:49:40 -0800 (PST)
-Received: from dggpeml500023.china.huawei.com (unknown [172.30.72.53])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NGkbL2hcyzHw4C;
-        Tue, 22 Nov 2022 20:49:02 +0800 (CST)
-Received: from ubuntu1804.huawei.com (10.67.174.58) by
- dggpeml500023.china.huawei.com (7.185.36.114) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 22 Nov 2022 20:49:38 +0800
-From:   Xiu Jianfeng <xiujianfeng@huawei.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <mani@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH -next] cpufreq: qcom-hw: Fix memory leak in qcom_cpufreq_hw_driver_probe()
-Date:   Tue, 22 Nov 2022 20:46:27 +0800
-Message-ID: <20221122124627.174403-1-xiujianfeng@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Tue, 22 Nov 2022 07:47:07 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7773B5BD47;
+        Tue, 22 Nov 2022 04:47:06 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3C9BE1FB;
+        Tue, 22 Nov 2022 04:47:12 -0800 (PST)
+Received: from [10.57.71.118] (unknown [10.57.71.118])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AED973F73B;
+        Tue, 22 Nov 2022 04:47:01 -0800 (PST)
+Message-ID: <916a6953-d9b4-c257-c08b-f5277ead71af@arm.com>
+Date:   Tue, 22 Nov 2022 12:46:56 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.58]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- dggpeml500023.china.huawei.com (7.185.36.114)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH RFC v2 5/7] arm64: dts: imx: fix touchscreen reset GPIO
+ polarity
+Content-Language: en-GB
+To:     Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+        David Jander <david@protonic.nl>,
+        Fabio Estevam <festevam@gmail.com>
+Cc:     Quentin Schulz <foss+kernel@0leil.net>,
+        "Angus Ainslie (Purism)" <angus@akkea.ca>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Samuel Holland <samuel@sholland.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Bastien Nocera <hadess@hadess.net>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        devicetree@vger.kernel.org
+References: <20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com>
+ <20221103-upstream-goodix-reset-v2-5-2c38fb03a300@theobroma-systems.com>
+ <CAOMZO5BzWsHAy7KjZe+KEiXVq-Mfpggqjk0vswuzx7nkups3gA@mail.gmail.com>
+ <20221122081851.6cb762d8@erd992>
+ <907b9321-14dc-dc99-80fc-e1a20ee33a1e@theobroma-systems.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <907b9321-14dc-dc99-80fc-e1a20ee33a1e@theobroma-systems.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If devm_clk_hw_register() fails, clk_init.name should be freed before
-return error, otherwise will cause memory leak issue, fix it.
+On 2022-11-22 09:58, Quentin Schulz wrote:
+> Hi David,
+> 
+> Thanks Fabio for the Cc.
+> 
+> On 11/22/22 08:18, David Jander wrote:
+>> On Mon, 21 Nov 2022 15:18:32 -0300
+>> Fabio Estevam <festevam@gmail.com> wrote:
+>>
+>>> [Adding Angus and David]
+>>
+>> Thanks. This was apparently necessary ;-)
+>>
+>>> On Mon, Nov 21, 2022 at 3:12 PM Quentin Schulz 
+>>> <foss+kernel@0leil.net> wrote:
+>>>>
+>>>> From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+>>>>
+>>>> The reset line is active low for the Goodix touchscreen controller so
+>>>> let's fix the polarity in the Device Tree node.
+>>>>
+>>>> Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+>>>> ---
+>>>>   arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts         | 2 +-
+>>>>   arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts | 2 +-
+>>>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts 
+>>>> b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+>>>> index 9fbbbb556c0b3..df7e5ae9698e1 100644
+>>>> --- a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+>>>> +++ b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+>>>> @@ -107,7 +107,7 @@ touchscreeen@5d {
+>>>>                  interrupt-parent = <&gpio1>;
+>>>>                  interrupts = <8 IRQ_TYPE_NONE>;
+>>>>                  irq-gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;
+>>>> -               reset-gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+>>>> +               reset-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+>>
+>> NACK!
+>>
+>> The PRT8MM has an inverter in the reset line. The reason for that is 
+>> that the
+>> reset line needs to be inactive when the driving side is unpowered.
+>> The DT was correct, this change will break it.
+>>
+> 
+> The DT was correct. The implementation in the driver is changed (the 
+> polarity is swapped) in this patch series, therefore the DT isn't 
+> correct anymore, hence this patch.
 
-Fixes: 84063a1cbe9e ("cpufreq: qcom-hw: Add CPU clock provider support")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
- 1 file changed, 1 insertion(+)
+I'm not sure it's quite that simple... FWIW I'm using an add-on LCD 
+module with a GT9271[1] (and I won't be the only one - Raspberry Pi and 
+other SBC users using DT overlays or custom-built DTBs are a whole other 
+can of worms here), where GPIO_ACTIVE_LOW is correctly specified per the 
+schematics, thus "wrong" for the current driver behaviour, yet it *is* 
+working OK as-is. I guess that's because /RSTB ends up driven low for 
+long enough between the current "deassertion" by 
+gpiod_direction_output(1) and gpiod_direction_input() allowing the 
+external pull-up to take it high again.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 1bd1e9ae5308..340fed35e45d 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -723,6 +723,7 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 		ret = devm_clk_hw_register(dev, &data->cpu_clk);
- 		if (ret < 0) {
- 			dev_err(dev, "Failed to register clock %d: %d\n", i, ret);
-+			kfree(clk_init.name);
- 			return ret;
- 		}
- 
--- 
-2.17.1
+Robin.
 
+[1] 
+https://www.friendlyelec.com/index.php?route=product/product&path=81&product_id=230
+
+> 
+> See 
+> https://lore.kernel.org/linux-input/20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com/ for the whole patch series.
+> 
+> This DT patch alone is obviously incorrect, but the context around it 
+> matters. I could/should have made it all into one big patch, the 
+> question is then how this big tree-crossing patch would be merged into 
+> Linux (if there's consensus). We're not there yet.
+> 
+> For some additional background on the discussion that was had in the v1:
+> https://lore.kernel.org/all/267de96a-0129-a97d-9bf6-e1001b422a1a@theobroma-systems.com/
+> I messed up the Cc list in the v1, apologies for the missing context in 
+> the archived mails, I think one should be able to understand the 
+> important bits by reading the answers in-mail. There, Dmitry, Hans and I 
+> discussed the meaning of the active level of GPIOs/reset lines and I 
+> expressed the reasons for such a change (which are also listed in the 
+> cover letter of this patch series).
+> 
+> As stated in v1 cover letter, no implementation will satisfy every one. 
+> We either make the DT binding implementation specific (which is what it 
+> shouldn't be), or we swap the polarity in the Linux implementation and 
+> thus the DT but then break DT backward compatibility.
+> 
+> Cheers,
+> Quentin
+> 
+> _______________________________________________
+> Linux-rockchip mailing list
+> Linux-rockchip@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-rockchip
