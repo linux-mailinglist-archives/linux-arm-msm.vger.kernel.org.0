@@ -2,142 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF03A6348B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 21:51:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD399634995
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 22:45:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234615AbiKVUvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 15:51:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58832 "EHLO
+        id S234043AbiKVVpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 16:45:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234518AbiKVUvK (ORCPT
+        with ESMTP id S232341AbiKVVpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 15:51:10 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA5A9585
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 12:51:08 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id n3so10065199wrp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 12:51:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gx+YWWCvKUmbpLOLiEAgZGjZu2bsrwzEPK49+jDiEKo=;
-        b=U56Z6HyNr+8U7X+k5HY107gitq8tL55XN2/davLUBfTrDuUK/wgOuxPbIhRlUiIVpO
-         DYiWZLrzE8vv1RgqzthucM0LGY5AejmXMIFCceBB+xXVc1q8laevMaTjTSQ1K4+yReCk
-         ivjrOu2Q+d1Az+uZFN3rQ3yjeChpiRD0cyV09df3LYnV1bxdwG8wFxGb7KHI+tSJWadR
-         lgWzcabIOJAqvnPLLZRT2k9d2q6BylVfP9uIudIU2iVIgFvIf31udR4aXIRRfUQQ7rIx
-         WX0fNWjMgCRBHI9FVZzxY8czhxUmgYfgFJzZV+XJ4X1WhNO7rTjq1YrZRlcqmNL9dSPM
-         b9Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gx+YWWCvKUmbpLOLiEAgZGjZu2bsrwzEPK49+jDiEKo=;
-        b=UnzM+30VikzsXLWMBkYTexBu2dXo6nsEqAFBItT5l85cguehyZc/lpe5y+uGLVG468
-         kEwFAMRrtBMLTHY4fnCCOybGPafLqVJYSotA9b1+StLu1bofjx9exQjQSP8SeFm1AkJc
-         bxm1jbBXShI06XJIe/r55y2yyyxDlrHUocki0HK2Jar0sXYAHzPMZO+FriX/eVwAeAPY
-         s8B2hf1ptGNJr6vWHKSpt6Tkz+WNrF7DyCvjkgAAYSjx1CboOvtHtPzLTL05VrcTj0Rm
-         9vx9zsCpZ3wzO9R+QpGntboGlJ6Ypj8jDN8AVUIxHVh5gxuUk5pjgLZkjF8lPM4DpreV
-         8Wgw==
-X-Gm-Message-State: ANoB5pmOPZd9Mm11c2xBZK8qq51zKVxLrpCEDm+tcVhm7LcVHDrA4TuO
-        mrCwb3S43m+5/7MvoW5Jnusucg==
-X-Google-Smtp-Source: AA0mqf5rPIjXhCXwCsxypSw1YhJ5JSXNE50WJhrKBKNpz+S35+WjBJXucChHKXjjj5trZ8uCMH3gUw==
-X-Received: by 2002:a5d:6052:0:b0:241:eba1:84fd with SMTP id j18-20020a5d6052000000b00241eba184fdmr168609wrt.696.1669150267102;
-        Tue, 22 Nov 2022 12:51:07 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id t1-20020a1c7701000000b003cf4d99fd2asm17606458wmi.6.2022.11.22.12.51.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 12:51:06 -0800 (PST)
-Date:   Tue, 22 Nov 2022 22:51:04 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: Add UFS host
- controller and PHY node
-Message-ID: <Y302OBP1f8W6pr5A@linaro.org>
-References: <20221116125112.2788318-1-abel.vesa@linaro.org>
- <20221116125112.2788318-3-abel.vesa@linaro.org>
- <22a41a8c-9b4a-ecca-ddd2-5e217d00d20c@linaro.org>
+        Tue, 22 Nov 2022 16:45:17 -0500
+Received: from smtp.smtpout.orange.fr (smtp-22.smtpout.orange.fr [80.12.242.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F69B10557
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 13:45:13 -0800 (PST)
+Received: from [192.168.1.18] ([86.243.100.34])
+        by smtp.orange.fr with ESMTPA
+        id xb4oo3s4a8oPgxb4oo5u6P; Tue, 22 Nov 2022 22:45:11 +0100
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 22 Nov 2022 22:45:11 +0100
+X-ME-IP: 86.243.100.34
+Message-ID: <253d4aac-62af-15af-90e7-a3cd4bacba92@wanadoo.fr>
+Date:   Tue, 22 Nov 2022 22:45:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <22a41a8c-9b4a-ecca-ddd2-5e217d00d20c@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] interconnect: qcom: icc-rpmh: Fix an error handling path
+ in qcom_icc_rpmh_probe()
+Content-Language: fr, en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <ec929c37c655ede7bb42e426354093c8a1377a0b.1668947686.git.christophe.jaillet@wanadoo.fr>
+ <COHSZZ9A5570.1P4NTXRE9IRZR@otso>
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <COHSZZ9A5570.1P4NTXRE9IRZR@otso>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-11-16 13:56:36, Konrad Dybcio wrote:
+Le 21/11/2022 à 08:42, Luca Weiss a écrit :
+> Hi Christophe,
+> 
+> On Sun Nov 20, 2022 at 1:35 PM CET, Christophe JAILLET wrote:
+>> If of_platform_populate() fails, some resources need to be freed as already
+>> done in the other error handling paths.
+>>
+>> Fixes: 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child NoC device probe")
+> 
+> I believe the same needs to be applied to icc-rpm.c.
+
+Their are other issues in the error handling path of this file.
+
+1)	if (desc->has_bus_pd) {
+		ret = dev_pm_domain_attach(dev, true);
+is unbalanced, both in the error handling path and in the remove function.
+
+
+2)	clk_bulk_prepare_enable()
+is not balanced in all error handling paths.
+
+
+3) the same issue about error handling if of_platform_populate() fails.
+
+
+These issues have been introduced in different commits.
+
+
+Would you prefer several patches, each related to a given Fixes: tag, or 
+one bigger "fix all error handling paths"?
+
+
+Anyway, fixing the points above would require moving some code around. 
+Usually I try to avoid it, because it is not always easy to see 
+associated side effects.
+
+CJ
+
+> 
+> Also there shouldn't be an empty line here between Fixes: and Signed-off-by:
+> 
+> Regards
+> Luca
+> 
+>>
+>> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+>> ---
+>>   drivers/interconnect/qcom/icc-rpmh.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+>> index fd17291c61eb..5168bbf3d92f 100644
+>> --- a/drivers/interconnect/qcom/icc-rpmh.c
+>> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+>> @@ -235,8 +235,11 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>>   	platform_set_drvdata(pdev, qp);
+>>   
+>>   	/* Populate child NoC devices if any */
+>> -	if (of_get_child_count(dev->of_node) > 0)
+>> -		return of_platform_populate(dev->of_node, NULL, NULL, dev);
+>> +	if (of_get_child_count(dev->of_node) > 0) {
+>> +		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+>> +		if (ret)
+>> +			goto err;
+>> +	}
+>>   
+>>   	return 0;
+>>   err:
+>> -- 
+>> 2.34.1
 > 
 > 
-> On 16/11/2022 13:51, Abel Vesa wrote:
-> > Enable UFS host controller and PHY node on SM8550 MTP board.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 22 ++++++++++++++++++++++
-> >   1 file changed, 22 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> > index d4c8d5b2497e..fef7793a7dec 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> > @@ -417,3 +417,25 @@ data-pins {
-> >   &uart7 {
-> >   	status = "okay";
-> >   };
-> > +
-> > +&ufs_mem_hc {
-> > +	status = "okay";
-> Status last, please.
 
-Yep. Will do.
-
-> 
-> > +
-> > +	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
-> > +
-> > +	vcc-supply = <&vreg_l17b_2p5>;
-> > +	vcc-max-microamp = <1300000>;
-> All these -microamp properties are downstream and do not exist in the
-> mainline kernel. Remove them.
-> 
-
-Actually, ufshcd-qcom complains if they are missing:
-
-[    3.287836] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
-to find vcc-max-microamp
-[    3.331904] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
-to find vccq-max-microamp
-[    3.346766] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
-to find vccq2-max-microamp
-
-> Konrad
-> > +	vccq-supply = <&vreg_l1g_1p2>;
-> > +	vccq-max-microamp = <1200000>;
-> > +	vccq2-supply = <&vreg_l3g_1p2>;
-> > +	vccq2-max-microamp = <100>;
-> > +};
-> > +
-> > +&ufs_mem_phy {
-> > +	status = "okay";
-> > +
-> > +	vdda-phy-supply = <&vreg_l1d_0p88>;
-> > +	vdda-phy-max-microamp = <188000>;
-
-These ones from PHY I can drop, since the driver won't complain.
-
-> > +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> > +	vdda-pll-max-microamp = <18300>;
-> > +};
