@@ -2,107 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70ED8633559
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 07:33:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC6086335E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 08:35:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229468AbiKVGdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 01:33:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
+        id S232391AbiKVHfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 02:35:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230255AbiKVGdY (ORCPT
+        with ESMTP id S232360AbiKVHfD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 01:33:24 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AC069FD2;
-        Mon, 21 Nov 2022 22:33:23 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AM64hxZ011778;
-        Tue, 22 Nov 2022 06:31:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=G6al7EgrFATCgp+KRSpg6rYdfJ14L7+oK1pxlH/1xPM=;
- b=FXhhwdJTxaPQFymKD/yRr2FSxLG6maIXss6h64W1jKPk2vV17490r82UXtWyDKljmE9s
- cyAKZIQtR25+FK68uVYVP4IA2TxSlT9EgICGNgpUa+IQnguEJaUC3dFV0u3VL0HEPVcp
- xRT3xQb+PfNKmQngNmJHTGmUN0kDG4QWX8IoOgPxv4Lhesy8a+bsBOXxgJCEo7CKflyG
- j9uO+zWaGrio7xuQywWHrbpeY3QEugfExXMEOFw9fge+qfRVyvDhM1JUrgJgAtGRi0wG
- eydy9eMMoxMYYUtrsxGc7lSP/EVltdBONEvHuOhqjiA8tOBvGEQ9lSnz2l5bjqHUekRI ZQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m0q6x86me-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 06:31:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AM6VYOu025299
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 06:31:34 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 21 Nov 2022 22:31:28 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>, <lgirdwood@gmail.co>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] ASoC: soc-pcm: Add NULL check in BE reparenting
-Date:   Tue, 22 Nov 2022 12:01:13 +0530
-Message-ID: <1669098673-29703-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Tue, 22 Nov 2022 02:35:03 -0500
+X-Greylist: delayed 964 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 21 Nov 2022 23:35:01 PST
+Received: from smtp15.bhosted.nl (smtp15.bhosted.nl [IPv6:2a02:9e0:8000::26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2336717052
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Nov 2022 23:35:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=protonic.nl; s=202111;
+        h=content-transfer-encoding:content-type:mime-version:references:in-reply-to:
+         message-id:subject:cc:to:from:date:from;
+        bh=Irzd9p8+2HaCNO0Vn7tqqCeUCmTdBbt/zWJHz9qjP1c=;
+        b=lJrIorXCx0ilwJuwWQE/gouCXs9jdvjGu2hOJkQ4Ozi495WYG+B4K2lUOcPD9V78Zmd7aL2nqx+m5
+         137Wx+2DAej8WLMp6457IMwMuDJP2u1Ap8bqEZhUXqcOSAFXkialwQAsIPl46fyAGeWrr2HOZICnYZ
+         7YtkjKhHbW8B3kr4bFX7MtA30XHMPuI/eWCYK0ebioDU1Fx+dpe9pjK97O8EgY6pFXAybWQGLass3C
+         ivcNX99Zo+ifr1rHGo2Xb3ykEb9W5FjAtoCEKZjw8/IixQRLODygQ4r26xKxORp+j11TG3mRAo5gJj
+         FS+4hRfSJpSeIvCpBkvR+mtWSyfXVjQ==
+X-MSG-ID: ea7fdbdd-6a35-11ed-b61c-0050569d3a82
+Date:   Tue, 22 Nov 2022 08:18:51 +0100
+From:   David Jander <david@protonic.nl>
+To:     Fabio Estevam <festevam@gmail.com>
+Cc:     Quentin Schulz <foss+kernel@0leil.net>,
+        "Angus Ainslie (Purism)" <angus@akkea.ca>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Samuel Holland <samuel@sholland.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Bastien Nocera <hadess@hadess.net>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC v2 5/7] arm64: dts: imx: fix touchscreen reset GPIO
+ polarity
+Message-ID: <20221122081851.6cb762d8@erd992>
+In-Reply-To: <CAOMZO5BzWsHAy7KjZe+KEiXVq-Mfpggqjk0vswuzx7nkups3gA@mail.gmail.com>
+References: <20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com>
+        <20221103-upstream-goodix-reset-v2-5-2c38fb03a300@theobroma-systems.com>
+        <CAOMZO5BzWsHAy7KjZe+KEiXVq-Mfpggqjk0vswuzx7nkups3gA@mail.gmail.com>
+Organization: Protonic Holland
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6Vcx3HIsNJoroU2495sFmzlrYThHOoL5
-X-Proofpoint-ORIG-GUID: 6Vcx3HIsNJoroU2495sFmzlrYThHOoL5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-22_03,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 spamscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211220047
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add NULL check in dpcm_be_reparent API, to handle
-kernel NULL pointer dereference error.
-The issue occurred in fuzzing test.
+On Mon, 21 Nov 2022 15:18:32 -0300
+Fabio Estevam <festevam@gmail.com> wrote:
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes Since V1:
-    -- Update commit title.
+> [Adding Angus and David]
 
- sound/soc/soc-pcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks. This was apparently necessary ;-)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 493f003..a7810c7 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -1247,6 +1247,8 @@ static void dpcm_be_reparent(struct snd_soc_pcm_runtime *fe,
- 		return;
- 
- 	be_substream = snd_soc_dpcm_get_substream(be, stream);
-+	if (!be_substream)
-+		return;
- 
- 	for_each_dpcm_fe(be, stream, dpcm) {
- 		if (dpcm->fe == fe)
+> On Mon, Nov 21, 2022 at 3:12 PM Quentin Schulz <foss+kernel@0leil.net> wrote:
+> >
+> > From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+> >
+> > The reset line is active low for the Goodix touchscreen controller so
+> > let's fix the polarity in the Device Tree node.
+> >
+> > Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+> > ---
+> >  arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts         | 2 +-
+> >  arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts | 2 +-
+> >  2 files changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> > index 9fbbbb556c0b3..df7e5ae9698e1 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mm-prt8mm.dts
+> > @@ -107,7 +107,7 @@ touchscreeen@5d {
+> >                 interrupt-parent = <&gpio1>;
+> >                 interrupts = <8 IRQ_TYPE_NONE>;
+> >                 irq-gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;
+> > -               reset-gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+> > +               reset-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+
+NACK!
+
+The PRT8MM has an inverter in the reset line. The reason for that is that the
+reset line needs to be inactive when the driving side is unpowered.
+The DT was correct, this change will break it.
+
+> >         };
+> >
+> >         temp-sense@70 {
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts b/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> > index 6445c6b90b5bb..b038300812b1e 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts
+> > @@ -542,7 +542,7 @@ touchscreen@5d {
+> >                 pinctrl-0 = <&pinctrl_ts>;
+> >                 interrupt-parent = <&gpio3>;
+> >                 interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+> > -               reset-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+> > +               reset-gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+> >                 irq-gpios = <&gpio3 0 GPIO_ACTIVE_HIGH>;
+> >                 touchscreen-size-x = <720>;
+> >                 touchscreen-size-y = <1440>;
+> >
+> > --
+> > b4 0.10.1  
+
+Best regards,
+
 -- 
-2.7.4
-
+David Jander
+Protonic Holland.
