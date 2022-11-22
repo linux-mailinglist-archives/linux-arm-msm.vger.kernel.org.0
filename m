@@ -2,80 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F0C1633A13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 11:29:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6296A633B69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 12:32:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233607AbiKVK30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 05:29:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56614 "EHLO
+        id S232799AbiKVLcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 06:32:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233466AbiKVK2s (ORCPT
+        with ESMTP id S232740AbiKVLbg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 05:28:48 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFD505C773;
-        Tue, 22 Nov 2022 02:24:24 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AM9YSti030893;
-        Tue, 22 Nov 2022 10:24:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jPXGyVfaNK8Q3j8+d5AjYsIGzf5B5ksvgQ59ZOxQExQ=;
- b=WSdUvomdWsMdDAOf/DPAwF9lCJn67WjccIiHngj93iguyhgPZ3VO7RrrkWsB4L51iYXG
- RCPU/5XFR4dl3xvhfetXh/azMu9YZRP2LTMlZpVm0BE2c0QstgL0+3GBiwYMnP5o1Paj
- /W/2wwzQtUUrXuS0UghVAflDBpeqckSYDhQmBoYs21bN+/PC1URquXxt9neFcOVmdgRE
- PdgPFXlGMX56d22k22V+TFkbTvilKsX5Bn58vNziDFh+8J5y6Ez/3CJEcWl7EvUxCxSv
- wZRC4BvkksEkXSgeKWRiJWy8X/sh19xY+faqb6BgwdaPtyJixb4Ky4IAbr6zhnes9RTW tA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kxrac6nwr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 10:24:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AMAOJBL017331
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 10:24:19 GMT
-Received: from [10.216.39.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
- 2022 02:24:15 -0800
-Message-ID: <4ac5d0be-e9c0-9eb3-8691-9759ed49d0f5@quicinc.com>
-Date:   Tue, 22 Nov 2022 15:54:12 +0530
+        Tue, 22 Nov 2022 06:31:36 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A521860E8A;
+        Tue, 22 Nov 2022 03:26:31 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 311F661671;
+        Tue, 22 Nov 2022 11:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8711C433D7;
+        Tue, 22 Nov 2022 11:26:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669116390;
+        bh=wpFinb0IMYn50p3PDwUFVzoQbgbhxdX0aMO0iiEe7wY=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=kOoeyjcwSPnSu0LZeG5wzcHO5zKGyJ3SjPV3ItIN/Efm99PtC+mE7dmmDcdVfJmFF
+         U56/XJgtp6mg3MyLONRIkKKMqZU4OAqXyO9uQDVL7POSIdpPQ/5TSOAPhNItlTgn6J
+         qhsX7hrBbsicZ3b2hCii8e2tIdaqes+DNf8BsXkDS3Z0Vvo9NUbjwOM57rniqnzS2z
+         XCz9yxHnppwPFrBIEiBKeYufojxwZ8TKF+Grp47c80qqLkTRjVnOqVmpPNAgKKx9zh
+         UKmh3sWnOWow86WOxV1TLv49k4nSX5lH1pEcD20ZQ2FcJBeIouRQ/qWUWCTdsjYyEv
+         3UtCKpsE7uW2Q==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        gregkh@linuxfoundation.org, elder@linaro.org,
+        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
+        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, ansuelsmth@gmail.com
+Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
+References: <20221105194943.826847-1-robimarko@gmail.com>
+        <20221105194943.826847-2-robimarko@gmail.com>
+        <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
+Date:   Tue, 22 Nov 2022 13:26:24 +0200
+In-Reply-To: <87cz9xcqbd.fsf@kernel.org> (Kalle Valo's message of "Tue, 08 Nov
+        2022 19:24:22 +0200")
+Message-ID: <877czn8c2n.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: Document the sc7280 CRD
- Pro boards
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dianders@chromium.org>,
-        <mka@chromium.org>
-References: <20221122094921.23109-1-quic_rjendra@quicinc.com>
- <e0fb4c60-3c84-cc52-b6ca-6ed081bb36ef@linaro.org>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <e0fb4c60-3c84-cc52-b6ca-6ed081bb36ef@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mWjY_bp3SWgHFXE6-LxDIThALpxQHoz2
-X-Proofpoint-ORIG-GUID: mWjY_bp3SWgHFXE6-LxDIThALpxQHoz2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-22_04,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=730 adultscore=0 clxscore=1015
- mlxscore=0 phishscore=0 priorityscore=1501 suspectscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211220075
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,26 +62,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Kalle Valo <kvalo@kernel.org> writes:
 
-
-On 11/22/2022 3:34 PM, Krzysztof Kozlowski wrote:
-> On 22/11/2022 10:49, Rajendra Nayak wrote:
->> Add compatibles for the Pro SKU of the sc7280 CRD boards
->> which come with a Pro variant of the qcard.
->> The Pro qcard variant has smps9 from pm8350c ganged up with
->> smps7 and smps8.
+> Manivannan Sadhasivam <mani@kernel.org> writes:
+>
+>> On Sat, Nov 05, 2022 at 08:49:43PM +0100, Robert Marko wrote:
+>>> Currently, trying to use AHB + PCI/MHI cards or multiple PCI/MHI cards
+>>> will cause a clash in the QRTR instance node ID and prevent the driver
+>>> from talking via QMI to the card and thus initializing it with:
+>>> [    9.836329] ath11k c000000.wifi: host capability request failed: 1 90
+>>> [    9.842047] ath11k c000000.wifi: failed to send qmi host cap: -22
+>>> 
 >>
->> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> ---
-> 
-> What changed? It's v3 so there should be a changelog here. Same for patch 2.
+>> There is still an outstanding issue where you cannot connect two WLAN modules
+>> with same node id.
+>>
+>>> So, in order to allow for this combination of cards, especially AHB + PCI
+>>> cards like IPQ8074 + QCN9074 (Used by me and tested on) set the desired
+>>> QRTR instance ID offset by calculating a unique one based on PCI domain
+>>> and bus ID-s and writing it to bits 7-0 of BHI_ERRDBG2 MHI register by
+>>> using the SBL state callback that is added as part of the series.
+>>> We also have to make sure that new QRTR offset is added on top of the
+>>> default QRTR instance ID-s that are currently used in the driver.
+>>> 
+>>
+>> Register BHI_ERRDBG2 is listed as Read only from Host as per the BHI spec.
+>> So I'm not sure if this solution is going to work on all ath11k supported
+>> chipsets.
+>>
+>> Kalle, can you confirm?
+>
+> I can't look at this in detail right now, but hopefully in few days.
+> I'll get back to you.
 
-sorry forgot to mention, no change for this patch, only PATCH 2/2 had some
-minor nits fixed based on feedback from Matthias.
+The solution we have been thinking internally would not use
+MHI_CB_EE_SBL_MODE at all, it's not clear for me yet why the mode was
+not needed in our solution. Maybe there are firmware modifications? I
+think it's best that we submit our proposal as well, then we can then
+compare implementations and see what is the best course of action.
 
-> 
-> Best regards,
-> Krzysztof
-> 
+But it looks that not all ath11k hardware and firmware releases support
+this feature, we would need meta data information from the firmware to
+detect it. I am working on adding firmware meta data support[1] to
+ath11k, will post patches for that "soon".
+
+[1] similar to firmware-N.bin support ath10k has
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
