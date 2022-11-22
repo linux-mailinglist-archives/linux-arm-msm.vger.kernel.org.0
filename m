@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3D62634AFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 00:20:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38EB8634B28
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 00:37:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232645AbiKVXUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 18:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42216 "EHLO
+        id S234777AbiKVXhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 18:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232341AbiKVXUs (ORCPT
+        with ESMTP id S235008AbiKVXhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 18:20:48 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C1BC67CA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 15:20:46 -0800 (PST)
+        Tue, 22 Nov 2022 18:37:03 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED92987A6B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 15:37:01 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id bp15so25775328lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 15:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669159247; x=1700695247;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=IEtAhQQjJ9tzyXq5aaFL+1wHCJ7FL1lPO1ifvEfi1yI=;
-  b=SpPbyZETUUF6wZVpXxHQJBqpRuHluee8h7Xbr1gFxghcGUe+sUtI9uUb
-   fPEEWno6vNuARV760McJvrzjmLNvt0r/du4NHEdao0ybxic1DmbfnEXGi
-   mY03EKOLw/W2tnEyaSm9qgg1IEXY590Xvhw+h79qMI10+KpSwb3+1emLN
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Nov 2022 15:20:46 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2022 15:20:46 -0800
-Received: from [10.71.111.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
- 2022 15:20:45 -0800
-Message-ID: <865249eb-8264-c7b8-8abe-fee01d00b6e6@quicinc.com>
-Date:   Tue, 22 Nov 2022 15:20:45 -0800
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jiQzjk4U2HBL8m9nCmdH0QqbW0qnEDB7JZce1irB8qw=;
+        b=gGKAQKdv563C0u+WXaCrTOxSt4oi0Gzo9xbEyK0chJ5EkTcKRvEG7Chp7zHxOYhqBU
+         xuNHeX+I2qzo1Bb65t4nCoto3D19Npd11LkQvCygMMcnblKMIbwQbZe66b1NfkaRBqtU
+         NjP7rEVEXms5uh0ocz6cA72tmeEtp/7+DR4ub5CEW/zJTzFn1cxlxxfw6tcDfaQfFr3N
+         PiXhHoDN38B5dqHk3D3MlUy68kYLCgGelhayXsDx7XmGEmxoRn3u7UVp5H4+5Nbm9H9K
+         x7qG8BPSG/JBj02t2RUFCCNYdVZJj41myreXKfbExEFnTo03HpIYmNkz7iFD5no7/XuX
+         6H4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jiQzjk4U2HBL8m9nCmdH0QqbW0qnEDB7JZce1irB8qw=;
+        b=N1W4ME0GAWiH4sdOxAL2r7xbPwztAP1LsOf8gPT+snWj0HWmn9PJXLZoqHONJxMxip
+         I/5bnsutFr1yWG+poHRD/jay7mSPSGltxmumko64GZMd5OcBl/BG5Fvd6RZLdEItFlZf
+         v2kZ79dYGfH/L+juzRFYspLQKBTi4Xau7VYRf13Je6r7M0bg8eP1xv/nh2Ai6B/bwRnw
+         s92ngXgM56i6cv3UThBbaslXIpNSBFsepBHRuJ7ZCDUFvw/QnO391Xa/tBS9vPKlEQhh
+         Ifj6N1TBJk0oQ5iNAMFsfssfGBZLqhWXJy/3dnMj1BUoTxNG/uTkIkONtnGSoO8L+mtm
+         Uw0g==
+X-Gm-Message-State: ANoB5plDK17RHlMsBwnB5ZPOQ+FXPwkuA0clKxYZPNrVJfYCptckhtOp
+        dTxXXb9LoPVOdpFcyOq2uHaV1w==
+X-Google-Smtp-Source: AA0mqf4rbwu1mUCXJ+V4n19yRGiu6bs/kFIOG1QwdiwAGz+l+K+/1xXJzZ04Qsd1evUe7LbbLVzz7g==
+X-Received: by 2002:a05:6512:32d0:b0:4b4:b5ed:c71f with SMTP id f16-20020a05651232d000b004b4b5edc71fmr8410539lfg.227.1669160220307;
+        Tue, 22 Nov 2022 15:37:00 -0800 (PST)
+Received: from eriador.lumag.spb.ru (dzpbkzhtyyyyyyyyyyyyt-3.rev.dnainternet.fi. [2001:14ba:a302:8a1a::1])
+        by smtp.gmail.com with ESMTPSA id h3-20020ac250c3000000b00492c463526dsm2666454lfm.186.2022.11.22.15.36.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 15:36:59 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/5] arm64: dts: qcom: sm8450-hdk: enable HDMI output
+Date:   Wed, 23 Nov 2022 01:36:54 +0200
+Message-Id: <20221122233659.3308175-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [Freedreno] [RFC PATCH 0/3] Support for Solid Fill Planes
-To:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        "Rob Clark" <robdclark@gmail.com>
-CC:     <daniel.vetter@ffwll.ch>, <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <seanpaul@chromium.org>, <laurent.pinchart@ideasonboard.com>,
-        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com>
- <5a9167d5-f88d-ed6b-abff-8ae39117feb1@quicinc.com>
- <CAF6AEGtbwsvr5A+mX7BxP95u3RyRiUFzE6dfiZacS96WVBhuvw@mail.gmail.com>
- <c196f010-34e7-4c1c-4ca6-852a4c32b154@quicinc.com>
- <CAF6AEGtJcz6dK-vgnYuJsBqm2tDRUYB7Tg2jtQm1-KuTi+z8ZA@mail.gmail.com>
- <Y2oYzdHKuSDKogkj@intel.com>
-Content-Language: en-US
-In-Reply-To: <Y2oYzdHKuSDKogkj@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,109 +77,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add device tree nodes for MDSS, DPU and DSI devices on Qualcomm SM8450
+platform. Enable these devices and add the HDMI bridge configuration on
+SM8450 HDK.
 
+Changes since v1:
+- Reorder properties, making status the last one
+- Rename opp nodes to follow the schema
+- Renamed display-controller and phy device nodes
+- Dropped phy-names for DSI PHYs
+- Renamed DSI and DSI PHY labels to include mdss_ prefix
+- Renamed 3v3 regulator device node to add -regulator suffix
 
-On 11/8/2022 12:52 AM, Ville Syrjälä wrote:
-> On Mon, Nov 07, 2022 at 07:34:43PM -0800, Rob Clark wrote:
->> On Mon, Nov 7, 2022 at 4:22 PM Jessica Zhang <quic_jesszhan@quicinc.com>wrote:
->>>
->>>
->>>
->>> On 11/7/2022 2:09 PM, Rob Clark wrote:
->>>> On Mon, Nov 7, 2022 at 1:32 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>>>>
->>>>>
->>>>>
->>>>> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
->>>>>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
->>>>>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
->>>>>>> properties. When the color fill value is set, and the framebuffer is set
->>>>>>> to NULL, memory fetch will be disabled.
->>>>>>
->>>>>> Thinking a bit more universally I wonder if there should be
->>>>>> some kind of enum property:
->>>>>>
->>>>>> enum plane_pixel_source {
->>>>>>         FB,
->>>>>>         COLOR,
->>>>>>         LIVE_FOO,
->>>>>>         LIVE_BAR,
->>>>>>         ...
->>>>>> }
->>>>>
->>>>> Hi Ville,
->>>>>
->>>>> Makes sense -- this way, we'd also lay some groundwork for cases where
->>>>> drivers want to use other non-FB sources.
->>>>>
->>>>>>
->>>>>>> In addition, loosen the NULL FB checks within the atomic commit callstack
->>>>>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
->>>>>>> methods where the FB was previously assumed to be non-NULL.
->>>>>>>
->>>>>>> Finally, have the DPU driver use drm_plane_state.color_fill and
->>>>>>> drm_plane_state.color_fill_format instead of dpu_plane_state.color_fill,
->>>>>>> and add extra checks in the DPU atomic commit callstack to account for a
->>>>>>> NULL FB in cases where color_fill is set.
->>>>>>>
->>>>>>> Some drivers support hardware that have optimizations for solid fill
->>>>>>> planes. This series aims to expose these capabilities to userspace as
->>>>>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
->>>>>>> hardware composer HAL) that can be set by apps like the Android Gears
->>>>>>> app.
->>>>>>>
->>>>>>> Userspace can set the color_fill value by setting COLOR_FILL_FORMATto a
->>>>>>> DRM format, setting COLOR_FILL to a color fill value, and setting the
->>>>>>> framebuffer to NULL.
->>>>>>
->>>>>> Is there some real reason for the format property? Ie. why not
->>>>>> just do what was the plan for the crttc background color and
->>>>>> specify the color in full 16bpc format and just pick as many
->>>>>> msbs from that as the hw can use?
->>>>>
->>>>> The format property was added because we can't assume that all hardware
->>>>> will support/use the same color format for solid fill planes. Even for
->>>>> just MSM devices, the hardware supports different variations of RGB
->>>>> formats [1].
->>>>
->>>> Sure, but the driver can convert the format into whatever the hw
->>>> wants.  A 1x1 color conversion is not going to be problematic ;-)
->>>
->>> Hi Rob,
->>>
->>> Hm... that's also a fair point. Just wondering, is there any advantage
->>> of having the driver convert the format, other than not having to
->>> implement an extra format property?
->>>
->>> (In case we end up wrapping everything into a prop blob or something)
->>>
->>
->> It keeps the uabi simpler.. for obvious reasons you don't want the
->> driver to do cpu color conversion for an arbitrary size plane, which
->> is why we go to all the complexity to expose formats and modifiers for
->> "real" planes, but we are dealing with a single pixel value here,
->> let's not make the uabi more complex than we need to.  I'd propose
->> making it float32[4] if float weren't a pita for kernel/uabi, but
->> u16[4] or u32[4] should be fine, and drivers can translate that easily
->> into whatever weird formats their hw wants for solid-fill.
-> 
-> u16[4] fits into a single u64 property value.
-> 
-> That was the plan for the background prop as well:
-> https://lore.kernel.org/all/20190703125442.GW5942@intel.com/T/
+Dmitry Baryshkov (3):
+  arm64: dts: qcom: sm8450: add RPMH_REGULATOR_LEVEL_LOW_SVS_D1
+  arm64: dts: qcom: sm8450: add display hardware devices
+  arm64: dts: qcom: sm8450-hdk: enable display hardware
 
-Got it, I think that's pretty reasonable then. Will probably use u32[4] 
-instead since that is what Pekka and Simon are recommending to match 
-Wayland's single-buffer protocol [1].
+Vinod Koul (2):
+  arm64: dts: qcom: sm8450-hdk: Add LT9611uxc HDMI bridge
+  arm64: dts: qcom: sm8450-hdk: Enable HDMI Display
 
-Thanks,
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 119 ++++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 304 +++++++++++++++++++++++-
+ include/dt-bindings/power/qcom-rpmpd.h  |   1 +
+ 3 files changed, 412 insertions(+), 12 deletions(-)
 
-Jessica Zhang
+-- 
+2.35.1
 
-[1] 
-https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/104
-
-> 
-> -- 
-> Ville Syrjälä
-> Intel
