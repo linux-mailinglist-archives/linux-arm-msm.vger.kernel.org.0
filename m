@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4311633EA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 15:14:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CEC3633EE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 15:28:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233908AbiKVOO6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 09:14:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36786 "EHLO
+        id S233139AbiKVO2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 09:28:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233747AbiKVOO4 (ORCPT
+        with ESMTP id S231808AbiKVO2h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 09:14:56 -0500
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89B6E30F6E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:14:53 -0800 (PST)
-Received: by mail-il1-x12c.google.com with SMTP id x16so7152983ilm.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:14:53 -0800 (PST)
+        Tue, 22 Nov 2022 09:28:37 -0500
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826E26316F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:28:36 -0800 (PST)
+Received: by mail-il1-x136.google.com with SMTP id h2so6483337ile.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LEL1JXswoOciVAB7l+D8H9Ys9DuQbRdeYUgr6HvaLqw=;
-        b=MhoLcQBFckWDFoDg/M7iUydo9q5aZ7pkg26LYanhGBenLbgjSmIVEERV9lkhER7B3+
-         o1VsgYj4gLYiRVz5vDSqPbBNDpkJW5F/kisyISsnQbUcjt921Uyp1vYOn/UPubl9D0fH
-         8l5DjTTDDuQ54KdbZtmr4qbj0vMMrL0pXjCBo=
+        bh=gzHNTCuPBl1243bm48FKjt2m0TJt4ZAgEwgFxeyfelg=;
+        b=AL3TCWiq8qz85gebwtmflSjU1TeY7vO9uOjerKfsr2hpsUEbbAdb0sqdA67uvzQ9Ul
+         2yOt1LsxjMfUGlR10Aa+2x4LTc+feZY0fLlDlrVwOpo1/pavzg0bx3YnicgigF7Caz06
+         rt1nVAb5bpishJPCpgh+eHrsesx3lf597h5C0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LEL1JXswoOciVAB7l+D8H9Ys9DuQbRdeYUgr6HvaLqw=;
-        b=xGx4l0Ik/OApUW3rwTgnjujt7dRVBlmG75oErZG321HyRlwMVQBfjPuoGV3d8FOC65
-         z+M+w0/Ga1+TnU+aRrsWHcFpTUIoDk7rQO+vkXaHOXjQy5iBk94UnhshIUzFLmQHtFQF
-         tK4UQ8VCX7/S55WxT/dMsDnzuaxDDa/EIKDIR3LP8tFo99/3j3XsZBLfhgYoa9Dm1d5i
-         3W/WtePRjeISq4BeAo7ZBMf051dqd2tviy0tn08xPFONtSpvwNI4XpbyoFNHAP/HPIya
-         xpT5GT0BORiHxl3iobVWBJNsz32pBJ3PYWvBQ2d1YwAE1s5cTjTAUMQE/wMUVboVorR4
-         P6VQ==
-X-Gm-Message-State: ANoB5pkIYfMVMXReBOXO36RY/gF4eemLhtM29Qb688EFnNchV9t1RINB
-        8vud8UPFhSoereAI2WTOPDJ3Lg==
-X-Google-Smtp-Source: AA0mqf6AvoSY6d8Nm2gnt1RXrtBwi6z5AKeyinvHIG5EWef+8UxlGGkkQm3AESyFb45bS39V7A2tIA==
-X-Received: by 2002:a92:d702:0:b0:302:5898:73d1 with SMTP id m2-20020a92d702000000b00302589873d1mr1738474iln.65.1669126492985;
-        Tue, 22 Nov 2022 06:14:52 -0800 (PST)
+        bh=gzHNTCuPBl1243bm48FKjt2m0TJt4ZAgEwgFxeyfelg=;
+        b=0iZf4vR1D0JpiCKZkxZGcI701reBopMaXVgiCcFvE5snC+Lz3dXwG3v0UTXsNtbRim
+         gQWKT4aD7uaPvu6LcOtRNNlYZkYSqsFk0tfh+MJ4z8C6WvSeIOmaaajsxSj5ynMCyeZ2
+         tqnnMpkl4F6flb2lSTOMlH9YihiiZrLnyla1A3eUOWfJeYHZRrEg2/j6D632QhY7bxb7
+         ECLgXeFj04nbbDn4iADy25MROm2yilTxp3NRBZs5gSwd01ej3VxD2hJUOk/SR9NEQ7pH
+         iiKjHwPsbwSLhl6rI2/4MHPKI0ThtQIM+cOa+aPpUJFfJHNwkYYASqwZIvBoigflc3fA
+         ce7g==
+X-Gm-Message-State: ANoB5pmewUrm3UpBgURwMfq0IvwCoedNiDBUJBsSWp5YFu2fg9/MMv5/
+        SBSRtmCmCNjR9kn+9+bJF3EhKA==
+X-Google-Smtp-Source: AA0mqf5gm7VUPG1g1odiwwIbuTVfM7E/P5h6sxqOsZuLoFOtjNCNF/RBNtatfOLOK9rJX+Jum4PaWQ==
+X-Received: by 2002:a92:1912:0:b0:302:5c57:c19d with SMTP id 18-20020a921912000000b003025c57c19dmr2821667ilz.226.1669127315866;
+        Tue, 22 Nov 2022 06:28:35 -0800 (PST)
 Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id y18-20020a92d212000000b002ffbf49a0d2sm4887435ily.84.2022.11.22.06.14.52
+        by smtp.gmail.com with UTF8SMTPSA id r13-20020a92440d000000b00300df8bfcf5sm4837898ila.14.2022.11.22.06.28.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 06:14:52 -0800 (PST)
-Date:   Tue, 22 Nov 2022 14:14:49 +0000
+        Tue, 22 Nov 2022 06:28:35 -0800 (PST)
+Date:   Tue, 22 Nov 2022 14:28:35 +0000
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Owen Yang <ecs.taipeikernel@gmail.com>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
@@ -54,13 +54,12 @@ Cc:     LKML <linux-kernel@vger.kernel.org>,
         Bob Moragues <moragues@chromium.org>,
         Harvey <hunge@google.com>, Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Adding DT binding for
  zombie
-Message-ID: <Y3zZWWCJ8aYphD7f@google.com>
+Message-ID: <Y3zck7tPA5WFd0p1@google.com>
 References: <20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,23 +67,24 @@ Content-Disposition: inline
 In-Reply-To: <20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On which tree is this series based? My earlier reply bounced for Bjorn's
+old Linaro e-mail address, which suggests that the series might be based
+on an older kernel tree (maybe downstream Chrome OS v5.15?). Please make
+sure to base patches to upstream lists on the corresponding maintainer
+tree/branch or a recent kernel version/rc.
+
 On Tue, Nov 22, 2022 at 08:37:02PM +0800, Owen Yang wrote:
 > Add an entry in the device tree binding for sc7280-zombie.
-
-nit: s/an entry/entries/ (there are two of them)
-
 > 
 > Documentation/devicetree/bindings/arm/qcom.yaml
-
-Drop this
-
 > 
 > Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
 > ---
