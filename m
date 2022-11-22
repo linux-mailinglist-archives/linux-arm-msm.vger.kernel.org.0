@@ -2,84 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7182B6347DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 21:15:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF03A6348B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 21:51:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234729AbiKVUPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 15:15:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56348 "EHLO
+        id S234615AbiKVUvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 15:51:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234632AbiKVUPJ (ORCPT
+        with ESMTP id S234518AbiKVUvK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 15:15:09 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB9427CF2;
-        Tue, 22 Nov 2022 12:15:07 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 09F89CE614;
-        Tue, 22 Nov 2022 20:15:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1669148105; bh=tjaabx+DOBEJxsj2AmY3G3Tchs38EEYG75S/4T0olZs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=i0nSZzq6GD7KIP0gmvVbxKBD68Sec5zzm2By2W2IQYCwXTMLFFSpqI3Jj0M6u8uOR
-         Tzx3xWsD3KW2It+wSTQyYW5z3zQIZGqJIXZy05ZI2kN6KNnfen+VIRgMouY1s7bUU4
-         FmDkOSyI+ZDGhsg9BNvBP7TrTNcwdvFrkxx1RmpY=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     myungjoo.ham@samsung.com, cw00.choi@samsung.com,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gurus@codeaurora.org,
-        aghayal@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: Re: [PATCH v4 0/2 RESEND] Fix pm8941-misc extcon interrupt dependency assumptions
-Date:   Tue, 22 Nov 2022 21:15:03 +0100
-Message-ID: <2260542.ElGaqSPkdT@g550jk>
-In-Reply-To: <20220926113143.40768-1-bryan.odonoghue@linaro.org>
-References: <20220926113143.40768-1-bryan.odonoghue@linaro.org>
+        Tue, 22 Nov 2022 15:51:10 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA5A9585
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 12:51:08 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id n3so10065199wrp.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 12:51:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gx+YWWCvKUmbpLOLiEAgZGjZu2bsrwzEPK49+jDiEKo=;
+        b=U56Z6HyNr+8U7X+k5HY107gitq8tL55XN2/davLUBfTrDuUK/wgOuxPbIhRlUiIVpO
+         DYiWZLrzE8vv1RgqzthucM0LGY5AejmXMIFCceBB+xXVc1q8laevMaTjTSQ1K4+yReCk
+         ivjrOu2Q+d1Az+uZFN3rQ3yjeChpiRD0cyV09df3LYnV1bxdwG8wFxGb7KHI+tSJWadR
+         lgWzcabIOJAqvnPLLZRT2k9d2q6BylVfP9uIudIU2iVIgFvIf31udR4aXIRRfUQQ7rIx
+         WX0fNWjMgCRBHI9FVZzxY8czhxUmgYfgFJzZV+XJ4X1WhNO7rTjq1YrZRlcqmNL9dSPM
+         b9Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gx+YWWCvKUmbpLOLiEAgZGjZu2bsrwzEPK49+jDiEKo=;
+        b=UnzM+30VikzsXLWMBkYTexBu2dXo6nsEqAFBItT5l85cguehyZc/lpe5y+uGLVG468
+         kEwFAMRrtBMLTHY4fnCCOybGPafLqVJYSotA9b1+StLu1bofjx9exQjQSP8SeFm1AkJc
+         bxm1jbBXShI06XJIe/r55y2yyyxDlrHUocki0HK2Jar0sXYAHzPMZO+FriX/eVwAeAPY
+         s8B2hf1ptGNJr6vWHKSpt6Tkz+WNrF7DyCvjkgAAYSjx1CboOvtHtPzLTL05VrcTj0Rm
+         9vx9zsCpZ3wzO9R+QpGntboGlJ6Ypj8jDN8AVUIxHVh5gxuUk5pjgLZkjF8lPM4DpreV
+         8Wgw==
+X-Gm-Message-State: ANoB5pmOPZd9Mm11c2xBZK8qq51zKVxLrpCEDm+tcVhm7LcVHDrA4TuO
+        mrCwb3S43m+5/7MvoW5Jnusucg==
+X-Google-Smtp-Source: AA0mqf5rPIjXhCXwCsxypSw1YhJ5JSXNE50WJhrKBKNpz+S35+WjBJXucChHKXjjj5trZ8uCMH3gUw==
+X-Received: by 2002:a5d:6052:0:b0:241:eba1:84fd with SMTP id j18-20020a5d6052000000b00241eba184fdmr168609wrt.696.1669150267102;
+        Tue, 22 Nov 2022 12:51:07 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id t1-20020a1c7701000000b003cf4d99fd2asm17606458wmi.6.2022.11.22.12.51.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 12:51:06 -0800 (PST)
+Date:   Tue, 22 Nov 2022 22:51:04 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: Add UFS host
+ controller and PHY node
+Message-ID: <Y302OBP1f8W6pr5A@linaro.org>
+References: <20221116125112.2788318-1-abel.vesa@linaro.org>
+ <20221116125112.2788318-3-abel.vesa@linaro.org>
+ <22a41a8c-9b4a-ecca-ddd2-5e217d00d20c@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <22a41a8c-9b4a-ecca-ddd2-5e217d00d20c@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 26. September 2022 13:31:41 CET Bryan O'Donoghue wrote:
-> RESEND:
-> - I thought I resent these at the start of this month, can't find them
->   in linux-msm I think I just sent them to myself.
+On 22-11-16 13:56:36, Konrad Dybcio wrote:
 > 
->   No change since July 17th
 > 
-> V4:
-> - Added suggested extra log text from Marjin to extcon patch
+> On 16/11/2022 13:51, Abel Vesa wrote:
+> > Enable UFS host controller and PHY node on SM8550 MTP board.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 22 ++++++++++++++++++++++
+> >   1 file changed, 22 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> > index d4c8d5b2497e..fef7793a7dec 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> > @@ -417,3 +417,25 @@ data-pins {
+> >   &uart7 {
+> >   	status = "okay";
+> >   };
+> > +
+> > +&ufs_mem_hc {
+> > +	status = "okay";
+> Status last, please.
+
+Yep. Will do.
+
 > 
-> V3:
-> - Adds a cover-letter since we are now doing two patches a dt-bindings fix
-> and platform_get_irq_byname_optional fix.
-> - Add Review-by -> Rob Herring, Marijn Suijten
-> - Add additional patch to negate warning when one of usb_id or usb_vbus
->   is not declared in the platform DTS.
+> > +
+> > +	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+> > +
+> > +	vcc-supply = <&vreg_l17b_2p5>;
+> > +	vcc-max-microamp = <1300000>;
+> All these -microamp properties are downstream and do not exist in the
+> mainline kernel. Remove them.
 > 
-> Bryan O'Donoghue (2):
->   dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
->   extcon: qcom-spmi: Switch to platform_get_irq_byname_optional
-> 
->  .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
->  drivers/extcon/extcon-qcom-spmi-misc.c               |  4 ++--
->  2 files changed, 10 insertions(+), 6 deletions(-)
 
-Hi Chanwoo Cho  and MyungJoo Ham,
+Actually, ufshcd-qcom complains if they are missing:
 
-could you please pick up these patches?
+[    3.287836] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
+to find vcc-max-microamp
+[    3.331904] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
+to find vccq-max-microamp
+[    3.346766] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: unable
+to find vccq2-max-microamp
 
-Regards
-Luca
+> Konrad
+> > +	vccq-supply = <&vreg_l1g_1p2>;
+> > +	vccq-max-microamp = <1200000>;
+> > +	vccq2-supply = <&vreg_l3g_1p2>;
+> > +	vccq2-max-microamp = <100>;
+> > +};
+> > +
+> > +&ufs_mem_phy {
+> > +	status = "okay";
+> > +
+> > +	vdda-phy-supply = <&vreg_l1d_0p88>;
+> > +	vdda-phy-max-microamp = <188000>;
 
+These ones from PHY I can drop, since the driver won't complain.
 
+> > +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> > +	vdda-pll-max-microamp = <18300>;
+> > +};
