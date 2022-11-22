@@ -2,80 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC0AC633FAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 15:59:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DC04633FCF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 16:06:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233642AbiKVO7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 09:59:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46722 "EHLO
+        id S233886AbiKVPGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 10:06:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234180AbiKVO7K (ORCPT
+        with ESMTP id S233478AbiKVPGH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 09:59:10 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF4D95D68A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:57:55 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id j4so23988962lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 06:57:55 -0800 (PST)
+        Tue, 22 Nov 2022 10:06:07 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E38A6396
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 07:06:06 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id 130so14598401pfu.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 07:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s2G5LSHSLWos4o64Yy/qVYvKcmpoCK7vfBEppoqpTno=;
-        b=WSLYBc0Uhv5x1y70Wc+bcOK72gnLzXzGWQYLYwhzeFfVUxnqmBgppJfNxGkIelPiAW
-         LZPC/pGtl9q/SoMerW8kXEovLqXNg5McJqQ0aUbzVkr1C1EvIjAL85gxftgLhhP/62p9
-         uuqoT5BZXytkcYu2r+gqrEtNZyL9Z7ZYrLmeSUcemP+zZTYufOPnXuYyet3o9SsaYV4k
-         3UdXXVOKIHAZeIL7zzEHOmX0YbiaqQFHCGwce8C9KiwKABc0VwiIVwhwq6NNghWpr61h
-         PCOtSnOvdPpU11BH4jeGC8AlbxBn5d++AmtiYIb5XM2BwkctnPbkktaf1Ber7r1w9UUs
-         12Jg==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KFm/hQzp85f9PkuPkdfd/PZMWkQMCDrrQWUl2fEW03w=;
+        b=LNABZeRJscon/VHkVveJ+lRDsjpGyOiP9IOwSqUmzdQKKCR9YcvxcJDwYKXoQ31puT
+         1HqnkQrRZ/k+3TSJjAgBQ+Kr38QRdX+vbD6LLNCI4Rm1RvfZc5Z5vyUACqBpPu6rIRLx
+         t1GdVd7Fk8spxfx32ehpulaunieqgpV/uNMX7QABg6IveP4V2P3HH3odTGTN9wqWK6VZ
+         A4hS2GeaolVs6tDiYvsBXUu7E2cey22hii5xm78bilr9FXr7EO8qryDnZYSSc35X1Z9Y
+         8PQchihQYpWbWxOsbrC6xgoiwPI0pxmnMZSkMshttOyJ7AVkTteMKSdJBxceEsC4VpbH
+         ToWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s2G5LSHSLWos4o64Yy/qVYvKcmpoCK7vfBEppoqpTno=;
-        b=jBccWeBtXBQvht8YAMHBmPTLFPKPgRfKOKp6rb9x8f7vu8gbt9yEvvQfmRTnOQv5is
-         HwddL10DkkhBmNDu80eWuR/if7/Q7Duw7i2ZcMikGK/H2wKScixqecRetVASfopKucRl
-         fqhF9Oftm07JsulRIPKbu3Zip0XX6Jj7PQMll/Z5nz5kGC2nAdKV3XWm0w3YiICJB6J/
-         zpxLadJgtxs/3k5CfpfB2OPhP6As3uaPyoXMo7fEpsdmaKyvIa2vhyg1evkIdgPYRG+K
-         M0BpUSo7ucICc6l/3J9pvhqB8f9rqvGkNY0XlyiXAqzgKUGbWOc50iZLZ2nfU3+pWl7H
-         66sA==
-X-Gm-Message-State: ANoB5pnrkYtOvB5GCHsqXvQOR1cVL8uSFTEtSNHHF3X52vetnK3bIAHF
-        B1r1eOPaOVXJD9o0FZfMKeiO9Q==
-X-Google-Smtp-Source: AA0mqf5cRagWe1+0LJQH1W1DbZlV4g9CgozLMEPngBqOIdOvmMJI2ZuBIUUC8xX163GPXmUsWlvZ8w==
-X-Received: by 2002:a19:6d0b:0:b0:4a2:489d:490f with SMTP id i11-20020a196d0b000000b004a2489d490fmr8335514lfc.196.1669129074184;
-        Tue, 22 Nov 2022 06:57:54 -0800 (PST)
-Received: from [192.168.1.101] (95.49.32.48.neoplus.adsl.tpnet.pl. [95.49.32.48])
-        by smtp.gmail.com with ESMTPSA id d18-20020a2e8912000000b002770eafaafbsm1949415lji.99.2022.11.22.06.57.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 06:57:53 -0800 (PST)
-Message-ID: <844a3ebf-d7f9-a745-3444-03c1be68e239@linaro.org>
-Date:   Tue, 22 Nov 2022 15:57:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [RESEND PATCH v5 4/4] dts: arm64: qcom: msm8916-acer-a1-724: Add
- touchscreen
-Content-Language: en-US
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
+        bh=KFm/hQzp85f9PkuPkdfd/PZMWkQMCDrrQWUl2fEW03w=;
+        b=aygIMcU8L/V3cIhRhGrtgA3RmmXBo/n3emZ6H4ieqa327oCPJwvyJnHFk5xLLcSNjG
+         nmtZJoqkJepIR6MqbY+p8XjaA40uhQFFK8vdJ3614TyZWeYb9d4OLp2WNBIoMcDayLAl
+         3WUz2LiMY4BK4NW0i+GPhJxn/UdqWuQk2n44YIAyh45bC07LthfWZDORK+MfrAbUNDKH
+         cRa1Yn6Opz3DdxUlEXxMUXai1llCI0TG/4Ib/DWL9vt1q5rLCp8JQeSQ7ENv/g+vMuaM
+         qyadXvnYmDNjxbm7NKn+iyrnP+pl/lO85GncWfX6R8SNR1h/dJcFPJYFNr96Z+qzXGqi
+         aN6Q==
+X-Gm-Message-State: ANoB5pmGaNDbscyWgO4l/wx20ChPetHTSjWz873DLEj6DI6YQVP75Ikd
+        cr1qtLqlMmb4lhxyG39iCA2E
+X-Google-Smtp-Source: AA0mqf5GjmHRR2cgKROAhBGQlpp08yLh0IhPhYqC84bGzFy5Jw1en3ayBeCra6H6haMqnZOZo68kzg==
+X-Received: by 2002:a63:e44:0:b0:475:2f61:bbc3 with SMTP id 4-20020a630e44000000b004752f61bbc3mr5548600pgo.435.1669129565476;
+        Tue, 22 Nov 2022 07:06:05 -0800 (PST)
+Received: from thinkpad ([59.92.98.84])
+        by smtp.gmail.com with ESMTPSA id b15-20020a1709027e0f00b001869394a372sm12022018plm.201.2022.11.22.07.05.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 07:06:04 -0800 (PST)
+Date:   Tue, 22 Nov 2022 20:35:55 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221122132816.257717-1-linmengbo0689@protonmail.com>
- <20221122133141.258357-1-linmengbo0689@protonmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221122133141.258357-1-linmengbo0689@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH 1/2] ufs: host: ufs-qcom: Clear qunipro_g4_sel for HW
+ version major 5
+Message-ID: <20221122150555.GE157542@thinkpad>
+References: <20221116121732.2731448-1-abel.vesa@linaro.org>
+ <20221116121732.2731448-2-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221116121732.2731448-2-abel.vesa@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,78 +87,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.11.2022 14:32, Lin, Meng-Bo wrote:
-> A1-724 uses a Focaltech FT5446 touchscreen that is connected to blsp_i2c5.
-> Add it to the device tree.
+On Wed, Nov 16, 2022 at 02:17:31PM +0200, Abel Vesa wrote:
+> On SM8550, depending on the Qunipro, we can run with G5 or G4.
+> For now, when the major version is 5 or above, we go with G5.
+> Therefore, we need to specifically tell UFS HC that.
 > 
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-Your commit message is wrong. It should be arm64: dts:.. and not dts: arm64:...
->  .../boot/dts/qcom/msm8916-acer-a1-724.dts     | 42 +++++++++++++++++++
->  1 file changed, 42 insertions(+)
+>  drivers/ufs/host/ufs-qcom.c | 4 ++++
+>  drivers/ufs/host/ufs-qcom.h | 2 ++
+>  2 files changed, 6 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-> index bea0d022dd9a..5b216107f69b 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
-> @@ -81,6 +81,30 @@ magnetometer@12 {
->  	};
->  };
->  
-> +&blsp_i2c5 {
-> +	status = "okay";
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index ca60a5b0292b..72334aefe81c 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -227,6 +227,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+>  	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
+>  		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+>  		   REG_UFS_CFG1);
 > +
-> +	touchscreen@38 {
-> +		/* Actually ft5446 */
-> +		compatible = "edt,edt-ft5406";
-> +		reg = <0x38>;
-> +
-> +		interrupt-parent = <&msmgpio>;
-> +		interrupts = <13 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		reset-gpios = <&msmgpio 12 GPIO_ACTIVE_LOW>;
-> +
-> +		vcc-supply = <&pm8916_l16>;
-> +		iovcc-supply = <&pm8916_l6>;
-> +
-> +		touchscreen-size-x = <720>;
-> +		touchscreen-size-y = <1280>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&touchscreen_default>;
-> +	};
-> +};
-> +
->  &blsp1_uart2 {
->  	status = "okay";
->  };
-> @@ -245,6 +269,24 @@ gpio_keys_default: gpio-keys-default-state {
->  		bias-pull-up;
->  	};
->  
-> +	touchscreen_default: touchscreen-default-state {
-> +		reset-pins {
-> +			pins = "gpio12";
-> +			function = "gpio";
-Redundant new line, here and in the next subnode.
+> +	if (host->hw_ver.major == 0x05)
+> +		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
 
-Konrad
+So this means, G5 will be used all the time even if the UFS device doesn't
+support it (ie., G4 device), which is not ideal.
+
+Since you have already based this series on my UFS gear 4 series, you should
+resend this on top of my next version that I'm about to submit. There I have
+proposed reinitializing the UFS device after switching to max gear supported by
+both controller and device.
+
+Based on that information, you could do:
+
+```
+	if (host->hw_ver.major == 0x05) {
+		if (host->hs_hear == UFS_HS_G5)
+			ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+		else
+			ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 1, REG_UFS_CFG0);
+	}
+```
+
+By this way, if the device doesn't support G5, G4 will be used.
+
+Btw, please use a valid definition instead of 0/1 above.
+
 > +
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		touchscreen-pins {
-> +			pins = "gpio13";
-> +			function = "gpio";
-> +
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	usb_id_default: usb-id-default-state {
->  		pins = "gpio110";
->  		function = "gpio";
+>  	/* make sure above configuration is applied before we return */
+>  	mb();
+>  }
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index 751ded3e3531..10621055bf7f 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -36,6 +36,7 @@ enum {
+>  	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
+>  	REG_UFS_PARAM0                      = 0xD0,
+>  	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
+> +	REG_UFS_CFG0                        = 0xD8,
+
+Hmm, so what is the offset of REG_UFS_PA_LINK_STARTUP_TIMER?
+
+>  	REG_UFS_CFG1                        = 0xDC,
+>  	REG_UFS_CFG2                        = 0xE0,
+>  	REG_UFS_HW_VERSION                  = 0xE4,
+> @@ -75,6 +76,7 @@ enum {
+>  
+>  /* bit definitions for REG_UFS_CFG1 register */
+>  #define QUNIPRO_SEL		BIT(0)
+> +#define QUNIPRO_G4_SEL		BIT(5)
+
+Since this bit belongs to CFG0 register, it should be added separately and not
+with CFG1 definitions.
+
+Thanks,
+Mani
+
+>  #define UFS_PHY_SOFT_RESET	BIT(1)
+>  #define UTP_DBG_RAMS_EN		BIT(17)
+>  #define TEST_BUS_EN		BIT(18)
+> -- 
+> 2.34.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
