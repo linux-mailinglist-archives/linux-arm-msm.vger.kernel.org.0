@@ -2,165 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2A5263431E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 18:58:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7182B6347DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 21:15:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233004AbiKVR6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 12:58:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44906 "EHLO
+        id S234729AbiKVUPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 15:15:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233983AbiKVR6A (ORCPT
+        with ESMTP id S234632AbiKVUPJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 12:58:00 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B00E5F;
-        Tue, 22 Nov 2022 09:57:33 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AMHcrOl018112;
-        Tue, 22 Nov 2022 17:57:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QC+M5hYOgPISCcR+K8EBr4ak/FF/squ8OZ69sQubXS0=;
- b=ERhGTWhPnrCayuyQ/TXvDsyNmDGMcm4/GCOFB3jM+EiTKIInA0qEjBIqM4BoZCtSwgB1
- z0518aQSTFRdk/9pnEyANFBMmUCfFqFToD3qe5+BXN9lwcCEFgsMX6sVToU85IS6kHgk
- XiVxKgVRCzsJFHPNXoRzLnHwxQhXoYb924S4SUHEEpeof5QanxUk63ZY7fj7Xs+iTcHV
- eNSzS9jkoua4+nv8240gwR8o+rioaJ85j3xOKU8+DXv/x+FehlXVbfnB+CzV/WOKPBBC
- fTptL4aq903UnpGwvRIysf/r9D/JDUv9mutzVcoHCe0pTV1ZGNS6s9cAEtbm1QAFdHN/ kA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m0twq9965-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 17:57:23 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AMHvMGJ032066
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 22 Nov 2022 17:57:22 GMT
-Received: from [10.110.109.32] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
- 2022 09:57:21 -0800
-Message-ID: <e6ae7c01-47ca-f1da-3b0b-1f17d9e862bf@quicinc.com>
-Date:   Tue, 22 Nov 2022 11:57:19 -0600
+        Tue, 22 Nov 2022 15:15:09 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB9427CF2;
+        Tue, 22 Nov 2022 12:15:07 -0800 (PST)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 09F89CE614;
+        Tue, 22 Nov 2022 20:15:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1669148105; bh=tjaabx+DOBEJxsj2AmY3G3Tchs38EEYG75S/4T0olZs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=i0nSZzq6GD7KIP0gmvVbxKBD68Sec5zzm2By2W2IQYCwXTMLFFSpqI3Jj0M6u8uOR
+         Tzx3xWsD3KW2It+wSTQyYW5z3zQIZGqJIXZy05ZI2kN6KNnfen+VIRgMouY1s7bUU4
+         FmDkOSyI+ZDGhsg9BNvBP7TrTNcwdvFrkxx1RmpY=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     myungjoo.ham@samsung.com, cw00.choi@samsung.com,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gurus@codeaurora.org,
+        aghayal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: Re: [PATCH v4 0/2 RESEND] Fix pm8941-misc extcon interrupt dependency assumptions
+Date:   Tue, 22 Nov 2022 21:15:03 +0100
+Message-ID: <2260542.ElGaqSPkdT@g550jk>
+In-Reply-To: <20220926113143.40768-1-bryan.odonoghue@linaro.org>
+References: <20220926113143.40768-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 1/3] dt-bindings: interconnect: Add rpmh virt devices
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221118182245.31035-1-quic_molvera@quicinc.com>
- <20221118182245.31035-2-quic_molvera@quicinc.com>
- <536af0d9-aa00-ddf1-753d-670ec2adef91@linaro.org>
- <3ada611b-96e0-5cf0-d79d-b90ca4202ddb@quicinc.com>
- <b7cc4f5d-c1d6-919c-9604-7855ea802d17@linaro.org>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <b7cc4f5d-c1d6-919c-9604-7855ea802d17@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RVBrSxMnNV_hb3ZYQ5poZWgop4M6XRe8
-X-Proofpoint-ORIG-GUID: RVBrSxMnNV_hb3ZYQ5poZWgop4M6XRe8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-22_11,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
- adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- phishscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2211220138
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Montag, 26. September 2022 13:31:41 CET Bryan O'Donoghue wrote:
+> RESEND:
+> - I thought I resent these at the start of this month, can't find them
+>   in linux-msm I think I just sent them to myself.
+> 
+>   No change since July 17th
+> 
+> V4:
+> - Added suggested extra log text from Marjin to extcon patch
+> 
+> V3:
+> - Adds a cover-letter since we are now doing two patches a dt-bindings fix
+> and platform_get_irq_byname_optional fix.
+> - Add Review-by -> Rob Herring, Marijn Suijten
+> - Add additional patch to negate warning when one of usb_id or usb_vbus
+>   is not declared in the platform DTS.
+> 
+> Bryan O'Donoghue (2):
+>   dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
+>   extcon: qcom-spmi: Switch to platform_get_irq_byname_optional
+> 
+>  .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+>  drivers/extcon/extcon-qcom-spmi-misc.c               |  4 ++--
+>  2 files changed, 10 insertions(+), 6 deletions(-)
 
+Hi Chanwoo Cho  and MyungJoo Ham,
 
-On 11/22/2022 1:50 AM, Krzysztof Kozlowski wrote:
-> On 21/11/2022 18:39, Melody Olvera wrote:
->>
->> On 11/20/2022 5:13 AM, Krzysztof Kozlowski wrote:
->>> On 18/11/2022 19:22, Melody Olvera wrote:
->>>> Add documentation for virtual rpmh devices. These interconnects
->>>> are not controlled by the application processor and thus
->>>> require separate bindings. Also, move compatibles for sm8450 to
->>>> this document and add them for QDU1000/QRU1000 platforms.
->>>>
->>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>>> ---
->>>>  .../bindings/interconnect/qcom,rpmh-virt.yaml | 55 +++++++++++++++++++
->>>>  .../bindings/interconnect/qcom,rpmh.yaml      |  2 -
->>>>  2 files changed, 55 insertions(+), 2 deletions(-)
->>>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->>>> new file mode 100644
->>>> index 000000000000..5cbaa51df863
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-virt.yaml
->>>> @@ -0,0 +1,55 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-virt.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm RPMh Virtual Network-On-Chip Interconnect
->>>> +
->>>> +maintainers:
->>>> +  - Georgi Djakov <georgi.djakov@linaro.org>
->>>> +  - Odelu Kukatla <quic_okukatla@quicinc.com>
->>>> +
->>>> +description: |
->>>> +   RPMh interconnect providers support system bandwidth requirements through
->>>> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
->>>> +   able to communicate with the BCM through the Resource State Coordinator (RSC)
->>>> +   associated with each execution environment. Provider nodes must point to at
->>>> +   least one RPMh device child node pertaining to their RSC and each provider
->>>> +   can map to multiple RPMh resources. Virtual interconnect providers are not
->>>> +   controlled by AP and do not support QoS; they should not have associated
->>>> +   register regions.
->>>> +
->>>> +allOf:
->>>> +  - $ref: qcom,rpmh-common.yaml#
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    enum:
->>>> +      - qcom,qdu1000-clk-virt
->>>> +      - qcom,qdu1000-mc-virt
->>>> +      - qcom,sm8450-clk-virt
->>>> +      - qcom,sm8450-mc-virt
->>> You should also move qcom,sdx65-mc-virt, qcom,sc8280xp-mc-virt,
->>> qcom,sc8280xp-clk-virt and more.
->> Ok. I wasn't sure since some of these entries don't seem to conform to
->> these bindings, even though it seems they should.
-> I have impression that devices I listed conform to these bindings, this
-> is why I listed them. But if you are sure that they do not, then they
-> should not be moved.
+could you please pick up these patches?
 
-You're correct; those you listed do conform to the new bindings and should be moved.
-I also caught qcom,sc7280-clk-virt which needs to be moved. I'll add to the new bindings.
+Regards
+Luca
 
-Thanks,
-Melody
->
-> Best regards,
-> Krzysztof
->
 
