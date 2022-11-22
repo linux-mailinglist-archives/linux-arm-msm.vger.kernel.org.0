@@ -2,174 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DC04633FCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 16:06:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73DCD634013
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Nov 2022 16:23:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233886AbiKVPGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 10:06:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
+        id S233710AbiKVPXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 10:23:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233478AbiKVPGH (ORCPT
+        with ESMTP id S233498AbiKVPXo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 10:06:07 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E38A6396
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 07:06:06 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id 130so14598401pfu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 07:06:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KFm/hQzp85f9PkuPkdfd/PZMWkQMCDrrQWUl2fEW03w=;
-        b=LNABZeRJscon/VHkVveJ+lRDsjpGyOiP9IOwSqUmzdQKKCR9YcvxcJDwYKXoQ31puT
-         1HqnkQrRZ/k+3TSJjAgBQ+Kr38QRdX+vbD6LLNCI4Rm1RvfZc5Z5vyUACqBpPu6rIRLx
-         t1GdVd7Fk8spxfx32ehpulaunieqgpV/uNMX7QABg6IveP4V2P3HH3odTGTN9wqWK6VZ
-         A4hS2GeaolVs6tDiYvsBXUu7E2cey22hii5xm78bilr9FXr7EO8qryDnZYSSc35X1Z9Y
-         8PQchihQYpWbWxOsbrC6xgoiwPI0pxmnMZSkMshttOyJ7AVkTteMKSdJBxceEsC4VpbH
-         ToWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KFm/hQzp85f9PkuPkdfd/PZMWkQMCDrrQWUl2fEW03w=;
-        b=aygIMcU8L/V3cIhRhGrtgA3RmmXBo/n3emZ6H4ieqa327oCPJwvyJnHFk5xLLcSNjG
-         nmtZJoqkJepIR6MqbY+p8XjaA40uhQFFK8vdJ3614TyZWeYb9d4OLp2WNBIoMcDayLAl
-         3WUz2LiMY4BK4NW0i+GPhJxn/UdqWuQk2n44YIAyh45bC07LthfWZDORK+MfrAbUNDKH
-         cRa1Yn6Opz3DdxUlEXxMUXai1llCI0TG/4Ib/DWL9vt1q5rLCp8JQeSQ7ENv/g+vMuaM
-         qyadXvnYmDNjxbm7NKn+iyrnP+pl/lO85GncWfX6R8SNR1h/dJcFPJYFNr96Z+qzXGqi
-         aN6Q==
-X-Gm-Message-State: ANoB5pmGaNDbscyWgO4l/wx20ChPetHTSjWz873DLEj6DI6YQVP75Ikd
-        cr1qtLqlMmb4lhxyG39iCA2E
-X-Google-Smtp-Source: AA0mqf5GjmHRR2cgKROAhBGQlpp08yLh0IhPhYqC84bGzFy5Jw1en3ayBeCra6H6haMqnZOZo68kzg==
-X-Received: by 2002:a63:e44:0:b0:475:2f61:bbc3 with SMTP id 4-20020a630e44000000b004752f61bbc3mr5548600pgo.435.1669129565476;
-        Tue, 22 Nov 2022 07:06:05 -0800 (PST)
-Received: from thinkpad ([59.92.98.84])
-        by smtp.gmail.com with ESMTPSA id b15-20020a1709027e0f00b001869394a372sm12022018plm.201.2022.11.22.07.05.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 07:06:04 -0800 (PST)
-Date:   Tue, 22 Nov 2022 20:35:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 22 Nov 2022 10:23:44 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1333D20F42;
+        Tue, 22 Nov 2022 07:23:43 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AMDjBxO001933;
+        Tue, 22 Nov 2022 15:23:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Q7ZjNfTJzfwKzx48mpBS6iFDtNLUI7sNoo3WFNK1EI8=;
+ b=RkoX7f5AMlEJiz/WOH3bRVxqOOcSr0cCgnbDpqXehlz8lTfEohXf8yL5aa8m3UDIZIQS
+ TXushe1Qe4GSti+8Q61lM4ceeM7u1YaYPBfkWfEnnTHIiUYWzcqqMrE1fbUc/1MPcCx/
+ wn5TnBbFJsGFGfwvo6FkD76UdRVW5dHmNLjZRX9ovvrB6//Qt6o97UkxUPz/L4clejrJ
+ 3M+o+L5YD3U/k4lbaUoyfCyhPgQLxmcQ/ob29qvQR6HsI9nMKovfEaKcTBEKPMJIabJ6
+ 91N9rxRvxoLi37Cv/vrekG+XfYpbiYiZ3GoSGe5g/XdOkcDdBCCZyBtA6R2E6kZdSiWM oQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m0hwpa2mx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Nov 2022 15:23:38 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AMFNbOT008091
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 22 Nov 2022 15:23:37 GMT
+Received: from [10.110.15.183] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
+ 2022 07:23:36 -0800
+Message-ID: <2a50b68f-d2dd-bae5-29b3-f608813d5a3f@quicinc.com>
+Date:   Tue, 22 Nov 2022 09:23:35 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 1/2] ufs: host: ufs-qcom: Clear qunipro_g4_sel for HW
- version major 5
-Message-ID: <20221122150555.GE157542@thinkpad>
-References: <20221116121732.2731448-1-abel.vesa@linaro.org>
- <20221116121732.2731448-2-abel.vesa@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221116121732.2731448-2-abel.vesa@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221118182039.29236-1-quic_molvera@quicinc.com>
+ <20221118182039.29236-2-quic_molvera@quicinc.com>
+ <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
+ <faf2d137-efab-93ab-f325-1fa507f166a7@quicinc.com>
+ <03174a04-440d-a840-1e54-fbdbdfe296c3@linaro.org>
+Content-Language: en-US
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <03174a04-440d-a840-1e54-fbdbdfe296c3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Un3uGb_kciHmoMf7AZDU0lFkBTTBcM31
+X-Proofpoint-ORIG-GUID: Un3uGb_kciHmoMf7AZDU0lFkBTTBcM31
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-22_09,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ malwarescore=0 mlxlogscore=999 lowpriorityscore=0 mlxscore=0 bulkscore=0
+ spamscore=0 phishscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211220115
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 02:17:31PM +0200, Abel Vesa wrote:
-> On SM8550, depending on the Qunipro, we can run with G5 or G4.
-> For now, when the major version is 5 or above, we go with G5.
-> Therefore, we need to specifically tell UFS HC that.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 4 ++++
->  drivers/ufs/host/ufs-qcom.h | 2 ++
->  2 files changed, 6 insertions(+)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index ca60a5b0292b..72334aefe81c 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -227,6 +227,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
->  	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
->  		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
->  		   REG_UFS_CFG1);
-> +
-> +	if (host->hw_ver.major == 0x05)
-> +		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
 
-So this means, G5 will be used all the time even if the UFS device doesn't
-support it (ie., G4 device), which is not ideal.
 
-Since you have already based this series on my UFS gear 4 series, you should
-resend this on top of my next version that I'm about to submit. There I have
-proposed reinitializing the UFS device after switching to max gear supported by
-both controller and device.
+On 11/22/2022 1:48 AM, Krzysztof Kozlowski wrote:
+> On 21/11/2022 21:38, Melody Olvera wrote:
+>>
+>> On 11/20/2022 4:58 AM, Krzysztof Kozlowski wrote:
+>>> On 18/11/2022 19:20, Melody Olvera wrote:
+>>>> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
+>>>>
+>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>> ---
+>>>>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
+>>>>  1 file changed, 134 insertions(+)
+>>>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>> new file mode 100644
+>>>> index 000000000000..cb0c496d8666
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>> @@ -0,0 +1,134 @@
+>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>> +%YAML 1.2
+>>>> +---
+>>>> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
+>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>> +
+>>>> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
+>>>> +
+>>>> +maintainers:
+>>>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>>>> +
+>>>> +description: |
+>>>> +  This Top Level Mode Multiplexer block (TLMM) is found in the QDU1000 and
+>>>> +  QRU1000 platforms.
+>>> It's better to keep consistent style which allows to do easy
+>>> search/replace, than to have new files using their own sentences. So
+>>> keep it the same as was unified in few recent commits.
+>> Ok... Just making sure that's what you want. Last PS you gave comments to change
+>> the wording of this description to remove "This binding describes..." as we've done
+>> in all the other qcom pinctrl/tlmm bindings. I can change the wording back to the
+>> original, just want to be clear here.
+> I propose to have the same wording as other Qualcomm TLMM bindings,
+> however you changed it to something not the same. Therefore I wonder -
+> why having here different wording than all other bindings?
+>
+> By going back to original - what do you mean? If it matches all others,
+> then yes, but I doubt it.
+>
+> Just to be sure - are you working on proper (recent) trees or something old?
 
-Based on that information, you could do:
+Original matched how it was done on other Qualcomm TLMM bindings. Feedback
+was to drop "This binding describes..." from [1], but all the Qualcomm TLMM
+bindings start with "This binding describes...". I'm looking at qcom tree for-next
+branch; should be recent, no?
 
-```
-	if (host->hw_ver.major == 0x05) {
-		if (host->hs_hear == UFS_HS_G5)
-			ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
-		else
-			ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 1, REG_UFS_CFG0);
-	}
-```
-
-By this way, if the device doesn't support G5, G4 will be used.
-
-Btw, please use a valid definition instead of 0/1 above.
-
-> +
->  	/* make sure above configuration is applied before we return */
->  	mb();
->  }
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 751ded3e3531..10621055bf7f 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -36,6 +36,7 @@ enum {
->  	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
->  	REG_UFS_PARAM0                      = 0xD0,
->  	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
-> +	REG_UFS_CFG0                        = 0xD8,
-
-Hmm, so what is the offset of REG_UFS_PA_LINK_STARTUP_TIMER?
-
->  	REG_UFS_CFG1                        = 0xDC,
->  	REG_UFS_CFG2                        = 0xE0,
->  	REG_UFS_HW_VERSION                  = 0xE4,
-> @@ -75,6 +76,7 @@ enum {
->  
->  /* bit definitions for REG_UFS_CFG1 register */
->  #define QUNIPRO_SEL		BIT(0)
-> +#define QUNIPRO_G4_SEL		BIT(5)
-
-Since this bit belongs to CFG0 register, it should be added separately and not
-with CFG1 definitions.
+[1] https://lore.kernel.org/all/37c53d8c-2810-509a-7404-7ca24d79fed8@linaro.org/
 
 Thanks,
-Mani
+Melody
 
->  #define UFS_PHY_SOFT_RESET	BIT(1)
->  #define UTP_DBG_RAMS_EN		BIT(17)
->  #define TEST_BUS_EN		BIT(18)
-> -- 
-> 2.34.1
-> 
+>
+> Best regards,
+> Krzysztof
+>
 
--- 
-மணிவண்ணன் சதாசிவம்
