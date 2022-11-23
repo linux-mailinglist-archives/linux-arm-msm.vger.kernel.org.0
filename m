@@ -2,203 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C85C6363DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:37:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 094696363E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:37:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238609AbiKWPhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 10:37:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
+        id S238912AbiKWPhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 10:37:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238780AbiKWPgz (ORCPT
+        with ESMTP id S238825AbiKWPh3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 10:36:55 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219A978D5A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:54 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id 5so13334421wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vIolcY7Gs+PsDlc7bfY9hlM/TZPENVo0vUsEsAX0cvo=;
-        b=iIxf37l8b88uHwbIJ1EaCE8cv6EBchOguS5dDQ8K3O3HtMMdQ1Gxj1bNLfmSM+X39b
-         mNCnmtvsdk+MeAMuj2JjfBPuVO9Hsg+ASLO4JRxLCYauhdgk+gZ/gkyPRJq3LpGd6nmb
-         FLFT1T26WHg7VEIaBhuYqfIFiO3hACO1y/X3KHDbUpVG9NPhE8Ce0XFG4FKjZ46AFerM
-         EBhpffAtnB/TEHidtsdWnWxgbKH5T9+WbwSECB75wmaCv6Q4wzSRnWaNyi4Tyynuxi/6
-         7q1kn5UfiX/qEwDGob4OSOZVvzju7Ryn81Bv3rlbI/N5kHUr87N2W298n+VRTECEYSuq
-         q2Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vIolcY7Gs+PsDlc7bfY9hlM/TZPENVo0vUsEsAX0cvo=;
-        b=kj9WuM8LzcGC3jjKUUIxX4oIlyt1uCD0y1nTcHV3EfB9jnHQxHbnV85ICyw6y2nwDj
-         AQe39mnUZXzBw73iqE0DFhR7oaiKXmZHL2ePul4b0qOgA00xtAiQFAy4RSPty2KzN6Ca
-         J6pagpPTOlH0+0QdKuSzrsKGfKEQs5Juonm0Tdcdd2I4cl1gHePDxHgA3NTk8fJG8NEj
-         K+mdwe0a5tnV3oqM/A/lQ0YOEThBXeuLdy/0OZ0nYz0wXnzVkYjfBv8I927ldVWCi/m5
-         3c8EmUR8tZcRiRMhrPpIyspeLUbUKqXQAUxYqYlUQJfLgg91fRJiXoqoyTqP+KwYVCPD
-         Df6g==
-X-Gm-Message-State: ANoB5pmfDyN4RlJeNmL8EMfm2asMXM1rDE2/XxePtnB5bCHOGIkafuXT
-        nZU4holvLHHrOnSl9Ry9/2FuhQ==
-X-Google-Smtp-Source: AA0mqf6z8+JyGCqRyyb8h2MVhjtcqBpG/IJmcAArjIW+ye0qQ8M1Oh75WKsXpxyYQf5bQv/+TJyA5A==
-X-Received: by 2002:a05:600c:5541:b0:3cf:8896:e1d0 with SMTP id iz1-20020a05600c554100b003cf8896e1d0mr10171475wmb.177.1669217812653;
-        Wed, 23 Nov 2022 07:36:52 -0800 (PST)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id e28-20020adfa45c000000b00228cbac7a25sm17169833wra.64.2022.11.23.07.36.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 07:36:52 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] regulator: qcom-rpmh: Add support for PM8550 regulators
-Date:   Wed, 23 Nov 2022 17:36:38 +0200
-Message-Id: <20221123153638.721254-3-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221123153638.721254-1-abel.vesa@linaro.org>
-References: <20221123153638.721254-1-abel.vesa@linaro.org>
+        Wed, 23 Nov 2022 10:37:29 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1FF0626A;
+        Wed, 23 Nov 2022 07:37:27 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8DB27B8216D;
+        Wed, 23 Nov 2022 15:37:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47180C433D6;
+        Wed, 23 Nov 2022 15:37:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669217845;
+        bh=UanCtzyfyh7s6GC+lB/BgGuUYEuJMVRrxquRNUED7QE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=m6P+8V1/dZMe1Sdy38Jer2Kq0kWOQcWPpch/6FCsgX7mogbRiZx+nRYmaqo4cOT5c
+         2VBhRCgyAp1QZeQHA3EETx8HSmmQjCOuPPa172HaY1MAN9akX9CNVq37lxVTz8BMr8
+         BBLccHPaIU6D7mYb41M582jELquyQZxntjmwvKYXyotA//5tW/2MbJATyer9nFW/f0
+         ufcjB46KzIThaQo20IBXLl20DeebxUayijZK5CPRM4y+7O6LBfTdsu4RRUcLHP5KOK
+         b4r/lHFcNKfmA5EJjEfSCvbMR52QJimK5ICXr91dLn0KonGcS4j6q3bU+aNI+8DhYx
+         YzSjHFJvVHfAg==
+Date:   Wed, 23 Nov 2022 15:37:13 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        netdev@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        linux-usb@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: Re: [PATCH v2 4/9] dt-bindings: drop redundant part of title (end)
+Message-ID: <Y34+KaMMI5H/qBlI@sirena.org.uk>
+References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
+ <20221121110615.97962-5-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="c3/TYdFfqHAXL0OZ"
+Content-Disposition: inline
+In-Reply-To: <20221121110615.97962-5-krzysztof.kozlowski@linaro.org>
+X-Cookie: I'm rated PG-34!!
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the rpmh regulators found in PM8550 PMIC and its variants,
-along with their compatibles and configuration data. They also
-contain some FT-SMPS 525, so add their configuration as well.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
+--c3/TYdFfqHAXL0OZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Changes since v1:
- * Made the commit message describe better the changes
- * Added Konrad's R-b tag
+On Mon, Nov 21, 2022 at 12:06:10PM +0100, Krzysztof Kozlowski wrote:
+> The Devicetree bindings document does not have to say in the title that
+> it is a "Devicetree binding", but instead just describe the hardware.
 
- drivers/regulator/qcom-rpmh-regulator.c | 81 +++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+Acked-by: Mark Brown <broonie@kernel.org>
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index f90bcdeecea5..43b5b9377714 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -731,6 +731,24 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
- 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
- };
- 
-+static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
-+	.regulator_type = VRM,
-+	.ops = &rpmh_regulator_vrm_ops,
-+	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
-+	.n_voltages = 268,
-+	.pmic_mode_map = pmic_mode_map_pmic5_smps,
-+	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
-+};
-+
-+static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
-+	.regulator_type = VRM,
-+	.ops = &rpmh_regulator_vrm_ops,
-+	.voltage_range = REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
-+	.n_voltages = 268,
-+	.pmic_mode_map = pmic_mode_map_pmic5_smps,
-+	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
-+};
-+
- static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
- 	.regulator_type = VRM,
- 	.ops = &rpmh_regulator_vrm_ops,
-@@ -987,6 +1005,57 @@ static const struct rpmh_vreg_init_data pm8450_vreg_data[] = {
- 	{}
- };
- 
-+static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,    "vdd-l2-l13-l14"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,    "vdd-l3"),
-+	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,    "vdd-l5-l16"),
-+	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo_lv, "vdd-l6-l7"),
-+	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv, "vdd-l6-l7"),
-+	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
-+	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
-+	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,    "vdd-l11"),
-+	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
-+	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
-+	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
-+	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo,    "vdd-l15"),
-+	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,    "vdd-l5-l16"),
-+	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,    "vdd-l17"),
-+	RPMH_VREG("bob1",   "bob%s1",  &pmic5_bob,     "vdd-bob1"),
-+	RPMH_VREG("bob2",   "bob%s2",  &pmic5_bob,     "vdd-bob2"),
-+	{}
-+};
-+
-+static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
-+	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525_lv, "vdd-s1"),
-+	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525_lv, "vdd-s2"),
-+	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525_lv, "vdd-s3"),
-+	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
-+	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
-+	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,   "vdd-l1"),
-+	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,   "vdd-l2"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,   "vdd-l3"),
-+	{}
-+};
-+
-+static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
-+	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
-+	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
-+	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
-+	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_lv, "vdd-s4"),
-+	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
-+	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
-+	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
-+	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
-+	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo,   "vdd-l1"),
-+	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo,   "vdd-l2"),
-+	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo,   "vdd-l3"),
-+	{}
-+};
-+
- static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
- 	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
- 	RPMH_VREG("smps2",  "smp%s2",  &pmic5_hfsmps515, "vdd-s2"),
-@@ -1314,6 +1383,18 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.compatible = "qcom,pm8450-rpmh-regulators",
- 		.data = pm8450_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pm8550-rpmh-regulators",
-+		.data = pm8550_vreg_data,
-+	},
-+	{
-+		.compatible = "qcom,pm8550ve-rpmh-regulators",
-+		.data = pm8550ve_vreg_data,
-+	},
-+	{
-+		.compatible = "qcom,pm8550vs-rpmh-regulators",
-+		.data = pm8550vs_vreg_data,
-+	},
- 	{
- 		.compatible = "qcom,pm8998-rpmh-regulators",
- 		.data = pm8998_vreg_data,
--- 
-2.34.1
+--c3/TYdFfqHAXL0OZ
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmN+PikACgkQJNaLcl1U
+h9Axvwf9HW9i1/TYYTLxyy8fUtu5a3P9a9v1aqZ5Vk5GOoY4gLBJ+Nn6TQz4e3WA
+B/mLs0ELXPm3nJVTGPQfpqgCN3STLaUwDcVJIskltCSFn08YUWFcyfkQWyBkAWym
+cNTiF+sk8z6Aw5orSNcjJFWhpEZejA/1yQ+eBJbfm3d44vR/G2D5tMGJXmbE3rEA
+bRa98QZef1l34JDi6+gadC0w7LX4jj8Q41K/mjRuLqdmV6BUstQvCsKC/8YIeoua
+G3jLmit5vd8KXG2eEiqK2lY2t5FBYlNLXqLoaE2yjZFcmvABd6Vh/2JDcOOFeBpK
+sPr6SAIesrsLQzCHS/nuT/saF9E/UA==
+=p0qY
+-----END PGP SIGNATURE-----
+
+--c3/TYdFfqHAXL0OZ--
