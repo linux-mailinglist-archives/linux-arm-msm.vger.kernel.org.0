@@ -2,169 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1696C6363BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:31:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CFFB6363DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:37:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238121AbiKWPbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 10:31:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43156 "EHLO
+        id S238502AbiKWPhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 10:37:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238867AbiKWPbV (ORCPT
+        with ESMTP id S238621AbiKWPgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 10:31:21 -0500
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C073B97F8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:30:53 -0800 (PST)
-Received: by mail-ua1-x931.google.com with SMTP id s16so3811805uaq.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:30:53 -0800 (PST)
+        Wed, 23 Nov 2022 10:36:53 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 713647C011
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:51 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id b12so16147681wrn.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LUoChsKBNuN03wcrTOc2UNOEbfXAl69AwMtwVs41RuY=;
-        b=ZaE0WiDUcb45M/OW9G0pRdeWarrm4usTJd9OHJFG/VJmQoRKanZiP50SvmARkyXtAD
-         cxvdznzDyyRYvYiYAdUHvYTE0/sHXROUILeQXt+lc4C7a4foAEUY2NGV9XPdmoRixymk
-         lh7dc2tuaEoiSKZjmY6mqKTspZl+IJNFhNW1cZfalfP9smklKlktsG/kmcvL54SlyUtQ
-         VlZWYyVvUVNCAR74PXRwxcx2AtfqiLC/2qy8iJV3seAuVU32Qht7KEXmL3bzI8tgBKZb
-         Xgr5EGDsdfpURfXUPfsvapuHFDqt0+UANfAnYnCN+P/9yPso56hALMYTfSzwOdSwVivv
-         6KDQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tousRRFV6m+cRpEg1qoKwA+d9M9IKdyUJXLLAyIiKj4=;
+        b=WRQsucsQAzGhqOJW6aV8mxzL6q3NhmRUzGYjG2FnwrO544ooakli32NsNZmInjQ3k/
+         4IvFu0PPgzxnE8vbh7h1F17GZ4x6JpW2Xi0Y2YNGLHMsMB2lKGU/a/bpoBrFBTcTz4uM
+         GOculze2wkzTC5Qr9eTLaCuG3qkhRG6GYkGTzdecOAncddL733ZOVauQpqSUT6c/Hh8j
+         acgL0rsr1GSKTDW+mW8kL+z9GRWqbl/0C88tMCq/yZystVs59eOfaPZayd1YgWpERz4p
+         Dj7jpgwWNE9L5Ptzrdzdaoi7ol6pMzKTNTizCg1XcCI29CrUbBCuHnr9w0IxgwJQ1f0t
+         aNmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LUoChsKBNuN03wcrTOc2UNOEbfXAl69AwMtwVs41RuY=;
-        b=2d+rNt93XjQsr8UbAERQ4sEchMLs9+Tnj5Bs0KVmhtyKBFaYo56LgLAiAGsWL3ZmBM
-         45Maq25AFULzcl19VO1eQ5EbKns6VpuJTWciqk0oMnQBDx4czmQxgnziwTevtg4F8guU
-         9JhqrxfL6XWIWDRg2AJaDidB6FS6dAgCAyy8ru+qJCqZWt5c6TtNdZ9PGKowE4qatxmR
-         43Mpek56QFdZIIVJrM3pxs+IEHN0xCBCh9SCGaAmbGVQi5s5AebYNX7Jsdgc/5okCYzH
-         8GuDfe8baDmziObDkBPp2t+oiLNWJlt0phY5nOv1lJlBW6lizApMfyDmp6vlPIPbOk97
-         V60w==
-X-Gm-Message-State: ANoB5pkOQzg4BthifrH3AvurM6D/MAy5Z0O/h+XVFab2rT7/2TjalvMj
-        XGzmY8lYjEvQGuUocaXxsAM4F7Yory6ZfyvCaKRnaViYEvqM/w==
-X-Google-Smtp-Source: AA0mqf5DsMXES+K/CJiQVAcKNGFEyictIOB89in/o2CuupV7FzwhFkMHiT/XsitTAWFmDVvO/um9RMphviJgCYyT7EE=
-X-Received: by 2002:ab0:6015:0:b0:418:c2fa:f8a6 with SMTP id
- j21-20020ab06015000000b00418c2faf8a6mr8323130ual.119.1669217452532; Wed, 23
- Nov 2022 07:30:52 -0800 (PST)
-MIME-Version: 1.0
-References: <20221122102125.142075-1-brgl@bgdev.pl> <20221122102125.142075-13-brgl@bgdev.pl>
- <Y3z/sqRZ3A/j8TIv@kroah.com>
-In-Reply-To: <Y3z/sqRZ3A/j8TIv@kroah.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Wed, 23 Nov 2022 16:30:41 +0100
-Message-ID: <CAMRc=MfEa_GwCGLS6c_wET_6BSPSh_rp_hhvCC6M7FFPwdMf5g@mail.gmail.com>
-Subject: Re: [PATCH v2 12/15] tty: serial: provide devm_uart_add_one_port()
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=tousRRFV6m+cRpEg1qoKwA+d9M9IKdyUJXLLAyIiKj4=;
+        b=jZdc9XGyT0BH154yRg7t1pw6YJH1k9bvzIURwG1B/VnKFRRsxmld9AHpOUk+EPQWFU
+         6ExaT1xdW0c8gizf5xHVbh51ZxQi4X7xI5h3+/abYanahWLnLqO7GrfHJ+vhfJ9VOD2U
+         07Vm1LJOwS74xI4peVevpKzMVKlF6bLMt/3nX+VkbxwxEAJnCziG4mHBVYD82m7F/EG5
+         5QB4VxsiqYs0UMKBe1rHWk4hngDMks+zam3gN69hQ+Z8A6r9fVSea4m6420Xt9UG5aZQ
+         xtpJ7as7ah6sdtkpuWSx3ok9HInwaBsFIufj1+/dfIisp8uh6DNLB/cPPgV2/mD5qQEY
+         5xOQ==
+X-Gm-Message-State: ANoB5pkDgplQ3pYSKQU8BG0jZNxF8W701zoEBfcPSzxjWuQwYfRfQ56F
+        THq31Ub8uKQ1ZGX2ZRWw3uRwJ0vg2I3iXw==
+X-Google-Smtp-Source: AA0mqf7mg9zqFjTxtOELO5YsRLvK7455nzLSUNp6l4EauNpTIk9IjawiR3ijrsMdAd4IyuPyG9OXsA==
+X-Received: by 2002:a5d:6486:0:b0:241:ba9c:cc65 with SMTP id o6-20020a5d6486000000b00241ba9ccc65mr17024694wri.443.1669217809978;
+        Wed, 23 Nov 2022 07:36:49 -0800 (PST)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id e28-20020adfa45c000000b00228cbac7a25sm17169833wra.64.2022.11.23.07.36.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Nov 2022 07:36:49 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/2] regulator: qcom-rpmh: Add support for PM8550
+Date:   Wed, 23 Nov 2022 17:36:36 +0200
+Message-Id: <20221123153638.721254-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 5:58 PM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Tue, Nov 22, 2022 at 11:21:22AM +0100, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Provide a devres variant of uart_add_one_port() that removes the managed
-> > port at device detach.
->
-> Ick, no, please let's keep devm away from the serial layer like this.
->
-> I would need a LOT of justification for why this is needed, not just one
-> driver that wants to use it, sorry.
->
-> Please do not make this part of the series for this driver, but do it
-> separately, later, if you still want it.
->
+This patchset adds regulator support for the new Qualcomm PM8550 PMIC.
 
-Hey Greg,
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
 
-I sent out a v3 without devres changes.
+Abel Vesa (2):
+  regulator: dt-bindings: qcom,rpmh: Add compatible for PM8550
+  regulator: qcom-rpmh: Add support for PM8550 regulators
 
-It's not just one driver that would use it, rather: it would be the
-first user and others could be converted later.
+ .../regulator/qcom,rpmh-regulator.yaml        | 26 +++++-
+ drivers/regulator/qcom-rpmh-regulator.c       | 81 +++++++++++++++++++
+ 2 files changed, 105 insertions(+), 2 deletions(-)
 
-I was wondering if your reaction ("Ick, no") comes from the general
-aversion to devres certain developers express? I'm asking because as a
-matter of fact, I've been just recently going through the various
-discussions about the supposed harm in using devres helpers and also
-watched Laurent's presentation[1] from this year's Linux Plumbers.
-While the issues described are real and easy to reproduce, I struggle
-to understand how they're caused by devres and not by the driver model
-in general. Specifically: the question that keeps popping up in my
-head is: how are the use-after-free issues fixed by ditching devres in
-favor of manually freeing resources in .remove()?
+-- 
+2.34.1
 
-I'm not the only one to be asking that, for instance in this[2]
-discussion Matti Vaittinen asked the same question and I can't find a
-convincing answer in this thread. Instead there are some incorrect
-statements, like claims that the order in which managed resources are
-released is not guaranteed - it is: resources are released in reverse
-(as they should).
-
-It's true that devres_release_all() is called after the remove()
-callback returns AND driver_sysfs_remove() is called so when replacing
-kmalloc() with devm_kmalloc(), there is some functional change but
-let's imagine the following patch:
-
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 3dda62503102..0046062828a3 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -527,7 +527,6 @@ static DEVICE_ATTR_RO(state_synced);
-
- static void device_unbind_cleanup(struct device *dev)
- {
--    devres_release_all(dev);
-     arch_teardown_dma_ops(dev);
-     kfree(dev->dma_range_map);
-     dev->dma_range_map = NULL;
-@@ -548,6 +547,8 @@ static void device_remove(struct device *dev)
-         dev->bus->remove(dev);
-     else if (dev->driver->remove)
-         dev->driver->remove(dev);
-+
-+    devres_release_all(dev);
- }
-
- static int call_driver_probe(struct device *dev, struct device_driver *drv)
-
-This seems to work just fine when tested (and I would argue it would
-be slightly more correct so I may send it as a separate patch). Now
-the devres resources are freed in reverse order IMMEDIATELY after
-.remove(). How would moving anything into .remove() fix the
-use-after-free problem described?
-
-We have the same use-after-free issue with the GPIO character device
-and while we keep the struct device associated with it alive until the
-last reference is dropped, the user-space can crash the kernel by
-calling any of the GPIO ioctl()s once the device has been unbound. I'm
-looking into subsystem-level solutions to that but devres has nothing
-to do with that (I tested that with gpio-sim just to make sure).
-
-Anyway, it's most likely a subject for a separate discussion. Just let
-me know what kind of justification for devres other than "it lessens
-the burden on developers to keep track of resources and simplifies
-error paths" you'd like to see.
-
-Best Regards,
-Bartosz
-
-[1] https://www.youtube.com/watch?v=kW8LHWlJPTU
-[2] https://lore.kernel.org/lkml/cover.1660292316.git.mazziesaccount@gmail.com/T/
