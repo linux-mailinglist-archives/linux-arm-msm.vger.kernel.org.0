@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95F1B634EAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 05:13:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C017634EBB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 05:15:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235633AbiKWEMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 23:12:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37396 "EHLO
+        id S235828AbiKWEOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 23:14:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235664AbiKWEMJ (ORCPT
+        with ESMTP id S235783AbiKWEOX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 23:12:09 -0500
-Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch [185.70.40.135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 206C0701A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 20:12:07 -0800 (PST)
-Date:   Wed, 23 Nov 2022 04:11:56 +0000
+        Tue, 22 Nov 2022 23:14:23 -0500
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch [185.70.40.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86A6E9336
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 20:13:26 -0800 (PST)
+Date:   Wed, 23 Nov 2022 04:13:12 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1669176725; x=1669435925;
-        bh=8EU89Vsk/zcnyypYNYzr98PvEuS/NDihuG+V30R5BqI=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=dSg9HaIofHXBRSPo8/1749eVyeTeKlC7UUtk7a/uE+0izFkUqweK01dsJPnfsjAF5
-         0Rjzmv22+clWfYRL2U9S/jeGJw7vcBko2F2tMLnbs5XwwvUTifTArVNDsQ6EPL/TrW
-         DbZnDfKF5x/X9+moSsPoZ9EnUBNEN/aJPQ7+2yeowA2hjpR3SPcnbzC388tf+q3vBi
-         ToACCKNZMtUFCflLG4Ym4AwCFolOueUAlal8ek54JoLhwfIqo3xxvsNVW5GlG9h4Ss
-         uKM6Ot58K2qICK0LBjSb+kvn0eHbkTYM88cHws88ImeOULfEfScS+cioJPl3f4w6Si
-         YGDDuqSOTsA0A==
+        s=protonmail3; t=1669176802; x=1669436002;
+        bh=vucYwH44vada8ZS4xeW86emggjOf64YACa1sNFU1WAE=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=SAizi2iNERss6Ghv8TGGMlAb0KQnkwMay1OtmNP3gKRr62Ls8anTi2SaHlEnbXytX
+         EOz8uUjgR+9pdUPro508PVinIpkXBl324BVQKly9RJ/GHYBMoc/XkXt3v80A1AK9nq
+         ukKPEguiFYLiAf5Klad4AG4TnNICZWr7+Y/sZefmggKQ61NkFjbRX7tABYlnJSkT79
+         UEgYhtUT75SHg1XpznlP6fG+L8NG6kiuQn4h9S4RqdFsckgGwDlpBdFsnSRaXutOAM
+         F+FjQ+mhmzqo+EmpT2CowcAl8X71CJqAVOdU7r80dXB4rPt2xJy6bsmhKsRW7YbprB
+         JWVO/6HJP3jlw==
 To:     linux-kernel@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -40,9 +41,12 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephan Gerhold <stephan@gerhold.net>,
         Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v4 0/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add initial device tree
-Message-ID: <20221123041110.150837-1-linmengbo0689@protonmail.com>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 1/5] dt-bindings: vendor-prefixes: Add GPLUS
+Message-ID: <20221123041220.150893-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20221123041110.150837-1-linmengbo0689@protonmail.com>
+References: <20221123041110.150837-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -57,23 +61,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v4: Fix missing Makefile entry in v3
-v3: Sort properties in l11 and nodes in touchscreen pinctrl.
-v2: Set property status =3D "okay"; as the last property.
-Reword the bindings patch.
+Add vendor prefix for GPLUS.
+https://www.gplus.com.tw
 
-GPLUS FL8005A is a tablet using the MSM8916 SoC released in 2015.
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Add a device tree for with initial support for:
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Docum=
+entation/devicetree/bindings/vendor-prefixes.yaml
+index be7554349545..f5a7e0309e2b 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -510,6 +510,8 @@ patternProperties:
+     description: Shenzhen Huiding Technology Co., Ltd.
+   "^google,.*":
+     description: Google, Inc.
++  "^gplus,.*":
++    description: GPLUS
+   "^grinn,.*":
+     description: Grinn
+   "^grmn,.*":
+--=20
+2.30.2
 
-- GPIO keys
-- GPIO LEDs
-- pm8916-vibrator
-- SDHCI (internal and external storage)
-- USB Device Mode
-- UART
-- WCNSS (WiFi/BT)
-- Regulators
-- Focaltech FT5402 touchscreen
-- SGM3140 Flash LED
 
