@@ -2,77 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E305634F13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 05:40:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC81F634FB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 06:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235858AbiKWEj7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 23:39:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56346 "EHLO
+        id S235832AbiKWFhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 00:37:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235952AbiKWEjo (ORCPT
+        with ESMTP id S229717AbiKWFhQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 23:39:44 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1811D9B386;
-        Tue, 22 Nov 2022 20:39:42 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B54961A3F;
-        Wed, 23 Nov 2022 04:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225EEC433C1;
-        Wed, 23 Nov 2022 04:39:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669178381;
-        bh=EVw4Vc0/gYpVHxzZAdah2zLNd6pA0gTQaK+joP95BKw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QeBxZCprwCTU86Pqv1jbwEiUULNLeEVvPC1vdnFLEOwo4ZjJ9TnndaaoA5XZ55BlH
-         dFNUaBxj1NdIgxQuslei2pAmnW/Z2yQ9Ez0pbOGy0w60FJfyM8TQpvvGSwo4X/CPnL
-         iGkeDfTcaooUjn+RtR+b8weXzQXvnVb2mgoYJ2ygsOCLKSiOMGNGANIMuXfckChAz+
-         PyeRCc3K/Sfw5tX54bqUCF6lgw/E5TKozvtW8vmrDPLBxXa96QLuq80CiTdUw3XPSv
-         11aAf/r27UgMrIlh/qUbpu0OZ3U7Hl/Jm7U0evtgaaia6qFgX/rpiLMZNJZusN3NFD
-         cRxjZ+VpqSyfQ==
-Date:   Wed, 23 Nov 2022 10:09:36 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        netdev@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH v2 5/9] dt-bindings: drop redundant part of title (end,
- part two)
-Message-ID: <Y32kCHhdLjQvSnE3@matsya>
-References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
- <20221121110615.97962-6-krzysztof.kozlowski@linaro.org>
+        Wed, 23 Nov 2022 00:37:16 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 832A3F1D87;
+        Tue, 22 Nov 2022 21:37:14 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AN4to6o026311;
+        Wed, 23 Nov 2022 05:37:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=i5cQM6Zb0RFIDomP7VSgalfTUBrkgnb5lgnwKHZmF8U=;
+ b=XHcfT8kbNGPaAPfZ0z5N2sNbZiLK59CuK4/SwFaH5GnCemrX8el/UPfMS9rnQr5aSX0I
+ 7oZ5zCRisubNWBuXQFDaY4YG+Cx5T7QQxWfefpN+17JrZ0wC3S381GYilu2TSyi9oTkD
+ bLXn1ehSITVYaTm1o4O0+clcaoCCRZi5YWXYT7H+CjUPjhFwj41Sc+rRWboSE9BQcYfD
+ hafKPUCtvAANeEQ8NsehcMiqZF/8vZIBv7Vm6dlzq4GfJqzRGIii6/g+mREwkhfWVUPP
+ b4b+OQnAtYraBtDauq2swRgm36I7ZHiQuz4xqVUwpoEQCauY3T9T59LkJ+CfQnkO2xRX 5g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m0nsjb0nd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Nov 2022 05:37:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AN5b3wK014141
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Nov 2022 05:37:03 GMT
+Received: from [10.216.38.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
+ 2022 21:36:57 -0800
+Message-ID: <7b6d7d2b-f8e7-f85c-ba39-70582225f6c4@quicinc.com>
+Date:   Tue, 22 Nov 2022 21:36:46 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121110615.97962-6-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4 09/11] drm/msm/dpu: add support for MDP_TOP blackhole
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20221122231235.3299737-1-dmitry.baryshkov@linaro.org>
+ <20221122231235.3299737-10-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221122231235.3299737-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Y1VPpCf_zvYWACEGEHCS3Vb6WbifQBOh
+X-Proofpoint-ORIG-GUID: Y1VPpCf_zvYWACEGEHCS3Vb6WbifQBOh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-23_02,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 mlxscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 spamscore=0 priorityscore=1501 suspectscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211230040
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,42 +90,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-11-22, 12:06, Krzysztof Kozlowski wrote:
-> The Devicetree bindings document does not have to say in the title that
-> it is a "binding", but instead just describe the hardware.
-> 
-> Drop trailing "Node|Tree|Generic bindings" in various forms (also with
-> trailling full stop):
-> 
->   find Documentation/devicetree/bindings/ -type f -name '*.yaml' \
->     -not -name 'trivial-devices.yaml' \
->     -exec sed -i -e 's/^title: \(.*\) [nN]ode [bB]indings\?\.\?$/title: \1/' {} \;
-> 
->   find Documentation/devicetree/bindings/ -type f -name '*.yaml' \
->     -not -name 'trivial-devices.yaml' \
->     -exec sed -i -e 's/^title: \(.*\) [tT]ree [bB]indings\?\.\?$/title: \1/' {} \;
-> 
->   find Documentation/devicetree/bindings/ -type f -name '*.yaml' \
->     -not -name 'trivial-devices.yaml' \
->     -exec sed -i -e 's/^title: \(.*\) [gG]eneric [bB]indings\?\.\?$/title: \1/' {} \;
-> 
->   find Documentation/devicetree/bindings/ -type f -name '*.yaml' \
->     -not -name 'trivial-devices.yaml' \
->     -exec sed -i -e 's/^title: \(.*\) [bB]indings\? description\.\?$/title: \1/' {} \;
-> 
->   find Documentation/devicetree/bindings/ -type f -name '*.yaml' \
->     -not -name 'trivial-devices.yaml' \
->     -exec sed -i -e 's/^title: \(.*\) [bB]indings\? document\.\?$/title: \1/' {} \;
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
->  Documentation/devicetree/bindings/phy/brcm,ns2-pcie-phy.yaml    | 2 +-
->  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml      | 2 +-
->  Documentation/devicetree/bindings/phy/ti,phy-gmii-sel.yaml      | 2 +-
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
+On 11/22/2022 3:12 PM, Dmitry Baryshkov wrote:
+> On sm8450 a register block was removed from MDP TOP. Accessing it during
+> snapshotting results in NoC errors / immediate reboot. Skip accessing
+> these registers during snapshot.
+> 
+> Tested-by: Vinod Koul <vkoul@kernel.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 11 +++++++++--
+>   2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 38aa38ab1568..4730f8268f2a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -92,6 +92,7 @@ enum {
+>   	DPU_MDP_UBWC_1_0,
+>   	DPU_MDP_UBWC_1_5,
+>   	DPU_MDP_AUDIO_SELECT,
+> +	DPU_MDP_PERIPH_0_REMOVED,
+>   	DPU_MDP_MAX
+>   };
 
--- 
-~Vinod
+Please update the enum documentation as already requested in the 
+previous patchset.
+
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index f3660cd14f4f..67f2e5288b3c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -927,8 +927,15 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+>   		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+>   				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
+>   
+> -	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
+> -			dpu_kms->mmio + cat->mdp[0].base, "top");
+> +	if (top->caps->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+> +		msm_disp_snapshot_add_block(disp_state, 0x380,
+> +				dpu_kms->mmio + cat->mdp[0].base, "top");
+> +		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - 0x3a8,
+> +				dpu_kms->mmio + cat->mdp[0].base + 0x3a8, "top_2");
+> +	} else {
+> +		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
+> +				dpu_kms->mmio + cat->mdp[0].base, "top");
+> +	}
+>   
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   }
