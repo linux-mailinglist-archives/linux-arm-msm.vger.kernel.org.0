@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 889756369DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 20:26:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4544A636ACE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 21:19:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235164AbiKWTZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 14:25:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54116 "EHLO
+        id S238957AbiKWUS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 15:18:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236472AbiKWTZ5 (ORCPT
+        with ESMTP id S239986AbiKWUSR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 14:25:57 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB58C1F69
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 11:25:55 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id z4so5593816ljq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 11:25:55 -0800 (PST)
+        Wed, 23 Nov 2022 15:18:17 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6F38CB96
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 12:18:16 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id bp15so29750983lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 12:18:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=t1DObvPh+Rx+Hqegn0XLyYJdliwmlAQX29QBWofxvPA=;
-        b=zusNWTQ0ZtK82/Ue7pGOHYNeKWcg2Ze4ZkbOTBvSyG4O9vOzVzpYdgtbzTQSADp2O0
-         vYDxc7B4D1FK1U7DuxqIKxfpDF/Of+Pp7MPdvTk0HyTvUgWAKXEGrXxhNzeP2i+LyrUo
-         BSQTTlJ5Qr0BSru3RYd2CIxZ0ApnHiuvpBLQzmCKW2/nUSkfyQCSMIcuYRUGcoy1kdAz
-         8UsvIRYvXSnsnZC6brAQOvdNsqdrjnZ6InTX2p2yaHZORdrIC9HRRUGI99+eXjPu7sjU
-         VUDluoan1yjaBrHZBnampED/dPUujN6SmSB7wjm13/mUqHHS5JN7cjH8tkSctlPYst2/
-         U1ig==
+        bh=ecST9nT/YcQwW35//EplrlkRqIWIVC66eBdnZLwwM+4=;
+        b=QZQ/jJ7LjkL8hAeYXlFlOg1bxlT95iqex3nxXJ24iN/ZfpuN3mB3zvf2T4zslMD+g5
+         mfAYwNdQ5MUD0WvmDjTILGmB+zMgPGuI/FlxGarsrblHRVx7MBK/nLJ4RxOYD2NTjtIt
+         0O6YEh/5AfLIrLQvawbJ/bWrFyEYAldFCnTNedKUDQ3c82n1BwVBPztKsvXMujwNaQhL
+         1mruzN2ERFvlhdgYLHD9qpYTI5CPlFN3JJjRMvrfDDZZE3DOblGKNG7oBnAdEmm/s03z
+         golL4ZLItXDI0sNKPuKdkgp6cwsBWlQi7rS4T/DN8EKetDXdStgx2GF5dKsKBvc5HZIB
+         4Jqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t1DObvPh+Rx+Hqegn0XLyYJdliwmlAQX29QBWofxvPA=;
-        b=GI0Mo2IRWk5V5W0gwNp0OY/6fnqv+oUPmww2f3hBUc6xg7AkTfElO1/I/JlustkfV9
-         kQqXcKBs7zqfrXPNhFy5hxMBB78OLAz+c84eDf7Y11EF8QrCpHHWVaQN2vSNQMsdUyJU
-         r95jEoX+MWNYmZoCmbl7T91uAXW4fkEMS8ZwLGCXWRK+iUcKjSyTLI1Jzv+AO4tP0Exy
-         6EaxSqyorKYE4xL+/FH8qUokY7fn6bdusULXvL8j7GwrkOefI1CDfGvuT32Wtq+6/Iwl
-         yKkCtpKf0T/cptwQ2sFfKvRXw5eKjkWQtrOY+Fq5b4th+HDChMwgHSo7eda1/p1DqVU4
-         1Wgw==
-X-Gm-Message-State: ANoB5pnrYIVdc9UYEfoPCqejL3qQjiyffJUyRHBduFO/BedC0BsRUock
-        /jQJpkP+t6XKu8fNdeagGX8viPVpKCDW4Q==
-X-Google-Smtp-Source: AA0mqf6sCm6NBHdvo+56rXL7omxWiAryfayByRNrgP0gPV7565DlqGRPl39qHB5E1kDK52xUUGeikg==
-X-Received: by 2002:a2e:a375:0:b0:277:7c00:e130 with SMTP id i21-20020a2ea375000000b002777c00e130mr3104784ljn.268.1669231553655;
-        Wed, 23 Nov 2022 11:25:53 -0800 (PST)
+        bh=ecST9nT/YcQwW35//EplrlkRqIWIVC66eBdnZLwwM+4=;
+        b=xTAZiittrWaVOAdSN+4Nf/uRSwDqxPgf9cKltyWQkw/VJ1uP+Y0pfU0lraAO/qq4gb
+         p+xAhdlfjhy6BhS0u0SC0NlgkFAeELXrlI4aSmiNbhkJlzF9naHpZJt53uelRvfYlyxE
+         wGXY7kQv+FAPqz0Al/e9E8vpJtmhe2duEtkYzoR6O1sJE2LXZ5Opd/fQCNFohUV6lw19
+         NooTvDKEVs+v+PXUBoyjZ5wH2Ao3dKElBzfgbnxTsrA6RXP1yOBj8RGsxJKFAuSNoJ6e
+         a73IXdpe5YVMAcFHwKVELSfA7/zRmhZkL8+UYzWJXZFflusSLy7uDadcuxgPq0BgzRw2
+         Fk9A==
+X-Gm-Message-State: ANoB5pn/ntvmGi31ApoJ60z4GafUlnZAU03/Rz7IABChuDNhU0rRKlo1
+        5E0VRt6Ma+q8UpBdpUp5Yvi1cdVawbG54w==
+X-Google-Smtp-Source: AA0mqf4BQ4FuKuZDygKHET70fMHELwqB+ogCPgJHghJ08EZZIhz4651jCGxWeDveGnGlGKWQHheJXg==
+X-Received: by 2002:ac2:43d9:0:b0:4a4:3059:af15 with SMTP id u25-20020ac243d9000000b004a43059af15mr4353327lfl.258.1669234694420;
+        Wed, 23 Nov 2022 12:18:14 -0800 (PST)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id i29-20020a196d1d000000b004a459799bc3sm2996182lfc.283.2022.11.23.11.25.52
+        by smtp.gmail.com with ESMTPSA id v17-20020ac258f1000000b004a03eb21c4fsm81985lfo.288.2022.11.23.12.18.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 11:25:53 -0800 (PST)
-Message-ID: <879739ef-41a7-3470-da0d-6aa7c8654e0a@linaro.org>
-Date:   Wed, 23 Nov 2022 21:25:52 +0200
+        Wed, 23 Nov 2022 12:18:13 -0800 (PST)
+Message-ID: <5fd29bdb-c93c-fa77-19ce-175fbfb8e639@linaro.org>
+Date:   Wed, 23 Nov 2022 22:18:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH v4 01/11] dt-bindings: display/msm: *dpu.yaml: split
- required properties clauses
+Subject: Re: [PATCH v4 03/11] dt-bindings: display/msm: mdss-common: make
+ clock-names required
 Content-Language: en-GB
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -72,10 +72,10 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20221122231235.3299737-1-dmitry.baryshkov@linaro.org>
- <20221122231235.3299737-2-dmitry.baryshkov@linaro.org>
- <3f796546-f9ac-353c-9f5b-870f77726da6@linaro.org>
+ <20221122231235.3299737-4-dmitry.baryshkov@linaro.org>
+ <40d5c7f3-148a-a5fa-fdf7-6fd301ec3a2d@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <3f796546-f9ac-353c-9f5b-870f77726da6@linaro.org>
+In-Reply-To: <40d5c7f3-148a-a5fa-fdf7-6fd301ec3a2d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,27 +87,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/11/2022 12:15, Krzysztof Kozlowski wrote:
+On 23/11/2022 12:19, Krzysztof Kozlowski wrote:
 > On 23/11/2022 00:12, Dmitry Baryshkov wrote:
->> Per Krzysztof's request, move a clause requiring certain properties to
->> the file where they are declared.
->>
+>> Mark clock-names property as required to be used on all MDSS devices.
 > 
-> Commit msg could be a bit more generic, without naming me (there are few
-> Krzysztofs), e.g.:
-> 
-> Require only properties declared in given schema, which makes the code a
-> bit more readable and easy to follow.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> This we see from the diff. Please tell why you are doing it. In some
+> other recent bindings we dropped clock-names from required, so this is
+> confusing.
 
-Ack, thank you
+Thanks for the question. It looks like you are correct and we do not 
+need clock-names for the new mdss devices (only for the DPU devices and 
+for the old qcom,mdss binding, but it's another story).
 
-> 
-> Best regards,
-> Krzysztof
-> 
+So, I'll drop this patch from the series. And for the next cycle I will 
+check whether we can drop the clock-names from existing dtsi files (and 
+from schema too).
 
 -- 
 With best wishes
