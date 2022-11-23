@@ -2,47 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92B7763652B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 17:00:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79C2363652C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 17:00:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236495AbiKWQAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 11:00:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52898 "EHLO
+        id S235641AbiKWQA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 11:00:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238605AbiKWQAO (ORCPT
+        with ESMTP id S237621AbiKWQAX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 11:00:14 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9591FC5627
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 08:00:12 -0800 (PST)
+        Wed, 23 Nov 2022 11:00:23 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF8963B80
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 08:00:22 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3428A61DD6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 16:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09775C433D6;
-        Wed, 23 Nov 2022 16:00:10 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 631EE61DD8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 16:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A8DC433D7;
+        Wed, 23 Nov 2022 16:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669219211;
-        bh=Iu4fc6+0jXoq++zDmmSSwKANHEKd+b9fm0eRRt9Gqpo=;
+        s=k20201202; t=1669219221;
+        bh=4ShBNb6RMfiZagbVwM+drZkgOzvEom40KzBlvW1E2S8=;
         h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=ZQSeaoyCi71TMsReD1GAQDoi7Apbh31NxLSluL58NkgT0flGgl6B7/R0sQ2X0I115
-         qCtf/+uhsTM6YyV4T1RQ8/Zw9SeMEe3TOEtrz/RoYbN4nq2CqY8UcNKt9sZqr0EXxk
-         zWIzZRp8RHL3VexxM82ZS59YkYPucNe/vpBpDRFUk16aPBfrxcsFAk1p8+WmCs48oP
-         ih9TlHYbRxwynCO6IizwaRGkyPgDTKeciagoc5VTlOt/nR5xqnIlxmSccx6Tzzwn7q
-         kJhTU6XQSWMnPkqFWKu9aKybR1gkcZ+wHdP34snFloOPkJOkGr0Avg85KZHi17qZEa
-         7n4Gvnhqcb4Ug==
-Message-ID: <a5dc12a7-14fa-749b-ba8d-e8537daf98f0@kernel.org>
-Date:   Wed, 23 Nov 2022 17:00:08 +0100
+        b=VAiqI1aGdkBVoOokmTa2p4dOJpvouu9DB6ICJN5u/hAmEI7oR5JKBzAGQLmBaQ5Sf
+         d6EdKXaqEBuxwq/4PKzdvDnDgMrNKIxvD/vFLNbhuvaAa7R1tkAfFughQh7geQCjBJ
+         vmJASWomNEUQf8ptNig5peLGMpF/j+EwlndegCRUcUTOveSY1B1RAMHj0Mpr4nYF8H
+         lTmvQj5w7EMcsPHbMUPbI79jEV95vRJzsqQuKPw4M/eVYBM8qS6l1y3xwN5TZXjpEZ
+         jeyDM4FywgRWnZ/mrR1yrglBg98ghX9Hgcew0iTxrRRZpM1DTxGJKgSmJtTTCwchHx
+         BumUGZTWeMfjw==
+Message-ID: <71357ac1-62b5-2ed9-4b78-3c5d8fb2078d@kernel.org>
+Date:   Wed, 23 Nov 2022 17:00:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH 1/2] dt-bindings: nfc: nxp,nci: Document NQ310 compatible
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm632-fairphone-fp3: Add NFC
 Content-Language: en-US
 To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
 References: <20221119153903.770853-1-luca@z3ntu.xyz>
+ <20221119153903.770853-2-luca@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20221119153903.770853-1-luca@z3ntu.xyz>
+In-Reply-To: <20221119153903.770853-2-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -56,13 +57,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/11/2022 16:39, Luca Weiss wrote:
-> The NQ310 is another NFC chip from NXP, document the compatible in the
-> bindings.
+> Configure the node for the NQ310 chip found on this device, which is
+> compatible with generic nxp-nci-i2c driver.
 > 
 > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)'
+>  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 15 +++++++++++++++
 
 Please use scripts/get_maintainers.pl to get a list of necessary people
 and lists to CC.  It might happen, that command when run on an older
