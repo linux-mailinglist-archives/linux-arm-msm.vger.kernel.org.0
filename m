@@ -2,63 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2985635604
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 10:28:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF1496359E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 11:30:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237694AbiKWJ0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 04:26:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43866 "EHLO
+        id S236503AbiKWKaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 05:30:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237651AbiKWJZo (ORCPT
+        with ESMTP id S236054AbiKWK3o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 04:25:44 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9761917417;
-        Wed, 23 Nov 2022 01:24:36 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id b4so679770pfb.9;
-        Wed, 23 Nov 2022 01:24:36 -0800 (PST)
+        Wed, 23 Nov 2022 05:29:44 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A5A26E4;
+        Wed, 23 Nov 2022 02:11:48 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id g5so374428pjd.4;
+        Wed, 23 Nov 2022 02:11:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HUxMWImFdFlFIDOsCEiIbn33y9KXI+sgMRS7gd08XCc=;
-        b=SPKnNkM3UoDe6C+kiqTEwh+QimzFLMn0A1LJjNzD/Exd6JKDBm+ubEFhJANKMMYJ3n
-         noT8hlInwGISr4G6CiEahZhsh7RroNaZn7UfXDsKWtE1jsLva57fbOgzjcDzRGN69D0h
-         OVdy+wXU5/UY0wDwV6D9cCJBNnrkwz1mzPWQIO0xMi54d5UaP2rAGASNJZCR4G6cXGnA
-         hVF/e89azTZje+O5I89YUmqZ8AYe6dHAdXFbxJ+8h0R9SL4qiabUAKiAxE0IkafKce3k
-         23zbYmFR32Zuqb7hBZs6X9PhZI1619ktfIJc2TYisHsnCNgSs6f1E7df4cGq3wbxrJAU
-         5YxQ==
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aDXkUNj19oN7kKoHOgamDv/9yxtzhVdBO0sCtPpIE6s=;
+        b=qsRIxirAU8x1w5IVEEwOzTmEmZxApJmmcFbHy00EU7/rufYApvm5YbeLFUC8bp7Okp
+         ESFj/LwUCQ0RMpnXFZWTU4IDn78HUvnN2a066zW4sP3lbdsllncEs5ixGe5UCCIqzUHd
+         Bl1L03WAhYK+ZzCmomYsj5TOtlRF9AC1FomgTtRI0fZJ4p/0CiYfPQ323dO7v7vuHbL1
+         eN6AYj8vrL4b5uEZtR+XLZQ2VwVIQ7aQSx/havGxMiG2c3N3Vcc4yxJ8dnPQB9nVwCo/
+         hAYBcmmsDKwo/06spqmQekeMfS7osfkifjK6wyUPw0luijDprHeCAnDZfYxH1bYHVmSO
+         9aag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HUxMWImFdFlFIDOsCEiIbn33y9KXI+sgMRS7gd08XCc=;
-        b=61xRYL3ZFA16PunqttCp9dgI19IXSHPGi0f33PCMitwLFIeT0EJYxLhgkXjEMRUVvV
-         4WlMrDeBDP6iZ2j9xUICdt8RbzX5wrBuaQR5IBlXbzBRBIH0jnxvRV5iXAroWQ/gr5mJ
-         G5LTHQ2ssfboYWKzPaYYrm+rLiBheHR1WiWyYnLL2zYBkVADKAwTAApL5uhXziaDhRbl
-         esNei+31ASepGU7rJ26Iv4/47H1iNMEjLpNlAEX87Ix/qzbIKSNHEvIORkGBOylp42ig
-         lBZbMU6b/6WE6DLFVh39ONFLgNj/SiQ3D/Lb2lP5PuSqGAxZZX/RKG1lnm4aZ9H08ZUw
-         wWaw==
-X-Gm-Message-State: ANoB5pl+/S3AVJH+SBgJ01QJAvJuhnCHijybtBbYLFBoes2Zf6Rvp8aa
-        AQ19hyXpS1R+9fxOPvrVV2UJP97oddTp3XClZPI=
-X-Google-Smtp-Source: AA0mqf5HYg51oCkzTJ1zaC5Ac1wFnubNUWUChJon4uOPQ1vg2i7wbWSyWM/3nLNe7Z5gaUZROV7ECIihFH8LDIZ/kjc=
-X-Received: by 2002:aa7:9af5:0:b0:56c:b5fc:9167 with SMTP id
- y21-20020aa79af5000000b0056cb5fc9167mr9451242pfp.40.1669195475987; Wed, 23
- Nov 2022 01:24:35 -0800 (PST)
-MIME-Version: 1.0
-References: <20221116214655.1116467-1-robimarko@gmail.com> <20221123023027.487A7C433D7@smtp.kernel.org>
-In-Reply-To: <20221123023027.487A7C433D7@smtp.kernel.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 23 Nov 2022 10:24:25 +0100
-Message-ID: <CAOX2RU4xzOH_EHBWvA86L5Agmyvub2Uu1dpgQBiWmnx26hYN_Q@mail.gmail.com>
-Subject: Re: [PATCH v2] clk: qcom: ipq8074: populate fw_name for all parents
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        Christian Marangi <ansuelsmth@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aDXkUNj19oN7kKoHOgamDv/9yxtzhVdBO0sCtPpIE6s=;
+        b=4VZv/2wll5RNkyOj408N++XfgJSEYKrhHJTQhdILZanv2d5AL49lG/c3X4ZHd4sykM
+         Ek9O9V/BM4H3O2r0MchZ1csBBhOCkL5ONaeZMt4fRJ6+JxrDPvBPJ/9Gqp3RwSkQTG/T
+         tzs9phaxwQLgj5u9GWpbqaappoI+xyuUvcaXxh557Uk+aTev+CiD/kTf7/4Yj+f8Jel2
+         OTodEoZR0yJoixMwbm3Nv7Rc0cQA4mHLuEFsmUEfknMklxFkUpVfEAlmI9CIDuxM22G5
+         FSFMeyal/AWSKcJvXAEVN2jIBiy2CPGZoAgHG5bpgdSiJ/2Eugv7mPmp69hs5MK3DqJL
+         CLaQ==
+X-Gm-Message-State: ANoB5plFhvbgp9A6dnVO3MUXNxjHcnhEAN7JKld7QRMRG3DtKFUk7e6r
+        rW/GApiDdwPi6U+/cpFL6ClyhmGcjdc=
+X-Google-Smtp-Source: AA0mqf7HBxQ18SaVsrrunUCqGDqPNcTNCL1t53Jl8giBfLDq4xgbaZ49OdYip5jrstCZ5JYaquR7yA==
+X-Received: by 2002:a17:90b:3c04:b0:218:4b47:9c29 with SMTP id pb4-20020a17090b3c0400b002184b479c29mr29119800pjb.54.1669198307069;
+        Wed, 23 Nov 2022 02:11:47 -0800 (PST)
+Received: from localhost.localdomain (2001-b400-e2d2-0afd-5100-fe55-e832-ec51.emome-ip6.hinet.net. [2001:b400:e2d2:afd:5100:fe55:e832:ec51])
+        by smtp.gmail.com with ESMTPSA id c8-20020aa79528000000b005622f99579esm12277929pfp.160.2022.11.23.02.11.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Nov 2022 02:11:46 -0800 (PST)
+From:   Owen Yang <ecs.taipeikernel@gmail.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, Harvey <hunge@google.com>,
+        Bob Moragues <moragues@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Owen Yang <ecs.taipeikernel@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Adding DT binding for zombie
+Date:   Wed, 23 Nov 2022 18:11:12 +0800
+Message-Id: <20221123181043.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
+X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -69,50 +75,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Nov 2022 at 03:30, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Robert Marko (2022-11-16 13:46:55)
-> > It appears that having only .name populated in parent_data for clocks
-> > which are only globally searchable currently will not work as the clk core
-> > won't copy that name if there is no .fw_name present as well.
-> >
-> > So, populate .fw_name for all parent clocks in parent_data.
-> >
-> > Fixes: ae55ad32e273 ("clk: qcom: ipq8074: convert to parent data")
-> >
-> > Co-developed-by: Christian Marangi <ansuelsmth@gmail.com>
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> > Changes in v2:
-> > * Add fw_name for PCIe PHY pipe clocks as well
-> > ---
-> >  drivers/clk/qcom/gcc-ipq8074.c | 52 +++++++++++++++++-----------------
-> >  1 file changed, 26 insertions(+), 26 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-> > index d231866804f6..8374cc40915a 100644
-> > --- a/drivers/clk/qcom/gcc-ipq8074.c
-> > +++ b/drivers/clk/qcom/gcc-ipq8074.c
-> > @@ -680,7 +680,7 @@ static struct clk_rcg2 pcie0_aux_clk_src = {
-> >  };
-> >
-> >  static const struct clk_parent_data gcc_pcie20_phy0_pipe_clk_xo[] = {
-> > -       { .name = "pcie20_phy0_pipe_clk" },
-> > +       { .fw_name = "pcie0_pipe", .name = "pcie20_phy0_pipe_clk" },
->
-> Is there a DT binding update for these firmware names?
+Add an entry in the device tree binding for sc7280-zombie.
 
-Hi Stephen,
-I have that name documented as part of series for passing the QMP
-PCI output clock directly to GCC instead of global matching that
-I wanted to send after this and PCI fixups were merged.
+Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
+---
 
-I can change it to match the global name, but that is a bit confusing
-as pcie20_phy0_pipe_clk is actually from the Gen3 PHY but the GCC
-driver was made for v1 of the SoC which was pre-production and then
-it got updated to support v2 which is only supported so the name stuck
-as it would break backwards compatibility.
+ Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Regards,
-Robert
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 463509f0f23a..7ec6240311db 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -655,6 +655,16 @@ properties:
+           - const: google,villager-sku512
+           - const: qcom,sc7280
+ 
++      - description: Google Zombie (newest rev)
++        items:
++          - const: google,zombie
++          - const: qcom,sc7280
++
++      - description: Google Zombie with LTE (newest rev)
++        items:
++          - const: google,zombie-sku512
++          - const: qcom,sc7280
++
+       - items:
+           - enum:
+               - lenovo,flex-5g
+-- 
+2.17.1
+
