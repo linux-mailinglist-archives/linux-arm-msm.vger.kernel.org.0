@@ -2,90 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6E36634DE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 03:30:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 691FC634E65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 04:37:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234704AbiKWCab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 21:30:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46026 "EHLO
+        id S235614AbiKWDhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 22:37:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234023AbiKWCaa (ORCPT
+        with ESMTP id S235332AbiKWDhh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 21:30:30 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DF2E06A8;
-        Tue, 22 Nov 2022 18:30:30 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BA752B81E51;
-        Wed, 23 Nov 2022 02:30:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487A7C433D7;
-        Wed, 23 Nov 2022 02:30:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669170627;
-        bh=sZtUMJY2VcKD4NHYZpzaajhtKLwlIs9S6QbWT2Yalq8=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=EjRsGvx/RKFCMBVMR2xWS40YMCXJ0DDXZ5l3rziIQENzvkf0NPyERw95Ehtba0Pro
-         gBPqJvTXE/xq/2s910KH20wQYntlX/SrGQGeC+GvZvkt52yFyImauGdfei9C3Q5Nn4
-         EGJrYwM8DQWhZhipIZYPXSaofvx0/JBD7JwlVafFRXyj2+wTPLUSI06uK122RO88M3
-         egntePmkmFwISiTxpuXA494V454dmuluDvincW18lYzqMYj+2uAZdSooXOIcUenKv9
-         Nd9B3++SdlPkU/Qjzu7XC2n5cXmCNAIl3NUHimQksUA3Mk4A5K5vGrEjdBG4kdpdcu
-         C9t5d7oWbq/sg==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 22 Nov 2022 22:37:37 -0500
+Received: from mail-40141.protonmail.ch (mail-40141.protonmail.ch [185.70.40.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C3E55B9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Nov 2022 19:37:33 -0800 (PST)
+Date:   Wed, 23 Nov 2022 03:37:15 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1669174651; x=1669433851;
+        bh=yIBwMfmtIa7Rb5jFkIzp6XGNfH1PaXySIjE175eRKns=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=rXMStljVNPYuKcFircOv0p6e27hsQb1i8duznbG4OPfBV2OMN50FVNgDTLJwF5C/X
+         Uvz1VCfAbRSs8iEnRT0FxoIEra629qUl32cAffmxbAwWVagwqONMZQhrU7tfpQNRhb
+         ZMR3dh1F5k0GeKL8nJbkxSWyXXXIl44BJSnpfGPJ3pM6VHb0F0rexng0wt1wRCtB7j
+         9tmQ9jnJEkyq24cHWO46AWkPmTImsWhkDGm6T1NZP4iYEAa3cjMlLjSinuqoTqQ496
+         eKQaH5Aomd8iuz+1Hgrc8WeDOw32xooCyZb4c923IugiKCq4E4UBZ1ZtG/UYkkLFLZ
+         YNRXYYFcc7Rjw==
+To:     linux-kernel@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v6 0/4] arm64: dts: qcom: msm8916-acer-a1-724: Add initial device tree
+Message-ID: <20221123033524.148682-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221116214655.1116467-1-robimarko@gmail.com>
-References: <20221116214655.1116467-1-robimarko@gmail.com>
-Subject: Re: [PATCH v2] clk: qcom: ipq8074: populate fw_name for all parents
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com
-Date:   Tue, 22 Nov 2022 18:30:23 -0800
-User-Agent: alot/0.10
-Message-Id: <20221123023027.487A7C433D7@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Robert Marko (2022-11-16 13:46:55)
-> It appears that having only .name populated in parent_data for clocks
-> which are only globally searchable currently will not work as the clk core
-> won't copy that name if there is no .fw_name present as well.
->=20
-> So, populate .fw_name for all parent clocks in parent_data.
->=20
-> Fixes: ae55ad32e273 ("clk: qcom: ipq8074: convert to parent data")
->=20
-> Co-developed-by: Christian Marangi <ansuelsmth@gmail.com>
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
-> Changes in v2:
-> * Add fw_name for PCIe PHY pipe clocks as well
-> ---
->  drivers/clk/qcom/gcc-ipq8074.c | 52 +++++++++++++++++-----------------
->  1 file changed, 26 insertions(+), 26 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq807=
-4.c
-> index d231866804f6..8374cc40915a 100644
-> --- a/drivers/clk/qcom/gcc-ipq8074.c
-> +++ b/drivers/clk/qcom/gcc-ipq8074.c
-> @@ -680,7 +680,7 @@ static struct clk_rcg2 pcie0_aux_clk_src =3D {
->  };
-> =20
->  static const struct clk_parent_data gcc_pcie20_phy0_pipe_clk_xo[] =3D {
-> -       { .name =3D "pcie20_phy0_pipe_clk" },
-> +       { .fw_name =3D "pcie0_pipe", .name =3D "pcie20_phy0_pipe_clk" },
+v6: Fix incorrect commit message and newlines in touchscreen.
+resend: Fix incorrect in-reply-to
+v5: Add touchscreen.
+v4: Sort properties in l11.
+v3: Set property status =3D "okay"; as the last property.
+Reword the bindings patch.
+v2: Fix a typo in dt-bindings commit message
 
-Is there a DT binding update for these firmware names?
+Acer Iconia Talk S A1-724 is a tablet using the MSM8916 SoC released
+in 2014.
+
+Note: The original firmware from Acer can only boot 32-bit kernels.
+To boot arm64 kernels it is necessary to flash 64-bit TZ/HYP firmware
+with EDL, e.g. taken from the DragonBoard 410c. This works because Acer
+didn't set up (firmware) secure boot.
+
+Add a device tree for with initial support for:
+
+- GPIO keys
+- pm8916-vibrator
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART
+- WCNSS (WiFi/BT)
+- Regulators
+- Bosch BMC150 accelerometer/magnetometer
+- Focaltech FT5446 touchscreen
+
