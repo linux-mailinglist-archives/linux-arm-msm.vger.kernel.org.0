@@ -2,115 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EE7E634ED4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 05:17:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 716BF634EF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 05:39:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235790AbiKWERD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 23:17:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37830 "EHLO
+        id S235354AbiKWEi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 23:38:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235833AbiKWEQN (ORCPT
+        with ESMTP id S235109AbiKWEiy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 23:16:13 -0500
-Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch [185.70.40.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BF7AB865;
-        Tue, 22 Nov 2022 20:14:05 -0800 (PST)
-Date:   Wed, 23 Nov 2022 04:14:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1669176844; x=1669436044;
-        bh=mKT0b3j/bY3j0Y2khrfg5ryVKfOy6kNma6mcjHf4UFk=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=QlzoiIgIT1vfZMLnPBiYQwgr5bxtWJ4jO5ZgkfOpyKANElPswtZ31Qulx5qnKcvcn
-         Xmx7dep6ZZiyA9Bv1II9vhj5K5uIArfLh82n4mqNQGMBJN3oDFbD0lIKY/815ZSNyv
-         UIREjBtljutP9mZCZqxtdyWeo8G3tR6SQcZR1YcwcT89ETB1JPXvaRgOmACVuW3zRX
-         QU8pajwn+pgu745hK0ucrrrli8/BCyIEPRK057KN7P6AD1AsP3O+FovzrJYb5nR5my
-         jB6Bujw9qXWc/xHAgfOzeL95l+YK+slX79r5FL+rBozMtA4MWxZfPwiB3S/EyYakjc
-         SpcksM36VeNkA==
-To:     linux-kernel@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 22 Nov 2022 23:38:54 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C8989A262;
+        Tue, 22 Nov 2022 20:38:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BFD8D61A3D;
+        Wed, 23 Nov 2022 04:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DBDC433C1;
+        Wed, 23 Nov 2022 04:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669178332;
+        bh=QqrDbDLRcAQr4MUv+oZ9PutfTqVkNXwAFQlJXbN9odk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=e//Q0Igg0hWRrSaEgwdgmlRQd6QUnoz7COLqfkBnj6LOQdy+G730Ld4a0mtbj4mXF
+         2Ns0fWlqq5UDuwlf9gZi0p759DWrC6wlC8ge0bN3ZHQX7ihQg5stNciFtDWoi+LjF+
+         jWzWEBluurxmktSYXewY3T9nYOayIZyWy4v5xTekb99HPZYHOBbHZT0xSp18BLpDTb
+         NaAioF2pMRU0zHtAQ3RqHqTT9WvlSrvbvq0f834SNj6byw1vq/7zTaiB7b45SOLdS0
+         ZrrsM+AKFkbmsFDsQ5lzS4sSEz1POrgSXaqhxXHOGYxGm3acH0ikOnG+UML9Urblga
+         OhyWc3tcT/vgQ==
+Date:   Wed, 23 Nov 2022 10:08:47 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stanislav Jakubek <stano.jakubek@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v4 5/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add flash LED
-Message-ID: <20221123041312.151109-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20221123041110.150837-1-linmengbo0689@protonmail.com>
-References: <20221123041110.150837-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        netdev@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        linux-usb@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: Re: [PATCH v2 1/9] dt-bindings: drop redundant part of title of
+ shared bindings
+Message-ID: <Y32j1+T3bBVTEDxO@matsya>
+References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
+ <20221121110615.97962-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221121110615.97962-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-FL8005A uses SGM3140 Flash LED driver. Add it to the device tree.
+On 21-11-22, 12:06, Krzysztof Kozlowski wrote:
+> The Devicetree bindings document does not have to say in the title that
+> it is a "binding", but instead just describe the hardware.  For shared
+> (re-usable) schemas, name them all as "common properties".
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Guenter Roeck <linux@roeck-us.net> # watchdog
+> Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com> # IIO
+> Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
+> ---
+>  Documentation/devicetree/bindings/dma/dma-common.yaml           | 2 +-
+>  Documentation/devicetree/bindings/dma/dma-controller.yaml       | 2 +-
+>  Documentation/devicetree/bindings/dma/dma-router.yaml           | 2 +-
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/msm8916-gplus-fl8005a.dts   | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Acked-By: Vinod Koul <vkoul@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts b/arch/arm6=
-4/boot/dts/qcom/msm8916-gplus-fl8005a.dts
-index 2cac99e3e52c..b28d7d0f1ed5 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
-@@ -21,6 +21,21 @@ chosen {
- =09=09stdout-path =3D "serial0";
- =09};
-=20
-+=09flash-led-controller {
-+=09=09compatible =3D "sgmicro,sgm3140";
-+=09=09enable-gpios =3D <&msmgpio 31 GPIO_ACTIVE_HIGH>;
-+=09=09flash-gpios =3D <&msmgpio 32 GPIO_ACTIVE_HIGH>;
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&camera_flash_default>;
-+
-+=09=09flash_led: led {
-+=09=09=09function =3D LED_FUNCTION_FLASH;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09flash-max-timeout-us =3D <250000>;
-+=09=09};
-+=09};
-+
- =09gpio-keys {
- =09=09compatible =3D "gpio-keys";
-=20
-@@ -239,6 +254,14 @@ l18 {
- };
-=20
- &msmgpio {
-+=09camera_flash_default: camera-flash-default-state {
-+=09=09pins =3D "gpio31", "gpio32";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107";
- =09=09function =3D "gpio";
---=20
-2.30.2
-
-
+-- 
+~Vinod
