@@ -2,71 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4601C636732
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 18:30:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D20F06368E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 19:32:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238910AbiKWRal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 12:30:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
+        id S237376AbiKWScQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 13:32:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238866AbiKWRaN (ORCPT
+        with ESMTP id S239813AbiKWSb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 12:30:13 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDB88E295;
-        Wed, 23 Nov 2022 09:30:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669224612; x=1700760612;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ZT9WVned9qGMAlH0r6W65dY8aAfAq0l2ES0Gvi1OpwI=;
-  b=nnHKdSPTYo47b6DAIhIVApHTAOdpOozQLnW/MQPB27rGarHhpDtCREnX
-   j3g4oBm2h17QBYN0wTEwgqKUVrS+LEUlbJ0TjHzXB7xvgXYJsa0jsqgft
-   mM6mF5HQOqHdycX5VTNVISbT2Tj0lfW98FMXb6DdYemAk9EQM5jFaxpjP
-   k=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Nov 2022 09:30:12 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2022 09:30:11 -0800
-Received: from [10.110.94.74] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 23 Nov
- 2022 09:30:10 -0800
-Message-ID: <85a0af2c-5f79-3d84-c946-a4960aee2958@quicinc.com>
-Date:   Wed, 23 Nov 2022 11:30:09 -0600
+        Wed, 23 Nov 2022 13:31:58 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB741CB69C;
+        Wed, 23 Nov 2022 10:31:35 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9E3AC61E69;
+        Wed, 23 Nov 2022 18:31:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22FEC433C1;
+        Wed, 23 Nov 2022 18:31:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669228294;
+        bh=K+Iq1u99ln+hWt6sHmpc/POIaayidRC/UWiGVIGIdPo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JWnz1fYtlQovd9Sfe2d4PpK7jSZeCJaljf/94LGXGqteXYfT08QpviBEtK9bQhwqw
+         SQ9+2Iv5n6HXH0auYSojq8L/BgP65EZpmw8ZONZcsId5WEopaI/a8UiBfid7flzF+R
+         xv4dXbjWBTHAC+ODl1jg+IZMWJB178FFxFe7H+qvKlTdfehFfSVZAo9tcMRoV9I2Ks
+         xo0zS8Hpi7OndVwilZP33AGfYc5NpkNZdCAAokI94jWLe+gZ8vnRjEgBCSWBAAZQo6
+         mjClvOwG52kLWL5eFaNooFlPP/hVZ3PZ9LJN9qeY90+G8JknHoGI1YmY6K6VTUEFm1
+         +Gki26dGDBEIQ==
+Date:   Wed, 23 Nov 2022 18:31:32 +0000
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org, quic_cang@quicinc.com,
+        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        ahalaney@redhat.com, abel.vesa@linaro.org
+Subject: Re: [PATCH v3 20/20] MAINTAINERS: Add myself as the maintainer for
+ Qcom UFS driver
+Message-ID: <Y35nBIIRmu3w9C1C@gmail.com>
+References: <20221123074826.95369-1-manivannan.sadhasivam@linaro.org>
+ <20221123074826.95369-21-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
- QRU1000 pinctrl
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221118182039.29236-1-quic_molvera@quicinc.com>
- <20221118182039.29236-2-quic_molvera@quicinc.com>
- <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
- <faf2d137-efab-93ab-f325-1fa507f166a7@quicinc.com>
- <03174a04-440d-a840-1e54-fbdbdfe296c3@linaro.org>
- <2a50b68f-d2dd-bae5-29b3-f608813d5a3f@quicinc.com>
- <1d13e913-d425-8cb0-d954-d1d7bc340f38@linaro.org>
-Content-Language: en-US
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <1d13e913-d425-8cb0-d954-d1d7bc340f38@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221123074826.95369-21-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,78 +59,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Nov 23, 2022 at 01:18:26PM +0530, Manivannan Sadhasivam wrote:
+> Qcom UFS driver has been left un-maintained till now. I'd like to step
+> up to maintain the driver and its binding.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  MAINTAINERS | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index cf0f18502372..149fd6daf52b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -21097,6 +21097,14 @@ L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
+>  S:	Maintained
+>  F:	drivers/ufs/host/ufs-mediatek*
+>  
+> +UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER QUALCOMM HOOKS
+> +M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +L:	linux-arm-msm@vger.kernel.org
+> +L:	linux-scsi@vger.kernel.org
+> +S:	Maintained
+> +F:	Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +F:	drivers/ufs/host/ufs-qcom.c
 
+Thanks for volunteering to maintain this driver!
 
-On 11/23/2022 2:06 AM, Krzysztof Kozlowski wrote:
-> On 22/11/2022 16:23, Melody Olvera wrote:
->>
->> On 11/22/2022 1:48 AM, Krzysztof Kozlowski wrote:
->>> On 21/11/2022 21:38, Melody Olvera wrote:
->>>> On 11/20/2022 4:58 AM, Krzysztof Kozlowski wrote:
->>>>> On 18/11/2022 19:20, Melody Olvera wrote:
->>>>>> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
->>>>>>
->>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>>>>> ---
->>>>>>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
->>>>>>  1 file changed, 134 insertions(+)
->>>>>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
->>>>>> new file mode 100644
->>>>>> index 000000000000..cb0c496d8666
->>>>>> --- /dev/null
->>>>>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
->>>>>> @@ -0,0 +1,134 @@
->>>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>>>> +%YAML 1.2
->>>>>> +---
->>>>>> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
->>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>>> +
->>>>>> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
->>>>>> +
->>>>>> +maintainers:
->>>>>> +  - Melody Olvera <quic_molvera@quicinc.com>
->>>>>> +
->>>>>> +description: |
->>>>>> +  This Top Level Mode Multiplexer block (TLMM) is found in the QDU1000 and
->>>>>> +  QRU1000 platforms.
->>>>> It's better to keep consistent style which allows to do easy
->>>>> search/replace, than to have new files using their own sentences. So
->>>>> keep it the same as was unified in few recent commits.
->>>> Ok... Just making sure that's what you want. Last PS you gave comments to change
->>>> the wording of this description to remove "This binding describes..." as we've done
->>>> in all the other qcom pinctrl/tlmm bindings. I can change the wording back to the
->>>> original, just want to be clear here.
->>> I propose to have the same wording as other Qualcomm TLMM bindings,
->>> however you changed it to something not the same. Therefore I wonder -
->>> why having here different wording than all other bindings?
->>>
->>> By going back to original - what do you mean? If it matches all others,
->>> then yes, but I doubt it.
->>>
->>> Just to be sure - are you working on proper (recent) trees or something old?
->> Original matched how it was done on other Qualcomm TLMM bindings. Feedback
->> was to drop "This binding describes..." from [1], but all the Qualcomm TLMM
->> bindings start with "This binding describes...". I'm looking at qcom tree for-next
->> branch; should be recent, no?
-> No. It's not recent for anything else than managed by Bjorn. You need to
-> base the patches on maintainer's trees, which is usually the easiest to
-> achieve via linux-next (especially that these changes were in my tree
-> for some time before I sent them to Linus).
+What about ufs-qcom.h and ufs-qcom-ice.c?  Those are part of this driver too.
 
-Ah ok; looking at linux-next looks like it should be "Top Level Mode Multiplexer pin
-controller in Qualcomm QDU1000 and QRU1000 SoCs."
+The pattern drivers/ufs/host/ufs-qcom* would cover all these files.
 
-Thanks,
-Melody
-
->
-> Your all other patches might have similar issues - wrong base or not
-> good example/starting point.
->
-> Best regards,
-> Krzysztof
->
-
+- Eric
