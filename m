@@ -2,56 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D20F06368E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 19:32:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 889756369DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 20:26:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237376AbiKWScQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 13:32:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59854 "EHLO
+        id S235164AbiKWTZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 14:25:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239813AbiKWSb6 (ORCPT
+        with ESMTP id S236472AbiKWTZ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 13:31:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB741CB69C;
-        Wed, 23 Nov 2022 10:31:35 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9E3AC61E69;
-        Wed, 23 Nov 2022 18:31:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22FEC433C1;
-        Wed, 23 Nov 2022 18:31:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669228294;
-        bh=K+Iq1u99ln+hWt6sHmpc/POIaayidRC/UWiGVIGIdPo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JWnz1fYtlQovd9Sfe2d4PpK7jSZeCJaljf/94LGXGqteXYfT08QpviBEtK9bQhwqw
-         SQ9+2Iv5n6HXH0auYSojq8L/BgP65EZpmw8ZONZcsId5WEopaI/a8UiBfid7flzF+R
-         xv4dXbjWBTHAC+ODl1jg+IZMWJB178FFxFe7H+qvKlTdfehFfSVZAo9tcMRoV9I2Ks
-         xo0zS8Hpi7OndVwilZP33AGfYc5NpkNZdCAAokI94jWLe+gZ8vnRjEgBCSWBAAZQo6
-         mjClvOwG52kLWL5eFaNooFlPP/hVZ3PZ9LJN9qeY90+G8JknHoGI1YmY6K6VTUEFm1
-         +Gki26dGDBEIQ==
-Date:   Wed, 23 Nov 2022 18:31:32 +0000
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org, quic_cang@quicinc.com,
-        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        ahalaney@redhat.com, abel.vesa@linaro.org
-Subject: Re: [PATCH v3 20/20] MAINTAINERS: Add myself as the maintainer for
- Qcom UFS driver
-Message-ID: <Y35nBIIRmu3w9C1C@gmail.com>
-References: <20221123074826.95369-1-manivannan.sadhasivam@linaro.org>
- <20221123074826.95369-21-manivannan.sadhasivam@linaro.org>
+        Wed, 23 Nov 2022 14:25:57 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB58C1F69
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 11:25:55 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id z4so5593816ljq.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 11:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t1DObvPh+Rx+Hqegn0XLyYJdliwmlAQX29QBWofxvPA=;
+        b=zusNWTQ0ZtK82/Ue7pGOHYNeKWcg2Ze4ZkbOTBvSyG4O9vOzVzpYdgtbzTQSADp2O0
+         vYDxc7B4D1FK1U7DuxqIKxfpDF/Of+Pp7MPdvTk0HyTvUgWAKXEGrXxhNzeP2i+LyrUo
+         BSQTTlJ5Qr0BSru3RYd2CIxZ0ApnHiuvpBLQzmCKW2/nUSkfyQCSMIcuYRUGcoy1kdAz
+         8UsvIRYvXSnsnZC6brAQOvdNsqdrjnZ6InTX2p2yaHZORdrIC9HRRUGI99+eXjPu7sjU
+         VUDluoan1yjaBrHZBnampED/dPUujN6SmSB7wjm13/mUqHHS5JN7cjH8tkSctlPYst2/
+         U1ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t1DObvPh+Rx+Hqegn0XLyYJdliwmlAQX29QBWofxvPA=;
+        b=GI0Mo2IRWk5V5W0gwNp0OY/6fnqv+oUPmww2f3hBUc6xg7AkTfElO1/I/JlustkfV9
+         kQqXcKBs7zqfrXPNhFy5hxMBB78OLAz+c84eDf7Y11EF8QrCpHHWVaQN2vSNQMsdUyJU
+         r95jEoX+MWNYmZoCmbl7T91uAXW4fkEMS8ZwLGCXWRK+iUcKjSyTLI1Jzv+AO4tP0Exy
+         6EaxSqyorKYE4xL+/FH8qUokY7fn6bdusULXvL8j7GwrkOefI1CDfGvuT32Wtq+6/Iwl
+         yKkCtpKf0T/cptwQ2sFfKvRXw5eKjkWQtrOY+Fq5b4th+HDChMwgHSo7eda1/p1DqVU4
+         1Wgw==
+X-Gm-Message-State: ANoB5pnrYIVdc9UYEfoPCqejL3qQjiyffJUyRHBduFO/BedC0BsRUock
+        /jQJpkP+t6XKu8fNdeagGX8viPVpKCDW4Q==
+X-Google-Smtp-Source: AA0mqf6sCm6NBHdvo+56rXL7omxWiAryfayByRNrgP0gPV7565DlqGRPl39qHB5E1kDK52xUUGeikg==
+X-Received: by 2002:a2e:a375:0:b0:277:7c00:e130 with SMTP id i21-20020a2ea375000000b002777c00e130mr3104784ljn.268.1669231553655;
+        Wed, 23 Nov 2022 11:25:53 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id i29-20020a196d1d000000b004a459799bc3sm2996182lfc.283.2022.11.23.11.25.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Nov 2022 11:25:53 -0800 (PST)
+Message-ID: <879739ef-41a7-3470-da0d-6aa7c8654e0a@linaro.org>
+Date:   Wed, 23 Nov 2022 21:25:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221123074826.95369-21-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v4 01/11] dt-bindings: display/msm: *dpu.yaml: split
+ required properties clauses
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20221122231235.3299737-1-dmitry.baryshkov@linaro.org>
+ <20221122231235.3299737-2-dmitry.baryshkov@linaro.org>
+ <3f796546-f9ac-353c-9f5b-870f77726da6@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <3f796546-f9ac-353c-9f5b-870f77726da6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,35 +87,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 23, 2022 at 01:18:26PM +0530, Manivannan Sadhasivam wrote:
-> Qcom UFS driver has been left un-maintained till now. I'd like to step
-> up to maintain the driver and its binding.
+On 23/11/2022 12:15, Krzysztof Kozlowski wrote:
+> On 23/11/2022 00:12, Dmitry Baryshkov wrote:
+>> Per Krzysztof's request, move a clause requiring certain properties to
+>> the file where they are declared.
+>>
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  MAINTAINERS | 8 ++++++++
->  1 file changed, 8 insertions(+)
+> Commit msg could be a bit more generic, without naming me (there are few
+> Krzysztofs), e.g.:
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index cf0f18502372..149fd6daf52b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -21097,6 +21097,14 @@ L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
->  S:	Maintained
->  F:	drivers/ufs/host/ufs-mediatek*
->  
-> +UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER QUALCOMM HOOKS
-> +M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> +L:	linux-arm-msm@vger.kernel.org
-> +L:	linux-scsi@vger.kernel.org
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +F:	drivers/ufs/host/ufs-qcom.c
+> Require only properties declared in given schema, which makes the code a
+> bit more readable and easy to follow.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks for volunteering to maintain this driver!
+Ack, thank you
 
-What about ufs-qcom.h and ufs-qcom-ice.c?  Those are part of this driver too.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-The pattern drivers/ufs/host/ufs-qcom* would cover all these files.
+-- 
+With best wishes
+Dmitry
 
-- Eric
