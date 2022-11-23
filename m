@@ -2,106 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED8B1634D3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 02:37:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBD15634DDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 03:28:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235334AbiKWBhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Nov 2022 20:37:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43712 "EHLO
+        id S235258AbiKWC2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Nov 2022 21:28:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234070AbiKWBhY (ORCPT
+        with ESMTP id S234023AbiKWC2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Nov 2022 20:37:24 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709879824F;
-        Tue, 22 Nov 2022 17:37:23 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id n17so15530466pgh.9;
-        Tue, 22 Nov 2022 17:37:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=57QTDQNjua4bD17eBQRGR4QYAKmDZiaeZv3y3ThjHNA=;
-        b=AJd4p4Y1GJ2PPHHqMJkt2vAn6ERqJlfv48oiJrZolP8/Sh1CAzdLzBPA6Y9SygNMOB
-         ZL09xzKfYY7O9Doh92VB3jb6Ja8HBaQeBTEaB8nC72ZjmyawK/usRw5XgujG3BFx/tAa
-         YQzpVS/GviFMu850709iF5BIFlEAro2HnvijgpS0DgkaoVdPf+crlJ8hgf6xE8Hefq+w
-         79hHmd2FIBoMnyNG0wJ0UGHjyN8DYJcXF/xPRlPXnE/3S7V0L3QNV1H73/xPNO9zBSaj
-         Pg4w7ZIQmKiJxfxA9pfQlebDCPWdCV3XIz9WLiDa5A8wWXQqx8dPEJlxFOfUf9f5WHlm
-         xytw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=57QTDQNjua4bD17eBQRGR4QYAKmDZiaeZv3y3ThjHNA=;
-        b=Xp+xVKZiv7dMq3egI49uxxxbvYedqyTHuitrzxA6GyAq60sVbFtjCG2c9pZXqrKjCc
-         QB8BbTxH25GIuBQoQkh/uYV/OsJoh6g1ZgZ7HtuSt5tLXPIeu8wduJk1El4S4TO/ph5u
-         dsfB1siKCOyUh7fSNxpPWEnUva8PJPpHvEmCF+f9cagh5mFpSo/y4XDL2qUsi/PQ+3XV
-         SnpsELKi9fwYWASuLCDlAGTpNhP//pQFLr59VU/Wfu+RNpjYZFsO2sxjP8jNl7NoCG9C
-         HI/l9lAbg51TeW1lKP2aRR86wjGWnfejofeyGOf/l4niZDyvBOVe3dJiN8qct/30/Hpu
-         hSqQ==
-X-Gm-Message-State: ANoB5pkbuQpHHvRO7TmK28EVTEO7K1Y2EIuioOwe9RjrEmjKoDbQRsyV
-        WYdybXaTHipy/RRi5Bigbow=
-X-Google-Smtp-Source: AA0mqf547JrxZeSVmkQLdlrpalzLSYM74m3LOUHFPzZ3vcYEWkifg+t/S5X1eHUvslK9HNQURfIwrg==
-X-Received: by 2002:a63:de14:0:b0:477:4a61:eb99 with SMTP id f20-20020a63de14000000b004774a61eb99mr16322572pgg.48.1669167442801;
-        Tue, 22 Nov 2022 17:37:22 -0800 (PST)
-Received: from google.com ([2620:15c:9d:2:af8d:6047:29d5:446c])
-        by smtp.gmail.com with ESMTPSA id c4-20020a17090a674400b002189ab866bfsm204545pjm.5.2022.11.22.17.37.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 17:37:22 -0800 (PST)
-Date:   Tue, 22 Nov 2022 17:37:17 -0800
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        netdev@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH v2 9/9] dt-bindings: drop redundant part of title (manual)
-Message-ID: <Y315Ta+ST067iVmh@google.com>
-References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
- <20221121110615.97962-10-krzysztof.kozlowski@linaro.org>
+        Tue, 22 Nov 2022 21:28:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2192D1E1;
+        Tue, 22 Nov 2022 18:27:46 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 73E4661A02;
+        Wed, 23 Nov 2022 02:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82CDC433B5;
+        Wed, 23 Nov 2022 02:27:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669170465;
+        bh=j70E8biRidyKpLWNs2x+HXH8VmJwsFnhf56UTmYl1vs=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=IEmCDi4Et0Ynn5CD3ufKKdYIiFcttpG4ACNm+45fulJTTXqrpaxRk+Jfbx2bvPrpM
+         1eZQ6pDT5SQjmjpaB0OShwdxykbvbm8PyBuks7ap0LYRRjn0HJ9zo//3P5wdsxTpt6
+         OQyJTDDDkEbq4ieuyPau1acMrKbNxdpfAjlghBMoJOZy2ZjAjfCj39XhzHAdFJi9ee
+         DW3wEdR6hnLdV4m5cQZncCscMTvVjOM2Zlo9hb5qXBoTpNn6Dt488g4jDP49V1XPzS
+         MXtCiXGZIqLsfbl7OGn8KRtmm8UmYKT4NmwU/gFc0x01ONVSGEbdCx9Lnb0VNLBbSr
+         J/FpHYvlUotiQ==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121110615.97962-10-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20221115152956.21677-1-quic_shazhuss@quicinc.com>
+References: <20221115152956.21677-1-quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH v3] clk: qcom: gcc-sc8280xp: add cxo as parent for three ufs ref clks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     bmasney@redhat.com, agross@kernel.org, mturquette@baylibre.com,
+        ahalaney@redhat.com, Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>, andersson@kernel.org,
+        johan@kernel.org
+Date:   Tue, 22 Nov 2022 18:27:42 -0800
+User-Agent: alot/0.10
+Message-Id: <20221123022745.B82CDC433B5@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 12:06:15PM +0100, Krzysztof Kozlowski wrote:
->  Documentation/devicetree/bindings/input/fsl,scu-key.yaml        | 2 +-
->  Documentation/devicetree/bindings/input/matrix-keymap.yaml      | 2 +-
+Quoting Shazad Hussain (2022-11-15 07:29:56)
+> The three UFS reference clocks, gcc_ufs_ref_clkref_clk for external
+> UFS devices, gcc_ufs_card_clkref_clk and gcc_ufs_1_card_clkref_clk for
+> two PHYs are all sourced from CXO.
+>=20
+> Added parent_data for all three reference clocks described above to
+> reflect that all three clocks are sourced from CXO to have valid
+> frequency for the ref clock needed by UFS controller driver.
+>=20
+> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.co=
+m/
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Andrew Halaney <ahalaney@redhat.com>
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> Reviewed-by: Reviewed-by: Brian Masney <bmasney@redhat.com>
+> ---
 
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixed the double Rb
 
--- 
-Dmitry
+Applied to clk-fixes
