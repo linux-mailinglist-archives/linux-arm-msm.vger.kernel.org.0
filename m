@@ -2,124 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B497635C56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 13:05:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA172635D96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 13:47:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237163AbiKWMFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 07:05:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
+        id S237521AbiKWMnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 07:43:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237145AbiKWMFI (ORCPT
+        with ESMTP id S236541AbiKWMmS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 07:05:08 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749A215FE2;
-        Wed, 23 Nov 2022 04:05:06 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id vv4so33002323ejc.2;
-        Wed, 23 Nov 2022 04:05:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MdkN33eqdBW8OFqoAkyIS40FmG3oWWH+dzPo/Vz7+AA=;
-        b=IwVLuZWWCilVb/mBFTdCkpJ/FyKCtl9qhLxekbfU3z6dSIbpf5HaE5M7yhDhpHR+Tl
-         Phudcd9OSkRwijiEw/baWROlfEKW9FdwH6B7Syq014lQMA54GfmjMV+AOXvds7sbuWf3
-         Zuaki/kU7fiFL2Z8Dj36y+wQBuxN/uC80aHsISXdWCzF6DSRxMQsu7sYq/5oM+t+G/Jm
-         p2lfngOI3XWaqkJyzgFvxkiOJxObGbiLTt2UNRqXOV4lL69TuMcSVgmjCqNj1YRFJ6Sa
-         t69NBYYsQdWuLVZhegvYJdSYa8m+8npCWow47ilp0RyKpnlTFmSvCk+iqxGQTxJgCGUy
-         vyWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdkN33eqdBW8OFqoAkyIS40FmG3oWWH+dzPo/Vz7+AA=;
-        b=M+fKECkUrYo/8u8f8HPu13Yd2vA0bOy2tLPHTonzzvVGJbyqKxNp2Hd1WQnXZG8JF/
-         PZp8xzM7HN9xnHHPRQwq4HVSrT3kpipEH0iBeJvhyQ5DSNy5JhZdQIdkpohjLywMN6pV
-         W3Vv5CBGksQntBoThf8EwktXf+UQXqqUtbWjIInpISHG/zP/3eky9iQb9i/p3vx0DtLZ
-         By/MesNTBg5JSfV52O/6r8AeYnvDQnl1huwcLwnPrnsC9VjA4gsY0ujG22TzGzywm0Vm
-         y+M2niEUfkNCaP5Lmf3Y0/61eO/sSyaC0Ffon2JGrbUlIF7fKNrcuSxG4YqoJPKS+Paj
-         Au5A==
-X-Gm-Message-State: ANoB5plTQ94MhntdzP9aG8gUoBx/hOccYSpVOL7JIWObMTYBpTmpsv0g
-        DiSo9oyXruCaYDekjCu/YdM=
-X-Google-Smtp-Source: AA0mqf52SQi4DYO4SRXhGUeSpqmBH7rHMNwq6edg3z6Jqk+RvDG0nj7w9SzccS7/ZLjWV4Gkkes7sg==
-X-Received: by 2002:a17:907:98ea:b0:7ae:c1af:89af with SMTP id ke10-20020a17090798ea00b007aec1af89afmr7595669ejc.550.1669205104775;
-        Wed, 23 Nov 2022 04:05:04 -0800 (PST)
-Received: from [10.20.0.7] ([37.120.217.162])
-        by smtp.gmail.com with ESMTPSA id b14-20020a17090636ce00b007a8de84ce36sm7166227ejc.206.2022.11.23.04.05.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 04:05:04 -0800 (PST)
-Message-ID: <33348300-b3a7-af67-5729-8d0471aff2dc@gmail.com>
-Date:   Wed, 23 Nov 2022 13:05:02 +0100
+        Wed, 23 Nov 2022 07:42:18 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E20266C86;
+        Wed, 23 Nov 2022 04:41:43 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EFA91B81F59;
+        Wed, 23 Nov 2022 12:41:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B462DC433B5;
+        Wed, 23 Nov 2022 12:41:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669207300;
+        bh=cXUFPo7OqE2nILNuP6wEGNjVgk3DTRgoHCsjSSUkV4k=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=KyB6oeikAMbuw6OB15Vtc1BxR6dnm5BwmryO9w24tusUxmxlRTEl1j069GrduGKLV
+         Pc8zC6qElt3IBtvo/g12W4PgraYX+oVlHOrM/+ak5XiCOXABPv+Zv/WcoznXu28edb
+         T+MwRGqt0HoiokWqi4mUrA3qV/cIocgGHLJ9nDTegTFCEgP65fp72ttdKX6n2fPbNz
+         2WeP0zJ1lcQDs8xIAiAFBY3anU5JZVmd7420hnoA428OBUJxU9/XXdOz44AolcyZ7z
+         v4FPoTv4E9cZHZOSjsmKNPCJMnCx2RtMVkWZvPVVjVMlwaSTlj6eiZTw6Q4J+l2KCO
+         VRRC54n4tvKpw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Anjana Hari <quic_ahari@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, andersson@kernel.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.0 17/44] pinctrl: qcom: sc8280xp: Rectify UFS reset pins
+Date:   Wed, 23 Nov 2022 07:40:26 -0500
+Message-Id: <20221123124057.264822-17-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221123124057.264822-1-sashal@kernel.org>
+References: <20221123124057.264822-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure
- Application
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <dfd07f84-c4bd-a18c-2263-49f999f2934c@linaro.org>
- <f42539d0-c2a3-a2b2-c35b-b7a5904b376f@gmail.com>
- <1085c75e-fd12-f432-8893-b58f7c3a7cab@linaro.org>
-Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <1085c75e-fd12-f432-8893-b58f7c3a7cab@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Anjana Hari <quic_ahari@quicinc.com>
 
-On 11/23/22 12:22, Srinivas Kandagatla wrote:
-> Hi Max,
-> 
-> On 02/08/2022 14:22, Maximilian Luz wrote:
->>
->>
->> On 8/2/22 13:51, Srinivas Kandagatla wrote:
+[ Upstream commit f04a2862f9c3f64962b8709c75d788efba6df26b ]
 
-[...]
+UFS reset pin offsets are wrongly configured for SC8280XP,
+correcting the same for both UFS instances here.
 
->>> I think its worth exploring if uefisecapp can talk smcinvoke.
->>> I can ping Qualcomm engineers to see if that is doable.
->>
->> I think that would be great! Thanks!
-> Sorry for such a long delay to reply to this,
-> 
-> here is what I have.
-> 
-> Access to TA using SCM calls remain valid and it will continue to work till SM8550 and probably after that if the TA is *NOT* loaded using smcinvoke for some reasons.
-> 
-> But overall by default on all new SoCs after sm8550 all the access to TA is only done via smcinvoke, and the underlying scm call that are used in this patchset will not be supported anymore.
-> 
->  From SM8550, we will need to move this driver to a proper TEE client kernel driver.
-> 
-> So, with that in mind, I would suggest that we carefully name the compatibles based on SoC rather than generic ones.
+Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # QDrive3
+Link: https://lore.kernel.org/r/20221103181051.26912-1-quic_bjorande@quicinc.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks! That makes sense.
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+index aa2075390f3e..e96c00686a25 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+@@ -1873,8 +1873,8 @@ static const struct msm_pingroup sc8280xp_groups[] = {
+ 	[225] = PINGROUP(225, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[226] = PINGROUP(226, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[227] = PINGROUP(227, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+-	[228] = UFS_RESET(ufs_reset, 0xf1004),
+-	[229] = UFS_RESET(ufs1_reset, 0xf3004),
++	[228] = UFS_RESET(ufs_reset, 0xf1000),
++	[229] = UFS_RESET(ufs1_reset, 0xf3000),
+ 	[230] = SDC_QDSD_PINGROUP(sdc2_clk, 0xe8000, 14, 6),
+ 	[231] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xe8000, 11, 3),
+ 	[232] = SDC_QDSD_PINGROUP(sdc2_data, 0xe8000, 9, 0),
+-- 
+2.35.1
 
-Regards,
-Max
