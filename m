@@ -2,86 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AEE66366EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 18:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4601C636732
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 18:30:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238130AbiKWRZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 12:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45678 "EHLO
+        id S238910AbiKWRal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 12:30:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236917AbiKWRZo (ORCPT
+        with ESMTP id S238866AbiKWRaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 12:25:44 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0336C8DA6E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 09:25:43 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id bs21so30456997wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 09:25:42 -0800 (PST)
+        Wed, 23 Nov 2022 12:30:13 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDB88E295;
+        Wed, 23 Nov 2022 09:30:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0o7n9aYBSzoZxwFuSe0/TKLoFU4W7raNANzVNncYvXw=;
-        b=DnkaY1AG+EjDI4cVCnGzmVOqU+YklwNcFSMU20ugCQlYHt6tL84ipDdUv62fmxfmCD
-         9QXmMIMf1nEBvHUXecPfiC7ahZAvciHaaS8/kfXzpHK4MLAqU1Fz2vHFa1stnRCA78GC
-         dNin8IhEyES+8TYkC3qDkUbsuM4u6PXZA44hEM7V1WQPPXjCU210OEshGOJSNvBh5or6
-         +F2hvGBFlEWe+nQs7EQE2cpSqNrLy9wkr5mk4CM627InzdcmAnH6RKIDbzDwZoCUasnB
-         SLyIls0KjkKoz0HxMIEW1EaekLfyerQt9r6T6eCiY0ONiwX4xUyq5o+bFV/2/gj05DSt
-         ypzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0o7n9aYBSzoZxwFuSe0/TKLoFU4W7raNANzVNncYvXw=;
-        b=Pa3iIVPXO8b5OBmhC2r1odZ55QNgIwqoypsoQ5zipTnHjkaKLiaZ/9fLUyR6Eb/pac
-         nO9zNpUFNtLFEsaryBSmgZomQ0KCtljDxW1zLORsXlTeiUODHGSUIRrXrhV8jkaZ4jWW
-         4456d6YaQxHSHDFpBWhGnKYgWSSL4aE1H0Iyl03pJFldu+tzg0DL3bVTGEdydVNSQpbL
-         r0SvmaaevEtFV2Jawy0bDpRAx0igLSvc8jdVXisM9bLh9yTGAVdZOXG13rh6ToinjpYh
-         zPm2da6lLdzduDFNnHQd7uhfzbr17tVJDZBr0d5u/pboeFN+ctQIKw0/u3SvLqNDJxNV
-         HgbQ==
-X-Gm-Message-State: ANoB5pmhTco69TYrUzIoKQrl4pTQCo+vJmc8UTGmzWfOHD6qS8NjrJ8D
-        CRlFiy4LR6CC+d9SzUTzqAXioA==
-X-Google-Smtp-Source: AA0mqf46S5Kp6+tlC/ZeFeE9K8YM4Q32ncP7DtA/Mwx2P3YNXWLeIywpLCyBi55242hteDKz3KBw4Q==
-X-Received: by 2002:a5d:4604:0:b0:241:dd0f:49e5 with SMTP id t4-20020a5d4604000000b00241dd0f49e5mr8346820wrq.113.1669224341491;
-        Wed, 23 Nov 2022 09:25:41 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e551:24c3:152c:7c05? ([2a01:e0a:982:cbb0:e551:24c3:152c:7c05])
-        by smtp.gmail.com with ESMTPSA id z4-20020a05600c0a0400b003c70191f267sm3346689wmp.39.2022.11.23.09.25.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 09:25:40 -0800 (PST)
-Message-ID: <034d653a-6402-6973-4caa-8ea2219c7064@linaro.org>
-Date:   Wed, 23 Nov 2022 18:25:39 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1669224612; x=1700760612;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ZT9WVned9qGMAlH0r6W65dY8aAfAq0l2ES0Gvi1OpwI=;
+  b=nnHKdSPTYo47b6DAIhIVApHTAOdpOozQLnW/MQPB27rGarHhpDtCREnX
+   j3g4oBm2h17QBYN0wTEwgqKUVrS+LEUlbJ0TjHzXB7xvgXYJsa0jsqgft
+   mM6mF5HQOqHdycX5VTNVISbT2Tj0lfW98FMXb6DdYemAk9EQM5jFaxpjP
+   k=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Nov 2022 09:30:12 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2022 09:30:11 -0800
+Received: from [10.110.94.74] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 23 Nov
+ 2022 09:30:10 -0800
+Message-ID: <85a0af2c-5f79-3d84-c946-a4960aee2958@quicinc.com>
+Date:   Wed, 23 Nov 2022 11:30:09 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v4 09/11] drm/msm/dpu: add support for MDP_TOP blackhole
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20221122231235.3299737-1-dmitry.baryshkov@linaro.org>
- <20221122231235.3299737-10-dmitry.baryshkov@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20221122231235.3299737-10-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221118182039.29236-1-quic_molvera@quicinc.com>
+ <20221118182039.29236-2-quic_molvera@quicinc.com>
+ <528648f2-17df-ab19-8ad4-76423bbc0ae4@linaro.org>
+ <faf2d137-efab-93ab-f325-1fa507f166a7@quicinc.com>
+ <03174a04-440d-a840-1e54-fbdbdfe296c3@linaro.org>
+ <2a50b68f-d2dd-bae5-29b3-f608813d5a3f@quicinc.com>
+ <1d13e913-d425-8cb0-d954-d1d7bc340f38@linaro.org>
+Content-Language: en-US
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <1d13e913-d425-8cb0-d954-d1d7bc340f38@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,62 +74,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 23/11/2022 00:12, Dmitry Baryshkov wrote:
-> On sm8450 a register block was removed from MDP TOP. Accessing it during
-> snapshotting results in NoC errors / immediate reboot. Skip accessing
-> these registers during snapshot.
-> 
-> Tested-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 11 +++++++++--
->   2 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 38aa38ab1568..4730f8268f2a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -92,6 +92,7 @@ enum {
->   	DPU_MDP_UBWC_1_0,
->   	DPU_MDP_UBWC_1_5,
->   	DPU_MDP_AUDIO_SELECT,
-> +	DPU_MDP_PERIPH_0_REMOVED,
->   	DPU_MDP_MAX
->   };
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index f3660cd14f4f..67f2e5288b3c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -927,8 +927,15 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
->   		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
->   				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
->   
-> -	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
-> -			dpu_kms->mmio + cat->mdp[0].base, "top");
-> +	if (top->caps->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
-
-This fails to build on linux-next, either I missed something while applying or it should be:
--       if (top->caps->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
-+       if (dpu_kms->hw_mdp->caps->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
 
 
-> +		msm_disp_snapshot_add_block(disp_state, 0x380,
-> +				dpu_kms->mmio + cat->mdp[0].base, "top");
-> +		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - 0x3a8,
-> +				dpu_kms->mmio + cat->mdp[0].base + 0x3a8, "top_2");
-> +	} else {
-> +		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
-> +				dpu_kms->mmio + cat->mdp[0].base, "top");
-> +	}
->   
->   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
->   }
+On 11/23/2022 2:06 AM, Krzysztof Kozlowski wrote:
+> On 22/11/2022 16:23, Melody Olvera wrote:
+>>
+>> On 11/22/2022 1:48 AM, Krzysztof Kozlowski wrote:
+>>> On 21/11/2022 21:38, Melody Olvera wrote:
+>>>> On 11/20/2022 4:58 AM, Krzysztof Kozlowski wrote:
+>>>>> On 18/11/2022 19:20, Melody Olvera wrote:
+>>>>>> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
+>>>>>>
+>>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>>> ---
+>>>>>>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
+>>>>>>  1 file changed, 134 insertions(+)
+>>>>>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>>>> new file mode 100644
+>>>>>> index 000000000000..cb0c496d8666
+>>>>>> --- /dev/null
+>>>>>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+>>>>>> @@ -0,0 +1,134 @@
+>>>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>>>> +%YAML 1.2
+>>>>>> +---
+>>>>>> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
+>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>>> +
+>>>>>> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
+>>>>>> +
+>>>>>> +maintainers:
+>>>>>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>>>>>> +
+>>>>>> +description: |
+>>>>>> +  This Top Level Mode Multiplexer block (TLMM) is found in the QDU1000 and
+>>>>>> +  QRU1000 platforms.
+>>>>> It's better to keep consistent style which allows to do easy
+>>>>> search/replace, than to have new files using their own sentences. So
+>>>>> keep it the same as was unified in few recent commits.
+>>>> Ok... Just making sure that's what you want. Last PS you gave comments to change
+>>>> the wording of this description to remove "This binding describes..." as we've done
+>>>> in all the other qcom pinctrl/tlmm bindings. I can change the wording back to the
+>>>> original, just want to be clear here.
+>>> I propose to have the same wording as other Qualcomm TLMM bindings,
+>>> however you changed it to something not the same. Therefore I wonder -
+>>> why having here different wording than all other bindings?
+>>>
+>>> By going back to original - what do you mean? If it matches all others,
+>>> then yes, but I doubt it.
+>>>
+>>> Just to be sure - are you working on proper (recent) trees or something old?
+>> Original matched how it was done on other Qualcomm TLMM bindings. Feedback
+>> was to drop "This binding describes..." from [1], but all the Qualcomm TLMM
+>> bindings start with "This binding describes...". I'm looking at qcom tree for-next
+>> branch; should be recent, no?
+> No. It's not recent for anything else than managed by Bjorn. You need to
+> base the patches on maintainer's trees, which is usually the easiest to
+> achieve via linux-next (especially that these changes were in my tree
+> for some time before I sent them to Linus).
 
-Neil
+Ah ok; looking at linux-next looks like it should be "Top Level Mode Multiplexer pin
+controller in Qualcomm QDU1000 and QRU1000 SoCs."
+
+Thanks,
+Melody
+
+>
+> Your all other patches might have similar issues - wrong base or not
+> good example/starting point.
+>
+> Best regards,
+> Krzysztof
+>
 
