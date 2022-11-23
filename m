@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 772A96363DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C85C6363DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:37:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237809AbiKWPhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 10:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49908 "EHLO
+        id S238609AbiKWPhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 10:37:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238765AbiKWPgz (ORCPT
+        with ESMTP id S238780AbiKWPgz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 23 Nov 2022 10:36:55 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD52668689
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:52 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 83-20020a1c0256000000b003d03017c6efso1054094wmc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:52 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219A978D5A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:54 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id 5so13334421wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fgJnlXA/WQvDoRbBq0+m+j+f2DhODOPC9nPotgIbx1U=;
-        b=Es1bgfzu412Kx60PeTZcrp1bmjukKo7/RDWkNjXkIxFnTwyS79CFMHKSq3vUqaG1eq
-         lH4RmLmwBV9SiEZGbn25SH/jn26PhtFZIzpJNrhmNCv0XgVN6dTNZVl3dnAbtvUjpiLm
-         VHr1IPAOlfE0L28YHHQkcWuxJnS5dBcvd+kWVP+fjIbkE0f09J63W3baLeVJ4xGJz9Q+
-         oj/N0pb8uJyHtwxQMA7Xvm1RQrrpZfmJdsb8GFtoe8gfuiaXGbaeZG++k+xTnjTxafV4
-         w1jtviAbCO72DNCTgje6k+Wk5hqNclf/4aigk5relTSXOls3NICIV9P9FMsSyP1e6Ja7
-         qzsA==
+        bh=vIolcY7Gs+PsDlc7bfY9hlM/TZPENVo0vUsEsAX0cvo=;
+        b=iIxf37l8b88uHwbIJ1EaCE8cv6EBchOguS5dDQ8K3O3HtMMdQ1Gxj1bNLfmSM+X39b
+         mNCnmtvsdk+MeAMuj2JjfBPuVO9Hsg+ASLO4JRxLCYauhdgk+gZ/gkyPRJq3LpGd6nmb
+         FLFT1T26WHg7VEIaBhuYqfIFiO3hACO1y/X3KHDbUpVG9NPhE8Ce0XFG4FKjZ46AFerM
+         EBhpffAtnB/TEHidtsdWnWxgbKH5T9+WbwSECB75wmaCv6Q4wzSRnWaNyi4Tyynuxi/6
+         7q1kn5UfiX/qEwDGob4OSOZVvzju7Ryn81Bv3rlbI/N5kHUr87N2W298n+VRTECEYSuq
+         q2Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fgJnlXA/WQvDoRbBq0+m+j+f2DhODOPC9nPotgIbx1U=;
-        b=W8T/p7BljkFVGBpljkesisLWReYLBYqB6VhV4dEEz0QiVfVBJp5hQF50tvSdORNv/g
-         U0vjyZwwkTptU5N0QivrbH0klvXbeCOF3vG69J2zJuwMjBx2Qke4nySDYpgEBinCCrg5
-         OfIGbqqmkx2dAMIeVzuOCcHEKagc5pAnjB+kHaSEjol9bUEPdoZEUg5yikHch6il7OIZ
-         +GYQiiH5DEdS//r2nBM2UAHbghy3AtPeqIPTWgOfg4aRI7zfw8pHxSz8lcEJhmZGR53H
-         7gE2Av29b9Rrzi7vc75W5JIecasXrl6yRilyj2Ud3U7LAfgWnfUkHUT05JFGkVCk/8KU
-         Jv+Q==
-X-Gm-Message-State: ANoB5pld6aKMg0656LhzFtCSAqbzR7Jz2CIHmN/75waOm4Z/JvjMqt+T
-        r8j7pj9WZtZbS+Lu1vtcj4Kp3w==
-X-Google-Smtp-Source: AA0mqf42OTN0ak2fomSu+Cv4KnSKJMzjfpa8qISdE7HnBOnCADBFj/eHKxSj9cKSpTJqvUcHn4VJgg==
-X-Received: by 2002:a05:600c:548b:b0:3cf:b0e4:30d9 with SMTP id iv11-20020a05600c548b00b003cfb0e430d9mr13918414wmb.66.1669217811237;
-        Wed, 23 Nov 2022 07:36:51 -0800 (PST)
+        bh=vIolcY7Gs+PsDlc7bfY9hlM/TZPENVo0vUsEsAX0cvo=;
+        b=kj9WuM8LzcGC3jjKUUIxX4oIlyt1uCD0y1nTcHV3EfB9jnHQxHbnV85ICyw6y2nwDj
+         AQe39mnUZXzBw73iqE0DFhR7oaiKXmZHL2ePul4b0qOgA00xtAiQFAy4RSPty2KzN6Ca
+         J6pagpPTOlH0+0QdKuSzrsKGfKEQs5Juonm0Tdcdd2I4cl1gHePDxHgA3NTk8fJG8NEj
+         K+mdwe0a5tnV3oqM/A/lQ0YOEThBXeuLdy/0OZ0nYz0wXnzVkYjfBv8I927ldVWCi/m5
+         3c8EmUR8tZcRiRMhrPpIyspeLUbUKqXQAUxYqYlUQJfLgg91fRJiXoqoyTqP+KwYVCPD
+         Df6g==
+X-Gm-Message-State: ANoB5pmfDyN4RlJeNmL8EMfm2asMXM1rDE2/XxePtnB5bCHOGIkafuXT
+        nZU4holvLHHrOnSl9Ry9/2FuhQ==
+X-Google-Smtp-Source: AA0mqf6z8+JyGCqRyyb8h2MVhjtcqBpG/IJmcAArjIW+ye0qQ8M1Oh75WKsXpxyYQf5bQv/+TJyA5A==
+X-Received: by 2002:a05:600c:5541:b0:3cf:8896:e1d0 with SMTP id iz1-20020a05600c554100b003cf8896e1d0mr10171475wmb.177.1669217812653;
+        Wed, 23 Nov 2022 07:36:52 -0800 (PST)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id e28-20020adfa45c000000b00228cbac7a25sm17169833wra.64.2022.11.23.07.36.50
+        by smtp.gmail.com with ESMTPSA id e28-20020adfa45c000000b00228cbac7a25sm17169833wra.64.2022.11.23.07.36.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 07:36:50 -0800 (PST)
+        Wed, 23 Nov 2022 07:36:52 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 1/2] regulator: dt-bindings: qcom,rpmh: Add compatible for PM8550
-Date:   Wed, 23 Nov 2022 17:36:37 +0200
-Message-Id: <20221123153638.721254-2-abel.vesa@linaro.org>
+Subject: [PATCH v2 2/2] regulator: qcom-rpmh: Add support for PM8550 regulators
+Date:   Wed, 23 Nov 2022 17:36:38 +0200
+Message-Id: <20221123153638.721254-3-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221123153638.721254-1-abel.vesa@linaro.org>
 References: <20221123153638.721254-1-abel.vesa@linaro.org>
@@ -78,83 +78,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string for PM8550 used in SM8550 boards.
+Add the rpmh regulators found in PM8550 PMIC and its variants,
+along with their compatibles and configuration data. They also
+contain some FT-SMPS 525, so add their configuration as well.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
 
 Changes since v1:
- * changed subject line according to Krzysztof's suggestion
- * dropped unrelated changes reported by Krzysztof
+ * Made the commit message describe better the changes
+ * Added Konrad's R-b tag
 
- .../regulator/qcom,rpmh-regulator.yaml        | 26 +++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 81 +++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-index 7ff51b558702..297a75069f60 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-@@ -47,6 +47,7 @@ description: |
-       For PM8350, smps1 - smps12, ldo1 - ldo10
-       For PM8350C, smps1 - smps10, ldo1 - ldo13, bob
-       For PM8450, smps1 - smps6, ldo1 - ldo4
-+      For PM8550, smps1 - smps6, ldo1 - ldo17, bob1 - bob2
-       For PM8998, smps1 - smps13, ldo1 - ldo28, lvs1 - lvs2
-       For PMI8998, bob
-       For PMR735A, smps1 - smps3, ldo1 - ldo7
-@@ -70,6 +71,9 @@ properties:
-       - qcom,pm8350-rpmh-regulators
-       - qcom,pm8350c-rpmh-regulators
-       - qcom,pm8450-rpmh-regulators
-+      - qcom,pm8550-rpmh-regulators
-+      - qcom,pm8550ve-rpmh-regulators
-+      - qcom,pm8550vs-rpmh-regulators
-       - qcom,pm8998-rpmh-regulators
-       - qcom,pmg1110-rpmh-regulators
-       - qcom,pmi8998-rpmh-regulators
-@@ -83,7 +87,7 @@ properties:
-         RPMh resource name suffix used for the regulators found
-         on this PMIC.
-     $ref: /schemas/types.yaml#/definitions/string
--    enum: [a, b, c, d, e, f, h, k]
-+    enum: [a, b, c, d, e, f, g, h, k]
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index f90bcdeecea5..43b5b9377714 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -731,6 +731,24 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
  
-   qcom,always-wait-for-ack:
-     description: |
-@@ -107,7 +111,7 @@ properties:
-       regulator-allow-set-load: ["regulator-allowed-modes"]
- 
- patternProperties:
--  "^(smps|ldo|lvs)[0-9]+$":
-+  "^(smps|ldo|lvs|bob)[0-9]+$":
-     type: object
-     $ref: "regulator.yaml#"
-     description: smps/ldo regulator nodes(s).
-@@ -299,6 +303,24 @@ allOf:
-         "^vdd-l[1-4]-supply$": true
-         "^vdd-s[1-6]-supply$": true
- 
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,pm8550-rpmh-regulators
-+            - qcom,pm8550ve-rpmh-regulators
-+            - qcom,pm8550vs-rpmh-regulators
-+    then:
-+      properties:
-+        vdd-l2-l13-l14-supply: true
-+        vdd-l5-l16-supply: true
-+        vdd-l6-l7-supply: true
-+        vdd-l8-l9-supply: true
-+      patternProperties:
-+        "^vdd-l([1-4]|1[0-7])-supply$": true
-+        "^vdd-s[1-6]-supply$": true
-+        "^vdd-bob[1-2]-supply$": true
++static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
++	.regulator_type = VRM,
++	.ops = &rpmh_regulator_vrm_ops,
++	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
++	.n_voltages = 268,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
++	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
++};
 +
-   - if:
-       properties:
-         compatible:
++static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
++	.regulator_type = VRM,
++	.ops = &rpmh_regulator_vrm_ops,
++	.voltage_range = REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
++	.n_voltages = 268,
++	.pmic_mode_map = pmic_mode_map_pmic5_smps,
++	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
++};
++
+ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
+@@ -987,6 +1005,57 @@ static const struct rpmh_vreg_init_data pm8450_vreg_data[] = {
+ 	{}
+ };
+ 
++static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,    "vdd-l2-l13-l14"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,    "vdd-l3"),
++	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,    "vdd-l5-l16"),
++	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo_lv, "vdd-l6-l7"),
++	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv, "vdd-l6-l7"),
++	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
++	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
++	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,    "vdd-l11"),
++	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
++	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
++	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
++	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo,    "vdd-l15"),
++	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,    "vdd-l5-l16"),
++	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,    "vdd-l17"),
++	RPMH_VREG("bob1",   "bob%s1",  &pmic5_bob,     "vdd-bob1"),
++	RPMH_VREG("bob2",   "bob%s2",  &pmic5_bob,     "vdd-bob2"),
++	{}
++};
++
++static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
++	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525_lv, "vdd-s1"),
++	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525_lv, "vdd-s2"),
++	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525_lv, "vdd-s3"),
++	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
++	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
++	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,   "vdd-l1"),
++	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,   "vdd-l2"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,   "vdd-l3"),
++	{}
++};
++
++static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
++	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
++	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
++	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_lv, "vdd-s4"),
++	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
++	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
++	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
++	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
++	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo,   "vdd-l1"),
++	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo,   "vdd-l2"),
++	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo,   "vdd-l3"),
++	{}
++};
++
+ static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
+ 	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
+ 	RPMH_VREG("smps2",  "smp%s2",  &pmic5_hfsmps515, "vdd-s2"),
+@@ -1314,6 +1383,18 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
+ 		.compatible = "qcom,pm8450-rpmh-regulators",
+ 		.data = pm8450_vreg_data,
+ 	},
++	{
++		.compatible = "qcom,pm8550-rpmh-regulators",
++		.data = pm8550_vreg_data,
++	},
++	{
++		.compatible = "qcom,pm8550ve-rpmh-regulators",
++		.data = pm8550ve_vreg_data,
++	},
++	{
++		.compatible = "qcom,pm8550vs-rpmh-regulators",
++		.data = pm8550vs_vreg_data,
++	},
+ 	{
+ 		.compatible = "qcom,pm8998-rpmh-regulators",
+ 		.data = pm8998_vreg_data,
 -- 
 2.34.1
 
