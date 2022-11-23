@@ -2,111 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D52566360B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 14:57:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B694C63615C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 15:20:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236573AbiKWN5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 08:57:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45466 "EHLO
+        id S236653AbiKWOUc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 09:20:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236767AbiKWN4v (ORCPT
+        with ESMTP id S237073AbiKWOUa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 08:56:51 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EBB3101F;
-        Wed, 23 Nov 2022 05:51:45 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id ED9E961CEC;
-        Wed, 23 Nov 2022 13:51:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70F3C433D6;
-        Wed, 23 Nov 2022 13:51:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669211504;
-        bh=yn6IQg9xUUV9CgWL40Zq6y52rg1mn5sa8oD03o5v7Xs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UKfpNKKUztgIyNLf4JyG/Wh9x1SnC70ZZ6CMkTeLD14mkOzGlAm4+qghDz9TTaJEY
-         oavU1DO373ElaIHQhIEpVZi9OKHf+AB7y5AZ3a0QM4K6Mda5mlxZI6uj77Y+34o3+z
-         tC1+zaqNCkF1IRGWjNnvY9xTloZLlUjIwvwDNzzHVs6iAjJgjo18LVCElB+Z+suDGy
-         RWQBO44v5C47KQUPl5LJXsrQ6VqWTj1W9The96h2CM4sfIP1b0DOy3ZhTq1Wp6bXDL
-         C50DRWElKcd6PEaRVrgU5hEWY/A3MmvIZ+aqD+I2bHVUKaydHWSJ+FVF1rDhM8vyJp
-         Av8NqbWSqNyRA==
-Date:   Wed, 23 Nov 2022 13:51:32 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        netdev@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-serial@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH v2 1/9] dt-bindings: drop redundant part of title of
- shared bindings
-Message-ID: <Y34lZFSBEwuI6G+a@sirena.org.uk>
-References: <20221121110615.97962-1-krzysztof.kozlowski@linaro.org>
- <20221121110615.97962-2-krzysztof.kozlowski@linaro.org>
+        Wed, 23 Nov 2022 09:20:30 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8B8657C3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 06:20:22 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id x17so16149452wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 06:20:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EMoXuHIdbhjwJcHJBXXgxho78Ko/2YIp+fuaUAlW2rY=;
+        b=UqeKHDjXeHPPYMhTlC9FYSoN/VLX8nN9SzpWL2c8bInJb/BM+st7kwbQPLjYgqeMf2
+         Ta/IK17zgDEC303ru/IWF1DrALGhUdKXwcbPk6/0PPkIrzcko7JH6vChe2yLwSh6Y9hV
+         HfMq9k2Cv0GB5WzTD3+rBAxpLCfPfuUNOV6U0uDcEWWBmLe9/hP5TV7+jACNBVTRSk/A
+         pWww9GWjGlwjVYS4VHueBqyjcNoYCwK0d4RUCD4kVvhh3X1gJ7Rm3vSxyItOQUcBaFO1
+         8leiLlGOXxQxOe+u548BsE31gKKGi/ZHbZnojcqp6ljxV0G6t2NnT5yYoU5Cti/0KMML
+         xyLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EMoXuHIdbhjwJcHJBXXgxho78Ko/2YIp+fuaUAlW2rY=;
+        b=i3KtcAJ3EZTCxcSmB7cEjMsXBxZGXbtlbWBSF6DqIXbO20YKu2hbYq7077xpcIklIG
+         rx0MwsdMtQQ37QdPQEjFYLm2ZFNW0OiBmcWLYFzJ4MelGGPmkmFG/pCq6ZJ21cgPVUJi
+         S3/bIvaTzItCzx1wMkh49HwRTaf6hi5+j/lTksvZ6N3DoalDLqCl3pfrBBA8UMffDPd7
+         rY2c67jKs5Lf3aCO5lhCZRp0C18e4C0Gg39rK32d1SNjjjytSXqu7PPvX0Ecy1qLyt8+
+         NfvIjNnin06e2tnSDcWdKUOqOWeC+NRQWiTs1a1IAv+nMfOlmN9ks39mHSw1PJEdzCll
+         ssHQ==
+X-Gm-Message-State: ANoB5pm5X3TwFs/zKfVKW6bD83P4XiWTUcCHl49Dm4I5bIpu4UEqLfgN
+        6PqEKM0cqcbcZb8vQZfTN4YGahUVsSvglA==
+X-Google-Smtp-Source: AA0mqf5/MjcP0RI/+UciB6PzI31sTUYrP2jKOSevJGF3jEz1P1vukOEYSoL/oxxMiaB9/eHN/I1Crw==
+X-Received: by 2002:adf:de0a:0:b0:241:cdf6:6a81 with SMTP id b10-20020adfde0a000000b00241cdf66a81mr7110202wrm.243.1669213220617;
+        Wed, 23 Nov 2022 06:20:20 -0800 (PST)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id g9-20020a05600c4ec900b003cfd58409desm2837438wmq.13.2022.11.23.06.20.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Nov 2022 06:20:20 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v2 0/9] clk: qcom: Add support for SM8550
+Date:   Wed, 23 Nov 2022 16:20:00 +0200
+Message-Id: <20221123142009.594781-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="sez8m7aAndejrS5d"
-Content-Disposition: inline
-In-Reply-To: <20221121110615.97962-2-krzysztof.kozlowski@linaro.org>
-X-Cookie: I'm rated PG-34!!
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patchset adds clock support for the Qualcomm SM8550 SoC,
+It adds support for the new type of PLL, the TCSR clock controller
+driver, support for configurable poll timeout, the RPMh clocks
+and the bindings.
 
---sez8m7aAndejrS5d
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Michael Turquette <mturquette@baylibre.com>
+To: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 12:06:07PM +0100, Krzysztof Kozlowski wrote:
-> The Devicetree bindings document does not have to say in the title that
-> it is a "binding", but instead just describe the hardware.  For shared
-> (re-usable) schemas, name them all as "common properties".
+Abel Vesa (9):
+  dt-bindings: clock: Add SM8550 GCC clocks
+  dt-bindings: clock: Add SM8550 TCSR CC clocks
+  clk: qcom: gdsc: Add configurable poll timeout
+  clk: qcom: Add LUCID_OLE PLL type for SM8550
+  clk: qcom: Add clock driver for SM8550
+  dt-bindings: clock: Add RPMHCC for SM8550
+  dt-bindings: clock: qcom,rpmh: Add CXO PAD clock IDs
+  clk: qcom: rpmh: Add support for SM8550 rpmh clocks
+  clk: qcom: Add TCSR clock driver for SM8550
 
-Acked-by: Mark Brown <broonie@kernel.org>
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ .../bindings/clock/qcom,sm8550-gcc.yaml       |   56 +
+ .../bindings/clock/qcom,sm8550-tcsrcc.yaml    |   39 +
+ drivers/clk/qcom/Kconfig                      |   15 +
+ drivers/clk/qcom/Makefile                     |    2 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   16 +
+ drivers/clk/qcom/clk-alpha-pll.h              |    5 +
+ drivers/clk/qcom/clk-rpmh.c                   |  110 +-
+ drivers/clk/qcom/gcc-sm8550.c                 | 3396 +++++++++++++++++
+ drivers/clk/qcom/gdsc.c                       |    5 +-
+ drivers/clk/qcom/gdsc.h                       |    1 +
+ drivers/clk/qcom/tcsrcc-sm8550.c              |  193 +
+ include/dt-bindings/clock/qcom,rpmh.h         |    2 +
+ include/dt-bindings/clock/qcom,sm8550-gcc.h   |  231 ++
+ .../dt-bindings/clock/qcom,sm8550-tcsrcc.h    |   18 +
+ 15 files changed, 4069 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm8550.c
+ create mode 100644 drivers/clk/qcom/tcsrcc-sm8550.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-gcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
 
---sez8m7aAndejrS5d
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+2.34.1
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmN+JWMACgkQJNaLcl1U
-h9CJ0gf/ajSRpLgN3RoHR7wLxFr99y5vWRywVoOaKU+lLq3UY2O6a9ssY8wOblzx
-J9LbUP4Acep2fofTZCX1Ks2sTUHXNBB95SaeCwpSD/MX2HltHr0QvTGh8Lc9EfRf
-f4l/ayjov4DbVsOJ019O7MKSgyuKezLb6Rj/5S38OrqdREbbzDoFe2ah8rSxpA8m
-OQPEsY4eAbVfELEo/JQ86QYXN8gT6p3qA0+8IxDb0D+iLi3JCIz3GTrn+ZCudWRS
-DkbD00vhGbeEaAbI/ufYp/KUWT0wfIoONENSAdGhmGMd+deqbmOt1Ryt+YoEt49j
-pRMeSDCxuBZIpBjQfw7H+5ofOT8jsg==
-=hoZL
------END PGP SIGNATURE-----
-
---sez8m7aAndejrS5d--
