@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3955163628B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 15:58:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4AC36362CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Nov 2022 16:07:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237899AbiKWO6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 09:58:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59424 "EHLO
+        id S236152AbiKWPHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 10:07:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238261AbiKWO6P (ORCPT
+        with ESMTP id S238530AbiKWPHQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 09:58:15 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB9049095
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 06:58:10 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id a15so21661999ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 06:58:10 -0800 (PST)
+        Wed, 23 Nov 2022 10:07:16 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BA72654D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:07:15 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id d123so13332964iof.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 07:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CeBIT/60qjtKOuj2huqcVC2uNtdl3dz0w0xzg0s2YMc=;
-        b=uZp42JulX1TxkgNIhtA4qWCD/v7lt7lhmIHz1gbmzLkJUHcsVGneWxOVQMk71kvZqP
-         HrI8A7q6caeXTHDmGTU8flQ42ORQdqQxl5a+29LS7ruq6Ql3v4n/qFdlm/2YI0kwQG2N
-         s2BaZDM0H9VA28Oss+FjjmxeVq6zahhKf5kS2OlLxfc1JRvTPPfbM1Q5Mh5HMjfevyPr
-         jaAWrLzQ3z/VB6vy4AvkVzAqJ3wJeizwNyS72T/c28DCN5+VkZh2VEtgijTnoYfER/9D
-         XKCB/qht43IPr9JQdWQYqH92C1Rfjz+5p+IlqOTPPfydAQVquaPJX/xBG+vn2jX8cv3e
-         Pmhg==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=w3+6kZ2jPHYC5XIhLk4GWvNk5dgTaXJHF9rl6H9TAKQ=;
+        b=QxyS2jc4eEVkc7xWxzPYNIuXzGXAbZ8bAvsyjhaprQIYWaXpa8/mb0+5btpVEIRzOq
+         8bFEiKF2mpWq3B87UAQu/4QBUJ0NjvxwpTCDG3HBeJsfBxgoTvxIaqeQmIotAhTSCpAr
+         i3+XwQBf/22NjT/8M9cJXZNdbQN7k6L6Z5Z4c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CeBIT/60qjtKOuj2huqcVC2uNtdl3dz0w0xzg0s2YMc=;
-        b=cVepuhgEP6GX+yidez5AX2lc2gJYyKSWsLOnYDjBbUv7clkj/vzpGYTvcf0OX2JNTB
-         ZXyikJwFIBekAVyLitgGm1TJaB4BZPJAs1pqCnbANV6593Q+52zbxupZ+9vtTzhJImv/
-         toSLUb246rRkD92caePmPOZvLFy7ns7n7fkwXSJjPn+fNLPkUbZhdvLvg0GLNcHh/ecT
-         VZOm5n9HBo6/Jgu3F1ePx3e0TZpHXCXXwnja2OHChwDSxc7F8ehbtQkyACS3SxW79Ibr
-         jYKGL7EsOK3VE6M4cOlvT60UY9TikqkvP4kuWdhxcocuITY+9pN7XY4P07B5KzYxxxRy
-         VJ7A==
-X-Gm-Message-State: ANoB5plW7er4ZFHUMoxID8HEad/Cm7IalBEDcHhWw+3xhYuNEu1569hn
-        GNngtdj5UhUbEmb0i07P3AgJIw==
-X-Google-Smtp-Source: AA0mqf66GMEuJ2XHtP9pOgH7Ccfq/hf/rZ1OausVh0mWMbAyaQ7OhkqWTGMvCll9zYAGrp/jquaFcg==
-X-Received: by 2002:a05:651c:509:b0:26f:b0c9:a3fb with SMTP id o9-20020a05651c050900b0026fb0c9a3fbmr4209527ljp.30.1669215488615;
-        Wed, 23 Nov 2022 06:58:08 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n16-20020a195510000000b004aa255e2e66sm2941835lfe.241.2022.11.23.06.58.07
+        bh=w3+6kZ2jPHYC5XIhLk4GWvNk5dgTaXJHF9rl6H9TAKQ=;
+        b=AObWwkjOyajW1ScP7iCK1FvZqR0StyR4VmSQm2Zw+ZkWXm1AmPGo3f9Wm8tlrrxKek
+         bPdpODXWNjgS5rIMQB5A61PLfyarq4EE2u5feR4g4cNLlt5pe2A8a+ThzWQK19PqbL+e
+         F1bi7OIkC1lUK1T9ObV7kYm19enkZtgC/5qcaPr/tgX4sHUnuziRz7HhMVOeXomXmRCt
+         3Qv8Y37spFR5GVDzAqkyGznaCVtwHhuSgT97zG47dTz/c/viVlm6LvQcgMknV2e32SvM
+         MThHPBM4nao08h1LbnHwr/X0kwQQrQ7UBI0TdBrGXw+HemzgZvMqBzq0ZwfO+6ZQ0wTU
+         ErIg==
+X-Gm-Message-State: ANoB5pnF7UQ19wPz/2vzBPRhOrTw65r9cqBf02t3IE/BwMNXKOHaGSAO
+        gQ2ccp8Ul1ho63gwYAgylycdrIrlyZ4Ekw==
+X-Google-Smtp-Source: AA0mqf46YDgL+DFXaRtC//XFl6SUoUuagE8OHUpFvGoORyGX6ge4WY9xVHBXqJ5q7g4cVZOGNRJV4w==
+X-Received: by 2002:a6b:1455:0:b0:6de:896e:529c with SMTP id 82-20020a6b1455000000b006de896e529cmr12735578iou.45.1669216034569;
+        Wed, 23 Nov 2022 07:07:14 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id b13-20020a02a58d000000b003633848da58sm6454991jam.41.2022.11.23.07.07.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 06:58:07 -0800 (PST)
-Message-ID: <2495157e-c827-cbe4-2d88-1cd1f45d6d11@linaro.org>
-Date:   Wed, 23 Nov 2022 15:58:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add DT for
- sc7280-herobrine-zombie
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Owen Yang <ecs.taipeikernel@gmail.com>
+        Wed, 23 Nov 2022 07:07:14 -0800 (PST)
+Date:   Wed, 23 Nov 2022 15:07:13 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     =?utf-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, Harvey <hunge@google.com>,
-        Bob Moragues <moragues@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
+        Bob Moragues <moragues@chromium.org>,
+        Harvey <hunge@google.com>, Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20221123181043.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
- <20221123181043.2.Ie435b31225d2dc284a34ac8e52fb84fffb39488c@changeid>
- <Y34wtwSlqc0y4Msz@google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y34wtwSlqc0y4Msz@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, Abner.Yen@ecs.com.tw,
+        Gavin.Lee@ecs.com.tw, Vicy.Lee@ecs.com.tw, Jason.Huang@ecs.com.tw,
+        Darren.Chen@ecs.com.tw
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Adding DT binding for
+ zombie
+Message-ID: <Y343IWgkli+y8HMn@google.com>
+References: <20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid>
+ <Y3zck7tPA5WFd0p1@google.com>
+ <CAPao8GKpXcRm3PmWnv+rsr2z53r6J-ScXAq+fOi4ydQg_Gy31A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPao8GKpXcRm3PmWnv+rsr2z53r6J-ScXAq+fOi4ydQg_Gy31A@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,28 +80,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/11/2022 15:39, Matthias Kaehlcke wrote:
-> On Wed, Nov 23, 2022 at 06:11:13PM +0800, Owen Yang wrote:
+On Wed, Nov 23, 2022 at 02:02:38PM +0800, 楊宗翰 wrote:
+> HiÂ Matthias ,
 > 
->> Subject: [2/2] arm64: dts: qcom: sc7280: Add DT for sc7280-herobrine-zombie
+> When I run "patman" still get warning "<patch>:36: warning: added, moved or
+> deleted file(s), does MAINTAINERS need updating?"
+
+The warning is expected because you added new files. In this case you can
+ignore it as it isn't expected that you become the maintainer of the new zombie
+DT files.
+
+> And I screenshot my "git gui" as below(attachment "git_gui_screenshot.jpg"):
+> [image.png]
 > 
-> Please in include a version number for versions >1. If my accounting is correct
-> this is v3, so the next iteration should be v4.
+> The latest git log info as below:
+> ---
+> commit 4d2b529bce125b83c546aebbc36ecedf76dfc55e (linux_qcom/for-next)
+> Merge: 9abf2313adc1 c03fa428ac6e afcd946be11c aec5f36cf676 cea42b8d7966
+> aa9f474014b1 37b5e8c48b9d cadaa773bcf1
+> Author: Bjorn Andersson <andersson@kernel.org>
+> Date: Â  Tue Nov 15 11:45:55 2022 -0600
 > 
-> You mentioned earlier that you are using patman. Add the following tag to
-> one of the patches in the series to get the version included in the subject:
+> Â  Â  Merge branches 'arm64-defconfig-for-6.2', 'arm64-for-6.2', 'clk-for-6.2',
+> 'defconfig-for-6.2', 'drivers-for-6.2', 'dts-for-6.2' and 'arm64-fixes-for-6.1'
+> into for-next
+> ---
 > 
-> Series-version: 4
+> My checkout steps as below:
+> $ git remote add linux_qcomÂ git://git.kernel.org/pub/scm/linux/kernel/git/
+> qcom/linux.git
+> $ git fetch --no-tags linux_qcom
+> $ git checkout -b <MyLocalBranchName> linux_qcom/for-next
+> 
+> Is myÂ code base branch still worng?Â  Am IÂ missing something?Â 
 
-It is a bit surprise that this patch is a v4...  because I do not
-remember v1 and v2... and v3. And no wonder since I was not CC-ed :/
+My understanding is that it is best to base you changes on a branch like
+'arm64-for-6.2' as the 'for-next' branch is re-created every time changes
+land in one of the '${area}-for-${version}' branches.
 
-It still surprised me how many people just cannot use
-scripts/get_maintainers.pl. Everywhere, in each company. There is a tool
-which they claim to use but they don't... or they base their patches on
-one year old kernel which is another surprise...
+No big issue in this case, just use the corresponding '${area}-for-${version}'
+branch for future patches/versions :)
+
+> The attachment is "0001-dt-bindings-arm-qcom-Adding-DT-binding-for-
+> zombie.patch" patch file,
+> Â I have drop "Documentation/devicetree/bindings/arm/qcom.yaml" as your advice.
+> 
+> Matthias Kaehlcke <mka@chromium.org> æ¼ 2022å¹´11æ22æ¥ é±äº æä¸10:
+> 28å¯«éï¼
+>      On which tree is this series based? My earlier reply bounced for
+>      Bjorn's
+>      old Linaro e-mail address, which suggests that the series might be
+>      based
+>      on an older kernel tree (maybe downstream Chrome OS v5.15?). Please
+>      make
+>      sure to base patches to upstream lists on the corresponding
+>      maintainer
+>      tree/branch or a recent kernel version/rc.
+> 
+>      On Tue, Nov 22, 2022 at 08:37:02PM +0800, Owen Yang wrote:
+>      > Add an entry in the device tree binding for sc7280-zombie.
+>      >
+>      > Documentation/devicetree/bindings/arm/qcom.yaml
+>      >
+>      > Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
+>      > ---
+>      >
+>      > Changes in v2:
+>      > - Move binding item to Google series bottom.
+>      > - Modify DT file for zombie.
+>      >
+>      >Â  Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+>      >Â  1 file changed, 10 insertions(+)
+>      >
+>      > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/
+>      Documentation/devicetree/bindings/arm/qcom.yaml
+>      > index c15a729a6852..f617923f7485 100644
+>      > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>      > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>      > @@ -538,6 +538,16 @@ properties:
+>      >Â  Â  Â  Â  Â  Â  - const: google,villager-sku512
+>      >Â  Â  Â  Â  Â  Â  - const: qcom,sc7280
+>      >Â 
+>      > +Â  Â  Â  - description: Google Zombie (newest rev)
+>      > +Â  Â  Â  Â  items:
+>      > +Â  Â  Â  Â  Â  - const: google,zombie
+>      > +Â  Â  Â  Â  Â  - const: qcom,sc7280
+>      > +
+>      > +Â  Â  Â  - description: Google Zombie with LTE (newest rev)
+>      > +Â  Â  Â  Â  items:
+>      > +Â  Â  Â  Â  Â  - const: google,zombie-sku512
+>      > +Â  Â  Â  Â  Â  - const: qcom,sc7280
+>      > +
+>      >Â  Â  Â  Â  - items:
+>      >Â  Â  Â  Â  Â  Â  - enum:
+>      >Â  Â  Â  Â  Â  Â  Â  Â  - xiaomi,lavender
+>      > --
+>      > 2.17.1
+>      >
 
 
-Best regards,
-Krzysztof
+
+
 
