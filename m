@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1E9B637F3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:44:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19942637F3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:44:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230038AbiKXSoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 13:44:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59302 "EHLO
+        id S229983AbiKXSoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 13:44:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiKXSoQ (ORCPT
+        with ESMTP id S229986AbiKXSoY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 13:44:16 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDA1132F64
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:58 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id be13so3698187lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:58 -0800 (PST)
+        Thu, 24 Nov 2022 13:44:24 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B277BFA718
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:44:00 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id z24so2850319ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:44:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KMI82BhiRMmxUe8PJNsOEzjk6w68RCfM4srJwtzf3Io=;
-        b=A/pJjqaXriyV3t+NRhNnf1QWTWMBl9IobPVwNj6Z5c3QojKt1pT8J5GpLkosAPYg9E
-         Tz7PEAFOrHUO4XXuyYqEC1PRkNkHQPjrOiuMXur6E2g6TZQMNPYpQLPJxWrBtPbhUWb2
-         JzEN1R61V9PtoIUXzDwQ/0twEmgBPDK4jKgjltnwxY2n2U099pkAujXBtcdCWChRNd3k
-         Vw0NC3MCCMmRPz6oXEBkbyVJ+udcWMssm15fpu+fCqcYg1dRpO4U3hR5rOzEP1WvWN2Y
-         LA3WygIYyeJ0+OsKgGbKNuJJn0oMJZSETNsmSGG3bxrKhQaSPfj0wNLWXaRWZ9ci/GKY
-         4Ocg==
+        bh=/yDE3gRUNG67QM74MH23NrqOxB5UmpZn9c+KMHml1Tg=;
+        b=flDS2b0G431Ael55u4XvBgIdPcY0/tcfoay6S8aRcUCQQYnAeOGkAHzYtKgbzHDQZj
+         Appvy3+589mSyojvsHBWQnIAftbxKUMLqknmn7ygiTbolRDE6iW9VYpc2jgEz29xbdiS
+         6pPTrm5cl6+ZidZNKzWR0G653TMIQKQG+wMfVX8qBAay2AJm7VgXI/1S5s7xJ4+Qox8C
+         5QT7rlR3OyjH3mx7s2fY3TKUcCOqjnUAQP2rBERFdPCn8VbgKs3IvX4GQfEL/8JdBXKz
+         oKhArWVjy5+4awHVxZGmziaTBoH1gDijgEzrwxanSEuDwIB/cFH90WuhuvPFY0fR7KCY
+         Zh+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KMI82BhiRMmxUe8PJNsOEzjk6w68RCfM4srJwtzf3Io=;
-        b=pmghLM2DCqEfDg659hZYbNZ2vKYYln0GEEFInKVvIS0ziUXbsVivtguV/cwtmnHA4O
-         iVcZSIdATCqW2Nz/Y8tVhfswHZs7dWAsxgZrwDYVo+JfHClXRfi0blCboR9kLDPgBFGP
-         OsamIh2Q+hJWaLSvWP+bx+t4mNiEfXSQsNdXeh1L3Mfr4dXDMvXMA4q/3u3VGzaYalTp
-         GmkfpT+xJJx6KjF0shXMVv/F/28wObBqeX7tycxJnBepiMpQS62kmTJw9eWNyp4uPZm+
-         ceDhM6Qu+20vcfrafeV0qvf2SQp9uNchXQavs/RiWnxrm8DXqO3wJPT8mZq0ZevvlFgx
-         nong==
-X-Gm-Message-State: ANoB5pltQqMZaHTom6hhl31JCt6w2bbs3dCHuTm+DeByblus6n2zgopX
-        6MckZnNlZ3MwBO4MF0TYkW/bZQ==
-X-Google-Smtp-Source: AA0mqf6L4OyrVgqGkmxjCebTyV1vLgmPt0BG1zrTBUz9iolhq0kO0p8jCnI9pnLIyDpXDXDHScsPvg==
-X-Received: by 2002:a05:6512:3d87:b0:4ad:5fbb:a5b0 with SMTP id k7-20020a0565123d8700b004ad5fbba5b0mr5374054lfv.466.1669315437716;
-        Thu, 24 Nov 2022 10:43:57 -0800 (PST)
+        bh=/yDE3gRUNG67QM74MH23NrqOxB5UmpZn9c+KMHml1Tg=;
+        b=ROPY+S4Z9+VvUW1ZGbThJs8ZdX7W6+/Pg8AFBd63Gkhm92+S+SfE+koMUd5f1t6LRG
+         PpoDnT1RvnnAubLXxoqwjIbqLe8Hh9irFpc/fWA1K2zZn8Kth01j9m+fM5vVSIBgyBKg
+         vgfnAyoai7E0E3L6kfINDeevwrsSMncalABliwNcmSy9g25NpRcYxu+SanQkibC5llOS
+         Q2AR929g08fahCfSKbwbGuxBjFrd95LhmXwW3RP/wbzhVeBCr8r2gN6n56jw0y+kOktc
+         r551wSsYcjBNcEC6O0oJUfeA5ncW1kVVfmMVpqbQhx1QK+QkRJ5CXihwAD5k70JoZuL/
+         yMkA==
+X-Gm-Message-State: ANoB5pmRxcQ4MbyCvNIC0YIicQp+/UlfePLdeuFZxpSteRoIdHHtEQLC
+        z6Sn48Eo18TcF+VnYeLR4iOyWw==
+X-Google-Smtp-Source: AA0mqf64hjLBIk366+jisGSi2sQaCYHQutz3nogH6c63mAGFQvmMIm4fkSYiAaSXqzY8nxpiryyd0A==
+X-Received: by 2002:a05:651c:906:b0:279:1349:b2e2 with SMTP id e6-20020a05651c090600b002791349b2e2mr10464425ljq.382.1669315438899;
+        Thu, 24 Nov 2022 10:43:58 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.56
+        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 10:43:57 -0800 (PST)
+        Thu, 24 Nov 2022 10:43:58 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 12/15] dt-bindings: remoteproc: qcom,sdx55-pas: split into separate file
-Date:   Thu, 24 Nov 2022 19:43:30 +0100
-Message-Id: <20221124184333.133911-13-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 13/15] dt-bindings: remoteproc: qcom,qcs404-pas: split into separate file
+Date:   Thu, 24 Nov 2022 19:43:31 +0100
+Message-Id: <20221124184333.133911-14-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
 References: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
@@ -79,82 +79,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split SDX55 remote processor Peripheral Authentication Service bindings
+Split QCS404 remote processor Peripheral Authentication Service bindings
 into their own file to reduce complexity and make maintenance easier.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 ---
 
-Changes since v1:
+Changes since v2:
 1. New patch.
 ---
- .../bindings/remoteproc/qcom,adsp.yaml        |   4 -
- .../bindings/remoteproc/qcom,sdx55-pas.yaml   | 101 ++++++++++++++++++
- 2 files changed, 101 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
+ .../bindings/remoteproc/qcom,adsp.yaml        | 12 ---
+ .../bindings/remoteproc/qcom,qcs404-pas.yaml  | 86 +++++++++++++++++++
+ 2 files changed, 86 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qcs404-pas.yaml
 
 diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 7b93064fa0ae..10c96445da11 100644
+index 10c96445da11..9fdfa9476ca9 100644
 --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
 +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -30,7 +30,6 @@ properties:
+@@ -22,9 +22,6 @@ properties:
+       - qcom,msm8996-slpi-pil
+       - qcom,msm8998-adsp-pas
+       - qcom,msm8998-slpi-pas
+-      - qcom,qcs404-adsp-pas
+-      - qcom,qcs404-cdsp-pas
+-      - qcom,qcs404-wcss-pas
+       - qcom,sc7180-mpss-pas
+       - qcom,sc7280-mpss-pas
        - qcom,sdm660-adsp-pas
-       - qcom,sdm845-adsp-pas
-       - qcom,sdm845-cdsp-pas
--      - qcom,sdx55-mpss-pas
- 
-   reg:
-     maxItems: 1
-@@ -125,7 +124,6 @@ allOf:
-             enum:
+@@ -61,9 +58,6 @@ allOf:
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8996-slpi-pil
+               - qcom,msm8998-adsp-pas
+-              - qcom,qcs404-adsp-pas
+-              - qcom,qcs404-cdsp-pas
+-              - qcom,qcs404-wcss-pas
                - qcom,sc7180-mpss-pas
                - qcom,sc7280-mpss-pas
--              - qcom,sdx55-mpss-pas
+               - qcom,sdm845-adsp-pas
+@@ -105,9 +99,6 @@ allOf:
+               - qcom,msm8996-slpi-pil
+               - qcom,msm8998-adsp-pas
+               - qcom,msm8998-slpi-pas
+-              - qcom,qcs404-adsp-pas
+-              - qcom,qcs404-cdsp-pas
+-              - qcom,qcs404-wcss-pas
+               - qcom,sdm845-adsp-pas
+               - qcom,sdm845-cdsp-pas
      then:
-       properties:
-         interrupts:
-@@ -203,7 +201,6 @@ allOf:
-           contains:
-             enum:
-               - qcom,sc7280-mpss-pas
--              - qcom,sdx55-mpss-pas
-     then:
-       properties:
-         power-domains:
-@@ -230,7 +227,6 @@ allOf:
-               - qcom,qcs404-cdsp-pas
-               - qcom,qcs404-wcss-pas
+@@ -223,9 +214,6 @@ allOf:
+               - qcom,msm8996-slpi-pil
+               - qcom,msm8998-adsp-pas
+               - qcom,msm8998-slpi-pas
+-              - qcom,qcs404-adsp-pas
+-              - qcom,qcs404-cdsp-pas
+-              - qcom,qcs404-wcss-pas
                - qcom,sdm660-adsp-pas
--              - qcom,sdx55-mpss-pas
      then:
        properties:
-         qcom,qmp: false
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-pas.yaml
 new file mode 100644
-index 000000000000..cbeaa00ca4d4
+index 000000000000..007349ef51ed
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
-@@ -0,0 +1,101 @@
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-pas.yaml
+@@ -0,0 +1,86 @@
 +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sdx55-pas.yaml#
++$id: http://devicetree.org/schemas/remoteproc/qcom,qcs404-pas.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Qualcomm SDX55 Peripheral Authentication Service
++title: Qualcomm QCS404 Peripheral Authentication Service
 +
 +maintainers:
 +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 +
 +description:
-+  Qualcomm SDX55 SoC Peripheral Authentication Service loads and boots firmware
-+  on the Qualcomm DSP Hexagon cores.
++  Qualcomm QCS404 SoC Peripheral Authentication Service loads and boots
++  firmware on the Qualcomm DSP Hexagon cores.
 +
 +properties:
 +  compatible:
 +    enum:
-+      - qcom,sdx55-mpss-pas
++      - qcom,qcs404-adsp-pas
++      - qcom,qcs404-cdsp-pas
++      - qcom,qcs404-wcss-pas
 +
 +  reg:
 +    maxItems: 1
@@ -168,25 +178,13 @@ index 000000000000..cbeaa00ca4d4
 +      - const: xo
 +
 +  interrupts:
-+    minItems: 6
++    maxItems: 5
 +
 +  interrupt-names:
-+    minItems: 6
++    maxItems: 5
 +
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+      - description: MSS power domain
-+
-+  power-domain-names:
-+    items:
-+      - const: cx
-+      - const: mss
-+
-+  qcom,qmp:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the AOSS side-channel message RAM.
-+
++  power-domains: false
++  power-domain-names: false
 +  smd-edge: false
 +
 +required:
@@ -200,41 +198,36 @@ index 000000000000..cbeaa00ca4d4
 +
 +examples:
 +  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
 +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
 +
-+    remoteproc@4080000 {
-+        compatible = "qcom,sdx55-mpss-pas";
-+        reg = <0x04080000 0x4040>;
++    remoteproc@c700000 {
++        compatible = "qcom,qcs404-adsp-pas";
++        reg = <0x0c700000 0x4040>;
 +
-+        clocks = <&rpmhcc RPMH_CXO_CLK>;
++        clocks = <&xo_board>;
 +        clock-names = "xo";
 +
-+        interrupts-extended = <&intc GIC_SPI 250 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready", "handover",
-+                          "stop-ack", "shutdown-ack";
++        interrupts-extended = <&intc GIC_SPI 293 IRQ_TYPE_EDGE_RISING>,
++                              <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++                              <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++                              <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++                              <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++        interrupt-names = "wdog", "fatal", "ready",
++                          "handover", "stop-ack";
 +
-+        memory-region = <&mpss_adsp_mem>;
++        memory-region = <&adsp_fw_mem>;
 +
-+        power-domains = <&rpmhpd SDX55_CX>, <&rpmhpd SDX55_MSS>;
-+        power-domain-names = "cx", "mss";
-+
-+        qcom,smem-states = <&modem_smp2p_out 0>;
++        qcom,smem-states = <&adsp_smp2p_out 0>;
 +        qcom,smem-state-names = "stop";
 +
 +        glink-edge {
-+            interrupts = <GIC_SPI 114 IRQ_TYPE_EDGE_RISING>;
-+            label = "mpss";
-+            mboxes = <&apcs 15>;
-+            qcom,remote-pid = <1>;
++            interrupts = <GIC_SPI 289 IRQ_TYPE_EDGE_RISING>;
 +
-+            /* ... */
++            qcom,remote-pid = <2>;
++            mboxes = <&apcs_glb 8>;
++
++            label = "adsp";
 +        };
 +    };
 -- 
