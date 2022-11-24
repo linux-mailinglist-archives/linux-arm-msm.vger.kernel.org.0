@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00FB2637AB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 14:58:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47111637ABC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 14:58:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230360AbiKXN6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 08:58:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50288 "EHLO
+        id S230383AbiKXN6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 08:58:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbiKXN5r (ORCPT
+        with ESMTP id S230308AbiKXN5v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 08:57:47 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21B6812BFC1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 05:56:53 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id x5so2594196wrt.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 05:56:53 -0800 (PST)
+        Thu, 24 Nov 2022 08:57:51 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFD512BFD3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 05:56:54 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id g12so2561573wrs.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 05:56:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MKy7telqHd11HTPv3+ayDIJY4ik4OoAmOld4l3dr43k=;
-        b=WIgWT9UExMUT8thEPd5eIeUMiiQq7v1HSe6+vjUm/jqXZB1uqqH1DsMjf9UEztgdn/
-         ZMZVcmv76UpYawTsoc6GjKKThwUkyyfwaSqw6FFlbs6JIDLMagIZFHHx6BNeBWj8uBxT
-         TpunKDUWQcB7Mv2U8PnJ2HweoqPsxGRhPvqnxjAervsftS1yk3UC0gDIZ0td9eXHGzpt
-         uPR/OohLTFWLzeVnAxGigcWPqhifFLbIsUcSPy0dkXH+N/s3dxkqgiMdFzUqOnXkhH9H
-         PWbsDnHWbdYE5hz5pFYmsCDn06tts5U5Y6IFMLqd/RdA5Cj0Pd8NJI1PTf8NGyu/iPRp
-         Hung==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j5zOiHrYkBMW3rwOZKoxLE7hRWxL8uTujQnvARIzYyM=;
+        b=sTv5vC7iFwaQXVfxqYnsvb358PFCDGS+VENrhxobNpUHB/fm0UNmpzGpJDwIEVI2Nk
+         OBOki/p+P/oVS/wOVQZg+mu0AoAUsJrSovlmDTqqaYh65XQJVP+RtjZlhBzvNatY7xB4
+         Pc48cXN2E/IiKfvtvSLLPKw1jQJpzGKyHe/Inq1RO2CC+MJQwzIswTArdaAis++cwQq7
+         PO7z+a3tZWMozQ1WY7McPnXjt3dZj9AwOGj6xHV+oB9JDOcgn2yBp/WHJYfeofakig4c
+         0Mq/v67SdDif3feK53qk366WNIkvvIkkGB99RhZQTm5vApVXgEfnteuZEmuD40bKAzpd
+         xlSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MKy7telqHd11HTPv3+ayDIJY4ik4OoAmOld4l3dr43k=;
-        b=Bfv8I8dZCtz1E/fgdSQOkTlq6kR/pmgPDYAgFLnq7eZ7Wci8/PxmUDyFBa/DxmKOK7
-         lvVs2x7RLbNYBL0xYOCLkQcgTe42YcQE9P+isYJQxT4mA/6o+NhevsuSzI+eRv8KQ2mk
-         RTDdzWE2RWimVegnCuIDn+IPfP9jjaN/mt9YRBEo39GqCGARAJTBPy5GHJeYG2K52nXv
-         Q4qnU0s4LLJQphBIoiYx46R/j0wIyiEcFnAA6DbGGW8UQPwdiMrVOwtmPqipS5P3WF1N
-         ju+qNcOl5De5c6JZd/QjNrQTlrAqKSS7wOqzNdZ6tzoOIOkkoHqiRc2LW44nrWPov+wW
-         Wj7Q==
-X-Gm-Message-State: ANoB5pne94at3A7/GrDOhZ6vBhPDK67Yd1lzf3aEX62cRCwOWqG466gm
-        wOSCkLJQFbI5TgOB8cqqnEIBWw==
-X-Google-Smtp-Source: AA0mqf7iQOUQCknFxjDcRzNCKiB/vNg4WEpm3a6jb14JzuJO31BQ0KlJFBMCL8SGgWVuN8WlzZSzaQ==
-X-Received: by 2002:a5d:5191:0:b0:236:7c38:147b with SMTP id k17-20020a5d5191000000b002367c38147bmr13446500wrv.569.1669298211505;
-        Thu, 24 Nov 2022 05:56:51 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j5zOiHrYkBMW3rwOZKoxLE7hRWxL8uTujQnvARIzYyM=;
+        b=j3Jkxb2lJmyflD9P4ph8TYVHSO+IapkmxqjRjhqpn8yYoMAoDFeDVLpF3qQ1bn/zCx
+         pV3G3F+UNutVkcR9/nRHQodL6h5ScMzPbNsBPxFCD/6CJ996goFaxA6nes55ec3bQRme
+         n/mpAn4G3+jaRBRK/VGVRtK1lc4ohnZ3gyWJNWrt2zaDU7oP+AauGz6UczyRCVV9qFKP
+         0bhEGgY8FDF3HhkkA+3/mNUWrzF6F8XBApd3IvsIIj71X90fcOevaFRpDtK+YgmWroUv
+         aiGC1OmkmZQL9y01hiSNkW5qsVPT0PXqhvBLhJpj9qgIZpg3/4V0N1pbftj0LY24e3tu
+         NdHQ==
+X-Gm-Message-State: ANoB5pmuA7t4Y7ORy5LNEi7ihJ53pcKqoJjq7Wcmzv+mQffb8XJhUSOB
+        a3g5zOCRyafiB5QlRU/UVlbqdQ==
+X-Google-Smtp-Source: AA0mqf6CQiRmxjEuJUqBdHowtUQkcB5xTheHpZ9uR2GZ/Bi71aLpv2Vgjzj1wPUUSR3zchbR9s1oPg==
+X-Received: by 2002:a5d:5290:0:b0:241:cdd4:6925 with SMTP id c16-20020a5d5290000000b00241cdd46925mr14259441wrv.525.1669298212811;
+        Thu, 24 Nov 2022 05:56:52 -0800 (PST)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v14-20020adfebce000000b00241d21d4652sm1414322wrn.21.2022.11.24.05.56.50
+        by smtp.gmail.com with ESMTPSA id v14-20020adfebce000000b00241d21d4652sm1414322wrn.21.2022.11.24.05.56.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 05:56:51 -0800 (PST)
+        Thu, 24 Nov 2022 05:56:52 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,11 +58,14 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 00/10] arm64: dts: Add base device tree files for SM8550
-Date:   Thu, 24 Nov 2022 15:56:36 +0200
-Message-Id: <20221124135646.1952727-1-abel.vesa@linaro.org>
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 01/10] dt-bindings: arm: qcom: Document SM8550 SoC and boards
+Date:   Thu, 24 Nov 2022 15:56:37 +0200
+Message-Id: <20221124135646.1952727-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221124135646.1952727-1-abel.vesa@linaro.org>
+References: <20221124135646.1952727-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,65 +78,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds the base device tree files and MTP board support
-for the Qualcomm SM8550 SoC, including the clock, pinctrl, smmu,
-regulators, interconnect, cpufreq, and qup nodes.
+Document the SM8550 SoC binding and the MTP board.
 
-The SM8550 is the latest Qualcomm Mobile Platform.
-See more at:
-https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Snapdragon-8-Gen-2-Product-Brief.pdf
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
 
-The first verion of this patchset is here:
-https://lore.kernel.org/all/20221116103146.2556846-1-abel.vesa@linaro.org/
+Changes since v1:
+ * added Krzysztof's R-b tag
 
-Here is a branch where the entire support has been merged:
-https://git.codelinaro.org/linaro/qcomlt/linux/-/commits/topic/sm8550/next
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-To: Andy Gross <agross@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-To: Rob Herring <robh+dt@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-
-Abel Vesa (3):
-  dt-bindings: arm: qcom: Document SM8550 SoC and boards
-  arm64: dts: qcom: Add base SM8550 dtsi
-  arm64: dts: qcom: Add base SM8550 MTP dts
-
-Neil Armstrong (7):
-  arm64: dts: qcom: Add pm8010 pmic dtsi
-  arm64: dts: qcom: Add PM8550 pmic dtsi
-  arm64: dts: qcom: Add PM8550b pmic dtsi
-  arm64: dts: qcom: Add PM8550ve pmic dtsi
-  arm64: dts: qcom: Add PM8550vs pmic dtsi
-  arm64: dts: qcom: Add PMK8550 pmic dtsi
-  arm64: dts: qcom: Add PMR735d pmic dtsi
-
- .../devicetree/bindings/arm/qcom.yaml         |    6 +
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- arch/arm64/boot/dts/qcom/pm8010.dtsi          |   84 +
- arch/arm64/boot/dts/qcom/pm8550.dtsi          |   59 +
- arch/arm64/boot/dts/qcom/pm8550b.dtsi         |   59 +
- arch/arm64/boot/dts/qcom/pm8550ve.dtsi        |   59 +
- arch/arm64/boot/dts/qcom/pm8550vs.dtsi        |  194 +
- arch/arm64/boot/dts/qcom/pmk8550.dtsi         |   55 +
- arch/arm64/boot/dts/qcom/pmr735d.dtsi         |  104 +
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |  404 ++
- arch/arm64/boot/dts/qcom/sm8550.dtsi          | 3522 +++++++++++++++++
- 11 files changed, 4547 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/pm8010.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pm8550.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pm8550b.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pm8550ve.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pm8550vs.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pmk8550.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/pmr735d.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sm8550-mtp.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm8550.dtsi
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 7637cf27d799..a586a38c3461 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -68,6 +68,7 @@ description: |
+         sm8250
+         sm8350
+         sm8450
++        sm8550
+ 
+   The 'board' element must be one of the following strings:
+ 
+@@ -818,6 +819,11 @@ properties:
+               - sony,pdx223
+           - const: qcom,sm8450
+ 
++      - items:
++          - enum:
++              - qcom,sm8550-mtp
++          - const: qcom,sm8550
++
+   # Board compatibles go above
+ 
+   qcom,msm-id:
 -- 
 2.34.1
 
