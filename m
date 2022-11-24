@@ -2,74 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 322E86375C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 10:59:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8182F6375FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 11:13:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiKXJ7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 04:59:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45464 "EHLO
+        id S229598AbiKXKNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 05:13:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbiKXJ7p (ORCPT
+        with ESMTP id S229653AbiKXKNS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 04:59:45 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0F835131D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 01:59:43 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j4so1839512lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 01:59:43 -0800 (PST)
+        Thu, 24 Nov 2022 05:13:18 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9072C976E6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 02:13:16 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id l22-20020a17090a3f1600b00212fbbcfb78so4714713pjc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 02:13:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uLVxA3yQxeJsXZtEUirJWHQKMadANt1t6I5SMmMyUzs=;
-        b=gTV+FCVayaeo95KLyfwT7X7NCzSuAZGAUZqCHPJzJro15gjLhEsZin5+vHQSmhnR9r
-         Tpol7bJ6jAT7Pp3n28Nk8Mp+qlvA4o14Bj8W/SARUiFygv6TZVHQ25wMy1G0ZM7BigGp
-         ENsf1KFPHdn9wWgugLmS7F42EmBkailAUz/3TANizikTjjdZ0RPFijz9zUsEXjwDJ/aM
-         FNFYgO7msNuCYWqKxQU9Gi5v+k9qd0HFtlneb+MMmtGi6GTqDEMEl8ITZM2fZPAfOMmD
-         w8frOfKjyTnxB5zGar8vsypiR/Q6JxEIGSuEnetMmLu24q2PSBMomY27T8VrBPJvgrZD
-         arZA==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=k2dr7Cgu4oJVGxGU1Y/2qFukYAZmH/+X4Fm9CRZLrY8=;
+        b=P9EOPeyXPx8GBJUYiq9uOyAn/qCWcWTGvL6Wha5DJLhTpCMmeXU8Qwr+VvfGYTryoM
+         0tUJDO5CfhLJ3URozTuKhk7INuvCw7+W74GbRlWy9SKKytlYp1sb0F9FzanRATTnkLyI
+         Yp53dXTE6HyC/L2c3UhFnhXXKUJiwP6/FINdzAf/0o9w+IoX9bJ90qSXgmlvZfhnPisN
+         FT8feH4EmP3pVlGqPUb2mgQRozoam3WpwGfb/nF/hr/ChS15K5bu0nbnkazVjdyLWhi8
+         Dv3WpK4QujOTOytec+yPzPzU14p2UnmmkE1JqnPzOVjjKDxWlvtvlKS79H2QlaSxb2b5
+         yOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uLVxA3yQxeJsXZtEUirJWHQKMadANt1t6I5SMmMyUzs=;
-        b=GQW3c3LiPpdHRmCX/SNHSmrxtBvQWhSi4Fbrsa3JZUCOXekxYyORdQqenBe7QlzQNm
-         QDN/GyEnR+UtaOYuI3qNK4s4DB07bbuaSOHjzZ+2SCJ2Jx7xu8MGpEkcGwhKhM1LGHYt
-         3j76yjLJJe/0nTUNBI22k1z9+jV8ulTM+EFmIaZnQwH9kiR1SMauUymzTvD7LEgOOsYi
-         QkQ/HAPoBRsRC+s9X14fdTJLTMynIpxnfi6cm77WI6R5TJEFwgatDNoYVXjnBf4sFZG8
-         OsGWw2Qn3uvoKEgQLmpEz+Jf1dwMeyYWMzrEujA63fWfYKk5586b8k2uS7hGU7+934sm
-         cyFQ==
-X-Gm-Message-State: ANoB5pn9nFZ86RaKwfFHYDu6qFi8+WTxhNN3iMUWyPY4je1TnKBITVJ2
-        GoZzZNG4J1dFlw5EYesAp1PDuw==
-X-Google-Smtp-Source: AA0mqf7Ni/8WYAByN5XvDcKkRGcR9g6e7hzhW5WCPQC+CJZwj8ABjf9mNiNY/UAJctZ6mPXOT1sfRA==
-X-Received: by 2002:a05:6512:324f:b0:4b4:f3c5:f195 with SMTP id c15-20020a056512324f00b004b4f3c5f195mr729506lfr.516.1669283982300;
-        Thu, 24 Nov 2022 01:59:42 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id i8-20020a2ea368000000b0027628240ff7sm59496ljn.135.2022.11.24.01.59.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Nov 2022 01:59:41 -0800 (PST)
-Message-ID: <a3eeef2d-edb6-fb73-040a-832fb54c142c@linaro.org>
-Date:   Thu, 24 Nov 2022 10:59:40 +0100
+        bh=k2dr7Cgu4oJVGxGU1Y/2qFukYAZmH/+X4Fm9CRZLrY8=;
+        b=nTA4RuV+9U+BpuGIlgny5WpXQxGoygGpVBQvUHPOm1pSY7apr6GRp9WbJ+yR0G5RSo
+         xyARvhO6Xbbd6cpI0mABP7Czpknq/KznjKtaA+7FBQ1aAVG0PEgOvY+L6eg4UnRQrn8B
+         d2dkGfSI4q0AquK5azuwHR4P3rmEyBCE/IWJuHlNQ1+OH7GyLY4v7dNN755QTmJMvtg7
+         KbaHLyqEFU3v3uVeyQ01rNKOmG6fSfGFDHIbmcqem9kXyI1wccvIN2nODaRI3Bx2h61p
+         4Hg8oT47UuxV8smtB7NxYWte9fnYDW0duYYTOitTfQv7hix5tVm2TjQlQpduczhmoWoD
+         OVjQ==
+X-Gm-Message-State: ANoB5plzGdd16yzkFikWk0hhQ1yYmT5L9oSV3tLlaCpgcjpgXBxgT0If
+        eyg4gwX4yJQaPv9v8LG8eVDq
+X-Google-Smtp-Source: AA0mqf4t6fAJ8A/JX49OHFGtob0Y2bkzouwdtsvSrPv9mEsKtqsl4IbjvZwzfzqw9F0zT26bCyhhsw==
+X-Received: by 2002:a17:90b:f04:b0:218:8ec2:a4e2 with SMTP id br4-20020a17090b0f0400b002188ec2a4e2mr27805083pjb.174.1669284796009;
+        Thu, 24 Nov 2022 02:13:16 -0800 (PST)
+Received: from thinkpad ([59.92.97.13])
+        by smtp.gmail.com with ESMTPSA id pl18-20020a17090b269200b00218f830c63esm842600pjb.1.2022.11.24.02.13.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 02:13:14 -0800 (PST)
+Date:   Thu, 24 Nov 2022 15:43:09 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org, quic_cang@quicinc.com,
+        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        ahalaney@redhat.com, abel.vesa@linaro.org
+Subject: Re: [PATCH v3 20/20] MAINTAINERS: Add myself as the maintainer for
+ Qcom UFS driver
+Message-ID: <20221124101309.GE5119@thinkpad>
+References: <20221123074826.95369-1-manivannan.sadhasivam@linaro.org>
+ <20221123074826.95369-21-manivannan.sadhasivam@linaro.org>
+ <Y35nBIIRmu3w9C1C@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sc8280xp: add gpr node
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, andersson@kernel.org
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221123104342.26140-1-srinivas.kandagatla@linaro.org>
- <20221123104342.26140-2-srinivas.kandagatla@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221123104342.26140-2-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y35nBIIRmu3w9C1C@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,16 +80,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/11/2022 11:43, Srinivas Kandagatla wrote:
-> Add GPR node along with APM(Audio Process Manager) and PRM(Proxy
-> resource Manager) audio services.
+On Wed, Nov 23, 2022 at 06:31:32PM +0000, Eric Biggers wrote:
+> On Wed, Nov 23, 2022 at 01:18:26PM +0530, Manivannan Sadhasivam wrote:
+> > Qcom UFS driver has been left un-maintained till now. I'd like to step
+> > up to maintain the driver and its binding.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  MAINTAINERS | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index cf0f18502372..149fd6daf52b 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -21097,6 +21097,14 @@ L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
+> >  S:	Maintained
+> >  F:	drivers/ufs/host/ufs-mediatek*
+> >  
+> > +UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER QUALCOMM HOOKS
+> > +M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > +L:	linux-arm-msm@vger.kernel.org
+> > +L:	linux-scsi@vger.kernel.org
+> > +S:	Maintained
+> > +F:	Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> > +F:	drivers/ufs/host/ufs-qcom.c
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
+> Thanks for volunteering to maintain this driver!
+> 
+> What about ufs-qcom.h and ufs-qcom-ice.c?  Those are part of this driver too.
+> 
+> The pattern drivers/ufs/host/ufs-qcom* would cover all these files.
+> 
 
+Sorry, forgot the wildcard! Will fix it in next revision.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks,
+Mani
 
-Best regards,
-Krzysztof
+> - Eric
 
+-- 
+மணிவண்ணன் சதாசிவம்
