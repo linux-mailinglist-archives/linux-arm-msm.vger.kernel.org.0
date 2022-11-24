@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B1D4637742
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 12:13:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E81DD637781
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 12:22:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbiKXLNf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 06:13:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43378 "EHLO
+        id S229990AbiKXLWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 06:22:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiKXLNe (ORCPT
+        with ESMTP id S229493AbiKXLVy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 06:13:34 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C0213E04C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 03:13:33 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id d6so2034623lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 03:13:33 -0800 (PST)
+        Thu, 24 Nov 2022 06:21:54 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE9266F81A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 03:21:52 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id be13so2090607lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 03:21:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rCj2UGwGM6w6ZRGQowdeC2XnWEPWL1uXR/0dltIvUwQ=;
-        b=XLX4CK2BN8y+2/Rw9fe9pSJddMHxO4Jj0B8KsBOQcz0Hp4ZyDYIqKp+SeirpiZAFAm
-         p6NdrjCcsLOMKZddZ+qRoYura7Sqwgmz3ykLV1v3WGE7sG5ZOeb96+E8usmo1w63l67D
-         DpDpGbpJYZ97fs4sRh7JXh+lOWHe7B4BnlC8J9nHMIMjteiplDHLdNKD54v2mpEzeNlH
-         MTb+LrBkuFgGX/RqG+MR785N0kdlkPN8tgHeGk1XlY3px26hH6W4aSiUoJUxtdyVjVRg
-         RSZNrFjvANfTTGicn3B+26yaSot04M2Xhrct1Iv7rgu2RBHq3xFPfd6kvqW/GP4Xd/kg
-         LW0Q==
+        bh=ZOwF1IoRFMxbzXIpHBYM5XNjvDo/YeKJYT2kSquRYBI=;
+        b=Fg6jjuFR5m4W3eanpXYUM8RD8eOzPoKNiTAR69CyNrQ2TXTARkiaegBkmDzJvDN1Q5
+         TNaH/kMR9SkcsPeZwr/zXwirLELiEk65ZML40X0ZieBPnZceiynsXnabKoCF45oLycbT
+         K/TbRswfT8MLL42DQz++bH7QmDWySdsnm6S8HU/whadx+Ut9Sm188yQElzjDfsHgZuMG
+         0vPjo0ApdVB0ERSHHgsIls14A194b6K8yvlZRAPPhGeKz85rMFNd+TJn+Bj3Jpyiub7F
+         d26vGtmiHfXuX05tkMPiKarpGEXaEiJrAEqy38Xa5EIhEIphEod1yU/WAJUCZpgB7398
+         TFbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rCj2UGwGM6w6ZRGQowdeC2XnWEPWL1uXR/0dltIvUwQ=;
-        b=FH4JnloVy29nD9o6p86cw9n6VEhHEggrVVw5Q+DiS44SwHL4xV1OcAiTUm7zdka1if
-         HH/04Xc1gWND62/N4Y0taZ6FwOEQafQi7B7jPgTEkSjkNmSC63eMI/tG1OLdtFou6HxX
-         StKcPHuDRQLhEI6R79xvJsORyKoRphVoW0J6ces28duIg5SCB7KqRp56+PeCVp6/h76x
-         6zZ56GEuiX3CPzbHCbQqyvdhEZ406qR/WPWt5UXgpN7Hw8e8Hs9Ydj54PKc+fkqw78pf
-         /YxdliL0Jufd1536pFAe4pqVMJt6BPpJGAclyuDbfUuF905CgzOpilTZioFRA/Cbrpvh
-         wZ+Q==
-X-Gm-Message-State: ANoB5pkfTjZZZTH149Mb+SFoet9UB2B3If8METe+r4KU1ubdrsqcWewQ
-        wvT7K8Q5TLKLEHB0QNTHr0SZRw==
-X-Google-Smtp-Source: AA0mqf77SJcXFxiT+8w1pskHsMFpUj7CdpIorQh3ACsDwCn46PkgObtYNifZNSkbEYo1vZBQPEdkFQ==
-X-Received: by 2002:a05:6512:1043:b0:4b0:efed:e3a8 with SMTP id c3-20020a056512104300b004b0efede3a8mr10457783lfb.650.1669288412115;
-        Thu, 24 Nov 2022 03:13:32 -0800 (PST)
+        bh=ZOwF1IoRFMxbzXIpHBYM5XNjvDo/YeKJYT2kSquRYBI=;
+        b=Of98aAsB0x+wpjlUAQfxIsowbhonCs0bXYb4o1h+cwkKhXQq+7TU7P8DqzGZ/fXlty
+         h0XmxXiShWx1u6j4GDMmvgUsHIKq/sRA+l7q7F5bt9s85lqWGlKLHqtCd3Hk16oAH5Mq
+         /K9Q5eIM1MlPcNA3P/lbACLLvN8xTtI84K0tyQM/MoYpgtHeNt7Bx6lrsOy18XZ6VZPv
+         SJ9r9RixkVcP64wyL9s6Cer0aW08pSHa8xSapLOk1EGnjHHgzXz5OHq2gIST8ojWAptv
+         ONO+iQDS9TdOk0TCiy9Sb/cCqfc1N0ds3po9UnulByPyBJDwaBon11D1qQ6ZLtjt/Z9m
+         //wA==
+X-Gm-Message-State: ANoB5pk0ro243BGad96hcRze+/aAJyKszIhUW1zY+Wncclhsef0LrnfD
+        Ongky5rQZ9L+SguvqswjqUHCzw==
+X-Google-Smtp-Source: AA0mqf7vpoM/p1roR8SKJXHdDemXz3anj2sImLjc2Ea3xaf2sqNCO+JS7hjoMTCDlaijBDgrqDHsKA==
+X-Received: by 2002:a19:5049:0:b0:4b4:661a:1ce1 with SMTP id z9-20020a195049000000b004b4661a1ce1mr8858626lfj.136.1669288911199;
+        Thu, 24 Nov 2022 03:21:51 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d13-20020a056512368d00b0049496855494sm91047lfs.104.2022.11.24.03.13.31
+        by smtp.gmail.com with ESMTPSA id f20-20020a0565123b1400b004a46a9cebe2sm88679lfv.289.2022.11.24.03.21.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Nov 2022 03:13:31 -0800 (PST)
-Message-ID: <3cda9005-d7a5-56f0-d1d2-fd6c1cb36fc3@linaro.org>
-Date:   Thu, 24 Nov 2022 12:13:30 +0100
+        Thu, 24 Nov 2022 03:21:50 -0800 (PST)
+Message-ID: <fc2774de-22d3-0326-a438-c5e804837d77@linaro.org>
+Date:   Thu, 24 Nov 2022 12:21:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH V5 1/2] dt-bindings: firmware: qcom-scm: Add optional
- interrupt
+Subject: Re: [PATCH V5 2/2] firmware: qcom: scm: Add wait-queue handling logic
 Content-Language: en-US
 To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org
 Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
@@ -65,14 +64,15 @@ Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
         konrad.dybcio@somainline.org, robimarko@gmail.com,
         quic_gurus@quicinc.com, quic_rjendra@quicinc.com
 References: <20221123204615.25358-1-quic_sibis@quicinc.com>
- <20221123204615.25358-2-quic_sibis@quicinc.com>
+ <20221123204615.25358-3-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221123204615.25358-2-quic_sibis@quicinc.com>
+In-Reply-To: <20221123204615.25358-3-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,54 +82,84 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 23/11/2022 21:46, Sibi Sankar wrote:
 > From: Guru Das Srinagesh <quic_gurus@quicinc.com>
 > 
-> Add an interrupt specification to the bindings to support the wait-queue
-> feature.
+> When the firmware (FW) supports multiple requests per VM, multiple requests
+> from the same/different VM can reach the firmware at the same time. Since
+> the firmware currently being used has limited resources, it guards them
+> with a resource lock and puts requests on a wait-queue internally and
+> signals to HLOS that it is doing so. It does this by returning a new return
+> value in addition to success or error: SCM_WAITQ_SLEEP. A sleeping SCM call
+> can be woken up by an interrupt that the FW raises.
 
-Subject - this is qcom,scm, not qcom-scm.
+Just two nitpicks while browsing the code...
 
-
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-> 
-> v5:
-> - Pick up R-b
-> 
-> v4:
-> - Qualify bindings [Krzysztoff]
-> 
->  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> index 25688571ee7c..aea6e0c86a89 100644
-> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> @@ -73,6 +73,12 @@ properties:
->    '#reset-cells':
->      const: 1
+>  static int qcom_scm_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_scm *scm;
+>  	unsigned long clks;
+> -	int ret;
+> +	int irq, ret;
 >  
-> +  interrupts:
-> +    description:
-> +      The wait-queue interrupt that firmware raises as part of handshake
-> +      protocol to handle sleeping SCM calls.
-> +    maxItems: 1
+>  	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
+>  	if (!scm)
+> @@ -1399,9 +1486,29 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	platform_set_drvdata(pdev, scm);
+> +
+>  	__scm = scm;
+>  	__scm->dev = &pdev->dev;
+>  
+> +	spin_lock_init(&__scm->waitq.idr_lock);
+> +	idr_init(&__scm->waitq.idr);
+> +	init_completion(&__scm->waitq.waitq_comp);
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq < 0) {
+> +		if (irq != -ENXIO)
+> +			return irq;
+> +	} else {
+> +		ret = devm_request_threaded_irq(__scm->dev, irq, NULL, qcom_scm_irq_handler,
+> +						IRQF_ONESHOT, "qcom-scm", __scm);
+> +		if (ret < 0) {
+> +			dev_err(scm->dev, "Failed to request qcom-scm irq: %d\n", ret);
+> +			idr_destroy(&__scm->waitq.idr);
+> +			return ret;
 
-Which devices have interrupts?
+return dev_err_probe().
 
-We talked about it here:
-https://lore.kernel.org/all/2464d90f-64e9-5e3c-404b-10394c3bc302@quicinc.com/
-and here:
-https://lore.kernel.org/all/c20edd0d-7613-5683-60e7-54317cac6e0b@linaro.org/
+> +		}
+> +	}
+> +
+>  	__get_convention();
+>  
+>  	/*
+> @@ -1417,6 +1524,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  
+>  static void qcom_scm_shutdown(struct platform_device *pdev)
+>  {
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&__scm->waitq.idr_lock, flags);
+> +	idr_destroy(&__scm->waitq.idr);
+> +	spin_unlock_irqrestore(&__scm->waitq.idr_lock, flags);
+> +
+>  	/* Clean shutdown, disable download mode to allow normal restart */
+>  	if (download_mode)
+>  		qcom_scm_set_download_mode(false);
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index db3d08a01209..323cb49d4976 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -60,6 +60,10 @@ struct qcom_scm_res {
+>  	u64 result[MAX_QCOM_SCM_RETS];
+>  };
+>  
+> +struct qcom_scm;
+> +extern struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx);
+> +extern int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending);
 
-But I still don't get which devices support it and which do not.
-
-
-BTW:
-https://lore.kernel.org/all/20221122092345.44369-2-krzysztof.kozlowski@linaro.org/
-
+No need for externs for new entries.
 
 Best regards,
 Krzysztof
