@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D58C0637F0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:43:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78AB1637F12
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:43:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbiKXSns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 13:43:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58334 "EHLO
+        id S229769AbiKXSnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 13:43:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbiKXSnr (ORCPT
+        with ESMTP id S229683AbiKXSns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 13:43:47 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25BC4FA715
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:46 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id a7so2819664ljq.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:46 -0800 (PST)
+        Thu, 24 Nov 2022 13:43:48 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE5DF8840
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:47 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id b3so3706136lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2nRilXNMejATHqCRSqUdhVZuc5XWTnwhyCKI7xkZLMk=;
-        b=U+Q/ZGQRh+ciARUPs8rBICHV5ApE1U7SEvrBSdJ5qjUPyWHlGhFBnvKX5TmLQmc0Y8
-         YbmHuFewD5VFAnPFA4LcvDanVlN9rArajfpN+SlVHKiVmL4I9cE2FhapmeV/+9vHHreS
-         JeRiDsXfG+/EZOluHIsbKXGsZ7XdiBltUZLlc20aY02lp7I4n9+Vo/dOiKobzHd34uKy
-         GirAXRa7vnrBNr4tmpY3mQTi4MhSOFl9nJKfEflTgJ3zu5MYx/lbo2/uT6aP7ywWjPw1
-         yqZR460mxQYiYzlKfdfg1DzmA7K1mSZ3pLZH24CtTe+iug5L7glEkMsUdVlcwy4eWof2
-         l5yg==
+        bh=w7fAfdGZJ4QQ0eAIGZU6uPWE4+p29HD6e1RtlTmr/Hk=;
+        b=KwaG+BwTeIrxnQVvMPAylzBNcKGaHh2obrbXAQfyROv8ySuEeR1leKfufof4yzbKBZ
+         cv6P8aIYOdD+I8uZiKyVEZXMaE2rvMgeNLuR/nQNRAa4ledJ2JWYdiBaZThgmS1u7nQb
+         mZ6Wbz7mNt+TtQ58tpGQZeuY0tzmQncevopsdcTKVk6yRX2IBiE/yPk/ZCu6vHGF9P0Z
+         o1Wq/haHociLwqBMtth8Q8WyLI3wA/lI32yJHdIsJsAqLM7T2CUoIQlMpRBJ7TPnF1SF
+         nBbgdFQMZQQ2S59ex5qe9yjMbqmzhzBTKF+FDdqsOqw9ox9e41XRCqhuOUzFFdn6NRN5
+         yHdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2nRilXNMejATHqCRSqUdhVZuc5XWTnwhyCKI7xkZLMk=;
-        b=uJ4jnlaI5ArAfYDyU3+lOx229zaAoFuThBDEvq+aWv0wTzjMx0lb8vOwcJ8/ABv2cI
-         MCD2icjj2JR203R3N6HsD3Dl+9zTusBuFZyAijMB0MueBMni4cVkaAC79gz6DXPmZHDh
-         lOp+7+0vKfO1JykjiSCN5B3R5Ip1oabPAiSc73GRJ0UNaUTZXf5o+8WPamPFu+1pVVDx
-         H44NpZtje+DZUyk4Jfu9iYOUqUWN6sNWA7L2W1cpthmMpig94H2vdck08yCA9QK/6mNv
-         NYkGyUyTCb1Jk6DzErsMObZgmJXG0CX7n3LS6LK2fm1oWpaBAScpNQ7OwQcPNT4Fq29m
-         xcfA==
-X-Gm-Message-State: ANoB5pmBHcr/WagAoQoNOfoaYFYyFeELESjr5RtHbybQx7okCO6o6Fve
-        yvLB5jHv5iFjCQz7yGG4TGXmTg==
-X-Google-Smtp-Source: AA0mqf5bLcnGSFfnThKEl7E9M7Oag927/C28/iLbqEtG5ebaSXT1G6t4nwsznoEkOEdXPf1v8oZdtw==
-X-Received: by 2002:a05:651c:213:b0:277:e01:610e with SMTP id y19-20020a05651c021300b002770e01610emr10427702ljn.181.1669315424541;
-        Thu, 24 Nov 2022 10:43:44 -0800 (PST)
+        bh=w7fAfdGZJ4QQ0eAIGZU6uPWE4+p29HD6e1RtlTmr/Hk=;
+        b=qn3k904dIZ2VG+2Rtws93FJVvjeli6Yl/gCGFbk5ovHPzI/n3LpOYfORwKEj2QKG2y
+         Gs7B9oSic3zWEw9Z4Mco+ompIFgNZWjvu/eaEIrb2rIVUfZQsw3stgWl/zJXQfW8jF+V
+         numDAWXgcr2Gor4b0mT58kYPOAghqia+lLM931xsbqYXZvxT5vlhTfge3PVTeO+E1bIm
+         vBSGSLdtWC+hEonwVoxEPeNmqySZIITBoxbrs+w5vu8bx55/pe7qZoNFleFsrIluiWF2
+         YahXw4XZrXm7o+kUX0SO0T0rjgMHCBCxyFJfhLCBEEZtAK38P3dnF/a2maIJh1K7gFzd
+         H0dw==
+X-Gm-Message-State: ANoB5pn6I3yKivQZDLI7txyPHERvbqkO3oPJWh0HXRpfAO98G7I3zfkG
+        hPSI8QDQJte5mnhhFNOCjQHi1DycJ3mPgeEO
+X-Google-Smtp-Source: AA0mqf4n6MC+K6mEwOwYA68QWwZSJvaV1aQhiNG9r04ux2Jbn/LZYoRnb0/wyh92uuRu6jaZUOOZ6w==
+X-Received: by 2002:ac2:47ec:0:b0:4a7:8b6b:2320 with SMTP id b12-20020ac247ec000000b004a78b6b2320mr4818704lfp.267.1669315425554;
+        Thu, 24 Nov 2022 10:43:45 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.43
+        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 10:43:44 -0800 (PST)
+        Thu, 24 Nov 2022 10:43:45 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 01/15] arm64: dts: qcom: msm8996: drop address/size cells from smd-edge
-Date:   Thu, 24 Nov 2022 19:43:19 +0100
-Message-Id: <20221124184333.133911-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 02/15] arm64: dts: qcom: qcs404: align CDSP PAS node with bindings
+Date:   Thu, 24 Nov 2022 19:43:20 +0100
+Message-Id: <20221124184333.133911-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
 References: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
@@ -78,9 +78,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The smd-edge node does not have children with unit addresses:
+The QCS404 CDSP remote processor can be brought to life using two
+different bindings:
+1. qcom,qcs404-cdsp-pas - currently used in DTSI.
+2. qcom,qcs404-cdsp-pil.
 
-  qcom/msm8996-oneplus3.dtb: remoteproc@9300000: smd-edge: '#address-cells', '#size-cells' do not match any of the regexes: 'pinctrl-[0-9]+'
+Comment out the properties related to qcom,qcs404-cdsp-pil
+(qcom,halt-regs, resets and additional clocks), to silence DT schema
+warnings.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
@@ -89,23 +94,66 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Changes since v2:
 1. New patch.
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 46 +++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index d31464204f69..cc65f52bb80f 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3426,8 +3426,7 @@ smd-edge {
- 				mboxes = <&apcs_glb 8>;
- 				qcom,smd-edge = <1>;
- 				qcom,remote-pid = <2>;
--				#address-cells = <1>;
--				#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index a5324eecb50a..78a8ab29a0a9 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -485,27 +485,31 @@ remoteproc_cdsp: remoteproc@b00000 {
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+ 
+-			clocks = <&xo_board>,
+-				 <&gcc GCC_CDSP_CFG_AHB_CLK>,
+-				 <&gcc GCC_CDSP_TBU_CLK>,
+-				 <&gcc GCC_BIMC_CDSP_CLK>,
+-				 <&turingcc TURING_WRAPPER_AON_CLK>,
+-				 <&turingcc TURING_Q6SS_AHBS_AON_CLK>,
+-				 <&turingcc TURING_Q6SS_AHBM_AON_CLK>,
+-				 <&turingcc TURING_Q6SS_Q6_AXIM_CLK>;
+-			clock-names = "xo",
+-				      "sway",
+-				      "tbu",
+-				      "bimc",
+-				      "ahb_aon",
+-				      "q6ss_slave",
+-				      "q6ss_master",
+-				      "q6_axim";
+-
+-			resets = <&gcc GCC_CDSP_RESTART>;
+-			reset-names = "restart";
+-
+-			qcom,halt-regs = <&tcsr 0x19004>;
++			clocks = <&xo_board>;
++			clock-names = "xo";
 +
- 				apr {
- 					power-domains = <&gcc HLOS1_VOTE_LPASS_ADSP_GDSC>;
- 					compatible = "qcom,apr-v2";
++			/*
++			 * If the node was using the PIL binding, then include properties:
++			 * clocks = <&xo_board>,
++			 *          <&gcc GCC_CDSP_CFG_AHB_CLK>,
++			 *          <&gcc GCC_CDSP_TBU_CLK>,
++			 *          <&gcc GCC_BIMC_CDSP_CLK>,
++			 *          <&turingcc TURING_WRAPPER_AON_CLK>,
++			 *          <&turingcc TURING_Q6SS_AHBS_AON_CLK>,
++			 *          <&turingcc TURING_Q6SS_AHBM_AON_CLK>,
++			 *          <&turingcc TURING_Q6SS_Q6_AXIM_CLK>;
++			 * clock-names = "xo",
++			 *               "sway",
++			 *               "tbu",
++			 *               "bimc",
++			 *               "ahb_aon",
++			 *               "q6ss_slave",
++			 *               "q6ss_master",
++			 *               "q6_axim";
++			 * resets = <&gcc GCC_CDSP_RESTART>;
++			 * reset-names = "restart";
++			 * qcom,halt-regs = <&tcsr 0x19004>;
++			 */
+ 
+ 			memory-region = <&cdsp_fw_mem>;
+ 
 -- 
 2.34.1
 
