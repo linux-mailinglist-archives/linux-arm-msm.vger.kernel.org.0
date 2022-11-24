@@ -2,116 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B873636F6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 01:49:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE01E6370DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 04:14:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbiKXAtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Nov 2022 19:49:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
+        id S229531AbiKXDO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Nov 2022 22:14:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229874AbiKXAtN (ORCPT
+        with ESMTP id S229590AbiKXDOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Nov 2022 19:49:13 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B701055B2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 16:48:27 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id e11so231576wru.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Nov 2022 16:48:27 -0800 (PST)
+        Wed, 23 Nov 2022 22:14:24 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15A4377202;
+        Wed, 23 Nov 2022 19:14:23 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id 9so471732pfx.11;
+        Wed, 23 Nov 2022 19:14:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fJAlFZkHe4ktdw1E/cS67Ub6i2g6utdoyS6sjNqUgDg=;
-        b=BmMvNzdp4Xr4It8CS2XqOsQ0/1pysRn+1u1rAugAEK5HREZVFB7vvN4R59kbSwCMIn
-         z7VsyDiQMa30nyPISddzck50OSKNyKCEyi9+LEFtWgFgaJraxZ8XHTtOtcPBBOPexMJz
-         3VlirAd7VrzLNDbK+LHzCwvuY0+Pvt1clDQ+1YfsxYA6WNsEyy6uPcnATNbEtUe1qsju
-         1zDQWMq1i2xavL48Hunj9aWqU9S3KDz7OKVg/61HjKG/4HB7bSG2fi5dAJfP9majhq84
-         94gupsXkuxRex8D9lkr9O0Gg9V9E6MaiuCOxXbQBh5ecClvbtQC2nCxXqH8XY0zCnEoo
-         HZQA==
+        bh=7eV9Vty9UioHPXG+7Z49fEwX2mXa79xcuBVejyPSsgU=;
+        b=KxZSfqXlnCWaBcXEPM+UKWwas6eD5rxuXSaY2yeaKRo3uqckgZ2hsvy3Br3kA2pLXB
+         yUYySLxXqJUACOTku5Hoxhrtd+cAM0K5+WaHpPsYUM4iliPYWEsdF8T54JIiJYqoupZT
+         Zf6oeSe2PqWVGRCiLEfVSUwtTRuEo0et/4xGmf+6sXg+ghlz/RoopmNgG+1kl/x24VRu
+         MCaVAr5bONmI5yRTPnwzC8fwWlCSOIpy5AkFB9BGc0IpoVIFRHbANiikyuggGv72KzkW
+         2HAzfR9ou0xPb3GRPxpA0PLVoB4Di92AJARNq3tLlgteA22L9UpIc8uKizzAqeTgE3z5
+         fMJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fJAlFZkHe4ktdw1E/cS67Ub6i2g6utdoyS6sjNqUgDg=;
-        b=sim+SRoFc9tg6wvVJt6PSwTh6n+v45cgXYIZYVAXQM4XionKaPDVb+YCUCB4kTTWbm
-         kNLkvMdZnTCDfVJCUds42VATQrW3X91qWz1gWRyQOu537u1DPWjK6mWfr57YkJPCYhFd
-         VqAct8ZgFoty+E65yjgdeQwbxluNUAxzXod8u3MaZHGgELYi1mggzGzn2mxB4chQCSIK
-         EfNLFS/MGTK0lKaOpetJbqRt791s7uc28SodWHA2hMs5gqfetNbKIH8T0JrRSRydNxtR
-         q3qXPFJO661qDe2SfO4/hjE0lyI3/tXtjkgBolYkdikbXw0rNm+B9uc1O67iM6p2cz4Z
-         iHaw==
-X-Gm-Message-State: ANoB5pmL+60hmUEtOcjIlf07GhR6y5OGEcIpXn7oyk5Ii9SFSp9jUpik
-        lpGe57KcrkwUf5OD/dUokU17Cr5agkNruQ==
-X-Google-Smtp-Source: AA0mqf409kRCLs15fCT6QuF9r3/Y5UfFTpHhWtaSGVJ2ihs3KhdXLmuB8UNDqK9RXjsd3IYNETwofA==
-X-Received: by 2002:adf:e2ca:0:b0:22e:4ac2:aaa5 with SMTP id d10-20020adfe2ca000000b0022e4ac2aaa5mr18599351wrj.455.1669250906331;
-        Wed, 23 Nov 2022 16:48:26 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id n38-20020a05600c3ba600b003c6bbe910fdsm5245076wms.9.2022.11.23.16.48.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 16:48:25 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
-        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
-        swboyd@chromium.org, konrad.dybcio@somainline.org,
-        agross@kernel.org, andersson@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH v3 18/18] arm64: dts: qcom: sm8250: Add compat qcom,sm8250-dsi-ctrl
-Date:   Thu, 24 Nov 2022 00:48:01 +0000
-Message-Id: <20221124004801.361232-19-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221124004801.361232-1-bryan.odonoghue@linaro.org>
-References: <20221124004801.361232-1-bryan.odonoghue@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7eV9Vty9UioHPXG+7Z49fEwX2mXa79xcuBVejyPSsgU=;
+        b=ivCVuZXiN9ANY4Zi6vsvmBlORbUhxls7OZZ5LiyKcXw2AGF2ucpix0XYC65mcpsXyG
+         B4LRjRdYE35Lenbpz9+f74ILOiWV130qs/AzPQqefWqakcytiFqPqz/3tKikfAuPM43r
+         DuiA48L92NjnNeQRDVRk2JhTwxk8CGVZPXMw4iLK3QCD4FC1/Qcjq2uw8JptmA84f5GP
+         SyyZKe6r63ZxOtPDHZ7Uy4D69bfRU2aV/2ZrIZgLj8oQ7QItOjftTdFDevB1L1F80cNe
+         G5ifwuopnfUlTyTP4hdfR/b1gTwDTKON7HzVGVOovwzxGZQdpTAI2IRw5bZ6qBuU0m8s
+         AidQ==
+X-Gm-Message-State: ANoB5pmiUYcpcdG3V+YhX1jFGvC40C2E+YNzh4o/6epOV89c44gySE4d
+        HbH4oAbE4XHP1Q9zNcrA5Kw=
+X-Google-Smtp-Source: AA0mqf7CrYVYWYFErY6Otr1YcZCOCs7kgEP8DZLXoU1xgw4pN2mYtw/mEvG2GJEWvcW1/Ze6OSf/eQ==
+X-Received: by 2002:a63:155e:0:b0:476:95a8:de91 with SMTP id 30-20020a63155e000000b0047695a8de91mr9916512pgv.102.1669259662477;
+        Wed, 23 Nov 2022 19:14:22 -0800 (PST)
+Received: from localhost ([2406:7400:61:64d5:6ced:a13c:ba7b:305b])
+        by smtp.gmail.com with ESMTPSA id s23-20020aa78bd7000000b0055f209690c0sm13463535pfd.50.2022.11.23.19.14.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Nov 2022 19:14:21 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 24 Nov 2022 08:44:15 +0530
+Message-Id: <COK75VDFXZSZ.TLR6MVN7TUMN@skynet-linux>
+Cc:     <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+Subject: Re: [PATCH v2 0/3] dmaengine: Add support for immediate commands
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Vinod Koul" <vkoul@kernel.org>
+X-Mailer: aerc 0.13.0
+References: <20221027051429.46593-1-sireeshkodali1@gmail.com>
+ <Y2UIS7P0alvqT4jn@matsya> <CO97J91UP8IF.23GNHUUM2KTVH@skynet-linux>
+ <Y3FudBqc1vQ8fEgU@matsya>
+In-Reply-To: <Y3FudBqc1vQ8fEgU@matsya>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add silicon specific compatible qcom,sm8250-dsi-ctrl to the
-mdss-dsi-ctrl block. This allows us to differentiate the specific bindings
-for sm8250 against the yaml documentation.
+On Mon Nov 14, 2022 at 3:53 AM IST, Vinod Koul wrote:
+> On 11-11-22, 10:42, Sireesh Kodali wrote:
+> > On Fri Nov 4, 2022 at 6:10 PM IST, Vinod Koul wrote:
+> > > On 27-10-22, 10:44, Sireesh Kodali wrote:
+> > > > The IPA v2.x block, found on some older Qualcomm SoCs, uses BAM DMA=
+ to
+> > > > send and receive packets from the AP. It also uses BAM to receive
+> > > > commands from the AP (and possibly the modem). These commands are
+> > > > encoded as "Immediate Commands". They vary from regular BAM DMA
+> > > > commands. Adding support for immediate commands is trivial, but req=
+uires
+> > > > also adding Immediate Commands to the dmaengine API, which is what =
+this
+> > > > patch series does.
+> > >
+> > > Can you explain a bit more. I understand you need "Immediate Commands=
+"
+> > > but am really reluctant to add another interface to support a specifi=
+c
+> > > use case
+> > >
+> >=20
+> > Apologies for the delayed response
+> >=20
+> > BAM supports both regular commands, and "immediate commands". Currently=
+,
+> > commands are used by the Qualcom NAND chip driver, while "immediate
+> > commands" are intended to be used by the (yet to be mainlined) IPA
+> > driver. From the BAM driver perspective, both immediate and regular
+> > commands are simply a matter of setting the appropriate flag in the
+> > descriptor. I don't have access to the documentation on BAM to know
+> > exactly how these two modes differ, however I do know they are not
+> > interchangable. If a different API is suggested, I can change the
+> > implementation as needed.
+>
+> Ok, can you please explain what is meant by 'regular' cmd and
+> 'immediate', lets see what is required here
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I unfortunately don't have access to any documentation that explains the
+difference between the two. All I know is that IPA requires using
+immediate commands, while the QCOM NAND driver requires using 'regular'
+commands.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 0d47c5b7148e1..8a73f1b487043 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3528,7 +3528,8 @@ opp-460000000 {
- 			};
- 
- 			dsi0: dsi@ae94000 {
--				compatible = "qcom,mdss-dsi-ctrl";
-+				compatible = "qcom,sm8250-dsi-ctrl",
-+					     "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
- 				reg-names = "dsi_ctrl";
- 
-@@ -3619,7 +3620,8 @@ dsi0_phy: dsi-phy@ae94400 {
- 			};
- 
- 			dsi1: dsi@ae96000 {
--				compatible = "qcom,mdss-dsi-ctrl";
-+				compatible = "qcom,sm8250-dsi-ctrl",
-+					     "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae96000 0 0x400>;
- 				reg-names = "dsi_ctrl";
- 
--- 
-2.38.1
+Regards,
+Sireesh
+>
+> --=20
+> ~Vinod
 
