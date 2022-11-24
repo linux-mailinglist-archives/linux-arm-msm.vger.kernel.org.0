@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F94637F17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D77A637F1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 19:44:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiKXSnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 13:43:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58446 "EHLO
+        id S229862AbiKXSn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 13:43:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbiKXSnu (ORCPT
+        with ESMTP id S229544AbiKXSnv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 13:43:50 -0500
+        Thu, 24 Nov 2022 13:43:51 -0500
 Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88283113712
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:49 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id r12so3717582lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:49 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6EF129C05
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:50 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id j16so3651542lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 10:43:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4/vhQQuptZXZHh0zdNwc0t76Wroztku6hKJUXWw2b90=;
-        b=F0ehGTnybTIURATNH1Et69zsXPiT7yvKob/MSkGUieowc+fK9mDM1kmqWE/f+jzlxY
-         cKROonksYgRIxIyZnbChORTTYfoIpGXib4+9tB3xwit6tRuKYw+Jxl83TrRckG/Mlomm
-         M5XgDuR+hdZc1x3j9V3xFR2PBk2FxUuMZEass9rYIFeHSaqjHs1/stQpj1jCS0QhFbPy
-         ZR+cAc+4u0khnc163GvP8IPjvUxaFzTHuLvVPCjqWPMDlEy0yAVWQhPrgH9W8KX7+zdM
-         EtYCaan/HtwHkUhLkJr2ic4dtYZ3O86drsIqKfBbio4S++u8ySKMh9T1gjTig9osa8AF
-         MFdQ==
+        bh=lEQC5O/KyRkWXHWn2kAQcPwkvnFfret4cFEbPNTIXf8=;
+        b=xaPVbvted/OoZuAvvNKLO4MsbnShtocpbMHJLqCnCWyaTlmwwSM69jG2A1tGfqSxbO
+         LdXHOs9MwV++ii6HW4bYfnMdPBuiB3HTMRynYkptxgegrVdh7rvzXmlKLNS20LrCIbha
+         RQdN6FyIIsnzB1e3t1/7gJ6XzAD4R1hu8RNGqmz9vZl64DvecGSkixYP2Ax2aaXmkUeu
+         RhDtkXan5ogKW5ESz1hgT4OjJ96x5a1Wgl2XBugtBRXOWOo3xddhNfFf2MoqZnxs3Lx9
+         X9EYqzvkkp1lb04qZ//KIVyauM5ahOiawMAzCYfUgOM0mkWnL1cdj9mnO8S7wkoR9rmd
+         vgJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4/vhQQuptZXZHh0zdNwc0t76Wroztku6hKJUXWw2b90=;
-        b=S8HR4jES+oehJgCWqT3jLTr6BzaMsjI5r2xU7lV8CDeXMPueOCUs4am6jge9AXCc0S
-         o2ikre+cw2xbZpFPvX7cRCbR9rIFsfAtJ5nNdIc+ABzHJHleAqnNTFSPrVWDEtdaqrx+
-         2Oi17QQtgDD/JPzhyD/ta5jH2n4YHWtUKmP9Fx0CLfWxrZU6SY9sdWz1RaIewRsY89Zi
-         bT2FdmwIn5q/aWbQvttngE3jWwKqbjrlTjP58nr+NAG/aDnEvGjYzxkYBzKomP+EE3by
-         8/kdGe8olW2FRqY2c7o7uQ07x61HjOk2+otdrS5knNIWpSXbhYuoQsKc1j5FtzOQdrhQ
-         m4zQ==
-X-Gm-Message-State: ANoB5pkSlbweTbGO5wYPoEgoxtUddCzpv1g8wad65PT6BskYKyxmDR37
-        VM0X/sRwSx7KWpJwnY+Z2S0WGKrcBHE/PX38
-X-Google-Smtp-Source: AA0mqf70NV4fY9MDkXnbT1QFnxFA72Ba+rk+aWviv+oWdptO30FXkMIiNfL4y1HOPjVaO3X2Oq84vg==
-X-Received: by 2002:a19:5e01:0:b0:4a2:2b5d:b95d with SMTP id s1-20020a195e01000000b004a22b5db95dmr11129078lfb.589.1669315427894;
-        Thu, 24 Nov 2022 10:43:47 -0800 (PST)
+        bh=lEQC5O/KyRkWXHWn2kAQcPwkvnFfret4cFEbPNTIXf8=;
+        b=e8V0bD0WkAKeo4PgrrWsnoUUtRumBinIjgq7Xzz7lU7/mNGuCOZpK1BIXlh4nx7J24
+         X0zm8kumqQRBT0YiNTOJlv9OqtwM8tU0zMIe/KR3zmbEBUGJvuXDMANaU1/1EpycQQQt
+         +jqdpj4/EKKrh7/N19rmkj+hgrd51nFHWK9112PQoXvDYOOKWD/HB5ZsMkwW9ltINsXZ
+         S9FilwVLx/BxYpXYyoWRkMln0kKDIXo9BrnoJ+1fXgK2virRiWqlN10VQz0OMlvDtZ+G
+         6dXcDVoZJ6+7rlqvNiddoxbq2azilXq+RCY5Za4ZkmolRsa5jEoJGrglybiLgQssTcLL
+         QvWA==
+X-Gm-Message-State: ANoB5pnrgCrBHUD6CUPPBvagIXQVVR6soKEdcwCUXwer8SSkxUtF6nck
+        8DA9AHsXWoTy2TXvZ2++p/MdPQ==
+X-Google-Smtp-Source: AA0mqf6JVg/AYXABCs9+QVo5yxJTB2c4c5NhBrVaHygfX1wkk/D8UauaycwNXUNIeQUidOOjBBG2Kw==
+X-Received: by 2002:a19:4943:0:b0:4b4:ec76:17d with SMTP id l3-20020a194943000000b004b4ec76017dmr2630115lfj.63.1669315428919;
+        Thu, 24 Nov 2022 10:43:48 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.46
+        by smtp.gmail.com with ESMTPSA id v7-20020a2ea607000000b0026e0434eb1esm159098ljp.67.2022.11.24.10.43.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 10:43:47 -0800 (PST)
+        Thu, 24 Nov 2022 10:43:48 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 04/15] arm64: dts: qcom: sc7280: align MPSS PAS node with bindings
-Date:   Thu, 24 Nov 2022 19:43:22 +0100
-Message-Id: <20221124184333.133911-5-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 05/15] dt-bindings: remoteproc: qcom,adsp: drop resets and qcom,halt-regs
+Date:   Thu, 24 Nov 2022 19:43:23 +0100
+Message-Id: <20221124184333.133911-6-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
 References: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
@@ -71,100 +71,203 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC7180 MPSS/MSS remote processor can be brought to life using two
-different bindings:
-1. qcom,sc7280-mpss-pas - currently used in DTSI
-2. qcom,sc7280-mss-pil
+Some remote processors (e.g. QCS404 CDSP, SC7180 MPSS/MSS) can be brought
+to life using two different bindings:
+1. PIL (Peripheral Image Loader)
+2. PAS (Peripheral Authentication Service)
 
-Move the properties related to qcom,sc7180-mss-pil (qcom,halt-regs,
-qcom,ext-regs, qcom,qaccept-regs, resets and additional clocks) to
-specific board using the PIL, to silence DT schema warnings.
+They still describe the same hardware - firmware load for remote
+processor - but use different methods to communicate with that
+processor.
+
+For these SoCs, the qcom,adsp.yaml bindings were describing the PAS
+method, however for easier customization of board DTS, the bindings
+combined additional properties from PIL: reset lines, qcom,halt-regs and
+additional clocks.  The devices and Linux kernel drivers, when
+instantiated as PAS, do not use these properties, so drop them from the
+bindings.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 ---
 
 Changes since v2:
-1. New patch.
+1. New patch
 ---
- .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 17 +++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi            | 16 ++--------------
- 2 files changed, 19 insertions(+), 14 deletions(-)
+ .../bindings/remoteproc/qcom,adsp.yaml        | 113 +-----------------
+ 1 file changed, 4 insertions(+), 109 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-index ad66e5e9db4e..bf522a64b172 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-@@ -22,11 +22,28 @@ mba_mem: memory@9c700000 {
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+index db9e0f0c2bea..e3e617315aef 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+@@ -61,11 +61,11 @@ properties:
  
- &remoteproc_mpss {
- 	compatible = "qcom,sc7280-mss-pil";
-+
-+	clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+		 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
-+		 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+		 <&rpmhcc RPMH_PKA_CLK>,
-+		 <&rpmhcc RPMH_CXO_CLK>;
-+	clock-names = "iface", "offline", "snoc_axi", "pka", "xo";
-+
- 	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
- 	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
- 	memory-region = <&mba_mem>, <&mpss_mem>;
- 	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
- 			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
-+
-+	resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
-+		 <&pdc_reset PDC_MODEM_SYNC_RESET>;
-+	reset-names = "mss_restart", "pdc_reset";
-+
-+	qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x8000 0x13000>;
-+	qcom,ext-regs = <&tcsr_2 0x10000 0x10004 &tcsr_1 0x6004 0x6008>;
-+	qcom,qaccept-regs = <&tcsr_1 0x3030 0x3040 0x3020>;
-+
- 	status = "okay";
- };
+   clocks:
+     minItems: 1
+-    maxItems: 8
++    maxItems: 2
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 448879d3d5cd..da3775677640 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2751,12 +2751,8 @@ remoteproc_mpss: remoteproc@4080000 {
- 			interrupt-names = "wdog", "fatal", "ready", "handover",
- 					  "stop-ack", "shutdown-ack";
+   clock-names:
+     minItems: 1
+-    maxItems: 8
++    maxItems: 2
  
--			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
--				 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
--				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
--				 <&rpmhcc RPMH_PKA_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "iface", "offline", "snoc_axi", "pka", "xo";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "xo";
+   interconnects:
+     maxItems: 1
+@@ -90,14 +90,6 @@ properties:
+       - const: stop-ack
+       - const: shutdown-ack
  
- 			power-domains = <&rpmhpd SC7280_CX>,
- 					<&rpmhpd SC7280_MSS>;
-@@ -2769,14 +2765,6 @@ remoteproc_mpss: remoteproc@4080000 {
- 			qcom,smem-states = <&modem_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
- 
--			resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
--				 <&pdc_reset PDC_MODEM_SYNC_RESET>;
--			reset-names = "mss_restart", "pdc_reset";
+-  resets:
+-    minItems: 1
+-    maxItems: 3
 -
--			qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x8000 0x13000>;
--			qcom,ext-regs = <&tcsr_2 0x10000 0x10004 &tcsr_1 0x6004 0x6008>;
--			qcom,qaccept-regs = <&tcsr_1 0x3030 0x3040 0x3020>;
+-  reset-names:
+-    minItems: 1
+-    maxItems: 3
 -
- 			status = "disabled";
+   cx-supply:
+     description: Phandle to the CX regulator
  
- 			glink-edge {
+@@ -135,18 +127,6 @@ properties:
+     items:
+       - const: stop
+ 
+-  qcom,halt-regs:
+-    $ref: /schemas/types.yaml#/definitions/phandle-array
+-    items:
+-      - items:
+-          - description: Phandle reference to a syscon representing TCSR
+-          - description: offsets within syscon for q6 halt registers
+-          - description: offsets within syscon for modem halt registers
+-          - description: offsets within syscon for nc halt registers
+-    description:
+-      Phandle reference to a syscon representing TCSR followed by the
+-      three offsets within syscon for q6, modem and nc halt registers.
+-
+   smd-edge:
+     $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
+     description:
+@@ -184,7 +164,9 @@ allOf:
+               - qcom,msm8996-slpi-pil
+               - qcom,msm8998-adsp-pas
+               - qcom,qcs404-adsp-pas
++              - qcom,qcs404-cdsp-pas
+               - qcom,qcs404-wcss-pas
++              - qcom,sc7180-mpss-pas
+               - qcom,sc7280-mpss-pas
+               - qcom,sc8180x-adsp-pas
+               - qcom,sc8180x-cdsp-pas
+@@ -238,60 +220,6 @@ allOf:
+             - const: xo
+             - const: aggre2
+ 
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,qcs404-cdsp-pas
+-    then:
+-      properties:
+-        clocks:
+-          items:
+-            - description: XO clock
+-            - description: SWAY clock
+-            - description: TBU clock
+-            - description: BIMC clock
+-            - description: AHB AON clock
+-            - description: Q6SS SLAVE clock
+-            - description: Q6SS MASTER clock
+-            - description: Q6 AXIM clock
+-        clock-names:
+-          items:
+-            - const: xo
+-            - const: sway
+-            - const: tbu
+-            - const: bimc
+-            - const: ahb_aon
+-            - const: q6ss_slave
+-            - const: q6ss_master
+-            - const: q6_axim
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sc7180-mpss-pas
+-    then:
+-      properties:
+-        clocks:
+-          items:
+-            - description: XO clock
+-            - description: IFACE clock
+-            - description: BUS clock
+-            - description: NAC clock
+-            - description: SNOC AXI clock
+-            - description: MNOC AXI clock
+-        clock-names:
+-          items:
+-            - const: xo
+-            - const: iface
+-            - const: bus
+-            - const: nav
+-            - const: snoc_axi
+-            - const: mnoc_axi
+-
+   - if:
+       properties:
+         compatible:
+@@ -520,39 +448,6 @@ allOf:
+           items:
+             - const: nsp
+ 
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,qcs404-cdsp-pas
+-    then:
+-      properties:
+-        resets:
+-          items:
+-            - description: CDSP restart
+-        reset-names:
+-          items:
+-            - const: restart
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sc7180-mpss-pas
+-              - qcom,sc7280-mpss-pas
+-    then:
+-      properties:
+-        resets:
+-          items:
+-            - description: MSS restart
+-            - description: PDC reset
+-        reset-names:
+-          items:
+-            - const: mss_restart
+-            - const: pdc_reset
+-
+   - if:
+       properties:
+         compatible:
 -- 
 2.34.1
 
