@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7772637B80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 15:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71ED4637B92
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 15:41:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbiKXOdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 09:33:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37632 "EHLO
+        id S229625AbiKXOlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 09:41:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbiKXOc7 (ORCPT
+        with ESMTP id S229599AbiKXOlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 09:32:59 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1C4776F1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 06:32:56 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j4so2865437lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 06:32:56 -0800 (PST)
+        Thu, 24 Nov 2022 09:41:53 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87163C5623
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 06:41:49 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id z24so2212856ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 06:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zYPcwuN0ixxBPz8vi1NczLJaDfU7Jd6IdhNMvi6HWb0=;
-        b=D5u8AgJcYgd5joOZvehXrdY4ax0HefmPst5qs2Ll24ByNjMvjqsM24UzcM0L+o2bid
-         P4VCmAsFX1QmnRolJ1Tg+FTWF4GbcWeyKmUZvi0vz0cIfhO/z1HjrwinN/QH0DAJfCq7
-         eFFtorRUmIZ54wbGWkjBY8derySIAwdBDtB67k8k+xo+b9gcMpbUETbsTLXR+3/g2/U0
-         6Wc+XqlOUCs3t8AbW7C3kt7N4uVgdurS6xudUx46ATHi2J0GXrw3sxBBNIKNqMrc9TDF
-         70lhe03Q/wiT1N/TpkFdcSKgVS8TAwtOYVWkEh8P+D1AO/IyZSTX4QG591EtepYD8ET2
-         97CQ==
+        bh=1501m/pV3I2YFjC6545ugxV+pZKwmEXspIUwDQHylu8=;
+        b=QviQSPMY7NLByd4ymW67yvSNaKAStoNc02Y22x30l3KGFw4xdTJMiKBVtwDd3q6Vuk
+         9wJpx0MyBFxvWQfs6hqMwBe7c7NBRXzorNRyl/macmEr/+fJFj+kk5SHn/50hOpKmMBj
+         OJwoouFRr1ZVKJkxCpGnkJOUysCEONMbC4yTkZNfbCG6EMNk0i/HnCQQRsV32aSrym7E
+         2JILI8LnuWbCWlJd3EcQCRP9Nka2ek5w/xafyMu1jEvpuxX5JVAPVu8HGrdRf17EAtim
+         oBUc2/U+bHS/Hm4Tgt5dUQcKw+jCjlFOw6Ou+96sZKncvogQSRRSIjhSR/zIlrEwdTHb
+         kd5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYPcwuN0ixxBPz8vi1NczLJaDfU7Jd6IdhNMvi6HWb0=;
-        b=TM/dld700svXWOBiQBJ4LZm6Mpd+2uwrFhcYl/FlIiojOYJaduPaPJQNNNocgX7Vqj
-         T+j1cbMf/9J1HN8ZJ3DL8BjOFG3KNL+BT77UbyZEqxHMGG3IN782MlsMFK4JITNkuzk8
-         1Or2kc1uAJsWcWCc36pWR+JN3s+/lER5uDupfAmTHCA+v7h8Ns4AXjaxBr4s8jfaTQc3
-         7jWkmheD6jGQmE6EVfe8bP+Y8B8Y6UMsbRRaKMCplL+0lKskU1BYcAZjeXGcducSQ6+l
-         WQDrpadnH6D+0dd5NEbzV9kzOebfxk1IrsbL/MitJGgaSc8xIxABOq6+Ju9X6xZIBTL6
-         whVw==
-X-Gm-Message-State: ANoB5pkfjwp+UwelvcmBwLCxNS0+Pom+SVD6gm54Aue9mMzV5gtqNrLl
-        QSjFJQ8Nfi96uZQPOJxVoU0a/w==
-X-Google-Smtp-Source: AA0mqf4bKcysvolziy0EL4RTYdY5BJl7S8gZPvthaVbhBr9/keBrnI2vpdR0tAfaU7q/p4iv+lD0hw==
-X-Received: by 2002:ac2:44ac:0:b0:4b4:efec:b4c9 with SMTP id c12-20020ac244ac000000b004b4efecb4c9mr1963916lfm.276.1669300374556;
-        Thu, 24 Nov 2022 06:32:54 -0800 (PST)
+        bh=1501m/pV3I2YFjC6545ugxV+pZKwmEXspIUwDQHylu8=;
+        b=76w6yFfKboF2erh4cNyzPs2u9sDOzdymHRDD1ltGsGafdkFqXCE+tohx5q7y/dYJA4
+         sQkyY9/uGW/i8NdcCZuWt++DGmoAYBDKP0c/xC2fu+Hx/sEFxQvhglRb1hspR5SKYLdI
+         /mV5aOR0DFdfpJZRjduNPizHJAzXNJ6RpE2PsPjeB5+CsYiVCiYtSuVRHj1T1KjHqr43
+         5f4OpbsZXJ3TGhkD8T7jJVvAOz4E80tcBeRL/HjA0hBAytaaCJKyIgIHD+6l6bh6/K3x
+         jeQ7KzG6Mry3tLWZLQohe8ajx1bcvZjKDZw5b8TCkPSa3l0EfOuwCmXPVDTVUbebB77c
+         BfTg==
+X-Gm-Message-State: ANoB5plGe4EGpGXsJlgPXoTT1KlAGm2a8CeUbN5QrEEHemxL9af/gDIO
+        Rbj3ebhlEDE//t5SdMaWv1UOzg==
+X-Google-Smtp-Source: AA0mqf6Y7CzwQt31av4VbTZbcOC08FcUE2XeKcinCHJppnxp7nxmHNN7YEI/yuhAeMEfQapEqEQFOg==
+X-Received: by 2002:a2e:321a:0:b0:279:7974:4471 with SMTP id y26-20020a2e321a000000b0027979744471mr2540317ljy.495.1669300907861;
+        Thu, 24 Nov 2022 06:41:47 -0800 (PST)
 Received: from [192.168.1.101] (95.49.32.48.neoplus.adsl.tpnet.pl. [95.49.32.48])
-        by smtp.gmail.com with ESMTPSA id e8-20020ac24e08000000b00492ceda336fsm133145lfr.278.2022.11.24.06.32.50
+        by smtp.gmail.com with ESMTPSA id w10-20020ac25d4a000000b004a8f824466bsm138637lfd.188.2022.11.24.06.41.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Nov 2022 06:32:53 -0800 (PST)
-Message-ID: <9016a729-4c7a-4252-a667-3c6536eb2038@linaro.org>
-Date:   Thu, 24 Nov 2022 15:32:48 +0100
+        Thu, 24 Nov 2022 06:41:47 -0800 (PST)
+Message-ID: <16acb2c7-cbaf-b8e0-9f3e-846672b29e14@linaro.org>
+Date:   Thu, 24 Nov 2022 15:41:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix PCIe DMA coherency
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221124142501.29314-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH v2 02/10] arm64: dts: qcom: Add base SM8550 dtsi
 Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221124135646.1952727-1-abel.vesa@linaro.org>
+ <20221124135646.1952727-3-abel.vesa@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221124142501.29314-1-johan+linaro@kernel.org>
+In-Reply-To: <20221124135646.1952727-3-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,98 +81,257 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 24.11.2022 15:25, Johan Hovold wrote:
-> The devices on the SC8280XP PCIe buses are cache coherent and must be
-> marked as such to avoid data corruption.
+On 24.11.2022 14:56, Abel Vesa wrote:
+> Add base dtsi for SM8550 SoC and includes base description of
+> CPUs, GCC, RPMHCC, UART, interrupt controller, TLMM, reserved
+> memory, RPMh PD, TCSRCC, ITS, IPCC, AOSS QMP, LLCC, cpufreq,
+> interconnect, thermal sensor, cpu cooling maps and SMMU nodes
+> which helps boot to shell with console on boards with this SoC.
 > 
-> A coherent device can, for example, end up snooping stale data from the
-> caches instead of using data written by the CPU through the
-> non-cacheable mapping which is used for consistent DMA buffers for
-> non-coherent devices.
-> 
-> Note that this is much more likely to happen since commit c44094eee32f
-> ("arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()")
-> that was added in 6.1 and which removed the cache invalidation when
-> setting up the non-cacheable mapping.
-> 
-> Marking the PCIe devices as coherent specifically fixes the intermittent
-> NVMe probe failures observed on the Thinkpad X13s, which was due to
-> corruption of the submission and completion queues. This was typically
-> observed as corruption of the admin submission queue (with well-formed
-> completion):
-> 
-> 	could not locate request for tag 0x0
-> 	nvme nvme0: invalid id 0 completed on queue 0
-> 
-> or corruption of the admin or I/O completion queues (malformed
-> completion):
-> 
-> 	could not locate request for tag 0x45f
-> 	nvme nvme0: invalid id 25695 completed on queue 25965
-> 
-> presumably as these queues are small enough to not be allocated using
-> CMA which in turn make them more likely to be cached (e.g. due to
-> accesses to nearby pages through the cacheable linear map). Increasing
-> the buffer sizes to two pages to force CMA allocation also appears to
-> make the problem go away.
-> 
-> Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-Looks like 8450 should also be like this, good catch!
+[...]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> +	reserved_memory: reserved-memory {
+> +		ranges;
+> +
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+#address-cells = <2>;
+#size-cells = <2>;
+ranges;
+
+
+> +
+> +		hyp_mem: hyp-region@80000000 {
+> +			reg = <0x0 0x80000000 0x0 0xa00000>;
+> +			no-map;
+> +		};
+> +
+
+> +
+> +		sdhc_2: mmc@8804000 {
+> +			compatible = "qcom,sm8550-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x0 0x08804000 0x0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+> +				 <&gcc GCC_SDCC2_APPS_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "iface", "core", "xo";
+> +			iommus = <&apps_smmu 0x540 0x0>;
+> +			qcom,dll-config = <0x0007642c>;
+> +			qcom,ddr-config = <0x80040868>;
+> +			power-domains = <&rpmhpd SM8550_CX>;
+> +			operating-points-v2 = <&sdhc2_opp_table>;
+> +
+> +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
+> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
+> +
+> +			/* Forbid SDR104/SDR50 - broken hw! */
+> +			sdhci-caps-mask = <0x3 0x0>;
+> +
+> +			status = "disabled";
+> +
+8450 needs `dma-coherent` there - I don't have any downstream for 8550
+to cross reference, could you check if this is the case here too?
+
+
+> +			sdhc2_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-19200000 {
+> +					opp-hz = /bits/ 64 <19200000>;
+> +					required-opps = <&rpmhpd_opp_min_svs>;
+> +				};
+> +
+> +				opp-50000000 {
+> +					opp-hz = /bits/ 64 <50000000>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +				};
+> +
+> +				opp-100000000 {
+> +					opp-hz = /bits/ 64 <100000000>;
+> +					required-opps = <&rpmhpd_opp_svs>;
+> +				};
+> +
+> +				opp-202000000 {
+> +					opp-hz = /bits/ 64 <202000000>;
+> +					required-opps = <&rpmhpd_opp_svs_l1>;
+> +				};
+> +			};
+> +		};
+> +
+> +		pdc: interrupt-controller@b220000 {
+> +			compatible = "qcom,sm8550-pdc", "qcom,pdc";
+> +			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
+> +			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
+> +					  <125 63 1>, <126 716 12>,
+> +					  <138 251 5>;
+> +			#interrupt-cells = <2>;
+> +			interrupt-parent = <&intc>;
+> +			interrupt-controller;
+> +		};
+> +
+> +		tsens0: thermal-sensor@c271000 {
+> +			compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c271000 0 0x1000>, /* TM */
+> +			      <0 0x0c222000 0 0x1000>; /* SROT */
+> +			#qcom,sensors = <16>;
+> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+> +		tsens1: thermal-sensor@c272000 {
+> +			compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c272000 0 0x1000>, /* TM */
+> +			      <0 0x0c223000 0 0x1000>; /* SROT */
+> +			#qcom,sensors = <16>;
+> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+> +		tsens2: thermal-sensor@c273000 {
+> +			compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c273000 0 0x1000>, /* TM */
+> +			      <0 0x0c224000 0 0x1000>; /* SROT */
+> +			#qcom,sensors = <16>;
+> +			interrupts = <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 642 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+> +		aoss_qmp: power-controller@c300000 {
+> +			compatible = "qcom,sm8550-aoss-qmp", "qcom,aoss-qmp";
+> +			reg = <0 0x0c300000 0 0x400>;
+> +			interrupt-parent = <&ipcc>;
+> +			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
+> +						     IRQ_TYPE_EDGE_RISING>;
+> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		sram@c3f0000 {
+> +			compatible = "qcom,rpmh-stats";
+> +			reg = <0x0 0x0c3f0000 0x0 0x400>;
+> +		};
+> +
+> +		spmi_bus: spmi@c400000 {
+> +			compatible = "qcom,spmi-pmic-arb";
+> +			reg = <0x0 0x0c400000 0x0 0x3000>,
+> +			      <0x0 0x0c500000 0x0 0x4000000>,
+> +			      <0x0 0x0c440000 0x0 0x80000>,
+> +			      <0x0 0x0c4c0000 0x0 0x20000>,
+> +			      <0x0 0x0c42d000 0x0 0x4000>;
+You use 0 and 0x0 inconsistently in reg. I propose to use 0 everywhere.
+
+
+> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> +			interrupt-names = "periph_irq";
+> +			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+> +			qcom,ee = <0>;
+> +			qcom,channel = <0>;
+> +			qcom,bus-id = <0>;
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <4>;
+> +		};
+> +
+
+[...]
+
+> +
+> +		pmu@24091000 {
+> +			compatible = "qcom,sm8550-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
+> +			reg = <0x0 0x24091000 0x0 0x1000>;
+> +			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
+> +			interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3>;
+> +
+> +			operating-points-v2 = <&llcc_bwmon_opp_table>;
+> +
+> +			llcc_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-0 {
+> +					opp-peak-kBps = <2086000>;
+> +				};
+Please insert a newline after each node.
+
+> +				opp-1 {
+> +					opp-peak-kBps = <2929000>;
+> +				};
+> +				opp-2 {
+> +					opp-peak-kBps = <5931000>;
+> +				};
+> +				opp-3 {
+> +					opp-peak-kBps = <6515000>;
+> +				};
+> +				opp-4 {
+> +					opp-peak-kBps = <7980000>;
+> +				};
+> +				opp-5 {
+> +					opp-peak-kBps = <10437000>;
+> +				};
+> +				opp-6 {
+> +					opp-peak-kBps = <12157000>;
+> +				};
+> +				opp-7 {
+> +					opp-peak-kBps = <14060000>;
+> +				};
+> +				opp-8 {
+> +					opp-peak-kBps = <16113000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		pmu@240b6400 {
+> +			compatible = "qcom,sm8550-cpu-bwmon", "qcom,msm8998-bwmon";
+> +			reg = <0x0 0x240b6400 0x0 0x600>;
+> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
+> +
+> +			operating-points-v2 = <&cpu_bwmon_opp_table>;
+> +
+> +			cpu_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-0 {
+> +					opp-peak-kBps = <4577000>;
+> +				};
+And here.
+
+> +				opp-1 {
+> +					opp-peak-kBps = <7110000>;
+> +				};
+> +				opp-2 {
+> +					opp-peak-kBps = <9155000>;
+> +				};
+> +				opp-3 {
+> +					opp-peak-kBps = <12298000>;
+> +				};
+> +				opp-4 {
+> +					opp-peak-kBps = <14236000>;
+> +				};
+> +				opp-5 {
+> +					opp-peak-kBps = <16265000>;
+> +				};
+> +			};
+> +		};
+> +
+
+The rest looks good!
 
 Konrad
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 27f5c2f82338..7748cd29276d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -854,6 +854,8 @@ pcie4: pcie@1c00000 {
->  				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <6>;
->  			num-lanes = <1>;
->  
-> @@ -951,6 +953,8 @@ pcie3b: pcie@1c08000 {
->  				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <5>;
->  			num-lanes = <2>;
->  
-> @@ -1046,6 +1050,8 @@ pcie3a: pcie@1c10000 {
->  				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <4>;
->  			num-lanes = <4>;
->  
-> @@ -1144,6 +1150,8 @@ pcie2b: pcie@1c18000 {
->  				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <3>;
->  			num-lanes = <2>;
->  
-> @@ -1239,6 +1247,8 @@ pcie2a: pcie@1c20000 {
->  				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <2>;
->  			num-lanes = <4>;
->  
