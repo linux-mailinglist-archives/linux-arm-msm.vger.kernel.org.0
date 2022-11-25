@@ -2,187 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F45E63863E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 10:29:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6934F638631
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 10:28:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbiKYJ3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 04:29:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45924 "EHLO
+        id S229901AbiKYJ2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 04:28:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbiKYJ2n (ORCPT
+        with ESMTP id S229924AbiKYJ23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 04:28:43 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 331C03AC16
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 01:28:40 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id vp12so7710062ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 01:28:40 -0800 (PST)
+        Fri, 25 Nov 2022 04:28:29 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA12E13DDF;
+        Fri, 25 Nov 2022 01:28:24 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id w79so3673991pfc.2;
+        Fri, 25 Nov 2022 01:28:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eDlDbAHR12BKCMIARhmBHpen1uRLAhjJaEci7K6+OM8=;
-        b=Y0/gjH7Z7VH4bu0X+rO60RMSq8bgcJ07Whg6hgXdtirNhC/MCzivcqnRAC0LKbbRXJ
-         MgtIMgwqYSfgg8yKHXpATNes6Il5oeHwQqW7qkGy3d3u2iRnId8iUEAXL2XJTUvwwSzc
-         GKOnqeMGs1LdBz2Q5KRWeQ43gPPBsGt+jSsK4C06uhJrP1XSv/a+4lLIQX0aUOINb6CN
-         6fzEa3vcI8V/S3i6MzblZmWZYhF0n7vpBSaeNl/xPHF7wubyFcVm56HlCP3SEoT2WGjJ
-         jP4nJpDYjt4WmNtNE7pWMnudbDGqwNoIHfZ72d4m1XkK/i/VOW1++f8Wl+abqSv5KR45
-         H6fg==
+        bh=gn2sizkMrneWFfSzYUQB5soJBl7mIdJiiFc0egNz5Zs=;
+        b=QsTVAa7JRtaXuFowmwy5i2eav7QNbidAg4ZI2AN96P8LbSM4r2EfZXICcTcTxDck4k
+         I/hJyMUfenMhrqYcQPe7meZL4ofu5fiQi2uKLEByWzGapBX2qmKAAns1gFdKtT50EhCo
+         Wh9jyVqg2pCPgLWMIJUbVLIHqrS9byxmd70vGoPmJMfqFRcgx9JbmCc4gqGEMSYnOx2s
+         HwynLvXlDqZMwQ28co+B7rA7cdAz034cs7o+bNsSUG1p9sBBYEslvTh/XgC/1KhDDj1m
+         Ly/ZaLGi68XMNvutGcYYPN1xJaIZgdCq67soSvO7yTr46HYdCaler8fmYqrEEl0cOdmb
+         6oQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eDlDbAHR12BKCMIARhmBHpen1uRLAhjJaEci7K6+OM8=;
-        b=5OE31wI6dcCnIVfexpnfd4v3HV2Dh9recSaDhnaMB/jxF9VtvRPOivr6F0pNMDqvjJ
-         PFBHdXiRV2Ra+C+znV/Z6s0ELavzanpkPNirYpUZEf+Fg1zn1DBJfvlqsH3mQNFbxK8Z
-         6V69dESQLxw2AInH94AcZBWKE78by5IH4dxRKGzg34lpL1xZbquMQMjuvIZ7QK/u4tzt
-         pByiivxHegV7kls08eJUqOAGClKrZTpqaNd9AcVKqajHz57zmeFy8BBieQXrSpNBxI7q
-         1kB8YXrk9nsdnyTRxjxcUfV0PWU2k8iL8irgmCeZXP3G6TIYOnxkHBDc+k7nVj2sEMIO
-         fw6A==
-X-Gm-Message-State: ANoB5pkWjWK6BSVLVcON3ilu+9isEVuC8EvQaoP684cxFTmUNnve/uoa
-        Gp46EgP/hMIj/x4R8ntafjuaa4x/pUTxpQ==
-X-Google-Smtp-Source: AA0mqf7oHl9+H293gFxLoBWl9XlcaihpEzinILW3YWYFjePNchpZGOt0bqS/jPIxrLU7CLPDeIzxTA==
-X-Received: by 2002:a17:906:1b48:b0:78d:a136:732b with SMTP id p8-20020a1709061b4800b0078da136732bmr15760264ejg.135.1669368518226;
-        Fri, 25 Nov 2022 01:28:38 -0800 (PST)
-Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id q10-20020a170906b28a00b007b47748d22fsm1329315ejz.220.2022.11.25.01.28.37
+        bh=gn2sizkMrneWFfSzYUQB5soJBl7mIdJiiFc0egNz5Zs=;
+        b=zPz84kR1TfHRJaQ50q18WJ5okueOsmofTVi96C6c1V0y2cwdI/++3f3CYuH5XwvKMt
+         a9sNojXDJ3yKlONWp2EsD45FbwniHUlLiWfjT1Hc8PGCO0At48kqlS+/gIQ2BEtc3giV
+         tccew0x93wkXPFjA93tDu45tqXDIsPlWDaol/hI6+LKkBMLeduCiqGiZpl/k+VSzTOQi
+         PSMm9ejhIdNfR+2PrRnlJVr+7Aj5+FOLyOY4jdUtiXCkl63HI/Fhxb5jZsaLRqd/1pNx
+         TBB3BNHUz8yGnlBT5xI3uiz8DG+Rldwk2vfsleVY6veN6mfg0DwAmnxGoyvL2Vf4EohH
+         22Lg==
+X-Gm-Message-State: ANoB5plr1qsrFuUnKC4cNCaFeSz2EvLNtkjZQpjhEMhKxk3Kr6Foep41
+        Wr48lpwZw9UdWCYELWko8cTC8kyyRLg=
+X-Google-Smtp-Source: AA0mqf50XZZ/soTHPNQbIvNJjXewcisXyQHI/CqiFiR3XoL8yz75ToMOhowDWc1u8gJaj5AMsJ+EbQ==
+X-Received: by 2002:a63:194f:0:b0:477:7db6:6d96 with SMTP id 15-20020a63194f000000b004777db66d96mr15349353pgz.458.1669368503761;
+        Fri, 25 Nov 2022 01:28:23 -0800 (PST)
+Received: from localhost.localdomain (2001-b400-e2d2-0afd-e841-8cc0-6431-915a.emome-ip6.hinet.net. [2001:b400:e2d2:afd:e841:8cc0:6431:915a])
+        by smtp.gmail.com with ESMTPSA id f68-20020a623847000000b0056c702a370dsm2613526pfa.117.2022.11.25.01.28.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 01:28:37 -0800 (PST)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org, Johan Hovold <johan@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
+        Fri, 25 Nov 2022 01:28:22 -0800 (PST)
+From:   Owen Yang <ecs.taipeikernel@gmail.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Gavin Lee <gavin.lee@ecs.corp-partner.google.com>,
+        Bob Moragues <moragues@google.com>,
+        Matthias Kaehlcke <mka@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abner Yen <abner.yen@ecs.corp-partner.google.com>,
+        Harvey <hunge@google.com>,
+        Owen Yang <ecs.taipeikernel@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFC PATCH v2 3/3] arm64: dts: qcom: sm6350: Use specific qmpphy compatible
-Date:   Fri, 25 Nov 2022 10:27:49 +0100
-Message-Id: <20221125092749.46073-3-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221125092749.46073-1-luca.weiss@fairphone.com>
-References: <20221125092749.46073-1-luca.weiss@fairphone.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: arm: qcom: Add zombie
+Date:   Fri, 25 Nov 2022 17:28:13 +0800
+Message-Id: <20221125172726.v2.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
+X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc7180 phy compatible works fine for some cases, but it turns out
-sm6350 does need proper phy configuration in the driver, so use the
-newly added sm6350 compatible.
+Add an entry in the device tree binding for sc7280-zombie.
 
-Because the sm6350 compatible is using the new binding, we need to
-change the node quite a bit to match it.
-
-This fixes qmpphy init when no USB cable is plugged in during bootloader
-stage.
-
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
 ---
-@Johan Hovold, in this patch there's also the question about cfg_ahb,
-power-domains but I'm also not happy about using the
-QMP_USB43DP_USB3_PHY define for the phy reference. Do you think it's a
-good idea to introduce e.g. QMP_USB3DP_USB3_PHY with the same value so
-it's essentially just an alias to the other?
 
-This series is tested on next-20221124 with next branch of linux-phy
-repo (commit bea3ce759b46) merged in.
+(no changes since v1)
 
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 46 +++++++---------------------
- 1 file changed, 11 insertions(+), 35 deletions(-)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 0f01ff4feb55..923c8bb7e5f8 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -11,6 +11,7 @@
- #include <dt-bindings/interconnect/qcom,sm6350.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-+#include <dt-bindings/phy/phy-qcom-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 1b5ac6b02bc5..46ec61e3dec3 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -595,6 +595,16 @@ properties:
+           - const: google,villager-sku512
+           - const: qcom,sc7280
  
-@@ -1119,50 +1120,25 @@ usb_1_hsphy: phy@88e3000 {
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
- 		};
- 
--		usb_1_qmpphy: phy@88e9000 {
--			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
--			reg = <0 0x088e9000 0 0x200>,
--			      <0 0x088e8000 0 0x40>,
--			      <0 0x088ea000 0 0x200>;
--			status = "disabled";
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+		usb_1_qmpphy: phy@88e8000 {
-+			compatible = "qcom,sm6350-qmp-usb3-dp-phy";
-+			reg = <0 0x088e8000 0 0x3000>;
- 
- 			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
- 				 <&xo_board>,
- 				 <&rpmhcc RPMH_QLINK_CLK>,
--				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
--			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+			clock-names = "aux", "cfg_ahb", "ref", "com_aux", "usb3_pipe";
- 
- 			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
- 				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
- 			reset-names = "phy", "common";
- 
--			usb_1_ssphy: usb3-phy@88e9200 {
--				reg = <0 0x088e9200 0 0x200>,
--				      <0 0x088e9400 0 0x200>,
--				      <0 0x088e9c00 0 0x400>,
--				      <0 0x088e9600 0 0x200>,
--				      <0 0x088e9800 0 0x200>,
--				      <0 0x088e9a00 0 0x100>;
--				#clock-cells = <0>;
--				#phy-cells = <0>;
--				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb3_phy_pipe_clk_src";
--			};
-+			#clock-cells = <1>;
-+			#phy-cells = <1>;
- 
--			dp_phy: dp-phy@88ea200 {
--				reg = <0 0x088ea200 0 0x200>,
--				      <0 0x088ea400 0 0x200>,
--				      <0 0x088eac00 0 0x400>,
--				      <0 0x088ea600 0 0x200>,
--				      <0 0x088ea800 0 0x200>,
--				      <0 0x088eaa00 0 0x100>;
--				#phy-cells = <0>;
--				#clock-cells = <1>;
--			};
-+			status = "disabled";
- 		};
- 
- 		dc_noc: interconnect@9160000 {
-@@ -1236,7 +1212,7 @@ usb_1_dwc3: usb@a600000 {
- 				snps,dis_enblslpm_quirk;
- 				snps,has-lpm-erratum;
- 				snps,hird-threshold = /bits/ 8 <0x10>;
--				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-+				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
- 		};
++      - description: Google Zombie (newest rev)
++        items:
++          - const: google,zombie
++          - const: qcom,sc7280
++
++      - description: Google Zombie with LTE (newest rev)
++        items:
++          - const: google,zombie-sku512
++          - const: qcom,sc7280
++
+       - items:
+           - enum:
+               - lenovo,flex-5g
 -- 
-2.38.1
+2.17.1
 
