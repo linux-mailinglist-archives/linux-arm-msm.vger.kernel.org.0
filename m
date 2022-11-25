@@ -2,95 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2F54638DAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 16:49:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95AF0638DCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 16:52:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbiKYPtv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 10:49:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37026 "EHLO
+        id S229641AbiKYPw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 10:52:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiKYPtu (ORCPT
+        with ESMTP id S229642AbiKYPwx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 10:49:50 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BAC23381;
-        Fri, 25 Nov 2022 07:49:49 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 54C8E6251A;
-        Fri, 25 Nov 2022 15:49:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8C2C433D7;
-        Fri, 25 Nov 2022 15:49:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669391388;
-        bh=J1n7A3Po/BvjIiR1JkMUhIHi/MIjb2B5HBeJvLmwlrc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IlJkXvd6UD0q9KHrp0K6eTAKTW+cDf93ng3pAFhU8yb2+8+Q2Xs0wtEAT6fCUkjj5
-         oZhNQoGestw7q/77t7S1TOKFWod64jyhVQzayoGxCppnVhIfn7WUkBl9Fh/Qa2NX2k
-         8nGl86ofw2ut2ByiUSDWTmrhXWVDljsV7RYZTltgGuLH/B4flQYbZnTGJrR02M4u++
-         g+2CSHQhFFq9GwUXKT0UWMTvG4D2u95+0tAt73qLX9FXLxRE5w+hy5hNq+ocm8pVE7
-         kEn6KL3kEcUENP0VM41/1pbKahH7k9fN+psf3fjR1BkdkwngmdBpPPezz+Al+vVqHt
-         EZZ65d3HUhF8Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oyax9-0006Zf-7R; Fri, 25 Nov 2022 16:49:23 +0100
-Date:   Fri, 25 Nov 2022 16:49:23 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Fri, 25 Nov 2022 10:52:53 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C99C2715E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 07:52:52 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id j16so7467971lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 07:52:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1S80mqqzZPV4x0fjfvSYuvzqcnujfLUcEw9LE2vdO30=;
+        b=rxTk+ofk5/kp/tBgvUncx34Wmy8PgkdH58ZnTcqVFqL6NiwtquGNdY9uMuSjTxWRU4
+         3ABUuer/n0skicY6HzPI/ItzipsC74K25KnLi71x6JCoC4olV7sXe815Frn+7irN2KBI
+         OggqKwajRyS7oiMjBW9sF+eQoLtbULqADkFczb69mTXl573T/acIro0SXY4bVxOVTFv+
+         IdDONAr3bVmK5L5A1DrmgAYz4xWZSK0YAuPR/ISkMJUCESleloB4Ra4PvliqpfJsRJJH
+         uqmhmgT/CxRAQT+y3ZBuqEXVDIaYHb9ATpEaCKoJyYFF+Er8bDb1d2j/scrgK6YtTPqM
+         nA9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1S80mqqzZPV4x0fjfvSYuvzqcnujfLUcEw9LE2vdO30=;
+        b=5D++yKbcjaMxyoHZNWAP73Lq1ptei+o2utKyJCAPlR68noDD3BcFm67UQ8ivgGRxTz
+         tktr9b6Uw82eo05QGSZ4Jch7MU0TZnuk95f+Vdqg8z/vg1x+f5AdFzV662/CUjP9VyKx
+         +xPBnzdPJdvM2yYfK+hftzukJ+tkj98eVkQTdzbtxekyRWy/X+B2YhDp+EEqmJvBxxij
+         ezpx6jHLhw8uEKQZI/crHPJ9iKDKTcTFdfyhfe3aYYf7N6aoSRyV0zXGmzHx/LE0O2pv
+         nNOjzGV0CcyYxRzt43OPLdxv2pDCnOuycWh9iveypVXTDCMol0uJo9pheS8N+gzbb3tL
+         Ektg==
+X-Gm-Message-State: ANoB5pkS8fogNHId9BqFi/1hkwc9j3wBMOZ6OOrVMd4yXtR10BVK57oC
+        Cgba9KQm3Sh5B/jj44ypOt7bqQH70j2X1Uti
+X-Google-Smtp-Source: AA0mqf6X/KnbJCFxPa7UnT2OxSIX0wk6JLemR+lPA+e4v/zQ+I1V5mQKQC1w//ayTYER8W7yYAXiIQ==
+X-Received: by 2002:a19:5e58:0:b0:4a7:5a63:71e1 with SMTP id z24-20020a195e58000000b004a75a6371e1mr6959397lfi.399.1669391570441;
+        Fri, 25 Nov 2022 07:52:50 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id t14-20020a05651c204e00b002778a76a3c3sm391488ljo.112.2022.11.25.07.52.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Nov 2022 07:52:50 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix PCIe DMA coherency
-Message-ID: <Y4DkA6Tbf9exhnL7@hovoldconsulting.com>
-References: <20221124142501.29314-1-johan+linaro@kernel.org>
- <20221125142625.GA9892@thinkpad>
- <Y4DUr7tVqnFT5HV9@hovoldconsulting.com>
- <20221125145336.GB9892@thinkpad>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v4 0/3] arm64: dts: qcom: sm8450-hdk: add sound support
+Date:   Fri, 25 Nov 2022 16:52:44 +0100
+Message-Id: <20221125155247.501203-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221125145336.GB9892@thinkpad>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 25, 2022 at 08:23:36PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Nov 25, 2022 at 03:43:59PM +0100, Johan Hovold wrote:
-> > On Fri, Nov 25, 2022 at 07:56:25PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Nov 24, 2022 at 03:25:01PM +0100, Johan Hovold wrote:
+Hi,
 
-> > I never claimed it would fix the problem, I explicitly wrote that it
-> > made it less likely to occur (to the point where my reproducer no longer
-> > triggers).
-> 
-> > Increasing the buffer sizes to two pages to force CMA allocation also appears
-> > to make the problem go away.
-> 
-> The "go away" part sounded like a claim to me and hence I added the statement.
-> But no worries :)
+Changes since v3
+================
+1. Re-order reg and sound-dai-cells.
 
-Hopefully it's clear enough if you also read the preceding sentence
-(with emphasis added):
+Changes since v2
+================
+1. Patch 2: Use lower-case hex.
+2. Patch 3: Use ACTIVE_LOW for qcom,wcd9380-codec reset-gpios.
+   https://lore.kernel.org/all/20221116053817.2929810-11-dmitry.torokhov@gmail.com
+3. Add Rb tags.
 
-  presumably as these queues are small enough to not be allocated using
-  CMA which in turn make them *more likely to be cached* (e.g. due to
-  accesses to nearby pages through the cacheable linear map).
+Changes since v1
+================
+1. Patch 2:
+   - Whitespace cleanups.
+   - Correct include - do not use deprecated one.
+2. Patch 3:
+   - Sort.
+   - Add Rb tag.
+   - Correct include - do not use deprecated one and drop q6asm.h (not used).
 
-Johan
+Description
+===========
+Initial work (still partially in progress) adding audio to HDK8450 board.
+
+Working/tested:
+ - speakers
+ - one channel of headset
+
+The DTS patches do not have particular dependencies, however they:
+1. Use updated ASoC bindings:
+   https://lore.kernel.org/linux-arm-msm/20221111113547.100442-1-krzysztof.kozlowski@linaro.org/T/#t
+
+2. For full operation need changes in Soundwire and Qualcomm ASoC drivers, not
+   yet upstreamed:
+   https://github.com/krzk/linux/commits/wip/sm8450
+   Booting remoteproc without these changes will report errors, but these are
+   expected at this stage.
+
+Best regards,
+Krzysztof
+
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+Srinivas Kandagatla (3):
+  arm64: dts: qcom: sm8450: add GPR node
+  arm64: dts: qcom: sm8450: add Soundwire and LPASS
+  arm64: dts: qcom: sm8450-hdk: add sound support
+
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 160 ++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 334 ++++++++++++++++++++++++
+ 2 files changed, 494 insertions(+)
+
+-- 
+2.34.1
+
