@@ -2,288 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F976638DD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 16:53:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1A33638E97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 17:51:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229726AbiKYPxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 10:53:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S229675AbiKYQvB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 11:51:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbiKYPw4 (ORCPT
+        with ESMTP id S229850AbiKYQuo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 10:52:56 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5194E27159
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 07:52:55 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id g7so7504129lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 07:52:55 -0800 (PST)
+        Fri, 25 Nov 2022 11:50:44 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD2421807;
+        Fri, 25 Nov 2022 08:50:26 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id l22-20020a17090a3f1600b00212fbbcfb78so8190283pjc.3;
+        Fri, 25 Nov 2022 08:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DpQGpxdfbdlTnJsvlWY89+wp3XHFdGWgbsddTZ6kjtg=;
-        b=Kh6BpNHbqaUj5w/c4K1/cgC1ulEpKWE9LFCS2e0gGw4Cg7yS1Vb3InheQAysxC6TKC
-         buIcYF132mMYIKJ3E0Pag5qkAkD2VeKT7ThvNHAeW8ecZ/JAS5uBU7Fs9eZVkRq2Wqjd
-         qDVofOCqyFVxEfTjCw30q+68EZ1QYIOpd+qDogmw0B/wJWVzByc9B9WKiQD+2Dhrd3f9
-         jfo4V/Hx044Iyrlg8v2twIPjQfXKnx1wU7lxq017IRGKIZiefR+N19FeiCH7pKxuoJp0
-         fE6vpTT+Pzl3BhyfrA96mt7Cw7DTA7D9f6JaFXfAIgIeajNGwKOwQ82c2Mm5sct8CiwR
-         tQsQ==
+        bh=KfwYrXaErbUOWjxPsFIISqMfJIaUdzQIGOvRpzN2nKo=;
+        b=fdDp0H4hxYRT1ClITZUPzA9Z0MOpbSjNBJUlpGkKulzi2+EPfVXSv5rRC3SI1rSOeC
+         idMuUqX6c8wTWmFGPKBF0Gsw+uHdje5XddS8Mmn7IxIIgx8w5Gum7VQIH/EciGDgr1DM
+         wcsLhr2PHKIeuJ4HisY6pBZlCXcbJ0rz418q4AGSGTgT8rGYvIDf9CrRnZ5eH2UycxJs
+         qaf4znjab6StYPkBciCM90APwXvrymrsd9thMO3iSKrHC/9c7gkM5JnAX3Rif3ltIc+Q
+         r/7tgShFpCFubWcpPOSkHwOKh9lUQV9+OKiwzLTvquKMnra9H9xTtHwz351n1G8IMn9P
+         RMsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DpQGpxdfbdlTnJsvlWY89+wp3XHFdGWgbsddTZ6kjtg=;
-        b=1XHexX3EZ0hOVqO7OtCa87HxjuTfOprtKOS0pJVe8BaLLnDNuCNWR6yQ+sxE7KsUOQ
-         scV7c+QAYNDiupFt4Xj8qfsIlS+77mJk52YJQAnPiqGvvurt93w/tEPW7YowJpNEkAoA
-         XKwtDEFxjF+hs0VO18M2hhqVAzhv0ki1S8J02mpjcoQhFYj9jzquJEc5J+sinIyaC/9D
-         ABA05yqOPmVZ6tIp7WOGnSfo810Ji/JOf78En+H87a6/wW3i80WxFcaHZ1ipuIEPnt2y
-         Fx85Vj+nItRBKAo7UDS4U8iY+j0y71KPEi3szsHgvJFZ7RujEO+CG7MiyPSrrCTH6pbJ
-         aJow==
-X-Gm-Message-State: ANoB5pnulyCukWI5Gnm5A6Q1as8wuF59V9fJyHj/ILegk8e8JKlHNv4j
-        dkZDtOrjJdoeCh469av5eP1UPsaq3NgCaWj/
-X-Google-Smtp-Source: AA0mqf6qLy/0CY7gK3gouE6sQ/qsgNeBybkUvLPnkUq2Lk7upu7SqSdaLbZuwSLYcJ2IejJLnMWQbw==
-X-Received: by 2002:a19:6514:0:b0:4ab:f05c:d667 with SMTP id z20-20020a196514000000b004abf05cd667mr9648706lfb.551.1669391573570;
-        Fri, 25 Nov 2022 07:52:53 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id t14-20020a05651c204e00b002778a76a3c3sm391488ljo.112.2022.11.25.07.52.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 07:52:53 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sm8450-hdk: add sound support
-Date:   Fri, 25 Nov 2022 16:52:47 +0100
-Message-Id: <20221125155247.501203-4-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221125155247.501203-1-krzysztof.kozlowski@linaro.org>
-References: <20221125155247.501203-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KfwYrXaErbUOWjxPsFIISqMfJIaUdzQIGOvRpzN2nKo=;
+        b=zuNcyW9nQN9KwJjE7bIknU9DYpoQCQsb7mQONUrjjb3FivqeAIRZEGjUbTePv+Veuh
+         /BKWHy7O66v6M8Dm8P5CdkuhLF6qhqgzx1ouJJsOrtlI8q0343PlRBQ/CmnalRGBKa2t
+         LAE6oCgXeJYF4JiURd1GfXjISOHmda6LwD/myCIj87jeGsridfevMjK2+yAN9cxbOYzm
+         gGt+Dho68nnNrg9FHX0IzMs0PmSP2qkujoTZauSpigMSYtPi7e1gu4mSm1isD+VXCuz6
+         A25+RAY5NfUPpUjfS5WoGBbdqVp/Fm1N5eeE+r/yUw3PpVTx5ylszZzDcuPY4wlzmwsy
+         OyJw==
+X-Gm-Message-State: ANoB5pk+VdawEZofoY47vZbvbJgIm4BVUOls5j/EX8+bjFwUnKhct7IQ
+        49EJziT+7kNFoaYEOazxUd0sHxiaBf2+QA==
+X-Google-Smtp-Source: AA0mqf591/LJdyKcke50EoqPhdMIyJAjyg8qfuWkR0iQ/7OJ+TNiOSQ+wOnprJ1xunlHvIBDl56Mrw==
+X-Received: by 2002:a17:902:dacd:b0:189:6889:c309 with SMTP id q13-20020a170902dacd00b001896889c309mr3481534plx.3.1669395025398;
+        Fri, 25 Nov 2022 08:50:25 -0800 (PST)
+Received: from localhost ([2406:7400:61:64d5:6ced:a13c:ba7b:305b])
+        by smtp.gmail.com with ESMTPSA id x80-20020a633153000000b004308422060csm2805793pgx.69.2022.11.25.08.50.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Nov 2022 08:50:24 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 25 Nov 2022 22:20:18 +0530
+Message-Id: <COLJ587CFY67.2E0WQZD08PLBY@skynet-linux>
+Cc:     <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+Subject: Re: [PATCH v2 0/3] dmaengine: Add support for immediate commands
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Vinod Koul" <vkoul@kernel.org>
+X-Mailer: aerc 0.13.0
+References: <20221027051429.46593-1-sireeshkodali1@gmail.com>
+ <Y2UIS7P0alvqT4jn@matsya> <CO97J91UP8IF.23GNHUUM2KTVH@skynet-linux>
+ <Y3FudBqc1vQ8fEgU@matsya>
+In-Reply-To: <Y3FudBqc1vQ8fEgU@matsya>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Mon Nov 14, 2022 at 3:53 AM IST, Vinod Koul wrote:
+> On 11-11-22, 10:42, Sireesh Kodali wrote:
+> > On Fri Nov 4, 2022 at 6:10 PM IST, Vinod Koul wrote:
+> > > On 27-10-22, 10:44, Sireesh Kodali wrote:
+> > > > The IPA v2.x block, found on some older Qualcomm SoCs, uses BAM DMA=
+ to
+> > > > send and receive packets from the AP. It also uses BAM to receive
+> > > > commands from the AP (and possibly the modem). These commands are
+> > > > encoded as "Immediate Commands". They vary from regular BAM DMA
+> > > > commands. Adding support for immediate commands is trivial, but req=
+uires
+> > > > also adding Immediate Commands to the dmaengine API, which is what =
+this
+> > > > patch series does.
+> > >
+> > > Can you explain a bit more. I understand you need "Immediate Commands=
+"
+> > > but am really reluctant to add another interface to support a specifi=
+c
+> > > use case
+> > >
+> >=20
+> > Apologies for the delayed response
+> >=20
+> > BAM supports both regular commands, and "immediate commands". Currently=
+,
+> > commands are used by the Qualcom NAND chip driver, while "immediate
+> > commands" are intended to be used by the (yet to be mainlined) IPA
+> > driver. From the BAM driver perspective, both immediate and regular
+> > commands are simply a matter of setting the appropriate flag in the
+> > descriptor. I don't have access to the documentation on BAM to know
+> > exactly how these two modes differ, however I do know they are not
+> > interchangable. If a different API is suggested, I can change the
+> > implementation as needed.
+>
+> Ok, can you please explain what is meant by 'regular' cmd and
+> 'immediate', lets see what is required here
 
-Add sound support to SM8450 HDK board.  Tested setup so far is only two
-speakers (working) and head-phones (only one channel working).
+Stephan pointed out the APQ8016E TRM has details on BAM. As I understand
+it, 'regular' commands are queued register read/writes for the
+peripheral. Immediate commands on the other hand seem to be interpreted
+by the peripheral's firmware, and don't involve any register
+writes/reads from BAM's perspective.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This is what the TRM has to say:
 
----
+> Immediate (IMM) (only for BAM-NDP): Allows the software to create
+> descriptors of type immediate, which does not generate any data
+> transmissions or registers configuration, it is simply supplied to the
+> peripheral, the peripheral then parses its fields (which are
+> irrelevant to the BAM). Only the flags of this descriptor are relevant
+> to the BAM, address and size are irrelevant, and BAM simply passes
+> them as is to the peripheral. This can be used for the software to
+> operate peripheral-specific operations within regular data operations.
+> Immediate descriptors are published on the sidebands as 1 byte size
+> descriptor, once BAM_NDP fetches an immediate descriptor, it publishes
+> all recently fetched descriptors including the immediate descriptor
+> with immediate indication, to inform the peripheral that the last
+> published descriptor was immediate descriptor.
 
-Changes since v2:
-1. Use ACTIVE_LOW for qcom,wcd9380-codec reset-gpios.
-   https://lore.kernel.org/all/20221116053817.2929810-11-dmitry.torokhov@gmail.com/
+> Command (CMD) (only for BAM-lite and BAM-NDP): Allows the software to
+> create descriptors of type command. Descriptors of type command do not
+> generate any data transmissions but configure registers in the
+> peripheral (write and read registers operations)
 
-Changes since v1:
-1. Sort.
-2. Correct include - do not use deprecated one and drop q6asm.h (not
-   used).
----
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 160 ++++++++++++++++++++++++
- 1 file changed, 160 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-index 4d75f9db08c2..1e1393e732ca 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -6,6 +6,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
- #include "sm8450.dtsi"
- 
- / {
-@@ -406,6 +407,147 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
-+&soc {
-+	wcd938x: codec {
-+		compatible = "qcom,wcd9380-codec";
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <1>;
-+
-+		vdd-buck-supply = <&vreg_s10b_1p8>;
-+		vdd-rxtx-supply = <&vreg_s10b_1p8>;
-+		vdd-io-supply = <&vreg_s10b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob>;
-+	};
-+};
-+
-+&sound {
-+	compatible = "qcom,sm8450-sndcard";
-+	model = "SM8450-HDK";
-+	audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-+			"SpkrRight IN", "WSA_SPK2 OUT",
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC1", "MIC BIAS1",
-+			"AMIC2", "MIC BIAS2",
-+			"AMIC3", "MIC BIAS3",
-+			"AMIC4", "MIC BIAS3",
-+			"AMIC5", "MIC BIAS4";
-+
-+	wcd-playback-dai-link {
-+		link-name = "WCD Playback";
-+		cpu {
-+			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wcd-playback-dai-link {
-+		link-name = "WCD Playback";
-+		cpu {
-+			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wsa-dai-link {
-+		link-name = "WSA Playback";
-+		cpu {
-+			sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&wsamacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	va-dai-link {
-+		link-name = "VA Capture";
-+		cpu {
-+			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+};
-+
-+&swr0 {
-+	right_spkr: speaker@0,1{
-+		compatible = "sdw10217020200";
-+		reg = <0 1>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_1_sd_n_active>;
-+		powerdown-gpios = <&tlmm 1 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		#thermal-sensor-cells = <0>;
-+		vdd-supply = <&vreg_s10b_1p8>;
-+	};
-+
-+	left_spkr: speaker@0,2{
-+		compatible = "sdw10217020200";
-+		reg = <0 2>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_2_sd_n_active>;
-+		powerdown-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		#thermal-sensor-cells = <0>;
-+		vdd-supply = <&vreg_s10b_1p8>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		/* ports: adc1_2, adc3_4, dmic0_3_mbhc, dmic4_7 */
-+		qcom,tx-port-mapping = <1 1 2 3>;
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <28 4>, <36 4>;
- 
-@@ -461,3 +603,21 @@ &usb_1_qmpphy {
- 	vdda-phy-supply = <&vreg_l6b_1p2>;
- 	vdda-pll-supply = <&vreg_l1b_0p91>;
- };
-+
-+&tlmm {
-+	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
-+		pins = "gpio1";
-+		function = "gpio";
-+		drive-strength = <4>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	spkr_2_sd_n_active: spkr-2-sd-n-active-state {
-+		pins = "gpio89";
-+		function = "gpio";
-+		drive-strength = <4>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
--- 
-2.34.1
+Regards,
+Sireesh
+>
+> --=20
+> ~Vinod
 
