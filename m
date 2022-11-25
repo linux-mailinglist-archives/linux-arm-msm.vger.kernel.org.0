@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F5916380C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Nov 2022 23:02:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB606381D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 01:02:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbiKXWB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Nov 2022 17:01:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53148 "EHLO
+        id S229518AbiKYACS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Nov 2022 19:02:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiKXWB6 (ORCPT
+        with ESMTP id S229633AbiKYACS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Nov 2022 17:01:58 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7E4281F80
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 14:01:56 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id s8so4220187lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 14:01:56 -0800 (PST)
+        Thu, 24 Nov 2022 19:02:18 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBB0832A4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 16:02:17 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id q7so3463962ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Nov 2022 16:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hiaWqrX53hfzzHEps4oYeXEWJEP8SB8VJFJPlW92C7M=;
-        b=q0uH/ZH2T9mzxpMxhmCPh++U8bgQ9REutxmlKqmCJio79K/P50x0nyM1hskgpEfSbj
-         ndkwKcE25OKhBQZ0OF0VtgOVseaVw/IDnbZogy0P5hDxrfU20scFX3VI59fQpuy8eNhU
-         dCwL3pdyXH1QisiCfEQM6zhIQREEWoXZyadP5rN/hTdyzR8E8u88eppWKZrE9MgMT3ox
-         1gA1o34PELNPWcggHLZCDpzIjKWz2PJCt4YgvFTdncu9zECYCThQNYqzjzY/opwfhkco
-         JptHAyNMgHVOSZjGWLhstXzCFZ4+H3+KaCqUiIBQ/Rxfb4jPJefd1xdEK8jWUP3AMZjb
-         DnGg==
+        bh=kgbhuavqT9sjFGfJG8BukwmDaC1jAhXZDZa+W9QfoOs=;
+        b=AttiVNDUP6q1hbgT3P7MqNSQtLZrHqsVnDdbXCUpoH/DRw81lKJ9U9TjW4yGE9iUhG
+         91wZbIoMaKmXxQ1Ql9laxvr6gaMT8+86Zooaje0tdZ4QTgEHVNCet6CTPd8VlhIOfufQ
+         vatIj4lhmP7EfhkJnNVrzul4WxkWFZbYOtLuSEklG29QMTvFEW3zhjPXr6ij7GEqlclx
+         EFnoXc6WgZgv4NAyc0qKOxeLKrGsUxmEK7xJ9cMxVo5jVyGqtVuOXgSCfjBapJc8p+JL
+         OavrXMfI0gjhgGBJsRiij7X9VywYLZNGueOJeLy22DV5GCHqv1dtiqBgHKAZBKu4ixsP
+         tMQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hiaWqrX53hfzzHEps4oYeXEWJEP8SB8VJFJPlW92C7M=;
-        b=DayrPmlWbRUeKn30G50op90TIjvkJW2kq1IMluytHqpTAL2VJ50C6PbWomIHNGc7RR
-         cksMmpjrU+I5aCvwAK7YBzYtp0ABSKxCGSsnmu8/EadhLfR1uYAWa2g/7RZLcfW6zqch
-         1ugMXVZ0sdIcRtU/dGNrsHNPKhF1U2y4OPdEXB0K7DnoHolWBHDfSGtACwjGrAl20VGP
-         9ieqkvPvRA1gVbNlctivxCMNnKGG4i8acpZkE0AhImeEWiBIfvr89hP/69QUufQ1Ymak
-         Cl/vzplXEID4n2mmBwdsO0hlA+Y8KI6ue3sMUQzDDhVDikfelqcB6ZE+mm3NDYCQ0Lwh
-         bG1A==
-X-Gm-Message-State: ANoB5pk3tULbudvgPF1qa+74trrKze7SYPxgOw7ZbKXZ2UH0tECUDPx5
-        uwAmRn5yPkN/8UTF82Y5hBLvLg==
-X-Google-Smtp-Source: AA0mqf6M2JO3ZaRg2fRcCaXkasdBXbmKGbXblw9MdQ8zbe7LrcKxTEI6W6xRCIPHk0xgrXN6LtIS6Q==
-X-Received: by 2002:a05:6512:3992:b0:4ae:5dc5:82c5 with SMTP id j18-20020a056512399200b004ae5dc582c5mr13244750lfu.2.1669327315153;
-        Thu, 24 Nov 2022 14:01:55 -0800 (PST)
-Received: from localhost.localdomain (95.49.32.48.neoplus.adsl.tpnet.pl. [95.49.32.48])
-        by smtp.gmail.com with ESMTPSA id p11-20020a05651212cb00b00497feee98basm246933lfg.274.2022.11.24.14.01.53
+        bh=kgbhuavqT9sjFGfJG8BukwmDaC1jAhXZDZa+W9QfoOs=;
+        b=C5M3IVhlvo/8Y/B7ytxAn47qAvKHVLVpw2on5NEOsD8WccRGGF/IIFU0jKCSZ0V+xm
+         qI3eSymQFdKfDVTFs3F2qh3HDmmt4dPd0wsb38Cnf0axe+EYnTqnRggNlsDOb7MtbqtJ
+         r8qyaqH0FwA3nHsu8wjdIB14cUNfY5vp4BCLRiTcHqlGzAd+aFU29PUlfLISafpjBMeJ
+         lWBzEV5YnJbIG91nlWWhuPyU6H2WSkyrvY+mmdutkvonI+zqjB1dTUcOYC8uaVg2aMlh
+         8UersOebNxef26ZkncixbfSigvRnZYlY0TFiI19b1cs4gFRl3f2jife1pzZu3xhIhgbP
+         i40g==
+X-Gm-Message-State: ANoB5pm2eSmuSzcD4Ffacgv+xix8V3Asf/H8I69cZBvXzHYJWKLJtF5K
+        FSwY8n3DwW4hLv0vebNKItG95ewK1Ace2U74
+X-Google-Smtp-Source: AA0mqf6OFOdHi5pJvaT0uHSnNXd+1KRmGHNzFVp7W64gh0yMz+Di3gBC2VTSNSsqns9Xj8BY9iMqHg==
+X-Received: by 2002:a2e:9615:0:b0:278:e939:4eca with SMTP id v21-20020a2e9615000000b00278e9394ecamr10519315ljh.95.1669334535428;
+        Thu, 24 Nov 2022 16:02:15 -0800 (PST)
+Received: from eriador.lumag.spb.ru (dzpy175yyyyyyyyyyyyyt-3.rev.dnainternet.fi. [2001:14ba:a301:5de4::1])
+        by smtp.gmail.com with ESMTPSA id b23-20020ac247f7000000b004aa95889063sm293806lfp.43.2022.11.24.16.02.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 14:01:54 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 24 Nov 2022 16:02:14 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8996-tone: Fix USB taking 6 minutes to wake up
-Date:   Thu, 24 Nov 2022 23:01:47 +0100
-Message-Id: <20221124220147.102611-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/mdp5: fix reading hw revision on db410c platform
+Date:   Fri, 25 Nov 2022 02:02:13 +0200
+Message-Id: <20221125000213.252115-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,43 +73,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The hardware turns out to be pretty sluggish at assuming it can only
-do USB2 with just a USB2 phy assigned to it - before it needed about
-6 minutes to acknowledge that.
+Since the commit commit c6122688f265 ("drm/msm/mdp5: stop overriding
+drvdata") reading the MDP5 hw revision on db410c will crash the board
+as the MDSS_GDSC is not enabled. Revert a part of the offending commit
+(moving rpm enablement) and set priv->kms earlier. This make it possible
+to use pm_runtime_get_sync() during read_mdp_hw_revision(), which will
+power up both the MDP5 and MDSS devices.
 
-Limit it to USB-HS explicitly to make USB come up about 720x faster.
-
-Fixes: 9da65e441d4d ("arm64: dts: qcom: Add support for SONY Xperia X Performance / XZ / XZs (msm8996, Tone platform)")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: c6122688f265 ("drm/msm/mdp5: stop overriding drvdata")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-No words.
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
- arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 12a7b6d91dbe..0ab9687f3406 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -991,10 +991,6 @@ touch_int_sleep: touch-int-sleep-state {
- 	};
- };
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index b46f983f2b46..29ae5c9613f3 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -519,10 +519,9 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
+ 	struct device *dev = &mdp5_kms->pdev->dev;
+ 	u32 version;
  
--/*
-- * For reasons that are currently unknown (but probably related to fusb301), USB takes about
-- * 6 minutes to wake up (nothing interesting in kernel logs), but then it works as it should.
-- */
- &usb3 {
- 	status = "okay";
- 	qcom,select-utmi-as-pipe-clk;
-@@ -1003,6 +999,7 @@ &usb3 {
- &usb3_dwc3 {
- 	extcon = <&usb3_id>;
- 	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
- 	phys = <&hsusb_phy1>;
- 	phy-names = "usb2-phy";
- 	snps,hird-threshold = /bits/ 8 <0>;
+-	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
+-	mdp5_enable(mdp5_kms);
++	pm_runtime_get_sync(dev);
+ 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
+-	mdp5_disable(mdp5_kms);
++	pm_runtime_put_sync(dev);
+ 
+ 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
+ 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
+@@ -839,6 +838,12 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	 */
+ 	clk_set_rate(mdp5_kms->core_clk, 200000000);
+ 
++	/* set uninit-ed kms */
++	priv->kms = &mdp5_kms->base.base;
++
++	pm_runtime_enable(&pdev->dev);
++	mdp5_kms->rpm_enabled = true;
++
+ 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
+ 
+ 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
+@@ -887,12 +892,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	if (ret)
+ 		goto fail;
+ 
+-	/* set uninit-ed kms */
+-	priv->kms = &mdp5_kms->base.base;
+-
+-	pm_runtime_enable(&pdev->dev);
+-	mdp5_kms->rpm_enabled = true;
+-
+ 	return 0;
+ fail:
+ 	if (mdp5_kms)
 -- 
-2.38.1
+2.35.1
 
