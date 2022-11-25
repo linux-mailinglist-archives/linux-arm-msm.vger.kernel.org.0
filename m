@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC83363880A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 11:59:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44722638896
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 12:21:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbiKYK7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 05:59:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54534 "EHLO
+        id S229554AbiKYLVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 06:21:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiKYK7a (ORCPT
+        with ESMTP id S229606AbiKYLVf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 05:59:30 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A05274A06F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 02:59:28 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id b12so6226306wrn.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 02:59:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qxVUzuEfs/JtujPMqVzJNV5+NhQvPn6jD1wFfmF5YfM=;
-        b=hpWKj9WbiPBqcBWPgY84/bsJo2X8VHHOXSltnPkhVQpzOMblhiXUBP/YApAP4mxw/l
-         +iBMNvupOl05n/13RoHoB8ekVUWQ65WEpuirycbVxcERe+lcdgdfpXAqzBSpu0lrwPBf
-         ZbfyjyJ1KUGbb46s60vYiBs2tM7LF8/CoEvhTEcSaPMevCew4dF1QFKMhtl5mVfY+AbJ
-         rzZgRk1JgmHDlUkSh4UjwF3yP5erCL0w67iZ/NIzZUwOfr7lk3Y0uDlVrTU8FcNa4EbA
-         Vx3wiJs0B5m7pOWMFmQlFhR3R2RH5df2WNAkXG14kz21K0PTUbBy53QcCGYCSoeSBCBG
-         883A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qxVUzuEfs/JtujPMqVzJNV5+NhQvPn6jD1wFfmF5YfM=;
-        b=CTE3jFZuunvdZTRMP/3DecWrja5hMLQPt/BTwRbaFsUiUsmqS4+8SNa3cw6fVO45ms
-         gAka5FOrdflcUlrMqu0l4lhMikMujc5ubfW94shXXM+65JHVkIOtbMNmud1HCG7KaPn4
-         ScNLg/xSG92l9Tdc3Xj0zROsPr03hMgwNAVLhdJ7CjM/7G9RpkIN7dxpLYl2a+mYKAMP
-         bF0RYGsAAdlmhknS2KL/l4Q3WBB1IyA2ScZ2TZg9h0wJORCk7/jbg+y8iNedmOKPw+6f
-         B430D1OByHuiHbszLXTiuJNOXqq7DrJZOkn2l400OdI3OUOOkc2fHpaodSramNok5IcQ
-         ox1Q==
-X-Gm-Message-State: ANoB5plPRd5FyR4go3DaX2LrQMjjpdfRSdrJgetjapquGwtEIYqBi84O
-        KO1vfpKICbUtgqbDOZursaAiiw==
-X-Google-Smtp-Source: AA0mqf7br94cM7b4HGSNhekL2RXQdU8X1ZTptG1/XapkSAPoz5vUxC6qAPeIGDWl9OmGApyxNeoTCQ==
-X-Received: by 2002:adf:e7c3:0:b0:241:dfce:9bfc with SMTP id e3-20020adfe7c3000000b00241dfce9bfcmr11553565wrn.697.1669373967118;
-        Fri, 25 Nov 2022 02:59:27 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id z14-20020a7bc7ce000000b003cf78aafdd7sm4650935wmk.39.2022.11.25.02.59.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Nov 2022 02:59:26 -0800 (PST)
-Message-ID: <eba53dc3-cfc8-1df5-970b-2c87d350dd09@linaro.org>
-Date:   Fri, 25 Nov 2022 10:59:25 +0000
+        Fri, 25 Nov 2022 06:21:35 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677F726132
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 03:21:34 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2APAJmAk004675;
+        Fri, 25 Nov 2022 11:21:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BCyYdTV2scl9kueGVLn7bpbceZS3Qy1/x8OzGJZuvPY=;
+ b=Nc2CWVthFkqS902Ph69dnIAP77iwqbvyytvud8glJIfCdGsubnBGVvgjXYly/ymH4/K8
+ 8Nc9XAucLT8xuGqgWb531+EqhyMtVK9Oj9CFwCYOhzC5hnWW0rvAqelICZKnkp7pw37j
+ pgP7rQt4LUTMbeJBL3iGDCXehgClThW1q/U2pyk1goZcAPRPyA21uBtSwlkxig2AASxb
+ jEhNT2njyOC7cYWzxHoSGKZGwM77LXzGQxBpS38ZnaiPSatOuMZQdBhgw5fiuBwwE2b4
+ x5jUiJxTU4I0ogU+VgwSxwf49eVYjDJGQ/J1J4Eg+P0TrllpR4rrlOdr8DqxOuSU1ps+ 7Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m2uujg6sp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Nov 2022 11:21:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2APBLQx0028869
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 25 Nov 2022 11:21:26 GMT
+Received: from [10.216.38.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 25 Nov
+ 2022 03:21:23 -0800
+Message-ID: <614099f5-6e5a-6f96-d81c-d07ded9e3ec1@quicinc.com>
+Date:   Fri, 25 Nov 2022 03:21:19 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [V2] spi: spi-geni-qcom: Add support for SE DMA mode
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/mdp5: fix reading hw revision on db410c platform
 Content-Language: en-US
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com, vkoul@kernel.org
-References: <1669040373-23605-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1669040373-23605-1-git-send-email-quic_vnivarth@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221125000213.252115-1-dmitry.baryshkov@linaro.org>
+ <dc44d8f1-c782-452b-5928-57538250dade@quicinc.com>
+ <3c9330f2-a75f-47ea-160c-848c583d9306@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <3c9330f2-a75f-47ea-160c-848c583d9306@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1yS_YMuDJRg3y9GQcGChQi9ftNjmP7R4
+X-Proofpoint-ORIG-GUID: 1yS_YMuDJRg3y9GQcGChQi9ftNjmP7R4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-25_04,2022-11-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 mlxlogscore=999 adultscore=0 bulkscore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211250089
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -77,309 +85,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your patch Vijaya,
 
-On 21/11/2022 14:19, Vijaya Krishna Nivarthi wrote:
-> SE DMA mode can be used for larger transfers and FIFO mode
-> for smaller transfers.
 
-Over all the patch looks good, but with few minor nits around coding 
-conventions.
+On 11/25/2022 1:21 AM, Dmitry Baryshkov wrote:
+> On 25/11/2022 07:45, Abhinav Kumar wrote:
+>> On 11/24/2022 4:02 PM, Dmitry Baryshkov wrote:
+>>> Since the commit commit c6122688f265 ("drm/msm/mdp5: stop overriding
+>>> drvdata") reading the MDP5 hw revision on db410c will crash the board
+>>> as the MDSS_GDSC is not enabled. Revert a part of the offending commit
+>>> (moving rpm enablement) and set priv->kms earlier. This make it possible
+>>> to use pm_runtime_get_sync() during read_mdp_hw_revision(), which will
+>>> power up both the MDP5 and MDSS devices.
+>>>
+>>
+>> This is the exact concern I had even when c6122688f265 was pushed.
+>>
+>> https://patchwork.freedesktop.org/patch/508334/#comment_917689
+>>
+>> Was the response given that time not correct then?
 > 
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->   drivers/spi/spi-geni-qcom.c | 211 ++++++++++++++++++++++++++++++++++----------
->   1 file changed, 165 insertions(+), 46 deletions(-)
+> Not fully correct. I did not notice, that non-rpm-enabled mdp5 node 
+> doesn't force mdss to be in the on state. (Which is strange. Maybe we 
+> are leaking pm_runtime_enable() for it somewhere.)
 > 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 4e83cc5..102529a 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -87,6 +87,8 @@ struct spi_geni_master {
->   	struct completion cs_done;
->   	struct completion cancel_done;
->   	struct completion abort_done;
-> +	struct completion tx_reset_done;
-> +	struct completion rx_reset_done;
->   	unsigned int oversampling;
->   	spinlock_t lock;
->   	int irq;
-> @@ -95,6 +97,7 @@ struct spi_geni_master {
->   	struct dma_chan *tx;
->   	struct dma_chan *rx;
->   	int cur_xfer_mode;
-> +	u32 cur_m_cmd;
->   };
->   
->   static int get_spi_clk_cfg(unsigned int speed_hz,
-> @@ -129,23 +132,26 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
->   	return ret;
->   }
->   
-> -static void handle_fifo_timeout(struct spi_master *spi,
-> +static void handle_se_timeout(struct spi_master *spi,
->   				struct spi_message *msg)
-indentation looks off.
 
+hmmm, this is a safer change as we are atleast not bypassing pm runtime.
 
->   {
->   	struct spi_geni_master *mas = spi_master_get_devdata(spi);
->   	unsigned long time_left;
->   	struct geni_se *se = &mas->se;
-> +	const struct spi_transfer *xfer;
->   
->   	spin_lock_irq(&mas->lock);
->   	reinit_completion(&mas->cancel_done);
-> -	writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> +	if (mas->cur_xfer_mode == GENI_SE_FIFO)
-> +		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+ From that perspective,
 
-empty line here would make the code more readable.
-
-> +	xfer = mas->cur_xfer;
->   	mas->cur_xfer = NULL;
->   	geni_se_cancel_m_cmd(se);
->   	spin_unlock_irq(&mas->lock);
->   
->   	time_left = wait_for_completion_timeout(&mas->cancel_done, HZ);
->   	if (time_left)
-> -		return;
-> +		goto unmap_if_dma;
->   
->   	spin_lock_irq(&mas->lock);
->   	reinit_completion(&mas->abort_done);
-> @@ -162,6 +168,45 @@ static void handle_fifo_timeout(struct spi_master *spi,
->   		 */
->   		mas->abort_failed = true;
->   	}
-> +
-> +unmap_if_dma:
-> +	if (mas->cur_xfer_mode == GENI_SE_DMA) {
-> +		if (mas->cur_m_cmd & SPI_TX_ONLY) {
-> +			spin_lock_irq(&mas->lock);
-> +			reinit_completion(&mas->tx_reset_done);
-> +			writel(1, se->base + SE_DMA_TX_FSM_RST);
-> +			spin_unlock_irq(&mas->lock);
-> +			time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
-> +			if (!time_left)
-> +				dev_err(mas->dev, "DMA TX RESET failed\n");
-> +		}
-> +		if (mas->cur_m_cmd & SPI_RX_ONLY) {
-> +			spin_lock_irq(&mas->lock);
-> +			reinit_completion(&mas->rx_reset_done);
-> +			writel(1, se->base + SE_DMA_RX_FSM_RST);
-> +			spin_unlock_irq(&mas->lock);
-> +			time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
-> +			if (!time_left)
-> +				dev_err(mas->dev, "DMA RX RESET failed\n");
-> +		}
-> +
-> +		if (xfer) {
-> +			if (xfer->tx_buf && xfer->tx_dma)
-> +				geni_se_tx_dma_unprep(se, xfer->tx_dma, xfer->len);
-> +			if (xfer->rx_buf && xfer->rx_dma)
-> +				geni_se_rx_dma_unprep(se, xfer->rx_dma, xfer->len);
-> +		} else {
-> +			/*
-> +			 * This can happen if a timeout happened and we had to wait
-> +			 * for lock in this function because isr was holding the lock
-> +			 * and handling transfer completion at that time.
-> +			 * isr will set cur_xfer to NULL when done.
-> +			 * Unnecessary error but cannot be helped.
-> +			 * Only do reset, dma_unprep is already done by isr.
-> +			 */
-> +			dev_err(mas->dev, "Cancel/Abort on completed SPI transfer\n");
-> +		}
-> +	}
->   }
->   
->   static void handle_gpi_timeout(struct spi_master *spi, struct spi_message *msg)
-> @@ -178,7 +223,8 @@ static void spi_geni_handle_err(struct spi_master *spi, struct spi_message *msg)
->   
->   	switch (mas->cur_xfer_mode) {
->   	case GENI_SE_FIFO:
-> -		handle_fifo_timeout(spi, msg);
-> +	case GENI_SE_DMA:
-> +		handle_se_timeout(spi, msg);
->   		break;
->   	case GENI_GPI_DMA:
->   		handle_gpi_timeout(spi, msg);
-> @@ -260,7 +306,7 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
->   	time_left = wait_for_completion_timeout(&mas->cs_done, HZ);
->   	if (!time_left) {
->   		dev_warn(mas->dev, "Timeout setting chip select\n");
-> -		handle_fifo_timeout(spi, NULL);
-> +		handle_se_timeout(spi, NULL);
->   	}
->   
->   exit:
-> @@ -482,8 +528,12 @@ static bool geni_can_dma(struct spi_controller *ctlr,
->   {
->   	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
->   
-> -	/* check if dma is supported */
-> -	return mas->cur_xfer_mode != GENI_SE_FIFO;
-> +	/*
-> +	 * Return true if transfer needs to be mapped prior to
-> +	 * calling transfer_one which is the case only for GPI_DMA.
-> +	 * For SE_DMA mode, map/unmap is done in geni_se_*x_dma_prep.
-> +	 */
-> +	return mas->cur_xfer_mode == GENI_GPI_DMA;
->   }
->   
->   static int spi_geni_prepare_message(struct spi_master *spi,
-> @@ -494,6 +544,7 @@ static int spi_geni_prepare_message(struct spi_master *spi,
->   
->   	switch (mas->cur_xfer_mode) {
->   	case GENI_SE_FIFO:
-> +	case GENI_SE_DMA:
->   		if (spi_geni_is_abort_still_pending(mas))
->   			return -EBUSY;
->   		ret = setup_fifo_params(spi_msg->spi, spi);
-> @@ -597,7 +648,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
->   			break;
->   		}
->   		/*
-> -		 * in case of failure to get dma channel, we can still do the
-> +		 * in case of failure to get gpi dma channel, we can still do the
->   		 * FIFO mode, so fallthrough
->   		 */
->   		dev_warn(mas->dev, "FIFO mode disabled, but couldn't get DMA, fall back to FIFO mode\n");
-> @@ -716,12 +767,12 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
->   	mas->rx_rem_bytes -= rx_bytes;
->   }
->   
-> -static void setup_fifo_xfer(struct spi_transfer *xfer,
-> +static int setup_se_xfer(struct spi_transfer *xfer,
->   				struct spi_geni_master *mas,
->   				u16 mode, struct spi_master *spi)
-
-consider adjusting the tabs once you change the function name.
->   {
->   	u32 m_cmd = 0;
-> -	u32 len;
-> +	u32 len, fifo_size;
->   	struct geni_se *se = &mas->se;
->   	int ret;
->   
-> @@ -748,7 +799,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
->   	/* Speed and bits per word can be overridden per transfer */
->   	ret = geni_spi_set_clock_and_bw(mas, xfer->speed_hz);
->   	if (ret)
-> -		return;
-> +		return ret;
->   
->   	mas->tx_rem_bytes = 0;
->   	mas->rx_rem_bytes = 0;xxxxxxx
-> @@ -771,6 +822,13 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
->   		writel(len, se->base + SE_SPI_RX_TRANS_LEN);
->   		mas->rx_rem_bytes = xfer->len;
->   	}
-> +	mas->cur_m_cmd = m_cmd;
-> +
-> +	/* Select transfer mode based on transfer length */
-> +	fifo_size =
-> +		mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-
-line can go up to 100 chars
-
-
-> +	mas->cur_xfer_mode = (len <= fifo_size) ? GENI_SE_FIFO : GENI_SE_DMA;
-
-I do not see any protection for cur_xfer_mode? Isn't it true that it 
-could be modified here while an interrupt handler is using this?
-
-
-> +	geni_se_select_mode(se, mas->cur_xfer_mode);
->   
->   	/*
->   	 * Lock around right before we start the transfer since our
-> @@ -778,11 +836,39 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
->   	 */
->   	spin_lock_irq(&mas->lock);
->   	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
-> -	if (m_cmd & SPI_TX_ONLY) {
-> +
-> +	if (mas->cur_xfer_mode == GENI_SE_DMA) {
-> +		if (m_cmd & SPI_RX_ONLY) {
-> +			ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
-> +				xfer->len, &xfer->rx_dma);
-> +			if (ret) {
-> +				dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
-> +				xfer->rx_dma = 0;
-> +				goto unlock_and_return;
-> +			}
-> +		}
-> +		if (m_cmd & SPI_TX_ONLY) {
-> +			ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
-> +				xfer->len, &xfer->tx_dma);
-> +			if (ret) {
-> +				dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
-> +				xfer->tx_dma = 0;
-> +				if (m_cmd & SPI_RX_ONLY && xfer->rx_dma) {
-> +					/* Unmap rx buffer if duplex transfer */
-> +					geni_se_rx_dma_unprep(se, xfer->rx_dma, xfer->len);
-> +					xfer->rx_dma = 0;
-> +				}
-> +				goto unlock_and_return;
-> +			}
-> +		}
-> +	} else if (m_cmd & SPI_TX_ONLY) {
->   		if (geni_spi_handle_tx(mas))
->   			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
->   	}
-> +
-> +unlock_and_return:
->   	spin_unlock_irq(&mas->lock);
-> +	return ret;
->   }
->   
->   static int spi_geni_transfer_one(struct spi_master *spi,
-> @@ -790,6 +876,7 @@ static int spi_geni_transfer_one(struct spi_master *spi,
->   				struct spi_transfer *xfer)
->   {
->   	struct spi_geni_master *mas = spi_master_get_devdata(spi);
-> +	int ret;
->   
->   	if (spi_geni_is_abort_still_pending(mas))
->   		return -EBUSY;
-> @@ -798,9 +885,12 @@ static int spi_geni_transfer_one(struct spi_master *spi,
->   	if (!xfer->len)
->   		return 0;
->   
-> -	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
-> -		setup_fifo_xfer(xfer, mas, slv->mode, spi);
-> -		return 1;
-> +	if (mas->cur_xfer_mode == GENI_SE_FIFO || mas->cur_xfer_mode == GENI_SE_DMA) {
-> +		ret = setup_se_xfer(xfer, mas, slv->mode, spi);
-> +		/* SPI framework expects +ve ret code to wait for transfer complete */
-> +		if (!ret)
-> +			ret = 1;
-> +		return ret;
->   	}
->   	return setup_gsi_xfer(xfer, mas, slv, spi);
->   }
-> @@ -823,39 +913,66 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
->   
->   	spin_lock(&mas->lock);
->   
-> -	if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
-> -		geni_spi_handle_rx(mas);
-> -
-> -	if (m_irq & M_TX_FIFO_WATERMARK_EN)
-> -		geni_spi_handle_tx(mas);
-> -
-> -	if (m_irq & M_CMD_DONE_EN) {
-> -		if (mas->cur_xfer) {
-> +	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
-
-Switch case?
-
-...
-
-> +		}
-> +	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
-> +		const struct spi_transfer *xfer = mas->cur_xfer;
-
-
---srini
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> https://patchwork.freedesktop.org/patch/508334/#comment_917713
+>>> Fixes: c6122688f265 ("drm/msm/mdp5: stop overriding drvdata")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 17 ++++++++---------
+>>>   1 file changed, 8 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c 
+>>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> index b46f983f2b46..29ae5c9613f3 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> @@ -519,10 +519,9 @@ static void read_mdp_hw_revision(struct mdp5_kms 
+>>> *mdp5_kms,
+>>>       struct device *dev = &mdp5_kms->pdev->dev;
+>>>       u32 version;
+>>> -    /* Manually enable the MDP5, as pm runtime isn't usable yet. */
+>>> -    mdp5_enable(mdp5_kms);
+>>> +    pm_runtime_get_sync(dev);
+>>>       version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
+>>> -    mdp5_disable(mdp5_kms);
+>>> +    pm_runtime_put_sync(dev);
+>>>       *major = FIELD(version, MDP5_HW_VERSION_MAJOR);
+>>>       *minor = FIELD(version, MDP5_HW_VERSION_MINOR);
+>>> @@ -839,6 +838,12 @@ static int mdp5_init(struct platform_device 
+>>> *pdev, struct drm_device *dev)
+>>>        */
+>>>       clk_set_rate(mdp5_kms->core_clk, 200000000);
+>>> +    /* set uninit-ed kms */
+>>> +    priv->kms = &mdp5_kms->base.base;
+>>> +
+>>> +    pm_runtime_enable(&pdev->dev);
+>>> +    mdp5_kms->rpm_enabled = true;
+>>> +
+>>>       read_mdp_hw_revision(mdp5_kms, &major, &minor);
+>>>       mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
+>>> @@ -887,12 +892,6 @@ static int mdp5_init(struct platform_device 
+>>> *pdev, struct drm_device *dev)
+>>>       if (ret)
+>>>           goto fail;
+>>> -    /* set uninit-ed kms */
+>>> -    priv->kms = &mdp5_kms->base.base;
+>>> -
+>>> -    pm_runtime_enable(&pdev->dev);
+>>> -    mdp5_kms->rpm_enabled = true;
+>>> -
+>>>       return 0;
+>>>   fail:
+>>>       if (mdp5_kms)
+> 
