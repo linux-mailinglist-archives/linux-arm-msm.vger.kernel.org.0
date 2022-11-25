@@ -2,151 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E93BF638BE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:12:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1709638C15
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:26:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229825AbiKYOMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 09:12:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34838 "EHLO
+        id S229553AbiKYO0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 09:26:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbiKYOMa (ORCPT
+        with ESMTP id S229610AbiKYO0g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 09:12:30 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8712DD40
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:12:27 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z18so6531145edb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:12:27 -0800 (PST)
+        Fri, 25 Nov 2022 09:26:36 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560A32AC7E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:26:34 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id f9so4085031pgf.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rm7cR6ae+qOInD+66DgxiENpanQtPaQwJadOEH3Sp+I=;
-        b=nVWakQVqW5tEZpFHHiKt0Psz1twbLwXTUSuYUj0W6+XMkAH0yLZYOcNvKrUcqZro0h
-         acVL/kmiLOek1ZtQC+e1XVOLM9jJwQsPxhdyWJRVMa6JwI0n1TrMMcEXTeSbL3j5JsD+
-         3NnSLoa1bjJG0cf7NrxG0WrhZ55LUKll9/IMgc+7oU9LDA1oG2CsbmAbuynewWZsePr5
-         htR95SphAqEHdAGqWKnoGeFCR6p1D23GCh4eZvG9stI85P+p49y0q3XIg/1e4KoKZ7Y/
-         exd9y9pBkr+QT7lYMOnjfv/IdIM6f5O+fgzrw+z6qx0TWK3dj4ZhTRjdyHCOHZkOK51u
-         XS5g==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pr9EPBHz4BamKgB8yWADZkXZ2+tlYR/qk7DwwWPntys=;
+        b=I22Ui3Ws2mdvy3i8n4OvfE7B4UBhCYea7j3aLWfiqH6e04pBvYdBesUghp62dWLwlP
+         nUvmU/k0g1An/0OlJ34HaFJQiRBzF0H4W6T/bVUx1zm9Bl2bgWzoL3GpF4JfgONWkVbE
+         EwQpaRMKtu1ensgpA7mEiE9oiRjstNpI6/teS/2EmsCih9G1zkFWu57x03IKOctYmO6b
+         8uIFnuHSjhfW3vcW332yGJfmlCNj0hM2e3UlZ2FvRnUWb5xA0fGO9KsZPNX63gbTbsLc
+         Avx33IJSJQXBDcMj1TDY9VR9YSk/OF8WhfUPLTuG21X7mpO1vVjJj47paR3SHE3BHjTr
+         ROiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rm7cR6ae+qOInD+66DgxiENpanQtPaQwJadOEH3Sp+I=;
-        b=RmU+QDD0iOb4JAmDidSYqmxAz12LENAxq0oGE7TLIRq3rz47EdSFy5uoGTHAPXo+ip
-         BVjrWTkevkcbyntg4EIA+Eyzz1rTxY/B14Ux/X6Dkctu7MRPk0YrER3lizHhLnfcU2Rt
-         qW8DVW8muqBd7Px9hXLQJXPSYw2aMqjQaTJ4f6K+bZagt5oA/NEiGzr10SimR/Sfdo/e
-         YOfCl1qMtEdCUvX5njSO2mQ+9jZjrjm7tTm2V8zXOjeEuUKyfNeA/RZGEv4ubbU200es
-         LZqQ5CbVfgM0RvBv1i8A6beLKASaIabmBTjx5WVZQh9pCzjdl1FCAwyI26QaIfOOQXNf
-         w+TA==
-X-Gm-Message-State: ANoB5plMSDHCi3NxnMofsWTss1fPpJyDbTa6vBp62ONeLnh9yyFQFPhm
-        JSnzdsrdRppYyWYGGL2rJNEFmg==
-X-Google-Smtp-Source: AA0mqf7x6SFiLyww87SyC8IGDI3uH4romvj+1/ZEa3aKkBGiDIMGQ9K99FuPICtZ1IRErGGVVqPvIw==
-X-Received: by 2002:a05:6402:5011:b0:469:9c84:3bdd with SMTP id p17-20020a056402501100b004699c843bddmr22477624eda.302.1669385545972;
-        Fri, 25 Nov 2022 06:12:25 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id p35-20020a056402502300b00463b9d47e1fsm1805512eda.71.2022.11.25.06.12.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Nov 2022 06:12:25 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 25 Nov 2022 15:12:24 +0100
-Message-Id: <COLFSBYDJQVH.1Q9V9ISPWR6ZX@otso>
-To:     "Johan Hovold" <johan@kernel.org>
-Cc:     <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Vinod Koul" <vkoul@kernel.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add
- sm6350 compatible
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.13.0
-References: <20221125092749.46073-1-luca.weiss@fairphone.com>
- <Y4CP9fwhDXsLu57Q@hovoldconsulting.com> <COLABNHBQ1DG.1PB8SDY3FW1YY@otso>
- <Y4CWoT52Q8jnm/dF@hovoldconsulting.com> <COLE3UWQCQ8R.XY36EY07DDDK@otso>
- <Y4DImjwHQNlWPEKh@hovoldconsulting.com>
-In-Reply-To: <Y4DImjwHQNlWPEKh@hovoldconsulting.com>
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pr9EPBHz4BamKgB8yWADZkXZ2+tlYR/qk7DwwWPntys=;
+        b=5GgRhr6qc8TqoAFQLGeNSUlFkkjD4wg7PmRlqUadtL52pZ20g7t/5AC4NoWDHslLEp
+         QFOIN9TZ8CcNTAjKrrz/8rYqmkfoHN8nHIwG/vfDg5Jaine4ZBf5iHuCItET4HXyak9Y
+         cm0U6iVh/UKVQARzH5QBPjTjynr/eQDLbkhRHEOgrbagh5e4M4klnZ394yfxUOxm/j+h
+         dET4A74MsV2MkLXQEJsVbe/1SKyclYAGekbzq7tXXT/AnIPpURHRZR8Osj3xpHHLB6yo
+         sGKxdMIY6tDCpOmINedGxm8MGVQ4oLTJMG53qm3fKo1yQOCkCLzQS4I9FqSmN4jI6KF7
+         Rblg==
+X-Gm-Message-State: ANoB5pkmQMf33hCQhOh7EljThNeb37EjXRexONFCf1aSRa4k5poyBi3D
+        UgdWrMoD56Yc4rJPTh1wjKes
+X-Google-Smtp-Source: AA0mqf49zCazD+UtCRa4BNYXgoE42BG1LqZ3W0LypZAXCz7fviyny0CBtnZkM2HGDAm3DL59CDuHnQ==
+X-Received: by 2002:a63:1e62:0:b0:46b:3acb:77b2 with SMTP id p34-20020a631e62000000b0046b3acb77b2mr15395586pgm.560.1669386393687;
+        Fri, 25 Nov 2022 06:26:33 -0800 (PST)
+Received: from thinkpad ([117.202.190.212])
+        by smtp.gmail.com with ESMTPSA id n7-20020a170902d2c700b00186ffe62502sm3448694plc.254.2022.11.25.06.26.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Nov 2022 06:26:32 -0800 (PST)
+Date:   Fri, 25 Nov 2022 19:56:25 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix PCIe DMA coherency
+Message-ID: <20221125142625.GA9892@thinkpad>
+References: <20221124142501.29314-1-johan+linaro@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221124142501.29314-1-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Nov 25, 2022 at 2:52 PM CET, Johan Hovold wrote:
-> On Fri, Nov 25, 2022 at 01:53:25PM +0100, Luca Weiss wrote:
-> > > Parent clocks (ref_clk_src) should not be included in the binding, bu=
-t
-> > > rather be handled by the clock driver. For example, see:
-> > >
-> > > 	https://lore.kernel.org/all/20221121085058.31213-4-johan+linaro@kern=
-el.org/
-> > > 	https://lore.kernel.org/all/20221115152956.21677-1-quic_shazhuss@qui=
-cinc.com/
-> >=20
-> > So I assume you mean that I shouldn't do this:
-> >=20
-> > clocks =3D <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> >      <&rpmhcc RPMH_QLINK_CLK>,
-> >      <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> >      <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > clock-names =3D "aux", "ref", "com_aux", "usb3_pipe";
-> >=20
-> > But for "ref" use GCC_USB3_PRIM_CLKREF_CLK? That also seems to work
-> > fine, also if RPMH_QLINK_CLK is not used from Linux-side (checked in
-> > debugfs).
->
-> Exactly. Since the vendor dts describes RPMH_QLINK_CLK as parent of ref,
-> I'd suggest modelling that in the clock driver. Perhaps it has just been
-> left on by the boot firmware. Someone with access to docs may be able
-> explain how it is supposed to be used.
+On Thu, Nov 24, 2022 at 03:25:01PM +0100, Johan Hovold wrote:
+> The devices on the SC8280XP PCIe buses are cache coherent and must be
+> marked as such to avoid data corruption.
+> 
+> A coherent device can, for example, end up snooping stale data from the
+> caches instead of using data written by the CPU through the
+> non-cacheable mapping which is used for consistent DMA buffers for
+> non-coherent devices.
+> 
 
-RPMH_QLINK_CLK is also in msm-4.19 ref_clk_src for
-GCC_UFS_MEM_CLKREF_CLK (ufsphy_mem) and also ref_clk (ufshc_mem).
+Also, the device may write into the L2 cache (or whatever cache that is
+accessible) if there is an entry and the CPU may invalidate it before reading
+from the DMA buffer. This will end up in a data loss.
 
-Honestly since it works fine without adding this to gcc driver and I
-don't really know much about clk (and have no docs for this) would it be
-okay to just ignore RPMH_QLINK_CLK?
+> Note that this is much more likely to happen since commit c44094eee32f
+> ("arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()")
+> that was added in 6.1 and which removed the cache invalidation when
+> setting up the non-cacheable mapping.
+> 
+> Marking the PCIe devices as coherent specifically fixes the intermittent
+> NVMe probe failures observed on the Thinkpad X13s, which was due to
+> corruption of the submission and completion queues. This was typically
+> observed as corruption of the admin submission queue (with well-formed
+> completion):
+> 
+> 	could not locate request for tag 0x0
+> 	nvme nvme0: invalid id 0 completed on queue 0
+> 
+> or corruption of the admin or I/O completion queues (malformed
+> completion):
+> 
+> 	could not locate request for tag 0x45f
+> 	nvme nvme0: invalid id 25695 completed on queue 25965
+> 
+> presumably as these queues are small enough to not be allocated using
+> CMA which in turn make them more likely to be cached (e.g. due to
+> accesses to nearby pages through the cacheable linear map). Increasing
+> the buffer sizes to two pages to force CMA allocation also appears to
+> make the problem go away.
+> 
 
->
-> > And for the driver patch, I've discovered that this phy doesn't have
-> > separate txa/tbx region, so dts was also wrong there. Do you know if
-> > there's a way to test DP phy initialization without having all the USB-=
-C
-> > plumbing in place? Might be good to validate at least phy init works if
-> > we're already touching all of this.
->
-> Do you mean that it appears to work as sc8280xp with txa/txb shared by
-> both the USB and DP parts?
+I don't think the problem will go away if the allocation happens from CMA
+region. It may just decrease the chances of cache hit but it could always
+happen due to the existence of linear mapping with cacheable attribute.
 
-Yes, looks like it. Can't find any evidence pointing in any other
-direction at least, everything I've seen shows .txa =3D 0x1200 & .txb =3D
-0x1600.
+> Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
->
-> I guess you need a proper setup to test it properly. Not sure what
-> you'll be able to learn otherwise, apart from whether it passes basic
-> smoke testing.
+Anyway, this is a really good find!
 
-Currently it's not even smoke testing because dp phy is never getting
-enabled because there's no consumer. That's why I guess it was never
-noticed it's wrongly described in dts.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Regards
-Luca
+Thanks,
+Mani
 
->
-> Johan
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 27f5c2f82338..7748cd29276d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -854,6 +854,8 @@ pcie4: pcie@1c00000 {
+>  				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
+>  			bus-range = <0x00 0xff>;
+>  
+> +			dma-coherent;
+> +
+>  			linux,pci-domain = <6>;
+>  			num-lanes = <1>;
+>  
+> @@ -951,6 +953,8 @@ pcie3b: pcie@1c08000 {
+>  				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
+>  			bus-range = <0x00 0xff>;
+>  
+> +			dma-coherent;
+> +
+>  			linux,pci-domain = <5>;
+>  			num-lanes = <2>;
+>  
+> @@ -1046,6 +1050,8 @@ pcie3a: pcie@1c10000 {
+>  				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
+>  			bus-range = <0x00 0xff>;
+>  
+> +			dma-coherent;
+> +
+>  			linux,pci-domain = <4>;
+>  			num-lanes = <4>;
+>  
+> @@ -1144,6 +1150,8 @@ pcie2b: pcie@1c18000 {
+>  				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
+>  			bus-range = <0x00 0xff>;
+>  
+> +			dma-coherent;
+> +
+>  			linux,pci-domain = <3>;
+>  			num-lanes = <2>;
+>  
+> @@ -1239,6 +1247,8 @@ pcie2a: pcie@1c20000 {
+>  				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
+>  			bus-range = <0x00 0xff>;
+>  
+> +			dma-coherent;
+> +
+>  			linux,pci-domain = <2>;
+>  			num-lanes = <4>;
+>  
+> -- 
+> 2.37.4
+> 
 
+-- 
+மணிவண்ணன் சதாசிவம்
