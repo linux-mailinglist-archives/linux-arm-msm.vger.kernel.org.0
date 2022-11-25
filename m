@@ -2,80 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1709638C15
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:26:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75E6A638C5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:38:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbiKYO0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 09:26:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
+        id S229987AbiKYOiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 09:38:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbiKYO0g (ORCPT
+        with ESMTP id S230045AbiKYOh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 09:26:36 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560A32AC7E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:26:34 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id f9so4085031pgf.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:26:34 -0800 (PST)
+        Fri, 25 Nov 2022 09:37:58 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601F41C129
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:37:55 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id s5so7076573wru.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pr9EPBHz4BamKgB8yWADZkXZ2+tlYR/qk7DwwWPntys=;
-        b=I22Ui3Ws2mdvy3i8n4OvfE7B4UBhCYea7j3aLWfiqH6e04pBvYdBesUghp62dWLwlP
-         nUvmU/k0g1An/0OlJ34HaFJQiRBzF0H4W6T/bVUx1zm9Bl2bgWzoL3GpF4JfgONWkVbE
-         EwQpaRMKtu1ensgpA7mEiE9oiRjstNpI6/teS/2EmsCih9G1zkFWu57x03IKOctYmO6b
-         8uIFnuHSjhfW3vcW332yGJfmlCNj0hM2e3UlZ2FvRnUWb5xA0fGO9KsZPNX63gbTbsLc
-         Avx33IJSJQXBDcMj1TDY9VR9YSk/OF8WhfUPLTuG21X7mpO1vVjJj47paR3SHE3BHjTr
-         ROiA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hrDPugbGkUH8uPiDnvaRZfdEhlUMjCxRails1zWFZdw=;
+        b=BMAit6xLhKZyhxy+vup7aqWvO/XCPl4fGAnIWkhlv0cgETv/w+db5BARl8jhd6eLAU
+         dDO1qPPALURyqP1cPkZxFjEPAssRnpUEE4pcwh3BTNLDAly4Pzf9g453lA3WyaMoz7/+
+         X2+z/+3cPIgf1kkkiAU2EYhEdGvRJAE7zZLe6G6JjBqvdSAWfWmAmo6ENLz7IoI3qcdy
+         t73evpDa4mplMnLOpxMPDFnATPbL05dY3aoBoiM4XbLENjYC7fwExRBuqcOHMUHrCXKn
+         +BXL/qyZkajAX6R/Ic5oJD7aXRzT0/0uiZ7zFbcnezQU/c434mivDpb5N9V9MR+CcOVk
+         wupw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pr9EPBHz4BamKgB8yWADZkXZ2+tlYR/qk7DwwWPntys=;
-        b=5GgRhr6qc8TqoAFQLGeNSUlFkkjD4wg7PmRlqUadtL52pZ20g7t/5AC4NoWDHslLEp
-         QFOIN9TZ8CcNTAjKrrz/8rYqmkfoHN8nHIwG/vfDg5Jaine4ZBf5iHuCItET4HXyak9Y
-         cm0U6iVh/UKVQARzH5QBPjTjynr/eQDLbkhRHEOgrbagh5e4M4klnZ394yfxUOxm/j+h
-         dET4A74MsV2MkLXQEJsVbe/1SKyclYAGekbzq7tXXT/AnIPpURHRZR8Osj3xpHHLB6yo
-         sGKxdMIY6tDCpOmINedGxm8MGVQ4oLTJMG53qm3fKo1yQOCkCLzQS4I9FqSmN4jI6KF7
-         Rblg==
-X-Gm-Message-State: ANoB5pkmQMf33hCQhOh7EljThNeb37EjXRexONFCf1aSRa4k5poyBi3D
-        UgdWrMoD56Yc4rJPTh1wjKes
-X-Google-Smtp-Source: AA0mqf49zCazD+UtCRa4BNYXgoE42BG1LqZ3W0LypZAXCz7fviyny0CBtnZkM2HGDAm3DL59CDuHnQ==
-X-Received: by 2002:a63:1e62:0:b0:46b:3acb:77b2 with SMTP id p34-20020a631e62000000b0046b3acb77b2mr15395586pgm.560.1669386393687;
-        Fri, 25 Nov 2022 06:26:33 -0800 (PST)
-Received: from thinkpad ([117.202.190.212])
-        by smtp.gmail.com with ESMTPSA id n7-20020a170902d2c700b00186ffe62502sm3448694plc.254.2022.11.25.06.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 06:26:32 -0800 (PST)
-Date:   Fri, 25 Nov 2022 19:56:25 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix PCIe DMA coherency
-Message-ID: <20221125142625.GA9892@thinkpad>
-References: <20221124142501.29314-1-johan+linaro@kernel.org>
+        bh=hrDPugbGkUH8uPiDnvaRZfdEhlUMjCxRails1zWFZdw=;
+        b=hAS2qL8I+dp6IAtdbrsAwUyHTz2zz7l2kZRuA2rhmh5OzwnGm4tgPLhazD/OWz2SxU
+         Vpp6ZEK5ezrNVIlphWzTMhJL9yg0Kjn7C5oG4rI3catCJ/zlkT5O6bVCSh4XH0YWrRmI
+         pJBR8+P1BPqFqvPgLr6SwIdH716uW6vdtf8sZq7Dhrygo9pNWeO5zyHLdBwbwFyS+fgI
+         ROhoBkGUFc32QJ5Op0XWRZW7Fw++FQSa34BVxR3tIaKAcDJEo4chH5vWbWQa8bxbFsE2
+         shGf3SBvsd+erXAcYrcJCnTheEeB/IFj3KLdFx89GLJe/IrW/6Mv8ZVLCS3XgVJLfX7b
+         SreA==
+X-Gm-Message-State: ANoB5pkKdLDwtU7YcCv+FpmM3jaQj7pE1qwwwrmacOKz4hULVS+DA1eu
+        ADznn6xHQhjaVz5Bw2Zgndbnkmkmk9RbWw==
+X-Google-Smtp-Source: AA0mqf6zFC29XjHLwhlQEYJX4yZh6j2JlZhtRxyqGdRVe0Zun9l7ZP3FYrb2zuBfsAUHkGZHKTvnVg==
+X-Received: by 2002:a05:6000:1208:b0:236:4838:515d with SMTP id e8-20020a056000120800b002364838515dmr22959604wrx.541.1669387073812;
+        Fri, 25 Nov 2022 06:37:53 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id d5-20020a05600c3ac500b003cfe6fd7c60sm5343439wms.8.2022.11.25.06.37.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Nov 2022 06:37:53 -0800 (PST)
+Message-ID: <426d1f07-0a5d-b740-dc93-77c5a8bc6d23@linaro.org>
+Date:   Fri, 25 Nov 2022 14:37:52 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221124142501.29314-1-johan+linaro@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 13/13] tty: serial: qcom-geni-serial: add support for
+ serial engine DMA
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
+        =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20221123110759.1836666-1-brgl@bgdev.pl>
+ <20221123110759.1836666-14-brgl@bgdev.pl>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20221123110759.1836666-14-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,117 +85,171 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 24, 2022 at 03:25:01PM +0100, Johan Hovold wrote:
-> The devices on the SC8280XP PCIe buses are cache coherent and must be
-> marked as such to avoid data corruption.
-> 
-> A coherent device can, for example, end up snooping stale data from the
-> caches instead of using data written by the CPU through the
-> non-cacheable mapping which is used for consistent DMA buffers for
-> non-coherent devices.
-> 
+Thanks Bartosz for the patch,
 
-Also, the device may write into the L2 cache (or whatever cache that is
-accessible) if there is an entry and the CPU may invalidate it before reading
-from the DMA buffer. This will end up in a data loss.
-
-> Note that this is much more likely to happen since commit c44094eee32f
-> ("arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()")
-> that was added in 6.1 and which removed the cache invalidation when
-> setting up the non-cacheable mapping.
+On 23/11/2022 11:07, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Marking the PCIe devices as coherent specifically fixes the intermittent
-> NVMe probe failures observed on the Thinkpad X13s, which was due to
-> corruption of the submission and completion queues. This was typically
-> observed as corruption of the admin submission queue (with well-formed
-> completion):
+> The qcom-geni-serial driver currently only works in SE FIFO mode. This
+> limits the UART speed to around 180 kB/s. In order to achieve higher
+> speeds we need to use SE DMA mode.
 > 
-> 	could not locate request for tag 0x0
-> 	nvme nvme0: invalid id 0 completed on queue 0
+> Keep the console port working in FIFO mode but extend the code to use DMA
+> for the high-speed port.
 > 
-> or corruption of the admin or I/O completion queues (malformed
-> completion):
-> 
-> 	could not locate request for tag 0x45f
-> 	nvme nvme0: invalid id 25695 completed on queue 25965
-> 
-> presumably as these queues are small enough to not be allocated using
-> CMA which in turn make them more likely to be cached (e.g. due to
-> accesses to nearby pages through the cacheable linear map). Increasing
-> the buffer sizes to two pages to force CMA allocation also appears to
-> make the problem go away.
-> 
-
-I don't think the problem will go away if the allocation happens from CMA
-region. It may just decrease the chances of cache hit but it could always
-happen due to the existence of linear mapping with cacheable attribute.
-
-> Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Anyway, this is a really good find!
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>   drivers/tty/serial/qcom_geni_serial.c | 289 ++++++++++++++++++++++----
+>   1 file changed, 247 insertions(+), 42 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 27f5c2f82338..7748cd29276d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -854,6 +854,8 @@ pcie4: pcie@1c00000 {
->  				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 82242a40a95a..0f4ba909c792 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -70,6 +70,8 @@
+>   #define UART_START_TX			0x1
+>   /* UART S_CMD OP codes */
+>   #define UART_START_READ			0x1
+> +#define UART_PARAM			0x1
+> +#define UART_PARAM_RFR_OPEN		BIT(7)
+>   
+>   #define UART_OVERSAMPLING		32
+>   #define STALE_TIMEOUT			16
+> @@ -95,9 +97,11 @@
+>   /* We always configure 4 bytes per FIFO word */
+>   #define BYTES_PER_FIFO_WORD		4
+>   
+> +#define DMA_RX_BUF_SIZE		2048
 > +
->  			linux,pci-domain = <6>;
->  			num-lanes = <1>;
->  
-> @@ -951,6 +953,8 @@ pcie3b: pcie@1c08000 {
->  				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <5>;
->  			num-lanes = <2>;
->  
-> @@ -1046,6 +1050,8 @@ pcie3a: pcie@1c10000 {
->  				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <4>;
->  			num-lanes = <4>;
->  
-> @@ -1144,6 +1150,8 @@ pcie2b: pcie@1c18000 {
->  				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <3>;
->  			num-lanes = <2>;
->  
-> @@ -1239,6 +1247,8 @@ pcie2a: pcie@1c20000 {
->  				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
->  			bus-range = <0x00 0xff>;
->  
-> +			dma-coherent;
-> +
->  			linux,pci-domain = <2>;
->  			num-lanes = <4>;
->  
-> -- 
-> 2.37.4
-> 
+>   struct qcom_geni_device_data {
+>   	bool console;
+> -	void (*handle_rx)(struct uart_port *uport, u32 bytes, bool drop);
+> +	enum geni_se_xfer_mode mode;
+>   };
+>   
+>   struct qcom_geni_private_data {
+> @@ -118,9 +122,11 @@ struct qcom_geni_serial_port {
+>   	u32 tx_fifo_depth;
+>   	u32 tx_fifo_width;
+>   	u32 rx_fifo_depth;
+> +	dma_addr_t tx_dma_addr;
+> +	dma_addr_t rx_dma_addr;
+>   	bool setup;
+>   	unsigned int baud;
+> -	void *rx_fifo;
+> +	void *rx_buf;
+>   	u32 loopback;
+>   	bool brk;
+>   
+> @@ -552,18 +558,11 @@ static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
+>   
+>   static void handle_rx_uart(struct uart_port *uport, u32 bytes, bool drop)
+>   {
+> -	struct tty_port *tport;
+>   	struct qcom_geni_serial_port *port = to_dev_port(uport);
+> -	u32 num_bytes_pw = port->tx_fifo_width / BITS_PER_BYTE;
+> -	u32 words = ALIGN(bytes, num_bytes_pw) / num_bytes_pw;
+> +	struct tty_port *tport = &uport->state->port;
+>   	int ret;
+>   
+> -	tport = &uport->state->port;
+> -	ioread32_rep(uport->membase + SE_GENI_RX_FIFOn, port->rx_fifo, words);
+> -	if (drop)
+> -		return;
+> -
 
--- 
-மணிவண்ணன் சதாசிவம்
+Are we removing FIFO support for uart?
+
+It it not a overhead to use dma for small transfers that are less than 
+fifo size?
+
+
+> -	ret = tty_insert_flip_string(tport, port->rx_fifo, bytes);
+> +	ret = tty_insert_flip_string(tport, port->rx_buf, bytes);
+>   	if (ret != bytes) {
+>   		dev_err(uport->dev, "%s:Unable to push data ret %d_bytes %d\n",
+>   				__func__, ret, bytes);
+> @@ -578,7 +577,70 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *uport)
+>   	return !readl(uport->membase + SE_GENI_TX_FIFO_STATUS);
+>   }
+>   
+> -static void qcom_geni_serial_start_tx(struct uart_port *uport)
+> +static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport)
+> +{
+> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
+> +	bool done;
+
+-->
+> +	u32 status;
+...
+> +
+> +	status = readl(uport->membase + SE_GENI_STATUS);
+> +	if (!(status & M_GENI_CMD_ACTIVE))
+> +		return;
+<---
+
+this code snippet is repeating more than few times in the patches, looks 
+like it could be made to a inline helper.
+
+
+> +
+> +	if (port->rx_dma_addr) {
+> +		geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr,
+> +				      port->tx_remaining);
+> +		port->tx_dma_addr = (dma_addr_t)NULL;
+> +		port->tx_remaining = 0;
+> +	}
+> +
+> +	m_irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
+> +	writel(m_irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+> +	geni_se_cancel_m_cmd(&port->se);
+> +
+> +	done = qcom_geni_serial_poll_bit(uport, SE_GENI_S_IRQ_STATUS,
+> +					 S_CMD_CANCEL_EN, true);
+> +	if (!done) {
+> +		geni_se_abort_m_cmd(&port->se);
+> +		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+> +					  M_CMD_ABORT_EN, true);
+
+return is not checked, there are few more such instances in the patch.
+
+> +		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+> +	}
+> +
+> +	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+> +}
+> +
+> +static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
+> +{
+> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
+> +	struct circ_buf *xmit = &uport->state->xmit;
+> +	unsigned int xmit_size;
+> +	int ret;
+> +
+> +	if (port->tx_dma_addr)
+> +		return;
+Is this condition actually possible?
+
+
+> +
+> +	xmit_size = uart_circ_chars_pending(xmit);
+> +	if (xmit_size < WAKEUP_CHARS)
+> +		uart_write_wakeup(uport);
+> +
+> +	xmit_size = CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE);
+> +
+> +	qcom_geni_serial_setup_tx(uport, xmit_size);
+> +
+> +	ret = geni_se_tx_dma_prep(&port->se, &xmit->buf[xmit->tail],
+> +				  xmit_size, &port->tx_dma_addr);
+> +	if (ret) {
+> +		dev_err(uport->dev, "unable to start TX SE DMA: %d\n", ret);
+> +		qcom_geni_serial_stop_tx_dma(uport);
+> +		return;
+> +	}
+> +
+> +	port->tx_remaining = xmit_size;
+> +}
+> +
+
+...
