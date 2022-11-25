@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E41BF63873B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 11:19:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AD9C638776
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 11:24:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbiKYKTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 05:19:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
+        id S230177AbiKYKYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 05:24:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbiKYKTk (ORCPT
+        with ESMTP id S230214AbiKYKY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 05:19:40 -0500
+        Fri, 25 Nov 2022 05:24:26 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C71F218B4;
-        Fri, 25 Nov 2022 02:19:40 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FB045EC1;
+        Fri, 25 Nov 2022 02:24:16 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD79F62349;
-        Fri, 25 Nov 2022 10:19:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09032C433D6;
-        Fri, 25 Nov 2022 10:19:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8F2C262354;
+        Fri, 25 Nov 2022 10:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75A7C433D6;
+        Fri, 25 Nov 2022 10:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669371579;
-        bh=wi1wajl/uQaonaWjdH3x87mG1xWYis5sdgMpB1P6VBQ=;
+        s=k20201202; t=1669371854;
+        bh=UZVGoBnwbqgX7QHkA+XxraCebfb9ih7yV/82oceIMgI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=E4cr9iHDICE9SsxDGL/9CiVT1UOVGyWQ4OQfzc+Y5O0XoADgHg6A6o5tSPOviuUe/
-         RtfoTfYzYOBLh9WP92bGkdT9oFeBV3ADNNPARQE3tRORxYrx8+on/dXoJBeyC6BaBg
-         OPuYLTHQ1ZLCpieJH8qgkI49PaeYVplOEGBy2MVuVDSWcXmiu+qy4Arkwn4lxHGwwX
-         7THM2IgwOy6+d95VPW5rnD1cQ8ZTE9g8xyuuLFKTX04zis9ZLF+5L/dC63PafAhgZe
-         4+/EDF205WIZuHosU4jl7HIvWPKWT1U+jEpVPdfuLH+x9W54L1mcUdMHnEHSDOlfIi
-         XQPR8It5XbCrA==
+        b=kAbBEKzxQW3BJZfTG3aYOohUWiAEpSVowGD+CqfEjT8iYkTbMJEAsEKTliV/+bqc1
+         xxb9OJelnz/cJhh3L0D5Uz8EKycRJhlfH6T1vn2tOHn+YRcBMhlWIvc4ADNjpPpFW/
+         gGCnr/UkoQ6/V7bjzt17DnpvC1acTDhrsqhX4sftEnHDIe19vcxaQQ1KRnQZz/FvWl
+         4M/h/My7xpHg3YWA6UKLx+ISzvzs5uWGi0/O7FpL/Te4XIMIy0S/Zb0Q7KWzmTm0Kv
+         /Uo9y+M9o27zetPCwtL1sNeJrwIQXRvzrEzrBx+FFAcSfyB4Cmz5vG7GZUgps4CTAF
+         mnC9lixd0c2uA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oyVnd-0002Wq-KI; Fri, 25 Nov 2022 11:19:14 +0100
-Date:   Fri, 25 Nov 2022 11:19:13 +0100
+        id 1oyVs6-0002aK-Av; Fri, 25 Nov 2022 11:23:50 +0100
+Date:   Fri, 25 Nov 2022 11:23:50 +0100
 From:   Johan Hovold <johan@kernel.org>
 To:     Luca Weiss <luca.weiss@fairphone.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -45,20 +45,17 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add
- sm6350 compatible
-Message-ID: <Y4CWoT52Q8jnm/dF@hovoldconsulting.com>
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 2/3] phy: qcom-qmp-combo: Add config for SM6350
+Message-ID: <Y4CXtn/o3aNvBNh5@hovoldconsulting.com>
 References: <20221125092749.46073-1-luca.weiss@fairphone.com>
- <Y4CP9fwhDXsLu57Q@hovoldconsulting.com>
- <COLABNHBQ1DG.1PB8SDY3FW1YY@otso>
+ <20221125092749.46073-2-luca.weiss@fairphone.com>
+ <Y4CSYZE+3fZCV4Z3@hovoldconsulting.com>
+ <COLAQH772WXW.P442ICY46TDR@otso>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <COLABNHBQ1DG.1PB8SDY3FW1YY@otso>
+In-Reply-To: <COLAQH772WXW.P442ICY46TDR@otso>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -68,85 +65,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 25, 2022 at 10:55:31AM +0100, Luca Weiss wrote:
+On Fri, Nov 25, 2022 at 11:14:53AM +0100, Luca Weiss wrote:
 > Hi Johan,
 > 
-> On Fri Nov 25, 2022 at 10:50 AM CET, Johan Hovold wrote:
-> > On Fri, Nov 25, 2022 at 10:27:47AM +0100, Luca Weiss wrote:
-> > > Add the compatible describing the combo phy found on SM6350.
+> On Fri Nov 25, 2022 at 11:01 AM CET, Johan Hovold wrote:
+> > On Fri, Nov 25, 2022 at 10:27:48AM +0100, Luca Weiss wrote:
+> > > Add the tables and config for the combo phy found on SM6350.
 > > > 
 > > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > > > ---
-> > > @Johan Hovold, I've sent this v2 as RFC because there are several things
-> > > where I have questions on how it should be done.
-> > > 
-> > > In this patch, you can see there's cfg_ahb (&xo_board) and power-domains
-> > > is not set. In msm-4.19 &gcc_usb30_prim_gdsc is only used in the
-> > > ssusb@a600000 node, or should I also add it to qmpphy?
+> > > @Johan Hovold, here I've added dp_txa & dp_txb, I believe otherwise
+> > > qmp->dp_tx would be wrong. Is this different on sc8280xp or was this a
+> > > mistake on your side? I think this should probably be split out to
+> > > another patch to not mix things up too much.
 > >
-> > Yeah, you may need to add a platform specific section of the clocks,
-> > which appear to be different, even if I'm not sure they are currently
-> > described correctly (xo_board as cfg_ahb and "QLINK" as ref). How are
-> > they named in the vendor's dts?
+> > Yeah, that's a difference in sc8280xp which does not have dedicated TX
+> > registers for DP.
 > 
-> This is the msm-4.19 dts:
-> https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/lagoon-usb.dtsi#354
-
-		clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-			<&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>,
-			<&rpmhcc RPMH_QLINK_CLK>,
-			<&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-			<&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-		clock-names = "aux_clk", "pipe_clk", "ref_clk_src",
-				"ref_clk", "com_aux_clk";
-
-So it looks like you don't need update the binding for the clocks as the
-above matches sc8280xp:
-
-	aux
-	ref
-	com_aux
-	usb3_pipe
-
-Parent clocks (ref_clk_src) should not be included in the binding, but
-rather be handled by the clock driver. For example, see:
-
-	https://lore.kernel.org/all/20221121085058.31213-4-johan+linaro@kernel.org/
-	https://lore.kernel.org/all/20221115152956.21677-1-quic_shazhuss@quicinc.com/
-
-> > >  .../bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml          | 5 +++--
-> > >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> > > index 6f31693d9868..3e39e3e0504d 100644
-> > > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> > > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> > > @@ -17,16 +17,18 @@ properties:
-> > >    compatible:
-> > >      enum:
-> > >        - qcom,sc8280xp-qmp-usb43dp-phy
-> > > +      - qcom,sm6350-qmp-usb3-dp-phy
-> > >  
-> > >    reg:
-> > >      maxItems: 1
-> > >  
-> > >    clocks:
-> > > -    maxItems: 4
-> > > +    maxItems: 5
-> > >  
-> > >    clock-names:
-> > >      items:
-> > >        - const: aux
-> > > +      - const: cfg_ahb
-> > >        - const: ref
-> > >        - const: com_aux
-> > >        - const: usb3_pipe
+> Good to know.
+> 
 > >
-> > So this would need to be moved to an allOf: construct at the end with
-> > one section each for sc8280xp and sm6350.
+> > This is probably best handled explicitly when parsing the DT by using
+> > dp_txa/b if they are set and otherwise fallback to txa/txb (e.g.
+> > instead of hiding it in the v5 table by using the same offset in two
+> > places).
 > 
-> Ack.
+> Are you thinking about something like this?
+> 
+> if (offs->dp_txa)
+>     qmp->dp_tx = base + offs->dp_txa
+> else
+>     qmp->dp_tx = base + offs->txa;
+> 
+> if (offs->dp_txb)
+>     qmp->dp_tx2 = base + offs->dp_txb;
+> else
+>     qmp->dp_tx2 = base + offs->txb;
+> 
+> This wouldn't handle ".dp_txa = 0x0000" but I don't think this should be
+> a problem, right?
 
-So no need to change this it seems.
+Yeah, that should be fine. I'd even merge the branches:
+
+	if (offs->dp_txa) {
+		qmp->dp_tx = base + offs->dp_txa;
+		qmp->dp_tx2 = base + offs->dp_txb;
+	} else {
+		qmp->dp_tx = base + offs->txa;
+		qmp->dp_tx2 = base + offs->txb;
+	}
 
 Johan
