@@ -2,73 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E71E638C94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:43:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3956638CA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:46:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbiKYOnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 09:43:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34304 "EHLO
+        id S230136AbiKYOqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 09:46:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230107AbiKYOm6 (ORCPT
+        with ESMTP id S230221AbiKYOp4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 09:42:58 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1065F41982
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:42:15 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id r12so7241896lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:42:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a1xSVUhkUfrXUhf8CMusEDuKEs4N/AtKVgIpTqaWjgU=;
-        b=rV7OXzdx6QVyI+A/2k8RpReSXMFb0Dnhi5C6GaVYBIDNoVggmmoQh/xQohAiGKVMf2
-         WdkeIGQUuIURvOnmj+VWZlDV4+zhUnPeWMpcQI2EEk+xpdBN0DtqgnXVx389EqvzMFGG
-         zXgBXx2MWglY8+Bv9MzWCSORTnp2NZAcNwPGuHeMrFHF6A+oNH78ZT0OtSkwfYs33HkE
-         HWKBH3Lp8gW0SkUpUzlFRQa+5RG0gL4QQjn0oGceBduqcjS1WzqPvZQEFOgjyBb3WbEt
-         gzwVTGwfwLNWgNKTg8qJwFkHN39aP7KWydVuOpsDGWgtwkK0SzTApE9MwEapc7OgjA+R
-         0b1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a1xSVUhkUfrXUhf8CMusEDuKEs4N/AtKVgIpTqaWjgU=;
-        b=5/nYveFgAFOZuMoDTqRedFE0NTq6WHSCiViY+RcQ4n7wwmh6Zn2y74Z2QOSVj4WDiS
-         hcpXPn0bw/g+6eXamZdY3GOXff8QppHEXKP+VM6ZdC14S4uHpU58nZ28/H9CRISHU5LJ
-         fOV+K84EA8zrIJSt/5np9Kd+2jxMoVVvBOW7za/dd0VQoP2kYgKe/+j8r/w8NHK3TJGj
-         bvT+J9AhlbDyQ7bVIraRE2KCMnYHL0FoIC966g36HXi4tpGTWjvEuqUUSjdyM3NLot1l
-         R5UaEQbFeS478LRYrILAqXguv8ZID2fa6AoeBDatpuXmtaWfVFkoysM0z5ZJTHPPV+qZ
-         ZRxA==
-X-Gm-Message-State: ANoB5pmVcdg57oY8ei6CHN6/pc/mlp1oiU/fLWy9m7Gi7trBZzg7ZIbj
-        FCetzbL6ILxgNmKGShtoaUMo6w==
-X-Google-Smtp-Source: AA0mqf62WPBt2G+cougPd3AQ5x/TOUIZAgyUfpsCm/dfHDCoT2+gYaVYZO2DA+CR98ghz03PzC6GbA==
-X-Received: by 2002:a19:2d0c:0:b0:4ad:5fbb:a5b9 with SMTP id k12-20020a192d0c000000b004ad5fbba5b9mr12365525lfj.98.1669387334578;
-        Fri, 25 Nov 2022 06:42:14 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c13-20020a056512238d00b0049ebc44994fsm553711lfv.128.2022.11.25.06.42.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 06:42:14 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 25 Nov 2022 09:45:56 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB233F044;
+        Fri, 25 Nov 2022 06:44:36 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 37CDD624C5;
+        Fri, 25 Nov 2022 14:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8978BC433D6;
+        Fri, 25 Nov 2022 14:44:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669387464;
+        bh=MuAwpha+qj7ypes7vfXT4oKy6o8DH33QwZ2K7CESjKA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RtMjx0KGVzlDUNKm+iMxXswVni2hxX+w+hhhpGHCT+Cq9vtG2la0i8kZdrgDcrKre
+         l7YNHyUJopFpdtCU/SylE/gHjsuBb+Y+37fMtJioOR+i1itWiCp2OR2HKNqZoJgYlQ
+         Moww0jEGsfFQQWAiQUcA5XkaMB7TIpgjN2kwWZJs8BkfEDkXlSAywj1wBxzGsT7nHU
+         J/p97AVBmXrTL49HkwK6b12SxQWq3QNdel2QZbgqxXD5QU01m0WZl/ah0L9u5SdVWX
+         xPqTeZGTQef9M5ffcumt42YtbCt+VrPmEb7n8pWuIJRhwE5IPB1pKwxtgN48H03SH3
+         9s2eEDi3UAp/w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oyZvr-0005Sz-98; Fri, 25 Nov 2022 15:44:00 +0100
+Date:   Fri, 25 Nov 2022 15:43:59 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ARM: dts: qcom: align LED node names with dtschema
-Date:   Fri, 25 Nov 2022 15:42:09 +0100
-Message-Id: <20221125144209.477328-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221125144209.477328-1-krzysztof.kozlowski@linaro.org>
-References: <20221125144209.477328-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix PCIe DMA coherency
+Message-ID: <Y4DUr7tVqnFT5HV9@hovoldconsulting.com>
+References: <20221124142501.29314-1-johan+linaro@kernel.org>
+ <20221125142625.GA9892@thinkpad>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221125142625.GA9892@thinkpad>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,77 +69,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The node names should be generic and DT schema expects certain pattern:
+On Fri, Nov 25, 2022 at 07:56:25PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Nov 24, 2022 at 03:25:01PM +0100, Johan Hovold wrote:
+> > The devices on the SC8280XP PCIe buses are cache coherent and must be
+> > marked as such to avoid data corruption.
+> > 
+> > A coherent device can, for example, end up snooping stale data from the
+> > caches instead of using data written by the CPU through the
+> > non-cacheable mapping which is used for consistent DMA buffers for
+> > non-coherent devices.
+> > 
+> 
+> Also, the device may write into the L2 cache (or whatever cache that is
+> accessible) if there is an entry and the CPU may invalidate it before reading
+> from the DMA buffer. This will end up in a data loss.
 
-  qcom-ipq4018-ap120c-ac.dtb: leds: 'wlan2g', 'wlan5g' do not match any of the regexes: '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
+I mentioned the above as an example, but clearly it can affect also the
+other direction (e.g. as described below).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts | 6 +++---
- arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts     | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+> > Note that this is much more likely to happen since commit c44094eee32f
+> > ("arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()")
+> > that was added in 6.1 and which removed the cache invalidation when
+> > setting up the non-cacheable mapping.
+> > 
+> > Marking the PCIe devices as coherent specifically fixes the intermittent
+> > NVMe probe failures observed on the Thinkpad X13s, which was due to
+> > corruption of the submission and completion queues. This was typically
+> > observed as corruption of the admin submission queue (with well-formed
+> > completion):
+> > 
+> > 	could not locate request for tag 0x0
+> > 	nvme nvme0: invalid id 0 completed on queue 0
+> > 
+> > or corruption of the admin or I/O completion queues (malformed
+> > completion):
+> > 
+> > 	could not locate request for tag 0x45f
+> > 	nvme nvme0: invalid id 25695 completed on queue 25965
+> > 
+> > presumably as these queues are small enough to not be allocated using
+> > CMA which in turn make them more likely to be cached (e.g. due to
+> > accesses to nearby pages through the cacheable linear map). Increasing
+> > the buffer sizes to two pages to force CMA allocation also appears to
+> > make the problem go away.
+> > 
+> 
+> I don't think the problem will go away if the allocation happens from CMA
+> region. It may just decrease the chances of cache hit but it could always
+> happen due to the existence of linear mapping with cacheable attribute.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts
-index cf7da1ab177c..1b27edce9d4f 100644
---- a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts
-+++ b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dts
-@@ -9,7 +9,7 @@ / {
- 	leds {
- 		compatible = "gpio-leds";
- 
--		power {
-+		led-power {
- 			label = "ap120c-ac:green:power";
- 			function = LED_FUNCTION_POWER;
- 			color = <LED_COLOR_ID_GREEN>;
-@@ -17,14 +17,14 @@ power {
- 			default-state = "on";
- 		};
- 
--		wlan {
-+		led-wlan {
- 			label = "ap120c-ac:green:wlan";
- 			function = LED_FUNCTION_WLAN;
- 			color = <LED_COLOR_ID_GREEN>;
- 			gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
- 		};
- 
--		support {
-+		led-support {
- 			label = "ap120c-ac:green:support";
- 			color = <LED_COLOR_ID_GREEN>;
- 			gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts
-index c4f89b712fd9..a707057c887d 100644
---- a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts
-+++ b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dts
-@@ -7,7 +7,7 @@ / {
- 	leds {
- 		compatible = "gpio-leds";
- 
--		status: status {
-+		status: led-status {
- 			label = "ap120c-ac:blue:status";
- 			function = LED_FUNCTION_STATUS;
- 			color = <LED_COLOR_ID_BLUE>;
-@@ -15,7 +15,7 @@ status: status {
- 			default-state = "keep";
- 		};
- 
--		wlan2g {
-+		led-wlan2g {
- 			label = "ap120c-ac:green:wlan2g";
- 			function = LED_FUNCTION_WLAN;
- 			color = <LED_COLOR_ID_GREEN>;
-@@ -23,7 +23,7 @@ wlan2g {
- 			linux,default-trigger = "phy0tpt";
- 		};
- 
--		wlan5g {
-+		led-wlan5g {
- 			label = "ap120c-ac:red:wlan5g";
- 			function = LED_FUNCTION_WLAN;
- 			color = <LED_COLOR_ID_RED>;
--- 
-2.34.1
+I never claimed it would fix the problem, I explicitly wrote that it
+made it less likely to occur (to the point where my reproducer no longer
+triggers).
 
+Johan
