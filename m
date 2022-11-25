@@ -2,61 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EC6563871B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 11:12:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE4E638723
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 11:13:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbiKYKMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 05:12:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
+        id S229865AbiKYKNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 05:13:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbiKYKMF (ORCPT
+        with ESMTP id S229495AbiKYKNd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 05:12:05 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 159E61FFAD;
-        Fri, 25 Nov 2022 02:11:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D9D826231F;
-        Fri, 25 Nov 2022 10:11:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B49C433C1;
-        Fri, 25 Nov 2022 10:11:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669371113;
-        bh=CtuOyTzwbNMD8uQ5rLP+h3ZAPmaYchqlqNUidC/4VKY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OiS+a2JQ8OWVB2U+bpcfHNg8bYFoGqb33LPVPwU9wZeFNW0SElLBVm/O8Uh8HoPKm
-         YD5+VxeA1WC7lyHKQR418KIOgXDnsbp5cxu9HgWFMnuhyNIp5KKcFLeLnejN/0CU/a
-         xcOir2W/EU5DEvOlZzn3n3XM+i/pgoY6hWlKwLEFyDwKMalq6xSWKHqom2eP5mrPeo
-         xZjLF0Ob5T6U7eX/1p8jWZoPfT92Yo4K1jQuIgzOl2lESqW7rDpWvqbsCk8Gpk+jkg
-         XxTfdqGmMEc512AxznV6ixlY2wKh3HACZLCMKlMMOzz3PYicIaarCiHiqmYQePvrti
-         4Q5aEh1OKr4Qg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oyVg7-0002QB-Si; Fri, 25 Nov 2022 11:11:28 +0100
-Date:   Fri, 25 Nov 2022 11:11:27 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Fri, 25 Nov 2022 05:13:33 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC652F388
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 02:13:32 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id j4so6205801lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 02:13:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N991s68h7sVHrWnW84OjVq88wuH3x/g5rq29JRb+HwM=;
+        b=XqoGcZ2FqxYxS2X2ldP5QGMN6qyyENXtxhEJ4hCdJhT88q45IucO2ND2AaMQxEpuYA
+         ZYyJ/VTS1pj80tAK1sHuIK241AETycPznRbe3o5enW5sajBso3Jq1TZ2uh04KqSdTdcJ
+         nziMMEqotNcAuhoXC3dfGvh9+1pMZkODzNCaRq4wJ5076LdtEhWPR/gNzc1HvEg65R2R
+         aSO4FKSZnd+TK3JCwjptwQp+Dkp1p/ilskQSZqJfNNrlXV2YFVdlY0/hO+ZmxrCrYT7i
+         lz3pzMhqrwfO8maj5sCphgfAplBCFNGv+daFcBvKsu6Aw5ONan2aiGYyYBj4GppvZF1w
+         nvcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N991s68h7sVHrWnW84OjVq88wuH3x/g5rq29JRb+HwM=;
+        b=CRNE+jxLCuuf1dcB5QiJRoxsfOcQlJ77FCAifzrqXiAqCaDlO/mz1amtdD/rA/xJu+
+         I25w+JI9Ic3ao4QCwacLCf7yq06qVV0kcO5plAtTl6LKzHKhm0+y22QGtvNYAMQX1V1S
+         pb0apeyi0MsePj4WfLzI/QeD7mFanEsaSvikL22peQohlcHGC2DCDp6SjtkQLXm/1svn
+         7XitIiakH244I7zDuoaHOCbKJQpOlWg0AEbsTkXNx6rzqDftVpL6pehaMS7ATOvT2zRv
+         L9pPDL8Yk6dUIRBZY1d8szHPC2u5/MbZSb3VztZCUZkHKXcpY0CTS5ur2m17/tix91Jg
+         LQAQ==
+X-Gm-Message-State: ANoB5pnxqlZDDdapIvE9Z3Uc9zhWQwtj4PntuIp5xeVHanni9wTCUwNx
+        eaODwD/57qnE0MRxMKQ+q+r0Ng==
+X-Google-Smtp-Source: AA0mqf4ikIXcGn3T5q0OgJWQbcOO1xeRlZOzPhEYXbu7bpy5rMe7Yi4DJhaaJYDKhN3YpD29JoH/Fg==
+X-Received: by 2002:a05:6512:74b:b0:4ad:5f7b:46e0 with SMTP id c11-20020a056512074b00b004ad5f7b46e0mr14177215lfs.350.1669371210546;
+        Fri, 25 Nov 2022 02:13:30 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id p13-20020a2e9acd000000b002774e7267a7sm317595ljj.25.2022.11.25.02.13.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Nov 2022 02:13:30 -0800 (PST)
+Message-ID: <d0a1c5b5-c75f-0bf6-0459-236feebb0e1b@linaro.org>
+Date:   Fri, 25 Nov 2022 11:13:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v5 1/2] dt-bindings: arm: qcom: Add zombie
+Content-Language: en-US
+To:     Owen Yang <ecs.taipeikernel@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     Abner Yen <abner.yen@ecs.corp-partner.google.com>,
+        Gavin Lee <gavin.lee@ecs.corp-partner.google.com>,
+        Harvey <hunge@google.com>, Matthias Kaehlcke <mka@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bob Moragues <moragues@google.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 3/3] arm64: dts: qcom: sm6350: Use specific qmpphy
- compatible
-Message-ID: <Y4CUz+qLVgnPoxU5@hovoldconsulting.com>
-References: <20221125092749.46073-1-luca.weiss@fairphone.com>
- <20221125092749.46073-3-luca.weiss@fairphone.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221125092749.46073-3-luca.weiss@fairphone.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20221125174415.v5.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221125174415.v5.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,133 +84,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 25, 2022 at 10:27:49AM +0100, Luca Weiss wrote:
-> The sc7180 phy compatible works fine for some cases, but it turns out
-> sm6350 does need proper phy configuration in the driver, so use the
-> newly added sm6350 compatible.
+On 25/11/2022 10:44, Owen Yang wrote:
+> Add an entry in the device tree binding for sc7280-zombie.
 > 
-> Because the sm6350 compatible is using the new binding, we need to
-> change the node quite a bit to match it.
-> 
-> This fixes qmpphy init when no USB cable is plugged in during bootloader
-> stage.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
 > ---
-> @Johan Hovold, in this patch there's also the question about cfg_ahb,
-> power-domains but I'm also not happy about using the
-> QMP_USB43DP_USB3_PHY define for the phy reference. Do you think it's a
-> good idea to introduce e.g. QMP_USB3DP_USB3_PHY with the same value so
-> it's essentially just an alias to the other?
 
-We had that discussion the other week and I believe we agreed that
-reusing the define with a more general infix (USB43DP) was fine as it's
-just a name for a constant (and the USB43DP constants will be a superset
-of the ones needed for USB3-DP PHYs).
+This is a friendly reminder during the review process.
 
-> This series is tested on next-20221124 with next branch of linux-phy
-> repo (commit bea3ce759b46) merged in.
+It looks like you received a tag and forgot to add it.
 
-The dependencies should all be in linux-next as of today.
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions. However, there's no need to repost patches *only* to add the
+tags. The upstream maintainer will do that for acks received on the
+version they apply.
 
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 46 +++++++---------------------
->  1 file changed, 11 insertions(+), 35 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index 0f01ff4feb55..923c8bb7e5f8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interconnect/qcom,sm6350.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  
-> @@ -1119,50 +1120,25 @@ usb_1_hsphy: phy@88e3000 {
->  			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->  		};
->  
-> -		usb_1_qmpphy: phy@88e9000 {
-> -			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
-> -			reg = <0 0x088e9000 0 0x200>,
-> -			      <0 0x088e8000 0 0x40>,
-> -			      <0 0x088ea000 0 0x200>;
-> -			status = "disabled";
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
-> +		usb_1_qmpphy: phy@88e8000 {
-> +			compatible = "qcom,sm6350-qmp-usb3-dp-phy";
-> +			reg = <0 0x088e8000 0 0x3000>;
->  
->  			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->  				 <&xo_board>,
->  				 <&rpmhcc RPMH_QLINK_CLK>,
-> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
-> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "com_aux", "usb3_pipe";
+https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
 
-As I mentioned in my reply to the binding, we should double check the
-vendor dts and hardware documentation (if possible) before settling on
-these names which appears to just have been reused from some older
-platform.
+If a tag was not added on purpose, please state why and what changed.
 
->  
->  			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
->  				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
->  			reset-names = "phy", "common";
->  
-> -			usb_1_ssphy: usb3-phy@88e9200 {
-> -				reg = <0 0x088e9200 0 0x200>,
-> -				      <0 0x088e9400 0 0x200>,
-> -				      <0 0x088e9c00 0 0x400>,
-> -				      <0 0x088e9600 0 0x200>,
-> -				      <0 0x088e9800 0 0x200>,
-> -				      <0 0x088e9a00 0 0x100>;
-> -				#clock-cells = <0>;
-> -				#phy-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb3_phy_pipe_clk_src";
-> -			};
-> +			#clock-cells = <1>;
-> +			#phy-cells = <1>;
->  
-> -			dp_phy: dp-phy@88ea200 {
-> -				reg = <0 0x088ea200 0 0x200>,
-> -				      <0 0x088ea400 0 0x200>,
-> -				      <0 0x088eac00 0 0x400>,
-> -				      <0 0x088ea600 0 0x200>,
-> -				      <0 0x088ea800 0 0x200>,
-> -				      <0 0x088eaa00 0 0x100>;
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Note that these registers were not correct to begin with and a fix has
-been posted here:
+Best regards,
+Krzysztof
 
-	https://lore.kernel.org/all/20221111094729.11842-2-johan+linaro@kernel.org/
-
-Will hopefully show up in linux-next next week so this can be rebased on
-top.
-
-> -				#phy-cells = <0>;
-> -				#clock-cells = <1>;
-> -			};
-> +			status = "disabled";
->  		};
->  
->  		dc_noc: interconnect@9160000 {
-> @@ -1236,7 +1212,7 @@ usb_1_dwc3: usb@a600000 {
->  				snps,dis_enblslpm_quirk;
->  				snps,has-lpm-erratum;
->  				snps,hird-threshold = /bits/ 8 <0x10>;
-> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
->  				phy-names = "usb2-phy", "usb3-phy";
->  			};
->  		};
-
-Johan
