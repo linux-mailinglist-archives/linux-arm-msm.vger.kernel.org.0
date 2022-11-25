@@ -2,88 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A338B6383BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 07:05:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88CC76383F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 07:21:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbiKYGFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 01:05:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43296 "EHLO
+        id S229491AbiKYGVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 01:21:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiKYGFk (ORCPT
+        with ESMTP id S229436AbiKYGVt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 01:05:40 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E30EB1FCF4;
-        Thu, 24 Nov 2022 22:05:39 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AP50kUP032652;
-        Fri, 25 Nov 2022 06:05:29 GMT
+        Fri, 25 Nov 2022 01:21:49 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61BCA240B1;
+        Thu, 24 Nov 2022 22:21:48 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AP5KSJY007979;
+        Fri, 25 Nov 2022 06:21:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=95nu3QZwoiCm+Mik9Bjpaa1JAMoaDGnyaT/b8apUHYA=;
- b=WLc2B0kpr12ZAA0Hk1Uj/oORduNjzHLOXO3z/pFZo+U+GytOyLLmLk2GcGAc0tWgUlFG
- UFPD9bSK8mzXdleG2zqEV+FtfJ7gw2eXwQ9Zm8L5L+j4/g95FvtFHY02A+tVT2GauF/R
- NKNNqzHMiJdrl1unKvNmS1ORdeMm4beevshlj2z3Ll700LUM4wQUV9OLMS8cXn9g52FJ
- jR0pNitr2w3KHm4bkzLNBW62CoViZVNygqX9qZHqFM76Pncyenwz6R9iYMycJCmzBCVH
- vxQvGCnPoOpqFnGT7HlE0fKMXYi5xZHVpDGYm4rWCoFvE5+JBjN4/4LnaLzkrPiWJNND IQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m21mbbc2q-1
+ bh=7X2cAV8D+5tN4VerwY+Cmy51FaJdiqC/SHu8MMSG/CE=;
+ b=RlzGebGH2snuiXO4Jy5qlbLiAqvwAhY9D8qmoTigq1w3IRCWEfgkc9+ek6ShQHTCmK30
+ xHNwjbDAu7pEPLezH1xTN+qegeqmTnFOzROAfkcf9E3H9QNxxMf1SkTmHTcAQWdwGlvr
+ ic515ooUrsPixia1I29NiOXDmNiPFvxPoaZYe3uofIcAlpeEnenw37EShWUnVWmhaNCh
+ rHy7wtmBr1/GLx/5mkDFKnIOoz1zp/r99aITAscXIzkheQyCDbFTrQ4xGw/qD3A29FRT
+ 7gq3cvz+VLmb2m7O66iCRsEqwlaLz1iwU+CRvAyh3PoOz/Zh2Tb9DsC6U+TEEcP7Rp2n rw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m2buv9gfm-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Nov 2022 06:05:28 +0000
+        Fri, 25 Nov 2022 06:21:34 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AP65Ruf027697
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AP6LW9b013426
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Nov 2022 06:05:27 GMT
+        Fri, 25 Nov 2022 06:21:32 GMT
 Received: from [10.216.38.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 24 Nov
- 2022 22:05:19 -0800
-Message-ID: <6753d5a3-e46b-2cf1-c807-333093ff3fdf@quicinc.com>
-Date:   Thu, 24 Nov 2022 22:05:16 -0800
+ 2022 22:21:26 -0800
+Message-ID: <cb4347b0-b885-1a00-6ab1-03566191e1ec@quicinc.com>
+Date:   Thu, 24 Nov 2022 22:21:22 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH v2 03/12] drm/msm/dpu: Refactor sc7280_pp
- location
+Subject: Re: [PATCH] drm/msm/dpu: Print interrupt index in addition to the
+ mask
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Robert Foss <robert.foss@linaro.org>, <robdclark@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
-        <airlied@linux.ie>, <daniel@ffwll.ch>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <quic_kalyant@quicinc.com>,
-        <swboyd@chromium.org>, <angelogioacchino.delregno@somainline.org>,
-        <loic.poulain@linaro.org>, <quic_khsieh@quicinc.com>,
-        <quic_vpolimer@quicinc.com>, <vkoul@kernel.org>,
-        <dianders@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Jonathan Marek <jonathan@marek.ca>,
-        <vinod.koul@linaro.org>, <quic_jesszhan@quicinc.com>,
-        <andersson@kernel.org>
-References: <20221115133105.980877-1-robert.foss@linaro.org>
- <20221115133105.980877-4-robert.foss@linaro.org>
- <d85a5d66-d54b-29cb-3ced-69c75f6f7802@somainline.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        <phone-devel@vger.kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Sean Paul" <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20221121222456.437815-1-marijn.suijten@somainline.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <d85a5d66-d54b-29cb-3ced-69c75f6f7802@somainline.org>
+In-Reply-To: <20221121222456.437815-1-marijn.suijten@somainline.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dy2vjxEGi9Y89OT7Lgm1pPSd_OzBv1mD
-X-Proofpoint-GUID: dy2vjxEGi9Y89OT7Lgm1pPSd_OzBv1mD
+X-Proofpoint-GUID: pp-FMCIr_c_5Iu05Tb_m__SLWc8ZnweR
+X-Proofpoint-ORIG-GUID: pp-FMCIr_c_5Iu05Tb_m__SLWc8ZnweR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-11-25_02,2022-11-24_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 spamscore=0 malwarescore=0
- impostorscore=0 priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211250049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ clxscore=1011 mlxscore=0 phishscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211250051
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -95,71 +96,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/15/2022 5:33 AM, Konrad Dybcio wrote:
+On 11/21/2022 2:24 PM, Marijn Suijten wrote:
+> The mask only describes the `irq_idx % 32` part, making it generally
+> impossible to deduce what interrupt is being enabled/disabled.  Since
+> `debug/core_irq` in debugfs (and other prints) also include the full
+> `DPU_IRQ_IDX()` value, print the same full value here for easier
+> correlation instead of only adding the `irq_idx / 32` part.
 > 
+> Furthermore, make the dbgstr messages more consistent.
 > 
-> On 15/11/2022 14:30, Robert Foss wrote:
->> The sc7280_pp declaration is not located by the other _pp
->> declarations, but rather hidden around the _merge_3d
->> declarations. Let's fix this to avoid confusion.
->>
->> Signed-off-by: Robert Foss <robert.foss@linaro.org>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
-> This is already merged.
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=1a5b5372e3b0a4cc65a0cbb724b1b0859f4ac63c 
-> 
-> 
-> Konrad
-
-Its part of linux-next but a PR hasnt been sent with it.
-
-That being said, since this particular change has been taken separately, 
-this series should now be rebased without this change and addressing 
-some of the other comments given by konrad.
-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 14 +++++++-------
->>   1 file changed, 7 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 4dac90ee5b8a..8f2d634f7b6b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -1294,6 +1294,13 @@ static const struct dpu_pingpong_cfg 
->> sm8150_pp[] = {
->>               -1),
->>   };
->> +static const struct dpu_pingpong_cfg sc7280_pp[] = {
->> +    PP_BLK("pingpong_0", PINGPONG_0, 0x59000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> +    PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> +    PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> +    PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> +};
->> +
->>   static struct dpu_pingpong_cfg qcm2290_pp[] = {
->>       PP_BLK("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk,
->>           DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->> @@ -1352,13 +1359,6 @@ static const struct dpu_merge_3d_cfg 
->> sm8450_merge_3d[] = {
->>       MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x65f00),
->>   };
->> -static const struct dpu_pingpong_cfg sc7280_pp[] = {
->> -    PP_BLK("pingpong_0", PINGPONG_0, 0x59000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> -    PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> -    PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> -    PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, 
->> -1),
->> -};
->> -
->>   /*************************************************************
->>    * DSC sub blocks config
->>    *************************************************************/
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index cf1b6d84c18a..64589a9c2c51 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -252,9 +252,9 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
+> -		dbgstr = "DPU IRQ already set:";
+> +		dbgstr = "already ";
+>   	} else {
+> -		dbgstr = "DPU IRQ enabled:";
+> +		dbgstr = "";
+>   
+>   		cache_irq_mask |= DPU_IRQ_MASK(irq_idx);
+>   		/* Cleaning any pending interrupt */
+> @@ -268,7 +268,7 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
+>   	}
+>   
+> -	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+> +	pr_debug("DPU IRQ %d %senabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
+>   			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
+>   
+>   	return 0;
+> @@ -301,9 +301,9 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
+> -		dbgstr = "DPU IRQ is already cleared:";
+> +		dbgstr = "already ";
+>   	} else {
+> -		dbgstr = "DPU IRQ mask disable:";
+> +		dbgstr = "";
+>   
+>   		cache_irq_mask &= ~DPU_IRQ_MASK(irq_idx);
+>   		/* Disable interrupts based on the new mask */
+> @@ -317,7 +317,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
+>   	}
+>   
+> -	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+> +	pr_debug("DPU IRQ %d %sdisabled: MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", irq_idx, dbgstr,
+>   			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
+>   
+>   	return 0;
