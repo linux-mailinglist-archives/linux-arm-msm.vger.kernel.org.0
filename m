@@ -2,166 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44722638896
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 12:21:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69C836389E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 13:36:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiKYLVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 06:21:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48276 "EHLO
+        id S229788AbiKYMgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 07:36:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbiKYLVf (ORCPT
+        with ESMTP id S229974AbiKYMgo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 06:21:35 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677F726132
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 03:21:34 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2APAJmAk004675;
-        Fri, 25 Nov 2022 11:21:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BCyYdTV2scl9kueGVLn7bpbceZS3Qy1/x8OzGJZuvPY=;
- b=Nc2CWVthFkqS902Ph69dnIAP77iwqbvyytvud8glJIfCdGsubnBGVvgjXYly/ymH4/K8
- 8Nc9XAucLT8xuGqgWb531+EqhyMtVK9Oj9CFwCYOhzC5hnWW0rvAqelICZKnkp7pw37j
- pgP7rQt4LUTMbeJBL3iGDCXehgClThW1q/U2pyk1goZcAPRPyA21uBtSwlkxig2AASxb
- jEhNT2njyOC7cYWzxHoSGKZGwM77LXzGQxBpS38ZnaiPSatOuMZQdBhgw5fiuBwwE2b4
- x5jUiJxTU4I0ogU+VgwSxwf49eVYjDJGQ/J1J4Eg+P0TrllpR4rrlOdr8DqxOuSU1ps+ 7Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m2uujg6sp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Nov 2022 11:21:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2APBLQx0028869
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 25 Nov 2022 11:21:26 GMT
-Received: from [10.216.38.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 25 Nov
- 2022 03:21:23 -0800
-Message-ID: <614099f5-6e5a-6f96-d81c-d07ded9e3ec1@quicinc.com>
-Date:   Fri, 25 Nov 2022 03:21:19 -0800
+        Fri, 25 Nov 2022 07:36:44 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C301431F97
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 04:36:42 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso3315580wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 04:36:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F8QEr1U+4DdwT5X6CEZxWsT4dF4Ejt6T8JypPrPO5rI=;
+        b=K1xi5tAQLXN9sLEIHr9BFO77DXOhF/h+p2Te8YWE54iOn1IeUtcnLo90aaRsxW20W5
+         rZVEcSEaRhabtLkuR0NeGOtMxgEZZotZzAzoHiA9UL2BZETO7Y4wWT8wDedQ9Z0YgHdu
+         n5PHhsvP51wHsF0Ysd5M7CCE7wpBlA9BgIN9e5xLPXWW8Iuy2NrnfFZX2KcB7lQhuMTb
+         ckk8NdpZ7uYvZGI3sP/hNvAuFcRVdVRIQfZ9rW3SLuDmGTygd6rAHWbfy5SEI9znwF+u
+         akM+qLLW7oSTGMNWAeNhmf+qlyHWx438NqeWmTvr8wVuaQEZDKpzVIvomFZQiG+yZrvi
+         RS6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F8QEr1U+4DdwT5X6CEZxWsT4dF4Ejt6T8JypPrPO5rI=;
+        b=AQBVwHHNcs/ZF4TOIic3VjQMAPK2cKYApKE33CO+ktejzHM1N9A76y4wJfqes7Azo7
+         LfZGfhn3u5klt5ZPDQe+rAarcgmkcHlBI9U8kckSW5fUQ7A7HyXxQuRbl3XTdRmJitmz
+         ZD6t6C+0C8ONlqoOTdmld1+s0230mpyT5ucF7REqKPVEFM/cZgjDXoUUTxce3SjZam6L
+         IDq1vOTs/RX6KPlvoE22VOIoATJlILbS6YemS52Yzs5+PYSKMvl+hHT4jLCtYPB+vX3C
+         CMkhVRpxQjdQpa9FfX/kRrkTenJ0B2dsfLtl8kxrAh9HUJzNkU4qVxmpzPZLgd7nOtn9
+         G2og==
+X-Gm-Message-State: ANoB5pktfIjJcafpwrQTK0yTrHHjyXkcRJNGabQuhIaeRUmQ9x7cFNrJ
+        nYwxn8MMbS46yhxpn34S+PpeRaGNms0lVw==
+X-Google-Smtp-Source: AA0mqf7i/gSH7GGQvOSqsgv9xi7K0jb2aAWSKxgFmGXT6Puc65tmss7R9tmharjDtcFbJgZW8DFsoA==
+X-Received: by 2002:a05:600c:1e85:b0:3cf:84be:aaf9 with SMTP id be5-20020a05600c1e8500b003cf84beaaf9mr14204871wmb.111.1669379800868;
+        Fri, 25 Nov 2022 04:36:40 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id k15-20020a5d6d4f000000b002366dd0e030sm3574111wri.68.2022.11.25.04.36.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Nov 2022 04:36:40 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
+        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
+        swboyd@chromium.org, konrad.dybcio@somainline.org,
+        agross@kernel.org, andersson@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v4 00/18] mdss-dsi-ctrl binding and dts fixes
+Date:   Fri, 25 Nov 2022 12:36:20 +0000
+Message-Id: <20221125123638.823261-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/mdp5: fix reading hw revision on db410c platform
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221125000213.252115-1-dmitry.baryshkov@linaro.org>
- <dc44d8f1-c782-452b-5928-57538250dade@quicinc.com>
- <3c9330f2-a75f-47ea-160c-848c583d9306@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <3c9330f2-a75f-47ea-160c-848c583d9306@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1yS_YMuDJRg3y9GQcGChQi9ftNjmP7R4
-X-Proofpoint-ORIG-GUID: 1yS_YMuDJRg3y9GQcGChQi9ftNjmP7R4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-25_04,2022-11-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 mlxlogscore=999 adultscore=0 bulkscore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211250089
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+V4:
+- Moves the update of the example from patch #5 to patch #4
+
+V3:
+- Moves declaration of mdss-dsi-ctrl into compat string declaration
+  patch - Krzysztof, Dmitry
+- Renames qcm-2290 compat string to agreed compat "qcom,socname-dsi-ctrl"
+  Dmirty, Krzysztof
+- Adds empty line after if clause in yaml control flow section - Dmirty
+- Adds Rb/Ack - Krzysztof, Dmitry, Doug, David
+- vdd*
+  Looking into this some more, I don't believe vdd, vdda, vddio ought to be
+  required properties. Its up to the PCB manufacturer and the panel in-use
+  how that panel is powered. Powering the panel is not something that
+  even necessarily needs to be done from the dsi-ctrl driver.
+  Originally marking vdd* as required in the .txt was an error, its not a
+  SoC level dtsi requirement.
+- clock-names
+  Rather than replicate the clock-name in each if block I listed them with
+  a specific description from a similar reference in usb/qcom,dwc3.yaml.
+ 
+https://lore.kernel.org/linux-arm-msm/eb80681f-2e0b-605f-0444-ec65562f74b8@linaro.org/
+
+V2:
+https://www.spinics.net/lists/linux-arm-msm/msg116326.html
+
+- Moves the DSI PHY changes to a different later series.
+  There are enough dsi-controller-main changes to justify its own
+  standalone series.
+
+- The original phy-name binding change given discussion with Rob and
+  Krzysztof became its own standalone series that has since been merged.
+  https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg403214.html
+
+- Retains the drop of power-domain from yaml as a required property.
+  I dug into the available dtsi. The apq8064 doesn't appear to have any
+  GDSC which can be attached as a power-domain, which means the
+  power-domain requirement is not universal across the various silicon
+  versions.
+
+- Adds Dmitry's RB to power-domain drop
+
+- For the clock declarations I've
+  * I noticed that the simple change I had worked for msm8939 but
+    subsquently broke other dtsi which drove a bigger change to document
+    the clocks on a per compatible basis.
+  * Added compat strings in yaml.
+  * Moved the allOf down later in the file to acomodate the if/then.
+  * Number of clocks validated on a per compatible basis
+  * The driver code which doesn't care about the number of clocks
+    can still operate on the mdss-dsi-ctrl compat but the dts checks will
+    validate against the compat string and yaml.
+
+- vdd descriptions
+  Took the previous text I missed from the .txt file - Krzysztof, Dmitry
+  Adds vdd, vdda and vddio to the required list. This exposes warnings in
+  existing dtsi but the previous .txt declared these regulators as
+  required. - Krzysztof
+ 
+V1:
+This series fixes up a number of dtbs checks which are being flagged adding
+in the msm8939 dtsi.
 
 
-On 11/25/2022 1:21 AM, Dmitry Baryshkov wrote:
-> On 25/11/2022 07:45, Abhinav Kumar wrote:
->> On 11/24/2022 4:02 PM, Dmitry Baryshkov wrote:
->>> Since the commit commit c6122688f265 ("drm/msm/mdp5: stop overriding
->>> drvdata") reading the MDP5 hw revision on db410c will crash the board
->>> as the MDSS_GDSC is not enabled. Revert a part of the offending commit
->>> (moving rpm enablement) and set priv->kms earlier. This make it possible
->>> to use pm_runtime_get_sync() during read_mdp_hw_revision(), which will
->>> power up both the MDP5 and MDSS devices.
->>>
->>
->> This is the exact concern I had even when c6122688f265 was pushed.
->>
->> https://patchwork.freedesktop.org/patch/508334/#comment_917689
->>
->> Was the response given that time not correct then?
-> 
-> Not fully correct. I did not notice, that non-rpm-enabled mdp5 node 
-> doesn't force mdss to be in the on state. (Which is strange. Maybe we 
-> are leaking pm_runtime_enable() for it somewhere.)
-> 
+When converting from .txt to .yaml a number of the parameters for the older
+msm8916 silicon were not transmitted into the yaml.
 
-hmmm, this is a safer change as we are atleast not bypassing pm runtime.
+Adding in the msm8939 which is a near 1:1 copy of the msm8916 in terms of
+dtsi triggers a rake of dtbs checks as a result.
 
- From that perspective,
+https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg403211.html
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->> https://patchwork.freedesktop.org/patch/508334/#comment_917713
->>> Fixes: c6122688f265 ("drm/msm/mdp5: stop overriding drvdata")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 17 ++++++++---------
->>>   1 file changed, 8 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c 
->>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> index b46f983f2b46..29ae5c9613f3 100644
->>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> @@ -519,10 +519,9 @@ static void read_mdp_hw_revision(struct mdp5_kms 
->>> *mdp5_kms,
->>>       struct device *dev = &mdp5_kms->pdev->dev;
->>>       u32 version;
->>> -    /* Manually enable the MDP5, as pm runtime isn't usable yet. */
->>> -    mdp5_enable(mdp5_kms);
->>> +    pm_runtime_get_sync(dev);
->>>       version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
->>> -    mdp5_disable(mdp5_kms);
->>> +    pm_runtime_put_sync(dev);
->>>       *major = FIELD(version, MDP5_HW_VERSION_MAJOR);
->>>       *minor = FIELD(version, MDP5_HW_VERSION_MINOR);
->>> @@ -839,6 +838,12 @@ static int mdp5_init(struct platform_device 
->>> *pdev, struct drm_device *dev)
->>>        */
->>>       clk_set_rate(mdp5_kms->core_clk, 200000000);
->>> +    /* set uninit-ed kms */
->>> +    priv->kms = &mdp5_kms->base.base;
->>> +
->>> +    pm_runtime_enable(&pdev->dev);
->>> +    mdp5_kms->rpm_enabled = true;
->>> +
->>>       read_mdp_hw_revision(mdp5_kms, &major, &minor);
->>>       mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
->>> @@ -887,12 +892,6 @@ static int mdp5_init(struct platform_device 
->>> *pdev, struct drm_device *dev)
->>>       if (ret)
->>>           goto fail;
->>> -    /* set uninit-ed kms */
->>> -    priv->kms = &mdp5_kms->base.base;
->>> -
->>> -    pm_runtime_enable(&pdev->dev);
->>> -    mdp5_kms->rpm_enabled = true;
->>> -
->>>       return 0;
->>>   fail:
->>>       if (mdp5_kms)
-> 
+Bryan O'Donoghue (18):
+  dt-bindings: msm: dsi-controller-main: Fix operating-points-v2
+    constraint
+  dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
+  dt-bindings: msm: dsi-controller-main: Rename qcom,dsi-ctrl-6g-qcm2290
+    to qcom,qcm2290-dsi-ctrl
+  dt-bindings: msm: dsi-controller-main: Add compatible strings for
+    every current SoC
+  dt-bindings: msm: dsi-controller-main: Document clocks on a per
+    compatible basis
+  dt-bindings: msm: dsi-controller-main: Fix description of core clock
+  dt-bindings: msm: dsi-controller-main: Fix clock declarations
+  dt-bindings: msm: dsi-controller-main: Add vdd* descriptions back in
+  ARM: dts: qcom: apq8064: add compat qcom,apq8064-dsi-ctrl
+  ARM: dts: qcom: msm8974: Add compat qcom,msm8974-dsi-ctrl
+  arm64: dts: qcom: msm8916: Add compat qcom,msm8916-dsi-ctrl
+  arm64: dts: qcom: msm8996: Add compat qcom,msm8996-dsi-ctrl
+  arm64: dts: qcom: sc7180: Add compat qcom,sc7180-dsi-ctrl
+  arm64: dts: qcom: sc7280: Add compat qcom,sc7280-dsi-ctrl
+  arm64: dts: qcom: sdm630: Add compat qcom,sdm630-dsi-ctrl
+  arm64: dts: qcom: sdm660: Add compat qcom,sdm660-dsi-ctrl
+  arm64: dts: qcom: sdm845: Add compat qcom,sdm845-dsi-ctrl
+  arm64: dts: qcom: sm8250: Add compat qcom,sm8250-dsi-ctrl
+
+ .../display/msm/dsi-controller-main.yaml      | 205 ++++++++++++++++--
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   3 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |   3 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   3 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   6 +-
+ 11 files changed, 208 insertions(+), 36 deletions(-)
+
+-- 
+2.38.1
+
