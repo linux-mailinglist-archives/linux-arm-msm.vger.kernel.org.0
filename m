@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75E6A638C5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:38:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF743638C96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 15:43:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbiKYOiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 09:38:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
+        id S230245AbiKYOnT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 09:43:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbiKYOh6 (ORCPT
+        with ESMTP id S230243AbiKYOm6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 09:37:58 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601F41C129
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:37:55 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id s5so7076573wru.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:37:55 -0800 (PST)
+        Fri, 25 Nov 2022 09:42:58 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3588E419A3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:42:15 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id f13so7207446lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Nov 2022 06:42:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hrDPugbGkUH8uPiDnvaRZfdEhlUMjCxRails1zWFZdw=;
-        b=BMAit6xLhKZyhxy+vup7aqWvO/XCPl4fGAnIWkhlv0cgETv/w+db5BARl8jhd6eLAU
-         dDO1qPPALURyqP1cPkZxFjEPAssRnpUEE4pcwh3BTNLDAly4Pzf9g453lA3WyaMoz7/+
-         X2+z/+3cPIgf1kkkiAU2EYhEdGvRJAE7zZLe6G6JjBqvdSAWfWmAmo6ENLz7IoI3qcdy
-         t73evpDa4mplMnLOpxMPDFnATPbL05dY3aoBoiM4XbLENjYC7fwExRBuqcOHMUHrCXKn
-         +BXL/qyZkajAX6R/Ic5oJD7aXRzT0/0uiZ7zFbcnezQU/c434mivDpb5N9V9MR+CcOVk
-         wupw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3o4Ak/tooirHnNJn7lhjm6d8X2fgF8UcvDymE+bkTxc=;
+        b=x7IEN5UsmY1JDkSkMKt6SFtlKQILzjEDG8mZ/yAk0l5GJidYSbQ3YuTSLW+ei7GOCI
+         IdCOMhu69TQ4IIztr30Af5lg7Nz8GKb8GDbcSssop8+5/ucwZlzAZsaj2B3Pjab/rROP
+         +0ccyTq3k8Y7VoGi1iNYe0dii3Ty7O55ks3zIoNJ7B0N23L/XRKYmsDGa60qV98jdAx9
+         q5YVSpUIXp5kES/+ldTU/ASurG8bRRtXjPZMSUqtDLgxN86IEgP0/xkdoKXbM4pgR2AH
+         4VHDHvfU6WMrHAJTyXDiWRfwteUlhlcUykLRfmyiMUW6DAZZ3FCRGm5fIpA8Mi+hJsHa
+         Imdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hrDPugbGkUH8uPiDnvaRZfdEhlUMjCxRails1zWFZdw=;
-        b=hAS2qL8I+dp6IAtdbrsAwUyHTz2zz7l2kZRuA2rhmh5OzwnGm4tgPLhazD/OWz2SxU
-         Vpp6ZEK5ezrNVIlphWzTMhJL9yg0Kjn7C5oG4rI3catCJ/zlkT5O6bVCSh4XH0YWrRmI
-         pJBR8+P1BPqFqvPgLr6SwIdH716uW6vdtf8sZq7Dhrygo9pNWeO5zyHLdBwbwFyS+fgI
-         ROhoBkGUFc32QJ5Op0XWRZW7Fw++FQSa34BVxR3tIaKAcDJEo4chH5vWbWQa8bxbFsE2
-         shGf3SBvsd+erXAcYrcJCnTheEeB/IFj3KLdFx89GLJe/IrW/6Mv8ZVLCS3XgVJLfX7b
-         SreA==
-X-Gm-Message-State: ANoB5pkKdLDwtU7YcCv+FpmM3jaQj7pE1qwwwrmacOKz4hULVS+DA1eu
-        ADznn6xHQhjaVz5Bw2Zgndbnkmkmk9RbWw==
-X-Google-Smtp-Source: AA0mqf6zFC29XjHLwhlQEYJX4yZh6j2JlZhtRxyqGdRVe0Zun9l7ZP3FYrb2zuBfsAUHkGZHKTvnVg==
-X-Received: by 2002:a05:6000:1208:b0:236:4838:515d with SMTP id e8-20020a056000120800b002364838515dmr22959604wrx.541.1669387073812;
-        Fri, 25 Nov 2022 06:37:53 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id d5-20020a05600c3ac500b003cfe6fd7c60sm5343439wms.8.2022.11.25.06.37.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Nov 2022 06:37:53 -0800 (PST)
-Message-ID: <426d1f07-0a5d-b740-dc93-77c5a8bc6d23@linaro.org>
-Date:   Fri, 25 Nov 2022 14:37:52 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v3 13/13] tty: serial: qcom-geni-serial: add support for
- serial engine DMA
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3o4Ak/tooirHnNJn7lhjm6d8X2fgF8UcvDymE+bkTxc=;
+        b=W5kZpvrMfy0VRdyi3eOvAX6+4KsPwxB/m43VppJiuPd+FxjvzxRmmyxDPyYvTVg0fQ
+         +d886VdE4gYC/J2LMJWCNiqKFDi1X08N+sMinkczx8aJrWblsqorgPQrTj7UEMx//+2r
+         fiwipK70gcQ4HZnGwwhgzFH6WTYi6baOYP3PzGXAUHxBaPFgAG6SihAAeOi5I4y1x0Jn
+         Z6UctRBF4TY8J6xzxpaf/TO/nujPXruGew3xe2KASMn4JeMr/A8XKvcdSk9hYr69eu5i
+         PaXKIDV0YWVKcHX3Pi13/h+hZqSiPXhTdYT0q60m9Vx5DHSbTKe3bhoYCE/DSqsx1kBt
+         1kww==
+X-Gm-Message-State: ANoB5plBWz/BlyuVyuTc3xfjECXa/pABrQWYFzSYeXGBekcb4DHr0iLq
+        dagJ3W6Mwn+39Fk+3d7ZPO99bw==
+X-Google-Smtp-Source: AA0mqf4tTyIvlnJxKmbAjhQ8HsOG9Vjbi/ohPlYPlxliaqFSzhlaUTAKGt9GkP1Q+NWCBbWEAbMKQw==
+X-Received: by 2002:ac2:456a:0:b0:4ad:23ac:94f5 with SMTP id k10-20020ac2456a000000b004ad23ac94f5mr12834073lfm.490.1669387333499;
+        Fri, 25 Nov 2022 06:42:13 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id c13-20020a056512238d00b0049ebc44994fsm553711lfv.128.2022.11.25.06.42.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Nov 2022 06:42:13 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20221123110759.1836666-1-brgl@bgdev.pl>
- <20221123110759.1836666-14-brgl@bgdev.pl>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20221123110759.1836666-14-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: align LED node names with dtschema
+Date:   Fri, 25 Nov 2022 15:42:08 +0100
+Message-Id: <20221125144209.477328-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,171 +74,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Bartosz for the patch,
+The node names should be generic and DT schema expects certain pattern:
 
-On 23/11/2022 11:07, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> The qcom-geni-serial driver currently only works in SE FIFO mode. This
-> limits the UART speed to around 180 kB/s. In order to achieve higher
-> speeds we need to use SE DMA mode.
-> 
-> Keep the console port working in FIFO mode but extend the code to use DMA
-> for the high-speed port.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->   drivers/tty/serial/qcom_geni_serial.c | 289 ++++++++++++++++++++++----
->   1 file changed, 247 insertions(+), 42 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 82242a40a95a..0f4ba909c792 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -70,6 +70,8 @@
->   #define UART_START_TX			0x1
->   /* UART S_CMD OP codes */
->   #define UART_START_READ			0x1
-> +#define UART_PARAM			0x1
-> +#define UART_PARAM_RFR_OPEN		BIT(7)
->   
->   #define UART_OVERSAMPLING		32
->   #define STALE_TIMEOUT			16
-> @@ -95,9 +97,11 @@
->   /* We always configure 4 bytes per FIFO word */
->   #define BYTES_PER_FIFO_WORD		4
->   
-> +#define DMA_RX_BUF_SIZE		2048
-> +
->   struct qcom_geni_device_data {
->   	bool console;
-> -	void (*handle_rx)(struct uart_port *uport, u32 bytes, bool drop);
-> +	enum geni_se_xfer_mode mode;
->   };
->   
->   struct qcom_geni_private_data {
-> @@ -118,9 +122,11 @@ struct qcom_geni_serial_port {
->   	u32 tx_fifo_depth;
->   	u32 tx_fifo_width;
->   	u32 rx_fifo_depth;
-> +	dma_addr_t tx_dma_addr;
-> +	dma_addr_t rx_dma_addr;
->   	bool setup;
->   	unsigned int baud;
-> -	void *rx_fifo;
-> +	void *rx_buf;
->   	u32 loopback;
->   	bool brk;
->   
-> @@ -552,18 +558,11 @@ static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
->   
->   static void handle_rx_uart(struct uart_port *uport, u32 bytes, bool drop)
->   {
-> -	struct tty_port *tport;
->   	struct qcom_geni_serial_port *port = to_dev_port(uport);
-> -	u32 num_bytes_pw = port->tx_fifo_width / BITS_PER_BYTE;
-> -	u32 words = ALIGN(bytes, num_bytes_pw) / num_bytes_pw;
-> +	struct tty_port *tport = &uport->state->port;
->   	int ret;
->   
-> -	tport = &uport->state->port;
-> -	ioread32_rep(uport->membase + SE_GENI_RX_FIFOn, port->rx_fifo, words);
-> -	if (drop)
-> -		return;
-> -
+  qcom/msm8998-oneplus-cheeseburger.dtb: leds: 'button-backlight' does not match any of the regexes: '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
+  qcom/sc7180-trogdor-coachz-r1.dtb: pwmleds: 'keyboard-backlight' does not match any of the regexes: '^led(-[0-9a-f]+)?$', 'pinctrl-[0-9]+'
 
-Are we removing FIFO support for uart?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi              | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi            | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-It it not a overhead to use dma for small transfers that are less than 
-fifo size?
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
+index b951f98d1b7b..9fb1fb9b8529 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
+@@ -22,7 +22,7 @@ leds {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&button_backlight_default>;
+ 
+-		button-backlight {
++		led-keypad-backlight {
+ 			gpios = <&pmi8998_gpio 5 GPIO_ACTIVE_HIGH>;
+ 			color = <LED_COLOR_ID_WHITE>;
+ 			function = LED_FUNCTION_KBD_BACKLIGHT;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 65601bea0797..74a90948db6b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -354,7 +354,7 @@ max98360a: audio-codec-0 {
+ 
+ 	pwmleds {
+ 		compatible = "pwm-leds";
+-		keyboard_backlight: keyboard-backlight {
++		keyboard_backlight: led-0 {
+ 			status = "disabled";
+ 			label = "cros_ec::kbd_backlight";
+ 			function = LED_FUNCTION_KBD_BACKLIGHT;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 448da9794722..27f479ff9d80 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -307,7 +307,7 @@ max98360a: audio-codec-0 {
+ 	pwmleds: pwmleds {
+ 		compatible = "pwm-leds";
+ 		status = "disabled";
+-		keyboard_backlight: keyboard-backlight {
++		keyboard_backlight: led-0 {
+ 			label = "cros_ec::kbd_backlight";
+ 			function = LED_FUNCTION_KBD_BACKLIGHT;
+ 			pwms = <&cros_ec_pwm 0>;
+-- 
+2.34.1
 
-
-> -	ret = tty_insert_flip_string(tport, port->rx_fifo, bytes);
-> +	ret = tty_insert_flip_string(tport, port->rx_buf, bytes);
->   	if (ret != bytes) {
->   		dev_err(uport->dev, "%s:Unable to push data ret %d_bytes %d\n",
->   				__func__, ret, bytes);
-> @@ -578,7 +577,70 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *uport)
->   	return !readl(uport->membase + SE_GENI_TX_FIFO_STATUS);
->   }
->   
-> -static void qcom_geni_serial_start_tx(struct uart_port *uport)
-> +static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport)
-> +{
-> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
-> +	bool done;
-
--->
-> +	u32 status;
-...
-> +
-> +	status = readl(uport->membase + SE_GENI_STATUS);
-> +	if (!(status & M_GENI_CMD_ACTIVE))
-> +		return;
-<---
-
-this code snippet is repeating more than few times in the patches, looks 
-like it could be made to a inline helper.
-
-
-> +
-> +	if (port->rx_dma_addr) {
-> +		geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr,
-> +				      port->tx_remaining);
-> +		port->tx_dma_addr = (dma_addr_t)NULL;
-> +		port->tx_remaining = 0;
-> +	}
-> +
-> +	m_irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
-> +	writel(m_irq_en, uport->membase + SE_GENI_M_IRQ_EN);
-> +	geni_se_cancel_m_cmd(&port->se);
-> +
-> +	done = qcom_geni_serial_poll_bit(uport, SE_GENI_S_IRQ_STATUS,
-> +					 S_CMD_CANCEL_EN, true);
-> +	if (!done) {
-> +		geni_se_abort_m_cmd(&port->se);
-> +		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> +					  M_CMD_ABORT_EN, true);
-
-return is not checked, there are few more such instances in the patch.
-
-> +		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> +	}
-> +
-> +	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> +}
-> +
-> +static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
-> +{
-> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
-> +	struct circ_buf *xmit = &uport->state->xmit;
-> +	unsigned int xmit_size;
-> +	int ret;
-> +
-> +	if (port->tx_dma_addr)
-> +		return;
-Is this condition actually possible?
-
-
-> +
-> +	xmit_size = uart_circ_chars_pending(xmit);
-> +	if (xmit_size < WAKEUP_CHARS)
-> +		uart_write_wakeup(uport);
-> +
-> +	xmit_size = CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE);
-> +
-> +	qcom_geni_serial_setup_tx(uport, xmit_size);
-> +
-> +	ret = geni_se_tx_dma_prep(&port->se, &xmit->buf[xmit->tail],
-> +				  xmit_size, &port->tx_dma_addr);
-> +	if (ret) {
-> +		dev_err(uport->dev, "unable to start TX SE DMA: %d\n", ret);
-> +		qcom_geni_serial_stop_tx_dma(uport);
-> +		return;
-> +	}
-> +
-> +	port->tx_remaining = xmit_size;
-> +}
-> +
-
-...
