@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13F1F6397B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Nov 2022 19:54:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E9066397B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Nov 2022 19:55:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbiKZSyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Nov 2022 13:54:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44978 "EHLO
+        id S229551AbiKZSzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Nov 2022 13:55:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiKZSyP (ORCPT
+        with ESMTP id S229502AbiKZSzh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Nov 2022 13:54:15 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA5215A21
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 10:54:14 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id be13so11528474lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 10:54:14 -0800 (PST)
+        Sat, 26 Nov 2022 13:55:37 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B47B15A21
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 10:55:36 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id q7so8664055ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 10:55:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=17Uu5jB5JSV5jcVLyNQKvZQt0F2pRwxcX8qU0oKH7qw=;
-        b=hd/b35FcuDguYSlqryOQKYBHU9QtBMOiMyUdY5h4wx7KHyOf/l9+c/A9bDpNTpzl6i
-         CeJtMBtmLLmS02vjN7cGtyelAF1womE/Ri0uolJ23roXhI4yop7dCkv4IaYPR0M2eKRq
-         ELj83xM+6tCWZa6tqQHl2HchVMdCETh/zJV+grmE+lP8ZFZNe2xL+Hm+XO1zKflqkx84
-         8dObKZontXoNls2yxo6gvW3jtTF0yUp3c85BmDNj/qgQ5Snv/+LNw4p9S3P9Rwump3Fp
-         Ud3wbFLqTqj8Q5JpDKylWVU38ycyTvsa1ySRV0PW02NUVDfmXjw7Zbr7OueoALA/cKfA
-         9KeQ==
+        bh=VbCBADLIPXF7TNfiwageJ9mTDj5FI0xwrrvz+HsWwAg=;
+        b=w09ks6qaH8b9qQcgi8GXTnBK8RyoaE6DXPbG5xAVAvux8WkSz/kSGitbaXvJPyZ+uG
+         MYfsD3AI/uz4atcTYv+RmnTHGQhMYEoueEBUX30LJHj6gKSZo6Rj9iu4+GHy8SHVrrWr
+         /aLZtM7uuZFPRdQmo8I4RJAtwEQp8hjAB1nCzQrJEnY7y82gWPH7xiThs6e3Ndf55aoW
+         sMvlZxCjzrvHsYl4MnVC8jQLVbxv1S2QZuT0f40w6pw6M1Baht7/nr5wx3QdjbaoLiH1
+         UkjKkR/wQWIBIkcId8h/hpNjkiLA+4qxpaLJQXaVRih+k1lJilukEbVYQPvPtBilQu4r
+         Z7qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=17Uu5jB5JSV5jcVLyNQKvZQt0F2pRwxcX8qU0oKH7qw=;
-        b=QFa/wqi8w6+6yE1U71UM3Oxyo4c9QnWD2pJmwROgfNKlWdqFcKzqQk2VHDJiHa+myW
-         WEcPNH2Sj897HuaDHjJjoLLaCm+SAbTLvKdeNAdcXXJ5gM7taOYnDI75EV4nzbZ1lI8O
-         z8v3EWMf7ptiOmW5UA3mSYWM4eOE5G4/Ikcf5mbbeCscZoyH7hFy85pkLTmei++N9Cwk
-         dr9PEsXwKOH7xGBkqS7s56PDJWz8ZGhBidZqKQ6uNCelKozYuhP6HN+i3gNvYzbr9EUA
-         1LygnD4Iez0VQXGwKmBiRp6XT33rfiQKGDRUNtAft//H+U/qEYcJOuXg8N642hTF6leV
-         ajgg==
-X-Gm-Message-State: ANoB5pnwvtHcWlAfKeNS6MyyzSdkkXeOibRZeolCe3YJI35NqGxAknvt
-        Cv7+0iT4hb+sFtpLA7hH89vr1w==
-X-Google-Smtp-Source: AA0mqf6Y7o7r7uQYiZDsghBFDuKtnMf9/K9SkY9AU9Mbkm5Kf98HI24HvIBkrxEmTFbQEGx9TreZMg==
-X-Received: by 2002:a05:6512:63:b0:4b4:f7a2:e4f2 with SMTP id i3-20020a056512006300b004b4f7a2e4f2mr5034714lfo.272.1669488853033;
-        Sat, 26 Nov 2022 10:54:13 -0800 (PST)
+        bh=VbCBADLIPXF7TNfiwageJ9mTDj5FI0xwrrvz+HsWwAg=;
+        b=5OCQqBbYQ6adMZYfrw4Jd/ucGzpo6M0vcyyK1ynFwWZaChadNDGjXnU5OVpqjqTxkw
+         SbV4G12D1DPtoSjcYut+oMJgPTgri9b4yyoXhine5aVr3rsA2ljsekOgVGHn+j0GYPIa
+         qAUOib/Wb5IaeAUf61Wjl3iAot2hznkUx8c+deOafsURYF2VaikhSLdIDiH8aTRorXsW
+         UumPoz2no55rnM05IIXTOr3zcl4aCHWsQ4Wurbey13ao0tJ5uHhI3LfiNndjf/06JmyJ
+         ScnxAW1SDnIbcX2RsqZI6mEGBlY6q6Kq/HgR9IXH5/utL+lOud03BOzSVYAkwhOkKqLl
+         WGwA==
+X-Gm-Message-State: ANoB5plLDZOsDcqNBRNEYXCXtnZFoU9diKO3Dqaa79nS4r1aEJQlNvmS
+        znd56xrfweLxPOUfGAaQtDUdvA==
+X-Google-Smtp-Source: AA0mqf5Kernurc3hkhUufFar+cj2qeo7AMUGpIxEazneIz/6FDqGsiX+Gx/zU89mp4LCOsCl1Pr3uA==
+X-Received: by 2002:a2e:a263:0:b0:276:be89:5616 with SMTP id k3-20020a2ea263000000b00276be895616mr7615840ljm.347.1669488934794;
+        Sat, 26 Nov 2022 10:55:34 -0800 (PST)
 Received: from [192.168.1.8] ([185.24.52.156])
-        by smtp.gmail.com with ESMTPSA id s2-20020a056512314200b004a2c447598fsm993270lfi.159.2022.11.26.10.54.11
+        by smtp.gmail.com with ESMTPSA id h19-20020a05651c125300b00267232d0652sm748076ljh.46.2022.11.26.10.55.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Nov 2022 10:54:12 -0800 (PST)
-Message-ID: <dc5df66c-2e2b-14f1-ce88-705d831f37d9@linaro.org>
-Date:   Sat, 26 Nov 2022 20:54:11 +0200
+        Sat, 26 Nov 2022 10:55:34 -0800 (PST)
+Message-ID: <1bb5309f-8e77-16bd-630a-707228e5dacc@linaro.org>
+Date:   Sat, 26 Nov 2022 20:55:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH v4 03/18] dt-bindings: msm: dsi-controller-main: Rename
- qcom,dsi-ctrl-6g-qcm2290 to qcom,qcm2290-dsi-ctrl
+Subject: Re: [PATCH v4 04/18] dt-bindings: msm: dsi-controller-main: Add
+ compatible strings for every current SoC
 Content-Language: en-GB
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -69,9 +69,9 @@ Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
         andersson@kernel.org, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
 References: <20221125123638.823261-1-bryan.odonoghue@linaro.org>
- <20221125123638.823261-4-bryan.odonoghue@linaro.org>
+ <20221125123638.823261-5-bryan.odonoghue@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221125123638.823261-4-bryan.odonoghue@linaro.org>
+In-Reply-To: <20221125123638.823261-5-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,32 +84,71 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 25/11/2022 14:36, Bryan O'Donoghue wrote:
-> We will add in a number of compat strings to dsi-controller-main.yaml in
-> the format "qcom,socname-dsi-ctrl" convert the currently unused
-> qcom,dsi-ctrl-6g-qcm2290 to qcom,qcm2290-dsi-ctrl.
+> Currently we do not differentiate between the various users of the
+> qcom,mdss-dsi-ctrl. The driver is flexible enough to operate from one
+> compatible string but, the hardware does have some significant differences
+> in the number of clocks.
+> 
+> To facilitate documenting the clocks add the following compatible strings
+> 
+> - qcom,apq8064-dsi-ctrl
+> - qcom,msm8916-dsi-ctrl
+> - qcom,msm8974-dsi-ctrl
+> - qcom,msm8996-dsi-ctrl
+> - qcom,sc7180-dsi-ctrl
+> - qcom,sc7280-dsi-ctrl
+> - qcom,sdm630-dsi-ctrl
+> - qcom,sdm660-dsi-ctrl
+> - qcom,sdm845-dsi-ctrl
+> - qcom,sm8250-dsi-ctrl
+> 
+> Each SoC dtsi should declare "qcom,socname-dsi-ctrl", "qcom,mdss-dsi-ctrl";
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-I'd say, as you are going to introduce new bindings using two compat 
-strings, just leave this binding as is, marking it as deprecated.
-
 > ---
->   .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   .../display/msm/dsi-controller-main.yaml      | 19 +++++++++++++++----
+>   1 file changed, 15 insertions(+), 4 deletions(-)
 > 
 > diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index cf782c5f5bdb0..67d08dc338925 100644
+> index 67d08dc338925..0cd2079137b02 100644
 > --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
 > +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -16,7 +16,7 @@ properties:
+> @@ -14,9 +14,20 @@ allOf:
+>   
+>   properties:
 >     compatible:
->       enum:
->         - qcom,mdss-dsi-ctrl
-> -      - qcom,dsi-ctrl-6g-qcm2290
-> +      - qcom,qcm2290-dsi-ctrl
+> -    enum:
+> -      - qcom,mdss-dsi-ctrl
+> -      - qcom,qcm2290-dsi-ctrl
+> +    items:
+> +      - enum:
+> +          - qcom,apq8064-dsi-ctrl
+> +          - qcom,msm8916-dsi-ctrl
+> +          - qcom,msm8974-dsi-ctrl
+> +          - qcom,msm8996-dsi-ctrl
+> +          - qcom,qcm2290-dsi-ctrl
+> +          - qcom,sc7180-dsi-ctrl
+> +          - qcom,sc7280-dsi-ctrl
+> +          - qcom,sdm630-dsi-ctrl
+> +          - qcom,sdm660-dsi-ctrl
+> +          - qcom,sdm845-dsi-ctrl
+> +          - qcom,sm8250-dsi-ctrl
+> +      - const: qcom,mdss-dsi-ctrl
 >   
 >     reg:
 >       maxItems: 1
+> @@ -146,7 +157,7 @@ examples:
+>        #include <dt-bindings/power/qcom-rpmpd.h>
+>   
+>        dsi@ae94000 {
+> -           compatible = "qcom,mdss-dsi-ctrl";
+> +           compatible = "qcom,sc7180-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+
+Other examples (from qcom,SOC-mdss.yaml) also must be updated.
+
+>              reg = <0x0ae94000 0x400>;
+>              reg-names = "dsi_ctrl";
+>   
 
 -- 
 With best wishes
