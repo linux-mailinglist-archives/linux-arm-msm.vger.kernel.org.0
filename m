@@ -2,112 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E46B639186
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Nov 2022 23:34:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8CE6392A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Nov 2022 01:20:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbiKYWen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Nov 2022 17:34:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50490 "EHLO
+        id S229816AbiKZAUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Nov 2022 19:20:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbiKYWem (ORCPT
+        with ESMTP id S230221AbiKZAUP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Nov 2022 17:34:42 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9224E230;
-        Fri, 25 Nov 2022 14:34:40 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id j2so4092445ljg.10;
-        Fri, 25 Nov 2022 14:34:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=niMavHIx/AWaO4yyhWp984rwBKsNidh7Wk+Ub6Q559A=;
-        b=KJJmGGxbxWMugMPePN2a3OVTaDG+dR0vMeor/ObZacim+FpRkzQsgYz/xz5WhrFbta
-         zT7zAaeyc9tM9xA6mMhto4IyBv2zqrhCCcF68qFhegdZduEvV7q5MAwiCtUBsDqPk+vH
-         IHaqxdxk+wUiZQNmPS9j6KMEpo2ZdO461GwungT2DlPuomfuh+9a/e/tEuLU4SnYwQy4
-         gtGVt0dKa4/0Qwcu6EfQn7kcGECOV/RZGgqm6BKUG3ONTtqs6em7hf8Xa++K+oST/cTM
-         wBjOAfUTa5CMMoWa38W84KSBKcSFW4j4TnBs8ejEoq2DfL2SLleqXYDqohvEMRmo7DWb
-         Br4Q==
+        Fri, 25 Nov 2022 19:20:15 -0500
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 022F859FFB;
+        Fri, 25 Nov 2022 16:20:09 -0800 (PST)
+Received: by mail-pj1-f53.google.com with SMTP id hd14-20020a17090b458e00b0021909875bccso2414306pjb.1;
+        Fri, 25 Nov 2022 16:20:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=niMavHIx/AWaO4yyhWp984rwBKsNidh7Wk+Ub6Q559A=;
-        b=ZV6WYIEYpTAh/XFTCTcgIX4wxr2eY0P7+YvFjQziywpwS+eSw0raV28t6fkH0l5ena
-         Hv/LCjO42f5j+JZMkwI/xkUFKZBFirt3vV2+YlYhEviJgRw9HUlhOCzt96TsMnpikBNA
-         Ilxt83uE3dVynh+jZwyzrmPIbyQXWKDaHtMqp/C6MZ8OCUvL7gRkXQc4kPcVjT09cthN
-         4al9MKWy0tu0w2WULNaPCiUjE2lElmpVAOIX5ztB5HsjAZacp4BX3c7DxjuuedlGhJ++
-         pLjGHFAV5ocqMmSh3SM0E3M9ZjTO2yf6/hG7CYMRrIrYrm+bdD6SFGf9/iKbnciW42F8
-         uMJg==
-X-Gm-Message-State: ANoB5pnz48ja6zGceVD+t4vy3V3PW7hCWVdHj0kdkqFVuBBf8D6zzex2
-        eTKWGXbZ3IBcMFZy6Ifd/GC5f32dFXHBmg==
-X-Google-Smtp-Source: AA0mqf6s6qDidC9qRW9J/WhddlUa/IBPQVUJAWLmXF5Grr7aIHh66El1D6eDfiMgD/tNRmIeMFYN/w==
-X-Received: by 2002:a2e:7306:0:b0:279:9104:d60c with SMTP id o6-20020a2e7306000000b002799104d60cmr2017396ljc.163.1669415678801;
-        Fri, 25 Nov 2022 14:34:38 -0800 (PST)
-Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.gmail.com with ESMTPSA id b4-20020ac24104000000b004b4b5bd8d02sm668945lfi.78.2022.11.25.14.34.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 14:34:38 -0800 (PST)
-From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable ADSP
-Date:   Sat, 26 Nov 2022 00:34:00 +0200
-Message-Id: <20221125223400.94515-1-matti.lehtimaki@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=na5Eef0FY+XWQut1bWk+6h4xrDMArS54kGEKttOuCzs=;
+        b=JuCvie/HGLKEGBGuiqheFLodVGpRG3OZSyoVFN1qRRG/Z5XBvqtJB21ZPpuwn1ZOYO
+         KRV7vx+i9obBanE4GrngFp2NisO6BLBJPAFAAb/6akFaCJXqepCQbeOIEw8aWXfwd2DW
+         vi/HvTZo+slcw0vaFgovgefxJ6FV951TDelECzj06M4OUVB01aQrmBbjB4cXtbplPlwb
+         DK0jyB9vlGrf6fpt/zpWe2BExyKIeffwZvzWDHDwaBdFpwOTlHae8p9fIYrCeHiEURDp
+         9swIFpyBfOStomNFrP9C4hQc26E5+mB4e+9TTySZyjp2jcuCh5Q2EeisQMXIfIyEOH0s
+         QqKg==
+X-Gm-Message-State: ANoB5pkycV/fun79MaJukPiaG5iE6zvPZpQG+0K5Y4qccNcE3KsrkwUw
+        6PnxROSbaRtOWhrNE5xuTMU=
+X-Google-Smtp-Source: AA0mqf4yT8h3p5NrmHSWftcUtTaSUa+jwGr3YobBULEFCuv+CfdJJt18WXqKf/JDTxU8cB7KRiEsIA==
+X-Received: by 2002:a17:90a:4283:b0:218:4953:58aa with SMTP id p3-20020a17090a428300b00218495358aamr49171431pjg.219.1669422008397;
+        Fri, 25 Nov 2022 16:20:08 -0800 (PST)
+Received: from [192.168.3.219] ([98.51.102.78])
+        by smtp.gmail.com with ESMTPSA id z21-20020a63e555000000b004777c56747csm3072583pgj.11.2022.11.25.16.20.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Nov 2022 16:20:07 -0800 (PST)
+Message-ID: <a3f2c913-f57a-4236-2790-5f9f17cc7494@acm.org>
+Date:   Fri, 25 Nov 2022 16:20:05 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v5 03/16] ufs: core: Introduce Multi-circular queue
+ capability
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
+ <1a84dab482956b19cb513dc46e9689e07316e357.1669176158.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <1a84dab482956b19cb513dc46e9689e07316e357.1669176158.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the reserved memory for ADSP and enable it.
+On 11/22/22 20:10, Asutosh Das wrote:
+> +module_param_cb(use_mcq_mode, &mcq_mode_ops, &use_mcq_mode, 0644);
+> +MODULE_PARM_DESC(mcq_mode, "Control MCQ mode for UFSHCI 4.0 controllers");
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
----
- arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Please make this description more detailed. The following information 
+should be added:
+* 0 disables MCQ.
+* 1 enables MCQ.
+* MCQ is enabled by default.
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-index 1c52337af560..859e91c16c61 100644
---- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-@@ -133,7 +133,8 @@ wcnss@d200000 {
- 			no-map;
- 		};
- 
--		adsp@d900000 {
-+		/delete-node/ adsp@dc00000;
-+		adsp_region: adsp@d900000 {
- 			reg = <0x0d900000 0x1800000>;
- 			no-map;
- 		};
-@@ -169,6 +170,10 @@ rmtfs@fd80000 {
- 	};
- };
- 
-+&adsp {
-+	status = "okay";
-+};
-+
- &blsp1_i2c2 {
- 	status = "okay";
- 
--- 
-2.34.1
+Once that information has been added, feel free to add:
 
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
