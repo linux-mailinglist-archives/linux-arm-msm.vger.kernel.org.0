@@ -2,106 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A282C639852
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Nov 2022 22:54:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBFAA639A18
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Nov 2022 12:24:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbiKZVyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Nov 2022 16:54:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
+        id S229624AbiK0LYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Nov 2022 06:24:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiKZVyK (ORCPT
+        with ESMTP id S229612AbiK0LYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Nov 2022 16:54:10 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D266175BF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 13:54:09 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id b73so8988134yba.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Nov 2022 13:54:09 -0800 (PST)
+        Sun, 27 Nov 2022 06:24:32 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5637EE087
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:32 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id j12so7689760plj.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zqe81NVe4wdrr2qX6L4lKfxkGOclAd0cUZt1hvJHh6k=;
-        b=KSesdFAk+hx2US2lXbKFOn0Csy1YQU/Q4fmPt3IHZVJjZQh6iVjthC8P0w9jg8Weim
-         Nzxu6WUEVv2q/uHzt0SwvOZViEwISSJW+DSBA8jsnM4qt/56XSpR5l23VkH+cxImmgLU
-         39e0RqgGVD3EG49hxlE4QkbCmSixA4q17vObjYhW39wAZgn6vclsseAnpff6Pg7uDK8Z
-         zs0yxHw7TkG92GRjJOd3S01JujZqsZtTyEBznfSjOiD6J49b6phBn/HEZVDeZCZQtecx
-         3MnevQ2ZREIW455Qx4UcJiRG4N4Rx/g/BWdFCRC11O2VNT+l2Md1ZGhxNQJnebIEuc4T
-         M5tw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPILUa0E2+UPwh5RG/lt7u1tMuC1PixA+4Ph8vLKr9c=;
+        b=cLecmEoEUkA48vnGQAkcp2jvBy3nUcSdoDo5hlEQEdSPdd3WgxCAP9q3DnHdYMVNo9
+         3e9ueOrhH7lMJb9RUCCiQ8vASt3zEKJ+HMiUL3qJdqJSbLclz80Pcgb1qMrbN46hAwfx
+         GIZ5fbiHFdXfoiGHzeqAGeA01bmP02SIsRBVxbE5xq95I7mUXN2PGwBy4lA3da+CwIbs
+         CrQ4xKtmL2clBnWpmWawmhQErO4vuN8jLy6+OJQastrCs1BtXyc+/zEiGUH0KMdrmu8U
+         +4nrGwbqaOipROcfVL4Hbix6Dheua2xvB2y8q7SEgNAZIjPApFxEujAJ1+1s+dfFHmhI
+         HKGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Zqe81NVe4wdrr2qX6L4lKfxkGOclAd0cUZt1hvJHh6k=;
-        b=3U13oPi4yoavLPe6oaH8uQDGzOqCk+sb1f3VTtYPpHpb1isl3xD2XTzWq2X+lQCEIO
-         yP/3i1pjKifVbT8TfB8dCp4TWsCD1yTpvI36UkwkTv9bvD7h/F/sm7SgrWYefpufrzp0
-         mONEuNSE1/brUzgja4R/CxX2s2xrdDrEqgh9In7QoAMWRF6z5x3WVZ9PL08LaQ28aEkI
-         xn/rTqRB5tVr9K4bO3lxD/DtWXuf7lav1gDufSRqXQ84+iThCjCTh8iiV1s4XBazDLWC
-         EOnO7JVf//lrjO9bQ5Ytkft4MaZ4q2DhDypqmjdR7VkKXsN8KWqHdvmdfuQfs3HKQTMS
-         0IAQ==
-X-Gm-Message-State: ANoB5pkiE/O7lLfpK+iUKMIK76Av08qGFKh33sp6g4RYgQZhiqdzqfJH
-        fxDRxcclRxq+T7HZixXPbwh2tvzkUimJZWXnNefR0g==
-X-Google-Smtp-Source: AA0mqf78FRQ1441202IFUwXz8NzZChqqyuytSPBEfAvEooJvd057yNmqCvNaVpwYu33ZVh/g47KT0G8ilKiWDJ9YkDE=
-X-Received: by 2002:a25:c7c8:0:b0:6bd:1ca1:afd6 with SMTP id
- w191-20020a25c7c8000000b006bd1ca1afd6mr40579650ybe.43.1669499648876; Sat, 26
- Nov 2022 13:54:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20221123152001.694546-1-abel.vesa@linaro.org> <20221123152001.694546-3-abel.vesa@linaro.org>
- <CACRpkdZtkHCkfUAcezSJvmei=HOezK6oyx+4C5kBrEtU+vAB-g@mail.gmail.com>
- <fecb2dd6-9be2-78dc-4598-cc338fbdc2a2@linaro.org> <CACRpkdZJaz9BEorQa7dTNkgTkwZjJNB-MWrpKFxHRgdsf3xJww@mail.gmail.com>
- <8602cacd-f552-e843-5c17-681b099069a3@linaro.org>
-In-Reply-To: <8602cacd-f552-e843-5c17-681b099069a3@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 26 Nov 2022 22:53:57 +0100
-Message-ID: <CACRpkdbqjNJH_QvWyEPceUUxRQ2tOpErNOWA0rg5GNwq7PfUFQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,tlmm-common: document
- i2c pull property
-To:     neil.armstrong@linaro.org
-Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        bh=SPILUa0E2+UPwh5RG/lt7u1tMuC1PixA+4Ph8vLKr9c=;
+        b=pZFiRHX0JhRuWp2ssSGLLmhNJHa9PzChjbuc68wPoFP5JUe4GPSDuQGUUooAYT+UEG
+         r3dDlejTKcSxkgTamWslTcB4NQAJcgZXMUzu4yELRQnY9Si6LjiEATJu8QTDl52wQauA
+         d/D92q5IXW/3ib5Nx2kxES/VJAQYmD5sgSMhephLDJX2XKKirNKoiQQq4j0U5MFSe08+
+         9fMS+JWr2B6+3WO+Ry+n770+j8TZ1OxI3LA7d7CvrDjuPeHwotJtAOeqoDrbqEisojCn
+         ubnNMs7AsQwIyTUfdw4BlVzhZ+3Av9S2uR74a3Lawq1UwxUk1afCBOPxQ3oglD1Pjkq7
+         NkiA==
+X-Gm-Message-State: ANoB5pkMRJOZR2y2qaHAYdwg+7YXeqUAqjL9Py9K9kE6NkzJA9WzSzy0
+        MRJsG+9sOGjmR01IdxLIRHkUT7VYVraYyA==
+X-Google-Smtp-Source: AA0mqf6+Den320jvJgzcrIFShkeIBr7UH1fOPWtMOzWHVv31xj2aYO3nmNTBS3u96kkLCZBdlh+nJw==
+X-Received: by 2002:a17:90a:9a98:b0:219:2f90:4fb3 with SMTP id e24-20020a17090a9a9800b002192f904fb3mr1891027pjp.109.1669548270831;
+        Sun, 27 Nov 2022 03:24:30 -0800 (PST)
+Received: from localhost.localdomain ([223.179.131.184])
+        by smtp.gmail.com with ESMTPSA id oa14-20020a17090b1bce00b0020d24ea4400sm7691349pjb.38.2022.11.27.03.24.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Nov 2022 03:24:30 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH 0/2] Add SM4250 RPM power domain support
+Date:   Sun, 27 Nov 2022 16:52:02 +0530
+Message-Id: <20221127112204.1486337-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 25, 2022 at 1:40 PM <neil.armstrong@linaro.org> wrote:
+Add RPM power domain support for SM4250.
 
-> As I understood, it enables an "I2C resistor" on the pin, removing the need
-> of an external pull-up resistor on the line.
->
-> I assume the classical pull-up bias is not strong enough to replace an actual
-> resistor on the PCB.
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Rajendra Nayak <rnayak@codeaurora.org>
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> 
 
-In that case I think this should be an argument to bias-pull-up like:
+Bhupesh Sharma (2):
+  dt-bindings: power: rpmpd: Add SM4250 support
+  soc: qcom: rpmpd: Add SM4250 support
 
-bias-pull-up = <360000>;
+ .../devicetree/bindings/power/qcom,rpmpd.yaml  |  1 +
+ drivers/soc/qcom/rpmpd.c                       | 18 ++++++++++++++++++
+ include/dt-bindings/power/qcom-rpmpd.h         | 10 ++++++++++
+ 3 files changed, 29 insertions(+)
 
-Nominally the pull up is in ohms:
+-- 
+2.38.1
 
-  bias-pull-up:
-    oneOf:
-      - type: boolean
-      - $ref: /schemas/types.yaml#/definitions/uint32
-    description: pull up the pin. Takes as optional argument on hardware
-      supporting it the pull strength in Ohm.
-
-Then the driver can choose to shunt in this extra I2C resistance
-from the resistance passed as argument. So no special property
-is needed, provided you can get an idea about the resistance
-provided here.
-
-Yours,
-Linus Walleij
