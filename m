@@ -2,130 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDBBF639A1D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Nov 2022 12:24:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA535639A70
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Nov 2022 13:24:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbiK0LYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Nov 2022 06:24:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38408 "EHLO
+        id S229526AbiK0MY3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Nov 2022 07:24:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbiK0LYl (ORCPT
+        with ESMTP id S229450AbiK0MY3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Nov 2022 06:24:41 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43AACE099
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:40 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id q1so7523054pgl.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:40 -0800 (PST)
+        Sun, 27 Nov 2022 07:24:29 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 448FBBF3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 04:24:28 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id t4so6637605wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 04:24:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=af32RiZNOuCS1SpmNdhimvmfJ1uk/URYpjz9mBw96SQ=;
-        b=jy0wVfV3VbjK6vnbeEMGF5KuhyMHGFPzWox8wvKIkcFG/HXdl5ggjSNkD/cq3HtEti
-         FbcjMCtO3vYo5XM+uEMsS5nBY8aOUHO+WwYhU6kQLSFYvXlP5UTB7yomRoHBKyvYm1cN
-         OZfhTsQ+hvG0E5/wQVAXX65unos/sx79FzXUEKw9WLvV0/rz2BAgRWudrtC0udPqWRYK
-         pfss71dH2yHx/4NHOQ/C5HQwBGkilTv1xPe6KcDLdHf7fnNSBoAsCyAmWsCeVGgWSdnp
-         IyRmomcN8Jc0clfmdtYaD4YPWaFO+pXdCNlWfg+Kf06+GkPebsUuhwAl72G+/izmgj+e
-         RtHQ==
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iW1UeaNHW1nZvRIYrQGKcf3kFYKlAFXkiSyrwvh4YCc=;
+        b=t2GnoaLuuFss6CmlA4LndixCeDygF//BbCfYDWLz7rAAGAQC1sxkhyYYMWSyTBRwuN
+         DTv95S7VVnqUDRzXo1t61TmmdGrO3F21id2jWYMivTsh+MP2U288XvKG9IqXe8qkwDru
+         pX3nolCG8aKD98lZEKJ8fWOvhsViGijO+KoCXVJxRtA6NyW5BxwhYk1h0Cfza2y3yo8Y
+         5c/HmqvA6Qc9zdhk2eF56pXIXCXM2sAowO8VV3L8tRgsb+kLrlRCD0ODYnoOKw0UF7wZ
+         rDJUT583iNBybOKvLM3CCvgm/Au68nIAg2YuDDczgvWGJIsIGaMGIrlS5+DS8ohwBU7J
+         ZhsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=af32RiZNOuCS1SpmNdhimvmfJ1uk/URYpjz9mBw96SQ=;
-        b=lREZGK7mwM11uvB0Ke7KJsiSvHXLq88q6wBfY1lG+9lBDdxNbuCandb0thJ+frFBo3
-         jxGFblrYymXmRXh4xEIQscEVrDoX1EegfaZVJzGczYwBiqvbXgeMJdpQmoMVcuiD6xe/
-         nSOn1Y+iARdUlmQsdbjBDE5aeOM1ymi3fFdb5P8qJeiwVrEUms/7Jj5vZ5dSh43TFrh1
-         3D53zPj7XhlbwKgXwVZgKzJ+BBXE6h3m3bwJj/xUceMVQHDyv/tM9ozVnMQck8E9yinv
-         XB9Zkk59yv3bTqpf3gjuhcr2RDJKKT8xFkoenhntYmPiq5QIiL77+8nUzrJ0Zw+0JrVg
-         +YTA==
-X-Gm-Message-State: ANoB5pnj3hWezIR1R6Eg4q7vGlU5h4M7za1iNk6WL7tEI7Zi9YwGCHp6
-        UvVOSlIdjtCBt958E/nHbWNborlrT3qrug==
-X-Google-Smtp-Source: AA0mqf5L3TYnjtJtzAa75ed/XwQKFkMTj7P+KxqwMlK5pbXVUY6CbgFHn+RGWM2wbLNqHgtdaEaB6w==
-X-Received: by 2002:a63:f510:0:b0:478:1020:b1e6 with SMTP id w16-20020a63f510000000b004781020b1e6mr1109710pgh.561.1669548279323;
-        Sun, 27 Nov 2022 03:24:39 -0800 (PST)
-Received: from localhost.localdomain ([223.179.131.184])
-        by smtp.gmail.com with ESMTPSA id oa14-20020a17090b1bce00b0020d24ea4400sm7691349pjb.38.2022.11.27.03.24.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Nov 2022 03:24:38 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH 2/2] soc: qcom: rpmpd: Add SM4250 support
-Date:   Sun, 27 Nov 2022 16:52:04 +0530
-Message-Id: <20221127112204.1486337-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221127112204.1486337-1-bhupesh.sharma@linaro.org>
-References: <20221127112204.1486337-1-bhupesh.sharma@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iW1UeaNHW1nZvRIYrQGKcf3kFYKlAFXkiSyrwvh4YCc=;
+        b=rHRXfDgFD6RSe9gHnpJPrEv2+FZ9cWEw+gGWvn1iDyHpjIiwHlqg/eLDQbdesW2GKa
+         YntL6eWkNtfTXtUsxi1sbCWUQ4mLVPTVPN9EnNtkopXpLZVr09oQ3Ep5Db89pG9h5tg4
+         Q2YCezX2bp2qSe61xUU3usn617kX9QsG8C2STA0p9dtsqBxiIsyeB9XitKM2qMcxfZKi
+         hJCuik8+F7bqNd1HgdVAD4O7nQ5IOYZ1BOatmznUAgrnVYuNA8gas4QNaiIoUnt71jXn
+         Rq3gVu/exleACRf011lHlavy72v2dRy+SCnbxLl3m/PWfwlehwL9eDvJc665calA7/mj
+         2Y0A==
+X-Gm-Message-State: ANoB5pniZuaWBDPWQ8loRCHiVLdpoviYoo8Bobcld7mYlOqvc/y/ApNm
+        I4OkpKzNenMn8vewzfhM5MTlhA==
+X-Google-Smtp-Source: AA0mqf6kuChrfZ5OyEbwXtrfM4OEbYvTKrEvGJzaEbjBadNowSbANRCdXXjdgtcT0+vBM5cBnuumNw==
+X-Received: by 2002:a7b:cc89:0:b0:3d0:57ea:342c with SMTP id p9-20020a7bcc89000000b003d057ea342cmr1175375wma.25.1669551866536;
+        Sun, 27 Nov 2022 04:24:26 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o7-20020a5d4087000000b002366b17ca8bsm9223560wrp.108.2022.11.27.04.24.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Nov 2022 04:24:25 -0800 (PST)
+Message-ID: <5666462e-d416-84ee-ca70-7edd77bab3d0@nexus-software.ie>
+Date:   Sun, 27 Nov 2022 12:24:24 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v4 02/18] dt-bindings: msm: dsi-controller-main: Fix
+ power-domain constraint
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
+        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
+        swboyd@chromium.org, konrad.dybcio@somainline.org,
+        agross@kernel.org, andersson@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20221125123638.823261-1-bryan.odonoghue@linaro.org>
+ <20221125123638.823261-3-bryan.odonoghue@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20221125123638.823261-3-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM4250 has the same RPM power domains as SM6115. Add SM4250
-support by reusing SM6115 power domains.
+On 25/11/2022 12:36, Bryan O'Donoghue wrote:
+> power-domain is required for the sc7180 dispcc GDSC but not every qcom SoC
+> has a similar dependency for example the aqp8064.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org> 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/soc/qcom/rpmpd.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 337b1ad1cd3b..f0db6a10cf4e 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -471,6 +471,23 @@ static const struct rpmpd_desc qcm2290_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
- };
- 
-+static struct rpmpd *sm4250_rpmpds[] = {
-+	[SM4250_VDDCX] = &sm6115_vddcx,
-+	[SM4250_VDDCX_AO] = &sm6115_vddcx_ao,
-+	[SM4250_VDDCX_VFL] = &sm6115_vddcx_vfl,
-+	[SM4250_VDDMX] = &sm6115_vddmx,
-+	[SM4250_VDDMX_AO] = &sm6115_vddmx_ao,
-+	[SM4250_VDDMX_VFL] = &sm6115_vddmx_vfl,
-+	[SM4250_VDD_LPI_CX] = &sm6115_vdd_lpi_cx,
-+	[SM4250_VDD_LPI_MX] = &sm6115_vdd_lpi_mx,
-+};
-+
-+static const struct rpmpd_desc sm4250_desc = {
-+	.rpmpds = sm4250_rpmpds,
-+	.num_pds = ARRAY_SIZE(sm4250_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
-+};
-+
- static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
- 	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
-@@ -485,6 +502,7 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
- 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
-+	{ .compatible = "qcom,sm4250-rpmpd", .data = &sm4250_desc },
- 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
- 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
- 	{ .compatible = "qcom,sm6375-rpmpd", .data = &sm6375_desc },
--- 
-2.38.1
+Note to self "apq8064"
 
