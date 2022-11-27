@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CACCF639A1A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Nov 2022 12:24:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDBBF639A1D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Nov 2022 12:24:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbiK0LYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Nov 2022 06:24:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38354 "EHLO
+        id S229632AbiK0LYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Nov 2022 06:24:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbiK0LYg (ORCPT
+        with ESMTP id S229652AbiK0LYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Nov 2022 06:24:36 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A77EE03F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:36 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id s196so7544269pgs.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:36 -0800 (PST)
+        Sun, 27 Nov 2022 06:24:41 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43AACE099
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:40 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id q1so7523054pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Nov 2022 03:24:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A/MKZqSXFw0WnY+4GjbBOi2kgTP3/Onn2l8kHqSBl5Y=;
-        b=idqBtv2m8CgU2HUBLZqKKLneakhETzn2udIcuh4/yPiDHOKMpkEsLMZJt2+vEQY6Z4
-         B/VvUkQ0gkKgWlgBD6JjzP79+IzFY6WWSHiMEqR1SP+r59J1E4FPEJQfLN837PHmgk1R
-         kutHYe+Z0rUKCan0ZxNS1IhMmmCGJdXKkJzGScKOOv+ccMYCCMPxi8DTWxF3Oly7PIOE
-         XKojD0EgUS4okIV85Ut56KVmjlMruRVmkR7G2g4u1B43GZe9B09BdaauAUusJpkJz1v2
-         MgCUGi3ipRr0jQs7bDL3BtIxch+ig+OOCbDxodA7z6i0+qN33b4q10MPD9r6mIgDnAo5
-         TeSQ==
+        bh=af32RiZNOuCS1SpmNdhimvmfJ1uk/URYpjz9mBw96SQ=;
+        b=jy0wVfV3VbjK6vnbeEMGF5KuhyMHGFPzWox8wvKIkcFG/HXdl5ggjSNkD/cq3HtEti
+         FbcjMCtO3vYo5XM+uEMsS5nBY8aOUHO+WwYhU6kQLSFYvXlP5UTB7yomRoHBKyvYm1cN
+         OZfhTsQ+hvG0E5/wQVAXX65unos/sx79FzXUEKw9WLvV0/rz2BAgRWudrtC0udPqWRYK
+         pfss71dH2yHx/4NHOQ/C5HQwBGkilTv1xPe6KcDLdHf7fnNSBoAsCyAmWsCeVGgWSdnp
+         IyRmomcN8Jc0clfmdtYaD4YPWaFO+pXdCNlWfg+Kf06+GkPebsUuhwAl72G+/izmgj+e
+         RtHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A/MKZqSXFw0WnY+4GjbBOi2kgTP3/Onn2l8kHqSBl5Y=;
-        b=CPC7Rz5AWSHW9PAG+UHFLrKKmb/i3h8lBT+MJ5EuuPwG8S0CtG3KdpOOlxHFG1WqUk
-         OcyCeprU+bBkNwdpg8p3Rw/wU3gBatLqnhqDlSTpJfY1wvtsv3x57ggqz6fx/EEtRV/Q
-         brMW1sdoyOjTSA09QaJNXE5Z0BPZjwx122VnxxAiccaZgj/Dt+Qwp5YQfcAIQL9epfio
-         7l2vuqlTw3qbzNJ5brUlf8GvPDGnKmQkZ92ll9WhSRkN12MqWRpiZtpwk0HPBDJOIzLG
-         GliyKsiB95BztLH2+nANv/LuwbS7cVJEkEkR5wnbiq34yww+dtSQsWWQo+BWEeb+yuP6
-         JcDw==
-X-Gm-Message-State: ANoB5pkjXzO0tqCZMiFpfKtSTQmZeF+L+vNmsY0IW5whDYkGnDMZJZSR
-        baHllzEgP7xzLXuRgQ3ydF7sXQELIS2wcQ==
-X-Google-Smtp-Source: AA0mqf72xDIqzBCYde93/TpUcWmhRRuwtC5BXk8dPC+ZjWMK/7vh5lG+/B406t68wV+gDZ10Me4wRA==
-X-Received: by 2002:a63:fc0a:0:b0:434:7885:6ade with SMTP id j10-20020a63fc0a000000b0043478856ademr27893332pgi.243.1669548275080;
-        Sun, 27 Nov 2022 03:24:35 -0800 (PST)
+        bh=af32RiZNOuCS1SpmNdhimvmfJ1uk/URYpjz9mBw96SQ=;
+        b=lREZGK7mwM11uvB0Ke7KJsiSvHXLq88q6wBfY1lG+9lBDdxNbuCandb0thJ+frFBo3
+         jxGFblrYymXmRXh4xEIQscEVrDoX1EegfaZVJzGczYwBiqvbXgeMJdpQmoMVcuiD6xe/
+         nSOn1Y+iARdUlmQsdbjBDE5aeOM1ymi3fFdb5P8qJeiwVrEUms/7Jj5vZ5dSh43TFrh1
+         3D53zPj7XhlbwKgXwVZgKzJ+BBXE6h3m3bwJj/xUceMVQHDyv/tM9ozVnMQck8E9yinv
+         XB9Zkk59yv3bTqpf3gjuhcr2RDJKKT8xFkoenhntYmPiq5QIiL77+8nUzrJ0Zw+0JrVg
+         +YTA==
+X-Gm-Message-State: ANoB5pnj3hWezIR1R6Eg4q7vGlU5h4M7za1iNk6WL7tEI7Zi9YwGCHp6
+        UvVOSlIdjtCBt958E/nHbWNborlrT3qrug==
+X-Google-Smtp-Source: AA0mqf5L3TYnjtJtzAa75ed/XwQKFkMTj7P+KxqwMlK5pbXVUY6CbgFHn+RGWM2wbLNqHgtdaEaB6w==
+X-Received: by 2002:a63:f510:0:b0:478:1020:b1e6 with SMTP id w16-20020a63f510000000b004781020b1e6mr1109710pgh.561.1669548279323;
+        Sun, 27 Nov 2022 03:24:39 -0800 (PST)
 Received: from localhost.localdomain ([223.179.131.184])
-        by smtp.gmail.com with ESMTPSA id oa14-20020a17090b1bce00b0020d24ea4400sm7691349pjb.38.2022.11.27.03.24.31
+        by smtp.gmail.com with ESMTPSA id oa14-20020a17090b1bce00b0020d24ea4400sm7691349pjb.38.2022.11.27.03.24.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Nov 2022 03:24:34 -0800 (PST)
+        Sun, 27 Nov 2022 03:24:38 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -59,9 +59,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH 1/2] dt-bindings: power: rpmpd: Add SM4250 support
-Date:   Sun, 27 Nov 2022 16:52:03 +0530
-Message-Id: <20221127112204.1486337-2-bhupesh.sharma@linaro.org>
+Subject: [PATCH 2/2] soc: qcom: rpmpd: Add SM4250 support
+Date:   Sun, 27 Nov 2022 16:52:04 +0530
+Message-Id: <20221127112204.1486337-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221127112204.1486337-1-bhupesh.sharma@linaro.org>
 References: <20221127112204.1486337-1-bhupesh.sharma@linaro.org>
@@ -77,8 +77,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible and constants for the power domains exposed by the
-SM4250 RPM.
+SM4250 has the same RPM power domains as SM6115. Add SM4250
+support by reusing SM6115 power domains.
 
 Cc: Bjorn Andersson <andersson@kernel.org>
 Cc: Rajendra Nayak <rnayak@codeaurora.org>
@@ -87,43 +87,45 @@ Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> 
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- .../devicetree/bindings/power/qcom,rpmpd.yaml          |  1 +
- include/dt-bindings/power/qcom-rpmpd.h                 | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+ drivers/soc/qcom/rpmpd.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-index 5b4eda919911..c99ffd39e704 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-@@ -37,6 +37,7 @@ properties:
-       - qcom,sdm845-rpmhpd
-       - qcom,sdx55-rpmhpd
-       - qcom,sdx65-rpmhpd
-+      - qcom,sm4250-rpmpd
-       - qcom,sm6115-rpmpd
-       - qcom,sm6125-rpmpd
-       - qcom,sm6350-rpmhpd
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index f5f82dde7399..bbe3b29913af 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -274,6 +274,16 @@
- #define SDM660_SSCMX		8
- #define SDM660_SSCMX_VFL	9
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
+index 337b1ad1cd3b..f0db6a10cf4e 100644
+--- a/drivers/soc/qcom/rpmpd.c
++++ b/drivers/soc/qcom/rpmpd.c
+@@ -471,6 +471,23 @@ static const struct rpmpd_desc qcm2290_desc = {
+ 	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
+ };
  
-+/* SM4250 Power Domains */
-+#define SM4250_VDDCX		0
-+#define SM4250_VDDCX_AO		1
-+#define SM4250_VDDCX_VFL	2
-+#define SM4250_VDDMX		3
-+#define SM4250_VDDMX_AO		4
-+#define SM4250_VDDMX_VFL	5
-+#define SM4250_VDD_LPI_CX	6
-+#define SM4250_VDD_LPI_MX	7
++static struct rpmpd *sm4250_rpmpds[] = {
++	[SM4250_VDDCX] = &sm6115_vddcx,
++	[SM4250_VDDCX_AO] = &sm6115_vddcx_ao,
++	[SM4250_VDDCX_VFL] = &sm6115_vddcx_vfl,
++	[SM4250_VDDMX] = &sm6115_vddmx,
++	[SM4250_VDDMX_AO] = &sm6115_vddmx_ao,
++	[SM4250_VDDMX_VFL] = &sm6115_vddmx_vfl,
++	[SM4250_VDD_LPI_CX] = &sm6115_vdd_lpi_cx,
++	[SM4250_VDD_LPI_MX] = &sm6115_vdd_lpi_mx,
++};
 +
- /* SM6115 Power Domains */
- #define SM6115_VDDCX		0
- #define SM6115_VDDCX_AO		1
++static const struct rpmpd_desc sm4250_desc = {
++	.rpmpds = sm4250_rpmpds,
++	.num_pds = ARRAY_SIZE(sm4250_rpmpds),
++	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
++};
++
+ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
+ 	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
+@@ -485,6 +502,7 @@ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
+ 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
+ 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
++	{ .compatible = "qcom,sm4250-rpmpd", .data = &sm4250_desc },
+ 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
+ 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
+ 	{ .compatible = "qcom,sm6375-rpmpd", .data = &sm6375_desc },
 -- 
 2.38.1
 
