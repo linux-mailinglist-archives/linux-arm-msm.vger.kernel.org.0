@@ -2,318 +2,441 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45ECA63AB9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 15:53:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B9FF63ABA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 15:56:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232049AbiK1Oxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 09:53:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44612 "EHLO
+        id S230462AbiK1O4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 09:56:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbiK1Oxl (ORCPT
+        with ESMTP id S232225AbiK1O4O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 09:53:41 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2976022B2C;
-        Mon, 28 Nov 2022 06:53:39 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BB202611F4;
-        Mon, 28 Nov 2022 14:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE823C433C1;
-        Mon, 28 Nov 2022 14:53:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669647218;
-        bh=uw2Pi5jCM9SNVGuWQrPxGM8G6h+A6DL8Wbgr4ldBBK0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Iai5b6NNmqzWlethjpBpunwrT1Jaq9dt0GsD7syLzt3NXZiYe0Ko+Dkb6gz/uRVhx
-         zIAP+o+tUBQAPZFq3CZEtce4DVsBqurzE7Mko8zZMoyeqrNuM86LqdKbadDaMhhD+v
-         Yvb78+7XWytsMg8d6+XXHoQPudnNkPQXL6UxGbUz/779AuFkoKTzN0RB6YM0dzZJ+f
-         aID1F7ZxlfbBVPxK5JuPi6NqZXnw08RiMfEFmYkWKWTTJ7Qs0nOvb0HIXI5V7HU3Pz
-         EXqCmkd0e/GrMfxc34Q7qm95yF3mHA4gzR4SPRSrEsrkMATaPw8unTJx1EgiyN0L24
-         7yni1H4zKOvdA==
-Date:   Mon, 28 Nov 2022 20:23:21 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>
-Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        eddie.huang@mediatek.com, daejun7.park@samsung.com,
-        bvanassche@acm.org, avri.altman@wdc.com, beanhuo@micron.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 05/16] ufs: core: mcq: Add Multi Circular Queue support
-Message-ID: <20221128145321.GE62721@thinkpad>
-References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
- <91d17ea9623b06d66027699257816bb2fb7176cb.1669176158.git.quic_asutoshd@quicinc.com>
+        Mon, 28 Nov 2022 09:56:14 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8148E1FCCC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 06:56:12 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id q7so13419083ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 06:56:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FOT7o7coi4TAoYXwjs3RFGYC2whGqK5WY9tHXZIG/1U=;
+        b=yod1UQvqmzZ2TIMIRH2ba8qILPeb5EkucSvrGKXtDxb2SED5RDSZ3McHL31zJ1SZGh
+         IKiLUpm9pxmN8TJOymI9j+szMpeBYi/ZVnpcqPfkc3fJ1hRK0lfYztqg2JOtpRNdvYO4
+         csdle3fz04ml3iZxBqYvKEZwuOcPJ9LZ03gQlHzIFPmul1gKPjrbLO86fuk+vDDcWlpk
+         FhA1Cg0GosabonZzoxLss42XnkNijGnf/MVNTWOmumhhZDLyqnXOtlQ91gjl3mCC9Wa0
+         mauNA6nvYX1KLHK1QyTfoxNq0cGSb0qudhZvDFP0Xtl9H+gdMRjqTNK0zjc4jT0tgoeg
+         bXSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FOT7o7coi4TAoYXwjs3RFGYC2whGqK5WY9tHXZIG/1U=;
+        b=qjpP2dCZkmIeoULBLw+j6irAaBMrpXP2mjSke8wR4OFhadYZM+7S4NADQgzoCjiVzV
+         Cr63h3U9kh8qIOwUNVoWOf1XxRv/Ihgqbi5I+AWYY8Mzeagw9M087aTnhD4o4H5VPBbs
+         VIpDWtnnLtIbPfrpWAGVCtsSBffUAetEPcvq4IsRQhNbFIirYWV6MBNUgITo7mY1BHcV
+         5zN7g/9KjgPmFuF4OBSVhSrLY0xvliggjqGU+5SYj0etr7+tC0EzUJKmzvvH0lmHEl3J
+         THewGJQOQUWlbtd6eMOYcQeKRGyR/Z6H470vFnDLsWVoXQA2tN0DrnhM+UNW+W1MrVzf
+         soLA==
+X-Gm-Message-State: ANoB5pl4w2kr4pdxvVSbtsTUk9gt/iFBcDPE2aB4kgXmhygRemDqmyGh
+        XfDwfGEqtBgQ1B4JnBvDaO3dLg==
+X-Google-Smtp-Source: AA0mqf4qO15HyJ3tuVS2kA3l+CAlPoep6WVE5Xhje8cpzRISXqO+oS22pLp2MptiVm8KzyaVgoGszg==
+X-Received: by 2002:a05:651c:201c:b0:279:a4b0:c34a with SMTP id s28-20020a05651c201c00b00279a4b0c34amr1992690ljo.435.1669647370814;
+        Mon, 28 Nov 2022 06:56:10 -0800 (PST)
+Received: from [192.168.1.101] (95.49.125.236.neoplus.adsl.tpnet.pl. [95.49.125.236])
+        by smtp.gmail.com with ESMTPSA id t27-20020a2e8e7b000000b0026fbac7468bsm1217757ljk.103.2022.11.28.06.56.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 06:56:10 -0800 (PST)
+Message-ID: <3751bf35-d202-99c2-fac1-12d3c69ad00a@linaro.org>
+Date:   Mon, 28 Nov 2022 15:56:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <91d17ea9623b06d66027699257816bb2fb7176cb.1669176158.git.quic_asutoshd@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221128131016.127860-1-krzysztof.kozlowski@linaro.org>
+ <20221128131016.127860-3-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221128131016.127860-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 08:10:18PM -0800, Asutosh Das wrote:
-> Add support for multi-circular queue (MCQ) which has been added
-> in UFSHC v4.0 standard in addition to the Single Doorbell mode.
-> The MCQ mode supports multiple submission and completion queues.
-> Add support to configure the number of queues.
+
+
+On 28.11.2022 14:10, Krzysztof Kozlowski wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-
-The patch subject is pretty opaque. Please use something like "Add initial
-Multi Circular Queue support" or something similar to specify that this patch
-only adds support for configuring the queues and not the full MCQ support.
-
-Also, this patch adds the module params for queues, so that should be mentioned
-in the description.
-
-> Co-developed-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
+> LPASS pin controller.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->  drivers/ufs/core/Makefile      |   2 +-
->  drivers/ufs/core/ufs-mcq.c     | 125 +++++++++++++++++++++++++++++++++++++++++
->  drivers/ufs/core/ufshcd-priv.h |   1 +
->  drivers/ufs/core/ufshcd.c      |  12 ++++
->  include/ufs/ufshcd.h           |   4 ++
->  5 files changed, 143 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/ufs/core/ufs-mcq.c
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 > 
-> diff --git a/drivers/ufs/core/Makefile b/drivers/ufs/core/Makefile
-> index 62f38c5..4d02e0f 100644
-> --- a/drivers/ufs/core/Makefile
-> +++ b/drivers/ufs/core/Makefile
-> @@ -1,7 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0
->  
->  obj-$(CONFIG_SCSI_UFSHCD)		+= ufshcd-core.o
-> -ufshcd-core-y				+= ufshcd.o ufs-sysfs.o
-> +ufshcd-core-y				+= ufshcd.o ufs-sysfs.o ufs-mcq.o
->  ufshcd-core-$(CONFIG_DEBUG_FS)		+= ufs-debugfs.o
->  ufshcd-core-$(CONFIG_SCSI_UFS_BSG)	+= ufs_bsg.o
->  ufshcd-core-$(CONFIG_SCSI_UFS_CRYPTO)	+= ufshcd-crypto.o
-> diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-> new file mode 100644
-> index 0000000..3818f45
-> --- /dev/null
-> +++ b/drivers/ufs/core/ufs-mcq.c
-> @@ -0,0 +1,125 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center. All rights reserved.
-> + *
-> + * Authors:
-> + *	Asutosh Das <quic_asutoshd@quicinc.com>
-> + *	Can Guo <quic_cang@quicinc.com>
-> + */
-> +
-> +#include <asm/unaligned.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include "ufshcd-priv.h"
-> +
-> +#define UFS_MCQ_MIN_RW_QUEUES 2
-> +#define UFS_MCQ_MIN_READ_QUEUES 0
-> +#define UFS_MCQ_NUM_DEV_CMD_QUEUES 1
-> +#define UFS_MCQ_MIN_POLL_QUEUES 0
-> +
-
-Remove extra new line
-
-> +
-> +static int rw_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_RW_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops rw_queue_count_ops = {
-> +	.set = rw_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int rw_queues;
-> +module_param_cb(rw_queues, &rw_queue_count_ops, &rw_queues, 0644);
-> +MODULE_PARM_DESC(rw_queues,
-> +		 "Number of interrupt driven I/O queues used for rw. Default value is nr_cpus");
-> +
-> +static int read_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_READ_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops read_queue_count_ops = {
-> +	.set = read_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int read_queues;
-> +module_param_cb(read_queues, &read_queue_count_ops, &read_queues, 0644);
-> +MODULE_PARM_DESC(read_queues,
-> +		 "Number of interrupt driven read queues used for read. Default value is 0");
-> +
-> +static int poll_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_POLL_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops poll_queue_count_ops = {
-> +	.set = poll_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int poll_queues = 1;
-> +module_param_cb(poll_queues, &poll_queue_count_ops, &poll_queues, 0644);
-> +MODULE_PARM_DESC(poll_queues,
-> +		 "Number of poll queues used for r/w. Default value is 1");
-> +
-> +static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
-> +{
-> +	int i;
-> +	u32 hba_maxq, rem, tot_queues;
-> +	struct Scsi_Host *host = hba->host;
-> +
-> +	hba_maxq = FIELD_GET(GENMASK(7, 0), hba->mcq_capabilities);
-
-It'd be good to add a definition for GENMASK(7, 0).
-
-> +
-> +	tot_queues = UFS_MCQ_NUM_DEV_CMD_QUEUES + read_queues + poll_queues +
-> +			rw_queues;
-> +
-> +	if (hba_maxq < tot_queues) {
-> +		dev_err(hba->dev, "Total queues (%d) exceeds HC capacity (%d)\n",
-> +			tot_queues, hba_maxq);
-> +		return -EOPNOTSUPP;
-> +	}
-> +
-> +	rem = hba_maxq - UFS_MCQ_NUM_DEV_CMD_QUEUES;
-> +
-> +	if (rw_queues) {
-> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = rw_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_DEFAULT];
-> +	} else {
-> +		rw_queues = num_possible_cpus();
-> +	}
-> +
-> +	if (poll_queues) {
-> +		hba->nr_queues[HCTX_TYPE_POLL] = poll_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_POLL];
-> +	}
-> +
-> +	if (read_queues) {
-> +		hba->nr_queues[HCTX_TYPE_READ] = read_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_READ];
-> +	}
-> +
-> +	if (!hba->nr_queues[HCTX_TYPE_DEFAULT])
-> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = min3(rem, rw_queues,
-> +							 num_possible_cpus());
-> +
-> +	for (i = 0; i < HCTX_MAX_TYPES; i++)
-> +		host->nr_hw_queues += hba->nr_queues[i];
-> +
-> +	hba->nr_hw_queues = host->nr_hw_queues + UFS_MCQ_NUM_DEV_CMD_QUEUES;
-> +	return 0;
-> +}
-> +
-> +int ufshcd_mcq_init(struct ufs_hba *hba)
-> +{
-> +	int ret;
-> +
-> +	ret = ufshcd_mcq_config_nr_queues(hba);
-> +
-> +	return ret;
-> +}
-> +
-> diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
-> index a9e8e1f..9368ba2 100644
-> --- a/drivers/ufs/core/ufshcd-priv.h
-> +++ b/drivers/ufs/core/ufshcd-priv.h
-> @@ -61,6 +61,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
->  int ufshcd_query_flag(struct ufs_hba *hba, enum query_opcode opcode,
->  	enum flag_idn idn, u8 index, bool *flag_res);
->  void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit);
-> +int ufshcd_mcq_init(struct ufs_hba *hba);
->  
->  #define SD_ASCII_STD true
->  #define SD_RAW false
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 42c49ce..0c4cd8f 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -8196,6 +8196,11 @@ static int ufshcd_add_lus(struct ufs_hba *hba)
->  	return ret;
->  }
->  
-> +static int ufshcd_alloc_mcq(struct ufs_hba *hba)
-> +{
-> +	return ufshcd_mcq_init(hba);
-> +}
-> +
->  /**
->   * ufshcd_probe_hba - probe hba to detect device and initialize it
->   * @hba: per-adapter instance
-> @@ -8245,6 +8250,13 @@ static int ufshcd_probe_hba(struct ufs_hba *hba, bool init_dev_params)
->  			goto out;
->  
->  		if (is_mcq_supported(hba)) {
-> +			ret = ufshcd_alloc_mcq(hba);
-> +			if (ret) {
-> +				/* Continue with SDB mode */
-> +				use_mcq_mode = false;
-> +				dev_err(hba->dev, "MCQ mode is disabled, err=%d\n",
-> +					 ret);
-> +			}
->  			ret = scsi_add_host(host, hba->dev);
->  			if (ret) {
->  				dev_err(hba->dev, "scsi_add_host failed\n");
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index 70c0f9f..dee0b37 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -833,6 +833,8 @@ struct ufs_hba_monitor {
->   *	ufshcd_resume_complete()
->   * @ext_iid_sup: is EXT_IID is supported by UFSHC
->   * @mcq_sup: is mcq supported by UFSHC
-> + * @nr_hw_queues: number of hardware queues configured
-> + * @nr_queues: number of Queues of different queue types
->   */
->  struct ufs_hba {
->  	void __iomem *mmio_base;
-> @@ -984,6 +986,8 @@ struct ufs_hba {
->  	bool complete_put;
->  	bool ext_iid_sup;
->  	bool mcq_sup;
-> +	unsigned int nr_hw_queues;
-> +	unsigned int nr_queues[HCTX_MAX_TYPES];
-
-Can these two members added before bool types to avoid any holes?
-
-Thanks,
-Mani
-
->  };
->  
->  /* Returns true if clocks can be gated. Otherwise false */
-> -- 
-> 2.7.4
+> Changes since v4:
+> 1. Re-order few properties between Soundwire nodes, to keep them ordered
+>    consistently.
+> 2. Drop unsupported qcom,port-offset.
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> Changes since v3:
+> 1. Re-order reg and sound-dai-cells.
+> 
+> Changes since v2:
+> 1. Use lower-case hex.
+> 
+> Changes since v1:
+> 1. Whitespace cleanups.
+> 2. Correct include - do not use deprecated one.
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 292 +++++++++++++++++++++++++++
+>  1 file changed, 292 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 7b63c56ff2f4..380405ec3452 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -15,6 +15,7 @@
+>  #include <dt-bindings/interconnect/qcom,sm8450.h>
+>  #include <dt-bindings/soc/qcom,gpr.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>  #include <dt-bindings/thermal/thermal.h>
+>  
+>  / {
+> @@ -2090,6 +2091,209 @@ compute-cb@3 {
+>  			};
+>  		};
+>  
+> +		wsa2macro: codec@31e0000 {
+> +			compatible = "qcom,sm8450-lpass-wsa-macro";
+> +			reg = <0 0x031e0000 0 0x1000>;
+> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&vamacro>;
+> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			assigned-clock-rates = <19200000>, <19200000>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "wsa2-mclk";
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&wsa2_swr_active>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		/* WSA2 */
+> +		swr4: soundwire-controller@31f0000 {
+> +			compatible = "qcom,soundwire-v1.7.0";
+> +			reg = <0 0x031f0000 0 0x2000>;
+> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&wsa2macro>;
+> +			clock-names = "iface";
+> +
+> +			qcom,din-ports = <2>;
+> +			qcom,dout-ports = <6>;
+> +
+> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		rxmacro: codec@3200000 {
+> +			compatible = "qcom,sm8450-lpass-rx-macro";
+> +			reg = <0 0x3200000 0 0x1000>;
+> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&vamacro>;
+> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+> +
+> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			assigned-clock-rates = <19200000>, <19200000>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "mclk";
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&rx_swr_active>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		swr1: soundwire-controller@3210000 {
+> +			compatible = "qcom,soundwire-v1.7.0";
+> +			reg = <0 0x3210000 0 0x2000>;
+> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&rxmacro>;
+> +			clock-names = "iface";
+> +			label = "RX";
+> +			qcom,din-ports = <0>;
+> +			qcom,dout-ports = <5>;
+> +
+> +			qcom,ports-sinterval-low =	/bits/ 8 <0x03 0x1f 0x1f 0x07 0x00>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x00>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x06 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0x00 0x01 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0x00>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x00 0x00 0x00 0x00>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		txmacro: codec@3220000 {
+> +			compatible = "qcom,sm8450-lpass-tx-macro";
+> +			reg = <0 0x3220000 0 0x1000>;
+> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&vamacro>;
+> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			assigned-clock-rates = <19200000>, <19200000>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "mclk";
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&tx_swr_active>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		wsamacro: codec@3240000 {
+> +			compatible = "qcom,sm8450-lpass-wsa-macro";
+> +			reg = <0 0x03240000 0 0x1000>;
+> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&vamacro>;
+> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+> +
+> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			assigned-clock-rates = <19200000>, <19200000>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "mclk";
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&wsa_swr_active>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		/* WSA */
+> +		swr0: soundwire-controller@3250000 {
+> +			compatible = "qcom,soundwire-v1.7.0";
+> +			reg = <0 0x03250000 0 0x2000>;
+> +			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&wsamacro>;
+> +			clock-names = "iface";
+> +
+> +			qcom,din-ports = <2>;
+> +			qcom,dout-ports = <6>;
+> +
+> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		swr2: soundwire-controller@33b0000 {
+> +			compatible = "qcom,soundwire-v1.7.0";
+> +			reg = <0 0x33b0000 0 0x2000>;
+> +			interrupts-extended = <&intc GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "core", "wake";
+> +
+> +			clocks = <&vamacro>;
+> +			clock-names = "iface";
+> +			label = "TX";
+> +
+> +			qcom,din-ports = <4>;
+> +			qcom,dout-ports = <0>;
+> +			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x01 0x03 0x03>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x01 0x01>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x02 0x00 0x00>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+> +		vamacro: codec@33f0000 {
+> +			compatible = "qcom,sm8450-lpass-va-macro";
+> +			reg = <0 0x033f0000 0 0x1000>;
+> +			clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			clock-names = "mclk", "macro", "dcodec", "npl";
+> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			assigned-clock-rates = <19200000>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "fsgen";
+> +			#sound-dai-cells = <1>;
+> +		};
+> +
+>  		remoteproc_adsp: remoteproc@30000000 {
+>  			compatible = "qcom,sm8450-adsp-pas";
+>  			reg = <0 0x30000000 0 0x100>;
+> @@ -3023,6 +3227,91 @@ qup_uart20_default: qup-uart20-default-state {
+>  
+>  		};
+>  
+> +		lpass_tlmm: pinctrl@3440000{
+> +			compatible = "qcom,sm8450-lpass-lpi-pinctrl";
+> +			reg = <0 0x3440000 0x0 0x20000>,
+> +			      <0 0x34d0000 0x0 0x10000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&lpass_tlmm 0 0 23>;
+> +
+> +			clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			clock-names = "core", "audio";
+> +
+> +			wsa_swr_active: wsa-swr-active-state {
+> +				clk-pins {
+> +					pins = "gpio10";
+> +					function = "wsa_swr_clk";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-disable;
+> +				};
+> +
+> +				data-pins {
+> +					pins = "gpio11";
+> +					function = "wsa_swr_data";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-bus-hold;
+> +				};
+> +			};
+> +
+> +			tx_swr_active: tx-swr-active-state {
+> +				clk-pins {
+> +					pins = "gpio0";
+> +					function = "swr_tx_clk";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-disable;
+> +				};
+> +
+> +				data-pins {
+> +					pins = "gpio1", "gpio2", "gpio14";
+> +					function = "swr_tx_data";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-bus-hold;
+> +				};
+> +			};
+> +
+> +			rx_swr_active: rx-swr-active-state {
+> +				clk-pins {
+> +					pins = "gpio3";
+> +					function = "swr_rx_clk";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-disable;
+> +				};
+> +
+> +				data-pins {
+> +					pins = "gpio4", "gpio5";
+> +					function = "swr_rx_data";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-bus-hold;
+> +				};
+> +			};
+> +
+> +			wsa2_swr_active: wsa2-swr-active-state {
+> +				clk-pins {
+> +					pins = "gpio15";
+> +					function = "wsa2_swr_clk";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-disable;
+> +				};
+> +
+> +				data-pins {
+> +					pins = "gpio16";
+> +					function = "wsa2_swr_data";
+> +					drive-strength = <2>;
+> +					slew-rate = <1>;
+> +					bias-bus-hold;
+> +				};
+> +			};
+> +		};
+> +
+>  		apps_smmu: iommu@15000000 {
+>  			compatible = "qcom,sm8450-smmu-500", "arm,mmu-500";
+>  			reg = <0 0x15000000 0 0x100000>;
+> @@ -3501,6 +3790,9 @@ lpass_ag_noc: interconnect@3c40000 {
+>  		};
+>  	};
+>  
+> +	sound: sound {
+> +	};
+> +
+>  	thermal-zones {
+>  		aoss0-thermal {
+>  			polling-delay-passive = <0>;
