@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 201F763B097
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 18:58:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 180BA63B0A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 19:01:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233992AbiK1R6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 12:58:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35166 "EHLO
+        id S233966AbiK1SBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 13:01:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234446AbiK1R5l (ORCPT
+        with ESMTP id S232976AbiK1SAj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 12:57:41 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B122CE1B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:46:15 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id j16so18542142lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:46:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sEOQc33dh/AvjD98uU08ScRRQgB0t4Sl60gjFCfdd8U=;
-        b=yhQe2+hZGfKl6Eo7WYzGcxfG3vjSEekJKA7nkO4rCuvo1+vY9HSx7lTw++LjKu/T/q
-         oGUXqhJeeq5zkrNXRdMIXEFvx25L9KApHsNm/KXgY0St375VrGNtLItCRFyN29hplOG6
-         9gc1TkStI7/j15OBs11Mxh9rYZyPpUVHBhF5knolHECXFL5+3duh5oHFGVTX0TJZqCY2
-         0BJY2g5+4peU0+TLiFM8tpUkUUinQ3YyvZAY2e5+mZWFJ+hkAWMBIXi4Dwl0uIXDo4R2
-         C9RP3oO6WQ6L7MTO7JCOcqg4KnvKi2GPBqUPL+ljPwNKtpXPJ7tbsnyXLpyeNVrQ1Nxu
-         pXgw==
+        Mon, 28 Nov 2022 13:00:39 -0500
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD3227DFE;
+        Mon, 28 Nov 2022 09:47:46 -0800 (PST)
+Received: by mail-pf1-f169.google.com with SMTP id b4so11207409pfb.9;
+        Mon, 28 Nov 2022 09:47:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sEOQc33dh/AvjD98uU08ScRRQgB0t4Sl60gjFCfdd8U=;
-        b=zArTMY6VsYGQ7O5NwqJYi46Gh91/qVDel+qpyhxy+4kf+jprZspx7EtEru7AC9GkYl
-         NaFsr/VB0R/hGG5IVE11YWopMpI5/H6gb04SWyPucSd8CPkToefl8TcBUvFRh4NBQ6qi
-         YQhHQJG2XGSWXzl2b8xrQq7RQ9+0UPRewiwFfJoIQ3GpN5zdl2UgL94MhtDxfgsISVlC
-         zk/85B0Cg9absumDCfh/sqzaFaSljr40L8kAJnYmpWwUD4S8VAC/ONeerrPq325B0zpE
-         kKurFZ654QbG40pVoSall1I1E1yP9twL6qqVyec6hl1VIX6PCkYN5d42FzRu8sc8Trgv
-         4nhA==
-X-Gm-Message-State: ANoB5pnpqHr0fImJa/h2047rmAaBEKCLQ0KOJL2DVKIirxKN1Qqy/8cX
-        4nPGqrXNEQiAjpmy7hPEKr///Csrl0uwnrj5
-X-Google-Smtp-Source: AA0mqf7Y8q4j5Qp8K52/Qdd96mqJajrlcpd3UQv1lIPTFAuR7uwCLpQ1Ju2x51BwH5f5CeII2zXU/A==
-X-Received: by 2002:a19:4901:0:b0:4b4:e3b8:c6af with SMTP id w1-20020a194901000000b004b4e3b8c6afmr11777772lfa.291.1669657569898;
-        Mon, 28 Nov 2022 09:46:09 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id b12-20020a05651c032c00b0027741daec09sm1252772ljp.107.2022.11.28.09.46.09
+        bh=mZKuvJhFRP5fDD1GxgFohQBtxaDdSsjAdzx3M27SwEE=;
+        b=yN4RJ/hOAMDCk0uORpcJusF+Sht+RaDxcesaQHwI1yVVMqupcYHCmOr7x5Du6s75p2
+         Nq4NSEYUMbcduw8AlF/2RXpP+J14qgbVqwe+6pisY9M0yc3+a5dkr8MXIoy3mjoBXMVH
+         6LupHLW8BdPrCzlpcve7fpFpM0hjMsIoQL+BSe3EXnTZTG/FEnHoZ+3W7YT7Gy8iFPvu
+         zyRZzt1YXu5ojYED7qGsqsDlBIgsMexHClZJduZmDWz1Ad5WG65HQ7QwdUp94pS4ttuX
+         BxgOLnT1MpwI4y8yiAVtrsXeH8UO+NBy+SR+13HLGYuPIcV11ALmcpIhGfkPVdRKby/l
+         ZLGA==
+X-Gm-Message-State: ANoB5plilEvB8qS7yQzVvAP+XTHDOGwCU13BgkgtBuViFIWSEHqycAT9
+        H6/G5R2Mlazl6r4K+meppPA=
+X-Google-Smtp-Source: AA0mqf5b56D5U7xlFZNXY9EV8a41oSDS7cAF4ID7GMgiHEd0+TF/j14hxb2MwuUJBqsLZOBxMzTEmQ==
+X-Received: by 2002:a63:1466:0:b0:476:cac7:16ad with SMTP id 38-20020a631466000000b00476cac716admr29993503pgu.128.1669657665374;
+        Mon, 28 Nov 2022 09:47:45 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:95f2:baa2:773c:2cfe? ([2620:15c:211:201:95f2:baa2:773c:2cfe])
+        by smtp.gmail.com with ESMTPSA id x189-20020a6231c6000000b0056cee8af3a6sm8304685pfx.54.2022.11.28.09.47.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 09:46:09 -0800 (PST)
-Message-ID: <dbf8082b-679a-b2d5-6568-3f9a93e52501@linaro.org>
-Date:   Mon, 28 Nov 2022 18:46:08 +0100
+        Mon, 28 Nov 2022 09:47:44 -0800 (PST)
+Message-ID: <de0c1d8a-42bb-4e29-4da0-7b0cfc9c2ffe@acm.org>
+Date:   Mon, 28 Nov 2022 09:47:41 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [RESEND PATCH 1/2] dt-bindings: nfc: nxp,nci: Document NQ310
- compatible
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v5 14/16] ufs: mcq: Add completion support of a cqe
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221128173744.833018-1-luca@z3ntu.xyz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221128173744.833018-1-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        eddie.huang@mediatek.com, daejun7.park@samsung.com,
+        avri.altman@wdc.com, beanhuo@micron.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
+ <32219cb9b058d7329ad8234a8a287701af1a0e34.1669176158.git.quic_asutoshd@quicinc.com>
+ <20221128170015.GM62721@thinkpad>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20221128170015.GM62721@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,17 +79,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/11/2022 18:37, Luca Weiss wrote:
-> The NQ310 is another NFC chip from NXP, document the compatible in the
-> bindings.
+On 11/28/22 09:00, Manivannan Sadhasivam wrote:
+> On Tue, Nov 22, 2022 at 08:10:27PM -0800, Asutosh Das wrote:
+>> Add support for completing requests from Completion Queue.
+>> Some host controllers support vendor specific registers
+>> that provide a bitmap of all CQ's which have at least one
+>> completed CQE. Add this support.
+>> The MCQ specification doesn't provide the Task Tag or its
+>> equivalent in the Completion Queue Entry.
+>> So use an indirect method to find the Task Tag from the
+>> Completion Queue Entry.
+>>
+>> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+>> Reported-by: kernel test robot <lkp@intel.com>
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> RESEND to fix Cc
+> What is this reported by for?
 
+I think that tag should be left out. "Reported-by: kernel test robot" 
+should only be used for patches that fix bugs reported by the kernel 
+test robot. I assume that a fix has been folded in into this patch that 
+was reported by the kernel test robot. If that is the case, the 
+"Reported-by: kernel test robot" tag is inappropriate.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+Bart.
 
