@@ -2,117 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B579963AD88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:20:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDF8263ADE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:38:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232421AbiK1QU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 11:20:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51348 "EHLO
+        id S232336AbiK1Qie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 11:38:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232168AbiK1QUy (ORCPT
+        with ESMTP id S230228AbiK1Qid (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 11:20:54 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52F0B7E5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:52 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id gu23so8945114ejb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:52 -0800 (PST)
+        Mon, 28 Nov 2022 11:38:33 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889FC24BFA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:38:32 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id d14so2740319ilq.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:38:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xB/MDsAyrTfDxbfwFpi7v9ob1ZeS88uoag9SCGEyi0g=;
-        b=gap6/PEMlSFVcoD4M7/mMeS/+FbnSLroHAsUDRxbASrIxWgYTUKUihwqwoFmpHzXw+
-         5GjFf7cOp03rcVcNkGNUZoIPqtNbHPx8hJX9bo5rxlYcSnVOgGrKltlfYrny0pFctp19
-         NSzPfKVoXE4Dh/eSjDPUFqii3IYwMoCQbjbnQ=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yXIPAzmyDAZ8+Yt+mdIKfYzYf8GpnFdRWmFlTziLPXg=;
+        b=AS242zFDSXrjnkDSDOd4HCh+DxQhjEj++DoANtzghOgH1Dhbr+D6SBJRVaUMJ2Hhr3
+         DBOE55TmEQsNUe3h0QEqbLWHv66CNpRkhh3KVULoHFjXmZ4HtUirB4INY02b2kvvvUkl
+         9turIca2kOmmbcLCY9s33Uphqh0Yn3tV488UgIWU9KjtFeyCW2gfwVgL++yWDcK0x//g
+         6T8Il64zJQ+pQ4ICgjpd/puAZI3rfOsQapqeGkAtSxCR8pxNQbAq5LUbN+fy+jjnsNXG
+         QWByrD8AHaYtay/CuVr6JaWtoA/KB2TNMd2bRXDwBjjWEDTbGAIZkAbmo+mq6ynQQiRx
+         cUUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xB/MDsAyrTfDxbfwFpi7v9ob1ZeS88uoag9SCGEyi0g=;
-        b=arv0qgO7mORm7WXznxTRPQDMdf8hYGdUIeAHodBdcnHodByEPJlQYVP/1xx4FNZsca
-         VqKQvh2uGFj+OUydCUMpjT+CnHrT/b6qMP4yBEdvwj1c1AGRp+2R+iwS+pq3mIlgqKEa
-         tG9VvneTEoWhwDAAgkzGYtulnVph09yfbUFTohCbGG3Eq4wWg93NUFYQkAu6kq2D6UEm
-         qZ8kwb7oBULBOecSQeuwGkARhn4Ewjhx9Vi9P4HhQaz5bkl4D/aIF7brvjHWGns/mfUN
-         xLQIw+XEg4aq8DrNeeITu+W99ye3TO5l40ZpgyUkQr1srKjEXQT73SGSdj75ZB8UhCD5
-         1AYQ==
-X-Gm-Message-State: ANoB5pm7A9dqoxA5jAbx+/dQ68PftQFEPMgHk1Kt8BrPKV8xF7wU0yTj
-        uQ8fgvuV5GBYDbHieU916UKyeMWp4EZTDeGz
-X-Google-Smtp-Source: AA0mqf72NmuKnO3J8ZORKIQb4E5QDgqOinFhMHNGYlOxsvHGFMgW0S1uT/9qnhupeN3jLh0pALk8wA==
-X-Received: by 2002:a17:906:914f:b0:7bc:4d3e:66dd with SMTP id y15-20020a170906914f00b007bc4d3e66ddmr15539636ejw.624.1669652450488;
-        Mon, 28 Nov 2022 08:20:50 -0800 (PST)
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
-        by smtp.gmail.com with ESMTPSA id 15-20020a170906328f00b007bd9e683639sm3302566ejw.130.2022.11.28.08.20.48
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 08:20:49 -0800 (PST)
-Received: by mail-wr1-f41.google.com with SMTP id n3so17707674wrp.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:48 -0800 (PST)
-X-Received: by 2002:adf:fd89:0:b0:242:1f81:7034 with SMTP id
- d9-20020adffd89000000b002421f817034mr185921wrr.617.1669652448598; Mon, 28 Nov
- 2022 08:20:48 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yXIPAzmyDAZ8+Yt+mdIKfYzYf8GpnFdRWmFlTziLPXg=;
+        b=FStfWSuqLdAoV9ofSKnY8mQdS0KG4VqpTfgCshpPuIDF3rEHkQ2TTyQ3jUx0wOqrfV
+         0WbW95eqaAGvILFAci4EE9rDIYCF/Fduk/Ysc+cwLMoehaPLgX42VxGiPWb/vWP/Sgko
+         BaWpF3Px+vIFS4MOpp/5I6Npma+pH/IJSHva0ejX5NaZrM7i/jsxGfywLhbziwlh6/yO
+         dgnW+AUtqr7o+gdasHN81XCjC0ZAagmR7pkDEM43HupWQsP2eMTwVPwnPg0tV7hJqSH6
+         s/akQ7miPAEpZ55yXu4i6HoNcw1LZKcWJDaHvrStXiaWh9E1RQJfYsH1YT6FIsBITIJa
+         kcQg==
+X-Gm-Message-State: ANoB5pm74I0BVaHhgG/eXe8TdVKXdasDGIFaACjLm6pI+V3vBEL+04b6
+        S5qj0DeM5Rxh8JQzVDzFjbDPLBD25cxmBJjm7JY8xQ==
+X-Google-Smtp-Source: AA0mqf5r5eWK1t05qxcUZ+jOLr71jb0rREp0k4Q9m03mLrkxwO85Ab05Wv/E06af1m1CqWAhynRdnEwTlpHGLp/2KRY=
+X-Received: by 2002:a92:1948:0:b0:302:4d37:9e66 with SMTP id
+ e8-20020a921948000000b003024d379e66mr15861054ilm.277.1669653511879; Mon, 28
+ Nov 2022 08:38:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid>
- <Y3zck7tPA5WFd0p1@google.com> <CAPao8GKpXcRm3PmWnv+rsr2z53r6J-ScXAq+fOi4ydQg_Gy31A@mail.gmail.com>
- <Y343IWgkli+y8HMn@google.com>
-In-Reply-To: <Y343IWgkli+y8HMn@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 28 Nov 2022 08:20:36 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=X4GzCnmgnAQMzCNpCxzxkZXWONt4gNVCHniRYE_uFVyg@mail.gmail.com>
-Message-ID: <CAD=FV=X4GzCnmgnAQMzCNpCxzxkZXWONt4gNVCHniRYE_uFVyg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Adding DT binding for zombie
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     =?UTF-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Harvey <hunge@google.com>, Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+References: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+In-Reply-To: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Mon, 28 Nov 2022 09:38:20 -0700
+Message-ID: <CANLsYkzwryAvo6rvT+4KyRX7deoB+QJ2gC0u2r0cN9HY1P3Daw@mail.gmail.com>
+Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
+To:     Sarannya S <quic_sarannya@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, arnaud.pouliquen@foss.st.com,
+        swboyd@chromium.org, quic_clew@quicinc.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Abner.Yen@ecs.com.tw,
-        Gavin.Lee@ecs.com.tw, Vicy.Lee@ecs.com.tw, Jason.Huang@ecs.com.tw,
-        Darren.Chen@ecs.com.tw
+        Shawn Guo <shawnguo@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "moderated list:ARM64 PORT (AARCH64 ARCHITECTURE)" 
+        <linux-arm-kernel@lists.infradead.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Please send another revision with a proper cover letter that details
+the changes made between the last version.
 
-On Wed, Nov 23, 2022 at 7:07 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+On Mon, 28 Nov 2022 at 06:28, Sarannya S <quic_sarannya@quicinc.com> wrote:
 >
-> > My checkout steps as below:
-> > $ git remote add linux_qcom=C3=82 git://git.kernel.org/pub/scm/linux/ke=
-rnel/git/
-> > qcom/linux.git
-> > $ git fetch --no-tags linux_qcom
-> > $ git checkout -b <MyLocalBranchName> linux_qcom/for-next
-> >
-> > Is my=C3=82 code base branch still worng?=C3=82  Am I=C3=82 missing som=
-ething?=C3=82
+> Some transports like Glink support the state notifications between
+> clients using flow control signals similar to serial protocol signals.
+> Local glink client drivers can send and receive flow control status
+> to glink clients running on remote processors.
 >
-> My understanding is that it is best to base you changes on a branch like
-> 'arm64-for-6.2' as the 'for-next' branch is re-created every time changes
-> land in one of the '${area}-for-${version}' branches.
+> Add APIs to support sending and receiving of flow control status by
+> rpmsg clients.
 >
-> No big issue in this case, just use the corresponding '${area}-for-${vers=
-ion}'
-> branch for future patches/versions :)
-
-FWIW, I usually just use Bjron's for-next branch for stuff like this.
-While the merge commits in the the Qualcomm "for-next" branch are
-re-created every time, because of the way "git" works the git hashes
-of the actual patches are the same as the git hashes of the patches in
-the separate branches. All the patches in "for-next" should be ones
-that are fine to base your patches on.
-
--Doug
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> ---
+>  arch/arm64/configs/defconfig   |  2 ++
+>  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+>  include/linux/rpmsg.h          | 15 +++++++++++++++
+>  4 files changed, 39 insertions(+)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 0b6af33..2df3778 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -26,6 +26,8 @@ CONFIG_CGROUP_CPUACCT=y
+>  CONFIG_CGROUP_PERF=y
+>  CONFIG_CGROUP_BPF=y
+>  CONFIG_USER_NS=y
+> +CONFIG_RPMSG=y
+> +CONFIG_RPMSG_CHAR=y
+>  CONFIG_SCHED_AUTOGROUP=y
+>  CONFIG_BLK_DEV_INITRD=y
+>  CONFIG_KALLSYMS_ALL=y
+> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> index d6dde00e..0c5bf67 100644
+> --- a/drivers/rpmsg/rpmsg_core.c
+> +++ b/drivers/rpmsg/rpmsg_core.c
+> @@ -331,6 +331,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>
+>  /**
+> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+> + * @ept:       the rpmsg endpoint
+> + * @enable:    enable or disable serial flow control
+> + *
+> + * Return: 0 on success and an appropriate error value on failure.
+> + */
+> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
+> +{
+> +       if (WARN_ON(!ept))
+> +               return -EINVAL;
+> +       if (!ept->ops->set_flow_control)
+> +               return -ENXIO;
+> +
+> +       return ept->ops->set_flow_control(ept, enable);
+> +}
+> +EXPORT_SYMBOL(rpmsg_set_flow_control);
+> +
+> +/**
+>   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+>   * @ept: the rpmsg endpoint
+>   *
+> @@ -539,6 +557,8 @@ static int rpmsg_dev_probe(struct device *dev)
+>
+>                 rpdev->ept = ept;
+>                 rpdev->src = ept->addr;
+> +
+> +               ept->flow_cb = rpdrv->flowcontrol;
+>         }
+>
+>         err = rpdrv->probe(rpdev);
+> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> index 39b646d..4fea45a 100644
+> --- a/drivers/rpmsg/rpmsg_internal.h
+> +++ b/drivers/rpmsg/rpmsg_internal.h
+> @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
+>   * @trysendto:         see @rpmsg_trysendto(), optional
+>   * @trysend_offchannel:        see @rpmsg_trysend_offchannel(), optional
+>   * @poll:              see @rpmsg_poll(), optional
+> + * @set_flow_control:  see @rpmsg_set_flow_control(), optional
+>   * @get_mtu:           see @rpmsg_get_mtu(), optional
+>   *
+>   * Indirection table for the operations that a rpmsg backend should implement.
+> @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
+>                              void *data, int len);
+>         __poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+>                              poll_table *wait);
+> +       int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
+>         ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+>  };
+>
+> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+> index 523c98b..cc7a917 100644
+> --- a/include/linux/rpmsg.h
+> +++ b/include/linux/rpmsg.h
+> @@ -64,12 +64,14 @@ struct rpmsg_device {
+>  };
+>
+>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
+> +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
+>
+>  /**
+>   * struct rpmsg_endpoint - binds a local rpmsg address to its user
+>   * @rpdev: rpmsg channel device
+>   * @refcount: when this drops to zero, the ept is deallocated
+>   * @cb: rx callback handler
+> + * @flow_cb: remote flow control callback handler
+>   * @cb_lock: must be taken before accessing/changing @cb
+>   * @addr: local rpmsg address
+>   * @priv: private data for the driver's use
+> @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
+>         struct rpmsg_device *rpdev;
+>         struct kref refcount;
+>         rpmsg_rx_cb_t cb;
+> +       rpmsg_flowcontrol_cb_t flow_cb;
+>         struct mutex cb_lock;
+>         u32 addr;
+>         void *priv;
+> @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
+>   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
+>   * @remove: invoked when the rpmsg channel is removed
+>   * @callback: invoked when an inbound message is received on the channel
+> + * @flowcontrol: invoked when remote side flow control status is received
+>   */
+>  struct rpmsg_driver {
+>         struct device_driver drv;
+> @@ -113,6 +117,7 @@ struct rpmsg_driver {
+>         int (*probe)(struct rpmsg_device *dev);
+>         void (*remove)(struct rpmsg_device *dev);
+>         int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
+> +       int (*flowcontrol)(struct rpmsg_device *, void *, bool);
+>  };
+>
+>  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
+> @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>
+>  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>
+> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
+> +
+>  #else
+>
+>  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+> @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>         return -ENXIO;
+>  }
+>
+> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
+> +{
+> +       /* This shouldn't be possible */
+> +       WARN_ON(1);
+> +
+> +       return -ENXIO;
+> +}
+> +
+>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+>
+>  /* use a macro to avoid include chaining to get THIS_MODULE */
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
