@@ -2,209 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE4F563A97F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 14:29:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA52063A990
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 14:32:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231827AbiK1N3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 08:29:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55418 "EHLO
+        id S231590AbiK1Nc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 08:32:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231932AbiK1N3o (ORCPT
+        with ESMTP id S231897AbiK1NcS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 08:29:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E391DDC2;
-        Mon, 28 Nov 2022 05:29:41 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ASD9qCe027048;
-        Mon, 28 Nov 2022 13:29:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=WWmFj/9cF+HmXZjr0kU3LqilZyGi9MnyIj7WZAVw4nI=;
- b=hZmVM/DSD6fq3juetUoprzIwblztUbyHiDeXbW6rjXyzRY8eAnIcvQBlqA9rU92CcSWl
- 33/dOYOmvuSsJHbq4rQXd0SsscseyErOuqoPWvmY6nskUv3mI8uCmd0vRlT0k4kM5MA2
- a56IUKAj+5lSttBr/TUUZFhODR1kN837QEDYtLPjBLT1TvLlq1vdRUIkzL8i9PZEsNWc
- XLdXCk/Zu6TfYf+eISulwJVH6fB9qdzrAHYkIacAZbWblhNJHniSCUlM8K2hOZCVItZZ
- NpgQR9M0/FtReDU7422bOcgVvu2h05HDd3i7oYbNLElTTKOf2vkPVlFOt4ravpVHdYsr cg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m3c3f4exc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Nov 2022 13:29:34 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ASDTYSe023311
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Nov 2022 13:29:34 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 28 Nov 2022 05:29:30 -0800
-From:   Sarannya S <quic_sarannya@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH V4 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-Date:   Mon, 28 Nov 2022 18:58:11 +0530
-Message-ID: <1669642093-20399-3-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+        Mon, 28 Nov 2022 08:32:18 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1904C1E718
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 05:32:17 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id d3so13165114ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 05:32:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UTk1f4/UabUqSaJoF84fcu0LQGS8SFqgsuHi7F6fCmA=;
+        b=bBXRoJxIBv+ZBlHdGK/YYBiHHzsROn2/wVRwIDc/Ftj+fiXiW/v3Smcs42r7Yhcr8/
+         y2bopk4Qp79o4/MCW7oMrSvqN24Tui+ZjHzhPNxCV0PG3jvvEpnbFbgRETOKIOvwg8yB
+         j6JfFuEsWIX2pBzRN/PNGferaGDmngRe5tDvmZBQu65yi7FPosv139CSEMm4gbe6zGbw
+         l1VmmGXvZlRxYRrrZeByhnQdGn6ltLKqYwO0BbwAYVCbSW6ESYWgPnFNMMwV8TK11lZq
+         uzxaPx29UNheINTbSIqL9NXO/pgpZHCtNoV/dKALc0FJFbD4iULKLw394eyF7ZMvkeGw
+         rw4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UTk1f4/UabUqSaJoF84fcu0LQGS8SFqgsuHi7F6fCmA=;
+        b=FAbayR6nTtjlMl/H4enDQuBMIH5V1KfE4FZcJRmfE0LTyZJ2dHSt6vyMHH6skuphD7
+         90N5+/Sq8PfpPlmr70uFCIC/RrijQSwsxKHxw72dScPgnXqMnCSBb9eBPSRXNuUbAmlB
+         5IJWDqBq4Nmfh2zl8RHhwzaBcT+oHqb7MwpS9CxE6Rm8RigpgMqk7F1w1ji2eeysyIQJ
+         tHniTfoGE6DH4YN0nVM5kp0ApyLpTbSpZ6uC4ZWKPadFdz5hIf5bsHN8be3Uc3xIbsbL
+         GmzYn+xwzxHCC/9fxqbdojbv7Jp7oKq7R1wHULeetZllCK2zm6/Xr+uOhjVn8jVHzRrN
+         qxbQ==
+X-Gm-Message-State: ANoB5pnvB+tYI1Z67OwLawKEeTGFb3uguu3qdJnVjJqDdD3D40utcA6k
+        0smOX9yzWEhy8Xplb7Z2/1vt1Q==
+X-Google-Smtp-Source: AA0mqf7TjM+XfkD/x98kN9/YPxlKDY7URm0w5/ZKEJGOGW2kQ9rdPYDx9dbzRYXZoLEJPEhA7tolSQ==
+X-Received: by 2002:a2e:2c0e:0:b0:279:8d29:193c with SMTP id s14-20020a2e2c0e000000b002798d29193cmr6056865ljs.167.1669642335016;
+        Mon, 28 Nov 2022 05:32:15 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id h19-20020a05651c159300b0026de0c8098csm1234052ljq.26.2022.11.28.05.32.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 05:32:14 -0800 (PST)
+Message-ID: <6b445991-0843-6a1e-1bd0-1980a78a0481@linaro.org>
+Date:   Mon, 28 Nov 2022 14:32:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vzBiDt_5YgIzVYIxFUkjw_ZmqBH8LD3w
-X-Proofpoint-ORIG-GUID: vzBiDt_5YgIzVYIxFUkjw_ZmqBH8LD3w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-28_11,2022-11-28_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- suspectscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211280103
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
+Content-Language: en-US
+To:     Sarannya S <quic_sarannya@quicinc.com>, bjorn.andersson@linaro.org,
+        arnaud.pouliquen@foss.st.com, swboyd@chromium.org,
+        quic_clew@quicinc.com, mathieu.poirier@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "moderated list:ARM64 PORT (AARCH64 ARCHITECTURE)" 
+        <linux-arm-kernel@lists.infradead.org>
+References: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
-to get/set the low level transport signals.
+On 28/11/2022 14:28, Sarannya S wrote:
+> Some transports like Glink support the state notifications between
+> clients using flow control signals similar to serial protocol signals.
+> Local glink client drivers can send and receive flow control status
+> to glink clients running on remote processors.
+> 
+> Add APIs to support sending and receiving of flow control status by
+> rpmsg clients.
+> 
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> ---
+>  arch/arm64/configs/defconfig   |  2 ++
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
----
- drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 52 insertions(+), 8 deletions(-)
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index 3e0b8f3..d44c8a6 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -23,6 +23,7 @@
- #include <linux/rpmsg.h>
- #include <linux/skbuff.h>
- #include <linux/slab.h>
-+#include <linux/termios.h>
- #include <linux/uaccess.h>
- #include <uapi/linux/rpmsg.h>
- 
-@@ -68,6 +69,8 @@ struct rpmsg_eptdev {
- 	struct sk_buff_head queue;
- 	wait_queue_head_t readq;
- 
-+	u32 remote_signals;
-+	bool signals_pending;
- };
- 
- int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-@@ -109,7 +112,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
- 	skb_queue_tail(&eptdev->queue, skb);
- 	spin_unlock(&eptdev->queue_lock);
- 
--	/* wake up any blocking processes, waiting for new data */
-+	wake_up_interruptible(&eptdev->readq);
-+
-+	return 0;
-+}
-+
-+static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-+{
-+	struct rpmsg_eptdev *eptdev = priv;
-+
-+	if (enable)
-+		eptdev->remote_signals = TIOCM_DSR | TIOCM_CTS;
-+	else
-+		eptdev->remote_signals = 0;
-+	
-+	eptdev->signals_pending = true;
-+
- 	wake_up_interruptible(&eptdev->readq);
- 
- 	return 0;
-@@ -146,6 +164,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 		return -EINVAL;
- 	}
- 
-+	ept->flow_cb = rpmsg_ept_flow_cb;
- 	eptdev->ept = ept;
- 	filp->private_data = eptdev;
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -166,6 +185,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
- 		eptdev->ept = NULL;
- 	}
- 	mutex_unlock(&eptdev->ept_lock);
-+	eptdev->signals_pending = false;
- 
- 	/* Discard all SKBs */
- 	skb_queue_purge(&eptdev->queue);
-@@ -279,6 +299,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
- 	if (!skb_queue_empty(&eptdev->queue))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	if (eptdev->signals_pending)
-+		mask |= EPOLLPRI;
-+
- 	mask |= rpmsg_poll(eptdev->ept, filp, wait);
- 
- 	return mask;
-@@ -289,14 +312,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
- {
- 	struct rpmsg_eptdev *eptdev = fp->private_data;
- 
--	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
--		return -EINVAL;
--
--	/* Don't allow to destroy a default endpoint. */
--	if (eptdev->default_ept)
--		return -EINVAL;
-+	bool set;
-+	u32 val;
-+	int ret;
-+	
-+	switch (cmd) {
-+	case TIOCMGET:
-+		eptdev->signals_pending = false;
-+		ret = put_user(eptdev->remote_signals, (int __user *)arg);
-+		break;
-+	case TIOCMSET:
-+		ret = get_user(val, (int __user *)arg);
-+		if (ret)
-+			break;
-+		set = (val & (TIOCM_DTR | TIOCM_RTS)) ? true : false;
-+		ret = rpmsg_set_flow_control(eptdev->ept, set);
-+		break;
-+	case RPMSG_DESTROY_EPT_IOCTL:
-+		/* Don't allow to destroy a default endpoint. */
-+		if (eptdev->default_ept) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+		break;
-+	default:
-+		ret = -EINVAL;
-+	}
- 
--	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+	return ret;
- }
- 
- static const struct file_operations rpmsg_eptdev_fops = {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+defconfig changes are not related with code, please keep separate with
+their own explanation.
+
+>  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+>  include/linux/rpmsg.h          | 15 +++++++++++++++
+>  4 files changed, 39 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 0b6af33..2df3778 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -26,6 +26,8 @@ CONFIG_CGROUP_CPUACCT=y
+>  CONFIG_CGROUP_PERF=y
+>  CONFIG_CGROUP_BPF=y
+>  CONFIG_USER_NS=y
+> +CONFIG_RPMSG=y
+> +CONFIG_RPMSG_CHAR=y
+
+Why? It is already =m
+I don't think this is correct patch hunk...
+
+Best regards,
+Krzysztof
 
