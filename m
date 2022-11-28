@@ -2,148 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 589CC63A246
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 08:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B05363A317
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 09:31:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbiK1HuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 02:50:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
+        id S230225AbiK1IbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 03:31:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiK1HuM (ORCPT
+        with ESMTP id S230108AbiK1IbD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 02:50:12 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7315A958A;
-        Sun, 27 Nov 2022 23:50:10 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AS5pvbm013085;
-        Mon, 28 Nov 2022 07:49:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=EvOYNr5YwYsIS+9C2KVrBrkRa6q4/RNX1EkrAtgxSz0=;
- b=pRMT6liRzaCzEJ+gyyAB9TSBPVuSRM2WcXU9/mavI0Kkf4QQqKhYNqhf2GFRiqVxmoJ4
- if1wzu6Fb3WewGZxUy6u9a8z8d494yKiKvZBnK9SM4bubVGharcdcvAvcFyiOzk1RYds
- wAGJ2S5F2ncHHjbjZozbF2KCTC5NVXkJCyWUsMeA+kLcYe4jPE0KFbXHrCpQszCozQrv
- o6vhHFj0V1NXDQ0WnjFITdHdc2oGJgNsaKASUWZcPQvcUmlKNmEADFltw/OB3eAVhG/n
- rKuWSoccanMC2q/z9TJuXpNy8RD54Z+yXpEtCcF4dkuDQ09McUfzlUFsUK4DE70m2MVF dg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m3bjrkpca-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Nov 2022 07:49:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AS7nLi5009840
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 28 Nov 2022 07:49:21 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Sun, 27 Nov 2022 23:49:15 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops
-Date:   Mon, 28 Nov 2022 13:19:02 +0530
-Message-ID: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 28 Nov 2022 03:31:03 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9514C175B7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 00:30:59 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id q7so12253532ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 00:30:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=v/ms0T42AkTk/cRIo1vElQWeWjhxMFGnKH3PD3tFd1E=;
+        b=O2M1PTCZR8mt3SUeRtG/QwPNxjnOQgrcUY6YdERup7cd75uBh+Ws0VRZxw4StQAWkY
+         99qI8nNJxzuN815YqbnaiOLcETih2O3NRW/T+WZsae3+bkpki1aRB5CjhtJnBBCa3iuA
+         LgRhoXVIyWRf1wUnTmjMEdunU7zURcsqL2Ku4otT+mJqahqq50o7w/9JlK/J7Q12h3kD
+         ftuYK0EogtFWZYXMxPRXbxSmZ3nbJP7tnqPYqWPb3SYUL/Kpy8Smax1ATIDVfgdru+oh
+         Q/4YdB1kaRzzlDct90W/I85516LVc4iq/QvCHJJfOYQXkjE4mZ7IF6s4b2L5yoAIttRk
+         FF5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v/ms0T42AkTk/cRIo1vElQWeWjhxMFGnKH3PD3tFd1E=;
+        b=5+YoKFmCDRS+9NBoLzqtbPwDzEGEpGjF1Bg/DjeHcaroUAaxWzsp8LHVj1PydmDYUZ
+         fckxj1FehP69ajw9fnQeifHuUajCYEr08lmFjAoh3g+XVsm22bmhmbQg6GYkDBuQAd1/
+         6K3k+sLm10FaX3FoJmqUVTeFiM4Q0Wl86kEWaeBP/AKZR3JBVBfgNygSq7fXiykcuiUN
+         UBWPOZT6iY43w4pwpBP2ph7kLNSMK1/GIirq9MHU1uKH3pkb//HXe2WDoCRJQYGoWVtH
+         LoVWc8QnX6uPIiYmZ2g3FIA15BO/DgmwT5Yu6107zMVUI6af8hSWd4tJoyh6DIYKl2HB
+         Nb3g==
+X-Gm-Message-State: ANoB5pmcia2ow/Mjv2NTq8IbZ9wAB6PwNROlgMu/yP7xJXHE1/ql8G9/
+        0hM7MFdHXnIXLhDzJyslLCGukg==
+X-Google-Smtp-Source: AA0mqf4WQ9BxGq6ZLYloTIYn8qMg3Dvz6GHoFpf2EVL4IylUTMzOzfulKTdziNdCWcyL1QCPXRfvyg==
+X-Received: by 2002:a2e:a884:0:b0:277:37a8:ba87 with SMTP id m4-20020a2ea884000000b0027737a8ba87mr10275610ljq.14.1669624257906;
+        Mon, 28 Nov 2022 00:30:57 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id o4-20020ac25b84000000b004b4b9beb0eesm1633968lfn.50.2022.11.28.00.30.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 00:30:57 -0800 (PST)
+Message-ID: <61f1a1e5-bd2c-4a22-66f7-1935154b35ad@linaro.org>
+Date:   Mon, 28 Nov 2022 09:30:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oyKsuhqYmd0bM19Akig8BJRQ_oIBWATw
-X-Proofpoint-GUID: oyKsuhqYmd0bM19Akig8BJRQ_oIBWATw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-28_06,2022-11-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
- impostorscore=0 priorityscore=1501 adultscore=0 mlxscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211280061
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH V5 1/2] dt-bindings: firmware: qcom-scm: Add optional
+ interrupt
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, robimarko@gmail.com,
+        quic_gurus@quicinc.com, quic_rjendra@quicinc.com
+References: <20221123204615.25358-1-quic_sibis@quicinc.com>
+ <20221123204615.25358-2-quic_sibis@quicinc.com>
+ <3cda9005-d7a5-56f0-d1d2-fd6c1cb36fc3@linaro.org>
+ <7b6ffbb4-80fb-610a-c839-e3bf1668d4ed@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <7b6ffbb4-80fb-610a-c839-e3bf1668d4ed@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update lpass sc7180 platform driver with PM ops, such as
-system supend and resume callbacks.
-This update is required to disable clocks during supend and
-avoid XO shutdown issue.
+On 28/11/2022 06:57, Sibi Sankar wrote:
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Rahul Ajmeriya <quic_rajmeriy@quicinc.com>
----
- sound/soc/qcom/lpass-sc7180.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+>>
+>> Which devices have interrupts?
+>>
+>> We talked about it here:
+>> https://lore.kernel.org/all/2464d90f-64e9-5e3c-404b-10394c3bc302@quicinc.com/
+>> and here:
+>> https://lore.kernel.org/all/c20edd0d-7613-5683-60e7-54317cac6e0b@linaro.org/
+>>
+>> But I still don't get which devices support it and which do not.
+> 
+> lol, I thought we reached a consensus earlier because of the "ok" and
+> R-b. Like I explained earlier the bootloader would be adding interrupt
+> on the fly, wouldn't such cases cause binding check failure if we list
+> all the devices supporting it? 
 
-diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-index 77a556b..6ad1c5b 100644
---- a/sound/soc/qcom/lpass-sc7180.c
-+++ b/sound/soc/qcom/lpass-sc7180.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <dt-bindings/sound/sc7180-lpass.h>
- #include <sound/pcm.h>
- #include <sound/soc.h>
-@@ -156,10 +157,34 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
- 	struct lpass_data *drvdata = platform_get_drvdata(pdev);
- 
- 	clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
-+	return 0;
-+}
-+
-+static int sc7180_lpass_dev_resume(struct device *dev)
-+{
-+	int ret = 0;
-+	struct lpass_data *drvdata = dev_get_drvdata(dev);
- 
-+	ret = clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
-+	if (ret) {
-+		dev_err(dev, "sc7180 clk prepare and enable failed\n");
-+		return ret;
-+	}
-+	return ret;
-+}
-+
-+static int sc7180_lpass_dev_suspend(struct device *dev)
-+{
-+	struct lpass_data *drvdata = dev_get_drvdata(dev);
-+
-+	clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
- 	return 0;
- }
- 
-+static const struct dev_pm_ops sc7180_lpass_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(sc7180_lpass_dev_suspend, sc7180_lpass_dev_resume)
-+};
-+
- static struct lpass_variant sc7180_data = {
- 	.i2sctrl_reg_base	= 0x1000,
- 	.i2sctrl_reg_stride	= 0x1000,
-@@ -293,6 +318,7 @@ static struct platform_driver sc7180_lpass_cpu_platform_driver = {
- 	.driver = {
- 		.name = "sc7180-lpass-cpu",
- 		.of_match_table = of_match_ptr(sc7180_lpass_cpu_device_id),
-+		.pm = &sc7180_lpass_pm_ops,
- 	},
- 	.probe = asoc_qcom_lpass_cpu_platform_probe,
- 	.remove = asoc_qcom_lpass_cpu_platform_remove,
--- 
-2.7.4
+What type of failure? I don't get. Is this interrupt valid for SM8250?
+SDM845? MSM8996? and so on? Now you make it valid.
+
+> Also some of the SM8450 devices in the
+> wild would be running firmware not having the feature but I guess
+> eventually most of the them will end up supporting the feature in the
+> end.
+
+That's not what I meant. Your patch describes the case for one variant
+but you are affecting all of them.
+
+
+
+Best regards,
+Krzysztof
 
