@@ -2,66 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A5AA63B1C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 20:02:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6C9863B1D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 20:04:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232854AbiK1TCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 14:02:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32940 "EHLO
+        id S233050AbiK1TEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 14:04:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232679AbiK1TCH (ORCPT
+        with ESMTP id S232858AbiK1TEG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 14:02:07 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10CA26AD4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:02:06 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id vv4so28300806ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:02:06 -0800 (PST)
+        Mon, 28 Nov 2022 14:04:06 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B9727FF0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:04:05 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id d20so5984200edn.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:04:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AvcsqOLDEgZfhGUaEz8COVF/l5RKQZT/ZHo2hpf2YEs=;
-        b=TZApyyqu3+lIUYq/nIpvz3YAkuyy3nX4GjcLECf52hWQiWYR/jG/KleP0WVpBIfPZh
-         +lSDZJUYBy87YJW+uMGSv0H+zUEEvIDaokUyNjZmg57VaBlufpfhJ4L0j+TteGx40z/S
-         KbYj/LVLnejrHFBFw3V5Alo6g/Yym6mPHamqo=
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i7TE3xTXHxdiPDqToBEWb9svQo97suw8gwZaCnVq0Pk=;
+        b=aVHKrbjVR6RMBzgskzOOJX3n9se5rG6SNBpczzN6sx49SsQagI8ySWu1eWrAS82a25
+         1VtP5sG0l2SyzqLy8HSg/XT6g+6M0QNhfPNKCWzt5SUpD5S6zy52Z6I+hC609fD64GI6
+         jb+MdADYxZquZEKxDNUGYPaoCBRTDAWnCtKlM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AvcsqOLDEgZfhGUaEz8COVF/l5RKQZT/ZHo2hpf2YEs=;
-        b=m1aDwtWcabZ2Lde9l2DKXA2itR1sLAd78ml/tLLIGMj19nvlM3BNF9EFGP0v6uJr9D
-         nGtvlPNfxpruv9KEUKlbjik0sBH/0bxRn327ZXGv34sx56nLt9sLCxH1WuVze16ls33N
-         tq5YBFpTMOR89Gnzwb5NHIsRrVgEmdeD562AGxuoc9qmKzgr41/brNx80TUDDtlM1Aj0
-         xiPf8EKMx84FW2yPZv+Li/DXDCbruQyT50lFMVqsOiYxLDcn9hWLxYkpEESV+8L7obtq
-         PovAQTmMo5qQNu3q7nraObF5enZcgBjXR3fHeBRo5SQ97X4ULx5C17cLZjq/rz2vPLgH
-         8S+w==
-X-Gm-Message-State: ANoB5pmlYAvES961G34mOrGGqTY/p7S0g+OrnDg05S3ITGuNHSjljKCg
-        nfio6It4KjJl6WFbJeo0HTiGrenbEd0vowvn
-X-Google-Smtp-Source: AA0mqf5FuyTZPQtKxKzopbQoHdBs6AiQj+TZ5sr1dKV+rgWGmLrHmfOeskhXPeM5x38C0oDTC7uEyQ==
-X-Received: by 2002:a17:906:f84d:b0:7b9:631b:7dfb with SMTP id ks13-20020a170906f84d00b007b9631b7dfbmr26044025ejb.32.1669662125212;
-        Mon, 28 Nov 2022 11:02:05 -0800 (PST)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id u1-20020a1709061da100b00780982d77d1sm5269995ejh.154.2022.11.28.11.02.04
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=i7TE3xTXHxdiPDqToBEWb9svQo97suw8gwZaCnVq0Pk=;
+        b=tkypPDYZTNvFmZRWnM3OOBfjG/bv5UflTofAD1h4p/rXSPsZhV8e9UzmAOR4TR/w2i
+         tVAofqCKzaceJ99t0fHWiPlPmnB1PdSPkPggG54Ila+kJm2U03feYJuYym09tLU+JtSV
+         I+VsGe0wfa1JfE+VvIuR9zbD0LJaTfdeVr13eBa1PN0ltqmKGyGxtFUw94G2jQkUzIDA
+         k8KaOaN34BRJ/gsiI2KZZxs83ZIEKUffaCozLrIwPjfZj5jhUpuvd19dYbuDhSNnPSWt
+         L9APpSNHZjkVFi1NcBB6novLZxhEJpbquVGee4oF08M/aJRTIh0LF+PPxyn87tBtkkq1
+         09Yw==
+X-Gm-Message-State: ANoB5plABQmZfKzM4AfUfPyZtkB8atGo/BVhJ9RckxR1wKPDOVmUAzLq
+        XUECnYv87HwJ1rpTGjgPTN8eBebJHcZBTS1M
+X-Google-Smtp-Source: AA0mqf4cumbE+mZNkFCR+opXOJBviXV4egxSM4sjY5fp4BkJJf4X5ICq9ckpBSShFml1JTOCMwID7w==
+X-Received: by 2002:aa7:cd91:0:b0:469:2f36:fd with SMTP id x17-20020aa7cd91000000b004692f3600fdmr35091510edv.385.1669662244000;
+        Mon, 28 Nov 2022 11:04:04 -0800 (PST)
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
+        by smtp.gmail.com with ESMTPSA id o20-20020a50fd94000000b0045726e8a22bsm5413905edt.46.2022.11.28.11.04.03
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 11:02:05 -0800 (PST)
-Received: by mail-wr1-f43.google.com with SMTP id g12so18448614wrs.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:02:04 -0800 (PST)
-X-Received: by 2002:adf:cd82:0:b0:238:b29e:4919 with SMTP id
- q2-20020adfcd82000000b00238b29e4919mr32489126wrj.583.1669662124286; Mon, 28
- Nov 2022 11:02:04 -0800 (PST)
+        Mon, 28 Nov 2022 11:04:03 -0800 (PST)
+Received: by mail-wr1-f51.google.com with SMTP id z4so18521238wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 11:04:03 -0800 (PST)
+X-Received: by 2002:a5d:4950:0:b0:242:1f80:6cd9 with SMTP id
+ r16-20020a5d4950000000b002421f806cd9mr681565wrs.405.1669661755148; Mon, 28
+ Nov 2022 10:55:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20221124115712.v4.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
  <CAPao8GK93KMrtaXw7mNWOCE60zk=uCENLfBXhNRVxJXEnnaGFg@mail.gmail.com>
- <f58866c8-0164-2e59-4ff3-f9a4f9334e49@linaro.org> <CAD=FV=UtiBYg_S-n7ZGFEChQcaMiima19qfYPibyW9DbQEsivA@mail.gmail.com>
- <9fea68d5-cdae-dc94-bd3b-71ba12a23a9b@linaro.org>
-In-Reply-To: <9fea68d5-cdae-dc94-bd3b-71ba12a23a9b@linaro.org>
+ <f58866c8-0164-2e59-4ff3-f9a4f9334e49@linaro.org> <CAPao8GKbdK79Z7w91x0T6JW9v6VFoeYSaXGGAuzB_=ukR9g0_w@mail.gmail.com>
+ <b54cd0a4-7ee8-e8c0-ceda-18b29588d535@linaro.org> <CAD=FV=X9C8nLDrEpZE2tLtq6Brn9cd-15+1JWFOL4cPYdJs5Dg@mail.gmail.com>
+ <f92ce2ed-80b5-eb26-36a4-2384a7a8510f@linaro.org>
+In-Reply-To: <f92ce2ed-80b5-eb26-36a4-2384a7a8510f@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 28 Nov 2022 11:01:52 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WJF86Gx4o4=x-8wDkV+TV+O-bAhgzGPcfXsO4LuffGdA@mail.gmail.com>
-Message-ID: <CAD=FV=WJF86Gx4o4=x-8wDkV+TV+O-bAhgzGPcfXsO4LuffGdA@mail.gmail.com>
+Date:   Mon, 28 Nov 2022 10:55:41 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Xfo713SmTpuOJYDavWCciCR0p47Qx7U+6gEN+f4FrB=w@mail.gmail.com>
+Message-ID: <CAD=FV=Xfo713SmTpuOJYDavWCciCR0p47Qx7U+6gEN+f4FrB=w@mail.gmail.com>
 Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Add zombie
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     =?UTF-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>,
@@ -78,6 +80,7 @@ Cc:     =?UTF-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>,
         Darren.Chen@ecs.com.tw, Abner.Yen@ecs.com.tw, Vicy.Lee@ecs.com.tw,
         Jason.Huang@ecs.com.tw
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -90,69 +93,87 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Nov 28, 2022 at 9:30 AM Krzysztof Kozlowski
+On Mon, Nov 28, 2022 at 9:22 AM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> On 28/11/2022 16:51, Doug Anderson wrote:
+> On 28/11/2022 16:56, Doug Anderson wrote:
 > > Hi,
 > >
-> > On Thu, Nov 24, 2022 at 1:29 AM Krzysztof Kozlowski
+> > On Thu, Nov 24, 2022 at 3:27 AM Krzysztof Kozlowski
 > > <krzysztof.kozlowski@linaro.org> wrote:
 > >>
-> >>> 2.
-> >>> I notice Kryzysztof say he didn't in cc mail loop at beggin, and below is
-> >>> my updated mail list:
-> >>> ---
-> >>> Series-to: LKML <linux-kernel@vger.kernel.org>
-> >>> Series-cc: Douglas Anderson <dianders@chromium.org>
-> >>> Series-cc: Bob Moragues <moragues@chromium.org>
-> >>> Series-cc: Harvey <hunge@google.com>
-> >>> Series-cc: Stephen Boyd <swboyd@chromium.org>
-> >>> Series-cc: Matthias Kaehlcke <mka@chromium.org>
-> >>> Series-cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>> ---
-> >>> Is there anyone I missed?
+> >> On 24/11/2022 12:20, =E6=A5=8A=E5=AE=97=E7=BF=B0 wrote:
+> >>> Hi Krzysztof, Matthias,
+> >>>
+> >>> How to use "get_maintainers.pl"?
+> >>>
+> >>> I find this script in path "<MyCodebase>/kernel/v5.15/script", and ou=
+tput
 > >>
-> >> These are not correct addresses and not complete list of them. Don't
-> >> invent the entries, don't add there some weird addresses.
-> >>
-> >> Use get_maintainers.pl. That's it. Nothing more, nothing less.
+> >> This looks like v5.15 kernel which is heavily outdated. Please never
+> >> work on such kernels when interacting with upstream. The rule is you
+> >> work on either last mainline kernel (v6.1-rc6), maintainers for-next
+> >> branch (you should know who is the maintainer of subsystem you submit
+> >> to, get_maintainers.pl gives this information) or on moderately recent
+> >> linux-next. For bigger patchsets there might be exceptions for these
+> >> rules, but it's not the case here.
 > >
-> > Just to give context here, I think Owen is using `patman` [0] to send
-> > patches. Yes, it's part of the u-boot tree but it's designed for
-> > sending Linux patches too.
+> > Just to add context here, it's a fairly standard workflow for ChromeOS
+> > kernel engineers to work in a "versioned" kernel directory but still
+> > checkout and work with the upstream kernel. I'm sure it's confusing to
+> > anyone not used to working with the ChromeOS source tree and build
+> > system. Sorry! :( So the fact that Owen is in a directory called
+> > "v5.15" doesn't mean that he's actually working with the v5.15 kernel.
+> > The fact that Bjorn's address is correct in his CC list implies to me
+> > that he's actually got a proper upstream kernel.
 > >
-> > By default, that means that get_maintainer is automatically called on
-> > all patches and those entries are CCed. The extra "Series-cc" just
-> > lets you add extra people. It's fine to add extra people to patches if
-> > you think that those people are interested in getting it.
+> > I had previously [0] instructed Owen to send against Bjorn's tree, so
+> > hopefully it's correct.
 >
-> The tool is just the tool, if it uses get_maintainers.pl, then result
-> would be correct. The problem was that CC list on v1 and v2:
+> If it was on Bjorn's tree, get_maintainers.pl would not produce such resu=
+lt:
 >
-> https://lore.kernel.org/linux-devicetree/20221117094251.2.Ibfc4751e4ba044d1caa1f88a16015e7c45c7db65@changeid/
->
-> https://lore.kernel.org/linux-devicetree/20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid/
->
-> As you can notice there easily:
-> 1. Bjorn's address is wrong
-> 2. My and Konrad's are missing
->
-> So if you say that get_maintainers.pl were used and tree is not v5.15,
-> then what else?
+> ---
+> Series-to: LKML <linux-kernel@vger.kernel.org>
+> Series-cc: Douglas Anderson <dianders@chromium.org>
+> Series-cc: Bob Moragues <moragues@chromium.org>
+> Series-cc: Harvey <hunge@google.com>
+> Series-cc: Stephen Boyd <swboyd@chromium.org>
+> Series-cc: Matthias Kaehlcke <mka@chromium.org>
+> Series-cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-Certainly on v1 and v2 he was targeting v5.15, not upstream. When I
-replied to v1 I told him this. Apparently he messed up still on v2.
-Matthias again pointed it out on v2. After v2, it was corrected. ...so
-right, you didn't get v1 and v2 and those of us on the email thread
-pointed that out and it got corrected. I'm not sure what happened to
-v3, but that seems like yet another mistake and I believe Matthias
-also commented on this. Here we're on v4 which is correctly tagged as
-v4 and sent (as far as I can tell) mostly correctly. It makes sense
-that you're surprised that v4 came without you seeing earlier
-versions, but given that the error had already been identified and
-corrected (which is why you got v4 at all) then I don't think we need
-to keep debugging it, right?
+So the above is the _manual_ set of names to add atop get_maintainers.
+Patman starts with the list you've manually added (via Series-to and
+Series-cc) and then automatically CCs the results of
+get_maintainers.pl
 
 
--Doug
+> or this:
+>
+> ---
+> owen@buildsvr-HP-ProDesk-600-G4-MT:~/chromebook_zombie_os/src/third_party=
+/kernel/v5.15$
+> perl scripts/get_maintainer.pl -f MAINTAINERS --email
+> linux-kernel@vger.kernel.org (open list)
+
+Wow, really? Maybe I don't have Bjorn's tree correctly checked out
+either. ...or you can tell me what I'm doing wrong.
+
+$ git checkout linux_qcom/for-next
+HEAD is now at 4d2b529bce12 Merge branches 'arm64-defconfig-for-6.2',
+'arm64-for-6.2', 'clk-for-6.2', 'defconfig-for-6.2',
+'drivers-for-6.2', 'dts-for-6.2' and 'arm64-fixes-for-6.1' into
+for-next
+
+$ perl scripts/get_maintainer.pl -f MAINTAINERS --email
+linux-kernel@vger.kernel.org (open list)
+
+
+> as Owen indicated earlier. They are either incomplete or not correct.
+>
+> Of course I don't know whether the base tree is the problem or usage of
+> get_maintainers.pl...
+
+I suspect it's because the only "maintainer" of the file MAINTAINERS is LKM=
+L.
