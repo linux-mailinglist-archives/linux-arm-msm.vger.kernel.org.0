@@ -2,96 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E84163ADF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:39:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C242463ADF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:40:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbiK1Qjn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 11:39:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34892 "EHLO
+        id S232244AbiK1QkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 11:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231366AbiK1Qj0 (ORCPT
+        with ESMTP id S232856AbiK1QkC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 11:39:26 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302BC25298;
-        Mon, 28 Nov 2022 08:39:25 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DB6C5B80E16;
-        Mon, 28 Nov 2022 16:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E98AC433C1;
-        Mon, 28 Nov 2022 16:39:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669653562;
-        bh=YgLMfdUQGT5lCNVStZjrAhw/JJQl8Py7iBEVi6NQUWU=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=GCaiCE/RId707JCrW1iO/GbCIZHMIChWSU4fpgaV+8FwWX0amz55f/k8hXTgLO0rX
-         P4q+VYSVHZhIetlY+5IbKJGA5hAyL1znsNzSdylfaRZ14lGexG8SMgrOhlXxEnglct
-         fUIIzm+EpSPAlpXet+h+M3HDMASkisxqc72gXdL1DVZLe9hp3M/RAKhKEQrLa1rgc5
-         G4Y2rA5XRqHW5d9rZSnw0kDgt8iTdaeQonLwUIP8rlNWcgZbEUD6nYfm8dyKMVigd3
-         VhC1ow+9y03ee2P++zJCeud/fPBNvEevmcndgTy3b+nDVc/pMVa+2lqdPt43BfEGyg
-         6JwgyPhgERAgQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     lgirdwood@gmail.com, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, quic_plai@quicinc.com,
-        perex@perex.cz, agross@kernel.org,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        srinivas.kandagatla@linaro.org, swboyd@chromium.org,
-        tiwai@suse.com, bgoswami@quicinc.com, robh+dt@kernel.org,
-        andersson@kernel.org
-In-Reply-To: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops
-Message-Id: <166965355923.629583.3946711311315912094.b4-ty@kernel.org>
-Date:   Mon, 28 Nov 2022 16:39:19 +0000
+        Mon, 28 Nov 2022 11:40:02 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A6926491
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:39:50 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id v82so12181740oib.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:39:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DOBbN+yGOTJblq8Kcqb5gYmtWCZuirUERvLLETmfmEA=;
+        b=KUq+4Fh4suvdwDSsDUXMUw66rZgOGwzs52q9I+3ENYDittdcKSClLo3UVV0ayEQS8S
+         sEcG7ClD7waTLdN+lVHKkhU3oz16kp7OE6Lur5QBk3zKpyo+Q/6tbuYbXCv9Z9/x4mcI
+         eK0IXLICIFWXzwTYhmIZWYHvO0PYUgMiPy/rwf9hZdcjUvBGVMujN+aDpWQqv73WjJ77
+         dqgvR6UVM8bBYOeyv/pJE/OkOmjMSvP2lJ4aYmxX3d03SmrhVy9cYndhYZaqDDYRY+6t
+         rhD5DQsCuDSzSusgMHGsqjK1sCf/K1O7RuR5k0+gACNL4NYQha9AX+ywkBJXNE/5IkD8
+         0ajw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DOBbN+yGOTJblq8Kcqb5gYmtWCZuirUERvLLETmfmEA=;
+        b=GONv24SnmvJ4tGRPEiNl7gT6JFDgVUNP+bnQ81geBx8k9mt6rDOATPo6Mit+Iyn6BF
+         u/s9tqmnKXUOhghZ4+L1KowYAnILcY5YToemT26+maAYNCC4M597BfnKR/RmfV9XdbO/
+         P6b2zuwilSDl/qkv/xs/8r1Bzfv+7huPv//wnD2BE3gSgKqKmuNt0nrSlxN/np8VJGHJ
+         Wi/esRBSclLFw3Wr67hcBvHdlSBlILX+u0ht9UFrZ17ZeUjCwE464AteYjj2jVjfSFN+
+         0SYSIGNCQuKfJFyqRqB4gq7RHkpOLncV9ZWiO0Mfc2hCc96/ymRx6SbNT11bpWFTmpV2
+         uVvQ==
+X-Gm-Message-State: ANoB5pnEyj8Y141HZ3xaxOHYx7TVVNwOFNugP5Ozh4jNVBnvshvM/Qzg
+        FuR5ZoQvH8tqGkq8m/aYxGPrzKJPG4JQBQXWdRk=
+X-Google-Smtp-Source: AA0mqf4S1IOj9AcvlZXtlLm+aCrlaJsKesQnaEcd5iOyI1R7KhOltGzgZn7tfxhi3OaspVR4xjnoH45OM9whV4iQPIs=
+X-Received: by 2002:aca:3984:0:b0:35b:94a8:4f89 with SMTP id
+ g126-20020aca3984000000b0035b94a84f89mr7535447oia.183.1669653589598; Mon, 28
+ Nov 2022 08:39:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-fc921
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 28 Nov 2022 08:39:39 -0800
+Message-ID: <CAF6AEGvT1h_S4d=YRgphgR8i7aMaxQaNW8mru7QaoUo9uiUk2A@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2022-11-28 for v6.2
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Nov 2022 13:19:02 +0530, Srinivasa Rao Mandadapu wrote:
-> Update lpass sc7180 platform driver with PM ops, such as
-> system supend and resume callbacks.
-> This update is required to disable clocks during supend and
-> avoid XO shutdown issue.
-> 
-> 
+Hi Dave & Daniel,
 
-Applied to
+Here are the gpu/gem bits for v6.2.  Dmitry already sent a separate
+pull request[1] for the display bits.  Summary below and in tag.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+[1] https://patchwork.kernel.org/project/dri-devel/patch/20221126102141.721353-1-dmitry.baryshkov@linaro.org/
 
-Thanks!
+The following changes since commit 7f7a942c0a338c4a2a7b359bdb2b68e9896122ec:
 
-[1/1] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops
-      commit: 2d68148f8f85ca5a4bf5e80c821b56167cfc0f8b
+  Merge tag 'drm-next-20221025' of git://linuxtv.org/pinchartl/media
+into drm-next (2022-10-27 14:44:15 +1000)
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+are available in the Git repository at:
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2022-11-28
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+for you to fetch changes up to d73b1d02de0858b96f743e1e8b767fb092ae4c1b:
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+  drm/msm: Hangcheck progress detection (2022-11-17 10:39:12 -0800)
 
-Thanks,
-Mark
+----------------------------------------------------------------
+msm-next for v6.2 (the gpu/gem bits)
+
+- Remove exclusive-fence hack that caused over-synchronization
+- Fix speed-bin detection vs. probe-defer
+- Enable clamp_to_idle on 7c3
+- Improved hangcheck detection
+
+----------------------------------------------------------------
+Rob Clark (6):
+      drm/msm: Remove exclusive-fence hack
+      drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+      drm/msm: Enable clamp_to_idle for 7c3
+      drm/msm: Enable unpin/eviction by default
+      drm/msm/adreno: Simplify read64/write64 helpers
+      drm/msm: Hangcheck progress detection
+
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  3 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 27 ++++------
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 84 ++++++++++++++++++-----------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +-
+ drivers/gpu/drm/msm/msm_drv.c               |  1 -
+ drivers/gpu/drm/msm/msm_drv.h               |  8 ++-
+ drivers/gpu/drm/msm/msm_gem_shrinker.c      |  2 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c        |  3 +-
+ drivers/gpu/drm/msm/msm_gpu.c               | 31 ++++++++++-
+ drivers/gpu/drm/msm/msm_gpu.h               | 22 +++++---
+ drivers/gpu/drm/msm/msm_ringbuffer.h        | 28 ++++++++++
+ 12 files changed, 150 insertions(+), 66 deletions(-)
