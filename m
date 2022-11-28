@@ -2,147 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BEDB63B13A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 19:25:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0547A63B165
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 19:33:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232755AbiK1SZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 13:25:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S232978AbiK1SdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 13:33:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233002AbiK1SZV (ORCPT
+        with ESMTP id S233077AbiK1Sc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 13:25:21 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5197D43
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 10:17:14 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id 82so3195563pgc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 10:17:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/lZONqS0oTvFRKGgFckYXWS1x3eo8FLZ0ipr+H+hpfI=;
-        b=DSRkylWdHzgDfR5RKIZDKx0KgFOBTkM8u5OSWee6ohj2oOkRyAIQX+ksbUqO3oLUsF
-         KklkAvEPlIX/xj52cuXLVx8PbxTCPopDAGmwv2+DxA1owzmyetznekBKZ/OFddjA0Rpq
-         p4M8olKwonZp5WQaXc33SDWndgnU6dnKCA/UwXnkaHoBDp4pA59ZMoQMkuv2Cv9LXPgm
-         06xrDvzfcvf4FxSml+nrdUIgGIw5XKCH8n6py+ht54wGkXTsE+OVmfF8jlO+V5+uXAx5
-         cybik47D/4xxfg51dJoAME8PpseNv+ipT4T0QFQL0MAM4KLeUU82SxjlnmFd6mbTSVsA
-         EBEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/lZONqS0oTvFRKGgFckYXWS1x3eo8FLZ0ipr+H+hpfI=;
-        b=L3vbFpZW19sLv1xDBhLFOmn/sYJ+YdRNqpe2XimbQ/cSAGioBwkKosfXZSiNqYhlLe
-         lKzDUfuS2fEhawAXBLLudBGJiDnF46FUQc8gb4ATwocDK7kWP/BxCBDe9gtjj4kpwI6r
-         8fTpFsYnUeL5lMoiZAHhMF3zEZKOBxqaKNGrp2vCgP99cElW1Kev9cWMIHPh8LUcLfbU
-         5qcelj3EOODKr/8LdUyW1CWylhp2xWX7eQqb9EKIRofEF/qh0WARTq7cHV4Cp02ADbpp
-         CrCJIMDQGK+06M0mihL0Jwu0CtuoU2UFycSym78DzOz/Y1fbV/yswOx0tLtiu6k05dI3
-         pXWQ==
-X-Gm-Message-State: ANoB5pmQkzUhxugV+mS3HR+AFZWbylwl/B5EejBR1/qopBFYAN2laXAg
-        LzZ/B15N9pRfMu0qCE/POccJ
-X-Google-Smtp-Source: AA0mqf6AKO2iT+R96zZccRIgRent1ybVJM2Qw0ZR+SFwiQ+1G3NTMorlvZprmT0fXBB8WZWwYelI6A==
-X-Received: by 2002:a62:1d4c:0:b0:574:c3ab:86bb with SMTP id d73-20020a621d4c000000b00574c3ab86bbmr16654230pfd.15.1669659434205;
-        Mon, 28 Nov 2022 10:17:14 -0800 (PST)
-Received: from thinkpad ([117.207.29.115])
-        by smtp.gmail.com with ESMTPSA id c80-20020a624e53000000b00561dcfa700asm8376897pfb.107.2022.11.28.10.17.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 10:17:13 -0800 (PST)
-Date:   Mon, 28 Nov 2022 23:47:05 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Borislav Petkov <bp@alien8.de>
-Cc:     bjorn.andersson@linaro.org, mchehab@kernel.org,
-        james.morse@arm.com, rric@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_saipraka@quicinc.com
-Subject: Re: [PATCH v4 1/2] EDAC/qcom: Get rid of hardcoded register offsets
-Message-ID: <20221128181705.GP62721@thinkpad>
-References: <20221116143352.289303-1-manivannan.sadhasivam@linaro.org>
- <20221116143352.289303-2-manivannan.sadhasivam@linaro.org>
- <Y4SmtfSzLbYea+f0@zn.tnic>
+        Mon, 28 Nov 2022 13:32:58 -0500
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9366ADC8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 10:30:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1669660218;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=GKZLgAKbgAJsBsUL/AQjiQQ9KI6oNqWjLldVq5sSTCo=;
+    b=bnuUZZti3OLRZwh+fgHiXl9FHmurJEVCn+3NNH8xZBdWfB93XmCKJQWotwR71yyV3r
+    JFuxcC4VnT0s1btD1CDlnd90obC+xMwNzTP1fMghluBrF3rAh/pWrltgjriOqT4FgW3I
+    Ac5dKaMgLLqGBwCo8qSo6X1ccDNhPCz59VfJX8M7iUMKvPNi/PUEjshwH6Mm8T+E1/TB
+    MFx9Hp+vAnCX2k+/tIKsoZ3o6Jzt1Mf210PNdSw1+IIgty06jkBzG1zOZfNXxIFCp9DT
+    b5cuKbwR//ndjKsC53kc3ZEqva4GJowo3mJdViSOFDXzL+IV96LHhO2yiFk07skLM9Ha
+    +XDg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWxfrI"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
+    with ESMTPSA id Yce349yASIUHtUH
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 28 Nov 2022 19:30:17 +0100 (CET)
+Date:   Mon, 28 Nov 2022 19:30:10 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        =?iso-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>,
+        Pavel Machek <pavel@ucw.cz>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-wingtech-wt88047: Add flash LED
+Message-ID: <Y4T+Mv+uIx7jQwky@gerhold.net>
+References: <20221128051512.125148-1-linmengbo0689@protonmail.com>
+ <43c24e7e-49b6-ff46-2f40-9413af7ac252@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y4SmtfSzLbYea+f0@zn.tnic>
+In-Reply-To: <43c24e7e-49b6-ff46-2f40-9413af7ac252@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 01:16:53PM +0100, Borislav Petkov wrote:
-> On Wed, Nov 16, 2022 at 08:03:51PM +0530, Manivannan Sadhasivam wrote:
-> > The LLCC EDAC register offsets varies between each SoC. Hardcoding the
-> > register offsets won't work and will often result in crash due to
-> > accessing the wrong locations.
+Hi Krzysztof,
+
+On Mon, Nov 28, 2022 at 09:56:47AM +0100, Krzysztof Kozlowski wrote:
+> On 28/11/2022 06:16, Lin, Meng-Bo wrote:
+> > WT88047 uses OCP 8110 Flash LED driver. Add it to the device tree.
 > > 
-> > Hence, get the register offsets from the LLCC driver matching the
-> > individual SoCs.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 > > ---
-> >  drivers/edac/qcom_edac.c           | 116 ++++++++++++++---------------
-> >  include/linux/soc/qcom/llcc-qcom.h |   6 --
-> >  2 files changed, 58 insertions(+), 64 deletions(-)
+> >  .../dts/qcom/msm8916-wingtech-wt88047.dts     | 22 +++++++++++++++++++
+> >  1 file changed, 22 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+> > index 166bed05996f..a87be1d95b14 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+> > @@ -23,6 +23,20 @@ chosen {
+> >  		stdout-path = "serial0";
+> >  	};
+> >  
+> > +	flash-led-controller {
+> > +		compatible = "ocs,ocp8110";
 > 
-> It looks to me like this patch needs to go to stable?
-> 
-
-Well, yes but that would imply both LLCC and EDAC patches going together.
-Splitting them will break the build, which is worse.
-
-So I delibrately avoided CCing stable list. I'll ping them once both patches
-are in mainline.
-
-> Also, the Fixes tag should probably be:
-> 
-> Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-> 
-> Yes, no?
+> The compatible is not documented. Checkpatch warns about it. You need to
+> document devices before using them.
 > 
 
-No. The actual breakage happened with, a6e9d7ef252c ("soc: qcom: llcc: Add
-configuration data for SM8450 SoC"). I didn't add the fixes tag because, the
-stable team might backport this patch automatically. And since the tag is not
-present in the LLCC patch, it will break the build.
+Unfortunately Pavel never applied the dt-bindings patch for this - only
+the driver patch was applied. Andr� already sent a kind reminder [1] and
+two resends [2, 3] without success. Since it's a documentation-only
+patch, maybe you could take it through the dt-bindings tree?
 
-> Also, please explain to me how you've tested this patch if it doesn't
-> even build?!
-> 
-> ERROR: modpost: "__devm_regmap_init_mmio_clk" [drivers/soc/qcom/llcc-qcom.ko] undefined!
-> make[1]: *** [scripts/Makefile.modpost:126: Module.symvers] Error 1
-> make: *** [Makefile:1944: modpost] Error 2
-> 
-> I guess because CONFIG_QCOM_LLCC is =y in your config while I have
-> CONFIG_QCOM_LLCC=m.
-> 
-> And I reported the same build error to you the last time. Did you not
-> see it?
-> 
-> For the next version, you'd need to fix all possible Kconfig build
-> errors before sending.
-> 
-
-Sorry, it is because I only tried building for ARM64 architecture. The error
-you are seeing is for x86-64 and I could now reproduce it as well.
-
-Will submit the next iteration including a fix for that.
+Even the original version [1] still applies cleanly to linux-next. :)
 
 Thanks,
-Mani
+Stephan
 
-> -- 
-> Regards/Gruss,
->     Boris.
-> 
-> https://people.kernel.org/tglx/notes-about-netiquette
-
--- 
-மணிவண்ணன் சதாசிவம்
+[1]: https://lore.kernel.org/linux-leds/20220212180942.8241-2-git@apitzsch.eu/
+[2]: https://lore.kernel.org/linux-leds/20220404161428.17175-1-git@apitzsch.eu/
+[3]: https://lore.kernel.org/linux-leds/20220505185344.10067-1-git@apitzsch.eu/
