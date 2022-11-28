@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AED4863B342
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 21:33:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE0CD63B3C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 21:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232907AbiK1UdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 15:33:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43950 "EHLO
+        id S233349AbiK1U7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 15:59:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232783AbiK1UdJ (ORCPT
+        with ESMTP id S233015AbiK1U7N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 15:33:09 -0500
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428922AC52;
-        Mon, 28 Nov 2022 12:33:08 -0800 (PST)
-Received: by mail-pl1-f169.google.com with SMTP id d3so6349339plr.10;
-        Mon, 28 Nov 2022 12:33:08 -0800 (PST)
+        Mon, 28 Nov 2022 15:59:13 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0D21E718
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 12:59:09 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id g12so19388529lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 12:59:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=amrhtMYz1fcMT4774lJ3IkoPUekKuEb1D1Fr4wm8cyE=;
+        b=mWJIJPx7w727Kxagcg85gL8GhE0Wr+zkYB2aPxVBSV5pvOgLtAJI/kgxjI3Vhyg9cg
+         A6cqL0mdiyD57ho0wUaz++izY8F1kQFBy4jA2e8FGggxpDqVISTqT8VVLC+/62vTnaQv
+         QHt2rfZNGfIiloqZ8Zlos1JwmlZJ/T7qou+VH/xP9qcnim8A6se9w+aCSDiXu42hnkR7
+         MWRTdrILBKUFyezpukTfgPqd38c0hTxWBHxf4cKiJiA+IUdVN+kX7LHIU7RYxS6TE/tZ
+         hK1rfxLtEKS22EfUd+3bvxeTy1vl7F7OV+H7maVfaLUHFazPo+x0KPIaB6uAFXx1kAU0
+         kf/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ftKGuI0EeUZhD1QDVOqqqnsiiCfbTt1mUy91/ldF0Uc=;
-        b=Pd/fQzms6yju3QaUsP06DbILNQ6OxllXnKE4FuOMyxaJxDN3dLtRzhwt0HMuI0DhCc
-         Y1Olqwcw5kdu4hER/rC3ih47ImWBee0ehw0hMrJnxOChFPgXHWPBub8xBtLyyYsRFy9w
-         HjUCFUcgKNrPOmFRQtPrgAfh7NBr/zj0Q7XBj0AYM051EYXdYMnp6gUWpVKgQA/OSSjB
-         S+eu7mLgrEfoWT8guIPfi7biQbvWnyxE1UBCAEWVSsCRfiH2VFQQ1LtEuSVvKiQPKKhd
-         iEQt+lrhoQyLuaMOUghQ+pBkcfuR/CiGXicHFg262uCtRTwuPURfRvzU1DswuEQBVY+F
-         7Yjg==
-X-Gm-Message-State: ANoB5plKVEQqtWKshpUVE7PBdDc/OKVtKfUJ2VoGjxeaLtBjY1uS1HA/
-        UXPuXOM8aC9gdV8133sLAz8=
-X-Google-Smtp-Source: AA0mqf7KbOuLp9LZHNnmD4KWoKV1AKSUMMAeJAt/SYOleMl5tTXg3bYqTPPwQuqwjFT+ZJCIZSrVRw==
-X-Received: by 2002:a17:90a:dc06:b0:218:9196:1cd1 with SMTP id i6-20020a17090adc0600b0021891961cd1mr49355887pjv.230.1669667587615;
-        Mon, 28 Nov 2022 12:33:07 -0800 (PST)
-Received: from ?IPV6:2620:15c:211:201:95f2:baa2:773c:2cfe? ([2620:15c:211:201:95f2:baa2:773c:2cfe])
-        by smtp.gmail.com with ESMTPSA id v2-20020a626102000000b005609d3d3008sm8674844pfb.171.2022.11.28.12.33.04
+        bh=amrhtMYz1fcMT4774lJ3IkoPUekKuEb1D1Fr4wm8cyE=;
+        b=2DnN1d+YBAHRvF7Qee2LXt16jm4zLLm2YTetCp+i6mYxj39+G0wpCmMpfxPBEICldW
+         n8hT9fUtCUz7jfb7rAHMjWBuabHWO+oP56W/hX/PRfXrvdCPFOpm+lg+tBQ8mU7FQpHd
+         mMEh0RYQzHqUAFhQt/Mf9WiCGh0Af41i5+g8T2OfgU90YY+N1oIfWX5ZCre7rcqPxlNJ
+         oo2wikqUKSRstuyclgna+GVVapOh5y3a6XITsPC08wFte7pBiLzGozCuzD9u8czcPRUd
+         H51dMo9EX87fB2f12ZPCPNsq8B+kvHCj8OAc3jJZHx7iFbiswYRcncj0QshiVrLa0B94
+         u5jQ==
+X-Gm-Message-State: ANoB5plgJd7LBmONZr/p0TO3dBLf5cIEEGGtQwTtcovG4Vq/lLm5xUkw
+        BrUQ2n2ybh970wei1CwP2j0REw==
+X-Google-Smtp-Source: AA0mqf6oWRYjzBqJxXLUJBEC/gj0sxdcJPuMtpZ1+2l0/UHjHaaDlf6ek+9eTPQ9E3umSLeOAbPFew==
+X-Received: by 2002:a19:791c:0:b0:4b4:dd9:1880 with SMTP id u28-20020a19791c000000b004b40dd91880mr12162177lfc.289.1669669147898;
+        Mon, 28 Nov 2022 12:59:07 -0800 (PST)
+Received: from [192.168.1.101] (95.49.125.236.neoplus.adsl.tpnet.pl. [95.49.125.236])
+        by smtp.gmail.com with ESMTPSA id q21-20020a056512211500b00492dc29be7bsm1872005lfr.227.2022.11.28.12.59.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 12:33:06 -0800 (PST)
-Message-ID: <89037602-f09a-f0da-69f7-f6aae72acc76@acm.org>
-Date:   Mon, 28 Nov 2022 12:33:03 -0800
+        Mon, 28 Nov 2022 12:59:07 -0800 (PST)
+Message-ID: <cce01dbd-e2b7-3d6b-9c83-af3790f3ee89@linaro.org>
+Date:   Mon, 28 Nov 2022 21:59:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v5 07/16] ufs: core: mcq: Calculate queue depth
+ Thunderbird/102.5.0
+Subject: Re: [PATCH] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable ADSP
 Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        eddie.huang@mediatek.com, daejun7.park@samsung.com,
-        avri.altman@wdc.com, beanhuo@micron.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
- <ae139f730dcec6462f9218856bf974eda4a29e1d.1669176158.git.quic_asutoshd@quicinc.com>
- <20221128151512.GF62721@thinkpad>
- <20221128195430.GD20677@asutoshd-linux1.qualcomm.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20221128195430.GD20677@asutoshd-linux1.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221125223400.94515-1-matti.lehtimaki@gmail.com>
+ <a64d31a5-5e55-35b9-57e3-bb4214fe3e28@linaro.org>
+ <90d231c6-1f16-74ea-ddf7-5e09a51a93ea@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <90d231c6-1f16-74ea-ddf7-5e09a51a93ea@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,23 +81,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/28/22 11:54, Asutosh Das wrote:
-> On Mon, Nov 28 2022 at 07:15 -0800, Manivannan Sadhasivam wrote:
->> On Tue, Nov 22, 2022 at 08:10:20PM -0800, Asutosh Das wrote:
->>> +static inline int ufshcd_mcq_vops_get_hba_mac(struct ufs_hba *hba)
+
+
+On 28.11.2022 18:01, Matti Lehtimäki wrote:
+> On 28.11.2022 16.41, Konrad Dybcio wrote:
 >>
->> Again, no inline please.
+>> On 25.11.2022 23:34, Matti Lehtimäki wrote:
+>>> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+>>> index 1c52337af560..859e91c16c61 100644
+>>> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+>>> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+>>> @@ -133,7 +133,8 @@ wcnss@d200000 {
+>>>               no-map;
+>>>           };
+>>>   -        adsp@d900000 {
+>>> +        /delete-node/ adsp@dc00000;
+>> Please delete nodes by referencing the label like so:
 >>
-> It spits out the following warning for all files that include this 
-> header, when
-> inline is removed:
-> warning: 'ufshcd_mcq_vops_get_hba_mac' defined but not used 
-> [-Wunused-function]
+>> /delete-node/ &adsp_region;
+> 
+> When I created the devicetree I was asked to do the opposite for the
+> smem_region [1] which I had originally deleted using the label near top of the
+> file but then moved next to the relevant node, where I cannot use label
+> when deleting it. Should the smem_region also be moved to the top of the
+> file if I move this delete-node there so the file would be consistent?
+In [1] you were asked to move the delete-node statement, not to alter
+the argument. Referencing nodes by label is allowed globally in the DTS.
+The removal should stay inside reserved-memory.
 
-My understanding is that the "no inline" rule applies to .c files only 
-and also that functions defined in header files should be declared 
-"static inline".
-
-Thanks,
-
-Bart.
+Konrad
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/CAA8EJpqUH_v1GXEYF62Z3DBtFu_305_h4D36aCnBr38bo5HoJw@mail.gmail.com/
