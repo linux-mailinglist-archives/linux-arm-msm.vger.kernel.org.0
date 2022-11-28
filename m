@@ -2,82 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87C5563B313
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 21:26:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AED4863B342
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 21:33:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234103AbiK1U0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 15:26:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38938 "EHLO
+        id S232907AbiK1UdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 15:33:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234067AbiK1U0O (ORCPT
+        with ESMTP id S232783AbiK1UdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 15:26:14 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0542B244
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 12:26:14 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id b73so14851112yba.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 12:26:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ivfgzL6QAyoGf+nvGpGi0Jl3H4DiP0TYwu/zQ8mY04o=;
-        b=FPoDnMp6zZagOTvNcUIQ2Wj1i9mvB7GYBcEouQVU6fBKpc5x8leZ9Lpuyx43jKBY4X
-         CaBoi4F3zq07hA2evud5BgRMxxjpA6jtuwyfxcwdxF9TKRBiSY4cg2YcRmrCs1ov0cpw
-         ZzDtZ55K5nHgJahbE2GXGOYNDe/xO6D9AsYqXQez1LSwYfr92PGOxgC1C3hrknhYdIHh
-         SFISOyjDQInXcO05QM+mXpa1VcDhzEK/Oj7mLzZgJN4+4i5tl0X4AhT2BspMLXjQsi9f
-         J21aVQNt7JrbWNh4oS1P31R8cySgt1/QLjQVFkIFeZKeG/gF7BnJFr55SmjYQVZES4oM
-         1Bjg==
+        Mon, 28 Nov 2022 15:33:09 -0500
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428922AC52;
+        Mon, 28 Nov 2022 12:33:08 -0800 (PST)
+Received: by mail-pl1-f169.google.com with SMTP id d3so6349339plr.10;
+        Mon, 28 Nov 2022 12:33:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ivfgzL6QAyoGf+nvGpGi0Jl3H4DiP0TYwu/zQ8mY04o=;
-        b=VSF0Kg2pQk8F675Izkcajz2zSVPsx/58lYZRPr+fSIhE98uz24e0DNYpWlpDqfUv07
-         wEqb4Mvd1fQfVxdT5cxpNGfOorzP+3RUM7jJ3vdnSjZhC2f5s0vJMVLwAjhKre+x5SRA
-         eepS43BENBurkCS5kMz2sPxkeqLF/Abw4gELXfcgt7cJJcYmB8JDAeyciEAY71di17/A
-         zaii5gEwQ0Ra/h0pqMD+g02wzQvsxfx42ukSZ34hCxFzdRd3apG8Lp/eypsvVgcBIdhb
-         RCya6wkODIvUmZn8T80rirXqPLcQt7SQWyae8Bvw1irYJ8aX49RJWLDZnoWYUILqBdkJ
-         Htww==
-X-Gm-Message-State: ANoB5pnonGHvFzw1rvBLI/9a+lC0sysi8romj0rqkf2VUojiiYxpF6t5
-        oWeOzyhWCJcLE1pXi0s+h8QjCMYMN9pclOZBnxNjtw==
-X-Google-Smtp-Source: AA0mqf4m3bZBPdUjmfh8mmuq9HBWU57kZ/4H4ELfwEO3SuMb1bX2yLfOFege2KuRLkQYvMj5XEljlE5dM0DlrXEhsbk=
-X-Received: by 2002:a25:d8d4:0:b0:6f0:36e2:5fc2 with SMTP id
- p203-20020a25d8d4000000b006f036e25fc2mr25779316ybg.52.1669667164793; Mon, 28
- Nov 2022 12:26:04 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ftKGuI0EeUZhD1QDVOqqqnsiiCfbTt1mUy91/ldF0Uc=;
+        b=Pd/fQzms6yju3QaUsP06DbILNQ6OxllXnKE4FuOMyxaJxDN3dLtRzhwt0HMuI0DhCc
+         Y1Olqwcw5kdu4hER/rC3ih47ImWBee0ehw0hMrJnxOChFPgXHWPBub8xBtLyyYsRFy9w
+         HjUCFUcgKNrPOmFRQtPrgAfh7NBr/zj0Q7XBj0AYM051EYXdYMnp6gUWpVKgQA/OSSjB
+         S+eu7mLgrEfoWT8guIPfi7biQbvWnyxE1UBCAEWVSsCRfiH2VFQQ1LtEuSVvKiQPKKhd
+         iEQt+lrhoQyLuaMOUghQ+pBkcfuR/CiGXicHFg262uCtRTwuPURfRvzU1DswuEQBVY+F
+         7Yjg==
+X-Gm-Message-State: ANoB5plKVEQqtWKshpUVE7PBdDc/OKVtKfUJ2VoGjxeaLtBjY1uS1HA/
+        UXPuXOM8aC9gdV8133sLAz8=
+X-Google-Smtp-Source: AA0mqf7KbOuLp9LZHNnmD4KWoKV1AKSUMMAeJAt/SYOleMl5tTXg3bYqTPPwQuqwjFT+ZJCIZSrVRw==
+X-Received: by 2002:a17:90a:dc06:b0:218:9196:1cd1 with SMTP id i6-20020a17090adc0600b0021891961cd1mr49355887pjv.230.1669667587615;
+        Mon, 28 Nov 2022 12:33:07 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:95f2:baa2:773c:2cfe? ([2620:15c:211:201:95f2:baa2:773c:2cfe])
+        by smtp.gmail.com with ESMTPSA id v2-20020a626102000000b005609d3d3008sm8674844pfb.171.2022.11.28.12.33.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 12:33:06 -0800 (PST)
+Message-ID: <89037602-f09a-f0da-69f7-f6aae72acc76@acm.org>
+Date:   Mon, 28 Nov 2022 12:33:03 -0800
 MIME-Version: 1.0
-References: <202211221631577017318@zte.com.cn>
-In-Reply-To: <202211221631577017318@zte.com.cn>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 28 Nov 2022 21:25:53 +0100
-Message-ID: <CACRpkdYQvquRysUcwOWhbsi6uELHCAToUHoSo=eHLtkN6KYXvg@mail.gmail.com>
-Subject: Re: [PATCH linux-next] pinctrl: qcom: remove duplicate included
- header files
-To:     ye.xingchen@zte.com.cn
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v5 07/16] ufs: core: mcq: Calculate queue depth
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        eddie.huang@mediatek.com, daejun7.park@samsung.com,
+        avri.altman@wdc.com, beanhuo@micron.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
+ <ae139f730dcec6462f9218856bf974eda4a29e1d.1669176158.git.quic_asutoshd@quicinc.com>
+ <20221128151512.GF62721@thinkpad>
+ <20221128195430.GD20677@asutoshd-linux1.qualcomm.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20221128195430.GD20677@asutoshd-linux1.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 9:32 AM <ye.xingchen@zte.com.cn> wrote:
+On 11/28/22 11:54, Asutosh Das wrote:
+> On Mon, Nov 28 2022 at 07:15 -0800, Manivannan Sadhasivam wrote:
+>> On Tue, Nov 22, 2022 at 08:10:20PM -0800, Asutosh Das wrote:
+>>> +static inline int ufshcd_mcq_vops_get_hba_mac(struct ufs_hba *hba)
+>>
+>> Again, no inline please.
+>>
+> It spits out the following warning for all files that include this 
+> header, when
+> inline is removed:
+> warning: 'ufshcd_mcq_vops_get_hba_mac' defined but not used 
+> [-Wunused-function]
 
-> From: ye xingchen <ye.xingchen@zte.com.cn>
->
-> linux/seq_file.h is included more than once.
->
-> Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+My understanding is that the "no inline" rule applies to .c files only 
+and also that functions defined in header files should be declared 
+"static inline".
 
-Patch applied.
+Thanks,
 
-Yours,
-Linus Walleij
+Bart.
