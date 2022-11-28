@@ -2,136 +2,318 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D62E63AB86
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 15:47:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45ECA63AB9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 15:53:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbiK1OrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 09:47:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37344 "EHLO
+        id S232049AbiK1Oxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 09:53:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231154AbiK1Oqb (ORCPT
+        with ESMTP id S232011AbiK1Oxl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 09:46:31 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969AC24BCC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 06:46:00 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id r12so17750899lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 06:46:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O3XOI8aagEXjvz3ZIFWEleJahhUT3rHSOr/3d1Pis4w=;
-        b=OQGXazctgO495vx3GkjHDyUyrY92OtXrh1WGOo34zc756/xBv6COpNjGT4Gn+GL1Tv
-         IhsSys34UMRv21BoqVfSuhlkOCgQy3GzqribJYKK80xP50U8SUjo6/rY5HJwU2jXPVhn
-         a/GhC53Ig8WHMyVkWNZiwka8dLUB701NjmTDv+GiXdDZ8RvXa1MD2PxYPwjIyX4DSfnq
-         1Kuu8sd4l5KegB81zcBBeKH3+SWVNPLsYoqTI9jCJlYBU9IdrmfwunOqq51HO/jr3jqh
-         7T57W92MvnErGtvVnV2Lza79+nQiHHaYKBaOO7XhjuIYsKpgII1A4cTjBOOMl/9VlOtw
-         b3yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O3XOI8aagEXjvz3ZIFWEleJahhUT3rHSOr/3d1Pis4w=;
-        b=cAzseOCLf/z8LITShcUTqcVr0y4Jx4nUvsvwubbmLq67hAYaZBf/YNzfLy04YKU+D2
-         fjQ0G+MhKh8vrbvjImXNauJi0klCgI3GLazN28jbcp7BLpLHYpDsRHEOQwXEq+eARaqz
-         kKg2mXPm4S4ZH801Hktx8ja27n2dG/zQxNHZttv8PGfA7W93TBzu/clIrn0fgkCfE2Ry
-         sskJFpNjH6RCBFKzhIO44JYdjkWXugM1bsibHBqj1lIT2/3ToB39JJ0O8SjZyRIaYqKl
-         D+5iYq/WJE2mznJXNJ+TJt6OSmZlaT8QcCO8lelMjhdS0Sqo0XfRD/gi6vZ6kGOJdgua
-         IB8g==
-X-Gm-Message-State: ANoB5pmmhS6KwHNbUuK8Jz3xTmkUhDiZrzdTE3s3cLcO75aTQ7ir6+R5
-        dWbXPohQomTzWeuZLWLFOddZWQ==
-X-Google-Smtp-Source: AA0mqf4DIUCr9hdSQputkw9RS3YWWU2CI9QYtMI6yFdaIVG0D4YpUCkL5wOnFcI154jrb/4Hd3W9NA==
-X-Received: by 2002:ac2:4ed4:0:b0:4a2:c701:b330 with SMTP id p20-20020ac24ed4000000b004a2c701b330mr12364964lfr.307.1669646758963;
-        Mon, 28 Nov 2022 06:45:58 -0800 (PST)
-Received: from [192.168.1.101] (95.49.125.236.neoplus.adsl.tpnet.pl. [95.49.125.236])
-        by smtp.gmail.com with ESMTPSA id a13-20020a056512374d00b004a05767bc07sm1754389lfs.28.2022.11.28.06.45.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 06:45:58 -0800 (PST)
-Message-ID: <5ef6c52f-6a24-f403-f8df-6bc103b1c1f3@linaro.org>
-Date:   Mon, 28 Nov 2022 15:45:56 +0100
+        Mon, 28 Nov 2022 09:53:41 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2976022B2C;
+        Mon, 28 Nov 2022 06:53:39 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BB202611F4;
+        Mon, 28 Nov 2022 14:53:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE823C433C1;
+        Mon, 28 Nov 2022 14:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669647218;
+        bh=uw2Pi5jCM9SNVGuWQrPxGM8G6h+A6DL8Wbgr4ldBBK0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Iai5b6NNmqzWlethjpBpunwrT1Jaq9dt0GsD7syLzt3NXZiYe0Ko+Dkb6gz/uRVhx
+         zIAP+o+tUBQAPZFq3CZEtce4DVsBqurzE7Mko8zZMoyeqrNuM86LqdKbadDaMhhD+v
+         Yvb78+7XWytsMg8d6+XXHoQPudnNkPQXL6UxGbUz/779AuFkoKTzN0RB6YM0dzZJ+f
+         aID1F7ZxlfbBVPxK5JuPi6NqZXnw08RiMfEFmYkWKWTTJ7Qs0nOvb0HIXI5V7HU3Pz
+         EXqCmkd0e/GrMfxc34Q7qm95yF3mHA4gzR4SPRSrEsrkMATaPw8unTJx1EgiyN0L24
+         7yni1H4zKOvdA==
+Date:   Mon, 28 Nov 2022 20:23:21 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        eddie.huang@mediatek.com, daejun7.park@samsung.com,
+        bvanassche@acm.org, avri.altman@wdc.com, beanhuo@micron.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 05/16] ufs: core: mcq: Add Multi Circular Queue support
+Message-ID: <20221128145321.GE62721@thinkpad>
+References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
+ <91d17ea9623b06d66027699257816bb2fb7176cb.1669176158.git.quic_asutoshd@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v2 2/2] arm: dts: qcom: use qcom,msm8974pro for pro
- devices
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221128131550.858724-1-dmitry.baryshkov@linaro.org>
- <20221128131550.858724-2-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221128131550.858724-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <91d17ea9623b06d66027699257816bb2fb7176cb.1669176158.git.quic_asutoshd@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 28.11.2022 14:15, Dmitry Baryshkov wrote:
-> Use new qcom,msm8974pro compatible string instead of qcom,msm8974 to
-> clearly mark that the device is using the Pro version of the SoC.
+On Tue, Nov 22, 2022 at 08:10:18PM -0800, Asutosh Das wrote:
+> Add support for multi-circular queue (MCQ) which has been added
+> in UFSHC v4.0 standard in addition to the Single Doorbell mode.
+> The MCQ mode supports multiple submission and completion queues.
+> Add support to configure the number of queues.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+The patch subject is pretty opaque. Please use something like "Add initial
+Multi Circular Queue support" or something similar to specify that this patch
+only adds support for configuring the queues and not the full MCQ support.
+
+Also, this patch adds the module params for queues, so that should be mentioned
+in the description.
+
+> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts             | 2 +-
->  arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts              | 2 +-
->  .../arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
+>  drivers/ufs/core/Makefile      |   2 +-
+>  drivers/ufs/core/ufs-mcq.c     | 125 +++++++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/core/ufshcd-priv.h |   1 +
+>  drivers/ufs/core/ufshcd.c      |  12 ++++
+>  include/ufs/ufshcd.h           |   4 ++
+>  5 files changed, 143 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/ufs/core/ufs-mcq.c
 > 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> index 38e69ed4fd1b..6523257815a0 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-> @@ -8,7 +8,7 @@
+> diff --git a/drivers/ufs/core/Makefile b/drivers/ufs/core/Makefile
+> index 62f38c5..4d02e0f 100644
+> --- a/drivers/ufs/core/Makefile
+> +++ b/drivers/ufs/core/Makefile
+> @@ -1,7 +1,7 @@
+>  # SPDX-License-Identifier: GPL-2.0
 >  
->  / {
->  	model = "Fairphone 2";
-> -	compatible = "fairphone,fp2", "qcom,msm8974";
-> +	compatible = "fairphone,fp2", "qcom,msm8974pro", "qcom,msm8974";
->  	chassis-type = "handset";
+>  obj-$(CONFIG_SCSI_UFSHCD)		+= ufshcd-core.o
+> -ufshcd-core-y				+= ufshcd.o ufs-sysfs.o
+> +ufshcd-core-y				+= ufshcd.o ufs-sysfs.o ufs-mcq.o
+>  ufshcd-core-$(CONFIG_DEBUG_FS)		+= ufs-debugfs.o
+>  ufshcd-core-$(CONFIG_SCSI_UFS_BSG)	+= ufs_bsg.o
+>  ufshcd-core-$(CONFIG_SCSI_UFS_CRYPTO)	+= ufshcd-crypto.o
+> diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+> new file mode 100644
+> index 0000000..3818f45
+> --- /dev/null
+> +++ b/drivers/ufs/core/ufs-mcq.c
+> @@ -0,0 +1,125 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center. All rights reserved.
+> + *
+> + * Authors:
+> + *	Asutosh Das <quic_asutoshd@quicinc.com>
+> + *	Can Guo <quic_cang@quicinc.com>
+> + */
+> +
+> +#include <asm/unaligned.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include "ufshcd-priv.h"
+> +
+> +#define UFS_MCQ_MIN_RW_QUEUES 2
+> +#define UFS_MCQ_MIN_READ_QUEUES 0
+> +#define UFS_MCQ_NUM_DEV_CMD_QUEUES 1
+> +#define UFS_MCQ_MIN_POLL_QUEUES 0
+> +
+
+Remove extra new line
+
+> +
+> +static int rw_queue_count_set(const char *val, const struct kernel_param *kp)
+> +{
+> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_RW_QUEUES,
+> +				     num_possible_cpus());
+> +}
+> +
+> +static const struct kernel_param_ops rw_queue_count_ops = {
+> +	.set = rw_queue_count_set,
+> +	.get = param_get_uint,
+> +};
+> +
+> +static unsigned int rw_queues;
+> +module_param_cb(rw_queues, &rw_queue_count_ops, &rw_queues, 0644);
+> +MODULE_PARM_DESC(rw_queues,
+> +		 "Number of interrupt driven I/O queues used for rw. Default value is nr_cpus");
+> +
+> +static int read_queue_count_set(const char *val, const struct kernel_param *kp)
+> +{
+> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_READ_QUEUES,
+> +				     num_possible_cpus());
+> +}
+> +
+> +static const struct kernel_param_ops read_queue_count_ops = {
+> +	.set = read_queue_count_set,
+> +	.get = param_get_uint,
+> +};
+> +
+> +static unsigned int read_queues;
+> +module_param_cb(read_queues, &read_queue_count_ops, &read_queues, 0644);
+> +MODULE_PARM_DESC(read_queues,
+> +		 "Number of interrupt driven read queues used for read. Default value is 0");
+> +
+> +static int poll_queue_count_set(const char *val, const struct kernel_param *kp)
+> +{
+> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_POLL_QUEUES,
+> +				     num_possible_cpus());
+> +}
+> +
+> +static const struct kernel_param_ops poll_queue_count_ops = {
+> +	.set = poll_queue_count_set,
+> +	.get = param_get_uint,
+> +};
+> +
+> +static unsigned int poll_queues = 1;
+> +module_param_cb(poll_queues, &poll_queue_count_ops, &poll_queues, 0644);
+> +MODULE_PARM_DESC(poll_queues,
+> +		 "Number of poll queues used for r/w. Default value is 1");
+> +
+> +static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
+> +{
+> +	int i;
+> +	u32 hba_maxq, rem, tot_queues;
+> +	struct Scsi_Host *host = hba->host;
+> +
+> +	hba_maxq = FIELD_GET(GENMASK(7, 0), hba->mcq_capabilities);
+
+It'd be good to add a definition for GENMASK(7, 0).
+
+> +
+> +	tot_queues = UFS_MCQ_NUM_DEV_CMD_QUEUES + read_queues + poll_queues +
+> +			rw_queues;
+> +
+> +	if (hba_maxq < tot_queues) {
+> +		dev_err(hba->dev, "Total queues (%d) exceeds HC capacity (%d)\n",
+> +			tot_queues, hba_maxq);
+> +		return -EOPNOTSUPP;
+> +	}
+> +
+> +	rem = hba_maxq - UFS_MCQ_NUM_DEV_CMD_QUEUES;
+> +
+> +	if (rw_queues) {
+> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = rw_queues;
+> +		rem -= hba->nr_queues[HCTX_TYPE_DEFAULT];
+> +	} else {
+> +		rw_queues = num_possible_cpus();
+> +	}
+> +
+> +	if (poll_queues) {
+> +		hba->nr_queues[HCTX_TYPE_POLL] = poll_queues;
+> +		rem -= hba->nr_queues[HCTX_TYPE_POLL];
+> +	}
+> +
+> +	if (read_queues) {
+> +		hba->nr_queues[HCTX_TYPE_READ] = read_queues;
+> +		rem -= hba->nr_queues[HCTX_TYPE_READ];
+> +	}
+> +
+> +	if (!hba->nr_queues[HCTX_TYPE_DEFAULT])
+> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = min3(rem, rw_queues,
+> +							 num_possible_cpus());
+> +
+> +	for (i = 0; i < HCTX_MAX_TYPES; i++)
+> +		host->nr_hw_queues += hba->nr_queues[i];
+> +
+> +	hba->nr_hw_queues = host->nr_hw_queues + UFS_MCQ_NUM_DEV_CMD_QUEUES;
+> +	return 0;
+> +}
+> +
+> +int ufshcd_mcq_init(struct ufs_hba *hba)
+> +{
+> +	int ret;
+> +
+> +	ret = ufshcd_mcq_config_nr_queues(hba);
+> +
+> +	return ret;
+> +}
+> +
+> diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
+> index a9e8e1f..9368ba2 100644
+> --- a/drivers/ufs/core/ufshcd-priv.h
+> +++ b/drivers/ufs/core/ufshcd-priv.h
+> @@ -61,6 +61,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
+>  int ufshcd_query_flag(struct ufs_hba *hba, enum query_opcode opcode,
+>  	enum flag_idn idn, u8 index, bool *flag_res);
+>  void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit);
+> +int ufshcd_mcq_init(struct ufs_hba *hba);
 >  
->  	aliases {
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> index 38a95430c7d4..52ece17986e4 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> @@ -7,7 +7,7 @@
+>  #define SD_ASCII_STD true
+>  #define SD_RAW false
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 42c49ce..0c4cd8f 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -8196,6 +8196,11 @@ static int ufshcd_add_lus(struct ufs_hba *hba)
+>  	return ret;
+>  }
 >  
->  / {
->  	model = "Samsung Galaxy S5";
-> -	compatible = "samsung,klte", "qcom,msm8974";
-> +	compatible = "samsung,klte", "qcom,msm8974pro", "qcom,msm8974";
->  	chassis-type = "handset";
+> +static int ufshcd_alloc_mcq(struct ufs_hba *hba)
+> +{
+> +	return ufshcd_mcq_init(hba);
+> +}
+> +
+>  /**
+>   * ufshcd_probe_hba - probe hba to detect device and initialize it
+>   * @hba: per-adapter instance
+> @@ -8245,6 +8250,13 @@ static int ufshcd_probe_hba(struct ufs_hba *hba, bool init_dev_params)
+>  			goto out;
 >  
->  	aliases {
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> index 8265a0ff7857..07131db2e35d 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> @@ -8,7 +8,7 @@
+>  		if (is_mcq_supported(hba)) {
+> +			ret = ufshcd_alloc_mcq(hba);
+> +			if (ret) {
+> +				/* Continue with SDB mode */
+> +				use_mcq_mode = false;
+> +				dev_err(hba->dev, "MCQ mode is disabled, err=%d\n",
+> +					 ret);
+> +			}
+>  			ret = scsi_add_host(host, hba->dev);
+>  			if (ret) {
+>  				dev_err(hba->dev, "scsi_add_host failed\n");
+> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+> index 70c0f9f..dee0b37 100644
+> --- a/include/ufs/ufshcd.h
+> +++ b/include/ufs/ufshcd.h
+> @@ -833,6 +833,8 @@ struct ufs_hba_monitor {
+>   *	ufshcd_resume_complete()
+>   * @ext_iid_sup: is EXT_IID is supported by UFSHC
+>   * @mcq_sup: is mcq supported by UFSHC
+> + * @nr_hw_queues: number of hardware queues configured
+> + * @nr_queues: number of Queues of different queue types
+>   */
+>  struct ufs_hba {
+>  	void __iomem *mmio_base;
+> @@ -984,6 +986,8 @@ struct ufs_hba {
+>  	bool complete_put;
+>  	bool ext_iid_sup;
+>  	bool mcq_sup;
+> +	unsigned int nr_hw_queues;
+> +	unsigned int nr_queues[HCTX_MAX_TYPES];
+
+Can these two members added before bool types to avoid any holes?
+
+Thanks,
+Mani
+
+>  };
 >  
->  / {
->  	model = "Sony Xperia Z2 Tablet";
-> -	compatible = "sony,xperia-castor", "qcom,msm8974";
-> +	compatible = "sony,xperia-castor", "qcom,msm8974pro", "qcom,msm8974";
->  	chassis-type = "tablet";
->  
->  	aliases {
+>  /* Returns true if clocks can be gated. Otherwise false */
+> -- 
+> 2.7.4
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
