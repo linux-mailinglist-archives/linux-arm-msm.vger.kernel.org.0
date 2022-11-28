@@ -2,239 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6056063AD5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:12:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B579963AD88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 17:20:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232665AbiK1QME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 11:12:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43586 "EHLO
+        id S232421AbiK1QU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 11:20:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbiK1QLx (ORCPT
+        with ESMTP id S232168AbiK1QUy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 11:11:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E2E62DF;
-        Mon, 28 Nov 2022 08:11:52 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E7AF461053;
-        Mon, 28 Nov 2022 16:11:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE9FC433D6;
-        Mon, 28 Nov 2022 16:11:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669651911;
-        bh=/AfMrRO3Gs++Irv+cSQmDnR4JW658Sic77CmiYl5VTg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SnpeCGRT89ht/EL42vkGT98ucBHJcFrSOQ+mtt9ix1rVW7MqA/gct5mvfce25bpR/
-         ZAfLBWVx2VSYAdzcUqEcCink0vxW34Rnhz0hp96cPO8B9gdSLIbYIa6y18NwuK5JLB
-         Q15uiUejDU6SoIFJSp2K8aTzBim4Ke0vHpeiygOu3sE5hDWCXfJ2D1AJ/HJCnKLmvm
-         YO+rhT/+w/LNdtNtXyBvyr/yMeoeYnZ6SAH7Rv8m0m7qFtU1NvLu9l+rRnRr/965i3
-         R5EiErAJ2msu3wNOwVvjv6vSMx6fhymx8uFip8BkYEVnZ+h2Jy3pJVHCjVziIEhrm2
-         8neFpdDvJrRdQ==
-Date:   Mon, 28 Nov 2022 21:41:34 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>
-Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        eddie.huang@mediatek.com, daejun7.park@samsung.com,
-        bvanassche@acm.org, avri.altman@wdc.com, beanhuo@micron.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 13/16] ufs: core: Prepare for completion in mcq
-Message-ID: <20221128161134.GL62721@thinkpad>
-References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
- <d076c0b5bfa9c34eed9038d36677853ea042bb78.1669176158.git.quic_asutoshd@quicinc.com>
+        Mon, 28 Nov 2022 11:20:54 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52F0B7E5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:52 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id gu23so8945114ejb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xB/MDsAyrTfDxbfwFpi7v9ob1ZeS88uoag9SCGEyi0g=;
+        b=gap6/PEMlSFVcoD4M7/mMeS/+FbnSLroHAsUDRxbASrIxWgYTUKUihwqwoFmpHzXw+
+         5GjFf7cOp03rcVcNkGNUZoIPqtNbHPx8hJX9bo5rxlYcSnVOgGrKltlfYrny0pFctp19
+         NSzPfKVoXE4Dh/eSjDPUFqii3IYwMoCQbjbnQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xB/MDsAyrTfDxbfwFpi7v9ob1ZeS88uoag9SCGEyi0g=;
+        b=arv0qgO7mORm7WXznxTRPQDMdf8hYGdUIeAHodBdcnHodByEPJlQYVP/1xx4FNZsca
+         VqKQvh2uGFj+OUydCUMpjT+CnHrT/b6qMP4yBEdvwj1c1AGRp+2R+iwS+pq3mIlgqKEa
+         tG9VvneTEoWhwDAAgkzGYtulnVph09yfbUFTohCbGG3Eq4wWg93NUFYQkAu6kq2D6UEm
+         qZ8kwb7oBULBOecSQeuwGkARhn4Ewjhx9Vi9P4HhQaz5bkl4D/aIF7brvjHWGns/mfUN
+         xLQIw+XEg4aq8DrNeeITu+W99ye3TO5l40ZpgyUkQr1srKjEXQT73SGSdj75ZB8UhCD5
+         1AYQ==
+X-Gm-Message-State: ANoB5pm7A9dqoxA5jAbx+/dQ68PftQFEPMgHk1Kt8BrPKV8xF7wU0yTj
+        uQ8fgvuV5GBYDbHieU916UKyeMWp4EZTDeGz
+X-Google-Smtp-Source: AA0mqf72NmuKnO3J8ZORKIQb4E5QDgqOinFhMHNGYlOxsvHGFMgW0S1uT/9qnhupeN3jLh0pALk8wA==
+X-Received: by 2002:a17:906:914f:b0:7bc:4d3e:66dd with SMTP id y15-20020a170906914f00b007bc4d3e66ddmr15539636ejw.624.1669652450488;
+        Mon, 28 Nov 2022 08:20:50 -0800 (PST)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id 15-20020a170906328f00b007bd9e683639sm3302566ejw.130.2022.11.28.08.20.48
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 08:20:49 -0800 (PST)
+Received: by mail-wr1-f41.google.com with SMTP id n3so17707674wrp.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 08:20:48 -0800 (PST)
+X-Received: by 2002:adf:fd89:0:b0:242:1f81:7034 with SMTP id
+ d9-20020adffd89000000b002421f817034mr185921wrr.617.1669652448598; Mon, 28 Nov
+ 2022 08:20:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d076c0b5bfa9c34eed9038d36677853ea042bb78.1669176158.git.quic_asutoshd@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221122203635.v2.1.Ie05fd439d0b271b927acb25c2a6e41af7a927e90@changeid>
+ <Y3zck7tPA5WFd0p1@google.com> <CAPao8GKpXcRm3PmWnv+rsr2z53r6J-ScXAq+fOi4ydQg_Gy31A@mail.gmail.com>
+ <Y343IWgkli+y8HMn@google.com>
+In-Reply-To: <Y343IWgkli+y8HMn@google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 28 Nov 2022 08:20:36 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=X4GzCnmgnAQMzCNpCxzxkZXWONt4gNVCHniRYE_uFVyg@mail.gmail.com>
+Message-ID: <CAD=FV=X4GzCnmgnAQMzCNpCxzxkZXWONt4gNVCHniRYE_uFVyg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Adding DT binding for zombie
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     =?UTF-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bob Moragues <moragues@chromium.org>,
+        Harvey <hunge@google.com>, Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Abner.Yen@ecs.com.tw,
+        Gavin.Lee@ecs.com.tw, Vicy.Lee@ecs.com.tw, Jason.Huang@ecs.com.tw,
+        Darren.Chen@ecs.com.tw
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 08:10:26PM -0800, Asutosh Das wrote:
-> Modify completion path APIs and add completion queue
-> entry.
-> 
-> Co-developed-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+Hi,
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+On Wed, Nov 23, 2022 at 7:07 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> > My checkout steps as below:
+> > $ git remote add linux_qcom=C3=82 git://git.kernel.org/pub/scm/linux/ke=
+rnel/git/
+> > qcom/linux.git
+> > $ git fetch --no-tags linux_qcom
+> > $ git checkout -b <MyLocalBranchName> linux_qcom/for-next
+> >
+> > Is my=C3=82 code base branch still worng?=C3=82  Am I=C3=82 missing som=
+ething?=C3=82
+>
+> My understanding is that it is best to base you changes on a branch like
+> 'arm64-for-6.2' as the 'for-next' branch is re-created every time changes
+> land in one of the '${area}-for-${version}' branches.
+>
+> No big issue in this case, just use the corresponding '${area}-for-${vers=
+ion}'
+> branch for future patches/versions :)
 
-Thanks,
-Mani
+FWIW, I usually just use Bjron's for-next branch for stuff like this.
+While the merge commits in the the Qualcomm "for-next" branch are
+re-created every time, because of the way "git" works the git hashes
+of the actual patches are the same as the git hashes of the patches in
+the separate branches. All the patches in "for-next" should be ones
+that are fine to base your patches on.
 
-> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-> ---
->  drivers/ufs/core/ufshcd-priv.h |  2 ++
->  drivers/ufs/core/ufshcd.c      | 80 ++++++++++++++++++++++++++----------------
->  2 files changed, 51 insertions(+), 31 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
-> index 14df7ce..6453449 100644
-> --- a/drivers/ufs/core/ufshcd-priv.h
-> +++ b/drivers/ufs/core/ufshcd-priv.h
-> @@ -61,6 +61,8 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
->  int ufshcd_query_flag(struct ufs_hba *hba, enum query_opcode opcode,
->  	enum flag_idn idn, u8 index, bool *flag_res);
->  void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit);
-> +void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
-> +			  struct cq_entry *cqe);
->  int ufshcd_mcq_init(struct ufs_hba *hba);
->  int ufshcd_mcq_decide_queue_depth(struct ufs_hba *hba);
->  int ufshcd_mcq_memory_alloc(struct ufs_hba *hba);
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 52c0386..f16d02c 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -784,12 +784,17 @@ static inline bool ufshcd_is_device_present(struct ufs_hba *hba)
->  /**
->   * ufshcd_get_tr_ocs - Get the UTRD Overall Command Status
->   * @lrbp: pointer to local command reference block
-> + * @cqe: pointer to the completion queue entry
->   *
->   * This function is used to get the OCS field from UTRD
->   * Returns the OCS field in the UTRD
->   */
-> -static enum utp_ocs ufshcd_get_tr_ocs(struct ufshcd_lrb *lrbp)
-> +static enum utp_ocs ufshcd_get_tr_ocs(struct ufshcd_lrb *lrbp,
-> +				      struct cq_entry *cqe)
->  {
-> +	if (cqe)
-> +		return le32_to_cpu(cqe->status) & MASK_OCS;
-> +
->  	return le32_to_cpu(lrbp->utr_descriptor_ptr->header.dword_2) & MASK_OCS;
->  }
->  
-> @@ -3048,7 +3053,7 @@ static int ufshcd_wait_for_dev_cmd(struct ufs_hba *hba,
->  		 * not trigger any race conditions.
->  		 */
->  		hba->dev_cmd.complete = NULL;
-> -		err = ufshcd_get_tr_ocs(lrbp);
-> +		err = ufshcd_get_tr_ocs(lrbp, hba->dev_cmd.cqe);
->  		if (!err)
->  			err = ufshcd_dev_cmd_completion(hba, lrbp);
->  	} else {
-> @@ -5214,18 +5219,20 @@ ufshcd_scsi_cmd_status(struct ufshcd_lrb *lrbp, int scsi_status)
->   * ufshcd_transfer_rsp_status - Get overall status of the response
->   * @hba: per adapter instance
->   * @lrbp: pointer to local reference block of completed command
-> + * @cqe: pointer to the completion queue entry
->   *
->   * Returns result of the command to notify SCSI midlayer
->   */
->  static inline int
-> -ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
-> +ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp,
-> +			   struct cq_entry *cqe)
->  {
->  	int result = 0;
->  	int scsi_status;
->  	enum utp_ocs ocs;
->  
->  	/* overall command status of utrd */
-> -	ocs = ufshcd_get_tr_ocs(lrbp);
-> +	ocs = ufshcd_get_tr_ocs(lrbp, cqe);
->  
->  	if (hba->quirks & UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR) {
->  		if (be32_to_cpu(lrbp->ucd_rsp_ptr->header.dword_1) &
-> @@ -5390,42 +5397,53 @@ static void ufshcd_release_scsi_cmd(struct ufs_hba *hba,
->  }
->  
->  /**
-> - * __ufshcd_transfer_req_compl - handle SCSI and query command completion
-> + * ufshcd_compl_one_cqe - handle a completion queue entry
->   * @hba: per adapter instance
-> - * @completed_reqs: bitmask that indicates which requests to complete
-> + * @task_tag: the task tag of the request to be completed
-> + * @cqe: pointer to the completion queue entry
->   */
-> -static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
-> -					unsigned long completed_reqs)
-> +void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
-> +			  struct cq_entry *cqe)
->  {
->  	struct ufshcd_lrb *lrbp;
->  	struct scsi_cmnd *cmd;
-> -	int index;
-> -
-> -	for_each_set_bit(index, &completed_reqs, hba->nutrs) {
-> -		lrbp = &hba->lrb[index];
-> -		lrbp->compl_time_stamp = ktime_get();
-> -		lrbp->compl_time_stamp_local_clock = local_clock();
-> -		cmd = lrbp->cmd;
-> -		if (cmd) {
-> -			if (unlikely(ufshcd_should_inform_monitor(hba, lrbp)))
-> -				ufshcd_update_monitor(hba, lrbp);
-> -			ufshcd_add_command_trace(hba, index, UFS_CMD_COMP);
-> -			cmd->result = ufshcd_transfer_rsp_status(hba, lrbp);
-> -			ufshcd_release_scsi_cmd(hba, lrbp);
-> -			/* Do not touch lrbp after scsi done */
-> -			scsi_done(cmd);
-> -		} else if (lrbp->command_type == UTP_CMD_TYPE_DEV_MANAGE ||
-> -			lrbp->command_type == UTP_CMD_TYPE_UFS_STORAGE) {
-> -			if (hba->dev_cmd.complete) {
-> -				ufshcd_add_command_trace(hba, index,
-> -							 UFS_DEV_COMP);
-> -				complete(hba->dev_cmd.complete);
-> -				ufshcd_clk_scaling_update_busy(hba);
-> -			}
-> +
-> +	lrbp = &hba->lrb[task_tag];
-> +	lrbp->compl_time_stamp = ktime_get();
-> +	cmd = lrbp->cmd;
-> +	if (cmd) {
-> +		if (unlikely(ufshcd_should_inform_monitor(hba, lrbp)))
-> +			ufshcd_update_monitor(hba, lrbp);
-> +		ufshcd_add_command_trace(hba, task_tag, UFS_CMD_COMP);
-> +		cmd->result = ufshcd_transfer_rsp_status(hba, lrbp, cqe);
-> +		ufshcd_release_scsi_cmd(hba, lrbp);
-> +		/* Do not touch lrbp after scsi done */
-> +		scsi_done(cmd);
-> +	} else if (lrbp->command_type == UTP_CMD_TYPE_DEV_MANAGE ||
-> +		   lrbp->command_type == UTP_CMD_TYPE_UFS_STORAGE) {
-> +		if (hba->dev_cmd.complete) {
-> +			hba->dev_cmd.cqe = cqe;
-> +			ufshcd_add_command_trace(hba, task_tag, UFS_DEV_COMP);
-> +			complete(hba->dev_cmd.complete);
-> +			ufshcd_clk_scaling_update_busy(hba);
->  		}
->  	}
->  }
->  
-> +/**
-> + * __ufshcd_transfer_req_compl - handle SCSI and query command completion
-> + * @hba: per adapter instance
-> + * @completed_reqs: bitmask that indicates which requests to complete
-> + */
-> +static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
-> +					unsigned long completed_reqs)
-> +{
-> +	int tag;
-> +
-> +	for_each_set_bit(tag, &completed_reqs, hba->nutrs)
-> +		ufshcd_compl_one_cqe(hba, tag, NULL);
-> +}
-> +
->  /*
->   * Returns > 0 if one or more commands have been completed or 0 if no
->   * requests have been completed.
-> -- 
-> 2.7.4
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+-Doug
