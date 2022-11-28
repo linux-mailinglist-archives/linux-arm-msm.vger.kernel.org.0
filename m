@@ -2,128 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5079363A94D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 14:18:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EB4863A973
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 14:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231567AbiK1NS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 08:18:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40614 "EHLO
+        id S230518AbiK1N3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 08:29:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbiK1NS1 (ORCPT
+        with ESMTP id S230241AbiK1N3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 08:18:27 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD6422504
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 05:15:57 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id p8so17259005lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 05:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pFUGrGulSqeLcudYT6o+J8i07U+IR9phc3EsZvzsY2g=;
-        b=YwogcFBW6P99XURzXY2P3bZL/y5V2KbfLgkN9yeiinGBzmHWYeTQCgnAZkXIocQYrk
-         Lljz2szTgAs8xkonxFRvGtx+nelCX26MhXHvH2umtYm0fcuG1eU2aM2JJeHXCY733MFS
-         NeKqw9bRFRIjc2vXdP/I4fhHbkWDWPWtG1K0rvPzgh+bunA883hyAZxKTCuHsyM2fIPB
-         EkFEsflgiNX+T5N+q2YcJEXUwuX/2Rp7YB1FuSK+NH4sjtfAoUmaZg9cPtol4nFcRsPu
-         sEvMtnCET/wjRhV6kSYnnEdVgrQCXpN3KyMe8in5XOuc31eYg0vcDmN4N2mji17uN7cm
-         oEZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pFUGrGulSqeLcudYT6o+J8i07U+IR9phc3EsZvzsY2g=;
-        b=6z2UXkqCWE5eSLu+YtlSBfy9+0GuOPH6tvLOzuYt9qmBdXhA0ihBjHFEKiJM05xF+S
-         YlE6qxo0wu5Q0V2E1rCuoiqWrUYN3I/LKxdhvHWZSvMEYYAdCo3qWIT7CzUauyYNFdyV
-         6a04IkCzDGa/IsmEvzTtWAlBIbEUUCJNtLoffI3VVDqESCRWGyz3nNZ8xETZr02MomFW
-         e945xbEJw2o8z59ejYq8E0ADtlkFoCmEPi8ypF2maDeUKN4EaquCrJnZS67VA5TVBbor
-         hUyO7kOEZQIqs1GcUMkEmm4QjWDfCFQ/uCeBqOKNQL9Gf9JRizzeM7mcjB7KOOO4sEit
-         ayuw==
-X-Gm-Message-State: ANoB5pkAABYZeVVe6rrLbHUOGan2MPTeTgOBzx58J8BvvltRNvpYSPFD
-        3Suc/dTcYap+2q6tF0z2I0tFKA==
-X-Google-Smtp-Source: AA0mqf73+jgZnwYM5AAMKzPSbH0jz6Q6He8rw8CjfkpV976BOc3ycXESmVTaxeC48Ydd5ankvzpaVA==
-X-Received: by 2002:a05:6512:39d4:b0:4b3:b6db:8cb5 with SMTP id k20-20020a05651239d400b004b3b6db8cb5mr13994342lfu.599.1669641354666;
-        Mon, 28 Nov 2022 05:15:54 -0800 (PST)
-Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id r2-20020ac25c02000000b004b4e373df2bsm1739044lfp.202.2022.11.28.05.15.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 05:15:54 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 28 Nov 2022 08:29:08 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486DA1144F;
+        Mon, 28 Nov 2022 05:29:04 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ASCoqMP023753;
+        Mon, 28 Nov 2022 13:28:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=XtmrGDzjmt0PLSzkgQBGPrV/ZYJmSKdpU+3eaJ6TZ6A=;
+ b=HHWrY3Iucv5HwhQxPAjihIvV+qJoAQzThHQgyfaFeRVMxKGMeUF+BSjW6+NfUJ9mVC9+
+ rC1Pk6VJCZ8KNMlixXBxj7C9zeDr1OTZr95bA1NQiqb1w119R8flC+H6C02tHI1xSL+l
+ 00zkqWdR3mZAXQb6TcxDvCfL/sbzrY8uuhZAGSBQZ/YZnlI38yo/UwB7l42G2E9ZSzwf
+ SElRXo2AfsCSGhYHMIxL38pRzcHQ+0RZu3YBV6a/3ykO31oo2Rcqr5hbcYvLDmD0GwTx
+ RPWSmmn7fNWUv9wHGnH1hZBdSs67dIUkGRrTWb0RTP4aTsjTUCtfSV/6fZEHMJ0mdKi+ IQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m3bjrmg61-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Nov 2022 13:28:40 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ASDScM4013930
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 28 Nov 2022 13:28:38 GMT
+Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 28 Nov 2022 05:28:32 -0800
+From:   Sarannya S <quic_sarannya@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <arnaud.pouliquen@foss.st.com>,
+        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Sarannya S <quic_sarannya@quicinc.com>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 2/2] arm: dts: qcom: use qcom,msm8974pro for pro devices
-Date:   Mon, 28 Nov 2022 15:15:50 +0200
-Message-Id: <20221128131550.858724-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221128131550.858724-1-dmitry.baryshkov@linaro.org>
-References: <20221128131550.858724-1-dmitry.baryshkov@linaro.org>
+        Shawn Guo <shawnguo@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Marcel Ziswiler" <marcel.ziswiler@toradex.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "moderated list:ARM64 PORT (AARCH64 ARCHITECTURE)" 
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH V4 1/3] rpmsg: core: Add signal API support
+Date:   Mon, 28 Nov 2022 18:58:09 +0530
+Message-ID: <1669642093-20399-1-git-send-email-quic_sarannya@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: AXyBl4DhVZFgAz4LQPoro9w67wPXs_jV
+X-Proofpoint-GUID: AXyBl4DhVZFgAz4LQPoro9w67wPXs_jV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-28_11,2022-11-28_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 phishscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 mlxscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211280102
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use new qcom,msm8974pro compatible string instead of qcom,msm8974 to
-clearly mark that the device is using the Pro version of the SoC.
+Some transports like Glink support the state notifications between
+clients using flow control signals similar to serial protocol signals.
+Local glink client drivers can send and receive flow control status
+to glink clients running on remote processors.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Add APIs to support sending and receiving of flow control status by
+rpmsg clients.
+
+Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
 ---
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts             | 2 +-
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts              | 2 +-
- .../arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/configs/defconfig   |  2 ++
+ drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+ drivers/rpmsg/rpmsg_internal.h |  2 ++
+ include/linux/rpmsg.h          | 15 +++++++++++++++
+ 4 files changed, 39 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index 38e69ed4fd1b..6523257815a0 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -8,7 +8,7 @@
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 0b6af33..2df3778 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -26,6 +26,8 @@ CONFIG_CGROUP_CPUACCT=y
+ CONFIG_CGROUP_PERF=y
+ CONFIG_CGROUP_BPF=y
+ CONFIG_USER_NS=y
++CONFIG_RPMSG=y
++CONFIG_RPMSG_CHAR=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+ CONFIG_KALLSYMS_ALL=y
+diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+index d6dde00e..0c5bf67 100644
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -331,6 +331,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+ EXPORT_SYMBOL(rpmsg_trysend_offchannel);
  
- / {
- 	model = "Fairphone 2";
--	compatible = "fairphone,fp2", "qcom,msm8974";
-+	compatible = "fairphone,fp2", "qcom,msm8974pro", "qcom,msm8974";
- 	chassis-type = "handset";
+ /**
++ * rpmsg_set_flow_control() - sets/clears serial flow control signals
++ * @ept:	the rpmsg endpoint
++ * @enable:	enable or disable serial flow control
++ *
++ * Return: 0 on success and an appropriate error value on failure.
++ */
++int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
++{
++	if (WARN_ON(!ept))
++		return -EINVAL;
++	if (!ept->ops->set_flow_control)
++		return -ENXIO;
++
++	return ept->ops->set_flow_control(ept, enable);
++}
++EXPORT_SYMBOL(rpmsg_set_flow_control);
++
++/**
+  * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+  * @ept: the rpmsg endpoint
+  *
+@@ -539,6 +557,8 @@ static int rpmsg_dev_probe(struct device *dev)
  
- 	aliases {
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index 38a95430c7d4..52ece17986e4 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -7,7 +7,7 @@
+ 		rpdev->ept = ept;
+ 		rpdev->src = ept->addr;
++
++		ept->flow_cb = rpdrv->flowcontrol;
+ 	}
  
- / {
- 	model = "Samsung Galaxy S5";
--	compatible = "samsung,klte", "qcom,msm8974";
-+	compatible = "samsung,klte", "qcom,msm8974pro", "qcom,msm8974";
- 	chassis-type = "handset";
+ 	err = rpdrv->probe(rpdev);
+diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+index 39b646d..4fea45a 100644
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -55,6 +55,7 @@ struct rpmsg_device_ops {
+  * @trysendto:		see @rpmsg_trysendto(), optional
+  * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
+  * @poll:		see @rpmsg_poll(), optional
++ * @set_flow_control:	see @rpmsg_set_flow_control(), optional
+  * @get_mtu:		see @rpmsg_get_mtu(), optional
+  *
+  * Indirection table for the operations that a rpmsg backend should implement.
+@@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
+ 			     void *data, int len);
+ 	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+ 			     poll_table *wait);
++	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
+ 	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+ };
  
- 	aliases {
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 8265a0ff7857..07131db2e35d 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -8,7 +8,7 @@
+diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+index 523c98b..cc7a917 100644
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -64,12 +64,14 @@ struct rpmsg_device {
+ };
  
- / {
- 	model = "Sony Xperia Z2 Tablet";
--	compatible = "sony,xperia-castor", "qcom,msm8974";
-+	compatible = "sony,xperia-castor", "qcom,msm8974pro", "qcom,msm8974";
- 	chassis-type = "tablet";
+ typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
++typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
  
- 	aliases {
+ /**
+  * struct rpmsg_endpoint - binds a local rpmsg address to its user
+  * @rpdev: rpmsg channel device
+  * @refcount: when this drops to zero, the ept is deallocated
+  * @cb: rx callback handler
++ * @flow_cb: remote flow control callback handler
+  * @cb_lock: must be taken before accessing/changing @cb
+  * @addr: local rpmsg address
+  * @priv: private data for the driver's use
+@@ -92,6 +94,7 @@ struct rpmsg_endpoint {
+ 	struct rpmsg_device *rpdev;
+ 	struct kref refcount;
+ 	rpmsg_rx_cb_t cb;
++	rpmsg_flowcontrol_cb_t flow_cb;
+ 	struct mutex cb_lock;
+ 	u32 addr;
+ 	void *priv;
+@@ -106,6 +109,7 @@ struct rpmsg_endpoint {
+  * @probe: invoked when a matching rpmsg channel (i.e. device) is found
+  * @remove: invoked when the rpmsg channel is removed
+  * @callback: invoked when an inbound message is received on the channel
++ * @flowcontrol: invoked when remote side flow control status is received
+  */
+ struct rpmsg_driver {
+ 	struct device_driver drv;
+@@ -113,6 +117,7 @@ struct rpmsg_driver {
+ 	int (*probe)(struct rpmsg_device *dev);
+ 	void (*remove)(struct rpmsg_device *dev);
+ 	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
++	int (*flowcontrol)(struct rpmsg_device *, void *, bool);
+ };
+ 
+ static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
+@@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+ 
+ ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+ 
++int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
++
+ #else
+ 
+ static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+@@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+ 	return -ENXIO;
+ }
+ 
++static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
++{
++	/* This shouldn't be possible */
++	WARN_ON(1);
++
++	return -ENXIO;
++}
++
+ #endif /* IS_ENABLED(CONFIG_RPMSG) */
+ 
+ /* use a macro to avoid include chaining to get THIS_MODULE */
 -- 
-2.35.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
