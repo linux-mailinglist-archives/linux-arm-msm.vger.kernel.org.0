@@ -2,61 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 741DF63A820
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 13:22:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B48263A847
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 13:28:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbiK1MWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 07:22:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32918 "EHLO
+        id S230120AbiK1M2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 07:28:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230520AbiK1MWb (ORCPT
+        with ESMTP id S229880AbiK1M2h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 07:22:31 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 904A5DFE8;
-        Mon, 28 Nov 2022 04:20:37 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3A5CFB80D84;
-        Mon, 28 Nov 2022 12:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ECBC433C1;
-        Mon, 28 Nov 2022 12:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669638034;
-        bh=hwHxJwIUXRDcNgQfpP18T9DGPQgJ8ElV6U1yC2ecy1E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YRSu7lJaA0D7yuu98WzjVmoyeD+bzYRaqqkKWoM5K7ty7v/Bgs6+sTZYQjPKpFF3/
-         mOECZOqRWaioKrgZe5qOpyiDZ0AyjCYukBgDmEuh3W5cnX0fBK0vcB4nIOpDEbUssH
-         R6JooCa0PvTyW6fWLlCdtlXw1Ar45JoRIKmcbVOW6h7Y0s34dRalpQWbVBDdZo1SCr
-         8jHjQ2rVwlvGOYQtld90wCKjnau3Bm+rhewLjyGN1sdJHzCj0mjhg+dqFfzlyOumEQ
-         AsqsknUj9+imZeI+LXEr1wDUtwJdYUZlQlDe6lDCWv1F27PVBiWmpvNAR5CLT0z2+I
-         mTmLwiDzSAuKA==
-Date:   Mon, 28 Nov 2022 17:50:18 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>
-Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        eddie.huang@mediatek.com, daejun7.park@samsung.com,
-        bvanassche@acm.org, avri.altman@wdc.com, beanhuo@micron.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 01/16] ufs: core: Optimize duplicate code to read
- extended feature
-Message-ID: <20221128122018.GA62721@thinkpad>
-References: <cover.1669176158.git.quic_asutoshd@quicinc.com>
- <b95fdf1a9b7d716049e286f84b94513dc30527ed.1669176158.git.quic_asutoshd@quicinc.com>
+        Mon, 28 Nov 2022 07:28:37 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC117A194
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 04:28:34 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id x17so16535037wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 04:28:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vRbycICMlh6MzVLeROs9V0fuaWLhFxskewtEQHYdgC0=;
+        b=BkXhnII9LnGEO0cfog3xYqFDi3Ly3wHmI0Q4i0q/24bvvi+yHNky1EuVYJQ42m1dgL
+         AqESCAuBWGFFwznAXx1QT+MrPpLZk12Pd0a7HGP4ph5Fl13BU70ix+uYxjGmXrQfsP8K
+         JnsFXpWFPumJ6GAsVi2RcfRc7eaMQjd0Ny0+ZlAT8viqdHUe2qi8D8NxWvHCcqd0SUa6
+         o3Zn7gaZWwS8O4fRp8ME1UgbDQWcFmX5YduYxynjy2mL5kx8hyh+DfIXFICf7ZJ4jkT8
+         dTCeDmBFphrYw9KBpcyNf5qjY8rk0fF6ay0kXs+/stGJQgyyyH4TEOEZ/DXmLsrQU+4l
+         FE1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vRbycICMlh6MzVLeROs9V0fuaWLhFxskewtEQHYdgC0=;
+        b=Q4wsT67bJ5o5gHFXkj3lvteu6Kc5WVrO0HdGrRoJLgb+oW9n+MXrS1C0hBPRnnuhAA
+         +aQDEbgpNy83sNiqu8EInTVlfWslFEYumdCOgYihTnZ/lTU8Fz1zV5XHB1v6A7hk1SWN
+         mJlewEc5ee2LzW8QMcDNI4ZuidxktCkP+RoWPdBOndCKUt5978JpCH1laMyenPb9YTWr
+         IRIUVjI8qylx0b6W/hsMJjbTQ6M4JZun0gLFAp/8c99aQZzIgc4NlLGigbEbdu7urLS3
+         +oMg45MzJEyKhP0uEBvPD+qpl8y3xqlbCJMg1Fkpvs5ShwGzgDOVwF5TaVzfac9vV78o
+         85ow==
+X-Gm-Message-State: ANoB5pmxhnwpq1XF9jUB15ZRZbRrRjU1LRaNLcT4Fsx/q97QA1byc1n8
+        fmEfR2Nqn1MxnIZEwV7VF4q9WlPMk8tgXA==
+X-Google-Smtp-Source: AA0mqf6o7O86dAX13xPVwmED8xdJy3JfoN8fCDfnBTFvip/GNTKkDrrvXF0lZcqbunQbi3zxCqFPSw==
+X-Received: by 2002:a5d:5d0f:0:b0:236:6f6f:8dd7 with SMTP id ch15-20020a5d5d0f000000b002366f6f8dd7mr21003296wrb.4.1669638513509;
+        Mon, 28 Nov 2022 04:28:33 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id u18-20020adfdd52000000b002421db5f279sm598405wrm.78.2022.11.28.04.28.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 04:28:33 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/9] clk: qcom: Add support for SM8550
+Date:   Mon, 28 Nov 2022 14:28:11 +0200
+Message-Id: <20221128122820.798610-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b95fdf1a9b7d716049e286f84b94513dc30527ed.1669176158.git.quic_asutoshd@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,72 +75,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 08:10:14PM -0800, Asutosh Das wrote:
-> The code to parse the extended feature is duplicated twice
-> in the ufs core. Replace the duplicated code with a
-> function.
-> 
-> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+This patchset adds clock support for the Qualcomm SM8550 SoC,
+It adds support for the new type of PLL, the TCSR clock controller
+driver, support for configurable poll timeout, the RPMh clocks
+and the bindings.
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Michael Turquette <mturquette@baylibre.com>
+To: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-Thanks,
-Mani
+Abel Vesa (9):
+  dt-bindings: clock: Add SM8550 GCC clocks
+  dt-bindings: clock: Add SM8550 TCSR CC clocks
+  clk: qcom: gdsc: Add configurable poll timeout
+  clk: qcom: Add LUCID_OLE PLL type for SM8550
+  clk: qcom: Add GCC driver for SM8550
+  dt-bindings: clock: Add RPMHCC for SM8550
+  dt-bindings: clock: qcom,rpmh: Add CXO PAD clock IDs
+  clk: qcom: rpmh: Add support for SM8550 rpmh clocks
+  clk: qcom: Add TCSR clock driver for SM8550
 
-> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-> ---
->  drivers/ufs/core/ufshcd.c | 21 +++++++++++++--------
->  1 file changed, 13 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 768cb49..c9d7b78 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -215,6 +215,17 @@ ufs_get_desired_pm_lvl_for_dev_link_state(enum ufs_dev_pwr_mode dev_state,
->  	return UFS_PM_LVL_0;
->  }
->  
-> +static unsigned int ufs_get_ext_ufs_feature(struct ufs_hba *hba,
-> +					    const u8 *desc_buf)
-> +{
-> +	if (hba->desc_size[QUERY_DESC_IDN_DEVICE] <
-> +	    DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP + 4)
-> +		return 0;
-> +
-> +	return get_unaligned_be32(desc_buf +
-> +				  DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
-> +}
-> +
->  static const struct ufs_dev_quirk ufs_fixups[] = {
->  	/* UFS cards deviations table */
->  	{ .wmanufacturerid = UFS_VENDOR_MICRON,
-> @@ -7584,13 +7595,7 @@ static void ufshcd_wb_probe(struct ufs_hba *hba, const u8 *desc_buf)
->  	     (hba->dev_quirks & UFS_DEVICE_QUIRK_SUPPORT_EXTENDED_FEATURES)))
->  		goto wb_disabled;
->  
-> -	if (hba->desc_size[QUERY_DESC_IDN_DEVICE] <
-> -	    DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP + 4)
-> -		goto wb_disabled;
-> -
-> -	ext_ufs_feature = get_unaligned_be32(desc_buf +
-> -					DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
-> -
-> +	ext_ufs_feature = ufs_get_ext_ufs_feature(hba, desc_buf);
->  	if (!(ext_ufs_feature & UFS_DEV_WRITE_BOOSTER_SUP))
->  		goto wb_disabled;
->  
-> @@ -7644,7 +7649,7 @@ static void ufshcd_temp_notif_probe(struct ufs_hba *hba, const u8 *desc_buf)
->  	if (!(hba->caps & UFSHCD_CAP_TEMP_NOTIF) || dev_info->wspecversion < 0x300)
->  		return;
->  
-> -	ext_ufs_feature = get_unaligned_be32(desc_buf + DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
-> +	ext_ufs_feature = ufs_get_ext_ufs_feature(hba, desc_buf);
->  
->  	if (ext_ufs_feature & UFS_DEV_LOW_TEMP_NOTIF)
->  		mask |= MASK_EE_TOO_LOW_TEMP;
-> -- 
-> 2.7.4
-> 
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ .../bindings/clock/qcom,sm8550-gcc.yaml       |   62 +
+ .../bindings/clock/qcom,sm8550-tcsrcc.yaml    |   45 +
+ drivers/clk/qcom/Kconfig                      |   15 +
+ drivers/clk/qcom/Makefile                     |    2 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   16 +
+ drivers/clk/qcom/clk-alpha-pll.h              |    5 +
+ drivers/clk/qcom/clk-rpmh.c                   |  110 +-
+ drivers/clk/qcom/gcc-sm8550.c                 | 3396 +++++++++++++++++
+ drivers/clk/qcom/gdsc.c                       |    5 +-
+ drivers/clk/qcom/gdsc.h                       |    1 +
+ drivers/clk/qcom/tcsrcc-sm8550.c              |  193 +
+ include/dt-bindings/clock/qcom,rpmh.h         |    2 +
+ include/dt-bindings/clock/qcom,sm8550-gcc.h   |  231 ++
+ .../dt-bindings/clock/qcom,sm8550-tcsrcc.h    |   18 +
+ 15 files changed, 4081 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm8550.c
+ create mode 100644 drivers/clk/qcom/tcsrcc-sm8550.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-gcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
