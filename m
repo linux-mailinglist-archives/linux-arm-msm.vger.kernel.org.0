@@ -2,145 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 019D563AFE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 18:46:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 201F763B097
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Nov 2022 18:58:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233420AbiK1Rqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Nov 2022 12:46:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35832 "EHLO
+        id S233992AbiK1R6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Nov 2022 12:58:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233414AbiK1RqJ (ORCPT
+        with ESMTP id S234446AbiK1R5l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Nov 2022 12:46:09 -0500
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EBEB2CE3F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:41:26 -0800 (PST)
-Received: by mail-il1-f173.google.com with SMTP id s16so2704201iln.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:41:26 -0800 (PST)
+        Mon, 28 Nov 2022 12:57:41 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B122CE1B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:46:15 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id j16so18542142lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Nov 2022 09:46:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sEOQc33dh/AvjD98uU08ScRRQgB0t4Sl60gjFCfdd8U=;
+        b=yhQe2+hZGfKl6Eo7WYzGcxfG3vjSEekJKA7nkO4rCuvo1+vY9HSx7lTw++LjKu/T/q
+         oGUXqhJeeq5zkrNXRdMIXEFvx25L9KApHsNm/KXgY0St375VrGNtLItCRFyN29hplOG6
+         9gc1TkStI7/j15OBs11Mxh9rYZyPpUVHBhF5knolHECXFL5+3duh5oHFGVTX0TJZqCY2
+         0BJY2g5+4peU0+TLiFM8tpUkUUinQ3YyvZAY2e5+mZWFJ+hkAWMBIXi4Dwl0uIXDo4R2
+         C9RP3oO6WQ6L7MTO7JCOcqg4KnvKi2GPBqUPL+ljPwNKtpXPJ7tbsnyXLpyeNVrQ1Nxu
+         pXgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xbRKAUrPmnBiS6hCHyMw1jh/sJ1aupJyGNs4+wDuBfw=;
-        b=cRhQrbCActFMToFKv0wSHG1HllnZP4Ma4BjrSQdkTAy8d+StNqeCMSV/IdVLTzVNCR
-         XsIK2n1e6HVO2psyp/zHyLKs07QblWmtk6Dh+O5UYZtZ+1i+gMnPN1BgL+s4Xc9bxAcw
-         L3gRJGNAOAHInMJxfkBpteDoDQ06iMPmnqEd8XuN2yhC90PNAhklMosY++9bXsOcsKcY
-         IX0eg8ECiNd6ZYWj6sCd6mwXafcSa3q+OMEv1d0gm0zrO3vqVHBpZ2ZsrV5TA3kFvuvj
-         msAkTFqqjnevBTbf7fU2VwA7iEvK2Ai/w+IGMfTv3Jq01fkfOPczva8Sj/xTRDRQDWZl
-         f6fw==
-X-Gm-Message-State: ANoB5pmH+yASNaj2Lg1pf7iFQ+43NqY0k9RN/PiFiKJSMz2jZHNa6g8W
-        5YHnZhyo5YO7S7bmfFdDhiIGWA==
-X-Google-Smtp-Source: AA0mqf506mtbJING1FaQH+qUD+TgZxe8QY5+GImTnpr+oiFjfC0dS6xS3ra4FGl0uBRaZC6gip956g==
-X-Received: by 2002:a05:6e02:def:b0:300:c33d:c8a8 with SMTP id m15-20020a056e020def00b00300c33dc8a8mr16478349ilj.166.1669657278190;
-        Mon, 28 Nov 2022 09:41:18 -0800 (PST)
-Received: from google.com (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with ESMTPSA id r5-20020a92c505000000b00300e6efca96sm4038626ilg.55.2022.11.28.09.41.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 09:41:17 -0800 (PST)
-Date:   Mon, 28 Nov 2022 17:41:14 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        =?utf-8?B?5qWK5a6X57+w?= <ecs.taipeikernel@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, Harvey <hunge@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Gavin.Lee@ecs.com.tw,
-        Darren.Chen@ecs.com.tw, Abner.Yen@ecs.com.tw, Vicy.Lee@ecs.com.tw,
-        Jason.Huang@ecs.com.tw
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Add zombie
-Message-ID: <Y4TyuqPQtZBFChKD@google.com>
-References: <20221124115712.v4.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
- <CAPao8GK93KMrtaXw7mNWOCE60zk=uCENLfBXhNRVxJXEnnaGFg@mail.gmail.com>
- <f58866c8-0164-2e59-4ff3-f9a4f9334e49@linaro.org>
- <CAPao8GKbdK79Z7w91x0T6JW9v6VFoeYSaXGGAuzB_=ukR9g0_w@mail.gmail.com>
- <b54cd0a4-7ee8-e8c0-ceda-18b29588d535@linaro.org>
- <CAD=FV=X9C8nLDrEpZE2tLtq6Brn9cd-15+1JWFOL4cPYdJs5Dg@mail.gmail.com>
- <f92ce2ed-80b5-eb26-36a4-2384a7a8510f@linaro.org>
+        bh=sEOQc33dh/AvjD98uU08ScRRQgB0t4Sl60gjFCfdd8U=;
+        b=zArTMY6VsYGQ7O5NwqJYi46Gh91/qVDel+qpyhxy+4kf+jprZspx7EtEru7AC9GkYl
+         NaFsr/VB0R/hGG5IVE11YWopMpI5/H6gb04SWyPucSd8CPkToefl8TcBUvFRh4NBQ6qi
+         YQhHQJG2XGSWXzl2b8xrQq7RQ9+0UPRewiwFfJoIQ3GpN5zdl2UgL94MhtDxfgsISVlC
+         zk/85B0Cg9absumDCfh/sqzaFaSljr40L8kAJnYmpWwUD4S8VAC/ONeerrPq325B0zpE
+         kKurFZ654QbG40pVoSall1I1E1yP9twL6qqVyec6hl1VIX6PCkYN5d42FzRu8sc8Trgv
+         4nhA==
+X-Gm-Message-State: ANoB5pnpqHr0fImJa/h2047rmAaBEKCLQ0KOJL2DVKIirxKN1Qqy/8cX
+        4nPGqrXNEQiAjpmy7hPEKr///Csrl0uwnrj5
+X-Google-Smtp-Source: AA0mqf7Y8q4j5Qp8K52/Qdd96mqJajrlcpd3UQv1lIPTFAuR7uwCLpQ1Ju2x51BwH5f5CeII2zXU/A==
+X-Received: by 2002:a19:4901:0:b0:4b4:e3b8:c6af with SMTP id w1-20020a194901000000b004b4e3b8c6afmr11777772lfa.291.1669657569898;
+        Mon, 28 Nov 2022 09:46:09 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id b12-20020a05651c032c00b0027741daec09sm1252772ljp.107.2022.11.28.09.46.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 09:46:09 -0800 (PST)
+Message-ID: <dbf8082b-679a-b2d5-6568-3f9a93e52501@linaro.org>
+Date:   Mon, 28 Nov 2022 18:46:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f92ce2ed-80b5-eb26-36a4-2384a7a8510f@linaro.org>
-X-Spam-Status: No, score=-9.2 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_SPF_WL autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [RESEND PATCH 1/2] dt-bindings: nfc: nxp,nci: Document NQ310
+ compatible
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221128173744.833018-1-luca@z3ntu.xyz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221128173744.833018-1-luca@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 06:22:39PM +0100, Krzysztof Kozlowski wrote:
-> On 28/11/2022 16:56, Doug Anderson wrote:
-> > Hi,
-> > 
-> > On Thu, Nov 24, 2022 at 3:27 AM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 24/11/2022 12:20, 楊宗翰 wrote:
-> >>> Hi Krzysztof, Matthias,
-> >>>
-> >>> How to use "get_maintainers.pl"?
-> >>>
-> >>> I find this script in path "<MyCodebase>/kernel/v5.15/script", and output
-> >>
-> >> This looks like v5.15 kernel which is heavily outdated. Please never
-> >> work on such kernels when interacting with upstream. The rule is you
-> >> work on either last mainline kernel (v6.1-rc6), maintainers for-next
-> >> branch (you should know who is the maintainer of subsystem you submit
-> >> to, get_maintainers.pl gives this information) or on moderately recent
-> >> linux-next. For bigger patchsets there might be exceptions for these
-> >> rules, but it's not the case here.
-> > 
-> > Just to add context here, it's a fairly standard workflow for ChromeOS
-> > kernel engineers to work in a "versioned" kernel directory but still
-> > checkout and work with the upstream kernel. I'm sure it's confusing to
-> > anyone not used to working with the ChromeOS source tree and build
-> > system. Sorry! :( So the fact that Owen is in a directory called
-> > "v5.15" doesn't mean that he's actually working with the v5.15 kernel.
-> > The fact that Bjorn's address is correct in his CC list implies to me
-> > that he's actually got a proper upstream kernel.
-> > 
-> > I had previously [0] instructed Owen to send against Bjorn's tree, so
-> > hopefully it's correct.
+On 28/11/2022 18:37, Luca Weiss wrote:
+> The NQ310 is another NFC chip from NXP, document the compatible in the
+> bindings.
 > 
-> If it was on Bjorn's tree, get_maintainers.pl would not produce such result:
-> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
-> Series-to: LKML <linux-kernel@vger.kernel.org>
-> Series-cc: Douglas Anderson <dianders@chromium.org>
-> Series-cc: Bob Moragues <moragues@chromium.org>
-> Series-cc: Harvey <hunge@google.com>
-> Series-cc: Stephen Boyd <swboyd@chromium.org>
-> Series-cc: Matthias Kaehlcke <mka@chromium.org>
-> Series-cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> RESEND to fix Cc
 
-These look like manual entries for patman
 
-> or this:
-> 
-> ---
-> owen@buildsvr-HP-ProDesk-600-G4-MT:~/chromebook_zombie_os/src/third_party/kernel/v5.15$
-> perl scripts/get_maintainer.pl -f MAINTAINERS --email
-> linux-kernel@vger.kernel.org (open list)
-> ---
-> 
-> as Owen indicated earlier. They are either incomplete or not correct.
-> 
-> Of course I don't know whether the base tree is the problem or usage of
-> get_maintainers.pl...
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-That looks like an operator error, the above command produces the same result with
-an upstream tree.
+Best regards,
+Krzysztof
 
-Issue one is the use of '-f' which seems to expect a file with a list of e-mail
-addresses, which MAINTAINERS is not. The second issue is that no patch file or
-directory is specified.
