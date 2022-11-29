@@ -2,55 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0816763C3F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 16:40:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50D6263C402
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 16:45:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234334AbiK2Pks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 10:40:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39198 "EHLO
+        id S231599AbiK2Pp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 10:45:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232159AbiK2Pkq (ORCPT
+        with ESMTP id S235647AbiK2PpZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 10:40:46 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D8E64A10;
-        Tue, 29 Nov 2022 07:40:45 -0800 (PST)
+        Tue, 29 Nov 2022 10:45:25 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E859E59FED;
+        Tue, 29 Nov 2022 07:45:24 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 7EC60CE1375;
-        Tue, 29 Nov 2022 15:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CF4C433C1;
-        Tue, 29 Nov 2022 15:40:37 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 623FE617AB;
+        Tue, 29 Nov 2022 15:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A20C433C1;
+        Tue, 29 Nov 2022 15:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669736440;
-        bh=p/2op5xe90YZqfKCHeiXyi+GWHBoal/ykuWpwuZF5HA=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=SYKIMHIh69WWqbGhnSDWnaE4HIN2P25f7edgu3zzDaJhWHikmjmi5ITve+cwQIi36
-         dQ5oQ9g4/jT0Er0/VDw8wJh/Vu177KuG0Xvr/+9Tmq5IR7wwMmjh1MLljNJsY4sp7/
-         nEqiFAo8whB0HvLrq7F+CDLKeSjgrpLa/1E0YBgk40pVnHc8Ud9tNS1ATkBCojTrW8
-         GnkMPV5lSJH7Kxnn6XM2RLuhVxKEdkCi1VUMuaLEDoPU+uE3itul9Nbpq8sT1nIXMY
-         FahjiVEEMci+O8XATbBqkuRI8w2ZOSYnLkyWlTgFZUx8uadSpkD9g4H7cbCCQKwyww
-         CewGoawitoNhA==
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bgoswami@quicinc.com, swboyd@chromium.org,
-        alsa-devel@alsa-project.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, quic_plai@quicinc.com,
-        judyhsiao@chromium.org, quic_rohkumar@quicinc.com,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        tiwai@suse.com, robh+dt@kernel.org, perex@perex.cz,
-        srinivas.kandagatla@linaro.org, agross@kernel.org,
-        devicetree@vger.kernel.org
-In-Reply-To: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
+        s=k20201202; t=1669736723;
+        bh=OBajQxyPKWk4eBVakGjlcr0afXEUapA11McgDnqCERY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=o2Ho0a2RYST8CGg8p8OHCzolQz82thLT7OpRnlwIAlED6f+4ob2GTjF49zM7kQfut
+         fHmCMle3msv6TgsC318FXf48vL02wg3f/4+wfledN5W3CT2jakO9ER4TRC+fo/+FYy
+         wzUU5epLEqVvkC81KSou9ozbbkv31MrakAysRe6rgb9zQqaCZJhgBLsqn++GIQ12tg
+         C96EkZH/sz7f6JbPCmQvWIj0MJMNyCil8oSCETDJjAVMh9GzThPlZ0s0GZ5iQG1QmO
+         m8I2X4ZM8yHxxwQMT83W6m9QgIf41vGyiMXU2D4Y3QNJKF0BW+swDFuTP/vr4FTlWl
+         J/N5LZR1T5FbQ==
+Date:   Tue, 29 Nov 2022 08:45:20 -0700
+From:   Nathan Chancellor <nathan@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for
+ system PM ops
+Message-ID: <Y4YpELN4/0cesonb@dev-arch.thelio-3990X>
 References: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for system PM ops
-Message-Id: <166973643691.238721.1254998116262856593.b4-ty@kernel.org>
-Date:   Tue, 29 Nov 2022 15:40:36 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-fc921
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,37 +59,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Nov 2022 18:23:48 +0530, Srinivasa Rao Mandadapu wrote:
+On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
 > Add __maybe_unused tag for system PM ops suspend and resume.
 > This is required to fix allmodconfig compilation issue.
 > Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
 > 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+
+A better solution would be replacing SET_SYSTEM_SLEEP_PM_OPS() with
+SYSTEM_SLEEP_PM_OPS(), which was added to avoid needing to add these
+'__maybe_unused' attributes to these functions. See commit 1a3c7bb08826
+("PM: core: Add new *_PM_OPS macros, deprecate old ones") for more info.
+
+> ---
+>  sound/soc/qcom/lpass-sc7180.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/1] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for system PM ops
-      commit: e8679db2970f04ee5281c042977fff880a3c045a
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+> index b96b85a..41db661 100644
+> --- a/sound/soc/qcom/lpass-sc7180.c
+> +++ b/sound/soc/qcom/lpass-sc7180.c
+> @@ -163,14 +163,14 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
+>  	return 0;
+>  }
+>  
+> -static int sc7180_lpass_dev_resume(struct device *dev)
+> +static int __maybe_unused sc7180_lpass_dev_resume(struct device *dev)
+>  {
+>  	struct lpass_data *drvdata = dev_get_drvdata(dev);
+>  
+>  	return clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
+>  }
+>  
+> -static int sc7180_lpass_dev_suspend(struct device *dev)
+> +static int __maybe_unused sc7180_lpass_dev_suspend(struct device *dev)
+>  {
+>  	struct lpass_data *drvdata = dev_get_drvdata(dev);
+>  
+> -- 
+> 2.7.4
+> 
+> 
