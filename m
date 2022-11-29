@@ -2,166 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE95E63BB06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 08:53:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37EDE63BB55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:15:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229972AbiK2Hxw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 02:53:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45932 "EHLO
+        id S230148AbiK2IPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 03:15:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiK2Hxv (ORCPT
+        with ESMTP id S229919AbiK2IPE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 02:53:51 -0500
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AC731EED9;
-        Mon, 28 Nov 2022 23:53:50 -0800 (PST)
-Received: by mail-qk1-f170.google.com with SMTP id c2so9157772qko.1;
-        Mon, 28 Nov 2022 23:53:50 -0800 (PST)
+        Tue, 29 Nov 2022 03:15:04 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9760C317C0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:15:03 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id h11so13496645wrw.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:15:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+tGnGmsd8SAIBQy5l4bYfSlkJXwSsNSEiUXV0JrZ7G4=;
+        b=KTldDQLc2tfmlmwHTPtlzERRJy+/jbYo9EsHIxk7O1mjZbOw9VlAAiNseOhv+Le/EY
+         4ZiEDc1QvJwrXaMN6eFvxqerNsnilHxvYyrnTSMXoCXQXWCPxQKf25zugw93LCUDO5aa
+         4y3Nd84D1+RvRWa6FCu8bT7RsBUZ1MNfy19ToCyxmF+kg59jjg4efRoZHY6F+te3aCe1
+         zs+dBujwbjothGnT2zaJGuKkewhnmrNOePYr5sLSz1BX4weqKuRwLldukQ/T1+wuXGGv
+         ADbztyNZqjIHoGHQtVI6FXqyrZZRqhmc6Azgbd+G2sLa3JZh4glG7ZPJpZRRfwAWYI8t
+         AN/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bDVov8d4BN3qgelRFS6S1eSfJ2eIIEzv+2+tNAw/t+c=;
-        b=7FTXIK68tUlTABOWleAlYd2i3G2HUybsiu+Frorzn0oNKMZsKDfFE19gsAeGGpN4UP
-         9ExmOYGY59GV/j+8VUKYFeknryGubylakie2Fb3ZFGobDdYDW4/nWq7JbbpSiPiYteUt
-         PC8Bej6aoxXNRCocj4JSfXTNuE6UklZxgXY4/V7E9iDDXNbFEDyedpleaBJLu+mRB9j2
-         4/y1nGAT9gHirlCS2Q6Mq7dHq3lPlZ6rHzAxA6IpefEbtq3KP8aGBEB9GaTLBbrfa26p
-         2iJBilemgz6TmVzCkHYwZNJk0qc9NGzIvDN1LACts+GA9Amee7451UN+zihFlvGyoCqP
-         QqPw==
-X-Gm-Message-State: ANoB5plSk34hv4JSrPmsafT/3MI9AaQxJyfWRytFjoQ+j9H9uQa0lMY/
-        BncPYHdA0OjOkC42ljNnh3Kx63kXCqziwA==
-X-Google-Smtp-Source: AA0mqf7+rtiLdTjkbS/2iR7m6rqYNZOLtWMGhgL/9Mcyrio4seMXah7qFFMUeQlF91oLFS7gp75/EQ==
-X-Received: by 2002:a37:ae42:0:b0:6fc:3fa1:bcd1 with SMTP id x63-20020a37ae42000000b006fc3fa1bcd1mr22397966qke.609.1669708428974;
-        Mon, 28 Nov 2022 23:53:48 -0800 (PST)
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
-        by smtp.gmail.com with ESMTPSA id k2-20020ac81402000000b0039467aadeb8sm8152903qtj.13.2022.11.28.23.53.46
+        bh=+tGnGmsd8SAIBQy5l4bYfSlkJXwSsNSEiUXV0JrZ7G4=;
+        b=k9j65Xfz07cjdRJBTEAeDOpRUbI9civid7VbC+ojEjzBIRQVb3IvYxQ9aSYKsOjqeG
+         g8orwg6GQfCL77kLwvIDBsjvhypmi4lhwVdghGZvKWqF1pHWRRzqxsu/UmYwCyUFn2Ek
+         X3cKSCTst6dJjqmqx8vCLl9Mh0iap2FKKY0cGCoD4T+2Dcq3EddnRBLwcGJh6pnLdDdr
+         12fxNEuZ8kMnDZ0mUkB9sfaykkXCHMuEeM+bETr4KrRiS1CN6BF8HwzmkyDtZkppKZyp
+         OZBmzvs9wZGWu1VYmINQflJOCs+A1SqTIEUbB4qWbBleUcxIFC4cOmdXW5ZF40R+JKMb
+         2rvg==
+X-Gm-Message-State: ANoB5pk5gK2E61zvC1YKJ1VZmJAM/FNgZGzq3I+Br/KWkrNTCHLkmKN2
+        qkgQlIXHv8/Be5EjyqDIeBdPM/K+LskLL/6N
+X-Google-Smtp-Source: AA0mqf4cGPQC7b3hpyexGmaRKYiejcRHPv4RznEDcAyvSpiAKZOUZqQXpPilrMkBaqhOfPiP9RWS7w==
+X-Received: by 2002:a5d:6503:0:b0:22e:35e8:382d with SMTP id x3-20020a5d6503000000b0022e35e8382dmr33962143wru.475.1669709702171;
+        Tue, 29 Nov 2022 00:15:02 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2? ([2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2])
+        by smtp.gmail.com with ESMTPSA id n21-20020a05600c3b9500b003b4c979e6bcsm1242431wms.10.2022.11.29.00.15.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 23:53:47 -0800 (PST)
-Received: by mail-yb1-f169.google.com with SMTP id e141so16424103ybh.3;
-        Mon, 28 Nov 2022 23:53:46 -0800 (PST)
-X-Received: by 2002:a25:bcc6:0:b0:6dd:1c5c:5602 with SMTP id
- l6-20020a25bcc6000000b006dd1c5c5602mr54295291ybm.36.1669708426532; Mon, 28
- Nov 2022 23:53:46 -0800 (PST)
+        Tue, 29 Nov 2022 00:15:01 -0800 (PST)
+Message-ID: <f6ffd433-1652-fb4f-8657-928e7407ba5f@linaro.org>
+Date:   Tue, 29 Nov 2022 09:15:02 +0100
 MIME-Version: 1.0
-References: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
-In-Reply-To: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 29 Nov 2022 08:53:34 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com>
-Message-ID: <CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,tlmm-common: document
+ i2c pull property
+Content-Language: en-US
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
+References: <20221123152001.694546-1-abel.vesa@linaro.org>
+ <20221123152001.694546-3-abel.vesa@linaro.org>
+ <CACRpkdZtkHCkfUAcezSJvmei=HOezK6oyx+4C5kBrEtU+vAB-g@mail.gmail.com>
+ <fecb2dd6-9be2-78dc-4598-cc338fbdc2a2@linaro.org>
+ <CACRpkdZJaz9BEorQa7dTNkgTkwZjJNB-MWrpKFxHRgdsf3xJww@mail.gmail.com>
+ <8602cacd-f552-e843-5c17-681b099069a3@linaro.org>
+ <CACRpkdbqjNJH_QvWyEPceUUxRQ2tOpErNOWA0rg5GNwq7PfUFQ@mail.gmail.com>
+Organization: Linaro Developer Services
+In-Reply-To: <CACRpkdbqjNJH_QvWyEPceUUxRQ2tOpErNOWA0rg5GNwq7PfUFQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivasa,
+Hi Linus,
 
-On Mon, Nov 28, 2022 at 8:50 AM Srinivasa Rao Mandadapu
-<quic_srivasam@quicinc.com> wrote:
-> Update lpass sc7180 platform driver with PM ops, such as
-> system supend and resume callbacks.
-> This update is required to disable clocks during supend and
-> avoid XO shutdown issue.
->
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Tested-by: Rahul Ajmeriya <quic_rajmeriy@quicinc.com>
+On 26/11/2022 22:53, Linus Walleij wrote:
+> On Fri, Nov 25, 2022 at 1:40 PM <neil.armstrong@linaro.org> wrote:
+> 
+>> As I understood, it enables an "I2C resistor" on the pin, removing the need
+>> of an external pull-up resistor on the line.
+>>
+>> I assume the classical pull-up bias is not strong enough to replace an actual
+>> resistor on the PCB.
+> 
+> In that case I think this should be an argument to bias-pull-up like:
+> 
+> bias-pull-up = <360000>;
+> 
+> Nominally the pull up is in ohms:
+> 
+>    bias-pull-up:
+>      oneOf:
+>        - type: boolean
+>        - $ref: /schemas/types.yaml#/definitions/uint32
+>      description: pull up the pin. Takes as optional argument on hardware
+>        supporting it the pull strength in Ohm.
+> 
+> Then the driver can choose to shunt in this extra I2C resistance
+> from the resistance passed as argument. So no special property
+> is needed, provided you can get an idea about the resistance
+> provided here.
 
-Thanks for your patch, which is now commit 2d68148f8f85ca5a ("ASoC:
-qcom: lpass-sc7180: Add system suspend/resume PM ops") in next-20221129.
+I like this alternative, I'll try to figure out if we can find a value
+to match against.
 
-> --- a/sound/soc/qcom/lpass-sc7180.c
-> +++ b/sound/soc/qcom/lpass-sc7180.c
-> @@ -12,6 +12,7 @@
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm_runtime.h>
->  #include <dt-bindings/sound/sc7180-lpass.h>
->  #include <sound/pcm.h>
->  #include <sound/soc.h>
-> @@ -156,10 +157,34 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
->         struct lpass_data *drvdata = platform_get_drvdata(pdev);
->
->         clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
-> +       return 0;
-> +}
-> +
-> +static int sc7180_lpass_dev_resume(struct device *dev)
-> +{
-> +       int ret = 0;
-> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
->
-> +       ret = clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
-> +       if (ret) {
-> +               dev_err(dev, "sc7180 clk prepare and enable failed\n");
-> +               return ret;
-> +       }
-> +       return ret;
-> +}
-> +
-> +static int sc7180_lpass_dev_suspend(struct device *dev)
-> +{
-> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
-> +
-> +       clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
->         return 0;
->  }
+Thanks,
+Neil
 
-noreply@ellerman.id.au reports for e.g. m68k-allmodconfig:
+> 
+> Yours,
+> Linus Walleij
 
-    sound/soc/qcom/lpass-sc7180.c:179:12: error:
-'sc7180_lpass_dev_suspend' defined but not used
-[-Werror=unused-function]
-    sound/soc/qcom/lpass-sc7180.c:166:12: error:
-'sc7180_lpass_dev_resume' defined but not used
-[-Werror=unused-function]
-
->
-> +static const struct dev_pm_ops sc7180_lpass_pm_ops = {
-> +       SET_SYSTEM_SLEEP_PM_OPS(sc7180_lpass_dev_suspend, sc7180_lpass_dev_resume)
-> +};
-
-Please use DEFINE_SIMPLE_DEV_PM_OPS()...
-
-> +
->  static struct lpass_variant sc7180_data = {
->         .i2sctrl_reg_base       = 0x1000,
->         .i2sctrl_reg_stride     = 0x1000,
-> @@ -293,6 +318,7 @@ static struct platform_driver sc7180_lpass_cpu_platform_driver = {
->         .driver = {
->                 .name = "sc7180-lpass-cpu",
->                 .of_match_table = of_match_ptr(sc7180_lpass_cpu_device_id),
-> +               .pm = &sc7180_lpass_pm_ops,
-
-... and pm_sleep_ptr().
-
->         },
->         .probe = asoc_qcom_lpass_cpu_platform_probe,
->         .remove = asoc_qcom_lpass_cpu_platform_remove,
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
