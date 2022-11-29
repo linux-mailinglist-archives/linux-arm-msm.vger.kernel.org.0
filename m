@@ -2,103 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 255B963C797
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 19:57:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF0C63C7D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 20:12:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236226AbiK2S5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 13:57:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33248 "EHLO
+        id S236637AbiK2TMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 14:12:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236296AbiK2S4p (ORCPT
+        with ESMTP id S236735AbiK2TLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 13:56:45 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CDF68C6D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 10:56:20 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id c1so23461859lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 10:56:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PBCgjAiK04IrCUOE9G7u0BiUPXBGDsDlbQIwI9V4K7I=;
-        b=qvPNXvQ8mIOkgMit1jOXIEGp+9D6AyhCZwYFZW+vUm4D+mfdpwIJHQ0Y6BIaWRCm6a
-         4g6uT/PtBTkrPebCOI1di3aZc047awsFSg9En23R3hHcCA+zCSYjt1Ofy/lNUK/5ZFx/
-         oDe/AZCn3muCQ6e4qJbUnx0B+YqhVOAqwgpHWhAn6fgC3btduHb+4E+h49I8p0RGmMD0
-         2CNoDKW6GChvPUk4KGgu0uRhH5pRTDRcwZ4/6iGyFwCZo8Z2fV2NBiVhvRKByBl7y1nG
-         Osa8pDvV4M6je7VkWEnQmlIEc2VC0YdAhulURtbudk/qoarWBiOgHy/ArxuBiNPAI+Ml
-         PKgg==
+        Tue, 29 Nov 2022 14:11:49 -0500
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0E35F84C;
+        Tue, 29 Nov 2022 11:11:34 -0800 (PST)
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-14263779059so18256584fac.1;
+        Tue, 29 Nov 2022 11:11:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PBCgjAiK04IrCUOE9G7u0BiUPXBGDsDlbQIwI9V4K7I=;
-        b=TrdRdZQmz7LQq0BC4NlpX/34uwckLed9CcpfbBO8KChBpWyfokcCPD0XJ95V9z6hzY
-         2l052kRVbG1eT7givSjkhmMQdAcGZ/B0CQyU0czOvOpiHNzDGLLtEzuIGWVSXJpJyLfo
-         KMeQNd44xnUsMwGa8Q+BPyok6aXYbuPNj2b0Ehv3ExOZO44tI55jM0BiR0pvG0Ti8Nuo
-         Z43PaVskhwrr8szmQjQzZ/P5qKABCNj3/PvWv1onhkm7sKbyZccZ7J6ZVhJA1l2LSQs1
-         RvC9R42tutbmU2LnB/vQECCe+ORFYeS7ruhiEOSIGTx9mRBJyYhLjNWreSFG9pRFnR9o
-         nvAQ==
-X-Gm-Message-State: ANoB5pmE3MYSX9q8zoju2fDb50TMZqo7Eqnh6V/lEIV1jLnhjBIBmyjB
-        U2L0PT9/YY5AMN7F3o7MyAwfopdJzSfCnqVzmKJmQQ==
-X-Google-Smtp-Source: AA0mqf4kWEf92W8sf08ba2plrUdzCvVW44+8ePjCefWcLRT+llNZCInV7JsXkcg6KhMH8q7tS/tQWafeweU02OnrVEw=
-X-Received: by 2002:a19:7b1c:0:b0:4a2:701c:f252 with SMTP id
- w28-20020a197b1c000000b004a2701cf252mr18758852lfc.125.1669748178063; Tue, 29
- Nov 2022 10:56:18 -0800 (PST)
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FmgBikZGbFm8f6dDa0H9dHuuET0xAXNxgKTk781FK/4=;
+        b=UwPj9FCLS5lllHJoU4UFnyxNU/LYl7rjQYyZlehI9mY4zLyfLVbEUhzOgVoTtDsjGW
+         5jgJLjyAc1se8QJ91QC8rD924/wJNfeCxZsm1F7LdtmbOGIW+T0ZsO082BVhm92OUY1N
+         U7D3nLcWZ6BeldLN++3Ya+xBIqQvnPJ2vSCe44rz/hJNQbIvFzgu+Ni9GlbbpAUN9GPk
+         F5VIuwTz/XnXa5LGN990WiCTUtnvWBfn6PF0NOtPNnqzzhQzIGECcX7uLgJuRBJSc7vh
+         Im1+Q9yfg7SHQ29y3MMdwHlwGqkOHWP9EyGQFIGnlnAzT4kOVRJ8ReLXj+neoi/JLjno
+         HJ1w==
+X-Gm-Message-State: ANoB5pn9Q9JJsIOcAxkaNnPp9MZtqylX6KoKIEF9C2LhNgWz45tGJKbn
+        rbsvpWzaAL8HFow2qadukG3xRHNq9w==
+X-Google-Smtp-Source: AA0mqf4O1ThZbVD9U3ASMqU0DZ+p03+QtOgZXMviTG7yS3K/RVmFOW1Z6h4HtbEcJNRF3mAtAyaSKA==
+X-Received: by 2002:a05:6871:458c:b0:13b:a02f:659e with SMTP id nl12-20020a056871458c00b0013ba02f659emr34931094oab.43.1669749094107;
+        Tue, 29 Nov 2022 11:11:34 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id s13-20020a0568302a8d00b00661c0747545sm6403006otu.44.2022.11.29.11.11.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Nov 2022 11:11:33 -0800 (PST)
+Received: (nullmailer pid 1871 invoked by uid 1000);
+        Tue, 29 Nov 2022 19:11:32 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20221127195418.1506876-1-bhupesh.sharma@linaro.org>
- <20221127195418.1506876-2-bhupesh.sharma@linaro.org> <d294edf4-9df3-5958-5a12-0f93bc74f28f@linaro.org>
-In-Reply-To: <d294edf4-9df3-5958-5a12-0f93bc74f28f@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 30 Nov 2022 00:26:06 +0530
-Message-ID: <CAH=2Ntwc7TvXZf8MLCwmkzzbnmPayKfdcX2dFZL_r2Q9vGmX5A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom: Add SM4250 APCS compatible
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     jassisinghbrar@gmail.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+In-Reply-To: <20221129131203.2197959-2-abel.vesa@linaro.org>
+References: <20221129131203.2197959-1-abel.vesa@linaro.org>
+ <20221129131203.2197959-2-abel.vesa@linaro.org>
+Message-Id: <166974899800.4190554.15519002006398183220.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add Qualcomm SM8550
+Date:   Tue, 29 Nov 2022 13:11:32 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Nov 2022 at 14:10, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 27/11/2022 20:54, Bhupesh Sharma wrote:
-> > Add compatible for the Qualcomm SM4250 APCS block.
-> >
-> > Cc: Bjorn Andersson <andersson@kernel.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
->
-> There is no need to store the regular CC list (coming from automated
-> output - get_maintainer.pl) in the Git history. Store it under ---.
 
-Got it. Will keep in mind for future patches.
-Thanks for the review.
+On Tue, 29 Nov 2022 15:12:02 +0200, Abel Vesa wrote:
+> The Qualcomm SM8550 SoC has several bus fabrics that could be
+> controlled and tuned dynamically according to the bandwidth demand.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> Changes since v2:
+>  * Added Neil and I as maintainers in the binding doc, as Krzysztof
+>    suggested
+>  * Added top-level reg property witg maxItem 1
+>  * Fixed the if clause for reg property, like Krzysztof suggested
+>  * Added top-level clocks, along with dedicated if clause for clocks
+>    property for required/false, like Krzysztof suggested
+>  * Kept only clk_virt and aggre1 examples and dropped the rest
+>  * Renamed both header and bindings like the compatible
+>  * Squashed the bindings schema patch in the one with the header
+> 
+>  .../interconnect/qcom,sm8550-rpmh.yaml        | 139 +++++++++++++
+>  .../interconnect/qcom,sm8550-rpmh.h           | 190 ++++++++++++++++++
+>  2 files changed, 329 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm8550-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sm8550-rpmh.h
+> 
 
-Regards,
-Bhupesh
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> > Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
->
->
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> Best regards,
-> Krzysztof
->
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/interconnect/qcom,sm8550-rpmh.example.dts:18:18: fatal error: dt-bindings/clock/qcom,sm8550-gcc.h: No such file or directory
+   18 |         #include <dt-bindings/clock/qcom,sm8550-gcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/interconnect/qcom,sm8550-rpmh.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1492: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221129131203.2197959-2-abel.vesa@linaro.org
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command.
+
