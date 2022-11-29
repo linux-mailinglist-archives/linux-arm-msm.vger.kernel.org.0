@@ -2,73 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 434EF63C8F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 21:08:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AFAC63C978
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 21:41:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237224AbiK2UIo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 15:08:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50176 "EHLO
+        id S236228AbiK2UlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 15:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbiK2UIm (ORCPT
+        with ESMTP id S236177AbiK2UlU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 15:08:42 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E613E5915A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 12:08:41 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id r81so10911713iod.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 12:08:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=584i24IeUmKZ9FcpWXtTGuzuY6S08oVRL30Y7AAE/c0=;
-        b=OusJZI2DkUTTnSZw7asCvGiqP1rEgrNCYXdAsZ+IYRCHLN05pkpGPpyI2O4+torBtE
-         CQAt55m4X3ZFv4zSy66ey3R+hYRJ1kmMH3RhGm8+etelW95tQF6Q1cTXjMU0FDKS3+28
-         jqi3uByUKBG6Kz2BVYPVQLPlVlpCJglP5wcr4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=584i24IeUmKZ9FcpWXtTGuzuY6S08oVRL30Y7AAE/c0=;
-        b=5uWVKM6OvOTYZwQE7TJivnpZeUXma5dFEvLpadDO0xRfxEC98vzRGoemDzo4DbZpvl
-         ph5p8iuN3YPB08tGUb15pQ2hndDZRv7ezglrmmATYqLal8Yx20JmPpjb7V56DTzDu5Ru
-         dyEBIjsnobvkq9LEmiJkYwmD8mLvnEcunBdJl7ng9vitA1C1vXmiSqiw5B3HJi4zxlwT
-         dtNX6XHZkqCdzAWYH0OKSW2etBEEjTQYYzM8qbMXKtjHOhu5iAlKtTDTqcWE/3WHNz1e
-         NZkmjJOiyVO8wPiq/mpYiHaHDKuIwyup12J5lMRETZQCkdQCT+oRPMItK8OZUKin/5fh
-         EU5w==
-X-Gm-Message-State: ANoB5pkn/XrNp0lPiRmwAMhap94hpsEvVGRwMNdeZ64QwniVXOrO1R4t
-        SwmZJdx8yGpe+p4cyGn2eox9Kp9J0Y2NxQ==
-X-Google-Smtp-Source: AA0mqf6ol8N3/GmPVhHSQInbDQajrGI6x+Tajc/TzT1e611+PD/fYR0YwQGfVz90iFMJHGOaq/7w9w==
-X-Received: by 2002:a6b:d314:0:b0:6bc:2a47:a874 with SMTP id s20-20020a6bd314000000b006bc2a47a874mr19340506iob.126.1669752521298;
-        Tue, 29 Nov 2022 12:08:41 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id k37-20020a026625000000b003758bcba4b5sm5592509jac.153.2022.11.29.12.08.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 12:08:40 -0800 (PST)
-Date:   Tue, 29 Nov 2022 20:08:40 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     Nathan Chancellor <nathan@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for
- system PM ops
-Message-ID: <Y4ZmyO0o6SvrvaWq@google.com>
-References: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
- <Y4YpELN4/0cesonb@dev-arch.thelio-3990X>
- <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
+        Tue, 29 Nov 2022 15:41:20 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F0969ABF;
+        Tue, 29 Nov 2022 12:41:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A7671B818F6;
+        Tue, 29 Nov 2022 20:41:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8D4C433D6;
+        Tue, 29 Nov 2022 20:41:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669754477;
+        bh=K/qBsbp0/BjS2c7vO/taj/9RoO4bN4ZoqYNajRSMNss=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=pY3GfC9OgDOUrpwx/P2V2w0/9CDRCGgHSitWarZX6qh0zzknj63KnV29nWRflCz8M
+         pApCgE+CfMz7fM4vZ0f4HhsZ9hbigeVPMf/zO7UGE1VOclrGXA+IO6c+FrEFyncDL7
+         qN1uivxPnUuHlHqvoQ3cWMDnj5d1zZTntRLKiDn2o5uY6bjNzqVHVIrpIhf69u0M4c
+         Z0AGmeZZOxIzKW1jULs3sitUvpC9Mfb5qIAS/ylHojRnEAQ427XqM9hZZ6dAX9KPuR
+         bW0mVQ8TH9lAyQ6bQL08LkL0Xb5rLjnI55zt1UVoegMLE0iz5shdK5eY6rlQDGuGkH
+         GjZEoRtpneKVA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20221128122820.798610-4-abel.vesa@linaro.org>
+References: <20221128122820.798610-1-abel.vesa@linaro.org> <20221128122820.798610-4-abel.vesa@linaro.org>
+Subject: Re: [PATCH v3 3/9] clk: qcom: gdsc: Add configurable poll timeout
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 29 Nov 2022 12:41:13 -0800
+User-Agent: alot/0.10
+Message-Id: <20221129204117.4C8D4C433D6@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,53 +60,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 29, 2022 at 09:28:33PM +0530, Srinivasa Rao Mandadapu wrote:
-> Thanks for your tie Nathan!!!
-> 
-> On 11/29/2022 9:15 PM, Nathan Chancellor wrote:
-> > On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
-> > > Add __maybe_unused tag for system PM ops suspend and resume.
-> > > This is required to fix allmodconfig compilation issue.
-> > > Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
-> > > 
-> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> > A better solution would be replacing SET_SYSTEM_SLEEP_PM_OPS() with
-> > SYSTEM_SLEEP_PM_OPS(), which was added to avoid needing to add these
-> > '__maybe_unused' attributes to these functions. See commit 1a3c7bb08826
-> > ("PM: core: Add new *_PM_OPS macros, deprecate old ones") for more info.
-> 
-> Tried this option but as this patch required for Kernel 5.4 version code
-> base,
-> 
-> SYSTEM_SLEEP_PM_OPS didn't work.
+Quoting Abel Vesa (2022-11-28 04:28:14)
+> Depending on the platform, the poll timeout delay might be different,
+> so allow the platform specific drivers to specify their own values.
 
-Older downstream trees needing a change shouldn't impact how a change is done
-upstream. The change should be what's best for the upstream kernel. Downstream
-kernels can do backports which might differ from the upstream solution or
-pick the missing dependencies (which might not be too hard in this case).
-
-> > > ---
-> > >   sound/soc/qcom/lpass-sc7180.c | 4 ++--
-> > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-> > > index b96b85a..41db661 100644
-> > > --- a/sound/soc/qcom/lpass-sc7180.c
-> > > +++ b/sound/soc/qcom/lpass-sc7180.c
-> > > @@ -163,14 +163,14 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
-> > >   	return 0;
-> > >   }
-> > > -static int sc7180_lpass_dev_resume(struct device *dev)
-> > > +static int __maybe_unused sc7180_lpass_dev_resume(struct device *dev)
-> > >   {
-> > >   	struct lpass_data *drvdata = dev_get_drvdata(dev);
-> > >   	return clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
-> > >   }
-> > > -static int sc7180_lpass_dev_suspend(struct device *dev)
-> > > +static int __maybe_unused sc7180_lpass_dev_suspend(struct device *dev)
-> > >   {
-> > >   	struct lpass_data *drvdata = dev_get_drvdata(dev);
-> > > -- 
-> > > 2.7.4
-> > > 
-> > > 
+It's a timeout, why not just increase the timeout define? I don't think
+we really care that some platforms have slower GDSCs, eventually they'll
+toggle status.
