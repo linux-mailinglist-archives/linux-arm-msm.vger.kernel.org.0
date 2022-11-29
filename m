@@ -2,60 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB88C63C3BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 16:28:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1615163C3C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 16:29:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235788AbiK2P2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 10:28:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57234 "EHLO
+        id S235291AbiK2P3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 10:29:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235574AbiK2P22 (ORCPT
+        with ESMTP id S235212AbiK2P3v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 10:28:28 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F391160E8C;
-        Tue, 29 Nov 2022 07:28:26 -0800 (PST)
+        Tue, 29 Nov 2022 10:29:51 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8626013EAC;
+        Tue, 29 Nov 2022 07:29:50 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7E023B816B3;
-        Tue, 29 Nov 2022 15:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55B8C433C1;
-        Tue, 29 Nov 2022 15:28:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1DEA66176F;
+        Tue, 29 Nov 2022 15:29:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B681C433C1;
+        Tue, 29 Nov 2022 15:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669735704;
-        bh=VJdpHOsIacRS6xdV5cAY7LDGF1gj/hMpBlnln/Rlw1Y=;
+        s=k20201202; t=1669735789;
+        bh=LcLxGc0JJF4Y9hWKi36NBEOqASyjERCHhf229KIalLQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sKL79Pz/F3n+59iCXKtLSgQtjCPi36ZfftuFoJLV2Q8RLzqxlyuxbsPuysYiWu4+W
-         1eSNJ3LLY40dvFVzJNSOeJ10ZqqqAhbGBlZfUH/YqtD1CIMTDSvw4Ck9O/9RG/zJ83
-         qKfEfv1JF1WQUsTDiJhHDxRhSK/uEkqmemT+2qL+GshPY/r4AKCm5MSEBucmlxpfs3
-         XXJeGD0q8X8t3JYArp4rN71eS/oalMmPye3tFIeSK7w1ZZ7j8RZDf3pxjXb5CtWcYG
-         eMuFZyGopIaEMUQ6DBirfJ5g0Nr0VuOIAZ8pBmf+iG3/vend5GL81uNvj1g7k4Gjk7
-         m4YNCXVcBCubA==
-Date:   Tue, 29 Nov 2022 20:58:09 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>
-Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        eddie.huang@mediatek.com, daejun7.park@samsung.com,
-        bvanassche@acm.org, avri.altman@wdc.com, beanhuo@micron.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 05/16] ufs: core: mcq: Add support to allocate
- multiple queues
-Message-ID: <20221129152809.GE4931@workstation>
-References: <cover.1669684648.git.quic_asutoshd@quicinc.com>
- <12a4afc650f826cafb218352b5ac25f74779e108.1669684648.git.quic_asutoshd@quicinc.com>
+        b=W18al4QIssBUGlHaJSbuzmXtvkWgmxk2N5i7DIut8Nxy3ysCvHhMCMSHDvP5DMrfG
+         0wWPme5DrYNNTRWyQl6RYolbCm5jf1AIiubRS0JyuzAWzUsneuSjfbmjaIGQMPC9Hi
+         9UX/mKX8fZfsSG/BdLHP7IqJkI9eM4yKhO1guYXCtoZqdtWA+E7uFtLfE4dmlgU9TU
+         cnhd0jpYcbvNKphuNYIYmjW6Vbp6azO2Vjo6GjJHwCrkXQBN5sXEiNI4gF6KBAgC8I
+         Lsh7CTkV0GrBfYaPWS8nTPLwzPspp4HCeVGQi+4iFnsBdg0G/y+se2uPUmfPNgy08x
+         qDctGIBXbzAiw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p02YP-0004V6-2i; Tue, 29 Nov 2022 16:29:49 +0100
+Date:   Tue, 29 Nov 2022 16:29:49 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add
+ sm6350 compatible
+Message-ID: <Y4YlbWL5uDXElBbi@hovoldconsulting.com>
+References: <20221125092749.46073-1-luca.weiss@fairphone.com>
+ <Y4CP9fwhDXsLu57Q@hovoldconsulting.com>
+ <COLABNHBQ1DG.1PB8SDY3FW1YY@otso>
+ <Y4CWoT52Q8jnm/dF@hovoldconsulting.com>
+ <COLE3UWQCQ8R.XY36EY07DDDK@otso>
+ <Y4DImjwHQNlWPEKh@hovoldconsulting.com>
+ <COLFSBYDJQVH.1Q9V9ISPWR6ZX@otso>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <12a4afc650f826cafb218352b5ac25f74779e108.1669684648.git.quic_asutoshd@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <COLFSBYDJQVH.1Q9V9ISPWR6ZX@otso>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -65,240 +72,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 05:20:46PM -0800, Asutosh Das wrote:
-> Multi-circular queue (MCQ) has been added in UFSHC v4.0
-> standard in addition to the Single Doorbell mode.
-> The MCQ mode supports multiple submission and completion queues.
-> Add support to allocate and configure the queues.
-> Add module parameters support to configure the queues.
+On Fri, Nov 25, 2022 at 03:12:24PM +0100, Luca Weiss wrote:
+> On Fri Nov 25, 2022 at 2:52 PM CET, Johan Hovold wrote:
+> > On Fri, Nov 25, 2022 at 01:53:25PM +0100, Luca Weiss wrote:
+> > > > Parent clocks (ref_clk_src) should not be included in the binding, but
+> > > > rather be handled by the clock driver. For example, see:
+> > > >
+> > > > 	https://lore.kernel.org/all/20221121085058.31213-4-johan+linaro@kernel.org/
+> > > > 	https://lore.kernel.org/all/20221115152956.21677-1-quic_shazhuss@quicinc.com/
+> > > 
+> > > So I assume you mean that I shouldn't do this:
+> > > 
+> > > clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> > >      <&rpmhcc RPMH_QLINK_CLK>,
+> > >      <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> > >      <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> > > clock-names = "aux", "ref", "com_aux", "usb3_pipe";
+> > > 
+> > > But for "ref" use GCC_USB3_PRIM_CLKREF_CLK? That also seems to work
+> > > fine, also if RPMH_QLINK_CLK is not used from Linux-side (checked in
+> > > debugfs).
+> >
+> > Exactly. Since the vendor dts describes RPMH_QLINK_CLK as parent of ref,
+> > I'd suggest modelling that in the clock driver. Perhaps it has just been
+> > left on by the boot firmware. Someone with access to docs may be able
+> > explain how it is supposed to be used.
 > 
-> Co-developed-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
-> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-> ---
->  drivers/ufs/core/Makefile      |   2 +-
->  drivers/ufs/core/ufs-mcq.c     | 125 +++++++++++++++++++++++++++++++++++++++++
->  drivers/ufs/core/ufshcd-priv.h |   1 +
->  drivers/ufs/core/ufshcd.c      |  12 ++++
->  include/ufs/ufshcd.h           |   4 ++
->  5 files changed, 143 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/ufs/core/ufs-mcq.c
+> RPMH_QLINK_CLK is also in msm-4.19 ref_clk_src for
+> GCC_UFS_MEM_CLKREF_CLK (ufsphy_mem) and also ref_clk (ufshc_mem).
 > 
-> diff --git a/drivers/ufs/core/Makefile b/drivers/ufs/core/Makefile
-> index 62f38c5..4d02e0f 100644
-> --- a/drivers/ufs/core/Makefile
-> +++ b/drivers/ufs/core/Makefile
-> @@ -1,7 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0
->  
->  obj-$(CONFIG_SCSI_UFSHCD)		+= ufshcd-core.o
-> -ufshcd-core-y				+= ufshcd.o ufs-sysfs.o
-> +ufshcd-core-y				+= ufshcd.o ufs-sysfs.o ufs-mcq.o
->  ufshcd-core-$(CONFIG_DEBUG_FS)		+= ufs-debugfs.o
->  ufshcd-core-$(CONFIG_SCSI_UFS_BSG)	+= ufs_bsg.o
->  ufshcd-core-$(CONFIG_SCSI_UFS_CRYPTO)	+= ufshcd-crypto.o
-> diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-> new file mode 100644
-> index 0000000..bf08ec5
-> --- /dev/null
-> +++ b/drivers/ufs/core/ufs-mcq.c
-> @@ -0,0 +1,125 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center. All rights reserved.
-> + *
-> + * Authors:
-> + *	Asutosh Das <quic_asutoshd@quicinc.com>
-> + *	Can Guo <quic_cang@quicinc.com>
-> + */
-> +
-> +#include <asm/unaligned.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include "ufshcd-priv.h"
-> +
-> +#define MAX_QUEUE_SUP GENMASK(7, 0)
-> +#define UFS_MCQ_MIN_RW_QUEUES 2
-> +#define UFS_MCQ_MIN_READ_QUEUES 0
-> +#define UFS_MCQ_NUM_DEV_CMD_QUEUES 1
-> +#define UFS_MCQ_MIN_POLL_QUEUES 0
-> +
-> +static int rw_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_RW_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops rw_queue_count_ops = {
-> +	.set = rw_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int rw_queues;
-> +module_param_cb(rw_queues, &rw_queue_count_ops, &rw_queues, 0644);
-> +MODULE_PARM_DESC(rw_queues,
-> +		 "Number of interrupt driven I/O queues used for rw. Default value is nr_cpus");
-> +
-> +static int read_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_READ_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops read_queue_count_ops = {
-> +	.set = read_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int read_queues;
-> +module_param_cb(read_queues, &read_queue_count_ops, &read_queues, 0644);
-> +MODULE_PARM_DESC(read_queues,
-> +		 "Number of interrupt driven read queues used for read. Default value is 0");
-> +
-> +static int poll_queue_count_set(const char *val, const struct kernel_param *kp)
-> +{
-> +	return param_set_uint_minmax(val, kp, UFS_MCQ_MIN_POLL_QUEUES,
-> +				     num_possible_cpus());
-> +}
-> +
-> +static const struct kernel_param_ops poll_queue_count_ops = {
-> +	.set = poll_queue_count_set,
-> +	.get = param_get_uint,
-> +};
-> +
-> +static unsigned int poll_queues = 1;
-> +module_param_cb(poll_queues, &poll_queue_count_ops, &poll_queues, 0644);
-> +MODULE_PARM_DESC(poll_queues,
-> +		 "Number of poll queues used for r/w. Default value is 1");
-> +
-> +static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
-> +{
-> +	int i;
-> +	u32 hba_maxq, rem, tot_queues;
-> +	struct Scsi_Host *host = hba->host;
-> +
-> +	hba_maxq = FIELD_GET(MAX_QUEUE_SUP, hba->mcq_capabilities);
-> +
-> +	tot_queues = UFS_MCQ_NUM_DEV_CMD_QUEUES + read_queues + poll_queues +
-> +			rw_queues;
-> +
-> +	if (hba_maxq < tot_queues) {
-> +		dev_err(hba->dev, "Total queues (%d) exceeds HC capacity (%d)\n",
-> +			tot_queues, hba_maxq);
-> +		return -EOPNOTSUPP;
-> +	}
-> +
-> +	rem = hba_maxq - UFS_MCQ_NUM_DEV_CMD_QUEUES;
-> +
-> +	if (rw_queues) {
-> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = rw_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_DEFAULT];
-> +	} else {
-> +		rw_queues = num_possible_cpus();
-> +	}
-> +
-> +	if (poll_queues) {
-> +		hba->nr_queues[HCTX_TYPE_POLL] = poll_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_POLL];
-> +	}
-> +
-> +	if (read_queues) {
-> +		hba->nr_queues[HCTX_TYPE_READ] = read_queues;
-> +		rem -= hba->nr_queues[HCTX_TYPE_READ];
-> +	}
-> +
-> +	if (!hba->nr_queues[HCTX_TYPE_DEFAULT])
-> +		hba->nr_queues[HCTX_TYPE_DEFAULT] = min3(rem, rw_queues,
-> +							 num_possible_cpus());
-> +
-> +	for (i = 0; i < HCTX_MAX_TYPES; i++)
-> +		host->nr_hw_queues += hba->nr_queues[i];
-> +
-> +	hba->nr_hw_queues = host->nr_hw_queues + UFS_MCQ_NUM_DEV_CMD_QUEUES;
-> +	return 0;
-> +}
-> +
-> +int ufshcd_mcq_init(struct ufs_hba *hba)
-> +{
-> +	int ret;
-> +
-> +	ret = ufshcd_mcq_config_nr_queues(hba);
-> +
-> +	return ret;
-> +}
-> +
-> diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
-> index a9e8e1f..9368ba2 100644
-> --- a/drivers/ufs/core/ufshcd-priv.h
-> +++ b/drivers/ufs/core/ufshcd-priv.h
-> @@ -61,6 +61,7 @@ int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
->  int ufshcd_query_flag(struct ufs_hba *hba, enum query_opcode opcode,
->  	enum flag_idn idn, u8 index, bool *flag_res);
->  void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit);
-> +int ufshcd_mcq_init(struct ufs_hba *hba);
->  
->  #define SD_ASCII_STD true
->  #define SD_RAW false
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 3c2220c..9b78814 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -8220,6 +8220,11 @@ static int ufshcd_add_lus(struct ufs_hba *hba)
->  	return ret;
->  }
->  
-> +static int ufshcd_alloc_mcq(struct ufs_hba *hba)
-> +{
-> +	return ufshcd_mcq_init(hba);
-> +}
-> +
->  /**
->   * ufshcd_probe_hba - probe hba to detect device and initialize it
->   * @hba: per-adapter instance
-> @@ -8269,6 +8274,13 @@ static int ufshcd_probe_hba(struct ufs_hba *hba, bool init_dev_params)
->  			goto out;
->  
->  		if (is_mcq_supported(hba)) {
-> +			ret = ufshcd_alloc_mcq(hba);
-> +			if (ret) {
-> +				/* Continue with SDB mode */
-> +				use_mcq_mode = false;
-> +				dev_err(hba->dev, "MCQ mode is disabled, err=%d\n",
-> +					 ret);
-> +			}
->  			ret = scsi_add_host(host, hba->dev);
->  			if (ret) {
->  				dev_err(hba->dev, "scsi_add_host failed\n");
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index 70c0f9f..146b613 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -829,6 +829,8 @@ struct ufs_hba_monitor {
->   *	ee_ctrl_mask
->   * @luns_avail: number of regular and well known LUNs supported by the UFS
->   *	device
-> + * @nr_hw_queues: number of hardware queues configured
-> + * @nr_queues: number of Queues of different queue types
->   * @complete_put: whether or not to call ufshcd_rpm_put() from inside
->   *	ufshcd_resume_complete()
->   * @ext_iid_sup: is EXT_IID is supported by UFSHC
-> @@ -981,6 +983,8 @@ struct ufs_hba {
->  	u32 debugfs_ee_rate_limit_ms;
->  #endif
->  	u32 luns_avail;
-> +	unsigned int nr_hw_queues;
-> +	unsigned int nr_queues[HCTX_MAX_TYPES];
->  	bool complete_put;
->  	bool ext_iid_sup;
->  	bool mcq_sup;
-> -- 
-> 2.7.4
+> Honestly since it works fine without adding this to gcc driver and I
+> don't really know much about clk (and have no docs for this) would it be
+> okay to just ignore RPMH_QLINK_CLK?
+
+Preferably it should be fixed now as it may be harder to figure out
+what's missing in case this causes trouble in some setup later.
+
+But, yeah, the lack of documentation is a pain.
+
+Hopefully Bjorn or Vinod can help out with getting this sorted properly.
+
+> > > And for the driver patch, I've discovered that this phy doesn't have
+> > > separate txa/tbx region, so dts was also wrong there. Do you know if
+> > > there's a way to test DP phy initialization without having all the USB-C
+> > > plumbing in place? Might be good to validate at least phy init works if
+> > > we're already touching all of this.
+> >
+> > Do you mean that it appears to work as sc8280xp with txa/txb shared by
+> > both the USB and DP parts?
 > 
+> Yes, looks like it. Can't find any evidence pointing in any other
+> direction at least, everything I've seen shows .txa = 0x1200 & .txb =
+> 0x1600.
+
+Ok. I've also only seen indirect references to the DP registers
+for the older platforms, but at least of them do have the separate DP TX
+regions.
+
+> > I guess you need a proper setup to test it properly. Not sure what
+> > you'll be able to learn otherwise, apart from whether it passes basic
+> > smoke testing.
+> 
+> Currently it's not even smoke testing because dp phy is never getting
+> enabled because there's no consumer. That's why I guess it was never
+> noticed it's wrongly described in dts.
+
+Yeah, people shouldn't be adding (copy-pasted) nodes for peripherals
+that they are not able to test (especially given the lack of
+documentation), but I guess the USB3-DP case is a bit of a grey area as
+the USB part can have been verified. Fortunately, this should be less of
+any issue with the new binding scheme.
+
+Johan
