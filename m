@@ -2,84 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5CCB63C481
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 17:01:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97C7063C4A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 17:06:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236088AbiK2QBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 11:01:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
+        id S235518AbiK2QGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 11:06:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235871AbiK2QBS (ORCPT
+        with ESMTP id S235019AbiK2QGG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 11:01:18 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C34169A8B;
-        Tue, 29 Nov 2022 07:59:41 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ATFmncM016736;
-        Tue, 29 Nov 2022 15:58:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=O1zHUKyMYg/N5w80x5NsEXIV4fzGlq8CSJOktCGLEoc=;
- b=j0PVXACHfpFiyiV3rnlCeFwBcG1yGYvTRRpsz9jkx5zIW59HM4QxuMVk79qmbgT+hktG
- iz14heoVMlFAzwEC9mtcaWwo8WMhh4olSeBDBBixOzm/XqHmH+RpybeHKrOFzITq14/I
- pQOqCyfxWs6uuIbJt/2jrQYDSErW7LXIWsXbMlDyfaLAA1aiUKibiDdL3mBIEgfgKAro
- s0I1NNWkrhnw3PIp4towyuNsE769NKX2bBvzzQrROjT0gVXiILVSZpgzxn3H2L/yiPUx
- PKBqq1hMChU4NmU8naQRiNLVE0ZquYFA9FYp2+BwQzJRZM4lLIBGN3WARjhkBhb6zWZu Zw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m5n1vg0v6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Nov 2022 15:58:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ATFwh5f029584
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 29 Nov 2022 15:58:43 GMT
-Received: from [10.216.9.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 29 Nov
- 2022 07:58:37 -0800
-Message-ID: <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
-Date:   Tue, 29 Nov 2022 21:28:33 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for system
- PM ops
-Content-Language: en-US
-To:     Nathan Chancellor <nathan@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
+        Tue, 29 Nov 2022 11:06:06 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F9B686B3;
+        Tue, 29 Nov 2022 08:05:51 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9C1EAB81694;
+        Tue, 29 Nov 2022 16:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59839C433C1;
+        Tue, 29 Nov 2022 16:05:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669737949;
+        bh=J1V3lMbkah+OkD2VRvQKWFgOy3p2gZiM1S+bTvQGf2Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WZLJ14E89JorGzLxOMTFFH4QVsaSRTIM12lhAOCSyXUvHqve1H6SQVeqaKnCYSXgy
+         9p/NgKzhuQRHiNhMwSA0HZKq3z3QU7nLqYdJfcfwJS7jktWDoGvPrPpHO1HaTvbcvc
+         I+0vzuIeugtNjMgCXuI52GbvCe41lg55NVX2wRyAPJO5xVYVbvrOEqdaXJz6FPiu0v
+         52rsov2Cs+wI9+cqlNbP2lT/tKTw6MyBYa+ZRyXKx8AU5SZO8wYj86ShUAc7xEdLaP
+         /TvX2CH+9TLnRsI+Q272sYX2irtlykNIfjNfNggR5rAgV7TGt/CoW9/GaQ5NANveNe
+         FUnW0owfZn2dQ==
+Date:   Tue, 29 Nov 2022 09:05:46 -0700
+From:   Nathan Chancellor <nathan@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for
+ system PM ops
+Message-ID: <Y4Yt2oEZm+Yb/wyr@dev-arch.thelio-3990X>
 References: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
  <Y4YpELN4/0cesonb@dev-arch.thelio-3990X>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <Y4YpELN4/0cesonb@dev-arch.thelio-3990X>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c5Gnbz93EI3y_DZwAkv2U-Y1I-f7G-L1
-X-Proofpoint-ORIG-GUID: c5Gnbz93EI3y_DZwAkv2U-Y1I-f7G-L1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-29_10,2022-11-29_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
- spamscore=0 priorityscore=1501 clxscore=1011 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211290089
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+ <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,51 +61,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your tie Nathan!!!
+On Tue, Nov 29, 2022 at 09:28:33PM +0530, Srinivasa Rao Mandadapu wrote:
+> Thanks for your tie Nathan!!!
+> 
+> On 11/29/2022 9:15 PM, Nathan Chancellor wrote:
+> > On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
+> > > Add __maybe_unused tag for system PM ops suspend and resume.
+> > > This is required to fix allmodconfig compilation issue.
+> > > Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
+> > > 
+> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > A better solution would be replacing SET_SYSTEM_SLEEP_PM_OPS() with
+> > SYSTEM_SLEEP_PM_OPS(), which was added to avoid needing to add these
+> > '__maybe_unused' attributes to these functions. See commit 1a3c7bb08826
+> > ("PM: core: Add new *_PM_OPS macros, deprecate old ones") for more info.
+> 
+> Tried this option but as this patch required for Kernel 5.4 version code
+> base,
+> 
+> SYSTEM_SLEEP_PM_OPS didn't work.
 
-On 11/29/2022 9:15 PM, Nathan Chancellor wrote:
-> On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
->> Add __maybe_unused tag for system PM ops suspend and resume.
->> This is required to fix allmodconfig compilation issue.
->> Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> A better solution would be replacing SET_SYSTEM_SLEEP_PM_OPS() with
-> SYSTEM_SLEEP_PM_OPS(), which was added to avoid needing to add these
-> '__maybe_unused' attributes to these functions. See commit 1a3c7bb08826
-> ("PM: core: Add new *_PM_OPS macros, deprecate old ones") for more info.
+Ah right, it is a more recent macro. I did not realize this patch was
+needed to fix a patch destined for stable.
 
-Tried this option but as this patch required for Kernel 5.4 version code 
-base,
+Perhaps keep this patch but add a second patch after it that converts
+to using SYSTEM_SLEEP_PM_OPS() for future releases?
 
-SYSTEM_SLEEP_PM_OPS didn't work.
-
->> ---
->>   sound/soc/qcom/lpass-sc7180.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
->> index b96b85a..41db661 100644
->> --- a/sound/soc/qcom/lpass-sc7180.c
->> +++ b/sound/soc/qcom/lpass-sc7180.c
->> @@ -163,14 +163,14 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
->>   	return 0;
->>   }
->>   
->> -static int sc7180_lpass_dev_resume(struct device *dev)
->> +static int __maybe_unused sc7180_lpass_dev_resume(struct device *dev)
->>   {
->>   	struct lpass_data *drvdata = dev_get_drvdata(dev);
->>   
->>   	return clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
->>   }
->>   
->> -static int sc7180_lpass_dev_suspend(struct device *dev)
->> +static int __maybe_unused sc7180_lpass_dev_suspend(struct device *dev)
->>   {
->>   	struct lpass_data *drvdata = dev_get_drvdata(dev);
->>   
->> -- 
->> 2.7.4
->>
->>
+> > > ---
+> > >   sound/soc/qcom/lpass-sc7180.c | 4 ++--
+> > >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+> > > index b96b85a..41db661 100644
+> > > --- a/sound/soc/qcom/lpass-sc7180.c
+> > > +++ b/sound/soc/qcom/lpass-sc7180.c
+> > > @@ -163,14 +163,14 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
+> > >   	return 0;
+> > >   }
+> > > -static int sc7180_lpass_dev_resume(struct device *dev)
+> > > +static int __maybe_unused sc7180_lpass_dev_resume(struct device *dev)
+> > >   {
+> > >   	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> > >   	return clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
+> > >   }
+> > > -static int sc7180_lpass_dev_suspend(struct device *dev)
+> > > +static int __maybe_unused sc7180_lpass_dev_suspend(struct device *dev)
+> > >   {
+> > >   	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> > > -- 
+> > > 2.7.4
+> > > 
+> > > 
