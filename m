@@ -2,142 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E728C63BE31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 11:45:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09F4463BE44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 11:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbiK2Kpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 05:45:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33854 "EHLO
+        id S230205AbiK2Kx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 05:53:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbiK2Kpp (ORCPT
+        with ESMTP id S229840AbiK2Kx1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 05:45:45 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED455C744
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 02:45:44 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id g7so21842522lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 02:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EgaNiOtXbRukgfZTHYDievg/9LoIfCts6FSyl7+geOA=;
-        b=NG/A1uow4JGf9cO5NMSIcSyo/8G36M0bbJyli+xfXvWIW8oIscCkIv4jy4YoQljIv9
-         K1kvwcg2hAWKlL0PWRL8XPD8nE5PnnkQuTteqDX3NnvgtR7jmNC7pDcq+iGuddEPU+7N
-         Q4/gLBtBRv1strAFK6Lj/wc3QSne39Hr0t3MDIQiAjXJr0a0P+nWtbjd/JDvn6BrSnhU
-         QV85rkU0sAsfoU63NhsTmk4eZoXkr/7neZvjaZxxa1OKu0Pqy+ASztcu3QWkL2ILi6u8
-         hU65ZJZ/11+mMy/vnQPdOHXp5mw/n956aXhdUAEqLiFo/w0mQA4lvlOXtcHyEXvT5C1G
-         ZDaA==
+        Tue, 29 Nov 2022 05:53:27 -0500
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07D9C5F87C;
+        Tue, 29 Nov 2022 02:53:24 -0800 (PST)
+Received: by mail-qv1-f54.google.com with SMTP id c14so5399781qvq.0;
+        Tue, 29 Nov 2022 02:53:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EgaNiOtXbRukgfZTHYDievg/9LoIfCts6FSyl7+geOA=;
-        b=cLeix0R+pSb3iIzi56V5WbusZDKbfIVUkIENtSKiKYd+QBSlCVKzsZfuq3nlr7sUli
-         8KXphoMn2VLkOyV4bKEwdJjFL477JofUIXACuIm+LjqzDPhBAJrI0rGGxwDhSbMy2Aq2
-         MIOVlfV6ZyLyr7kcntzX6037zEAAEJikts34+lKQvk0ONDmKsh+35tY5+l997ELPZecV
-         oCaas48H3auj7+Q/sbSFVbaIxR9S2ZwBcT7Qf7gUHVwX3nJXWfqGswqBtPbvgW+LEeWf
-         Lb3HPP1s1qgq8XZHS3LIV5iQAbIA/X2CtNdrw7RD//HnGd6tn8f+2/+/ynD1macT100i
-         4SCw==
-X-Gm-Message-State: ANoB5pkP0NvDCbBYtUW1leYRQASQIdJRo3t6qIsS6XAxHpcqbmhkeP0p
-        qHz1bvmURsCO2+dXtLMmnWkSQQ==
-X-Google-Smtp-Source: AA0mqf7QL0VmeSIrLhv2CGB/d9lqwnVER6ZrjBqZzSej4ClMcCWxmJQ5j1Yjam9vC3WbHqykOP9LIg==
-X-Received: by 2002:ac2:5a5e:0:b0:4b5:110e:3fd8 with SMTP id r30-20020ac25a5e000000b004b5110e3fd8mr3777046lfn.100.1669718742494;
-        Tue, 29 Nov 2022 02:45:42 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n11-20020a05651203eb00b00497aa190523sm2172749lfq.248.2022.11.29.02.45.41
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=byCqNO9wNjp3bMa2bdQ4RMa3BFEO/vUEjR67iUdLdSk=;
+        b=Zr9w5CXNPza4SXy4/wnvS0hynIMja0EhHkNKP1HpBDPhCmfhi7nSL1lG2Iub0w/vnf
+         +Ma0/Ej/R5G2fns31DnwdCuGTJY8BVZ7QGWxtaHGdkH4S9TipAid68aoXZog6tXNF9pH
+         Ci27nOEOres2BCMeSJRWJf+NcwKxKd4WkGvJImkTC/4a+n6/pMhQGBe0HgPzKq7QPDpE
+         PtygfjANsr+Mrtjw59pokbU3bZyInAI67PVVJysJcdnRevs8dKiWN3lD8OJsX6vYsBju
+         pjQj6U5kasLgO/fol4hJmmV1G5LVconDICD61Xm9E/NeQYmEK/K1FNFEPbEG44Kuw/DU
+         twdg==
+X-Gm-Message-State: ANoB5plfNkY+buDrQppwoOW1XyoAnf45jPjp3EHFHD5qNwPlMfRlfhoe
+        aVINsdkszb6iqTdrUvAHrGHOKeJReVrjfg==
+X-Google-Smtp-Source: AA0mqf4T4HwW/qrOTYVVjX1M1jxfRCBkXN5GVrTmzffjzY38wXuxrhTgEl/mjRQobDW6EyuSIh+mxQ==
+X-Received: by 2002:a0c:edd0:0:b0:4b1:8d88:1982 with SMTP id i16-20020a0cedd0000000b004b18d881982mr36484357qvr.33.1669719203657;
+        Tue, 29 Nov 2022 02:53:23 -0800 (PST)
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com. [209.85.128.179])
+        by smtp.gmail.com with ESMTPSA id x26-20020ac8539a000000b00398df095cf5sm8316486qtp.34.2022.11.29.02.53.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 02:45:41 -0800 (PST)
-Message-ID: <73a5b252-b83b-aa3f-d593-776e42182ab6@linaro.org>
-Date:   Tue, 29 Nov 2022 11:45:40 +0100
+        Tue, 29 Nov 2022 02:53:23 -0800 (PST)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-3b56782b3f6so134072637b3.13;
+        Tue, 29 Nov 2022 02:53:22 -0800 (PST)
+X-Received: by 2002:a05:690c:b81:b0:37e:6806:a5f9 with SMTP id
+ ck1-20020a05690c0b8100b0037e6806a5f9mr36739244ywb.47.1669719202235; Tue, 29
+ Nov 2022 02:53:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH V5 1/2] dt-bindings: firmware: qcom-scm: Add optional
- interrupt
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, robimarko@gmail.com,
-        quic_gurus@quicinc.com, quic_rjendra@quicinc.com
-References: <20221123204615.25358-1-quic_sibis@quicinc.com>
- <20221123204615.25358-2-quic_sibis@quicinc.com>
- <3cda9005-d7a5-56f0-d1d2-fd6c1cb36fc3@linaro.org>
- <7b6ffbb4-80fb-610a-c839-e3bf1668d4ed@quicinc.com>
- <61f1a1e5-bd2c-4a22-66f7-1935154b35ad@linaro.org>
- <c21737b3-cb72-6a4e-0ab2-b8231a7119fe@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <c21737b3-cb72-6a4e-0ab2-b8231a7119fe@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
+ <CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com> <3b00c04c-cb6d-9e9a-ba0c-0ce093b4a3fb@quicinc.com>
+In-Reply-To: <3b00c04c-cb6d-9e9a-ba0c-0ce093b4a3fb@quicinc.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 29 Nov 2022 11:53:10 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdUfRJmy56eO=ET-Togg-EOgxSjnTgAUYWmixD_zVonipA@mail.gmail.com>
+Message-ID: <CAMuHMdUfRJmy56eO=ET-Togg-EOgxSjnTgAUYWmixD_zVonipA@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/11/2022 11:05, Sibi Sankar wrote:
-> On 11/28/22 14:00, Krzysztof Kozlowski wrote:
->> On 28/11/2022 06:57, Sibi Sankar wrote:
->>
->>>>
->>>> Which devices have interrupts?
->>>>
->>>> We talked about it here:
->>>> https://lore.kernel.org/all/2464d90f-64e9-5e3c-404b-10394c3bc302@quicinc.com/
->>>> and here:
->>>> https://lore.kernel.org/all/c20edd0d-7613-5683-60e7-54317cac6e0b@linaro.org/
->>>>
->>>> But I still don't get which devices support it and which do not.
->>>
->>> lol, I thought we reached a consensus earlier because of the "ok" and
->>> R-b. Like I explained earlier the bootloader would be adding interrupt
->>> on the fly, wouldn't such cases cause binding check failure if we list
->>> all the devices supporting it?
->>
->> What type of failure? I don't get. Is this interrupt valid for SM8250?
->> SDM845? MSM8996? and so on? Now you make it valid.
-> 
-> ok if we mark the interrupt as required for SM8450 and not specify the
-> interrupt in the board file (since the bootloader will be adding it on
-> the fly), dtbs_check will throw 'interrupts' is a required property for
-> the board file. This was the failure I was talking about.
+Hi Srinivasa,
 
-OK, but no one said here about making it required. So how this issue can
-happen?
+On Tue, Nov 29, 2022 at 11:36 AM Srinivasa Rao Mandadapu
+<quic_srivasam@quicinc.com> wrote:
+> On 11/29/2022 1:23 PM, Geert Uytterhoeven wrote:
+> > On Mon, Nov 28, 2022 at 8:50 AM Srinivasa Rao Mandadapu
+> > <quic_srivasam@quicinc.com> wrote:
+> >> Update lpass sc7180 platform driver with PM ops, such as
+> >> system supend and resume callbacks.
+> >> This update is required to disable clocks during supend and
+> >> avoid XO shutdown issue.
+> >>
+> >> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> >> Tested-by: Rahul Ajmeriya <quic_rajmeriy@quicinc.com>
+> > Thanks for your patch, which is now commit 2d68148f8f85ca5a ("ASoC:
+> > qcom: lpass-sc7180: Add system suspend/resume PM ops") in next-20221129.
+> >
+> >> --- a/sound/soc/qcom/lpass-sc7180.c
+> >> +++ b/sound/soc/qcom/lpass-sc7180.c
+> >> @@ -12,6 +12,7 @@
+> >>   #include <linux/module.h>
+> >>   #include <linux/of.h>
+> >>   #include <linux/platform_device.h>
+> >> +#include <linux/pm_runtime.h>
+> >>   #include <dt-bindings/sound/sc7180-lpass.h>
+> >>   #include <sound/pcm.h>
+> >>   #include <sound/soc.h>
+> >> @@ -156,10 +157,34 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
+> >>          struct lpass_data *drvdata = platform_get_drvdata(pdev);
+> >>
+> >>          clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
+> >> +       return 0;
+> >> +}
+> >> +
+> >> +static int sc7180_lpass_dev_resume(struct device *dev)
+> >> +{
+> >> +       int ret = 0;
+> >> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
+> >>
+> >> +       ret = clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
+> >> +       if (ret) {
+> >> +               dev_err(dev, "sc7180 clk prepare and enable failed\n");
+> >> +               return ret;
+> >> +       }
+> >> +       return ret;
+> >> +}
+> >> +
+> >> +static int sc7180_lpass_dev_suspend(struct device *dev)
+> >> +{
+> >> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
+> >> +
+> >> +       clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
+> >>          return 0;
+> >>   }
+> > noreply@ellerman.id.au reports for e.g. m68k-allmodconfig:
+> >
+> >      sound/soc/qcom/lpass-sc7180.c:179:12: error:
+> > 'sc7180_lpass_dev_suspend' defined but not used
+> > [-Werror=unused-function]
+> >      sound/soc/qcom/lpass-sc7180.c:166:12: error:
+> > 'sc7180_lpass_dev_resume' defined but not used
+> > [-Werror=unused-function]
+> >
+> >> +static const struct dev_pm_ops sc7180_lpass_pm_ops = {
+> >> +       SET_SYSTEM_SLEEP_PM_OPS(sc7180_lpass_dev_suspend, sc7180_lpass_dev_resume)
+> >> +};
+> > Please use DEFINE_SIMPLE_DEV_PM_OPS()...
+> Actually, we need to use this patch in in previous kernels 5.4 and 5.15.
+> I think these changes won't apply on previous kernel.
+> Hence ignoring for now and will take care next time.
 
-Please read above chapter again. I said nothing about required, but I
-said "valid".
+In that case you should add __maybe_unused tags to
+sc7180_lpass_dev_suspend() and sc7180_lpass_dev_resume() first, so it
+can be backported to 5.4 and 5.15, and do the DEFINE_SIMPLE_DEV_PM_OPS()
+conversion later.
 
-> 
->>
->>> Also some of the SM8450 devices in the
->>> wild would be running firmware not having the feature but I guess
->>> eventually most of the them will end up supporting the feature in the
->>> end.
->>
->> That's not what I meant. Your patch describes the case for one variant
->> but you are affecting all of them.
-> 
-> Not really, the driver treats interrupts as optional. 
+Gr{oetje,eeting}s,
 
-Linux implementation matters less. We talk about device/hardware
-(firmware in this case).
+                        Geert
 
-> If the interrupt
-> isn't present we assume that the feature isn't supported. If the
-> bootloader adds the property during boot then we assume the fw has
-> waitqueue support.
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-Sure, my question stays. Which devices do not support it at all?
-
-Best regards,
-Krzysztof
-
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
