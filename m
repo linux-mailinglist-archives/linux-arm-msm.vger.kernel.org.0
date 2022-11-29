@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B29D563BE69
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:00:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A4B363BE74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbiK2LAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 06:00:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43098 "EHLO
+        id S230161AbiK2LAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 06:00:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232477AbiK2LAX (ORCPT
+        with ESMTP id S232515AbiK2LAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 06:00:23 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E794760E90
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:21 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id ja4-20020a05600c556400b003cf6e77f89cso789290wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:21 -0800 (PST)
+        Tue, 29 Nov 2022 06:00:25 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A3960E9A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:23 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so10487966wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DkZacf9TX3zvyVeUrL+nHxYirMYsPuTeW+Zo+lEbcT0=;
-        b=ymqV7q53bvSU4CrarfDxQFR00R9D8YMrI+N5EwFtZvYEGwPr9XXHQazLobyxuBthbF
-         CLskGiWGSuIulq9If4OwG48jM3vJ0E6Q0X3BVnpaiOcLs33eX+/JMcWACBZaAMlqLebn
-         winH+dRCmI88m0gNS8U7LlQqYyli7iJYR4waUTqVUHry0Bz2e6xPR5izQw9PowSSxGu/
-         f+UXJYzpFm4kvujtqA0MPI5L0R9Lf2xapVDZljwfQk2BLa5yfUJ/TXWdwbumWqBipc4U
-         YnMhRfVTHVTFUanNhCJ11vDpqxaxJbJjll1/ZodaYVvLSjx3Q9p5uuLUl2oIB4aVRCHl
-         82Vg==
+        bh=EonL2PwB0Makj2JepNmLczYfWSZatIPogqShuTJezMI=;
+        b=oC3RvrZh+uD/rIN/OhFpct3sfNNCaF6rodg7ivYc3KKlgkwKPvt1s3rlHtq05ZuK83
+         ByMi14bSTIY6u1CzO3uSSE2/0xiVhGKcK6YfPCo7wrZCk3dxci49pvh3E0WUKOlssDQB
+         hdDj+gtyTMlQtchdsdLyRFI08Fh2q+VSksE35RSjGojbbww20MP/87IQUOXYsKZVuULU
+         BiAAyvI5y43cfac0R8NKk9BWUeGfjNVpIkmxeNTYU1qkIxUUtD/I0oyAcSF9QYDd630h
+         YKSrvI30htxcWGuxwvd3/RVnSHvGOp8THzBZcMX3Y5hszJ+8XhAZhWhhlNZDkpejFM3J
+         wCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DkZacf9TX3zvyVeUrL+nHxYirMYsPuTeW+Zo+lEbcT0=;
-        b=oLDdQdC7iul4Hecn3mX+JKQhk0SnfPCPhkkvRXfpmldcncRukTy/dxEex/vNwBxmwq
-         U6NU26hCLBX/fQXmnG7On6nlhP2UkokEVTWs/fRqoNDfzZitD/fEa9k2LKuXV2iWP0hX
-         p5T7JKInX6o2YYGqtTrhQ//Z0kiDeL9eoW4GpKoUW2aqmi0TmDOS0lZTeA3RONOkLMD7
-         WsnN7heZrEmegCxdrtjgPae59dkFmMSc47VdJm99C4S7tv3WZGAOFFzA3u6L+r2wfghQ
-         5TliYngWYnZQhyQOuXIasvzP0buWG73OCh+M1HFUaLGvpl0huMB1B1NUJQdLQrLYSQuY
-         VBXQ==
-X-Gm-Message-State: ANoB5pn08C4D+aZdTSIB9VWRbC/c+vfwMMUcMFrBMwjg6sGGBBAjNVt9
-        RBzTq9BFptt77iDZ7jltmpDW2A==
-X-Google-Smtp-Source: AA0mqf4E75mhjTHNy7PTTYWvDS5SFN/M+50o8ctNotiKaYOC6AwSOS1u/tBacyozgzngbw0fIO0nzA==
-X-Received: by 2002:a7b:c046:0:b0:3cf:d58f:f66e with SMTP id u6-20020a7bc046000000b003cfd58ff66emr28931925wmc.165.1669719621501;
-        Tue, 29 Nov 2022 03:00:21 -0800 (PST)
+        bh=EonL2PwB0Makj2JepNmLczYfWSZatIPogqShuTJezMI=;
+        b=L1fj8XfMk+T8uxbtY+x06+KIdHzJJ+e13sRFdBFrQEbexialI6IlNOb6X3VjDDif1I
+         hU2W3YH17Sov+ZxOlNGo4ufk5DZxk2hCu5oEwFNunmpG/dyqjnpJSe2b7M2mleof1BXJ
+         wHEclQAz3/srkIZ4nxmuZAITqFDqFSNdAbVS7byi3PSK38aSw2GKdSpbEOS7c5Rz6bku
+         t5LnI5o6I60/tA75Svh28S+3UdCDMHT/TVVY9ZlFKxeXwxBbPmEoaYlDcL6MNxaBcDMW
+         sakljxy5SgT6bVpWVhBSeJlA8Bnb1TeIzAcTiFguA2RNjctGMvdtLZrrX0+73pBXo3zb
+         vavg==
+X-Gm-Message-State: ANoB5pmELCaEsUOrL9s14gM8QVv6myN7b3jH2owwvTeRlPnqHef5AYHQ
+        UjRfkViGs4kU62Z3CSx3KF5rxA==
+X-Google-Smtp-Source: AA0mqf5j5YyHdMnLTqWYWWktLVBD+0Xy9WBNz2pgYLzaZzBHz4S0NpFwwlF5MmZrsdP9vWOUwOJhCw==
+X-Received: by 2002:a05:600c:1d9c:b0:3c6:e369:e856 with SMTP id p28-20020a05600c1d9c00b003c6e369e856mr40758892wms.35.1669719622444;
+        Tue, 29 Nov 2022 03:00:22 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:6b19:1d8e:fbca:fd02])
-        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.20
+        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 03:00:21 -0800 (PST)
+        Tue, 29 Nov 2022 03:00:22 -0800 (PST)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,9 +63,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v4 04/13] tty: serial: qcom-geni-serial: improve the to_dev_port() macro
-Date:   Tue, 29 Nov 2022 12:00:03 +0100
-Message-Id: <20221129110012.224685-5-brgl@bgdev.pl>
+Subject: [PATCH v4 05/13] tty: serial: qcom-geni-serial: remove stray newlines
+Date:   Tue, 29 Nov 2022 12:00:04 +0100
+Message-Id: <20221129110012.224685-6-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20221129110012.224685-1-brgl@bgdev.pl>
 References: <20221129110012.224685-1-brgl@bgdev.pl>
@@ -82,169 +82,35 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The member we want to resolve in struct qcom_geni_serial_port is called
-uport so we don't need an additional redundant parameter in this macro.
-
-While at it: turn the macro into a static inline function.
+Remove stray newlines around #ifdefs for consistency with the rest
+of the driver code.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 36 ++++++++++++++-------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 97ee7c074b79..e4139718e084 100644
+index e4139718e084..ec2523736e99 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -133,8 +133,10 @@ static const struct uart_ops qcom_geni_uart_pops;
- static struct uart_driver qcom_geni_console_driver;
- static struct uart_driver qcom_geni_uart_driver;
+@@ -320,7 +320,6 @@ static void qcom_geni_serial_abort_rx(struct uart_port *uport)
+ }
  
--#define to_dev_port(ptr, member) \
--		container_of(ptr, struct qcom_geni_serial_port, member)
-+static inline struct qcom_geni_serial_port *to_dev_port(struct uart_port *uport)
-+{
-+	return container_of(uport, struct qcom_geni_serial_port, uport);
-+}
- 
- static struct qcom_geni_serial_port qcom_geni_uart_ports[GENI_UART_PORTS] = {
- 	[0] = {
-@@ -175,7 +177,7 @@ static struct qcom_geni_serial_port qcom_geni_console_port = {
- static int qcom_geni_serial_request_port(struct uart_port *uport)
+ #ifdef CONFIG_CONSOLE_POLL
+-
+ static int qcom_geni_serial_get_char(struct uart_port *uport)
  {
- 	struct platform_device *pdev = to_platform_device(uport->dev);
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	uport->membase = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(uport->membase))
-@@ -212,7 +214,7 @@ static void qcom_geni_serial_set_mctrl(struct uart_port *uport,
- 							unsigned int mctrl)
- {
- 	u32 uart_manual_rfr = 0;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	if (uart_console(uport))
- 		return;
-@@ -253,7 +255,7 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
  	struct qcom_geni_private_data *private_data = uport->private_data;
+@@ -545,7 +544,6 @@ static int handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
+ {
+ 	return -EPERM;
+ }
+-
+ #endif /* CONFIG_SERIAL_QCOM_GENI_CONSOLE */
  
- 	if (private_data->drv) {
--		port = to_dev_port(uport, uport);
-+		port = to_dev_port(uport);
- 		baud = port->baud;
- 		if (!baud)
- 			baud = 115200;
-@@ -506,7 +508,7 @@ static int handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
- 	u32 i;
- 	unsigned char buf[sizeof(u32)];
- 	struct tty_port *tport;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	tport = &uport->state->port;
- 	for (i = 0; i < bytes; ) {
-@@ -549,7 +551,7 @@ static int handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
  static int handle_rx_uart(struct uart_port *uport, u32 bytes, bool drop)
- {
- 	struct tty_port *tport;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	u32 num_bytes_pw = port->tx_fifo_width / BITS_PER_BYTE;
- 	u32 words = ALIGN(bytes, num_bytes_pw) / num_bytes_pw;
- 	int ret;
-@@ -598,7 +600,7 @@ static void qcom_geni_serial_stop_tx(struct uart_port *uport)
- {
- 	u32 irq_en;
- 	u32 status;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
- 	irq_en &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
-@@ -627,7 +629,7 @@ static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop)
- 	u32 last_word_byte_cnt;
- 	u32 last_word_partial;
- 	u32 total_bytes;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	status = readl(uport->membase +	SE_GENI_RX_FIFO_STATUS);
- 	word_cnt = status & RX_FIFO_WC_MSK;
-@@ -649,7 +651,7 @@ static void qcom_geni_serial_stop_rx(struct uart_port *uport)
- {
- 	u32 irq_en;
- 	u32 status;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	u32 s_irq_status;
- 
- 	irq_en = readl(uport->membase + SE_GENI_S_IRQ_EN);
-@@ -687,7 +689,7 @@ static void qcom_geni_serial_start_rx(struct uart_port *uport)
- {
- 	u32 irq_en;
- 	u32 status;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	status = readl(uport->membase + SE_GENI_STATUS);
- 	if (status & S_GENI_CMD_ACTIVE)
-@@ -707,7 +709,7 @@ static void qcom_geni_serial_start_rx(struct uart_port *uport)
- static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
- 		bool active)
- {
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	struct circ_buf *xmit = &uport->state->xmit;
- 	size_t avail;
- 	size_t remaining;
-@@ -803,7 +805,7 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
- 	struct uart_port *uport = dev;
- 	bool drop_rx = false;
- 	struct tty_port *tport = &uport->state->port;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	if (uport->suspended)
- 		return IRQ_NONE;
-@@ -869,7 +871,7 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
- 
- static int qcom_geni_serial_port_setup(struct uart_port *uport)
- {
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	u32 rxstale = DEFAULT_BITS_PER_CHAR * STALE_TIMEOUT;
- 	u32 proto;
- 	u32 pin_swap;
-@@ -917,7 +919,7 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
- static int qcom_geni_serial_startup(struct uart_port *uport)
- {
- 	int ret;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	if (!port->setup) {
- 		ret = qcom_geni_serial_port_setup(uport);
-@@ -1003,7 +1005,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
- 	u32 stop_bit_len;
- 	unsigned int clk_div;
- 	u32 ser_clk_cfg;
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	unsigned long clk_rate;
- 	u32 ver, sampling_rate;
- 	unsigned int avg_bw_core;
-@@ -1288,7 +1290,7 @@ static struct uart_driver qcom_geni_uart_driver = {
- static void qcom_geni_serial_pm(struct uart_port *uport,
- 		unsigned int new_state, unsigned int old_state)
- {
--	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	/* If we've never been called, treat it as off */
- 	if (old_state == UART_PM_STATE_UNDEFINED)
 -- 
 2.37.2
 
