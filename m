@@ -2,133 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 292B563BB97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:30:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF9D663BC26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:53:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbiK2IaH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 03:30:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39496 "EHLO
+        id S231664AbiK2Ixn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 03:53:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbiK2I3T (ORCPT
+        with ESMTP id S230011AbiK2Ix0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 03:29:19 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1406759851
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:28:48 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id x17so20824445wrn.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:28:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UsdFpV0/mKDiXztrE9lqloezboDBtAsqnTTRBiOVtQ8=;
-        b=Lt2YZeLSZM3s91FD+Cb0iXVLAQ7owCjKjUS3Ae1jNlIFM57h8NDDsrdMoGpW7NxjJa
-         Rm8jNQBM0CsA5pty/Bg3BlqfgA0EMOOWKsjso8ekNmvzv7Y0S1J7erclbRbZEQqinaT/
-         gVVrh8W8ZYGjPrjoky8mP++kBkSABMYMc3U2fuidvKGXyp9Tx1Ow6wAxnq5iJZHZdM3r
-         TJi8XcPA8zVgd5aDMCWieNA/HklwLLcgdUsOqu0tEx/W7DQhuBfkJxGdC5NUWn069GFM
-         PfUnT7ajbkDUVv3REcjyLLjLpbC0M1uQMnE2XKM8PA7RuGDz2TTlUlC6ntyIxYIzP1KA
-         kZzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UsdFpV0/mKDiXztrE9lqloezboDBtAsqnTTRBiOVtQ8=;
-        b=GeGwqfaoWH7odmvOGw4tiHRz0k6U9puS2E13sZbk4zB03T2hQIZ4wUKOSYsdsaWa4e
-         1a0RsKJG6N9tRMeGfdrLnNth+F6gdM8Mz+3SZCnT1rf6YrEZ6jeRkLriaS+ot0UMIMhK
-         Rs+mjERVRf0Hg3U++1o3NeqapxfWRKeF0AAjWAaIEMey6JGd491/ngV3da+ZxZJwHhSg
-         /BddAhBy5SDrbyQ0zUqa7J7pErzX30dEIwJtzeqiuxB0qgwitDb9ayF+vt2csAALVm+j
-         jaYfee+EgLq1+tLR/JLQVd6qaWDxlyVkiLPIJFjmkT2KErzMqryp8pMIicVCjrr+auk+
-         ur3g==
-X-Gm-Message-State: ANoB5pkvCsIZoDKKxq8r8NB+goKagFT1CW3kNg2Pw51NvI7FJkNrQIZF
-        65ym/eQtZko1oYDk4OsSDPotpA==
-X-Google-Smtp-Source: AA0mqf5Z0ZWZ9WQn5gBf/30EXFOX91ieTBWgfiEIeO5U9aZafcjJQFiEzNfLFKEoKitug8Bt471FDA==
-X-Received: by 2002:a5d:68cc:0:b0:242:1c1a:37e6 with SMTP id p12-20020a5d68cc000000b002421c1a37e6mr4279056wrw.549.1669710526889;
-        Tue, 29 Nov 2022 00:28:46 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2? ([2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2])
-        by smtp.gmail.com with ESMTPSA id h18-20020adff4d2000000b00242269c8b8esm83142wrp.25.2022.11.29.00.28.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 00:28:46 -0800 (PST)
-Message-ID: <301cfc50-5452-7e71-559e-2586f89464d6@linaro.org>
-Date:   Tue, 29 Nov 2022 09:28:47 +0100
+        Tue, 29 Nov 2022 03:53:26 -0500
+X-Greylist: delayed 429 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 29 Nov 2022 00:53:00 PST
+Received: from mail.lucidfour.pl (mail.lucidfour.pl [217.61.97.194])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4DF85A6F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:53:00 -0800 (PST)
+Received: by mail.lucidfour.pl (Postfix, from userid 1001)
+        id 3FA4F81B11; Tue, 29 Nov 2022 08:45:59 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucidfour.pl; s=mail;
+        t=1669711559; bh=CSKXLMgcdpWkXuTgJn5+jsCVobtU9JEF4vCnS5z6McM=;
+        h=Date:From:To:Subject:From;
+        b=a3f0HQeSz9qqIC5WX42tYGEg+rf9vBMq+kN7owYWxawyGixsRTrFn3xJm0i2BfCCx
+         FMzvWXAJrl2Xp98IYnOKNtcXRIJqfvsADD212i5x0TB/4g2Sv2+CrPj+qRzyjpADu5
+         fs5uReD+q+iTMMGO+3/fvouQOIUTnQ/A1IhRs1UNuTy7aJJT2KF8x+oEBA1bPi34vg
+         uea5/TFU5D0WEKRz+gsB1pOAUBKBK/714/S836xZYzTpEllbQ7Hn1C6W5smIUHKmc6
+         1yL8C7wFnQLWmYGyiHMOMLGsA1IT8kWwR4jJukncOlcdIXr3ZAz6ksejMK7nAMaUDB
+         t8fYmAKFvw5wg==
+Received: by mail.lucidfour.pl for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 08:45:06 GMT
+Message-ID: <20221129074501-0.1.e.1fi5.0.r58oegn05l@lucidfour.pl>
+Date:   Tue, 29 Nov 2022 08:45:06 GMT
+From:   "Wiktor Nurek" <wiktor.nurek@lucidfour.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: =?UTF-8?Q?Nap=C5=82yw_Klient=C3=B3w_ze_strony?=
+X-Mailer: mail.lucidfour.pl
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/2] soc: qcom: Add support for Qualcomm Modem
- Processing SubSystem DSM memory
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-0-f7c65d6f0e55@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v2-0-f7c65d6f0e55@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=1.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_VALIDITY_RPBL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 09:53, Neil Armstrong wrote:
-> The Qualcomm SM8550 SoC Modem Processing SubSystem requires that a memory
-> region named DSM should be shared with the Application Processor SubSystem.
-> 
-> This adds bindings for this MPSS DSM memory and driver implementation to
-> share this memory region with the Modem Processing SubSystem.
-> 
-> The MPSS DSM memory must be shared between the APPS SubSystem and the MPSS
-> SubSystems, for the whole lifetime of the system.
-> 
-> To: Andy Gross <agross@kernel.org>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konrad.dybcio@somainline.org>
-> To: Rob Herring <robh+dt@kernel.org>
-> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> To: Frank Rowand <frowand.list@gmail.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> ---
-> Changes in v2:
-> - Fixed the bindings
-> - Added some precision on the MPSS DSM in commit messages
-> - Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org
-> 
-> ---
-> Neil Armstrong (2):
->        dt-bindings: reserved-memory: document Qualcomm MPSS DSM memory
->        soc: qcom: add MDSS DSM memory driver
-> 
->   .../reserved-memory/qcom,mpss-dsm-mem.yaml         | 37 +++++++++
->   drivers/of/platform.c                              |  1 +
->   drivers/soc/qcom/Kconfig                           | 10 +++
->   drivers/soc/qcom/Makefile                          |  1 +
->   drivers/soc/qcom/mpss_dsm_mem.c                    | 95 ++++++++++++++++++++++
->   5 files changed, 144 insertions(+)
-> ---
-> base-commit: 999e0145579c0e04174044a39257a4d96ee30020
-> change-id: 20221114-narmstrong-sm8550-upstream-mpss_dsm-21c438c65f9b
-> 
-> Best regards,
+Dzie=C5=84 dobry,
 
-After discussions on https://lore.kernel.org/all/20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org/,
-handling of this memory zone will be integrated into the remoteproc PAS changes.
+chcia=C5=82bym poinformowa=C4=87 Pa=C5=84stwa o mo=C5=BCliwo=C5=9Bci pozy=
+skania nowych zlece=C5=84 ze strony www.
 
-Neil
+Widzimy zainteresowanie potencjalnych Klient=C3=B3w Pa=C5=84stwa firm=C4=85=
+, dlatego ch=C4=99tnie pomo=C5=BCemy Pa=C5=84stwu dotrze=C4=87 z ofert=C4=
+=85 do wi=C4=99kszego grona odbiorc=C3=B3w poprzez efektywne metody pozyc=
+jonowania strony w Google.
+
+Czy m=C3=B3g=C5=82bym liczy=C4=87 na kontakt zwrotny?
+
+
+Pozdrawiam serdecznie,
+Wiktor Nurek
