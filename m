@@ -2,85 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37EDE63BB55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:15:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16B1663BB6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:24:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbiK2IPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 03:15:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59738 "EHLO
+        id S230134AbiK2IYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 03:24:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbiK2IPE (ORCPT
+        with ESMTP id S229552AbiK2IYu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 03:15:04 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9760C317C0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:15:03 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id h11so13496645wrw.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:15:03 -0800 (PST)
+        Tue, 29 Nov 2022 03:24:50 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 641F356554
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:24:48 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id v1so20794392wrt.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:24:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+tGnGmsd8SAIBQy5l4bYfSlkJXwSsNSEiUXV0JrZ7G4=;
-        b=KTldDQLc2tfmlmwHTPtlzERRJy+/jbYo9EsHIxk7O1mjZbOw9VlAAiNseOhv+Le/EY
-         4ZiEDc1QvJwrXaMN6eFvxqerNsnilHxvYyrnTSMXoCXQXWCPxQKf25zugw93LCUDO5aa
-         4y3Nd84D1+RvRWa6FCu8bT7RsBUZ1MNfy19ToCyxmF+kg59jjg4efRoZHY6F+te3aCe1
-         zs+dBujwbjothGnT2zaJGuKkewhnmrNOePYr5sLSz1BX4weqKuRwLldukQ/T1+wuXGGv
-         ADbztyNZqjIHoGHQtVI6FXqyrZZRqhmc6Azgbd+G2sLa3JZh4glG7ZPJpZRRfwAWYI8t
-         AN/w==
+        bh=tYLYGC4+NF53GSUK1U1BbaDChlHeYLa+kefmGNsOQLo=;
+        b=tlInaQk5JAdGJVixJIEPxHZ5uO4OP/98WWK0YcFd2CuALpz3daEqqlCCAYHVJsF5b3
+         Nz7og1BmUP/MlZ8IdBZTYfSCknxLkCIFk8N4FRErZW58FqUwEoi8I1QKtXJJoSnV4izM
+         N0ZnVfdo0hh5UC4p9RYTh4sZi0jyPOkF2sc6eM6Xgjaf8SHEVLE9TFEmLW0ISzEhsZ/4
+         SCNrtq7k79C/GS5SAWC2O7kvvuAk2t09OKdfTCqhJr7nKBbkQoEKXRSeP6AfClUR7w/X
+         +WHmT7Aceuxtl59hzgZABCSGuNG43zvJC9kqXnAh1cQE41z62OKLZkWEC+COlTQcJPwR
+         Zajw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+tGnGmsd8SAIBQy5l4bYfSlkJXwSsNSEiUXV0JrZ7G4=;
-        b=k9j65Xfz07cjdRJBTEAeDOpRUbI9civid7VbC+ojEjzBIRQVb3IvYxQ9aSYKsOjqeG
-         g8orwg6GQfCL77kLwvIDBsjvhypmi4lhwVdghGZvKWqF1pHWRRzqxsu/UmYwCyUFn2Ek
-         X3cKSCTst6dJjqmqx8vCLl9Mh0iap2FKKY0cGCoD4T+2Dcq3EddnRBLwcGJh6pnLdDdr
-         12fxNEuZ8kMnDZ0mUkB9sfaykkXCHMuEeM+bETr4KrRiS1CN6BF8HwzmkyDtZkppKZyp
-         OZBmzvs9wZGWu1VYmINQflJOCs+A1SqTIEUbB4qWbBleUcxIFC4cOmdXW5ZF40R+JKMb
-         2rvg==
-X-Gm-Message-State: ANoB5pk5gK2E61zvC1YKJ1VZmJAM/FNgZGzq3I+Br/KWkrNTCHLkmKN2
-        qkgQlIXHv8/Be5EjyqDIeBdPM/K+LskLL/6N
-X-Google-Smtp-Source: AA0mqf4cGPQC7b3hpyexGmaRKYiejcRHPv4RznEDcAyvSpiAKZOUZqQXpPilrMkBaqhOfPiP9RWS7w==
-X-Received: by 2002:a5d:6503:0:b0:22e:35e8:382d with SMTP id x3-20020a5d6503000000b0022e35e8382dmr33962143wru.475.1669709702171;
-        Tue, 29 Nov 2022 00:15:02 -0800 (PST)
+        bh=tYLYGC4+NF53GSUK1U1BbaDChlHeYLa+kefmGNsOQLo=;
+        b=q8pznanPaTGpTU8nxTPay6qXGxrVroZeC1BaCMxGY5l+JW6tEZrHCyTnZt6XqoLai7
+         O41DKbEeNBSLANGcWZmwSYffo69M/fRk/QUQujb28bYgnnRrlUebPLl8mHwldBAR3naW
+         sDpeMzojZAotY8LIVBmTtBPv4daE0Ny41vH6jGXlyp2VhxL+cQ91swgXUHDV5Je27h7H
+         nO2TYZB5BOLqHvMyAD1r2dRb53fOnm64Qgj9+5EkVqzKaTCyshucRYUuI/d1VMy1hRmn
+         QgiYw6JYkUa++2YxedLzijKQaDKr9e/+3Ey4D2YwERM4Y2cUl5rkGzh6oJBdzOTz8HHi
+         Tj0g==
+X-Gm-Message-State: ANoB5pn/+5oTOfWU+IdhCkKh/QUqbxvjb4/2jWEZ3JdS6MJj/7vCptkq
+        K9EIeP1UXF+CE2v62r+HrHSJhg==
+X-Google-Smtp-Source: AA0mqf47saa479iipml8biPhf2KL71g5Xo9YVRuTvBi/IBp5oYvCer6s+8sxPyzl8Yb1uTtMK5YUJQ==
+X-Received: by 2002:a5d:5709:0:b0:241:d71c:5dde with SMTP id a9-20020a5d5709000000b00241d71c5ddemr25813602wrv.678.1669710286827;
+        Tue, 29 Nov 2022 00:24:46 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2? ([2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2])
-        by smtp.gmail.com with ESMTPSA id n21-20020a05600c3b9500b003b4c979e6bcsm1242431wms.10.2022.11.29.00.15.01
+        by smtp.gmail.com with ESMTPSA id 124-20020a1c1982000000b003cfa81e2eb4sm1177399wmz.38.2022.11.29.00.24.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 00:15:01 -0800 (PST)
-Message-ID: <f6ffd433-1652-fb4f-8657-928e7407ba5f@linaro.org>
-Date:   Tue, 29 Nov 2022 09:15:02 +0100
+        Tue, 29 Nov 2022 00:24:46 -0800 (PST)
+Message-ID: <cbccbcbe-5006-cdc9-f3af-39c53d87b8a5@linaro.org>
+Date:   Tue, 29 Nov 2022 09:24:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,tlmm-common: document
- i2c pull property
+Subject: Re: [PATCH v2 3/6] soc: qcom: geni-se: add desc struct to specify
+ clocks from device match data
 Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
-References: <20221123152001.694546-1-abel.vesa@linaro.org>
- <20221123152001.694546-3-abel.vesa@linaro.org>
- <CACRpkdZtkHCkfUAcezSJvmei=HOezK6oyx+4C5kBrEtU+vAB-g@mail.gmail.com>
- <fecb2dd6-9be2-78dc-4598-cc338fbdc2a2@linaro.org>
- <CACRpkdZJaz9BEorQa7dTNkgTkwZjJNB-MWrpKFxHRgdsf3xJww@mail.gmail.com>
- <8602cacd-f552-e843-5c17-681b099069a3@linaro.org>
- <CACRpkdbqjNJH_QvWyEPceUUxRQ2tOpErNOWA0rg5GNwq7PfUFQ@mail.gmail.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-0-aadaa6997b28@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-3-aadaa6997b28@linaro.org>
+ <24a88a47-7556-20f1-ce9c-fe7bd0466a88@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <CACRpkdbqjNJH_QvWyEPceUUxRQ2tOpErNOWA0rg5GNwq7PfUFQ@mail.gmail.com>
+In-Reply-To: <24a88a47-7556-20f1-ce9c-fe7bd0466a88@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -90,42 +85,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
-
-On 26/11/2022 22:53, Linus Walleij wrote:
-> On Fri, Nov 25, 2022 at 1:40 PM <neil.armstrong@linaro.org> wrote:
+On 18/11/2022 10:06, Konrad Dybcio wrote:
 > 
->> As I understood, it enables an "I2C resistor" on the pin, removing the need
->> of an external pull-up resistor on the line.
+> 
+> On 18/11/2022 09:45, Neil Armstrong wrote:
+>> The I2C Master Hub is a stripped down version of the GENI Serial Engine
+>> QUP Wrapper Controller but only supporting I2C serial engines without
+>> DMA support.
 >>
->> I assume the classical pull-up bias is not strong enough to replace an actual
->> resistor on the PCB.
-> 
-> In that case I think this should be an argument to bias-pull-up like:
-> 
-> bias-pull-up = <360000>;
-> 
-> Nominally the pull up is in ohms:
-> 
->    bias-pull-up:
->      oneOf:
->        - type: boolean
->        - $ref: /schemas/types.yaml#/definitions/uint32
->      description: pull up the pin. Takes as optional argument on hardware
->        supporting it the pull strength in Ohm.
-> 
-> Then the driver can choose to shunt in this extra I2C resistance
-> from the resistance passed as argument. So no special property
-> is needed, provided you can get an idea about the resistance
-> provided here.
+>> Prepare support for the I2C Master Hub variant by moving the required
+>> clocks list to a new desc struct then passing it through the compatible
+>> match data.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/soc/qcom/qcom-geni-se.c | 59 +++++++++++++++++++++++++++++++----------
+>>   1 file changed, 45 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+>> index a0ceeede450f..ced2a2932eda 100644
+>> --- a/drivers/soc/qcom/qcom-geni-se.c
+>> +++ b/drivers/soc/qcom/qcom-geni-se.c
+>> @@ -81,19 +81,31 @@
+>>    */
+>>   #define MAX_CLK_PERF_LEVEL 32
+>> -#define NUM_AHB_CLKS 2
+>> +#define MAX_CLKS 2
+>>   /**
+>>    * struct geni_wrapper - Data structure to represent the QUP Wrapper Core
+>>    * @dev:        Device pointer of the QUP wrapper core
+>>    * @base:        Base address of this instance of QUP wrapper core
+>> - * @ahb_clks:        Handle to the primary & secondary AHB clocks
+>> + * @clks:        Handle to the primary & optional secondary AHB clocks
+>> + * @num_clks:        Count of clocks
+>>    * @to_core:        Core ICC path
+>>    */
+>>   struct geni_wrapper {
+>>       struct device *dev;
+>>       void __iomem *base;
+>> -    struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
+>> +    struct clk_bulk_data clks[MAX_CLKS];
+>> +    unsigned int num_clks;
+>> +};
+>> +
+>> +/**
+>> + * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
+>> + * @clks:        Name of the primary & optional secondary AHB clocks
+>> + * @num_clks:        Count of clock names
+>> + */
+>> +struct geni_se_desc {
+>> +    unsigned int num_clks;
+>> +    const char * const *clks;
+>>   };
+>>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
+>> @@ -496,8 +508,7 @@ static void geni_se_clks_off(struct geni_se *se)
+>>       struct geni_wrapper *wrapper = se->wrapper;
+>>       clk_disable_unprepare(se->clk);
+>> -    clk_bulk_disable_unprepare(ARRAY_SIZE(wrapper->ahb_clks),
+>> -                        wrapper->ahb_clks);
+>> +    clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
+>>   }
+>>   /**
+>> @@ -528,15 +539,13 @@ static int geni_se_clks_on(struct geni_se *se)
+>>       int ret;
+>>       struct geni_wrapper *wrapper = se->wrapper;
+>> -    ret = clk_bulk_prepare_enable(ARRAY_SIZE(wrapper->ahb_clks),
+>> -                        wrapper->ahb_clks);
+>> +    ret = clk_bulk_prepare_enable(wrapper->num_clks, wrapper->clks);
+>>       if (ret)
+>>           return ret;
+>>       ret = clk_prepare_enable(se->clk);
+>>       if (ret)
+>> -        clk_bulk_disable_unprepare(ARRAY_SIZE(wrapper->ahb_clks),
+>> -                            wrapper->ahb_clks);
+>> +        clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
+>>       return ret;
+>>   }
+>> @@ -887,11 +896,23 @@ static int geni_se_probe(struct platform_device *pdev)
+>>           return PTR_ERR(wrapper->base);
+>>       if (!has_acpi_companion(&pdev->dev)) {
+>> -        wrapper->ahb_clks[0].id = "m-ahb";
+>> -        wrapper->ahb_clks[1].id = "s-ahb";
+>> -        ret = devm_clk_bulk_get(dev, NUM_AHB_CLKS, wrapper->ahb_clks);
+>> +        const struct geni_se_desc *desc;
+>> +        int i;
+>> +
+>> +        desc = device_get_match_data(&pdev->dev);
+>> +        if (!desc)
+>> +            return -EINVAL;
+>> +
+>> +        wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+>> +        if (wrapper->num_clks < desc->num_clks)
+> This will never execute (except if somebody adding a third desc would make a mistake or not update MAX_CLKS), as wrapper->num_clks will only be < desc->num_clks if desc->num_clks > MAX_CLKS.
 
-I like this alternative, I'll try to figure out if we can find a value
-to match against.
+You're right, I did read too fast.
 
-Thanks,
+> 
+> I was thinking about getting the number of actual clocks passed to the device in the DT, but I can't find a helper function for that, so it would probably require some kind of manual looping.. I guess we can drop this. Or leave it to save somebody pulling their hair out in an unlikely event. I guess I'm fine with both.
+
+This would be:
+
+of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells")
+
+but ultimately if the number of clocks is lower than requested, it will fail
+in the call to devm_clk_bulk_get().
+
+Would we warn if the DT clocks count is higher ? or simply fail if lower ?
+
 Neil
 
 > 
-> Yours,
-> Linus Walleij
+> 
+>> +            dev_warn(dev, "too much clocks described in DT\n")
+> If you leave it, s/too much/Too many/
+> 
+> 
+> Konrad
+>> +
+>> +        for (i = 0; i < wrapper->num_clks; ++i)
+>> +            wrapper->clks[i].id = desc->clks[i];
+>> +
+>> +        ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+>>           if (ret) {
+>> -            dev_err(dev, "Err getting AHB clks %d\n", ret);
+>> +            dev_err(dev, "Err getting clks %d\n", ret);
+>>               return ret;
+>>           }
+>>       }
+>> @@ -901,8 +922,18 @@ static int geni_se_probe(struct platform_device *pdev)
+>>       return devm_of_platform_populate(dev);
+>>   }
+>> +static const char * const qup_clks[] = {
+>> +    "m-ahb",
+>> +    "s-ahb",
+>> +};
+>> +
+>> +static const struct geni_se_desc qup_desc = {
+>> +    .clks = qup_clks,
+>> +    .num_clks = ARRAY_SIZE(qup_clks),
+>> +};
+>> +
+>>   static const struct of_device_id geni_se_dt_match[] = {
+>> -    { .compatible = "qcom,geni-se-qup", },
+>> +    { .compatible = "qcom,geni-se-qup", .data = &qup_desc },
+>>       {}
+>>   };
+>>   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
+>>
 
