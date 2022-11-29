@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A900563BE87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:01:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45E6A63BE8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:02:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232846AbiK2LBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 06:01:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
+        id S232701AbiK2LCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 06:02:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232635AbiK2LAg (ORCPT
+        with ESMTP id S232691AbiK2LAy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 06:00:36 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0147660EB7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:29 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id bx10so9378860wrb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:28 -0800 (PST)
+        Tue, 29 Nov 2022 06:00:54 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB4361507
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:30 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id bs21so21471506wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1ae8HveYcHh2T2XBLR+r4ZEzx3jbK8wRJY72T1zrZRE=;
-        b=zs9qEIDKNQLt9OsNEzm5stFfcAJFZLYlEZ6yB4ivjkdmPKQCfM208NpOyM5sF1X/65
-         rkry25ss/0gHV7zvrsIYPEoQMfWKM9/GjyqepT0GCr9OinpKLi3RXHdCouq02kJz3nup
-         Cfljw853Y67vwVD2kx6zJBEBv4MyaMiLkHLKzSzZ6z7bMhqG+udc8BPVSnNyfFF9d55f
-         IRwmEyLUnuY/jrylBUVV1GVeiMek7y4DYyDYYcoblDmUc1oi6KOH2olozbXCtP/GN+Kl
-         KCDU/t5slqAEmpCQXY02o+RtwebcbZzke/bhnWdHBgFTOATqxWUfJMvwAX/Xm35TqSaQ
-         MZyQ==
+        bh=LuwEN90AtgG+bvIlYhOJ4Y3TdxahsORXGOntfwKDvGM=;
+        b=pRIFqC4dlxFU+bQiqjtLoDfrz5xyHyCSsTH7JTWf1/eAN0WYhoIrFGKArOa736Dw2/
+         1DDbDoebKoUvem0JG5Y73B/uSePxmqfLMPpbuMpe8ZD0hf/72GKUJQEEkGW7s8bN4eKU
+         0xXfm5XP8rMPtSJFP5f85Wb2hFb3LjNQbxtjt0LH5MuMrMeEmjfVmhmQwjvLEd8jIJbw
+         dbo3X0/B7t2xGxo2UbOJvycXZSZ5zjNbR39Pbzcbf95F98UMJ0en/4vtvSgU8F9yamvM
+         K5XcTDI62wt7MzSjMccNVRW3H4KpfCSuSduHdQR3DJ/8lFsYoAyPi1sOnamCOFxMiQCr
+         nZFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1ae8HveYcHh2T2XBLR+r4ZEzx3jbK8wRJY72T1zrZRE=;
-        b=0I5MT+z25c1cc77Jh9384JBxvfge1R6a7ac8jdpVOLGl0oGj7cfgCl7KJtjAf+za0M
-         H3pvkWuIY5xv8OyXv/KKl7wa7ZjLKjuAZuBEIH3mFlU8pmdRC8J5FeT3zSy9r3WmWi/W
-         hnzH5jUzFhklo//mJl2g9mwwxkhrRKSvMQWYZzs2GAlHUAk24bGJigEuYg3/yAigBYqs
-         v8c1CkzImrG3mke3p2nWXr1LntvRfK++r8Nq7mT1ldifVII/yzMsodlAqyJ2yFroSm+K
-         vmSzhAK8DHWOmQIXGHlxntBiH9F/lwzM0Q4GfbZyg6KKuogC0hDnQ6HNbopKQngKlWL+
-         LUoQ==
-X-Gm-Message-State: ANoB5pl37+9Th20iVzcNfQVWDGtG1yxn9SVp2lk4PtwXzT59b7ZihGDl
-        B8dZnlTCcJfA0iXWOpwToACK4g==
-X-Google-Smtp-Source: AA0mqf5Gfttb2EiqHzKz0Gba0XlVKT934pq/PC605ECHdYITJ9sOp+5hEmiZ8Z0VsfiZblWKTIu4tQ==
-X-Received: by 2002:a5d:42d0:0:b0:241:d8e2:868d with SMTP id t16-20020a5d42d0000000b00241d8e2868dmr26645126wrr.671.1669719628529;
-        Tue, 29 Nov 2022 03:00:28 -0800 (PST)
+        bh=LuwEN90AtgG+bvIlYhOJ4Y3TdxahsORXGOntfwKDvGM=;
+        b=f+SkpyryWrSy8MfMV4ptJAfA4mD067NLdgv5gYt/HSbNFcpL2VzysGeF9/RMskicnA
+         zAnmRvp/yD2a76UzYpD4e0xcscxnZain/euXriiS+r3A7zyKF0ztvBGmlRMSJonlSYdJ
+         JiZKa1pQOzOWZpSiyp3lFCIVo0WZgL7g/xRIXCEVL1w+HAgg90Q188Mzu2oyh7fyJSJX
+         yuDCmcfljmRXsS4mQru6JGzU7ntlQwVqWK4RV6t66rTniotc6dc8NLR7ycQuaD8hnPIl
+         zCKJkqIXHfR8Tvr60gUEKDRAuRQtt5wXU1yuw9GMvwxoxt/5omPs7/KSUUe6KKCP3Dkn
+         mDPA==
+X-Gm-Message-State: ANoB5plME7yqsL+DI+PD7rTn0ExFVD014wtmPnz8LlfQ20RXn17aI3J4
+        L+BsWNvHRu42RC+Y2ethhxxMtw==
+X-Google-Smtp-Source: AA0mqf4RsabVzQK84xDYO1JzgdzlW+eTBl++QKyCuHvr5r+AzIVdwkefDmkyWfFl73DM6qN6EoFLKA==
+X-Received: by 2002:a05:6000:783:b0:241:bc34:3149 with SMTP id bu3-20020a056000078300b00241bc343149mr28789891wrb.351.1669719629472;
+        Tue, 29 Nov 2022 03:00:29 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:6b19:1d8e:fbca:fd02])
-        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.27
+        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 03:00:28 -0800 (PST)
+        Tue, 29 Nov 2022 03:00:29 -0800 (PST)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,17 +63,17 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v4 11/13] tty: serial: qcom-geni-serial: stop operations in progress at shutdown
-Date:   Tue, 29 Nov 2022 12:00:10 +0100
-Message-Id: <20221129110012.224685-12-brgl@bgdev.pl>
+Subject: [PATCH v4 12/13] soc: qcom-geni-se: add more symbol definitions
+Date:   Tue, 29 Nov 2022 12:00:11 +0100
+Message-Id: <20221129110012.224685-13-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20221129110012.224685-1-brgl@bgdev.pl>
 References: <20221129110012.224685-1-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,29 +82,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-We don't stop transmissions in progress at shutdown. This is fine with
-FIFO SE mode but with DMA it causes trouble so fix it now.
+The following symbols will be used when adding support for SE DMA in
+the qcom geni serial driver.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 3 +++
+ include/linux/qcom-geni-se.h | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index fe15fc0e1345..c0270eec2a66 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -864,6 +864,9 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
- 
- static void qcom_geni_serial_shutdown(struct uart_port *uport)
- {
-+	qcom_geni_serial_stop_tx(uport);
-+	qcom_geni_serial_stop_rx(uport);
-+
- 	disable_irq(uport->irq);
- }
- 
+diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+index f5672785c0c4..400213daa461 100644
+--- a/include/linux/qcom-geni-se.h
++++ b/include/linux/qcom-geni-se.h
+@@ -103,6 +103,7 @@ struct geni_se {
+ #define SE_DMA_TX_FSM_RST		0xc58
+ #define SE_DMA_RX_IRQ_STAT		0xd40
+ #define SE_DMA_RX_IRQ_CLR		0xd44
++#define SE_DMA_RX_LEN_IN		0xd54
+ #define SE_DMA_RX_FSM_RST		0xd58
+ #define SE_HW_PARAM_0			0xe24
+ #define SE_HW_PARAM_1			0xe28
+@@ -235,6 +236,8 @@ struct geni_se {
+ #define RX_SBE				BIT(2)
+ #define RX_RESET_DONE			BIT(3)
+ #define RX_FLUSH_DONE			BIT(4)
++#define RX_DMA_PARITY_ERR		BIT(5)
++#define RX_DMA_BREAK			GENMASK(8, 7)
+ #define RX_GENI_GP_IRQ			GENMASK(10, 5)
+ #define RX_GENI_CANCEL_IRQ		BIT(11)
+ #define RX_GENI_GP_IRQ_EXT		GENMASK(13, 12)
 -- 
 2.37.2
 
