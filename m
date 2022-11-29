@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A4B363BE74
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:01:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFA0263BE6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 12:00:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbiK2LAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 06:00:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43174 "EHLO
+        id S232574AbiK2LAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 06:00:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232515AbiK2LAZ (ORCPT
+        with ESMTP id S230161AbiK2LAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 29 Nov 2022 06:00:25 -0500
 Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A3960E9A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:23 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so10487966wmi.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:23 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C1C60E91
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:24 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id t1so10575814wmi.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 03:00:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EonL2PwB0Makj2JepNmLczYfWSZatIPogqShuTJezMI=;
-        b=oC3RvrZh+uD/rIN/OhFpct3sfNNCaF6rodg7ivYc3KKlgkwKPvt1s3rlHtq05ZuK83
-         ByMi14bSTIY6u1CzO3uSSE2/0xiVhGKcK6YfPCo7wrZCk3dxci49pvh3E0WUKOlssDQB
-         hdDj+gtyTMlQtchdsdLyRFI08Fh2q+VSksE35RSjGojbbww20MP/87IQUOXYsKZVuULU
-         BiAAyvI5y43cfac0R8NKk9BWUeGfjNVpIkmxeNTYU1qkIxUUtD/I0oyAcSF9QYDd630h
-         YKSrvI30htxcWGuxwvd3/RVnSHvGOp8THzBZcMX3Y5hszJ+8XhAZhWhhlNZDkpejFM3J
-         wCYQ==
+        bh=hrodxjE3++JzSf9Q5uxlAVuutjj+cagca/Bct4wXLdY=;
+        b=f7KBupZKEv89MmEWL+Hpyk0X7yqUvKsNA2eKPe9MGoi6DP+Somr/3YKb7OsvtwSTL9
+         dPbAkNnxRy0WuXm+8OTJi49+lVB/BFdQFnW0kid+DoKNTybSKi9VXWQvUqGZj8cTeVqJ
+         U3A9iRZYdjXEUHs1vpcHYhC/3SFrN1TxtEFI3B05Oj2ouJLmIfaKx0xPiuanMkmC1Y4d
+         Ku5p0cblw0KdaQqG10TkMNTfF8OGlrKSV/aOaJgapXRU5bpNOQlIerlLZLjUafiIVfuL
+         2aLOSD7Ryz7lLNdwhBm7oEkTYu5/Mq0Unj1OomvGr35zP0BUpCwf4SULcOaNEwKpv8xI
+         N2Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EonL2PwB0Makj2JepNmLczYfWSZatIPogqShuTJezMI=;
-        b=L1fj8XfMk+T8uxbtY+x06+KIdHzJJ+e13sRFdBFrQEbexialI6IlNOb6X3VjDDif1I
-         hU2W3YH17Sov+ZxOlNGo4ufk5DZxk2hCu5oEwFNunmpG/dyqjnpJSe2b7M2mleof1BXJ
-         wHEclQAz3/srkIZ4nxmuZAITqFDqFSNdAbVS7byi3PSK38aSw2GKdSpbEOS7c5Rz6bku
-         t5LnI5o6I60/tA75Svh28S+3UdCDMHT/TVVY9ZlFKxeXwxBbPmEoaYlDcL6MNxaBcDMW
-         sakljxy5SgT6bVpWVhBSeJlA8Bnb1TeIzAcTiFguA2RNjctGMvdtLZrrX0+73pBXo3zb
-         vavg==
-X-Gm-Message-State: ANoB5pmELCaEsUOrL9s14gM8QVv6myN7b3jH2owwvTeRlPnqHef5AYHQ
-        UjRfkViGs4kU62Z3CSx3KF5rxA==
-X-Google-Smtp-Source: AA0mqf5j5YyHdMnLTqWYWWktLVBD+0Xy9WBNz2pgYLzaZzBHz4S0NpFwwlF5MmZrsdP9vWOUwOJhCw==
-X-Received: by 2002:a05:600c:1d9c:b0:3c6:e369:e856 with SMTP id p28-20020a05600c1d9c00b003c6e369e856mr40758892wms.35.1669719622444;
-        Tue, 29 Nov 2022 03:00:22 -0800 (PST)
+        bh=hrodxjE3++JzSf9Q5uxlAVuutjj+cagca/Bct4wXLdY=;
+        b=d4U4dUho5OyVqlqOhkBHCEbFSlnzjB/7kEfv10L10jQhZmcwQiBTcsvKnhitZCE8KL
+         Le++vuQ6QzDhbjmnm4P3uYWu8wh+S3l+DhHb18bhW5UHUCBvBvQLFyunqHpxX5EIxNtk
+         aNZz2+Qn86iP0SDcWedlMW9RX9M2aXmc2eDgHgUQHsALiegA74fUu/hS9JkyMQn+uSUe
+         Z/hiSeuNaJQEQwbU0z36kvjImbgom69nbYWT8pFoj2K+pvlN9lpsyMw2Yv5j2qbnineI
+         sbpOYr+wxVFaebU9n7tni60ZtW7oT6w+Gmpeb1zG/t1/neP7x3RSlYQ7vhpHd3XDN6EC
+         tSzQ==
+X-Gm-Message-State: ANoB5pkyvFKD+tEh3WR9hziyFxW45CQ6XG4q+StOahoVdnI9NqLuOTv8
+        LjXYAIXaGYbMynHck+HKtie+XQH0w5TB8w==
+X-Google-Smtp-Source: AA0mqf6gli/Ra65Hvjq28nqIOpLdHCy1N4wirFtX/8WUw2yTjbme1+wrXY7fIaldOceukMuhPYseaQ==
+X-Received: by 2002:a05:600c:6549:b0:3d0:5aa:b315 with SMTP id dn9-20020a05600c654900b003d005aab315mr38550158wmb.101.1669719623419;
+        Tue, 29 Nov 2022 03:00:23 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:6b19:1d8e:fbca:fd02])
-        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.21
+        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003a3170a7af9sm1617658wmq.4.2022.11.29.03.00.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 03:00:22 -0800 (PST)
+        Tue, 29 Nov 2022 03:00:23 -0800 (PST)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,13 +63,14 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v4 05/13] tty: serial: qcom-geni-serial: remove stray newlines
-Date:   Tue, 29 Nov 2022 12:00:04 +0100
-Message-Id: <20221129110012.224685-6-brgl@bgdev.pl>
+Subject: [PATCH v4 06/13] tty: serial: qcom-geni-serial: refactor qcom_geni_serial_isr()
+Date:   Tue, 29 Nov 2022 12:00:05 +0100
+Message-Id: <20221129110012.224685-7-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20221129110012.224685-1-brgl@bgdev.pl>
 References: <20221129110012.224685-1-brgl@bgdev.pl>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
@@ -82,35 +83,44 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Remove stray newlines around #ifdefs for consistency with the rest
-of the driver code.
+Simplify the conditions in qcom_geni_serial_isr() and fix indentation.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index e4139718e084..ec2523736e99 100644
+index ec2523736e99..fba02f71a874 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -320,7 +320,6 @@ static void qcom_geni_serial_abort_rx(struct uart_port *uport)
- }
+@@ -827,20 +827,18 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
  
- #ifdef CONFIG_CONSOLE_POLL
--
- static int qcom_geni_serial_get_char(struct uart_port *uport)
- {
- 	struct qcom_geni_private_data *private_data = uport->private_data;
-@@ -545,7 +544,6 @@ static int handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
- {
- 	return -EPERM;
- }
--
- #endif /* CONFIG_SERIAL_QCOM_GENI_CONSOLE */
+ 	if (m_irq_status & m_irq_en & (M_TX_FIFO_WATERMARK_EN | M_CMD_DONE_EN))
+ 		qcom_geni_serial_handle_tx(uport, m_irq_status & M_CMD_DONE_EN,
+-					geni_status & M_GENI_CMD_ACTIVE);
++					   geni_status & M_GENI_CMD_ACTIVE);
  
- static int handle_rx_uart(struct uart_port *uport, u32 bytes, bool drop)
+-	if (s_irq_status & S_GP_IRQ_0_EN || s_irq_status & S_GP_IRQ_1_EN) {
++	if (s_irq_status & (S_GP_IRQ_0_EN | S_GP_IRQ_1_EN)) {
+ 		if (s_irq_status & S_GP_IRQ_0_EN)
+ 			uport->icount.parity++;
+ 		drop_rx = true;
+-	} else if (s_irq_status & S_GP_IRQ_2_EN ||
+-					s_irq_status & S_GP_IRQ_3_EN) {
++	} else if (s_irq_status & (S_GP_IRQ_2_EN | S_GP_IRQ_3_EN)) {
+ 		uport->icount.brk++;
+ 		port->brk = true;
+ 	}
+ 
+-	if (s_irq_status & S_RX_FIFO_WATERMARK_EN ||
+-					s_irq_status & S_RX_FIFO_LAST_EN)
++	if (s_irq_status & (S_RX_FIFO_WATERMARK_EN | S_RX_FIFO_LAST_EN))
+ 		qcom_geni_serial_handle_rx(uport, drop_rx);
+ 
+ out_unlock:
 -- 
 2.37.2
 
