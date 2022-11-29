@@ -2,56 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3866163C068
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 13:55:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C8B363C0B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 14:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234810AbiK2MzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 07:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41518 "EHLO
+        id S233479AbiK2NNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 08:13:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234738AbiK2Myx (ORCPT
+        with ESMTP id S233374AbiK2NNN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 07:54:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227EC3056C;
-        Tue, 29 Nov 2022 04:54:51 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B52E061716;
-        Tue, 29 Nov 2022 12:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3A0C433D6;
-        Tue, 29 Nov 2022 12:54:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669726490;
-        bh=z8Q1QJRm2KKkxLQHH/2XVuF74pYD7S/glQUMAD+4R7s=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=CPd0UDwhiuI9KEPa3X2HUiZIyj1IQuycQb8SLzJjL78b2+bQ2uQw7wC9tRw9qTQlj
-         icdA4Nt+a2xJ3qJz5/c2kCk4/DymXF7sPJpQWI0uTpjtbaTHPtZ+2aW6mdKFPmeoJ0
-         7Un7ul2vsm41QCvo6M2dbAB5z7Fj+qDfzcLzgavapX7KMHYc4xjq7PRToo6P79Lbut
-         /K9f0ZvZBfkUvfJGllo/uYqlSnDYSN+LxfULdlv/LuZsTfL1NtbtS/10U5E7pNpPXL
-         EpFG9uuM+ndporCtHHBRgdR8oq/HeSA4/O+ee9i6cViJgNmx6aU+xO78Dyll30lmQi
-         GGHhXSGS8OsUQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     tiwai@suse.com, lgirdwood@gmail.com, bgoswami@quicinc.com,
-        quic_plai@quicinc.com, srinivas.kandagatla@linaro.org,
-        perex@perex.cz, andersson@kernel.org, judyhsiao@chromium.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        robh+dt@kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org
-In-Reply-To: <1669724411-14840-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1669724411-14840-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v2] ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops
-Message-Id: <166972648662.69085.11100963944342452925.b4-ty@kernel.org>
-Date:   Tue, 29 Nov 2022 12:54:46 +0000
+        Tue, 29 Nov 2022 08:13:13 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D78D62E83
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 05:12:09 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id m19so18456272edj.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 05:12:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yvGYMXBpX4kCTXFb7In42mmUQ0TnJwaY3tVruVQALiM=;
+        b=qYzyHHRuHsbiBL4KnYqHuAcMAfaAL6Cryp5vPg0Zjb0XGggP+M1b6b2KiQyenpLQr6
+         TZl0yUUe8OSlDVO97gTkjaI3cKSmCrkRPnkgXY5bi/29pGrePfz4Ly/6k25TZZmhGPUp
+         KqfVBm7cAiQ4LuPz0NMfBPeO+ScQ4L+Gw065HaMzBznWX6D0fKsZ49WBcwdQ7veW18S8
+         I3+kYptVPermoS64iqUo48NfRXMp8HKOHiXbAHIElXRkDRIGCLSQnZpJMhBXMlfnCAqM
+         Bme7wERG7/zwLQ63Tl45wAIh98JfoCd2geWVlwOVNNryD8OfEr0H7TLone6ZNHKJ8CVN
+         h/Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yvGYMXBpX4kCTXFb7In42mmUQ0TnJwaY3tVruVQALiM=;
+        b=klzGNsFqWn497bDrTaiW4+rAGTktREH05HFrjHopp7kTf4xKW+8fxDi5e4c/4tX5Iy
+         LoAc/VgNiKxD2/S+2NDddA0yBnFN9p7motclenZrRCdCq1TZ+QTs0rwjJBwmi18Uofi2
+         an29CyaVC2J0+dI0B4EEvYkRSDPUzCeLzGSFk54q7er8eVy10c9sUZbIKYd41QHWiYhC
+         mALavqqhQ3pqRWKq2UtoPitHnICxKvZfge6v/lYl5dZgK66EujEzYHMEzfAB/ikt4mCd
+         cy+iXgWzG6OLeXc9tbVBIz1r+Hs6/Pd+JRojOfwdQ/50H9A3EWRVg9rPmGsa6P4a1aWz
+         8pjQ==
+X-Gm-Message-State: ANoB5pkIHaajELMQqiePEe3SLusqq86PNWSvhr3rY4Uc64PV92xsxaPs
+        j9bY2QpAzo2lAoTBGvYvhAr9qS/nbKvxXQ==
+X-Google-Smtp-Source: AA0mqf4mE6fmy2qJlzqH6rEehX2y9w2oMpqP6Zc2O9ZYfPeOLu+kRcI0MUTEUxfh31doNKzOYGj5BA==
+X-Received: by 2002:a05:6402:2949:b0:468:fb6b:3a79 with SMTP id ed9-20020a056402294900b00468fb6b3a79mr50642882edb.63.1669727528092;
+        Tue, 29 Nov 2022 05:12:08 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p21-20020a05640210d500b0046b25b93451sm2620541edu.85.2022.11.29.05.12.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Nov 2022 05:12:07 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: [PATCH v3 0/2] interconnect: qcom: Add support for SM8550
+Date:   Tue, 29 Nov 2022 15:12:01 +0200
+Message-Id: <20221129131203.2197959-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-fc921
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,38 +75,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Nov 2022 17:50:11 +0530, Srinivasa Rao Mandadapu wrote:
-> Update lpass sc7280 platform driver with PM ops, such as
-> system supend and resume callbacks.
-> This update is required to disable clocks during supend and
-> avoid XO shutdown issue.
-> 
-> 
+This patchset adds interconnect support for SM8550.
 
-Applied to
+The v2 of this patchset is here:
+https://lore.kernel.org/all/20221124112232.1704144-1-abel.vesa@linaro.org/
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Georgi Djakov <djakov@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-Thanks!
+Abel Vesa (2):
+  dt-bindings: interconnect: Add Qualcomm SM8550
+  interconnect: qcom: Add SM8550 interconnect provider driver
 
-[1/1] ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops
-      commit: a3a96e93cc888c652e47e4d7346abe99b1b44c53
+ .../interconnect/qcom,sm8550-rpmh.yaml        |  139 +
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/sm8550.c            | 2319 +++++++++++++++++
+ drivers/interconnect/qcom/sm8550.h            |  178 ++
+ .../interconnect/qcom,sm8550-rpmh.h           |  190 ++
+ 6 files changed, 2837 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm8550-rpmh.yaml
+ create mode 100644 drivers/interconnect/qcom/sm8550.c
+ create mode 100644 drivers/interconnect/qcom/sm8550.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sm8550-rpmh.h
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+-- 
+2.34.1
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
