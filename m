@@ -2,235 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16B1663BB6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:24:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10A8263BB80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 09:27:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbiK2IYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 03:24:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36618 "EHLO
+        id S230243AbiK2I12 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 03:27:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbiK2IYu (ORCPT
+        with ESMTP id S229924AbiK2I10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 03:24:50 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 641F356554
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:24:48 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id v1so20794392wrt.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:24:48 -0800 (PST)
+        Tue, 29 Nov 2022 03:27:26 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DB857B5B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:27:25 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id z4so20865700wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Nov 2022 00:27:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tYLYGC4+NF53GSUK1U1BbaDChlHeYLa+kefmGNsOQLo=;
-        b=tlInaQk5JAdGJVixJIEPxHZ5uO4OP/98WWK0YcFd2CuALpz3daEqqlCCAYHVJsF5b3
-         Nz7og1BmUP/MlZ8IdBZTYfSCknxLkCIFk8N4FRErZW58FqUwEoi8I1QKtXJJoSnV4izM
-         N0ZnVfdo0hh5UC4p9RYTh4sZi0jyPOkF2sc6eM6Xgjaf8SHEVLE9TFEmLW0ISzEhsZ/4
-         SCNrtq7k79C/GS5SAWC2O7kvvuAk2t09OKdfTCqhJr7nKBbkQoEKXRSeP6AfClUR7w/X
-         +WHmT7Aceuxtl59hzgZABCSGuNG43zvJC9kqXnAh1cQE41z62OKLZkWEC+COlTQcJPwR
-         Zajw==
+        bh=fC0Ojnx6/B78FbeaxNlNaS5gHEZKTLKTPBVMbnEU/Uo=;
+        b=vqbla1SYWRt1WiOApwfF8a1m+eCPIDP40A9UnBLUW4pDWhEteS841d1Qsa+JFpEn5R
+         Q6ScJdCUdlvzTUvV9sv1uL5V3IRYQ/YK77o2NtHM/ys2rRWuPW88u6PX1R4TFy57hx19
+         WwK/wp/ARbrwPSBlq6jj16I6d+hz+nBGT1/hk9opG9zpfA2YXhCgeClf4lImIgW/JHkG
+         /JbHYrmtGfmagdk1MKpd5f04ODZAewuoAinapLBvIVhlZ2WT5ZvaLWEj/Neo1Dt3h3vq
+         f7HsntfUClDlrWqvgC8GH4TXLov4gWwZwZWOP3cSPET9LGi9j80tBXWcqWwLQ+1+ISbQ
+         Zpug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tYLYGC4+NF53GSUK1U1BbaDChlHeYLa+kefmGNsOQLo=;
-        b=q8pznanPaTGpTU8nxTPay6qXGxrVroZeC1BaCMxGY5l+JW6tEZrHCyTnZt6XqoLai7
-         O41DKbEeNBSLANGcWZmwSYffo69M/fRk/QUQujb28bYgnnRrlUebPLl8mHwldBAR3naW
-         sDpeMzojZAotY8LIVBmTtBPv4daE0Ny41vH6jGXlyp2VhxL+cQ91swgXUHDV5Je27h7H
-         nO2TYZB5BOLqHvMyAD1r2dRb53fOnm64Qgj9+5EkVqzKaTCyshucRYUuI/d1VMy1hRmn
-         QgiYw6JYkUa++2YxedLzijKQaDKr9e/+3Ey4D2YwERM4Y2cUl5rkGzh6oJBdzOTz8HHi
-         Tj0g==
-X-Gm-Message-State: ANoB5pn/+5oTOfWU+IdhCkKh/QUqbxvjb4/2jWEZ3JdS6MJj/7vCptkq
-        K9EIeP1UXF+CE2v62r+HrHSJhg==
-X-Google-Smtp-Source: AA0mqf47saa479iipml8biPhf2KL71g5Xo9YVRuTvBi/IBp5oYvCer6s+8sxPyzl8Yb1uTtMK5YUJQ==
-X-Received: by 2002:a5d:5709:0:b0:241:d71c:5dde with SMTP id a9-20020a5d5709000000b00241d71c5ddemr25813602wrv.678.1669710286827;
-        Tue, 29 Nov 2022 00:24:46 -0800 (PST)
+        bh=fC0Ojnx6/B78FbeaxNlNaS5gHEZKTLKTPBVMbnEU/Uo=;
+        b=O10/vzZqR0DgkcAZb9wgh20mIeZqSSW+vAPoBy/igGwEyaFsI3nkgidP+h36oYVt2F
+         t5PaqlaRgpNTgv97zLSqBud27KODItaYS7OM1T03r0sC1ZYdMt74TEh5Gp2ioJKFlnuO
+         USLWxuF8cdOFnlMuU9zdm4pERklTNyeQN+M+Qzo50bXV/tba6tFbC41K1RPyB4eyxbTB
+         Q80O3n05F0y21JHBSrfNudHuHJvkjIw3QNeF9uwaUnEMevPDwNxSOViUypQ6nyiUqYPo
+         WYa37Ymk44kiG73Z9J3aWDfA9u60/zxOnfWs6v8/IfRDCxuzIx/wjSB77LXj11HMyAuX
+         k7cQ==
+X-Gm-Message-State: ANoB5pmdrt/NorswNZlHKGrN5F0dzbFm75lwXdrTuf6h+d77uS8ROI09
+        Jy8paxNevjO1RptuLK0tSkjQ8A==
+X-Google-Smtp-Source: AA0mqf5sna9CUiSoFrFut2DuhcjOVxisdEhSsZ7ova8PCj0QwmiRq7tHLberlUIwj5EZnNdk85HROA==
+X-Received: by 2002:a5d:6891:0:b0:22e:54da:a4f1 with SMTP id h17-20020a5d6891000000b0022e54daa4f1mr33612237wru.637.1669710444088;
+        Tue, 29 Nov 2022 00:27:24 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2? ([2a01:e0a:982:cbb0:2f85:a28c:5df7:9cd2])
-        by smtp.gmail.com with ESMTPSA id 124-20020a1c1982000000b003cfa81e2eb4sm1177399wmz.38.2022.11.29.00.24.46
+        by smtp.gmail.com with ESMTPSA id 124-20020a1c1982000000b003cfa81e2eb4sm1187980wmz.38.2022.11.29.00.27.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 00:24:46 -0800 (PST)
-Message-ID: <cbccbcbe-5006-cdc9-f3af-39c53d87b8a5@linaro.org>
-Date:   Tue, 29 Nov 2022 09:24:47 +0100
+        Tue, 29 Nov 2022 00:27:23 -0800 (PST)
+Message-ID: <891304de-c216-fecf-00ee-d70d61c847b6@linaro.org>
+Date:   Tue, 29 Nov 2022 09:27:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-From:   Neil Armstrong <neil.armstrong@linaro.org>
+From:   neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 3/6] soc: qcom: geni-se: add desc struct to specify
- clocks from device match data
+Subject: Re: [PATCH 1/2] dt-bindings: reserved-memory: document Qualcomm MPSS
+ DSM memory
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-0-aadaa6997b28@linaro.org>
- <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v2-3-aadaa6997b28@linaro.org>
- <24a88a47-7556-20f1-ce9c-fe7bd0466a88@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-0-158dc2bb6e96@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-mpss_dsm-v1-1-158dc2bb6e96@linaro.org>
+ <38fff21b-3e75-13f9-664e-a115bc527b67@linaro.org>
+ <9aa23650-6ae1-3844-7cf3-6812dc023c11@linaro.org>
+ <dfec6a0b-86c6-fb61-51f6-d1e400a6f5ef@linaro.org>
+ <ad9d2e4f-1d60-15e7-dc2d-e7e32b0ec855@linaro.org>
+ <7b3356a9-8f2b-49de-7ad3-b01c3279eac0@linaro.org>
+ <eb577577-d4c9-1d68-f8f5-f42729155536@linaro.org>
+ <5b1eb21c-92bf-59bc-25c5-f8c38c42b375@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <24a88a47-7556-20f1-ce9c-fe7bd0466a88@linaro.org>
+In-Reply-To: <5b1eb21c-92bf-59bc-25c5-f8c38c42b375@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/11/2022 10:06, Konrad Dybcio wrote:
-> 
-> 
-> On 18/11/2022 09:45, Neil Armstrong wrote:
->> The I2C Master Hub is a stripped down version of the GENI Serial Engine
->> QUP Wrapper Controller but only supporting I2C serial engines without
->> DMA support.
+On 24/11/2022 14:57, Krzysztof Kozlowski wrote:
+> On 23/11/2022 11:19, neil.armstrong@linaro.org wrote:
+>>>>> We have already three of such "memory region devices" and we keep
+>>>>> growing it. It's not scalable.
+>>>>
+>>>> If we want to properly describe this, we must then represent the MPSS subsystem
+>>>> and associate this memory region.
+>>>
+>>> I don't see why. None of devices in your DTS reference this memory
+>>> region, so it is purely to keep it mapped for Modem, right? In such case
+>>> I still do not get why PAS/PIL, who starts and stops the remote
+>>> processor, could not prepare the memory and share it with modem.
 >>
->> Prepare support for the I2C Master Hub variant by moving the required
->> clocks list to a new desc struct then passing it through the compatible
->> match data.
+>> OK you've got a point, but this is still an implementation detail.
 >>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/soc/qcom/qcom-geni-se.c | 59 +++++++++++++++++++++++++++++++----------
->>   1 file changed, 45 insertions(+), 14 deletions(-)
+>> I got some more background about why this memory zone appeared, before it
+>> was including in the modem reserved-memories, but for flexibility reasons
+>> this is now in the hands of the APPS runtime (linux) to setup this memory
+>> zone and share it to the MPSS subsystem.
 >>
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
->> index a0ceeede450f..ced2a2932eda 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -81,19 +81,31 @@
->>    */
->>   #define MAX_CLK_PERF_LEVEL 32
->> -#define NUM_AHB_CLKS 2
->> +#define MAX_CLKS 2
->>   /**
->>    * struct geni_wrapper - Data structure to represent the QUP Wrapper Core
->>    * @dev:        Device pointer of the QUP wrapper core
->>    * @base:        Base address of this instance of QUP wrapper core
->> - * @ahb_clks:        Handle to the primary & secondary AHB clocks
->> + * @clks:        Handle to the primary & optional secondary AHB clocks
->> + * @num_clks:        Count of clocks
->>    * @to_core:        Core ICC path
->>    */
->>   struct geni_wrapper {
->>       struct device *dev;
->>       void __iomem *base;
->> -    struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
->> +    struct clk_bulk_data clks[MAX_CLKS];
->> +    unsigned int num_clks;
->> +};
->> +
->> +/**
->> + * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
->> + * @clks:        Name of the primary & optional secondary AHB clocks
->> + * @num_clks:        Count of clock names
->> + */
->> +struct geni_se_desc {
->> +    unsigned int num_clks;
->> +    const char * const *clks;
->>   };
->>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
->> @@ -496,8 +508,7 @@ static void geni_se_clks_off(struct geni_se *se)
->>       struct geni_wrapper *wrapper = se->wrapper;
->>       clk_disable_unprepare(se->clk);
->> -    clk_bulk_disable_unprepare(ARRAY_SIZE(wrapper->ahb_clks),
->> -                        wrapper->ahb_clks);
->> +    clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
->>   }
->>   /**
->> @@ -528,15 +539,13 @@ static int geni_se_clks_on(struct geni_se *se)
->>       int ret;
->>       struct geni_wrapper *wrapper = se->wrapper;
->> -    ret = clk_bulk_prepare_enable(ARRAY_SIZE(wrapper->ahb_clks),
->> -                        wrapper->ahb_clks);
->> +    ret = clk_bulk_prepare_enable(wrapper->num_clks, wrapper->clks);
->>       if (ret)
->>           return ret;
->>       ret = clk_prepare_enable(se->clk);
->>       if (ret)
->> -        clk_bulk_disable_unprepare(ARRAY_SIZE(wrapper->ahb_clks),
->> -                            wrapper->ahb_clks);
->> +        clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
->>       return ret;
->>   }
->> @@ -887,11 +896,23 @@ static int geni_se_probe(struct platform_device *pdev)
->>           return PTR_ERR(wrapper->base);
->>       if (!has_acpi_companion(&pdev->dev)) {
->> -        wrapper->ahb_clks[0].id = "m-ahb";
->> -        wrapper->ahb_clks[1].id = "s-ahb";
->> -        ret = devm_clk_bulk_get(dev, NUM_AHB_CLKS, wrapper->ahb_clks);
->> +        const struct geni_se_desc *desc;
->> +        int i;
->> +
->> +        desc = device_get_match_data(&pdev->dev);
->> +        if (!desc)
->> +            return -EINVAL;
->> +
->> +        wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
->> +        if (wrapper->num_clks < desc->num_clks)
-> This will never execute (except if somebody adding a third desc would make a mistake or not update MAX_CLKS), as wrapper->num_clks will only be < desc->num_clks if desc->num_clks > MAX_CLKS.
-
-You're right, I did read too fast.
-
+>> So the only requirement for the PAS is to make sure this zone is shared
+>> before starting the startup process, not to actually do the share setup.
+>>
+>> The zone will need to be shared whatever the PAS state is (probe, startup, remove, ...).
 > 
-> I was thinking about getting the number of actual clocks passed to the device in the DT, but I can't find a helper function for that, so it would probably require some kind of manual looping.. I guess we can drop this. Or leave it to save somebody pulling their hair out in an unlikely event. I guess I'm fine with both.
+> I don't understand here. The memory region should be shared before
+> remote processor start or before the PAS probe? If the second, why? What
+> if your driver probes a bit later - after PAS probe? Then all is lost...
 
-This would be:
+After offline discussions, I'll associate the DSM memory zone to the PAS MPSS
+loader instead to make sure the zone is shared before startup.
 
-of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells")
-
-but ultimately if the number of clocks is lower than requested, it will fail
-in the call to devm_clk_bulk_get().
-
-Would we warn if the DT clocks count is higher ? or simply fail if lower ?
-
+Thanks,
 Neil
 
 > 
+> Best regards,
+> Krzysztof
 > 
->> +            dev_warn(dev, "too much clocks described in DT\n")
-> If you leave it, s/too much/Too many/
-> 
-> 
-> Konrad
->> +
->> +        for (i = 0; i < wrapper->num_clks; ++i)
->> +            wrapper->clks[i].id = desc->clks[i];
->> +
->> +        ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
->>           if (ret) {
->> -            dev_err(dev, "Err getting AHB clks %d\n", ret);
->> +            dev_err(dev, "Err getting clks %d\n", ret);
->>               return ret;
->>           }
->>       }
->> @@ -901,8 +922,18 @@ static int geni_se_probe(struct platform_device *pdev)
->>       return devm_of_platform_populate(dev);
->>   }
->> +static const char * const qup_clks[] = {
->> +    "m-ahb",
->> +    "s-ahb",
->> +};
->> +
->> +static const struct geni_se_desc qup_desc = {
->> +    .clks = qup_clks,
->> +    .num_clks = ARRAY_SIZE(qup_clks),
->> +};
->> +
->>   static const struct of_device_id geni_se_dt_match[] = {
->> -    { .compatible = "qcom,geni-se-qup", },
->> +    { .compatible = "qcom,geni-se-qup", .data = &qup_desc },
->>       {}
->>   };
->>   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
->>
 
