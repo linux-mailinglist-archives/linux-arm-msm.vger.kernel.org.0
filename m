@@ -2,490 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD0AE63BDFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 11:33:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEE1163BE18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Nov 2022 11:37:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230205AbiK2Kcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 05:32:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51720 "EHLO
+        id S231971AbiK2Khy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Nov 2022 05:37:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbiK2Kct (ORCPT
+        with ESMTP id S231733AbiK2Khl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 05:32:49 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531B013D08;
-        Tue, 29 Nov 2022 02:32:41 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id f3so12624111pgc.2;
-        Tue, 29 Nov 2022 02:32:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SqpTj+Jg8mVVczU2kaTu36XCm98IToyxwFVV27gMpJI=;
-        b=MZGmLli3t9WH8zW648DKOeq8osuvEKVtE0cBb8FN9m4lRHy72aGC01vOd1pYZskIBJ
-         OSvNJrAFhW82tLFpZxPQ2PCYY5/KT/oltSg3Nz6crQ4TMFPyGS6DJ1Q3YZaUvdxsZKBq
-         CwkfsWMB8qBqrwttfG6uCBhzPGD15l4pV0dpK2xQfN+9Ar7X599G3b+cz7YzW2snhxds
-         S+Q9MZ2w15rDLvUO8p7hNBmvGJeNBb4Q4Qr5D/fg6rB0VnCP6BnLTmhzHLkxfiCGVIeF
-         JoWWBJBKQfaTIlwV92EMJCHR8ZOJOP/FeqkOwrZCU5lQiTkY/Mmbk5D8wLddeWRDn3w3
-         Q5cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SqpTj+Jg8mVVczU2kaTu36XCm98IToyxwFVV27gMpJI=;
-        b=pslo3kU2qhGlR16avTqFUme3Upo8BlLJ8DcQzlAxogj1rdKUUwOtsgIb9cI+SqjrKb
-         8G1KFtRRVglOe6vBvBHow8I+JyEZx7NxuDi2a4t+RlAdmAp5jtxpN2bKTh9hC9bVFie6
-         BZEzZH24zx0moMtTJM9AnVUWZqs0CqujaRu5CqPDQF7itU3FrPgnaJDCGjb7YMoKot2v
-         QNOTiPFE4xK9rkFur2xSE+FXNhM/T5l3rvMAY8aaT2i2ABotSR1U4lm9aYLOCVcB+qAx
-         oSVws1IvqRs33KlHSlSoctRXn/zSmLRXn77CwqUTuLwA8pDCjpDvBophNzhpwMExPN5K
-         EbJA==
-X-Gm-Message-State: ANoB5pnDOV3z1xsAFjG7CHq2tq0i0bYL9rpaqq/kGUssQUFuSOidmNWX
-        PhNlPuiutw6B4TK6vr8Ej5OYZWRHZao=
-X-Google-Smtp-Source: AA0mqf6zSEDczUzSYOB31Izp2VMCuSOoXvqQNRhs1DzRiZ4xNgDEmZ0RSuQ/DI6LbKm0QNSR51Zq2w==
-X-Received: by 2002:aa7:804d:0:b0:573:c701:4c80 with SMTP id y13-20020aa7804d000000b00573c7014c80mr36596324pfm.37.1669717960863;
-        Tue, 29 Nov 2022 02:32:40 -0800 (PST)
-Received: from localhost.localdomain (2001-b400-e2d4-7fe5-5c2c-fa0a-e67b-3955.emome-ip6.hinet.net. [2001:b400:e2d4:7fe5:5c2c:fa0a:e67b:3955])
-        by smtp.gmail.com with ESMTPSA id v24-20020a17090ad59800b0020b7de675a4sm1025234pju.41.2022.11.29.02.32.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 02:32:39 -0800 (PST)
-From:   Owen Yang <ecs.taipeikernel@gmail.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Bob Moragues <moragues@google.com>,
-        Matthias Kaehlcke <mka@google.com>, Harvey <hunge@google.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Gavin Lee <gavin.lee@ecs.com.tw>,
-        Doug Anderson <dianders@chromium.org>,
-        Abner Yen <abner.yen@ecs.com.tw>,
-        Owen Yang <ecs.taipeikernel@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v6 2/2] arm64: dts: qcom: sc7280: Add DT for sc7280-herobrine-zombie
-Date:   Tue, 29 Nov 2022 18:32:28 +0800
-Message-Id: <20221129183213.v6.2.I80aa32497bfd67bc8a372c1418ccc443ccf193e4@changeid>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20221129183213.v6.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
-References: <20221129183213.v6.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Tue, 29 Nov 2022 05:37:41 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB96BC8;
+        Tue, 29 Nov 2022 02:37:38 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AT9pNxj007856;
+        Tue, 29 Nov 2022 10:36:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=49Ttj4zeLRKtXUQ2iiLm1EzCQ/EuPogtM4kufqhs5Uc=;
+ b=UBXDWgGoUszM01aQDbG1N66lp30hi4FdoDDlTawTwaAKq6yOZP1QzzSap5pUBRCncdUR
+ Nlp7uHJPvPbSaWEvVNtJzHkIO7mP6Qks5s2l4/AP/I6K5W44tr4IY6MxvIMWZ4+vtoWx
+ YkHVYE1XuK7X04H6k06cCPRix6JX+kTlCm8C0ZlkRM/xIsxhK9hZsB3iLBlbTAA+C8gH
+ KVvv92hrKAAjoC9dwvslCLel29Wh+BauNdGCmUzjbNlhHq3IcueYzC/ZTZmb5akMzPPR
+ xSKw+Hy8Q4vKbKeamnF9EX7orNjDaYsCpouEt1vJFHZ9DJQhRs9MKhjwY719UdDHTw30 Fw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m56c69h3v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Nov 2022 10:36:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ATAahE9020469
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 29 Nov 2022 10:36:43 GMT
+Received: from [10.216.62.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 29 Nov
+ 2022 02:36:38 -0800
+Message-ID: <3b00c04c-cb6d-9e9a-ba0c-0ce093b4a3fb@quicinc.com>
+Date:   Tue, 29 Nov 2022 16:05:41 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add system suspend/resume PM
+ ops
+Content-Language: en-US
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+References: <1669621742-28524-1-git-send-email-quic_srivasam@quicinc.com>
+ <CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: y7qbBzVgVThROMFrnCjQzpa-c2HaquO_
+X-Proofpoint-GUID: y7qbBzVgVThROMFrnCjQzpa-c2HaquO_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-29_07,2022-11-29_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ mlxscore=0 phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211290065
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT for sc7280-herobrine-zombie
+Hi Geert,
 
-Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
----
+Thanks for your time!!!
 
-Changes in v6:
-- Set the PWM period to 200 microseconds (5kHz duty cycle).
-- Drop post-power-on-delay-ms = <100>.
-- Remove one of the lines after the line with "MOS_BLE_UART_RX" for matching amount of GPIO (174).
-
-Changes in v5:
-- Overwrite pm8350c_pwm_backlight setting in sc7280-herobrine-zombie.dtsi for chrome zombie. v5.
-- Dropping the redundant 'DT binding for' as requested by Krzysztof. v4.
-- Adding an empty line here before "/dts-v1/;" in "sc7280-herobrine-zombie-lte.dts", "sc7280-herobrine-zombie.dts" as requested by Matthias. v4.
-- Deleteing "/dts-v1/;" in "sc7280-herobrine-zombie.dtsi" as requested by Matthias. v4.
-- Droping changing file path in description. v3. as requested by Matthias. v3.
-- Changing Patch order, binding patch first and dt file second, as requested by Douglas. v2.
-- Adding "arm64: dts: qcom: sc7280:" in dt patch ${SUBJECT}, as requested by Douglas. v2.
-- Adding "dt-bindings: arm: qcom:" in bind patch ${SUBJECT}, as requested by Douglas. v2.
-- Adding '#include "sc7280-herobrine-wifi-sku.dtsi"' in sc7280-herobrine-zombie.dts, as requested by Douglas. v2.
-- Adding "(newest rev)" for zombie entry description in qcom.yaml, as requested by Douglas. v2.
-- Adding "post-power-on-delay-ms = <100>;" for trackpad in "sc7280-herobrine-zombie.dtsi". v2
-- Changing "vcc-supply" to "vdd-supply" for trackpad in "sc7280-herobrine-zombie.dtsi", as requested by Douglas. v2.
-
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../dts/qcom/sc7280-herobrine-zombie-lte.dts  |  16 +
- .../boot/dts/qcom/sc7280-herobrine-zombie.dts |  16 +
- .../dts/qcom/sc7280-herobrine-zombie.dtsi     | 311 ++++++++++++++++++
- 4 files changed, 345 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index afe496a93f94..7b0644a39062 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -114,6 +114,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1-lte.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-zombie.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-zombie-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dts
-new file mode 100644
-index 000000000000..c9fe64529555
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Zombie board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine-zombie.dtsi"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Zombie with LTE";
-+	compatible = "google,zombie-sku512", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dts
-new file mode 100644
-index 000000000000..0246c12b2f40
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Zombie board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine-zombie.dtsi"
-+#include "sc7280-herobrine-wifi-sku.dtsi"
-+
-+/ {
-+	model = "Google Zombie";
-+	compatible = "google,zombie", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-new file mode 100644
-index 000000000000..2aac468a7a05
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-@@ -0,0 +1,311 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Zombie board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+#include "sc7280-herobrine.dtsi"
-+#include "sc7280-herobrine-audio-rt5682.dtsi"
-+
-+/*
-+ * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
-+ *
-+ * Sort order matches the order in the parent files (parents before children).
-+ */
-+
-+&pp3300_codec {
-+	status = "okay";
-+};
-+
-+/* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
-+
-+ap_tp_i2c: &i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	trackpad: trackpad@15 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x15>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tp_int_odl>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
-+
-+		hid-descr-addr = <0x01>;
-+		vdd-supply = <&pp3300_z1>;
-+
-+		wakeup-source;
-+	};
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor0 {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor1 {
-+	status = "okay";
-+};
-+
-+&mdss_edp {
-+	status = "okay";
-+};
-+
-+&mdss_edp_phy {
-+	status = "okay";
-+};
-+
-+/* For nvme */
-+&pcie1 {
-+	status = "okay";
-+};
-+
-+/* For nvme */
-+&pcie1_phy {
-+	status = "okay";
-+};
-+
-+&pm8350c_pwm_backlight{
-+        pwms = <&pm8350c_pwm 3 200000>;
-+};
-+
-+&pwmleds {
-+	status = "okay";
-+};
-+
-+/* For eMMC */
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
-+
-+&ts_rst_conn {
-+	bias-disable;
-+};
-+
-+/* PINCTRL - BOARD-SPECIFIC */
-+
-+/*
-+ * Methodology for gpio-line-names:
-+ * - If a pin goes to herobrine board and is named it gets that name.
-+ * - If a pin goes to herobrine board and is not named, it gets no name.
-+ * - If a pin is totally internal to Qcard then it gets Qcard name.
-+ * - If a pin is not hooked up on Qcard, it gets no name.
-+ */
-+
-+&pm8350c_gpios {
-+	gpio-line-names = "FLASH_STROBE_1",		/* 1 */
-+			  "AP_SUSPEND",
-+			  "PM8008_1_RST_N",
-+			  "",
-+			  "",
-+			  "",
-+			  "PMIC_EDP_BL_EN",
-+			  "PMIC_EDP_BL_PWM",
-+			  "";
-+};
-+
-+&tlmm {
-+	gpio-line-names = "AP_TP_I2C_SDA",		/* 0 */
-+			  "AP_TP_I2C_SCL",
-+			  "SSD_RST_L",
-+			  "PE_WAKE_ODL",
-+			  "AP_SAR_SDA",
-+			  "AP_SAR_SCL",
-+			  "PRB_SC_GPIO_6",
-+			  "TP_INT_ODL",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+
-+			  "GNSS_L1_EN",			/* 10 */
-+			  "GNSS_L5_EN",
-+			  "SPI_AP_MOSI",
-+			  "SPI_AP_MISO",
-+			  "SPI_AP_CLK",
-+			  "SPI_AP_CS0_L",
-+			  /*
-+			   * AP_FLASH_WP is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_OD.
-+			   */
-+			  "AP_FLASH_WP",
-+			  "",
-+			  "AP_EC_INT_L",
-+			  "",
-+
-+			  "UF_CAM_RST_L",		/* 20 */
-+			  "WF_CAM_RST_L",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "",
-+			  "PM8008_IRQ_1",
-+			  "HOST2WLAN_SOL",
-+			  "WLAN2HOST_SOL",
-+			  "MOS_BT_UART_CTS",
-+			  "MOS_BT_UART_RFR",
-+
-+			  "MOS_BT_UART_TX",		/* 30 */
-+			  "MOS_BT_UART_RX",
-+			  "PRB_SC_GPIO_32",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "AP_SPI_FP_MISO",
-+			  "AP_SPI_FP_MOSI",
-+			  "AP_SPI_FP_CLK",
-+			  "AP_SPI_FP_CS_L",
-+
-+			  "AP_EC_SPI_MISO",		/* 40 */
-+			  "AP_EC_SPI_MOSI",
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "LCM_RST_L",
-+			  "EARLY_EUD_N",
-+			  "",
-+			  "DP_HOT_PLUG_DET",
-+			  "IO_BRD_MLB_ID0",
-+			  "IO_BRD_MLB_ID1",
-+
-+			  "IO_BRD_MLB_ID2",		/* 50 */
-+			  "SSD_EN",
-+			  "TS_I2C_SDA_CONN",
-+			  "TS_I2C_CLK_CONN",
-+			  "TS_RST_CONN",
-+			  "TS_INT_CONN",
-+			  "AP_I2C_TPM_SDA",
-+			  "AP_I2C_TPM_SCL",
-+			  "PRB_SC_GPIO_58",
-+			  "PRB_SC_GPIO_59",
-+
-+			  "EDP_HOT_PLUG_DET_N",		/* 60 */
-+			  "FP_TO_AP_IRQ_L",
-+			  "",
-+			  "AMP_EN",
-+			  "CAM0_MCLK_GPIO_64",
-+			  "CAM1_MCLK_GPIO_65",
-+			  "WF_CAM_MCLK",
-+			  "PRB_SC_GPIO_67",
-+			  "FPMCU_BOOT0",
-+			  "UF_CAM_SDA",
-+
-+			  "UF_CAM_SCL",			/* 70 */
-+			  "",
-+			  "",
-+			  "WF_CAM_SDA",
-+			  "WF_CAM_SCL",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "FP_RST_L",
-+			  "PCIE1_CLKREQ_ODL",
-+
-+			  "EN_PP3300_DX_EDP",		/* 80 */
-+			  "US_EURO_HS_SEL",
-+			  "FORCED_USB_BOOT",
-+			  "WCD_RESET_N",
-+			  "MOS_WLAN_EN",
-+			  "MOS_BT_EN",
-+			  "MOS_SW_CTRL",
-+			  "MOS_PCIE0_RST",
-+			  "MOS_PCIE0_CLKREQ_N",
-+			  "MOS_PCIE0_WAKE_N",
-+
-+			  "MOS_LAA_AS_EN",		/* 90 */
-+			  "SD_CD_ODL",
-+			  "",
-+			  "",
-+			  "MOS_BT_WLAN_SLIMBUS_CLK",
-+			  "MOS_BT_WLAN_SLIMBUS_DAT0",
-+			  "HP_MCLK",
-+			  "HP_BCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+
-+			  "HP_LRCLK",			/* 100 */
-+			  "HP_IRQ",
-+			  "",
-+			  "",
-+			  "GSC_AP_INT_ODL",
-+			  "EN_PP3300_CODEC",
-+			  "AMP_BCLK",
-+			  "AMP_DIN",
-+			  "AMP_LRCLK",
-+			  "UIM1_DATA_GPIO_109",
-+
-+			  "UIM1_CLK_GPIO_110",		/* 110 */
-+			  "UIM1_RESET_GPIO_111",
-+			  "PRB_SC_GPIO_112",
-+			  "UIM0_DATA",
-+			  "UIM0_CLK",
-+			  "UIM0_RST",
-+			  "UIM0_PRESENT_ODL",
-+			  "SDM_RFFE0_CLK",
-+			  "SDM_RFFE0_DATA",
-+			  "WF_CAM_EN",
-+
-+			  "FASTBOOT_SEL_0",		/* 120 */
-+			  "SC_GPIO_121",
-+			  "FASTBOOT_SEL_1",
-+			  "SC_GPIO_123",
-+			  "FASTBOOT_SEL_2",
-+			  "SM_RFFE4_CLK_GRFC_8",
-+			  "SM_RFFE4_DATA_GRFC_9",
-+			  "WLAN_COEX_UART1_RX",
-+			  "WLAN_COEX_UART1_TX",
-+			  "PRB_SC_GPIO_129",
-+
-+			  "LCM_ID0",			/* 130 */
-+			  "LCM_ID1",
-+			  "",
-+			  "SDR_QLINK_REQ",
-+			  "SDR_QLINK_EN",
-+			  "QLINK0_WMSS_RESET_N",
-+			  "SMR526_QLINK1_REQ",
-+			  "SMR526_QLINK1_EN",
-+			  "SMR526_QLINK1_WMSS_RESET_N",
-+			  "PRB_SC_GPIO_139",
-+
-+			  "SAR1_IRQ_ODL",		/* 140 */
-+			  "SAR0_IRQ_ODL",
-+			  "PRB_SC_GPIO_142",
-+			  "",
-+			  "WCD_SWR_TX_CLK",
-+			  "WCD_SWR_TX_DATA0",
-+			  "WCD_SWR_TX_DATA1",
-+			  "WCD_SWR_RX_CLK",
-+			  "WCD_SWR_RX_DATA0",
-+			  "WCD_SWR_RX_DATA1",
-+
-+			  "DMIC01_CLK",			/* 150 */
-+			  "DMIC01_DATA",
-+			  "DMIC23_CLK",
-+			  "DMIC23_DATA",
-+			  "",
-+			  "",
-+			  "EC_IN_RW_ODL",
-+			  "HUB_EN",
-+			  "WCD_SWR_TX_DATA2",
-+			  "",
-+
-+			  "",				/* 160 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+
-+			  "",				/* 170 */
-+			  "MOS_BLE_UART_TX",
-+			  "MOS_BLE_UART_RX",
-+			  "",
-+			  "";
-+};
--- 
-2.17.1
-
+On 11/29/2022 1:23 PM, Geert Uytterhoeven wrote:
+> Hi Srinivasa,
+>
+> On Mon, Nov 28, 2022 at 8:50 AM Srinivasa Rao Mandadapu
+> <quic_srivasam@quicinc.com> wrote:
+>> Update lpass sc7180 platform driver with PM ops, such as
+>> system supend and resume callbacks.
+>> This update is required to disable clocks during supend and
+>> avoid XO shutdown issue.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Tested-by: Rahul Ajmeriya <quic_rajmeriy@quicinc.com>
+> Thanks for your patch, which is now commit 2d68148f8f85ca5a ("ASoC:
+> qcom: lpass-sc7180: Add system suspend/resume PM ops") in next-20221129.
+>
+>> --- a/sound/soc/qcom/lpass-sc7180.c
+>> +++ b/sound/soc/qcom/lpass-sc7180.c
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/module.h>
+>>   #include <linux/of.h>
+>>   #include <linux/platform_device.h>
+>> +#include <linux/pm_runtime.h>
+>>   #include <dt-bindings/sound/sc7180-lpass.h>
+>>   #include <sound/pcm.h>
+>>   #include <sound/soc.h>
+>> @@ -156,10 +157,34 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
+>>          struct lpass_data *drvdata = platform_get_drvdata(pdev);
+>>
+>>          clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
+>> +       return 0;
+>> +}
+>> +
+>> +static int sc7180_lpass_dev_resume(struct device *dev)
+>> +{
+>> +       int ret = 0;
+>> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
+>>
+>> +       ret = clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
+>> +       if (ret) {
+>> +               dev_err(dev, "sc7180 clk prepare and enable failed\n");
+>> +               return ret;
+>> +       }
+>> +       return ret;
+>> +}
+>> +
+>> +static int sc7180_lpass_dev_suspend(struct device *dev)
+>> +{
+>> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
+>> +
+>> +       clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
+>>          return 0;
+>>   }
+> noreply@ellerman.id.au reports for e.g. m68k-allmodconfig:
+>
+>      sound/soc/qcom/lpass-sc7180.c:179:12: error:
+> 'sc7180_lpass_dev_suspend' defined but not used
+> [-Werror=unused-function]
+>      sound/soc/qcom/lpass-sc7180.c:166:12: error:
+> 'sc7180_lpass_dev_resume' defined but not used
+> [-Werror=unused-function]
+>
+>> +static const struct dev_pm_ops sc7180_lpass_pm_ops = {
+>> +       SET_SYSTEM_SLEEP_PM_OPS(sc7180_lpass_dev_suspend, sc7180_lpass_dev_resume)
+>> +};
+> Please use DEFINE_SIMPLE_DEV_PM_OPS()...
+Actually, we need to use this patch in in previous kernels 5.4 and 5.15.
+I think these changes won't apply on previous kernel.
+Hence ignoring for now and will take care next time.
+>
+>> +
+>>   static struct lpass_variant sc7180_data = {
+>>          .i2sctrl_reg_base       = 0x1000,
+>>          .i2sctrl_reg_stride     = 0x1000,
+>> @@ -293,6 +318,7 @@ static struct platform_driver sc7180_lpass_cpu_platform_driver = {
+>>          .driver = {
+>>                  .name = "sc7180-lpass-cpu",
+>>                  .of_match_table = of_match_ptr(sc7180_lpass_cpu_device_id),
+>> +               .pm = &sc7180_lpass_pm_ops,
+> ... and pm_sleep_ptr().
+>
+>>          },
+>>          .probe = asoc_qcom_lpass_cpu_platform_probe,
+>>          .remove = asoc_qcom_lpass_cpu_platform_remove,
+> Gr{oetje,eeting}s,
+>
+>                          Geert
+>
+> --
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+>
+> In personal conversations with technical people, I call myself a hacker. But
+> when I'm talking to journalists I just say "programmer" or something like that.
+>                                  -- Linus Torvalds
