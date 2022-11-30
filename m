@@ -2,230 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FCD363DD1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:24:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33C5563DECF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:41:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbiK3SYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 13:24:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50658 "EHLO
+        id S231152AbiK3SlD convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 13:41:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiK3SXs (ORCPT
+        with ESMTP id S231149AbiK3Sk7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:23:48 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B0E54750
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 10:23:17 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id n21so2469713iod.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 10:23:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ONDnEc4ZIyy7Wu5ujEkS7Ktw1ahOUILUSTWpMfcxxQQ=;
-        b=pwrErNWmob268zUOg+YwENLcK/qom0yQVqn8oY2WFSUEuf2Jr3URR0IWp2whEwJZkk
-         5KZ4CEXzcxKpQjjjf/42ZDHqhN2no+ZYAkxQwSHqM9OQpTpo0oeCqJUiXNUh8ZJ61q8B
-         eOidCFbsMG+aDhsPVK7+EuXZmSZ6UhEqPUhvGwG1FoDTV5ZmFQH+uAQR/iSF6knFx4Pj
-         DExeZMpQpwV7deRWrycCjFLhsM0Ln5JILhRhBLQEJu19B40QANz5U3ApN3wgjQX5mUKl
-         ZySiWygLU5ipXYFBX0Z6JX2Dl/D3V5jygajJaDvlrwd2DvywMpnfV0qaUp/9rwQQSsDF
-         RL7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ONDnEc4ZIyy7Wu5ujEkS7Ktw1ahOUILUSTWpMfcxxQQ=;
-        b=mhRWLJUKcm6y7F9U422Gz4oJzKiGfwk+mUIqzIeD6HmquE8LSU4dM+eDzSsU896b9/
-         YwXferzTJy/Xqe4ypNy+Ak3Wi7bLX00m/fsza5Vklu1KM2lGh8l1MhTQ/Xz6lMo4WGIF
-         CpIpETGcxUz3K//YNVIkmBHufovINxDflBCpn4IJnNIlKnvLVLdvFoSZ3rSF634euvfI
-         BgXoGRYSAKyCem1oYMaKBkYbSQpEUsLc2OZEAFtjy/j0dKfGU20jtw2oD8Iu9f5RZNDo
-         lDrHwjiCglB/djlTDlCByQahFsHWYDug6KRNtMLXpJzScNoKFlRLLfMV5SsZlK+ACkDW
-         ob8g==
-X-Gm-Message-State: ANoB5pkfJk74DUd+Lv38oc3XU5lUZ6dtXgNVDzYUEMMhkz2o9U2ThYxV
-        rQxSlCkWh8cDI7fSoZOJ4Lx0zSYFvVTjG7pbxWY6mQ==
-X-Google-Smtp-Source: AA0mqf7P++wySGdQaSQLLnxnCcRG9+GZr61mVqsW+x7n6y+OZ20z6BFaJRCgtGj/vM5qP9xeSP1Kf2O90kWJDUuL2fw=
-X-Received: by 2002:a02:c905:0:b0:374:e77e:d3d8 with SMTP id
- t5-20020a02c905000000b00374e77ed3d8mr29319867jao.103.1669832596394; Wed, 30
- Nov 2022 10:23:16 -0800 (PST)
+        Wed, 30 Nov 2022 13:40:59 -0500
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869C098949;
+        Wed, 30 Nov 2022 10:40:55 -0800 (PST)
+Received: from ip5b412258.dynamic.kabel-deutschland.de ([91.65.34.88] helo=diego.localnet)
+        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <heiko@sntech.de>)
+        id 1p0S0E-0003wh-HH; Wed, 30 Nov 2022 19:40:14 +0100
+From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
+To:     Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walle ij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+        Frank Wunderlich <frank-w@public-files.de>,
+        Michael Riesch <michael.riesch@wolfvision.net>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Subject: Re: [PATCH 3/5] arm64: dts: remove label = "cpu" from DSA dt-binding
+Date:   Wed, 30 Nov 2022 19:40:12 +0100
+Message-ID: <5443335.kQq0lBPeGt@diego>
+In-Reply-To: <20221130141040.32447-4-arinc.unal@arinc9.com>
+References: <20221130141040.32447-1-arinc.unal@arinc9.com> <20221130141040.32447-4-arinc.unal@arinc9.com>
 MIME-Version: 1.0
-References: <1669658575-21993-1-git-send-email-quic_sarannya@quicinc.com>
- <1669658575-21993-2-git-send-email-quic_sarannya@quicinc.com> <71e3425b-e598-a2ff-b684-dbf2f43bfa60@foss.st.com>
-In-Reply-To: <71e3425b-e598-a2ff-b684-dbf2f43bfa60@foss.st.com>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Wed, 30 Nov 2022 11:23:05 -0700
-Message-ID: <CANLsYkwX03vUpBN2MKOdtTHZbgV=7j1XSDv-e1hN8R_f=Ac0=w@mail.gmail.com>
-Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
+Content-Transfer-Encoding: 8BIT
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
+        T_SPF_HELO_TEMPERROR autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Nov 2022 at 02:29, Arnaud POULIQUEN
-<arnaud.pouliquen@foss.st.com> wrote:
->
-> Hi Sarannya,
->
-> On 11/28/22 19:02, Sarannya S wrote:
-> > Some transports like Glink support the state notifications between
-> > clients using flow control signals similar to serial protocol signals.
-> > Local glink client drivers can send and receive flow control status
-> > to glink clients running on remote processors.
-> >
-> > Add APIs to support sending and receiving of flow control status by
-> > rpmsg clients.
-> >
-> > Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> > Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
-> > ---
-> >  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
-> >  drivers/rpmsg/rpmsg_internal.h |  2 ++
-> >  include/linux/rpmsg.h          | 15 +++++++++++++++
-> >  3 files changed, 37 insertions(+)
-> >
-> > diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> > index d6dde00e..0c5bf67 100644
-> > --- a/drivers/rpmsg/rpmsg_core.c
-> > +++ b/drivers/rpmsg/rpmsg_core.c
-> > @@ -331,6 +331,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
-> >  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
-> >
-> >  /**
-> > + * rpmsg_set_flow_control() - sets/clears serial flow control signals
-> > + * @ept:     the rpmsg endpoint
-> > + * @enable:  enable or disable serial flow control
-> > + *
-> > + * Return: 0 on success and an appropriate error value on failure.
-> > + */
-> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
->
-> Seems that you did not take into account comment in your V3 asking you to
-> add the destination address of the endpoint as parameter
+Am Mittwoch, 30. November 2022, 15:10:38 CET schrieb Arınç ÜNAL:
+> This is not used by the DSA dt-binding, so remove it from all devicetrees.
+> 
+> Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+> ---
 
-I will not review this patchset until Arnaud's comment is addressed or
-a reason for the omission is provided.
+> diff --git a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
+> index c282f6e79960..b71162d65d2e 100644
+> --- a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
+> +++ b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
+> @@ -552,7 +552,6 @@ port@4 {
+>  
+>  			port@5 {
+>  				reg = <5>;
+> -				label = "cpu";
+>  				ethernet = <&gmac0>;
+>  				phy-mode = "rgmii";
+>  
+> 
 
->
-> Regards,
-> Arnaud
->
-> > +{
-> > +     if (WARN_ON(!ept))
-> > +             return -EINVAL;
-> > +     if (!ept->ops->set_flow_control)
-> > +             return -ENXIO;
-> > +
-> > +     return ept->ops->set_flow_control(ept, enable);
-> > +}
-> > +EXPORT_SYMBOL(rpmsg_set_flow_control);
-> > +
-> > +/**
-> >   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
-> >   * @ept: the rpmsg endpoint
-> >   *
-> > @@ -539,6 +557,8 @@ static int rpmsg_dev_probe(struct device *dev)
-> >
-> >               rpdev->ept = ept;
-> >               rpdev->src = ept->addr;
-> > +
-> > +             ept->flow_cb = rpdrv->flowcontrol;
-> >       }
-> >
-> >       err = rpdrv->probe(rpdev);
-> > diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> > index 39b646d..4fea45a 100644
-> > --- a/drivers/rpmsg/rpmsg_internal.h
-> > +++ b/drivers/rpmsg/rpmsg_internal.h
-> > @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
-> >   * @trysendto:               see @rpmsg_trysendto(), optional
-> >   * @trysend_offchannel:      see @rpmsg_trysend_offchannel(), optional
-> >   * @poll:            see @rpmsg_poll(), optional
-> > + * @set_flow_control:        see @rpmsg_set_flow_control(), optional
-> >   * @get_mtu:         see @rpmsg_get_mtu(), optional
-> >   *
-> >   * Indirection table for the operations that a rpmsg backend should implement.
-> > @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
-> >                            void *data, int len);
-> >       __poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
-> >                            poll_table *wait);
-> > +     int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
-> >       ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
-> >  };
-> >
-> > diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> > index 523c98b..cc7a917 100644
-> > --- a/include/linux/rpmsg.h
-> > +++ b/include/linux/rpmsg.h
-> > @@ -64,12 +64,14 @@ struct rpmsg_device {
-> >  };
-> >
-> >  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
-> > +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
-> >
-> >  /**
-> >   * struct rpmsg_endpoint - binds a local rpmsg address to its user
-> >   * @rpdev: rpmsg channel device
-> >   * @refcount: when this drops to zero, the ept is deallocated
-> >   * @cb: rx callback handler
-> > + * @flow_cb: remote flow control callback handler
-> >   * @cb_lock: must be taken before accessing/changing @cb
-> >   * @addr: local rpmsg address
-> >   * @priv: private data for the driver's use
-> > @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
-> >       struct rpmsg_device *rpdev;
-> >       struct kref refcount;
-> >       rpmsg_rx_cb_t cb;
-> > +     rpmsg_flowcontrol_cb_t flow_cb;
-> >       struct mutex cb_lock;
-> >       u32 addr;
-> >       void *priv;
-> > @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
-> >   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
-> >   * @remove: invoked when the rpmsg channel is removed
-> >   * @callback: invoked when an inbound message is received on the channel
-> > + * @flowcontrol: invoked when remote side flow control status is received
-> >   */
-> >  struct rpmsg_driver {
-> >       struct device_driver drv;
-> > @@ -113,6 +117,7 @@ struct rpmsg_driver {
-> >       int (*probe)(struct rpmsg_device *dev);
-> >       void (*remove)(struct rpmsg_device *dev);
-> >       int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
-> > +     int (*flowcontrol)(struct rpmsg_device *, void *, bool);
-> >  };
-> >
-> >  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
-> > @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
-> >
-> >  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
-> >
-> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
-> > +
-> >  #else
-> >
-> >  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-> > @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-> >       return -ENXIO;
-> >  }
-> >
-> > +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
-> > +{
-> > +     /* This shouldn't be possible */
-> > +     WARN_ON(1);
-> > +
-> > +     return -ENXIO;
-> > +}
-> > +
-> >  #endif /* IS_ENABLED(CONFIG_RPMSG) */
-> >
-> >  /* use a macro to avoid include chaining to get THIS_MODULE */
+Rockchip-part:
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+
+
