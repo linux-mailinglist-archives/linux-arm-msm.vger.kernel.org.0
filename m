@@ -2,124 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33C5563DECF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:41:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DAEE63DF25
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:44:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231152AbiK3SlD convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 13:41:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52266 "EHLO
+        id S231330AbiK3So2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 13:44:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231149AbiK3Sk7 (ORCPT
+        with ESMTP id S231335AbiK3SoF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:40:59 -0500
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869C098949;
-        Wed, 30 Nov 2022 10:40:55 -0800 (PST)
-Received: from ip5b412258.dynamic.kabel-deutschland.de ([91.65.34.88] helo=diego.localnet)
-        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <heiko@sntech.de>)
-        id 1p0S0E-0003wh-HH; Wed, 30 Nov 2022 19:40:14 +0100
-From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
-To:     Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Hauke Mehrtens <hauke@hauke-m.de>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
-        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
-        Linus Walle ij <linus.walleij@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-        Frank Wunderlich <frank-w@public-files.de>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
-        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH 3/5] arm64: dts: remove label = "cpu" from DSA dt-binding
-Date:   Wed, 30 Nov 2022 19:40:12 +0100
-Message-ID: <5443335.kQq0lBPeGt@diego>
-In-Reply-To: <20221130141040.32447-4-arinc.unal@arinc9.com>
-References: <20221130141040.32447-1-arinc.unal@arinc9.com> <20221130141040.32447-4-arinc.unal@arinc9.com>
+        Wed, 30 Nov 2022 13:44:05 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC10F98962;
+        Wed, 30 Nov 2022 10:44:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1669833842; x=1701369842;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=Gtyz6SNZuGgTDy//usOG/QH31joaiy/IY6bcuWc0RzI=;
+  b=TI6t8gdPKYOnDxR71LS0W+ybg8yfq5nniGdwWUrp/rcnLnhJoGRnK6Z4
+   WvrjoX0AVzQtSICJpQsujFz83pWFJW4c8B0l9ZI0hOKf8z9XE6r04q4KH
+   vBtvAzLTKvtAOsQb1FubkJPgog12azvfRMoQnVdGFfXitpy9afsg+rQNa
+   0=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Nov 2022 10:44:02 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2022 10:44:02 -0800
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 30 Nov 2022 10:44:01 -0800
+Date:   Wed, 30 Nov 2022 10:44:01 -0800
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     Eddie Huang =?utf-8?B?KOm7g+aZuuWCkSk=?= 
+        <eddie.huang@mediatek.com>
+CC:     "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "krzysztof.kozlowski@linaro.org" <krzysztof.kozlowski@linaro.org>,
+        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
+        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+        "jejb@linux.ibm.com" <jejb@linux.ibm.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "beanhuo@micron.com" <beanhuo@micron.com>,
+        "avri.altman@wdc.com" <avri.altman@wdc.com>,
+        "bvanassche@acm.org" <bvanassche@acm.org>,
+        "j-young.choi@samsung.com" <j-young.choi@samsung.com>,
+        "Arthur.Simchaev@wdc.com" <Arthur.Simchaev@wdc.com>,
+        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+        "daejun7.park@samsung.com" <daejun7.park@samsung.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        Stanley Chu =?utf-8?B?KOacseWOn+mZnik=?= 
+        <stanley.chu@mediatek.com>,
+        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "agross@kernel.org" <agross@kernel.org>
+Subject: Re: [PATCH v7 06/16] ufs: core: mcq: Configure resource regions
+Message-ID: <20221130184401.GB9934@asutoshd-linux1.qualcomm.com>
+References: <cover.1669747235.git.quic_asutoshd@quicinc.com>
+ <c655d1e62f619818e034f76c90330393cba8c79b.1669747235.git.quic_asutoshd@quicinc.com>
+ <37a017a2176fee1da8a7903613f132b22c9741df.camel@mediatek.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
-        T_SPF_HELO_TEMPERROR autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <37a017a2176fee1da8a7903613f132b22c9741df.camel@mediatek.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Mittwoch, 30. November 2022, 15:10:38 CET schrieb Arınç ÜNAL:
-> This is not used by the DSA dt-binding, so remove it from all devicetrees.
-> 
-> Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-> ---
+On Wed, Nov 30 2022 at 01:15 -0800, Eddie Huang (黃智傑) wrote:
+>Hi Asutosh,
+>
+>On Tue, 2022-11-29 at 10:53 -0800, Asutosh Das wrote:
+>Please correct:
+>
+>return hba->vops->mcq_config_resource(hba);
+>
+Thanks, I missed correcting it before pushing it up.
+I will send a next version now.
 
-> diff --git a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-> index c282f6e79960..b71162d65d2e 100644
-> --- a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-> +++ b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-> @@ -552,7 +552,6 @@ port@4 {
->  
->  			port@5 {
->  				reg = <5>;
-> -				label = "cpu";
->  				ethernet = <&gmac0>;
->  				phy-mode = "rgmii";
->  
-> 
+-asd
 
-Rockchip-part:
-Acked-by: Heiko Stuebner <heiko@sntech.de>
-
-
+>> +
+>> +	return -EOPNOTSUPP;
+>> +}
+>> +
+>>
+>
+>Except this issue, I test this series pass on my platform. Thanks the
+>patch
+>
+>Eddie
+>
