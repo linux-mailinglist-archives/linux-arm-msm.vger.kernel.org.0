@@ -2,282 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40C7A63DA7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 17:24:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5802E63DB96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 18:09:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbiK3QYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 11:24:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
+        id S231246AbiK3RJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 12:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbiK3QYR (ORCPT
+        with ESMTP id S231173AbiK3RJX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 11:24:17 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E9F5C768
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 08:24:14 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id r8so21483221ljn.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 08:24:14 -0800 (PST)
+        Wed, 30 Nov 2022 12:09:23 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4399399F72;
+        Wed, 30 Nov 2022 09:04:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YbCew0BFNIRSFlp+k5uoeLKizvWgiWnblmCvWuyFg8Y=;
-        b=ZxxkADj2eOo60vb97SjWhIokVfM6y1vjfalXar5jCWgqqLAOvG67JKzvYA+B0SIaLk
-         CcmFI+Azi/SIwuQrHWYyHp2B7SIXToWyurBYoeSlzRMUO9LUZnl/XD8+B55hNYwO4scI
-         H1CcRZ/a7U2u9QLi7NHc2IessDPYoc/O6I+Cg8ZN40qlo7jgsNfubf9badzn2e0YBq/L
-         0XwTF4vAGFd52R+HgxS+SCx8+3PFDfFmC2SgKJ+VI/ZT4FscHF0eRUYeIMPukHiACCnR
-         SXAOys/bSJFRdIbII2ZSQNXWZw0IaNyeV6HZtdyM1OA35HY0lImuJIUg0MtohfkLUlKC
-         knRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YbCew0BFNIRSFlp+k5uoeLKizvWgiWnblmCvWuyFg8Y=;
-        b=7nTAtJBO5BvKR6Twj5k+4A8Pg/Y97sIEdJHw/mGAZSd5N+nsq6E2VeOSB9jqXDoJZT
-         4XANOnNGAFm3XEQgLx3SzrXacDyn9zBSqP8fLtMTZ0Yg+A3fIfcY/zOlQIaLeThcjRvP
-         5mNGbk8tTFMtDRjpiiANhDhWDcd5xxJSDbosiWSkM6YCcTGZ+I8gHyXo/UTJLXNf3f3u
-         gPtlJb/aoNU0H0tf2406AWrwdhH7rn+8dih7OscG4yp+QpRMAnvk30znM3Hjt2sYt5wt
-         s1W/iujN8QgQXugsa3smKWn0hFO9aDAZS9/8PuZixwcSsn71LPEsYVi4j82IAKGrnPnt
-         i8uQ==
-X-Gm-Message-State: ANoB5pm5FYfW+4obvI6bGLAilRZuYb/+8MWh75lTp9BLBqJA1ZR3D6Kb
-        xXLf5LyXKP3MIBTCnYcTqSmCrg==
-X-Google-Smtp-Source: AA0mqf6C9iAEBZCoC56tNEM8JYTBJNnzYIkVMPp0xkGO/BTkobxq0of+g47UTD6XPcOGAOwbMW9PWg==
-X-Received: by 2002:a05:651c:1a10:b0:277:5059:82c9 with SMTP id by16-20020a05651c1a1000b00277505982c9mr15621509ljb.218.1669825452692;
-        Wed, 30 Nov 2022 08:24:12 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id s8-20020a056512214800b004b4823f02b0sm306594lfr.152.2022.11.30.08.24.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 08:24:12 -0800 (PST)
-Message-ID: <9412f6ff-1fd7-31b5-56a7-12bda174f7f6@linaro.org>
-Date:   Wed, 30 Nov 2022 17:24:11 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1669827850; x=1701363850;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=FNhzSHst8+jmjOO0yNo7a7WaYGilcwNvTIMJbLD05+g=;
+  b=aBAhOZ1WqccuvpLw+emzI82LA5PEqSJEnsSoyFUt+iRW3HS5EZTejO8P
+   CJ/BUQRXBIdGnRzqX5ilPlNWTOM4+wTOdshaFE76E6sr4yJUKo9OBQgC1
+   s1KX78Nq1GIeqSvua4BlTIA1K+0OBZ8pldo/JkBGDhj1ocKN9Kmp2Ueqd
+   k=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Nov 2022 09:04:09 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2022 09:04:09 -0800
+Received: from [10.251.45.13] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 30 Nov
+ 2022 09:04:06 -0800
+Message-ID: <179c9db4-cbfd-ef9c-def2-544e3d54f94f@quicinc.com>
+Date:   Wed, 30 Nov 2022 19:04:04 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 1/8] dt-bindings: power: supply: Add DT schema for
- Qualcomm SMBCHG
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v5 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
 Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Alejandro Tafalla <atafalla@dnyon.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220808073459.396278-1-y.oudjana@protonmail.com>
- <20220808073459.396278-2-y.oudjana@protonmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220808073459.396278-2-y.oudjana@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
+        <jzala@quicinc.com>, <todor.too@gmail.com>
+CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
+        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221128144210.1028-1-quic_mmitkov@quicinc.com>
+ <32736286-9fb8-a1f1-31cb-2fd19d713e9e@linaro.org>
+From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
+In-Reply-To: <32736286-9fb8-a1f1-31cb-2fd19d713e9e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/08/2022 09:34, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
-> 
+On 30/11/2022 17:50, Bryan O'Donoghue wrote:
+> On 28/11/2022 14:42, quic_mmitkov@quicinc.com wrote:
+>> With these changes, the CSID entity has, as it did previously, a single
+>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+>> virtual channel configuration is determined by which of the source ports
+>> are linked to an output VFE line. For example, the link below will
+>> configure the CSID driver to enable vc 0 and vc 1:
+>>
+>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+>
+> Following your instructions here
+>
+> root@linaro-gnome:~# media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> root@linaro-gnome:~# media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+> root@linaro-gnome:~# media-ctl -l '"msm_csid0":3->"msm_vfe0_rdi2":0[1]'
+> root@linaro-gnome:~# media-ctl -l '"msm_csid0":4->"msm_vfe0_rdi3":0[1]'
+> Unable to parse link: Invalid argument (22)
+>
+> ?
+>
+> ---
+> bod
 
+Hi Bryan,
 
-> +      See Documentation/devicetree/bindings/power/supply/battery.yaml
-> +
-> +  interrupts:
-> +    items:
-> +      - description: Charger error
-> +      - description: Charger inhibited
-> +      - description: Charger precharge safety timer timeout
-> +      - description: Charger charge safety timer timeout
-> +      - description: Charger pre to fast charging switch threshold reached
-> +      - description: Charger recharge threshold reached
-> +      - description: Charger taper threshold reached
+Thanks for the feedback! There are the following IFEs on SM8250 (Titan 4.8):
 
-After discussing with Dmitry, it's current design of the PMIC (parent
-device) so it's fine. We would need to make bigger refactoring of
-drivers and bindings to change it to match other typical MFD PMICs. In
-current state it's the only way to express device interrupts.
+IFE0 -> has 3 RDI lines and 1 PIX line
 
-Two more comments below.
+IFE1 -> has 3 RDI lines and 1 PIX line
 
-> +      - description: Charger charge termination threshold reached
-> +      - description: Battery hot
-> +      - description: Battery warm
-> +      - description: Battery cold
-> +      - description: Battery cool
-> +      - description: Battery overvoltage
-> +      - description: Battery low
-> +      - description: Battery missing
-> +      - description: Battery thermistor missing # unconfirmed
-> +      - description: USB input undervolt
-> +      - description: USB input overvolt
-> +      - description: USB input source detected
-> +      - description: OTG regulator failure
-> +      - description: OTG regulator overcurrent
-> +      - description: Automatic input current limiting done
-> +      - description: USB ID pin changed
-> +      - description: DC input undervolt
-> +      - description: DC input overvolt
-> +      - description: Power OK
-> +      - description: Temperature shutdown
-> +      - description: Watchdog timeout
-> +      - description: Flash failure
-> +      - description: OTST2 # unknown
-> +      - description: OTST3 # unknown
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: chg-error
-> +      - const: chg-inhibit
-> +      - const: chg-prechg-sft
-> +      - const: chg-complete-chg-sft
-> +      - const: chg-p2f-thr
-> +      - const: chg-rechg-thr
-> +      - const: chg-taper-thr
-> +      - const: chg-tcc-thr
-> +      - const: batt-hot
-> +      - const: batt-warm
-> +      - const: batt-cold
-> +      - const: batt-cool
-> +      - const: batt-ov
-> +      - const: batt-low
-> +      - const: batt-missing
-> +      - const: batt-term-missing
-> +      - const: usbin-uv
-> +      - const: usbin-ov
-> +      - const: usbin-src-det
-> +      - const: otg-fail
-> +      - const: otg-oc
-> +      - const: aicl-done
-> +      - const: usbid-change
-> +      - const: dcin-uv
-> +      - const: dcin-ov
-> +      - const: power-ok
-> +      - const: temp-shutdown
-> +      - const: wdog-timeout
-> +      - const: flash-fail
-> +      - const: otst2
-> +      - const: otst3
-> +
-> +  otg-vbus:
-> +    type: object
+IFELite0 -> has 4 RDI lines
 
-I think I did not comment about this one - this looks like regulator.yaml.
+IFELite1 -> has 4 RDI lines
 
-> +
-> +    description:
-> +      OTG regulator subnode.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - monitored-battery
-> +  - interrupts
-> +  - interrupt-names
-> +  - otg-vbus
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    battery: battery {
-> +        compatible = "simple-battery";
-> +
-> +        charge-full-design-microamp-hours = <4070000>;
-> +        charge-term-current-microamp = <100000>;
-> +        voltage-min-design-microvolt = <3400000>;
-> +        voltage-max-design-microvolt = <4400000>;
-> +    };
-> +
-> +    pmic {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        charger@1000 {
-> +            compatible = "qcom,pmi8996-smbchg";
-> +            reg = <0x1000>;
-> +
-> +            interrupts = <0x2 0x10 0x0 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x1 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x2 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x3 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x4 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x5 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x10 0x6 IRQ_TYPE_EDGE_RISING>,
-> +                         <0x2 0x10 0x7 IRQ_TYPE_EDGE_RISING>,
-> +                         <0x2 0x12 0x0 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x1 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x3 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x4 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x5 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x6 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x12 0x7 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x13 0x0 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x13 0x1 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x13 0x2 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x13 0x3 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x13 0x4 IRQ_TYPE_EDGE_RISING>,
-> +                         <0x2 0x13 0x5 IRQ_TYPE_EDGE_RISING>,
-> +                         <0x2 0x13 0x6 IRQ_TYPE_EDGE_FALLING>,
-> +                         <0x2 0x14 0x0 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x14 0x1 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x0 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x1 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x2 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x3 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x4 IRQ_TYPE_EDGE_BOTH>,
-> +                         <0x2 0x16 0x5 IRQ_TYPE_EDGE_BOTH>;
-> +            interrupt-names = "chg-error",
-> +                              "chg-inhibit",
-> +                              "chg-prechg-sft",
-> +                              "chg-complete-chg-sft",
-> +                              "chg-p2f-thr",
-> +                              "chg-rechg-thr",
-> +                              "chg-taper-thr",
-> +                              "chg-tcc-thr",
-> +                              "batt-hot",
-> +                              "batt-warm",
-> +                              "batt-cold",
-> +                              "batt-cool",
-> +                              "batt-ov",
-> +                              "batt-low",
-> +                              "batt-missing",
-> +                              "batt-term-missing",
-> +                              "usbin-uv",
-> +                              "usbin-ov",
-> +                              "usbin-src-det",
-> +                              "otg-fail",
-> +                              "otg-oc",
-> +                              "aicl-done",
-> +                              "usbid-change",
-> +                              "dcin-uv",
-> +                              "dcin-ov",
-> +                              "power-ok",
-> +                              "temp-shutdown",
-> +                              "wdog-timeout",
-> +                              "flash-fail",
-> +                              "otst2",
-> +                              "otst3";
-> +
-> +            monitored-battery = <&battery>;
-> +
-> +            otg-vbus { };
+so there's no msm_vfe0_rdi3 port for IFE0 and IFE1 at all, only rdi0, 
+rdi1, rdi2. In theory if you link the 4th CSID source port to 
+msm_vfe0_pix the parsing works:
 
-Why empty?
+media-ctl -l '"msm_csid0":4->"msm_vfe0_pix":0[1]'
 
-Best regards,
-Krzysztof
+However, in practice, there's no PIX support in camss so even if the 
+linking works, the hardware won't get configured properly.
+
+You can however use the IFELite's 4th RDI port. Due to omission in 
+camss-vfe there isn't any separate logic for naming the sink ports of 
+IFELite's devies so it's still called "pix", even though it's not a pix 
+port. It should be a small code change to fix the naming of the port for 
+IFELite, I could do it as part of this patch set or as a new patch after 
+this patch set gets merged. Which is the preferred way?
+
+Regards,
+
+Milen
 
