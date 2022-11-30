@@ -2,125 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5802E63DB96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 18:09:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7152D63DBA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 18:12:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231246AbiK3RJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 12:09:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
+        id S229905AbiK3RM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 12:12:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231173AbiK3RJX (ORCPT
+        with ESMTP id S231364AbiK3RMM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 12:09:23 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4399399F72;
-        Wed, 30 Nov 2022 09:04:10 -0800 (PST)
+        Wed, 30 Nov 2022 12:12:12 -0500
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A5B1E3F7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 09:07:47 -0800 (PST)
+Received: by mail-il1-x133.google.com with SMTP id f6so8371861ilu.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 09:07:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669827850; x=1701363850;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=FNhzSHst8+jmjOO0yNo7a7WaYGilcwNvTIMJbLD05+g=;
-  b=aBAhOZ1WqccuvpLw+emzI82LA5PEqSJEnsSoyFUt+iRW3HS5EZTejO8P
-   CJ/BUQRXBIdGnRzqX5ilPlNWTOM4+wTOdshaFE76E6sr4yJUKo9OBQgC1
-   s1KX78Nq1GIeqSvua4BlTIA1K+0OBZ8pldo/JkBGDhj1ocKN9Kmp2Ueqd
-   k=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Nov 2022 09:04:09 -0800
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2022 09:04:09 -0800
-Received: from [10.251.45.13] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 30 Nov
- 2022 09:04:06 -0800
-Message-ID: <179c9db4-cbfd-ef9c-def2-544e3d54f94f@quicinc.com>
-Date:   Wed, 30 Nov 2022 19:04:04 +0200
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hwbeRXDCPnkzZaLAZJzPCmUQXCGZT3CgoSXNyHRIbL4=;
+        b=UTV414O5U/PBfbN3sot40dFRdr29nsiDpH7mW9CHhEHTz8HwPQZW0ntrlp03S2Z5Qd
+         1lk+QJLhVEOQ7huOtOn8tc8jPC7n4Lakg01Cums/GaXHAJMooFd0fElMdwoRORoqpE+y
+         VkP609mtJ+dEoFK7lXPFDJ1qYJam84wIP5Z3k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hwbeRXDCPnkzZaLAZJzPCmUQXCGZT3CgoSXNyHRIbL4=;
+        b=yBUCOnkm0fxZkwQ6G4t/n3W8TU//jjHRK+B6+IZ7JLYa8a2MEXYoEUnX5ckMHdiDY2
+         xYKF+cJK1L6WZmttir+Y00/YN/LgCaSqDkPQSlQMZpyUy+PBtnq+O/6d4R/1encuLBHP
+         wiPpju5jnFZ0vO9Tj00Bi1ERo8mHj0sPWo5580RKHg+8i2dTVJt6QVfPaDpDQvakZDFo
+         7luHMx3zE4yr82ANzk+EqphGw1k+3Bh47t8RVmmRcwOBWdOwrlh+10KwUdpDZZSZoz40
+         kJXyVJCYj6lm5+K9Y1Q6AcS1YfddmK/tceJ5F+kRagMQKfEHPJw/0kiroe8nNCFa8T5h
+         GDbw==
+X-Gm-Message-State: ANoB5pl1TG+ZBoMHA67UxCXvSGCHnf3jAfEiFKfaYtS2HuMJ1Env5y+8
+        DtkLW+cBmxIvGZkeL1N2+ZtCKvRj3UI8LA==
+X-Google-Smtp-Source: AA0mqf7dRZ5ikRklhhLf4zCW66fwPUUtbqqE8HBiPfnHONAIRVgwN8feEkWTFgnbGzVdaW1H68FZGg==
+X-Received: by 2002:a92:dd82:0:b0:2f6:52ad:27e2 with SMTP id g2-20020a92dd82000000b002f652ad27e2mr19252287iln.285.1669828066772;
+        Wed, 30 Nov 2022 09:07:46 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id j193-20020a0263ca000000b003717c1df569sm736403jac.165.2022.11.30.09.07.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Nov 2022 09:07:46 -0800 (PST)
+Date:   Wed, 30 Nov 2022 17:07:46 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for
+ system PM ops
+Message-ID: <Y4eN4utrDnEnKu/8@google.com>
+References: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v5 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
-        <jzala@quicinc.com>, <todor.too@gmail.com>
-CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
-        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
-        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
-        <laurent.pinchart@ideasonboard.com>
-References: <20221128144210.1028-1-quic_mmitkov@quicinc.com>
- <32736286-9fb8-a1f1-31cb-2fd19d713e9e@linaro.org>
-From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
-In-Reply-To: <32736286-9fb8-a1f1-31cb-2fd19d713e9e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/11/2022 17:50, Bryan O'Donoghue wrote:
-> On 28/11/2022 14:42, quic_mmitkov@quicinc.com wrote:
->> With these changes, the CSID entity has, as it did previously, a single
->> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
->> virtual channel configuration is determined by which of the source ports
->> are linked to an output VFE line. For example, the link below will
->> configure the CSID driver to enable vc 0 and vc 1:
->>
->> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
->
-> Following your instructions here
->
-> root@linaro-gnome:~# media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> root@linaro-gnome:~# media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
-> root@linaro-gnome:~# media-ctl -l '"msm_csid0":3->"msm_vfe0_rdi2":0[1]'
-> root@linaro-gnome:~# media-ctl -l '"msm_csid0":4->"msm_vfe0_rdi3":0[1]'
-> Unable to parse link: Invalid argument (22)
->
-> ?
->
-> ---
-> bod
+On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add __maybe_unused tag for system PM ops suspend and resume.
+> This is required to fix allmodconfig compilation issue.
+> Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
 
-Hi Bryan,
+This is incorrect, it should be '2d68148f8f85 ("ASoC: qcom: lpass-sc7180: Add
+system suspend/resume PM ops")'. I see you fixed that in v2, but this patch
+has already been applied ...
 
-Thanks for the feedback! There are the following IFEs on SM8250 (Titan 4.8):
+Srinivasa, it seems a similar patch is needed for commit c3bf7699747c ("ASoC:
+qcom: lpass-sc7280: Add system suspend/resume PM ops"). For that you could use
+SYSTEM_SLEEP_PM_OPS() instead of the maybe_unused tags as suggested by Nathan.
 
-IFE0 -> has 3 RDI lines and 1 PIX line
-
-IFE1 -> has 3 RDI lines and 1 PIX line
-
-IFELite0 -> has 4 RDI lines
-
-IFELite1 -> has 4 RDI lines
-
-so there's no msm_vfe0_rdi3 port for IFE0 and IFE1 at all, only rdi0, 
-rdi1, rdi2. In theory if you link the 4th CSID source port to 
-msm_vfe0_pix the parsing works:
-
-media-ctl -l '"msm_csid0":4->"msm_vfe0_pix":0[1]'
-
-However, in practice, there's no PIX support in camss so even if the 
-linking works, the hardware won't get configured properly.
-
-You can however use the IFELite's 4th RDI port. Due to omission in 
-camss-vfe there isn't any separate logic for naming the sink ports of 
-IFELite's devies so it's still called "pix", even though it's not a pix 
-port. It should be a small code change to fix the naming of the port for 
-IFELite, I could do it as part of this patch set or as a new patch after 
-this patch set gets merged. Which is the preferred way?
-
-Regards,
-
-Milen
-
+Mark, I appreciate you being responsive and picking patches quickly, it might
+help though to leave 'external' reviewers at least some time to provide their
+feedback :)
