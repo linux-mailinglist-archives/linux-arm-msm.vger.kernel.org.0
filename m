@@ -2,266 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8706D63D518
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 12:59:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 170F263D569
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 13:20:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234750AbiK3L7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 06:59:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50502 "EHLO
+        id S229929AbiK3MUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 07:20:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234786AbiK3L7O (ORCPT
+        with ESMTP id S229580AbiK3MUh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 06:59:14 -0500
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4601F7046F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 03:59:12 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-3704852322fso168471427b3.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 03:59:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eh/bSv5K+nO2aEk+T9ztAxrVSsdipm+/TYe81Q/dTxU=;
-        b=s4W8Y0Alu8oRKicv9Vi+KdD/0WyY+EJx/AZ/EXnVmVCa+/e788uulQDQ21UPN2XxZk
-         8x1vZHfDT8G7WetPlwodRwYmsxTHi5k3E7qHGf6OiEVtVp2yvuk3gHW+PJ1s4IJK5kpT
-         E37lut4oL60lAHxYeq5yur9KvaHw9UeWvVIscGsxkvSlUNevj/U4s2Ka5ws10vIvgU80
-         LMhobG4p0pMz3JoS/oesWFHc2/mmrO3j0v+8BYbyDqGxdIDp8rY4Uew+qoyfjnV+LW1V
-         J+X5VRvx695c2foasQ/S1EK4IjK8l8UMpMnbj++A1i0UpQZiLaXnIuT0NTUc7v4dUT+K
-         buqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eh/bSv5K+nO2aEk+T9ztAxrVSsdipm+/TYe81Q/dTxU=;
-        b=z1F+n4l5yZI/suEgOluteyU4GUIp8oc9zBxlghp/wpg3/pHi8UeeNq8PyOPxlmfkoW
-         0NxvEpa03w/PZLG9ZfJgdiUF2L2T8pDtod+488F8DgD8qNNIhjHn4fVUowg9vt9S+XhP
-         HVq9nYJBxfzACPTu3DF+UnKOgktTXzy3gYFwY4UwGpff5rnxx1w5hQsREgdUTXYWW/Cg
-         iBHgXoypUqf6MERVEoYl8rF/duKriwLn2kcRrTi6iKZh5Wf6B3e/4Fjggvm8VHfcP07c
-         1jOtgCJuAKnxi8Bezc/gXMZSwtZZkR4zjZDQ5LFsHRKrM8zpNwLKXDlDGLXkIphqYbxb
-         t9Xw==
-X-Gm-Message-State: ANoB5pmVAQjmjtECSSqE3XN/sn66tHIOz7jCnZbDZ46IXRAgNAwQpmrv
-        788fzDlJ2Xx69j9RZenN/SNWqflojI4DgO3dzxuUeQ==
-X-Google-Smtp-Source: AA0mqf4ZKmWx3KjQagnWAI7vJQZv4Zx6cIzzLTshqHmSptUJFH2zQVjKTWWsL5kjaTh+zbm8lJ+kIlHlOMUuruyPG9U=
-X-Received: by 2002:a0d:d103:0:b0:370:4c23:eacc with SMTP id
- t3-20020a0dd103000000b003704c23eaccmr58861940ywd.127.1669809551431; Wed, 30
- Nov 2022 03:59:11 -0800 (PST)
-MIME-Version: 1.0
-References: <20221130112852.2977816-1-abel.vesa@linaro.org>
- <20221130112852.2977816-9-abel.vesa@linaro.org> <CAA8EJppgpe_LK=2=qncHB_fpDz4AmUBzcRQ=8_kb0YrLCQNweg@mail.gmail.com>
-In-Reply-To: <CAA8EJppgpe_LK=2=qncHB_fpDz4AmUBzcRQ=8_kb0YrLCQNweg@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Nov 2022 13:59:00 +0200
-Message-ID: <CAA8EJpqgzc01756fVMU6QbRrObZY4bSwQajVzdinZKC2n92h4g@mail.gmail.com>
-Subject: Re: [PATCH v4 8/9] clk: qcom: rpmh: Add support for SM8550 rpmh clocks
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Wed, 30 Nov 2022 07:20:37 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334F46DCC8;
+        Wed, 30 Nov 2022 04:20:36 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AUC7qJo018648;
+        Wed, 30 Nov 2022 12:20:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=6CaDG6FQs1F5uP2IQ8HSQQ6culH2xnBd8bcJ5NL6wnI=;
+ b=SfuAYpqUzniYI5MZYvECqfa5kzPy5zykFFoU+/h6vBPxd1Ia/7Fpzs4OQwNxyybOwFUO
+ A3yXy9wsLZYx2WoJ+oQzohAOyOa64scLSUTZ8dvZW4JuqneD+jbAkclTaE7J4eH2NnnK
+ LADKsnCFDhMP2RviMZ04jzFy+/jYLxd1OkD5WhbU5hqs7Tc07i0bH1Gj03cDChsv5W46
+ OyBZRVZ8T3+DqUHjqFNK70crGRVlWRr5D3tzu3kuOl+9Iwx4fMsTb4pwtPh1c+6WhHom
+ Tr8rPsPqmQ+x3u0SbMbqze+DmoS69+QjVqUZy+nNDiFXLwfs3BwksyeoSY7Zg/nugazX rw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m66w4g0xn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 30 Nov 2022 12:20:32 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AUCKSG5031895;
+        Wed, 30 Nov 2022 12:20:28 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3m3bvknc4e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 30 Nov 2022 12:20:28 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AUCHAn6028553;
+        Wed, 30 Nov 2022 12:20:28 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2AUCKRdY031886;
+        Wed, 30 Nov 2022 12:20:28 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 1C0D03F58; Wed, 30 Nov 2022 17:50:27 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [PATCH] dmaengine: qcom: gpi: Set link_rx bit on GO TRE for rx operation
+Date:   Wed, 30 Nov 2022 17:50:24 +0530
+Message-Id: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: saoNPNDqXdfrcCNlnDl2Qz1j6VK4Ea9y
+X-Proofpoint-ORIG-GUID: saoNPNDqXdfrcCNlnDl2Qz1j6VK4Ea9y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-30_04,2022-11-30_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ malwarescore=0 mlxlogscore=848 mlxscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211300087
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 30 Nov 2022 at 13:45, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 30 Nov 2022 at 13:30, Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > Adds the RPMH clocks present in SM8550 SoC.
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >  drivers/clk/qcom/clk-rpmh.c | 110 +++++++++++++++++++++++++++++-------
-> >  1 file changed, 90 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> > index 0471bab82464..3204df3fda86 100644
-> > --- a/drivers/clk/qcom/clk-rpmh.c
-> > +++ b/drivers/clk/qcom/clk-rpmh.c
-> > @@ -132,6 +132,36 @@ static DEFINE_MUTEX(rpmh_clk_lock);
-> >                 },                                                      \
-> >         }
-> >
-> > +#define DEFINE_CLK_RPMH_FIXED(_platform, _name, _name_active,  \
-> > +                                 _parent_name, _name_active_parent,    \
-> > +                                 _div)                                 \
-> > +       static struct clk_fixed_factor _platform##_##_name = {          \
-> > +               .mult = 1,                                              \
-> > +               .div = _div,                                            \
-> > +               .hw.init = &(struct clk_init_data){                     \
-> > +                       .ops = &clk_fixed_factor_ops,                   \
-> > +                       .name = #_name,                                 \
-> > +                       .parent_data =  &(const struct clk_parent_data){ \
-> > +                                       .fw_name = #_parent_name,       \
-> > +                                       .name = #_parent_name,          \
-> > +                       },                                              \
-> > +                       .num_parents = 1,                               \
-> > +               },                                                      \
-> > +       };                                                              \
-> > +       static struct clk_fixed_factor _platform##_##_name_active = {   \
-> > +               .mult = 1,                                              \
-> > +               .div = _div,                                            \
-> > +               .hw.init = &(struct clk_init_data){                     \
-> > +                       .ops = &clk_fixed_factor_ops,                   \
-> > +                       .name = #_name_active,                          \
-> > +                       .parent_data =  &(const struct clk_parent_data){ \
-> > +                                       .fw_name = #_name_active_parent,\
-> > +                                       .name = #_name_active_parent,   \
-> > +                       },                                              \
-> > +                       .num_parents = 1,                               \
-> > +               },                                                      \
-> > +       }
-> > +
->
-> Please use CLK_FIXED_FACTOR_FW_NAME() instead.
+As per GSI spec, link_rx bit is to be set on GO TRE on tx
+channel whenever there is going to be a DMA TRE on rx
+channel. This is currently set for duplex operation only.
 
-Or even better CLK_FIXED_FACTOR_HW(). It fits better here.
+Set the bit for rx operation as well.
 
->
-> >  static inline struct clk_rpmh *to_clk_rpmh(struct clk_hw *_hw)
-> >  {
-> >         return container_of(_hw, struct clk_rpmh, hw);
-> > @@ -579,6 +609,43 @@ static const struct clk_rpmh_desc clk_rpmh_sm8450 = {
-> >         .num_clks = ARRAY_SIZE(sm8450_rpmh_clocks),
-> >  };
-> >
-> > +DEFINE_CLK_RPMH_ARC(sm8550, xo_pad, xo_pad_ao, "xo.lvl", 0x03, 2);
-> > +DEFINE_CLK_RPMH_FIXED(sm8550, bi_tcxo, bi_tcxo_ao, xo_pad, xo_pad_ao, 2);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, rf_clk1, rf_clk1_ao, "clka1", 1);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, rf_clk2, rf_clk2_ao, "clka2", 1);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, rf_clk3, rf_clk3_ao, "clka3", 1);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, rf_clk4, rf_clk4_ao, "clka4", 1);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, ln_bb_clk1, ln_bb_clk1_ao, "clka6", 2);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, ln_bb_clk2, ln_bb_clk2_ao, "clka7", 2);
-> > +DEFINE_CLK_RPMH_VRM(sm8550, ln_bb_clk3, ln_bb_clk3_ao, "clka8", 2);
-> > +
-> > +static struct clk_hw *sm8550_rpmh_clocks[] = {
-> > +       [RPMH_CXO_PAD_CLK]      = &sm8550_xo_pad.hw,
-> > +       [RPMH_CXO_PAD_CLK_A]    = &sm8550_xo_pad_ao.hw,
-> > +       [RPMH_CXO_CLK]          = &sm8550_bi_tcxo.hw,
-> > +       [RPMH_CXO_CLK_A]        = &sm8550_bi_tcxo_ao.hw,
-> > +       [RPMH_LN_BB_CLK1]       = &sm8550_ln_bb_clk1.hw,
-> > +       [RPMH_LN_BB_CLK1_A]     = &sm8550_ln_bb_clk1_ao.hw,
-> > +       [RPMH_LN_BB_CLK2]       = &sm8550_ln_bb_clk2.hw,
-> > +       [RPMH_LN_BB_CLK2_A]     = &sm8550_ln_bb_clk2_ao.hw,
-> > +       [RPMH_LN_BB_CLK3]       = &sm8550_ln_bb_clk3.hw,
-> > +       [RPMH_LN_BB_CLK3_A]     = &sm8550_ln_bb_clk3_ao.hw,
-> > +       [RPMH_RF_CLK1]          = &sm8550_rf_clk1.hw,
-> > +       [RPMH_RF_CLK1_A]        = &sm8550_rf_clk1_ao.hw,
-> > +       [RPMH_RF_CLK2]          = &sm8550_rf_clk2.hw,
-> > +       [RPMH_RF_CLK2_A]        = &sm8550_rf_clk2_ao.hw,
-> > +       [RPMH_RF_CLK3]          = &sm8550_rf_clk3.hw,
-> > +       [RPMH_RF_CLK3_A]        = &sm8550_rf_clk3_ao.hw,
-> > +       [RPMH_RF_CLK4]          = &sm8550_rf_clk4.hw,
-> > +       [RPMH_RF_CLK4_A]        = &sm8550_rf_clk4_ao.hw,
-> > +       [RPMH_IPA_CLK]          = &sdm845_ipa.hw,
-> > +};
-> > +
-> > +static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
-> > +       .clks = sm8550_rpmh_clocks,
-> > +       .num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
-> > +};
-> > +
-> >  static struct clk_hw *sc7280_rpmh_clocks[] = {
-> >         [RPMH_CXO_CLK]      = &sc7280_bi_tcxo.hw,
-> >         [RPMH_CXO_CLK_A]    = &sc7280_bi_tcxo_ao.hw,
-> > @@ -682,29 +749,31 @@ static int clk_rpmh_probe(struct platform_device *pdev)
-> >
-> >                 name = hw_clks[i]->init->name;
-> >
-> > -               rpmh_clk = to_clk_rpmh(hw_clks[i]);
-> > -               res_addr = cmd_db_read_addr(rpmh_clk->res_name);
-> > -               if (!res_addr) {
-> > -                       dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
-> > -                               rpmh_clk->res_name);
-> > -                       return -ENODEV;
-> > -               }
-> > +               if (hw_clks[i]->init->ops != &clk_fixed_factor_ops) {
->
-> This looks ugly a bit. I'd rather add something like non_cmd_clks to
-> the clk_rpmh_desc data and register them separately. Or even worse,
-> you can keep the rpmh as is, with only cmd-db based clocks and add a
-> fixed factor clock to the sm8550 dtsi directly. I have a slight
-> preference for the former method, but the latter would also work.
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+ drivers/dma/qcom/gpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-After a second thought, I'd withdraw the second method. Just add a
-separate array with non-cmd-db clocks.
-
->
-> > +                       rpmh_clk = to_clk_rpmh(hw_clks[i]);
-> > +                       res_addr = cmd_db_read_addr(rpmh_clk->res_name);
-> > +                       if (!res_addr) {
-> > +                               dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
-> > +                                       rpmh_clk->res_name);
-> > +                               return -ENODEV;
-> > +                       }
-> >
-> > -               data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
-> > -               if (IS_ERR(data)) {
-> > -                       ret = PTR_ERR(data);
-> > -                       dev_err(&pdev->dev,
-> > -                               "error reading RPMh aux data for %s (%d)\n",
-> > -                               rpmh_clk->res_name, ret);
-> > -                       return ret;
-> > -               }
-> > +                       data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
-> > +                       if (IS_ERR(data)) {
-> > +                               ret = PTR_ERR(data);
-> > +                               dev_err(&pdev->dev,
-> > +                                       "error reading RPMh aux data for %s (%d)\n",
-> > +                                       rpmh_clk->res_name, ret);
-> > +                               return ret;
-> > +                       }
-> >
-> > -               /* Convert unit from Khz to Hz */
-> > -               if (aux_data_len == sizeof(*data))
-> > -                       rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
-> > +                       /* Convert unit from Khz to Hz */
-> > +                       if (aux_data_len == sizeof(*data))
-> > +                               rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
-> >
-> > -               rpmh_clk->res_addr += res_addr;
-> > -               rpmh_clk->dev = &pdev->dev;
-> > +                       rpmh_clk->res_addr += res_addr;
-> > +                       rpmh_clk->dev = &pdev->dev;
-> > +               }
-> >
-> >                 ret = devm_clk_hw_register(&pdev->dev, hw_clks[i]);
-> >                 if (ret) {
-> > @@ -739,6 +808,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
-> >         { .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
-> >         { .compatible = "qcom,sm8350-rpmh-clk", .data = &clk_rpmh_sm8350},
-> >         { .compatible = "qcom,sm8450-rpmh-clk", .data = &clk_rpmh_sm8450},
-> > +       { .compatible = "qcom,sm8550-rpmh-clk", .data = &clk_rpmh_sm8550},
-> >         { .compatible = "qcom,sc7280-rpmh-clk", .data = &clk_rpmh_sc7280},
-> >         { }
-> >  };
-> > --
-> > 2.34.1
-> >
->
->
-> --
-> With best wishes
-> Dmitry
-
-
-
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 061add8..59a36cb 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1756,6 +1756,7 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+ 		tre->dword[3] = u32_encode_bits(TRE_TYPE_GO, TRE_FLAGS_TYPE);
+ 		if (spi->cmd == SPI_RX) {
+ 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
++			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_LINK);
+ 		} else if (spi->cmd == SPI_TX) {
+ 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_CHAIN);
+ 		} else { /* SPI_DUPLEX */
 -- 
-With best wishes
-Dmitry
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+
