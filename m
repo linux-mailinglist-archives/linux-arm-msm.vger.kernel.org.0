@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4E4F63D274
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 10:51:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E658663D30C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 11:18:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234757AbiK3JvB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 04:51:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53286 "EHLO
+        id S235617AbiK3KSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 05:18:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234727AbiK3JvA (ORCPT
+        with ESMTP id S235647AbiK3KSs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 04:51:00 -0500
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA66624F3D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:50:59 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-3cbdd6c00adso71942417b3.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:50:59 -0800 (PST)
+        Wed, 30 Nov 2022 05:18:48 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B101901B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 02:18:47 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id s5so23333991edc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 02:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=85CBpe8h6suPlC2YlUqV3pCbiuyIDeu7NL7tAzWSq04=;
-        b=WMQHbII59gMQ0BlEfRQu/mx7qNJjrPJO7OqapZERyzpNTOsYZeo79HPXvNUQb2WH/g
-         IsVteDPqxVox+ZFHzsroABU1M9JcDSi9MSNK0CmQpoLfJlERObQjoZlYfyCXinMQBfK4
-         Iys+Lm0Fp4z5uqFibE++OQPIYgruCqrIIfoonVqw+S5Jwr13dyHJjwXmZykNsxMwUB4E
-         S7h1Xhfo8AlwrrLbn876IzrNOITSfHH20iPy6R1kSMirhzHRdOMuNVF+/tUBGGY6JFIn
-         Gbn2SoJ+Gkhud76kOUhRyP3c7q6ZuM9HJ1V2QQUn67MAqC5gVATxLXOacvAs2Gd/oKeg
-         4ZKg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2YlrwU4occVe0adogrVPtY69ywnLn4XdBZ7LW42fxJc=;
+        b=YEatoxhGTuwpwU22Fx99KGAvkMEGPXHZBdZOPZu3X1iP+h9H+GszskwGBiY8moPDi5
+         Xr0WSM+MnMt6ysahaHcf29FQb+HPv5wKaJEOFUE+yA9rXUlSIA9sZFysbKUehnA9mBn+
+         5JktMJ1xp7daV+P1si6d+VdcE1kTrWJ/j2c9HURL67YGDqH1tF6Fh7QFyug9Rs548mQ2
+         Yf863EdUo2x91oy8na0YP6aKlkVgpzMXh/1o02R7VMPNlYjLysBkvF3NV/o3eQhXCc3n
+         OOIlMJSrXdXtQmgHY3zPI8DKAcUmzCov+aH4BbEsbgYXYYj9tu+dohArQhTHV5ewPjTX
+         vpxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=85CBpe8h6suPlC2YlUqV3pCbiuyIDeu7NL7tAzWSq04=;
-        b=pBhgmS/gWcLcXbhvkPeIxs2f9f/P57FkJ9dndqxmp/Re8CxfBUKxyk7iALyKth6Ikg
-         x11WJDeOTz/4MDsocnA3fL8Xu5aF0FBzSt/eUBo1PnxwiymOBZ2+BTtsrUWmagS3RiQd
-         YZLhR/CHQ9QHrGW2kqoSkeplBZKNreykKgUsjInh4wx7qHi2OIZorqc5L5E5YnM5JjXq
-         SKKHg+N5yVAml/Q+LzTsIx7aI6tQLNgD7wsnV8WOvkH3iPlvUe507tjOVp7QGQZ8Kvw5
-         +3+Aj/CM87sRpbdxRcjago8aYlPQmLVSFY7a7qUN+ynrBBadJ5+K5wYQMROKwrQrXv7J
-         UK3Q==
-X-Gm-Message-State: ANoB5plXwtoZVT6kr34e2mCBDOwhKFK6ZpJKpi1PIWLDKzIH3nKbmiDp
-        Bd94wUuGN+cpbofAElsqlRe9sccsdQCEPKOD3R4KSw==
-X-Google-Smtp-Source: AA0mqf5nA1N+rUMCNTWTlTmneC+iJIjUIdYRscTuKjxKx6GwENB0YR1xBSvYfk36+SLH/PPzg8wy1CB+3xgKhh7YJcA=
-X-Received: by 2002:a0d:db15:0:b0:3d6:2151:4038 with SMTP id
- d21-20020a0ddb15000000b003d621514038mr1132331ywe.418.1669801858887; Wed, 30
- Nov 2022 01:50:58 -0800 (PST)
+        bh=2YlrwU4occVe0adogrVPtY69ywnLn4XdBZ7LW42fxJc=;
+        b=QtRDkPguRFVlmIkeF3f7g9hfbkhPA+DlU9l5zClz924OXbxhyMvM+D3sOjx1UdR1FU
+         +la/o+GeLKhf7snlsZV8PO2i1oXjx+f5+pGWdl/UwspLJN4vunDkfJCfi8IAo9g4Lfy2
+         j5vHSHsrcnVyeHnPplYlySugjvVvNcHekzPJcL7i8kp9r3yuV2sg1ZnYdUcTke3zREKg
+         +2OuZuAgBTwyWRKbd7ileI+LO+q/Qk7by9SlcVN7KoYt3aawWqsLYkYYN2DskY/jwhWk
+         XcEo7S8AVRkNG7M0XNax8wlHHe+D1fMM2WiduDzGA77u/RomAJe+EKHw6TLvdeNgnqE3
+         s+eg==
+X-Gm-Message-State: ANoB5plphxd2QOX8tdqfUkemTCuD5Vu6n8ji+tuIA69YrO5b/x5XkhPi
+        PAazEOe5TE+V8WyZ8hTeWF+EjA==
+X-Google-Smtp-Source: AA0mqf6nBPRHsu8ALUW2482qbHD6afgyXawtnD2XY1qV1eQbr97eJMCu9I0Tw+dRC3kl3BmLIGrCDg==
+X-Received: by 2002:a05:6402:541a:b0:463:be84:5283 with SMTP id ev26-20020a056402541a00b00463be845283mr13828667edb.7.1669803525639;
+        Wed, 30 Nov 2022 02:18:45 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id l4-20020aa7c304000000b00458dc7e8ecasm449462edq.72.2022.11.30.02.18.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 02:18:45 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 00/10] arm64: dts: Add base device tree files for SM8550
+Date:   Wed, 30 Nov 2022 12:17:34 +0200
+Message-Id: <20221130101744.2849294-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <1669767131-13854-1-git-send-email-quic_khsieh@quicinc.com> <1669767131-13854-3-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1669767131-13854-3-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Nov 2022 11:50:48 +0200
-Message-ID: <CAA8EJppEHrPeoCxZUerf4MjDVkYEm7EvTcsm8eTAQBUVMqc_cA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] drm/msm/dp: parser data-lanes and link-frequencies
- from endpoint node
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,128 +74,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 30 Nov 2022 at 02:12, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Both data-lanes and link-frequencies are property of endpoint. This
-> patch parser endpoint to retrieve max data lanes and max link rate
-> supported specified at dp_out endpoint. In the case where no endpoint
-> specified, then 4 data lanes with HBR2 link rate (5.4G) will be the
-> default link configuration.
+This series adds the base device tree files and MTP board support
+for the Qualcomm SM8550 SoC, including the clock, pinctrl, smmu,
+regulators, interconnect, cpufreq, and qup nodes.
 
-So, you have two changes in a single patch.
-1) Moving the data-lanes to the endpoint
-2) Adding link-frequencies.
+The SM8550 is the latest Qualcomm Mobile Platform.
+See more at:
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Snapdragon-8-Gen-2-Product-Brief.pdf
 
-Please split the patch accordingly. Also keep in mind that you have to
-provide backwards compatibility for the data-lanes property.
+The v3 of this patchset is here:
+https://lore.kernel.org/all/20221126114617.497677-1-abel.vesa@linaro.org/
 
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_parser.c | 34 ++++++++++++++++++++++++++--------
->  drivers/gpu/drm/msm/dp/dp_parser.h |  2 ++
->  2 files changed, 28 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index dd73221..9367f8c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -94,16 +94,34 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
->  static int dp_parser_misc(struct dp_parser *parser)
->  {
->         struct device_node *of_node = parser->pdev->dev.of_node;
-> -       int len;
-> -
-> -       len = drm_of_get_data_lanes_count(of_node, 1, DP_MAX_NUM_DP_LANES);
-> -       if (len < 0) {
-> -               DRM_WARN("Invalid property \"data-lanes\", default max DP lanes = %d\n",
-> -                        DP_MAX_NUM_DP_LANES);
-> -               len = DP_MAX_NUM_DP_LANES;
-> +       struct device_node *endpoint;
-> +       int cnt;
-> +       u64 frequence[4];
+Here is a branch where the entire support has been merged:
+https://git.codelinaro.org/linaro/qcomlt/linux/-/commits/topic/sm8550/next
 
-frequency
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-> +
-> +       endpoint = of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
-> +       if (endpoint) {
-> +               cnt = of_property_count_u32_elems(endpoint, "data-lanes");
-> +               if (cnt < 0)
-> +                       parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
-> +               else
-> +                       parser->max_dp_lanes = cnt;
-> +
-> +               cnt = of_property_count_u64_elems(endpoint, "link-frequencies");
-> +               if (cnt < 0) {
-> +                       parser->max_dp_link_rate = DP_LINK_FREQUENCY_HBR2; /* 54000 khz */
+Abel Vesa (3):
+  dt-bindings: arm: qcom: Document SM8550 SoC and boards
+  arm64: dts: qcom: Add base SM8550 dtsi
+  arm64: dts: qcom: Add base SM8550 MTP dts
 
-Wrong number of zeroes
+Neil Armstrong (7):
+  arm64: dts: qcom: Add pm8010 pmic dtsi
+  arm64: dts: qcom: Add PM8550 pmic dtsi
+  arm64: dts: qcom: Add PM8550b pmic dtsi
+  arm64: dts: qcom: Add PM8550ve pmic dtsi
+  arm64: dts: qcom: Add PM8550vs pmic dtsi
+  arm64: dts: qcom: Add PMK8550 pmic dtsi
+  arm64: dts: qcom: Add PMR735d pmic dtsi
 
-> +               } else {
-> +                       if (cnt > 4)    /* 4 frequency at most */
-> +                               cnt = 4;
+ .../devicetree/bindings/arm/qcom.yaml         |    6 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/pm8010.dtsi          |   84 +
+ arch/arm64/boot/dts/qcom/pm8550.dtsi          |   59 +
+ arch/arm64/boot/dts/qcom/pm8550b.dtsi         |   59 +
+ arch/arm64/boot/dts/qcom/pm8550ve.dtsi        |   59 +
+ arch/arm64/boot/dts/qcom/pm8550vs.dtsi        |  194 +
+ arch/arm64/boot/dts/qcom/pmk8550.dtsi         |   55 +
+ arch/arm64/boot/dts/qcom/pmr735d.dtsi         |  104 +
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |  404 ++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          | 3535 +++++++++++++++++
+ 11 files changed, 4560 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8010.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8550.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8550b.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8550ve.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pmk8550.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pmr735d.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8550.dtsi
 
-'4 frequencies'. Not to mention that magic '4' should be defined
-somewhere. Or removed completely. See below.
+-- 
+2.34.1
 
-> +                       of_property_read_u64_array(endpoint, "link-frequencies", frequence, cnt);
-
-Can you please use of_property_read_u64_index() instead? It also has a
-nice feature of modifying the out_value only if the proper data was
-found. So you can set the default and then override it with the
-of_property_read function. And then divide it by 1000 to get the value
-in KHz.
-
-> +                       parser->max_dp_link_rate = (u32)frequence[cnt  -1];
-> +                       parser->max_dp_link_rate /= 1000;       /* khz */
-
-The HDR3 rate is 8100 Mb/s. 8 100 000 000. This doesn't fit into u32
-(U32_MAX = 4 294 967 295).
-
-> +               }
-> +       } else {
-> +               /* default */
-> +               parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
-> +               parser->max_dp_link_rate = DP_LINK_FREQUENCY_HBR2; /* 54000 khz */
-
-Wrong number of zeroes. Better use Mb/s or Gb/s directly. Also it is a
-rate, not a frequency, so the define should also use 'RATE' in its
-name.
-
->         }
->
-> -       parser->max_dp_lanes = len;
->         return 0;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 866c1a8..76ddb751 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -15,6 +15,7 @@
->  #define DP_LABEL "MDSS DP DISPLAY"
->  #define DP_MAX_PIXEL_CLK_KHZ   675000
->  #define DP_MAX_NUM_DP_LANES    4
-> +#define DP_LINK_FREQUENCY_HBR2 540000
->
->  enum dp_pm_type {
->         DP_CORE_PM,
-> @@ -119,6 +120,7 @@ struct dp_parser {
->         struct dp_io io;
->         struct dp_display_data disp_data;
->         u32 max_dp_lanes;
-> +       u32 max_dp_link_rate;
->         struct drm_bridge *next_bridge;
->
->         int (*parse)(struct dp_parser *parser);
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
-
-
---
-With best wishes
-
-Dmitry
