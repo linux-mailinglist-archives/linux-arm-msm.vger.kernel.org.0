@@ -2,123 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9A0A63D713
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 14:47:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CE063D75B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 14:58:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbiK3Nrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 08:47:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49758 "EHLO
+        id S229751AbiK3N6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 08:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229875AbiK3Nrk (ORCPT
+        with ESMTP id S229541AbiK3N6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 08:47:40 -0500
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8EC1101;
-        Wed, 30 Nov 2022 05:47:38 -0800 (PST)
-Received: by mail-oi1-f176.google.com with SMTP id t62so18728498oib.12;
-        Wed, 30 Nov 2022 05:47:38 -0800 (PST)
+        Wed, 30 Nov 2022 08:58:35 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9DD21263
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 05:58:34 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id j16so27038386lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 05:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/IkgJhGlC2jakl2mEql5tWtZmP6qrQiICZlujfOmWc=;
+        b=qeI5DGC7HVu7dL1ljYAK70PykFG9IlTdEiF+RN4EhqN+g45Vwfb0ZYUgY30IcuUq1v
+         IV1dR+9CViyrU70Ec/JtxkG8vbmJ9DUibs57hRzRMWRhm+b+BWeQqtMAlNk3vcj5vFiG
+         dNVaLLdvj6Hx3mzzDZszjzXd06PV4+zwPffdOIlaYUjPb1fdyVTsbB8OcGz6YK70hPFP
+         ZfJIWvXt8VFoqdXTPOKHzktLJCAu5zw/lWf4s38du6xHZA6/sbhephVAediUlGN+PIwP
+         fwvmp8iMn7N/u3w9zv7nl6VgkDr03TsXtZnrPjhtdBZMbefGO0ouDX9wYea6vX/QqU9Z
+         bsZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gak/3RKX7XYoG4HonhN+fE0X+MnSoJz/FUAaVKDSypw=;
-        b=DspuHJva8xCGOWNNyGrBt0tCvHOecmGce6tIWDMb68DIfgDd1V1xvRz7zm1LGakFub
-         DDRNevXn8ONh4yJRyk1JzuLjuTmdPkQHmxcmhbS1ZnGfn8p9pr9uQXcM1AUPEtRzGgYB
-         MisZiDnZcE4WTgn509ba5IjrMdgYHIxrf16PJRI7Degxk2f61PwHcP0RY/zPPRf72BpF
-         b2nS2opap0tD5k/fDjPhYB1Y+V40ub0hKcl6fMCPhND8ToJfKWwcSHvuCRraUxDpJ05+
-         Olj1YNTJsSBtSrz5HaV1rvoXTaz42LrxLYezFdYbU9OkWKh0W9UI9rTwFR/wJDmgqiAI
-         7iLQ==
-X-Gm-Message-State: ANoB5pn+VHPaw/wtRke9MA/Et0qnnOugW8r2Xn/EBhCZEMkP8/ptQWY5
-        IlZt4OauO7P/db3cOgjXjw==
-X-Google-Smtp-Source: AA0mqf6fMAoP/58oEsz3Wca9wUM11OobHl3sPwSCVzO8EB7MwtdlW8G2g9IbykGNOR0G2UCElHT3mw==
-X-Received: by 2002:aca:1004:0:b0:350:d543:7554 with SMTP id 4-20020aca1004000000b00350d5437554mr31513963oiq.251.1669816057469;
-        Wed, 30 Nov 2022 05:47:37 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id cv31-20020a056870c69f00b00143cfb377b4sm1214314oab.6.2022.11.30.05.47.36
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z/IkgJhGlC2jakl2mEql5tWtZmP6qrQiICZlujfOmWc=;
+        b=Q2IIZayJ8+8xAz2j3DBGUo9dAyDcelbYDOIrMmlbhD77Q81r8h5z5zn6miGDNq7sbP
+         hbADeX2MNu7vISuete3aDcMQj6M2RUD7LmMBB2D5z1v7lwke/czlMUQXHKqB7StI8eQp
+         PutG93fjRyZxbpqKfy2vF+QVmdkYHjWd9lD7wPricXrUNsAeidgwcotEWzzUzG87tl16
+         3cbMch0/FviqN72C6nqEPDfUktoXgfLxoeWOhSa+WwbfhwRLuepK7Ysj/+Rsrxclzuan
+         xqZsy4Gx2Avtmpxk2jweyTe1H03+BA0a6LeTuQTDNgCjwC3LN0FhDI+KooQyKNvlbgwi
+         YGow==
+X-Gm-Message-State: ANoB5pklyfkLkpJkcrxb+L9+rdqHYNSmIa2w9N85vwtgXqFfcsO9Lbot
+        T9drj39bxAYXxeSEhdjinWQmfeK7CHDnTg==
+X-Google-Smtp-Source: AA0mqf4mhUxGdxDyd1aKC1Sf0nP8jRR+iC9NP6I0ui600XlVx0c7uo//PmdFxfl+aNiow/+mVRXJDA==
+X-Received: by 2002:a05:6512:3153:b0:4a2:da6:d969 with SMTP id s19-20020a056512315300b004a20da6d969mr17496716lfi.671.1669816712596;
+        Wed, 30 Nov 2022 05:58:32 -0800 (PST)
+Received: from localhost.localdomain (95.49.125.236.neoplus.adsl.tpnet.pl. [95.49.125.236])
+        by smtp.gmail.com with ESMTPSA id 6-20020ac25f06000000b00498fbec3f8asm269889lfq.129.2022.11.30.05.58.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 05:47:36 -0800 (PST)
-Received: (nullmailer pid 1848613 invoked by uid 1000);
-        Wed, 30 Nov 2022 13:47:34 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Wed, 30 Nov 2022 05:58:28 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: msm/dsi: Don't require vcca-supply on 14nm PHY
+Date:   Wed, 30 Nov 2022 14:58:07 +0100
+Message-Id: <20221130135807.45028-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     linux-remoteproc@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v2-2-12bc22255474@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-remoteproc-v2-0-12bc22255474@linaro.org>
- <20221114-narmstrong-sm8550-upstream-remoteproc-v2-2-12bc22255474@linaro.org>
-Message-Id: <166981596760.1846592.11317546499813728073.robh@kernel.org>
-Subject: Re: [PATCH v2 2/5] dt-bindings: remoteproc: qcom: adsp: document
- sm8550 adsp, cdsp & mpss compatible
-Date:   Wed, 30 Nov 2022 07:47:34 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On some SoCs (hello SM6115) vcca-supply is not wired to any smd-rpm
+or rpmh regulator, but instead powered by the VDD_MX line, which is
+voted for in the DSI ctrl node.
 
-On Wed, 30 Nov 2022 11:29:46 +0100, Neil Armstrong wrote:
-> This documents the compatible for the component used to boot the
-> aDSP, cDSP and MPSS on the SM8550 SoC.
-> 
-> The SM8550 boot process on SM8550 now requires a secondary "Devicetree"
-> firmware to be passed along the main Firmware, and the cDSP a new power
-> domain named "NSP".
-> 
-> A third memory domain for the DSM memory zone is also needed for the MPSS
-> PAS bindings.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 195 +++++++++++++++++++++
->  1 file changed, 195 insertions(+)
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.example.dtb: remoteproc@30000000: False schema does not allow {'compatible': ['qcom,sm8550-adsp-pas'], 'reg': [[805306368, 256]], 'clocks': [[4294967295, 0]], 'clock-names': ['xo'], 'interrupts-extended': [[4294967295, 6, 1], [4294967295, 0, 1], [4294967295, 1, 1], [4294967295, 2, 1], [4294967295, 3, 1]], 'interrupt-names': ['wdog', 'fatal', 'ready', 'handover', 'stop-ack'], 'memory-region': [[4294967295], [4294967295]], 'firmware-name': ['qcom/sm8550/adsp.mbn', 'qcom/sm8550/adsp_dtb.mbn'], 'power-domains': [[4294967295], [4294967295]], 'power-domain-names': ['lcx', 'lmx'], 'qcom,qmp': [[4294967295]], 'qcom,smem-states': [[4294967295, 0]], 'qcom,smem-state-names': ['stop'], 'glink-edge': {'interrupts-extended': [[4294967295, 3, 0, 1]], 'mboxes': [[4294967295, 3, 0]], 'label': ['lpass'], 'qcom,remote-pid': [[2]]}, '$nodename': ['remoteproc@30000000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.example.dtb: remoteproc@30000000: Unevaluated properties are not allowed ('glink-edge', 'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221114-narmstrong-sm8550-upstream-remoteproc-v2-2-12bc22255474@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+index 819de5ce0bc9..a43e11d3b00d 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+@@ -39,7 +39,6 @@ required:
+   - compatible
+   - reg
+   - reg-names
+-  - vcca-supply
+ 
+ unevaluatedProperties: false
+ 
+-- 
+2.38.1
 
