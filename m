@@ -2,108 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DAEE63DF25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:44:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 514FF63E074
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 20:11:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231330AbiK3So2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 13:44:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
+        id S229625AbiK3TL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 14:11:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbiK3SoF (ORCPT
+        with ESMTP id S229449AbiK3TL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:44:05 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC10F98962;
-        Wed, 30 Nov 2022 10:44:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1669833842; x=1701369842;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=Gtyz6SNZuGgTDy//usOG/QH31joaiy/IY6bcuWc0RzI=;
-  b=TI6t8gdPKYOnDxR71LS0W+ybg8yfq5nniGdwWUrp/rcnLnhJoGRnK6Z4
-   WvrjoX0AVzQtSICJpQsujFz83pWFJW4c8B0l9ZI0hOKf8z9XE6r04q4KH
-   vBtvAzLTKvtAOsQb1FubkJPgog12azvfRMoQnVdGFfXitpy9afsg+rQNa
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Nov 2022 10:44:02 -0800
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2022 10:44:02 -0800
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 30 Nov 2022 10:44:01 -0800
-Date:   Wed, 30 Nov 2022 10:44:01 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Eddie Huang =?utf-8?B?KOm7g+aZuuWCkSk=?= 
-        <eddie.huang@mediatek.com>
-CC:     "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "krzysztof.kozlowski@linaro.org" <krzysztof.kozlowski@linaro.org>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
-        "jejb@linux.ibm.com" <jejb@linux.ibm.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "beanhuo@micron.com" <beanhuo@micron.com>,
-        "avri.altman@wdc.com" <avri.altman@wdc.com>,
-        "bvanassche@acm.org" <bvanassche@acm.org>,
-        "j-young.choi@samsung.com" <j-young.choi@samsung.com>,
-        "Arthur.Simchaev@wdc.com" <Arthur.Simchaev@wdc.com>,
-        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
-        "daejun7.park@samsung.com" <daejun7.park@samsung.com>,
-        "mani@kernel.org" <mani@kernel.org>,
-        Stanley Chu =?utf-8?B?KOacseWOn+mZnik=?= 
-        <stanley.chu@mediatek.com>,
-        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "agross@kernel.org" <agross@kernel.org>
-Subject: Re: [PATCH v7 06/16] ufs: core: mcq: Configure resource regions
-Message-ID: <20221130184401.GB9934@asutoshd-linux1.qualcomm.com>
-References: <cover.1669747235.git.quic_asutoshd@quicinc.com>
- <c655d1e62f619818e034f76c90330393cba8c79b.1669747235.git.quic_asutoshd@quicinc.com>
- <37a017a2176fee1da8a7903613f132b22c9741df.camel@mediatek.com>
+        Wed, 30 Nov 2022 14:11:28 -0500
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC5D5445D;
+        Wed, 30 Nov 2022 11:11:27 -0800 (PST)
+Received: by mail-oi1-f178.google.com with SMTP id n205so19846071oib.1;
+        Wed, 30 Nov 2022 11:11:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1JhMgGZW7My2+iKHTLOJlbdH8i+Z4qqitNV2auxp8XE=;
+        b=3Lx4kzjCVjChRS7YDzWxLyYITAZRBR3VeCqG5MYAbEBDrnrtdzu83PW6fMwBKpFyoY
+         CD6xEFzcTzw5weSDMkQeYmTGRyaVJKnBWRtUonlHdJAv4aqs4jSVj3JuR2V2/z5hCln6
+         DFKMESXqWY+evHPAYGjcVIpJZPXNi54gNwWy66tcI+IxXJlR+ugrr6n9YMLEaRxEAMyi
+         +n752g/MO3q2DDF1uw8iJ5HwvKRWKb2jwoI67bfTJwuCAc013MOnQlPopNMZeBbHDwpq
+         x0mpohtMFV2YsnhuzAfn1wS8wRHWMmJmkg9x39mrB1gJU3oEppBJ9EVYpLdf+jPokbbW
+         UsxA==
+X-Gm-Message-State: ANoB5pmPQLaLJZig+SbBwjC/oHqCczTKHYPpWl0IfqRFydUOdO5zFFpS
+        laMehRX26KBobNq363o00A==
+X-Google-Smtp-Source: AA0mqf7htfyXtTOqZ6SLwCWAtka03LgntaMGU5dLEbwjX1nbs89vbcUHfQasU5eIlJmkF1/HAWFS4g==
+X-Received: by 2002:a05:6808:1309:b0:359:d97b:3f6f with SMTP id y9-20020a056808130900b00359d97b3f6fmr23361909oiv.298.1669835486319;
+        Wed, 30 Nov 2022 11:11:26 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id s16-20020a056830439000b0066c7733be43sm1290820otv.30.2022.11.30.11.11.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 11:11:25 -0800 (PST)
+Received: (nullmailer pid 2629509 invoked by uid 1000);
+        Wed, 30 Nov 2022 19:11:25 -0000
+Date:   Wed, 30 Nov 2022 13:11:25 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Robert Marko <robimarko@gmail.com>,
+        Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: firmware: qcom,scm: document MSM8226
+ clocks
+Message-ID: <166983548453.2629449.4233608295006445088.robh@kernel.org>
+References: <20221122092345.44369-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <37a017a2176fee1da8a7903613f132b22c9741df.camel@mediatek.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221122092345.44369-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 30 2022 at 01:15 -0800, Eddie Huang (黃智傑) wrote:
->Hi Asutosh,
->
->On Tue, 2022-11-29 at 10:53 -0800, Asutosh Das wrote:
->Please correct:
->
->return hba->vops->mcq_config_resource(hba);
->
-Thanks, I missed correcting it before pushing it up.
-I will send a next version now.
 
--asd
+On Tue, 22 Nov 2022 10:23:44 +0100, Krzysztof Kozlowski wrote:
+> Document the clocks (core, bus and iface) used on MSM8226 SCM.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Cc: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
->> +
->> +	return -EOPNOTSUPP;
->> +}
->> +
->>
->
->Except this issue, I test this series pass on my platform. Thanks the
->patch
->
->Eddie
->
+Acked-by: Rob Herring <robh@kernel.org>
