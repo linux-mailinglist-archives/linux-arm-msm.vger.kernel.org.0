@@ -2,106 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 170F263D569
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 13:20:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C42663D5E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 13:44:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbiK3MUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 07:20:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36544 "EHLO
+        id S235084AbiK3MoS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 07:44:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbiK3MUh (ORCPT
+        with ESMTP id S235019AbiK3MoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 07:20:37 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334F46DCC8;
-        Wed, 30 Nov 2022 04:20:36 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AUC7qJo018648;
-        Wed, 30 Nov 2022 12:20:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=6CaDG6FQs1F5uP2IQ8HSQQ6culH2xnBd8bcJ5NL6wnI=;
- b=SfuAYpqUzniYI5MZYvECqfa5kzPy5zykFFoU+/h6vBPxd1Ia/7Fpzs4OQwNxyybOwFUO
- A3yXy9wsLZYx2WoJ+oQzohAOyOa64scLSUTZ8dvZW4JuqneD+jbAkclTaE7J4eH2NnnK
- LADKsnCFDhMP2RviMZ04jzFy+/jYLxd1OkD5WhbU5hqs7Tc07i0bH1Gj03cDChsv5W46
- OyBZRVZ8T3+DqUHjqFNK70crGRVlWRr5D3tzu3kuOl+9Iwx4fMsTb4pwtPh1c+6WhHom
- Tr8rPsPqmQ+x3u0SbMbqze+DmoS69+QjVqUZy+nNDiFXLwfs3BwksyeoSY7Zg/nugazX rw== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m66w4g0xn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Nov 2022 12:20:32 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AUCKSG5031895;
-        Wed, 30 Nov 2022 12:20:28 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3m3bvknc4e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 30 Nov 2022 12:20:28 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AUCHAn6028553;
-        Wed, 30 Nov 2022 12:20:28 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2AUCKRdY031886;
-        Wed, 30 Nov 2022 12:20:28 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 1C0D03F58; Wed, 30 Nov 2022 17:50:27 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] dmaengine: qcom: gpi: Set link_rx bit on GO TRE for rx operation
-Date:   Wed, 30 Nov 2022 17:50:24 +0530
-Message-Id: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: saoNPNDqXdfrcCNlnDl2Qz1j6VK4Ea9y
-X-Proofpoint-ORIG-GUID: saoNPNDqXdfrcCNlnDl2Qz1j6VK4Ea9y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-30_04,2022-11-30_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- malwarescore=0 mlxlogscore=848 mlxscore=0 spamscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211300087
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        Wed, 30 Nov 2022 07:44:08 -0500
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ECCB4F183
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 04:44:08 -0800 (PST)
+Received: by mail-vs1-xe29.google.com with SMTP id q128so845863vsa.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 04:44:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MNA7eZi9VQf69CeBVlQwZ04/y+5gTO1SaFbD25OjShk=;
+        b=uSk5JtGDkFtZkUVlSh2i3p7XW+BEpm0qle2Qeku5sBhEFvEtjxwJcJO/dKAIH6mtnM
+         ihCM776HxUIm9bISIC0XuUG2ntUDh43aYrOMKAm8kyIKgsGhNiQWX3jWqJ7nrDkcrJux
+         P6HiyheNg1ARMUwTofYkN+5TdwWAD+Ief4jrVs3kTBRmPfEJV+1Fj/Kobmxo1TAft8FS
+         86v6pEod24fy4y15bRVI/fgHouGGWPW/5cHlox5WDNAg1oMIcSXrXjoxUuke9vjsCIUJ
+         /Tk2xkrcwu9Rx5yVD7NwJ2YtxgrQifkgBuMZI59vLsuMVQHnRn7y6HHSroWm49Z+GqcQ
+         dgTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MNA7eZi9VQf69CeBVlQwZ04/y+5gTO1SaFbD25OjShk=;
+        b=sD7yLk0NyEZ2bqRAWvbfiafXqfKOislcs+f9HHLE7s83ou/fmDxFUmHGrRkAayXFgB
+         tFX1zHfTbiJkoBCfJrLeZe71OSw9wG6AnwEvSFXtAO7obtfwDd2D+C+V+e8G/gorUGsA
+         obGtsh/MgCWxY5xJpUjx0gEp3RrTuwV7FmeUDOMhs0PrFKDB2NvvGF9N624Eo10HFNxn
+         IgKqZ7tK2SlgNzXcnxRxF588O7oC4NrOsyDFjO1DJ4pOfZ/NdGcJm6qUBcalkD1uOZcg
+         u1Qw9AYQMmGYOPfHko3nSGYZvOLFayThDhT+0l7R83M66X8D9dTHBdDLdl9L/7pyXNvg
+         3mBA==
+X-Gm-Message-State: ANoB5pkR2GMJ/1dOwuSeE1/Sw8x6mS2q2KdBkJ2++hCYi+TaBLZRh5ki
+        SHWhrzcobuECJZ7b23f3CpnUFPO90c+CWJ+qnx1AnQ==
+X-Google-Smtp-Source: AA0mqf54Z2CrPKxSRMlbr73gv+438gnoVt/fuaLT9AfACCSJrTBHJXFmdawHwFRgJOYgsFogG3EQ+yCbag8p/gkY3HY=
+X-Received: by 2002:a67:eb11:0:b0:3b0:c9bc:7abe with SMTP id
+ a17-20020a67eb11000000b003b0c9bc7abemr3394360vso.61.1669812247176; Wed, 30
+ Nov 2022 04:44:07 -0800 (PST)
+MIME-Version: 1.0
+References: <20221129110012.224685-1-brgl@bgdev.pl> <20221129110012.224685-12-brgl@bgdev.pl>
+ <22332676-9d3a-1e21-aa70-e9c367b19bd9@kernel.org>
+In-Reply-To: <22332676-9d3a-1e21-aa70-e9c367b19bd9@kernel.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Wed, 30 Nov 2022 13:43:56 +0100
+Message-ID: <CAMRc=MczfMKYEWfV_WOazXni9FbXX8x_iwjm4URD7-WWQQmUsA@mail.gmail.com>
+Subject: Re: [PATCH v4 11/13] tty: serial: qcom-geni-serial: stop operations
+ in progress at shutdown
+To:     Jiri Slaby <jirislaby@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per GSI spec, link_rx bit is to be set on GO TRE on tx
-channel whenever there is going to be a DMA TRE on rx
-channel. This is currently set for duplex operation only.
+On Wed, Nov 30, 2022 at 10:37 AM Jiri Slaby <jirislaby@kernel.org> wrote:
+>
+> On 29. 11. 22, 12:00, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > We don't stop transmissions in progress at shutdown. This is fine with
+> > FIFO SE mode but with DMA it causes trouble so fix it now.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >   drivers/tty/serial/qcom_geni_serial.c | 3 +++
+> >   1 file changed, 3 insertions(+)
+> >
+> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> > index fe15fc0e1345..c0270eec2a66 100644
+> > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > @@ -864,6 +864,9 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
+> >
+> >   static void qcom_geni_serial_shutdown(struct uart_port *uport)
+> >   {
+> > +     qcom_geni_serial_stop_tx(uport);
+> > +     qcom_geni_serial_stop_rx(uport);
+> > +
+> >       disable_irq(uport->irq);
+>
+> I'm just asking without actually looking into the code: cannot the
+> interrupt reschedule/restart the above?
+>
 
-Set the bit for rx operation as well.
+It can actually, good catch, thanks.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/dma/qcom/gpi.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 061add8..59a36cb 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1756,6 +1756,7 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
- 		tre->dword[3] = u32_encode_bits(TRE_TYPE_GO, TRE_FLAGS_TYPE);
- 		if (spi->cmd == SPI_RX) {
- 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
-+			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_LINK);
- 		} else if (spi->cmd == SPI_TX) {
- 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_CHAIN);
- 		} else { /* SPI_DUPLEX */
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
-
+Bart
