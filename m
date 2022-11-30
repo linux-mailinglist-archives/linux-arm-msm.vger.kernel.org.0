@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D87363D1A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 10:21:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A79D63D1AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 10:22:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbiK3JVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 04:21:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
+        id S232847AbiK3JWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 04:22:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230024AbiK3JU7 (ORCPT
+        with ESMTP id S232707AbiK3JWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 04:20:59 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6A6F4B77C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:20:57 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id v206so4049552ybv.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:20:57 -0800 (PST)
+        Wed, 30 Nov 2022 04:22:40 -0500
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA03D11A32
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:22:38 -0800 (PST)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-3bfd998fa53so111999567b3.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VgWpKJeG3/tybrVDEBxDjhgC2NrM3Rx6PkdmaV95rbk=;
-        b=zdtQAQWDk4FnFK86ZcgrZQAMzCT1IyHgsnQbdaM9MxP1jbUKoo405i8aFBPc2XxnvN
-         72mLgb3//1aOTLAuTenYxEYS2Qog7auIYPPg2d5dljDuySf0AdxzIwnB0teGfyh3MHXH
-         7T5NfKCg9gyoGE2r8WTcsCR5Gsrq/tbwK9k4UmtV482FrjipmAESmoMrZHVQK1Mn8+mo
-         AugT8o9vYgoN7Yuv746DbDvt/ldIJlsB5BQnH7w9iVSD15F/iTfgeCA4hxVQuGmR6TlI
-         QcTn7HivJ3tn71hBper17qTBIYVbLsGddGXI5rXd/IQRpdEgqx2PUr/vTvykUORMCJlk
-         DiWw==
+        bh=esqAkKsNPNa+vWU1VEu3p5pJm5olzNFS6cZhKN5g6K8=;
+        b=OH1nH0cfbXVH7lX96inipfihQDqcAzOBuPL6pnQ6uFYs+2t8n0RmwCJCpEqhJG6hMy
+         gEd3CZlJJCZIDT4OrLt0d+L61dZuYlVu07TGc6SOGDgVrzdUlItR9clJ4k/tBn+WvfFu
+         SwRR9u1dwsdHThjGptZYZGzIL4PxFiBxXdqCeDJmIGW8kjvUHjWDfuFso7i9fh5/OisF
+         obXKDXIO981BzKPuhy+U7vgvLsJDsZL89AOBwJgnrDdNDqGZaE8BgoqEed9Oe8D6CSIy
+         ODu58bEWerMuu1XCJWXaEAXXs4DEKWCsa4cHNQOtgxscHMdKl3u+JdM/8LcLXkz+oUba
+         SccA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VgWpKJeG3/tybrVDEBxDjhgC2NrM3Rx6PkdmaV95rbk=;
-        b=SQTlQzTKZ/dSSXu1CveZ0t5pr2VyaH2gvaNqwAskkFq2aWw+VhrXtXAPu6NId8JJ/s
-         j8tWidKzYJiIbhjGCKhaQrj8PSNtUxNOdQI7NKxzowhR/HC9KwstW1JvWa+y7q3NUwMh
-         dezRCEZxAvYH9qOcfTM50+N+v+BQN69jCFeFX4GRqsDj/pDFzQxqGfFXh+v/MBndRR2F
-         rd/fF5Hvk8C6+17i6zPqJJDCdUgyCNoPNl1Lkr/G9Z86kw+muznM8tpCLX5FrwqeXjDW
-         s7UZLFSAlcfIujRmaW9IQZUWcYI9Avqi8DDDDkM5AC2Rt3TNo+1uhVqPWMT1DsNuPz49
-         fLEQ==
-X-Gm-Message-State: ANoB5pn+w4qoojGy4AFCbMSq65dG2Wr5S5pV2Y0wSrqab7DlNNeDyfGV
-        Y39gCRIRhHLPNP3roDUDMxgQCQK3d9Hdv8l+bV/yUg==
-X-Google-Smtp-Source: AA0mqf78Hw8TSqu8oK1aqKN8OQkfbNJgRXzi7U0lTakAB9DHU/yOz5bIOkvZbFBAe3UtMnwI80NSL2OBrOGx5UEJzs8=
-X-Received: by 2002:a25:ae91:0:b0:6f7:fd66:8e5c with SMTP id
- b17-20020a25ae91000000b006f7fd668e5cmr10277731ybj.516.1669800056665; Wed, 30
- Nov 2022 01:20:56 -0800 (PST)
+        bh=esqAkKsNPNa+vWU1VEu3p5pJm5olzNFS6cZhKN5g6K8=;
+        b=2IkfNMg2HJLtKkoc37oHfERdyaustniM6y6YGhwvR2cbH9LFMc9sR84SD35W42z5xF
+         OGjQPdGvTrx4xNkfBAPs4RKZcAjfEzCl9TMDAUWeLX5D3+/PN01X6hcMwL5WBFwRyo2j
+         4HAbo766A+TPuSBOdnHFv0P34sfLUkB9EIL4PB7CNOng/0e0DWcZ0TgyQpih6mim/eVy
+         4DQbXG6qIO45lO2JgoV0slWEB27o5JW+dc080YJ8VeHe0aNxBcbhlMyDGQKNAl3s1Hnl
+         NBHUPvEt4YehepOfcKzTySdq7dljHllC02vHy2wjBmnHJLbPphkIdyhbB1ng3yN6en49
+         GeEw==
+X-Gm-Message-State: ANoB5pkno8nFtjRgJ7oKQXlancXzErPucFWcDPPxWNbD5cNvMesAcdt+
+        eQqszZ+r3nQM8L36FzN1kJQnyhk8oX+l0C2aT6qyPA==
+X-Google-Smtp-Source: AA0mqf6eRY6wdCOqxX33Z4M4u21qczGijL4HTcdnMMJLEpRYeSokHrYtqrqbnwCO4ETK0bWEGQxk+x9Y9p+wGxJYsRc=
+X-Received: by 2002:a81:598b:0:b0:3b7:78c8:a205 with SMTP id
+ n133-20020a81598b000000b003b778c8a205mr26625010ywb.188.1669800157826; Wed, 30
+ Nov 2022 01:22:37 -0800 (PST)
 MIME-Version: 1.0
-References: <1669767131-13854-1-git-send-email-quic_khsieh@quicinc.com> <1669767131-13854-2-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1669767131-13854-2-git-send-email-quic_khsieh@quicinc.com>
+References: <20221126102141.721353-1-dmitry.baryshkov@linaro.org> <CAPM=9tyjMCOY3-tJASxNg6dFizfaivqfSrhSG1otFTvfuSg=dQ@mail.gmail.com>
+In-Reply-To: <CAPM=9tyjMCOY3-tJASxNg6dFizfaivqfSrhSG1otFTvfuSg=dQ@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 30 Nov 2022 11:20:45 +0200
-Message-ID: <CAA8EJpr_AODJ6WPB8_4aRY8q6XBy3-cXMOkox7VfL-PK1p4pQg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] arm64: dts: qcom: add data-lanes and
- link-freuencies into dp_out endpoint
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Wed, 30 Nov 2022 11:22:27 +0200
+Message-ID: <CAA8EJpoN7HAkdRnJHFCqTxF__L7QwyDK4hLuFKn63A3TgosOsQ@mail.gmail.com>
+Subject: Re: [pull] drm/msm: drm-msm-display-for-6.2
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -72,64 +69,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 30 Nov 2022 at 02:12, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Wed, 30 Nov 2022 at 09:02, Dave Airlie <airlied@gmail.com> wrote:
 >
-> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
-> add link-frequencies property into dp_out endpoint as well. The last
-> frequency specified at link-frequencies will be the max link rate
-> supported by DP.
+> On Sat, 26 Nov 2022 at 20:21, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Hi Dave,
+> >
+> > As agreed with Rob Clark, a pull request for the non-GPU part of the drm/msm driver. Summary below.
+> >
+> > The following changes since commit 7f7a942c0a338c4a2a7b359bdb2b68e9896122ec:
+> >
+> >   Merge tag 'drm-next-20221025' of git://linuxtv.org/pinchartl/media into drm-next (2022-10-27 14:44:15 +1000)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.freedesktop.org/lumag/msm.git tags/drm-msm-display-for-6.2
+> >
+> > for you to fetch changes up to 8d1d17d47eaebe4466459846d07e4ba8953fa585:
+> >
+> >   Merge branches 'msm-next-lumag-core', 'msm-next-lumag-dpu', 'msm-next-lumag-dp', 'msm-next-lumag-dsi', 'msm-next-lumag-hdmi' and 'msm-next-lumag-mdp5' into msm-next-lumag (2022-11-26 12:06:29 +0200)
+> >
+> > ----------------------------------------------------------------
+> > drm/msm updates for 6.2
+> >
+> > Core:
+> > - MSM_INFO_GET_FLAGS support
+> > - Cleaned up MSM IOMMU wrapper code
+> >
+> > DPU:
+> > - Added support for XR30 and P010 image formats
+> > - Reworked MDSS/DPU schema, added SM8250 MDSS bindings
+> > - Added Qualcomm SM6115 support
+> >
+> > DP:
+> > - Dropped unsane sanity checks
+> >
+> > DSI:
+> > - Fix calculation of DSC pps payload
+> >
+> > DSI PHY:
+> > - DSI PHY support for QCM2290
+> >
+> > HDMI:
+> > - Reworked dev init path
+> >
+> > ----------------------------------------------------------------
+> > Adam Skladowski (2):
+> >       dt-bindings: display/msm: add support for SM6115
+> >       drm/msm/disp/dpu1: add support for display on SM6115
+> >
+> > Bryan O'Donoghue (1):
+> >       dt-bindings: msm: dsi-controller-main: Drop redundant phy-names
+> >
+> > Dan Carpenter (1):
+> >       drm/msm/hdmi: remove unnecessary NULL check
+> >
+> > Dmitry Baryshkov (25):
+> >       Merge remote-tracking branch 'msm/msm-fixes' into HEAD
 >
-> Changes in v5:
-> -- revert changes at sc7180.dtsi and sc7280.dtsi
-> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
+> This commit has no justification or signed off by line, I'll let it
+> slide this once, but no backmerges without justification and please
+> sign off merges.
 
-Bindings update?
-
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 6 +++++-
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 6 +++++-
->  2 files changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 754d2d6..39f0844 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -812,7 +812,11 @@ hp_i2c: &i2c9 {
->         status = "okay";
->         pinctrl-names = "default";
->         pinctrl-0 = <&dp_hot_plug_det>;
-> -       data-lanes = <0 1>;
-> +};
-> +
-> +&dp_out {
-> +    data-lanes = <0  1>;
-> +    link-frequencies = /bits/ 64 <160000000 270000000 540000000>;
->  };
->
->  &pm6150_adc {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index 93e39fc..b7c343d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -440,7 +440,11 @@ ap_i2c_tpm: &i2c14 {
->         status = "okay";
->         pinctrl-names = "default";
->         pinctrl-0 = <&dp_hot_plug_det>;
-> -       data-lanes = <0 1>;
-> +};
-> +
-> +&dp_out {
-> +       data-lanes = <0  1>;
-> +       link-frequencies = /bits/ 64 <160000000 270000000 540000000 810000000>;
->  };
->
->  &mdss_mdp {
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+Roger.
 
 
 -- 
