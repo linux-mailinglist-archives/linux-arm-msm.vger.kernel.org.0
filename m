@@ -2,87 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF52763E2F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 22:51:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F98763E2F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 22:51:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbiK3VvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 16:51:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
+        id S229749AbiK3Vvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 16:51:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbiK3VvM (ORCPT
+        with ESMTP id S229750AbiK3Vv2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 16:51:12 -0500
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 099A65AE36;
-        Wed, 30 Nov 2022 13:51:12 -0800 (PST)
-Received: by mail-oi1-f169.google.com with SMTP id m204so59183oib.6;
-        Wed, 30 Nov 2022 13:51:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ed0ydWV+6MGo0R7QavnrcUotFip+FDP5jOASQ/l4gg4=;
-        b=wWTxSqzxGt4zue1i+dwEUcjJVFjggML7zPNrTA+ytu8XpGWWPLSQDYCm/gNH08A3xc
-         jHD3PIFtcxtxi9Q6zKOSUnsdbFkUQ0xdR+N1Cq25gDfKVkVvZm2w26wZ4ODV7ketry38
-         5RaBbICtx3vDIJgl1Etw6YK5DeiIMZp9hU/arO5C9YVensHVXbrGPi9w+xDThN7f9utW
-         4LzFpXbVpnYClWHpNkzmLaoKhUUS293NqZgkmkRlBShPQUfiH6XE1adisE2HhUU1bV3y
-         U+VccLMOA8hQ082qQT8K4+c1N5iv6YSVwxHHs86Il9PzxNBQ4I/1/Qynfje9gLtzOu3t
-         rjCQ==
-X-Gm-Message-State: ANoB5pkL73Ik8RFwg5yo7lWiYxevIrUPSBg8qKC47aTMI+l514XQesmI
-        iDJKoSk2jEQXvoz4LFwfjw==
-X-Google-Smtp-Source: AA0mqf7J8e2oXFovz2VgTSEz3/EdPmTWw6BjtL7XC784CxAbJ1Z+zs/qpUiq5LLxHKDpZyxShWaJRA==
-X-Received: by 2002:a05:6808:14d1:b0:35b:92a4:fcae with SMTP id f17-20020a05680814d100b0035b92a4fcaemr13100578oiw.102.1669845071240;
-        Wed, 30 Nov 2022 13:51:11 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 185-20020aca05c2000000b0035b7002af8csm1057826oif.56.2022.11.30.13.51.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 13:51:10 -0800 (PST)
-Received: (nullmailer pid 2988879 invoked by uid 1000);
-        Wed, 30 Nov 2022 21:51:09 -0000
-Date:   Wed, 30 Nov 2022 15:51:09 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, dianders@chromium.org, david@ixit.cz,
-        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
-        konrad.dybcio@somainline.org, agross@kernel.org,
-        andersson@kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 03/18] dt-bindings: msm: dsi-controller-main: Rename
- qcom,dsi-ctrl-6g-qcm2290 to qcom,qcm2290-dsi-ctrl
-Message-ID: <20221130215109.GA2986716-robh@kernel.org>
-References: <20221125123638.823261-1-bryan.odonoghue@linaro.org>
- <20221125123638.823261-4-bryan.odonoghue@linaro.org>
- <dc5df66c-2e2b-14f1-ce88-705d831f37d9@linaro.org>
+        Wed, 30 Nov 2022 16:51:28 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF3692A1E;
+        Wed, 30 Nov 2022 13:51:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1669845087; x=1701381087;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=GAy6p2zNRrTbb2Kd0FfJLA6CMe4CwBNHgW0q9DGdS6s=;
+  b=pZfNbt71hca0xqb5gXyQsvsHC9s3aK0uHFeenhaRNb7prXo1lAjwwuOM
+   gsF+wGJBcFskmmxFLGphptSumxMbj9nXm4dMFa9ZSSB42WB4OGnLCsYlz
+   ZbYQxev9+9sb9xCYyIdgvPeXPHM1GCr0sb3UJp9jVFGdSn7QIVjrMaLzJ
+   U=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Nov 2022 13:51:27 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2022 13:51:27 -0800
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 30 Nov 2022 13:51:26 -0800
+Date:   Wed, 30 Nov 2022 13:51:26 -0800
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     Bart Van Assche <bvanassche@acm.org>
+CC:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
+        <quic_xiaosenh@quicinc.com>, <stanley.chu@mediatek.com>,
+        <eddie.huang@mediatek.com>, <daejun7.park@samsung.com>,
+        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v8 00/16] Add Multi Circular Queue Support
+Message-ID: <20221130215126.GC9934@asutoshd-linux1.qualcomm.com>
+References: <cover.1669839847.git.quic_asutoshd@quicinc.com>
+ <7b71f90d-05d2-0b42-3a4a-6414e0cb88a3@acm.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"; format=flowed
 Content-Disposition: inline
-In-Reply-To: <dc5df66c-2e2b-14f1-ce88-705d831f37d9@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <7b71f90d-05d2-0b42-3a4a-6414e0cb88a3@acm.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Nov 26, 2022 at 08:54:11PM +0200, Dmitry Baryshkov wrote:
-> On 25/11/2022 14:36, Bryan O'Donoghue wrote:
-> > We will add in a number of compat strings to dsi-controller-main.yaml in
-> > the format "qcom,socname-dsi-ctrl" convert the currently unused
-> > qcom,dsi-ctrl-6g-qcm2290 to qcom,qcm2290-dsi-ctrl.
-> > 
-> > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> I'd say, as you are going to introduce new bindings using two compat
-> strings, just leave this binding as is, marking it as deprecated.
+On Wed, Nov 30 2022 at 13:14 -0800, Bart Van Assche wrote:
+>On 11/30/22 12:27, Asutosh Das wrote:
+>>This patch series is an implementation of UFS Multi-Circular Queue.
+>>Please consider this series for next merge window.
+>
+>Hi Asutosh,
+>
+>It seems like my Reviewed-by tag is missing from several patches?
+>
+>>Please take a look and let us know your thoughts.
+>>
+>>v6 -> v7:
+>>- Added missing Reviewed-by tags.
+>
+>Are the v7 -> v8 changes perhaps missing?
+>
+Hello Bart,
+Thanks.
+Let me correct this and RESEND the v8 with everything updated.
 
-But if it was unused, then it's okay to just change it.
+-asd
 
-Rob
+>Thanks,
+>
+>Bart.
+>
