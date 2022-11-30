@@ -2,84 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBDDC63CDA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 04:00:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 153F063CF33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 07:30:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiK3DAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Nov 2022 22:00:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35524 "EHLO
+        id S234194AbiK3GaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 01:30:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232655AbiK3DAu (ORCPT
+        with ESMTP id S234131AbiK3GaG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Nov 2022 22:00:50 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE9A6E571;
-        Tue, 29 Nov 2022 19:00:49 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 28D8CB819FA;
-        Wed, 30 Nov 2022 03:00:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37295C433C1;
-        Wed, 30 Nov 2022 03:00:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669777246;
-        bh=IWQo4SSdovd7II4a3BN6Ku/F6HwhfznsqvyOPegEjQQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SSXLjOXClSrRHvhJSt+ogmAoeLAldynncH1XLRJ+ffjNT8UxKTDkEZ1oYPQpsZd9Q
-         zr8jdwc42kmeFLnO2L/Ibj1J/S86zMjbP1BQNh6leYHwm5HKHFWsk7xrVpDd/iAisO
-         m4puiGZCQs0k4eU0WmEu0BcBSFxb+dB3pAtqD8WiFz1Bqj19SslIgv6WhQCN4bggT4
-         g7V7d4ZPGokkbMUIDBf3Zo4i8ggmwLKCHs9Scdqb/TZ6YnUCX6VzO9HN0wQDHPDcdz
-         1nexwS2WGelmKLj+Cmh2pgutaoBM5Jsglopv2chsz03+Tr0ZAihvVge9Z6v02rXx2Q
-         u773h4L2eUN+Q==
-Date:   Tue, 29 Nov 2022 21:00:44 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sarannya S <quic_sarannya@quicinc.com>
-Cc:     quic_bjorande@quicinc.com, arnaud.pouliquen@foss.st.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH V4 0/3] rpmsg signaling/flowcontrol patches
-Message-ID: <20221130030044.hqp6vwovhgl37or5@builder.lan>
-References: <1669658575-21993-1-git-send-email-quic_sarannya@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1669658575-21993-1-git-send-email-quic_sarannya@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 30 Nov 2022 01:30:06 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907EC3FB8D;
+        Tue, 29 Nov 2022 22:30:01 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id 9so15927416pfx.11;
+        Tue, 29 Nov 2022 22:30:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7X0wN6DpjI8XmLGa5Qd3cypCN6OHZWy7qqAwTdstsr8=;
+        b=c6N/EiTsBJ0oILqhP/MASxki8AiPnSFzQ76UCpiCxwo8q6BiNUJBIG4Va6iHGdnBFm
+         YHAZVajb5UyT+Kg5M1tD52BTN+AP5V+aiEIMyJEu+dnFL/ogiFItbWfXtOoOarzgNVQA
+         aBcey8TUpTMZz9FEhOCl0iJbT9vVO+zDKITL3DrpnLOsum+0kksfRBdcprYRNRJmBasy
+         hW6yPYstZ+xY88dkg1mUHZ0x8N95szGmZMB6Y4WVz1Xtd0LMs3N0QIqDeD0wOxFH5UNe
+         P9hs9bN604Bf8tijSu64t0zre1ail3od+xpZNkVxJ0KR5OonU3CehrAnHpEdK7bnxadK
+         H3bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7X0wN6DpjI8XmLGa5Qd3cypCN6OHZWy7qqAwTdstsr8=;
+        b=eKZEYFSL1Xkyq5cWB3V58vAljI2fD8bzgedGUVx2/SvIzrSmIuta+FYzoY+6VJNC6O
+         qO9wu2tUgz0WzyIbA80uOidrQfw5D5agHg/k/wmYRHux6iAAAieSVRUa6w93qHt8BiLN
+         qTll8cIcoG3GKMjuC5M0eZid49GyfOv2t4KQ+SF22AMYGSGzQLTjfyVcMnTg8qK+U6Sd
+         EZebG3hA/g1UxqxhF40Z1DUkgDbgk3whdX07YeDaP8dfvB7f+UF6HVypWdbwjJMGqU8w
+         7M15mRB64Tpke/d9lOw9KsSaozwUj4uUlpmsQzj7eu7WsSJrnUuePxoLAnxGNbLMjMnM
+         BwAA==
+X-Gm-Message-State: ANoB5pm7i/Yxp8A14toD3LwOPE304ithN6tyVyAKb4487c30YzvpMZ5W
+        CNiBgmlHlSnBoVM265R+c2Rm9IVCO9M=
+X-Google-Smtp-Source: AA0mqf5+A5G3kVOZzVagiGlVvettoA3+DZ/f+f57uEicoYYeZEgeg0pDXaomEoJc/YLsSfF03u1Gcw==
+X-Received: by 2002:a63:5409:0:b0:476:e3bb:2340 with SMTP id i9-20020a635409000000b00476e3bb2340mr34690736pgb.530.1669789800526;
+        Tue, 29 Nov 2022 22:30:00 -0800 (PST)
+Received: from localhost.localdomain (2001-b400-e2d4-7fe5-300a-7c16-8b65-8a51.emome-ip6.hinet.net. [2001:b400:e2d4:7fe5:300a:7c16:8b65:8a51])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170902780200b00188b63f0782sm432375pll.288.2022.11.29.22.29.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Nov 2022 22:29:59 -0800 (PST)
+From:   Owen Yang <ecs.taipeikernel@gmail.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Harvey <hunge@google.com>, Bob Moragues <moragues@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Gavin Lee <gavin.lee@ecs.com.tw>,
+        Matthias Kaehlcke <mka@google.com>,
+        Abner Yen <abner.yen@ecs.com.tw>,
+        Owen Yang <ecs.taipeikernel@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v10 1/2] dt-bindings: arm: qcom: Add zombie
+Date:   Wed, 30 Nov 2022 14:29:52 +0800
+Message-Id: <20221130142829.v10.1.Idfcba5344b7995b44b7fa2e20f1aa4351defeca6@changeid>
+X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 11:32:52PM +0530, Sarannya S wrote:
-> [Change from V3]:
-> Fixed review comments in previous set.
-> 
+Add entries in the device tree binding for sc7280-zombie.
 
-Please do list the actual changes that you did. This ensures that new
-people can focus on the new areas, if preferred, and that returning
-reviewers get confirmation that their feedback was addressed.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-Thanks,
-Bjorn
+Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
+---
 
-> Sarannya S (3):
->   rpmsg: core: Add signal API support
->   rpmsg: glink: Add support to handle signals command
->   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-> 
->  drivers/rpmsg/qcom_glink_native.c | 63 +++++++++++++++++++++++++++++++++++++++
->  drivers/rpmsg/rpmsg_char.c        | 60 ++++++++++++++++++++++++++++++++-----
->  drivers/rpmsg/rpmsg_core.c        | 20 +++++++++++++
->  drivers/rpmsg/rpmsg_internal.h    |  2 ++
->  include/linux/rpmsg.h             | 15 ++++++++++
->  5 files changed, 152 insertions(+), 8 deletions(-)
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Changes in v10:
+- Add "Reviewed-by" tags in this patch log.
+- Fixed history log list.
+
+Changes in v9:
+- Fixed version number (v7 and v8 were erroneously posted as v6)
+
+Changes in v8:
+- Correct commit log. Use "entries" instead of "an entry". As requested by Krzysztof, Matthias and Douglas.
+
+Changes in v7:
+- None.
+
+Changes in v6:
+- None.
+
+Changes in v5:
+- None.
+
+Changes in v4:
+- None.
+
+Changes in v3:
+- None.
+
+Changes in v2:
+- Fixed patch order.
+
+ Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 463509f0f23a..7ec6240311db 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -655,6 +655,16 @@ properties:
+           - const: google,villager-sku512
+           - const: qcom,sc7280
+ 
++      - description: Google Zombie (newest rev)
++        items:
++          - const: google,zombie
++          - const: qcom,sc7280
++
++      - description: Google Zombie with LTE (newest rev)
++        items:
++          - const: google,zombie-sku512
++          - const: qcom,sc7280
++
+       - items:
+           - enum:
+               - lenovo,flex-5g
+-- 
+2.17.1
+
