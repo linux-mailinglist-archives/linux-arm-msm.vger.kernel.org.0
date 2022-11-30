@@ -2,78 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C421963DC7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 18:57:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1903963DC95
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:02:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229897AbiK3R46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 12:56:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51978 "EHLO
+        id S229669AbiK3SC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 13:02:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiK3R46 (ORCPT
+        with ESMTP id S229559AbiK3SC1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 12:56:58 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF69E4A076
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 09:56:56 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id v1so28353908wrt.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 09:56:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v/yfboE8GBvsF2o0XAcHNNlgI3QJRQ4CfM3zu1bAjZk=;
-        b=TVpDIr2dN2bMRWM1+cvsD7niKuZPhNiak2jXBxZycQcBTrRZILzm4X4m6mqsjOj24P
-         odBcz+m1oskrmFcJ6OS3Oc7/MBRq7XylkiguFSe4Ifo4Sbpz28uknRb79xhqxNmDc2af
-         8MnHJ+FUfr9KKVeZrsEoxvYcpJ+Mcdqde+R6V0JHoeTzW2C29dGpZt0m07M7uVfp6TuK
-         /xlVawNJYi9TiiKGBZs1y8FWLqDVsyS7MgoZ0R4NPATGT5P0FUc/x4a0+gY53GRsT132
-         sNePi3txZ7TgN1HRIosj+UmucrvqLXBaKaGSeyGpGg5dhKXGu183JYthDM2RoiDo4j7h
-         fqYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v/yfboE8GBvsF2o0XAcHNNlgI3QJRQ4CfM3zu1bAjZk=;
-        b=7CCuLVLXOp4UV7iDSsNRDjbk2DNHdjNJVrk+kXh5f1wXjeTFeWQ1QoOyOQSqCHmBeJ
-         61VbP7Yo8rOVOXKZBJttxTpYkBeOWTvoJPZ2+Qat5PqtHsLzLA76q1B9X/lDkg8UlyOq
-         rHg0a17Rh7SEr8lWwsB50dCSgrX9EnWMyPswpc9OCy+8EN54S1h5Fb2inHHIedQ/uVUN
-         lHjsBX8RIn4FcpeHrqjPE6zmKj00nMmEj6NBANLY/TYc4zXRhlGT3wqxanA1oSWrqulZ
-         XqAMd7gsqq77RdwFgNoKZ1Lln9zN+rKUFoUI4/n9Ze5TRlTLyOclUn8UD0Vfs6FTfi1b
-         bnig==
-X-Gm-Message-State: ANoB5plUHiYeK0TMpk/6p+XEkeDDbd7p8XwNN/KdVvTMUtrCOnBZ79/D
-        4Se7np1sGrQwwyklvqeJRKjNYA==
-X-Google-Smtp-Source: AA0mqf7RSf3TRivZNMt+x0iR7kT2RFCxCz0PHF4GhD7VvGX8m9HVmadVGgc1stf5xFqmHVXSk9cpEQ==
-X-Received: by 2002:a05:6000:52:b0:242:5e7:d301 with SMTP id k18-20020a056000005200b0024205e7d301mr17364812wrx.464.1669831015392;
-        Wed, 30 Nov 2022 09:56:55 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j3-20020adfd203000000b002366c3eefccsm2225169wrh.109.2022.11.30.09.56.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 09:56:54 -0800 (PST)
-Message-ID: <7152a291-d559-01d9-bd19-29cea5969c00@linaro.org>
-Date:   Wed, 30 Nov 2022 17:56:53 +0000
+        Wed, 30 Nov 2022 13:02:27 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD2BE2EF68;
+        Wed, 30 Nov 2022 10:02:26 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 70A82B81C5E;
+        Wed, 30 Nov 2022 18:02:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22A3C433C1;
+        Wed, 30 Nov 2022 18:02:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669831344;
+        bh=PxN7ZdJLfEd8pxwZrcru/DKCXudV+wCmunE5yEOkGuw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YauE7EA6ZdEw8pk2kkZhXdBqBb67P3YatKxmq2WFv3K8imgh1iIsOnCAdmx+v3QSu
+         aXf8foT6dZlXJCjEE9HJecjlAdb0R1UUz7cbOkcxhv5NXYX7pct1HCg3PrKij2lVND
+         XsAZdPCH8StZ3tJMOgUuHOpNleDs7mXOj6Ew45EyizoWU8sQl9Jsdgg2NXcGBUexTL
+         VSSaWuubS9RbSgDb3HnhXLxXnxhlWUJkR8KXkBZwVmqAeTwZvyzLMt9R2qtN21+aN7
+         uJJIAW2ghpc05c7uLOYyhA2Oli5SXkQCFpLBAWf+au1mJO3674/llPCEdOKU5mWc3I
+         Q9/J3nATFkHQQ==
+Date:   Wed, 30 Nov 2022 23:32:16 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom-ep: Fix PERST register description
+Message-ID: <20221130180216.GA41385@thinkpad>
+References: <20221018093115.7537-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v5 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robert.foss@linaro.org, akapatra@quicinc.com, jzala@quicinc.com,
-        todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-References: <20221128144210.1028-1-quic_mmitkov@quicinc.com>
- <32736286-9fb8-a1f1-31cb-2fd19d713e9e@linaro.org>
- <179c9db4-cbfd-ef9c-def2-544e3d54f94f@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <179c9db4-cbfd-ef9c-def2-544e3d54f94f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221018093115.7537-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,78 +61,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/11/2022 17:04, Milen Mitkov (Consultant) wrote:
-> On 30/11/2022 17:50, Bryan O'Donoghue wrote:
->> On 28/11/2022 14:42, quic_mmitkov@quicinc.com wrote:
->>> With these changes, the CSID entity has, as it did previously, a single
->>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
->>> virtual channel configuration is determined by which of the source ports
->>> are linked to an output VFE line. For example, the link below will
->>> configure the CSID driver to enable vc 0 and vc 1:
->>>
->>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
->>
->> Following your instructions here
->>
->> root@linaro-gnome:~# media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->> root@linaro-gnome:~# media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
->> root@linaro-gnome:~# media-ctl -l '"msm_csid0":3->"msm_vfe0_rdi2":0[1]'
->> root@linaro-gnome:~# media-ctl -l '"msm_csid0":4->"msm_vfe0_rdi3":0[1]'
->> Unable to parse link: Invalid argument (22)
->>
->> ?
->>
->> ---
->> bod
+On Tue, Oct 18, 2022 at 11:31:15AM +0200, Johan Hovold wrote:
+> The 'qcom,perst-regs' property holds a single phandle array with the
+> phandle of the TCSR syscon and offsets of the two PERST registers, but
+> the current schema does not capture this.
 > 
-> Hi Bryan,
+> Update the binding to describe the single phandle array and its three
+> elements.
 > 
-> Thanks for the feedback! There are the following IFEs on SM8250 (Titan 
-> 4.8):
+> Fixes: 31c9ef002580 ("dt-bindings: PCI: Add Qualcomm PCIe Endpoint controller")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml          | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> IFE0 -> has 3 RDI lines and 1 PIX line
-> 
-> IFE1 -> has 3 RDI lines and 1 PIX line
-> 
-> IFELite0 -> has 4 RDI lines
-> 
-> IFELite1 -> has 4 RDI lines
-> 
-> so there's no msm_vfe0_rdi3 port for IFE0 and IFE1 at all, only rdi0, 
-> rdi1, rdi2. In theory if you link the 4th CSID source port to 
-> msm_vfe0_pix the parsing works:
-> 
-> media-ctl -l '"msm_csid0":4->"msm_vfe0_pix":0[1]'
-> 
-> However, in practice, there's no PIX support in camss so even if the 
-> linking works, the hardware won't get configured properly.
-> 
-> You can however use the IFELite's 4th RDI port. Due to omission in 
-> camss-vfe there isn't any separate logic for naming the sink ports of 
-> IFELite's devies so it's still called "pix", even though it's not a pix 
-> port. It should be a small code change to fix the naming of the port for 
-> IFELite, I could do it as part of this patch set or as a new patch after 
-> this patch set gets merged. Which is the preferred way?
-> 
-> Regards,
-> 
-> Milen
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> index 977c976ea799..7574291646ad 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> @@ -42,13 +42,13 @@ properties:
+>      maxItems: 8
+>  
+>    qcom,perst-regs:
+> -    description: Reference to a syscon representing TCSR followed by the two
+> -                 offsets within syscon for Perst enable and Perst separation
+> -                 enable registers
+> +    description: PERST TCSR registers
+>      $ref: "/schemas/types.yaml#/definitions/phandle-array"
+>      items:
+> -      minItems: 3
+> -      maxItems: 3
+> +      - items:
+> +          - description: phandle of TCSR syscon
+> +          - description: offset of PERST Enable register
+> +          - description: offset of PERST Separation Enable register
+>  
+>    interrupts:
+>      items:
+> -- 
+> 2.37.3
 > 
 
-Hmm, OK the pix mapping works for me, thanks, the
-
-It would be good to fixup the name, maybe as an additional patch.
-
-Also the above description contains important information. IMO its 
-worthwhile to include information like that in the git log.
-
-i.e. IFE <-> RDI mapping, IFELite <-> RDI mapping
-
-Also suggest adding example media-ctl commands for the VCs to your git 
-log both for yourself to remember - I'm usually logging so that I can 
-remind myself - but also for other people to more easily 
-replicate/validate your work.
-
----
-bod
+-- 
+மணிவண்ணன் சதாசிவம்
