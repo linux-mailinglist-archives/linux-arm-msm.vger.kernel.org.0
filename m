@@ -2,124 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A73663DCF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:18:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FCD363DD1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 19:24:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbiK3SSk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 13:18:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48838 "EHLO
+        id S229705AbiK3SYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 13:24:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbiK3SSZ (ORCPT
+        with ESMTP id S229630AbiK3SXs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:18:25 -0500
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74ED9897B;
-        Wed, 30 Nov 2022 10:15:42 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id l42-20020a9d1b2d000000b0066c6366fbc3so11758302otl.3;
-        Wed, 30 Nov 2022 10:15:42 -0800 (PST)
+        Wed, 30 Nov 2022 13:23:48 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B0E54750
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 10:23:17 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id n21so2469713iod.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 10:23:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ONDnEc4ZIyy7Wu5ujEkS7Ktw1ahOUILUSTWpMfcxxQQ=;
+        b=pwrErNWmob268zUOg+YwENLcK/qom0yQVqn8oY2WFSUEuf2Jr3URR0IWp2whEwJZkk
+         5KZ4CEXzcxKpQjjjf/42ZDHqhN2no+ZYAkxQwSHqM9OQpTpo0oeCqJUiXNUh8ZJ61q8B
+         eOidCFbsMG+aDhsPVK7+EuXZmSZ6UhEqPUhvGwG1FoDTV5ZmFQH+uAQR/iSF6knFx4Pj
+         DExeZMpQpwV7deRWrycCjFLhsM0Ln5JILhRhBLQEJu19B40QANz5U3ApN3wgjQX5mUKl
+         ZySiWygLU5ipXYFBX0Z6JX2Dl/D3V5jygajJaDvlrwd2DvywMpnfV0qaUp/9rwQQSsDF
+         RL7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JQgMv+4kwESBu57U9sIa1Qhs40zZZUjyRdV30we0JoU=;
-        b=2w5+3hzeNhvnPmhc8BE9pnXTYLELFXlf8pMYGsrwtxap9p+1aeG/nvqr7TiwzXgpdc
-         DHh/eOPfOsX+vdA2Wo4RGZvgdxlafEINJdWWi3aBEr5SYeWYo3VEQYYWZWiDhaX7cPmP
-         VuoBbh6u9OCZ6f0khh4IlNa6iYk59U7W768A02W3nX1wmWEiahKAUM+s33bNv1XPqAwj
-         7TMAncgofOofNdICX/f3mrcq4f/r34mPd48YtvdsXn0tPj9c3XFbKybhjKxm4/eV5zW1
-         CUdk6wMQ+XANgKNKJr0cQEllX1LUdhFCydh6L44fEW6xvXCu8ccNpa/D4sMV75tlYHIN
-         noOw==
-X-Gm-Message-State: ANoB5pndIpmMxFmlyq9NIsDMeAzF5FdUF/uJQ2Khq2TCKTEMvo5HZ4e1
-        tQGGgURsiUmtbdX83F16I328zTvJMg==
-X-Google-Smtp-Source: AA0mqf7Gyq/9uTW6zQxKhmsY5gzkvXymZgl+qZcZo2UBY55Qqq62o+YalOdkJKa3fE9puNdFsdefAA==
-X-Received: by 2002:a9d:2c42:0:b0:66c:754e:869b with SMTP id f60-20020a9d2c42000000b0066c754e869bmr30820357otb.198.1669832137870;
-        Wed, 30 Nov 2022 10:15:37 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v12-20020acaac0c000000b00342ded07a75sm902245oie.18.2022.11.30.10.15.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 10:15:37 -0800 (PST)
-Received: (nullmailer pid 2555328 invoked by uid 1000);
-        Wed, 30 Nov 2022 18:15:36 -0000
-Date:   Wed, 30 Nov 2022 12:15:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Tao Zhang <quic_taozha@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v1 1/9] dt-bindings: arm: Add support for DSB element
-Message-ID: <20221130181536.GA2553507-robh@kernel.org>
-References: <1669018873-4718-1-git-send-email-quic_taozha@quicinc.com>
- <1669018873-4718-2-git-send-email-quic_taozha@quicinc.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ONDnEc4ZIyy7Wu5ujEkS7Ktw1ahOUILUSTWpMfcxxQQ=;
+        b=mhRWLJUKcm6y7F9U422Gz4oJzKiGfwk+mUIqzIeD6HmquE8LSU4dM+eDzSsU896b9/
+         YwXferzTJy/Xqe4ypNy+Ak3Wi7bLX00m/fsza5Vklu1KM2lGh8l1MhTQ/Xz6lMo4WGIF
+         CpIpETGcxUz3K//YNVIkmBHufovINxDflBCpn4IJnNIlKnvLVLdvFoSZ3rSF634euvfI
+         BgXoGRYSAKyCem1oYMaKBkYbSQpEUsLc2OZEAFtjy/j0dKfGU20jtw2oD8Iu9f5RZNDo
+         lDrHwjiCglB/djlTDlCByQahFsHWYDug6KRNtMLXpJzScNoKFlRLLfMV5SsZlK+ACkDW
+         ob8g==
+X-Gm-Message-State: ANoB5pkfJk74DUd+Lv38oc3XU5lUZ6dtXgNVDzYUEMMhkz2o9U2ThYxV
+        rQxSlCkWh8cDI7fSoZOJ4Lx0zSYFvVTjG7pbxWY6mQ==
+X-Google-Smtp-Source: AA0mqf7P++wySGdQaSQLLnxnCcRG9+GZr61mVqsW+x7n6y+OZ20z6BFaJRCgtGj/vM5qP9xeSP1Kf2O90kWJDUuL2fw=
+X-Received: by 2002:a02:c905:0:b0:374:e77e:d3d8 with SMTP id
+ t5-20020a02c905000000b00374e77ed3d8mr29319867jao.103.1669832596394; Wed, 30
+ Nov 2022 10:23:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1669018873-4718-2-git-send-email-quic_taozha@quicinc.com>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <1669658575-21993-1-git-send-email-quic_sarannya@quicinc.com>
+ <1669658575-21993-2-git-send-email-quic_sarannya@quicinc.com> <71e3425b-e598-a2ff-b684-dbf2f43bfa60@foss.st.com>
+In-Reply-To: <71e3425b-e598-a2ff-b684-dbf2f43bfa60@foss.st.com>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Wed, 30 Nov 2022 11:23:05 -0700
+Message-ID: <CANLsYkwX03vUpBN2MKOdtTHZbgV=7j1XSDv-e1hN8R_f=Ac0=w@mail.gmail.com>
+Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
+        swboyd@chromium.org, quic_clew@quicinc.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 04:21:05PM +0800, Tao Zhang wrote:
-> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
-> Bit) element for TPDA. Specifies the DSB element size supported
-> by each monitor connected to the aggregator on each port. Should
-> be specified in pairs (port, dsb element size).
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> index c46ddea..e3b58b5 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> @@ -58,6 +58,13 @@ properties:
->      minItems: 1
->      maxItems: 2
->  
-> +  qcom,dsb-elem-size:
-> +    description: |
-> +      Specifies the DSB element size supported by each monitor
-> +      connected to the aggregator on each port. Should be specified
-> +      in pairs (port, dsb element size).
+On Tue, 29 Nov 2022 at 02:29, Arnaud POULIQUEN
+<arnaud.pouliquen@foss.st.com> wrote:
+>
+> Hi Sarannya,
+>
+> On 11/28/22 19:02, Sarannya S wrote:
+> > Some transports like Glink support the state notifications between
+> > clients using flow control signals similar to serial protocol signals.
+> > Local glink client drivers can send and receive flow control status
+> > to glink clients running on remote processors.
+> >
+> > Add APIs to support sending and receiving of flow control status by
+> > rpmsg clients.
+> >
+> > Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> > Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> > ---
+> >  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+> >  drivers/rpmsg/rpmsg_internal.h |  2 ++
+> >  include/linux/rpmsg.h          | 15 +++++++++++++++
+> >  3 files changed, 37 insertions(+)
+> >
+> > diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> > index d6dde00e..0c5bf67 100644
+> > --- a/drivers/rpmsg/rpmsg_core.c
+> > +++ b/drivers/rpmsg/rpmsg_core.c
+> > @@ -331,6 +331,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+> >  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+> >
+> >  /**
+> > + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+> > + * @ept:     the rpmsg endpoint
+> > + * @enable:  enable or disable serial flow control
+> > + *
+> > + * Return: 0 on success and an appropriate error value on failure.
+> > + */
+> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
+>
+> Seems that you did not take into account comment in your V3 asking you to
+> add the destination address of the endpoint as parameter
 
-Please define DSB somewhere here and not just the commit msg.
+I will not review this patchset until Arnaud's comment is addressed or
+a reason for the omission is provided.
 
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +
->    clocks:
->      maxItems: 1
->  
-> @@ -100,6 +107,8 @@ examples:
->         compatible = "qcom,coresight-tpda", "arm,primecell";
->         reg = <0x6004000 0x1000>;
->  
-> +       qcom,dsb-elem-size = <0 32>;
-> +
->         clocks = <&aoss_qmp>;
->         clock-names = "apb_pclk";
->  
-> -- 
-> 2.7.4
-> 
-> 
+>
+> Regards,
+> Arnaud
+>
+> > +{
+> > +     if (WARN_ON(!ept))
+> > +             return -EINVAL;
+> > +     if (!ept->ops->set_flow_control)
+> > +             return -ENXIO;
+> > +
+> > +     return ept->ops->set_flow_control(ept, enable);
+> > +}
+> > +EXPORT_SYMBOL(rpmsg_set_flow_control);
+> > +
+> > +/**
+> >   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+> >   * @ept: the rpmsg endpoint
+> >   *
+> > @@ -539,6 +557,8 @@ static int rpmsg_dev_probe(struct device *dev)
+> >
+> >               rpdev->ept = ept;
+> >               rpdev->src = ept->addr;
+> > +
+> > +             ept->flow_cb = rpdrv->flowcontrol;
+> >       }
+> >
+> >       err = rpdrv->probe(rpdev);
+> > diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> > index 39b646d..4fea45a 100644
+> > --- a/drivers/rpmsg/rpmsg_internal.h
+> > +++ b/drivers/rpmsg/rpmsg_internal.h
+> > @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
+> >   * @trysendto:               see @rpmsg_trysendto(), optional
+> >   * @trysend_offchannel:      see @rpmsg_trysend_offchannel(), optional
+> >   * @poll:            see @rpmsg_poll(), optional
+> > + * @set_flow_control:        see @rpmsg_set_flow_control(), optional
+> >   * @get_mtu:         see @rpmsg_get_mtu(), optional
+> >   *
+> >   * Indirection table for the operations that a rpmsg backend should implement.
+> > @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
+> >                            void *data, int len);
+> >       __poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+> >                            poll_table *wait);
+> > +     int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
+> >       ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+> >  };
+> >
+> > diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+> > index 523c98b..cc7a917 100644
+> > --- a/include/linux/rpmsg.h
+> > +++ b/include/linux/rpmsg.h
+> > @@ -64,12 +64,14 @@ struct rpmsg_device {
+> >  };
+> >
+> >  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
+> > +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
+> >
+> >  /**
+> >   * struct rpmsg_endpoint - binds a local rpmsg address to its user
+> >   * @rpdev: rpmsg channel device
+> >   * @refcount: when this drops to zero, the ept is deallocated
+> >   * @cb: rx callback handler
+> > + * @flow_cb: remote flow control callback handler
+> >   * @cb_lock: must be taken before accessing/changing @cb
+> >   * @addr: local rpmsg address
+> >   * @priv: private data for the driver's use
+> > @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
+> >       struct rpmsg_device *rpdev;
+> >       struct kref refcount;
+> >       rpmsg_rx_cb_t cb;
+> > +     rpmsg_flowcontrol_cb_t flow_cb;
+> >       struct mutex cb_lock;
+> >       u32 addr;
+> >       void *priv;
+> > @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
+> >   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
+> >   * @remove: invoked when the rpmsg channel is removed
+> >   * @callback: invoked when an inbound message is received on the channel
+> > + * @flowcontrol: invoked when remote side flow control status is received
+> >   */
+> >  struct rpmsg_driver {
+> >       struct device_driver drv;
+> > @@ -113,6 +117,7 @@ struct rpmsg_driver {
+> >       int (*probe)(struct rpmsg_device *dev);
+> >       void (*remove)(struct rpmsg_device *dev);
+> >       int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
+> > +     int (*flowcontrol)(struct rpmsg_device *, void *, bool);
+> >  };
+> >
+> >  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
+> > @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+> >
+> >  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+> >
+> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
+> > +
+> >  #else
+> >
+> >  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+> > @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+> >       return -ENXIO;
+> >  }
+> >
+> > +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
+> > +{
+> > +     /* This shouldn't be possible */
+> > +     WARN_ON(1);
+> > +
+> > +     return -ENXIO;
+> > +}
+> > +
+> >  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+> >
+> >  /* use a macro to avoid include chaining to get THIS_MODULE */
