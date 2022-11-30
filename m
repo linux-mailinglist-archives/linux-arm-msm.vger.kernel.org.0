@@ -2,108 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D60663D22F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 10:39:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4E4F63D274
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 10:51:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234022AbiK3JjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 04:39:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
+        id S234757AbiK3JvB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 04:51:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235116AbiK3JiU (ORCPT
+        with ESMTP id S234727AbiK3JvA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 04:38:20 -0500
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E08BE16;
-        Wed, 30 Nov 2022 01:37:40 -0800 (PST)
-Received: by mail-ed1-f44.google.com with SMTP id b8so23209991edf.11;
-        Wed, 30 Nov 2022 01:37:39 -0800 (PST)
+        Wed, 30 Nov 2022 04:51:00 -0500
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA66624F3D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:50:59 -0800 (PST)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-3cbdd6c00adso71942417b3.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 01:50:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=85CBpe8h6suPlC2YlUqV3pCbiuyIDeu7NL7tAzWSq04=;
+        b=WMQHbII59gMQ0BlEfRQu/mx7qNJjrPJO7OqapZERyzpNTOsYZeo79HPXvNUQb2WH/g
+         IsVteDPqxVox+ZFHzsroABU1M9JcDSi9MSNK0CmQpoLfJlERObQjoZlYfyCXinMQBfK4
+         Iys+Lm0Fp4z5uqFibE++OQPIYgruCqrIIfoonVqw+S5Jwr13dyHJjwXmZykNsxMwUB4E
+         S7h1Xhfo8AlwrrLbn876IzrNOITSfHH20iPy6R1kSMirhzHRdOMuNVF+/tUBGGY6JFIn
+         Gbn2SoJ+Gkhud76kOUhRyP3c7q6ZuM9HJ1V2QQUn67MAqC5gVATxLXOacvAs2Gd/oKeg
+         4ZKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8txsqYzOtikQ3QaXooOdL0rWxlI4WoMcJ9dMdxjlc34=;
-        b=7ZCCqNVSneXdbHkjAp4CsZ+lZTRRdYdXHW4bZ+UwHz3REcf7I/a8pBBEs7VTe5Z+hU
-         AFDGd9z1guEA5DCKPjazaVKmXhjDHuWJlXA0YYkT1v3Q/q4eyDaYTi4qsssudYUEXTEd
-         skiXFPwzIZVrS9Q9H1x9eUiML2ISQ2wQhwnaA8uJHT9Qk+E8NmngvBaScmLVn5ZIuWqG
-         +PBUWiEWMcHvw2c3t3EtCjvV7pBqVqskRpes3eycXvKaC/tw1rvaKSdZfllryn4bhYtL
-         gGLrh0WK6OJuhXgO902FOZLKLoM2iSTBrm0KDaFnlOzIAJPVS69W1byOEPYnZFTvJF/7
-         6vQQ==
-X-Gm-Message-State: ANoB5pmK3uXQpZ6iUZ75W5zisbrkjn3fPaFeI47IyzDXePaLcnWOUBiU
-        RDhQkA3pUYJLF087t/CfSy4=
-X-Google-Smtp-Source: AA0mqf7Tiax9Np3qBwe098NPc6lmOwV81ou5iaihHaCbKsNigXw7NiBzNqUrh8Y/yYdg+pkrP3h30A==
-X-Received: by 2002:a05:6402:5290:b0:461:af68:9bcd with SMTP id en16-20020a056402529000b00461af689bcdmr38837516edb.67.1669801058451;
-        Wed, 30 Nov 2022 01:37:38 -0800 (PST)
-Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:49? ([2a0b:e7c0:0:107::aaaa:49])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906211200b007b29eb8a4dbsm452553ejt.13.2022.11.30.01.37.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 01:37:37 -0800 (PST)
-Message-ID: <22332676-9d3a-1e21-aa70-e9c367b19bd9@kernel.org>
-Date:   Wed, 30 Nov 2022 10:37:36 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=85CBpe8h6suPlC2YlUqV3pCbiuyIDeu7NL7tAzWSq04=;
+        b=pBhgmS/gWcLcXbhvkPeIxs2f9f/P57FkJ9dndqxmp/Re8CxfBUKxyk7iALyKth6Ikg
+         x11WJDeOTz/4MDsocnA3fL8Xu5aF0FBzSt/eUBo1PnxwiymOBZ2+BTtsrUWmagS3RiQd
+         YZLhR/CHQ9QHrGW2kqoSkeplBZKNreykKgUsjInh4wx7qHi2OIZorqc5L5E5YnM5JjXq
+         SKKHg+N5yVAml/Q+LzTsIx7aI6tQLNgD7wsnV8WOvkH3iPlvUe507tjOVp7QGQZ8Kvw5
+         +3+Aj/CM87sRpbdxRcjago8aYlPQmLVSFY7a7qUN+ynrBBadJ5+K5wYQMROKwrQrXv7J
+         UK3Q==
+X-Gm-Message-State: ANoB5plXwtoZVT6kr34e2mCBDOwhKFK6ZpJKpi1PIWLDKzIH3nKbmiDp
+        Bd94wUuGN+cpbofAElsqlRe9sccsdQCEPKOD3R4KSw==
+X-Google-Smtp-Source: AA0mqf5nA1N+rUMCNTWTlTmneC+iJIjUIdYRscTuKjxKx6GwENB0YR1xBSvYfk36+SLH/PPzg8wy1CB+3xgKhh7YJcA=
+X-Received: by 2002:a0d:db15:0:b0:3d6:2151:4038 with SMTP id
+ d21-20020a0ddb15000000b003d621514038mr1132331ywe.418.1669801858887; Wed, 30
+ Nov 2022 01:50:58 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v4 11/13] tty: serial: qcom-geni-serial: stop operations
- in progress at shutdown
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20221129110012.224685-1-brgl@bgdev.pl>
- <20221129110012.224685-12-brgl@bgdev.pl>
-From:   Jiri Slaby <jirislaby@kernel.org>
-In-Reply-To: <20221129110012.224685-12-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1669767131-13854-1-git-send-email-quic_khsieh@quicinc.com> <1669767131-13854-3-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1669767131-13854-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 30 Nov 2022 11:50:48 +0200
+Message-ID: <CAA8EJppEHrPeoCxZUerf4MjDVkYEm7EvTcsm8eTAQBUVMqc_cA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] drm/msm/dp: parser data-lanes and link-frequencies
+ from endpoint node
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29. 11. 22, 12:00, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> We don't stop transmissions in progress at shutdown. This is fine with
-> FIFO SE mode but with DMA it causes trouble so fix it now.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Wed, 30 Nov 2022 at 02:12, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Both data-lanes and link-frequencies are property of endpoint. This
+> patch parser endpoint to retrieve max data lanes and max link rate
+> supported specified at dp_out endpoint. In the case where no endpoint
+> specified, then 4 data lanes with HBR2 link rate (5.4G) will be the
+> default link configuration.
+
+So, you have two changes in a single patch.
+1) Moving the data-lanes to the endpoint
+2) Adding link-frequencies.
+
+Please split the patch accordingly. Also keep in mind that you have to
+provide backwards compatibility for the data-lanes property.
+
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/tty/serial/qcom_geni_serial.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index fe15fc0e1345..c0270eec2a66 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -864,6 +864,9 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
->   
->   static void qcom_geni_serial_shutdown(struct uart_port *uport)
->   {
-> +	qcom_geni_serial_stop_tx(uport);
-> +	qcom_geni_serial_stop_rx(uport);
+>  drivers/gpu/drm/msm/dp/dp_parser.c | 34 ++++++++++++++++++++++++++--------
+>  drivers/gpu/drm/msm/dp/dp_parser.h |  2 ++
+>  2 files changed, 28 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index dd73221..9367f8c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -94,16 +94,34 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
+>  static int dp_parser_misc(struct dp_parser *parser)
+>  {
+>         struct device_node *of_node = parser->pdev->dev.of_node;
+> -       int len;
+> -
+> -       len = drm_of_get_data_lanes_count(of_node, 1, DP_MAX_NUM_DP_LANES);
+> -       if (len < 0) {
+> -               DRM_WARN("Invalid property \"data-lanes\", default max DP lanes = %d\n",
+> -                        DP_MAX_NUM_DP_LANES);
+> -               len = DP_MAX_NUM_DP_LANES;
+> +       struct device_node *endpoint;
+> +       int cnt;
+> +       u64 frequence[4];
+
+frequency
+
 > +
->   	disable_irq(uport->irq);
+> +       endpoint = of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
+> +       if (endpoint) {
+> +               cnt = of_property_count_u32_elems(endpoint, "data-lanes");
+> +               if (cnt < 0)
+> +                       parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
+> +               else
+> +                       parser->max_dp_lanes = cnt;
+> +
+> +               cnt = of_property_count_u64_elems(endpoint, "link-frequencies");
+> +               if (cnt < 0) {
+> +                       parser->max_dp_link_rate = DP_LINK_FREQUENCY_HBR2; /* 54000 khz */
 
-I'm just asking without actually looking into the code: cannot the 
-interrupt reschedule/restart the above?
+Wrong number of zeroes
 
-thanks,
--- 
-js
-suse labs
+> +               } else {
+> +                       if (cnt > 4)    /* 4 frequency at most */
+> +                               cnt = 4;
 
+'4 frequencies'. Not to mention that magic '4' should be defined
+somewhere. Or removed completely. See below.
+
+> +                       of_property_read_u64_array(endpoint, "link-frequencies", frequence, cnt);
+
+Can you please use of_property_read_u64_index() instead? It also has a
+nice feature of modifying the out_value only if the proper data was
+found. So you can set the default and then override it with the
+of_property_read function. And then divide it by 1000 to get the value
+in KHz.
+
+> +                       parser->max_dp_link_rate = (u32)frequence[cnt  -1];
+> +                       parser->max_dp_link_rate /= 1000;       /* khz */
+
+The HDR3 rate is 8100 Mb/s. 8 100 000 000. This doesn't fit into u32
+(U32_MAX = 4 294 967 295).
+
+> +               }
+> +       } else {
+> +               /* default */
+> +               parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
+> +               parser->max_dp_link_rate = DP_LINK_FREQUENCY_HBR2; /* 54000 khz */
+
+Wrong number of zeroes. Better use Mb/s or Gb/s directly. Also it is a
+rate, not a frequency, so the define should also use 'RATE' in its
+name.
+
+>         }
+>
+> -       parser->max_dp_lanes = len;
+>         return 0;
+>  }
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 866c1a8..76ddb751 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -15,6 +15,7 @@
+>  #define DP_LABEL "MDSS DP DISPLAY"
+>  #define DP_MAX_PIXEL_CLK_KHZ   675000
+>  #define DP_MAX_NUM_DP_LANES    4
+> +#define DP_LINK_FREQUENCY_HBR2 540000
+>
+>  enum dp_pm_type {
+>         DP_CORE_PM,
+> @@ -119,6 +120,7 @@ struct dp_parser {
+>         struct dp_io io;
+>         struct dp_display_data disp_data;
+>         u32 max_dp_lanes;
+> +       u32 max_dp_link_rate;
+>         struct drm_bridge *next_bridge;
+>
+>         int (*parse)(struct dp_parser *parser);
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+
+--
+With best wishes
+
+Dmitry
