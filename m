@@ -2,88 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5E3B63E30C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 23:04:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A435B63E5FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 01:01:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbiK3WEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 17:04:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
+        id S230075AbiLAABP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 19:01:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbiK3WEu (ORCPT
+        with ESMTP id S229943AbiLAAAk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 17:04:50 -0500
-Received: from sp13.canonet.ne.jp (sp13.canonet.ne.jp [210.134.168.90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 970907BF89;
-        Wed, 30 Nov 2022 14:04:49 -0800 (PST)
-Received: from csp13.canonet.ne.jp (unknown [172.21.160.133])
-        by sp13.canonet.ne.jp (Postfix) with ESMTP id 86E891E06A4;
-        Thu,  1 Dec 2022 07:04:41 +0900 (JST)
-Received: from echeck13.canonet.ne.jp ([172.21.160.123])
-        by csp3 with ESMTP
-        id 0VC5pCfBAxJr50VC5plUwn; Thu, 01 Dec 2022 07:04:41 +0900
-X-CNT-CMCheck-Reason: "undefined", "v=2.4 cv=S49nfKgP c=1 sm=1 tr=0
- ts=6387d379 cx=g_jp:t_eml p=ZMph9Jy3UboA:10 p=et4T4aBE6iSmLst72HwA:9
- p=pOQp6VyLxH7D_L77S6qH:22 a=c8wCX2VJ6RehaN9m5YqYzw==:117
- a=yr9NA9NbXb0B05yJHQEWeQ==:17 a=PlGk70OYzacA:10 a=kj9zAlcOel0A:10
- a=sHyYjHe8cH0A:10 a=x7bEGLp0ZPQA:10 a=CjuIK1q_8ugA:10 a=0iaRBTTaEecA:10
- a=xo5jKAKm-U-Zyk2_beg_:22"
-X-CNT-CMCheck-Score: 100.00
-Received: from echeck13.canonet.ne.jp (localhost [127.0.0.1])
-        by esets.canonet.ne.jp (Postfix) with ESMTP id 3B61E1C026D;
-        Thu,  1 Dec 2022 07:04:41 +0900 (JST)
-X-Virus-Scanner: This message was checked by ESET Mail Security
-        for Linux/BSD. For more information on ESET Mail Security,
-        please, visit our website: http://www.eset.com/.
-Received: from smtp13.canonet.ne.jp (unknown [172.21.160.103])
-        by echeck13.canonet.ne.jp (Postfix) with ESMTP id 12A6E1C0262;
-        Thu,  1 Dec 2022 07:04:41 +0900 (JST)
-Received: from kanesaki-kawara.co.jp (webmail.canonet.ne.jp [210.134.169.250])
-        by smtp13.canonet.ne.jp (Postfix) with ESMTPA id 41D0815F962;
-        Thu,  1 Dec 2022 07:04:40 +0900 (JST)
+        Wed, 30 Nov 2022 19:00:40 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA23C87CAB;
+        Wed, 30 Nov 2022 16:00:36 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B100EAm006661;
+        Thu, 1 Dec 2022 00:00:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=I2PzmvDndnXc+YNvIQ8ulWPxOTzENuqVoeZhIiF5um0=;
+ b=fGfrbrWf8heiMjszx9cGHbCSVWekp/wjUF/Izob7eWXxpFSbUK85QuW2XHGXwpD/vpTe
+ hc8fNlXTeg2WdoufPwaZueDy03tGLH5cHeLvUbOxJfmRkRg65+qvNBn9CHnr+fUOhNY+
+ rgSWzN2NNVBOalolXgRDJ1gpBWuBx8LbX0ZTekCCaJtv3uqR0BHlpyertnGQK5d6zjra
+ +VjdiO7bU8JtBnr2iiGuBztihWCnm02uRTMAtJmFtyDe2OZiKjhKhew8+4LWUeZcptUL
+ PLhXo/GknZiTZyYif/VT8PrqTLKrdDCvdXA2YPGAedhjEOGHvBf+9XPDsqFrQSypson3 NQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m5vc9btp9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Dec 2022 00:00:14 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B100C9W001460
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Dec 2022 00:00:12 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 30 Nov 2022 16:00:12 -0800
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>
+CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
+        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
+        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v9 00/16] Add Multi Circular Queue Support 
+Date:   Wed, 30 Nov 2022 15:50:32 -0800
+Message-ID: <cover.1669850856.git.quic_asutoshd@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Message-ID: <20221130220440.00000941.0556@kanesaki-kawara.co.jp>
-Date:   Thu, 01 Dec 2022 07:04:40 +0900
-From:   "Richard Lee" <junko@kanesaki-kawara.co.jp>
-To:     <INBOX@kanesaki-kawara.co.jp>
-Reply-To: <richardeeoo@gmail.com>
-Subject: INQUIRY
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-ORGANIZATION: Richard Lee
-X-MAILER: Active! mail
-X-EsetResult: clean, %VIRUSNAME%
-X-ESET-AS: R=SPAM;S=100;OP=CALC;TIME=1669845881;VERSION=7941;MC=4067780606;TRN=15;CRV=0;IPC=210.134.169.250;SP=4;SIPS=1;PI=5;F=0
-X-I-ESET-AS: RN=442,624:0;RNP=richardeeoo@gmail.com
-X-ESET-Antispam: SPAM
-X-Spam-Status: Yes, score=7.5 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS,
-        UNRESOLVED_TEMPLATE,XPRIO_SHORT_SUBJ autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5229]
-        *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
-        *      https://senderscore.org/blocklistlookup/
-        *      [210.134.168.90 listed in bl.score.senderscore.com]
-        *  1.3 UNRESOLVED_TEMPLATE Headers contain an unresolved template
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-        *  2.0 XPRIO_SHORT_SUBJ Has X Priority header + short subject
-X-Spam-Level: *******
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EPQIS1owsj4Mgeh-enUgTjjUYGm1s1ng
+X-Proofpoint-ORIG-GUID: EPQIS1owsj4Mgeh-enUgTjjUYGm1s1ng
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-30_04,2022-11-30_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ adultscore=0 mlxlogscore=999 spamscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211300170
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Martin,
 
-Greetings,
+This patch series is an implementation of UFS Multi-Circular Queue.
+Please consider this series for next merge window.
+This implementation has been verified on a Qualcomm & MediaTek platform.
 
-I trust you are well. I sent you an email yesterday,
-I just want to confirm if you received it.
-Please let me know as soon as possible,
+Thanks,
+Asutosh
 
-Thank you.
 
+UFS Multi-Circular Queue (MCQ) has been added in UFSHCI v4.0 to improve storage performance.
+The implementation uses the shared tagging mechanism so that tags are shared
+among the hardware queues. The number of hardware queues is configurable.
+This series doesn't include the ESI implementation for completion handling.
+
+Please take a look and let us know your thoughts.
+
+v8 -> v9:
+- Added missing Reviewed-by tags.
+
+v7 -> v8:
+- Addressed Eddie's comments
+
+v6 -> v7:
+- Added missing Reviewed-by tags.
+
+v5 -> v6:
+- Addressed Mani's comments
+- Addressed Bart's comments
+
+v4 -> v5:
+- Fixed failure to fallback to SDB during initialization
+- Fixed failure when rpm-lvl=5 in the ufshcd_host_reset_and_restore() path
+- Improved ufshcd_mcq_config_nr_queues() to handle different configurations
+- Addressed Bart's comments
+- Verified read/write using FIO, clock gating, runtime-pm[lvl=3, lvl=5]
+
+v3 -> v4:
+- Added a kernel module parameter to disable MCQ mode
+- Added Bart's reviewed-by tag for some patches
+- Addressed Bart's comments
+
+v2 -> v3:
+- Split ufshcd_config_mcq() into ufshcd_alloc_mcq() and ufshcd_config_mcq()
+- Use devm_kzalloc() in ufshcd_mcq_init()
+- Free memory and resource allocation on error paths
+- Corrected typos in code comments
+
+v1 -> v2:
+- Added a non MCQ related change to use a function to extrace ufs extended
+feature
+- Addressed Mani's comments
+- Addressed Bart's comments
+
+v1:
+- Split the changes
+- Addressed Bart's comments
+- Addressed Bean's comments
+
+* RFC versions:
+v2 -> v3:
+- Split the changes based on functionality
+- Addressed queue configuration issues
+- Faster SQE tail pointer increments
+- Addressed comments from Bart and Manivannan
+
+v1 -> v2:
+- Enabled host_tagset
+- Added queue num configuration support
+- Added one more vops to allow vendor provide the wanted MAC
+- Determine nutrs and can_queue by considering both MAC, bqueuedepth and EXT_IID support
+- Postponed MCQ initialization and scsi_add_host() to async probe
+- Used (EXT_IID, Task Tag) tuple to support up to 4096 tasks (theoretically)
+
+
+Asutosh Das (16):
+  ufs: core: Optimize duplicate code to read extended feature
+  ufs: core: Probe for ext_iid support
+  ufs: core: Introduce Multi-circular queue capability
+  ufs: core: Defer adding host to scsi if mcq is supported
+  ufs: core: mcq: Add support to allocate multiple queues
+  ufs: core: mcq: Configure resource regions
+  ufs: core: mcq: Calculate queue depth
+  ufs: core: mcq: Allocate memory for mcq mode
+  ufs: core: mcq: Configure operation and runtime interface
+  ufs: core: mcq: Use shared tags for MCQ mode
+  ufs: core: Prepare ufshcd_send_command for mcq
+  ufs: core: mcq: Find hardware queue to queue request
+  ufs: core: Prepare for completion in mcq
+  ufs: mcq: Add completion support of a cqe
+  ufs: core: mcq: Add completion support in poll
+  ufs: core: mcq: Enable Multi Circular Queue
+
+ drivers/ufs/core/Makefile      |   2 +-
+ drivers/ufs/core/ufs-mcq.c     | 416 +++++++++++++++++++++++++++++++++++++++++
+ drivers/ufs/core/ufshcd-priv.h |  92 ++++++++-
+ drivers/ufs/core/ufshcd.c      | 395 +++++++++++++++++++++++++++++++-------
+ drivers/ufs/host/ufs-qcom.c    | 148 +++++++++++++++
+ drivers/ufs/host/ufs-qcom.h    |   5 +
+ include/ufs/ufs.h              |   6 +
+ include/ufs/ufshcd.h           | 128 +++++++++++++
+ include/ufs/ufshci.h           |  64 +++++++
+ 9 files changed, 1189 insertions(+), 67 deletions(-)
+ create mode 100644 drivers/ufs/core/ufs-mcq.c
+
+-- 
+2.7.4
 
