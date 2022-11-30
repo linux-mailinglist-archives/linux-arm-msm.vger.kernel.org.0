@@ -2,147 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0A0363D820
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 15:31:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E6EB63D7F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 15:19:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbiK3Oan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 09:30:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59492 "EHLO
+        id S229684AbiK3OTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 09:19:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbiK3Oa0 (ORCPT
+        with ESMTP id S229624AbiK3OTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 09:30:26 -0500
-Received: from sender4-op-o14.zoho.com (sender4-op-o14.zoho.com [136.143.188.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2BC54745;
-        Wed, 30 Nov 2022 06:30:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1669817583; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=dXasd2esNNmpiHUfVcmRkxgzG65o721c/Rvd3FSmMvedmhALBVsV8qp0aRGUE2LZxkv2HoMmc+ekS3YM7y1rZd7ygvUwHPN/hIGHycdpwbRMl8AKrHO6BjS80kHs3dfXb+tTq6HObvTyo9BtHSLXZJfNhtI2NDQXKCD5ErIoBsg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1669817583; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=tcD2tFxEru39PLp3xQkd+dJ8fltdBcdkPCdXOUfgLMQ=; 
-        b=lO865isAuQRik7INPA7FZOiYw2VcoYkZzICanbPbLMs5UcOpVmYH2ojvAtyUkogX1bx6lflv9TwhKvXKySfLjzNEfJQth/+YrNbGbOryVSSzseZpaJvZ7R4fmc1NBsDCLo2lxD/q7DmFswtddApJGvyLOVRN0aOK3V+2uvxxs04=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=arinc9.com;
-        spf=pass  smtp.mailfrom=arinc.unal@arinc9.com;
-        dmarc=pass header.from=<arinc.unal@arinc9.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1669817583;
-        s=zmail; d=arinc9.com; i=arinc.unal@arinc9.com;
-        h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Reply-To;
-        bh=tcD2tFxEru39PLp3xQkd+dJ8fltdBcdkPCdXOUfgLMQ=;
-        b=h91l4+uumvdMWNksQsm+lLIQWjvfnAiRH0AY1lQ1rUMZHTcD9BpIXNqyyiRIIZNv
-        zTAeFsofzE/hNeBYRoRnP2XXfHJy36b852k4KrBCBZRISGmZRX3Kl8uojjKq4iNQH83
-        JVCdBqOiVaWHwI39rjwtkpbVw4RCX2IGXFzaUjAo=
-Received: from arinc9-PC.lan (37.120.152.236 [37.120.152.236]) by mx.zohomail.com
-        with SMTPS id 1669817581238174.27626882243624; Wed, 30 Nov 2022 06:13:01 -0800 (PST)
-From:   =?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>
-To:     Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Hauke Mehrtens <hauke@hauke-m.de>,
-        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
-        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
+        Wed, 30 Nov 2022 09:19:41 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A5DC4F190
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 06:19:40 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id r8so21037243ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 06:19:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AyScXnxFfxE24p36q1hJ+oZNMxvQckw7RZl7GmCoGro=;
+        b=Q5fQyxRxJadMtMT8lfpY846f+mk3m+LAQ7EVCIu0KRuw03/rcZYEkMt6nDOg6M4vQ4
+         uKFQ6ajZmn4x/cdM+Cl9myEBsjvjJH/qZU/opZCPQf/ZJbqBnExsYkCjf0AEEjZt/hNP
+         UglJZtO4VUA3Uej0ojjhTLha0NfwwC62yfE/osbIBonsES/+wqNMX8noBbMDljDH6E6Q
+         bQeYOjuc/vHbLw8QylzlAtnkzMdyUZ6YdCJWBuf0jjak4fLRcR9STEW5PNmeyop+VWM6
+         9p5Rs7O9RbmwwiW3MXARlTsS94VToCzx4tcSRaOHl8OssNgzKLSJw+NE8T2LzXoPb1Bu
+         Uw8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AyScXnxFfxE24p36q1hJ+oZNMxvQckw7RZl7GmCoGro=;
+        b=7hTInDo0D0VgEAaaZPDrItgxrUXuMCmuOCsmFx4SbSJdiq3EsyYy9owzNZlcKuwQ1X
+         jlROx8Ewr4UilcaSY644CtOL1iTI9Iah7SVd4TZ0sDzidhuIfrWAuanXTi3qPkmQdMak
+         m+QrKQ9op6kWh5oEc7BPMotUKhQuM4Tojt6a6Dbt7SVsUCA8FgDhcUQkBIJjm7AiFafY
+         ravYZ5e2CvtEu/icJUtCxyqOODq8JWso83kKnCQBnV3uWfDVd3apMqsZHBcDWEaUBP1K
+         ml1hsX4bTk13w9OqwfoRJH20U4ELpdqY7tDndEDRvCh63hxjSRMBC9AWNUgM/Ks/2qSa
+         I7ZQ==
+X-Gm-Message-State: ANoB5plz1YIY9LtmAWpBQcpVxktj+Y4VuIUyQOmeekdyg7Psid89SXIo
+        bxLPZ8oj3S4Z5QUx+k7ffNVW0A==
+X-Google-Smtp-Source: AA0mqf6IsejNi9xqYexLJpi1Obsy+wm3B/MFOlYgieClosKGVhxkQoDsC6Y4EoO5U4KwcWyGO31b6g==
+X-Received: by 2002:a2e:844d:0:b0:279:c1cd:5177 with SMTP id u13-20020a2e844d000000b00279c1cd5177mr1649954ljh.357.1669817978463;
+        Wed, 30 Nov 2022 06:19:38 -0800 (PST)
+Received: from [192.168.1.101] (95.49.125.236.neoplus.adsl.tpnet.pl. [95.49.125.236])
+        by smtp.gmail.com with ESMTPSA id x34-20020a056512132200b0048afb8b8e53sm273719lfu.80.2022.11.30.06.19.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Nov 2022 06:19:33 -0800 (PST)
+Message-ID: <f0f6c137-b083-0174-9ae3-c58405a9c8d1@linaro.org>
+Date:   Wed, 30 Nov 2022 15:19:29 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [RESEND PATCH 2/2] arm64: dts: qcom: sdm632-fairphone-fp3: Add
+ NFC
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        =?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-        Frank Wunderlich <frank-w@public-files.de>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Oleksij Rempel <linux@rempel-privat.de>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
-        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: [PATCH 5/5] powerpc: dts: remove label = "cpu" from DSA dt-binding
-Date:   Wed, 30 Nov 2022 17:10:40 +0300
-Message-Id: <20221130141040.32447-6-arinc.unal@arinc9.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221130141040.32447-1-arinc.unal@arinc9.com>
-References: <20221130141040.32447-1-arinc.unal@arinc9.com>
-MIME-Version: 1.0
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221128173744.833018-1-luca@z3ntu.xyz>
+ <20221128173744.833018-2-luca@z3ntu.xyz>
+ <b20432e8-115c-407f-2480-6dd429ce5c25@linaro.org> <3134585.5fSG56mABF@g550jk>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <3134585.5fSG56mABF@g550jk>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is not used by the DSA dt-binding, so remove it from all devicetrees.
 
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
----
- arch/powerpc/boot/dts/turris1x.dts | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/turris1x.dts b/arch/powerpc/boot/dts/turris1x.dts
-index 045af668e928..3841c8d96d00 100644
---- a/arch/powerpc/boot/dts/turris1x.dts
-+++ b/arch/powerpc/boot/dts/turris1x.dts
-@@ -147,7 +147,6 @@ ports {
- 
- 					port@0 {
- 						reg = <0>;
--						label = "cpu";
- 						ethernet = <&enet1>;
- 						phy-mode = "rgmii-id";
- 
-@@ -184,7 +183,6 @@ port@5 {
- 
- 					port@6 {
- 						reg = <6>;
--						label = "cpu";
- 						ethernet = <&enet0>;
- 						phy-mode = "rgmii-id";
- 
--- 
-2.34.1
+On 29.11.2022 19:31, Luca Weiss wrote:
+> On Dienstag, 29. November 2022 14:29:36 CET Konrad Dybcio wrote:
+>> On 28.11.2022 18:37, Luca Weiss wrote:
+>>> Configure the node for the NQ310 chip found on this device, which is
+>>> compatible with generic nxp-nci-i2c driver.
+>>>
+>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>> ---
+>>> RESEND to fix Cc
+>>>
+>>>  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 15 +++++++++++++++
+>>>  1 file changed, 15 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+>>> b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts index
+>>> 2920504461d3..fde93cbcd180 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+>>> @@ -63,6 +63,21 @@ touchscreen@48 {
+>>>
+>>>  	};
+>>>  
+>>>  };
+>>>
+>>> +&i2c_5 {
+>>> +	status = "okay";
+>>> +
+>>> +	nfc@28 {
+>>> +		compatible = "nxp,nq310", "nxp,nxp-nci-i2c";
+>>
+>> Unless there was some binding change (that was not emailed to me with
+>> this email, I only got 2/2), only "nxp,nxp-nci-i2c" and
+>> "nxp,pn547", "nxp,nxp-nci-i2c" are allowed.
+> 
+> Yes, I've added the double compatible to the yaml.
+> https://lore.kernel.org/lkml/20221128173744.833018-1-luca@z3ntu.xyz/
+Ok, this looks good then.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+
+> 
+> I'll try to work on my Cc-script setup, currently it adds the output of 
+> get_maintainers.pl for each patch (and adds all for the cover letter), which 
+> is based on some script I found a while ago online.
+> 
+> Is there like a recommended way to put all people in Cc for a series, I'm not 
+> aware of anything at least...
+> 
+> Perhaps I'll look into b4 for sending patches, that seems to have some goodies 
+> there.
+Check out this reply from Rob Herring here https://lore.kernel.org/lkml/CAL_JsqLubWBr2W3xZPsuPLOGav7CFgBdH=aCfT22F_m0_cx3cQ@mail.gmail.com/
+
+Konrad
+> 
+> Regards
+> Luca
+> 
+>>
+>> The node looks good though.
+>>
+>> Konrad
+>>
+>>> +		reg = <0x28>;
+>>> +
+>>> +		interrupt-parent = <&tlmm>;
+>>> +		interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
+>>> +
+>>> +		enable-gpios = <&tlmm 16 GPIO_ACTIVE_HIGH>;
+>>> +		firmware-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
+>>> +	};
+>>> +};
+>>> +
+>>>
+>>>  &pm8953_resin {
+>>>  
+>>>  	status = "okay";
+>>>  	linux,code = <KEY_VOLUMEDOWN>;
+> 
+> 
+> 
+> 
