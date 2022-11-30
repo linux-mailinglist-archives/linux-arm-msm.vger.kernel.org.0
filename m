@@ -2,114 +2,283 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D928F63E229
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 21:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A00D63E25F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Nov 2022 21:54:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbiK3Uc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 15:32:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44042 "EHLO
+        id S229689AbiK3UyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 15:54:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbiK3Uci (ORCPT
+        with ESMTP id S229599AbiK3UyX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 15:32:38 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8605D94545;
-        Wed, 30 Nov 2022 12:31:37 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AUBxnkG021761;
-        Wed, 30 Nov 2022 20:31:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bUx2F1njbYad5/Bph/yve0YlzZuGc9YGQi5bG0PZGWI=;
- b=juW3plSXVKNVOSWNf7B22zoJniKiGtqawSOYdOhYz2UAot/IGjGVcB3Y99w7ohtUXRp2
- YmPUt22K6V8B7zLYzPXw/DXjzYB2hTtcVkvQkymSxr2Q1GFtmiOUfDFK65kJkQLw1353
- 6+3QA2i7UlCD5vvj1BtL/Em70QjRfoTPZdmNvSa6l90XLjdYmfjcdejVwdP8P6JNgc69
- snzq6K7mDCDO1YqmgRnRniLt9V4BvYbQUsmyasjpzT5OPc7k0+TqLxW0epvmC4c+f5W6
- GF791z3ixMA4vJcNDKWf0uJRjxsqrmrCj2Srmosx8kvdBPAYqvtvUwpK3Fv54GG6yQhj hg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m616haq9w-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Nov 2022 20:31:03 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AUKV2gn016380
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 30 Nov 2022 20:31:02 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 30 Nov 2022 12:31:02 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
-        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v8 16/16] ufs: core: mcq: Enable Multi Circular Queue
-Date:   Wed, 30 Nov 2022 12:27:57 -0800
-Message-ID: <aeacbc87b583289f729c04feb1168a690714dbc4.1669839847.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1669839847.git.quic_asutoshd@quicinc.com>
-References: <cover.1669839847.git.quic_asutoshd@quicinc.com>
+        Wed, 30 Nov 2022 15:54:23 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 511AB837D0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 12:54:19 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2A59820309;
+        Wed, 30 Nov 2022 21:54:16 +0100 (CET)
+Date:   Wed, 30 Nov 2022 21:54:14 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [RFC PATCH] iio: adc: qcom-spmi-vadc: Propagate fw node
+ name/label to extend_name
+Message-ID: <20221130205414.6m4rfufc25hfzxmf@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Cameron <jic23@kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20221106193018.270106-1-marijn.suijten@somainline.org>
+ <20221106202445.fkobsyc3mohmzqod@SoMainline.org>
+ <20221112162719.0ac87998@jic23-huawei>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mAuGLyEWZmGEGoF5M_J_-yrWJWMqDe19
-X-Proofpoint-ORIG-GUID: mAuGLyEWZmGEGoF5M_J_-yrWJWMqDe19
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-30_04,2022-11-30_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 phishscore=0 mlxscore=0 adultscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2211300143
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221112162719.0ac87998@jic23-huawei>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ in the Host Controller.
+On 2022-11-12 16:27:19, Jonathan Cameron wrote:
+> On Sun, 6 Nov 2022 21:24:45 +0100
+> Marijn Suijten <marijn.suijten@somainline.org> wrote:
+> 
+> > Adding Krzysztof to CC for the DT bindings discussion.
+> > 
+> > On 2022-11-06 20:30:18, Marijn Suijten wrote:
+> > > Much like the ADC5 driver iio_chan_spec::extend_name has to be set for
+> > > friendly/useful names to show up in sysfs, allowing users to correlate
+> > > readout values with the corresponding probe. This name is read from
+> > > firmware, taking both the node name and - if set - node label into
+> > > account.  This is particularly useful for custom thermistors being
+> > > attached to otherwise-generically-named GPIOs.
+> > > 
+> 
+> If you are attaching thermistors to an ADC channel, then you should have
+> a driver for that thermistor.  It will be a consumer of the ADC channel
+> in question and any labels etc should apply there (along with scaling
+> / non linear transforms to get to a temperature), not at the ADC
+> level.
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
----
- drivers/ufs/core/ufshcd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+This is what happens in the ADC5 driver, though.  In /sys/bus/iio names
+show up for ADC channels that aren't otherwise consumed by (thermistor)
+drivers.  There are also voltage readings.  The IIO driver seems to be
+aware of both the unit and (linear iirc) scaling.
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index adf3597..e9d6891 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8381,6 +8381,12 @@ static void ufshcd_config_mcq(struct ufs_hba *hba)
- 
- 	hba->host->can_queue = hba->nutrs - UFSHCD_NUM_RESERVED;
- 	hba->reserved_slot = hba->nutrs - UFSHCD_NUM_RESERVED;
-+
-+	/* Select MCQ mode */
-+	ufshcd_writel(hba, ufshcd_readl(hba, REG_UFS_MEM_CFG) | 0x1,
-+		      REG_UFS_MEM_CFG);
-+	hba->mcq_enabled = true;
-+
- 	dev_info(hba->dev, "MCQ configured, nr_queues=%d, io_queues=%d, read_queue=%d, poll_queues=%d, queue_depth=%d\n",
- 		 hba->nr_hw_queues, hba->nr_queues[HCTX_TYPE_DEFAULT],
- 		 hba->nr_queues[HCTX_TYPE_READ], hba->nr_queues[HCTX_TYPE_POLL],
--- 
-2.7.4
+> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > 
+> > > ---
+> > > 
+> > > This RFC may seem a bit controversial as there are multiple patches
+> > > going around in DT-land changing how nodes are labeled [1] (or
+> > > introducing new ones: [2]), seemingly to appease binding conventions
+> > > without considering how the driver propagates them to IIO (and in turn
+> > > what userspace sees in sysfs).  I hope we can put together the right
+> > > conventions with this RFC.
+> 
+> > > 
+> > > Before getting started, note that ADC5 provides this DT/FW node
+> > > name/label in *both* extend_name *and* datasheet_name;
+> > > adc5_channels::datasheet_name provided by the macros remains *unread*
+> > > (except for a non-null check).
+> 
+> There was some history here if I recall correctly.  Until recently(ish) we didn't
+> have the "label" attribute for channels so the only route was to use
+> extended_name. That makes a mess for userspace developers however because
+> it is harder to write a parser that is happy with free form sections
+> of an attribute name.  So extended_name is more or less deprecated with the
+> exception of a few legacy cases that we might carry forwards into very similar
+> drivers.
 
+Making sure we're talking about the same thing: it's extend_name, not
+extendED_name.
+
+> datasheet_name was introduced to allow binding the channels to consumers
+> in a human readable form. Note that this dates back to predevice tree
+> days - so mostly you'll see it used when an mfd registers its own
+> consumers.  They weren't at the time intended to be used directly by the
+> drivers at all.
+
+It is unfortunate that I don't see these in sysfs then; vadc only
+assigns datasheet_name but not extend_name.
+
+> > > Since the names hardcoded in the driver seem to be somewhat
+> > > "datasheet"-y, and the names in DT typically take the form of a more
+> > > friendly "<device>-therm" indicating where the thermistor (or voltage
+> > > probe) is located on the board or attached to, I have opted to persist
+> > > the original use of vadc_channels::datasheet_name in
+> > > iio_chan_spec::datasheet_name, and only propagate the data from DT/FW
+> > > into extend_name.
+> 
+> To clarify datasheet_name is the name on the datasheet of the provider part
+> not the naming on the board datasheet - basically it's meant to be the pin name.
+
+Right; it may not have come across but that is what I assumed (datsheet
+name of the part, which would be the names hardcoded in the adc5/vadc
+driver), and then have the labels - assigned in /board/ dts specialize
+that where it is not a hardwired reading within the part.
+
+> If you modify extend_name at all you break userspace ABI.
+> So that's pretty much a non starter (and one reason why we added the label
+> attribute).
+
+The sysfs filenames will change, but they currently don't carry an
+in_{voltage,temp}X_label attribute.  Only when I set extend_name to
+something sensible.  But then X changes from an index to that same name
+too.
+
+Note that this is already the case for ADC5.
+
+> Also, if the ADC channel is labelled with what it is consumed by that feels
+> backwards.  The thermistor could be connected to any channel.  Any nice
+> naming should be at the thermistor driver end.  So say I put a thermistor
+> on input 8.  It should just bind to input 8. The bit of the binding for
+> the ADC just provides the consumer services for that input 8.
+
+This is how these drivers are describing their channels though, except
+for a few freely assignable GPIO channels?
+
+> > > (We should likely rename vadc_channel_prop::datasheet_name to
+> > > extend_name to this end.)
+> > > 
+> > > Back when I submitted patches for pm6125 [3] (utilizing ADC5)
+> > > 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+> > > didn't yet land, and these patches use the node name to convey a
+> > > useful/friendly name (again, the string literals in ADC5 are unused).
+> > > fwnode_get_name() however includes the `@xx` reg suffix, making for an
+> > > unpleasant reading experience in sysfs.
+> > > 
+> > > With all that context in mind, I feel like we should answer the
+> > > following questions:
+> > > 
+> > > 1. Should we propagate names from DT/FW at all?
+> 
+> This question needs to make it clear - which name?  Propagating channel
+> labels to sysfs is often useful via the in_voltageX_label type attributes.
+
+Note that X here gets replaced by the value of extend_name, it seems.
+
+> Whether it is useful in this specific driver depends on whether we have
+> information to convey that isn't provided by channel numbers alone.
+
+The driver contains channel names for the purpose of clarifying what the
+channel is, which isn't easily deducible (nor very user-friendly) when
+only having access to channel indices/numbers.
+
+> > > 2. If so, how should a node be represented in DT?  Should it use generic
+> > >    node names (which we might not want to use anyway considering the
+> > >    `@xx` suffix highlighted above) or labels exclusively?
+> 
+> I would suggest only labels.
+
+Ack, the node name is a mess nowadays.  That means ADC5 shouldn't use it
+as fallback either when a DT label is not set (and instead use the
+currently-unused adc5_channels::datasheet_name field).
+
+Can I remove it (use of fwnode_get_name() as datasheet_name)?
+
+> Though in the case you give of a thermistor attached
+> this handling is wrong anyway.
+
+Not sure I follow you here.  The driver defines when a channel is a
+thermistor or a voltage, and even gives it a name/label.  The values are
+readable through /sys/bus/iio.  Not sure if they're all correct
+readings, and some (but not all) are later routed into a "thermal
+manager", but having at least a _label for these would be useful.
+
+> > > 3. If only labels are going to be used in conjunction with generic node
+> > >    names, should ADC5 be changed to ignore the node name?
+>
+> From a quick search, I'm only seeing the node name used in debug prints currently.
+> That feels fine to me as it's telling us where the binding parsing went wrong...
+> Am I missing some use outside of vadc_get_fw_channel_data()?
+
+That's the VADC driver.  Look at adc5_get_fw_channel_data, specifically
+where it calls fwnode_property_read_string() to overwrite
+prop->datasheet_name.
+
+> > > 4. If a label (or node name) is not set, do we fall back to
+> > >    datasheet_name hardcoded in the driver?
+> 
+> Hmm. Probably not.
+
+Then we might as well remove this useless data from the kernel driver
+altogether...
+
+> > > 5. What do we use for datasheet_name vs extend_name?
+> Expand that to include label.
+> datasheet_name : When you want to have human readable pin names from the ADC
+>   datasheet, used as part of provide services to consumer drivers. Doesn't
+>   work with DT though as it wasn't part of the binding for consumers.
+>   So largely irrelevant unless you have an MFD where the ADC consumers are
+>   also part of the MFD children and so the map is set up in the way we used
+>   to do it for board files.
+
+... or this could remain to feed into datasheet_name?
+
+> extended_name: Short answer is don't use it today.  It was a bad design decision
+>   a long time back.
+> label: This is the one you should info from DT through to today.  As it is freeform
+>   and comes from the bindings - we don't encode this in the const iio_chan_spec array
+>   but rather use the iio_info->read_label() callback.  It is provided to userspace
+>   as a per channel _label attribute.
+
+Thanks, I have been looking for this and scanning through
+iio_read_channel_label() now.  It'll use ->read_label() and only defer
+to extend_name if the getter isn't available.
+
+I'll insert a getter here in the vadc driver that returns the DT label
+if set, otherwise the hardcoded driver name (which'll still feed into
+iio_chan_spec::datasheet_name).
+
+Do we then remove extend_name from qcom-spmi-adc5 and give it the same
+treatment, since it would now use DT node names as filenames unless a
+label is set?  I can only imagine it having been set because the ADC5
+author(s) didn't see a name nor label in sysfs either, without knowing
+about the existence of read_label.
+
+> > > 6. Any other vadc drivers that need the same treatment, when we come to
+> > >    a resolution?
+> Any resolution can only 'add' ABI to userspace.  So adding labels is fine.
+> extend_name never is.
+
+Saying the above in a different way: would removing extend_name
+assignment from qcom-spmi-adc5 be fine?
+
+> Hope that helps.
+
+A lot, now knowing that read_label is the part of the puzzle I
+previously missed.  Thanks!
+
+- Marijn
