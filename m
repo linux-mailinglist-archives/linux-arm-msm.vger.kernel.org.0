@@ -2,102 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1BF063EE4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 11:45:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B00F63EE87
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 11:58:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbiLAKpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 05:45:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52684 "EHLO
+        id S229568AbiLAK6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 05:58:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiLAKne (ORCPT
+        with ESMTP id S230227AbiLAK6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 05:43:34 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A44431DDE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 02:43:31 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id z24so1412883ljn.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 02:43:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1kyrvMls8wTQMlQrJqyGrjffl641Id/9a8Nkb4/gCx4=;
-        b=VB6ARDsUl9VDYdCN2+lOHBpQREZqTxeDFRGhmdVSMuUrYfsXQIto7O3WmA0gaY2O2f
-         VuJKiviMybBR6jRObOdA+JBaGb7zyI62bejJiEeHMNjPmP5vhpgZxLQFrSSiaYXs6Y+g
-         rT3rs+lg8U7/oP6GK5q8QYMYM74Z1SLVVGcwElaerQ+0qpLx3crZryC+QPmNSRrmYcZl
-         K9TeuOcGRkkMD+Sw1AJrQT69wUGhum6nY3BIBm9aYaK7paFXTOBlQV2roe/AFpWcv41x
-         3el058IRSwutRldsN83xt7MRmJRwCcLbCW5B6tRw9wMtQMA91NbvTBafz5VwV6S+Ki+K
-         CLsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1kyrvMls8wTQMlQrJqyGrjffl641Id/9a8Nkb4/gCx4=;
-        b=cFPIyMwRUt8+ppG/n9q/Wd6I29HZzmhJG7/xsc/t84Vw2mJtygBnJAkXkMVsl7asA2
-         69tcswzQ+7JYFUaDQdXlncYbdD0nOKOpG4iNSo6Gv1SWWs/+YvzYq1+gB/7LpGoTMV50
-         rnBDy8I0fej3MWTb/ZdSJRRSEmXJrmobqqnrdecolktM48+vCJYpCNTXce6ozbg9JhKq
-         ul56C+nMStGfQkCZ8roeONeP5UI+pqNsBbLKKPWyW6RrOr3OGCSnjJKb9CHkdafSwZUl
-         XuLI01YNAxTkFAwvWwHyAJm48NHSqAkEfK4kNxkohM7wMop5QZZhogTReyddB9Qpl9D0
-         i8dQ==
-X-Gm-Message-State: ANoB5pkUEPYGG1UMtrRPISdYaccOoptsQ3aeJb4hfsAJ/vHsuUfVT+z+
-        bjwM2/kxGLDGe84Pz82A32A1IZpHeaKMeJug
-X-Google-Smtp-Source: AA0mqf7dZn8tcHCSTqwKdg59rVP2szYiKJd/88+xPBwamyUC0rkQTrwxWM43ihM6G6ZIvZydte88ig==
-X-Received: by 2002:a05:651c:239e:b0:279:c7b9:c365 with SMTP id bk30-20020a05651c239e00b00279c7b9c365mr2133580ljb.134.1669891409697;
-        Thu, 01 Dec 2022 02:43:29 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id bi41-20020a0565120ea900b00492ce573726sm607522lfb.47.2022.12.01.02.43.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 02:43:28 -0800 (PST)
-Message-ID: <cae9f009-d75b-9088-8f22-ea54552e9f34@linaro.org>
-Date:   Thu, 1 Dec 2022 11:43:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: Add Qualcomm SM8550
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Thu, 1 Dec 2022 05:58:12 -0500
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E1736B30;
+        Thu,  1 Dec 2022 02:58:09 -0800 (PST)
+Received: from uucp (helo=alpha)
+        by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+        id 1p0hGS-0007Uq-04; Thu, 01 Dec 2022 11:58:00 +0100
+Received: by alpha.franken.de (Postfix, from userid 1000)
+        id 045ACC1EF5; Thu,  1 Dec 2022 11:53:20 +0100 (CET)
+Date:   Thu, 1 Dec 2022 11:53:20 +0100
+From:   Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To:     =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+Cc:     Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20221130132059.3145243-1-abel.vesa@linaro.org>
- <20221130132059.3145243-2-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221130132059.3145243-2-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+        Frank Wunderlich <frank-w@public-files.de>,
+        Michael Riesch <michael.riesch@wolfvision.net>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Subject: Re: [PATCH 4/5] mips: dts: remove label = "cpu" from DSA dt-binding
+Message-ID: <20221201105320.GD6569@alpha.franken.de>
+References: <20221130141040.32447-1-arinc.unal@arinc9.com>
+ <20221130141040.32447-5-arinc.unal@arinc9.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221130141040.32447-5-arinc.unal@arinc9.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/11/2022 14:20, Abel Vesa wrote:
-> The Qualcomm SM8550 SoC has several bus fabrics that could be
-> controlled and tuned dynamically according to the bandwidth demand.
+On Wed, Nov 30, 2022 at 05:10:39PM +0300, Arınç ÜNAL wrote:
+> This is not used by the DSA dt-binding, so remove it from all devicetrees.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 > ---
+>  arch/mips/boot/dts/qca/ar9331.dtsi    | 1 -
+>  arch/mips/boot/dts/ralink/mt7621.dtsi | 1 -
+>  2 files changed, 2 deletions(-)
 > 
-> Changes since v3:
->  * Dropped qcom,sm8550-rpmh.h and qcom,rpmh.h from examples
->  * Added the header for interconnect IDs to the top-level description
->  * Fixed examples indentation
+> diff --git a/arch/mips/boot/dts/qca/ar9331.dtsi b/arch/mips/boot/dts/qca/ar9331.dtsi
+> index c4102b280b47..768ac0f869b1 100644
+> --- a/arch/mips/boot/dts/qca/ar9331.dtsi
+> +++ b/arch/mips/boot/dts/qca/ar9331.dtsi
+> @@ -176,7 +176,6 @@ ports {
+>  
+>  						switch_port0: port@0 {
+>  							reg = <0x0>;
+> -							label = "cpu";
+>  							ethernet = <&eth1>;
+>  
+>  							phy-mode = "gmii";
+> diff --git a/arch/mips/boot/dts/ralink/mt7621.dtsi b/arch/mips/boot/dts/ralink/mt7621.dtsi
+> index f3f4c1f26e01..445817cbf376 100644
+> --- a/arch/mips/boot/dts/ralink/mt7621.dtsi
+> +++ b/arch/mips/boot/dts/ralink/mt7621.dtsi
+> @@ -386,7 +386,6 @@ port@4 {
+>  
+>  					port@6 {
+>  						reg = <6>;
+> -						label = "cpu";
+>  						ethernet = <&gmac0>;
+>  						phy-mode = "trgmii";
+>  
+> -- 
+> 2.34.1
 
+applied to mips-next.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thomas.
 
-Best regards,
-Krzysztof
-
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
