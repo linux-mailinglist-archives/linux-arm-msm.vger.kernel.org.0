@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 873E663FAF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:50:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DF8963FB08
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231743AbiLAWum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 17:50:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43322 "EHLO
+        id S231372AbiLAW5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 17:57:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231730AbiLAWuT (ORCPT
+        with ESMTP id S230284AbiLAW5M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 17:50:19 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BE7C86B3;
-        Thu,  1 Dec 2022 14:49:25 -0800 (PST)
+        Thu, 1 Dec 2022 17:57:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51973BE4E6;
+        Thu,  1 Dec 2022 14:57:11 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 55DB462084;
-        Thu,  1 Dec 2022 22:49:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36561C433C1;
-        Thu,  1 Dec 2022 22:49:24 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0649CB82059;
+        Thu,  1 Dec 2022 22:57:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158DCC433C1;
+        Thu,  1 Dec 2022 22:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669934964;
-        bh=M7nV2gz26gK5iSyAIFMnEJ0Gt4gZXURIaCRJJrGWVxQ=;
+        s=k20201202; t=1669935428;
+        bh=Iece4Ggdjnc0zgVTxLn8Qf6TaPc+ROmQXehO4YnTyUk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FHvhp1LgyAA/mE+nZNzb72kPSlTEZL+G4LRNhH/OPMaY8bsZbUuBUGsvPeQ8yX57M
-         yf6raFFlzijL/8k0JET2nFa2etTzeyNBZtyIqZhjf6olJI+sINsOf7FcX/mqHIYAtW
-         wUwi+/a3sesg5XEpxzPnSNPjbNds/Vz01O1ltVYZf7QABYoUnEl7RY+ylglA2xF6WN
-         Z9MFJJS+ShXsqpA8fZWWV5KVwUZKBBoYvEbfa/mDP9A7+zrIUA4UbeaoixLh/V6WcJ
-         NZmR/fJGN5t+pwLPJtyYHexFhEP7qmEznDlaXN+x0fggCTsttpIkgj6vgzPaCJFWyz
-         YgPUOCLl+Hvig==
-Date:   Thu, 1 Dec 2022 23:49:21 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        b=Dhi9a4n1MDkugPm6zzlyfa1b463Z4vsP2TF/EUCWg0UeTI/wZXo9HV75Wrqt9ktiN
+         0VE/7gjmbALvarkSaaTK2vduEPR3b0vHlQ8YRjQW8VWmt3r+0KG1ZSer25P2FwUi4j
+         cIPN0/vWkJ8U0tyCI294h+QP/yExXFxgYvLJKem9oRgF7bqTyzY4Cwk8MzOUMgialh
+         XqMJ+4y7T+NuC9fDSOQlLlGdDWFmKH7jGWrxKiw6TPwsijz0ec+D7b7uT0a9dTAuWG
+         W4sAIyUbit8zbldtmN0SLaKsxMhCJgIrQev/i8YLwVihXjXRSQEWEKeAiL1dqsFWj6
+         m/m92RAlKTIxA==
+Date:   Thu, 1 Dec 2022 16:57:05 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Douglas Anderson <dianders@chromium.org>,
+        krzysztof.kozlowski@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/6] soc: qcom: add support for the I2C Master Hub
-Message-ID: <Y4kvcXTdwImZpaU1@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v3-0-f6a20dc9996e@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 0/6] clk/qcom: Support gdsc collapse polling using
+ 'reset' interface
+Message-ID: <20221201225705.46r2m35ketvzipox@builder.lan>
+References: <1664960824-20951-1-git-send-email-quic_akhilpo@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YX5ttnhQhXaDF07q"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v3-0-f6a20dc9996e@linaro.org>
+In-Reply-To: <1664960824-20951-1-git-send-email-quic_akhilpo@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,54 +71,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Oct 05, 2022 at 02:36:58PM +0530, Akhil P Oommen wrote:
+> 
 
---YX5ttnhQhXaDF07q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+@Ulf, Akhil has a power-domain for a piece of hardware which may be
+voted active by multiple different subsystems (co-processors/execution
+contexts) in the system.
 
-On Tue, Nov 29, 2022 at 03:47:00PM +0100, Neil Armstrong wrote:
-> The I2C Master Hub is a stripped down version of the GENI Serial Engine
-> QUP Wrapper Controller but only supporting I2C serial engines without
-> DMA support.
->=20
-> The I2C Master Hub only supports a variant of the I2C serial engine with:
-> - a separate "core" clock
-> - no DMA support
-> - non discoverable fixed FIFO size
->=20
-> Since DMA isn't supported, the wrapper doesn't need the Master AHB clock
-> and the iommus property neither.
->=20
-> This patchset adds the bindings changes to the QUPv3 wrapper and I2C seri=
-al
-> element bindings to reflect the different resources requirements.
->=20
-> In order to reuse the QUPv3 wrapper and I2C serial element driver support,
-> the I2C Master Hub requirements are expressed in new desc structs passed
-> as device match data.
+As such, during the powering down sequence we don't wait for the
+power-domain to turn off. But in the event of an error, the recovery
+mechanism relies on waiting for the hardware to settle in a powered off
+state.
 
-Is everyone fine if I take all this via the I2C tree?
+The proposal here is to use the reset framework to wait for this state
+to be reached, before continuing with the recovery mechanism in the
+client driver.
 
+Given our other discussions on quirky behavior, do you have any
+input/suggestions on this?
 
---YX5ttnhQhXaDF07q
-Content-Type: application/pgp-signature; name="signature.asc"
+> Some clients like adreno gpu driver would like to ensure that its gdsc
+> is collapsed at hardware during a gpu reset sequence. This is because it
+> has a votable gdsc which could be ON due to a vote from another subsystem
+> like tz, hyp etc or due to an internal hardware signal. To allow
+> this, gpucc driver can expose an interface to the client driver using
+> reset framework. Using this the client driver can trigger a polling within
+> the gdsc driver.
 
------BEGIN PGP SIGNATURE-----
+@Akhil, this description is fairly generic. As we've reached the state
+where the hardware has settled and we return to the client, what
+prevents it from being powered up again?
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmOJL3EACgkQFA3kzBSg
-KbbJOg/9GeM6NURU8nhZCAy2JAcAIK8NTfDvJOQzYFEwPYiYhrH6On5gkziryCCL
-2/3SO5jAQdN+veFD1oRDLpKN9FdMXtEjw6Sp4WMu6/l8smL/oHrlc1QANfi0c9OR
-f2tuU4socvwBZStWWwlCih92Llqz/kz2jb8hYbwQdqJ4MiVJUA0nFWqTR7owGS/d
-IQQlyFF4zGK8r53RVekM1ayyul0h3/IX/rP30rL369sIKcS2H111MjyTkOEiKgcF
-Gr5qmP7StWauhE6ft9bx5u8ePasd90qfX/OiIof63X7cJADmRHHjwjF0Ceo+DLRT
-7c9UAU7i8eivMVTKbjJT6EsG8R53yNPxbR6fX39G72OgbIUf1jo24XGWau95yFp5
-nWHb6nk9wt5ECNZ8GWeZxMV/V9NPZV/J0G47rSTtXVtCgEcrywdVm1mEZQb5+0KO
-VD2Vp5FQ4SodgWqJQWiIeIxSkY5R+4OXVA6NeTBZw+3koNFyl1hEU759weXIX4MC
-UGUm4mpQgJSk2jbRhBCN6ucmSJzcZgzFnqWRp3fphhHEJwOu/A5m9yH7NMc+y4bo
-Po3pFZRYYdHhA3ahGdtlsokfIgukR+fii4qn/45bFK1EJ2vzP5YfiOJK97S1TdmN
-qrMmMIe1ee/EAxNs4V59guFwfh7pAFAPj9YkUotHHBvwgVuygac=
-=QWHn
------END PGP SIGNATURE-----
+Or is it simply a question of it hitting the powered-off state, not
+necessarily staying there?
 
---YX5ttnhQhXaDF07q--
+Regards,
+Bjorn
+
+> 
+> This series is rebased on top of qcom/linux:for-next branch.
+> 
+> Related discussion: https://patchwork.freedesktop.org/patch/493144/
+> 
+> Changes in v7:
+> - Update commit message (Bjorn)
+> - Rebased on top of qcom/linux:for-next branch.
+> 
+> Changes in v6:
+> - No code changes in this version. Just captured the Acked-by tags
+> 
+> Changes in v5:
+> - Nit: Remove a duplicate blank line (Krzysztof)
+> 
+> Changes in v4:
+> - Update gpu dt-binding schema
+> - Typo fix in commit text
+> 
+> Changes in v3:
+> - Use pointer to const for "struct qcom_reset_ops" in qcom_reset_map (Krzysztof)
+> 
+> Changes in v2:
+> - Return error when a particular custom reset op is not implemented. (Dmitry)
+> 
+> Akhil P Oommen (6):
+>   dt-bindings: clk: qcom: Support gpu cx gdsc reset
+>   clk: qcom: Allow custom reset ops
+>   clk: qcom: gdsc: Add a reset op to poll gdsc collapse
+>   clk: qcom: gpucc-sc7280: Add cx collapse reset support
+>   dt-bindings: drm/msm/gpu: Add optional resets
+>   arm64: dts: qcom: sc7280: Add Reset support for gpu
+> 
+>  .../devicetree/bindings/display/msm/gpu.yaml       |  6 +++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |  3 +++
+>  drivers/clk/qcom/gdsc.c                            | 23 ++++++++++++++----
+>  drivers/clk/qcom/gdsc.h                            |  7 ++++++
+>  drivers/clk/qcom/gpucc-sc7280.c                    | 10 ++++++++
+>  drivers/clk/qcom/reset.c                           | 27 +++++++++++++++++++++-
+>  drivers/clk/qcom/reset.h                           |  8 +++++++
+>  include/dt-bindings/clock/qcom,gpucc-sc7280.h      |  3 +++
+>  8 files changed, 82 insertions(+), 5 deletions(-)
+> 
+> -- 
+> 2.7.4
+> 
