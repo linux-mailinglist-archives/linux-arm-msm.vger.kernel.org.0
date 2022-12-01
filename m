@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50BFE63E667
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 01:22:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A26E63E672
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 01:26:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbiLAAWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Nov 2022 19:22:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42006 "EHLO
+        id S229521AbiLAA0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Nov 2022 19:26:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiLAAWC (ORCPT
+        with ESMTP id S229497AbiLAA0X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Nov 2022 19:22:02 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91165338
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 16:22:01 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id u27so17923lfc.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 16:22:01 -0800 (PST)
+        Wed, 30 Nov 2022 19:26:23 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA31858BC9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 16:26:21 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id bp15so9548lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 16:26:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5N0Mkr5HCFYGmgX8q0UkQuN/NJxjaOMGBO0cCYdERo0=;
-        b=H0c7A46V8YoCWyXqfkCVF/NSBak05twg10HPQ2y6jE4aBHM2dICZMSxZU5y7+hYYbM
-         wfaYH2FiaW01rB48b5f1TiGWnRKzCt3s1mH8dZgBxL4YesmoxBUVhYhOvnlZpQ21pb6S
-         IA8l9DaKPNgmnmhAaUGD5o3cQs9eZtMpjjlluudNjbYeItyYiVDOLwKu5/16LdtoYES2
-         /XKfbsCQuQ6hsi5Vq6XpBAiBz0NSvEQXCbSuRAACU/Acyj0TlZBLPcbxcQ5gfXaooT8e
-         fpP21vdRH4bYPUjf7EWsf2giaqALbG+uLjM6FXPhWfhfWkh4rd6i5iDzDWpYkq6Sk0nB
-         xvmQ==
+        bh=IigBehPc+Em/qusf/7j6u/r/e7HcF8wFshWUasQJ9B8=;
+        b=jgQJptowxk+tpWm5JxfxLPZwgR+m+Otq4kBaWUfskKldD7GOkjHQI8c1yN6MFxojOn
+         OJ6TBG7mwc0Tbr4l/vtUCCgley8qf2inX64QF059GLKiCOEeGuO//CjDxYsziREdqREF
+         PwaIzaWDzaMiar5Ynyc2kgkNc91VZ/q2xLMvFZPuYfuqs4+1ZRxXvgvacj7F8Wue40Cc
+         A2SDp/u46syaVrCHgAxDcU79nj779XG5rnceNUJtIbeG0pDpdtJP1hTB2NLGTMeD2I+H
+         QLtpdoxtZzTuzLo6dK2dmNChr0r9f1j79Tm7nKvD1rbU2pV1XZ+COTVnPvFDvJwjpsbT
+         mG1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5N0Mkr5HCFYGmgX8q0UkQuN/NJxjaOMGBO0cCYdERo0=;
-        b=j7c1f7TXKIWLpzMiECwZ2qeZ77BJTYa4qgs6duyyFnSu3zIrOEB8N79EsfFxPol3Uh
-         5pmryiOqF7DkFWFWlrLSwfNVMbK1k7tJ0e5HA1S7bx+0jEdwGEYMbn4gIooixsagtgBx
-         0Q4N0fdBFTvG4JzYZtZDo10wivVPvs3SDepRfIiTDO3tXUa8/0HBaP7Drsp657zzfi+w
-         BmR72woegerKzICspBIFs04KhRQwaW/sHsyN5YbKtlbS+ArwokPztU2Lcg2N6I3+/qYe
-         Cus8d6OF3I2+Dbe2F7B78fQfQHhTAmCZ+7PMWOq4aYwbW6HPBoXtsxaNmuW3AoBCc48Q
-         eRhw==
-X-Gm-Message-State: ANoB5pl1stNKIX7xQCSgTQ5GrX84bPioNpnXkcLqVlYHm0Mdp7CxZ9Tz
-        aUve8Tt75ewGxxrDVMbWPl0F7w==
-X-Google-Smtp-Source: AA0mqf70FBKNRSuoWqNgqghhPvrU14vVnZJLdlDmk7QjI8o4IKxBP5EBwoiB8UXAJNy/A2PaLwDT0A==
-X-Received: by 2002:ac2:5202:0:b0:4b5:1ec2:d5fb with SMTP id a2-20020ac25202000000b004b51ec2d5fbmr3690695lfl.48.1669854119938;
-        Wed, 30 Nov 2022 16:21:59 -0800 (PST)
+        bh=IigBehPc+Em/qusf/7j6u/r/e7HcF8wFshWUasQJ9B8=;
+        b=SX4s/a4THY87lHWEj9k55CcJFUPBlVZeCd+lPS9oyZORhqxQ70V8UGAVt/JAijIxjf
+         dbwIKHc8R/fZUg4GDiE3W00yDZCICbCAV8HwfBoTWbE2CrnmAw/q1HAmHHBWGZc8+j7e
+         8HRFjeLjeWU3Fqg9IfW/xzo57gW8kdg+Xer9k4ZbQVB5kMvihKQ4t7rpt45MeL3fZVni
+         t0t4fjW/6j4XoUP16/4bIz6VGPnX4HgZ09kJFG81yALoUISynJycjPLEgepn/HFsZU3E
+         lyD2gGrei5Jkx9M24cq0nacN05KTATyV61QpcpgJUL7JgsFYppU+lGyBGSXeBckjMUQi
+         SOWw==
+X-Gm-Message-State: ANoB5pmJh28O2DdLF23E6K+lfoyXgeTeKH7DlCPrPpeDBAIXPhuW8T3j
+        xdfaJeLjYWGzoSVwfBxMIG99Uw==
+X-Google-Smtp-Source: AA0mqf6Y/rBxKmL6xGjcEbKjQtStZUc7jyTJiN1dVB/hUBKz123VUR/fTeFuMFM5wE5Gj9ziDBr4Lg==
+X-Received: by 2002:a05:6512:15a8:b0:4a6:3ed2:3717 with SMTP id bp40-20020a05651215a800b004a63ed23717mr16703128lfb.637.1669854380184;
+        Wed, 30 Nov 2022 16:26:20 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id j22-20020a05651231d600b00498fc3d4d15sm425908lfe.190.2022.11.30.16.21.59
+        by smtp.gmail.com with ESMTPSA id t15-20020a056512208f00b004b4ec76016esm426881lfr.113.2022.11.30.16.26.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 16:21:59 -0800 (PST)
-Message-ID: <29d12e26-b3c8-dbf6-de1f-5c6ae4a5a705@linaro.org>
-Date:   Thu, 1 Dec 2022 02:21:58 +0200
+        Wed, 30 Nov 2022 16:26:19 -0800 (PST)
+Message-ID: <3ead3652-1241-89bd-3441-8ca4a4c8df57@linaro.org>
+Date:   Thu, 1 Dec 2022 02:26:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: add data-lanes and
- link-freuencies into dp_out endpoint
+Subject: Re: [PATCH v6 3/4] drm/msm/dp: parser link-frequencies as property of
+ dp_out endpoint
 Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
@@ -68,11 +67,11 @@ Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1669852310-22360-1-git-send-email-quic_khsieh@quicinc.com>
- <1669852310-22360-2-git-send-email-quic_khsieh@quicinc.com>
- <7bf73466-e476-4a1d-5dc0-1b63ea742226@linaro.org>
-In-Reply-To: <7bf73466-e476-4a1d-5dc0-1b63ea742226@linaro.org>
+ <1669852310-22360-4-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1669852310-22360-4-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -82,142 +81,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/12/2022 02:07, Dmitry Baryshkov wrote:
-> On 01/12/2022 01:51, Kuogee Hsieh wrote:
->> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
->> add link-frequencies property into dp_out endpoint as well. The last
->> frequency specified at link-frequencies will be the max link rate
->> supported by DP.
->>
->> Changes in v5:
->> -- revert changes at sc7180.dtsi and sc7280.dtsi
->> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
->>
->> Changes in v6:
->> -- add data-lanes and link-frequencies to yaml
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   .../devicetree/bindings/display/msm/dp-controller.yaml  | 17 
->> +++++++++++++++++
+On 01/12/2022 01:51, Kuogee Hsieh wrote:
+> Add capability to parser and retrieve max DP link supported rate from
+> link-frequencies property of dp_out endpoint.
 > 
-> Separate patch. Also you didn't check the get_maintainers output, so 
-> required parties were not included into the distribution.
+> Changes in v6:
+> -- second patch after split parser patch into two patches
 > 
-> Also as you'd check the get_maintainers output, please fix other email 
-> addresses too.
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_parser.c | 16 ++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_parser.h |  2 ++
+>   2 files changed, 18 insertions(+)
 > 
->>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi            |  6 +++++-
->>   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi          |  6 +++++-
->>   3 files changed, 27 insertions(+), 2 deletions(-)
->>
->> diff --git 
->> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
->> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> index 94bc6e1..af70343 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> @@ -90,6 +90,20 @@ properties:
->>           $ref: /schemas/graph.yaml#/properties/port
->>           description: Output endpoint of the controller
->> +        properties:
->> +          endpoint:
->> +            $ref: /schemas/media/video-interfaces.yaml#
->> +
->> +          properties:
->> +            link-frequencies: true
->> +            data-lanes: true
-> 
-> No. Use $ref for both of them.
-> 
->> +
->> +          required:
->> +            - link-frequencies
->> +            - data-lanes
-> 
-> No, they are not required.
-> 
->> +
->> +          additionalProperties: false
->> +
-> 
-> deprecation of old data-lanes property?
-> 
->>   required:
->>     - compatible
->>     - reg
->> @@ -158,6 +172,9 @@ examples:
->>                   reg = <1>;
->>                   endpoint {
->>                       remote-endpoint = <&typec>;
->> +                    data-lanes = <1 2>;
->> +                    link-frequencies = /bits/ 64 <160000000 270000000
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index b06ff60..2006341 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -95,6 +95,7 @@ static int dp_parser_misc(struct dp_parser *parser)
+>   {
+>   	struct device_node *of_node = parser->pdev->dev.of_node;
+>   	struct device_node *endpoint;
+> +	u64 frequency;
+>   	int cnt;
+>   
+>   	/*
+> @@ -103,6 +104,7 @@ static int dp_parser_misc(struct dp_parser *parser)
+>   	cnt = drm_of_get_data_lanes_count(of_node, 1, DP_MAX_NUM_DP_LANES);
+>   	if (cnt > 0) {
+>   		parser->max_dp_lanes = cnt;
+> +		parser->max_dp_link_rate = DP_LINK_RATE_HBR2; /* 540000 khz */
+>   		return 0;
+>   	}
+>   
+> @@ -116,8 +118,22 @@ static int dp_parser_misc(struct dp_parser *parser)
+>   			parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
+>   		else
+>   			parser->max_dp_lanes = cnt;
+> +
+> +		cnt = of_property_count_u64_elems(endpoint, "link-frequencies");
+> +		if (cnt < 0) {
+> +			parser->max_dp_link_rate = DP_LINK_RATE_HBR2; /* 540000 khz */
+> +		} else {
+> +			if (cnt > DP_MAX_NUM_DP_LANES)
+> +				cnt = DP_MAX_NUM_DP_LANES;
 
-s/1600/1620
+Why are you comparing the number of link frequencies with the number of 
+lanes? You don't need the comparison at all.
 
->> +                                                  540000000 810000000>;
-> 
-> I guess the number of zeroes is wrong here. This is 160 MHz ... 810 Mhz, 
-> rather than 1.6 GHz ... 8.1 GHz
+> +
+> +			of_property_read_u64_index(endpoint, "link-frequencies",
+> +							cnt - 1, &frequency);
 
-Ok, I was wrong here. The old code definitely defaults to 570 
-mega-something. Now I'd really like to read your description for the 
-link-frequencies property, because the phy_configure_opts_dp::link_rate 
-is clearly specified in Mb/s and it takes a fixed set of values from 
-1.62 Gb/s up to 8.1 Gb/s.
+Checking of the return value?
 
-I think the drm_dp_bw_code_to_link_rate() function is incorrect by 
-itself, as it multiplies with 27000 (27 Mbps) rather than 270000 (0.27 
-Gbps) as required by the standard. So first, we should fix the function, 
-then all the rates would become logical.
+> +
+> +			parser->max_dp_link_rate = (frequency / 1000); /* kbits */
+> +		}
+>   	} else {
+>   		parser->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
+> +		parser->max_dp_link_rate = DP_LINK_RATE_HBR2; /* 540000 khz */
 
+Instead of having all the nested if's and setting of max_dp_link rate in 
+several branches, please add a function that returns either a valid rate 
+or an error. Then you can simply check the result of that function and 
+set the default.
 
-> 
->>                   };
->>               };
->>           };
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> index 754d2d6..39f0844 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->> @@ -812,7 +812,11 @@ hp_i2c: &i2c9 {
->>       status = "okay";
->>       pinctrl-names = "default";
->>       pinctrl-0 = <&dp_hot_plug_det>;
->> -    data-lanes = <0 1>;
->> +};
->> +
->> +&dp_out {
->> +    data-lanes = <0  1>;
->> +    link-frequencies = /bits/ 64 <160000000 270000000 540000000>;
-> 
-> Same comment here.
-> 
->>   };
->>   &pm6150_adc {
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> index 93e39fc..b7c343d 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> @@ -440,7 +440,11 @@ ap_i2c_tpm: &i2c14 {
->>       status = "okay";
->>       pinctrl-names = "default";
->>       pinctrl-0 = <&dp_hot_plug_det>;
->> -    data-lanes = <0 1>;
->> +};
->> +
->> +&dp_out {
->> +    data-lanes = <0  1>;
->> +    link-frequencies = /bits/ 64 <160000000 270000000 540000000 
->> 810000000>;
-> 
-> And here.
-> 
->>   };
->>   &mdss_mdp {
-> 
+>   	}
+>   
+>   	return 0;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 866c1a8..3ddf639 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -15,6 +15,7 @@
+>   #define DP_LABEL "MDSS DP DISPLAY"
+>   #define DP_MAX_PIXEL_CLK_KHZ	675000
+>   #define DP_MAX_NUM_DP_LANES	4
+> +#define DP_LINK_RATE_HBR2       540000
+>   
+>   enum dp_pm_type {
+>   	DP_CORE_PM,
+> @@ -119,6 +120,7 @@ struct dp_parser {
+>   	struct dp_io io;
+>   	struct dp_display_data disp_data;
+>   	u32 max_dp_lanes;
+> +	u32 max_dp_link_rate;
+>   	struct drm_bridge *next_bridge;
+>   
+>   	int (*parse)(struct dp_parser *parser);
 
 -- 
 With best wishes
