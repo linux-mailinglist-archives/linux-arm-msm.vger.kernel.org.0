@@ -2,73 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91F8963FAD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:47:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 873E663FAF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:50:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231172AbiLAWrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 17:47:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38402 "EHLO
+        id S231743AbiLAWum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 17:50:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230484AbiLAWrm (ORCPT
+        with ESMTP id S231730AbiLAWuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 17:47:42 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE1455A2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 14:47:37 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id vp12so7676090ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:47:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2kIVsQfN9yKH0DYGMpC0ApzZk7KmelbVN6aprGnz3wQ=;
-        b=G8BEj3JH2fZS872/6ZTXfJz73rjPHbRTMO8k+5CSFm+fcAZuYGHbcvwjPp9YURHOvC
-         9IIsh8RJ3zWJSAiftpVd6gSjNCzb8qZrEt1JzB7sha4C3q/2ozW98CYFXS1v+YKkEZEw
-         cDXVwNGKUr0LRxZeYkYf1GjMDFzMriqErtgvQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2kIVsQfN9yKH0DYGMpC0ApzZk7KmelbVN6aprGnz3wQ=;
-        b=CMBRnseTPyjpi9FjOXlRHT8enj6Q+qw0P/1ckrtH1+t9Iz2cGXb8+XmEOXHCgPdBft
-         XAEluoFDcmcrDqW32dACBzBSGljviNOQOGi0szbB866Lif2qUB5uVZGCkJEpi76AQVbG
-         Fwe12q45gxw1hb8soefZntOLLk+hc7Yt3YQTAMk4operMLMT5oAAmt15HKBatHNGK5ro
-         7QashwN8J15IWNi+D8irPLRT3V8S7JA6eRPqqZRPIS2UvVGtTqxhUTvgC5Veq4QoYz+Y
-         vl9mvmDGWqGKENLT44ybO91kpFAD1IdUR+gZdbkEaakm/p9cnhgyY4ZQdgtCu09OaUUx
-         RcFg==
-X-Gm-Message-State: ANoB5pmlxFH9HaW3XEFQzS2nosvNEoGe/Uy2LUebVtLO1wfd8SDJiu9G
-        VuzyM1pDZyfLbxboImUukbhx3dd4UJ3zBwtn
-X-Google-Smtp-Source: AA0mqf5064LKC7yhAjbBOOQ4LwNRUKpXT+0i6rJ6p4WD0fq+nw3Ud0Vz49p9HLG0hLvizap2gtd52w==
-X-Received: by 2002:a17:906:a156:b0:78d:9b8b:93cc with SMTP id bu22-20020a170906a15600b0078d9b8b93ccmr4527511ejb.529.1669934856171;
-        Thu, 01 Dec 2022 14:47:36 -0800 (PST)
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
-        by smtp.gmail.com with ESMTPSA id v16-20020a1709061dd000b007b47749838asm2261811ejh.45.2022.12.01.14.47.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 14:47:34 -0800 (PST)
-Received: by mail-wr1-f52.google.com with SMTP id h12so5143361wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:47:33 -0800 (PST)
-X-Received: by 2002:a5d:4943:0:b0:242:3ca3:b7bd with SMTP id
- r3-20020a5d4943000000b002423ca3b7bdmr2729799wrs.583.1669934853656; Thu, 01
- Dec 2022 14:47:33 -0800 (PST)
+        Thu, 1 Dec 2022 17:50:19 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BE7C86B3;
+        Thu,  1 Dec 2022 14:49:25 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 55DB462084;
+        Thu,  1 Dec 2022 22:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36561C433C1;
+        Thu,  1 Dec 2022 22:49:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669934964;
+        bh=M7nV2gz26gK5iSyAIFMnEJ0Gt4gZXURIaCRJJrGWVxQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FHvhp1LgyAA/mE+nZNzb72kPSlTEZL+G4LRNhH/OPMaY8bsZbUuBUGsvPeQ8yX57M
+         yf6raFFlzijL/8k0JET2nFa2etTzeyNBZtyIqZhjf6olJI+sINsOf7FcX/mqHIYAtW
+         wUwi+/a3sesg5XEpxzPnSNPjbNds/Vz01O1ltVYZf7QABYoUnEl7RY+ylglA2xF6WN
+         Z9MFJJS+ShXsqpA8fZWWV5KVwUZKBBoYvEbfa/mDP9A7+zrIUA4UbeaoixLh/V6WcJ
+         NZmR/fJGN5t+pwLPJtyYHexFhEP7qmEznDlaXN+x0fggCTsttpIkgj6vgzPaCJFWyz
+         YgPUOCLl+Hvig==
+Date:   Thu, 1 Dec 2022 23:49:21 +0100
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/6] soc: qcom: add support for the I2C Master Hub
+Message-ID: <Y4kvcXTdwImZpaU1@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v3-0-f6a20dc9996e@linaro.org>
 MIME-Version: 1.0
-References: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 1 Dec 2022 14:47:21 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VWJvBU=uAPpyegxYz-k2sx=jBgiNm=qrso3cb3FXtqjw@mail.gmail.com>
-Message-ID: <CAD=FV=VWJvBU=uAPpyegxYz-k2sx=jBgiNm=qrso3cb3FXtqjw@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: qcom: gpi: Set link_rx bit on GO TRE for rx operation
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YX5ttnhQhXaDF07q"
+Content-Disposition: inline
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-i2c-master-hub-v3-0-f6a20dc9996e@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,38 +69,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, Nov 30, 2022 at 4:20 AM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> As per GSI spec, link_rx bit is to be set on GO TRE on tx
-> channel whenever there is going to be a DMA TRE on rx
-> channel. This is currently set for duplex operation only.
->
-> Set the bit for rx operation as well.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/dma/qcom/gpi.c | 1 +
->  1 file changed, 1 insertion(+)
+--YX5ttnhQhXaDF07q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't feel qualified to actually give this a review since I don't
-know anything about the details of GSI/GPI. It seems simple enough so
-I'll just assume that Bjorn will land it. Ideally someone else at
-Qualcomm would give you a Reviewed-by tag.
+On Tue, Nov 29, 2022 at 03:47:00PM +0100, Neil Armstrong wrote:
+> The I2C Master Hub is a stripped down version of the GENI Serial Engine
+> QUP Wrapper Controller but only supporting I2C serial engines without
+> DMA support.
+>=20
+> The I2C Master Hub only supports a variant of the I2C serial engine with:
+> - a separate "core" clock
+> - no DMA support
+> - non discoverable fixed FIFO size
+>=20
+> Since DMA isn't supported, the wrapper doesn't need the Master AHB clock
+> and the iommus property neither.
+>=20
+> This patchset adds the bindings changes to the QUPv3 wrapper and I2C seri=
+al
+> element bindings to reflect the different resources requirements.
+>=20
+> In order to reuse the QUPv3 wrapper and I2C serial element driver support,
+> the I2C Master Hub requirements are expressed in new desc structs passed
+> as device match data.
 
-One drive-by comment, though, is that I would say that your patch
-description lacks an answer to the question: "So what?"
+Is everyone fine if I take all this via the I2C tree?
 
-In other words, what is broken today? Does everything work fine today
-but some bit counter looked over your shoulder and told you that you
-were a bad person for not setting that bit? Did the lunar lander catch
-fire (despite the lack of Oxygen on the moon!) because it started
-using the RX transfer mode to talk to its fuel valve system and the RX
-transfer mode never worked? ...or maybe everything today works but the
-super secret Qualcomm SDM9002 (shhhh!) chip needs this bit set? Help
-people looking at your patch be able to decide if it's important for
-them to pick to their kernel tree! :-)
 
--Doug
+--YX5ttnhQhXaDF07q
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmOJL3EACgkQFA3kzBSg
+KbbJOg/9GeM6NURU8nhZCAy2JAcAIK8NTfDvJOQzYFEwPYiYhrH6On5gkziryCCL
+2/3SO5jAQdN+veFD1oRDLpKN9FdMXtEjw6Sp4WMu6/l8smL/oHrlc1QANfi0c9OR
+f2tuU4socvwBZStWWwlCih92Llqz/kz2jb8hYbwQdqJ4MiVJUA0nFWqTR7owGS/d
+IQQlyFF4zGK8r53RVekM1ayyul0h3/IX/rP30rL369sIKcS2H111MjyTkOEiKgcF
+Gr5qmP7StWauhE6ft9bx5u8ePasd90qfX/OiIof63X7cJADmRHHjwjF0Ceo+DLRT
+7c9UAU7i8eivMVTKbjJT6EsG8R53yNPxbR6fX39G72OgbIUf1jo24XGWau95yFp5
+nWHb6nk9wt5ECNZ8GWeZxMV/V9NPZV/J0G47rSTtXVtCgEcrywdVm1mEZQb5+0KO
+VD2Vp5FQ4SodgWqJQWiIeIxSkY5R+4OXVA6NeTBZw+3koNFyl1hEU759weXIX4MC
+UGUm4mpQgJSk2jbRhBCN6ucmSJzcZgzFnqWRp3fphhHEJwOu/A5m9yH7NMc+y4bo
+Po3pFZRYYdHhA3ahGdtlsokfIgukR+fii4qn/45bFK1EJ2vzP5YfiOJK97S1TdmN
+qrMmMIe1ee/EAxNs4V59guFwfh7pAFAPj9YkUotHHBvwgVuygac=
+=QWHn
+-----END PGP SIGNATURE-----
+
+--YX5ttnhQhXaDF07q--
