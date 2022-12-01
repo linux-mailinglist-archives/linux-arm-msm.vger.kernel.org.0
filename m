@@ -2,197 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE74963F614
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 18:20:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5167B63F622
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 18:32:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230106AbiLARUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 12:20:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40302 "EHLO
+        id S229512AbiLARcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 12:32:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbiLARUk (ORCPT
+        with ESMTP id S229468AbiLARcV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 12:20:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33329AC1BE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 09:19:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1669915182;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=Qx4tJBDDVJQuTwv5HZkZkSep7aBO8Jt6heDUOx7SfSo=;
-        b=XC2L7m8k6niby6m1dZiF1rYq1gSJSQ5I1p6EuCGNS18L5alQRzVwFQs4Dv3CVvYb+0qEGL
-        x7PmMwqOn4cjyinBfdnwtyU62GxTrlqoLxFQqKAPKO99t25GirOSZIgbVW0h7iHXi904d2
-        uPZzuu4FSGLBbEBIYQEI2oGsuofsjVs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-522-u7Y4AQK9Mmmqdq8ofJ_ivA-1; Thu, 01 Dec 2022 12:19:41 -0500
-X-MC-Unique: u7Y4AQK9Mmmqdq8ofJ_ivA-1
-Received: by mail-qv1-f69.google.com with SMTP id mi12-20020a056214558c00b004bb63393567so6566837qvb.21
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 09:19:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Qx4tJBDDVJQuTwv5HZkZkSep7aBO8Jt6heDUOx7SfSo=;
-        b=v+hKUmPOd9A4qfGOZ7eAiO5WnFQO0dHL3TFBfQ88reKTulf0rFdrG1a1F40HqVfQDn
-         9xGNo0UFx/Y5W4fsqzyMsY2nF55RRxTxHJaf1o4KG6P51tZ0cgJu5LSvY98psSlWfOYC
-         FHJ9OSaQCPuxfaStOSLdJ6LQLoVEp6LouMzlCOLmgAraLW5CZUdZeKk/WwrkrmOquHpg
-         GYf9w5MHxSQ2GV4+X4SAqJH0xF9CVlUUBR42zWCwarJyPrMpVBZYEkfUphWCw9XZPqD/
-         RPKp2e7nfYU5EsiX+p12CiDuV3D+pycdHwS9qEHzdWm518iUAyjgEsK4t8bxL57+mcTO
-         Pntw==
-X-Gm-Message-State: ANoB5pnwLPaqcm/smvLkXUy/HC6paqclnqnGvQ0RIWxAiPd+P+Z5uxFd
-        fW3E5WPvnDnRqQe03NPTn87H9DhB3U3VM0hVky6vCeRk8VTZphxAJYArQW1S+ftTO3S99M6W6N6
-        gPqr+egl34yGUU/qidsiC2B8sfw==
-X-Received: by 2002:ac8:6886:0:b0:3a5:f507:8ed4 with SMTP id m6-20020ac86886000000b003a5f5078ed4mr61853830qtq.450.1669915180756;
-        Thu, 01 Dec 2022 09:19:40 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf5r3BvCutg+1QztBc5YxpRubTlOisO3GEigwdeg3f+lRep01JpM3E+7OYsn0wkXJm2DCRcFWQ==
-X-Received: by 2002:ac8:6886:0:b0:3a5:f507:8ed4 with SMTP id m6-20020ac86886000000b003a5f5078ed4mr61853805qtq.450.1669915180485;
-        Thu, 01 Dec 2022 09:19:40 -0800 (PST)
-Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id g8-20020a05620a40c800b006f3e6933bacsm545421qko.113.2022.12.01.09.19.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 09:19:40 -0800 (PST)
-From:   Brian Masney <bmasney@redhat.com>
-To:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_shazhuss@quicinc.com,
-        psodagud@quicinc.com, ahalaney@redhat.com, echanude@redhat.com
-Subject: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-Date:   Thu,  1 Dec 2022 12:19:31 -0500
-Message-Id: <20221201171931.1919961-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.38.1
+        Thu, 1 Dec 2022 12:32:21 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB90A5571;
+        Thu,  1 Dec 2022 09:32:19 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B1ANN74005503;
+        Thu, 1 Dec 2022 17:32:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cH4X/9hp42Ht1t4/gAdjt5IqVXmrBA6lZWKRLIVyAgM=;
+ b=Jfq7/YXqfA72R1xnxGuLP9AsKQX7Aqh77e6Z7O69zwnRdSZz7JpQYL1OTDGA/+k4EHJs
+ CHSGGJ5mV/47i/d2enpz6xUQjLDJakZklVJ6UCbcTo74VdAXa7cYAnDLTB6aC3hKy9vI
+ bUYHc0nxLsOnWwpDJzGxc5u+qDaRwa9EtazSCtebBoFgBSwu3kyMURdjq4O9AYvhcPfm
+ Q6BDWRYBX5py0WO2/Cg6LdqiFugmBsAmAuw2usJZoMl51kIfTyoUWuslBI8DPAxoEIPS
+ FjciAXRQPA3CSKtVjhCnaDKP2mIid496XdcsYxYiGLtdy5hQgmYRZtV4Ovqc0NnA+vTt mA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m6k6xjypx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Dec 2022 17:32:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B1HWAYq008297
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Dec 2022 17:32:10 GMT
+Received: from [10.110.18.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 1 Dec 2022
+ 09:32:03 -0800
+Message-ID: <f03233b4-2850-c206-724c-0b6568b6a876@quicinc.com>
+Date:   Thu, 1 Dec 2022 09:32:02 -0800
 MIME-Version: 1.0
-Content-type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: add data-lanes and
+ link-freuencies into dp_out endpoint
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1669852310-22360-1-git-send-email-quic_khsieh@quicinc.com>
+ <1669852310-22360-2-git-send-email-quic_khsieh@quicinc.com>
+ <7bf73466-e476-4a1d-5dc0-1b63ea742226@linaro.org>
+ <29d12e26-b3c8-dbf6-de1f-5c6ae4a5a705@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <29d12e26-b3c8-dbf6-de1f-5c6ae4a5a705@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Jn-ucERJMZDvW0JL7kgkMjrfX0k8G9-R
+X-Proofpoint-ORIG-GUID: Jn-ucERJMZDvW0JL7kgkMjrfX0k8G9-R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-01_12,2022-12-01_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ mlxscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1015 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2212010131
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the vreg_l11a, pcie3a, pcie3a_phy, and tlmm nodes that are necessary
-in order to get PCIe working on the QDrive3.
 
-This patch also increases the width of the ranges property for the PCIe
-switch that's found on this platform. Note that this change requires
-the latest trustzone (TZ) firmware that's available from Qualcomm as
-of November 2022. If this is used against a board with the older
-firmware, then the board will go into ramdump mode when PCIe is probed
-on startup.
+On 11/30/2022 4:21 PM, Dmitry Baryshkov wrote:
+> On 01/12/2022 02:07, Dmitry Baryshkov wrote:
+>> On 01/12/2022 01:51, Kuogee Hsieh wrote:
+>>> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
+>>> add link-frequencies property into dp_out endpoint as well. The last
+>>> frequency specified at link-frequencies will be the max link rate
+>>> supported by DP.
+>>>
+>>> Changes in v5:
+>>> -- revert changes at sc7180.dtsi and sc7280.dtsi
+>>> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
+>>>
+>>> Changes in v6:
+>>> -- add data-lanes and link-frequencies to yaml
+>>>
+>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>> ---
+>>>   .../devicetree/bindings/display/msm/dp-controller.yaml  | 17 
+>>> +++++++++++++++++
+>>
+>> Separate patch. Also you didn't check the get_maintainers output, so 
+>> required parties were not included into the distribution.
+>>
+>> Also as you'd check the get_maintainers output, please fix other 
+>> email addresses too.
+>>
+>>> arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi            |  6 +++++-
+>>>   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi          |  6 +++++-
+>>>   3 files changed, 27 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git 
+>>> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
+>>> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> index 94bc6e1..af70343 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> @@ -90,6 +90,20 @@ properties:
+>>>           $ref: /schemas/graph.yaml#/properties/port
+>>>           description: Output endpoint of the controller
+>>> +        properties:
+>>> +          endpoint:
+>>> +            $ref: /schemas/media/video-interfaces.yaml#
+>>> +
+>>> +          properties:
+>>> +            link-frequencies: true
+>>> +            data-lanes: true
+>>
+>> No. Use $ref for both of them.
+>>
+>>> +
+>>> +          required:
+>>> +            - link-frequencies
+>>> +            - data-lanes
+>>
+>> No, they are not required.
+>>
+>>> +
+>>> +          additionalProperties: false
+>>> +
+>>
+>> deprecation of old data-lanes property?
+>>
+>>>   required:
+>>>     - compatible
+>>>     - reg
+>>> @@ -158,6 +172,9 @@ examples:
+>>>                   reg = <1>;
+>>>                   endpoint {
+>>>                       remote-endpoint = <&typec>;
+>>> +                    data-lanes = <1 2>;
+>>> +                    link-frequencies = /bits/ 64 <160000000 270000000
+>
+> s/1600/1620
+>
+>>> + 540000000 810000000>;
+>>
+>> I guess the number of zeroes is wrong here. This is 160 MHz ... 810 
+>> Mhz, rather than 1.6 GHz ... 8.1 GHz
+>
+> Ok, I was wrong here. The old code definitely defaults to 570 
+> mega-something. Now I'd really like to read your description for the 
+> link-frequencies property, because the 
+> phy_configure_opts_dp::link_rate is clearly specified in Mb/s and it 
+> takes a fixed set of values from 1.62 Gb/s up to 8.1 Gb/s.
+>
+> I think the drm_dp_bw_code_to_link_rate() function is incorrect by 
+> itself, as it multiplies with 27000 (27 Mbps) rather than 270000 (0.27 
+> Gbps) as required by the standard. So first, we should fix the 
+> function, then all the rates would become logical.
 
-The ranges property is overridden in this sa8540p-ride.dts file since
-this is what's used to describe the QDrive3 variant with dual SoCs.
-There's another variant of this board that only has a single SoC where
-this change is not applicable, and hence why this specific change was
-not done in sa8540p.dtsi.
+no, drm_dp_bw_code_to_link_rate() is correct and should not be changes 
+since it impact to other dp drivers too.
 
-These changes were derived from various patches that Qualcomm
-delivered to Red Hat in a downstream kernel.
+0.27Gbps/lane is specified at DP spec.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
----
-Changes since v1:
-- Add -state and -pins suffixes to tlmm (Krzysztof)
+DP use 8b/10b coding rule (10 bits symbol contains 8 bits data).
 
-This patch depends on the following series that hasn't made it's way
-into linux-next yet:
 
-[PATCH v10 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
-https://lore.kernel.org/lkml/20221118025158.16902-1-quic_ppareek@quicinc.com/
-
-I can't find the specific TZ firmware version that we have so that's why
-I included the date instead.
-
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 54 +++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index a5f87a8629d6..e953165f3b73 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -51,6 +51,14 @@ vreg_l7a: ldo7 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l11a: ldo11 {
-+			regulator-name = "vreg_l11a";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
- 		vreg_l13a: ldo13 {
- 			regulator-name = "vreg_l13a";
- 			regulator-min-microvolt = <3072000>;
-@@ -139,6 +147,27 @@ vreg_l8g: ldo8 {
- 	};
- };
- 
-+&pcie3a {
-+	ranges = <0x01000000 0x0 0x32200000 0x0 0x32200000 0x0 0x100000>,
-+	         <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-+	         <0x03000000 0x6 0x00000000 0x6 0x00000000 0x2 0x00000000>;
-+
-+	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 56 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie3a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3a_phy {
-+	vdda-phy-supply = <&vreg_l11a>;
-+	vdda-pll-supply = <&vreg_l3a>;
-+
-+	status = "okay";
-+};
-+
- &qup2 {
- 	status = "okay";
- };
-@@ -158,6 +187,31 @@ &remoteproc_nsp1 {
- 	status = "okay";
- };
- 
-+&tlmm {
-+	pcie3a_default: pcie3a-default-state {
-+		perst-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio150";
-+			function = "pcie3a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio56";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+};
-+
- &ufs_mem_hc {
- 	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
- 
--- 
-2.38.1
-
+>
+>
+>>
+>>>                   };
+>>>               };
+>>>           };
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> index 754d2d6..39f0844 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>> @@ -812,7 +812,11 @@ hp_i2c: &i2c9 {
+>>>       status = "okay";
+>>>       pinctrl-names = "default";
+>>>       pinctrl-0 = <&dp_hot_plug_det>;
+>>> -    data-lanes = <0 1>;
+>>> +};
+>>> +
+>>> +&dp_out {
+>>> +    data-lanes = <0  1>;
+>>> +    link-frequencies = /bits/ 64 <160000000 270000000 540000000>;
+>>
+>> Same comment here.
+>>
+>>>   };
+>>>   &pm6150_adc {
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>> index 93e39fc..b7c343d 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>> @@ -440,7 +440,11 @@ ap_i2c_tpm: &i2c14 {
+>>>       status = "okay";
+>>>       pinctrl-names = "default";
+>>>       pinctrl-0 = <&dp_hot_plug_det>;
+>>> -    data-lanes = <0 1>;
+>>> +};
+>>> +
+>>> +&dp_out {
+>>> +    data-lanes = <0  1>;
+>>> +    link-frequencies = /bits/ 64 <160000000 270000000 540000000 
+>>> 810000000>;
+>>
+>> And here.
+>>
+>>>   };
+>>>   &mdss_mdp {
+>>
+>
