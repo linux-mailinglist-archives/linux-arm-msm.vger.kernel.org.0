@@ -2,74 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A57C63FA7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:24:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8985E63FA91
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:30:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbiLAWYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 17:24:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43458 "EHLO
+        id S230337AbiLAWaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 17:30:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiLAWY2 (ORCPT
+        with ESMTP id S231186AbiLAWaR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 17:24:28 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAB51CB3A;
-        Thu,  1 Dec 2022 14:24:28 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B1KTxK6031263;
-        Thu, 1 Dec 2022 22:24:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=pSnnyqswrXqnqsVTp7FpeVnzPD1GrBLVmOoY+g5lPnw=;
- b=LtavIXkuVbjqCcW40uHXfzK3Zr6dA86jUJo5y6wAMrZdmb+QCyuDQTdEoZLInq8GmST1
- 2qCDOU17lp4oij/vicnM+R/AUEyixuEdfTgI5RCJMVtMRSg5UtWQ4ZgbgswOWbS81zfF
- 3mqN2IgnHNm26DGDIU8Qu2U2WrMVzI/DaTWgbUM8T1eqNFxpAJ8yESpws2A1AE2agDPt
- E/T99DccXiftuT1dzkR6+vDh6q2HypRXGsFIHzzNmtCwgi0AqMY2ZMhMJ5JuU/IcXX2u
- Ji4ifOE40UZxZ9uOPrQOC5tiBM4ibcSknkowkIXyt64joaIJ4EFMezEdrLpfkJAT0H3P HA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m6k2c3qnx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Dec 2022 22:24:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B1MOKZt013454
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Dec 2022 22:24:20 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 1 Dec 2022 14:24:19 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 5/5] drm/msm/dp: add support of max dp link rate
-Date:   Thu, 1 Dec 2022 14:24:12 -0800
-Message-ID: <1669933452-18927-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 1 Dec 2022 17:30:17 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620F4BE698;
+        Thu,  1 Dec 2022 14:30:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 067AB62155;
+        Thu,  1 Dec 2022 22:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A50C433D6;
+        Thu,  1 Dec 2022 22:30:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669933815;
+        bh=C9zPt6ff2ci339LcJjA+A5VnNTOlj2rygaMYGmHG9Eg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=U3LQUI+ImSEa4/wJUkQRej3SnDSVRtGUoRzMqcyJYmlFR4e37G98HM/AJJpeqMq5W
+         Ngh+yG5Y0JqE7XCOJaVYr2tayfLQIC+Fkhi8R9OQELvupx2nGnRtqY/4oM7WQgNOCq
+         kUVVO50DZB2oSiMaDeP6hCUdIJc8h2xnPiU0PX8T5xSYeQ+ClbShFDofrr8cfaZE2s
+         1j3afsRRbbfxBCfzZD1/HjX2KipNAex6wcT8kOdLOh/hsjL86WwZDZX6YTAbdGa8qv
+         9VnRK9YxcG1kdMEzFkrVuGb8PFKtsDE1zyGqiUbFvg67s8MJRYCsClhAH03z6JsVfd
+         buyq/x3hKNv3w==
+Date:   Thu, 1 Dec 2022 16:30:12 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_shazhuss@quicinc.com,
+        psodagud@quicinc.com, ahalaney@redhat.com, echanude@redhat.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable PCIe support
+Message-ID: <20221201223012.r6mvz4updf3qoilj@builder.lan>
+References: <20221201171931.1919961-1-bmasney@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mVf6Baw_BrzP2Gr7Fp9HLg4_3jxkfY9m
-X-Proofpoint-GUID: mVf6Baw_BrzP2Gr7Fp9HLg4_3jxkfY9m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-01_14,2022-12-01_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 impostorscore=0 spamscore=0 clxscore=1015
- bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212010173
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221201171931.1919961-1-bmasney@redhat.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,78 +56,132 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-By default, HBR2 (5.4G) is the max link link be supported. This patch add
-the capability to support max link rate at HBR3 (8.1G).
+On Thu, Dec 01, 2022 at 12:19:31PM -0500, Brian Masney wrote:
+> Add the vreg_l11a, pcie3a, pcie3a_phy, and tlmm nodes that are necessary
+> in order to get PCIe working on the QDrive3.
+> 
+> This patch also increases the width of the ranges property for the PCIe
+> switch that's found on this platform. Note that this change requires
+> the latest trustzone (TZ) firmware that's available from Qualcomm as
+> of November 2022. If this is used against a board with the older
+> firmware, then the board will go into ramdump mode when PCIe is probed
+> on startup.
+> 
+> The ranges property is overridden in this sa8540p-ride.dts file since
+> this is what's used to describe the QDrive3 variant with dual SoCs.
+> There's another variant of this board that only has a single SoC where
+> this change is not applicable, and hence why this specific change was
+> not done in sa8540p.dtsi.
+> 
+> These changes were derived from various patches that Qualcomm
+> delivered to Red Hat in a downstream kernel.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
+> Changes since v1:
+> - Add -state and -pins suffixes to tlmm (Krzysztof)
+> 
+> This patch depends on the following series that hasn't made it's way
+> into linux-next yet:
+> 
+> [PATCH v10 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
+> https://lore.kernel.org/lkml/20221118025158.16902-1-quic_ppareek@quicinc.com/
+> 
+> I can't find the specific TZ firmware version that we have so that's why
+> I included the date instead.
+> 
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 54 +++++++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index a5f87a8629d6..e953165f3b73 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -51,6 +51,14 @@ vreg_l7a: ldo7 {
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> +		vreg_l11a: ldo11 {
+> +			regulator-name = "vreg_l11a";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
 
-Changes in v2:
--- add max link rate from dtsi
+In order to specify regulator-allow-set-load you also need
+regulator-allowed-modes.
 
-Changes in v3:
--- parser max_data_lanes and max_dp_link_rate from dp_out endpoint
+But if I read the implementation correction, we don't actually alter the
+load, so perhaps best to just omit this for now?
 
-Changes in v4:
--- delete unnecessary pr_err
+Regards,
+Bjorn
 
-Changes in v5:
--- split parser function into different patch
-
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 4 ++++
- drivers/gpu/drm/msm/dp/dp_panel.c   | 7 ++++---
- drivers/gpu/drm/msm/dp/dp_panel.h   | 1 +
- 3 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index bfd0aef..edee550 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -390,6 +390,10 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	struct edid *edid;
- 
- 	dp->panel->max_dp_lanes = dp->parser->max_dp_lanes;
-+	dp->panel->max_dp_link_rate = dp->parser->max_dp_link_rate;
-+
-+	drm_dbg_dp(dp->drm_dev, "max_lanes=%d max_link_rate=%d\n",
-+		dp->panel->max_dp_lanes, dp->panel->max_dp_link_rate);
- 
- 	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
- 	if (rc)
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 5149ceb..933fa9c 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -75,12 +75,13 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
- 	link_info->rate = drm_dp_bw_code_to_link_rate(dpcd[DP_MAX_LINK_RATE]);
- 	link_info->num_lanes = dpcd[DP_MAX_LANE_COUNT] & DP_MAX_LANE_COUNT_MASK;
- 
-+	/* Limit data lanes from data-lanes of endpoint properity of dtsi */
- 	if (link_info->num_lanes > dp_panel->max_dp_lanes)
- 		link_info->num_lanes = dp_panel->max_dp_lanes;
- 
--	/* Limit support upto HBR2 until HBR3 support is added */
--	if (link_info->rate >= (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
--		link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
-+	/* Limit link rate from link-frequencies of endpoint properity of dtsi */
-+	if (link_info->rate > dp_panel->max_dp_link_rate)
-+		link_info->rate = dp_panel->max_dp_link_rate;
- 
- 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
- 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index d861197a..f04d021 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -50,6 +50,7 @@ struct dp_panel {
- 
- 	u32 vic;
- 	u32 max_dp_lanes;
-+	u32 max_dp_link_rate;
- 
- 	u32 max_bw_code;
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> +		};
+> +
+>  		vreg_l13a: ldo13 {
+>  			regulator-name = "vreg_l13a";
+>  			regulator-min-microvolt = <3072000>;
+> @@ -139,6 +147,27 @@ vreg_l8g: ldo8 {
+>  	};
+>  };
+>  
+> +&pcie3a {
+> +	ranges = <0x01000000 0x0 0x32200000 0x0 0x32200000 0x0 0x100000>,
+> +	         <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
+> +	         <0x03000000 0x6 0x00000000 0x6 0x00000000 0x2 0x00000000>;
+> +
+> +	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 56 GPIO_ACTIVE_HIGH>;
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie3a_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie3a_phy {
+> +	vdda-phy-supply = <&vreg_l11a>;
+> +	vdda-pll-supply = <&vreg_l3a>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qup2 {
+>  	status = "okay";
+>  };
+> @@ -158,6 +187,31 @@ &remoteproc_nsp1 {
+>  	status = "okay";
+>  };
+>  
+> +&tlmm {
+> +	pcie3a_default: pcie3a-default-state {
+> +		perst-pins {
+> +			pins = "gpio151";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+> +		};
+> +
+> +		clkreq-pins {
+> +			pins = "gpio150";
+> +			function = "pcie3a_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		wake-pins {
+> +			pins = "gpio56";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +};
+> +
+>  &ufs_mem_hc {
+>  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+>  
+> -- 
+> 2.38.1
+> 
