@@ -2,75 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1FB863FABD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91F8963FAD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 23:47:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231368AbiLAWl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 17:41:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59356 "EHLO
+        id S231172AbiLAWrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 17:47:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229953AbiLAWll (ORCPT
+        with ESMTP id S230484AbiLAWrm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 17:41:41 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B437CBA6C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 14:40:48 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id o13so7698349ejm.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:40:48 -0800 (PST)
+        Thu, 1 Dec 2022 17:47:42 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE1455A2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 14:47:37 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id vp12so7676090ejc.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:47:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QCBYYhoGVnPTz4nZHJRlsPZmuJN8IhHsIEClmRUBJpo=;
-        b=jBcVX9Jl9yrC96NGyAJJme3N1v+AcQiGHgHXRNu8ZsSznlpuF+iEpmAg1j7gwBA8gm
-         dWiaW3mkUvrBoTlgohQGGoX9JWZPsOalitI1/7b7NdOkDgkZicIDCD+rLoMWBdJzqp66
-         JlfXDtT3QfqvSBpIg/TonYco3N03nPKIiO/Cw=
+        bh=2kIVsQfN9yKH0DYGMpC0ApzZk7KmelbVN6aprGnz3wQ=;
+        b=G8BEj3JH2fZS872/6ZTXfJz73rjPHbRTMO8k+5CSFm+fcAZuYGHbcvwjPp9YURHOvC
+         9IIsh8RJ3zWJSAiftpVd6gSjNCzb8qZrEt1JzB7sha4C3q/2ozW98CYFXS1v+YKkEZEw
+         cDXVwNGKUr0LRxZeYkYf1GjMDFzMriqErtgvQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QCBYYhoGVnPTz4nZHJRlsPZmuJN8IhHsIEClmRUBJpo=;
-        b=N5dh28DxhysaeXppnsElC9Q1tM6DtMxKFSInIaEAmmPrPKT/wW3XVnaeGElkLoF0KK
-         3NKmEU4NrBhZ8I3Xb8piAq3PIh+T3G/lafLEi0/xXU+gi0ybvJvBPEhAewhSqEXEibi5
-         FERN0KHE8Hm4KEOSmeuB1zc6QIyP42X1Ajr5GS1gK0MbxMO5J4h+mi3mJaikIx0d2tGU
-         zyHU2TAxamkeocExK0xsP1SDvkHpMS5Ve2XXAzMPmwrNrzl1+cBYAmzkCqjQNdSYOMMN
-         hcm2tOEraHh3z16mcCIjZ9L7sGaBosStkwJZShDHxYkSFkMi5oOtmyVCT7RekNN5xXxZ
-         zKlA==
-X-Gm-Message-State: ANoB5pnQfACxPOIR4sbvUCrL/gi3ZquwnTJCpZFYkQqzVFlBo81lYeiU
-        FkniaISqU6mTSyo9lMzYjaU6MY/d+cy0dFyL
-X-Google-Smtp-Source: AA0mqf5RoMZQXU8u7dWQ4clNh2mmjS5NTWQkqUtjM22Eohn8T7EKIIFHfK316mQ/Dh8ssxtVfgsmOw==
-X-Received: by 2002:a17:907:7796:b0:7b6:6086:75bc with SMTP id ky22-20020a170907779600b007b6608675bcmr47686546ejc.181.1669934446450;
-        Thu, 01 Dec 2022 14:40:46 -0800 (PST)
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
-        by smtp.gmail.com with ESMTPSA id e18-20020a170906315200b007b935641971sm2293328eje.5.2022.12.01.14.40.44
+        bh=2kIVsQfN9yKH0DYGMpC0ApzZk7KmelbVN6aprGnz3wQ=;
+        b=CMBRnseTPyjpi9FjOXlRHT8enj6Q+qw0P/1ckrtH1+t9Iz2cGXb8+XmEOXHCgPdBft
+         XAEluoFDcmcrDqW32dACBzBSGljviNOQOGi0szbB866Lif2qUB5uVZGCkJEpi76AQVbG
+         Fwe12q45gxw1hb8soefZntOLLk+hc7Yt3YQTAMk4operMLMT5oAAmt15HKBatHNGK5ro
+         7QashwN8J15IWNi+D8irPLRT3V8S7JA6eRPqqZRPIS2UvVGtTqxhUTvgC5Veq4QoYz+Y
+         vl9mvmDGWqGKENLT44ybO91kpFAD1IdUR+gZdbkEaakm/p9cnhgyY4ZQdgtCu09OaUUx
+         RcFg==
+X-Gm-Message-State: ANoB5pmlxFH9HaW3XEFQzS2nosvNEoGe/Uy2LUebVtLO1wfd8SDJiu9G
+        VuzyM1pDZyfLbxboImUukbhx3dd4UJ3zBwtn
+X-Google-Smtp-Source: AA0mqf5064LKC7yhAjbBOOQ4LwNRUKpXT+0i6rJ6p4WD0fq+nw3Ud0Vz49p9HLG0hLvizap2gtd52w==
+X-Received: by 2002:a17:906:a156:b0:78d:9b8b:93cc with SMTP id bu22-20020a170906a15600b0078d9b8b93ccmr4527511ejb.529.1669934856171;
+        Thu, 01 Dec 2022 14:47:36 -0800 (PST)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id v16-20020a1709061dd000b007b47749838asm2261811ejh.45.2022.12.01.14.47.33
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 14:40:44 -0800 (PST)
-Received: by mail-wm1-f41.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso5152745wme.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:40:44 -0800 (PST)
-X-Received: by 2002:a05:600c:3109:b0:3cf:5731:53db with SMTP id
- g9-20020a05600c310900b003cf573153dbmr54653459wmo.85.1669934443867; Thu, 01
- Dec 2022 14:40:43 -0800 (PST)
+        Thu, 01 Dec 2022 14:47:34 -0800 (PST)
+Received: by mail-wr1-f52.google.com with SMTP id h12so5143361wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 14:47:33 -0800 (PST)
+X-Received: by 2002:a5d:4943:0:b0:242:3ca3:b7bd with SMTP id
+ r3-20020a5d4943000000b002423ca3b7bdmr2729799wrs.583.1669934853656; Thu, 01
+ Dec 2022 14:47:33 -0800 (PST)
 MIME-Version: 1.0
-References: <1669713814-28876-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1669713814-28876-1-git-send-email-quic_vnivarth@quicinc.com>
+References: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1669810824-32094-1-git-send-email-quic_vnivarth@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 1 Dec 2022 14:40:32 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WW-YttMn2+_6MdKwVDQO2stHjiisSdX8vFoOFBMnsjRA@mail.gmail.com>
-Message-ID: <CAD=FV=WW-YttMn2+_6MdKwVDQO2stHjiisSdX8vFoOFBMnsjRA@mail.gmail.com>
-Subject: Re: [V3] spi: spi-geni-qcom: Add support for SE DMA mode
+Date:   Thu, 1 Dec 2022 14:47:21 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VWJvBU=uAPpyegxYz-k2sx=jBgiNm=qrso3cb3FXtqjw@mail.gmail.com>
+Message-ID: <CAD=FV=VWJvBU=uAPpyegxYz-k2sx=jBgiNm=qrso3cb3FXtqjw@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom: gpi: Set link_rx bit on GO TRE for rx operation
 To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com, vkoul@kernel.org
+        quic_vtanuku@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -79,208 +78,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Nov 29, 2022 at 1:23 AM Vijaya Krishna Nivarthi
+On Wed, Nov 30, 2022 at 4:20 AM Vijaya Krishna Nivarthi
 <quic_vnivarth@quicinc.com> wrote:
 >
-> @@ -95,6 +97,7 @@ struct spi_geni_master {
->         struct dma_chan *tx;
->         struct dma_chan *rx;
->         int cur_xfer_mode;
-> +       u32 cur_m_cmd;
-
-In v1, I said: "I don't think you need to store "cur_m_cmd" ..."
-...you responded: Please note that cur_xfer can be NULL. Added further
-to comments."
-
-I don't see any comments about this.
-
-In any case, I'm still unclear about why this is needed. I guess
-you're looking at the code in handle_se_timeout(). I'll comment there.
-
-
-> @@ -162,6 +169,45 @@ static void handle_fifo_timeout(struct spi_master *spi,
->                  */
->                 mas->abort_failed = true;
->         }
-> +
-> +unmap_if_dma:
-> +       if (mas->cur_xfer_mode == GENI_SE_DMA) {
-> +               if (mas->cur_m_cmd & SPI_TX_ONLY) {
-> +                       spin_lock_irq(&mas->lock);
-> +                       reinit_completion(&mas->tx_reset_done);
-> +                       writel(1, se->base + SE_DMA_TX_FSM_RST);
-> +                       spin_unlock_irq(&mas->lock);
-> +                       time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
-> +                       if (!time_left)
-> +                               dev_err(mas->dev, "DMA TX RESET failed\n");
-> +               }
-> +               if (mas->cur_m_cmd & SPI_RX_ONLY) {
-> +                       spin_lock_irq(&mas->lock);
-> +                       reinit_completion(&mas->rx_reset_done);
-> +                       writel(1, se->base + SE_DMA_RX_FSM_RST);
-> +                       spin_unlock_irq(&mas->lock);
-> +                       time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
-> +                       if (!time_left)
-> +                               dev_err(mas->dev, "DMA RX RESET failed\n");
-> +               }
-> +
-> +               if (xfer) {
-> +                       if (xfer->tx_buf && xfer->tx_dma)
-> +                               geni_se_tx_dma_unprep(se, xfer->tx_dma, xfer->len);
-> +                       if (xfer->rx_buf && xfer->rx_dma)
-> +                               geni_se_rx_dma_unprep(se, xfer->rx_dma, xfer->len);
-> +               } else {
-> +                       /*
-> +                        * This can happen if a timeout happened and we had to wait
-> +                        * for lock in this function because isr was holding the lock
-> +                        * and handling transfer completion at that time.
-> +                        * isr will set cur_xfer to NULL when done.
-> +                        * Unnecessary error but cannot be helped.
-> +                        * Only do reset, dma_unprep is already done by isr.
-> +                        */
-> +                       dev_err(mas->dev, "Cancel/Abort on completed SPI transfer\n");
-> +               }
-
-For the above block of code, if "xfer" is NULL then do we actually
-need to issue the DMA TX Reset and the DMA RX Reset? As per your
-comments, the only case "xfer" can be NULL is if the ISR was holding
-the lock and handling the transfer completion at that time. If the ISR
-handled the transfer completion then we're not actually in a bad
-state, right? Thus, couldn't you do:
-
-if (xfer) {
-  if (xfer->tx_buf && xfer->tx_dma) {
-    // Do the FSM reset
-    // Unprepare the DMA
-  }
-  if (xfer->rx_buf && xfer->rx_dma) {
-    // Do the FSM reset
-    // Unprepare the DMA
-  }
-} else {
-  dev_err(...);
-}
-
-That should be fine, right? ...and then we can get rid of the need for
-"cur_m_cmd" as per my previous comment, right?
-
-I'll also ask if we can downgrade the "dev_err" to a "dev_warn". I
-usually reserve dev_err for things that are fatal. Here we think we'll
-probably recover, right?
-
-
-> @@ -778,11 +836,39 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
->          */
->         spin_lock_irq(&mas->lock);
->         geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
-> -       if (m_cmd & SPI_TX_ONLY) {
-> +
-> +       if (mas->cur_xfer_mode == GENI_SE_DMA) {
-> +               if (m_cmd & SPI_RX_ONLY) {
-> +                       ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
-> +                               xfer->len, &xfer->rx_dma);
-
-In response to v1 I asked if it's really OK to use "xfer->rx_dma" for
-your purposes since it's supposed to be managed by the SPI framework.
-
-It still makes me nervous to use it, even though it seems to work.
-Since we're using it in an undocumented way, I'd be nervous that the
-SPI framework might change what it's doing and break us in the future.
-
-We can only have one TX and one RX transfer at a time anyway. Why
-don't we just have our own "rx_dma" and "tx_dma" in "struct
-spi_geni_master". It's only 16 extra bytes of data and it would make
-me feel less nervous.
-
-It still would be nice to eventually use the SPI framework to manage
-the mapping, but I agree that can be a future task.
-
-
-> +                       if (ret) {
-> +                               dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
-> +                               xfer->rx_dma = 0;
-> +                               goto unlock_and_return;
-> +                       }
-> +               }
-> +               if (m_cmd & SPI_TX_ONLY) {
-> +                       ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
-> +                               xfer->len, &xfer->tx_dma);
-
-In v1 I asked about the above "void *" cast. You pointed out that it
-was to cast away constness. So I agree that you can keep it here for
-now, but could you also post a patch to change geni_se_tx_dma_prep()
-to take a "const void *"? You'll need a cast in _that_ function to
-remove the constness (since dma_map_single() is generic for both TX
-and RX), but it seems like a better place for it. Then a later patch
-could remove the cast here.
-
-
-> +                       if (ret) {
-> +                               dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
-> +                               xfer->tx_dma = 0;
-> +                               if (m_cmd & SPI_RX_ONLY && xfer->rx_dma) {
-
-Don't need "&& xfer->rx_dma". You _just_ mapped it above and if it had
-failed it would have returned an error. you don't need to
-double-check. You can trust that the framework knows what it's doing
-and won't return NULL to you. If it did return NULL to you because of
-a bug, it's not necessarily better to just silently skip unpreparing
-anyway.
-
-
-> @@ -823,39 +913,66 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+> As per GSI spec, link_rx bit is to be set on GO TRE on tx
+> channel whenever there is going to be a DMA TRE on rx
+> channel. This is currently set for duplex operation only.
 >
->         spin_lock(&mas->lock);
+> Set the bit for rx operation as well.
 >
-> -       if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
-> -               geni_spi_handle_rx(mas);
-> -
-> -       if (m_irq & M_TX_FIFO_WATERMARK_EN)
-> -               geni_spi_handle_tx(mas);
-> -
-> -       if (m_irq & M_CMD_DONE_EN) {
-> -               if (mas->cur_xfer) {
-> +       if (mas->cur_xfer_mode == GENI_SE_FIFO) {
-> +               if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
-> +                       geni_spi_handle_rx(mas);
-> +
-> +               if (m_irq & M_TX_FIFO_WATERMARK_EN)
-> +                       geni_spi_handle_tx(mas);
-> +
-> +               if (m_irq & M_CMD_DONE_EN) {
-> +                       if (mas->cur_xfer) {
-> +                               spi_finalize_current_transfer(spi);
-> +                               mas->cur_xfer = NULL;
-> +                               /*
-> +                                * If this happens, then a CMD_DONE came before all the
-> +                                * Tx buffer bytes were sent out. This is unusual, log
-> +                                * this condition and disable the WM interrupt to
-> +                                * prevent the system from stalling due an interrupt
-> +                                * storm.
-> +                                *
-> +                                * If this happens when all Rx bytes haven't been
-> +                                * received, log the condition. The only known time
-> +                                * this can happen is if bits_per_word != 8 and some
-> +                                * registers that expect xfer lengths in num spi_words
-> +                                * weren't written correctly.
-> +                                */
-> +                               if (mas->tx_rem_bytes) {
-> +                                       writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> +                                       dev_err(mas->dev, "Premature done. tx_rem = %d bpw%d\n",
-> +                                               mas->tx_rem_bytes, mas->cur_bits_per_word);
-> +                               }
-> +                               if (mas->rx_rem_bytes)
-> +                                       dev_err(mas->dev, "Premature done. rx_rem = %d bpw%d\n",
-> +                                               mas->rx_rem_bytes, mas->cur_bits_per_word);
-> +                       } else {
-> +                               complete(&mas->cs_done);
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/dma/qcom/gpi.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-Question: did you try actually using the chip select with your new
-GENI_SE_DMA? Does it work? I ask because I don't see anything that
-completes the "cs_done" in the DMA case of the ISR and I don't see
-anything in spi_geni_set_cs() that forces it to FIFO mode. Note: if
-you're only testing on trogdor/herobrine boards, you'd have to change
-them to not use a GPIO for chip select.
+I don't feel qualified to actually give this a review since I don't
+know anything about the details of GSI/GPI. It seems simple enough so
+I'll just assume that Bjorn will land it. Ideally someone else at
+Qualcomm would give you a Reviewed-by tag.
 
+One drive-by comment, though, is that I would say that your patch
+description lacks an answer to the question: "So what?"
+
+In other words, what is broken today? Does everything work fine today
+but some bit counter looked over your shoulder and told you that you
+were a bad person for not setting that bit? Did the lunar lander catch
+fire (despite the lack of Oxygen on the moon!) because it started
+using the RX transfer mode to talk to its fuel valve system and the RX
+transfer mode never worked? ...or maybe everything today works but the
+super secret Qualcomm SDM9002 (shhhh!) chip needs this bit set? Help
+people looking at your patch be able to decide if it's important for
+them to pick to their kernel tree! :-)
 
 -Doug
