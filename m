@@ -2,102 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D720563F17B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 14:22:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4C8F63F1A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 14:30:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231431AbiLANWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 08:22:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34262 "EHLO
+        id S231519AbiLANan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 08:30:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbiLANWY (ORCPT
+        with ESMTP id S229481AbiLANam (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 08:22:24 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D67A8945
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 05:22:22 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id n1so1865248ljg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 05:22:22 -0800 (PST)
+        Thu, 1 Dec 2022 08:30:42 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE38ABF93C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 05:30:40 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id x11so1880052ljh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 05:30:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WyQawYit9lLZInOCq3g0j1Ztdmfwj5fvP6/cKOuQ4T8=;
-        b=bT5dnp2zEMGz5HB4ydLvpAnoqepKcklDia7j09ZySBqE5jTueQ+Nvvbpr4YZGh1ovI
-         hkttYWNhHIHL0EHQ1f6jRmsaxwMCKhW7CQg/wM4WQeypvy0Vepm1IbvAPcH7crN42DnG
-         h3L89oHdebH4fTo6YqMsTDROuljLO/7/vRPK8yCReo8CAsStBnX+hN42z2th1MnR4B6Q
-         zDIc+9u9hkb5BUttRci152xqpY/fWA/4TDcbnn/zgRj9cg7LqVCEZGum83O6aTX67QzX
-         YKJL6XxPp2aueCZrWhbQq3LCkDza/zQZEfT9T+PU7ivvSejPzltGsD094G9JAlX31LhA
-         FJ+w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ILQpLAASTEQxVAHqS2HsUvzwY9XLxYCyDgjgQHgPzU=;
+        b=eR9ALniAmj8Rr/MZ8fMkaouXFUfjlssAT56toegyYHVQ1TDZRoXOsvAdt5rJhV+V9U
+         8gZwDPU2a7V0Me0ZTWbWhqSV3vgyOTU3cbwup5/rBKe40wn9jaLCmMo1kHbM9/y6DR/2
+         OorzZRlGG0knCysTjLO7Y/fWYAFQmGBAbr3xARhqMO+syBiRvEtrH1MD8LhW7vVWCg1k
+         IDVPqKmd5i0S3Eo3tR6KkPEImCHtz8Yz33jN8evalkvM82qvdp3OrgviLG2cGDvsda7r
+         quhZmXkDLIp/ioY9PxAC668LfCcTG6iE3XsFyo2p4c9G1S6xKyiQWWO7LPW0gAXebrbK
+         IS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WyQawYit9lLZInOCq3g0j1Ztdmfwj5fvP6/cKOuQ4T8=;
-        b=CgPuQ/PQNUM8BoNdNtQEBJDgVJr7tMx7KiivlQcO9bri3wypxiy9P5MhaNuAWuzrB5
-         oP7f04QMdZWS2uwVhSe00+aufMj0gJUqli8mWNrpsbxs3/iBkU4KFQhaLx4aebfoNoiU
-         B0RiP/EsZqOVE3OLZqtM8ZgsfncRPNYMSC+JyxVRcnv+Donr5539v/rUs0VGhtgeMwic
-         2ml15tU0gw+hhn2Aoi113LJ486hRIhwdIcAQyzKbdggzSy4n28ejI4hQDHwk0iuvYwyv
-         /B4i8iQImkL7asc6Ikz887daTplHqWQzDnu6PEByrDf4BIqxz1MRi4Ac7S1lpTmRCDOz
-         3iNg==
-X-Gm-Message-State: ANoB5plH+7nDNVxurGD9qDeo/5D2LFhqSJhPGg15tfxC/UF3bm1afsoH
-        M1Ndg1j/EuqBuc941ljXlBVB9w==
-X-Google-Smtp-Source: AA0mqf7I/YMv5A1pkXzYkyN//geQ0DmC/fF+wcRMWDbsDc4h4FNrYDBO9frwL7EGnDLbj7ep1oHRug==
-X-Received: by 2002:a2e:bd06:0:b0:277:2437:e977 with SMTP id n6-20020a2ebd06000000b002772437e977mr22531568ljq.195.1669900940981;
-        Thu, 01 Dec 2022 05:22:20 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id h9-20020a05651211c900b004b52f4ea0d3sm641191lfr.192.2022.12.01.05.22.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 05:22:20 -0800 (PST)
-Message-ID: <e8a86b3e-7a2f-3434-52d8-6a827b720f92@linaro.org>
-Date:   Thu, 1 Dec 2022 14:22:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to YAML
-Content-Language: en-US
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        linux-remoteproc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
- <20220511161602.117772-5-sireeshkodali1@gmail.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2ILQpLAASTEQxVAHqS2HsUvzwY9XLxYCyDgjgQHgPzU=;
+        b=iFm3bgZEOAyqICkBn/TRq0PzZAXchjNA4UOIkx5HdIIbCyrHwSeQKmwNIySVLF/wwu
+         oSzNMlHSVOVY5vCbR5J5xhQOVg4aHN6iQmza8aQLz7IuXb8m6hmcCRCj6S83gyEFBLc6
+         9C3g7CAX4HEKSXpt55xUYxqo2AFZPEXUNr0KKFqsh3xXAQJzeWHuDaJzpTz6sHelKGgC
+         Yk9Wl3Q8K8DoUEXMR5xlTD3zu3QZkboSQLX61Roj6jXfIOoi8tkohJAov8wNyWzR/vBP
+         p1XNB7q08FalvqkoqajK8107vfC3yFbclk9b9lCMOM7Kig2oGM789WMECGQozE38JrXk
+         OK/w==
+X-Gm-Message-State: ANoB5pmbA2rpW2u5GsX+827fVzKVZsSkj5S3qJ4SbScqskrm2oBtRMB7
+        yre1/fZtpqhgjqj1bFKrbqvEwA==
+X-Google-Smtp-Source: AA0mqf5OkeTE/cp5ki879BHyFVVAPe8JGTwak2eUMlj2ILnqi8fBN5AEyJqIAguB2W9cicz1mZD4tw==
+X-Received: by 2002:a2e:828d:0:b0:276:ffbf:2ee2 with SMTP id y13-20020a2e828d000000b00276ffbf2ee2mr19981993ljg.505.1669901439104;
+        Thu, 01 Dec 2022 05:30:39 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id p1-20020ac24ec1000000b004991437990esm657494lfr.11.2022.12.01.05.30.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Dec 2022 05:30:38 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220511161602.117772-5-sireeshkodali1@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: serial: qcom,msm-uart: Convert to DT schema
+Date:   Thu,  1 Dec 2022 14:30:36 +0100
+Message-Id: <20221201133036.45288-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 18:15, Sireesh Kodali wrote:
-> Convert the dt-bindings from txt to YAML. This is in preparation for
-> including the relevant bindings for the MSM8953 platform's wcnss pil.
-> 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> ---
->  .../bindings/remoteproc/qcom,wcnss-pil.txt    | 177 --------------
->  .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 228 ++++++++++++++++++
->  2 files changed, 228 insertions(+), 177 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> 
+Convert the Qualcomm MSM SoC UART (non-DMA) bindings to DT schema.
 
-Half year passed, so I wonder if these series are abandoned or shall we
-expect v2?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/serial/qcom,msm-uart.txt         | 25 ---------
+ .../bindings/serial/qcom,msm-uart.yaml        | 56 +++++++++++++++++++
+ 2 files changed, 56 insertions(+), 25 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/serial/qcom,msm-uart.txt
+ create mode 100644 Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/serial/qcom,msm-uart.txt b/Documentation/devicetree/bindings/serial/qcom,msm-uart.txt
+deleted file mode 100644
+index ce8c90161959..000000000000
+--- a/Documentation/devicetree/bindings/serial/qcom,msm-uart.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-* MSM Serial UART
+-
+-The MSM serial UART hardware is designed for low-speed use cases where a
+-dma-engine isn't needed. From a software perspective it's mostly compatible
+-with the MSM serial UARTDM except that it only supports reading and writing one
+-character at a time.
+-
+-Required properties:
+-- compatible: Should contain "qcom,msm-uart"
+-- reg: Should contain UART register location and length.
+-- interrupts: Should contain UART interrupt.
+-- clocks: Should contain the core clock.
+-- clock-names: Should be "core".
+-
+-Example:
+-
+-A uart device at 0xa9c00000 with interrupt 11.
+-
+-serial@a9c00000 {
+-	compatible = "qcom,msm-uart";
+-	reg = <0xa9c00000 0x1000>;
+-	interrupts = <11>;
+-	clocks = <&uart_cxc>;
+-	clock-names = "core";
+-};
+diff --git a/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml b/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
+new file mode 100644
+index 000000000000..a052aaef21f4
+--- /dev/null
++++ b/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
+@@ -0,0 +1,56 @@
++# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/serial/qcom,msm-uart.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM SoC Serial UART
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++
++description:
++  The MSM serial UART hardware is designed for low-speed use cases where a
++  dma-engine isn't needed. From a software perspective it's mostly compatible
++  with the MSM serial UARTDM except that it only supports reading and writing
++  one character at a time.
++
++properties:
++  compatible:
++    const: qcom,msm-uart
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    items:
++      - const: core
++
++  interrupts:
++    maxItems: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - clock-names
++  - clocks
++  - interrupts
++  - reg
++
++unevaluatedProperties: false
++
++allOf:
++  - $ref: /schemas/serial/serial.yaml#
++
++examples:
++  - |
++    serial@a9c00000 {
++        compatible = "qcom,msm-uart";
++        reg = <0xa9c00000 0x1000>;
++        interrupts = <11>;
++        clocks = <&uart_cxc>;
++        clock-names = "core";
++    };
+-- 
+2.34.1
 
