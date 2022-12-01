@@ -2,97 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4F8363F165
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 14:17:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D720563F17B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 14:22:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbiLANRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 08:17:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58834 "EHLO
+        id S231431AbiLANWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 08:22:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231193AbiLANRk (ORCPT
+        with ESMTP id S230346AbiLANWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 08:17:40 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9883BAE53
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 05:17:39 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id z24so1851429ljn.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 05:17:39 -0800 (PST)
+        Thu, 1 Dec 2022 08:22:24 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D67A8945
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 05:22:22 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id n1so1865248ljg.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 05:22:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qj5jLfcl/TleK/jyR5GjEQ/vCFrxs7vu0/jWUhzk7hg=;
-        b=pJO4lzpoUQ//8p0gzjVyR7jn5l2RNbS51IJpUzJ2PN8dgdGtzdvry4Z+gcXBNedJ1W
-         K5vf9nwLbR7xSHnqxkZrSBuqX/16TGqxe6aVkdbtwA3Mw024KwtobnPFX5iOMiQwg9kt
-         HEj7eOx80a9BIxlJeqtz04UQnnSgqWOwUzEX4bwGz2RfvhcZH+IRPFLE/jlma2bmFl2B
-         lCU8Bcm1GkBVPGYIOHHYtgi6EkFrRzO0e8l4BnaKf9JKCf2c3KpnEihiPUbhsyNI0Cix
-         aZSGTBrxCTQAxs5ek4s8H/fqAwMZWpnl+K7eso9khNN/i/euV4782wUAIhVavvCfkWbQ
-         L1PQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WyQawYit9lLZInOCq3g0j1Ztdmfwj5fvP6/cKOuQ4T8=;
+        b=bT5dnp2zEMGz5HB4ydLvpAnoqepKcklDia7j09ZySBqE5jTueQ+Nvvbpr4YZGh1ovI
+         hkttYWNhHIHL0EHQ1f6jRmsaxwMCKhW7CQg/wM4WQeypvy0Vepm1IbvAPcH7crN42DnG
+         h3L89oHdebH4fTo6YqMsTDROuljLO/7/vRPK8yCReo8CAsStBnX+hN42z2th1MnR4B6Q
+         zDIc+9u9hkb5BUttRci152xqpY/fWA/4TDcbnn/zgRj9cg7LqVCEZGum83O6aTX67QzX
+         YKJL6XxPp2aueCZrWhbQq3LCkDza/zQZEfT9T+PU7ivvSejPzltGsD094G9JAlX31LhA
+         FJ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qj5jLfcl/TleK/jyR5GjEQ/vCFrxs7vu0/jWUhzk7hg=;
-        b=HpeJOFS7caU5lU7ZBA6uHURBfwyjzNI4cV9hhsQT2/A0fdgRfcv9z34CQ8mwK2Ifv6
-         BD+B9Nw2YHEtBaHbh5/MA27gOtI58vtvitJtp1JaovwjIZOuBy8M6Ib6XkEg5cYjW8kO
-         IseIoT5f9eZU9AnBKKARpC33DSA3C0y3yLwRIhUrYEHrYEQxp75DkIMOJaW5qiMsIZXP
-         pMQ9PUkHVGBkIDQZ+cgB2emUQzGpLHa7ARKMSy7VhrqMWSw/9uf6Zx347htYBKqaEzQt
-         Byqk9m2ViV7IecZV6N2kK3fwKdfe8ceeFTxQnZt8P6uUY/ZhJZ3O5BNxkkzeCjSv3K/M
-         X8KQ==
-X-Gm-Message-State: ANoB5pknDi91ZG3ZZpKCt8o3DcP0jmAKlck2cKj2hYV3bjk7/DB4ka6t
-        p9mAPCEvfiI17k3+8EOtZFDD+A==
-X-Google-Smtp-Source: AA0mqf5jftLRflWRJ9gzjPfBtLmiKax+CH+MiAuyYkqFcM2CcLJBzf79oA9VFqvfZDNJwzvi1L+drg==
-X-Received: by 2002:a2e:95c4:0:b0:277:3dd2:beca with SMTP id y4-20020a2e95c4000000b002773dd2becamr22544875ljh.485.1669900657842;
-        Thu, 01 Dec 2022 05:17:37 -0800 (PST)
+        bh=WyQawYit9lLZInOCq3g0j1Ztdmfwj5fvP6/cKOuQ4T8=;
+        b=CgPuQ/PQNUM8BoNdNtQEBJDgVJr7tMx7KiivlQcO9bri3wypxiy9P5MhaNuAWuzrB5
+         oP7f04QMdZWS2uwVhSe00+aufMj0gJUqli8mWNrpsbxs3/iBkU4KFQhaLx4aebfoNoiU
+         B0RiP/EsZqOVE3OLZqtM8ZgsfncRPNYMSC+JyxVRcnv+Donr5539v/rUs0VGhtgeMwic
+         2ml15tU0gw+hhn2Aoi113LJ486hRIhwdIcAQyzKbdggzSy4n28ejI4hQDHwk0iuvYwyv
+         /B4i8iQImkL7asc6Ikz887daTplHqWQzDnu6PEByrDf4BIqxz1MRi4Ac7S1lpTmRCDOz
+         3iNg==
+X-Gm-Message-State: ANoB5plH+7nDNVxurGD9qDeo/5D2LFhqSJhPGg15tfxC/UF3bm1afsoH
+        M1Ndg1j/EuqBuc941ljXlBVB9w==
+X-Google-Smtp-Source: AA0mqf7I/YMv5A1pkXzYkyN//geQ0DmC/fF+wcRMWDbsDc4h4FNrYDBO9frwL7EGnDLbj7ep1oHRug==
+X-Received: by 2002:a2e:bd06:0:b0:277:2437:e977 with SMTP id n6-20020a2ebd06000000b002772437e977mr22531568ljq.195.1669900940981;
+        Thu, 01 Dec 2022 05:22:20 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id f1-20020a056512360100b00498fe38ea0fsm645663lfs.174.2022.12.01.05.17.36
+        by smtp.gmail.com with ESMTPSA id h9-20020a05651211c900b004b52f4ea0d3sm641191lfr.192.2022.12.01.05.22.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 05:17:37 -0800 (PST)
-Message-ID: <6f5ef197-057f-400e-d4e0-649ed5becd38@linaro.org>
-Date:   Thu, 1 Dec 2022 14:17:36 +0100
+        Thu, 01 Dec 2022 05:22:20 -0800 (PST)
+Message-ID: <e8a86b3e-7a2f-3434-52d8-6a827b720f92@linaro.org>
+Date:   Thu, 1 Dec 2022 14:22:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH] leds: qcom,pm8058-led: Convert to DT schema
-To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20221201131505.42292-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to YAML
 Content-Language: en-US
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
+        linux-remoteproc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-5-sireeshkodali1@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221201131505.42292-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220511161602.117772-5-sireeshkodali1@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/12/2022 14:15, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm PM8058 PMIC LED bindings to DT schema.
+On 11/05/2022 18:15, Sireesh Kodali wrote:
+> Convert the dt-bindings from txt to YAML. This is in preparation for
+> including the relevant bindings for the MSM8953 platform's wcnss pil.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
 > ---
->  .../devicetree/bindings/leds/leds-pm8058.txt  | 67 -------------------
->  .../bindings/leds/qcom,pm8058-led.yaml        | 57 ++++++++++++++++
->  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml  |  4 ++
->  3 files changed, 61 insertions(+), 67 deletions(-)
+>  .../bindings/remoteproc/qcom,wcnss-pil.txt    | 177 --------------
+>  .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 228 ++++++++++++++++++
+>  2 files changed, 228 insertions(+), 177 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> 
 
-Note to myself:
-
-Use subject prefixes matching the subsystem (git log --oneline -- ...).
+Half year passed, so I wonder if these series are abandoned or shall we
+expect v2?
 
 Best regards,
 Krzysztof
