@@ -2,123 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD4263EC1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 10:15:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D51263EDFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 11:37:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbiLAJPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 04:15:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48666 "EHLO
+        id S230243AbiLAKhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 05:37:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbiLAJPQ (ORCPT
+        with ESMTP id S230295AbiLAKhg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 04:15:16 -0500
-Received: from sender4-op-o14.zoho.com (sender4-op-o14.zoho.com [136.143.188.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F491442C7;
-        Thu,  1 Dec 2022 01:15:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1669886069; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=PuFREHxuJ3FoD3zI0cgmwgxXBACrFbsNXtmB1ZUDMZF0Vw7u5go+yLfWIyRlKmsI4dy/C4JBEgDliSKn1GHoNmOpzBqaWl6iXr8io/eTVI3oCPsCmOMRaRxdzRXptLt4DP3hnV53GkO6NAhhWer+prEaTAbxrLXw/JqtvaQrzWo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1669886069; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=rmnGX0as+j0mWZhRBwCINR7c9wsJ33DTrPhAflpkh7k=; 
-        b=fw/MEtbCpCH9VgI82wo0vE16g6dZ8NV1Le4xk0BjWdTYK38rt7XBr8kXPBBPo3YRUN6Qe0dqE8w6e3UHXsxU9mNhstxy2c3zRoUP/VEPwky/wlzovr2sCQ7tztCh20i22nk9oPAoF3GnSvN5RPlNAcT6sNLjUOovaigMSm1VuKI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=arinc9.com;
-        spf=pass  smtp.mailfrom=arinc.unal@arinc9.com;
-        dmarc=pass header.from=<arinc.unal@arinc9.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1669886069;
-        s=zmail; d=arinc9.com; i=arinc.unal@arinc9.com;
-        h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-        bh=rmnGX0as+j0mWZhRBwCINR7c9wsJ33DTrPhAflpkh7k=;
-        b=kC5OJuaedGtqPWAXavS8QBOXmOzGAN9KVKeFTZblN5hQvtgIY+bZgMHEmvSv5xeL
-        m50GcHUsZyBhq0mNsX+aCeIwwvLqFeeWwtPZKWwBHrfnYXDUeClaEjUb82O6yrKKDVx
-        OifNFxxqXQi0y0KKnh1zyARvxBzbuGAfmR/P71Bk=
-Received: from [10.10.10.3] (37.120.152.236 [37.120.152.236]) by mx.zohomail.com
-        with SMTPS id 1669886067241836.827775278157; Thu, 1 Dec 2022 01:14:27 -0800 (PST)
-Message-ID: <b5ed90cf-1b5d-9306-7b06-ded7c331ca2a@arinc9.com>
-Date:   Thu, 1 Dec 2022 12:14:21 +0300
+        Thu, 1 Dec 2022 05:37:36 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938EA335
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 02:37:32 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id l8so1356840ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 02:37:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CIit3J5M4bcdITVWI6ie/I3FGXLXgR6m6GwfusmdrJE=;
+        b=oRuEXXERKZYYDV9WimFhxi+n+W16yYt2dtOc7P5QG08IRUKnts1REggwWcSWA2K7GS
+         CFWqZfYbNsg/vcgWQQ6gDHeVl1xTmW6BEWAWnS5pbY+gqcMzZsnq8L7hVPgEOrI+27Hw
+         SPbvb6eW8+fT07BwkeFkFtubmtV5KF3Jvsky2iUBjMnzlpMQycRNe3Ezvx7xJEAcUhNG
+         +Lgp1rl1ekNfciXbfK+C+cv2ofczu6yn0K8XW9aEDCNpWEGEK8awHimGAY5/lhZxjwwj
+         5mTVf+6Jg1X0Nm1Krh54WT05EljJ43fEtjcKBJ7mDa00Sxbyc6tQuE766VVTCZjfEOXZ
+         igYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CIit3J5M4bcdITVWI6ie/I3FGXLXgR6m6GwfusmdrJE=;
+        b=wku5H/mo7qPRVTIh5AlvXJvNHuqJcoFFE8NL0ybVeTQrW60EJCkwRy8rgT+gi7PfLW
+         K2DcVgc0pFQSNQqiiyNPrDmawn9oV6l8ay7vrmI7AEBNl02i8GblhlQ87sajJVa4F1dA
+         0WCaVYTesn1sdXyZJDuuP3L2opKt2B1RvLgda7E76qtZ9Uocqq68uCRSAG2v9fx7nxhT
+         ervbIjQtNXdTpAcUjgrlK3LS8EAo4NrJ7ov3Z2ZiLLbiUKyF8WvQGhZoashGWk5ZpT9k
+         O4Ro9bi/xt0Vl55IYYEvY+Sv/e6vHMvwS1bA4FeV1S0XB1nZUIaPCkzFWpeBQbfdPpbI
+         Z91g==
+X-Gm-Message-State: ANoB5pnTiAAOUVHaDOiy3exRJJCRqxF2kvsCCHQw0twpsE+m98UZgtYB
+        5J4MAlyY6hBTL2rv4tF6mvC4jg==
+X-Google-Smtp-Source: AA0mqf7ynKkshYTZoTQ3GRH//Z1ZR04OWdvwe5TEjKbt7pYwLviofbMpiBkGttO94vlLg2DiroAsTg==
+X-Received: by 2002:a2e:940f:0:b0:277:5df:9728 with SMTP id i15-20020a2e940f000000b0027705df9728mr14128145ljh.337.1669891050977;
+        Thu, 01 Dec 2022 02:37:30 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id s21-20020a056512203500b004ab98cd5644sm601503lfs.182.2022.12.01.02.37.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Dec 2022 02:37:30 -0800 (PST)
+Message-ID: <dfd2d1b5-4d1b-2381-ad11-5ea9e6654a55@linaro.org>
+Date:   Thu, 1 Dec 2022 11:37:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 0/5] remove label = "cpu" from DSA dt-binding
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 01/12] dt-bindings: display: msm: Rename mdss node name
+ in example
 Content-Language: en-US
-To:     Jakub Kicinski <kuba@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        soc@kernel.org, Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Michael Ellerman <mpe@ellerman.id.au>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
-        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vladimir Oltean <vladimir.oltean@nxp.com>
-References: <20221130141040.32447-1-arinc.unal@arinc9.com>
-From:   =?UTF-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
-In-Reply-To: <20221130141040.32447-1-arinc.unal@arinc9.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20221130200950.144618-1-a39.skl@gmail.com>
+ <20221130200950.144618-2-a39.skl@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221130200950.144618-2-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I'm sending a more specific mail to make sure this series doesn't fall 
-through the cracks like Andrew said. I'd like this merged this week 
-before the merge window closes.
+On 30/11/2022 21:09, Adam Skladowski wrote:
+> Follow other YAMLs and replace mdss name into display-subystem.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 
-Jakub, please take patch 1.
-Arnd, please take patch 2 and 3.
-Thomas, please take patch 4.
-Michael, please take patch 5.
 
-Arınç
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 30.11.2022 17:10, Arınç ÜNAL wrote:
-> Hello folks,
-> 
-> With this patch series, we're completely getting rid of 'label = "cpu";'
-> which is not used by the DSA dt-binding at all.
-> 
-> Information for taking the patches for maintainers:
-> Patch 1: netdev maintainers (based off netdev/net-next.git main)
-> Patch 2-3: SoC maintainers (based off soc/soc.git soc/dt)
-> Patch 4: MIPS maintainers (based off mips/linux.git mips-next)
-> Patch 5: PowerPC maintainers (based off powerpc/linux.git next-test)
-> 
-> I've been meaning to submit this for a few months. Find the relevant
-> conversation here:
-> https://lore.kernel.org/netdev/20220913155408.GA3802998-robh@kernel.org/
-> 
-> Here's how I did it, for the interested (or suggestions):
-> 
-> Find the platforms which have got 'label = "cpu";' defined.
-> grep -rnw . -e 'label = "cpu";'
-> 
-> Remove the line where 'label = "cpu";' is included.
-> sed -i /'label = "cpu";'/,+d arch/arm/boot/dts/*
-> sed -i /'label = "cpu";'/,+d arch/arm64/boot/dts/freescale/*
-> sed -i /'label = "cpu";'/,+d arch/arm64/boot/dts/marvell/*
-> sed -i /'label = "cpu";'/,+d arch/arm64/boot/dts/mediatek/*
-> sed -i /'label = "cpu";'/,+d arch/arm64/boot/dts/rockchip/*
-> sed -i /'label = "cpu";'/,+d arch/mips/boot/dts/qca/*
-> sed -i /'label = "cpu";'/,+d arch/mips/boot/dts/ralink/*
-> sed -i /'label = "cpu";'/,+d arch/powerpc/boot/dts/turris1x.dts
-> sed -i /'label = "cpu";'/,+d Documentation/devicetree/bindings/net/qca,ar71xx.yaml
-> 
-> Restore the symlink files which typechange after running sed.
-> 
-> Arınç ÜNAL (5):
->    dt-bindings: net: qca,ar71xx: remove label = "cpu" from examples
->    arm: dts: remove label = "cpu" from DSA dt-binding
->    arm64: dts: remove label = "cpu" from DSA dt-binding
->    mips: dts: remove label = "cpu" from DSA dt-binding
->    powerpc: dts: remove label = "cpu" from DSA dt-binding
-> 
-> 
+Best regards,
+Krzysztof
+
