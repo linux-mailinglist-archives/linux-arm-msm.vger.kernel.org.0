@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46DE163F672
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 18:44:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E6A563F675
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 18:45:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbiLARom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 12:44:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32808 "EHLO
+        id S230312AbiLARpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 12:45:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbiLARoX (ORCPT
+        with ESMTP id S230228AbiLARoa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 12:44:23 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2596DB71F3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 09:44:17 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id jn7so2296880plb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 09:44:17 -0800 (PST)
+        Thu, 1 Dec 2022 12:44:30 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B15EBB7DF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 09:44:24 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id v3so2282353pgh.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 09:44:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0EwbwxScxAH0Ye5HC8kecov46MNjbALXnqq/6xD/uZI=;
-        b=t+B+gdvWpTyroYE+SGEqX9/YuhL5Dufp6zJbMHpPHKhyaoEcktAaFKu/KlVFq2Akzm
-         pW2nsD9QNakchPgTAfPcv6qm/0opGtV3Hscm7fhTCw9FwPmXqVvGXHZ93ulLzlegBNlI
-         oQvRpUkMTWVh8sfqCYPG/SAd6CcqbDdRLU2nUAwwP2qb3rjSKrRmzZ8LBt53Z7Kk84bM
-         62exduN0roGn38WL9Y/U2Sm7JXUPt0SMU5w51yQSxCnSXOmtEPZ2khFbr2CyV4dxlWWO
-         YKdzwsXrLB/HBc3E2WQhbQwRgjwNbqk0vBscGy8L9eaNluH6S6hiJPzLCsBH8+rIBLiN
-         mhHA==
+        bh=VokxVeiGlk4/WOivaM2OMRYtiSd+zd4jyq/WMTsU5T8=;
+        b=qur3pKxXkUeqCfjCdWbCjXcSxBKKB3V0dVqMWVmW7M6g1OOyl7Mki2jQAmNX/0Voqw
+         R6KxNsvzY9hbI4Li7g+M61ivU3/snLSAita6hYQ6B/0CkEa4F9TGqV3y4YtcL9YYDy6N
+         nppB3ROKUlO7IYawhnSYWMfPbS3xdKj19v4goI7Oo+qjktqtUpu5GmiK1OajhvJnLklu
+         wqSXEHAWv0DhQ67Yt91d697VfGvLnMpf9KM9dGmUl25RzbdgzGzO0J4yOhuv9yAgjrvV
+         AsGxzd1YiJWwgDdUM8JDLnwGVt+QWXktmJSWvMyGdTu8F8ASOR7Hsn8lkGl3d3FMoTV3
+         R/qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0EwbwxScxAH0Ye5HC8kecov46MNjbALXnqq/6xD/uZI=;
-        b=g/nVeLLTry8KX7Je2tVMlqFyAJnRe0vB3OhPgA671hkgkr5CF0JnQ7PXpMtNN9hiiv
-         FY7YBTmv9VwD0+ODZiAYgO0BfTJUonRqhbn5A1/Qa8f+U1ToPNXjDAuvCySLDIcTp2MF
-         ZYH3N/aFwH3IB5us38fjHgGyzgRlc3ZOfB0jsVdBYBTBtRkTx9FCeRUhE0v2CLOKK+1H
-         uwi4vtVl9vRSZz9J1c9tczEA7AAWUHa0+jXTI2B9o2UOPAxujhHc8jlm7VzF3VAlyZsq
-         5/ib87rYa3KL2eGzvcSgfCKHZKNqwmdfvOVx2KbNHNI1FUIJbXH1lU6v2rzqTEDgQOZQ
-         jILg==
-X-Gm-Message-State: ANoB5pkSKuewdzn6r6IYey0hDrcdABbB/RPs0U9xrcawdh/6mL5eafvY
-        DDAKqn6Y/O5/tCW7L1+wq/Tl
-X-Google-Smtp-Source: AA0mqf5ydUecqFe7PW9IOZSeA7CC2Qp/29SmhDgnZCLdXfjL++61YnwIkT911+LZT8O2qDb9RPw2kw==
-X-Received: by 2002:a17:902:e94e:b0:186:5613:becf with SMTP id b14-20020a170902e94e00b001865613becfmr37192236pll.46.1669916656633;
-        Thu, 01 Dec 2022 09:44:16 -0800 (PST)
+        bh=VokxVeiGlk4/WOivaM2OMRYtiSd+zd4jyq/WMTsU5T8=;
+        b=hoODjjqGYhmx3Q49LURamZnK31T6IdU7HS3vz0qk/mVJ8tTe5TobbbDjvPb6mREzyP
+         C6lep5k0jQJ/BgUDMoKMmMQC16fQNd89d4WzH8Z3zN0PL/LqoWo0t3ZejHEUtuB3RmSV
+         V5McGweQ3LlATs3+FMnltu3MNbL1vTgzckPNPtOx5fcunrm7MXDhvUB4P6MbcIzAsrTP
+         1q8Y6AOUDasMZPT/bV7tELo/3Dap6+SSqckjmcwBB7UnbxXsqEAbNAe2Io6zKojWCBb2
+         Mi+JkrCVr0oi0IDv/r/GLYJOyS8d7MdaGCSmQHaRAZcg+VrBSS5Sr6TkJL0T281aG28U
+         wfqQ==
+X-Gm-Message-State: ANoB5pmW7eJODW/q2jJCnjtUuERvSDh7Y+lah1XCAWnijFha94msl7sd
+        Tf8bnw/FXJdq0QUAwRmHpiZQ
+X-Google-Smtp-Source: AA0mqf5zOpNVAUo4EYpAHKlqDCMO+RGnpY0uHvo8MxKKhHGMkaXaBFiW0Qd1KLco8dll01ZaWAIkxw==
+X-Received: by 2002:a63:a61:0:b0:478:2d2c:6e82 with SMTP id z33-20020a630a61000000b004782d2c6e82mr16478070pgk.136.1669916663657;
+        Thu, 01 Dec 2022 09:44:23 -0800 (PST)
 Received: from localhost.localdomain ([220.158.159.39])
-        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016d9b101413sm3898743pll.200.2022.12.01.09.44.09
+        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016d9b101413sm3898743pll.200.2022.12.01.09.44.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 09:44:15 -0800 (PST)
+        Thu, 01 Dec 2022 09:44:22 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         andersson@kernel.org, vkoul@kernel.org
@@ -60,9 +60,9 @@ Cc:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
         abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
         bvanassche@acm.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 05/23] phy: qcom-qmp-ufs: Add support for configuring PHY in HS G4 mode
-Date:   Thu,  1 Dec 2022 23:13:10 +0530
-Message-Id: <20221201174328.870152-6-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 06/23] phy: qcom-qmp-ufs: Move HS Rate B register setting to tbls_hs_b
+Date:   Thu,  1 Dec 2022 23:13:11 +0530
+Message-Id: <20221201174328.870152-7-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org>
 References: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org>
@@ -78,66 +78,140 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add separate tables_hs_g4 instance to allow the PHY driver to configure the
-PHY in HS G4 mode. The individual SoC configs need to supply the Rx, Tx and
-PCS register setting in tables_hs_g4 and the UFS driver can request the
-Hs G4 mode by calling phy_set_mode_ext() with submode set to UFS_HS_G4.
+Since now there is support for configuring the HS Rate B mode properly,
+let's move the register setting to tbls_hs_b struct for all SoCs.
+
+This allows the PHY to be configured in Rate A initially and then in
+Rate B if requested by the UFS driver.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 37 +++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 2d5dd336aeb2..82be9b754e8e 100644
+index 82be9b754e8e..97d0baa9bac3 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -20,6 +20,7 @@
- #include <linux/reset.h>
- #include <linux/slab.h>
+@@ -214,8 +214,9 @@ static const struct qmp_phy_init_tbl sm6115_ufsphy_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0x0f),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_INITVAL1, 0xff),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_INITVAL2, 0x00),
++};
  
-+#include <ufs/unipro.h>
- #include "phy-qcom-qmp.h"
- 
- /* QPHY_SW_RESET bit */
-@@ -549,6 +550,8 @@ struct qmp_phy_cfg {
- 	const struct qmp_phy_cfg_tbls tbls;
- 	/* Additional sequence for HS Series B */
- 	const struct qmp_phy_cfg_tbls tbls_hs_b;
-+	/* Additional sequence for HS G4 */
-+	const struct qmp_phy_cfg_tbls tbls_hs_g4;
- 
- 	/* clock ids to be requested */
- 	const char * const *clk_list;
-@@ -583,6 +586,7 @@ struct qmp_ufs {
- 
- 	struct phy *phy;
- 	u32 mode;
-+	u32 submode;
+-	/* Rate B */
++static const struct qmp_phy_init_tbl sm6115_ufsphy_hs_b_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x44),
  };
  
- static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-@@ -847,7 +851,11 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
- 	if (qmp->mode == PHY_MODE_UFS_HS_B)
- 		qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_b);
- 	qmp_ufs_lanes_init(qmp, &cfg->tbls);
-+	if (qmp->submode == UFS_HS_G4)
-+		qmp_ufs_lanes_init(qmp, &cfg->tbls_hs_g4);
- 	qmp_ufs_pcs_init(qmp, &cfg->tbls);
-+	if (qmp->submode == UFS_HS_G4)
-+		qmp_ufs_pcs_init(qmp, &cfg->tbls_hs_g4);
- }
+@@ -291,8 +292,9 @@ static const struct qmp_phy_init_tbl sdm845_ufsphy_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE2_MODE1, 0x00),
+ 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE1, 0x32),
+ 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE1, 0x0f),
++};
  
- static int qmp_ufs_com_init(struct qmp_ufs *qmp)
-@@ -1021,6 +1029,7 @@ static int qmp_ufs_set_mode(struct phy *phy, enum phy_mode mode, int submode)
- 	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+-	/* Rate B */
++static const struct qmp_phy_init_tbl sdm845_ufsphy_hs_b_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE_MAP, 0x44),
+ };
  
- 	qmp->mode = mode;
-+	qmp->submode = submode;
+@@ -357,8 +359,9 @@ static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP2_MODE1, 0x0f),
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
++};
  
- 	return 0;
- }
+-	/* Rate B */
++static const struct qmp_phy_init_tbl sm8150_ufsphy_hs_b_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_VCO_TUNE_MAP, 0x06),
+ };
+ 
+@@ -406,7 +409,6 @@ static const struct qmp_phy_init_tbl sm8150_ufsphy_rx[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH2, 0xc8),
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH3, 0x3b),
+ 	QMP_PHY_INIT_CFG(QSERDES_V4_RX_RX_MODE_10_HIGH4, 0xb1),
+-
+ };
+ 
+ static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs[] = {
+@@ -444,8 +446,9 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x1e),
+ 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
+ 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
++};
+ 
+-	/* Rate B */
++static const struct qmp_phy_init_tbl sm8350_ufsphy_hs_b_serdes[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE_MAP, 0x06),
+ };
+ 
+@@ -679,6 +682,10 @@ static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
+ 		.pcs		= sm8350_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sm8350_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sm8350_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sdm845_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -699,6 +706,10 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+ 		.pcs		= sdm845_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sdm845_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sdm845_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sdm845_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sdm845_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -721,6 +732,10 @@ static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+ 		.pcs		= sm6115_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sm6115_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sm6115_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sm6115_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sdm845_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -743,6 +758,10 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
+ 		.pcs		= sm8150_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sm8150_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sm8150_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sdm845_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -763,6 +782,10 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
+ 		.pcs		= sm8350_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sm8350_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sm8350_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sdm845_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -783,6 +806,10 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
+ 		.pcs		= sm8350_ufsphy_pcs,
+ 		.pcs_num	= ARRAY_SIZE(sm8350_ufsphy_pcs),
+ 	},
++	.tbls_hs_b = {
++		.serdes		= sm8350_ufsphy_hs_b_serdes,
++		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_hs_b_serdes),
++	},
+ 	.clk_list		= sm8450_ufs_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(sm8450_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
 -- 
 2.25.1
 
