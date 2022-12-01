@@ -2,108 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 025CE63F817
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 20:23:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C25C463F827
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 20:28:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiLATXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 14:23:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
+        id S230134AbiLAT2k convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 1 Dec 2022 14:28:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbiLATXP (ORCPT
+        with ESMTP id S229810AbiLAT2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 14:23:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B97FC6E75
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 11:22:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1669922540;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=KRzayttSwSsJ/jtFl/tZsSkDN66+m4h4qNmmW/rZF+w=;
-        b=fiUXmj7I1Eyn2kbqzMrbBuj0irPhxuhNI4BUrhFQAJgWg6GD4hgjq6gfwUyKjsrcJFnSaY
-        SE74awGkjoIwuHRWLHq4hKxfO27GIFUrIIye7flQg4r9h8BEL8ParjmL7j71yYf+Vr+NoO
-        kV5YlCxbmHTekaR1j0+SkhP+PEgypKk=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-496-0YgWx_ZuMT6wB93sFMIjYg-1; Thu, 01 Dec 2022 14:22:19 -0500
-X-MC-Unique: 0YgWx_ZuMT6wB93sFMIjYg-1
-Received: by mail-ot1-f70.google.com with SMTP id v17-20020a9d7d11000000b0066c33c3e0easo1222453otn.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 11:22:19 -0800 (PST)
+        Thu, 1 Dec 2022 14:28:38 -0500
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A4AC5E32;
+        Thu,  1 Dec 2022 11:28:37 -0800 (PST)
+Received: by mail-qt1-f181.google.com with SMTP id y15so2184156qtv.5;
+        Thu, 01 Dec 2022 11:28:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KRzayttSwSsJ/jtFl/tZsSkDN66+m4h4qNmmW/rZF+w=;
-        b=5czifoFhqkqiOsH+o8mI3t8lNwVyo3StrP1uj3KVQTq3OW2mG0/0FSEcXn91XrtUJi
-         mXT1/126IB+WNFO4JAwMLEGXBSbYGtzlQH8LDgsfjW4FTnZQzzuA274jP18UeJWfS4lw
-         +oWLw49IDDQLZJ+P+qGbu4+9nZuoPHZCi3SpNP79PJhVoSppXabJxDB9rRfiSgpfiGfd
-         Ao9gHfDV05N6hqVhNseLPcwGhWcxI+uuLSPjQCm1suPk2XpCEeC0hBRsY6vKUPYtnoGz
-         73VD11Bkw+TUMCl+10OQeDcu0TBWNRETZd8tq8XjaUANMS7kMoawMIs+rS+K4Nwk6Ua7
-         WUUw==
-X-Gm-Message-State: ANoB5pnFRboQrfjcxhPQDuuBavuCIJX431tqMuXEzWKxmRbawKG0Last
-        O7YSh0s/WWwTlM8vf+Ypi6EnhkXMOP8a+BcNDFvb+Rq7/olSyMQIqf2fnzZoFXzQEbWr0pGa2S+
-        qcKxBqcla4nW4zPeafK+wYX9nRg==
-X-Received: by 2002:a05:6808:143:b0:345:8913:17ae with SMTP id h3-20020a056808014300b00345891317aemr23854533oie.155.1669922538579;
-        Thu, 01 Dec 2022 11:22:18 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf7wn23egEUl8THpuxVHkoTqQX/Vsfjgq1k8BvNPqZn/l+WC1hbIWW2UmvH5OWeWYf3hN7BYhg==
-X-Received: by 2002:a05:6808:143:b0:345:8913:17ae with SMTP id h3-20020a056808014300b00345891317aemr23854525oie.155.1669922538390;
-        Thu, 01 Dec 2022 11:22:18 -0800 (PST)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
-        by smtp.gmail.com with ESMTPSA id h19-20020a9d6f93000000b006619f38a686sm2415522otq.56.2022.12.01.11.22.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 11:22:17 -0800 (PST)
-Date:   Thu, 1 Dec 2022 13:22:15 -0600
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Brian Masney <bmasney@redhat.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v10 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
-Message-ID: <20221201192215.fi3ekvkntruevxtd@halaney-x13s>
-References: <20221118025158.16902-1-quic_ppareek@quicinc.com>
- <20221118025158.16902-3-quic_ppareek@quicinc.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+MgxVjr37axlTfgKOduJn6x/gthSur1b3/et+b9tLAg=;
+        b=ffHEe1zfAh6XnVbL2NljlVFE7VLz4+Fgsu6v0hThYpab0cRZhP8sJSu73S7fL5CJXX
+         t0nlPX+63KSfioTYjIPkVPhV+jyVAbfFIKHXyuS5nkdPNluPyfaqrgQX7jA5YYi8H/Hm
+         DFPbQUjHZ850QcPfEKvHDGCpvFIoizsKDXgd0t+TiPN7u+CHEAQvNS+n9T6IoL31T482
+         Bc9y4IVMMzp7glMnRAYfmPmRCPdlA+HID13BMpbeo2/KQcyf6mEXECia6k8gg36LUHyI
+         JmrxXR5KT8fOzr6CgKTJSGvbn92dsdmmdROBUkI01xQRJ40atZXdymeK80NW+zLwV+9r
+         8RQw==
+X-Gm-Message-State: ANoB5pnAb1QF13bizqXpfppqM6dLaLZQDKpzm8AqIwe07kPUNFR06ujO
+        6piUouF4yfm5hX5rh5KDZIgQ8tYD4ozLezKY6ZYcrLPS
+X-Google-Smtp-Source: AA0mqf6FO1DQrtwcXa2dpAVNgsu4BOIjaR2sDee9u7dsmopUPESwEnGgd79eheoZBvUdU/jLNLLrd+dnHDRmIJzjdmQ=
+X-Received: by 2002:a37:ad0c:0:b0:6ee:91b3:2484 with SMTP id
+ f12-20020a37ad0c000000b006ee91b32484mr58800326qkm.648.1669922916665; Thu, 01
+ Dec 2022 11:28:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221118025158.16902-3-quic_ppareek@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com>
+ <8c0a715a-d626-aa70-15f1-79f1e23fbc67@quicinc.com> <a5e2aab6-7f0e-7f3b-f34b-6d222450c97d@intel.com>
+ <8ca27fcb-b146-3ea7-a042-55f99e0ae3fb@quicinc.com> <2a1047a7-3121-6cbe-d4c5-46bbff0c5cc5@quicinc.com>
+ <20aae21e-62d2-8fdb-b57a-7b5a180266d8@intel.com>
+In-Reply-To: <20aae21e-62d2-8fdb-b57a-7b5a180266d8@intel.com>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Thu, 1 Dec 2022 20:28:25 +0100
+Message-ID: <CAJZ5v0gdg=PUz-j0yd_QJRPmjhZ7pCuRrHt30U60H4QyTHCmdA@mail.gmail.com>
+Subject: Re: PM-runtime: supplier looses track of consumer during probe
+To:     Adrian Hunter <adrian.hunter@intel.com>
+Cc:     Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Tushar Nimkar <quic_tnimkar@quicinc.com>,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        bjorn.andersson@kernel.org, quic_mkshah@quicinc.com,
+        quic_lsrao@quicinc.com, bvanassche@acm.org,
+        Peter Wang <peter.wang@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 08:21:58AM +0530, Parikshit Pareek wrote:
-> Introduce the Qualcomm SA8540P ride automotive platform, also known as
-> Qdrive-3 development board.
-> 
-> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
-> regulators, debug UART, PMICs, remoteprocs and USB.
-> 
-> The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
-> been created for PMIC, so that it can be used for future SA8540P based
-> boards.
-> 
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> Tested-by: Brian Masney <bmasney@redhat.com>
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Tested-by: Eric Chanudet <echanude@redhat.com>
-> Reviewed-by: Eric Chanudet <echanude@redhat.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+On Thu, Dec 1, 2022 at 2:10 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
+>
+> On 29/11/22 18:56, Nitin Rawat wrote:
+> > Hi Adrian,
+> >
+> > On 11/21/2022 11:38 AM, Tushar Nimkar wrote:
+> >> Hi Adrian,
+> >>
+> >> On 11/18/2022 8:25 PM, Adrian Hunter wrote:
+> >>> On 4/11/22 11:19, Tushar Nimkar wrote:
+> >>>> Hi linux-pm/linux-scsi,
+> >>
+> >>>>> Process -1
+> >>>>> ufshcd_async_scan context (process 1)
+> >>>>> scsi_autopm_put_device() //0:0:0:0
+> >>>
+> >>> I am having trouble following your description.  What function is calling
+> >>> scsi_autopm_put_device() here?
+> >>>
+> >> Below is flow which calls scsi_autopm_put_device()
+> >> Process -1
+> >> ufshcd_async_scan()
+> >>      scsi_probe_and_add_lun()
+> >>          scsi_add_lun()
+> >>              slave_configure()
+> >>                  scsi_sysfs_add_sdev()
+> >>                      scsi_autopm_get_device()
+> >>                          device_add()     <- invoked [Process 2] sd_probe()
+> >>                              scsi_autopm_put_device()
+> >>
+> >>>>> pm_runtime_put_sync()
+> >>>>> __pm_runtime_idle()
+> >>>>> rpm_idle() -- RPM_GET_PUT(4)
+> >>>>>       __rpm_callback
+> >>>>>           scsi_runtime_idle()
+> >>>>>               pm_runtime_mark_last_busy()
+> >>>>>               pm_runtime_autosuspend()  --[A]
+> >>>>>                   rpm_suspend() -- RPM_AUTO(8)
+> >>>>>                       pm_runtime_autosuspend_expiration() use_autosuspend    is false return 0   --- [B]
+> >>>>>                           __update_runtime_status to RPM_SUSPENDING
+> >>>>>                       __rpm_callback()
+> >>>>>                           __rpm_put_suppliers(dev, false)
+> >>>>>                       __update_runtime_status to RPM_SUSPENDED
+> >>>>>                   rpm_suspend_suppliers()
+> >>>>>                       rpm_idle() for supplier -- RPM_ASYNC(1) return (-EAGAIN) [ Other consumer active for supplier]
+> >>>>>                   rpm_suspend() – END with return=0
+> >>>>>           scsi_runtime_idle() END return (-EBUSY) always.
+> >>>
+> >>> Not following here either.  Which device is EBUSY and why?
+> >>
+> >> scsi_runtime_idle() return -EBUSY always [3]
+> >> Storage/scsi team can better explain -EBUSY implementation.
+> >
+> > EBUSY is returned from below code for consumer dev 0:0:0:0.
+> > scsi_runtime_idle is called from scsi_autopm_put_device which inturn is called from ufshcd_async_scan (Process 1 as per above call stack)
+> > static int scsi_runtime_idle(struct device *dev)
+> > {
+> >     :
+> >
+> >     if (scsi_is_sdev_device(dev)) {
+> >         pm_runtime_mark_last_busy(dev);
+> >         pm_runtime_autosuspend(dev);
+> >         return -EBUSY; ---> EBUSY returned from here.
+> >     }
+> >
+> >
+> > }
+> >
+> >>
+> >> [3] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/scsi/scsi_pm.c?h=next-20221118#n210
+> >>
+> >>
+> >>>>>
+> >>>>> [1]: https://lore.kernel.org/lkml/4748074.GXAFRqVoOG@kreacher/T/
+> >>>>> [2]: https://lkml.org/lkml/2022/10/12/259
+>
+> It looks to me like __rpm_callback() makes assumptions about
+> dev->power.runtime_status that are not necessarily true because
+> dev->power.lock is dropped.
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com>
+Well, this happens because rpm_idle() calls __rpm_callback() and
+allows it to run concurrently with rpm_suspend() and rpm_resume(), so
+one of them may change runtime_status to RPM_SUSPENDING or
+RPM_RESUMING while __rpm_callback() is running.
 
+It is somewhat questionable whether or not this should be allowed to
+happen, but since it is generally allowed to suspend the device from
+its .runtime_idle callback, there is not too much that can be done
+about it.
+
+>  AFAICT the intention of the code would be fulfilled by instead using the status as it was before
+> the lock was dropped.
+
+That's correct, so the patch should help, but it also needs to remove
+the comment stating that the runtime status cannot change when
+__rpm_callback() is running, which is clearly incorrect.
+
+> Consequently, perhaps you could try this:
+>
+> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+> index b52049098d4e..3cf9abc3b2c2 100644
+> --- a/drivers/base/power/runtime.c
+> +++ b/drivers/base/power/runtime.c
+> @@ -365,6 +365,7 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
+>  {
+>         int retval = 0, idx;
+>         bool use_links = dev->power.links_count > 0;
+> +       enum rpm_status runtime_status = dev->power.runtime_status;
+>
+>         if (dev->power.irq_safe) {
+>                 spin_unlock(&dev->power.lock);
+> @@ -378,7 +379,7 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
+>                  * routine returns, so it is safe to read the status outside of
+>                  * the lock.
+>                  */
+> -               if (use_links && dev->power.runtime_status == RPM_RESUMING) {
+> +               if (use_links && runtime_status == RPM_RESUMING) {
+>                         idx = device_links_read_lock();
+>
+>                         retval = rpm_get_suppliers(dev);
+> @@ -405,8 +406,8 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
+>                  * Do that if resume fails too.
+>                  */
+>                 if (use_links
+> -                   && ((dev->power.runtime_status == RPM_SUSPENDING && !retval)
+> -                   || (dev->power.runtime_status == RPM_RESUMING && retval))) {
+> +                   && ((runtime_status == RPM_SUSPENDING && !retval)
+> +                   || (runtime_status == RPM_RESUMING && retval))) {
+>                         idx = device_links_read_lock();
+>
+>                         __rpm_put_suppliers(dev, false);
+>
+>
