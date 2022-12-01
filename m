@@ -2,131 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64E6363E9D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 07:21:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89CB163EA16
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 08:03:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbiLAGVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 01:21:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59520 "EHLO
+        id S229671AbiLAHDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 02:03:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbiLAGVx (ORCPT
+        with ESMTP id S229761AbiLAHDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 01:21:53 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DA1AB022
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Nov 2022 22:21:52 -0800 (PST)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ore@pengutronix.de>)
-        id 1p0cwR-00075x-2t; Thu, 01 Dec 2022 07:21:03 +0100
-Received: from ore by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ore@pengutronix.de>)
-        id 1p0cwN-0002Vk-93; Thu, 01 Dec 2022 07:20:59 +0100
-Date:   Thu, 1 Dec 2022 07:20:59 +0100
-From:   Oleksij Rempel <o.rempel@pengutronix.de>
-To:     =?utf-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
-Cc:     Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Hauke Mehrtens <hauke@hauke-m.de>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
-        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-        Frank Wunderlich <frank-w@public-files.de>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
-        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH 2/5] arm: dts: remove label = "cpu" from DSA dt-binding
-Message-ID: <20221201062059.GF19642@pengutronix.de>
-References: <20221130141040.32447-1-arinc.unal@arinc9.com>
- <20221130141040.32447-3-arinc.unal@arinc9.com>
+        Thu, 1 Dec 2022 02:03:38 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C60C862F6;
+        Wed, 30 Nov 2022 23:03:36 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B15A2GJ009555;
+        Thu, 1 Dec 2022 07:03:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2qT5K9rHZ2k+os7b5m3JWOjmTKB3v7jcnwxt+X1IumY=;
+ b=I41ox6tU+lcR6OuITYdITgXsOjt517iMTGpRKC2I21OBsQx/JVi+v1pgjr0YAfEAghE5
+ neEjeAZ5vQme8cz16pe0UQZ9vfD3Drzl99BmFObcn/1iUY14uRy+rSrCBAbcvmlhQPh6
+ RD0rKvGLKar/lYyzkyD54wtEyl1Wrakk0QM8EMWSmcMIfIQTcKSTCNBjHjklpv70/ezD
+ b84J8H1ubaDxUUQ5TUGYJGdt1ZbIn5A1xvwtVD757iVf/HwGxPxN6Zno2ZpPbz/mQerL
+ o18dzwHgaUfYd7g4CeQX6qiaoBoG6D6sUdXAXXLmuf2+/5Ch1HSU1YzCexIRrJ96wFwN jA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m6kgmgg02-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Dec 2022 07:03:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B1732P8018068
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Dec 2022 07:03:02 GMT
+Received: from [10.216.5.116] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 30 Nov
+ 2022 23:02:55 -0800
+Message-ID: <85ddbbfd-15ea-dfda-bf52-bd35c4353aac@quicinc.com>
+Date:   Thu, 1 Dec 2022 12:32:52 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221130141040.32447-3-arinc.unal@arinc9.com>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ore@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] ASoC: qcom: lpass-sc7180: Add maybe_unused tag for system
+ PM ops
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Nathan Chancellor <nathan@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+References: <1669726428-3140-1-git-send-email-quic_srivasam@quicinc.com>
+ <Y4YpELN4/0cesonb@dev-arch.thelio-3990X>
+ <65fd2068-4744-221f-f398-da4303b64fca@quicinc.com>
+ <Y4ZmyO0o6SvrvaWq@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <Y4ZmyO0o6SvrvaWq@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9WqrwfmDjSQiYRwThR4I3FM4PNKDZ-rx
+X-Proofpoint-GUID: 9WqrwfmDjSQiYRwThR4I3FM4PNKDZ-rx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-01_04,2022-11-30_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 spamscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212010048
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 30, 2022 at 05:10:37PM +0300, Arınç ÜNAL wrote:
-> This is not used by the DSA dt-binding, so remove it from all devicetrees.
-> 
-> Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-> ---
->  arch/arm/boot/dts/imx6qdl-skov-cpu.dtsi                   | 1 -
->  arch/arm/boot/dts/imx6qp-prtwd3.dts                       | 1 -
+Thanks for your time Matthias,
 
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-
-Thx! 
-
--- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+On 11/30/2022 1:38 AM, Matthias Kaehlcke wrote:
+> On Tue, Nov 29, 2022 at 09:28:33PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Thanks for your tie Nathan!!!
+>>
+>> On 11/29/2022 9:15 PM, Nathan Chancellor wrote:
+>>> On Tue, Nov 29, 2022 at 06:23:48PM +0530, Srinivasa Rao Mandadapu wrote:
+>>>> Add __maybe_unused tag for system PM ops suspend and resume.
+>>>> This is required to fix allmodconfig compilation issue.
+>>>> Fixes: c3bf7699747c ("ASoC: qcom: lpass-sc7280: Add system suspend/resume PM ops")
+>>>>
+>>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>> A better solution would be replacing SET_SYSTEM_SLEEP_PM_OPS() with
+>>> SYSTEM_SLEEP_PM_OPS(), which was added to avoid needing to add these
+>>> '__maybe_unused' attributes to these functions. See commit 1a3c7bb08826
+>>> ("PM: core: Add new *_PM_OPS macros, deprecate old ones") for more info.
+>> Tried this option but as this patch required for Kernel 5.4 version code
+>> base,
+>>
+>> SYSTEM_SLEEP_PM_OPS didn't work.
+> Older downstream trees needing a change shouldn't impact how a change is done
+> upstream. The change should be what's best for the upstream kernel. Downstream
+> kernels can do backports which might differ from the upstream solution or
+> pick the missing dependencies (which might not be too hard in this case).
+Okay. Will take care next time.
+>
+>>>> ---
+>>>>    sound/soc/qcom/lpass-sc7180.c | 4 ++--
+>>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+>>>> index b96b85a..41db661 100644
+>>>> --- a/sound/soc/qcom/lpass-sc7180.c
+>>>> +++ b/sound/soc/qcom/lpass-sc7180.c
+>>>> @@ -163,14 +163,14 @@ static int sc7180_lpass_exit(struct platform_device *pdev)
+>>>>    	return 0;
+>>>>    }
+>>>> -static int sc7180_lpass_dev_resume(struct device *dev)
+>>>> +static int __maybe_unused sc7180_lpass_dev_resume(struct device *dev)
+>>>>    {
+>>>>    	struct lpass_data *drvdata = dev_get_drvdata(dev);
+>>>>    	return clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
+>>>>    }
+>>>> -static int sc7180_lpass_dev_suspend(struct device *dev)
+>>>> +static int __maybe_unused sc7180_lpass_dev_suspend(struct device *dev)
+>>>>    {
+>>>>    	struct lpass_data *drvdata = dev_get_drvdata(dev);
+>>>> -- 
+>>>> 2.7.4
+>>>>
+>>>>
