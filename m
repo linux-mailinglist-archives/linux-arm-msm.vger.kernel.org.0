@@ -2,200 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C25C463F827
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 20:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3727863F862
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Dec 2022 20:34:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbiLAT2k convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 1 Dec 2022 14:28:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50762 "EHLO
+        id S231280AbiLATe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 14:34:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbiLAT2i (ORCPT
+        with ESMTP id S230465AbiLATej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 14:28:38 -0500
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A4AC5E32;
-        Thu,  1 Dec 2022 11:28:37 -0800 (PST)
-Received: by mail-qt1-f181.google.com with SMTP id y15so2184156qtv.5;
-        Thu, 01 Dec 2022 11:28:37 -0800 (PST)
+        Thu, 1 Dec 2022 14:34:39 -0500
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D799381C;
+        Thu,  1 Dec 2022 11:33:49 -0800 (PST)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-14286d5ebc3so3335979fac.3;
+        Thu, 01 Dec 2022 11:33:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VPkQQERyjiDmblFdMpvetG3Txhv1fALmSUiNK4uispU=;
+        b=JIVTb6kVxC2+GkogklTf3iO7DdD+uMRGAWgl1zuxAMxh7CuiezggfqAOEft6c/q8eW
+         RJLqfbNwTaiLr3hJaXKVcu91q0hjddR3wiaXAUojE/zXibeNisE9YFCIV6F6JTV9ClHW
+         YNWBOrfFh0xZarYfsulryI7QCQJ/04teja9lHFjLB6w0YTLDhiPctaZpMoDUwsyOn6Zn
+         NyP/dwmmWZDQcEh54JVmq0JV5UGQD5s9g15X8MIpt6Y9ur1MGU2B1L2g7muF1jku24Ap
+         DZS/aSJ+FRrTBJ1VBsf3tRZypBAFZteumLCs6GvgAl1iHbfZjxl/iKXOHF9PTRYbtnqQ
+         nc9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+MgxVjr37axlTfgKOduJn6x/gthSur1b3/et+b9tLAg=;
-        b=ffHEe1zfAh6XnVbL2NljlVFE7VLz4+Fgsu6v0hThYpab0cRZhP8sJSu73S7fL5CJXX
-         t0nlPX+63KSfioTYjIPkVPhV+jyVAbfFIKHXyuS5nkdPNluPyfaqrgQX7jA5YYi8H/Hm
-         DFPbQUjHZ850QcPfEKvHDGCpvFIoizsKDXgd0t+TiPN7u+CHEAQvNS+n9T6IoL31T482
-         Bc9y4IVMMzp7glMnRAYfmPmRCPdlA+HID13BMpbeo2/KQcyf6mEXECia6k8gg36LUHyI
-         JmrxXR5KT8fOzr6CgKTJSGvbn92dsdmmdROBUkI01xQRJ40atZXdymeK80NW+zLwV+9r
-         8RQw==
-X-Gm-Message-State: ANoB5pnAb1QF13bizqXpfppqM6dLaLZQDKpzm8AqIwe07kPUNFR06ujO
-        6piUouF4yfm5hX5rh5KDZIgQ8tYD4ozLezKY6ZYcrLPS
-X-Google-Smtp-Source: AA0mqf6FO1DQrtwcXa2dpAVNgsu4BOIjaR2sDee9u7dsmopUPESwEnGgd79eheoZBvUdU/jLNLLrd+dnHDRmIJzjdmQ=
-X-Received: by 2002:a37:ad0c:0:b0:6ee:91b3:2484 with SMTP id
- f12-20020a37ad0c000000b006ee91b32484mr58800326qkm.648.1669922916665; Thu, 01
- Dec 2022 11:28:36 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VPkQQERyjiDmblFdMpvetG3Txhv1fALmSUiNK4uispU=;
+        b=b9mz2T3OH3VHU2gwUE8hPcy6R/Crph2+sDqApEJ5uU0tODp9JbL3x5iLki7OGvjFLt
+         WZmw0eamB/CikgwHyQ/GkSQPRrQcebg5r/Zh2JyrCGPrLh+Bv1D91FmDVcz8zJUX4arB
+         k0z+OyiRdP3KhwK/nQT5/GbWd19x+mVDgi06jeEqZu/4Uqgrf6HDh4nvbg/mIMIUcQzh
+         ING1O+dgQCiRrSWlu/2jNN4zGxq/5HpLR/xHUylj6Om7BhQ3uztlp4XJ/lNUv54rsNjG
+         5lC+KZD4qVLYUJCMNIBZunkc93o/9oeFBDFdwz7Qcu+s2jf8Vjibl3sraCmI4xW1oKHB
+         xyww==
+X-Gm-Message-State: ANoB5pklnd+GpM+bf2FyIzvLXuzaLJr27M68Bk3XiMaGAsM4u+CGDuuN
+        /Kb9B2gtqjPEly65yr8yIEQJ8OdMg053ug8IrtvVtO85
+X-Google-Smtp-Source: AA0mqf5Y1FCdimrFaHTrU8Rv9VYLNayXBm6wkTjy2CMyzp5Sfd1yy5/UTaWmVF4ZZMuRF85ezZkOgwQrLlHPdjOhg84=
+X-Received: by 2002:a05:6870:b01e:b0:131:f559:461b with SMTP id
+ y30-20020a056870b01e00b00131f559461bmr37615734oae.38.1669923228590; Thu, 01
+ Dec 2022 11:33:48 -0800 (PST)
 MIME-Version: 1.0
-References: <36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com>
- <8c0a715a-d626-aa70-15f1-79f1e23fbc67@quicinc.com> <a5e2aab6-7f0e-7f3b-f34b-6d222450c97d@intel.com>
- <8ca27fcb-b146-3ea7-a042-55f99e0ae3fb@quicinc.com> <2a1047a7-3121-6cbe-d4c5-46bbff0c5cc5@quicinc.com>
- <20aae21e-62d2-8fdb-b57a-7b5a180266d8@intel.com>
-In-Reply-To: <20aae21e-62d2-8fdb-b57a-7b5a180266d8@intel.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Thu, 1 Dec 2022 20:28:25 +0100
-Message-ID: <CAJZ5v0gdg=PUz-j0yd_QJRPmjhZ7pCuRrHt30U60H4QyTHCmdA@mail.gmail.com>
-Subject: Re: PM-runtime: supplier looses track of consumer during probe
-To:     Adrian Hunter <adrian.hunter@intel.com>
-Cc:     Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Tushar Nimkar <quic_tnimkar@quicinc.com>,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        bjorn.andersson@kernel.org, quic_mkshah@quicinc.com,
-        quic_lsrao@quicinc.com, bvanassche@acm.org,
-        Peter Wang <peter.wang@mediatek.com>
+References: <20221111194957.4046771-1-joel@joelfernandes.org>
+ <20221111194957.4046771-2-joel@joelfernandes.org> <899db0f8-7b8a-ed8f-30b8-4f630da1298d@quicinc.com>
+ <CAF6AEGtEswqCRXkrd+tWKb_1N1UXgQ=EVMTZAgxxpNcD2vYGHQ@mail.gmail.com> <CAEXW_YSKBsVKBqJHB=9dQYV9XboTnsNb10ESJk1S_ia0gyKbuw@mail.gmail.com>
+In-Reply-To: <CAEXW_YSKBsVKBqJHB=9dQYV9XboTnsNb10ESJk1S_ia0gyKbuw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 1 Dec 2022 11:33:40 -0800
+Message-ID: <CAF6AEGv9nOy6+_xgs3oF5GUKi+JZazS0G0fcviShGCpqzM9eEg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] adreno: Detect shutdown during get_param()
+To:     Joel Fernandes <joel@joelfernandes.org>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Ross Zwisler <zwisler@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 1, 2022 at 2:10 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
+On Thu, Dec 1, 2022 at 10:42 AM Joel Fernandes <joel@joelfernandes.org> wrote:
 >
-> On 29/11/22 18:56, Nitin Rawat wrote:
-> > Hi Adrian,
+> On Sat, Nov 12, 2022 at 6:35 PM Rob Clark <robdclark@gmail.com> wrote:
 > >
-> > On 11/21/2022 11:38 AM, Tushar Nimkar wrote:
-> >> Hi Adrian,
-> >>
-> >> On 11/18/2022 8:25 PM, Adrian Hunter wrote:
-> >>> On 4/11/22 11:19, Tushar Nimkar wrote:
-> >>>> Hi linux-pm/linux-scsi,
-> >>
-> >>>>> Process -1
-> >>>>> ufshcd_async_scan context (process 1)
-> >>>>> scsi_autopm_put_device() //0:0:0:0
-> >>>
-> >>> I am having trouble following your description.  What function is calling
-> >>> scsi_autopm_put_device() here?
-> >>>
-> >> Below is flow which calls scsi_autopm_put_device()
-> >> Process -1
-> >> ufshcd_async_scan()
-> >>      scsi_probe_and_add_lun()
-> >>          scsi_add_lun()
-> >>              slave_configure()
-> >>                  scsi_sysfs_add_sdev()
-> >>                      scsi_autopm_get_device()
-> >>                          device_add()     <- invoked [Process 2] sd_probe()
-> >>                              scsi_autopm_put_device()
-> >>
-> >>>>> pm_runtime_put_sync()
-> >>>>> __pm_runtime_idle()
-> >>>>> rpm_idle() -- RPM_GET_PUT(4)
-> >>>>>       __rpm_callback
-> >>>>>           scsi_runtime_idle()
-> >>>>>               pm_runtime_mark_last_busy()
-> >>>>>               pm_runtime_autosuspend()  --[A]
-> >>>>>                   rpm_suspend() -- RPM_AUTO(8)
-> >>>>>                       pm_runtime_autosuspend_expiration() use_autosuspend    is false return 0   --- [B]
-> >>>>>                           __update_runtime_status to RPM_SUSPENDING
-> >>>>>                       __rpm_callback()
-> >>>>>                           __rpm_put_suppliers(dev, false)
-> >>>>>                       __update_runtime_status to RPM_SUSPENDED
-> >>>>>                   rpm_suspend_suppliers()
-> >>>>>                       rpm_idle() for supplier -- RPM_ASYNC(1) return (-EAGAIN) [ Other consumer active for supplier]
-> >>>>>                   rpm_suspend() – END with return=0
-> >>>>>           scsi_runtime_idle() END return (-EBUSY) always.
-> >>>
-> >>> Not following here either.  Which device is EBUSY and why?
-> >>
-> >> scsi_runtime_idle() return -EBUSY always [3]
-> >> Storage/scsi team can better explain -EBUSY implementation.
+> > On Fri, Nov 11, 2022 at 1:28 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> > >
+> > > On 11/12/2022 1:19 AM, Joel Fernandes (Google) wrote:
+> > > > Even though the GPU is shut down, during kexec reboot we can have userspace
+> > > > still running. This is especially true if KEXEC_JUMP is not enabled, because we
+> > > > do not freeze userspace in this case.
+> > > >
+> > > > To prevent crashes, track that the GPU is shutdown and prevent get_param() from
+> > > > accessing GPU resources if we find it shutdown.
+> > > >
+> > > > This fixes the following crash during kexec reboot on an ARM64 device with adreno GPU:
+> > > >
+> > > > [  292.534314] Kernel panic - not syncing: Asynchronous SError Interrupt
+> > > > [  292.534323] Hardware name: Google Lazor (rev3 - 8) with LTE (DT)
+> > > > [  292.534326] Call trace:
+> > > > [  292.534328]  dump_backtrace+0x0/0x1d4
+> > > > [  292.534337]  show_stack+0x20/0x2c
+> > > > [  292.534342]  dump_stack_lvl+0x60/0x78
+> > > > [  292.534347]  dump_stack+0x18/0x38
+> > > > [  292.534352]  panic+0x148/0x3b0
+> > > > [  292.534357]  nmi_panic+0x80/0x94
+> > > > [  292.534364]  arm64_serror_panic+0x70/0x7c
+> > > > [  292.534369]  do_serror+0x0/0x7c
+> > > > [  292.534372]  do_serror+0x54/0x7c
+> > > > [  292.534377]  el1h_64_error_handler+0x34/0x4c
+> > > > [  292.534381]  el1h_64_error+0x7c/0x80
+> > > > [  292.534386]  el1_interrupt+0x20/0x58
+> > > > [  292.534389]  el1h_64_irq_handler+0x18/0x24
+> > > > [  292.534395]  el1h_64_irq+0x7c/0x80
+> > > > [  292.534399]  local_daif_inherit+0x10/0x18
+> > > > [  292.534405]  el1h_64_sync_handler+0x48/0xb4
+> > > > [  292.534410]  el1h_64_sync+0x7c/0x80
+> > > > [  292.534414]  a6xx_gmu_set_oob+0xbc/0x1fc
+> > > > [  292.534422]  a6xx_get_timestamp+0x40/0xb4
+> > > > [  292.534426]  adreno_get_param+0x12c/0x1e0
+> > > > [  292.534433]  msm_ioctl_get_param+0x64/0x70
+> > > > [  292.534440]  drm_ioctl_kernel+0xe8/0x158
+> > > > [  292.534448]  drm_ioctl+0x208/0x320
+> > > > [  292.534453]  __arm64_sys_ioctl+0x98/0xd0
+> > > > [  292.534461]  invoke_syscall+0x4c/0x118
+> > > > [  292.534467]  el0_svc_common+0x98/0x104
+> > > > [  292.534473]  do_el0_svc+0x30/0x80
+> > > > [  292.534478]  el0_svc+0x20/0x50
+> > > > [  292.534481]  el0t_64_sync_handler+0x78/0x108
+> > > > [  292.534485]  el0t_64_sync+0x1a4/0x1a8
+> > > > [  292.534632] Kernel Offset: 0x1a5f800000 from 0xffffffc008000000
+> > > > [  292.534635] PHYS_OFFSET: 0x80000000
+> > > > [  292.534638] CPU features: 0x40018541,a3300e42
+> > > > [  292.534644] Memory Limit: none
+> > > >
+> > > > Cc: Rob Clark <robdclark@chromium.org>
+> > > > Cc: Steven Rostedt <rostedt@goodmis.org>
+> > > > Cc: Ricardo Ribalda <ribalda@chromium.org>
+> > > > Cc: Ross Zwisler <zwisler@kernel.org>
+> > > > Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+> > > > ---
+> > > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+> > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 2 +-
+> > > >   drivers/gpu/drm/msm/msm_gpu.h              | 3 +++
+> > > >   3 files changed, 5 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > index f0cff62812c3..03d912dc0130 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > @@ -612,6 +612,7 @@ static void adreno_shutdown(struct platform_device *pdev)
+> > > >   {
+> > > >       struct msm_gpu *gpu = dev_to_gpu(&pdev->dev);
+> > > >
+> > > > +     gpu->is_shutdown = true;
+> > > >       WARN_ON_ONCE(adreno_system_suspend(&pdev->dev));
+> > > >   }
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > > index 382fb7f9e497..6903c6892469 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > > @@ -251,7 +251,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+> > > >       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> > > >
+> > > >       /* No pointer params yet */
+> > > > -     if (*len != 0)
+> > > > +     if (*len != 0 || gpu->is_shutdown)
+> > > >               return -EINVAL;
+> > > This will race with shutdown. Probably, propagating back the return
+> > > value of pm_runtime_get() in every possible ioctl call path is the right
+> > > thing to do.
+> > >
+> > > I have never thought about this scenario. Do you know why userspace is
+> > > not freezed before kexec?
 > >
-> > EBUSY is returned from below code for consumer dev 0:0:0:0.
-> > scsi_runtime_idle is called from scsi_autopm_put_device which inturn is called from ufshcd_async_scan (Process 1 as per above call stack)
-> > static int scsi_runtime_idle(struct device *dev)
-> > {
-> >     :
-> >
-> >     if (scsi_is_sdev_device(dev)) {
-> >         pm_runtime_mark_last_busy(dev);
-> >         pm_runtime_autosuspend(dev);
-> >         return -EBUSY; ---> EBUSY returned from here.
-> >     }
-> >
-> >
-> > }
-> >
-> >>
-> >> [3] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/scsi/scsi_pm.c?h=next-20221118#n210
-> >>
-> >>
-> >>>>>
-> >>>>> [1]: https://lore.kernel.org/lkml/4748074.GXAFRqVoOG@kreacher/T/
-> >>>>> [2]: https://lkml.org/lkml/2022/10/12/259
+> > So userspace not being frozen seems like the root issue, and is likely
+> > to cause all sorts of other whack-a-mole problems.  I guess I'd like
+> > to know if this is the expected behavior?
 >
-> It looks to me like __rpm_callback() makes assumptions about
-> dev->power.runtime_status that are not necessarily true because
-> dev->power.lock is dropped.
+> We tried that. Freezing before kexec seems to cause issues for ALSA as
+> Ricardo found:
+> https://lore.kernel.org/lkml/202211281209.mnBLzQ2I-lkp@intel.com/T/
+>
+> That patch is still TBD due to disagreement on the right approach to
+> fix, so I don't think freezing before shutting down devices is viable
+> at the moment.
+>
+> I am checking Ricardo if we can do something like util-linux's
+> shutdown code which sends SIGTERM to all processes:
+> https://kernel.googlesource.com/pub/scm/utils/util-linux/util-linux/+/v2.8/login-utils/shutdown.c#273
+> , before issuing the kexec-reboot.
+>
+> Maybe, a more graceful shutdown from kexec-lite, will prevent the
+> kexec-reboot it does from crashing? Though in my view that would still
+> be a small copout instead of fixing the real issue, which is the
+> kernel crashing for any reason.
 
-Well, this happens because rpm_idle() calls __rpm_callback() and
-allows it to run concurrently with rpm_suspend() and rpm_resume(), so
-one of them may change runtime_status to RPM_SUSPENDING or
-RPM_RESUMING while __rpm_callback() is running.
+The problem is that pm_runtime_force_suspend() yanks the rug out from
+under the driver from a runpm PoV.. generally this is ok (as long as
+scheduler kthread is parked) because we don't have to worry about
+userspace ;-)
 
-It is somewhat questionable whether or not this should be allowed to
-happen, but since it is generally allowed to suspend the device from
-its .runtime_idle callback, there is not too much that can be done
-about it.
+> > If so, we should probably look at
+> > drm_dev_is_unplugged()/drm_dev_unplug()/etc rather than trying to NIH
+> > that mechanism.  We would need to sprinkle drm_dev_is_unplugged()
+> > checks more widely, and also ensure that the scheduler kthread(s) gets
+> > parked.  But it would be nice to know first if we are just trying to
+> > paper over a kexec bug.
+>
+> Agreed. I think we still patch 1/2 whether the SIGTERM trick mentioned
+> above, works or not. I will await discussions with Ricardo before
+> reposting that one.
 
->  AFAICT the intention of the code would be fulfilled by instead using the status as it was before
-> the lock was dropped.
+Yeah, I think I'm waiting on a v2 of that one ;-)
 
-That's correct, so the patch should help, but it also needs to remove
-the comment stating that the runtime status cannot change when
-__rpm_callback() is running, which is clearly incorrect.
+BR,
+-R
 
-> Consequently, perhaps you could try this:
+> Cheers,
 >
-> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-> index b52049098d4e..3cf9abc3b2c2 100644
-> --- a/drivers/base/power/runtime.c
-> +++ b/drivers/base/power/runtime.c
-> @@ -365,6 +365,7 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
->  {
->         int retval = 0, idx;
->         bool use_links = dev->power.links_count > 0;
-> +       enum rpm_status runtime_status = dev->power.runtime_status;
->
->         if (dev->power.irq_safe) {
->                 spin_unlock(&dev->power.lock);
-> @@ -378,7 +379,7 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
->                  * routine returns, so it is safe to read the status outside of
->                  * the lock.
->                  */
-> -               if (use_links && dev->power.runtime_status == RPM_RESUMING) {
-> +               if (use_links && runtime_status == RPM_RESUMING) {
->                         idx = device_links_read_lock();
->
->                         retval = rpm_get_suppliers(dev);
-> @@ -405,8 +406,8 @@ static int __rpm_callback(int (*cb)(struct device *), struct device *dev)
->                  * Do that if resume fails too.
->                  */
->                 if (use_links
-> -                   && ((dev->power.runtime_status == RPM_SUSPENDING && !retval)
-> -                   || (dev->power.runtime_status == RPM_RESUMING && retval))) {
-> +                   && ((runtime_status == RPM_SUSPENDING && !retval)
-> +                   || (runtime_status == RPM_RESUMING && retval))) {
->                         idx = device_links_read_lock();
->
->                         __rpm_put_suppliers(dev, false);
->
->
+>  -- Joel
