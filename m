@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4259640E73
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:29:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DEBA640E76
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:29:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234700AbiLBT3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 14:29:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
+        id S234780AbiLBT3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 14:29:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234159AbiLBT3r (ORCPT
+        with ESMTP id S234159AbiLBT3t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 14:29:47 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92105EDD5C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 11:29:45 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id fz10so6600719qtb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 11:29:45 -0800 (PST)
+        Fri, 2 Dec 2022 14:29:49 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286E5EC80E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 11:29:48 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id p12so4062317qvu.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 11:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0+20XbQGU29ha3MjESx+A5LL2KSvJfQiwEkfJeGtVr0=;
-        b=jrLuTshkNdUfnRjZLc9mz/5q8pbUswHWpPq00WO/hK0lbiqQcazzAjYV/7ktM+7KqY
-         44QxFXg7XRhIl5zadvfDbcK0BmPLRoBewBXPeBqcK0YqfLbatN2UELXZPxFZr93tK6/A
-         Co+/24LrkYc2vIcbIwcUYrs0PL1wD+D2VAHhUy8Un7sYw1RprYjPZLueToQfQYVomwtQ
-         72u4+j6+QePfmr6jQDLhhDhgD4mCfSczQWvtjraC7QJtULxuWjsTy2izYcgKeUWXsb18
-         WiezSy9CFT9nWUF99goke4BTf7f+sXnslVxRirGfI8QtnhTdLmrJOir5DYL7bMRERMPh
-         0+9w==
+        bh=WXI3neVS8CRBAiuDUMYV81QwYWr0/b5PYjiiXMlU4kU=;
+        b=FO30Qxh3KLAiKXTKhRYwKxx+RBz1RSuLMwFmiRJgfsVO6z1u1IJpi94Gw4CPcANN44
+         uQSz5/sUkX7dq/J9mwJ5jIUIXxdTT7FC9/uSiv4Ke9WvJ5x+y0GMJvSedKkyQ9Mnj2L9
+         zeWoqeVAtK1gskVt0iu5lDnVi+L3qFugCqpbDLMnronaIZ3JAdET8uItwqW60PyViQ/r
+         LttWWUCiH5jt7Pbuo8OSOrwtkiJ+AQVtQvDRTJ1WLMdjzOgEn/bM/mDesLnRrztMrIQY
+         8NeAUqMJbNUm7LqPm3c40aklgk2siIjtmn7m7ksb5Wz33svhQABflBkrHLc+LMM9I4Tt
+         k4uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0+20XbQGU29ha3MjESx+A5LL2KSvJfQiwEkfJeGtVr0=;
-        b=IhKvcOB3VtM4EgkdCQIpO+Y2U5jkwlAfbfmg47pnFsFcHbEb7lNtiuOg/R+5I0N5Ng
-         rv1rs6WuL2cMZv/vzSj2raHgO2AC+wXCFDFyRxItXjRonaQvRbkO7JUaM59d+fWtXGrA
-         A7OeGJUP0icVNOTt8n1phZsDACW5jAlHNXvDcrE92NgxBpn8NRrLC/wxdi2qwx0Ai/mB
-         QuwGaJ2hzLLdAlVKHpuCfdv0i65a8JKvGf8igCbsZJqWrXratGDx/+7ha9p8Yl+ulBAt
-         mIMJLos6dp+Ugsli4HyzMGoEdTkpCHvK7oUZs7mIqY2XvCY0W8FBMld4SUj0GVexyaid
-         qgTA==
-X-Gm-Message-State: ANoB5pkf+r6WcrgKA9lVZwq8EjCtf4QPrOlC6I7DitUA9lk0VUn+5vZ1
-        MkhYGp6QA76FKxcVuzGcwCcqQA==
-X-Google-Smtp-Source: AA0mqf7RmprlpT97E8/imh+zoxMMwj7z3FaytghWMKc1M2/1WywdqL4dlNtPTcfSX7U58/A+kirwTg==
-X-Received: by 2002:a37:4553:0:b0:6fc:ae7e:2b4 with SMTP id s80-20020a374553000000b006fcae7e02b4mr4572755qka.767.1670009384558;
-        Fri, 02 Dec 2022 11:29:44 -0800 (PST)
+        bh=WXI3neVS8CRBAiuDUMYV81QwYWr0/b5PYjiiXMlU4kU=;
+        b=hJKQW0Fw3fuxML3vMA81zmOyk3q0xtSC03jk9D0+nG54lrqWDshRCax/0NZCUgrxZ8
+         /YNCE5RBG/xTIJ6WAtyHaKDBuKpg6MbJ/WC502aLbMs5jF3zeXIpJ/FGJdE6UzJ6YDWe
+         fR9+TpRzKUbmY3iE7OyQRVvAS7uWywiGil4xEM3DDWfokhHpS7fK4vKs7lcRswHiO4Mf
+         7E3NnPU+3OwHHMdTYUWqh8vy7HfzUmOC+hJsa14MERX54ZHqNom97CBY6EQG10SUUbmN
+         RcGAWZb/oboqwykt+J4fTlszFBcqLsQLsC2ECV5X6rs3EXcLj/iZrwNVyV6DijxGHxB3
+         4VHg==
+X-Gm-Message-State: ANoB5pl9pAQmg3QeM7lY4PbSDjNecT0/ZEsmTATHmFHdUtrKITMVif6r
+        mDGMIvNKUM337+9+bJrqgl6/ZWthNr/YnKoc
+X-Google-Smtp-Source: AA0mqf7SXRirUSsiSoROkPjwapnWetlpUM/fK8jb1IPYHT+lYpcM/g6sOcVhIl+rLjjqdpydXD2SMw==
+X-Received: by 2002:ad4:4b63:0:b0:4c7:19e5:8953 with SMTP id m3-20020ad44b63000000b004c719e58953mr14646242qvx.116.1670009387211;
+        Fri, 02 Dec 2022 11:29:47 -0800 (PST)
 Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id v23-20020ac873d7000000b003a606428a59sm4642215qtp.91.2022.12.02.11.29.43
+        by smtp.googlemail.com with ESMTPSA id j25-20020ac874d9000000b003a623e5b9ecsm4665050qtr.78.2022.12.02.11.29.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Dec 2022 11:29:43 -0800 (PST)
-Message-ID: <ef889512-61f8-5a38-240a-5e95230f9d81@linaro.org>
-Date:   Fri, 2 Dec 2022 13:29:42 -0600
+        Fri, 02 Dec 2022 11:29:46 -0800 (PST)
+Message-ID: <85869242-b228-8171-de58-791f67ffd547@linaro.org>
+Date:   Fri, 2 Dec 2022 13:29:45 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v3 5/8] clk: qcom: rpmh: support separate symbol name for
- the RPMH clocks
+Subject: Re: [PATCH v3 6/8] clk: qcom: rpmh: rename ARC clock data
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +66,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
 References: <20221202185843.721673-1-dmitry.baryshkov@linaro.org>
- <20221202185843.721673-6-dmitry.baryshkov@linaro.org>
+ <20221202185843.721673-7-dmitry.baryshkov@linaro.org>
 From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20221202185843.721673-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221202185843.721673-7-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,77 +81,204 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/2/22 12:58 PM, Dmitry Baryshkov wrote:
-> Both ARC and VRM clocks have minor differences between platforms.
-> However using SoC names directly results in duplication, confusion and
-> ocassional errors. Next patches are going to drop the SoC names and
+> RPMH ARC clocks are frequently shared between several platfoms. It makes
 
-s/ocassional/occasional/
+s/platfoms/platforms/
 
-> encode these differences into the clock names.
-> To keep the system clock names (visible to userspace) intact, add
-> separate symbol names that are used in the code.
+> little sense to encode the SoC name into the clock name, if the same
+> clock is used for other SoCs.
+> 
+> Rework the ARC clock defintions to remove the SoC name. Keep the
+
+s/defintions/definitions/
+
+> userspace-visible clock name, but encode the divider into the variable
+> name. This also makes it obvious which divider is used by the platform,
+> making the code less error-prone.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Looks good.  Thank you for rearranging this, it's easier to follow.
+Looks good.
 
 Reviewed-by: Alex Elder <elder@linaro.org>
 
 > ---
->   drivers/clk/qcom/clk-rpmh.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+>   drivers/clk/qcom/clk-rpmh.c | 62 ++++++++++++++++++-------------------
+>   1 file changed, 31 insertions(+), 31 deletions(-)
 > 
 > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index 2ab406c1dab5..34099bb6b899 100644
+> index 34099bb6b899..439cace44bd1 100644
 > --- a/drivers/clk/qcom/clk-rpmh.c
 > +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -70,15 +70,15 @@ struct clk_rpmh_desc {
->   
->   static DEFINE_MUTEX(rpmh_clk_lock);
->   
-> -#define __DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
-> +#define __DEFINE_CLK_RPMH(_platform, _name, _clk_name, _res_name,	\
->   			  _res_en_offset, _res_on, _div)		\
-> -	static struct clk_rpmh _platform##_##_name##_ao;		\
-> -	static struct clk_rpmh _platform##_##_name = {			\
-> +	static struct clk_rpmh _platform##_##_clk_name##_ao;		\
-> +	static struct clk_rpmh _platform##_##_clk_name = {		\
->   		.res_name = _res_name,					\
->   		.res_addr = _res_en_offset,				\
->   		.res_on_val = _res_on,					\
->   		.div = _div,						\
-> -		.peer = &_platform##_##_name##_ao,			\
-> +		.peer = &_platform##_##_clk_name##_ao,			\
->   		.valid_state_mask = (BIT(RPMH_WAKE_ONLY_STATE) |	\
->   				      BIT(RPMH_ACTIVE_ONLY_STATE) |	\
->   				      BIT(RPMH_SLEEP_STATE)),		\
-> @@ -92,12 +92,12 @@ static DEFINE_MUTEX(rpmh_clk_lock);
->   			.num_parents = 1,				\
->   		},							\
->   	};								\
-> -	static struct clk_rpmh _platform##_##_name##_ao= {		\
-> +	static struct clk_rpmh _platform##_##_clk_name##_ao= {		\
->   		.res_name = _res_name,					\
->   		.res_addr = _res_en_offset,				\
->   		.res_on_val = _res_on,					\
->   		.div = _div,						\
-> -		.peer = &_platform##_##_name,				\
-> +		.peer = &_platform##_##_clk_name,			\
->   		.valid_state_mask = (BIT(RPMH_WAKE_ONLY_STATE) |	\
->   					BIT(RPMH_ACTIVE_ONLY_STATE)),	\
->   		.hw.init = &(struct clk_init_data){			\
-> @@ -112,11 +112,11 @@ static DEFINE_MUTEX(rpmh_clk_lock);
+> @@ -112,7 +112,7 @@ static DEFINE_MUTEX(rpmh_clk_lock);
 >   	}
 >   
 >   #define DEFINE_CLK_RPMH_ARC(_platform, _name, _res_name, _res_on, _div)	\
-> -	__DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
-> +	__DEFINE_CLK_RPMH(_platform, _name, _name, _res_name,		\
+> -	__DEFINE_CLK_RPMH(_platform, _name, _name, _res_name,		\
+> +	__DEFINE_CLK_RPMH(_platform, _name, _name##_##div##_div, _res_name, \
 >   			  CLK_RPMH_ARC_EN_OFFSET, _res_on, _div)
 >   
 >   #define DEFINE_CLK_RPMH_VRM(_platform, _name, _res_name, _div)		\
-> -	__DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
-> +	__DEFINE_CLK_RPMH(_platform, _name, _name, _res_name,		\
->   			  CLK_RPMH_VRM_EN_OFFSET, 1, _div)
+> @@ -375,8 +375,8 @@ DEFINE_CLK_RPMH_BCM(pka, "PKA0");
+>   DEFINE_CLK_RPMH_BCM(qpic_clk, "QP0");
 >   
->   #define DEFINE_CLK_RPMH_BCM(_name, _res_name)				\
+>   static struct clk_hw *sdm845_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
+> @@ -397,8 +397,8 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
+>   };
+>   
+>   static struct clk_hw *sdm670_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
+> @@ -417,8 +417,8 @@ static const struct clk_rpmh_desc clk_rpmh_sdm670 = {
+>   };
+>   
+>   static struct clk_hw *sdx55_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_RF_CLK1]		= &sc8180x_rf_clk1.hw,
+>   	[RPMH_RF_CLK1_A]	= &sc8180x_rf_clk1_ao.hw,
+>   	[RPMH_RF_CLK2]		= &sc8180x_rf_clk2.hw,
+> @@ -433,8 +433,8 @@ static const struct clk_rpmh_desc clk_rpmh_sdx55 = {
+>   };
+>   
+>   static struct clk_hw *sm8150_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
+> @@ -453,8 +453,8 @@ static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
+>   };
+>   
+>   static struct clk_hw *sc7180_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
+> @@ -472,8 +472,8 @@ static const struct clk_rpmh_desc clk_rpmh_sc7180 = {
+>   };
+>   
+>   static struct clk_hw *sc8180x_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
+> @@ -492,8 +492,8 @@ static const struct clk_rpmh_desc clk_rpmh_sc8180x = {
+>   };
+>   
+>   static struct clk_hw *sm8250_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK1]	= &sm8250_ln_bb_clk1.hw,
+>   	[RPMH_LN_BB_CLK1_A]	= &sm8250_ln_bb_clk1_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+> @@ -512,8 +512,8 @@ static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
+>   };
+>   
+>   static struct clk_hw *sm8350_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_DIV_CLK1]		= &sm8350_div_clk1.hw,
+>   	[RPMH_DIV_CLK1_A]	= &sm8350_div_clk1_ao.hw,
+>   	[RPMH_LN_BB_CLK1]	= &sm8250_ln_bb_clk1.hw,
+> @@ -539,8 +539,8 @@ static const struct clk_rpmh_desc clk_rpmh_sm8350 = {
+>   };
+>   
+>   static struct clk_hw *sc8280xp_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_div2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]       = &sdm845_ln_bb_clk3.hw,
+>   	[RPMH_LN_BB_CLK3_A]     = &sdm845_ln_bb_clk3_ao.hw,
+>   	[RPMH_IPA_CLK]          = &clk_rpmh_ipa.hw,
+> @@ -554,8 +554,8 @@ static const struct clk_rpmh_desc clk_rpmh_sc8280xp = {
+>   };
+>   
+>   static struct clk_hw *sm8450_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sc7280_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sc7280_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sc7280_bi_tcxo_div4.hw,
+> +	[RPMH_CXO_CLK_A]	= &sc7280_bi_tcxo_div4_ao.hw,
+>   	[RPMH_LN_BB_CLK1]	= &sm8450_ln_bb_clk1.hw,
+>   	[RPMH_LN_BB_CLK1_A]	= &sm8450_ln_bb_clk1_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sm8450_ln_bb_clk2.hw,
+> @@ -577,8 +577,8 @@ static const struct clk_rpmh_desc clk_rpmh_sm8450 = {
+>   };
+>   
+>   static struct clk_hw *sc7280_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]      = &sc7280_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]    = &sc7280_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]      = &sc7280_bi_tcxo_div4.hw,
+> +	[RPMH_CXO_CLK_A]    = &sc7280_bi_tcxo_div4_ao.hw,
+>   	[RPMH_LN_BB_CLK2]   = &sdm845_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A] = &sdm845_ln_bb_clk2_ao.hw,
+>   	[RPMH_RF_CLK1]      = &sdm845_rf_clk1.hw,
+> @@ -598,14 +598,14 @@ static const struct clk_rpmh_desc clk_rpmh_sc7280 = {
+>   };
+>   
+>   static struct clk_hw *sm6350_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]		= &sc7280_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]	= &sc7280_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]		= &sc7280_bi_tcxo_div4.hw,
+> +	[RPMH_CXO_CLK_A]	= &sc7280_bi_tcxo_div4_ao.hw,
+>   	[RPMH_LN_BB_CLK2]	= &sm6350_ln_bb_clk2.hw,
+>   	[RPMH_LN_BB_CLK2_A]	= &sm6350_ln_bb_clk2_ao.hw,
+>   	[RPMH_LN_BB_CLK3]	= &sm6350_ln_bb_clk3.hw,
+>   	[RPMH_LN_BB_CLK3_A]	= &sm6350_ln_bb_clk3_ao.hw,
+> -	[RPMH_QLINK_CLK]	= &sm6350_qlink.hw,
+> -	[RPMH_QLINK_CLK_A]	= &sm6350_qlink_ao.hw,
+> +	[RPMH_QLINK_CLK]	= &sm6350_qlink_div4.hw,
+> +	[RPMH_QLINK_CLK_A]	= &sm6350_qlink_div4_ao.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_sm6350 = {
+> @@ -614,8 +614,8 @@ static const struct clk_rpmh_desc clk_rpmh_sm6350 = {
+>   };
+>   
+>   static struct clk_hw *sdx65_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]          = &sc7280_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]        = &sc7280_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]          = &sc7280_bi_tcxo_div4.hw,
+> +	[RPMH_CXO_CLK_A]        = &sc7280_bi_tcxo_div4_ao.hw,
+>   	[RPMH_LN_BB_CLK1]       = &sm8450_ln_bb_clk1.hw,
+>   	[RPMH_LN_BB_CLK1_A]     = &sm8450_ln_bb_clk1_ao.hw,
+>   	[RPMH_RF_CLK1]          = &sdm845_rf_clk1.hw,
+> @@ -636,8 +636,8 @@ static const struct clk_rpmh_desc clk_rpmh_sdx65 = {
+>   };
+>   
+>   static struct clk_hw *qdu1000_rpmh_clocks[] = {
+> -	[RPMH_CXO_CLK]      = &qdu1000_bi_tcxo.hw,
+> -	[RPMH_CXO_CLK_A]    = &qdu1000_bi_tcxo_ao.hw,
+> +	[RPMH_CXO_CLK]      = &qdu1000_bi_tcxo_div1.hw,
+> +	[RPMH_CXO_CLK_A]    = &qdu1000_bi_tcxo_div1_ao.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_qdu1000 = {
 
