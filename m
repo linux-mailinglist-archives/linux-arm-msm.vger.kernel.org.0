@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE4C263FD49
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:50:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DD4963FD55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:51:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231625AbiLBAul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 19:50:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41602 "EHLO
+        id S232180AbiLBAvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 19:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231368AbiLBAuk (ORCPT
+        with ESMTP id S232118AbiLBAvK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 19:50:40 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94AD8BDCE5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 16:50:38 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id s5so4505082edc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 16:50:38 -0800 (PST)
+        Thu, 1 Dec 2022 19:51:10 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A247BCEFA8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 16:51:07 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso3109953wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 16:51:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F7pFB+ZvlcrA8R79s7DUy7BFXLwcQol/AYjTA4sACPo=;
-        b=L9GHDfR84Id1CY6HR4mg5KxP96kN0GT3UaBgmyWCgrj+17Kj66luUSBTwgx+QJANfU
-         ZNWC4ILSyeqj48kxKnBUQ+aN1bUUmji4fvyf/IljruXwv4pDdYOmZCB7zzmNMtXgueIX
-         6vd19tOOrS+jBOQKfR1Pa3GlU7MXJlliRINiM=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jSla93EpscSPQh3ATxY6DK8WOubu5/W+e14yqK8GABA=;
+        b=eNIwG7QMQk4WVoF38bIkacJ3GEMa2RStDsjcNOmVBAESS6mUah2bmTVAdYJYiXBQtr
+         fn9lQ0gk/aEB8BPsVAjLvPBrTnKcuf5weyIPGf/d+SaYJPTPvBDyqx1zssYFZmlDON6I
+         hK3RYLjzicmQ0Y3uVub8PEvquFU0gFwqY81x4X9v7d3wwdITQRRV1cMQmhW0o5rd7mTb
+         mj2KFLdtX5kehATeM9tiVd5sVtD697VsvUXFMWhQougnoCtojQ58GgFYqmonATLKUSpx
+         WaE629eaGEVXvNrrRXgVqKDiiCbX19vdunxavc+Edle5RRd7mSnLDu7MGy+l8eEwOqdv
+         u6Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F7pFB+ZvlcrA8R79s7DUy7BFXLwcQol/AYjTA4sACPo=;
-        b=DeWElbeQyH5QURwzIrFl8yAQaumwsVcsWaUxUBRs7ZovdM34NZe8XG041+GujxU3ai
-         4WWyK5KCE14ToH795Qh/RvS6manKhQzJdRYVAj+f1d7LN07fYQbHmKrPaqrD17YtQqcw
-         rDy5FGzSNLuZyEz1nqRf1CctPPmtajbzSQiyv+0AIqzFOD6+kmwljr+bFUwJUWk3hYHL
-         v2+sIS7ZzEH+zl1nNZ79LN+hoZoyofTvwFW8mPjVI5IxJf3C2HJSyp6G4Sf0fy7KgnJK
-         8pSUttJ//VUr1R/4QjmLodbGvsLR8n6O+TqHcYHkNXqOGD8NZBNmM/fF4GN5g0kwZI5X
-         nElA==
-X-Gm-Message-State: ANoB5pl8CzLKb8q9FoizuxmjZepCjfbStfDRH9t2J4jFFUqS8F0BdqWF
-        ev6WG6xQ/Chvha1zv4MjCeeCHlDHaCkQRbVT
-X-Google-Smtp-Source: AA0mqf7+oJZmM/TPE+81ozSk+bxD9vs/04439BE25Ae4kQdWXVwiwril/KRPIBU93ijq9cRGRqhaBw==
-X-Received: by 2002:aa7:cb0d:0:b0:45a:2d7c:f3a0 with SMTP id s13-20020aa7cb0d000000b0045a2d7cf3a0mr52835804edt.98.1669942236863;
-        Thu, 01 Dec 2022 16:50:36 -0800 (PST)
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com. [209.85.128.43])
-        by smtp.gmail.com with ESMTPSA id h4-20020aa7cdc4000000b00458a03203b1sm2283395edw.31.2022.12.01.16.50.36
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jSla93EpscSPQh3ATxY6DK8WOubu5/W+e14yqK8GABA=;
+        b=5c8BnyapM4BY/MnSamomM6rD88vQtz1lFc4ynQrnlLUB1GEdUQnzsxumsqfLaUnDiw
+         fPY3heOqpTFcz+FeKW9GRJpZMFtnTnr/17fMfi+ECrYJBOzpkwakiBlGZ5hy4cVhjVwO
+         9hY+3+M8rQrj7RZXWT/EQkH9uHIv6IzJ/p2+5JHY1EAK/llhpuMX0LotZmxJfOR6f8Zs
+         4Mx97xmhOqfFqPvHpo+Fbu8RJMVJydgwf+3vjsOT9dmIWwFk0F48HMIbvgVttmf2Htmr
+         yIr56z/4SS9Kdnh4t3QX1agLyWjhCOe51JwVnBdNdC7z2TBKUdgsC6ieIcHyqf7G3LVe
+         TfQA==
+X-Gm-Message-State: ANoB5pm6hfkd5E3r1RFHi2I5oCyn6p8eDplVxLZAUwgtDVgU8HJZGXsD
+        nEaBul/wNPZOBqM+9CVS1kCD2w==
+X-Google-Smtp-Source: AA0mqf5os0dg5CrBOfGor7KO+EaTj/T+8bvDBh7/FuwnwMPUbNUGnljXviQcBLivdynYywjbz3/jYw==
+X-Received: by 2002:a05:600c:5010:b0:3cf:b067:416c with SMTP id n16-20020a05600c501000b003cfb067416cmr38912984wmr.134.1669942266208;
+        Thu, 01 Dec 2022 16:51:06 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id s1-20020adfdb01000000b002420a2cdc96sm5584765wri.70.2022.12.01.16.51.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 16:50:36 -0800 (PST)
-Received: by mail-wm1-f43.google.com with SMTP id l39-20020a05600c1d2700b003cf93c8156dso3086702wms.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 16:50:36 -0800 (PST)
-X-Received: by 2002:a7b:c4d8:0:b0:3cf:b0ed:de9d with SMTP id
- g24-20020a7bc4d8000000b003cfb0edde9dmr36726708wmk.188.1669942236049; Thu, 01
- Dec 2022 16:50:36 -0800 (PST)
+        Thu, 01 Dec 2022 16:51:05 -0800 (PST)
+Message-ID: <fab6a134-21a3-ce49-dede-97f0a4b0dc50@linaro.org>
+Date:   Fri, 2 Dec 2022 00:51:04 +0000
 MIME-Version: 1.0
-References: <20221118164201.321147-1-krzysztof.kozlowski@linaro.org> <20221118164201.321147-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221118164201.321147-2-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 1 Dec 2022 16:50:24 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XeaskcBRVRQDoha7Xiv9j57fuvtcSJUeN7HCZSGVJ8uQ@mail.gmail.com>
-Message-ID: <CAD=FV=XeaskcBRVRQDoha7Xiv9j57fuvtcSJUeN7HCZSGVJ8uQ@mail.gmail.com>
-Subject: Re: [RFT PATCH v2 2/2] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/1] venus : Fix for H265 decoding failure.
+Content-Language: en-US
+To:     quic_vboma@quicinc.com,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@qti.qualcomm.com>
+References: <20221115121004.28197-1-quic_vboma@quicinc.com>
+ <20221115121004.28197-2-quic_vboma@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20221115121004.28197-2-quic_vboma@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,80 +80,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Nov 18, 2022 at 8:42 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> DT schema expects TLMM pin configuration nodes to be named with
-> '-state' suffix and their optional children with '-pins' suffix.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
+On 15/11/2022 12:10, quic_vboma@quicinc.com wrote:
+> From: Viswanath Boma <quic_vboma@quicinc.com>
+> 
+> Aligned the mismatch of persist1 and scratch1 buffer calculation,
+> as per the firmware requirements .
+> 
+> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
 > ---
->
-> Cc: Doug Anderson <dianders@chromium.org>
->
-> Tested on Qualcomm RB3. Please kndly test a bit more on other devices.
-> This should not have an functional impact.
+>   drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> index ea25c451222b..a9be31ec6927 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> @@ -93,7 +93,7 @@
+>   #define LCU_MIN_SIZE_PELS		16
+>   #define SIZE_SEI_USERDATA		4096
+>   
+> -#define H265D_MAX_SLICE			600
+> +#define H265D_MAX_SLICE			3600
+>   #define SIZE_H265D_HW_PIC_T		SIZE_H264D_HW_PIC_T
+>   #define SIZE_H265D_BSE_CMD_PER_BUF	(16 * sizeof(u32))
+>   #define SIZE_H265D_VPP_CMD_PER_BUF	256
+> @@ -1021,7 +1021,7 @@ static u32 h264d_persist1_size(void)
+>   static u32 h265d_persist1_size(void)
+>   {
+>   	return ALIGN((SIZE_SLIST_BUF_H265 * NUM_SLIST_BUF_H265 + H265_NUM_TILE
+> -			* sizeof(u32)), HFI_DMA_ALIGNMENT);
+> +			* sizeof(u32) + NUM_HW_PIC_BUF * SIZE_SEI_USERDATA), HFI_DMA_ALIGNMENT);
+>   }
+>   
+>   static u32 vp8d_persist1_size(void)
 
-Added Rob Clark and Fritz who are the only people I know that still do
-anything with cheza.
+If this is a real fix it need to be applied elsewhere
 
+Please add a Fixes tag
 
-> -       wcd_intr_default: wcd_intr_default {
-> +       wcd_intr_default: wcd-intr-default-state {
->                 pins = <54>;
+Fixes: 3a75bf4e7925 ("media: venus: Add platform buffers for v6")
 
-Not new to your patch, but I'm surprised it truly works to use an
-integer for a pin? How does it know that 54 is an integer and not a
-string???
+and
 
+Cc: <stable@vger.kernel.org> # 5.14.x
 
->  &qup_uart3_default {
-> -       pinmux {
-> -               pins = "gpio41", "gpio42", "gpio43", "gpio44";
-> +       cts-rts-pins {
-> +               pins = "gpio41", "gpio42";
->                 function = "qup3";
->         };
->  };
-
-FWIW, I would have expected that the SoC dtsi file would get a "4-pin"
-definition (similar to what you did with qup_uart6_4pin) and then we'd
-use that here.
-
-
->                         qup_uart6_4pin: qup-uart6-4pin-state {
-> -
-> -                               cts-pins {
-> +                               qup_uart6_4pin_cts: cts-pins {
->                                         pins = "gpio45";
->                                         function = "qup6";
-> -                                       bias-pull-down;
-
-After your patch, where is the above bias set for cheza, db845c,
-oneplus, shift-axolotl, ...?
-
-
->                                 };
->
-> -                               rts-tx-pins {
-> +                               qup_uart6_4pin_rts_tx: rts-tx-pins {
->                                         pins = "gpio46", "gpio47";
->                                         function = "qup6";
-> -                                       drive-strength = <2>;
-> -                                       bias-disable;
-
-After your patch, where is the above bias / drive-strength set?
-
-
->                                 };
->
-> -                               rx-pins {
-> +                               qup_uart6_4pin_rx: rx-pins {
->                                         pins = "gpio48";
->                                         function = "qup6";
-> -                                       bias-pull-up;
-
-After your patch, where is the above bias set?
+---
+bod
