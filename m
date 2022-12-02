@@ -2,88 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC4263FC93
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:10:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C396463FC9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:12:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231970AbiLBAKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 19:10:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
+        id S232047AbiLBAMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 19:12:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231928AbiLBAKl (ORCPT
+        with ESMTP id S231381AbiLBAMb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 19:10:41 -0500
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B9457B7C;
-        Thu,  1 Dec 2022 16:10:40 -0800 (PST)
-Received: by mail-ot1-f43.google.com with SMTP id s9-20020a05683004c900b0066e7414466bso2003846otd.12;
-        Thu, 01 Dec 2022 16:10:40 -0800 (PST)
+        Thu, 1 Dec 2022 19:12:31 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8590CEF99
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 16:12:29 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id z24so3729878ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 16:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=P8p0Z0zeTz3i1GFfP7TnrNV/siBjMEcrSAAgdFihh2s=;
+        b=PZZabSocQzrzEETht1TzRFqTDjibqlc1QHcRGQjYir1wLVy8qvqa+SyHW1jxiJmvpp
+         /0dYKiSzwz8OQXz68NS6iaS6uNXB5YsXAlmDmn2m9htZMg2RuXbsmifJ8f1rRYynjFrh
+         zqCUiNubfMIuFUmX6/kdmzE0VDKUjbc2cNY90=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uwV47pF0x8U7rd7NR79rNEXGsagQJIpvbm5W5UmYny0=;
-        b=wnjZ3F9UotquJW9x0A9pHL0fj4I/pTtQknQGGDgTyk21bYJ1kxPSUmu9jL/bGylaRW
-         8+q5obZUwOW3q8uTNSPjMfOsIOcrjWRXOLXKQ8iyY+q7TDkm9jSgo5L3cNeCZAIJxcjQ
-         JvrKQwhU2MnHw/XwA2DGf4etpjweGaFFN0F2grqE57m0jhnJgj6US/enqtMR/6D9sBuL
-         2hKUrfhb/JjsYN+zwyanaGe0mZMRACKCRXLiFoAn6xeg9KB1MqXfuMrUOiafdn1voT3c
-         +NPzmJqJX/bgQ7N7tReRLs4kTtGKHX0b67T0H48QI3aKl75caZvLXzY7jYCX3ON2vgiJ
-         xwqA==
-X-Gm-Message-State: ANoB5pl6j0icd4Cw92Udn/766g4e83+DsZTVIgQygyT1ex/Crf+gOf5Z
-        wuI61XB2TJnJZPKrxQc8aA==
-X-Google-Smtp-Source: AA0mqf7AEpmA2qWD6lE5NIau1JNEjmDdHQY0KFYIoW3nQGe/ogvO3xevqCCrDzz9W+3Ftf1ypOHr4A==
-X-Received: by 2002:a9d:2aa:0:b0:66c:44be:cf1d with SMTP id 39-20020a9d02aa000000b0066c44becf1dmr23953181otl.267.1669939839576;
-        Thu, 01 Dec 2022 16:10:39 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v188-20020a4a7cc5000000b004a066f9a7b4sm2311577ooc.34.2022.12.01.16.10.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 16:10:39 -0800 (PST)
-Received: (nullmailer pid 1740146 invoked by uid 1000);
-        Fri, 02 Dec 2022 00:10:38 -0000
-Date:   Thu, 1 Dec 2022 18:10:38 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        alsa-devel@alsa-project.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH] dt-bindings: soc: qcom: apr: document generic qcom,apr
- compatible
-Message-ID: <166993983796.1740107.16144015318255344818.robh@kernel.org>
-References: <20221201133637.46146-1-krzysztof.kozlowski@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P8p0Z0zeTz3i1GFfP7TnrNV/siBjMEcrSAAgdFihh2s=;
+        b=rlLF3lEfLOh7BxOEUfGQWxAoTWxegNbINUCKdXTne11nrn+GkQIdDr+3VnedcQrqKT
+         UwlfBo2037Lh4ctK045pS6MwuVDEpQ+hrugHiapWvZ9dXzhB0XpHC1ishGHLQKdQLkpl
+         DmJqzEZFXLxLMkuvLKVvnrcY+rhhbFLbINfVLbM3gyNSC9wksaMiGsHQRXyY93BYLWtS
+         ENxG+pcdpvCjo6jOywTB1ge2YfnyBHwIP6aV8IC+eol4PXRzJ7V0OiC7fwFRn9gSvCL1
+         2ClhmJ3Oz/YseoUT2wZ0/dxysKXN8b44EnFNWDBjckQ2sTMZXLkIaybjcwiPCNF96yTz
+         QhEw==
+X-Gm-Message-State: ANoB5pkSzH0yY392yNEiL47qJTHKFbveCw/XXaRT6zryno/rB9dr6sIw
+        zUGXUBdJpbrty93g5J0QqHzWr5trzUUyyVQ8amtngQ==
+X-Google-Smtp-Source: AA0mqf6SWLUf6ohVB+dVwukRPOdFAe9kAAGGi6mbnqGZi4xpM4mbOGdxvJDzhVaMqW3rCjNmU19YSegd0Ad8WPGtSs0=
+X-Received: by 2002:a2e:b007:0:b0:279:8b4f:3aeb with SMTP id
+ y7-20020a2eb007000000b002798b4f3aebmr11980670ljk.132.1669939947971; Thu, 01
+ Dec 2022 16:12:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221201133637.46146-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20221115121004.28197-1-quic_vboma@quicinc.com> <20221115121004.28197-2-quic_vboma@quicinc.com>
+In-Reply-To: <20221115121004.28197-2-quic_vboma@quicinc.com>
+From:   Nathan Hebert <nhebert@chromium.org>
+Date:   Thu, 1 Dec 2022 16:12:16 -0800
+Message-ID: <CANHAJhEH7qTjaVaMWk3MeuhYMnwt1qTUSKxAZ_XTfxPJObC=nQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] venus : Fix for H265 decoding failure.
+To:     quic_vboma@quicinc.com
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@qti.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 01 Dec 2022 14:36:37 +0100, Krzysztof Kozlowski wrote:
-> Document the qcom,apr compatible, used by Qualcomm Asynchronous Packet
-> Router driver.  There are no upstream DTSes using this compatible -
-> instead we have ones with APRv2 (qcom,apr-v2).  The driver does not make
-> distinction between both compatibles, which raises the question whether
-> the compatible is really needed.  Document it (as compatible with v2)
-> for completeness.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Tue, Nov 15, 2022 at 4:10 AM <quic_vboma@quicinc.com> wrote:
+>
+> From: Viswanath Boma <quic_vboma@quicinc.com>
+>
+> Aligned the mismatch of persist1 and scratch1 buffer calculation,
+> as per the firmware requirements .
+>
+> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+>  drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> index ea25c451222b..a9be31ec6927 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> @@ -93,7 +93,7 @@
+>  #define LCU_MIN_SIZE_PELS              16
+>  #define SIZE_SEI_USERDATA              4096
+>
+> -#define H265D_MAX_SLICE                        600
+> +#define H265D_MAX_SLICE                        3600
+>  #define SIZE_H265D_HW_PIC_T            SIZE_H264D_HW_PIC_T
+>  #define SIZE_H265D_BSE_CMD_PER_BUF     (16 * sizeof(u32))
+>  #define SIZE_H265D_VPP_CMD_PER_BUF     256
+> @@ -1021,7 +1021,7 @@ static u32 h264d_persist1_size(void)
+>  static u32 h265d_persist1_size(void)
+>  {
+>         return ALIGN((SIZE_SLIST_BUF_H265 * NUM_SLIST_BUF_H265 + H265_NUM_TILE
+> -                       * sizeof(u32)), HFI_DMA_ALIGNMENT);
+> +                       * sizeof(u32) + NUM_HW_PIC_BUF * SIZE_SEI_USERDATA), HFI_DMA_ALIGNMENT);
+>  }
+>
+>  static u32 vp8d_persist1_size(void)
+> --
+> 2.17.1
+>
+Hi Viswanath. I tested this patch on ChromiumOS's downstream
+5.15-based fork. Using ITU-T HEVC test vectors [0] I am seeing
+firmware errors "qcom-venus-decoder aa00000.video-codec:video-decoder:
+VenusMed : event not sufficient resources". Does this change fix HEVC
+decoding for you?
 
-Acked-by: Rob Herring <robh@kernel.org>
+[0]: https://www.itu.int/wftp3/av-arch/jctvc-site/bitstream_exchange/draft_conformance/HEVC_v1/
+
+Best regards,
+Nathan Hebert
