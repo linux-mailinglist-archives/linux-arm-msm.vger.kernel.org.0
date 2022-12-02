@@ -2,69 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49F7863FC90
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:10:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC4263FC93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 01:10:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbiLBAKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Dec 2022 19:10:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46348 "EHLO
+        id S231970AbiLBAKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Dec 2022 19:10:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbiLBAKS (ORCPT
+        with ESMTP id S231928AbiLBAKl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Dec 2022 19:10:18 -0500
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8806442F46
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 16:10:17 -0800 (PST)
-Received: by mail-il1-x135.google.com with SMTP id x13so1472285ilp.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 16:10:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0JLOerdSvijcxwSSR1k2y3nhGMATfKm32CrJ1hI7jDs=;
-        b=qXO8bwpEppVrTaf0S0PFpvLX9Zi9xXZ1vTsuf9JN0UyydX3lzX4A2G98Sk0Me3Rlww
-         fcrDGaJGWmD9TN35WXTrCQ6GvUiqb+QxV8EMAw27aqhze4aCUcJftoMT4fc3q3CnLHvM
-         EDLSU6V2qZRt511gpENuQzq5ROMKydex6y73ngSJnI+tTpqtc5lTN6f7Kh0DLRj6ZrAv
-         lBJfgXj1a0dk4njbhcE0q47/BJjhSB7JszcOtOhlleKbt1wq8800wXQeSH1xSNRwSE/x
-         wW6A/OOj139d2PkaMncLVEXBtEkXyNxj5vnadK+jzZGNxkuWp18yhv6WBiwoCxQLXqg9
-         PXbw==
+        Thu, 1 Dec 2022 19:10:41 -0500
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B9457B7C;
+        Thu,  1 Dec 2022 16:10:40 -0800 (PST)
+Received: by mail-ot1-f43.google.com with SMTP id s9-20020a05683004c900b0066e7414466bso2003846otd.12;
+        Thu, 01 Dec 2022 16:10:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0JLOerdSvijcxwSSR1k2y3nhGMATfKm32CrJ1hI7jDs=;
-        b=iz46AQ8LKUoxO4utsbTBtgBVASNBUY5F1AyCEnqXxvpNGCQq0Piq3tcfNCDUpgf6+D
-         Q83e96S0VvpAa+tMM7q5WUIr8xUDvWfbfL3wopdpR1s+ouqRaOOZJgZjrFD/4tjCEALf
-         4RDJpP+0mp5yxgVA1pZtEtlYIV/RV0vihouybfHYVjwHmE2lNmtD5/+9kXZane7YkauG
-         PCM//O/wuxylJweEWJd6ePp7/BLjtYTRfobqim2ZRE0OCE64wq1v9cAXzab3pp1uSJyv
-         cSBv2XgftZg1931mES93AuSfPHph7fok2tF+ofJkX+t8BEmXC3rq4ct7DkFvgazSdrVt
-         LobQ==
-X-Gm-Message-State: ANoB5pmsEPkHPbUsg4PgqHXSDPap5covj3GuC2qBs2PkzZASq9jw+btD
-        jDMIZ/CzAFxFoVNcAY1M8tuXykBltdxhVoJ0A3Ii2GepOOzr72ul
-X-Google-Smtp-Source: AA0mqf6lL3NEaLFWB+BJH7NaxLOr8nYgfWnWRh5a9WxlLSHwz8Snlx5CT7+g6NxKOyuxpPRlfXAPNsBKQ2fN9cCKqPQ=
-X-Received: by 2002:a92:8748:0:b0:2f9:b1d0:2f24 with SMTP id
- d8-20020a928748000000b002f9b1d02f24mr32142440ilm.181.1669939816637; Thu, 01
- Dec 2022 16:10:16 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uwV47pF0x8U7rd7NR79rNEXGsagQJIpvbm5W5UmYny0=;
+        b=wnjZ3F9UotquJW9x0A9pHL0fj4I/pTtQknQGGDgTyk21bYJ1kxPSUmu9jL/bGylaRW
+         8+q5obZUwOW3q8uTNSPjMfOsIOcrjWRXOLXKQ8iyY+q7TDkm9jSgo5L3cNeCZAIJxcjQ
+         JvrKQwhU2MnHw/XwA2DGf4etpjweGaFFN0F2grqE57m0jhnJgj6US/enqtMR/6D9sBuL
+         2hKUrfhb/JjsYN+zwyanaGe0mZMRACKCRXLiFoAn6xeg9KB1MqXfuMrUOiafdn1voT3c
+         +NPzmJqJX/bgQ7N7tReRLs4kTtGKHX0b67T0H48QI3aKl75caZvLXzY7jYCX3ON2vgiJ
+         xwqA==
+X-Gm-Message-State: ANoB5pl6j0icd4Cw92Udn/766g4e83+DsZTVIgQygyT1ex/Crf+gOf5Z
+        wuI61XB2TJnJZPKrxQc8aA==
+X-Google-Smtp-Source: AA0mqf7AEpmA2qWD6lE5NIau1JNEjmDdHQY0KFYIoW3nQGe/ogvO3xevqCCrDzz9W+3Ftf1ypOHr4A==
+X-Received: by 2002:a9d:2aa:0:b0:66c:44be:cf1d with SMTP id 39-20020a9d02aa000000b0066c44becf1dmr23953181otl.267.1669939839576;
+        Thu, 01 Dec 2022 16:10:39 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v188-20020a4a7cc5000000b004a066f9a7b4sm2311577ooc.34.2022.12.01.16.10.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Dec 2022 16:10:39 -0800 (PST)
+Received: (nullmailer pid 1740146 invoked by uid 1000);
+        Fri, 02 Dec 2022 00:10:38 -0000
+Date:   Thu, 1 Dec 2022 18:10:38 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        alsa-devel@alsa-project.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH] dt-bindings: soc: qcom: apr: document generic qcom,apr
+ compatible
+Message-ID: <166993983796.1740107.16144015318255344818.robh@kernel.org>
+References: <20221201133637.46146-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6e02:188f:0:0:0:0 with HTTP; Thu, 1 Dec 2022 16:10:16
- -0800 (PST)
-From:   Crypto Commons <sunnyyshelke@gmail.com>
-Date:   Fri, 2 Dec 2022 02:10:16 +0200
-Message-ID: <CAFR5kui+HJeCZjwEXA=BaMuszibn-OZwTN=hQzY0XiZ+-CLfwA@mail.gmail.com>
-Subject: SAFUU - $$$HUGE SIF!! WHEN PRICE UP? FUD & ACCUSATIONS DRAMA?
-To:     linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=3.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,PLING_QUERY,
-        RCVD_IN_DNSWL_NONE,SHORT_SHORTNER,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221201133637.46146-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SAFUU. ZkSync. Starknet. LayerZero. SUI. Aptos. How do I get airdrop?
-- ARBITRUM TRUSTPAD CLAIM 500 .VIDEO-MANUAL ON YOUTUBE CHANNEL
-https://youtu.be/qzuQovP4QUA
+
+On Thu, 01 Dec 2022 14:36:37 +0100, Krzysztof Kozlowski wrote:
+> Document the qcom,apr compatible, used by Qualcomm Asynchronous Packet
+> Router driver.  There are no upstream DTSes using this compatible -
+> instead we have ones with APRv2 (qcom,apr-v2).  The driver does not make
+> distinction between both compatibles, which raises the question whether
+> the compatible is really needed.  Document it (as compatible with v2)
+> for completeness.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+
+Acked-by: Rob Herring <robh@kernel.org>
