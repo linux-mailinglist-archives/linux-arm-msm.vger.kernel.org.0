@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99EF3640E4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:19:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4259640E73
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:29:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234500AbiLBTTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 14:19:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44288 "EHLO
+        id S234700AbiLBT3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 14:29:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234415AbiLBTTJ (ORCPT
+        with ESMTP id S234159AbiLBT3r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 14:19:09 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105D432B82
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 11:19:08 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id ud5so13719073ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 11:19:07 -0800 (PST)
+        Fri, 2 Dec 2022 14:29:47 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92105EDD5C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 11:29:45 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id fz10so6600719qtb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 11:29:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J943yYpuo0jFR9PCG/F9JS9VvWtOyHZ6S8cQEy5PX9s=;
-        b=zIMn7QfCJdbk4wTH0N8lemUAvDDcSZo/Z+gBiKFz8ilbUjpEIe4S3P4uvqDDd+H+AM
-         5gg1OTe8VLzeMxXf7HC69s4F9H4ZSyW3R7jEzr7aF4yQKHXHdU/lehSD3gNzfp8rU39A
-         Vqlg2vFP9WXVXctmx3ERTPpjFSf6OMwn9RV+Byk6C16lfFBg4FaDKOD2udXMBBbmBXJI
-         arkM87qCeV3zTeBHIWUXH3wxhO/NL6FUao54jNTnlB1v7krtXvEviNPYKYZsHJCMN2Vg
-         Nbbz0g91IPi1Nm65INfGgyfvaED0KbuKOFkLLGhK7D6/JP/XyNkf4FJH/R/pV+p/7vGx
-         1Nxg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0+20XbQGU29ha3MjESx+A5LL2KSvJfQiwEkfJeGtVr0=;
+        b=jrLuTshkNdUfnRjZLc9mz/5q8pbUswHWpPq00WO/hK0lbiqQcazzAjYV/7ktM+7KqY
+         44QxFXg7XRhIl5zadvfDbcK0BmPLRoBewBXPeBqcK0YqfLbatN2UELXZPxFZr93tK6/A
+         Co+/24LrkYc2vIcbIwcUYrs0PL1wD+D2VAHhUy8Un7sYw1RprYjPZLueToQfQYVomwtQ
+         72u4+j6+QePfmr6jQDLhhDhgD4mCfSczQWvtjraC7QJtULxuWjsTy2izYcgKeUWXsb18
+         WiezSy9CFT9nWUF99goke4BTf7f+sXnslVxRirGfI8QtnhTdLmrJOir5DYL7bMRERMPh
+         0+9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J943yYpuo0jFR9PCG/F9JS9VvWtOyHZ6S8cQEy5PX9s=;
-        b=sswT3zkh1t9A5StXF0ASimpXtZftxBJxtFBiPDhoEm/kU3irOdoF1d0wPTNXOBRfth
-         ikJzv4uoqQIbk2j2xPv3KDAS2U491TTXZp07uxor12XJNSRvXYDEkwyBxIUL7pUYde/T
-         HhrB/s77HBcm+mNVUnTBlGQP5Z3juGqumlzj8WD3oxitmqVq2nvI9xEybjyNIpwayWYK
-         J7M6kFsc4De3wXSGEWx/Crn0up0sDhMg9OpbnXsoHdO4pBks8zom+XAiTWqQSzhZ7CX8
-         Zh5hbeJshsp4qUNv8pzqZooncTQDG0/P08ph++bYkL+HkDDA0865dXGW+YGh04S1cW7O
-         2LPw==
-X-Gm-Message-State: ANoB5pkJP2rdBpB9hEDM87fPGp3a7bfDVfyxG+e14mVhnWsHMEjUUtPX
-        +ve+bx6ILy6uffM/TMkOFS7Vmw==
-X-Google-Smtp-Source: AA0mqf7ogr9/tON+JEkHrEd1+Lltn3rha/i65c/OtJZfitNnrjQd44HPiL5kZj9Rj48yTucY21oj+w==
-X-Received: by 2002:a17:906:94c8:b0:7c0:a321:8df2 with SMTP id d8-20020a17090694c800b007c0a3218df2mr10838829ejy.308.1670008746540;
-        Fri, 02 Dec 2022 11:19:06 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id d13-20020a17090694cd00b007c0b28b85c5sm2145585ejy.138.2022.12.02.11.19.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 11:19:05 -0800 (PST)
-Date:   Fri, 2 Dec 2022 21:19:04 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 2/9] dt-bindings: clock: Add SM8550 TCSR CC clocks
-Message-ID: <Y4pPqAbKLI5L/u0G@linaro.org>
-References: <20221130112852.2977816-1-abel.vesa@linaro.org>
- <20221130112852.2977816-3-abel.vesa@linaro.org>
- <20221201221220.7kdbndug3m3om62p@builder.lan>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0+20XbQGU29ha3MjESx+A5LL2KSvJfQiwEkfJeGtVr0=;
+        b=IhKvcOB3VtM4EgkdCQIpO+Y2U5jkwlAfbfmg47pnFsFcHbEb7lNtiuOg/R+5I0N5Ng
+         rv1rs6WuL2cMZv/vzSj2raHgO2AC+wXCFDFyRxItXjRonaQvRbkO7JUaM59d+fWtXGrA
+         A7OeGJUP0icVNOTt8n1phZsDACW5jAlHNXvDcrE92NgxBpn8NRrLC/wxdi2qwx0Ai/mB
+         QuwGaJ2hzLLdAlVKHpuCfdv0i65a8JKvGf8igCbsZJqWrXratGDx/+7ha9p8Yl+ulBAt
+         mIMJLos6dp+Ugsli4HyzMGoEdTkpCHvK7oUZs7mIqY2XvCY0W8FBMld4SUj0GVexyaid
+         qgTA==
+X-Gm-Message-State: ANoB5pkf+r6WcrgKA9lVZwq8EjCtf4QPrOlC6I7DitUA9lk0VUn+5vZ1
+        MkhYGp6QA76FKxcVuzGcwCcqQA==
+X-Google-Smtp-Source: AA0mqf7RmprlpT97E8/imh+zoxMMwj7z3FaytghWMKc1M2/1WywdqL4dlNtPTcfSX7U58/A+kirwTg==
+X-Received: by 2002:a37:4553:0:b0:6fc:ae7e:2b4 with SMTP id s80-20020a374553000000b006fcae7e02b4mr4572755qka.767.1670009384558;
+        Fri, 02 Dec 2022 11:29:44 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id v23-20020ac873d7000000b003a606428a59sm4642215qtp.91.2022.12.02.11.29.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Dec 2022 11:29:43 -0800 (PST)
+Message-ID: <ef889512-61f8-5a38-240a-5e95230f9d81@linaro.org>
+Date:   Fri, 2 Dec 2022 13:29:42 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221201221220.7kdbndug3m3om62p@builder.lan>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 5/8] clk: qcom: rpmh: support separate symbol name for
+ the RPMH clocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20221202185843.721673-1-dmitry.baryshkov@linaro.org>
+ <20221202185843.721673-6-dmitry.baryshkov@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20221202185843.721673-6-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,119 +81,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-12-01 16:12:20, Bjorn Andersson wrote:
-> On Wed, Nov 30, 2022 at 01:28:45PM +0200, Abel Vesa wrote:
-> > Add bindings documentation for clock TCSR driver on SM8550.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> >  .../bindings/clock/qcom,sm8550-tcsrcc.yaml    | 45 +++++++++++++++++++
-> >  .../dt-bindings/clock/qcom,sm8550-tcsrcc.h    | 18 ++++++++
-> >  2 files changed, 63 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml
-> >  create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
-> > 
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml
-> > new file mode 100644
-> > index 000000000000..b2de251328e4
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsrcc.yaml
-> > @@ -0,0 +1,45 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,sm8550-tcsrcc.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm TCSR Clock Controller on SM8550
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <andersson@kernel.org>
-> > +
-> > +description: |
-> > +  Qualcomm TCSR clock control module provides the clocks, resets and
-> > +  power domains on SM8550
-> > +
-> > +  See also:: include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,sm8550-tcsrcc
-> 
-> The block described is the TCSR block, the clock controller represents
-> one of the functions provided. I think it would be more appropriate if
-> the compatible represented the generic nature of the block, even though
-> you currently only care about exposing these clocks.
+On 12/2/22 12:58 PM, Dmitry Baryshkov wrote:
+> Both ARC and VRM clocks have minor differences between platforms.
+> However using SoC names directly results in duplication, confusion and
+> ocassional errors. Next patches are going to drop the SoC names and
 
-I think there is a rule that says the compatible string to be the same as
-the schema filename.
+s/ocassional/occasional/
 
-Should I then also rename the schema file and also the binding IDs header?
-Like qcom,sm8550-tcsr.yaml and qcom,sm8550-tcsr.h ?
+> encode these differences into the clock names.
+> To keep the system clock names (visible to userspace) intact, add
+> separate symbol names that are used in the code.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  '#clock-cells':
-> > +    const: 1
-> > +
-> > +  '#reset-cells':
-> > +    const: 1
-> > +
-> 
-> Your clocks are fed by cxo. While there might be reasons for not wire
-> the parent up in the clocks, I think you should represent it in the
-> binding.
+Looks good.  Thank you for rearranging this, it's easier to follow.
 
-Right, will document the clocks property as well and describe the clock
-as xo-board.
+Reviewed-by: Alex Elder <elder@linaro.org>
 
+> ---
+>   drivers/clk/qcom/clk-rpmh.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-> Regards,
-> Bjorn
-> 
-> > +required:
-> > +  - compatible
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    clock-controller@1fc0000 {
-> > +      compatible = "qcom,sm8550-tcsrcc";
-> > +      reg = <0x1fc0000 0x30000>;
-> > +      #clock-cells = <1>;
-> > +      #reset-cells = <1>;
-> > +    };
-> > +
-> > +...
-> > diff --git a/include/dt-bindings/clock/qcom,sm8550-tcsrcc.h b/include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
-> > new file mode 100644
-> > index 000000000000..091cb76f953a
-> > --- /dev/null
-> > +++ b/include/dt-bindings/clock/qcom,sm8550-tcsrcc.h
-> > @@ -0,0 +1,18 @@
-> > +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> > +/*
-> > + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2022, Linaro Limited
-> > + */
-> > +
-> > +#ifndef _DT_BINDINGS_CLK_QCOM_TCSR_CC_SM8550_H
-> > +#define _DT_BINDINGS_CLK_QCOM_TCSR_CC_SM8550_H
-> > +
-> > +/* TCSR CC clocks */
-> > +#define TCSR_PCIE_0_CLKREF_EN					0
-> > +#define TCSR_PCIE_1_CLKREF_EN					1
-> > +#define TCSR_UFS_CLKREF_EN					2
-> > +#define TCSR_UFS_PAD_CLKREF_EN					3
-> > +#define TCSR_USB2_CLKREF_EN					4
-> > +#define TCSR_USB3_CLKREF_EN					5
-> > +
-> > +#endif
-> > -- 
-> > 2.34.1
-> > 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index 2ab406c1dab5..34099bb6b899 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -70,15 +70,15 @@ struct clk_rpmh_desc {
+>   
+>   static DEFINE_MUTEX(rpmh_clk_lock);
+>   
+> -#define __DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
+> +#define __DEFINE_CLK_RPMH(_platform, _name, _clk_name, _res_name,	\
+>   			  _res_en_offset, _res_on, _div)		\
+> -	static struct clk_rpmh _platform##_##_name##_ao;		\
+> -	static struct clk_rpmh _platform##_##_name = {			\
+> +	static struct clk_rpmh _platform##_##_clk_name##_ao;		\
+> +	static struct clk_rpmh _platform##_##_clk_name = {		\
+>   		.res_name = _res_name,					\
+>   		.res_addr = _res_en_offset,				\
+>   		.res_on_val = _res_on,					\
+>   		.div = _div,						\
+> -		.peer = &_platform##_##_name##_ao,			\
+> +		.peer = &_platform##_##_clk_name##_ao,			\
+>   		.valid_state_mask = (BIT(RPMH_WAKE_ONLY_STATE) |	\
+>   				      BIT(RPMH_ACTIVE_ONLY_STATE) |	\
+>   				      BIT(RPMH_SLEEP_STATE)),		\
+> @@ -92,12 +92,12 @@ static DEFINE_MUTEX(rpmh_clk_lock);
+>   			.num_parents = 1,				\
+>   		},							\
+>   	};								\
+> -	static struct clk_rpmh _platform##_##_name##_ao= {		\
+> +	static struct clk_rpmh _platform##_##_clk_name##_ao= {		\
+>   		.res_name = _res_name,					\
+>   		.res_addr = _res_en_offset,				\
+>   		.res_on_val = _res_on,					\
+>   		.div = _div,						\
+> -		.peer = &_platform##_##_name,				\
+> +		.peer = &_platform##_##_clk_name,			\
+>   		.valid_state_mask = (BIT(RPMH_WAKE_ONLY_STATE) |	\
+>   					BIT(RPMH_ACTIVE_ONLY_STATE)),	\
+>   		.hw.init = &(struct clk_init_data){			\
+> @@ -112,11 +112,11 @@ static DEFINE_MUTEX(rpmh_clk_lock);
+>   	}
+>   
+>   #define DEFINE_CLK_RPMH_ARC(_platform, _name, _res_name, _res_on, _div)	\
+> -	__DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
+> +	__DEFINE_CLK_RPMH(_platform, _name, _name, _res_name,		\
+>   			  CLK_RPMH_ARC_EN_OFFSET, _res_on, _div)
+>   
+>   #define DEFINE_CLK_RPMH_VRM(_platform, _name, _res_name, _div)		\
+> -	__DEFINE_CLK_RPMH(_platform, _name, _res_name,			\
+> +	__DEFINE_CLK_RPMH(_platform, _name, _name, _res_name,		\
+>   			  CLK_RPMH_VRM_EN_OFFSET, 1, _div)
+>   
+>   #define DEFINE_CLK_RPMH_BCM(_name, _res_name)				\
+
