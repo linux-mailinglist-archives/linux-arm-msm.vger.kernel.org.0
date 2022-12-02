@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D1A064088F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 15:37:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10811640895
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 15:38:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233221AbiLBOhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 09:37:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37800 "EHLO
+        id S232114AbiLBOi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 09:38:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232038AbiLBOhQ (ORCPT
+        with ESMTP id S231518AbiLBOi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 09:37:16 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCC8E70622
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 06:37:09 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id b2so11990863eja.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 06:37:09 -0800 (PST)
+        Fri, 2 Dec 2022 09:38:28 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42AEB5AE0A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 06:38:27 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id z92so6778650ede.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 06:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=R7S1hXfJrdA2OO05qT0bVLolHIgquQtzY/qiJ0ELKso=;
-        b=iFbV+ZBpq8wDqSDeD0899VZYy/j7fXEh0JVZ4Ka/doaR3TEJKeRuxWUCeWOlPa2fPr
-         abC1KxI3WehkC31cOilHKIqbJIsG5th63gllZOJqo10ba+MTr51kqHv2Anx6CKgXJwY1
-         Qn/K+41ta0ATg6z/bJC9YrqtPWaQT/RDRGo7A=
+        bh=qGY6WkT4lRuXaZzdlQnZdGGZzLB2sng4XfKDkywn0jw=;
+        b=FpCfeMTD2EZbG+mTWjfqX3lVMRGEWAZfQorccOoXyuf8d2BQchQ7uk5E07hW/9GL07
+         SKyA3TwOxE7I5E0WFP4wLPF6M4oX4RBIQtoSyYHmUgCiSZGN97onFVIfLRUzEOmHT8OB
+         3nUePhQjN7eie9jW0mEXtJShB0YsHewywd9Ok=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=R7S1hXfJrdA2OO05qT0bVLolHIgquQtzY/qiJ0ELKso=;
-        b=XyLbPPM/xkiOpAesQdccq2PX2U8sFyCE0lzMP3Zl8nnQI3lYv1Uq07dEP2ccmtDh0p
-         4g9fPgACM4I3Tb7OHWNTgk4PnvnmHK4AQ4M63dwI6BA8B3dtZBvB+aVD0Ddjko169k3i
-         Oq8wtkReBqLh5b2W1LhROIqRVrvvOwlZJxmXqC1pXigplNsKS2MbiX78UJscMehB/20u
-         MEseEeHW5WAgfmZOvUjzDFLdeTaINxDBwCXnb7D5la1VkKGmvhp7T9xkQjCl3uGuwZ7C
-         eIB76HFq3VPVWYSXYUajux6ZQ2Ril9e6JLmWNi3Q0Jn60uHqjABc7Q9vaNrFbkkRLHOT
-         i1Ag==
-X-Gm-Message-State: ANoB5pmcmjLFFxEZquaVMN0/QhMh8RmZgPiX+DHy7PXzh2qvpQ7ahdji
-        LwF/YwII/uZciMHoYmufZfTQEpFHERA6WW3eEJo=
-X-Google-Smtp-Source: AA0mqf6HtwfgDCmf0dM04PGobmTkrTGt7Yq0O5E+dyhFapkTpzUzGuORGMy19TqZlu40ide8Xl74Dg==
-X-Received: by 2002:a17:906:5dcd:b0:7bf:707a:7247 with SMTP id p13-20020a1709065dcd00b007bf707a7247mr21431777ejv.196.1669991828050;
-        Fri, 02 Dec 2022 06:37:08 -0800 (PST)
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
-        by smtp.gmail.com with ESMTPSA id ju10-20020a17090798aa00b007bb751f9d10sm3066398ejc.77.2022.12.02.06.37.07
+        bh=qGY6WkT4lRuXaZzdlQnZdGGZzLB2sng4XfKDkywn0jw=;
+        b=k41pEIeGrfHWoWlymU6+0UmL1y+rWDs1xDOY+2XcY0DlV6BFuqpxicCOt6aymZOqdS
+         LoUnTcJ9+Qg1E8E/3Njs+ArOBnym5avwXQYK1wpPo9V7dvqbHa8K0v2XzI2kh4IwfzXj
+         Y86JeTEWEUDGBZuudqDjhBlOBeiHgsgvWqlv3ogqIG9meVhR17i5N5kUipEaxFDf9haR
+         DA/Vu+gTyjJ156RGOgE2Z17EowW0QnbSjaeXGoTt0ZQFIzWFWlCBi8aGcWZvdo/6Mbt5
+         fUfYviTOAHwBIgocOlzFujFYRlGVyAbmLmFE+cj1IqJ+5Px5XgSyiIrHmd6+PHUyXhu+
+         ZauA==
+X-Gm-Message-State: ANoB5pmZqu6cZkLzlEUzAtLl+e+F26y84d/QJbmyqvKABuxvHsKJ5/ni
+        9t6WvVxDhXlwJPXuLyDBJj8uBNLziuK+FXpGTDo=
+X-Google-Smtp-Source: AA0mqf7H0Qe8t6Sr6WlYc3HdEZnDUr1pi+V+bJQL2WT6dLuJlHEfE0FsC2HGrh7TRdp4ChKQ7rGICA==
+X-Received: by 2002:aa7:cad9:0:b0:461:60e8:7ac1 with SMTP id l25-20020aa7cad9000000b0046160e87ac1mr17184277edt.45.1669991905591;
+        Fri, 02 Dec 2022 06:38:25 -0800 (PST)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id sb25-20020a1709076d9900b007ae4717bef1sm3127085ejc.15.2022.12.02.06.38.25
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Dec 2022 06:37:07 -0800 (PST)
-Received: by mail-wm1-f50.google.com with SMTP id f13-20020a1cc90d000000b003d08c4cf679so588952wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 06:37:07 -0800 (PST)
-X-Received: by 2002:a05:600c:3c8e:b0:3d0:69f4:d3d0 with SMTP id
- bg14-20020a05600c3c8e00b003d069f4d3d0mr12058890wmb.93.1669991827159; Fri, 02
- Dec 2022 06:37:07 -0800 (PST)
+        Fri, 02 Dec 2022 06:38:25 -0800 (PST)
+Received: by mail-wr1-f41.google.com with SMTP id z4so8110508wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 06:38:25 -0800 (PST)
+X-Received: by 2002:adf:fb4c:0:b0:236:5270:735e with SMTP id
+ c12-20020adffb4c000000b002365270735emr32762102wrs.659.1669991904737; Fri, 02
+ Dec 2022 06:38:24 -0800 (PST)
 MIME-Version: 1.0
 References: <20221118164201.321147-1-krzysztof.kozlowski@linaro.org>
- <20221118164201.321147-2-krzysztof.kozlowski@linaro.org> <CAD=FV=XeaskcBRVRQDoha7Xiv9j57fuvtcSJUeN7HCZSGVJ8uQ@mail.gmail.com>
- <68bcdf25-e8e3-f817-f213-efb0bce3f43a@linaro.org>
-In-Reply-To: <68bcdf25-e8e3-f817-f213-efb0bce3f43a@linaro.org>
+ <CAD=FV=Vo9zbsjgYEn0eBkC8eKRceg6v4u1g=w6nSYHNctFQWxg@mail.gmail.com> <ca4693a5-e941-a2c9-b023-42a91589dad6@linaro.org>
+In-Reply-To: <ca4693a5-e941-a2c9-b023-42a91589dad6@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 2 Dec 2022 06:36:54 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WBNpeWK31dCgzX5QAuR7AySkp_dEyY8WK3o8+SaiPxOg@mail.gmail.com>
-Message-ID: <CAD=FV=WBNpeWK31dCgzX5QAuR7AySkp_dEyY8WK3o8+SaiPxOg@mail.gmail.com>
-Subject: Re: [RFT PATCH v2 2/2] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
+Date:   Fri, 2 Dec 2022 06:38:12 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VCJA0v-EpT9YyCRZg07QzGeH9PGcNcO=j=x0e9XeHtHQ@mail.gmail.com>
+Message-ID: <CAD=FV=VCJA0v-EpT9YyCRZg07QzGeH9PGcNcO=j=x0e9XeHtHQ@mail.gmail.com>
+Subject: Re: [RFT PATCH v2 1/2] arm64: dts: qcom: sdm845-db845c: drop unneeded qup_spi0_default
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -84,44 +82,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Dec 2, 2022 at 12:15 AM Krzysztof Kozlowski
+On Fri, Dec 2, 2022 at 12:17 AM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> >>                         qup_uart6_4pin: qup-uart6-4pin-state {
-> >> -
-> >> -                               cts-pins {
-> >> +                               qup_uart6_4pin_cts: cts-pins {
-> >>                                         pins = "gpio45";
-> >>                                         function = "qup6";
-> >> -                                       bias-pull-down;
+> On 02/12/2022 01:49, Doug Anderson wrote:
+> > Hi,
 > >
-> > After your patch, where is the above bias set for cheza, db845c,
-> > oneplus, shift-axolotl, ...?
-> >
-> >
-> >>                                 };
+> > On Fri, Nov 18, 2022 at 8:42 AM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
 > >>
-> >> -                               rts-tx-pins {
-> >> +                               qup_uart6_4pin_rts_tx: rts-tx-pins {
-> >>                                         pins = "gpio46", "gpio47";
-> >>                                         function = "qup6";
-> >> -                                       drive-strength = <2>;
-> >> -                                       bias-disable;
+> >> The qup_spi0_default pin override is exactly the same as one already in
+> >> sdm845.dtsi.
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>
+> >> ---
+> >>
+> >> Cc: Doug Anderson <dianders@chromium.org>
+> >>
+> >> Changes since v1:
+> >> 1. New patch.
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 --------
+> >>  1 file changed, 8 deletions(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >> index 02dcf75c0745..56a7afb697ed 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >> @@ -1274,11 +1274,3 @@ ov7251_ep: endpoint {
+> >>                 };
+> >>         };
+> >>  };
+> >> -
+> >> -/* PINCTRL - additions to nodes defined in sdm845.dtsi */
+> >> -&qup_spi0_default {
+> >> -       config {
+> >> -               drive-strength = <6>;
+> >> -               bias-disable;
+> >> -       };
+> >> -};
 > >
-> > After your patch, where is the above bias / drive-strength set?
+> > I guess it's more of a question for what Bjorn thinks, but I view the
+> > fact that the drive-strength / bias are in the dtsi file to begin with
+> > as more as a bug in commit 8f6e20adaaf3 ("arm64: dts: qcom: sdm845:
+> > enable dma for spi"), which is where these properties were introduced
+> > to sdm845.dtsi.
+> >
+> > The historical guidance from Bjorn was that things like
+> > "drive-strength" and "bias" didn't belong in the SoC dtsi file. Later
+> > we came to an agreement that it could be OK to put drive-strength in
+> > the SoC dtsi file but that bias was still problematic because it meant
+> > ugly "/delete-property/" stuff in the board dtsi files [1].
 >
-> They don't use 4-pin setup. If they use, I would assume they will
-> override the entries just like sdm850 boards (where I override it to set
-> these).
->
-> Alternatively I can keep it in DTSI, but it is not really property of
-> the SoC.
+> So let's move it from DTSI to all boards? Although what if the board
+> does not use SPI0?
 
-I see things like:
+You'd look for boards that set spi0's status to "okay" and those
+boards would be the ones to have it in their dtsi.
 
-.../sdm845-cheza.dtsi:     pinctrl-0 = <&qup_uart6_4pin>;
-
-...before your patch that would get the bias/drive strength from the
-SoC dtsi, right? After your patch, you've removed it from the dtsi but
-not added it to the board. ...so I think it's a net change. Did I mess
-up / miss something?
+-Doug
