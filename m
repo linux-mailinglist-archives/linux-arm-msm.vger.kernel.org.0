@@ -2,54 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E2F640E9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:42:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F553640EBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 20:48:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234514AbiLBTmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 14:42:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41986 "EHLO
+        id S234590AbiLBTs4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 14:48:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiLBTmM (ORCPT
+        with ESMTP id S234423AbiLBTsy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 14:42:12 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C8B8E801F;
-        Fri,  2 Dec 2022 11:42:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 862F661CD5;
-        Fri,  2 Dec 2022 19:42:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CABC433D7;
-        Fri,  2 Dec 2022 19:42:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670010130;
-        bh=Q8Ldh2CarbtjRyADsmuRznQ616b8eNaOu+tBX+CQdEE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JrwaIHeMFAW1xCdAjnaOq9JOv12wwffYFergE5JbIUUJkivr03Ymw1ZFBnSssT6n2
-         rB24qZmn/cBmUmBlw5TaDOAQipYB6I0W9jjCyhqjc348CN5qvM92plEkL4j4uqDykU
-         xZYahtSS9sVsm0hZ4fXeeYiQzQCJe9kLCCXkzctq+oahvLu7/Oq5rLIoxrUws4jSge
-         bgAi97Ovpgwq34TPyZXh4YCED28vCIcPEBWeJI5dc8qn/zLsutm8dJrwL937aIeAay
-         j581XdAESyYP0KQPqtM9klDvOV6wLbYj+FB8snhKrcaSivHX+xnnApil2laBcH6OEe
-         kEh37lZtHR7gA==
-Date:   Fri, 2 Dec 2022 13:42:08 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] clk: qcom: rpm: drop platform names
-Message-ID: <20221202194208.rmr3nxj7a5bj4iri@builder.lan>
-References: <20221202070814.482470-1-dmitry.baryshkov@linaro.org>
+        Fri, 2 Dec 2022 14:48:54 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1840ED6A9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 11:48:50 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id d6so8911901lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 11:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LKRU6k6DP3+MoWkZKc6pR9Fxw8QPzYqEpMkErX9J1aI=;
+        b=TJt+az+6QemYlHALrKlPXXwpeSk5LEevUf1/CUYcJbogqyVJzzaOv91evf3XQpLFAN
+         wwFNcx6fxAuP8V1JJ4TYXKKIH8/H7lGHVWLSuizBUqOOwmy6NyMQc1DzDQJNQag93Fw8
+         nrXx+l3XHCoJMEyWcllJ7Gx1ydav3UU0pLH0A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LKRU6k6DP3+MoWkZKc6pR9Fxw8QPzYqEpMkErX9J1aI=;
+        b=RBGM8izEzx+YLH+CwlznqlLf7LveVrmRs7Hf4vzo7nt9FbDIMbSOzwYnwWJLFel19z
+         xeUbywySuM6G+EvYfuzt32kxSP6T3ZWr4339251NFNIYu/GoOxOseENMvEkZxUxGW18y
+         AsVv84ZpRBqNuDAccbi3KtYpxEmwAIn8RG5PN0e1VFcEDK6Nyysp+h2775fAFXDpiIjt
+         iRAJ7tnITPhQZzTvPJr+ZypP2ojHeg1XAF4j34Uivx0tYh9OtluXJ53YRZSIAahys28j
+         4OrxUh/CNlbvBCIoRCnoL+5puCVBD14n+t+nO/0sBOmurlD8INqkE3vHl+3hV8SOiNCa
+         DtAQ==
+X-Gm-Message-State: ANoB5plbHWRoM4SK8eDvfR+wremz/x7Lo72/mVKTyIAB4k+DbvHuQG8s
+        H55I3zuIB4hN86hAQ436uwfuGe4YNc9RR7EqL+tyyA==
+X-Google-Smtp-Source: AA0mqf7vWuXOietesbVcX1O+qubMF7A+WQ/MIHQ9UUxKQTH3AwZtVv3L8yaDU8p4H2poYaZEVGkXkn1HTBR+uXhkT4U=
+X-Received: by 2002:a05:6512:a83:b0:4aa:f944:f7ec with SMTP id
+ m3-20020a0565120a8300b004aaf944f7ecmr19927828lfu.467.1670010529136; Fri, 02
+ Dec 2022 11:48:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221202070814.482470-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20221115121004.28197-1-quic_vboma@quicinc.com>
+ <20221115121004.28197-2-quic_vboma@quicinc.com> <CANHAJhEH7qTjaVaMWk3MeuhYMnwt1qTUSKxAZ_XTfxPJObC=nQ@mail.gmail.com>
+In-Reply-To: <CANHAJhEH7qTjaVaMWk3MeuhYMnwt1qTUSKxAZ_XTfxPJObC=nQ@mail.gmail.com>
+From:   Nathan Hebert <nhebert@chromium.org>
+Date:   Fri, 2 Dec 2022 11:48:37 -0800
+Message-ID: <CANHAJhENA5ssFBBDeqfDyC8v_CwZhpiJC93B1HZnL4K+N3N35A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] venus : Fix for H265 decoding failure.
+To:     quic_vboma@quicinc.com
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@qti.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,34 +69,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 02, 2022 at 09:08:10AM +0200, Dmitry Baryshkov wrote:
-> The RPM clocks driver uses platform (SoC) as a part of the clock
-> definition. However there is nothing really SoC-specific in this
-> part. Using it just leads to confusion and sometimes to duplication of
-> definitions. Drop the SoC name where it is logical.
+On Thu, Dec 1, 2022 at 4:12 PM Nathan Hebert <nhebert@chromium.org> wrote:
+>
+> On Tue, Nov 15, 2022 at 4:10 AM <quic_vboma@quicinc.com> wrote:
+> >
+> > From: Viswanath Boma <quic_vboma@quicinc.com>
+> >
+> > Aligned the mismatch of persist1 and scratch1 buffer calculation,
+> > as per the firmware requirements .
+> >
+> > Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+> > Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> > ---
+> >  drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> > index ea25c451222b..a9be31ec6927 100644
+> > --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> > +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> > @@ -93,7 +93,7 @@
+> >  #define LCU_MIN_SIZE_PELS              16
+> >  #define SIZE_SEI_USERDATA              4096
+> >
+> > -#define H265D_MAX_SLICE                        600
+> > +#define H265D_MAX_SLICE                        3600
+> >  #define SIZE_H265D_HW_PIC_T            SIZE_H264D_HW_PIC_T
+> >  #define SIZE_H265D_BSE_CMD_PER_BUF     (16 * sizeof(u32))
+> >  #define SIZE_H265D_VPP_CMD_PER_BUF     256
+> > @@ -1021,7 +1021,7 @@ static u32 h264d_persist1_size(void)
+> >  static u32 h265d_persist1_size(void)
+> >  {
+> >         return ALIGN((SIZE_SLIST_BUF_H265 * NUM_SLIST_BUF_H265 + H265_NUM_TILE
+> > -                       * sizeof(u32)), HFI_DMA_ALIGNMENT);
+> > +                       * sizeof(u32) + NUM_HW_PIC_BUF * SIZE_SEI_USERDATA), HFI_DMA_ALIGNMENT);
+> >  }
+> >
+> >  static u32 vp8d_persist1_size(void)
+> > --
+> > 2.17.1
+> >
+> Hi Viswanath. I tested this patch on ChromiumOS's downstream
+> 5.15-based fork. Using ITU-T HEVC test vectors [0] I am seeing
+> firmware errors "qcom-venus-decoder aa00000.video-codec:video-decoder:
+> VenusMed : event not sufficient resources". Does this change fix HEVC
+> decoding for you?
+>
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Hi Viswanath. Thanks for looking at the logs offline. I re-tested
+after adding Q08C (UBWC) support to my decoder client, and it fixed
+the error that I was seeing. My mistake. Each of the main profile test
+vectors now decodes correctly after applying your patch!
 
-Regards,
-Bjorn
+Tested-by: Nathan Hebert <nhebert@chromium.org>
 
-> 
-> Changes since v2:
-> - Split from the RPMH patchset
-> - Dropped superfluous active-only clock names when there are no actual
->   clocks behind
-> - Removed the _clk and _a_clk suffixes, moving them to preprocessor
->   macro, no need to have them all over the code.
-> 
-> Dmitry Baryshkov (4):
->   clk: qcom: rpm: remove unused active-only clock names
->   clk: qcom: rpm: drop separate active-only names
->   clk: qcom: rpm: drop the _clk suffix completely
->   clk: qcom: rpm: drop the platform from clock definitions
-> 
->  drivers/clk/qcom/clk-rpm.c | 204 +++++++++++++++++--------------------
->  1 file changed, 94 insertions(+), 110 deletions(-)
-> 
-> -- 
-> 2.35.1
-> 
+> [0]: https://www.itu.int/wftp3/av-arch/jctvc-site/bitstream_exchange/draft_conformance/HEVC_v1/
+>
+> Best regards,
+> Nathan Hebert
