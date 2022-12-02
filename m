@@ -2,86 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 308F564011F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 08:40:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D93640126
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 08:40:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232227AbiLBHkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 02:40:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49284 "EHLO
+        id S232406AbiLBHkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 02:40:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232152AbiLBHkA (ORCPT
+        with ESMTP id S230094AbiLBHke (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 02:40:00 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A06AD9A0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 23:39:58 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id h33so3727037pgm.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 23:39:58 -0800 (PST)
+        Fri, 2 Dec 2022 02:40:34 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7DAB0B61
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Dec 2022 23:40:34 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id w129so4180429pfb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Dec 2022 23:40:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=EKdJy8iwYIrzA6eUcHS1xN++4Pj6b6rZ6Y+yBBYokW8=;
-        b=Uw1oClizcn3XTQesSOqhOmB5uui3mQLM2nfnZLp7ch36IdWnVz33clXfk4pw4FoI/W
-         XMkc7MJawfHhIBKsjA0b/bl1oSzxHbPhekaCKF/HdvEi+2F6lZ+R7V/YtSU/EtzoDwtv
-         yFXYWYBmMWAPn/yQGpLx+AtN48qzfQA4/InfnhgC1EMYmzfSpJdu1x19LCBWOgXh2yp7
-         IKui+F7vxprrEQ3XXvuyZgrTyDanXVjL0VI3Q1l+MTQLdB+UfSj7blpsnLxlK7IDS/ul
-         M+dOR4h8DD9s3wn9qRi+N1ZmPnV7oKxB8TNvZkNJgVfNGNISX/ECEeyP4enPo8A5dvCJ
-         HLFQ==
+        bh=nDu6wdj2BavaJhgV2+IGABHC/KEWWb+4yyQcwbwd+rA=;
+        b=vGIxaz68/q/F+Cc79hSj1Yrfct0QR+YaiyK5BQ4C6hiZyHx/8iu6y8E1PtRzXKEnzd
+         s9nXKon0twvku4AZQbm055w40EBHnDL6JPYOlxUbIjUIXCKtG+4oo18baBM7adk7YXDd
+         bAjOjJkst88dSaFg7cIdCItKVRFr1McJ6Q7rPs/U6W7ROvkGJ7oQyoGeQlWnH0dEDMn5
+         2/OzC6HJQ47VwY9YtMb46EGL7qkqD8qEEMtUroNW33oXC1dZotRDcZJ+sQi0+ERv9Noz
+         OL/BwIz8fRqvvb11QAIxCyGvhfs53+UOdgk0e3LxwwIEytbmELTBaAgUACZH2kBEQqbd
+         HOLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EKdJy8iwYIrzA6eUcHS1xN++4Pj6b6rZ6Y+yBBYokW8=;
-        b=bDhQkSwJCqzUe2azN6WQzkbRUFbzHfGbkFWZ0sg+0UJfozqGyvqrn0242vTujhgGoq
-         o8H1DDGUTrtapYo+RZ2A6JKNAjnCdNEDi7+2B3nAfXWw81HG1bkir/bekiPsi0OJUWru
-         Gfn1YxLtdMDv2JNtA7WhZRG5UQ8aIi5Cmn1kog1lPL5nZjUWXrENisBH+UDMOEq8oC5A
-         WcmQ37qSX/lmbH6pecgnNGj7sXNEz0CWuZA8zqb1MGpSC8yXVoaoT1rET3LgZhV2UvLb
-         pSG2a9uc7RD59ftVc5nw0d8nZzd0FX8sJaxnsfcw7sUwhTflLdP6KzRgWRjEJPumzdFm
-         gBNQ==
-X-Gm-Message-State: ANoB5pmZDEgpg7Sf7Iibv8cQ8ajWkEVOL2hEcdyVrxV6+Q3Tflzc9JwU
-        0kOHgtgqCCenXMmPY6K5nWAe
-X-Google-Smtp-Source: AA0mqf4RHtpfIlj5JeeEw6Da3Yq5R9fgzfWHMLyg5+ZY64vcJqKkS0zVLdyfP/r8TE+O0RRrfjgcOw==
-X-Received: by 2002:a62:840b:0:b0:575:2199:70e8 with SMTP id k11-20020a62840b000000b00575219970e8mr25115627pfd.14.1669966798480;
-        Thu, 01 Dec 2022 23:39:58 -0800 (PST)
+        bh=nDu6wdj2BavaJhgV2+IGABHC/KEWWb+4yyQcwbwd+rA=;
+        b=XoIipsR7R9Q+iO1X62KvPkwJ0p+8ZPgFh3ljqGUnXPeqZKClWJxygvkjVBWbe8ntEL
+         QhykdE9IIKQJIiP1RRoU9A+yBiVAKqlkPtxBOLJxur2D+Op2mfipclaPew4OVEHO6fZh
+         T4Thq/JaNx5GMoVJ03q+bRIXwPTydVDZ1PNqAh5w9QWuc4bHsK7IbQy4HUQpaweoeVg5
+         kIYooVBZeRUdXfUW+JOCruEzEWAZZ5oR9D+YzxzEZmCzUXjJDfrHVFRSsCwc8jUWeGl8
+         z1WeM8IABjTANIv6le7tdcL5Jb9ybFeWLDaJBgddfNMfsGnSJrPpA1uZ9fQvZgO3DdCW
+         tXiQ==
+X-Gm-Message-State: ANoB5pma0QSRk8CzkUioCaTC0eWqRVEwMWeHv1F6iBc2jnWi8V1O0TOA
+        9cWMSVfsV9mCUcex3JwXoYqE
+X-Google-Smtp-Source: AA0mqf5Ag5+BnQmSsuOlhiMDTVxXCd5381jopnyR1FNdrsNyFJE6Wo2Z9eXE7MXXIb3+AkYNm36GHw==
+X-Received: by 2002:a63:ec07:0:b0:470:90f1:6216 with SMTP id j7-20020a63ec07000000b0047090f16216mr62174034pgh.42.1669966833731;
+        Thu, 01 Dec 2022 23:40:33 -0800 (PST)
 Received: from thinkpad ([27.111.75.154])
-        by smtp.gmail.com with ESMTPSA id bd12-20020a170902830c00b001894198d0ebsm4849251plb.24.2022.12.01.23.39.53
+        by smtp.gmail.com with ESMTPSA id z15-20020a655a4f000000b0046faefad8a1sm3630828pgs.79.2022.12.01.23.40.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 23:39:57 -0800 (PST)
-Date:   Fri, 2 Dec 2022 13:09:51 +0530
+        Thu, 01 Dec 2022 23:40:32 -0800 (PST)
+Date:   Fri, 2 Dec 2022 13:10:25 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Andrew Halaney <ahalaney@redhat.com>
 Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
         jejb@linux.ibm.com, martin.petersen@oracle.com,
         p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
         linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] scsi: ufs: ufs-qcom: Remove usage of dbg_print_en
-Message-ID: <20221202073951.GD5356@thinkpad>
+Subject: Re: [PATCH 4/4] scsi: ufs: ufs-qcom: Use dev_err() where possible
+Message-ID: <20221202074025.GE5356@thinkpad>
 References: <20221201230810.1019834-1-ahalaney@redhat.com>
- <20221201230810.1019834-4-ahalaney@redhat.com>
+ <20221201230810.1019834-5-ahalaney@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221201230810.1019834-4-ahalaney@redhat.com>
+In-Reply-To: <20221201230810.1019834-5-ahalaney@redhat.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 01, 2022 at 05:08:09PM -0600, Andrew Halaney wrote:
-> This bitmask is unconditionally set in the current driver,
-> so all conditionals using it can be considered bit rot.
+On Thu, Dec 01, 2022 at 05:08:10PM -0600, Andrew Halaney wrote:
+> dev_err() statements are better to use than pr_err(), so switch to
+> those.
 > 
-> Let's take the current default conditional path everywhere and remove
-> dbg_print_en from the driver.
+> In a similar vein, the check on the dev_req_params pointer here is
+> not needed, the two places this function is called never pass in a
+> NULL pointer, so instead of using dev_err() there just remove it.
 > 
 > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
@@ -91,89 +91,35 @@ Thanks,
 Mani
 
 > ---
->  drivers/ufs/host/ufs-qcom.c | 18 +++---------------
->  drivers/ufs/host/ufs-qcom.h | 11 -----------
->  2 files changed, 3 insertions(+), 26 deletions(-)
+>  drivers/ufs/host/ufs-qcom.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
 > 
 > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 1b0dfbbdcdf3..b1fcff1fad0c 100644
+> index b1fcff1fad0c..4350c44a6fc7 100644
 > --- a/drivers/ufs/host/ufs-qcom.c
 > +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -22,9 +22,6 @@
->  #include <ufs/ufshci.h>
->  #include <ufs/ufs_quirks.h>
+> @@ -680,12 +680,6 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>  	struct ufs_dev_params ufs_qcom_cap;
+>  	int ret = 0;
 >  
-> -#define UFS_QCOM_DEFAULT_DBG_PRINT_EN	\
-> -	(UFS_QCOM_DBG_PRINT_REGS_EN | UFS_QCOM_DBG_PRINT_TEST_BUS_EN)
-> -
->  enum {
->  	TSTBUS_UAWM,
->  	TSTBUS_UARM,
-> @@ -1040,7 +1037,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
->  		ufs_qcom_hosts[hba->dev->id] = host;
->  
-> -	host->dbg_print_en |= UFS_QCOM_DEFAULT_DBG_PRINT_EN;
->  	ufs_qcom_get_default_testbus_cfg(host);
->  	err = ufs_qcom_testbus_config(host);
->  	if (err) {
-> @@ -1191,14 +1187,9 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->  
->  static void ufs_qcom_enable_test_bus(struct ufs_qcom_host *host)
->  {
-> -	if (host->dbg_print_en & UFS_QCOM_DBG_PRINT_TEST_BUS_EN) {
-> -		ufshcd_rmwl(host->hba, UFS_REG_TEST_BUS_EN,
-> -				UFS_REG_TEST_BUS_EN, REG_UFS_CFG1);
-> -		ufshcd_rmwl(host->hba, TEST_BUS_EN, TEST_BUS_EN, REG_UFS_CFG1);
-> -	} else {
-> -		ufshcd_rmwl(host->hba, UFS_REG_TEST_BUS_EN, 0, REG_UFS_CFG1);
-> -		ufshcd_rmwl(host->hba, TEST_BUS_EN, 0, REG_UFS_CFG1);
+> -	if (!dev_req_params) {
+> -		pr_err("%s: incoming dev_req_params is NULL\n", __func__);
+> -		ret = -EINVAL;
+> -		goto out;
 > -	}
-> +	ufshcd_rmwl(host->hba, UFS_REG_TEST_BUS_EN,
-> +			UFS_REG_TEST_BUS_EN, REG_UFS_CFG1);
-> +	ufshcd_rmwl(host->hba, TEST_BUS_EN, TEST_BUS_EN, REG_UFS_CFG1);
->  }
->  
->  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host)
-> @@ -1315,9 +1306,6 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
->  	ufshcd_dump_regs(hba, REG_UFS_SYS1CLK_1US, 16 * 4,
->  			 "HCI Vendor Specific Registers ");
->  
-> -	if (!(host->dbg_print_en & UFS_QCOM_DBG_PRINT_REGS_EN))
-> -		return;
 > -
->  	reg = ufs_qcom_get_debug_reg_offset(host, UFS_UFS_DBG_RD_REG_OCSC);
->  	ufshcd_dump_regs(hba, reg, 44 * 4, "UFS_UFS_DBG_RD_REG_OCSC ");
->  
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 44466a395bb5..e567e4636357 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -113,15 +113,6 @@ enum {
->  	MASK_CLK_NS_REG                     = 0xFFFC00,
->  };
->  
-> -/* QCOM UFS debug print bit mask */
-> -#define UFS_QCOM_DBG_PRINT_REGS_EN	BIT(0)
-> -#define UFS_QCOM_DBG_PRINT_ICE_REGS_EN	BIT(1)
-> -#define UFS_QCOM_DBG_PRINT_TEST_BUS_EN	BIT(2)
-> -
-> -#define UFS_QCOM_DBG_PRINT_ALL	\
-> -	(UFS_QCOM_DBG_PRINT_REGS_EN | UFS_QCOM_DBG_PRINT_ICE_REGS_EN | \
-> -	 UFS_QCOM_DBG_PRINT_TEST_BUS_EN)
-> -
->  /* QUniPro Vendor specific attributes */
->  #define PA_VS_CONFIG_REG1	0x9000
->  #define DME_VS_CORE_CLK_CTRL	0xD002
-> @@ -212,8 +203,6 @@ struct ufs_qcom_host {
->  
->  	u32 dev_ref_clk_en_mask;
->  
-> -	/* Bitmask for enabling debug prints */
-> -	u32 dbg_print_en;
->  	struct ufs_qcom_testbus testbus;
->  
->  	/* Reset control of HCI */
+>  	switch (status) {
+>  	case PRE_CHANGE:
+>  		ufshcd_init_pwr_dev_param(&ufs_qcom_cap);
+> @@ -709,7 +703,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>  					       dev_max_params,
+>  					       dev_req_params);
+>  		if (ret) {
+> -			pr_err("%s: failed to determine capabilities\n",
+> +			dev_err(hba->dev, "%s: failed to determine capabilities\n",
+>  					__func__);
+>  			goto out;
+>  		}
 > -- 
 > 2.38.1
 > 
