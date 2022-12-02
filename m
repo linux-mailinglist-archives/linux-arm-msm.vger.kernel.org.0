@@ -2,138 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A777640971
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 16:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8006E64099F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Dec 2022 16:57:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233703AbiLBPcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Dec 2022 10:32:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37752 "EHLO
+        id S233798AbiLBP5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Dec 2022 10:57:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233551AbiLBPcR (ORCPT
+        with ESMTP id S233793AbiLBP5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Dec 2022 10:32:17 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB09EE51C2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 07:32:15 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id a19so5843684ljk.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 07:32:15 -0800 (PST)
+        Fri, 2 Dec 2022 10:57:45 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A55F5B6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Dec 2022 07:57:43 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id p36so3659705lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Dec 2022 07:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qrJQRjYSCGh+5IRAzVY1UpfODdiJfmCsnRpLOeAqkM4=;
-        b=crqOMyl/estFD5kYlrRUY6dijClq49pSi5308P6RU8HUq30aX3L/NC6fM2btqWywEW
-         GUR+gaxaPuKdYqA27ShtkaCCBUDMRfP9YuqVIPOQ/hzBrEYJPrORJzJtnll0osBvyyZJ
-         WIV+M7YOAKYkA+O8Zb57+uHj2sMc3Xxg3InlaT3wegHfEeSYnZY+fdaW0koZiVL+Y1V+
-         QCWl82X758M43z/m6pEtafNNcBvNtmHw/zH39ZBB8wYLw+ti3+jopAMRfvaPoZFbg/oh
-         Zy1stSHpq4lUyjy6xTpf9EKaptRSu0T8avi8Vkm/RBC128/stFkjKzTOrKSB+PX8BWQ/
-         t0rg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=v7Do1zGZeJXfk/btC7g+b550Atcgh8+jKqzDtcXOK/E=;
+        b=I2uoBpetXygYV2BOAzzNs3znsM9iyVjecCI7TMryTjj9yycblQftOFDQEw5+15+t0Y
+         hlexP1IG49F3V/T0PXewL4KQ2DpUFmtw8AXrfuSEpv/K98fcjb2pye6tpdaD/3jE7/3+
+         qHspF8CAdMvreGlEnMalhG9EzyV5/pgQyVgZbxLTm4L/Giql0JwlXKzT0LTh11DnL+Ii
+         q2Su1htcs8ox4I3f2nuG7/Hy5W7tyzaGqmVuOAk6LM5Bn38zqgQ+QEfQ/mvDkVuWj/v4
+         YFgolMAlZOHH00dQ+RJZyU198tpPXcBUG8KKxFtyHXILs2PY5CRYWD8IdydNYUSOPGmI
+         C5rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qrJQRjYSCGh+5IRAzVY1UpfODdiJfmCsnRpLOeAqkM4=;
-        b=yf3PxP9pg9ISEd8ltwrAYYjXxVtu5mpyV4rsJNfCelImWmWc1xVy7e5ldrQszAPMD3
-         VOjcgg8kdR2spUPepqmupMIWpx5y9UUsQdjnS2yOAH1OwQuA1F+B57uNwbuBo3N1D80F
-         1szNuiNG0g9GXzEwgIQdD56D+bHE+5DaA6xG9lFzEuTPOBbioguR8BmTxKpSXjEyCEh0
-         OTyTdmX4+9nlUc4jjUSsXKqhtJCYHpmOQlXW8egfi2oV3WRMkPDt+/KjpMScJL9GX4yP
-         CKot+KMFUxwLvbcgYI0aYYMCW1xe/Xs5DNoJtQQ18bDdxMXP5VFbb7enQjRXVl+t4YfX
-         PO+w==
-X-Gm-Message-State: ANoB5plDaIdAT6YAMKQK7jGmKdrL1MwdOCEyQsldAHE5tcUij42GQYyv
-        erfl/UEujzgvMeODk3YHjOPHuA==
-X-Google-Smtp-Source: AA0mqf6DnG5jpKp7S6oQgFmUYGc2Csfby4Uyfz44ydtW+WC5OiN2K4wSHd+zA8p8nheYkdvSZqzyaw==
-X-Received: by 2002:a2e:a452:0:b0:277:9c2:d5db with SMTP id v18-20020a2ea452000000b0027709c2d5dbmr18170905ljn.168.1669995134188;
-        Fri, 02 Dec 2022 07:32:14 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id w10-20020ac2598a000000b004b4ea0f4e7fsm1043826lfn.299.2022.12.02.07.32.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Dec 2022 07:32:13 -0800 (PST)
-Message-ID: <7ef76a8b-c45b-2a94-d0ad-9136757af684@linaro.org>
-Date:   Fri, 2 Dec 2022 16:32:12 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [RFT PATCH v2 2/2] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v7Do1zGZeJXfk/btC7g+b550Atcgh8+jKqzDtcXOK/E=;
+        b=mfLvfrfJSNZ+dwdGK+5d3mJ5n5im4Cmn69GuQw5k0ThlWDZjaQn7Bgp1ykGZRF7k+P
+         wTcn824gpKI3x9qM8Rx7G+jtuRzaxR788D8XrHUhdLlr6n5h7WB1j5D8qreKS7T7yN0b
+         y3KefzlT+wHv/fUpMwl/0IA9DG60y38rEclYola0hDXwhZ16Q9jDxZ0kybXyZXOM7iwJ
+         vN5gLIs6CU1cgeYA0XCUJQXc4/PyVGJ21buBD24dJ/Gk/KnUIo62Lbkjn3NP7CHjUzmR
+         YglR5MeNU7ZDi8wqTeUOlcPeiG1if9k3j4BPWM/WasOF5dYRI6UkwkXdci209EndR9/n
+         fWwg==
+X-Gm-Message-State: ANoB5pki1dE/O9X5Gn6f1yJahWIbgdRI3ttVt4ppWen4BhjZsZTa2nJS
+        OCIfhlhxXYXmJjvc6xyLnmwnRw==
+X-Google-Smtp-Source: AA0mqf6bzFc67lteDluoeYPumSDHPT1u2Ff3NsMyEbeCNcymqTNokJU6p8C0hYnJ9JwNnxbcipD5AA==
+X-Received: by 2002:ac2:5195:0:b0:4b5:362d:b6ae with SMTP id u21-20020ac25195000000b004b5362db6aemr4000777lfi.528.1669996662112;
+        Fri, 02 Dec 2022 07:57:42 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id b25-20020ac25e99000000b004b4e6dab30esm1049133lfq.222.2022.12.02.07.57.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Dec 2022 07:57:40 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Fritz Koenig <frkoenig@google.com>
-References: <20221118164201.321147-1-krzysztof.kozlowski@linaro.org>
- <20221118164201.321147-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=XeaskcBRVRQDoha7Xiv9j57fuvtcSJUeN7HCZSGVJ8uQ@mail.gmail.com>
- <68bcdf25-e8e3-f817-f213-efb0bce3f43a@linaro.org>
- <CAD=FV=WBNpeWK31dCgzX5QAuR7AySkp_dEyY8WK3o8+SaiPxOg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WBNpeWK31dCgzX5QAuR7AySkp_dEyY8WK3o8+SaiPxOg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: [PATCH v3 1/3] arm64: dts: qcom: sdm845-db845c: fix audio codec interrupt pin name
+Date:   Fri,  2 Dec 2022 16:57:36 +0100
+Message-Id: <20221202155738.383301-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/12/2022 15:36, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Dec 2, 2022 at 12:15 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->>>>                         qup_uart6_4pin: qup-uart6-4pin-state {
->>>> -
->>>> -                               cts-pins {
->>>> +                               qup_uart6_4pin_cts: cts-pins {
->>>>                                         pins = "gpio45";
->>>>                                         function = "qup6";
->>>> -                                       bias-pull-down;
->>>
->>> After your patch, where is the above bias set for cheza, db845c,
->>> oneplus, shift-axolotl, ...?
->>>
->>>
->>>>                                 };
->>>>
->>>> -                               rts-tx-pins {
->>>> +                               qup_uart6_4pin_rts_tx: rts-tx-pins {
->>>>                                         pins = "gpio46", "gpio47";
->>>>                                         function = "qup6";
->>>> -                                       drive-strength = <2>;
->>>> -                                       bias-disable;
->>>
->>> After your patch, where is the above bias / drive-strength set?
->>
->> They don't use 4-pin setup. If they use, I would assume they will
->> override the entries just like sdm850 boards (where I override it to set
->> these).
->>
->> Alternatively I can keep it in DTSI, but it is not really property of
->> the SoC.
-> 
-> I see things like:
-> 
-> .../sdm845-cheza.dtsi:     pinctrl-0 = <&qup_uart6_4pin>;
-> 
-> ...before your patch that would get the bias/drive strength from the
-> SoC dtsi, right? After your patch, you've removed it from the dtsi but
-> not added it to the board. ...so I think it's a net change. Did I mess
-> up / miss something?
+The pin config entry should have a string, not number, for the GPIO used
+as WCD9340 audio codec interrupt.
 
-I missed something or rather my git grep failed. I'll bring them back to
-DTSI.
+Reported-by: Doug Anderson <dianders@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+---
+
+Cc: Doug Anderson <dianders@chromium.org>
+
+Changes since v2:
+1. New patch.
+---
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 3e7ceb0861eb..f324c0af665b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -979,7 +979,7 @@ sdc2_card_det_n: sd-card-det-n {
+ 	};
+ 
+ 	wcd_intr_default: wcd_intr_default {
+-		pins = <54>;
++		pins = "gpio54";
+ 		function = "gpio";
+ 
+ 		input-enable;
+-- 
+2.34.1
 
