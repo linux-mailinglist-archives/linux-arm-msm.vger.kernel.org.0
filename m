@@ -2,90 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9281641F48
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 20:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D143641FE1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 22:32:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbiLDTZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Dec 2022 14:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
+        id S230353AbiLDVbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Dec 2022 16:31:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbiLDTZn (ORCPT
+        with ESMTP id S229949AbiLDVby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Dec 2022 14:25:43 -0500
-Received: from msg-1.mailo.com (msg-1.mailo.com [213.182.54.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BC410B48;
-        Sun,  4 Dec 2022 11:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1670181910; bh=BN4Yxoc6WAoOrqgGgqUNWiyWrjKRRO9S8lDVUGEoGR4=;
-        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-         References:Content-Type:Content-Transfer-Encoding:MIME-Version;
-        b=Z69X3WLgn3qvQtuXy50cHO5De6/oEbalrOEhgZRqmW3n8y01ROM8sSBvkcMqOCW3r
-         DPi1m9iA0AzG3AG1v2ox95T4Bkxu1pvaV9kwNrpi8wX9jxPWPUIE8fU1OL9jYMubC8
-         fHkRP/08v6L7zeQFLNQkdi8DcGKbe+JBIRM6ni+o=
-Received: by b-4.in.mailobj.net [192.168.90.14] with ESMTP
-        via proxy.mailoo.org [213.182.55.207]
-        Sun,  4 Dec 2022 20:25:10 +0100 (CET)
-X-EA-Auth: /kXLJbkaOaSWqX87hlMC1d+ptdkDlK8r8EcVv7CAEcpjg7ovQn5c8MlNYcwabDXqszjvD4qWa+RZdevdgaCAXPEsQviTSNc8rAs9scPBbLU=
-Message-ID: <b0d37b049ebedd5e04f69d505afb36ab6f0a1492.camel@mailoo.org>
-Subject: Re: [PATCH v2 08/15] thermal/drivers/tsens: Drop single-cell code
- for msm8939
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sun, 4 Dec 2022 16:31:54 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E18F913E26
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Dec 2022 13:31:52 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id e141so12320972ybh.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Dec 2022 13:31:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lI01SEvVv3MktbLdSo/+mTT0yrIOdj+1vIgFJfDfN34=;
+        b=ihXgyprU2JPflAJxQ2hlVAlQWQi84KLxjubvaMjwbXraHSizz8TCIx4U240bsQyj7+
+         f4S620hisnyPfhiCwKcejyelzlojnRQY4jMp9A5DZ+yb6q2aq4EA73+dpm0+UL0Oxh1a
+         IYwnyg3VzbGB2nq4bXM6+FsV3LOGBHWgjtL25AWN7IG9Q1azGQhN55hwsfFxbGLKWiOD
+         f/a/T7Q/HJsAQI/owlcuy6xGaGqVr+p5wZVckWegEIRl5Ivc5Qji4Sl+FvX4zG7kVyuj
+         +sXdCe5JgrGyvJk71T09UvTiajH6J8eboYF7zb6jD/uuzxRFmOa9C/7E2gTQahmgh7lS
+         cwKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lI01SEvVv3MktbLdSo/+mTT0yrIOdj+1vIgFJfDfN34=;
+        b=syCX3H9cKKBAhKlqgXd/BCJjdYfq0N+V2671Km0nuglcXRFEl7MRfOOjjGnN3wf0Oc
+         EHPvZhe6P+qrpnK9Woolr4wKv0R91SXvSBogFCFWKExe2sFnfg3Ys9jvH8E99iC9kKjs
+         3zSGbDj4tcCxGC7Ksck7+KkzOqsRVLvFKr8sXV+jCMWUJ6U/NF5u8B0MfhXpptAtGo0x
+         XCCUHeRttQNm89cS1EjBksgH8zuk95nghhdqJqeK5aYm6Whkcxb7CxAXVNRjM7I1xUB1
+         zTGf5u7d3cGynk9DTwiBOUR39dXmQdH5nFhD8vqMekNCTwKfIesYPJxC64ZAf2l/ho1M
+         nY3g==
+X-Gm-Message-State: ANoB5pkqcdAaOokyFf/WVoAymq+nHcKeucgEKiem83p8Pxqzsxj5JJM7
+        WRcZ3Zh+tMus0gRP5wn8SdZFgR1QxyH0Qn6U5WrUdA==
+X-Google-Smtp-Source: AA0mqf6AghRoYoTD/xrAAjTRoEs/YU038ITJkX/3Vhiv+Ox9xXlJbEIBdnkIbFDPiPE2mKag2EXwUYp2ImAROIxTvOc=
+X-Received: by 2002:a25:c485:0:b0:6be:8e8d:639f with SMTP id
+ u127-20020a25c485000000b006be8e8d639fmr72141889ybf.506.1670189512119; Sun, 04
+ Dec 2022 13:31:52 -0800 (PST)
+MIME-Version: 1.0
+References: <20221130141040.32447-1-arinc.unal@arinc9.com> <20221130141040.32447-3-arinc.unal@arinc9.com>
+In-Reply-To: <20221130141040.32447-3-arinc.unal@arinc9.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sun, 4 Dec 2022 22:31:40 +0100
+Message-ID: <CACRpkdbojTVjR2G+95YS1Xqvau9XmwTkp_KtpaeE7-+v41hgeg@mail.gmail.com>
+Subject: Re: [PATCH 2/5] arm: dts: remove label = "cpu" from DSA dt-binding
+To:     =?UTF-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>
+Cc:     Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Date:   Sun, 04 Dec 2022 20:25:07 +0100
-In-Reply-To: <2186df0393c6cf4dab88772aceed7202090f5a1d.camel@mailoo.org>
-References: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
-         <20221204055909.1351895-9-dmitry.baryshkov@linaro.org>
-         <2186df0393c6cf4dab88772aceed7202090f5a1d.camel@mailoo.org>
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+        Frank Wunderlich <frank-w@public-files.de>,
+        Michael Riesch <michael.riesch@wolfvision.net>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
-MIME-Version: 1.0
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le dimanche 04 d=C3=A9cembre 2022 =C3=A0 19:42 +0100, Vincent Knecht a =C3=
-=A9crit=C2=A0:
-> Le dimanche 04 d=C3=A9cembre 2022 =C3=A0 07:59 +0200, Dmitry Baryshkov a =
-=C3=A9crit=C2=A0:
-> > There is no dtsi file for msm8939 in the kernel sources. Drop the
-> > compatibility with unofficial dtsi and remove support for handling the
-> > single-cell calibration data on msm8939.
->=20
-> Could one invoke a "msm8916-like exemption" here ?
+On Wed, Nov 30, 2022 at 3:13 PM Ar=C4=B1n=C3=A7 =C3=9CNAL <arinc.unal@arinc=
+9.com> wrote:
 
-Ignore that, guess we'll just have to implement it like there:
-https://lore.kernel.org/linux-arm-msm/20221204055909.1351895-9-dmitry.barys=
-hkov@linaro.org/T/#m19cffb13114b6f4f153058e3e7a1943251acaf81
+> This is not used by the DSA dt-binding, so remove it from all devicetrees=
+.
+>
+> Signed-off-by: Ar=C4=B1n=C3=A7 =C3=9CNAL <arinc.unal@arinc9.com>
 
-> Also, msm8939.dtsi was submitted once [1],
-> and if helps we could send a v2 this month...
->=20
-> [1] https://lore.kernel.org/linux-arm-msm/20220419010903.3109514-1-bryan.=
-odonoghue@linaro.org/
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-Offer still stands, the current community one is here:
-https://github.com/msm8916-mainline/linux/blob/msm8916/6.1-rc7/arch/arm64/b=
-oot/dts/qcom/msm8939.dtsi
-
-
-
+Yours,
+Linus Walleij
