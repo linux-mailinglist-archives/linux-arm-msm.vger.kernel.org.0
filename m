@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E346364198E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Dec 2022 23:42:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B5C1641ADC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 06:59:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229862AbiLCWma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Dec 2022 17:42:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
+        id S229755AbiLDF7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Dec 2022 00:59:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiLCWmS (ORCPT
+        with ESMTP id S229567AbiLDF7O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Dec 2022 17:42:18 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6CF1C920;
-        Sat,  3 Dec 2022 14:42:17 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B3MgEfL015253;
-        Sat, 3 Dec 2022 22:42:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=CRiOFceBSHcccdzlP0WNsBunBsJJJm6wdP4oqKzJiyI=;
- b=eJb8tQsebkwxN3R4fD2f58vsZ193cP+n1Q3XhVCX4Fk1VsDYZr/vGD8cz3GIS2Umnj/4
- qz7JhFi0ozX9hlAp5coi7GVCFaK6b56DBnzC56SV1W8q3Bhq95aM90jFV2PdNrIEBmpe
- mYtLmu0Am4s4Mbo3G/HfahT73JcAp56W6SUZrCPCTVEu7sB0rmOfKqgBrrHOsZXTUfSP
- 0ykjAinK7asVaQo8oqrSjP80yko2JX0zvrF4OAFAb3SGjvutMA1vjeDRbmAyHV5tY9q7
- JS+DCcE+nXAs1gjHiWMBL81nfObCS7oVDTA7xoqgZ7ywExA3APqXWLhrKIF/9cvJdK3s FA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m7xp8h819-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 03 Dec 2022 22:42:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B3MgDVh014607
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 3 Dec 2022 22:42:13 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Sat, 3 Dec 2022 14:42:10 -0800
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Rob Clark" <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 4/4] drm/msm/a6xx: Update ROQ size in coredump
-Date:   Sun, 4 Dec 2022 04:11:44 +0530
-Message-ID: <20221204040946.4.I07f22966395eb045f6b312710f53890d5d7e69d4@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <20221204040946.1.Ib978de92c4bd000b515486aad72e96c2481f84d0@changeid>
-References: <20221204040946.1.Ib978de92c4bd000b515486aad72e96c2481f84d0@changeid>
+        Sun, 4 Dec 2022 00:59:14 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB212140CF
+        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Dec 2022 21:59:12 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id r8so9946192ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Dec 2022 21:59:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zhINbGmUkR446pTjVDx9epaOw6+W6fX9AeKTKkDRvH0=;
+        b=j8b+O9T72R0RPQIslmr9y94FHdZndU+uu1Cdaebc9xn6dU6NqPygMGcGyT+GC/hR8v
+         4Oe+9VA91xcAUuDbj/XSVookl/8ch26NLxTblE8net368LIgcDTV4J/jFH0AyN3qn1nX
+         0Km971OI2tWuCZJWS4TbVYZ8HJ1psovARKoMB25xK0mLNDWFBDY1WoPv6mFQISAI4wG7
+         0BDD4PiMB3KYPyfZ7H/pI08Psqqbt8YeGtdeCpFI1m/L4aweQDjMUwJs33SBmfINwjmr
+         nuDpz1tfwO+prgtHQHksdhn4lXRij6m8JH1rMreH+UwgMT22f+zr84vwPfqgkxI9/8pE
+         cjmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zhINbGmUkR446pTjVDx9epaOw6+W6fX9AeKTKkDRvH0=;
+        b=7dmKOdM6UBE58lpwq3HdUHMAxXr2zeftD93r/cWiL21ovG+A/uP1dJu+tl0imUEOPZ
+         Zi6Av0YJHKM92v7esLe6Tmjt984WaN5Nmtmx1soJOqkvMRKlvWtAmVYuTw2jTK87sBhj
+         PEYT7dhtTa2nHHjEYXgmG13WqvJTCNTwFE8ixwx9P0f6iNTGDIvBjCkuvT+nh23hY2D8
+         OtrKpIQ/KvxLOFqD6WrQhiG4cFvSa5sw29TTkFtFeQFjuLHn0HwBWsc/Jh83xDyPb1n0
+         1RuNK+AQm9iAgXdIUUGm6P40LF0dyOZIz4Kjz4ldEfrg0dXtJucOJAXHcMDrP4sM59SD
+         YA2Q==
+X-Gm-Message-State: ANoB5pmQiWaK2SLSRpbZceIJdp2zqPgPxVm9NfPq8LrH1sbFfgzHVabl
+        YoOpWyjFz8nkop50+xVMzVPYTA==
+X-Google-Smtp-Source: AA0mqf5A4bw4tbHZFxBQx69OlO2zCAnop58y/4Y3LvtVNo6rZmDYB0YghQmyl5nBuQ7NA1k/UBVb0A==
+X-Received: by 2002:a2e:7210:0:b0:279:9c12:1ef3 with SMTP id n16-20020a2e7210000000b002799c121ef3mr11515027ljc.392.1670133551162;
+        Sat, 03 Dec 2022 21:59:11 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o6-20020a05651205c600b004917a30c82bsm1650028lfo.153.2022.12.03.21.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Dec 2022 21:59:10 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 00/15] thermal/drivers/tsens: specify nvmem cells in DT rather than parsing them manually
+Date:   Sun,  4 Dec 2022 07:58:54 +0200
+Message-Id: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: a-cVsWgVR8zG49UQN33PCsqFr5u87vQp
-X-Proofpoint-GUID: a-cVsWgVR8zG49UQN33PCsqFr5u87vQp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-03_12,2022-12-01_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 mlxlogscore=846 malwarescore=0 bulkscore=0
- impostorscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2212030202
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,86 +77,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since RoQ size differs between generations, calculate dynamically the
-RoQ size while capturing coredump.
+Historically the tsens driver fetches the calibration data as a blob and
+then parses the blob on its own. This results in semi-duplicated code
+spreading over the platform-specific functions.
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
+This patch series changes tsens calibration code to per-value nvmem
+cells rather than parsing the blob in the driver. For backwards
+compatibility the old code is left in place for msm8916, msm8974 and
+qcs404, the platforms which have in-tree DT files. For all other
+affected platforms the old parsing code has been dropped as a part of
+this series.
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 11 ++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 17 ++++++++++-------
- 2 files changed, 20 insertions(+), 8 deletions(-)
+The code was tested on msm8916 and qcs404 only.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index da190b6ddba0..80e60e34ce7d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -939,15 +939,24 @@ static void a6xx_get_registers(struct msm_gpu *gpu,
- 			dumper);
- }
- 
-+static u32 a6xx_get_cp_roq_size(struct msm_gpu *gpu)
-+{
-+	/* The value at [16:31] is in 4dword units. Convert it to dwords */
-+	return gpu_read(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2) >> 14;
-+}
-+
- /* Read a block of data from an indexed register pair */
- static void a6xx_get_indexed_regs(struct msm_gpu *gpu,
- 		struct a6xx_gpu_state *a6xx_state,
--		const struct a6xx_indexed_registers *indexed,
-+		struct a6xx_indexed_registers *indexed,
- 		struct a6xx_gpu_state_obj *obj)
- {
- 	int i;
- 
- 	obj->handle = (const void *) indexed;
-+	if (indexed->count_fn)
-+		indexed->count = indexed->count_fn(gpu);
-+
- 	obj->data = state_kcalloc(a6xx_state, indexed->count, sizeof(u32));
- 	if (!obj->data)
- 		return;
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 808121c88662..790f55e24533 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -383,25 +383,28 @@ static const struct a6xx_registers a6xx_gmu_reglist[] = {
- 	REGS(a6xx_gmu_gx_registers, 0, 0),
- };
- 
--static const struct a6xx_indexed_registers {
-+static u32 a6xx_get_cp_roq_size(struct msm_gpu *gpu);
-+
-+static struct a6xx_indexed_registers {
- 	const char *name;
- 	u32 addr;
- 	u32 data;
- 	u32 count;
-+	u32 (*count_fn)(struct msm_gpu *gpu);
- } a6xx_indexed_reglist[] = {
- 	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
--		REG_A6XX_CP_SQE_STAT_DATA, 0x33 },
-+		REG_A6XX_CP_SQE_STAT_DATA, 0x33, NULL },
- 	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
--		REG_A6XX_CP_DRAW_STATE_DATA, 0x100 },
-+		REG_A6XX_CP_DRAW_STATE_DATA, 0x100, NULL },
- 	{ "CP_UCODE_DBG_DATA", REG_A6XX_CP_SQE_UCODE_DBG_ADDR,
--		REG_A6XX_CP_SQE_UCODE_DBG_DATA, 0x6000 },
-+		REG_A6XX_CP_SQE_UCODE_DBG_DATA, 0x8000, NULL },
- 	{ "CP_ROQ", REG_A6XX_CP_ROQ_DBG_ADDR,
--		REG_A6XX_CP_ROQ_DBG_DATA, 0x400 },
-+		REG_A6XX_CP_ROQ_DBG_DATA, 0, a6xx_get_cp_roq_size},
- };
- 
--static const struct a6xx_indexed_registers a6xx_cp_mempool_indexed = {
-+static struct a6xx_indexed_registers a6xx_cp_mempool_indexed = {
- 	"CP_MEMPOOL", REG_A6XX_CP_MEM_POOL_DBG_ADDR,
--		REG_A6XX_CP_MEM_POOL_DBG_DATA, 0x2060,
-+		REG_A6XX_CP_MEM_POOL_DBG_DATA, 0x2060, NULL,
- };
- 
- #define DEBUGBUS(_id, _count) { .id = _id, .name = #_id, .count = _count }
+Note: the DTs changes depend on driver changes. Tsens driver will not
+work if DT patches are merged, but the driver bits are not. As the
+thermal sense is critical for device safety, I'd suggest merging binding
+and driver during one merge window and then merging DT changes in the
+next merge window.
+
+Changes since the RFC:
+- Sorted out the msm8976/msm8956, custom slopes are used only for msm8956,
+- Implemented proper support for msm8974/apq8084,
+- Added tsens_calibrate_common() and ops_v0_1 which can be used in
+  common cases,
+- Removed superfluous identity hw_ids
+- Fixed calibration calculation in tsens_calibrate_nvmem() for
+  ONE_PT_CALIB case
+
+Dmitry Baryshkov (15):
+  dt-bindings: thermal: tsens: add msm8956 compat
+  dt-bindings: thermal: tsens: support per-sensor calibration cells
+  dt-bindings: thermal: tsens: add per-sensor cells for msm8974
+  thermal/drivers/tsens: Drop unnecessary hw_ids
+  thermal/drivers/tsens: Drop msm8976-specific defines
+  thermal/drivers/tsens: Sort out msm8976 vs msm8956 data
+  thermal/drivers/tsens: Support using nvmem cells for calibration data
+  thermal/drivers/tsens: Drop single-cell code for msm8939
+  thermal/drivers/tsens: Drop single-cell code for mdm9607
+  thermal/drivers/tsens: Drop single-cell code for msm8976/msm8956
+  thermal/drivers/tsens: Support using nvmem cells for msm8974
+    calibration
+  arm64: dts: qcom: msm8916: specify per-sensor calibration cells
+  arm64: dts: qcom: qcs404: specify per-sensor calibration cells
+  ARM: dts: qcom-msm8974: specify per-sensor calibration cells
+  ARM: dts: qcom-apq8084: specify per-sensor calibration cells
+
+ .../bindings/thermal/qcom-tsens.yaml          | 123 +++++++-
+ arch/arm/boot/dts/qcom-apq8084.dtsi           | 262 ++++++++++++++++-
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 262 ++++++++++++++++-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  70 ++++-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          | 121 +++++++-
+ drivers/thermal/qcom/tsens-v0_1.c             | 267 ++++--------------
+ drivers/thermal/qcom/tsens-v1.c               | 190 +++----------
+ drivers/thermal/qcom/tsens.c                  | 102 +++++++
+ drivers/thermal/qcom/tsens.h                  |   8 +-
+ 9 files changed, 1002 insertions(+), 403 deletions(-)
+
 -- 
-2.7.4
+2.35.1
 
