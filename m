@@ -2,83 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F886641B98
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 09:31:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2639641BA8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 09:46:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229870AbiLDIbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Dec 2022 03:31:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43032 "EHLO
+        id S229985AbiLDIqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Dec 2022 03:46:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbiLDIbe (ORCPT
+        with ESMTP id S229954AbiLDIqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Dec 2022 03:31:34 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 470F8178A4
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Dec 2022 00:31:33 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id x6so10161156lji.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Dec 2022 00:31:33 -0800 (PST)
+        Sun, 4 Dec 2022 03:46:21 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74BF912AF8
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Dec 2022 00:46:20 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id f21so13194476lfm.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Dec 2022 00:46:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KNUZkKkSN/8RkV/qHyHCbRY1TQQfCZSuhLJUO8SmPX0=;
-        b=MxGsobdil6ch66e6fgLeA7Jb3CDXcr0RlpdbBUyKGXLfJTGmYhxj8cChO4fnAoXXev
-         oxW7DfHljqvk4ogcz9APC6tHQjqH+S7wDx4T6BXcvW/5Eg8dXDIpdyVAEb6nmx8Zwjsc
-         FxD10QIA0MzZx/F7zPGncwxHnWv68+D1MdgiykGE9+eSG+h1htjtxsBzMpHWsGvC0T2f
-         X8IUgW/Wt6qeN1WrDyMHdkZI0mWrMAeBzEZe2T0tKnV71hZY03IjCXomoH537fWsE0YD
-         M1ssZsN0e1tJ2u8krwGqcG2NqI5tXhA/IPSB84xW2pbG3UFtRgr3fHY5YKcCKW+qG/Md
-         K00w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5JSgb59n7yt285OgnTxrX5jNyxDnhai9FpL9TwOkiUQ=;
+        b=E8VTCpcK8U1SYdCoZDpb8MUs+oDGPLLSRjA9wrjxylnZsd1deUIKA/05f4FwxXgDzq
+         dFp1FlNdOVBwbv7nXas8aD2swC8DZGkoHZjs5WmLt+HBwwjNVUVAhCegzoFJ9Rk58rb+
+         Xk1JnQJnfwRHTpvbRbNFkNIW7uWaS7igIJ/xD7rynjjXFF+QxIODoVOLl3mzg8bOrBuS
+         pj2NcN4aG0lDpqLV0R+zMnHCwrxNxtvZGBqPcpjtcjdnTAfyinmiK+k6aLZrmo/0srEg
+         lRDMCt9a/OzwmFX5ukqbGVjFMt3YyFLO4YeNrYaXaH8E4Cp2i9boQvTguwZYlA708RWy
+         o7uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KNUZkKkSN/8RkV/qHyHCbRY1TQQfCZSuhLJUO8SmPX0=;
-        b=AycEkqHwXI26AG2wKtM0oZmV/lju1mK46B3KKnpnKqyY2NF2ZLBbW7bYGV424BcEN3
-         f0j8yVgqck68UOfhX33aaqsVhEdizCCoc8IgTbkX5SBulMCeay2KcSCSt1hl4Zw/AggD
-         on9kuUYpuND4ifRIf2yQfSPaHi+d+xH20zIOrqoUfxEs5KH8NPav78UOb7VDXjdie2Bw
-         Yzk9pQR7KmHE7loEBEVi5+iWRY/CvntyKE/4appNJg1MWeJgJqWGovEOEyMaeB7bPKNV
-         LsinvJBv5+/culkOZtz0Wb5SY7Pgv50s0Ova/fFgJF6cwx7oqtyM9j0w3s1a95Y9wbPW
-         9NdA==
-X-Gm-Message-State: ANoB5pmhAcwrCeQc+CV4CkOFtX1OTi42pwvBXY/9V/RIGO1FdI/0fYPP
-        UttnuH1oowujdDm+kkqJteoVUg==
-X-Google-Smtp-Source: AA0mqf5AYKtgGCfYbFWwFwc4gN67WxFdMjUCiH9GR+ezag0gvhhKQgHYxzd2VkRt7+c/YtHbqyX4XQ==
-X-Received: by 2002:a05:651c:554:b0:279:dfe:898f with SMTP id q20-20020a05651c055400b002790dfe898fmr19968384ljp.375.1670142691651;
-        Sun, 04 Dec 2022 00:31:31 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id r11-20020a2e80cb000000b00279dadba337sm686413ljg.68.2022.12.04.00.31.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Dec 2022 00:31:31 -0800 (PST)
-Message-ID: <fbd0222b-5370-0896-e98d-bf1f71e0877d@linaro.org>
-Date:   Sun, 4 Dec 2022 09:31:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v2 03/15] dt-bindings: thermal: tsens: add per-sensor
- cells for msm8974
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5JSgb59n7yt285OgnTxrX5jNyxDnhai9FpL9TwOkiUQ=;
+        b=6yv2ECUlM23L35W9IiqtuFZui5Kc/3SQ2S9m7ylxsGiIwkjpa7O7BQRWSe2i5faquE
+         QqgRmzPNF9ryH98XJNfKtTOpl21Zc2Ux2f9iS3JtSlm+BY99WTCEEGUYAZRKO5y4qk0i
+         0/giSUfdrCWS/DItC46Vex3EQ+chplQvt6VLjg7K3ijyNt5IumwQl5DfNuSige0TnUDq
+         3Q3MRmFLuMXNSGp2GquydrzRbTb8tz0neeXQzU0nn7MWjXQ2tSozHJw52Sj3CPXTTtzl
+         9Vh5Y0pdRbHzcke8pUwJvke5O2lOLnCCajjwP8MKoYnVU51GwLlEBja7IaPym+zfsR52
+         5q9Q==
+X-Gm-Message-State: ANoB5pkrVhpN1tJ8kHvRwf4wlRb+HR2c1YjD39rsDg3jysvc2CGGWIqy
+        GyDdu7kPhKAzVirlMLTg416GzQbOdDA8MUzZ57s=
+X-Google-Smtp-Source: AA0mqf62jLndMfJoLDbjXQ3MjgTBCmWaLCceq3cMUMzDVMw+TCy28658Vo2EzqROT9uvquszoXhoTg==
+X-Received: by 2002:ac2:4bd4:0:b0:4b4:aed7:4aa5 with SMTP id o20-20020ac24bd4000000b004b4aed74aa5mr19490634lfq.447.1670143578832;
+        Sun, 04 Dec 2022 00:46:18 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id f20-20020ac25cd4000000b004b4bae1a05asm1680759lfq.293.2022.12.04.00.46.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Dec 2022 00:46:18 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
- <20221204055909.1351895-4-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221204055909.1351895-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: apq8084-ifc6540: fix overriding SDHCI
+Date:   Sun,  4 Dec 2022 09:46:14 +0100
+Message-Id: <20221204084614.12193-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,16 +75,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/12/2022 06:58, Dmitry Baryshkov wrote:
-> The msm8974 platform uses two sets of calibration data, add a special
-> case to handle both of them.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+While changing node names of APQ8084 SDHCI, the ones in IFC6540 board
+were not updated leading to disabled and misconfigured SDHCI.
 
+Cc: <stable@vger.kernel.org>
+Fixes: 2477d81901a2 ("ARM: dts: qcom: Fix sdhci node names - use 'mmc@'")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom-apq8084-ifc6540.dts | 20 ++++++++++----------
+ arch/arm/boot/dts/qcom-apq8084.dtsi        |  4 ++--
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm/boot/dts/qcom-apq8084-ifc6540.dts b/arch/arm/boot/dts/qcom-apq8084-ifc6540.dts
+index 44cd72f1b1be..116e59a3b76d 100644
+--- a/arch/arm/boot/dts/qcom-apq8084-ifc6540.dts
++++ b/arch/arm/boot/dts/qcom-apq8084-ifc6540.dts
+@@ -19,16 +19,16 @@ soc {
+ 		serial@f995e000 {
+ 			status = "okay";
+ 		};
++	};
++};
+ 
+-		sdhci@f9824900 {
+-			bus-width = <8>;
+-			non-removable;
+-			status = "okay";
+-		};
++&sdhc_1 {
++	bus-width = <8>;
++	non-removable;
++	status = "okay";
++};
+ 
+-		sdhci@f98a4900 {
+-			cd-gpios = <&tlmm 122 GPIO_ACTIVE_LOW>;
+-			bus-width = <4>;
+-		};
+-	};
++&sdhc_2 {
++	cd-gpios = <&tlmm 122 GPIO_ACTIVE_LOW>;
++	bus-width = <4>;
+ };
+diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
+index fe30abfff90a..4b0d2b4f4b6a 100644
+--- a/arch/arm/boot/dts/qcom-apq8084.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
+@@ -421,7 +421,7 @@ blsp2_uart2: serial@f995e000 {
+ 			status = "disabled";
+ 		};
+ 
+-		mmc@f9824900 {
++		sdhc_1: mmc@f9824900 {
+ 			compatible = "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0xf9824900 0x11c>, <0xf9824000 0x800>;
+ 			reg-names = "hc", "core";
+@@ -434,7 +434,7 @@ mmc@f9824900 {
+ 			status = "disabled";
+ 		};
+ 
+-		mmc@f98a4900 {
++		sdhc_2: mmc@f98a4900 {
+ 			compatible = "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0xf98a4900 0x11c>, <0xf98a4000 0x800>;
+ 			reg-names = "hc", "core";
+-- 
+2.34.1
 
