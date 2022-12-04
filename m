@@ -2,43 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D28E1641B93
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 09:30:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6EF9641B94
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Dec 2022 09:30:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbiLDIaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Dec 2022 03:30:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
+        id S229903AbiLDIaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Dec 2022 03:30:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbiLDIaE (ORCPT
+        with ESMTP id S229703AbiLDIaM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Dec 2022 03:30:04 -0500
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01332175AA;
-        Sun,  4 Dec 2022 00:30:02 -0800 (PST)
-Received: from kwepemi500016.china.huawei.com (unknown [172.30.72.57])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NQ0G2605CzRpVL;
-        Sun,  4 Dec 2022 16:29:14 +0800 (CST)
-Received: from huawei.com (10.175.100.227) by kwepemi500016.china.huawei.com
- (7.221.188.220) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Sun, 4 Dec
- 2022 16:30:00 +0800
-From:   Shang XiaoJing <shangxiaojing@huawei.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <mathieu.poirier@linaro.org>,
-        <govinds@codeaurora.org>, <gokulsri@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-CC:     <shangxiaojing@huawei.com>
-Subject: [PATCH] remoteproc: qcom: q6v5: Fix missing clk_disable_unprepare() in q6v5_wcss_qcs404_power_on()
-Date:   Sun, 4 Dec 2022 16:27:57 +0800
-Message-ID: <20221204082757.18850-1-shangxiaojing@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Sun, 4 Dec 2022 03:30:12 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975A9175AD
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Dec 2022 00:30:11 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id x11so10168099ljh.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Dec 2022 00:30:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NEAdA2tVF8LZsf2n1iXOw7OGaaP2byXd0qqESevi+8I=;
+        b=KEBOyL1H3wNxjNsCsrflL9EbNiiXkVxCp5C4hjn4Hr8zHQfX9sqaXAA6omrLiM3/B1
+         NiwIl+tjZVJXnT4eQi7GJG0eRAWGU9XSO9UHU/FQmg2JUc3X83dkUzksPZsnAfSdA1/x
+         dEQ49WCHjJq6Txvc7ccAke9CottCxLUY0LtONsCqKURYa1YXNvvX3jRc4tF8qimmdzWi
+         gYHLvcXBoWlzCQupbHyZDPvcSW39mKDMpALiQRLF021DWcjIhQOcIARheZic4q2CEvO6
+         lt34gekM3ahYf+43pRrDo6RX5uSPlgz9C31g4d/1QFkIP0640anP3CqAsdZ5/Ly8C0/D
+         P4jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NEAdA2tVF8LZsf2n1iXOw7OGaaP2byXd0qqESevi+8I=;
+        b=xIOlcO2vxujIeHI3eqEpMoaKGAzRomWrl1154A8t1hGCaSlKeDkFME1r6pKsQ+iVnC
+         JWU5F6DdPrjIqbj/d1ZHhsQlYmWUjmKbYyTT4tHNOBEhAnV6xTzIpz24wBG/4JydsH+R
+         9UYblOTXaMiXOgRI5Q4EZLpbw8auHZ2qv4sw8ygS3BlPd9m407kP0+jAjNqmCwD/qqAr
+         aIEgwVt1HMoGINHNr89/av4XXUTycuIpNQNSVMfWv0tXUGYjHsuJisBEyjLuA0Tk5v+9
+         2+MWQ/40DRvUMI61VrlWw/ULphYVPVNtfH9T2koVrMow/DJ8vc7jIgeKADyGFx27ZF3F
+         yHdA==
+X-Gm-Message-State: ANoB5pkBLrbSLhaAcmZMy3Q0ArXLn/g9CWwX34VxTQHf8P0wH7qD20lF
+        CQxHVLGuHrYoqK+SqkkA6uUNNA==
+X-Google-Smtp-Source: AA0mqf5C7jR+6hYSd6dpy0tVAxQpBI7eTmjIBiT886Zz8Nn3VihEMxKjc3qUdA7dDL0h1CFKel4yHQ==
+X-Received: by 2002:a2e:875a:0:b0:26e:1d9:c2a5 with SMTP id q26-20020a2e875a000000b0026e01d9c2a5mr24793234ljj.353.1670142609979;
+        Sun, 04 Dec 2022 00:30:09 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id f27-20020a19381b000000b0049fff3f645esm1692861lfa.70.2022.12.04.00.30.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Dec 2022 00:30:09 -0800 (PST)
+Message-ID: <e78b8c4c-81e3-3d36-10b4-36f8b52e6131@linaro.org>
+Date:   Sun, 4 Dec 2022 09:30:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.175.100.227]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemi500016.china.huawei.com (7.221.188.220)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 01/15] dt-bindings: thermal: tsens: add msm8956 compat
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
+ <20221204055909.1351895-2-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221204055909.1351895-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -46,36 +85,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-q6v5_wcss_qcs404_power_on() have no fail path for readl_poll_timeout().
-Add fail path for readl_poll_timeout().
+On 04/12/2022 06:58, Dmitry Baryshkov wrote:
+> When adding support for msm8976 it was thought that msm8956 would reuse
+> the same compat. However checking the vendor kernel revealed that these
+> two platforms use different slope values for calculating the calibration
+> data.
+> 
+> Add new compatible for the tsens on msm8956 SoC.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
----
- drivers/remoteproc/qcom_q6v5_wcss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index de232337e082..ba24d745b2d6 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -351,7 +351,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
- 	if (ret) {
- 		dev_err(wcss->dev,
- 			"xo cbcr enabling timed out (rc:%d)\n", ret);
--		return ret;
-+		goto disable_xo_cbcr_clk;
- 	}
- 
- 	writel(0, wcss->reg_base + Q6SS_CGC_OVERRIDE);
-@@ -417,6 +417,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
- 	val = readl(wcss->reg_base + Q6SS_SLEEP_CBCR);
- 	val &= ~Q6SS_CLK_ENABLE;
- 	writel(val, wcss->reg_base + Q6SS_SLEEP_CBCR);
-+disable_xo_cbcr_clk:
- 	val = readl(wcss->reg_base + Q6SS_XO_CBCR);
- 	val &= ~Q6SS_CLK_ENABLE;
- 	writel(val, wcss->reg_base + Q6SS_XO_CBCR);
--- 
-2.17.1
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
