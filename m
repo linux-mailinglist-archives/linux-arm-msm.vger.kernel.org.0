@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DF65643634
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 21:59:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6926464364F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:04:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230450AbiLEU7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 15:59:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58744 "EHLO
+        id S233811AbiLEVEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 16:04:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232548AbiLEU7n (ORCPT
+        with ESMTP id S233418AbiLEVDe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 15:59:43 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB7825C5A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 12:59:42 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id b3so20521555lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 12:59:42 -0800 (PST)
+        Mon, 5 Dec 2022 16:03:34 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B7D2B253
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 13:02:07 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id s10so977059ljg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 13:02:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Bgy+f2L2rbGOuAQ7U6WSb8YGwu0T4H70GoPKtOQnTKw=;
-        b=CFlqt7da3YJEIvnrTwB241/AGjRWUuGLzB5DGhs7yvvo1pGgYEQSybv2RkJO4fIUBS
-         30MMfLZiIqc5laEZZf5HbB0bZQLl+RU8HRYivJe2uqPNUd7MoR8Z+MS8aLd8UlIxK4JN
-         b5fhEi+vqzJRA9iVRkXh+jxWYeK3D4Bo38GKGy5OfSV7WYhJFvl7EN+MX36abDSqdlY3
-         E0u6Dwl8brybOa4Qiw29S/PMYZBX+vuNvxm01AeBF0ehFWpUl/f1gaFmMh+gHAJDjFtG
-         SIMo+rfuK/eJ0Y62NqGMF0TnKd/RCwtGRgNP/8OOw80iZlsP8za7r3G9/EYc6ZaV8RbS
-         jV9Q==
+        bh=oHs+FqdUXZ8dY/1UdxeesnQgdtIGHLBMYAul3CErIMw=;
+        b=oo/3QD3RnOsB//i0LeWi6f6xfNMxY4CIVu6ymNCgcGX2szuQj5mK3IKlg43DG4CGAG
+         +m1cE1p1YACPkg553lAIpp2JKY6g0ovpeGNg2jVVWd8/48ab1FbctWf2ZfjxtJgLgP2r
+         ebGYj1hy/Uz12mNeHAUnwPzyctKuwkFFobCvL6mW3oMDzf/DUW9Vptlm8f0CTsguxFlT
+         9S0b0tieMW04bK25zhYN5vj6k5eeWvb/pWD+BhakFa5w887cHFOL+/8qh46VneOG3sU0
+         0KrETIj/yJ+fVav/i5C43uaP8sM8sHhfiSNwNydhpHdwM1O3Nh/8nv+lDsxHhiVHZW2z
+         PNjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bgy+f2L2rbGOuAQ7U6WSb8YGwu0T4H70GoPKtOQnTKw=;
-        b=FSZ4MkdXoLt47uxc2IXoYcqNlVitSt/Td42HNcPiI3baa1/1XnibtOjxtGwwNXzUhG
-         QyeAbYN+M/87Wux1VF5ssXTai7mbbMj+8h1BAZoVMHHNsnf4SLTkAxtNwY8QGfUesaH+
-         PxZbz+UieaS8W3l3PQKvT6ZjuWLjrXOX3o5wWL9cPaeUHkK2EmfdV5jg4WWZHtRnFT6a
-         qv7WTJx0fyWd7Gh3JHSpAno1CeDGMfzzyVAqJ3gn8pwCrW9Jq/+W/mcP5fL/EQ7Zpfl9
-         wWxXcqiuGVnzIExG+SUVNX3ej3ieK9MfQAxQ1B7LL4dUo7dQINCIfdOH0hUvGYj5Wm5d
-         S3OA==
-X-Gm-Message-State: ANoB5pnvPY53PqQedkeXtCOfHEk+4tX7JOLXYypa4jNy3ITrgswWAPzX
-        fanCm7GRGj/qYhN3NItkNS8WEg==
-X-Google-Smtp-Source: AA0mqf68QUVq95pZFc5bKU3wSaoKsO3Awljf51PvcoFMkTesiOnzMn7rQACunOavaTjQqgAEnhQ31A==
-X-Received: by 2002:ac2:4bd2:0:b0:4a2:61b0:8d28 with SMTP id o18-20020ac24bd2000000b004a261b08d28mr21493095lfq.600.1670273980652;
-        Mon, 05 Dec 2022 12:59:40 -0800 (PST)
+        bh=oHs+FqdUXZ8dY/1UdxeesnQgdtIGHLBMYAul3CErIMw=;
+        b=vd2EFQj6Fhd7zh1upoAXU4wCP0p5j1NAkNrsbLBziYMb7Q+jNa9EJcj/rdo3GJPRRG
+         O+b4dpzxYHV0uAYbp+HZ8WGuN+88vPChh63TgQU7RNR3PRwolq/3LTOkEgo2V2FCfLnG
+         hvOrtjLIxnsipVdJ71nKrsRH4WdFuUF7dCEvNjmBP4hNL3LHh/hEJo8ykGU71U1pLR6S
+         FFXM6ZWvuwwu+aZO89lLxYS7Ru27Ibo2oT+xO0YWlSrh9zIx9+zpd2lu91+4Oeab50JI
+         BorSW3soeMRLZSPZNXxMZbtIadbCmUnNIINGGue9K4q+5qEa6jcXkEBKoNkCT/c9QMRF
+         39Bw==
+X-Gm-Message-State: ANoB5pmV5RS7kKpw5/tf+Ja4VB9p1dx8Q/qfBeQqMAu62w4tDHoUTVKx
+        jkYtb+EAZa9bUMZ+r31MFIwJfg==
+X-Google-Smtp-Source: AA0mqf7b8AihvPHnHW9Fpk0XOGRCY4PnhRVvSAU8ZHOm+17Io0XAUyzYe1yURuzbjdyF40G3jN+d1w==
+X-Received: by 2002:a2e:2d01:0:b0:278:ebb5:ddd2 with SMTP id t1-20020a2e2d01000000b00278ebb5ddd2mr25350274ljt.494.1670274125389;
+        Mon, 05 Dec 2022 13:02:05 -0800 (PST)
 Received: from [127.0.0.1] ([94.25.229.129])
-        by smtp.gmail.com with ESMTPSA id k20-20020ac24574000000b004b55da14ba8sm1128333lfm.291.2022.12.05.12.59.39
+        by smtp.gmail.com with ESMTPSA id z15-20020a0565120c0f00b004b56de48f05sm733929lfu.27.2022.12.05.13.02.04
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Dec 2022 12:59:40 -0800 (PST)
-Date:   Mon, 05 Dec 2022 23:59:36 +0300
+        Mon, 05 Dec 2022 13:02:04 -0800 (PST)
+Date:   Tue, 06 Dec 2022 00:02:00 +0300
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 CC:     Rob Clark <robdclark@gmail.com>,
@@ -69,11 +69,11 @@ CC:     Rob Clark <robdclark@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 03/13] drm/msm: Introduce SC8280XP MDSS
+Subject: Re: [PATCH v4 08/13] drm/msm/dp: Implement hpd_notify()
 User-Agent: K-9 Mail for Android
-In-Reply-To: <20221205174433.16847-4-quic_bjorande@quicinc.com>
-References: <20221205174433.16847-1-quic_bjorande@quicinc.com> <20221205174433.16847-4-quic_bjorande@quicinc.com>
-Message-ID: <A185142D-8021-4879-B75E-2C255A7A5A21@linaro.org>
+In-Reply-To: <20221205174433.16847-9-quic_bjorande@quicinc.com>
+References: <20221205174433.16847-1-quic_bjorande@quicinc.com> <20221205174433.16847-9-quic_bjorande@quicinc.com>
+Message-ID: <0C21338C-EC82-4A57-949F-6EE8044BBFFD@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -89,20 +89,108 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5 December 2022 20:44:23 GMT+03:00, Bjorn Andersson <quic_bjorande@quic=
+On 5 December 2022 20:44:28 GMT+03:00, Bjorn Andersson <quic_bjorande@quic=
 inc=2Ecom> wrote:
 >From: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
 >
->Add compatible for the SC8280XP Mobile Display Subsystem and
->initialization for version 8=2E0=2E0=2E
+>The DisplayPort controller's hot-plug mechanism is based on pinmuxing a
+>physical signal on a GPIO pin into the controller=2E This is not always
+>possible, either because there aren't dedicated GPIOs available or
+>because the hot-plug signal is a virtual notification, in cases such as
+>USB Type-C=2E
+>
+>For these cases, by implementing the hpd_notify() callback for the
+>DisplayPort controller's drm_bridge, a downstream drm_bridge
+>(next_bridge) can be used to track and signal the connection status
+>changes=2E
+>
+>This makes it possible to use downstream drm_bridges such as
+>display-connector or any virtual mechanism, as long as they are
+>implemented as a drm_bridge=2E
 >
 >Signed-off-by: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
+>[bjorn: Drop connector->fwnode assignment and dev from struct msm_dp]
 >Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
-
 >---
+>
+>Changes since v3:
+>- None
+>
+> drivers/gpu/drm/msm/dp/dp_display=2Ec | 22 ++++++++++++++++++++++
+> drivers/gpu/drm/msm/dp/dp_drm=2Ec     |  1 +
+> drivers/gpu/drm/msm/dp/dp_drm=2Eh     |  2 ++
+> 3 files changed, 25 insertions(+)
+>
+>diff --git a/drivers/gpu/drm/msm/dp/dp_display=2Ec b/drivers/gpu/drm/msm/=
+dp/dp_display=2Ec
+>index 666b45c8ab80=2E=2E17fcf8cd84cd 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_display=2Ec
+>+++ b/drivers/gpu/drm/msm/dp/dp_display=2Ec
+>@@ -1772,3 +1772,25 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bri=
+dge,
+> 	dp_display->dp_mode=2Eh_active_low =3D
+> 		!!(dp_display->dp_mode=2Edrm_mode=2Eflags & DRM_MODE_FLAG_NHSYNC);
+> }
+>+
+>+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+>+			  enum drm_connector_status status)
+>+{
+>+	struct msm_dp_bridge *dp_bridge =3D to_dp_bridge(bridge);
+>+	struct msm_dp *dp_display =3D dp_bridge->dp_display;
+>+	struct dp_display_private *dp =3D container_of(dp_display, struct dp_di=
+splay_private, dp_display);
+>+
+>+	/* Without next_bridge interrupts are handled by the DP core directly *=
+/
+>+	if (!dp_display->next_bridge)
+>+		return;
+
+Can we use hpd_notify in all the cases by dropping the corresponding piece=
+ of code from the core driver?=20
+
+
+>+
+>+	if (!dp->core_initialized) {
+>+		drm_dbg_dp(dp->drm_dev, "not initialized\n");
+>+		return;
+>+	}
+>+
+>+	if (!dp_display->is_connected && status =3D=3D connector_status_connect=
+ed)
+>+		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+>+	else if (dp_display->is_connected && status =3D=3D connector_status_dis=
+connected)
+>+		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+>+}
+>diff --git a/drivers/gpu/drm/msm/dp/dp_drm=2Ec b/drivers/gpu/drm/msm/dp/d=
+p_drm=2Ec
+>index 6db82f9b03af=2E=2E3898366ebd5e 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_drm=2Ec
+>+++ b/drivers/gpu/drm/msm/dp/dp_drm=2Ec
+>@@ -102,6 +102,7 @@ static const struct drm_bridge_funcs dp_bridge_ops =
+=3D {
+> 	=2Eget_modes    =3D dp_bridge_get_modes,
+> 	=2Edetect       =3D dp_bridge_detect,
+> 	=2Eatomic_check =3D dp_bridge_atomic_check,
+>+	=2Ehpd_notify   =3D dp_bridge_hpd_notify,
+> };
+>=20
+> struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_=
+device *dev,
+>diff --git a/drivers/gpu/drm/msm/dp/dp_drm=2Eh b/drivers/gpu/drm/msm/dp/d=
+p_drm=2Eh
+>index 82035dbb0578=2E=2E79e6b2cf2d25 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_drm=2Eh
+>+++ b/drivers/gpu/drm/msm/dp/dp_drm=2Eh
+>@@ -32,5 +32,7 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_br=
+idge *bridge,
+> void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> 			const struct drm_display_mode *mode,
+> 			const struct drm_display_mode *adjusted_mode);
+>+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+>+			  enum drm_connector_status status);
+>=20
+> #endif /* _DP_DRM_H_ */
 
 --=20
 With best wishes
