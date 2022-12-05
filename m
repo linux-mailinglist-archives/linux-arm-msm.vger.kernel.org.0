@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E54D642D3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 17:40:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87476642D44
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 17:40:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233200AbiLEQkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 11:40:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35020 "EHLO
+        id S233241AbiLEQkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 11:40:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233022AbiLEQj1 (ORCPT
+        with ESMTP id S232058AbiLEQje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 11:39:27 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C146C205CE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 08:38:13 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id i15so8386095edf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 08:38:13 -0800 (PST)
+        Mon, 5 Dec 2022 11:39:34 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2159320BCA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 08:38:15 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id gh17so194545ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 08:38:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zdoZ3Re0757L2mwn1KYvl/6yc6DEIjLF3AShLHyNWWM=;
-        b=JMKm0kKI+noLyReu0/ATNV8+wCuvNS7JEXXZjPRL1OtYRGio4ViGJUflWj7brVgXas
-         hHkilrRB8y+qxQUqknlsPwjsVvkLy+tBUiEA6qBRKVaAS9poy8CR/yCUkVC9vrA5quks
-         9g8uu6qPxj+J5aokqc31cjTXxXvw9zAMzoajM8F7Tn61q8Xc4WuqzPy2dDvNLUVpu0uB
-         XKjp0aBeypxdLgtp9c3OCAxcMjsB1AdIilVFaCSB4AgqgU5Jx9wbnYWKoAeEGigfD8WU
-         Z8JrPjAHGx8MUNqKT2BsqWJ4L5rOC5FLsd4MkwiveXOp1ONLKg7djDPU2safEJzmiWLo
-         hqpQ==
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f8V9nFZkwbM1mFP7M0f7YVhyukgxCQVzQsjaWBAF8+c=;
+        b=QvjyimSLtThRwsB09Mtz7/4ulAx0mafYaCJ0qYXA7JxnJ9vujELomHnSZnRfxObwfx
+         uhUo1I2LSIDk3R0EV8O3VfYgmRWVZGaVSZgyX6EphHOhFc1laZMLkspM2TeY1dPbXwTO
+         9fuQzmBTW+GChZlHHKb9VRWLxOBlp7Ce1vE+XCyMW0XexvP8V9yNGeHeDOx53r6DMRsM
+         X64oBhcVyJRsO9odArfntw6R+37d9kQwbT33j1srVekEqh6ZrKwcEjZ8rac9FltEnkcK
+         M98QJSe7i5Q3FrNIP41aEH5GEPepqKRkNSYoqOPYCeC27CZbqFcjpUI2GPonVpw2d9xl
+         fwCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zdoZ3Re0757L2mwn1KYvl/6yc6DEIjLF3AShLHyNWWM=;
-        b=EJzyz0vR9eF0K4as3o/CTcLPKLDKxkZJbpElMkdQyIHENu3dV/5I5iaBwuZ+8gc4pS
-         kcSGBCgbRtWtBJUuGXagzMFSnEwG25LdoO+O3gIELuiM8OMxfQT1SR091gWtP/yBZdbh
-         Oz84PKL6FabNaKWCWSduttOO81ry9+P9abGamXWxKTEvQ/RRn4+v4+e98f3/6XbqA1/2
-         1RA3Je61OACeU665S2TIqMh6X4FvCWUdz+Ao+tbFfi0FZ/WSP0P43Nbp9ArQCVntw6W5
-         kS88+RTNn+7ytsvqLyY/J+9Z0Py2exPWqgQlX0hHzC6PDFDfyBtiJoX3REYBfpVC8IS9
-         D2/g==
-X-Gm-Message-State: ANoB5pmTv7s9+Y2q6Ao+ioiEq9nZbFe0PJoqw+m+gPgQt2FBLkasc2TR
-        nIHdapeqvIx984rmb6CX5jp3Tg==
-X-Google-Smtp-Source: AA0mqf54xMct7ysrBdlruu+pyTFTsdOmHgBo3Vbycr9HMKr2aqqvpzU3+jbN410wfqAOZv8Wq/9jMA==
-X-Received: by 2002:aa7:c585:0:b0:46b:635a:ed8f with SMTP id g5-20020aa7c585000000b0046b635aed8fmr27387734edq.406.1670258292371;
-        Mon, 05 Dec 2022 08:38:12 -0800 (PST)
+        bh=f8V9nFZkwbM1mFP7M0f7YVhyukgxCQVzQsjaWBAF8+c=;
+        b=WrTke8b15/vb5oX5oSJksl1RcOPL/P5ly1Gv+9iw7QbxY1mf34nE+6BbX0A54QYjjv
+         dlXE4t+6zbLXnJq6XmZ4H9zWFkklOEVUwoMxA3U8NG1N1kSCMk6qlT2s+5/jD81BxluF
+         6031wItE6/X3DBqV8OQjK83USwJePZUX78NP3U0pInawzGg5wNxL5AfDjIlz8FHSt2GP
+         MVZvIY1zP5YguJQoZufBTATcYGfpV9maRhjwAmMGSGcLV677FkysNQEkZyosR3HwONTw
+         eER/bxaPxk9rVYtlN+C+c4yIWQVYGzjQZRAnRooUqJ355qwZbyo/V+231H+XnCkiqKYW
+         ZtXg==
+X-Gm-Message-State: ANoB5pkrdXg8qYVmCF8CLsHDAlnAIboFZNFJE4dAFx4jDR4VkR5dcjEX
+        Ze4lQ1tKBbY344f2YlQCUWs/TCsFtGY5mtan
+X-Google-Smtp-Source: AA0mqf46j9+txa8mtVKpsWnrVVVOpvPKo/TO24ObaEJ9xywVdvdovyhYUCfe8E9c/OlRZLqa/geT6g==
+X-Received: by 2002:a17:906:3897:b0:7c0:911e:199a with SMTP id q23-20020a170906389700b007c0911e199amr22273070ejd.689.1670258294145;
+        Mon, 05 Dec 2022 08:38:14 -0800 (PST)
 Received: from prec5560.localdomain (ip5f58f364.dynamic.kabel-deutschland.de. [95.88.243.100])
-        by smtp.gmail.com with ESMTPSA id e21-20020a170906315500b007bed316a6d9sm6413610eje.18.2022.12.05.08.38.10
+        by smtp.gmail.com with ESMTPSA id e21-20020a170906315500b007bed316a6d9sm6413610eje.18.2022.12.05.08.38.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 08:38:11 -0800 (PST)
+        Mon, 05 Dec 2022 08:38:13 -0800 (PST)
 From:   Robert Foss <robert.foss@linaro.org>
 To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
         dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
@@ -64,10 +64,9 @@ To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
         quic_jesszhan@quicinc.com, andersson@kernel.org
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 08/11] arm64: dts: qcom: sm8350: Use 2 interconnect cells
-Date:   Mon,  5 Dec 2022 17:37:51 +0100
-Message-Id: <20221205163754.221139-9-robert.foss@linaro.org>
+Subject: [PATCH v3 09/11] arm64: dts: qcom: sm8350: Add display system nodes
+Date:   Mon,  5 Dec 2022 17:37:52 +0100
+Message-Id: <20221205163754.221139-10-robert.foss@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221205163754.221139-1-robert.foss@linaro.org>
 References: <20221205163754.221139-1-robert.foss@linaro.org>
@@ -83,130 +82,243 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use two interconnect cells in order to optionally
-support a path tag.
+Add mdss, mdss_mdp, dsi0, dsi0_phy nodes. With these
+nodes the display subsystem is configured to support
+one DSI output.
 
 Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 199 ++++++++++++++++++++++++++-
+ 1 file changed, 195 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 805d53d91952..434f8e8b12c1 100644
+index 434f8e8b12c1..fb1c616c5e89 100644
 --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1543,56 +1543,56 @@ apps_smmu: iommu@15000000 {
- 		config_noc: interconnect@1500000 {
- 			compatible = "qcom,sm8350-config-noc";
- 			reg = <0 0x01500000 0 0xa580>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2020, Linaro Limited
+  */
+ 
++#include <dt-bindings/interconnect/qcom,sm8350.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,dispcc-sm8350.h>
+ #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+@@ -2536,14 +2537,203 @@ usb_2_dwc3: usb@a800000 {
+ 			};
  		};
  
- 		mc_virt: interconnect@1580000 {
- 			compatible = "qcom,sm8350-mc-virt";
- 			reg = <0 0x01580000 0 0x1000>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
++		mdss: mdss@ae00000 {
++			compatible = "qcom,sm8350-mdss";
++			reg = <0 0x0ae00000 0 0x1000>;
++			reg-names = "mdss";
++
++			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
++					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "mdp0-mem", "mdp1-mem";
++
++			power-domains = <&dispcc MDSS_GDSC>;
++			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
++
++			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&gcc GCC_DISP_SF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			clock-names = "iface", "bus", "nrt_bus", "core";
++
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			iommus = <&apps_smmu 0x820 0x402>;
++
++			status = "disabled";
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			mdss_mdp: display-controller@ae01000 {
++				compatible = "qcom,sm8350-dpu";
++				reg = <0 0x0ae01000 0 0x8f000>,
++				      <0 0x0aeb0000 0 0x2008>;
++				reg-names = "mdp", "vbif";
++
++				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++					<&gcc GCC_DISP_SF_AXI_CLK>,
++					<&dispcc DISP_CC_MDSS_AHB_CLK>,
++					<&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					<&dispcc DISP_CC_MDSS_MDP_CLK>,
++					<&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "bus",
++					      "nrt_bus",
++					      "iface",
++					      "lut",
++					      "core",
++					      "vsync";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <19200000>;
++
++				operating-points-v2 = <&mdp_opp_table>;
++				power-domains = <&rpmhpd SM8350_MMCX>;
++
++				interrupt-parent = <&mdss>;
++				interrupts = <0>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&dsi0_in>;
++						};
++					};
++				};
++			};
++
++			dsi0: dsi@ae94000 {
++				compatible = "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae94000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss>;
++				interrupts = <4>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&dsi0_phy 0>,
++							 <&dsi0_phy 1>;
++
++				operating-points-v2 = <&dsi_opp_table>;
++				power-domains = <&rpmhpd SM8350_MMCX>;
++
++				phys = <&dsi0_phy>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dsi0_out: endpoint {
++						};
++					};
++				};
++
++				mdp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					/* TODO: opp-200000000 should work with
++					 * &rpmhpd_opp_low_svs, but one some of
++					 * sm8350_hdk boards reboot using this
++					 * opp.
++					 */
++					opp-200000000 {
++						opp-hz = /bits/ 64 <200000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-345000000 {
++						opp-hz = /bits/ 64 <345000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-460000000 {
++						opp-hz = /bits/ 64 <460000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++				};
++			};
++
++			dsi0_phy: phy@ae94400 {
++				compatible = "qcom,dsi-phy-5nm-8350";
++				reg = <0 0x0ae94400 0 0x200>,
++				      <0 0x0ae94600 0 0x280>,
++				      <0 0x0ae94900 0 0x260>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface", "ref";
++
++				status = "disabled";
++
++				dsi_opp_table: dsi-opp-table {
++					compatible = "operating-points-v2";
++
++					opp-187500000 {
++						opp-hz = /bits/ 64 <187500000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-358000000 {
++						opp-hz = /bits/ 64 <358000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++				};
++			};
++		};
++
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,sm8350-dispcc";
+ 			reg = <0 0x0af00000 0 0x10000>;
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
++				 <&dsi0_phy 0>, <&dsi0_phy 1>,
++				 <0>, <0>,
+ 				 <0>,
+ 				 <0>;
+ 			clock-names = "bi_tcxo",
+@@ -2558,6 +2748,7 @@ dispcc: clock-controller@af00000 {
+ 			#power-domain-cells = <1>;
+ 
+ 			power-domains = <&rpmhpd SM8350_MMCX>;
++			required-opps = <&rpmhpd_opp_low_svs>;
  		};
  
- 		system_noc: interconnect@1680000 {
- 			compatible = "qcom,sm8350-system-noc";
- 			reg = <0 0x01680000 0 0x1c200>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		aggre1_noc: interconnect@16e0000 {
- 			compatible = "qcom,sm8350-aggre1-noc";
- 			reg = <0 0x016e0000 0 0x1f180>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		aggre2_noc: interconnect@1700000 {
- 			compatible = "qcom,sm8350-aggre2-noc";
- 			reg = <0 0x01700000 0 0x33000>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		mmss_noc: interconnect@1740000 {
- 			compatible = "qcom,sm8350-mmss-noc";
- 			reg = <0 0x01740000 0 0x1f080>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		lpass_ag_noc: interconnect@3c40000 {
- 			compatible = "qcom,sm8350-lpass-ag-noc";
- 			reg = <0 0x03c40000 0 0xf080>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		compute_noc: interconnect@a0c0000{
- 			compatible = "qcom,sm8350-compute-noc";
- 			reg = <0 0x0a0c0000 0 0xa180>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-@@ -1620,8 +1620,8 @@ ipa: ipa@1e40000 {
- 			clocks = <&rpmhcc RPMH_IPA_CLK>;
- 			clock-names = "core";
- 
--			interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
--					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
-+			interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
- 			interconnect-names = "memory",
- 					     "config";
- 
-@@ -1661,7 +1661,7 @@ mpss: remoteproc@4080000 {
- 					<&rpmhpd SM8350_MSS>;
- 			power-domain-names = "cx", "mss";
- 
--			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
-+			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1 0>;
- 
- 			memory-region = <&pil_modem_mem>;
- 
-@@ -2239,7 +2239,7 @@ cdsp: remoteproc@98900000 {
- 					<&rpmhpd SM8350_MXC>;
- 			power-domain-names = "cx", "mxc";
- 
--			interconnects = <&compute_noc MASTER_CDSP_PROC &mc_virt SLAVE_EBI1>;
-+			interconnects = <&compute_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
- 
- 			memory-region = <&pil_cdsp_mem>;
- 
-@@ -2421,14 +2421,14 @@ usb_2_ssphy: phy@88ebe00 {
- 		dc_noc: interconnect@90c0000 {
- 			compatible = "qcom,sm8350-dc-noc";
- 			reg = <0 0x090c0000 0 0x4200>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
- 		gem_noc: interconnect@9100000 {
- 			compatible = "qcom,sm8350-gem-noc";
- 			reg = <0 0x09100000 0 0xb4000>;
--			#interconnect-cells = <1>;
-+			#interconnect-cells = <2>;
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
+ 		adsp: remoteproc@17300000 {
 -- 
 2.34.1
 
