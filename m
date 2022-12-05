@@ -2,75 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2C75642F92
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 19:07:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F7B0642F9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 19:09:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231497AbiLESHB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 13:07:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53622 "EHLO
+        id S231598AbiLESJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 13:09:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231387AbiLESGe (ORCPT
+        with ESMTP id S230352AbiLESJv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 13:06:34 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CB91FCF9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 10:06:33 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id f21so18976812lfm.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 10:06:33 -0800 (PST)
+        Mon, 5 Dec 2022 13:09:51 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89781BC8F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 10:09:49 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id c1so19855384lfi.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 10:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vu0CtkB3guUPfMS7CpRIQ8Dt+ybBzQKNPH967OkF8/Y=;
-        b=g4pIHPDZX+J+V9jbIhleYoPH4Ky6J49WImIDyRq+xZGDBfM1kXOdGOH+nF8mvI3dKw
-         VrQ8/1Ozz6coJQZ/Hlhc6lls89bIXCW7UpAFco/beUfUmvgSkfCyudHrogv0zUmUvO56
-         O8Kbeeuk+PqOUPqQEYiSg2pvDMn9J/MiHpZj20Sc6NUysfGzCcVGDnUN3ouarV3kxjyS
-         0QuXBaREDv5LWVp3MLPwbZlXuT4hD/Kz7RSkavWjSBQbD/3Ft5Wnfme2N15xwy2DpaVy
-         ehK2F+xBNCyyy48eQHgXYsv1L+ReAxO+Ebu6TIQuLeZZJBZWicqW1HbqBOwPgyHw10J+
-         INOg==
+        bh=1ygEPlHYIIbXAkVkRyyQhAxFfq5zBnEqOicPGwf/WsU=;
+        b=Vw/JTpQ1krpQXq0KPjaPn1fOgZbVwgTiAQdsY1mYISovHNk+XYvP7hgdmJ/pWU0Hqf
+         OiRGQfNlL9qzbpfQHbKwGuFE0VWht5/D5tRhz8v7r7wlQFADcOjqbkaREyEw97ey1izT
+         qFFOQ766ada8SHct1HuqMXC/nQA3FtsDuU3wnV1XCBnKQ8d95C9Um7tAYFYwXJI/+iSp
+         4/lrsIvuKwfNsGffK9dldjEa1/gqb53EhAjajlW5Rr1AxVVqGCvYvzuhS++GZt0Vue86
+         uKBVavXbAm+FUQuhJXBsMjNIYfOEVmTC9vDH7ybCvpXh6e6BwBIGB3SFCJHXs0Jj9e79
+         d3JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Vu0CtkB3guUPfMS7CpRIQ8Dt+ybBzQKNPH967OkF8/Y=;
-        b=q6xaopC1qs1BkqgF2sBFf01mQiNSQBjZIcwNOJS/28c6uQU7RlhEMN83H78orKnNFp
-         9HhPVP/kxzF2KZQkWuFfNVAPd3aOhYzUkASp6xG0t3cYHrDplp5diIXgSjpKkR3UJj2Z
-         rLLdFeZ17uzWsWBKdG+W8JNCZG4lIy2F3LTDDA5BPxIi25fu7KFMU+M616E6eenn/kJ2
-         v8LsxmE6f0sJ8aC6PRJjf56VkjpJrmiZkUWi28nETWMmua6fwHPM8gEF4QV+eMgBBfS4
-         xIB3kgJxaGD2BPfjUPtqEuY98FpSzipvJaBDJwqRz+O4zC6bl5ErJu5Rq+IzeecJis/H
-         JfaA==
-X-Gm-Message-State: ANoB5pm/wjOwBgrJsG/Bms8EFy8285puTA0/H1Vv3D9vdtYwJLjUU46q
-        BayBLfKNgjZ6dnSGTADLiNte5o2gjJqFSLqr
-X-Google-Smtp-Source: AA0mqf7WZnJMfbF8n+RBXU4uu5pM8fReKBOlV5mHLtDEaIRnYn8/ZKFur+vdSSzkmPlELLWK+afIfg==
-X-Received: by 2002:a19:674a:0:b0:4b1:3931:af with SMTP id e10-20020a19674a000000b004b1393100afmr25019742lfj.394.1670263591688;
-        Mon, 05 Dec 2022 10:06:31 -0800 (PST)
+        bh=1ygEPlHYIIbXAkVkRyyQhAxFfq5zBnEqOicPGwf/WsU=;
+        b=twFu5lFuwCsmTozo7shvpQrBEFy145Z/X6bgTgWGzMwAs4G1ha143QcW7Iv7f2hERU
+         kQDCAualRffY+jTq7j4CZhIjJEowynrHPycSwa1ow0eQ4KHWDApf2a85fiTq1/LsDxWJ
+         5+BYcD4B9iiLoN3mHP/R+sxLPJfwNVIuxyxapgXPr3jQvXpQfzpVKVLuZgojQg/Wvb3K
+         MVNmbakquEY6GULEElNsR/pURGM7taxWcjfBxg6GCS5WQag+I/t5JGNgWT6IoXNZAtzy
+         LNFTQY12aqYsarMj55tcUVfzE42G9ruibgZHAVQITdtLEjGAyQdAurulK9WZL7nTp549
+         r/1A==
+X-Gm-Message-State: ANoB5pmlBTCOwEuFUQVxrC+xKx62Rs255lHHhTzczPTdAqwzUCv94+EL
+        a1pjW6Btpno4jiBkIeoUj+UIOw==
+X-Google-Smtp-Source: AA0mqf5z7wLp2Dz1hSeqBNT+xZUYZDY1Sc5BuFV3VZ6xSH3BN6dWJXybUuNwSewVfTY3XHvEJRNJlg==
+X-Received: by 2002:a05:6512:2215:b0:4b5:5efb:7d29 with SMTP id h21-20020a056512221500b004b55efb7d29mr4113966lfu.477.1670263787929;
+        Mon, 05 Dec 2022 10:09:47 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05651205d200b004b5323639d8sm2179775lfo.155.2022.12.05.10.06.29
+        by smtp.gmail.com with ESMTPSA id a2-20020a19ca02000000b004946a1e045fsm2175600lfg.197.2022.12.05.10.09.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 10:06:30 -0800 (PST)
-Message-ID: <2761807c-b4b1-9c8d-50e3-efe8258ba610@linaro.org>
-Date:   Mon, 5 Dec 2022 19:06:28 +0100
+        Mon, 05 Dec 2022 10:09:47 -0800 (PST)
+Message-ID: <b58f6935-b6ac-128b-2fec-a06dccc3210f@linaro.org>
+Date:   Mon, 5 Dec 2022 19:09:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH] arm64: dts: qcom: sa8295p-adp: Add RTC node
+Subject: Re: [PATCH v4 13/13] arm64: dts: qcom: sa8295-adp: Enable DP
+ instances
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221205174309.16733-1-quic_bjorande@quicinc.com>
+References: <20221205174433.16847-1-quic_bjorande@quicinc.com>
+ <20221205174433.16847-14-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221205174309.16733-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20221205174433.16847-14-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -79,35 +92,294 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 05/12/2022 18:43, Bjorn Andersson wrote:
-> The first PM8540 PMIC has an available RTC block, describe this in the
-> SA8295P ADP. Mark it as wakeup-source to allow waking the system from
-> sleep.
+On 05/12/2022 18:44, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
+> The SA8295P ADP has, among other interfaces, six MiniDP connectors which
+> are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
+> 
+> Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
+> DP PHYs and link them all together.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 8 ++++++++
->   1 file changed, 8 insertions(+)
+> 
+> Changes since v3:
+> - None
+> 
+>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
+>   1 file changed, 241 insertions(+), 2 deletions(-)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index d55c8c5304cc..d2eb3d870f5a 100644
+> index 6c29d7d757e0..d55c8c5304cc 100644
 > --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
 > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -510,6 +510,14 @@ pm8450a: pmic@0 {
->   		#address-cells = <1>;
->   		#size-cells = <0>;
+> @@ -23,6 +23,90 @@ aliases {
+>   	chosen {
+>   		stdout-path = "serial0:115200n8";
+>   	};
+> +
+> +	dp2-connector {
+> +		compatible = "dp-connector";
+> +		label = "DP2";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			dp2_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp0_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	dp3-connector {
+> +		compatible = "dp-connector";
+> +		label = "DP3";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			dp3_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp1_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp0-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP0";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp0_connector_in: endpoint {
+> +				remote-endpoint = <&mdss0_dp2_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp1-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP1";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp1_connector_in: endpoint {
+> +				remote-endpoint = <&mdss0_dp3_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp2-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP2";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp2_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp2_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp3-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP3";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp3_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp3_phy_out>;
+> +			};
+> +		};
+> +	};
+>   };
 >   
-> +		rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> +			wakeup-source;
+>   &apps_rsc {
+> @@ -163,13 +247,168 @@ vreg_l7g: ldo7 {
+>   
+>   		vreg_l8g: ldo8 {
+>   			regulator-name = "vreg_l8g";
+> -			regulator-min-microvolt = <880000>;
+> -			regulator-max-microvolt = <880000>;
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
 > +		};
 > +
->   		pm8450a_gpios: gpio@c000 {
->   			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
->   			reg = <0xc000>;
+> +		vreg_l11g: ldo11 {
+> +			regulator-name = "vreg_l11g";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   		};
+>   	};
+>   };
+>   
+> +&dispcc0 {
+> +	status = "okay";
+> +};
+> +
+> +&dispcc1 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss0 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dp2 {
+> +	status = "okay";
+status should go last.
+
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp2_phy_out: endpoint {
+That's quite a lot of indentation.. couldn't these endpoints be defined 
+in the SoC DT?
+
+Konrad
+> +				remote-endpoint = <&edp0_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss0_dp2_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l8g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+> +&mdss0_dp3 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp3_phy_out: endpoint {
+> +				remote-endpoint = <&edp1_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss0_dp3_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l8g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+> +&mdss1 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss1_dp0 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp0_phy_out: endpoint {
+> +				remote-endpoint = <&dp2_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp0_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+> +&mdss1_dp1 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp1_phy_out: endpoint {
+> +				remote-endpoint = <&dp3_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp1_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+> +&mdss1_dp2 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp2_phy_out: endpoint {
+> +				remote-endpoint = <&edp2_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp2_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+> +&mdss1_dp3 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp3_phy_out: endpoint {
+> +				remote-endpoint = <&edp3_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp3_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +};
+> +
+>   &pcie2a {
+>   	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+>   	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
