@@ -2,128 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E61666429C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 14:44:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2970C642BA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 16:27:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232444AbiLENob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 08:44:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36766 "EHLO
+        id S231887AbiLEP1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 10:27:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231906AbiLENoA (ORCPT
+        with ESMTP id S232755AbiLEP06 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 08:44:00 -0500
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626E91DF05;
-        Mon,  5 Dec 2022 05:43:25 -0800 (PST)
-Received: (Authenticated sender: foss@0leil.net)
-        by mail.gandi.net (Postfix) with ESMTPSA id 94B6DFF80A;
-        Mon,  5 Dec 2022 13:42:52 +0000 (UTC)
-From:   Quentin Schulz <foss+kernel@0leil.net>
-To:     Samuel Holland <samuel@sholland.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Angus Ainslie <angus@akkea.ca>,
-        Ondrej Jirman <megous@megous.com>,
-        Icenowy Zheng <icenowy@aosc.io>,
-        Andy Gross <agross@kernel.org>,
-        Aleksei Mamlin <mamlinav@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        David Jander <david@protonic.nl>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Peter Geis <pgwipeout@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Lukasz Majewski <lukma@denx.de>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: [PATCH v3 9/9] arm64: dts: rockchip: fix touchscreen reset GPIO polarity
-Date:   Mon,  5 Dec 2022 14:40:38 +0100
-Message-Id: <20221103-upstream-goodix-reset-v3-9-0975809eb183@theobroma-systems.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221103-upstream-goodix-reset-v3-0-0975809eb183@theobroma-systems.com>
-References: <20221103-upstream-goodix-reset-v3-0-0975809eb183@theobroma-systems.com>
+        Mon, 5 Dec 2022 10:26:58 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C72501CFF2;
+        Mon,  5 Dec 2022 07:25:22 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B5DKp8W032050;
+        Mon, 5 Dec 2022 15:25:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=o1RgCldRU5LCONRuJD06PgFPW47ogIApdE1+sCFH2jQ=;
+ b=FZWdCXDERH0LMXaTIho7ShjgniYw/4IAMivY+PZX5mCsq5BefqEI02PlPv1fl5b5SE5R
+ +vqLYFiUV2r3q6teSOThSQ/59X35dSCr9uPhXDz+p49A84zlhg6+X5SvxVchSxxkNQzH
+ x3ArHiF0mdm+UzzY9MpE9LvtMuTI/oT1BUjbqzUGas+JBKpfPkjrcJWH18VZmE7WH9HH
+ piR9BCEoP7ygRUz9u15u3Rx6b2cIOsH808kjt1KF+2OWIwR/dNJPSaaqJnYs4rbcYMeg
+ KceWRcBEUDZYoNf/TpauDaqDAIkfQBG/2Z9wj0AonK7fxZfyCKed+WTKsfG2d8S9imoR 3w== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m7wsr45pq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Dec 2022 15:25:10 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B5FP9FK001607
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Dec 2022 15:25:09 GMT
+Received: from mmitkov.eu.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 5 Dec 2022 07:25:06 -0800
+From:   <quic_mmitkov@quicinc.com>
+To:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
+        <jzala@quicinc.com>, <todor.too@gmail.com>
+CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <cgera@qti.qualcomm.com>, <gchinnab@quicinc.com>,
+        <ayasan@qti.qualcomm.com>, <laurent.pinchart@ideasonboard.com>,
+        Milen Mitkov <quic_mmitkov@quicinc.com>
+Subject: [PATCH v6 0/4] media: camss: sm8250: Virtual channels support for SM8250
+Date:   Mon, 5 Dec 2022 17:24:46 +0200
+Message-ID: <20221205152450.1099-1-quic_mmitkov@quicinc.com>
+X-Mailer: git-send-email 2.37.3.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.10.1
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DGJc7sakvbei9c4sAM_49NrD7v0Y75Bg
+X-Proofpoint-GUID: DGJc7sakvbei9c4sAM_49NrD7v0Y75Bg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-05_01,2022-12-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999
+ priorityscore=1501 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212050127
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Milen Mitkov <quic_mmitkov@quicinc.com>
 
-The reset line is active low for the Goodix touchscreen controller so
-let's fix the polarity in the Device Tree node.
+For v6:
+- Fix for a potential race condition in csid
+- More detailed description on how to use/test this feature in
+  user-space in the last patch.
 
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
----
- arch/arm64/boot/dts/rockchip/px30-evb.dts          | 2 +-
- arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi | 2 +-
- arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts   | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+For v5:
+- Use entity->use_count instead of s_stream subdev call ret code to
+  check if another instance of the pipeline is running. Prevents an
+  error on 6.1 and up, when stopping one of several simultaneous
+  instances.
+- flush buffers instead of just returning if the pipeline didn't start.
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30-evb.dts b/arch/arm64/boot/dts/rockchip/px30-evb.dts
-index c1bbd555f5f5b..2087dc7299446 100644
---- a/arch/arm64/boot/dts/rockchip/px30-evb.dts
-+++ b/arch/arm64/boot/dts/rockchip/px30-evb.dts
-@@ -420,7 +420,7 @@ touchscreen@14 {
- 		interrupt-parent = <&gpio0>;
- 		interrupts = <RK_PA5 IRQ_TYPE_LEVEL_LOW>;
- 		irq-gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
--		reset-gpios = <&gpio0 RK_PB4 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&gpio0 RK_PB4 GPIO_ACTIVE_LOW>;
- 		VDDIO-supply = <&vcc3v3_lcd>;
- 	};
- 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-index 78157521e9449..e63491fb443be 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-@@ -588,7 +588,7 @@ touch: touchscreen@5d {
- 		AVDD28-supply = <&vcc3v0_touch>;
- 		VDDIO-supply = <&vcc3v0_touch>;
- 		irq-gpios = <&gpio4 RK_PD5 GPIO_ACTIVE_HIGH>;
--		reset-gpios = <&gpio4 RK_PD6 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&gpio4 RK_PD6 GPIO_ACTIVE_LOW>;
- 		status = "disabled";
- 	};
- };
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts b/arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts
-index 674792567fa6e..234531aaa430a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts
-@@ -495,7 +495,7 @@ touchscreen0: goodix@14 {
- 		irq-gpios = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&touch_int &touch_rst>;
--		reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_LOW>;
- 		VDDIO-supply = <&vcc3v3_lcd0_n>;
- 	};
- };
+For v4:
+- fixes the warning reported by the kernel test robot
+- tiny code change to enable the vc functionality with the partially-applied
+  multistream patches on linux-next (tested on tag:next-20221010)
+
+For v3:
+- setting the sink pad format on the CSID entity will now propagate the
+  format to the source pads to keep the subdev in a valid internal state.
+- code syntax improvements
+
+For v2:
+- code syntax improvements
+- The info print for the enabled VCs was demoted to a dbg print. Can be
+  enabled with dynamic debug, e.g.:
+echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
+
+NOTE: These changes depend on the multistream series, that as of yet
+is still not merged upstream. However, part of the
+multistream patches are merged in linux-next (tested on
+tag:next-20221010), including the patch that introduces the
+video_device_pipeline_alloc_start() functionality. This allows 
+applying and using this series on linux-next without applying the
+complete multistream set.
+
+The CSID hardware on SM8250 can demux the input data stream into
+maximum of 4 multiple streams depending on virtual channel (vc)
+or data type (dt) configuration.
+
+Situations in which demuxing is useful:
+- HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
+  (the setup we used for testing, with the imx412 sensor),
+  or a 3-frame HDR output - light, medium-lit, dark frame.
+- sensors with additional metadata that is streamed over a different
+  virtual channel/datatype.
+- sensors that produce frames with multiple resolutions in the same pixel
+  data stream
+
+With these changes, the CSID entity has, as it did previously, a single
+sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+virtual channel configuration is determined by which of the source ports
+are linked to an output VFE line. For example, the link below will
+configure the CSID driver to enable vc 0 and vc 1:
+
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+
+which will be demuxed and propagated into /dev/video0
+and /dev/video1 respectively. With this, the userspace can use
+any normal V4L2 client app to start/stop/queue/dequeue from these
+video nodes. Tested with the yavta app.
+
+The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+msm_vfe0_rdi1,...) must also be configured explicitly.
+
+Note that in order to keep a valid internal subdevice state,
+setting the sink pad format of the CSID subdevice will propagate
+this format to the source pads. However, since the CSID hardware
+can demux the input stream into several streams each of which can 
+be a different format, in that case each source pad's 
+format must be set individually, e.g.:
+
+media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+
+Milen Mitkov (4):
+  media: camss: sm8250: Virtual channels for CSID
+  media: camss: vfe: Reserve VFE lines on stream start and link to CSID
+  media: camss: vfe-480: Multiple outputs support for SM8250
+  media: camss: sm8250: Pipeline starting and stopping for multiple
+    virtual channels
+
+ .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+ .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+ .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+ .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+ drivers/media/platform/qcom/camss/camss-vfe.c |  1 +
+ .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+ drivers/media/platform/qcom/camss/camss.c     |  2 +-
+ 7 files changed, 134 insertions(+), 60 deletions(-)
 
 -- 
-b4 0.10.1
+2.37.3
+
