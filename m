@@ -2,91 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B98D643630
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 21:59:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DF65643634
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 21:59:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233106AbiLEU7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 15:59:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58656 "EHLO
+        id S230450AbiLEU7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 15:59:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbiLEU7G (ORCPT
+        with ESMTP id S232548AbiLEU7n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 15:59:06 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5241325C5A;
-        Mon,  5 Dec 2022 12:59:05 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id p36so16166991lfa.12;
-        Mon, 05 Dec 2022 12:59:05 -0800 (PST)
+        Mon, 5 Dec 2022 15:59:43 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB7825C5A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 12:59:42 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id b3so20521555lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 12:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DPNFi5M94/IqI7pOWxoC968X74QQ2n1ZVdzxSZn9iNc=;
-        b=FwgXn3xZhD5zRRqCMs4hDFdMz4tZrrxnPm7MttsWNyzhcWldTwt/80xEQZzeg3rdL8
-         U8+u40YXQuv7hPhziqdh78CfTkFwsghc9LicQlgzUNM0VAV9CQj/PPpHC+U/q7H4I9gG
-         J19k3bwTm3MJmrzOfec1jrN2i+4+XYrs+d1beDtWqNWH3hmz6+IObhp0Mo4ZRC8qR5xr
-         xSD7ezE6nLaMO5CnuTNNaQsRNHFn8ksBKPRGpIFQRn1HCB5xxm5C4LRUQRGikqbQF42b
-         QiKIA15Irwii6ntu65w8jXl8HiOSuInnedIF7p5kwEEbh8vihJrs39iQ2gOg/NvHOKUK
-         f9Qg==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Bgy+f2L2rbGOuAQ7U6WSb8YGwu0T4H70GoPKtOQnTKw=;
+        b=CFlqt7da3YJEIvnrTwB241/AGjRWUuGLzB5DGhs7yvvo1pGgYEQSybv2RkJO4fIUBS
+         30MMfLZiIqc5laEZZf5HbB0bZQLl+RU8HRYivJe2uqPNUd7MoR8Z+MS8aLd8UlIxK4JN
+         b5fhEi+vqzJRA9iVRkXh+jxWYeK3D4Bo38GKGy5OfSV7WYhJFvl7EN+MX36abDSqdlY3
+         E0u6Dwl8brybOa4Qiw29S/PMYZBX+vuNvxm01AeBF0ehFWpUl/f1gaFmMh+gHAJDjFtG
+         SIMo+rfuK/eJ0Y62NqGMF0TnKd/RCwtGRgNP/8OOw80iZlsP8za7r3G9/EYc6ZaV8RbS
+         jV9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DPNFi5M94/IqI7pOWxoC968X74QQ2n1ZVdzxSZn9iNc=;
-        b=i/oE7x9/LxElS2lM1MkLPbKJy7T6Qtt47SX8WpyxLlopQwv/HW1/5Xi5edYLOLyMAX
-         KyiIb6BtgXudIvymWJ0YjZUQI4tneMzTqqIS6x+6DhPUniQQUPnGMIT4yPEOuYKEc0Gk
-         woetn23yNVC11VBWk57Hfglai29ammxVqzp1JM8BusJlGF9DEjFOU5AjUwPjycKcUtrd
-         tcTHfRwC0YaH3TkwiA1Mu4jM+X7+8arB/DKCi58vH0XGr9DOX6ucbpIb4v4m4A2j0dX5
-         l8PXBqgj7NMA1RZ6tmXBw08YQJZngn1Jpw/lsJHTe6Y6wra0rMyWT0pD6viGpmTYAhO3
-         n9nQ==
-X-Gm-Message-State: ANoB5pnYXSAkKKpWD2TFZkH/lz9qTIWoDuKa2rZXmXD5UcBfCwvBZvJT
-        VTGUZ5sDMql3tFWhyzq7lQQ=
-X-Google-Smtp-Source: AA0mqf4Y/QbR0gP0eR82q9nn+2ByZK5n5Nsf0nxr+rI4fSU1rzgBQrMqSzZ+AjqqJrA+GtXIe4sXig==
-X-Received: by 2002:ac2:414e:0:b0:4b5:114c:fc4c with SMTP id c14-20020ac2414e000000b004b5114cfc4cmr12971797lfi.522.1670273943610;
-        Mon, 05 Dec 2022 12:59:03 -0800 (PST)
-Received: from localhost.localdomain (user-5-173-104-25.play-internet.pl. [5.173.104.25])
-        by smtp.gmail.com with ESMTPSA id x7-20020a056512078700b004978e51b691sm2233948lfr.266.2022.12.05.12.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 12:59:03 -0800 (PST)
-From:   Dominik Kobinski <dominikkobinski314@gmail.com>
-To:     konrad.dybcio@linaro.org
-Cc:     agross@kernel.org, alexeymin@postmarketos.org,
-        bjorn.andersson@linaro.org, bribbers@disroot.org,
-        devicetree@vger.kernel.org, dominikkobinski314@gmail.com,
-        linux-arm-msm@vger.kernel.org, petr.vorel@gmail.com,
-        pevik@seznam.cz
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8992-lg-bullhead: Disable cont_splash_mem
-Date:   Mon,  5 Dec 2022 21:59:01 +0100
-Message-Id: <20221205205901.2248-1-dominikkobinski314@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <2cf45767-7974-3b40-fa18-ec33db5d5ac2@linaro.org>
-References: <2cf45767-7974-3b40-fa18-ec33db5d5ac2@linaro.org>
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Bgy+f2L2rbGOuAQ7U6WSb8YGwu0T4H70GoPKtOQnTKw=;
+        b=FSZ4MkdXoLt47uxc2IXoYcqNlVitSt/Td42HNcPiI3baa1/1XnibtOjxtGwwNXzUhG
+         QyeAbYN+M/87Wux1VF5ssXTai7mbbMj+8h1BAZoVMHHNsnf4SLTkAxtNwY8QGfUesaH+
+         PxZbz+UieaS8W3l3PQKvT6ZjuWLjrXOX3o5wWL9cPaeUHkK2EmfdV5jg4WWZHtRnFT6a
+         qv7WTJx0fyWd7Gh3JHSpAno1CeDGMfzzyVAqJ3gn8pwCrW9Jq/+W/mcP5fL/EQ7Zpfl9
+         wWxXcqiuGVnzIExG+SUVNX3ej3ieK9MfQAxQ1B7LL4dUo7dQINCIfdOH0hUvGYj5Wm5d
+         S3OA==
+X-Gm-Message-State: ANoB5pnvPY53PqQedkeXtCOfHEk+4tX7JOLXYypa4jNy3ITrgswWAPzX
+        fanCm7GRGj/qYhN3NItkNS8WEg==
+X-Google-Smtp-Source: AA0mqf68QUVq95pZFc5bKU3wSaoKsO3Awljf51PvcoFMkTesiOnzMn7rQACunOavaTjQqgAEnhQ31A==
+X-Received: by 2002:ac2:4bd2:0:b0:4a2:61b0:8d28 with SMTP id o18-20020ac24bd2000000b004a261b08d28mr21493095lfq.600.1670273980652;
+        Mon, 05 Dec 2022 12:59:40 -0800 (PST)
+Received: from [127.0.0.1] ([94.25.229.129])
+        by smtp.gmail.com with ESMTPSA id k20-20020ac24574000000b004b55da14ba8sm1128333lfm.291.2022.12.05.12.59.39
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Dec 2022 12:59:40 -0800 (PST)
+Date:   Mon, 05 Dec 2022 23:59:36 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 03/13] drm/msm: Introduce SC8280XP MDSS
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20221205174433.16847-4-quic_bjorande@quicinc.com>
+References: <20221205174433.16847-1-quic_bjorande@quicinc.com> <20221205174433.16847-4-quic_bjorande@quicinc.com>
+Message-ID: <A185142D-8021-4879-B75E-2C255A7A5A21@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
 
-> Is it loaded with this DTB or does it rely on ACPI?
-It is loaded with this DT (booted from grub with efifb enabled in kernel config)
 
-The uefi is just Lumia950XLPKg (link : [1])  with some modifications. 
-It also contains code from SurfaceDuoPkg (link : [2]) that resets the platform, 
-and uefi then reinitializes MMU (with a more windows-suited memory map). 
-I'm guessing it could be the reason for the difference in behaviour.
+On 5 December 2022 20:44:23 GMT+03:00, Bjorn Andersson <quic_bjorande@quic=
+inc=2Ecom> wrote:
+>From: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
+>
+>Add compatible for the SC8280XP Mobile Display Subsystem and
+>initialization for version 8=2E0=2E0=2E
+>
+>Signed-off-by: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
+>Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
 
-Kind regards,
-Dominik
 
-[1] https://github.com/WOA-Project/Lumia950XLPkg
-[2] https://github.com/WOA-Project/SurfaceDuoPkg
+Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+
+>---
+
+--=20
+With best wishes
+Dmitry
