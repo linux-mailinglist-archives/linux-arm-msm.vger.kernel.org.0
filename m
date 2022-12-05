@@ -2,79 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC4C8642D86
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 17:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92EEA642DE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 17:52:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbiLEQtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 11:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
+        id S232930AbiLEQvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 11:51:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232169AbiLEQti (ORCPT
+        with ESMTP id S232020AbiLEQu4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 11:49:38 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE9620F7C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 08:48:54 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id m6-20020a9d7e86000000b0066ec505ae93so2057857otp.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 08:48:54 -0800 (PST)
+        Mon, 5 Dec 2022 11:50:56 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6F7B1E9;
+        Mon,  5 Dec 2022 08:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=O4WPtqOs6pYDke8VCfpzwsIX+8zN33o8tLS2XMy/lFU=;
-        b=EvWmzEra/azIE+dhpMGnktmqmSoesb8PSCiM/05QKkVO5anMKEbRHSG7nojCSOyYWk
-         9IDI1UgS5rC+uB5j5uOW4no2X6seMos8u1Uby8q6RKzl1vCALcAn7vpiT6rpclAi8Jt0
-         gPKoEl0xikkT9S+7dg4LTBa5X4VHIsnKU2e6OrEO/j4h9xN1NPllzu29Dg0k3gFH+bOt
-         HMDW+rYw/YqhqvZ6y4oXgIeqTNVodnF9zHtiwgFo2Y0tEc6ReoK23o3+Epe6dWg/8ai1
-         Z4r7fWQ42rAk0Fys+lVH3VBvE+2FTvVvceopyfVxKS8DxJV3KaRTE9M5zTY24mYt1gIO
-         /rEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=O4WPtqOs6pYDke8VCfpzwsIX+8zN33o8tLS2XMy/lFU=;
-        b=63vCzX+QObSiEsAJFipKL52MGNs27yFt+Krlhz92sMUMH/OtH3Uev7I3DS/bYPiMAI
-         nOP96ybJ3pdWkGuAhqp+Ja7VLB17PNYne4N0fe5JVpH7JqGyP7/tOOHBvpEoPuBzttQ5
-         A5EGhauDSx2lIKfR2b5VbJ4HOI+tP2+6VmqDIuzCZcbH1f1Vjm4nPda6TZOA4IQdNXZ4
-         yExOsi3qbkS3Rp7lLEzXXCr/QWkaT/EuwDFCTLnSQXlACGWm0QL6sPzJXh+xP/aTNp1a
-         nbVjOVBJFjYcEodWaE2LFh5p/3X54b0uVXH0Mhi8/ZifSI64OX+rUKWIphNMAzh1HsgY
-         EJhw==
-X-Gm-Message-State: ANoB5pnt/6p91AFXV3BWuOOowqa697KKzLRT4SGnrqYcerknRguuyoIF
-        THI8VRwo05zILXIq3lDipzY+lM5HW57fQztSR74=
-X-Google-Smtp-Source: AA0mqf6rJpockmAlPLGWb5IdXxyZXi5oeB/VlA7nQtTh5mH5GBjbP93nFRUHbmrw3A3v2AKvxeLYo6EVgAyGoUC2980=
-X-Received: by 2002:a05:6830:61ce:b0:66b:e4e2:8d25 with SMTP id
- cc14-20020a05683061ce00b0066be4e28d25mr41635604otb.152.1670258933537; Mon, 05
- Dec 2022 08:48:53 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1670258991; x=1701794991;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=rEp1zQdYuNC0t245hu4WP6DEtna2pq6vGeoF3bRP32E=;
+  b=j/QJIp3bqdfi40mNvhHczfME3hRf8msNHjwvWS3Vp8UAiqklrkXHWtJI
+   PjsjY7fxXmY4y3f16jt6x39GtfgDc6anXGWr8Ik9RgdKNfOQ29SgKTAXP
+   shQ9Rm24HuB+PO1hWBkVfy/PPfOZ4Q3ZxaKm+rykHf6NSmkab0WEER6RI
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Dec 2022 08:49:49 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2022 08:49:49 -0800
+Received: from [10.251.45.87] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 5 Dec 2022
+ 08:49:44 -0800
+Message-ID: <d1554eec-7f45-c513-f77c-7868943de2d4@quicinc.com>
+Date:   Mon, 5 Dec 2022 18:49:42 +0200
 MIME-Version: 1.0
-Received: by 2002:a05:6358:7211:b0:dd:1fa2:ef73 with HTTP; Mon, 5 Dec 2022
- 08:48:53 -0800 (PST)
-Reply-To: plml47@hotmail.com
-From:   Philip Manul <lometogo1999@gmail.com>
-Date:   Mon, 5 Dec 2022 08:48:53 -0800
-Message-ID: <CAFtqZGFXDNDSmyfAW1goTwuOjaKBWi=RMxR7avPMnWxdOUFKOg@mail.gmail.com>
-Subject: REP:
-To:     in <in@proposal.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: **
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v6 4/4] media: camss: sm8250: Pipeline starting and
+ stopping for multiple virtual channels
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
+        <jzala@quicinc.com>, <todor.too@gmail.com>
+CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
+        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221205152450.1099-1-quic_mmitkov@quicinc.com>
+ <20221205152450.1099-5-quic_mmitkov@quicinc.com>
+ <846f56b0-2591-318d-cb37-99cbf6d7bb32@linaro.org>
+From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
+In-Reply-To: <846f56b0-2591-318d-cb37-99cbf6d7bb32@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Guten tag,
-Mein Name ist Philip Manul. Ich bin von Beruf Rechtsanwalt. Ich habe
-einen verstorbenen Kunden, der zuf=C3=A4llig denselben Namen mit Ihnen
-teilt. Ich habe alle Papierdokumente in meinem Besitz. Ihr Verwandter,
-mein verstorbener Kunde, hat hier in meinem Land einen nicht
-beanspruchten Fonds zur=C3=BCckgelassen. Ich warte auf Ihre Antwort zum
-Verfahren.
-Philip Manul.
+
+On 05/12/2022 18:43, Bryan O'Donoghue wrote:
+> On 05/12/2022 15:24, quic_mmitkov@quicinc.com wrote:
+>> media-ctl -v -d /dev/media0 -V '"imx577 
+>> '22-001a'":0[fmt:SRGGB10/3840x2160 field:none]'
+>
+> I really like the improved commit log, thank you for that.
+>
+> SRGGB10/3840x2160 drivers/media/i2c/imx412.c that's not a supported 
+> resolution.
+>
+> media-ctl -v -d /dev/media0 -V '"imx577 
+> '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+>
+> ?
+>
+> ---
+> bod
+
+
+Hi Bryan,
+
+it's not a supported resolution with the current imx412/577 driver in 
+upstream. We tested with a different driver (with proprietary Sony 
+registers)
+
+that uses this resolution that generates 2 multiplexed streams. It would 
+be impossible for pure upstream solution to test this driver with imx412 
+right now.
+
+I couldn't have used the upstream supported resolution either, because 
+it's of a sensor mode with only 1 stream and that would create the 
+impression that anybody can just take this imx412 sensor and use the 
+upstream driver to test the solution, but this is in fact not possible 
+without register changes to the sensor driver itself.
+
+Regards,
+
+Milen
+
