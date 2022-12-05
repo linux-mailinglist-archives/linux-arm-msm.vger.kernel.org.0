@@ -2,86 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F7B0642F9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 19:09:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7651A642FBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 19:18:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231598AbiLESJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 13:09:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57074 "EHLO
+        id S231687AbiLESSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 13:18:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230352AbiLESJv (ORCPT
+        with ESMTP id S230459AbiLESSl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 13:09:51 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89781BC8F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 10:09:49 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id c1so19855384lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 10:09:49 -0800 (PST)
+        Mon, 5 Dec 2022 13:18:41 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D10A4164B5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 10:18:38 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id d123so2654878iof.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 10:18:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1ygEPlHYIIbXAkVkRyyQhAxFfq5zBnEqOicPGwf/WsU=;
-        b=Vw/JTpQ1krpQXq0KPjaPn1fOgZbVwgTiAQdsY1mYISovHNk+XYvP7hgdmJ/pWU0Hqf
-         OiRGQfNlL9qzbpfQHbKwGuFE0VWht5/D5tRhz8v7r7wlQFADcOjqbkaREyEw97ey1izT
-         qFFOQ766ada8SHct1HuqMXC/nQA3FtsDuU3wnV1XCBnKQ8d95C9Um7tAYFYwXJI/+iSp
-         4/lrsIvuKwfNsGffK9dldjEa1/gqb53EhAjajlW5Rr1AxVVqGCvYvzuhS++GZt0Vue86
-         uKBVavXbAm+FUQuhJXBsMjNIYfOEVmTC9vDH7ybCvpXh6e6BwBIGB3SFCJHXs0Jj9e79
-         d3JA==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1Kwjjsx+waj1NcHgZ8ne7/Y3ZoidRky6q1QRST3mznU=;
+        b=k/D6BRrAiEltqHGAx7SdxcEa8xxfmOjT2Q8OQrBn85TrObX/ggwOvTc/w630GDofxn
+         5mGGw13ytll+9uDYJfi1kQUcIVnouzkhyJJA9S43gB09mJGCNGxYdPUo6JeRjK0kNET4
+         Emjqo8yM/xdPN7/CtKRinsPeLRnn+bQekTW7w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1ygEPlHYIIbXAkVkRyyQhAxFfq5zBnEqOicPGwf/WsU=;
-        b=twFu5lFuwCsmTozo7shvpQrBEFy145Z/X6bgTgWGzMwAs4G1ha143QcW7Iv7f2hERU
-         kQDCAualRffY+jTq7j4CZhIjJEowynrHPycSwa1ow0eQ4KHWDApf2a85fiTq1/LsDxWJ
-         5+BYcD4B9iiLoN3mHP/R+sxLPJfwNVIuxyxapgXPr3jQvXpQfzpVKVLuZgojQg/Wvb3K
-         MVNmbakquEY6GULEElNsR/pURGM7taxWcjfBxg6GCS5WQag+I/t5JGNgWT6IoXNZAtzy
-         LNFTQY12aqYsarMj55tcUVfzE42G9ruibgZHAVQITdtLEjGAyQdAurulK9WZL7nTp549
-         r/1A==
-X-Gm-Message-State: ANoB5pmlBTCOwEuFUQVxrC+xKx62Rs255lHHhTzczPTdAqwzUCv94+EL
-        a1pjW6Btpno4jiBkIeoUj+UIOw==
-X-Google-Smtp-Source: AA0mqf5z7wLp2Dz1hSeqBNT+xZUYZDY1Sc5BuFV3VZ6xSH3BN6dWJXybUuNwSewVfTY3XHvEJRNJlg==
-X-Received: by 2002:a05:6512:2215:b0:4b5:5efb:7d29 with SMTP id h21-20020a056512221500b004b55efb7d29mr4113966lfu.477.1670263787929;
-        Mon, 05 Dec 2022 10:09:47 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id a2-20020a19ca02000000b004946a1e045fsm2175600lfg.197.2022.12.05.10.09.46
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Kwjjsx+waj1NcHgZ8ne7/Y3ZoidRky6q1QRST3mznU=;
+        b=x+qHemPSwj/RKftxH6sFnS0izQtpSa4WaJki7AObmF8YUtSHRK1j5LqwSPsv7HBY7W
+         0c2WyuL2Lac0xCWfLkIb7v+U14jB7ULbD9zURuPK039/Mnu9v9ZMeBfrITRcrcLR0RsV
+         Du7HZFSQKQm5nkbdJI3tbGFAUGfaoI0k7X+CPUdkSHIdt14Cxn1Xc/KumrZt2NrJ6Y5w
+         UOyl/RRPg0O7L3Vxgr+XHZLGgI7F+a0RsPFCFQaTL7ol1fZsKFqu1msz0UYbc21WSMPF
+         ZCIG0aaDNiFpzznrzG+Ic+UtSvUPjhs1kc3y/CybjpeZjZeQaZCXRVEJRlSqiWUfukOz
+         iRMw==
+X-Gm-Message-State: ANoB5pkvZ8J+uW+nct1CYO31U0e0ClmsNEQzyukZpBr+TkJfXSvCgfN6
+        acON8xXljx8S1Lzw9fj/rnGYOA==
+X-Google-Smtp-Source: AA0mqf7QEA1CNoWdkleXcJM+P4tT/Lz8FQq9eZlR+KvECnmuIAiYHcC6m9lD6rZLxGtle8E713gXjw==
+X-Received: by 2002:a05:6638:450a:b0:363:a91e:7ead with SMTP id bs10-20020a056638450a00b00363a91e7eadmr39895791jab.196.1670264317535;
+        Mon, 05 Dec 2022 10:18:37 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id u30-20020a02cbde000000b0038a55bcfb47sm440373jaq.58.2022.12.05.10.18.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 10:09:47 -0800 (PST)
-Message-ID: <b58f6935-b6ac-128b-2fec-a06dccc3210f@linaro.org>
-Date:   Mon, 5 Dec 2022 19:09:45 +0100
+        Mon, 05 Dec 2022 10:18:37 -0800 (PST)
+Date:   Mon, 5 Dec 2022 18:18:36 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>
+Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
+ max latencies
+Message-ID: <Y441/Icd2wSgVnNU@google.com>
+References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
+ <20221205112500.GB4514@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v4 13/13] arm64: dts: qcom: sa8295-adp: Enable DP
- instances
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221205174433.16847-1-quic_bjorande@quicinc.com>
- <20221205174433.16847-14-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221205174433.16847-14-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221205112500.GB4514@thinkpad>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,296 +83,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Dec 05, 2022 at 04:55:00PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
+> > In ASPM driver, LTR threshold scale and value are updated based on
+> > tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
+> > LTR threshold scale and value are greater values than max snoop/non-snoop
+> > value.
+> > 
+> > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+> > reported snoop/no-snoop values is greater than or equal to
+> > LTR_L1.2_THRESHOLD value.
+> > 
+> > Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> I take my Ack back... Sorry that I did not look into this patch closer.
+> 
+> > ---
+> > 
+> > I am taking this patch forward as prasad is no more working with our org.
+> > changes since v6:
+> > 	- Rebasing with pci/next.
+> > changes since v5:
+> > 	- no changes, just reposting as standalone patch instead of reply to
+> > 	  previous patch.
+> > Changes since v4:
+> > 	- Replaced conditional statements with min and max.
+> > changes since v3:
+> > 	- Changed the logic to include this condition "snoop/nosnoop
+> > 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
+> > Changes since v2:
+> > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+> > Changes since v1:
+> > 	- Added missing variable declaration in v1 patch
+> > ---
+> >  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
+> >  1 file changed, 30 insertions(+)
+> > 
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index 928bf64..2bb8470 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> >  {
+> >  	struct pci_dev *child = link->downstream, *parent = link->pdev;
+> >  	u32 val1, val2, scale1, scale2;
+> > +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
+> >  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+> >  	u32 ctl1 = 0, ctl2 = 0;
+> >  	u32 pctl1, pctl2, cctl1, cctl2;
+> > +	u16 ltr;
+> > +	u16 max_snoop_lat, max_nosnoop_lat;
+> >  
+> >  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+> >  		return;
+> >  
+> > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+> > +	if (!ltr)
+> > +		return;
+> > +
+> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+> > +
+> > +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> > +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
+> > +
+> > +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> > +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
+> > +
+> > +	/* choose the greater max scale value between snoop and no snoop value*/
+> > +	max_scale = max(max_snp_scale, max_nsnp_scale);
+> > +
+> > +	/* choose the greater max value between snoop and no snoop scales */
+> > +	max_val = max(max_snp_val, max_nsnp_val);
+> > +
+> >  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+> >  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> >  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> > @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> >  	 */
+> >  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> >  	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> > +
+> > +	/*
+> > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+> > +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
+> 
+> Apart from the bug in calculating the LTR_Threshold as reported by Matthias
+> and Bjorn, I'm wondering if we are covering up for the device firmware issue.
+
+Yes, I think the patch is doing exactly that.
+
+> As per section 6.18, if the device reports snoop/no-snoop scale/value as 0, then
+> it implies that the device won't tolerate any additional delays from the host.
+>
+> In that case, how can we allow the link to go into L1.2 since that would incur
+> high delay compared to L1.1?
+
+I had the same doubt, a value of 0 doesn't make sense, if it literally means
+'max delay of 0ns'. I did some debugging around this issue. One thing I found
+is that there are NVMe models that don't have issues with entering L1.2 with
+max (no-)snoop latencies of 0. From that I infer that a value of 0 does not
+literally mean a max delay of 0ns.
+
+The PCIe spec doesn't say specifically what a value of 0 in those registers
+means, but chapter "6.18 Latency Tolerance Reporting (LTR) Mechanism" of the
+PCIe 4.0 base spec says something about the latency requirements in LTR
+messages:
+
+  Setting the value and scale fields to all 0’s indicates that the device will
+  be impacted by any delay and that the best possible service is requested.
+
+With that and the fact that several NVMe's don't have issues with all 0 values
+I deduce that all 0's means 'best possible service' and not 'max latency of
+0ns'. It seems the Kioxia firmware has a bug which interprets all 0 values as
+a max latency of 0ns.
+
+Another finding is that the Kioxia NVMe can enter L1.2 if the max latencies
+are set to values >= the LTR threshold. Unfortunately that isn't a viable
+fix for existing devices in the field, devices under development could possibly
+adjust the latencies in the BIOS (coreboot code [1] suggests that this is done
+at least in some cases).
+
+m.
+
+[1] https://github.com/coreboot/coreboot/blob/master/src/device/pciexp_device.c#L313
 
 
-On 05/12/2022 18:44, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> The SA8295P ADP has, among other interfaces, six MiniDP connectors which
-> are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
-> 
-> Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
-> DP PHYs and link them all together.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> 
-> Changes since v3:
-> - None
-> 
->   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
->   1 file changed, 241 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index 6c29d7d757e0..d55c8c5304cc 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -23,6 +23,90 @@ aliases {
->   	chosen {
->   		stdout-path = "serial0:115200n8";
->   	};
-> +
-> +	dp2-connector {
-> +		compatible = "dp-connector";
-> +		label = "DP2";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			dp2_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp0_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	dp3-connector {
-> +		compatible = "dp-connector";
-> +		label = "DP3";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			dp3_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp1_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp0-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP0";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp0_connector_in: endpoint {
-> +				remote-endpoint = <&mdss0_dp2_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp1-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP1";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp1_connector_in: endpoint {
-> +				remote-endpoint = <&mdss0_dp3_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp2-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP2";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp2_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp2_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp3-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP3";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp3_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp3_phy_out>;
-> +			};
-> +		};
-> +	};
->   };
->   
->   &apps_rsc {
-> @@ -163,13 +247,168 @@ vreg_l7g: ldo7 {
->   
->   		vreg_l8g: ldo8 {
->   			regulator-name = "vreg_l8g";
-> -			regulator-min-microvolt = <880000>;
-> -			regulator-max-microvolt = <880000>;
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11g: ldo11 {
-> +			regulator-name = "vreg_l11g";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
->   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->   		};
->   	};
->   };
->   
-> +&dispcc0 {
-> +	status = "okay";
-> +};
-> +
-> +&dispcc1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss0 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss0_dp2 {
-> +	status = "okay";
-status should go last.
 
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp2_phy_out: endpoint {
-That's quite a lot of indentation.. couldn't these endpoints be defined 
-in the SoC DT?
 
-Konrad
-> +				remote-endpoint = <&edp0_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp2_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss0_dp3 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp1_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp3_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp0 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp0_phy_out: endpoint {
-> +				remote-endpoint = <&dp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp0_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp1 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp1_phy_out: endpoint {
-> +				remote-endpoint = <&dp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp1_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp2 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp2_phy_out: endpoint {
-> +				remote-endpoint = <&edp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp2_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp3 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp3_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
->   &pcie2a {
->   	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
->   	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> > +	 */
+> > +	scale = min(scale, max_scale);
+> > +	value = min(value, max_val);
+> > +
+> >  	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+> >  
+> >  	/* Some broken devices only support dword access to L1 SS */
+> > -- 
+> > 2.7.4
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
