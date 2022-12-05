@@ -2,227 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7651A642FBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 19:18:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6114C643194
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 20:17:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231687AbiLESSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 13:18:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
+        id S233309AbiLETPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 14:15:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbiLESSl (ORCPT
+        with ESMTP id S233178AbiLETPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 13:18:41 -0500
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D10A4164B5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 10:18:38 -0800 (PST)
-Received: by mail-io1-xd29.google.com with SMTP id d123so2654878iof.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 10:18:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1Kwjjsx+waj1NcHgZ8ne7/Y3ZoidRky6q1QRST3mznU=;
-        b=k/D6BRrAiEltqHGAx7SdxcEa8xxfmOjT2Q8OQrBn85TrObX/ggwOvTc/w630GDofxn
-         5mGGw13ytll+9uDYJfi1kQUcIVnouzkhyJJA9S43gB09mJGCNGxYdPUo6JeRjK0kNET4
-         Emjqo8yM/xdPN7/CtKRinsPeLRnn+bQekTW7w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Kwjjsx+waj1NcHgZ8ne7/Y3ZoidRky6q1QRST3mznU=;
-        b=x+qHemPSwj/RKftxH6sFnS0izQtpSa4WaJki7AObmF8YUtSHRK1j5LqwSPsv7HBY7W
-         0c2WyuL2Lac0xCWfLkIb7v+U14jB7ULbD9zURuPK039/Mnu9v9ZMeBfrITRcrcLR0RsV
-         Du7HZFSQKQm5nkbdJI3tbGFAUGfaoI0k7X+CPUdkSHIdt14Cxn1Xc/KumrZt2NrJ6Y5w
-         UOyl/RRPg0O7L3Vxgr+XHZLGgI7F+a0RsPFCFQaTL7ol1fZsKFqu1msz0UYbc21WSMPF
-         ZCIG0aaDNiFpzznrzG+Ic+UtSvUPjhs1kc3y/CybjpeZjZeQaZCXRVEJRlSqiWUfukOz
-         iRMw==
-X-Gm-Message-State: ANoB5pkvZ8J+uW+nct1CYO31U0e0ClmsNEQzyukZpBr+TkJfXSvCgfN6
-        acON8xXljx8S1Lzw9fj/rnGYOA==
-X-Google-Smtp-Source: AA0mqf7QEA1CNoWdkleXcJM+P4tT/Lz8FQq9eZlR+KvECnmuIAiYHcC6m9lD6rZLxGtle8E713gXjw==
-X-Received: by 2002:a05:6638:450a:b0:363:a91e:7ead with SMTP id bs10-20020a056638450a00b00363a91e7eadmr39895791jab.196.1670264317535;
-        Mon, 05 Dec 2022 10:18:37 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id u30-20020a02cbde000000b0038a55bcfb47sm440373jaq.58.2022.12.05.10.18.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 10:18:37 -0800 (PST)
-Date:   Mon, 5 Dec 2022 18:18:36 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Kai-Heng Feng <kai.heng.feng@canonical.com>
-Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
- max latencies
-Message-ID: <Y441/Icd2wSgVnNU@google.com>
-References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
- <20221205112500.GB4514@thinkpad>
+        Mon, 5 Dec 2022 14:15:07 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C029209A5;
+        Mon,  5 Dec 2022 11:15:06 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B5JEfWF021763;
+        Mon, 5 Dec 2022 19:14:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=BsIhV61f48a1exBvKZpEkb+RMgLqTQbvrtEGK9lnO6E=;
+ b=mATROBkqtMjScK3P+4ab5UYYYJUWWSrEbw0zRqWvfopey2ovTC3gCd3ZZP+J1aQluXgl
+ Pqn1vuFuqR2lChqGNo893mjeVITBtLOqRoRjhdskHMZNmTQOG2LrNLrJ7ZMUB4bU/FxT
+ AVcv13MtuSEZvSBAw7iXRKVTyxZApSLUEiHgfS5jmnKgVawnDfSLkizcujcIOT3SclFC
+ Xvzeay5cAmgXudZp3XkuBTJCJJCxmmxBhfge1gfGK0Iggn8uHPEfjgRaW1xT8Z7l4HDm
+ Kul2Nb1YQie4JihWvR0q91YyO3N1Si++qD5XCjjKx/jEmSauMpnpxUKbtu4lOpMwvE4P Sg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3m7wdxw4ee-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Dec 2022 19:14:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B5JEeRL026638
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Dec 2022 19:14:40 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 5 Dec 2022 11:14:39 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <devicetree@vger.kernel.org>, <airlied@gmail.com>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v8 0/5] Add data-lanes and link-frequencies to dp_out endpoint
+Date:   Mon, 5 Dec 2022 11:14:25 -0800
+Message-ID: <1670267670-15832-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221205112500.GB4514@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: z72bwSbJOYammp8RfJ6DetVcz6rAwQ2l
+X-Proofpoint-ORIG-GUID: z72bwSbJOYammp8RfJ6DetVcz6rAwQ2l
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-05_01,2022-12-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ clxscore=1015 adultscore=0 mlxscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ mlxlogscore=861 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212050160
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 05, 2022 at 04:55:00PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
-> > In ASPM driver, LTR threshold scale and value are updated based on
-> > tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
-> > LTR threshold scale and value are greater values than max snoop/non-snoop
-> > value.
-> > 
-> > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-> > reported snoop/no-snoop values is greater than or equal to
-> > LTR_L1.2_THRESHOLD value.
-> > 
-> > Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> I take my Ack back... Sorry that I did not look into this patch closer.
-> 
-> > ---
-> > 
-> > I am taking this patch forward as prasad is no more working with our org.
-> > changes since v6:
-> > 	- Rebasing with pci/next.
-> > changes since v5:
-> > 	- no changes, just reposting as standalone patch instead of reply to
-> > 	  previous patch.
-> > Changes since v4:
-> > 	- Replaced conditional statements with min and max.
-> > changes since v3:
-> > 	- Changed the logic to include this condition "snoop/nosnoop
-> > 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-> > Changes since v2:
-> > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-> > Changes since v1:
-> > 	- Added missing variable declaration in v1 patch
-> > ---
-> >  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
-> >  1 file changed, 30 insertions(+)
-> > 
-> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > index 928bf64..2bb8470 100644
-> > --- a/drivers/pci/pcie/aspm.c
-> > +++ b/drivers/pci/pcie/aspm.c
-> > @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> >  {
-> >  	struct pci_dev *child = link->downstream, *parent = link->pdev;
-> >  	u32 val1, val2, scale1, scale2;
-> > +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
-> >  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
-> >  	u32 ctl1 = 0, ctl2 = 0;
-> >  	u32 pctl1, pctl2, cctl1, cctl2;
-> > +	u16 ltr;
-> > +	u16 max_snoop_lat, max_nosnoop_lat;
-> >  
-> >  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
-> >  		return;
-> >  
-> > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-> > +	if (!ltr)
-> > +		return;
-> > +
-> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-> > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-> > +
-> > +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
-> > +
-> > +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
-> > +
-> > +	/* choose the greater max scale value between snoop and no snoop value*/
-> > +	max_scale = max(max_snp_scale, max_nsnp_scale);
-> > +
-> > +	/* choose the greater max value between snoop and no snoop scales */
-> > +	max_val = max(max_snp_val, max_nsnp_val);
-> > +
-> >  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
-> >  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> >  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> >  	 */
-> >  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
-> >  	encode_l12_threshold(l1_2_threshold, &scale, &value);
-> > +
-> > +	/*
-> > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-> > +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
-> 
-> Apart from the bug in calculating the LTR_Threshold as reported by Matthias
-> and Bjorn, I'm wondering if we are covering up for the device firmware issue.
+Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
+functions to DP driver.
 
-Yes, I think the patch is doing exactly that.
+Kuogee Hsieh (5):
+  arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
+    endpoint
+  dt-bindings: msm/dp: add data-lanes and link-frequencies property
+  drm/msm/dp: parser data-lanes as property of dp_out endpoint
+  drm/msm/dp: parser link-frequencies as property of dp_out endpoint
+  drm/msm/dp: add support of max dp link rate
 
-> As per section 6.18, if the device reports snoop/no-snoop scale/value as 0, then
-> it implies that the device won't tolerate any additional delays from the host.
->
-> In that case, how can we allow the link to go into L1.2 since that would incur
-> high delay compared to L1.1?
+ .../bindings/display/msm/dp-controller.yaml        | 22 +++++++++----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  6 +++-
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |  6 +++-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  4 +++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  7 ++--
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c                 | 38 ++++++++++++++++++----
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |  2 ++
+ 8 files changed, 68 insertions(+), 18 deletions(-)
 
-I had the same doubt, a value of 0 doesn't make sense, if it literally means
-'max delay of 0ns'. I did some debugging around this issue. One thing I found
-is that there are NVMe models that don't have issues with entering L1.2 with
-max (no-)snoop latencies of 0. From that I infer that a value of 0 does not
-literally mean a max delay of 0ns.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-The PCIe spec doesn't say specifically what a value of 0 in those registers
-means, but chapter "6.18 Latency Tolerance Reporting (LTR) Mechanism" of the
-PCIe 4.0 base spec says something about the latency requirements in LTR
-messages:
-
-  Setting the value and scale fields to all 0’s indicates that the device will
-  be impacted by any delay and that the best possible service is requested.
-
-With that and the fact that several NVMe's don't have issues with all 0 values
-I deduce that all 0's means 'best possible service' and not 'max latency of
-0ns'. It seems the Kioxia firmware has a bug which interprets all 0 values as
-a max latency of 0ns.
-
-Another finding is that the Kioxia NVMe can enter L1.2 if the max latencies
-are set to values >= the LTR threshold. Unfortunately that isn't a viable
-fix for existing devices in the field, devices under development could possibly
-adjust the latencies in the BIOS (coreboot code [1] suggests that this is done
-at least in some cases).
-
-m.
-
-[1] https://github.com/coreboot/coreboot/blob/master/src/device/pciexp_device.c#L313
-
-
-
-
-> > +	 */
-> > +	scale = min(scale, max_scale);
-> > +	value = min(value, max_val);
-> > +
-> >  	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
-> >  
-> >  	/* Some broken devices only support dword access to L1 SS */
-> > -- 
-> > 2.7.4
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
