@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 005E8643468
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 20:46:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D12E643490
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 20:47:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235076AbiLETqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 14:46:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47852 "EHLO
+        id S235096AbiLETr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 14:47:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235056AbiLETqF (ORCPT
+        with ESMTP id S235084AbiLETrh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 14:46:05 -0500
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62C52DA98;
-        Mon,  5 Dec 2022 11:42:26 -0800 (PST)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-143ffc8c2b2so14723838fac.2;
-        Mon, 05 Dec 2022 11:42:26 -0800 (PST)
+        Mon, 5 Dec 2022 14:47:37 -0500
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 129052A42E;
+        Mon,  5 Dec 2022 11:44:04 -0800 (PST)
+Received: by mail-oi1-f173.google.com with SMTP id q83so765889oif.7;
+        Mon, 05 Dec 2022 11:44:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kwtUnWRhcXi3vHuwS7fJ1x5P4unvbDZKnLOAXO8tzqQ=;
-        b=vytJSjguo358gTWWGPgDDnGu0VuHKmjk21EabO/bSI/k+9ACMIwkFq+9TfNZHG5Lve
-         et/1ZopXwvTJXVk4N4OvIaSu/n2b/58+8Vg3c/Qsm55AOGTowubAnVxUyqKMcuiJV4m7
-         7I6iuMVb7lMs5uVOxBniOEXvNOCtgXrdGch4WfGemMhbyHzb+HyMh4tOoYACjetyfCz2
-         Odq99hQlP50Q7YAi8Jj8vPuf2bcNga7ZjCvMnuDi0dWrbZCr7ciB/nlPrK4/PFSYuhjM
-         G2hk4GIsJxtQWz+XHyKu6yn7L/li9vlFLQKrVaLC1fHjxjC+qq2QSL/2/PT6jeR9q7hR
-         nD2w==
-X-Gm-Message-State: ANoB5plIEUrgXEwk+L+qUKbll5bg9Om9dhzPaQMNw1jZuJyaKNy3pSJu
-        O9yJYMY1ChcuuekUP+JDBA==
-X-Google-Smtp-Source: AA0mqf7mIsgmwqlw8/wmvAHtTjOWt43bx7CJhpx5R1PKP7Ypb/aP8Ye3Bws7U3SFMAb8D4rKuV/myA==
-X-Received: by 2002:a05:6870:6c1b:b0:144:307b:c88a with SMTP id na27-20020a0568706c1b00b00144307bc88amr10087441oab.267.1670269345827;
-        Mon, 05 Dec 2022 11:42:25 -0800 (PST)
+        bh=HQzVdvVBCf/eUGpwToE6Ntfsj3J9nsllj1YkGsPYjqQ=;
+        b=yRHf+xpvpZF+dT0FNc4F6+7Zr8xF+F990ptgf/qU9gKZMTjAbBbetSU2b0VOinNvMB
+         bJHxxHPLPhUHRscTDANb5dROIhcqmtKvXykmPl0cQ84iXMcWCozset/JHGdokfhbEmvn
+         u+cPF2v6LiUjknAf99/yXitd6XY37OCXdeF2eZ2pvR5+f2KSEy+1+xgLpx/KxdGiyU6r
+         XEdiZMv0Wmkxqj229ip+Qne4OBZ6inC1lIIpKTFrSwYzhN+Ly7Prkj/U4TAaMy32zhhq
+         uCm+NcF8jUA9pKw2o2Xm5inmL83kZ9Bfo4iuqH5ivwG+DImH9FKQ6IDEcQUzoSwke7A1
+         MIqg==
+X-Gm-Message-State: ANoB5pmcgORy4FOMimY+Hat9551nlpW+ZAX8OVl5LALtUYDOE/xqzcV9
+        7irkqU45UFQY5FNyZbMvn8Likxmlhw==
+X-Google-Smtp-Source: AA0mqf7b+4zUTozm5hbhuaD7wbOoaVSrzhgGn8fvTMrKL4MCB2VXcVReLBK54tTCECqtI7gKpxjEBw==
+X-Received: by 2002:aca:a908:0:b0:35c:23ed:253a with SMTP id s8-20020acaa908000000b0035c23ed253amr4257656oie.91.1670269443185;
+        Mon, 05 Dec 2022 11:44:03 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o12-20020a4abe8c000000b0049f3f5afcbasm906400oop.13.2022.12.05.11.42.24
+        by smtp.gmail.com with ESMTPSA id cv31-20020a056870c69f00b00143cfb377b4sm9657112oab.6.2022.12.05.11.44.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 11:42:25 -0800 (PST)
-Received: (nullmailer pid 2470894 invoked by uid 1000);
-        Mon, 05 Dec 2022 19:42:24 -0000
-Date:   Mon, 5 Dec 2022 13:42:24 -0600
+        Mon, 05 Dec 2022 11:44:02 -0800 (PST)
+Received: (nullmailer pid 2473716 invoked by uid 1000);
+        Mon, 05 Dec 2022 19:44:02 -0000
+Date:   Mon, 5 Dec 2022 13:44:02 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-acpi@vger.kernel.org,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>
-Subject: Re: [PATCH v7 02/20] dt-bindings: Add binding for gunyah hypervisor
-Message-ID: <167026934327.2470835.18397895386816332012.robh@kernel.org>
-References: <20221121140009.2353512-1-quic_eberman@quicinc.com>
- <20221121140009.2353512-3-quic_eberman@quicinc.com>
+        Andy Gross <agross@kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v3 05/15] dt-bindings: remoteproc: qcom,adsp: drop resets
+ and qcom,halt-regs
+Message-ID: <167026944152.2473650.845853977501597417.robh@kernel.org>
+References: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
+ <20221124184333.133911-6-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221121140009.2353512-3-quic_eberman@quicinc.com>
+In-Reply-To: <20221124184333.133911-6-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,23 +73,32 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 21 Nov 2022 05:59:51 -0800, Elliot Berman wrote:
-> When Linux is booted as a guest under the Gunyah hypervisor, the Gunyah
-> Resource Manager applies a devicetree overlay describing the virtual
-> platform configuration of the guest VM, such as the message queue
-> capability IDs for communicating with the Resource Manager. This
-> information is not otherwise discoverable by a VM: the Gunyah hypervisor
-> core does not provide a direct interface to discover capability IDs nor
-> a way to communicate with RM without having already known the
-> corresponding message queue capability ID. Add the DT bindings that
-> Gunyah adheres for the hypervisor node and message queues.
+On Thu, 24 Nov 2022 19:43:23 +0100, Krzysztof Kozlowski wrote:
+> Some remote processors (e.g. QCS404 CDSP, SC7180 MPSS/MSS) can be brought
+> to life using two different bindings:
+> 1. PIL (Peripheral Image Loader)
+> 2. PAS (Peripheral Authentication Service)
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> They still describe the same hardware - firmware load for remote
+> processor - but use different methods to communicate with that
+> processor.
+> 
+> For these SoCs, the qcom,adsp.yaml bindings were describing the PAS
+> method, however for easier customization of board DTS, the bindings
+> combined additional properties from PIL: reset lines, qcom,halt-regs and
+> additional clocks.  The devices and Linux kernel drivers, when
+> instantiated as PAS, do not use these properties, so drop them from the
+> bindings.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->  .../bindings/firmware/gunyah-hypervisor.yaml  | 82 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 83 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> 
+> Changes since v2:
+> 1. New patch
+> ---
+>  .../bindings/remoteproc/qcom,adsp.yaml        | 113 +-----------------
+>  1 file changed, 4 insertions(+), 109 deletions(-)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
