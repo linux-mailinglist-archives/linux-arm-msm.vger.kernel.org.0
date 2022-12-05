@@ -2,69 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DCBC64380A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:25:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FDA643813
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:27:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbiLEWZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 17:25:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55040 "EHLO
+        id S233847AbiLEW1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 17:27:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231867AbiLEWZx (ORCPT
+        with ESMTP id S233759AbiLEW1n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 17:25:53 -0500
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4767AB4B;
-        Mon,  5 Dec 2022 14:25:53 -0800 (PST)
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-144bd860fdbso2058941fac.0;
-        Mon, 05 Dec 2022 14:25:53 -0800 (PST)
+        Mon, 5 Dec 2022 17:27:43 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD6A2112E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 14:27:38 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id b13so9895047lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 14:27:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ik/UwYGkNtvCKECth4XEynNimFfWTJwc3LAnHqyGcKM=;
+        b=HpWcdPQye7eAnYl6/VFGcLZEkXqb0Gbfs2zHPaNL3UDbgG71N4p95sjHZWjmdAe7oW
+         /X5V1wP7L5cVQEJngTBJbfUULlZzX0s/TRMni5oQZBhJ1khqOuxqOK6kS7XDZERRXl98
+         eNNmoBGEAylwHs4VxWfdfnaaMoa1ec89Ds42RIULDMVTopSPazVDDajiUE/cq3wj5KKA
+         4+rhOWdwiDkbyL4uQtJ6YHwkBbCg3owcvDXoL8pDt9+t1zrw5QoQJN8Lkms7AeSwIJwg
+         8osV3Ip76RKWngK7UUY7GetBKctPsW+2DZFXIvR+xans3D4n59vAFsj4WKmd7zgwbFRo
+         Di2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iYt/DH5axArWCdtKIq8L7LqqDIDr8bBvFNydtROy+Xk=;
-        b=iZM2ozifaxWOoAojWIN8LlimlX/zmUWY4PEggdSWIZmuZ7sEefntJlh3nE2jjCyRut
-         WAovbtiGURkFWK9yRVG/dix5c0/BpKmJkbVMUJKd13IDdV0RqPrSV7o+KLWiZb3eAURI
-         QmzEveIlks1OdCl7v6JVTFfpqMGf8LGgczM1qS/2xnnggH+vbQST7bX/+57cBqKdJH5a
-         mDETkLEWHl2XngAWe7lFJCEiC5U3JFUu1AuzzGSazlJUV83SpUX0Yeu68qILicxzdr0f
-         HeSgRIidPx7XIeEjyIcjNP7kP1Eo8+7N/sSYqFKzi+sdlnBaZCJkTUv9L0rZBUPeZfqQ
-         gEPw==
-X-Gm-Message-State: ANoB5pkSwsYk5rpd2eAXED+OS3AxsspGRTnJ6VJXHJhu67EWvgaXj0xB
-        yWE8URqaSY45B63G6gNmdvLOWSoBTA==
-X-Google-Smtp-Source: AA0mqf7+MYm64muTcJa5mzLrg+MyapenmZQOQMjLZWeflzFpG52Pvav0+gpk2TveGELaLB+x1JZIAw==
-X-Received: by 2002:a05:6870:c694:b0:13c:d5bd:6faa with SMTP id cv20-20020a056870c69400b0013cd5bd6faamr37009124oab.275.1670279152484;
-        Mon, 05 Dec 2022 14:25:52 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id n189-20020aca59c6000000b0035a64076e0bsm7542792oib.37.2022.12.05.14.25.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 14:25:52 -0800 (PST)
-Received: (nullmailer pid 2799247 invoked by uid 1000);
-        Mon, 05 Dec 2022 22:25:51 -0000
-Date:   Mon, 5 Dec 2022 16:25:51 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-pci@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'dma-coherent' property
-Message-ID: <167027915042.2799181.8429355168491802390.robh@kernel.org>
-References: <20221205094530.12883-1-johan+linaro@kernel.org>
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ik/UwYGkNtvCKECth4XEynNimFfWTJwc3LAnHqyGcKM=;
+        b=wGVg1KIDUkUFkWtQ3n1oBEZSVpFYbksYDNjCDb1S+0PgERunfyjyHVW1iX6+zeaae7
+         XqcXNTkUD+cOBG9rbtfWrwiC037XK3AMzbXFxrdGg3tmrIvNfEmt2auSLs/LxuFJPYGB
+         kga/kqzFoGlKEjfW7mFcxxI+OrxRq4QNROmWppGIXfo24LeJwxASvNjAFV1IkYSzpg/p
+         xqj4uB1iMLkenr1MQMfcCTMEx5SUK1RD83pAym6ki9aTbRk7PDnx5mHshTMgJ6cYVTpv
+         K6cE8BT83xygFDmn6wXbR/FE3DzlPaNKUlwKYMr2fKdVQt/dXIxwbz5UaZ+B43EXduop
+         eO7w==
+X-Gm-Message-State: ANoB5pnaq/lWsc9yTHirLVMADjpRlHwzr+5Da2Av3YCcemd5v/23tYO8
+        s5EjTj+glLOChisBUN48f4rP7w==
+X-Google-Smtp-Source: AA0mqf4ix7dAZ17Pea+SOr+Lf9tdy75RBjwTknY7dYH+pwR4H3+ziQ7VLQVdGorXp/iwo9WROlWYEQ==
+X-Received: by 2002:ac2:5636:0:b0:4b5:5f97:6a18 with SMTP id b22-20020ac25636000000b004b55f976a18mr4282631lff.77.1670279257008;
+        Mon, 05 Dec 2022 14:27:37 -0800 (PST)
+Received: from [127.0.0.1] ([94.25.229.129])
+        by smtp.gmail.com with ESMTPSA id v20-20020a2e5054000000b002797d6bb516sm1503230ljd.20.2022.12.05.14.27.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Dec 2022 14:27:36 -0800 (PST)
+Date:   Tue, 06 Dec 2022 01:26:26 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org
+CC:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
+        ahalaney@redhat.com, abel.vesa@linaro.org, alim.akhtar@samsung.com,
+        avri.altman@wdc.com, bvanassche@acm.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_13/23=5D_scsi=3A_ufs=3A_ufs-qc?= =?US-ASCII?Q?om=3A_Remove_un-necessary_goto_statements?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20221201174328.870152-14-manivannan.sadhasivam@linaro.org>
+References: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org> <20221201174328.870152-14-manivannan.sadhasivam@linaro.org>
+Message-ID: <3F1FB621-3368-43C6-8D91-115352BE6921@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221205094530.12883-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -72,24 +79,417 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 05 Dec 2022 10:45:30 +0100, Johan Hovold wrote:
-> Devices on some PCIe buses may be cache coherent and must be marked as
-> such in the devicetree to avoid data corruption.
-> 
-> This is specifically needed on recent Qualcomm platforms like SC8280XP.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-> 
-> Lorenzo, the corresponding SC8280XP DT fix is heading for 6.2 so it
-> would be nice if this one could be merged for 6.2-rc1 (or -rc2) as well
-> to avoid the corresponding DT validation warnings.
-> 
-> Johan
-> 
-> 
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+On 1 December 2022 20:43:18 GMT+03:00, Manivannan Sadhasivam <manivannan=
+=2Esadhasivam@linaro=2Eorg> wrote:
+>goto in error path is useful if the function needs to do cleanup other
+>than returning the error code=2E But in this driver, goto statements are
+>used for just returning the error code in many places=2E This really
+>makes it hard to read the code=2E
+>
+>So let's get rid of those goto statements and just return the error code
+>directly=2E
+>
+>Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>Signed-off-by: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eor=
+g>
+
+Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+
+
+>---
+> drivers/ufs/host/ufs-qcom=2Ec | 100 +++++++++++++++---------------------
+> 1 file changed, 41 insertions(+), 59 deletions(-)
+>
+>diff --git a/drivers/ufs/host/ufs-qcom=2Ec b/drivers/ufs/host/ufs-qcom=2E=
+c
+>index 8ad1415e10b6=2E=2E7cd996ac180b 100644
+>--- a/drivers/ufs/host/ufs-qcom=2Ec
+>+++ b/drivers/ufs/host/ufs-qcom=2Ec
+>@@ -110,7 +110,7 @@ static void ufs_qcom_disable_lane_clks(struct ufs_qco=
+m_host *host)
+>=20
+> static int ufs_qcom_enable_lane_clks(struct ufs_qcom_host *host)
+> {
+>-	int err =3D 0;
+>+	int err;
+> 	struct device *dev =3D host->hba->dev;
+>=20
+> 	if (host->is_lane_clks_enabled)
+>@@ -119,7 +119,7 @@ static int ufs_qcom_enable_lane_clks(struct ufs_qcom_=
+host *host)
+> 	err =3D ufs_qcom_host_clk_enable(dev, "rx_lane0_sync_clk",
+> 		host->rx_l0_sync_clk);
+> 	if (err)
+>-		goto out;
+>+		return err;
+>=20
+> 	err =3D ufs_qcom_host_clk_enable(dev, "tx_lane0_sync_clk",
+> 		host->tx_l0_sync_clk);
+>@@ -137,7 +137,8 @@ static int ufs_qcom_enable_lane_clks(struct ufs_qcom_=
+host *host)
+> 		goto disable_rx_l1;
+>=20
+> 	host->is_lane_clks_enabled =3D true;
+>-	goto out;
+>+
+>+	return 0;
+>=20
+> disable_rx_l1:
+> 	clk_disable_unprepare(host->rx_l1_sync_clk);
+>@@ -145,7 +146,7 @@ static int ufs_qcom_enable_lane_clks(struct ufs_qcom_=
+host *host)
+> 	clk_disable_unprepare(host->tx_l0_sync_clk);
+> disable_rx_l0:
+> 	clk_disable_unprepare(host->rx_l0_sync_clk);
+>-out:
+>+
+> 	return err;
+> }
+>=20
+>@@ -160,25 +161,25 @@ static int ufs_qcom_init_lane_clks(struct ufs_qcom_=
+host *host)
+> 	err =3D ufs_qcom_host_clk_get(dev, "rx_lane0_sync_clk",
+> 					&host->rx_l0_sync_clk, false);
+> 	if (err)
+>-		goto out;
+>+		return err;
+>=20
+> 	err =3D ufs_qcom_host_clk_get(dev, "tx_lane0_sync_clk",
+> 					&host->tx_l0_sync_clk, false);
+> 	if (err)
+>-		goto out;
+>+		return err;
+>=20
+> 	/* In case of single lane per direction, don't read lane1 clocks */
+> 	if (host->hba->lanes_per_direction > 1) {
+> 		err =3D ufs_qcom_host_clk_get(dev, "rx_lane1_sync_clk",
+> 			&host->rx_l1_sync_clk, false);
+> 		if (err)
+>-			goto out;
+>+			return err;
+>=20
+> 		err =3D ufs_qcom_host_clk_get(dev, "tx_lane1_sync_clk",
+> 			&host->tx_l1_sync_clk, true);
+> 	}
+>-out:
+>-	return err;
+>+
+>+	return 0;
+> }
+>=20
+> static int ufs_qcom_check_hibern8(struct ufs_hba *hba)
+>@@ -241,7 +242,7 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+>=20
+> 	if (!host->core_reset) {
+> 		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
+>-		goto out;
+>+		return 0;
+> 	}
+>=20
+> 	reenable_intr =3D hba->is_irq_enabled;
+>@@ -252,7 +253,7 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+> 	if (ret) {
+> 		dev_err(hba->dev, "%s: core_reset assert failed, err =3D %d\n",
+> 				 __func__, ret);
+>-		goto out;
+>+		return ret;
+> 	}
+>=20
+> 	/*
+>@@ -274,15 +275,14 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+> 		hba->is_irq_enabled =3D true;
+> 	}
+>=20
+>-out:
+>-	return ret;
+>+	return 0;
+> }
+>=20
+> static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+> {
+> 	struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
+> 	struct phy *phy =3D host->generic_phy;
+>-	int ret =3D 0;
+>+	int ret;
+> 	bool is_rate_B =3D UFS_QCOM_LIMIT_HS_RATE =3D=3D PA_HS_MODE_B;
+>=20
+> 	/* Reset UFS Host Controller and PHY */
+>@@ -299,7 +299,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba =
+*hba)
+> 	if (ret) {
+> 		dev_err(hba->dev, "%s: phy init failed, ret =3D %d\n",
+> 			__func__, ret);
+>-		goto out;
+>+		return ret;
+> 	}
+>=20
+> 	/* power on phy - start serdes and phy's power and clocks */
+>@@ -316,7 +316,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba =
+*hba)
+>=20
+> out_disable_phy:
+> 	phy_exit(phy);
+>-out:
+>+
+> 	return ret;
+> }
+>=20
+>@@ -374,7 +374,6 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba =
+*hba,
+> static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> 			       u32 hs, u32 rate, bool update_link_startup_timer)
+> {
+>-	int ret =3D 0;
+> 	struct ufs_qcom_host *host =3D ufshcd_get_variant(hba);
+> 	struct ufs_clk_info *clki;
+> 	u32 core_clk_period_in_ns;
+>@@ -409,11 +408,11 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba,=
+ u32 gear,
+> 	 * Aggregation logic=2E
+> 	*/
+> 	if (ufs_qcom_cap_qunipro(host) && !ufshcd_is_intr_aggr_allowed(hba))
+>-		goto out;
+>+		return 0;
+>=20
+> 	if (gear =3D=3D 0) {
+> 		dev_err(hba->dev, "%s: invalid gear =3D %d\n", __func__, gear);
+>-		goto out_error;
+>+		return -EINVAL;
+> 	}
+>=20
+> 	list_for_each_entry(clki, &hba->clk_list_head, list) {
+>@@ -436,7 +435,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u=
+32 gear,
+> 	}
+>=20
+> 	if (ufs_qcom_cap_qunipro(host))
+>-		goto out;
+>+		return 0;
+>=20
+> 	core_clk_period_in_ns =3D NSEC_PER_SEC / core_clk_rate;
+> 	core_clk_period_in_ns <<=3D OFFSET_CLK_NS_REG;
+>@@ -451,7 +450,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u=
+32 gear,
+> 					"%s: index %d exceeds table size %zu\n",
+> 					__func__, gear,
+> 					ARRAY_SIZE(hs_fr_table_rA));
+>-				goto out_error;
+>+				return -EINVAL;
+> 			}
+> 			tx_clk_cycles_per_us =3D hs_fr_table_rA[gear-1][1];
+> 		} else if (rate =3D=3D PA_HS_MODE_B) {
+>@@ -460,13 +459,13 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba,=
+ u32 gear,
+> 					"%s: index %d exceeds table size %zu\n",
+> 					__func__, gear,
+> 					ARRAY_SIZE(hs_fr_table_rB));
+>-				goto out_error;
+>+				return -EINVAL;
+> 			}
+> 			tx_clk_cycles_per_us =3D hs_fr_table_rB[gear-1][1];
+> 		} else {
+> 			dev_err(hba->dev, "%s: invalid rate =3D %d\n",
+> 				__func__, rate);
+>-			goto out_error;
+>+			return -EINVAL;
+> 		}
+> 		break;
+> 	case SLOWAUTO_MODE:
+>@@ -476,14 +475,14 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba,=
+ u32 gear,
+> 					"%s: index %d exceeds table size %zu\n",
+> 					__func__, gear,
+> 					ARRAY_SIZE(pwm_fr_table));
+>-			goto out_error;
+>+			return -EINVAL;
+> 		}
+> 		tx_clk_cycles_per_us =3D pwm_fr_table[gear-1][1];
+> 		break;
+> 	case UNCHANGED:
+> 	default:
+> 		dev_err(hba->dev, "%s: invalid mode =3D %d\n", __func__, hs);
+>-		goto out_error;
+>+		return -EINVAL;
+> 	}
+>=20
+> 	if (ufshcd_readl(hba, REG_UFS_TX_SYMBOL_CLK_NS_US) !=3D
+>@@ -507,12 +506,8 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, =
+u32 gear,
+> 		 */
+> 		mb();
+> 	}
+>-	goto out;
+>=20
+>-out_error:
+>-	ret =3D -EINVAL;
+>-out:
+>-	return ret;
+>+	return 0;
+> }
+>=20
+> static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>@@ -527,8 +522,7 @@ static int ufs_qcom_link_startup_notify(struct ufs_hb=
+a *hba,
+> 					0, true)) {
+> 			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+> 				__func__);
+>-			err =3D -EINVAL;
+>-			goto out;
+>+			return -EINVAL;
+> 		}
+>=20
+> 		if (ufs_qcom_cap_qunipro(host))
+>@@ -554,7 +548,6 @@ static int ufs_qcom_link_startup_notify(struct ufs_hb=
+a *hba,
+> 		break;
+> 	}
+>=20
+>-out:
+> 	return err;
+> }
+>=20
+>@@ -691,8 +684,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba =
+*hba,
+>=20
+> 	if (!dev_req_params) {
+> 		pr_err("%s: incoming dev_req_params is NULL\n", __func__);
+>-		ret =3D -EINVAL;
+>-		goto out;
+>+		return -EINVAL;
+> 	}
+>=20
+> 	switch (status) {
+>@@ -720,7 +712,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba =
+*hba,
+> 		if (ret) {
+> 			pr_err("%s: failed to determine capabilities\n",
+> 					__func__);
+>-			goto out;
+>+			return ret;
+> 		}
+>=20
+> 		/* enable the device ref clock before changing to HS mode */
+>@@ -761,7 +753,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba =
+*hba,
+> 		ret =3D -EINVAL;
+> 		break;
+> 	}
+>-out:
+>+
+> 	return ret;
+> }
+>=20
+>@@ -773,14 +765,11 @@ static int ufs_qcom_quirk_host_pa_saveconfigtime(st=
+ruct ufs_hba *hba)
+> 	err =3D ufshcd_dme_get(hba, UIC_ARG_MIB(PA_VS_CONFIG_REG1),
+> 			     &pa_vs_config_reg1);
+> 	if (err)
+>-		goto out;
+>+		return err;
+>=20
+> 	/* Allow extension of MSB bits of PA_SaveConfigTime attribute */
+>-	err =3D ufshcd_dme_set(hba, UIC_ARG_MIB(PA_VS_CONFIG_REG1),
+>+	return ufshcd_dme_set(hba, UIC_ARG_MIB(PA_VS_CONFIG_REG1),
+> 			    (pa_vs_config_reg1 | (1 << 12)));
+>-
+>-out:
+>-	return err;
+> }
+>=20
+> static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
+>@@ -957,9 +946,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>=20
+> 	host =3D devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+> 	if (!host) {
+>-		err =3D -ENOMEM;
+> 		dev_err(dev, "%s: no memory for qcom ufs host\n", __func__);
+>-		goto out;
+>+		return -ENOMEM;
+> 	}
+>=20
+> 	/* Make a two way bind between the qcom host and the hba */
+>@@ -980,10 +968,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+> 	host->rcdev=2Eowner =3D dev->driver->owner;
+> 	host->rcdev=2Enr_resets =3D 1;
+> 	err =3D devm_reset_controller_register(dev, &host->rcdev);
+>-	if (err) {
+>+	if (err)
+> 		dev_warn(dev, "Failed to register reset controller\n");
+>-		err =3D 0;
+>-	}
+>=20
+> 	if (!has_acpi_companion(dev)) {
+> 		host->generic_phy =3D devm_phy_get(dev, "ufsphy");
+>@@ -1049,17 +1035,16 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+> 	host->dbg_print_en |=3D UFS_QCOM_DEFAULT_DBG_PRINT_EN;
+> 	ufs_qcom_get_default_testbus_cfg(host);
+> 	err =3D ufs_qcom_testbus_config(host);
+>-	if (err) {
+>+	if (err)
+>+		/* Failure is non-fatal */
+> 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+> 				__func__, err);
+>-		err =3D 0;
+>-	}
+>=20
+>-	goto out;
+>+	return 0;
+>=20
+> out_variant_clear:
+> 	ufshcd_set_variant(hba, NULL);
+>-out:
+>+
+> 	return err;
+> }
+>=20
+>@@ -1085,7 +1070,7 @@ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_=
+div(struct ufs_hba *hba,
+> 			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> 			    &core_clk_ctrl_reg);
+> 	if (err)
+>-		goto out;
+>+		return err;
+>=20
+> 	core_clk_ctrl_reg &=3D ~DME_VS_CORE_CLK_CTRL_MAX_CORE_CLK_1US_CYCLES_MA=
+SK;
+> 	core_clk_ctrl_reg |=3D clk_cycles;
+>@@ -1093,11 +1078,9 @@ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear=
+_div(struct ufs_hba *hba,
+> 	/* Clear CORE_CLK_DIV_EN */
+> 	core_clk_ctrl_reg &=3D ~DME_VS_CORE_CLK_CTRL_CORE_CLK_DIV_EN_BIT;
+>=20
+>-	err =3D ufshcd_dme_set(hba,
+>+	return ufshcd_dme_set(hba,
+> 			    UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
+> 			    core_clk_ctrl_reg);
+>-out:
+>-	return err;
+> }
+>=20
+> static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+>@@ -1180,7 +1163,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba=
+ *hba,
+>=20
+> 		if (err || !dev_req_params) {
+> 			ufshcd_uic_hibern8_exit(hba);
+>-			goto out;
+>+			return err;
+> 		}
+>=20
+> 		ufs_qcom_cfg_timers(hba,
+>@@ -1191,8 +1174,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba=
+ *hba,
+> 		ufshcd_uic_hibern8_exit(hba);
+> 	}
+>=20
+>-out:
+>-	return err;
+>+	return 0;
+> }
+>=20
+> static void ufs_qcom_print_hw_debug_reg_all(struct ufs_hba *hba,
+
+--=20
+With best wishes
+Dmitry
