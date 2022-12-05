@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5EF9643679
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:08:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63C3C643685
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:09:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233553AbiLEVI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 16:08:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41276 "EHLO
+        id S232792AbiLEVJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 16:09:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232501AbiLEVII (ORCPT
+        with ESMTP id S233417AbiLEVJB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 16:08:08 -0500
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABC2B9594;
-        Mon,  5 Dec 2022 13:08:04 -0800 (PST)
-Received: by mail-oi1-f169.google.com with SMTP id v70so6148367oie.3;
-        Mon, 05 Dec 2022 13:08:04 -0800 (PST)
+        Mon, 5 Dec 2022 16:09:01 -0500
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E595A5F73;
+        Mon,  5 Dec 2022 13:08:59 -0800 (PST)
+Received: by mail-ot1-f41.google.com with SMTP id a7-20020a056830008700b0066c82848060so8066704oto.4;
+        Mon, 05 Dec 2022 13:08:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=h7D2s6NnE8vYMQ/1od1mZ431L8A1FEXOo9mtdMb467A=;
-        b=E0HugYwOYGyGS7q0pHLqRKdKlki6jBpe3ficsDYyzh4FCnjL1NhhGi/q8EGTW2tfZJ
-         a1hWpPbfEw6oE+NdnDPVR/uskdCHFesVgLZXe4Bil+56OMU9rGoRdyc4rj8eVal2WQj+
-         tckb9qdcyI4hKOrZUQH7qSMdxOxdZF5xW4FvWNTuOe6aFCIA58mV/n9N6+s300YUUesQ
-         fRajpwSenrQdP8iyGEcNDqZtCYOHyOZicbvNNJiW3Adr63hFXiVUbaUYjHi5oxTG65Ej
-         mfDMt5Z5FyQ2nGV8FCZB88GU1H/dbSz+7OKX+TtdHW14dEcWJQN68TDtVt3AHqLCOHoy
-         6HaQ==
-X-Gm-Message-State: ANoB5pnlAzJ9/VR1cEXs3qjloFdkULna9yi7H06SK0EfQlL6Y4QXEZg8
-        zTjXdxXl3ekXUsxLRtZ0Sw==
-X-Google-Smtp-Source: AA0mqf7kB79NxvQBbpUMIQzxzhMvhuENJ0k1IumtXLM2ePDNaBA7cCNBU9POc3JkyXDrBtrsmYCj2w==
-X-Received: by 2002:a05:6808:1902:b0:35d:d646:3d00 with SMTP id bf2-20020a056808190200b0035dd6463d00mr1388934oib.194.1670274483639;
-        Mon, 05 Dec 2022 13:08:03 -0800 (PST)
+        bh=GXjFpm/+C4nfs0zFQWp+HDIv2IGjyOfEFa6fb6gGpMw=;
+        b=J3/txBpPFbg8xUCmtyjILhTpM6KcYgoCFgF3aJakfxYaz0G3rjlLZn0To4WZT8Wd9y
+         tx3A0OGqCmhooOq3Vd/mlY+37d6Of5KgWr3ecHRd+TQ/8RdCpHahpk9sU3nscym3GPj1
+         B4pG61tMFPikJtKw3MxEi7vBIc7jM+97Q1edM1zDc8tW97+H+P2b+YBatUC8MKLHWnUO
+         0WuHbfgVyo4Srx8Y6EZ7E87yu/zTMPsThMmu2waxO5JN4epCFp3QgvHeG4d2LVX+Prwv
+         NrkQ1abi7bQriL3M8nc3TnYe4f0A8ewT0/hpkdJV4aogJ7hMHL+c1gcwIv4mSgA/WOMq
+         HDug==
+X-Gm-Message-State: ANoB5plv+wJTKePjXFqKIe3OqqyQw8nG95IuS06XRM2b3h5DW6EspSnD
+        CK0ZlBkhxI8hqiPeEDWtLg==
+X-Google-Smtp-Source: AA0mqf4pi2xM26IK4lkpivLEq04ATV1U/s3nJb8ELurAsyYe6CVsyow1euCYO7OR3rTAz0hPf4OzCw==
+X-Received: by 2002:a9d:69:0:b0:66e:976:193f with SMTP id 96-20020a9d0069000000b0066e0976193fmr31490146ota.214.1670274539009;
+        Mon, 05 Dec 2022 13:08:59 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j8-20020aca3c08000000b0035c21f1a570sm3252935oia.6.2022.12.05.13.08.02
+        by smtp.gmail.com with ESMTPSA id n25-20020a9d6f19000000b00660e833baddsm8206891otq.29.2022.12.05.13.08.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 13:08:03 -0800 (PST)
-Received: (nullmailer pid 2623860 invoked by uid 1000);
-        Mon, 05 Dec 2022 21:08:02 -0000
-Date:   Mon, 5 Dec 2022 15:08:02 -0600
+        Mon, 05 Dec 2022 13:08:58 -0800 (PST)
+Received: (nullmailer pid 2625205 invoked by uid 1000);
+        Mon, 05 Dec 2022 21:08:57 -0000
+Date:   Mon, 5 Dec 2022 15:08:57 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     freedreno@lists.freedesktop.org, robdclark@gmail.com,
-        devicetree@vger.kernel.org, sean@poorly.run,
-        quic_jesszhan@quicinc.com, loic.poulain@linaro.org,
-        konrad.dybcio@somainline.org, airlied@linux.ie, agross@kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        dmitry.baryshkov@linaro.org, andersson@kernel.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        vkoul@kernel.org, dianders@chromium.org, daniel@ffwll.ch,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, quic_abhinavk@quicinc.com,
-        quic_vpolimer@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
-        quic_kalyant@quicinc.com, Jonathan Marek <jonathan@marek.ca>
-Subject: Re: [PATCH v3 02/11] dt-bindings: display: msm: Add qcom,sm8350-mdss
- binding
-Message-ID: <167027448138.2623801.7062789699923957275.robh@kernel.org>
-References: <20221205163754.221139-1-robert.foss@linaro.org>
- <20221205163754.221139-3-robert.foss@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v4 01/13] dt-bindings: display/msm: Add binding for
+ SC8280XP MDSS
+Message-ID: <167027453696.2625145.2281674467563645839.robh@kernel.org>
+References: <20221205174433.16847-1-quic_bjorande@quicinc.com>
+ <20221205174433.16847-2-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221205163754.221139-3-robert.foss@linaro.org>
+In-Reply-To: <20221205174433.16847-2-quic_bjorande@quicinc.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,16 +81,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 05 Dec 2022 17:37:45 +0100, Robert Foss wrote:
-> Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema for MDSS device
-> tree bindings
+On Mon, 05 Dec 2022 09:44:21 -0800, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Add binding for the display subsystem and display processing unit in the
+> Qualcomm SC8280XP platform.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  .../display/msm/qcom,sm8350-mdss.yaml         | 221 ++++++++++++++++++
->  1 file changed, 221 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+> 
+> Changes since v3:
+> - Reworked on top of redesigned common yaml.
+> 
+>  .../display/msm/qcom,sc8280xp-dpu.yaml        | 122 +++++++++++++++
+>  .../display/msm/qcom,sc8280xp-mdss.yaml       | 143 ++++++++++++++++++
+>  2 files changed, 265 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-dpu.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
