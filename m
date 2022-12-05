@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3B9D64377E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:56:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05BCF643780
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:56:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232118AbiLEV4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 16:56:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58218 "EHLO
+        id S231535AbiLEV4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 16:56:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232054AbiLEV4C (ORCPT
+        with ESMTP id S232686AbiLEV4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 16:56:02 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E089252B9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 13:55:12 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id j4so20770141lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 13:55:12 -0800 (PST)
+        Mon, 5 Dec 2022 16:56:12 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F1E7E3D
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 13:55:38 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id p36so16365769lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 13:55:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=DuCbaziL7ipwUokx8SdKjEyNaVxjpbuSpAIzdJTw5Wk=;
-        b=EZ61WOgtuGU6gpRgHDm040OTpm25fx5anWD3iDhaj+TRuQ001odDN0NCUeucYe76Xj
-         +b/A9zh1Huo/QYb31nV5z6jqM4/fCI5ogg6FqktDWGelOhwshhTjJX5MEpLSbiR2Lg/c
-         cf9BT0rV/DXZ3Q7QXsXSy9dHVSMGL3dikVd4zzqdZLDAehjWIJS2TQYcAUp/jj2f2tuP
-         /BSqWRnm0cLU3zwTmfoER6jGI/mHwJ0raqJO+iVIlxy4AcqNUUgaqMSdGp0xPzZ0GqyR
-         We1DJY5Z0Q3EpwNdr3MrBNezKl2QT+yvoxa04W/YukmUMYYSUcgMttoAygjD77wRvVw/
-         r36Q==
+        bh=IYiXc3taqf3OqgKX8G3ZmQD8ADNe5yBaMSKzXtc0OqI=;
+        b=SMgQKy8n3TTVSyAcOapLk++OS+iAeyaN+5cH/F7kNHQV5SL/prmMjWWwJqcitjqO7T
+         Z7/FLCKlrTa93GdDv5wN97xxWwFoEprCdwKzQrmhd3WC2Ofys4xXk1p1l+ugH40FMAFE
+         RZQqE3xL3bv43b87qTHEIkPj6+G/EgPWUySEbotpbKMhYsqHRFHkczzZO3XY8AaYwAQ2
+         3rqb/6+mQpCX5jxbtjwydy+DOPCg6AKMCgkvBijqDO26G93Lrw09h9wl5LETDI0wzKA2
+         oEYMzVEGcWLTgqMcrKM68FFaJtR5NYcnxyGgm8pXd4iRB6VlIcrhuZywEYbaFbH1yR00
+         QhCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DuCbaziL7ipwUokx8SdKjEyNaVxjpbuSpAIzdJTw5Wk=;
-        b=eAf6fNs67fYCUUvcAnjdzLOH1xp0AAfkSkvQpcvTDfW2MU437t+4RETXhns1DMVV8w
-         JLoxNaCMlQU2iSpUGkOhL15sCDX/3UJfc0xf75BnU4BMilCXkiZeQ3N3EkWA/RXJJC0D
-         0GQoHGQjmyoFCBIiBU79BTvZDA8I75AYdug5ubwHbriGqLJha3e+8Zc4RLATnVpRYPTt
-         qTh8NzT1SpWWj1Fde68RdE4QyNZRapePu9OYLsn4ODm5CyF7OJwArgVrT/8luujv+ZE6
-         TESwX06TZ62aGoVEShpKW1SDGQrQ227LgfkkJR7Zmtc6CSWrcHDUGu9VnGPf0YVHoRdB
-         Wn7w==
-X-Gm-Message-State: ANoB5pkvf/Cw3BiNMArqx+j36CF7rh+mDtDhsxBbsIYPc9xbkLeGm17a
-        RS+HipjqvZw1lbs0fcqRvuRCPX2spBAD7BuA
-X-Google-Smtp-Source: AA0mqf7a37W99NFxiADuO6IZRRPlkwNIPPcpXqSVr1sY3PdBNkFTIOLCTFco6NqHvbVAN4USu4AVKA==
-X-Received: by 2002:a19:ca02:0:b0:4a4:434e:1e07 with SMTP id a2-20020a19ca02000000b004a4434e1e07mr26910750lfg.172.1670277311132;
-        Mon, 05 Dec 2022 13:55:11 -0800 (PST)
+        bh=IYiXc3taqf3OqgKX8G3ZmQD8ADNe5yBaMSKzXtc0OqI=;
+        b=cidpH/EPlJQKvR70qpumHooR4uHUcCYXFbVv7q5DhxLPRZ4pWue+oB0RA2Igd1spoj
+         CDa/HdHGPqpAN0sc829/sFv0OEagIJe3gq3fWeRWuzd/S+s8QoCSB2yqkr4i7PmAGRBA
+         EDJFD110Bg77hFObfN4n/8H6kPmxvy/ANLLpcTBfonqQHydmYDXIsnMv/MjndnE7AnSr
+         6vprZMhXmKMZhmyu4DRyn2Zzt3tNTvWLkQASSKrjmcwST5IDzkJipwtA+ww0REkKLUkx
+         pAMsTWKtWqZqnZUhBVZMp3OzD7u2S8lSR5ZhMQ1S7gMR/m1dHgUTtjoHRJbOO3+QNJa/
+         TNkQ==
+X-Gm-Message-State: ANoB5pk/71QAoERaDXz7UBSocUK/z57L59/u+Yga0uOFYjFlveurBsHI
+        l5Slr1S8CTYCXcOpSHu3CFiKSQ==
+X-Google-Smtp-Source: AA0mqf4oBbBb6gVe51gRGsXHv3lwQC3IykjlDmFr9izuKScYSa1W+5PArG3TfWQQG9q4PJJ/D23IHA==
+X-Received: by 2002:a05:6512:14f:b0:4b5:8504:7070 with SMTP id m15-20020a056512014f00b004b585047070mr217183lfo.304.1670277337023;
+        Mon, 05 Dec 2022 13:55:37 -0800 (PST)
 Received: from [127.0.0.1] ([94.25.229.129])
-        by smtp.gmail.com with ESMTPSA id k9-20020a05651239c900b00498fc3d4cfdsm2246171lfu.189.2022.12.05.13.55.10
+        by smtp.gmail.com with ESMTPSA id o6-20020ac25e26000000b00492e3a8366esm2249627lfg.9.2022.12.05.13.55.36
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Dec 2022 13:55:10 -0800 (PST)
-Date:   Tue, 06 Dec 2022 00:55:06 +0300
+        Mon, 05 Dec 2022 13:55:36 -0800 (PST)
+Date:   Tue, 06 Dec 2022 00:55:32 +0300
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         martin.petersen@oracle.com, jejb@linux.ibm.com,
@@ -60,19 +60,18 @@ CC:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
         linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
         ahalaney@redhat.com, abel.vesa@linaro.org, alim.akhtar@samsung.com,
         avri.altman@wdc.com, bvanassche@acm.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_09/23=5D_phy=3A_qcom-qmp-ufs=3A?= =?US-ASCII?Q?_Avoid_setting_HS_G3_specific_registers?=
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_10/23=5D_phy=3A_qcom-qmp-ufs?= =?US-ASCII?Q?=3A_Add_HS_G4_mode_support_to_SM8350_SoC?=
 User-Agent: K-9 Mail for Android
-In-Reply-To: <20221201174328.870152-10-manivannan.sadhasivam@linaro.org>
-References: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org> <20221201174328.870152-10-manivannan.sadhasivam@linaro.org>
-Message-ID: <29FC6095-645C-46B1-BFD1-0CB9F05214FD@linaro.org>
+In-Reply-To: <20221201174328.870152-11-manivannan.sadhasivam@linaro.org>
+References: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org> <20221201174328.870152-11-manivannan.sadhasivam@linaro.org>
+Message-ID: <A94528A7-01B3-473D-A5D5-6FA2FED00CAD@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,57 +80,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1 December 2022 20:43:14 GMT+03:00, Manivannan Sadhasivam <manivannan=
+On 1 December 2022 20:43:15 GMT+03:00, Manivannan Sadhasivam <manivannan=
 =2Esadhasivam@linaro=2Eorg> wrote:
->SM8350 default init sequence sets some PCS registers to HS G3, thereby
->disabling HS G4 mode=2E This has the effect on MPHY capability negotiatio=
-n
->between the host and the device during link startup and causes the
->PA_MAXHSGEAR to G3 irrespective of device max gear=2E
->
->Due to that, the agreed gear speed determined by the UFS core will become
->G3 only and the platform won't run at G4=2E
->
->So, let's remove setting these registers for SM8350 as like other G4
->compatible platforms=2E One downside of this is that, when the board desi=
-gn
->uses non-G4 compatible device, then MPHY will continue to run in the
+>UFS PHY in SM8350 SoC is capable of operating at HS G4 mode=2E Hence, add=
+ the
+>required register settings using the tables_hs_g4 struct instance=2E
 
-QMP PHY?
 
->default mode (G4) even if UFSHCD runs in G3=2E But this is the case for
->other platforms as well=2E
-
-Should this be fixed by adding a separate set of tables used to setup g3?
-
+Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 
 >
 >Signed-off-by: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eor=
 g>
 >---
-> drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec | 7 -------
-> 1 file changed, 7 deletions(-)
+> drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec | 36 +++++++++++++++++++++++++
+> 1 file changed, 36 insertions(+)
 >
 >diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec b/drivers/phy/qual=
 comm/phy-qcom-qmp-ufs=2Ec
->index d5324c4e8513=2E=2E6c7c6a06fe3b 100644
+>index 6c7c6a06fe3b=2E=2E75e55c4181c9 100644
 >--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec
 >+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec
->@@ -567,13 +567,6 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_p=
+>@@ -571,6 +571,34 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_p=
 cs[] =3D {
-> 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-> 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_DEBUG_BUS_CLKSEL, 0x1f),
-> 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_RX_MIN_HIBERN8_TIME, 0xff),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_PLL_CNTL, 0x03),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB, 0x16),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB, 0xd8),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TX_PWM_GEAR_BAND, 0xaa),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TX_HS_GEAR_BAND, 0x06),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x03),
->-	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x03),
-> 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_RX_SIGDET_CTRL1, 0x0e),
 > 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
 > };
+>=20
+>+static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_tx[] =3D {
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0xe5),
+>+};
+>+
+>+static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_rx[] =3D {
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CTRL2, 0x81),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_TERM_BW, 0x6f),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL2, 0x00),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4a),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0a),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_IDAC_MEASURE_TIME, 0x20),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_IDAC_TSETTLE_LOW, 0x80),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_IDAC_TSETTLE_HIGH, 0x01),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_LOW, 0xbf),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH, 0xbf),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0x7f),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x7f),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH4, 0x2d),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_LOW, 0x6d),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH, 0x6d),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH2, 0xed),
+>+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH4, 0x3c),
+>+};
+>+
+>+static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_pcs[] =3D {
+>+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_BIST_FIXED_PAT_CTRL, 0x0a),
+>+};
+>+
+> struct qmp_ufs_offsets {
+> 	u16 serdes;
+> 	u16 pcs;
+>@@ -875,6 +903,14 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg =
+=3D {
+> 		=2Eserdes		=3D sm8350_ufsphy_hs_b_serdes,
+> 		=2Eserdes_num	=3D ARRAY_SIZE(sm8350_ufsphy_hs_b_serdes),
+> 	},
+>+	=2Etbls_hs_g4 =3D {
+>+		=2Etx		=3D sm8350_ufsphy_g4_tx,
+>+		=2Etx_num		=3D ARRAY_SIZE(sm8350_ufsphy_g4_tx),
+>+		=2Erx		=3D sm8350_ufsphy_g4_rx,
+>+		=2Erx_num		=3D ARRAY_SIZE(sm8350_ufsphy_g4_rx),
+>+		=2Epcs		=3D sm8350_ufsphy_g4_pcs,
+>+		=2Epcs_num	=3D ARRAY_SIZE(sm8350_ufsphy_g4_pcs),
+>+	},
+> 	=2Eclk_list		=3D sdm845_ufs_phy_clk_l,
+> 	=2Enum_clks		=3D ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+> 	=2Evreg_list		=3D qmp_phy_vreg_l,
 
 --=20
 With best wishes
