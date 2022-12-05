@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B4B6438E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 00:02:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 504626438E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 00:02:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233972AbiLEXCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 18:02:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52480 "EHLO
+        id S233933AbiLEXCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 18:02:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234104AbiLEXBe (ORCPT
+        with ESMTP id S233946AbiLEXBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 18:01:34 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55EA41E72E;
-        Mon,  5 Dec 2022 15:01:33 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id a18so3266690ilk.9;
-        Mon, 05 Dec 2022 15:01:33 -0800 (PST)
+        Mon, 5 Dec 2022 18:01:36 -0500
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6D81EAC1;
+        Mon,  5 Dec 2022 15:01:35 -0800 (PST)
+Received: by mail-il1-x135.google.com with SMTP id g7so5804629ile.0;
+        Mon, 05 Dec 2022 15:01:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Qxi6kW+nZelgmuu1SuZddsY5HzZFPIbjqBCxA1IDU9k=;
-        b=UwT9Y/Ua+ei/ZoT3avPJgKPkyQGmvzWZfiBoVkNNyoOT//vk76qFP4/mF1HxeN/35L
-         xHJi9cYYKqt6VeOrxYA0qtjN1Tcpqst28ivQarvBoKD83iSRHMl/kzil62/MINxj9b8u
-         wWYn/N4udI8yIUXX4ZwiaHcc4nOf+YT0Xsc5DaO06s5ui+dNfTu2qswmLJSdwjxyfWPB
-         r62TrUDoyAfwm2Rbsg+VcoX18l5+95KKX+D33vABMdYH2UyxUfsHR+7Rz1NgNXsHN4jA
-         5ggLUxsgUgrVpK1T9qMoT+1L/7BLtFs25yOlp18p8J31majP0TJlwrHBZeULTwEQwe24
-         wJqw==
+        bh=47KrEjLNXNciXvVDsYUjuFz86syQOtCTJGhPHkeep7I=;
+        b=Bf0Gk8z/nhI+SUv2Tj/ols7Rz51Mx4b7sz33uuf47XDCdzr3NdBohjuRofGwtW9dDr
+         QMIAqteFgbr/adWNoy0Sbje5yT+wFVjVwQjuaopnLF5xusKqXTztu530FuRGwA7yiXns
+         DDjsCyUJvLP1WjA08ETa+ivbzMR6gjjpJbLz4k8vjE2+SS/6PriU9yssmeciieONeEfZ
+         z30RSv4/36VqbqAC6ZRsjnHlBqutI0pKPZiNE/ULz97kPCMWXrOjxWrjRopAMraOGqrM
+         BisoYE1oMnbhVzf/YIHR7ro/IdYnVJa+ggw6LArWBLsGq+c+4XY6JLQPzsVdgew8/06x
+         T1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Qxi6kW+nZelgmuu1SuZddsY5HzZFPIbjqBCxA1IDU9k=;
-        b=sZewO8tgQvNu5J9xv0xCpkahhA3ggpile0OgdZgf40VxKLq51eziB0MY8f8IcT8xf+
-         8V1GZ95jJAgG+kqukCx8Mo/mhPoErrQP9ByBOZuRpkOLnUi/AS0RoI7BDi2Gu6fq/+hy
-         rUGhAIyw21H+owu6XbwHIir7VF6q5AQ7o6BPjKwTFnU7jdior/45G1rEokzXXBR/H2OV
-         p+PCEap49dJzRPOCHEpakAkwWFY2nRk6vGlJlUxQjkQbazzHqh11eSlVmiOkkxqsjoDn
-         Q6E1alqO6g99dyMrWnJzVBcdACFNLeWLCQjqW1uyQbqwCAGhnnHRTJmR610rTvo85qvx
-         hUBQ==
-X-Gm-Message-State: ANoB5pnVlR2ujy/s0fXwRGrIKd77titd8KF0RGl+XWZsz7qZyvRSFIHm
-        e8Y5J+drFZzxZox3mgUoo34=
-X-Google-Smtp-Source: AA0mqf6I6RUlV3Y7XaZ3cIqENYheRrr+9Z3781xqTQFw2K/KqLy5NVK+XWTbyJwhqN7iOTBmZoRUrA==
-X-Received: by 2002:a92:cb46:0:b0:302:dd2d:1f5d with SMTP id f6-20020a92cb46000000b00302dd2d1f5dmr28601125ilq.108.1670281292713;
-        Mon, 05 Dec 2022 15:01:32 -0800 (PST)
+        bh=47KrEjLNXNciXvVDsYUjuFz86syQOtCTJGhPHkeep7I=;
+        b=4HKUU5IPVihoc3oj+Wq/0tlcNV2uju6g1RZJKjERgnoOHs4sb7rg5Z0bx5s2sgMql2
+         9dWkh/1q2MT6tIcW30OU0Sll78LDW9L6tVdNYd2hdhluLzmcSmeBUXKaGK2+VF5YOf9s
+         jLUcRFzu9J/FAvVnv2Eiw1fMwz9fHoSCOdLRi3BdmrRtOcvyAYpO7Lbo2l03GFv4Ticx
+         XTm5KT6tGqULXCGJqFFB4nFXaAmYq0lPyLUNDWmZMduJMxMvBXkF2XbPQgqsEK6Uuoj4
+         QD3GevXrYrKOvZTyHVRG4jdqQL9gpGHfdof28O7R2lnnKYjcpPnc82Wuwjmlc40Hvsgt
+         i29A==
+X-Gm-Message-State: ANoB5pmpe0uBe0j9VKUEY2C4b62s51zSPJP9lMwh1GDpdpEGcuwUVgJW
+        4OUiZcl49TqridnxAiR03B8JXSSfidQ=
+X-Google-Smtp-Source: AA0mqf5MgLCGLhQJqflcvrRLFWZgt1lddExHovgY9Tdp9ROtVCWBiy3GIi9fFhQc1/St1zjAR5A9vA==
+X-Received: by 2002:a92:6b03:0:b0:302:55d5:8808 with SMTP id g3-20020a926b03000000b0030255d58808mr29198642ilc.152.1670281294461;
+        Mon, 05 Dec 2022 15:01:34 -0800 (PST)
 Received: from localhost ([2607:fea8:a2df:3d00::be63])
-        by smtp.gmail.com with ESMTPSA id b5-20020a05660214c500b006df13af1f16sm6248303iow.50.2022.12.05.15.01.32
+        by smtp.gmail.com with ESMTPSA id y9-20020a92c749000000b00300e7a459aasm5632707ilp.38.2022.12.05.15.01.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 15:01:32 -0800 (PST)
+        Mon, 05 Dec 2022 15:01:34 -0800 (PST)
 From:   Richard Acayan <mailingradian@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 2/3] arm64: dts: qcom: sdm670: add qfprom node
-Date:   Mon,  5 Dec 2022 18:01:15 -0500
-Message-Id: <20221205230116.2204-2-mailingradian@gmail.com>
+Subject: [PATCH 3/3] arm64: dts: qcom: sdm670: add missing usb hstx nvmem cell
+Date:   Mon,  5 Dec 2022 18:01:16 -0500
+Message-Id: <20221205230116.2204-3-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205230116.2204-1-mailingradian@gmail.com>
 References: <20221205230116.2204-1-mailingradian@gmail.com>
@@ -77,9 +77,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some hardware quirks and capabilities can be determined by reading the
-fuse-programmable read-only memory. Add the QFPROM node so consumers
-know if they need to do anything extra to support the hardware.
+This nvmem cell is present on SDM670 as well as SDM845. Add it in SDM670
+so there is proper tuning.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
@@ -87,23 +86,30 @@ Signed-off-by: Richard Acayan <mailingradian@gmail.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index f93705bc549f..933ad2fabf3a 100644
+index 933ad2fabf3a..2a44cccc47ee 100644
 --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -731,6 +731,13 @@ gcc: clock-controller@100000 {
- 			#power-domain-cells = <1>;
+@@ -736,6 +736,11 @@ qfprom: qfprom@780000 {
+ 			reg = <0 0x780000 0 0x1000>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
++
++			qusb2p_hstx_trim: hstx-trim-primary@1eb {
++				reg = <0x1eb 0x1>;
++				bits = <1 4>;
++			};
  		};
  
-+		qfprom: qfprom@780000 {
-+			compatible = "qcom,sdm670-qfprom", "qcom,qfprom";
-+			reg = <0 0x780000 0 0x1000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+		};
-+
  		sdhc_1: mmc@7c4000 {
- 			compatible = "qcom,sdm670-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x007c4000 0 0x1000>,
+@@ -1418,6 +1423,8 @@ usb_1_hsphy: phy@88e2000 {
+ 
+ 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+ 
++			nvmem-cells = <&qusb2p_hstx_trim>;
++
+ 			status = "disabled";
+ 		};
+ 
 -- 
 2.38.1
 
