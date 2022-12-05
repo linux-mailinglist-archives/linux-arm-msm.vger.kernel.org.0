@@ -2,261 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D9746437F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:20:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1ADA6437FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:23:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbiLEWUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 17:20:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49332 "EHLO
+        id S233418AbiLEWXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 17:23:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiLEWUT (ORCPT
+        with ESMTP id S233451AbiLEWXT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 17:20:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 200551A058
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 14:19:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1670278761;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=r/SpJiKMRZzsA13nt/vHo0GTokdNpO5dXKV/2C5VsvI=;
-        b=jCORk4L1OCRBc4hT7t6ZmhgWCEA30tpTJQ10WyYGagI+XtSuFfLdiQhqIGaujSIkhi8fQB
-        u8Q3pWRi+NwtdLmRQEpkA0E+XWmbn/U2iBdZGDEdh24By1MdCiyYsj3jZMw5rqNH/smVAl
-        u3Yepkd5zXoOf65g1fq7WonvKXxXdRo=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-640-CqcmlbSzN0W0z-qE-N7aYQ-1; Mon, 05 Dec 2022 17:19:20 -0500
-X-MC-Unique: CqcmlbSzN0W0z-qE-N7aYQ-1
-Received: by mail-ej1-f72.google.com with SMTP id hp16-20020a1709073e1000b007adf5a83df7so409433ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 14:19:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r/SpJiKMRZzsA13nt/vHo0GTokdNpO5dXKV/2C5VsvI=;
-        b=7YFsvgAYXIbmEUvLlFVXurdWoNlpfdqZQgwSlATOIiqGVlqYNkWgWRvGiftr0rVITX
-         Gr4UtBQ0vjm8Jrse3QAVlMgFzljLW/Q5BelhgcPDqkdH6+ti6VRY/qIlAoooWZRwYdpB
-         3Py3kwUzXE6s3gxb0OPyx9zxLvSuoO6yWKCgyobwlmAOJvgk6fykPfbBWvCNO/VNS46+
-         C7nkSRie44lAZ9Bpnm5AYliGAvPqwKRH/P3KTxqNPhsZn11fGCP3EY32ZkxQniMPnobC
-         o07Mq2/aRzEUD+HrBMyPpZ02Ipe+21rhZb5ACt/bE6C3ra7FDIW/Gip/BQyMUKSDm6/q
-         mr4Q==
-X-Gm-Message-State: ANoB5pnWiVdhrRgVPwGK+py0tqtBoE9iocuB+uLht5Pj0Eq86IibZIoO
-        GAp9Y18rWUi58B7mz3/UzuXVTbsPMuiapG1vG+q648mw0ZkS0apu1uxnU2rBsLKHFFGm4qLBTkK
-        PC9xadm35JfGAUl9llxy/UEx4TA==
-X-Received: by 2002:a17:906:402:b0:7a6:fc0f:6fe6 with SMTP id d2-20020a170906040200b007a6fc0f6fe6mr68328918eja.694.1670278759569;
-        Mon, 05 Dec 2022 14:19:19 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf4/AZjHdk4blrYZTy+WUNqF0ehBqnPpjtR2Q0U1GDaaqR6yRlJDcKawBK9sFngjEIEqwh3gGA==
-X-Received: by 2002:a17:906:402:b0:7a6:fc0f:6fe6 with SMTP id d2-20020a170906040200b007a6fc0f6fe6mr68328906eja.694.1670278759272;
-        Mon, 05 Dec 2022 14:19:19 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id g26-20020a056402181a00b004618a89d273sm286672edy.36.2022.12.05.14.19.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 14:19:18 -0800 (PST)
-Message-ID: <2186e672-8795-8da0-32a3-e6dba00ff504@redhat.com>
-Date:   Mon, 5 Dec 2022 23:19:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 0/9] fix reset line polarity for Goodix touchscreen
- controllers
-Content-Language: en-US, nl
-To:     Quentin Schulz <foss+kernel@0leil.net>,
-        Samuel Holland <samuel@sholland.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        =?UTF-8?Q?Guido_G=c3=bcnther?= <agx@sigxcpu.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Angus Ainslie <angus@akkea.ca>,
-        Ondrej Jirman <megous@megous.com>,
-        Icenowy Zheng <icenowy@aosc.io>,
-        Andy Gross <agross@kernel.org>,
-        Aleksei Mamlin <mamlinav@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        David Jander <david@protonic.nl>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Peter Geis <pgwipeout@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Lukasz Majewski <lukma@denx.de>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
+        Mon, 5 Dec 2022 17:23:19 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF17B7FD;
+        Mon,  5 Dec 2022 14:23:18 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C52A1B81262;
+        Mon,  5 Dec 2022 22:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8C2C433C1;
+        Mon,  5 Dec 2022 22:23:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670278995;
+        bh=r7Zbs6ql/zVmwGxY0A2vvhLYDbx61rLzdNI7bJloNmM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=N25sRvjt9ynOVmKtUWr0551Jy3GiEGY9HV0ZbMTMbrQhtsBGGuL+iODpFpZh9eC57
+         1VK5Lk6yv6A0eaec8NaewtUYlPqqQuIg87EkXNMhgKHy9I9fwBdoEx51CSZGGJbIpk
+         geaYrLTRQTPmafEXuW4dElMoWSHXSqulhMgtI+5ACu5dXmSQqlY3K3DjOnmGSVci0J
+         HI+cIbhqJw+7EqnCAcjjw/HOopBqtWv2ixtqM2TRhzdtOZTrJKQtmPcR0SgFreDZDk
+         Lrhn6rLJqLZSqTA7XxIepXKyRODqo9QYmRUtONBdWqPG9HGX6/YWug4tB6VObC/Qx0
+         kb5rT6Xk3Sm9g==
+Date:   Mon, 5 Dec 2022 16:23:12 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-References: <20221103-upstream-goodix-reset-v3-0-0975809eb183@theobroma-systems.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20221103-upstream-goodix-reset-v3-0-0975809eb183@theobroma-systems.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 08/13] drm/msm/dp: Implement hpd_notify()
+Message-ID: <20221205222312.gmg65h35d44zigg4@builder.lan>
+References: <20221205174433.16847-1-quic_bjorande@quicinc.com>
+ <20221205174433.16847-9-quic_bjorande@quicinc.com>
+ <4E586110-168A-4D47-966F-357DF042AFC7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4E586110-168A-4D47-966F-357DF042AFC7@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Quentin,
-
-On 12/5/22 14:40, Quentin Schulz wrote:
-> From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+On Tue, Dec 06, 2022 at 12:29:13AM +0300, Dmitry Baryshkov wrote:
 > 
-> The Goodix touchscreen controller has a reset line active low. It happens to
-> also be used to configure its i2c address at runtime. If the reset line is
-> incorrectly asserted, the address will be wrongly configured. This cost me a few
-> hours, trying to figure out why the touchscreen wouldn't work.
 > 
-> The driver is "asserting" this reset GPIO by setting its output to 0, probably
-> to reflect the physical state of the line. However, this relies on the fact that
-> the Device Tree node setting the reset line polarity to active high, which is
-> incorrect since the reset is active low in hardware.
+> On 5 December 2022 20:44:28 GMT+03:00, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+> >From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >
+> >The DisplayPort controller's hot-plug mechanism is based on pinmuxing a
+> >physical signal on a GPIO pin into the controller. This is not always
+> >possible, either because there aren't dedicated GPIOs available or
+> >because the hot-plug signal is a virtual notification, in cases such as
+> >USB Type-C.
+> >
+> >For these cases, by implementing the hpd_notify() callback for the
+> >DisplayPort controller's drm_bridge, a downstream drm_bridge
+> >(next_bridge) can be used to track and signal the connection status
+> >changes.
+> >
+> >This makes it possible to use downstream drm_bridges such as
+> >display-connector or any virtual mechanism, as long as they are
+> >implemented as a drm_bridge.
+> >
+> >Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >[bjorn: Drop connector->fwnode assignment and dev from struct msm_dp]
+> >Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-> To fix this inconsistency, the polarity is inverted to not confuse the user
-> about the reset line polarity. This obviously requires to fix the DT since most
-> users had the "incorrect" value in there, it needs to be inverted.
-> Note that the v2 highlighted that I was not the only one that got confused since
-> PRT8MM board has the "correct" HW representation for this line in DT (which does
-> not match what the driver was expecting).
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> This is marked as RFC because I can neither test ACPI support nor boards I don't
-> own. Please test on the boards you have that are impacted by this patchset and
-> give your Tested-By.
+> Minor nit: if for the next revision you reorder the patches to have
+> hpd_enable first, then missing conditions, then this patch, it will
+> look more logical.
 
-I have tested this on a x86/ACPI device where we actually need to reset
-the controller at boot to get it to work and things still work fine there
-after this series.
+You're right, that will look better. I'll do so.
 
-I've also reviewd patches 1-3 and they look good to me to.
+Thanks,
+Bjorn
 
-So for patches 1-3 you may add my:
-
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-
-Regards,
-
-Hans
-
-
-
-
-
-> Do we also make this patch series only one patchset since the DT patches depend
-> on the driver patch and vice-versa? In which tree would this go?
 > 
-> Thanks,
-> Quentin
+> >---
+> >
+> >Changes since v3:
+> >- None
+> >
+> > drivers/gpu/drm/msm/dp/dp_display.c | 22 ++++++++++++++++++++++
+> > drivers/gpu/drm/msm/dp/dp_drm.c     |  1 +
+> > drivers/gpu/drm/msm/dp/dp_drm.h     |  2 ++
+> > 3 files changed, 25 insertions(+)
+> >
+> >diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> >index 666b45c8ab80..17fcf8cd84cd 100644
+> >--- a/drivers/gpu/drm/msm/dp/dp_display.c
+> >+++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> >@@ -1772,3 +1772,25 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> > 	dp_display->dp_mode.h_active_low =
+> > 		!!(dp_display->dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+> > }
+> >+
+> >+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> >+			  enum drm_connector_status status)
+> >+{
+> >+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+> >+	struct msm_dp *dp_display = dp_bridge->dp_display;
+> >+	struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >+
+> >+	/* Without next_bridge interrupts are handled by the DP core directly */
+> >+	if (!dp_display->next_bridge)
+> >+		return;
+> >+
+> >+	if (!dp->core_initialized) {
+> >+		drm_dbg_dp(dp->drm_dev, "not initialized\n");
+> >+		return;
+> >+	}
+> >+
+> >+	if (!dp_display->is_connected && status == connector_status_connected)
+> >+		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+> >+	else if (dp_display->is_connected && status == connector_status_disconnected)
+> >+		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+> >+}
+> >diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >index 6db82f9b03af..3898366ebd5e 100644
+> >--- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> >+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >@@ -102,6 +102,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
+> > 	.get_modes    = dp_bridge_get_modes,
+> > 	.detect       = dp_bridge_detect,
+> > 	.atomic_check = dp_bridge_atomic_check,
+> >+	.hpd_notify   = dp_bridge_hpd_notify,
+> > };
+> > 
+> > struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> >diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
+> >index 82035dbb0578..79e6b2cf2d25 100644
+> >--- a/drivers/gpu/drm/msm/dp/dp_drm.h
+> >+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
+> >@@ -32,5 +32,7 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_bridge *bridge,
+> > void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> > 			const struct drm_display_mode *mode,
+> > 			const struct drm_display_mode *adjusted_mode);
+> >+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> >+			  enum drm_connector_status status);
+> > 
+> > #endif /* _DP_DRM_H_ */
 > 
-> To: Bastien Nocera <hadess@hadess.net>
-> To: Hans de Goede <hdegoede@redhat.com>
-> To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> To: Rob Herring <robh+dt@kernel.org>
-> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> To: Shawn Guo <shawnguo@kernel.org>
-> To: Sascha Hauer <s.hauer@pengutronix.de>
-> To: Pengutronix Kernel Team <kernel@pengutronix.de>
-> To: Fabio Estevam <festevam@gmail.com>
-> To: NXP Linux Team <linux-imx@nxp.com>
-> To: Chen-Yu Tsai <wens@csie.org>
-> To: Jernej Skrabec <jernej.skrabec@gmail.com>
-> To: Samuel Holland <samuel@sholland.org>
-> To: Andy Gross <agross@kernel.org>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konrad.dybcio@somainline.org>
-> To: Heiko Stuebner <heiko@sntech.de>
-> To: David Jander <david@protonic.nl>
-> To: Angus Ainslie <angus@akkea.ca>
-> To: Peter Geis <pgwipeout@gmail.com>
-> To: Michael Riesch <michael.riesch@wolfvision.net>
-> To: Konrad Dybcio <konrad.dybcio@somainline.org>
-> To: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> To: Guido Günther <agx@sigxcpu.org>
-> To: Jagan Teki <jagan@amarulasolutions.com>
-> To: Ondrej Jirman <megous@megous.com>
-> To: Icenowy Zheng <icenowy@aosc.io>
-> To: Aleksei Mamlin <mamlinav@gmail.com>
-> To: Lukasz Majewski <lukma@denx.de>
-> To: Frieder Schrempf <frieder.schrempf@kontron.de>
-> Cc: linux-input@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-sunxi@lists.linux.dev
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-rockchip@lists.infradead.org
-> Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-> ---
-> Changes in v3:
-> - Cc'ing people who contributed to DTS of impacted boards,
-> - removed PRT8MM DTS change since it's been reported the polarity is actually
->   correct (goes through an inverter), keeping the appropriate folks in Cc though
->   since it'd be a good idea to check this patch series anyways,
-> - added ACPI_GPIO_QUIRK_NO_IO_RESTRICTION to acpi_gpio_mapping quirks to make
->   gpiolib-acpi core respect GPIOD_ASIS flag in gpiod_get,
-> - checked schematics of:
->   - pinephone: https://files.pine64.org/doc/PinePhone/PinePhone%20v1.2%20Released%20Schematic.pdf
->   - pinetab: https://files.pine64.org/doc/PineTab/PineTab%20Schematic%20v1.2-20191125.pdf
->   - px30 evb: https://opensource.rock-chips.com/images/d/db/Px30_mini_evb_v10_20180528.pdf
->   - rockpro64: https://files.pine64.org/doc/rockpro64/rockpro64_v21-SCH.pdf
->   - librem5 devkit: https://source.puri.sm/Librem5/dvk-mx8m-bsb/blob/master/dvk-mx8m-bsb.pdf
-> 
->   All seems to be directly connected to the GPIO on the SoC side, without an
->   inverter on the line.
-> - Link to v2: https://lore.kernel.org/r/20221103-upstream-goodix-reset-v2-0-2c38fb03a300@theobroma-systems.com
-> 
-> Changes in v2:
-> - implemented ACPI support as suggested by Hans,
-> - removed Qcom SC7180 Trogdor-based devices changes as they are not using this Goodix driver,
-> - added comment on how to read gpiod_request_output and the GPIO DT polarity,
-> - Link to v1: https://lore.kernel.org/r/20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com
-> 
-> ---
-> Quentin Schulz (9):
->       Input: goodix - add macro for gpio mapping
->       Input: goodix - make gpiod_get honor GPIOD_ASIS
->       Input: goodix - fix reset polarity
->       ARM: dts: imx: fix touchscreen reset GPIO polarity
->       ARM: dts: sunxi: fix touchscreen reset GPIO polarity on Wexler TAB7200 tablet
->       arm64: dts: allwinner: fix touchscreen reset GPIO polarity
->       arm64: dts: librem5: fix touchscreen reset GPIO polarity
->       arm64: dts: qcom: msm8998-fxtec: fix touchscreen reset GPIO polarity
->       arm64: dts: rockchip: fix touchscreen reset GPIO polarity
-> 
->  arch/arm/boot/dts/imx6q-kp.dtsi                    |  2 +-
->  arch/arm/boot/dts/imx6ul-kontron-bl-43.dts         |  2 +-
->  arch/arm/boot/dts/sun7i-a20-wexler-tab7200.dts     |  2 +-
->  .../dts/allwinner/sun50i-a64-amarula-relic.dts     |  2 +-
->  .../allwinner/sun50i-a64-oceanic-5205-5inmfd.dts   |  2 +-
->  .../boot/dts/allwinner/sun50i-a64-pinephone.dtsi   |  2 +-
->  .../boot/dts/allwinner/sun50i-a64-pinetab.dts      |  2 +-
->  .../boot/dts/freescale/imx8mq-librem5-devkit.dts   |  2 +-
->  arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts    |  2 +-
->  arch/arm64/boot/dts/rockchip/px30-evb.dts          |  2 +-
->  arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi |  2 +-
->  arch/arm64/boot/dts/rockchip/rk3568-evb1-v10.dts   |  2 +-
->  drivers/input/touchscreen/goodix.c                 | 54 ++++++++++++++++++----
->  13 files changed, 56 insertions(+), 22 deletions(-)
-> ---
-> base-commit: 76dcd734eca23168cb008912c0f69ff408905235
-> change-id: 20221103-upstream-goodix-reset-aa1c65994f57
-> 
-> Best regards,
-
+> -- 
+> With best wishes
+> Dmitry
