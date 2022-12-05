@@ -2,97 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB9BD642603
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 10:46:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36CB664264B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 11:03:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231383AbiLEJqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 04:46:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58172 "EHLO
+        id S231321AbiLEKDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 05:03:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231366AbiLEJqb (ORCPT
+        with ESMTP id S230133AbiLEKDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 04:46:31 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1982319284;
-        Mon,  5 Dec 2022 01:46:29 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 5 Dec 2022 05:03:38 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016D7C0F;
+        Mon,  5 Dec 2022 02:03:37 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6761760FFB;
-        Mon,  5 Dec 2022 09:46:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6519C433C1;
-        Mon,  5 Dec 2022 09:46:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670233588;
-        bh=vlbWmQAQsqVoCP5/iGG9T+Mh7FPLIm+omDon8p2JA10=;
-        h=From:To:Cc:Subject:Date:From;
-        b=bMM7gHLW3WMCRoSscjKR3d5B7dFagYLse28B06cubnjjcjtgrJoAZ+mozdLgS7ydy
-         y5ZCvY/WCTD6z2bVf0C1W9CFnw59bAxUF9kadLyEG+2HzQMm5/HYH7bd49MnBMdfKR
-         1tUBwdYYB96V8fKRqnLE7PL+41HSeabo+7seDSyYP7esxY81ZbM7zLbDny4pH5HZk+
-         y4KdxMaWjF2YIU0+lVh1Z5UVdSsnd8Fuh68iEMqfXaZyaga+vK/ZDp5V+38ankjxya
-         +YoHo9+l/4aIqIJhEV6dNz+CPgjzQen0DRn7EjrZWkEWWpqeZOc7B23iJdH0Z7M/0F
-         talFkUPKSoOlQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1p283U-0003MH-Im; Mon, 05 Dec 2022 10:46:33 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7A3CC66003EF;
+        Mon,  5 Dec 2022 10:03:35 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1670234616;
+        bh=3myGzgoCY0AcXvZSkCZnjZ8vlQZf+gbCK1V/oN4UuRk=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=QM08QN3dE5CltqFKkcy3x9/UUUu1jXqS4Wc783Ombkmf5bSa9wOfp7TNXpHS1P3Cn
+         1UWQZbBu5HLHU8xGSH6Q6FfoyVqHfXjXInA5QPw3ZnBFGAWLEpocJdWrB+q7YyuRgg
+         kHXByw29h+y5tj7tkOGb5Qf2oqsRx+hSfZaN/U6dVJXiXp7fQAeZxTLtcqcnc82mYY
+         MMpnXcUzFDxdtbY3FHyuyLGD8xfFH5a1sJjQEiZG5ul5J2yg1IyJx2UOOwbxELOz5K
+         Ld8Qa4L99R1FqjADrzcrWz/Y5pia0sSKfPX2qS4BSPBlvTvrqHbo6FKLuqAFu+qpH/
+         TqTyYr9Ft3X6g==
+Message-ID: <1196ef87-0be0-6c0c-8851-e58919a81ade@collabora.com>
+Date:   Mon, 5 Dec 2022 11:03:32 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 06/15] thermal/drivers/tsens: Sort out msm8976 vs
+ msm8956 data
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] dt-bindings: PCI: qcom: Allow 'dma-coherent' property
-Date:   Mon,  5 Dec 2022 10:45:30 +0100
-Message-Id: <20221205094530.12883-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.4
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
+ <20221204055909.1351895-7-dmitry.baryshkov@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20221204055909.1351895-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Devices on some PCIe buses may be cache coherent and must be marked as
-such in the devicetree to avoid data corruption.
+Il 04/12/22 06:59, Dmitry Baryshkov ha scritto:
+> Tsens driver mentions that msm8976 data should be used for both msm8976
+> and msm8956 SoCs. This is not quite correct, as according to the
+> vendor kernels, msm8976 should use standard slope values (3200), while
+> msm8956 really uses the slope values found in the driver.
+> 
+> Add separate compatibility string for msm8956, move slope value
+> overrides to the corresponding init function and use the standard
+> compute_intercept_slope() function for both platforms.
+> 
+> Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/thermal/qcom/tsens-v1.c | 56 ++++++++++++++++++---------------
+>   drivers/thermal/qcom/tsens.c    |  3 ++
+>   drivers/thermal/qcom/tsens.h    |  2 +-
+>   3 files changed, 34 insertions(+), 27 deletions(-)
+> 
 
-This is specifically needed on recent Qualcomm platforms like SC8280XP.
+..snip..
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
+> @@ -357,6 +333,22 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+>   	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+>   };
+>   
+> +int __init init_8956(struct tsens_priv *priv) {
 
-Lorenzo, the corresponding SC8280XP DT fix is heading for 6.2 so it
-would be nice if this one could be merged for 6.2-rc1 (or -rc2) as well
-to avoid the corresponding DT validation warnings.
+That function should be static as it's both defined and used only in here,
+plus, brace goes on a new line. Please fix.
 
-Johan
+static int __init init_8956(struct tsens_priv *priv)
+{
 
 
- Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+....after which....
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 2f851c804bb0..a5859bb3dc28 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -62,6 +62,8 @@ properties:
-     minItems: 3
-     maxItems: 13
- 
-+  dma-coherent: true
-+
-   interconnects:
-     maxItems: 2
- 
--- 
-2.37.4
-
+Cheers,
+Angelo
