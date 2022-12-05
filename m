@@ -2,174 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF02643695
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:12:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B9AF6436A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:16:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbiLEVMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 16:12:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45634 "EHLO
+        id S232371AbiLEVQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 16:16:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233397AbiLEVL7 (ORCPT
+        with ESMTP id S230151AbiLEVQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 16:11:59 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 951C411C14
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 13:11:57 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id a7so14970150ljq.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 13:11:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Eq2ZXszLjKr//ikj+7g9JMKWJ4MAQFXRFYQxnRJH2ns=;
-        b=uv+ysMBoXT9OnHKv2d2ki4+o8X18uddVwaH+9qoMgLHkXZr1y7R44ea/VhSpZQ7DYz
-         1yALAGAZQ5JH369QRzwze66Sq7aIZl2dAMX1BdtW8wkXEZVMk3OyVDaX/80U3zZdTwVD
-         jy3jMsLIKlkZZDqu3ZrYQYbspKuuZhB/FNPfjWlC1AHJ+OYWuHe6g/Mi3CXFMe1uHgih
-         8h9zv522tJ2uFqhJ9XXrejJenWLGou3A5lbcQkzR5x8WpeuOuG4VXUrUCeGa59qU7M1E
-         7QHiZl7dEhUPoJdwztGMxZbu62ot2vb86an7VugcCHooAtH2MDEufICxZbVOnKLEwgcG
-         3x8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Eq2ZXszLjKr//ikj+7g9JMKWJ4MAQFXRFYQxnRJH2ns=;
-        b=f5mQ2XOLnYHKAAbzr62ZHwjo4LbnYA7eW2OKrkZtOlRdC+nr1qCX5uIQCvWIM7RTG2
-         Kh+DDSytqGE5u63o7LyQccKtvDspK5V29npt0Kuzg1+r5TEMWcV83mlBCFWDDyvi+qeN
-         a5k1Iky/xhp/6LM19nAuoTOgjZKmBcJBkptSqQ4DmCN6pc3BHKagtfGLAF2UOHtHr9cR
-         2gcDqfPT3lU+HeBAjT86sn3B8ZIIIsY9P0vrnG1lMhKrrti7s2AL3DI+nE9IwiIG3+A8
-         wzeth1WNj9v6kaU6+NK6cGUZpcHF2FybmBCHbS8QE5Bq9zGR7+fPgaaBDaKr2oKZbALK
-         6tsg==
-X-Gm-Message-State: ANoB5pn/QXyiRQuV9w8aM+KTwIc2oeCBMq0nZUFGWFQrP9guXUsFdRT/
-        P5wsEtMuoktr5JACM6/vFMBTgw==
-X-Google-Smtp-Source: AA0mqf40g4Eax0o9RTqpNOnSr4NFV/WsN+mtKCY5opKnXRZdgli634oXeQBgQNpNxXsndr+D+MAr3A==
-X-Received: by 2002:a2e:bd87:0:b0:277:1cfe:398 with SMTP id o7-20020a2ebd87000000b002771cfe0398mr19179355ljq.10.1670274715882;
-        Mon, 05 Dec 2022 13:11:55 -0800 (PST)
-Received: from [127.0.0.1] ([94.25.229.129])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651c118900b00279d206a43bsm1241901ljo.34.2022.12.05.13.11.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Dec 2022 13:11:55 -0800 (PST)
-Date:   Tue, 06 Dec 2022 00:11:52 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 5 Dec 2022 16:16:27 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F44813F62;
+        Mon,  5 Dec 2022 13:16:27 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F19B6145B;
+        Mon,  5 Dec 2022 21:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF00C433C1;
+        Mon,  5 Dec 2022 21:16:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670274986;
+        bh=2YCgsYtgXchcK2HQN9j4UPzSu5I9SAEgamI3XGdIwNM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DzViI502CGY9RMc9HkFPZ2iRr74SbWdCu4D9+c4rSejbfKimjFp+wxyI+ozoKzLjk
+         6eg9yP+Gu5/0fsUwcgwwI43jpxqCuBk5Rdo/57F4WzvJZQz/AQcbvuh/5b9im5D+A+
+         JutQF2vxoBzxuhFz/kOCYQG3E9DtW7itTK5DxeVUPJ85wG6xkDsnuue6lBtK2mZjN6
+         ytV2/2uy8rm5YBxKsStNmV8UR7l8YTdvgqXlukU+PCSueCiJz23tfMaIsU29ULDlfn
+         9cGRMGag+Bvz/6qJB2csMTFKPOlU/GsZs+ViuZ1iqzXd8U7gWb7/MefwaVsBSWm5G1
+         nv4Mo4jCt1GZw==
+Date:   Mon, 5 Dec 2022 15:16:23 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 09/13] drm/msm/dp: Don't enable HPD interrupts for edp
-User-Agent: K-9 Mail for Android
-In-Reply-To: <62FFEABE-0074-4836-84BE-2C88C83F8674@linaro.org>
-References: <20221205174433.16847-1-quic_bjorande@quicinc.com> <20221205174433.16847-10-quic_bjorande@quicinc.com> <62FFEABE-0074-4836-84BE-2C88C83F8674@linaro.org>
-Message-ID: <72DDE54D-8368-4E2A-82D6-30265118D7D4@linaro.org>
+        Rob Herring <robh@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: soc: qcom: aoss: Add compatible for SM8550
+Message-ID: <20221205211623.extu4b22fsowilyd@builder.lan>
+References: <20221116113128.2655441-1-abel.vesa@linaro.org>
+ <adc327c7-9e99-4f2d-9641-2981b380ee47@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <adc327c7-9e99-4f2d-9641-2981b380ee47@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Nov 16, 2022 at 12:43:26PM +0100, Krzysztof Kozlowski wrote:
+> On 16/11/2022 12:31, Abel Vesa wrote:
+> > Document the compatible for SM8550.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> 
+> Why this is not part of other SoC patches? I just received many single
+> patches for this SM8550 topic. All these should be set of few series,
+> not 10 or more...
+> 
 
+Because these patches are independent of each other and done in this way
+means the maintainer can merge each piece on its own. I much prefer this
+over having these series with 20+ patches being sent over and over
+because one of the patches is getting feedback.
 
-On 6 December 2022 00:07:12 GMT+03:00, Dmitry Baryshkov <dmitry=2Ebaryshko=
-v@linaro=2Eorg> wrote:
->
->
->On 5 December 2022 20:44:29 GMT+03:00, Bjorn Andersson <quic_bjorande@qui=
-cinc=2Ecom> wrote:
->>From: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->>
->>Most instances where HPD interrupts are masked and unmasked are guareded
->>by the presence of an EDP panel being connected, but not all=2E Extend
->>this to cover the last few places, as HPD interrupt handling is not used
->>for the EDP case=2E
->
->I don't remember whether I asked that or not=2E Would it be possible to m=
-ove hpd irq enablement to bridge's hpd_enable() / hpd_disable() callbacks ?=
- I think this would allow us to drop the is_edp checks=2E
+Regards,
+Bjorn
 
-Ignore this=2E I should read the series carefully=2E
-
->
->>
->>Signed-off-by: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->>Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
->>Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
->>---
->>
->>Changes since v3:
->>- None
->>
->> drivers/gpu/drm/msm/dp/dp_display=2Ec | 15 ++++++++++-----
->> 1 file changed, 10 insertions(+), 5 deletions(-)
->>
->>diff --git a/drivers/gpu/drm/msm/dp/dp_display=2Ec b/drivers/gpu/drm/msm=
-/dp/dp_display=2Ec
->>index 17fcf8cd84cd=2E=2Ebb92c33beff8 100644
->>--- a/drivers/gpu/drm/msm/dp/dp_display=2Ec
->>+++ b/drivers/gpu/drm/msm/dp/dp_display=2Ec
->>@@ -610,8 +610,10 @@ static int dp_hpd_plug_handle(struct dp_display_pri=
-vate *dp, u32 data)
->> 	}
->>=20
->> 	/* enable HDP irq_hpd/replug interrupt */
->>-	dp_catalog_hpd_config_intr(dp->catalog,
->>-		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
->>+	if (!dp->dp_display=2Eis_edp)
->>+		dp_catalog_hpd_config_intr(dp->catalog,
->>+					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
->>+					   true);
->>=20
->> 	drm_dbg_dp(dp->drm_dev, "After, type=3D%d hpd_state=3D%d\n",
->> 			dp->dp_display=2Econnector_type, state);
->>@@ -651,8 +653,10 @@ static int dp_hpd_unplug_handle(struct dp_display_p=
-rivate *dp, u32 data)
->> 			dp->dp_display=2Econnector_type, state);
->>=20
->> 	/* disable irq_hpd/replug interrupts */
->>-	dp_catalog_hpd_config_intr(dp->catalog,
->>-		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, false);
->>+	if (!dp->dp_display=2Eis_edp)
->>+		dp_catalog_hpd_config_intr(dp->catalog,
->>+					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
->>+					   false);
->>=20
->> 	/* unplugged, no more irq_hpd handle */
->> 	dp_del_event(dp, EV_IRQ_HPD_INT);
->>@@ -678,7 +682,8 @@ static int dp_hpd_unplug_handle(struct dp_display_pr=
-ivate *dp, u32 data)
->> 	}
->>=20
->> 	/* disable HPD plug interrupts */
->>-	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false=
-);
->>+	if (!dp->dp_display=2Eis_edp)
->>+		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, fals=
-e);
->>=20
->> 	/*
->> 	 * We don't need separate work for disconnect as
->
-
---=20
-With best wishes
-Dmitry
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Best regards,
+> Krzysztof
+> 
