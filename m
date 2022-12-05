@@ -2,140 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC7C64354A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 21:10:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E800C643555
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 21:11:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232323AbiLEUJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 15:09:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51180 "EHLO
+        id S232516AbiLEULC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 15:11:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232307AbiLEUJ5 (ORCPT
+        with ESMTP id S232414AbiLEULB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 15:09:57 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE2222BE7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 12:09:56 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id vp12so1166781ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 12:09:56 -0800 (PST)
+        Mon, 5 Dec 2022 15:11:01 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBA423E93;
+        Mon,  5 Dec 2022 12:10:59 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id t17so1242836eju.1;
+        Mon, 05 Dec 2022 12:10:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=byt+6Yq2EaLbyXoYZ+ACDho3kUdzFwRWJcBHXY7JBeE=;
-        b=eB0yoAA5tqcdHwitjX0cIu6RMwRyTFZx5x6UckB5WhVZ4iTdXt2f9sOIJjZtoE3EKu
-         M2FMHf/xdjFhjkA6tVFEy4ZhxmIoXi4L3o8ZBDBn3LSUa6e4AYRaskOw/WybIOGk9jCh
-         osEdGzctluiUuXmjzNsQOtulCz4z4maNU0Sq9GUtow/DT1J05SrJM8pWGFkVY5ontQSi
-         w/1KAVOcQEC2hxSUAkrGjwcqgjM5ivaETkOqttqSP0RCkyvUJygdsrhj357cQ3sY8ZsT
-         Vb766I4pW0ur/bWZbyNMPxxbO2sLhLY2XDPlapnmvMSgXf8TVN0Qfu8V/K5wPSK1uTYs
-         n+uw==
+        bh=Sp/bNT5Sth10xITvOq6/Mc90creRR8yZ/shLGt2Fjbo=;
+        b=b6Jb2v7WFhoSvR0qnQE049/t4BrlMrHARODr4SKR7Xn1FQa9HrOT4fkLVGvEHA9Y1j
+         1aehg61bR85KIrd2yJzQDQujMLuCNIt+emvdW9fTMhx/4U1IfjkR3nnqFTKD2foaT9Ui
+         956X6MJskqO817oItJy60eJ/aPD436SYiI8CtZcVVtFSrPoeWakNB2ZLOP0F+i4StkUL
+         nsRQewGeP0UsRkxnq3KtMkx7OiRgubdtkydVEQYG6jK5ZHZmbx0yNK/c8JcyYjD3JIAC
+         Ut3m1P+iv3Z6OSkGBM5RkqV2YJSAbtOAlIPpS5aYllY3p4QAyiook36M6HlT+zHtjfwv
+         isQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=byt+6Yq2EaLbyXoYZ+ACDho3kUdzFwRWJcBHXY7JBeE=;
-        b=m7zMHMDRv0RsnSnkIZzXYVPgzY/NcDyn5HRJtzOuLMRnE0VfqI7GPFM1cE3zJyACjn
-         MrtZrX5bDg3vKyFQcVVlwXIv9E2SRKHkjdAq43/M+6GdkO07/RfqjzY2aSmpIAmWJvo7
-         p05v4TXiz5KU64Ikz4svLJH1QDWjSDLGLz/Gcod1XFzPu7jdKPDkKEFTSMSfJkXh8s7/
-         aMlHdJi4YCP/1+QD/3BiDXGXnpxa9v/Z8Rqgl0ceVhgPiXNmKMrBUwLeNish9ev51ENS
-         Xf9plrERvOT+p0zdyCQ/NoHFj77V6+VUpdoR76i31LLAMV6p2J0dFvbA31C2C/R9iCzK
-         bnEw==
-X-Gm-Message-State: ANoB5plZZ5ZXGbM41JhpRiznljD8kZQBAZbd7lRog+wTj6cyQjbD7tvk
-        kIKg6Av2pjHPWVcydbEeuD/k4Q==
-X-Google-Smtp-Source: AA0mqf6hpf3x2YGZHsciPiFFZ9WTPQHOt/1Nl85YsaI6yp4AKdaqVL7TssXcL7VvJ/eu2CHIe6BxlQ==
-X-Received: by 2002:a17:906:3993:b0:7ad:f5a9:ece3 with SMTP id h19-20020a170906399300b007adf5a9ece3mr71186272eje.635.1670270994685;
-        Mon, 05 Dec 2022 12:09:54 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id n20-20020aa7c694000000b0045726e8a22bsm176115edq.46.2022.12.05.12.09.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 12:09:53 -0800 (PST)
-Message-ID: <9aaabc1f-6d7f-2e75-8831-30e88180f3bf@linaro.org>
-Date:   Mon, 5 Dec 2022 21:09:51 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v4 13/13] arm64: dts: qcom: sa8295-adp: Enable DP
- instances
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sp/bNT5Sth10xITvOq6/Mc90creRR8yZ/shLGt2Fjbo=;
+        b=3gCV/EMZaHZggJvSs17EPU9+D8Jk9/e5V1V6N+6Q8IADrez3FtnqCLujsN53UKBv6D
+         6MqXAbJvdvOQeqTiPLVP4LVrpYj3DEqKIXBcnHuLrCAidv7/gA3clMcwdRLPl1lpEuAE
+         c7QlZy1TZdvS86DNwZpXg7y+9iKSRjVUD59IWShSlpMlO/ZnvryHS/4/D37/HSr/Ysic
+         vpaD+TCFdnfr76ekcQ2kYRipTv8c83m6z+BUS7NHzV7pXh2JUiouzKqOEtUv0sYN6v5z
+         of+L7+/AIZsJTRIq946GHK+gQcCn+ZUk7Fcd15N7lBmhKSKqFV1XmzHDeH/NQ1u1/PEq
+         2d0Q==
+X-Gm-Message-State: ANoB5plgfOFv888wkectHpxQxA8J51dFLqMgBAw3V1mNOX+5TrEktCHV
+        gBwbrJUArNHrqgsNQQYa6HU=
+X-Google-Smtp-Source: AA0mqf7z2/lysFZiqxK7ulKcSDgTYuqAgvTjsjwNu9269MsuvY9zIMkwT4vKR3jmOkwgiNV/Sr+dWg==
+X-Received: by 2002:a17:906:6c93:b0:7c0:ff76:7866 with SMTP id s19-20020a1709066c9300b007c0ff767866mr2992853ejr.272.1670271058311;
+        Mon, 05 Dec 2022 12:10:58 -0800 (PST)
+Received: from kista.localnet (82-149-19-102.dynamic.telemach.net. [82.149.19.102])
+        by smtp.gmail.com with ESMTPSA id d21-20020a170906305500b007838e332d78sm6558596ejd.128.2022.12.05.12.10.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 12:10:57 -0800 (PST)
+From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To:     Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        soc@kernel.org, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221205174433.16847-1-quic_bjorande@quicinc.com>
- <20221205174433.16847-14-quic_bjorande@quicinc.com>
- <b58f6935-b6ac-128b-2fec-a06dccc3210f@linaro.org>
- <20221205200236.2t25pv5abrgkrt5k@builder.lan>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221205200236.2t25pv5abrgkrt5k@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        =?UTF-8?B?QXLEsW7DpyDDnE5BTA==?= <arinc.unal@arinc9.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+        Frank Wunderlich <frank-w@public-files.de>,
+        Michael Riesch <michael.riesch@wolfvision.net>,
+        Oleksij Rempel <linux@rempel-privat.de>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rockchip@lists.infradead.org,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Subject: Re: [PATCH 2/5] arm: dts: remove label = "cpu" from DSA dt-binding
+Date:   Mon, 05 Dec 2022 21:10:54 +0100
+Message-ID: <5625120.DvuYhMxLoT@kista>
+In-Reply-To: <20221130141040.32447-3-arinc.unal@arinc9.com>
+References: <20221130141040.32447-1-arinc.unal@arinc9.com> <20221130141040.32447-3-arinc.unal@arinc9.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dne sreda, 30. november 2022 ob 15:10:37 CET je Ar=C4=B1n=C3=A7 =C3=9CNAL n=
+apisal(a):
+> This is not used by the DSA dt-binding, so remove it from all devicetrees.
+>=20
+> Signed-off-by: Ar=C4=B1n=C3=A7 =C3=9CNAL <arinc.unal@arinc9.com>
+> ---
+>  arch/arm/boot/dts/armada-370-rd.dts                       | 1 -
+>  arch/arm/boot/dts/armada-381-netgear-gs110emx.dts         | 1 -
+>  arch/arm/boot/dts/armada-385-clearfog-gtr-l8.dts          | 1 -
+>  arch/arm/boot/dts/armada-385-clearfog-gtr-s4.dts          | 1 -
+>  arch/arm/boot/dts/armada-385-linksys.dtsi                 | 1 -
+>  arch/arm/boot/dts/armada-385-turris-omnia.dts             | 1 -
+>  arch/arm/boot/dts/armada-388-clearfog.dts                 | 1 -
+>  arch/arm/boot/dts/armada-xp-linksys-mamba.dts             | 1 -
+>  arch/arm/boot/dts/at91-sama5d2_icp.dts                    | 1 -
+>  arch/arm/boot/dts/at91-sama5d3_ksz9477_evb.dts            | 1 -
+>  arch/arm/boot/dts/bcm-cygnus.dtsi                         | 1 -
+>  arch/arm/boot/dts/bcm4708-buffalo-wzr-1166dhp-common.dtsi | 1 -
+>  arch/arm/boot/dts/bcm4708-luxul-xap-1510.dts              | 1 -
+>  arch/arm/boot/dts/bcm4708-luxul-xwc-1000.dts              | 1 -
+>  arch/arm/boot/dts/bcm4708-netgear-r6250.dts               | 1 -
+>  arch/arm/boot/dts/bcm4708-smartrg-sr400ac.dts             | 1 -
+>  arch/arm/boot/dts/bcm47081-buffalo-wzr-600dhp2.dts        | 1 -
+>  arch/arm/boot/dts/bcm47081-luxul-xap-1410.dts             | 1 -
+>  arch/arm/boot/dts/bcm47081-luxul-xwr-1200.dts             | 1 -
+>  arch/arm/boot/dts/bcm4709-netgear-r8000.dts               | 1 -
+>  arch/arm/boot/dts/bcm47094-asus-rt-ac88u.dts              | 3 ---
+>  arch/arm/boot/dts/bcm47094-dlink-dir-885l.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-linksys-panamera.dts           | 4 ----
+>  arch/arm/boot/dts/bcm47094-luxul-abr-4500.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-luxul-xap-1610.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-luxul-xbr-4500.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-luxul-xwc-2000.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-luxul-xwr-3100.dts             | 1 -
+>  arch/arm/boot/dts/bcm47094-luxul-xwr-3150-v1.dts          | 1 -
+>  arch/arm/boot/dts/bcm47189-tenda-ac9.dts                  | 1 -
+>  arch/arm/boot/dts/bcm53015-meraki-mr26.dts                | 1 -
+>  arch/arm/boot/dts/bcm53016-meraki-mr32.dts                | 1 -
+>  arch/arm/boot/dts/bcm953012er.dts                         | 1 -
+>  arch/arm/boot/dts/bcm958622hr.dts                         | 1 -
+>  arch/arm/boot/dts/bcm958623hr.dts                         | 1 -
+>  arch/arm/boot/dts/bcm958625hr.dts                         | 1 -
+>  arch/arm/boot/dts/bcm958625k.dts                          | 1 -
+>  arch/arm/boot/dts/bcm988312hr.dts                         | 1 -
+>  arch/arm/boot/dts/gemini-dlink-dir-685.dts                | 1 -
+>  arch/arm/boot/dts/gemini-sl93512r.dts                     | 1 -
+>  arch/arm/boot/dts/gemini-sq201.dts                        | 1 -
+>  arch/arm/boot/dts/imx51-zii-rdu1.dts                      | 1 -
+>  arch/arm/boot/dts/imx51-zii-scu2-mezz.dts                 | 1 -
+>  arch/arm/boot/dts/imx51-zii-scu3-esb.dts                  | 1 -
+>  arch/arm/boot/dts/imx53-kp-hsc.dts                        | 1 -
+>  arch/arm/boot/dts/imx6dl-yapp4-common.dtsi                | 1 -
+>  arch/arm/boot/dts/imx6q-b450v3.dts                        | 1 -
+>  arch/arm/boot/dts/imx6q-b650v3.dts                        | 1 -
+>  arch/arm/boot/dts/imx6q-b850v3.dts                        | 1 -
+>  arch/arm/boot/dts/imx6qdl-gw5904.dtsi                     | 1 -
+>  arch/arm/boot/dts/imx6qdl-skov-cpu.dtsi                   | 1 -
+>  arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi                   | 1 -
+>  arch/arm/boot/dts/imx6qp-prtwd3.dts                       | 1 -
+>  arch/arm/boot/dts/imx7d-zii-rpu2.dts                      | 1 -
+>  arch/arm/boot/dts/kirkwood-dir665.dts                     | 1 -
+>  arch/arm/boot/dts/kirkwood-l-50.dts                       | 1 -
+>  arch/arm/boot/dts/kirkwood-linksys-viper.dts              | 1 -
+>  arch/arm/boot/dts/kirkwood-mv88f6281gtw-ge.dts            | 1 -
+>  arch/arm/boot/dts/kirkwood-rd88f6281.dtsi                 | 1 -
+>  arch/arm/boot/dts/mt7623a-rfb-emmc.dts                    | 1 -
+>  arch/arm/boot/dts/mt7623a-rfb-nand.dts                    | 1 -
+>  arch/arm/boot/dts/mt7623n-bananapi-bpi-r2.dts             | 1 -
+>  arch/arm/boot/dts/mt7623n-rfb-emmc.dts                    | 1 -
+>  arch/arm/boot/dts/orion5x-netgear-wnr854t.dts             | 1 -
+>  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts                 | 2 --
+>  arch/arm/boot/dts/r9a06g032.dtsi                          | 1 -
+>  arch/arm/boot/dts/stm32mp151a-prtt1c.dts                  | 1 -
+>  arch/arm/boot/dts/sun7i-a20-lamobo-r1.dts                 | 1 -
+
+=46or sun7i:
+
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+
+Best regards,
+Jernej
+
+>  arch/arm/boot/dts/vf610-zii-cfu1.dts                      | 1 -
+>  arch/arm/boot/dts/vf610-zii-dev-rev-b.dts                 | 1 -
+>  arch/arm/boot/dts/vf610-zii-dev-rev-c.dts                 | 1 -
+>  arch/arm/boot/dts/vf610-zii-scu4-aib.dts                  | 1 -
+>  arch/arm/boot/dts/vf610-zii-spb4.dts                      | 1 -
+>  arch/arm/boot/dts/vf610-zii-ssmb-dtu.dts                  | 1 -
+>  arch/arm/boot/dts/vf610-zii-ssmb-spu3.dts                 | 1 -
+>  75 files changed, 81 deletions(-)
 
 
-On 05/12/2022 21:02, Bjorn Andersson wrote:
-> On Mon, Dec 05, 2022 at 07:09:45PM +0100, Konrad Dybcio wrote:
->> On 05/12/2022 18:44, Bjorn Andersson wrote:
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> [..]
->>> +&mdss0_dp2 {
->>> +	status = "okay";
->> status should go last.
->>
-> 
-> Thanks for pointing that out. Would be nice if the computer told me
-> that...somehow...
-> 
->>> +
->>> +	data-lanes = <0 1 2 3>;
->>> +
->>> +	ports {
->>> +		port@1 {
->>> +			reg = <1>;
->>> +			mdss0_dp2_phy_out: endpoint {
->> That's quite a lot of indentation.. couldn't these endpoints be defined in
->> the SoC DT?
->>
-> 
-> The alternative would be to have the description of each DP controller
-> split over multiple nodes and rely on the reader to stitch together the
-> view of the node based on the label.
-> Based on the naming of these labels they would at least be adjacent, so
-> it wouldn't be that bad.
-> 
-> But I feel that there is enough DP-controller nodes in this board
-> already; I've yet to describe the two USB Type-C controllers or the two
-> DSI-DP bridges.
-> So I don't know if it's worth optimizing indentation-level within each
-> node like this.
-> 
-> 
-> And we will end up mixing this optimization between DP controllers, USB
-> Type-C nodes, QMP nodes, DSI-DP bridges.
-Oh okay, I see, let's keep it as-is then.
 
-Konrad
-> 
-> Regards,
-> Bjorn
