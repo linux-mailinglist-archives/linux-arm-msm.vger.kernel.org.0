@@ -2,86 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B82E643792
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:01:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD20864379F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 23:04:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231960AbiLEWBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 17:01:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35290 "EHLO
+        id S232113AbiLEWEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 17:04:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230154AbiLEWBF (ORCPT
+        with ESMTP id S231895AbiLEWEg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 17:01:05 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD189388;
-        Mon,  5 Dec 2022 14:01:03 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B4C26144D;
-        Mon,  5 Dec 2022 22:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F95C433C1;
-        Mon,  5 Dec 2022 22:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670277662;
-        bh=ft+sTE0mE8t3iZHmaktOo2bqKVFMds11iKVynOJ6Y6I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DMDSMNNsku4wmMi56cdErZdDCXO8lNdgxRNdkvFrudoPSaI80S2chbc8HLsq37rh/
-         mka7WwzSFMYh2csr61wAshRQ4lUn9hxqFQJ/TwCboq+JnbiqdxpwQYv794QgI0uwfo
-         0ZCiu6zd524YRPbUINHJZ8Zo78WjT5/kV5ZH3NYrR9NAyoakJqPhXX3rsh1oC2iWyM
-         EuIPNwhFbRKuEOdrzYMuJbL3NhSTAeye1PVrK8a0BM4Ix0Uzjwz1fC552swq8zZ1HZ
-         3BGj0u+rErlF+4EDasajwSA1K/ibLsCgiCzVqtFrBQgpkBt9koMp4iha02H6ZG6wZb
-         ftPS5dKVatqCQ==
-Date:   Mon, 5 Dec 2022 16:01:00 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     ye.xingchen@zte.com.cn
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH linux-next] soc: qcom: smem_state: Use
- device_match_of_node()
-Message-ID: <20221205220100.a2omqdmhtw26i7qx@builder.lan>
-References: <202211171548066327249@zte.com.cn>
+        Mon, 5 Dec 2022 17:04:36 -0500
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13D211470;
+        Mon,  5 Dec 2022 14:04:35 -0800 (PST)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-14449b7814bso10197411fac.3;
+        Mon, 05 Dec 2022 14:04:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X0o74DAKGRH7Cm9VJkIU43IM86KKjNPrQtB4w12QWbA=;
+        b=sGqzU9+ZxURRohoE2SNQ/14EyCb2k0Cy+7lOJyErZfYbkAFcsDoPIpvnNQVexFgN2s
+         ediQ3fzehZrnF3pD8emD2MfLQfCmgmYomjQu/dNlmS1G+ZawUO1vVx1u2GmfRfwCfzDe
+         h4yUJH70sSA9oUesf48iCdYunkIOWjo+6TyXr2drgU5DQEyoE6htbINVA3EmZXJWgS9J
+         LIKMTf3EQXXZlYhlTZPoSWHIgcXWeZHN9fralygXCnzEmEp3+3Y4OHAO/G8I4m1R63En
+         Ph6kRJdcbOh2/kSz4vzDu73nRrbU2go8CjEQPFk5KQqwiVCvtweC4i+hmkxHXAgeQp3K
+         KC3w==
+X-Gm-Message-State: ANoB5pl9yAenJ6Igg5VkfNU+EZkZPRZyb9E0+PQiVnICx0SN6P8kk//Y
+        wFdfhsVCrmRVcuO3Gqj+yg==
+X-Google-Smtp-Source: AA0mqf5+j5X2a2K39tY4PrzDbQKhAY0J9u3F+3pE3tsRI6votXOld4GH5/oZPKPKFAfPEktnYb/4qg==
+X-Received: by 2002:a05:6870:ea81:b0:144:6881:d7e6 with SMTP id s1-20020a056870ea8100b001446881d7e6mr6088539oap.94.1670277875064;
+        Mon, 05 Dec 2022 14:04:35 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id r127-20020aca4485000000b0034d9042758fsm7461646oia.24.2022.12.05.14.04.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 14:04:34 -0800 (PST)
+Received: (nullmailer pid 2709108 invoked by uid 1000);
+        Mon, 05 Dec 2022 22:04:33 -0000
+Date:   Mon, 5 Dec 2022 16:04:33 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: input: qcom,pm8921-keypad: convert
+ to YAML format
+Message-ID: <20221205220433.GA2684995-robh@kernel.org>
+References: <20221204061555.1355453-1-dmitry.baryshkov@linaro.org>
+ <20221204061555.1355453-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202211171548066327249@zte.com.cn>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221204061555.1355453-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 03:48:06PM +0800, ye.xingchen@zte.com.cn wrote:
-> From: ye xingchen <ye.xingchen@zte.com.cn>
+On Sun, Dec 04, 2022 at 08:15:52AM +0200, Dmitry Baryshkov wrote:
+> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
+> PM8058 PMICs from text to YAML format.
 > 
-> Replace the open-code with device_match_of_node().
-> 
-> Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
-> ---
->  drivers/soc/qcom/smem_state.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/smem_state.c b/drivers/soc/qcom/smem_state.c
-> index e848cc9a3cf8..a7844841a727 100644
-> --- a/drivers/soc/qcom/smem_state.c
-> +++ b/drivers/soc/qcom/smem_state.c
-> @@ -63,7 +63,7 @@ static struct qcom_smem_state *of_node_to_state(struct device_node *np)
->  	mutex_lock(&list_lock);
-> 
->  	list_for_each_entry(state, &smem_states, list) {
-> -		if (state->of_node == np) {
-> +		if (device_match_of_node(state, np)) {
+> While doing the conversion also change linux,keypad-no-autorepeat
+> property to linux,input-no-autorepeat. The former property was never
+> used by DT and was never handled by the driver.
 
-I don't find this form easier to read, nor is state a struct device *...
+Changing from the documented one to one some drivers use. I guess 
+that's a slight improvement. Please see this discussion[1]. 
 
-Regards,
-Bjorn
+Rob
 
->  			kref_get(&state->refcount);
->  			goto unlock;
->  		}
-> -- 
-> 2.25.1
+[1] https://lore.kernel.org/all/YowEgvwBOSEK+kd2@google.com/
