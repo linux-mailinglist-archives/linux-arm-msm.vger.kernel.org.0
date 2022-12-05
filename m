@@ -2,55 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C490643962
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 00:21:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0345D6439B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 00:58:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbiLEXVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 18:21:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43186 "EHLO
+        id S232165AbiLEX6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 18:58:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiLEXVI (ORCPT
+        with ESMTP id S232702AbiLEX6w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 18:21:08 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36AFA17AB4;
-        Mon,  5 Dec 2022 15:21:07 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A94A461472;
-        Mon,  5 Dec 2022 23:21:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABA9C433D6;
-        Mon,  5 Dec 2022 23:21:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670282466;
-        bh=VoYS6nkf8OD5lbUxlXWhVJUvZLl8dSesij0AjBK2dfw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jd7oWhxwdoI0q2TPSi8QP5xKi9qzOmhjjRjQnThdmYExipVWRFtoF+e1p+MYoWcVU
-         EKow5gf5EGV3eC+FYEumrHlCvEtIMoxAy4Mum/iIv36gMAOwGnHyR0d4Dqzp6GpFRH
-         P8S7V4OBFDd5UEsHQDp2bZPtd+BTvmFIw3mt3dPeJIvurkV8rcnWHPJD/II8sXacmY
-         nL20IAZb+8tpWYc1pKqF7ozArwpwht3T3EapT6u+BwBVcB6CxJwtNFtZwNPsxqFmKe
-         bNPMZiv6b/VEFaeAY0pGOHgBG5h3dxAJElJS4r6utg/9m1PriVCCyRw+YOIwKSHVsF
-         2mmq0e6txIstw==
-Date:   Mon, 5 Dec 2022 17:21:03 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm670: add qfprom node
-Message-ID: <20221205232103.bz4ar3dbmocfl3yv@builder.lan>
-References: <20221205230116.2204-1-mailingradian@gmail.com>
- <20221205230116.2204-2-mailingradian@gmail.com>
+        Mon, 5 Dec 2022 18:58:52 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4192315A28
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 15:58:49 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id p36so16749064lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 15:58:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=doSWp/8FuNr+NEV3HjPTJkGGPY6r8PL0hvET2gbpcas=;
+        b=Qerm5bC31eCO/u9ZcVP1OcqKBknqnslFPZd1KK3o1V2jy51sySmxFQBQZRAhfyjlr5
+         0iF9IRsEbwty3qVO1wOSB1T87h54s4gx2dJ/E70LBpDUfxeBT2cSM76kwX5YzDpxthuy
+         UnYbMgHX4IGFYzj1YAZQBQTpVChrQM5rc9K3429C+Jc0ZgfYBnYlDrz+7g2oiSPSXnK2
+         QHFngs5DeLtpPzW019h10iP/OTn9g1CjjuZZRz4zuO33qvD06K6FnsWDYHMpslkxGyAW
+         kCsR8n5tZFQ550S05KB+1mMT0htMsGwqyCLZkyGESXATDlNoAS3dU+8IhaYxSoZUBpq5
+         Kgiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=doSWp/8FuNr+NEV3HjPTJkGGPY6r8PL0hvET2gbpcas=;
+        b=LswKwglRahJuYdZ2uH1+qFC8MfwIH8V8XbZ7dYQhbp3fOnIEJwJyO5B7/wG4qJ/cQQ
+         CXH7J3GmpZWkJifXMzsy4PqyiAd3UJTPrT7mkZtvpDpQimg5yTWDxTihMA9rVK+91eqV
+         /SQFKQJ9tav4daf01Bf/8pTi6E5DtXc8IJcNTAJH4bikc9eQV8ooG4dLBEg0nBUkuiVz
+         Sg9EYUCnp1lI9QvZBWQ8097Z6l02kXnnzgWfHgciZXHIqKuHyLEttsOFMS2KewP+C3pq
+         qncdXQB6qLaD9rmptCjaeVIyFb4lVcz2HF1qKAD8+1xQqaCNcP6aWJYhaYOV26HNUKPB
+         ke2Q==
+X-Gm-Message-State: ANoB5pmDbwGsqPg6yyEp3hufG2ZJpn/NCBysantVTPE3kmh9YVpE6j/7
+        qRtJdMIqZEH4OwWyKz2ygwpTSw==
+X-Google-Smtp-Source: AA0mqf4iVNbwTKjN8IO9W2OPq2uXL5c4w2KkFC+MzkP3JxqHL9eP3wjuwJUr9hB+oLt1r/8eCoxMEA==
+X-Received: by 2002:ac2:4e14:0:b0:4af:f5a0:8786 with SMTP id e20-20020ac24e14000000b004aff5a08786mr26291071lfr.265.1670284727601;
+        Mon, 05 Dec 2022 15:58:47 -0800 (PST)
+Received: from [127.0.0.1] ([188.170.72.128])
+        by smtp.gmail.com with ESMTPSA id bp33-20020a05651215a100b004b5701b5337sm721215lfb.104.2022.12.05.15.58.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Dec 2022 15:58:47 -0800 (PST)
+Date:   Tue, 06 Dec 2022 02:41:21 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        airlied@gmail.com
+CC:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v9_4/5=5D_drm/msm/dp=3A_parser_link?= =?US-ASCII?Q?-frequencies_as_property_of_dp=5Fout_endpoint?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <1670281694-13281-5-git-send-email-quic_khsieh@quicinc.com>
+References: <1670281694-13281-1-git-send-email-quic_khsieh@quicinc.com> <1670281694-13281-5-git-send-email-quic_khsieh@quicinc.com>
+Message-ID: <90C493B1-E7E3-46A9-89F0-443922B8FEF5@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221205230116.2204-2-mailingradian@gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,45 +81,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 05, 2022 at 06:01:15PM -0500, Richard Acayan wrote:
-> Some hardware quirks and capabilities can be determined by reading the
-> fuse-programmable read-only memory. Add the QFPROM node so consumers
-> know if they need to do anything extra to support the hardware.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm670.dtsi | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index f93705bc549f..933ad2fabf3a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -731,6 +731,13 @@ gcc: clock-controller@100000 {
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		qfprom: qfprom@780000 {
-> +			compatible = "qcom,sdm670-qfprom", "qcom,qfprom";
-> +			reg = <0 0x780000 0 0x1000>;
+6 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3=2E 02:08:13 GMT+03=
+:00, Kuogee Hsieh <quic_khsieh@quicinc=2Ecom> =D0=BF=D0=B8=D1=88=D0=B5=D1=
+=82:
+>Add capability to parser and retrieve max DP link supported rate from
+>link-frequencies property of dp_out endpoint=2E
+>
+>Changes in v6:
+>-- second patch after split parser patch into two patches
+>
+>Changes in v7:
+>-- without checking cnt against DP_MAX_NUM_DP_LANES to retrieve link rate
+>
+>Changes in v9:
+>-- separate parser link-frequencies out of data-lanes
+>
+>Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>
+>---
+> drivers/gpu/drm/msm/dp/dp_parser=2Ec | 20 ++++++++++++++++++--
+> drivers/gpu/drm/msm/dp/dp_parser=2Eh |  2 ++
+> 2 files changed, 20 insertions(+), 2 deletions(-)
+>
+>diff --git a/drivers/gpu/drm/msm/dp/dp_parser=2Ec b/drivers/gpu/drm/msm/d=
+p/dp_parser=2Ec
+>index b5f7e70=2E=2Efdea843 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_parser=2Ec
+>+++ b/drivers/gpu/drm/msm/dp/dp_parser=2Ec
+>@@ -94,15 +94,17 @@ static int dp_parser_ctrl_res(struct dp_parser *parse=
+r)
+> static int dp_parser_misc(struct dp_parser *parser)
+> {
+> 	struct device_node *of_node =3D parser->pdev->dev=2Eof_node;
+>+	struct device_node *endpoint;
+>+	u64 frequency;
+> 	int cnt;
+>=20
+> 	/*
+> 	 * data-lanes is the property of dp_out endpoint
+> 	 */
+> 	cnt =3D drm_of_get_data_lanes_count_ep(of_node, 1, 0, 1, DP_MAX_NUM_DP_=
+LANES);
+>-	if (cnt > 0)
+>+	if (cnt > 0) {
+> 		parser->max_dp_lanes =3D cnt;
+>-	else {
+>+	} else {
 
-I suspect the qfprom block is inherited from SDM845, if so 0x780000
-contains raw, uncorrected data, while 0x784000 contains ECC-corrected
-versions of these. Please validate and use the same.
+This belongs to the previous patch=20
 
-Also, please pad the address to 8 digits, to make it easier to check the
-sort order.
+> 		/*
+> 		 * legacy code, data-lanes is the property of mdss_dp node
+> 		 */
+>@@ -113,6 +115,20 @@ static int dp_parser_misc(struct dp_parser *parser)
+> 			parser->max_dp_lanes =3D DP_MAX_NUM_DP_LANES; /* 4 lanes */
+> 	}
+>=20
+>+	cnt =3D 0;
+>+	endpoint =3D of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
+>+	if (endpoint)
+>+		cnt =3D of_property_count_u64_elems(endpoint, "link-frequencies");
+>+	of_node_put(endpoint);
+>+	if (cnt > 0) {
+>+		of_property_read_u64_index(endpoint, "link-frequencies",
 
-Thanks,
-Bjorn
+And this is use after free=2E
 
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +		};
-> +
->  		sdhc_1: mmc@7c4000 {
->  			compatible = "qcom,sdm670-sdhci", "qcom,sdhci-msm-v5";
->  			reg = <0 0x007c4000 0 0x1000>,
-> -- 
-> 2.38.1
-> 
+I still think than an additional function would make code simpler=2E You c=
+an return an error code at any point=2E And then handle it in the calling c=
+ode=2E
+
+>+						cnt - 1, &frequency);
+>+		frequency /=3D 10;	/* from symbol rate to link rate */
+>+		parser->max_dp_link_rate =3D (frequency / 1000); /* kbits */
+>+	} else {
+>+		parser->max_dp_link_rate =3D DP_LINK_RATE_HBR2; /* 540000 khz */
+>+	}
+>+
+> 	return 0;
+> }
+>=20
+>diff --git a/drivers/gpu/drm/msm/dp/dp_parser=2Eh b/drivers/gpu/drm/msm/d=
+p/dp_parser=2Eh
+>index 866c1a8=2E=2E3ddf639 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_parser=2Eh
+>+++ b/drivers/gpu/drm/msm/dp/dp_parser=2Eh
+>@@ -15,6 +15,7 @@
+> #define DP_LABEL "MDSS DP DISPLAY"
+> #define DP_MAX_PIXEL_CLK_KHZ	675000
+> #define DP_MAX_NUM_DP_LANES	4
+>+#define DP_LINK_RATE_HBR2       540000
+>=20
+> enum dp_pm_type {
+> 	DP_CORE_PM,
+>@@ -119,6 +120,7 @@ struct dp_parser {
+> 	struct dp_io io;
+> 	struct dp_display_data disp_data;
+> 	u32 max_dp_lanes;
+>+	u32 max_dp_link_rate;
+> 	struct drm_bridge *next_bridge;
+>=20
+> 	int (*parse)(struct dp_parser *parser);
+
