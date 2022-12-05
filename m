@@ -2,85 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6926464364F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:04:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C2F643669
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Dec 2022 22:06:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233811AbiLEVEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 16:04:01 -0500
+        id S233633AbiLEVF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 16:05:58 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233418AbiLEVDe (ORCPT
+        with ESMTP id S231426AbiLEVFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 16:03:34 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B7D2B253
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 13:02:07 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id s10so977059ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 13:02:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oHs+FqdUXZ8dY/1UdxeesnQgdtIGHLBMYAul3CErIMw=;
-        b=oo/3QD3RnOsB//i0LeWi6f6xfNMxY4CIVu6ymNCgcGX2szuQj5mK3IKlg43DG4CGAG
-         +m1cE1p1YACPkg553lAIpp2JKY6g0ovpeGNg2jVVWd8/48ab1FbctWf2ZfjxtJgLgP2r
-         ebGYj1hy/Uz12mNeHAUnwPzyctKuwkFFobCvL6mW3oMDzf/DUW9Vptlm8f0CTsguxFlT
-         9S0b0tieMW04bK25zhYN5vj6k5eeWvb/pWD+BhakFa5w887cHFOL+/8qh46VneOG3sU0
-         0KrETIj/yJ+fVav/i5C43uaP8sM8sHhfiSNwNydhpHdwM1O3Nh/8nv+lDsxHhiVHZW2z
-         PNjQ==
+        Mon, 5 Dec 2022 16:05:18 -0500
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5361D2BB07;
+        Mon,  5 Dec 2022 13:04:56 -0800 (PST)
+Received: by mail-oi1-f175.google.com with SMTP id h132so14521617oif.2;
+        Mon, 05 Dec 2022 13:04:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oHs+FqdUXZ8dY/1UdxeesnQgdtIGHLBMYAul3CErIMw=;
-        b=vd2EFQj6Fhd7zh1upoAXU4wCP0p5j1NAkNrsbLBziYMb7Q+jNa9EJcj/rdo3GJPRRG
-         O+b4dpzxYHV0uAYbp+HZ8WGuN+88vPChh63TgQU7RNR3PRwolq/3LTOkEgo2V2FCfLnG
-         hvOrtjLIxnsipVdJ71nKrsRH4WdFuUF7dCEvNjmBP4hNL3LHh/hEJo8ykGU71U1pLR6S
-         FFXM6ZWvuwwu+aZO89lLxYS7Ru27Ibo2oT+xO0YWlSrh9zIx9+zpd2lu91+4Oeab50JI
-         BorSW3soeMRLZSPZNXxMZbtIadbCmUnNIINGGue9K4q+5qEa6jcXkEBKoNkCT/c9QMRF
-         39Bw==
-X-Gm-Message-State: ANoB5pmV5RS7kKpw5/tf+Ja4VB9p1dx8Q/qfBeQqMAu62w4tDHoUTVKx
-        jkYtb+EAZa9bUMZ+r31MFIwJfg==
-X-Google-Smtp-Source: AA0mqf7b8AihvPHnHW9Fpk0XOGRCY4PnhRVvSAU8ZHOm+17Io0XAUyzYe1yURuzbjdyF40G3jN+d1w==
-X-Received: by 2002:a2e:2d01:0:b0:278:ebb5:ddd2 with SMTP id t1-20020a2e2d01000000b00278ebb5ddd2mr25350274ljt.494.1670274125389;
-        Mon, 05 Dec 2022 13:02:05 -0800 (PST)
-Received: from [127.0.0.1] ([94.25.229.129])
-        by smtp.gmail.com with ESMTPSA id z15-20020a0565120c0f00b004b56de48f05sm733929lfu.27.2022.12.05.13.02.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Dec 2022 13:02:04 -0800 (PST)
-Date:   Tue, 06 Dec 2022 00:02:00 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 08/13] drm/msm/dp: Implement hpd_notify()
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20221205174433.16847-9-quic_bjorande@quicinc.com>
-References: <20221205174433.16847-1-quic_bjorande@quicinc.com> <20221205174433.16847-9-quic_bjorande@quicinc.com>
-Message-ID: <0C21338C-EC82-4A57-949F-6EE8044BBFFD@linaro.org>
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9CwjQnBpZhR3hfYFhEevn5e7QNaIh1B5bLQAi43lcrk=;
+        b=ICZqOiSPYNMkvZGxbxj7S6tRa5U0ZJlu8/Kh+LZWJEpRbhtKuCaKaLNp5O0zMMTKPO
+         vxAMqhgsDxQsnf7GBQeLQycKfzoAWIHJuVxFSIxBet5zNmRjucylkVhIX32QSC7k7TIz
+         ZiK9CrAIT6OhRNxB0b/ABjilbHbAuSdMU7JP5+3DczBAA45DCdYgJxXAxH0nVo7CPUv9
+         SqRSQhSyZkNcLYHX4i/hz6kMC17h1S6EufzXsfLjRqb5yjAuKpcmIbnBH4LQWB/Cf7ox
+         yoog4QFHwD2+iPT9GN8K0IM32XzeOHO6/UnV9rWs1T11NJuIlIo+OBfeKvr4qq2CnNc2
+         gWbw==
+X-Gm-Message-State: ANoB5pnI8Og1HjXzN3nbPeFVp/x5NB9jvgdKChL7iosmJysnZUvrhPUa
+        qKxrQxp+GrHnv61XKErKtp1FXXMsoA==
+X-Google-Smtp-Source: AA0mqf6PNt36qq3YHqydspUbJJ2YLYagwBsN9fSedf6ZJgKdnwon8TbkB7Y9jzHiw1tuBJG4lDUmwA==
+X-Received: by 2002:a54:478d:0:b0:35a:582b:e0f5 with SMTP id o13-20020a54478d000000b0035a582be0f5mr30964775oic.164.1670274295497;
+        Mon, 05 Dec 2022 13:04:55 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id z10-20020a056870c20a00b0013b911d5960sm9684219oae.49.2022.12.05.13.04.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 13:04:55 -0800 (PST)
+Received: (nullmailer pid 2619485 invoked by uid 1000);
+        Mon, 05 Dec 2022 21:04:51 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dianders@chromium.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, airlied@gmail.com, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org, robdclark@gmail.com,
+        konrad.dybcio@somainline.org, devicetree@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
+        vkoul@kernel.org, freedreno@lists.freedesktop.org, sean@poorly.run,
+        quic_sbillaka@quicinc.com, robh+dt@kernel.org, agross@kernel.org,
+        quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org
+In-Reply-To: <1670267670-15832-3-git-send-email-quic_khsieh@quicinc.com>
+References: <1670267670-15832-1-git-send-email-quic_khsieh@quicinc.com>
+ <1670267670-15832-3-git-send-email-quic_khsieh@quicinc.com>
+Message-Id: <167027422734.2617917.15803998013731491196.robh@kernel.org>
+Subject: Re: [PATCH v8 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
+Date:   Mon, 05 Dec 2022 15:04:51 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,110 +72,60 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Mon, 05 Dec 2022 11:14:27 -0800, Kuogee Hsieh wrote:
+> Add both data-lanes and link-frequencies property into endpoint
+> 
+> Changes in v7:
+> -- split yaml out of dtsi patch
+> -- link-frequencies from link rate to symbol rate
+> -- deprecation of old data-lanes property
+> 
+> Changes in v8:
+> -- correct Bjorn mail address to kernel.org
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 22 ++++++++++++++++------
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+> 
 
-On 5 December 2022 20:44:28 GMT+03:00, Bjorn Andersson <quic_bjorande@quic=
-inc=2Ecom> wrote:
->From: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->
->The DisplayPort controller's hot-plug mechanism is based on pinmuxing a
->physical signal on a GPIO pin into the controller=2E This is not always
->possible, either because there aren't dedicated GPIOs available or
->because the hot-plug signal is a virtual notification, in cases such as
->USB Type-C=2E
->
->For these cases, by implementing the hpd_notify() callback for the
->DisplayPort controller's drm_bridge, a downstream drm_bridge
->(next_bridge) can be used to track and signal the connection status
->changes=2E
->
->This makes it possible to use downstream drm_bridges such as
->display-connector or any virtual mechanism, as long as they are
->implemented as a drm_bridge=2E
->
->Signed-off-by: Bjorn Andersson <bjorn=2Eandersson@linaro=2Eorg>
->[bjorn: Drop connector->fwnode assignment and dev from struct msm_dp]
->Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
->---
->
->Changes since v3:
->- None
->
-> drivers/gpu/drm/msm/dp/dp_display=2Ec | 22 ++++++++++++++++++++++
-> drivers/gpu/drm/msm/dp/dp_drm=2Ec     |  1 +
-> drivers/gpu/drm/msm/dp/dp_drm=2Eh     |  2 ++
-> 3 files changed, 25 insertions(+)
->
->diff --git a/drivers/gpu/drm/msm/dp/dp_display=2Ec b/drivers/gpu/drm/msm/=
-dp/dp_display=2Ec
->index 666b45c8ab80=2E=2E17fcf8cd84cd 100644
->--- a/drivers/gpu/drm/msm/dp/dp_display=2Ec
->+++ b/drivers/gpu/drm/msm/dp/dp_display=2Ec
->@@ -1772,3 +1772,25 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bri=
-dge,
-> 	dp_display->dp_mode=2Eh_active_low =3D
-> 		!!(dp_display->dp_mode=2Edrm_mode=2Eflags & DRM_MODE_FLAG_NHSYNC);
-> }
->+
->+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
->+			  enum drm_connector_status status)
->+{
->+	struct msm_dp_bridge *dp_bridge =3D to_dp_bridge(bridge);
->+	struct msm_dp *dp_display =3D dp_bridge->dp_display;
->+	struct dp_display_private *dp =3D container_of(dp_display, struct dp_di=
-splay_private, dp_display);
->+
->+	/* Without next_bridge interrupts are handled by the DP core directly *=
-/
->+	if (!dp_display->next_bridge)
->+		return;
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Can we use hpd_notify in all the cases by dropping the corresponding piece=
- of code from the core driver?=20
+yamllint warnings/errors:
 
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: properties:ports:properties:port@1:properties: 'properties' should not be valid under {'$ref': '#/definitions/json-schema-prop-names'}
+	hint: A json-schema keyword was found instead of a DT property name.
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: properties:ports:properties:port@1:properties: 'additionalProperties' should not be valid under {'$ref': '#/definitions/json-schema-prop-names'}
+	hint: A json-schema keyword was found instead of a DT property name.
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: properties:ports:properties:port@1:properties:properties: 'anyOf' conditional failed, one must be fixed:
+	'data-lanes' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	'type' was expected
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: properties:ports:properties:port@1:properties:properties: 'anyOf' conditional failed, one must be fixed:
+	'link-frequencies' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	'type' was expected
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.example.dtb: displayport-controller@ae90000: ports:port@1:endpoint: Unevaluated properties are not allowed ('data-lanes', 'link-frequencies' were unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
 
->+
->+	if (!dp->core_initialized) {
->+		drm_dbg_dp(dp->drm_dev, "not initialized\n");
->+		return;
->+	}
->+
->+	if (!dp_display->is_connected && status =3D=3D connector_status_connect=
-ed)
->+		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
->+	else if (dp_display->is_connected && status =3D=3D connector_status_dis=
-connected)
->+		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
->+}
->diff --git a/drivers/gpu/drm/msm/dp/dp_drm=2Ec b/drivers/gpu/drm/msm/dp/d=
-p_drm=2Ec
->index 6db82f9b03af=2E=2E3898366ebd5e 100644
->--- a/drivers/gpu/drm/msm/dp/dp_drm=2Ec
->+++ b/drivers/gpu/drm/msm/dp/dp_drm=2Ec
->@@ -102,6 +102,7 @@ static const struct drm_bridge_funcs dp_bridge_ops =
-=3D {
-> 	=2Eget_modes    =3D dp_bridge_get_modes,
-> 	=2Edetect       =3D dp_bridge_detect,
-> 	=2Eatomic_check =3D dp_bridge_atomic_check,
->+	=2Ehpd_notify   =3D dp_bridge_hpd_notify,
-> };
->=20
-> struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_=
-device *dev,
->diff --git a/drivers/gpu/drm/msm/dp/dp_drm=2Eh b/drivers/gpu/drm/msm/dp/d=
-p_drm=2Eh
->index 82035dbb0578=2E=2E79e6b2cf2d25 100644
->--- a/drivers/gpu/drm/msm/dp/dp_drm=2Eh
->+++ b/drivers/gpu/drm/msm/dp/dp_drm=2Eh
->@@ -32,5 +32,7 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_br=
-idge *bridge,
-> void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
-> 			const struct drm_display_mode *mode,
-> 			const struct drm_display_mode *adjusted_mode);
->+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
->+			  enum drm_connector_status status);
->=20
-> #endif /* _DP_DRM_H_ */
+doc reference errors (make refcheckdocs):
 
---=20
-With best wishes
-Dmitry
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1670267670-15832-3-git-send-email-quic_khsieh@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
