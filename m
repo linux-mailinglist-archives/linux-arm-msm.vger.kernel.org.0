@@ -2,112 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D657644BCE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:34:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE352644C67
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 20:21:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbiLFSd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 13:33:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51628 "EHLO
+        id S229702AbiLFTVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 14:21:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbiLFSdg (ORCPT
+        with ESMTP id S229699AbiLFTVY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 13:33:36 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC2743852;
-        Tue,  6 Dec 2022 10:31:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C0CB6189A;
-        Tue,  6 Dec 2022 18:31:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5AFC433C1;
-        Tue,  6 Dec 2022 18:31:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670351461;
-        bh=5xTLjp4LeFj0uXRgLCQLSq2wJXbvdG8fJOW+4kkXY+U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=amYtWejkR96N3Rc+kkrX8N3+no0s11/MLffgcbXb7n7YOdyxIIak+ZUvQI6VX/LUA
-         u8QahuoSc7o4D7f9BMlgHunGFnbwHF8kFyTjzfxe6HW/PsufUfk/9bLWjBuxujZvj9
-         bDcg/l+jLIk0df4Iw+tUNRSOp/DG3UpRvBBOAwxeAjq/nutULrKAu5srwrtxCOrpfZ
-         1zyrM+aLV9H2o7qm1zD3A3SocX/yrJsxvc/pFLGp70Q87gcuKnaIF1k6ZQ69bMX3Cb
-         TFag4Qqvm9fAE9V9i97cDPMa2O44XkmqwVZstDSJVubzxlrw0BSjQkIJbImfHz4EyG
-         /OTJsPMFBMapg==
-Date:   Tue, 6 Dec 2022 12:30:58 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Alex Elder <alex.elder@linaro.org>
-Cc:     Alex Elder <elder@linaro.org>, sboyd@kernel.org,
-        mturquette@baylibre.com, konrad.dybcio@linaro.org,
-        agross@kernel.org, Luca Weiss <luca.weiss@fairphone.com>,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: rpmh: add support for SM6350 rpmh IPA clock
-Message-ID: <20221206183058.rsws5ciqa2u5q7oj@builder.lan>
-References: <20221202221240.225720-1-elder@linaro.org>
- <20221205225646.gtwhakd4lxh6vlfc@builder.lan>
- <39903fb5-fd28-c159-b300-47d3ec4cd0fc@linaro.org>
+        Tue, 6 Dec 2022 14:21:24 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138F63FB9B;
+        Tue,  6 Dec 2022 11:21:23 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id z8-20020a17090abd8800b00219ed30ce47so4726572pjr.3;
+        Tue, 06 Dec 2022 11:21:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kCOE6UB3AU4sZjM0eLrxIRHE8DSLTlCxmBapLp+bPNQ=;
+        b=oxisaQx/rtHyRTCMpb85wCfSx3JaiXt6gpFSAXSp4FBtH8KRxOuGMFodPB4T4nmghi
+         LcuqFFHpATlLWmrV7wfOj+JZrOaYqN7hKH40bPzvwfkj09li3lm2tueUfFt/orlTAFyT
+         tvxrbkSNTTXmQ/0GakqDsx0uzmMHOh07GiNu540gt6qTrdXvItuM50ztfPXxxZBhCkMQ
+         phB/7HgkIHCFtm2GWm9HjrDIrNaywELLXZVvacLeV4cp2oAz4NCBlxWaPI4ynblR3n2q
+         GsIfFyt8NS6Q7XBycZrQLky8jXgBpCr0adp6/sflDfVKMoDMgF30XtMMM6BRZIWBfDLA
+         hbmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kCOE6UB3AU4sZjM0eLrxIRHE8DSLTlCxmBapLp+bPNQ=;
+        b=b2Jn8icqej4Hj2I2j5r1Zv6sDLjpk5ZFyAkAu1CKSarZV7crQKTow7L6qHkB/pxosg
+         Pzlf6dnNajyXGQofHW7oruq/qTf2LH5V65vw+wYB7SUuz4CMTQQ8S4AS2rVnIhmq0p40
+         47xv+iJLGbQvUMdchO3X5bTPcplvRa/yhkjw5IdDLzm7NMX/94nEe3E4tiMbJ9dTp97S
+         1XRApMkGxV5Z4BrFzASLXvfQ3yBwS4NG28aEm2WZ2PPgHWEBA6hp0wqp++vXZd1NMTX2
+         LXpM7NxigchFwNIQ3uxHd85GbVALKt9jqdSaZLS/Ss/MwOrkDuwTldBExU7tQWCsSWYl
+         3oxQ==
+X-Gm-Message-State: ANoB5plU2ZYzAAAVk8ln4uLnt+VFwTTLGmVzJ0jdbjIP8y/YQk7/vxX2
+        GeA5IgJgP1dneuXBp5HwxJg=
+X-Google-Smtp-Source: AA0mqf6exKLZJ3n5EhVh3nDm8ZR2z+CSHRWSi0xA8aPelGwpxWfZfGSsbERAoO8DlqExqBSnR0M+ig==
+X-Received: by 2002:a17:902:f7ca:b0:189:b203:9e2f with SMTP id h10-20020a170902f7ca00b00189b2039e2fmr382970plw.56.1670354482458;
+        Tue, 06 Dec 2022 11:21:22 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id v25-20020a634659000000b00473c36ea150sm5434632pgk.92.2022.12.06.11.21.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 11:21:21 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Add MSM_SUBMIT_BO_NO_IMPLICIT
+Date:   Tue,  6 Dec 2022 11:21:23 -0800
+Message-Id: <20221206192123.661448-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39903fb5-fd28-c159-b300-47d3ec4cd0fc@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 05, 2022 at 09:05:30PM -0600, Alex Elder wrote:
-> On 12/5/22 4:56 PM, Bjorn Andersson wrote:
-> > On Fri, Dec 02, 2022 at 04:12:40PM -0600, Alex Elder wrote:
-> > > From: Luca Weiss <luca.weiss@fairphone.com>
-> > > 
-> > > The IPA core clock is required for SM6350.  Define it.
-> > > 
-> > > [elder@linaro.org: rebased with Dmitry's changes]
-> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> 
-> Sorry about that, I knew I was supposed to sign
-> off and thought I had.
-> 
-> You told me separately that this was sufficient:
-> 
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> 
-> If you want me to send a new version with the
-> signoff just let me know.  Thanks.
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-That works fine, thank you.
-Bjorn
+In cases where implicit sync is used, it is still useful (for things
+like sub-allocation, etc) to allow userspace to opt-out of implicit
+sync on per-BO basis.
 
-> 					-Alex
-> > 
-> > Thanks for rebasing this Alex. But as you're handling the patch you need
-> > to add your S-o-b; which will make sure your [] makes sense as well.
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > ---
-> > > v2: This is now based on qualcomm/for-next.
-> > > 
-> > >   drivers/clk/qcom/clk-rpmh.c | 1 +
-> > >   1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> > > index 2c2ef4b6d130e..586a810c682ca 100644
-> > > --- a/drivers/clk/qcom/clk-rpmh.c
-> > > +++ b/drivers/clk/qcom/clk-rpmh.c
-> > > @@ -606,6 +606,7 @@ static struct clk_hw *sm6350_rpmh_clocks[] = {
-> > >   	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_ln_bb_clk3_g4_ao.hw,
-> > >   	[RPMH_QLINK_CLK]	= &clk_rpmh_qlink_div4.hw,
-> > >   	[RPMH_QLINK_CLK_A]	= &clk_rpmh_qlink_div4_ao.hw,
-> > > +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
-> > >   };
-> > >   static const struct clk_rpmh_desc clk_rpmh_sm6350 = {
-> > > -- 
-> > > 2.34.1
-> > > 
-> 
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_drv.c        |  3 ++-
+ drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++++++++
+ include/uapi/drm/msm_drm.h           |  4 +++-
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 017a512982a2..e0e1199a822f 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -45,9 +45,10 @@
+  * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
+  * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
+  * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
++ * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
+  */
+ #define MSM_VERSION_MAJOR	1
+-#define MSM_VERSION_MINOR	9
++#define MSM_VERSION_MINOR	10
+ #define MSM_VERSION_PATCHLEVEL	0
+ 
+ static const struct drm_mode_config_funcs mode_config_funcs = {
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index eb3536e3d66a..8bad07a04f85 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -334,9 +334,20 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+ 		if (ret)
+ 			return ret;
+ 
++		/* If userspace has determined that explicit fencing is
++		 * used, it can disable implicit sync on the entire
++		 * submit:
++		 */
+ 		if (no_implicit)
+ 			continue;
+ 
++		/* Otherwise userspace can ask for implicit sync to be
++		 * disabled on specific buffers.  This is useful for internal
++		 * usermode driver managed buffers, suballocation, etc.
++		 */
++		if (submit->bos[i].flags & MSM_SUBMIT_BO_NO_IMPLICIT)
++			continue;
++
+ 		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
+ 							      obj,
+ 							      write);
+diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+index f54b48ef6a2d..329100016e7c 100644
+--- a/include/uapi/drm/msm_drm.h
++++ b/include/uapi/drm/msm_drm.h
+@@ -222,10 +222,12 @@ struct drm_msm_gem_submit_cmd {
+ #define MSM_SUBMIT_BO_READ             0x0001
+ #define MSM_SUBMIT_BO_WRITE            0x0002
+ #define MSM_SUBMIT_BO_DUMP             0x0004
++#define MSM_SUBMIT_BO_NO_IMPLICIT      0x0008
+ 
+ #define MSM_SUBMIT_BO_FLAGS            (MSM_SUBMIT_BO_READ | \
+ 					MSM_SUBMIT_BO_WRITE | \
+-					MSM_SUBMIT_BO_DUMP)
++					MSM_SUBMIT_BO_DUMP | \
++					MSM_SUBMIT_BO_NO_IMPLICIT)
+ 
+ struct drm_msm_gem_submit_bo {
+ 	__u32 flags;          /* in, mask of MSM_SUBMIT_BO_x */
+-- 
+2.38.1
+
