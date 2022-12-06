@@ -2,73 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFB9064450E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 14:55:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1BD564481D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 16:35:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234761AbiLFNz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 08:55:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48442 "EHLO
+        id S232458AbiLFPf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 10:35:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234167AbiLFNzn (ORCPT
+        with ESMTP id S234692AbiLFPf0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 08:55:43 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C472C67F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 05:55:41 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id q7so23568476wrr.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 05:55:41 -0800 (PST)
+        Tue, 6 Dec 2022 10:35:26 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0312B60B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 07:35:20 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id p36so19912860lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 07:35:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KnOs7pcvmFOnnCna+HbqLKoHhRLMU0RIR9rIe1VPz1I=;
-        b=c/B0ZaXccb4UimJk2g22JsUXDblykgEkVG6nhqTPtQBvD9Yn/hZ1MvmPLerpBDQhKR
-         KREceLTzVCdaN7DmE6l/Ae/zGCUDdBXPKLeYWR+CmR6zyfmNqZsNcXpQYSzp+BinphTM
-         ifuZpFuIeuUQeHUmjGZTx2IMm84h+xEJIeyo9wjTMAaNOreuTFXzoAcl5gYgeMyofhH4
-         3t3BwSIowQxylZo33D9+HtjD7kJg07eI8UyEsL1lZmufBYlvBN4GwFiu0ktvUzGPtccy
-         U/12CjWwab1euiTSyPYvHSgqwwOeuI6bpkxgbDfoRQOO/9OTKnXvMHIhRZD7N7+W/1yg
-         MQtQ==
+        bh=F1KPdrNmIxp/vLqj14ywZDhQ1hvfTFyJrb/kxKX7fV4=;
+        b=lBCtYGkPkNXHFvTdm1DCtq7RzVuMzyyDGMYRTAYKnx7r0KkE9pqSJz9RwHkzTfaU/n
+         Y2s0W3b3Q9TKaSwHDG7nJrJBgDXS29ms9JSVA6+83rmsyNbMj9gxkBEL4ROyA8dDIWgn
+         xeLk8Iz1ZE4YJq4mSOP5Y1T7SQF2wEOwVI4An16JY+NKeermak7fmVqhRRn3cR3IeDDT
+         4YLXzF+Nw9bqXE8wRODMU/hNtpRgocb3NiOSIkZFYg6ysR7D0WcoodHt0kyfP4bWmV/j
+         M8Xrq0rhd36WoZDwDiJfaM46jbBmR4eURWj2CP+hZOjq+RHyamsoarrT42EEGoD33+Er
+         ItHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KnOs7pcvmFOnnCna+HbqLKoHhRLMU0RIR9rIe1VPz1I=;
-        b=cot9cbveJN+ihSisg9HGUMTKO9HaWhbzfn8EyNuE6ueQxFDnRw5F/jFM1rTgGyRw/W
-         zzG1yaieDUD/v5kqRREXuBj/RZ6xWvjjU6aIHp8ISbGTdEFSQoRkb8w1jOkxIcMFoNhI
-         e7BtDx41WA/kty+JP/7ZOPJ6uhKVXdN+Rw+bCUhR3i0jcL3qCv5Z+8VofoqbIQvzN5VO
-         ONdBPlEOIsyp6X6vEkroUIwAMPvVz9Igf3pd5rbmUM9jFJ7uc5k0EwDRlypwR40sDae2
-         0Z925q7Oqw6FbkLeYdr1kmBUQ9ZeaUmzsilhEBbFsDgF/bOWVnzzKwLj4N1xapQSq0jg
-         RLRQ==
-X-Gm-Message-State: ANoB5pnRcgtxtoDqRRjEcOlxb2WGSKlJdC7T2fRZ15rTGatvFh4ny0Hw
-        l/AzGztoW/KJFtiurv+aGZiBqA==
-X-Google-Smtp-Source: AA0mqf6b3SlLK06/M7Ib0YoqwhTZiPW89mBxzHkMfT2KgAPmTT0liM2Ons4KWDmLq2RZRGs7oHsYcA==
-X-Received: by 2002:a5d:53cd:0:b0:242:47b9:7ad6 with SMTP id a13-20020a5d53cd000000b0024247b97ad6mr10242093wrw.93.1670334940296;
-        Tue, 06 Dec 2022 05:55:40 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b003cf54b77bfesm27869478wmq.28.2022.12.06.05.55.39
+        bh=F1KPdrNmIxp/vLqj14ywZDhQ1hvfTFyJrb/kxKX7fV4=;
+        b=2AZOkDnGD0W6zF+FjPIgyTt4WwYGCjtVXSSmBYmhUUCRYLhaFxI+uhlS0doxN4sx7t
+         UUmSZFvOf3W3Su8vJVGsQjX5V7d3JgcbEhJC/V3xtREvM37YG9E7dYmY/vml5pQzqKvU
+         7mrXfLJRc4GtqewmdZQGKFSMs/KFHh6s3V7Ek6f6unMKytFfXuqs6JD7P2zppqAF/ton
+         LsyUBMH/NvZUqwbwY928vsogB4KVQpAD6FysnPkr93KLSrSRRnhJIH6G/9MgpFrrfUNL
+         1/HuvajqFbt4FgzGZHTpjcfebTWfRo/d9aohspTZOFgyfmXL+NhaKDFOomz8kkV3m8Ge
+         gxew==
+X-Gm-Message-State: ANoB5pmsJiNCo4NiiA1Nj4zljvUulsNLaNhKjr6GAfnmmLw+h29WvCmm
+        oSPSHuoDYOStmJ8dk6s7jGF2AQ==
+X-Google-Smtp-Source: AA0mqf5Egysi9Meisg5THM/DUVSiqhI4AENo68/EpnGy0c4t/MajZcQiQC8PBhxf+3S0Ahjn4MVrWw==
+X-Received: by 2002:a05:6512:3413:b0:4aa:b3d1:9c83 with SMTP id i19-20020a056512341300b004aab3d19c83mr22037421lfr.260.1670340918475;
+        Tue, 06 Dec 2022 07:35:18 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id g4-20020a2ea4a4000000b00279d73cdf83sm1417014ljm.128.2022.12.06.07.35.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Dec 2022 05:55:39 -0800 (PST)
-Message-ID: <92fbb572-3599-726e-117e-0d4ace2d9a36@linaro.org>
-Date:   Tue, 6 Dec 2022 13:55:38 +0000
+        Tue, 06 Dec 2022 07:35:18 -0800 (PST)
+Message-ID: <33d261f6-ab3d-7470-8e3d-6943c3fa9297@linaro.org>
+Date:   Tue, 6 Dec 2022 16:35:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v6 2/4] media: camss: vfe: Reserve VFE lines on stream
- start and link to CSID
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v5 1/5] dt-bindings: clock: Add SM8550 TCSR CC clocks
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20221206125635.952114-1-abel.vesa@linaro.org>
+ <20221206125635.952114-2-abel.vesa@linaro.org>
 Content-Language: en-US
-To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-References: <20221205152450.1099-1-quic_mmitkov@quicinc.com>
- <20221205152450.1099-3-quic_mmitkov@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20221205152450.1099-3-quic_mmitkov@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221206125635.952114-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -80,47 +84,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/12/2022 15:24, quic_mmitkov@quicinc.com wrote:
-> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+On 06/12/2022 13:56, Abel Vesa wrote:
+> Add bindings documentation for clock TCSR driver on SM8550.
 > 
-> For multiple virtual channels support, each VFE line can be in either
-> ON, RESERVED or OFF states. This allows the starting and stopping
-> of a VFE line independently of other active VFE lines.
-> 
-> Also, link the CSID entity's source ports to corresponding VFE lines.
-> 
-> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-> Reviewed-by: Robert Foss <robert.foss@linaro.org>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Acked-by: Robert Foss <robert.foss@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   drivers/media/platform/qcom/camss/camss-vfe.c | 1 +
->   drivers/media/platform/qcom/camss/camss.c     | 2 +-
->   2 files changed, 2 insertions(+), 1 deletion(-)
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml      | 53 +++++++++++++++++++
+>  include/dt-bindings/clock/qcom,sm8550-tcsr.h  | 18 +++++++
+>  2 files changed, 71 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsr.h
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index a26e4a5d87b6..e0832f3f4f25 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -740,6 +740,7 @@ static int vfe_set_stream(struct v4l2_subdev *sd, int enable)
->   	int ret;
->   
->   	if (enable) {
-> +		line->output.state = VFE_OUTPUT_RESERVED;
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> new file mode 100644
+> index 000000000000..15176b0457d1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sm8550-tcsr.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm TCSR Clock Controller on SM8550
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description: |
+> +  Qualcomm TCSR clock control module provides the clocks, resets and
+> +  power domains on SM8550
+> +
+> +  See also:: include/dt-bindings/clock/qcom,sm8550-tcsr.h
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8550-tcsr
 
-This statement is breaking rb3
+This still misses syscon. Did you send it before we talk on IRC?
 
->   		ret = vfe->ops->vfe_enable(line);
->   		if (ret < 0)
->   			dev_err(vfe->camss->dev,
+Best regards,
+Krzysztof
 
-you need to extend your patch doing this for vfe-480.c
-
--       if (output->state != VFE_OUTPUT_OFF) {
-+       if (output->state > VFE_OUTPUT_RESERVED) {
-
-
-to vfe-170.c and camss-vfe-gen1.c
-
----
-bod
