@@ -2,177 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5661E644357
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 13:42:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3CAA644367
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 13:47:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234485AbiLFMm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 07:42:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50740 "EHLO
+        id S230093AbiLFMrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 07:47:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234379AbiLFMmW (ORCPT
+        with ESMTP id S230327AbiLFMrb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 07:42:22 -0500
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99AB2A25E;
-        Tue,  6 Dec 2022 04:42:14 -0800 (PST)
-Received: from wsk (85-222-111-42.dynamic.chello.pl [85.222.111.42])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: lukma@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id 5052E85453;
-        Tue,  6 Dec 2022 13:42:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1670330531;
-        bh=iI5SeUL51UC7eISdgdq26IjAocTkIL/OIraEMeV0ztw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=kohTwBtNeMzWD5rKFY2zLgtxNV3zwHgzPawC0atjqRcJLpxirfFpg13Hq82Zwlamu
-         sfG576AIyFhd/Y/MTkXpXEnLyuM+Zk9sC/hSq1SPR8vCaVL4EnDUdWyaApDZb5s27p
-         YAnrTzcZdILPc37J49JVyzpBuiShP8+xmX55o7rEVlH7cxE7PZXcOvonhLMUeedo3q
-         CtiVJdkmWSLBAQJN6rYBO7RdsT1BbqwBzYB1uws42EYmwaGMvKpPFxZn7atebPiuUP
-         /CYp2V0pE+b7s1z+DnntkIPisnI5a62ezTyrL82FZCx252xmaDV0+TWNdHMtXwVwqF
-         USZMAjXhOD3VQ==
-Date:   Tue, 6 Dec 2022 13:42:01 +0100
-From:   Lukasz Majewski <lukma@denx.de>
-To:     Frieder Schrempf <frieder.schrempf@kontron.de>
-Cc:     Quentin Schulz <foss+kernel@0leil.net>,
-        Samuel Holland <samuel@sholland.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Guido =?UTF-8?B?R8O8bnRoZXI=?= <agx@sigxcpu.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Angus Ainslie <angus@akkea.ca>,
-        Ondrej Jirman <megous@megous.com>,
-        Icenowy Zheng <icenowy@aosc.io>,
-        Andy Gross <agross@kernel.org>,
-        Aleksei Mamlin <mamlinav@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        David Jander <david@protonic.nl>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Peter Geis <pgwipeout@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v3 4/9] ARM: dts: imx: fix touchscreen reset GPIO
- polarity
-Message-ID: <20221206134201.703ad352@wsk>
-In-Reply-To: <b37272ae-a939-1dce-de47-e237c6363a0f@kontron.de>
-References: <20221103-upstream-goodix-reset-v3-0-0975809eb183@theobroma-systems.com>
-        <20221103-upstream-goodix-reset-v3-4-0975809eb183@theobroma-systems.com>
-        <b37272ae-a939-1dce-de47-e237c6363a0f@kontron.de>
-Organization: denx.de
-X-Mailer: Claws Mail 3.19.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        Tue, 6 Dec 2022 07:47:31 -0500
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75E424F;
+        Tue,  6 Dec 2022 04:47:28 -0800 (PST)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-1445ca00781so10659624fac.1;
+        Tue, 06 Dec 2022 04:47:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jRbJnoAPdyVeKSpAdDaecdS/ZR6oAJxEcKGzEYJMYw0=;
+        b=eeHNYvEqru0tU9fsBL1/bkm91uWkm/y0V+oysIoo2Vk/HRtadL0J8x7Ca0VbvMieUq
+         PIf8vzrpoHWDg7bXsG4kItHvtls3JKl/4nX0/aHK+sF1yQKVO64H9DFepaya4AF2qr6u
+         Bzp7gOSx6pnfbsODe0GM763SxIWktkahQXr2gASibA6xaw6ulrvsKIMXbgoDubvAaGUp
+         a0rd++TjUNFn4B82T37qJzRTaFQL6wbNhVEXbPDQwn5KjpGbHTb4Xpzu/udLqKBRV1v/
+         M+Xi5eS+J/EPmXI1en1/TkZKfdEaPYNTaa8/aWqPy1cJGaA8DQNGU2Ql6zv8TRIMBerR
+         gtGw==
+X-Gm-Message-State: ANoB5plRHmNIZx+NMlYumtDwC34R5hC4mzHIyib8PhwBHzODONBSJXeT
+        Os2UX4x9Jzov9CiYdkmAlw==
+X-Google-Smtp-Source: AA0mqf5Rm0o3BU5PrNXKP/4vKT9EPUdrmyLN5uG/7ZjQ/O4xf0ra3tTsNcE89VV/V15aEllCorbAZw==
+X-Received: by 2002:a05:6870:5781:b0:13b:c610:e30b with SMTP id i1-20020a056870578100b0013bc610e30bmr39970200oap.134.1670330848000;
+        Tue, 06 Dec 2022 04:47:28 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id r16-20020a4a3710000000b004a0b424f99dsm3656548oor.43.2022.12.06.04.47.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 04:47:27 -0800 (PST)
+Received: (nullmailer pid 176446 invoked by uid 1000);
+        Tue, 06 Dec 2022 12:47:26 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/wSkO.yKQ_Y+Ill11MbjpZ3n";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dmitry.baryshkov@linaro.org, daniel@ffwll.ch,
+        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        airlied@linux.ie, quic_sbillaka@quicinc.com, andersson@kernel.org,
+        agross@kernel.org, sean@poorly.run, robh+dt@kernel.org,
+        vkoul@kernel.org, konrad.dybcio@somainline.org, airlied@gmail.com,
+        quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
+        swboyd@chromium.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <1670281694-13281-3-git-send-email-quic_khsieh@quicinc.com>
+References: <1670281694-13281-1-git-send-email-quic_khsieh@quicinc.com>
+ <1670281694-13281-3-git-send-email-quic_khsieh@quicinc.com>
+Message-Id: <167033052405.165993.699264089064134340.robh@kernel.org>
+Subject: Re: [PATCH v9 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
+Date:   Tue, 06 Dec 2022 06:47:26 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/wSkO.yKQ_Y+Ill11MbjpZ3n
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, 6 Dec 2022 12:25:29 +0100
-Frieder Schrempf <frieder.schrempf@kontron.de> wrote:
+On Mon, 05 Dec 2022 15:08:11 -0800, Kuogee Hsieh wrote:
+> Add both data-lanes and link-frequencies property into endpoint
+> 
+> Changes in v7:
+> -- split yaml out of dtsi patch
+> -- link-frequencies from link rate to symbol rate
+> -- deprecation of old data-lanes property
+> 
+> Changes in v8:
+> -- correct Bjorn mail address to kernel.org
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
 
-> On 05.12.22 14:40, Quentin Schulz wrote:
-> > From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-> >=20
-> > The reset line is active low for the Goodix touchscreen controller
-> > so let's fix the polarity in the Device Tree node.
-> >=20
-> > Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-> > ---
-> >  arch/arm/boot/dts/imx6q-kp.dtsi            | 2 +-
-> >  arch/arm/boot/dts/imx6ul-kontron-bl-43.dts | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/arch/arm/boot/dts/imx6q-kp.dtsi
-> > b/arch/arm/boot/dts/imx6q-kp.dtsi index
-> > 1ade0bff681d6..dae14aaf803a8 100644 ---
-> > a/arch/arm/boot/dts/imx6q-kp.dtsi +++
-> > b/arch/arm/boot/dts/imx6q-kp.dtsi @@ -188,7 +188,7 @@
-> > touchscreen@5d { interrupt-parent =3D <&gpio1>;
-> >  		interrupts =3D <9 IRQ_TYPE_EDGE_FALLING>;
-> >  		irq-gpios =3D <&gpio1 9 GPIO_ACTIVE_HIGH>;
-> > -		reset-gpios =3D <&gpio5 2 GPIO_ACTIVE_HIGH>;
-> > +		reset-gpios =3D <&gpio5 2 GPIO_ACTIVE_LOW>;
-> >  	};
-> > =20
-> >  	ds1307: rtc@32 {
-> > diff --git a/arch/arm/boot/dts/imx6ul-kontron-bl-43.dts
-> > b/arch/arm/boot/dts/imx6ul-kontron-bl-43.dts index
-> > 0c643706a158b..767ef5da76136 100644 ---
-> > a/arch/arm/boot/dts/imx6ul-kontron-bl-43.dts +++
-> > b/arch/arm/boot/dts/imx6ul-kontron-bl-43.dts @@ -29,7 +29,7 @@
-> > touchscreen@5d { pinctrl-0 =3D <&pinctrl_cap_touch>;
-> >  		interrupt-parent =3D <&gpio5>;
-> >  		interrupts =3D <6 IRQ_TYPE_LEVEL_LOW>;
-> > -		reset-gpios =3D <&gpio5 8 GPIO_ACTIVE_HIGH>;
-> > +		reset-gpios =3D <&gpio5 8 GPIO_ACTIVE_LOW>;
-> >  		irq-gpios =3D <&gpio5 6 GPIO_ACTIVE_HIGH>;
-> >  	};
-> >  }; =20
->=20
-> The imx6ul-kontron-bl-43.dts misses a working panel node, so I'm
-> pretty sure it is not used and nobody will bother about change
-> breaking compatibility. I don't have the hardware at hand at the
-> moment to perform a test, so for now:
->=20
-> Acked-by: Frieder Schrempf <frieder.schrempf@kontron.de> #
-> imx6ul-kontron-bl-43.dts
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Reviewed-by: Lukasz Majewski <lukma@denx.de>
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: [error] syntax error: mapping values are not allowed here (syntax)
 
-For imx6 TPC70 device.
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/display/msm/dp-controller.example.dts'
+Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed here
+make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/display/msm/dp-controller.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed here
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: ignoring, error parsing file
+make: *** [Makefile:1492: dt_binding_check] Error 2
 
-Best regards,
+doc reference errors (make refcheckdocs):
 
-Lukasz Majewski
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1670281694-13281-3-git-send-email-quic_khsieh@quicinc.com
 
---
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-Phone: (+49)-8142-66989-59 Fax: (+49)-8142-66989-80 Email: lukma@denx.de
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
---Sig_/wSkO.yKQ_Y+Ill11MbjpZ3n
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+pip3 install dtschema --upgrade
 
------BEGIN PGP SIGNATURE-----
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
-iQEzBAEBCgAdFiEEgAyFJ+N6uu6+XupJAR8vZIA0zr0FAmOPOJkACgkQAR8vZIA0
-zr3LxAf/cTdBTk+iiToN5yxnqM4qT8HJEan6BzkjWYMZcb6PMMKqHZW+Zsr/SP8o
-O+3ChkrLogmz7NjwQqaA09s4IIqYJA5+Wfqd/AqYxjoed5hnRK7tsItBPzJtBmtc
-wHxhAkrz/cMcALf8pTfzM3SL1dTB4y+8rPr7O1vhMGS7GPTZMdfXa0WU/QGi6TtZ
-GgBZjk8Qutd0SjxaHiqH0FuciHrBNXGX3cLKytigm+WFgtqSFYw9+cU41SyN1Kdx
-TodH+8TTz1tURnTAd5vBcq8INdx9N0C2xyeq228bGO2xfnGxjsuOmA00EUzsOmbU
-pp/MnwgcQS0r4qXma8E7t1o19CU7Dg==
-=buG3
------END PGP SIGNATURE-----
-
---Sig_/wSkO.yKQ_Y+Ill11MbjpZ3n--
