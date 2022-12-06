@@ -2,206 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E939F644918
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 17:21:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D487F64492E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 17:27:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234827AbiLFQVy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 11:21:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
+        id S234835AbiLFQ1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 11:27:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234173AbiLFQVb (ORCPT
+        with ESMTP id S235053AbiLFQ1f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 11:21:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C365C6266
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 08:19:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1670343573;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=95B8jA1kUqCpFMTm4ShvxX3NFN/etc7ByfObmPR7SeM=;
-        b=HoEgBGILOX89+l3cgYLqTzz7wVxtSm2uc+/ItLgWrY5tuI0STffYbG+h3L3bmrAfG/mRIR
-        PaRLuAh9PGuM/quJZcS+VKAjp4iFQkzruL9UkovkPEYNd+57tpAeHyfpcFf+OQcHhhvrYy
-        4uEx5Wby/SJpOkQCvaT43de5oDkfQ2U=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-615--HCz0PgoOpKOOgxoMtVoEQ-1; Tue, 06 Dec 2022 11:19:32 -0500
-X-MC-Unique: -HCz0PgoOpKOOgxoMtVoEQ-1
-Received: by mail-qt1-f197.google.com with SMTP id j26-20020ac84c9a000000b003a7e6d38e01so5188469qtv.14
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 08:19:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=95B8jA1kUqCpFMTm4ShvxX3NFN/etc7ByfObmPR7SeM=;
-        b=gdIuAn4pG7D1j6lRBJXO5ThC724SoWRIrYWDHlvszSb17qIgcVvVGxJ0EXrN4Dq2Uu
-         IqbtPu3GltK8+PGluo1RcD1165yrtyL1UWODyFVADTOk3TpXUnTqLYFvREUJE3trLp94
-         qgkUKkwNSZtLxGWwFZSN+/xT+mOxMX7Fg/JDMmZDbgTyqS7LNcHRC130oQcnYcNaN0AQ
-         nKShdauXwokYRx0Sz4jgsTDqG6+KU9xengy8vD4Q7Rc9Si2Fhhe8BsW7pAwdWGQQSe3p
-         URALVLOBe/p23Uj2LvQq0sbBLA9buS7GHqyPF5EgFs8E0xV6JkVd3BQUNQAD7yER6Ztt
-         O8bg==
-X-Gm-Message-State: ANoB5pnK0rGCTjLpP5bd//PqYMsvMGXRfGSeVI44gauaFM/v4TmUJGaL
-        f9T2kYL0je3tZzOYDoD9Eo83BJjc9hwj3jP6mOPFe4hw7t7bN+eVyjlDEfmmQPiKfZh6nIukC+w
-        WdZua28fqrxBNVuJ7yqh6u94yOA==
-X-Received: by 2002:ac8:7542:0:b0:3a5:c5c1:43ff with SMTP id b2-20020ac87542000000b003a5c5c143ffmr67114671qtr.312.1670343569299;
-        Tue, 06 Dec 2022 08:19:29 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf49vR+++05b4uFXu6ATeKJjLwqI9dPd1rS6ITiN8XeTe9nr5JMY3djLwK4hc3bKkqjsD4KK3g==
-X-Received: by 2002:ac8:7542:0:b0:3a5:c5c1:43ff with SMTP id b2-20020ac87542000000b003a5c5c143ffmr67114532qtr.312.1670343567557;
-        Tue, 06 Dec 2022 08:19:27 -0800 (PST)
-Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id d7-20020a05620a240700b006feba101f85sm5883529qkn.13.2022.12.06.08.19.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 08:19:27 -0800 (PST)
-From:   Brian Masney <bmasney@redhat.com>
-To:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_shazhuss@quicinc.com,
-        psodagud@quicinc.com, ahalaney@redhat.com, echanude@redhat.com
-Subject: [PATCH v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-Date:   Tue,  6 Dec 2022 11:19:16 -0500
-Message-Id: <20221206161916.315640-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.38.1
+        Tue, 6 Dec 2022 11:27:35 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37DBDF3;
+        Tue,  6 Dec 2022 08:27:34 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B6FJENR028294;
+        Tue, 6 Dec 2022 16:27:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=7c9rUUN7a3dR7QSdFDzCgZSOVng77nFk6H1OiFv6SGM=;
+ b=MCipxe8THHv/9DW5+rX4GrGGfKh0E6vw0zH7Qfan69fsdVAxhKiAMEjFNHnd3aIT8x3X
+ /+pAOIKD8TPItzmGUa2iiDvEfwyeCl3wnumhxceBMy8EGE0xpIWcHtq2xqyVCxe7TxrK
+ IV2ZFUCmwd2lGNMq9SLCFFcTm2vu2NKw6SSd3Gtb40tNZvIgZEcg1Z6vmaK4rNzS6j4U
+ 3cgEYFb0NfZYn+iuWpoTbZs9PJVRMlPhsKTD6HK+IsxMtoUwj6R+/6yb9ZUcx1btPyY8
+ 8NeIiN7CuNSgzPpa+eaq02vyL76LiGsTdKu63NRZezbz3+URyCa/eajdEDep2UgiCVmN QA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ma1661e4y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Dec 2022 16:27:26 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B6GRP8A022789
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Dec 2022 16:27:25 GMT
+Received: from [10.50.39.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 6 Dec 2022
+ 08:27:21 -0800
+Message-ID: <03048338-449d-6d4b-dfa9-d4eccba5cabb@quicinc.com>
+Date:   Tue, 6 Dec 2022 21:57:17 +0530
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v6 02/10] arm64: dts: qcom: Add base SM8550 dtsi
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+CC:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20221206131252.977369-1-abel.vesa@linaro.org>
+ <20221206131252.977369-3-abel.vesa@linaro.org>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20221206131252.977369-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4qtcHSvXVKEvRAKcAP_RZOnVilkFH2mM
+X-Proofpoint-GUID: 4qtcHSvXVKEvRAKcAP_RZOnVilkFH2mM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-06_10,2022-12-06_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015 mlxscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 spamscore=0 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212060137
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the vreg_l11a, pcie3a, pcie3a_phy, and tlmm nodes that are necessary
-in order to get PCIe working on the QDrive3.
+Hi Abel,
 
-This patch also increases the width of the ranges property for the PCIe
-switch that's found on this platform. Note that this change requires
-the latest trustzone (TZ) firmware that's available from Qualcomm as
-of November 2022. If this is used against a board with the older
-firmware, then the board will go into ramdump mode when PCIe is probed
-on startup.
+On 12/6/2022 6:42 PM, Abel Vesa wrote:
+> Add base dtsi for SM8550 SoC and includes base description of
+> CPUs, GCC, RPMHCC, UART, interrupt controller, TLMM, reserved
+> memory, RPMh PD, TCSRCC, ITS, IPCC, AOSS QMP, LLCC, cpufreq,
+> interconnect, thermal sensor, cpu cooling maps and SMMU nodes
+> which helps boot to shell with console on boards with this SoC.
+> 
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> 
+> Changes since v5:
+>   * changed the include of qcom,sm8550-tcsrcc.h to qcom,sm8550-tcsr.h
+>
 
-The ranges property is overridden in this sa8540p-ride.dts file since
-this is what's used to describe the QDrive3 variant with dual SoCs.
-There's another variant of this board that only has a single SoC where
-this change is not applicable, and hence why this specific change was
-not done in sa8540p.dtsi.
+<snip>...
 
-These changes were derived from various patches that Qualcomm
-delivered to Red Hat in a downstream kernel.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Tested-by: Andrew Halaney <ahalaney@redhat.com>
-Tested-by: Shazad Hussain <quic_shazhuss@quicinc.com>
----
-Changes since v3:
-- Move tlmm node to bottom of file and add PINCTRL comment (Johan)
-- Collect Tested-by tags from Andrew and Shazad
+> +	pmu {
+> +		compatible = "arm,armv8-pmuv3";
+> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
 
-Changes since v2:
-- Dropped regulator-allow-set-load (Bjorn)
-- Updated first member of ranges property to match downstream:
-  s/0x32200000/0x40200000/ (Andrew)
+This should be IRQ_TYPE_LEVEL_LOW
 
-Changes since v1:
-- Add -state and -pins suffixes to tlmm (Krzysztof)
 
-This patch depends on the following series that hasn't made it's way
-into linux-next yet:
+> +
+> +		intc: interrupt-controller@17100000 {
+> +			compatible = "arm,gic-v3";
+> +			reg = <0 0x17100000 0 0x10000>,	/* GICD */
+> +			      <0 0x17180000 0 0x200000>;	/* GICR * 8 */
+> +			ranges;
+> +			#interrupt-cells = <3>;
+> +			interrupt-controller;
+> +			#redistributor-regions = <1>;
+> +			redistributor-stride = <0 0x40000>;
+> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
 
-[PATCH v10 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
-https://lore.kernel.org/lkml/20221118025158.16902-1-quic_ppareek@quicinc.com/
+And here as well, IRQ_TYPE_LEVEL_LOW
 
-I can't find the specific TZ firmware version that we have so that's why
-I included the date instead.
+With these 2 corrections,
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 55 +++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index a5f87a8629d6..bb4afd3a9632 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -51,6 +51,13 @@ vreg_l7a: ldo7 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l11a: ldo11 {
-+			regulator-name = "vreg_l11a";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l13a: ldo13 {
- 			regulator-name = "vreg_l13a";
- 			regulator-min-microvolt = <3072000>;
-@@ -139,6 +146,27 @@ vreg_l8g: ldo8 {
- 	};
- };
- 
-+&pcie3a {
-+	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
-+	         <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-+	         <0x03000000 0x6 0x00000000 0x6 0x00000000 0x2 0x00000000>;
-+
-+	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 56 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie3a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3a_phy {
-+	vdda-phy-supply = <&vreg_l11a>;
-+	vdda-pll-supply = <&vreg_l3a>;
-+
-+	status = "okay";
-+};
-+
- &qup2 {
- 	status = "okay";
- };
-@@ -215,3 +243,30 @@ &usb_2_qmpphy0 {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+/* PINCTRL */
-+
-+&tlmm {
-+	pcie3a_default: pcie3a-default-state {
-+		perst-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio150";
-+			function = "pcie3a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio56";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+};
--- 
-2.38.1
 
+Thanks,
+Sai
