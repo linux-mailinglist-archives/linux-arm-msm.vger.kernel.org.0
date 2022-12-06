@@ -2,90 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D125643BFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 04:52:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E037C643D75
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 08:12:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233178AbiLFDwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 22:52:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
+        id S233934AbiLFHM0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 02:12:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbiLFDwW (ORCPT
+        with ESMTP id S233742AbiLFHMZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 22:52:22 -0500
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EDBEB1C90B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 19:52:19 -0800 (PST)
-Received: from localhost.localdomain (unknown [124.16.138.125])
-        by APP-05 (Coremail) with SMTP id zQCowAAXHfFLvI5jxv8tBQ--.48475S2;
-        Tue, 06 Dec 2022 11:51:40 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, sam@ravnborg.org, jani.nikula@intel.com,
-        hbh25y@gmail.com, quic_jesszhan@quicinc.com,
-        ville.syrjala@linux.intel.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] drm/msm/mdp5: Add check for kzalloc
-Date:   Tue,  6 Dec 2022 11:51:38 +0800
-Message-Id: <20221206035138.41418-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Tue, 6 Dec 2022 02:12:25 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2208711A2B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 23:12:24 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id h33so12586378pgm.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 23:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=B1ANPs4DOsm+UmHpJKXF/8eOmbfQxRkzXdEOzvRDR0M=;
+        b=h6iWhky3HNQ9/UAroFVu1c+YaOp5hTc8qWEg+liylRRbSddMndy3T8bGavUnnPHPoc
+         BJHn0yVyaQCk/TP0+iqLwCBnOUS/CFyGhpP3v1X0RRSy19tKVJkFAMz8TGNKNgikv5Co
+         evQOdPQ6v2JLkS2TbWCMZsZNLvooyzVGnOmnKEUclleIOBpfpuxB0ZVhr9mCRPdl35cm
+         /T+HSA3Nn7xCMpoftJcstFZ83FTeaqGlofBVFZBttSR/6jCwxyOIahWOfXOfiALLJfAY
+         /aGzowNZASXJYkbLpil8GHBc7leT9ovBsrfx0VukswY/lbzcQOK6vZqbEOpMUHwSL8kM
+         1/1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B1ANPs4DOsm+UmHpJKXF/8eOmbfQxRkzXdEOzvRDR0M=;
+        b=mC1o/3CchMojluJSlhG1z3ZnWg2hq3tfCaPovZFuSsZ15j9OYWajQKZGsAaC21n59y
+         FbQfRrx0CXeUXQh/bdx88XcsLAQxmfw7VTTmIv3QrY3OLyaUWaukUIyeN8n6xHiE5b8M
+         5TrkfgS4nWLeh72SBif9NmadgaAgtwiXQ8N8pUY/pGvSehcIhHsZZQQoDeKNUoghlBfO
+         +Zs6c5WxM+yuXP55zTyR0JxGuwCVkeAUqDJFPAAIKsWl+jkIjdRWrMPk9x7HNMiba9Fv
+         3XQp3s4Nqf3OJpYzseJ2GTlMDgTfW8ixW/yOVQF5iCVuqNq9kzJD7ifW2JxfARt3otnN
+         EXlA==
+X-Gm-Message-State: ANoB5pkMt+UBUlQsvtECbwPR7DbyEjDPBK14hDf495D+Sd3UrkCe997O
+        mrmpfHL0Rdbrd6c6cylaroZA
+X-Google-Smtp-Source: AA0mqf54IKnAGppRNz0mXYBvpJUyY3qJ/ynQHuD0Eq4Kx1RmzbUPe15c2LK96rk2XExXRZe1KksIPA==
+X-Received: by 2002:a05:6a00:1d22:b0:577:e7d:5490 with SMTP id a34-20020a056a001d2200b005770e7d5490mr6282671pfx.71.1670310742370;
+        Mon, 05 Dec 2022 23:12:22 -0800 (PST)
+Received: from thinkpad ([117.207.29.147])
+        by smtp.gmail.com with ESMTPSA id i28-20020a056a00005c00b005771f5ea2ebsm2058560pfk.135.2022.12.05.23.12.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 23:12:21 -0800 (PST)
+Date:   Tue, 6 Dec 2022 12:42:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org, quic_cang@quicinc.com,
+        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, ahalaney@redhat.com,
+        abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org
+Subject: Re: [PATCH v4 04/23] phy: qcom-qmp-ufs: Add support for configuring
+ PHY in HS Series B mode
+Message-ID: <20221206071213.GA15486@thinkpad>
+References: <20221201174328.870152-1-manivannan.sadhasivam@linaro.org>
+ <20221201174328.870152-5-manivannan.sadhasivam@linaro.org>
+ <32201EF1-8169-4940-99E1-31CC0C37C522@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAAXHfFLvI5jxv8tBQ--.48475S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Jw4kZrWkXryfCr1rGFWrGrg_yoWkWrX_G3
-        WxZr9rKry7CryDK3WjyrnakFyF9a95uF4Fqw48tFyfArWkXr13A39Fvr4rGr15ZF10qFyD
-        JF1qvry3AFsrAjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb4kFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-        Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s
-        1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0
-        cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8Jw
-        ACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka
-        0xkIwI1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67
-        AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIY
-        rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14
-        v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8
-        JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUoOJ5UU
-        UUU
-X-Originating-IP: [124.16.138.125]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <32201EF1-8169-4940-99E1-31CC0C37C522@linaro.org>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As kzalloc may fail and return NULL pointer,
-it should be better to check the return value
-in order to avoid the NULL pointer dereference.
+On Tue, Dec 06, 2022 at 12:51:42AM +0300, Dmitry Baryshkov wrote:
+> 
+> 
+> On 1 December 2022 20:43:09 GMT+03:00, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> >Add separate tables_hs_b instance to allow the PHY driver to configure the
+> >PHY in HS Series B mode. The individual SoC configs need to supply the
+> >serdes register setting in tables_hs_b and the UFS driver can request the
+> >Series B mode by calling phy_set_mode() with mode set to PHY_MODE_UFS_HS_B.
+> >
+> >Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >---
+> > drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 15 +++++++++++++++
+> > 1 file changed, 15 insertions(+)
+> >
+> >diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >index 516027e356f0..2d5dd336aeb2 100644
+> >--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >@@ -547,6 +547,8 @@ struct qmp_phy_cfg {
+> > 
+> > 	/* Main init sequence for PHY blocks - serdes, tx, rx, pcs */
+> > 	const struct qmp_phy_cfg_tbls tbls;
+> >+	/* Additional sequence for HS Series B */
+> >+	const struct qmp_phy_cfg_tbls tbls_hs_b;
+> > 
+> > 	/* clock ids to be requested */
+> > 	const char * const *clk_list;
+> >@@ -580,6 +582,7 @@ struct qmp_ufs {
+> > 	struct reset_control *ufs_reset;
+> > 
+> > 	struct phy *phy;
+> >+	u32 mode;
+> > };
+> > 
+> > static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+> >@@ -841,6 +844,8 @@ static void qmp_ufs_pcs_init(struct qmp_ufs *qmp, const struct qmp_phy_cfg_tbls
+> > static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
+> > {
+> > 	qmp_ufs_serdes_init(qmp, &cfg->tbls);
+> >+	if (qmp->mode == PHY_MODE_UFS_HS_B)
+> >+		qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_b);
+> 
+> I still think that qmp_ufs_init_registers() is a way to go here , see the pcie driver.
+> 
 
-Fixes: 1cff7440a86e ("drm/msm: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I did use qmp_ufs_init_registers() as a wrapper. Only difference here is that
+there is one more level of abstraction which looks cleaner to me.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index e86421c69bd1..86036dd4e1e8 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -1139,7 +1139,10 @@ static void mdp5_crtc_reset(struct drm_crtc *crtc)
- 	if (crtc->state)
- 		mdp5_crtc_destroy_state(crtc, crtc->state);
- 
--	__drm_atomic_helper_crtc_reset(crtc, &mdp5_cstate->base);
-+	if (mdp5_cstate)
-+		__drm_atomic_helper_crtc_reset(crtc, &mdp5_cstate->base);
-+	else
-+		__drm_atomic_helper_crtc_reset(crtc, NULL);
- }
- 
- static const struct drm_crtc_funcs mdp5_crtc_no_lm_cursor_funcs = {
+Thanks,
+Mani
+
+> > 	qmp_ufs_lanes_init(qmp, &cfg->tbls);
+> > 	qmp_ufs_pcs_init(qmp, &cfg->tbls);
+> > }
+> >@@ -1011,9 +1016,19 @@ static int qmp_ufs_disable(struct phy *phy)
+> > 	return qmp_ufs_exit(phy);
+> > }
+> > 
+> >+static int qmp_ufs_set_mode(struct phy *phy, enum phy_mode mode, int submode)
+> >+{
+> >+	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+> >+
+> >+	qmp->mode = mode;
+> >+
+> >+	return 0;
+> >+}
+> >+
+> > static const struct phy_ops qcom_qmp_ufs_phy_ops = {
+> > 	.power_on	= qmp_ufs_enable,
+> > 	.power_off	= qmp_ufs_disable,
+> >+	.set_mode	= qmp_ufs_set_mode,
+> > 	.owner		= THIS_MODULE,
+> > };
+> > 
+> 
+> -- 
+> With best wishes
+> Dmitry
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
