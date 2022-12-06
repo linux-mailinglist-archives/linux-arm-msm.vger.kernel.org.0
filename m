@@ -2,49 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71FF9644B2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:20:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5F92644B31
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:20:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbiLFSUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 13:20:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33848 "EHLO
+        id S229986AbiLFSUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 13:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbiLFSTt (ORCPT
+        with ESMTP id S229848AbiLFSTv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 13:19:49 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC0ABF46;
-        Tue,  6 Dec 2022 10:19:48 -0800 (PST)
+        Tue, 6 Dec 2022 13:19:51 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D312513DE3;
+        Tue,  6 Dec 2022 10:19:50 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2F1A9B81B29;
-        Tue,  6 Dec 2022 18:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4189C4314C;
-        Tue,  6 Dec 2022 18:19:44 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 1F660CE198B;
+        Tue,  6 Dec 2022 18:19:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F18C43149;
+        Tue,  6 Dec 2022 18:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670350785;
-        bh=j4WKYzbuvF8pRZENcvE70eiApecHVgy4JhfLsWf9m/s=;
+        s=k20201202; t=1670350787;
+        bh=M0wHeZolpHobaLLOhyylwlObJxvye0zC49cllR32lps=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JKWHXhCfNCN1x9t1IMZixnMlbeuOspKFI+CHWkN0r7wPV1hqOFkuSC6Z3+nvKzuZT
-         E//YWdZKr88G5tSAGJTS9umCwV8RgYv6DETDHkLffQ9f3mbEUSW1SAdfDknir01KMJ
-         PaUHjRMdIkwAGh56jIEnbyK06Jt8g1+ogR7D3N3GVcF0Ujua2Hmzksayxfw7pIO9NH
-         8pSI0Z2tCyqP5w0h/RhSJ7ZnajJe00HRlmkW9EGWj/nimd/8baBUYJ1vp0Dh28ULnT
-         Mo23v0Aj9efLzcT6tB84ReyCbh2Bv09ZhCAQ8HJQCpZvMeRWaFfkg9WdzMhBffsitp
-         hPODQISKP1+qQ==
+        b=AstvDeo9PrNKgEK8wRtzezuJp4etUxY2ksi2TDgQfrQtqSthzYUEZifK7pDtu/cU0
+         ZlqBi5tukcYxTryLtYUjOpV1wyNsx1FQqF1GyJ+gaNK2cD8QGP6EfILIeEwdhBIvsE
+         /NjrBx7P0AwAnGqGJ9aFWSk83a2tm1idCY4M+DBVsUQsjQs27+IxFBfWqD6GrBCYkS
+         vzcnyoD8mCzzAlpoFbg97N7BtHoEAimwhBieoULhCI6wO1Qv8qeAGVw6e5JnOG35Z1
+         /uex8aoMlKXEkksq0oxiRFzIVkiYp8ix6zeGwQ42umbGFn1x3VFHOfpzkKeU7T1L5r
+         7zyEQai1t8aPg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     bmasney@redhat.com, krzysztof.kozlowski+dt@linaro.org
-Cc:     robh+dt@kernel.org, psodagud@quicinc.com,
-        quic_shazhuss@quicinc.com, echanude@redhat.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        agross@kernel.org, ahalaney@redhat.com
-Subject: Re: [PATCH v3] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-Date:   Tue,  6 Dec 2022 12:18:50 -0600
-Message-Id: <167035076354.3155086.13493782253518624178.b4-ty@kernel.org>
+To:     robert.foss@linaro.org, vladimir.zapolskiy@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@somainline.org,
+        bryan.odonoghue@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        todor.too@gmail.com, dmitry.baryshkov@linaro.org,
+        agross@kernel.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, hverkuil@xs4all.nl,
+        linux-arm-msm@vger.kernel.org, quic_mmitkov@quicinc.com,
+        devicetree@vger.kernel.org, laurent.pinchart@ideasonboard.com,
+        Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: Re: [PATCH v7 0/7] CAMSS fixes for rb3, switch on IMX577 for RB5
+Date:   Tue,  6 Dec 2022 12:18:51 -0600
+Message-Id: <167035076341.3155086.4547946796844422301.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221202120918.2252647-1-bmasney@redhat.com>
-References: <20221202120918.2252647-1-bmasney@redhat.com>
+In-Reply-To: <20221117003232.589734-1-bryan.odonoghue@linaro.org>
+References: <20221117003232.589734-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,23 +60,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2 Dec 2022 07:09:18 -0500, Brian Masney wrote:
-> Add the vreg_l11a, pcie3a, pcie3a_phy, and tlmm nodes that are necessary
-> in order to get PCIe working on the QDrive3.
+On Thu, 17 Nov 2022 00:32:25 +0000, Bryan O'Donoghue wrote:
+> V7:
+> - Adds further RB from Konrad
+> - Moves status="okay" below regulator declarations in qrb5165::camss - Konrad
 > 
-> This patch also increases the width of the ranges property for the PCIe
-> switch that's found on this platform. Note that this change requires
-> the latest trustzone (TZ) firmware that's available from Qualcomm as
-> of November 2022. If this is used against a board with the older
-> firmware, then the board will go into ramdump mode when PCIe is probed
-> on startup.
+> Previous
+> https://lore.kernel.org/linux-arm-msm/20221116162801.546737-1-bryan.odonoghue@linaro.org/T/#t
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-      commit: b8bf63f8eb728dc9cb0ae0ee921eb889a11186cb
+[1/7] arm64: dts: qcom: sdm845: Define the number of available ports
+      commit: 0ddcea2f7692388f8eb1ce0f6804cb649bc76220
+[2/7] arm64: dts: qcom: sdm845-db845c: Drop redundant address-cells, size-cells declaration
+      commit: dacfbacc882ad3b1ce6ab2974386665db1976a61
+[3/7] arm64: dts: qcom: sdm845-db845c: Drop redundant reg = in port
+      commit: 693c65e2bdbfecedc126904de663334f0f5031f9
+[4/7] arm64: dts: qcom: sdm845-db845c: Use okay not ok, disabled not disable for status
+      commit: 5ceaa402f45c8fd19500c69bd9eb4385a14a5173
+[5/7] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Add navigation mezzanine dts
+      commit: 64cb4a44720143a94a261ce2b3098498d6dc84d6
+[6/7] arm64: dts: qcom: sm8250: camss: Define ports and ports address/size cells
+      commit: 3c5aa4c758dd4a41119158dff2ab358b9b5cd520
+[7/7] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine: Add vision mezzanine
+      commit: 16b24fe54f0050843509321094d99f75fba33f59
 
 Best regards,
 -- 
