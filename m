@@ -2,58 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72DA7644BBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:29:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D657644BCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:34:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbiLFS3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 13:29:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47176 "EHLO
+        id S229703AbiLFSd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 13:33:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230138AbiLFS3A (ORCPT
+        with ESMTP id S229900AbiLFSdg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 13:29:00 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B774E4B99B;
-        Tue,  6 Dec 2022 10:24:09 -0800 (PST)
+        Tue, 6 Dec 2022 13:33:36 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC2743852;
+        Tue,  6 Dec 2022 10:31:02 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id AFC9DCE1AF9;
-        Tue,  6 Dec 2022 18:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE95C433D6;
-        Tue,  6 Dec 2022 18:23:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C0CB6189A;
+        Tue,  6 Dec 2022 18:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5AFC433C1;
+        Tue,  6 Dec 2022 18:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670351014;
-        bh=M8WKNBU3VnzY0vAPfX8+hUUgSFuMbkBjP5zVOGHhQz8=;
+        s=k20201202; t=1670351461;
+        bh=5xTLjp4LeFj0uXRgLCQLSq2wJXbvdG8fJOW+4kkXY+U=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fqazpemNzOVMBIdamfGyH89ClbVP/HRxlj/qWxetTDkooWyvpjj5J0WEI4d62HuIk
-         ayJFpl1vnPALluPk0xVlrvoVnGblfboEaTBMIL5v+ebNHbLy+H5Pk85oy/tjJdokz4
-         eRms3g+wwr0djaX31g1lyh+RUwePzQMry88QyB4bTV6MLEOH5bqlSULQy8SzeXcZFk
-         Op7hv3aDHD7J0lScdeqdyUStNSgNh9OUCr+wyvHoxM4r6EBkOdfZKBLYvEbJDYHBGU
-         jQhU7d6F92Jes/X8zndi86PFMA/fnlDPVnoNuARXDN2j13oXUlFyjhj49d18nr2XIz
-         r61vHslNYOSpA==
-Date:   Tue, 6 Dec 2022 12:23:32 -0600
+        b=amYtWejkR96N3Rc+kkrX8N3+no0s11/MLffgcbXb7n7YOdyxIIak+ZUvQI6VX/LUA
+         u8QahuoSc7o4D7f9BMlgHunGFnbwHF8kFyTjzfxe6HW/PsufUfk/9bLWjBuxujZvj9
+         bDcg/l+jLIk0df4Iw+tUNRSOp/DG3UpRvBBOAwxeAjq/nutULrKAu5srwrtxCOrpfZ
+         1zyrM+aLV9H2o7qm1zD3A3SocX/yrJsxvc/pFLGp70Q87gcuKnaIF1k6ZQ69bMX3Cb
+         TFag4Qqvm9fAE9V9i97cDPMa2O44XkmqwVZstDSJVubzxlrw0BSjQkIJbImfHz4EyG
+         /OTJsPMFBMapg==
+Date:   Tue, 6 Dec 2022 12:30:58 -0600
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v5 1/5] dt-bindings: clock: Add SM8550 TCSR CC clocks
-Message-ID: <20221206182332.oi7mxxryv2kvd3wu@builder.lan>
-References: <20221206125635.952114-1-abel.vesa@linaro.org>
- <20221206125635.952114-2-abel.vesa@linaro.org>
+To:     Alex Elder <alex.elder@linaro.org>
+Cc:     Alex Elder <elder@linaro.org>, sboyd@kernel.org,
+        mturquette@baylibre.com, konrad.dybcio@linaro.org,
+        agross@kernel.org, Luca Weiss <luca.weiss@fairphone.com>,
+        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] clk: qcom: rpmh: add support for SM6350 rpmh IPA clock
+Message-ID: <20221206183058.rsws5ciqa2u5q7oj@builder.lan>
+References: <20221202221240.225720-1-elder@linaro.org>
+ <20221205225646.gtwhakd4lxh6vlfc@builder.lan>
+ <39903fb5-fd28-c159-b300-47d3ec4cd0fc@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221206125635.952114-2-abel.vesa@linaro.org>
+In-Reply-To: <39903fb5-fd28-c159-b300-47d3ec4cd0fc@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,110 +58,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 06, 2022 at 02:56:31PM +0200, Abel Vesa wrote:
-> Add bindings documentation for clock TCSR driver on SM8550.
+On Mon, Dec 05, 2022 at 09:05:30PM -0600, Alex Elder wrote:
+> On 12/5/22 4:56 PM, Bjorn Andersson wrote:
+> > On Fri, Dec 02, 2022 at 04:12:40PM -0600, Alex Elder wrote:
+> > > From: Luca Weiss <luca.weiss@fairphone.com>
+> > > 
+> > > The IPA core clock is required for SM6350.  Define it.
+> > > 
+> > > [elder@linaro.org: rebased with Dmitry's changes]
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/clock/qcom,sm8550-tcsr.yaml      | 53 +++++++++++++++++++
->  include/dt-bindings/clock/qcom,sm8550-tcsr.h  | 18 +++++++
->  2 files changed, 71 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsr.h
+> Sorry about that, I knew I was supposed to sign
+> off and thought I had.
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
-> new file mode 100644
-> index 000000000000..15176b0457d1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm8550-tcsr.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm TCSR Clock Controller on SM8550
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description: |
-> +  Qualcomm TCSR clock control module provides the clocks, resets and
-> +  power domains on SM8550
-> +
-> +  See also:: include/dt-bindings/clock/qcom,sm8550-tcsr.h
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8550-tcsr
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
+> You told me separately that this was sufficient:
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> 
+> If you want me to send a new version with the
+> signoff just let me know.  Thanks.
+> 
 
-This sounds like the crystal feeding the PMIC, but the clock here should
-be the signal that arrives at the CXO pin of the SoC.
-
-Other than that, this looks good now.
-
-Thanks,
+That works fine, thank you.
 Bjorn
 
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - clocks
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +    clock-controller@1fc0000 {
-> +      compatible = "qcom,sm8550-tcsr";
-> +      reg = <0x1fc0000 0x30000>;
-> +      clocks = <&rpmhcc RPMH_CXO_PAD_CLK>;
-> +      #clock-cells = <1>;
-> +      #reset-cells = <1>;
-> +    };
-> +
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,sm8550-tcsr.h b/include/dt-bindings/clock/qcom,sm8550-tcsr.h
-> new file mode 100644
-> index 000000000000..091cb76f953a
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,sm8550-tcsr.h
-> @@ -0,0 +1,18 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Limited
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_TCSR_CC_SM8550_H
-> +#define _DT_BINDINGS_CLK_QCOM_TCSR_CC_SM8550_H
-> +
-> +/* TCSR CC clocks */
-> +#define TCSR_PCIE_0_CLKREF_EN					0
-> +#define TCSR_PCIE_1_CLKREF_EN					1
-> +#define TCSR_UFS_CLKREF_EN					2
-> +#define TCSR_UFS_PAD_CLKREF_EN					3
-> +#define TCSR_USB2_CLKREF_EN					4
-> +#define TCSR_USB3_CLKREF_EN					5
-> +
-> +#endif
-> -- 
-> 2.34.1
+> 					-Alex
+> > 
+> > Thanks for rebasing this Alex. But as you're handling the patch you need
+> > to add your S-o-b; which will make sure your [] makes sense as well.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > ---
+> > > v2: This is now based on qualcomm/for-next.
+> > > 
+> > >   drivers/clk/qcom/clk-rpmh.c | 1 +
+> > >   1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> > > index 2c2ef4b6d130e..586a810c682ca 100644
+> > > --- a/drivers/clk/qcom/clk-rpmh.c
+> > > +++ b/drivers/clk/qcom/clk-rpmh.c
+> > > @@ -606,6 +606,7 @@ static struct clk_hw *sm6350_rpmh_clocks[] = {
+> > >   	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_ln_bb_clk3_g4_ao.hw,
+> > >   	[RPMH_QLINK_CLK]	= &clk_rpmh_qlink_div4.hw,
+> > >   	[RPMH_QLINK_CLK_A]	= &clk_rpmh_qlink_div4_ao.hw,
+> > > +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+> > >   };
+> > >   static const struct clk_rpmh_desc clk_rpmh_sm6350 = {
+> > > -- 
+> > > 2.34.1
+> > > 
 > 
