@@ -2,48 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF83D644B47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:21:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07E74644B52
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 19:21:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbiLFSVE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 13:21:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34136 "EHLO
+        id S230055AbiLFSVL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 13:21:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229914AbiLFSUC (ORCPT
+        with ESMTP id S229921AbiLFSUC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 6 Dec 2022 13:20:02 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5498E25E9F;
-        Tue,  6 Dec 2022 10:20:01 -0800 (PST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0333728E2F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 10:20:01 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD130616C6;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8BD0061849
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 18:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F40AC43149;
         Tue,  6 Dec 2022 18:20:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A660C43142;
-        Tue,  6 Dec 2022 18:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670350800;
-        bh=GGcgVAWbKAaeKgBUJoZLQS1AH4CGIZHE1vwTGXk2aTs=;
+        s=k20201202; t=1670350801;
+        bh=YWdQ4twb1NnBBVdfM7GjqtkqNVWa5FsmalcLw99RvuA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dt3Y+hU8RmEVyVhlyrbrgh4oklgU7bJJEn384CzAeQQaR9qEm641gkneHOBgrepND
-         qosrF5bzPPGDaFtnLJiNd3D3lOA/FwvKRNrQU8DPHfSz8ipat8wlw3N1JVk6YdSBcH
-         b7f249czL+sZXDZCOG9zTwq6Snok8WsL3rN9ZUcQwUXUEVeQbYD8YnntIiYche+s7l
-         YqjnE6kHpDzn9a5Yuuuf9952F9jDoCPyo9QFAJD0m+hvMNSPbAinZEKARGoCDZzHuF
-         dt7QP2Zsv9DsJWeek4R27ITdUHfkK77G+LRx7veaVzmFtgKf/79XU1JVsZ74+B+yru
-         4ZaAYadKjRoGw==
+        b=Y7SRCNiuX5O+SL9pz3lRhatIBROqBEPwEvkvOgueLxV3l/Z+3zx9Bdn0QVi3WKlov
+         S9Kt69ZZNoOPer7CyshB866Lc4v7rhwW61QO0GytHXiy/+Kicgl44k5bdxBdErFpQm
+         AWD0qBwksXHo4WnceGslUvFMpZ1TTctoHN/SJ0JLCJf6Qhlme0F8X0Utaai+75pXSp
+         5FQNxrCqhaq1ioD2f+Fz4ASIR0vddFqix7iOyzRpvHd+LUPsInztpZO1oKfYQMwim2
+         1TviEWQvc3SkAGEbRfgIUZAnQmacSNP/ABV+SdqBQlGxjGBlEBiGyhYkV/dyURd7Hv
+         LHl24602POhPQ==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski@linaro.org
-Cc:     robh+dt@kernel.org, konrad.dybcio@somainline.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, patches@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450-nagara: Add gpio line names for TLMM
-Date:   Tue,  6 Dec 2022 12:19:04 -0600
-Message-Id: <167035076343.3155086.8221489903193050914.b4-ty@kernel.org>
+To:     krzysztof.kozlowski@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
+Cc:     patches@linaro.org
+Subject: Re: (subset) [PATCH v2 0/3] SM6375 / PDX225 SD Card support
+Date:   Tue,  6 Dec 2022 12:19:05 -0600
+Message-Id: <167035076320.3155086.13818190480693577685.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221117141613.19942-1-konrad.dybcio@linaro.org>
-References: <20221117141613.19942-1-konrad.dybcio@linaro.org>
+In-Reply-To: <20221109144153.53630-1-konrad.dybcio@linaro.org>
+References: <20221109144153.53630-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,44 +54,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Nov 2022 15:16:13 +0100, Konrad Dybcio wrote:
-> Sony ever so graciously provides GPIO line names in their downstream
-> kernel (though sometimes they are not 100% accurate and you can judge
-> that by simply looking at them and with what drivers they are used).
+On Wed, 9 Nov 2022 15:41:50 +0100, Konrad Dybcio wrote:
+> Add SDHC2 for SM6375 which effectively means SD Card support for
+> PDX225. Nothing unusual here, some regulator dancing was required,
+> but that's expected.
 > 
-> Add these to the PDX223&224 DTSIs to better document the hardware.
+> Depends on [1] and [2].
 > 
-> Diff between 223 and 224:
-> < 	gpio-line-names = "NC", /* GPIO_0 */
-> < 			  "NC",
-> < 			  "NC",
-> < 			  "NC",
-> > 	gpio-line-names = "TELE_SPI_MISO", /* GPIO_0 */
-> > 			  "TELE_SPI_MOSI",
-> > 			  "TELE_SPI_CLK",
-> > 			  "TELE_SPI_CS_N",
-> < 			  "PM8010_2_RESET_N",
-> > 			  "NC",
-> < 			  "NC",
-> > 			  "UWIDEC_PWR_EN",
-> < 			  "TOF_RST_N",
-> > 			  "NC"
-> < 			  "QLINK1_REQ",
-> < 			  "QLINK1_EN", /* GPIO_160 */
-> < 			  "QLINK1_WMSS_RESET_N",
-> > 			  "NC",
-> > 			  "NC", /* GPIO_160 */
-> > 			  "NC",
-> The tele lens setup is different on 1 IV and 5 IV and power wiring
-> is different for some lenses, so it makes sense. As for QLINK, no
-> idea.
+> [1] https://lore.kernel.org/linux-arm-msm/20221109111236.46003-1-konrad.dybcio@linaro.org/T/#t
+> [2] https://lore.kernel.org/linux-arm-msm/20221109110846.45789-2-konrad.dybcio@linaro.org/T/#u
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8450-nagara: Add gpio line names for TLMM
-      commit: 15245c93d3c8775a8405c0de18704a8c17a41775
+[2/3] arm64: dts: qcom: sm6375: Add SDHCI2
+      commit: 6f196ab2ad1e2b56c67cc247293ac2c5b73dbe90
+[3/3] arm64: dts: qcom: sm6375-pdx225: Enable SD card slot
+      commit: ecbdcbcd6f78fcf1c50e804b9baf065a36b61d26
 
 Best regards,
 -- 
