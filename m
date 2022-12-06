@@ -2,121 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB62064425A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 12:45:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3FC164427F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 12:51:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234300AbiLFLpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 06:45:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43204 "EHLO
+        id S234460AbiLFLvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 06:51:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233599AbiLFLo7 (ORCPT
+        with ESMTP id S235082AbiLFLvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 06:44:59 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B885627DFB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 03:44:57 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id j4so23267039lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 03:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zs/glU61iMmBEYzfjQPXxEkfHrnwIczjCeiehS51xyg=;
-        b=ZowRqI21xHzHjcUsGCIreEkHoDNuEcDh/y4chsUa54F27NggrLlvBnCDYQ6qIF2ZDh
-         MDGOF3EeoPGe7gRaA24mEtqr3F5NNjk34cwjTRnUm1My5khxRdA5FGGY9RH4cOWNjdAv
-         lSLaVA9HdJA0Q7yKQMeCEU2bmSCDMxnsG3qttL0fjORoCuVvww4AgTwubuwvZBNpMxZQ
-         dm/GqmvZRF38t5UbgJ0LYv+B3SqhdnDVqpW1ewLwVr5jqVBg9YWXqjgRaAffzExOp7hu
-         GrxYK/tFsPJEypaRxEwq00CjoVKdGZ45O9A2T8SwO4N1KyUqlnQ1XkODroJzz/gOaxX1
-         6/Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zs/glU61iMmBEYzfjQPXxEkfHrnwIczjCeiehS51xyg=;
-        b=mz0u9riOyWLa5KOYk9fEUcEosIU8WevmM+KAB7yxWVrhxBfh5NJwL2GR3hCf1kc3kf
-         2KAmkZX5XncJadj4104hShYJnROtaOh8hWdES1v14Ig6JSxaTs2ztSBs9MMkzGSydmQn
-         qhaAObjaH8+bz8PepEWKWwDVklBBDYMKtqTJw7VyotL2C20h/dbUDNtlbGwx2HveaYbc
-         riRyjAtPFQPvFl4kv9eUqZugz8sW6pDsjqk/RJGohz859eN8E1vpV5KCxqiWUIJ2kD95
-         Idj2LYRdyNI/nbtCfndRIacd7T12Ug5G3CQtT/gPWHj6dzcc9NEe8DM9lyUmH2dH1DH/
-         Xk5g==
-X-Gm-Message-State: ANoB5plScfrus72eru9IdkS8GHwg5IuKhNnP7SEQVaSKwrZ9UqCgGMvB
-        KRpotSdyAFuHtW9KpmpzHQ83Yw==
-X-Google-Smtp-Source: AA0mqf6h22DC0KAQue5KYSYozblSb2wE8jNlr6J8sY+ZRFEnDjvn3P/MsgXcd3eJtC3umMD+KbGwsA==
-X-Received: by 2002:ac2:488e:0:b0:4b4:cf32:e105 with SMTP id x14-20020ac2488e000000b004b4cf32e105mr27927160lfc.110.1670327095941;
-        Tue, 06 Dec 2022 03:44:55 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id j12-20020a056512344c00b004a05402c5c3sm2468044lfr.93.2022.12.06.03.44.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Dec 2022 03:44:55 -0800 (PST)
-Message-ID: <cebb1182-ca05-b339-8990-e85fff43bcb7@linaro.org>
-Date:   Tue, 6 Dec 2022 12:44:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v5 10/10] arm64: dts: qcom: Add base SM8550 MTP dts
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Tue, 6 Dec 2022 06:51:43 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E0827DED;
+        Tue,  6 Dec 2022 03:51:42 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6A836B819BB;
+        Tue,  6 Dec 2022 11:51:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8D6C433D6;
+        Tue,  6 Dec 2022 11:51:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670327500;
+        bh=s4K6bUN232iqgGLvJebgGUOXpM0Nekv+4mjWez6DWJ4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XiES+w/sgACehabQ6uDUpA2H2rgqaWd2j8ft6FggvWDX77Skw6L7pY7Z+A7LqWQUO
+         dSKU50T7pQCD+ueZThDG0C3Xmdp6qggNQGgKEgu+u0GlFBeJ1gG52mklvgTC+fn/Db
+         X3wbHEvReFDEc1gctm7Wq5A3oKuJLodsoMvhgArGsKIS+gCF5qlPKLT9Y7Ju1zF0f8
+         HoKdasAplW9SjPPt1jgPd/kGvxPPWKeEKjpPktupwDv5VRZqRZGez5h0JbZEMTlYgp
+         zyR36nP8kZ5qj+R7etGVXufEpWtx1EIBM6tjzmyJsE6QImfdASM9kodNcpkywY7gDM
+         C5NwERGeObbcw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p2WUF-0000Vi-IY; Tue, 06 Dec 2022 12:51:47 +0100
+Date:   Tue, 6 Dec 2022 12:51:47 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20221205230342.494923-1-abel.vesa@linaro.org>
- <20221205230342.494923-11-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221205230342.494923-11-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'dma-coherent' property
+Message-ID: <Y48s09HMMkb34kRn@hovoldconsulting.com>
+References: <20221205094530.12883-1-johan+linaro@kernel.org>
+ <Y48f4ktAwsPBW60y@lpieralisi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y48f4ktAwsPBW60y@lpieralisi>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/12/2022 00:03, Abel Vesa wrote:
-> Add dts file for Qualcomm MTP platform which uses SM8550 SoC.
+On Tue, Dec 06, 2022 at 11:56:34AM +0100, Lorenzo Pieralisi wrote:
+> On Mon, Dec 05, 2022 at 10:45:30AM +0100, Johan Hovold wrote:
+> > Devices on some PCIe buses may be cache coherent and must be marked as
+> > such in the devicetree to avoid data corruption.
+> > 
+> > This is specifically needed on recent Qualcomm platforms like SC8280XP.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> > 
+> > Lorenzo, the corresponding SC8280XP DT fix is heading for 6.2 so it
+> > would be nice if this one could be merged for 6.2-rc1 (or -rc2) as well
+> > to avoid the corresponding DT validation warnings.
 > 
-> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 404 ++++++++++++++++++++++++
->  2 files changed, 405 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> 
+> What's the commit base for this patch ? I tried applying to my pci/dt
+> branch to no avail, please let me know and I will merge it.
 
-Thank you for your patch. There is something to discuss/improve.
+That should be pci/qcom which has 3a936b2a5a58 ("dt-bindings: PCI: qcom:
+Add SC8280XP/SA8540P interconnects").
 
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_2 {
-> +	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
-> +	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
-> +	vmmc-supply = <&vreg_l9b_2p9>;
-> +	vqmmc-supply = <&vreg_l8b_1p8>;
-> +	bus-width = <4>;
-> +	no-sdio;
-> +	no-emmc;
-
-no-mmc
-
-https://lore.kernel.org/linux-devicetree/20221204094438.73288-2-krzysztof.kozlowski@linaro.org/
-
-Best regards,
-Krzysztof
-
+Johan
