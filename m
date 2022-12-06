@@ -2,129 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC6B4643BA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 04:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CC5C643BD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 04:20:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233904AbiLFDFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Dec 2022 22:05:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36636 "EHLO
+        id S232064AbiLFDUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Dec 2022 22:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231678AbiLFDFe (ORCPT
+        with ESMTP id S233778AbiLFDUZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Dec 2022 22:05:34 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4084E13D3A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 19:05:33 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id e189so8954883iof.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 19:05:33 -0800 (PST)
+        Mon, 5 Dec 2022 22:20:25 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B66A25EA1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Dec 2022 19:20:23 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id x6so15760729lji.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Dec 2022 19:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yQf4ZY8NnOfS/XZrZYFBrjz8jiMgg2iTJlvBgkUiKnI=;
-        b=B+LESh4NfFlaJrLJhK/+R7eY67yJrRUrFyBNEy7rQqgfKZgNOsllOH5A1HjUSu/ACQ
-         rsaWsGUGxWXYWSHjOt8TVfCBD2CotfmtlqbiiuUugWxre3rmsuJh4v2L1QJbmlDT3HAx
-         2HUMv63gCgipquCzvHgqPHRhfnuULE9027jRi2a7vwv6bdt9XL75QNqhDMvqbg1T0cLC
-         D45HYjkIFDn8/Y/VFSWKLiS5uBDcMx9uw6hW0qdzJEd+AAfln962A3xS9dEhEiQKEdQp
-         tS2SwV8gIDqXMiDu7AoyPPSZ/r61a0tn8I+wI4YWG9rW6wH5F0sZTOkXLAbpU0NR8Yao
-         PH1A==
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oiALkO4rnC9Gu1nW7FKSVg0MUO2Gu598TIaBBm3UFKo=;
+        b=rCBcl63/F6Niuy708YAPQul4O7KNWWu8j2jvlpkOlOMMtqO5pGi9Dd79n37g4h9qPE
+         af00f1jmXlSKao1P1zswJVUsxmBAvlVQEdE3VdKYZxD5xkZDZCE/b9RSX0V04UVXS5Qh
+         rx+6TiDDq36V212RATgVv5bRH2TEz73fITM+n9iJ64jxIM3zAkt8JMQMFFdpATm3+d3A
+         leA3+cEx9YKVEDXzhmkXJbVvJEeVHzfDP/o8N+x45cchcilZqzesv9a4MoKol1qcGwS6
+         cvMG3iTO1gCfE2AEc5Zzi68rvqGg5PFs2jHlms+mYJpRYegJ36BuvljPbuwcutHV+Q1t
+         +aYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yQf4ZY8NnOfS/XZrZYFBrjz8jiMgg2iTJlvBgkUiKnI=;
-        b=Bc0kx5B4wAU/uCO3VRg1pDTum5sgj+2tLDQeGNxOoJPS+HWQAUtBn9ybgBHcl9UZNv
-         JDTRZ4/uxlBWf/HFpYN4FO30QbeFJ6o9QklZzL1IGsTqETy5sz6YwdliAjUo0mCo7E8j
-         pJGKKW0dDfF3ieDM7L4IF6tyw2rvjbK7n810QqXr5te9QhALv2Fq5Oex8Q4ax4+vurbC
-         BLvB9qOgwNzeY77p+XFBHLx3QFlXy0D4XhZs/9VHx68+l1Q1kABMm0VXIpe0uJIWZ+mX
-         23DGIS/tCeuj5uilXzOhATmtiUWdYEgcUzHoc5xrjzHuKw8O/qZXlDVh9x/WaqPXYFYi
-         qL/g==
-X-Gm-Message-State: ANoB5pkOLZLTWHRFohdhDQs+2UtC6TWcdiM8Y04J8bfG5Fzf+2gUW3K3
-        7YnQpvx8ScjJeQhYwhfemkg/2A==
-X-Google-Smtp-Source: AA0mqf5RyDbcFgJcCuznHg/LSos18Hg/iENVPFz7iPLYoFND0sWm3/uY1TqH7HaYlk3NyHApBqPE0Q==
-X-Received: by 2002:a05:6638:37a5:b0:363:dd45:9df6 with SMTP id w37-20020a05663837a500b00363dd459df6mr40029387jal.274.1670295932596;
-        Mon, 05 Dec 2022 19:05:32 -0800 (PST)
-Received: from [10.211.55.3] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id o62-20020a022241000000b00389d2ff28a5sm6410719jao.47.2022.12.05.19.05.31
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oiALkO4rnC9Gu1nW7FKSVg0MUO2Gu598TIaBBm3UFKo=;
+        b=rzVpgmiF2D14VORUBF3x3XS++dbwCvcNctNbb0GlLkJCbt4+ExpZtklWi5IN1tXYCf
+         Wyf8+G1xLqzSXdJod2xIm2saRhryxYOqR5ICRLMqwkJHaWSeSwLV0N1rGmaTjz3r544/
+         ZGs8ilP4XYm+eRwp/c6U5hikVz2S4bqpVJfJNFaktE6dZuAjKhGDdpRnbky1BZ3zX/5f
+         AUCRY937b5a0u+OtWo6Skt/7W06YPe4qOLNxBX7dQi4ZukaM5K+Ol7njEUv4x6uqIoR8
+         0IfB2i1TKdRucA3+sMjAAktm/PtMzrngBKUzTRemfoCggV6i+QspA4qK+mszZnsFcrRy
+         gUeQ==
+X-Gm-Message-State: ANoB5pmW6kH5qcbPmF2+Vqhh/PLMGuacPKwzgGjsZdAVkJ0cA0fZzzZY
+        8EGmCsAYNRKQJ24r7DeG4Lg4nw==
+X-Google-Smtp-Source: AA0mqf42AaD6LXyoTAuOcqwduDBkwv9Bu13Ho9T18SDcaeo2qdQeywTEBcOV7564vcTH9ojn5OoI0g==
+X-Received: by 2002:a05:651c:b26:b0:277:9847:286a with SMTP id b38-20020a05651c0b2600b002779847286amr20542523ljr.309.1670296821664;
+        Mon, 05 Dec 2022 19:20:21 -0800 (PST)
+Received: from [127.0.0.1] (85-76-34-181-nat.elisa-mobile.fi. [85.76.34.181])
+        by smtp.gmail.com with ESMTPSA id z1-20020a2ebcc1000000b0027711dbd000sm1031505ljp.69.2022.12.05.19.20.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 19:05:32 -0800 (PST)
-Message-ID: <39903fb5-fd28-c159-b300-47d3ec4cd0fc@linaro.org>
-Date:   Mon, 5 Dec 2022 21:05:30 -0600
+        Mon, 05 Dec 2022 19:20:21 -0800 (PST)
+Date:   Tue, 06 Dec 2022 05:20:16 +0200
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+CC:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        linux-leds@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/4=5D_dt-bindings=3A_input=3A_q?= =?US-ASCII?Q?com=2Cpm8921-keypad=3A_convert_to_YAML_format?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20221205220433.GA2684995-robh@kernel.org>
+References: <20221204061555.1355453-1-dmitry.baryshkov@linaro.org> <20221204061555.1355453-2-dmitry.baryshkov@linaro.org> <20221205220433.GA2684995-robh@kernel.org>
+Message-ID: <E5C1A37F-5758-4026-9412-F13760C465D0@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2] clk: qcom: rpmh: add support for SM6350 rpmh IPA clock
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Alex Elder <elder@linaro.org>
-Cc:     sboyd@kernel.org, mturquette@baylibre.com,
-        konrad.dybcio@linaro.org, agross@kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221202221240.225720-1-elder@linaro.org>
- <20221205225646.gtwhakd4lxh6vlfc@builder.lan>
-From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <20221205225646.gtwhakd4lxh6vlfc@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/5/22 4:56 PM, Bjorn Andersson wrote:
-> On Fri, Dec 02, 2022 at 04:12:40PM -0600, Alex Elder wrote:
->> From: Luca Weiss <luca.weiss@fairphone.com>
->>
->> The IPA core clock is required for SM6350.  Define it.
->>
->> [elder@linaro.org: rebased with Dmitry's changes]
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+6 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3=2E 00:04:33 GMT+02=
+:00, Rob Herring <robh@kernel=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+>On Sun, Dec 04, 2022 at 08:15:52AM +0200, Dmitry Baryshkov wrote:
+>> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
+>> PM8058 PMICs from text to YAML format=2E
+>>=20
+>> While doing the conversion also change linux,keypad-no-autorepeat
+>> property to linux,input-no-autorepeat=2E The former property was never
+>> used by DT and was never handled by the driver=2E
+>
+>Changing from the documented one to one some drivers use=2E I guess=20
+>that's a slight improvement=2E Please see this discussion[1]=2E=20
 
-Sorry about that, I knew I was supposed to sign
-off and thought I had.
+Well, the problem is that the documentation is misleading=2E The driver do=
+esn't handle the documented property, so we should change either the driver=
+, or the docs=2E Which change is the preferred one?
 
-You told me separately that this was sufficient:
-
-Signed-off-by: Alex Elder <elder@linaro.org>
-
-If you want me to send a new version with the
-signoff just let me know.  Thanks.
-
-					-Alex
-> 
-> Thanks for rebasing this Alex. But as you're handling the patch you need
-> to add your S-o-b; which will make sure your [] makes sense as well.
-> 
-> Regards,
-> Bjorn
-> 
->> ---
->> v2: This is now based on qualcomm/for-next.
->>
->>   drivers/clk/qcom/clk-rpmh.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
->> index 2c2ef4b6d130e..586a810c682ca 100644
->> --- a/drivers/clk/qcom/clk-rpmh.c
->> +++ b/drivers/clk/qcom/clk-rpmh.c
->> @@ -606,6 +606,7 @@ static struct clk_hw *sm6350_rpmh_clocks[] = {
->>   	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_ln_bb_clk3_g4_ao.hw,
->>   	[RPMH_QLINK_CLK]	= &clk_rpmh_qlink_div4.hw,
->>   	[RPMH_QLINK_CLK_A]	= &clk_rpmh_qlink_div4_ao.hw,
->> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
->>   };
->>   
->>   static const struct clk_rpmh_desc clk_rpmh_sm6350 = {
->> -- 
->> 2.34.1
->>
+>
+>Rob
+>
+>[1] https://lore=2Ekernel=2Eorg/all/YowEgvwBOSEK+kd2@google=2Ecom/
 
