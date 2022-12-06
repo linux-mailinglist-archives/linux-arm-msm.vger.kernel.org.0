@@ -2,184 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1FD0643FB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 10:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C77CE6440D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Dec 2022 10:56:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234733AbiLFJT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 04:19:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34996 "EHLO
+        id S235655AbiLFJ4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 04:56:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234742AbiLFJTh (ORCPT
+        with ESMTP id S235562AbiLFJzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Dec 2022 04:19:37 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D59B3205FC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 01:17:56 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id 136so12854952pga.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 01:17:56 -0800 (PST)
+        Tue, 6 Dec 2022 04:55:25 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DD427CC8;
+        Tue,  6 Dec 2022 01:51:52 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id 136so12921957pga.1;
+        Tue, 06 Dec 2022 01:51:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ePWQHlJZ1ifQfk6Te5xFRB+dPeDDvHuJ9FBMyduq99Y=;
-        b=bCtcy40TBkMMs+Bx7uvp/8ffgWsN8SmTCqqiq0rSu0lzo3hObF4h5AzqBWU1RUxsqe
-         d9MjQKefgoEX5/ePs9f3/OyR8DC51smp0jwcbADoc9qCq4inshfq5p5V7sgXUDG4uLai
-         KLXihMWFtwtTsuuVwt23cYGHe47HidgigeuHK5cyOTYqesLPqPXhHvcNC7desZNJ45zS
-         PW7yLVv9J/DfOZtUAtCLPuIhRUfjduXXxZfp+MLVw8Yk0bQgjlUR1OBYeVxyrZMW+uoU
-         0r/VfW72EUgKAG/Ppl1J9m5QfsSehrdRa/Muf1Fo7fgEn7PBewdOnKcrGMX/MeHJAhGG
-         Zvrg==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U+fxm9YTmv9JfkvctmWrMw1uJzYw0A6ddSWm2DcTfh4=;
+        b=KASsjemV5+/UsBsF+0fNzCSb4WFN82ryD6ERtjetC0+DEaZ4O9MLj81oSaZ8EbY+O8
+         GcPaq7/5jK0+4LDB/DIlyERXnYV4N/sT3WK+IkIxdGke/W5eF3Owfo7S9xatHLI8xST6
+         0iZ7DmP/wlDGthhrkgFcFrRZXMVO9X6Hhn/5rezUFY4QfliobAmX01jM6Ic+TPC3Jw4C
+         dklcRUxBnyJW6qCpWPSK+jaAgBAAoaOOdYH1MwTnVlqELriUF0KQgFrvA9XJzwoJszbt
+         dBAwTO3mC3JAaPuxhejeumvj1xC3omn11r078yyUL162A9pbz5peX7nal3E5ZD+O6tkG
+         BXKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ePWQHlJZ1ifQfk6Te5xFRB+dPeDDvHuJ9FBMyduq99Y=;
-        b=GU1dctscwRUubDqGNcr2zzNVsFt6LNWtX8gt1b0FzmwyA9PY3KmSBppp4w61yrEGzO
-         i+lcvYluqMKsjUNt7LeKEWno5ACAUsAcaCUftq+1XnJdq0bJv3nXeEZXcb7SLdGuzJrG
-         +JLAUD3XhzQrHne3D77P6XoTdsZvh3hAt7k/rcA+7Ydq/L0hBOh24ustuqD2te6VXx/W
-         nObbzVKGe8jJpmlO3tXcgEzVWjiOEu+2b4kiiZQVjKbI+zQ0RA/vG09e/Eo92qQIFMWy
-         TYJqQz8shfikMRiRs5KMa4t0hU3TRLn5aJZrczq3d6CsPIhmr/XjjGXxdA8OLQB9HWoo
-         2qSw==
-X-Gm-Message-State: ANoB5pn4QFvq1BEiygLyrzgITL65KdmcsLCx6oqG7dKkaA8kpv/4kkAB
-        6DvGiqy854CQ1x33DZ6K1VYi
-X-Google-Smtp-Source: AA0mqf5UTduCpVAOsvqnU2Aq3c7POTsT0fXfbeT+OrZbKq34wo4NaKVMNSIIuYy0HS/p/CxktBtqMA==
-X-Received: by 2002:a65:58ca:0:b0:470:2c91:9579 with SMTP id e10-20020a6558ca000000b004702c919579mr58584377pgu.22.1670318276006;
-        Tue, 06 Dec 2022 01:17:56 -0800 (PST)
-Received: from thinkpad ([59.92.103.18])
-        by smtp.gmail.com with ESMTPSA id u10-20020a170902e5ca00b00189371b5971sm12147194plf.220.2022.12.06.01.17.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 01:17:54 -0800 (PST)
-Date:   Tue, 6 Dec 2022 14:47:37 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: ufs: qcom: allow 'dma-coherent' property
-Message-ID: <20221206091737.GC15486@thinkpad>
-References: <20221205100837.29212-1-johan+linaro@kernel.org>
- <20221205100837.29212-2-johan+linaro@kernel.org>
- <20221205115906.GA20192@thinkpad>
- <Y43e9KRDsTCS5VI4@hovoldconsulting.com>
- <20221205122018.GC20192@thinkpad>
- <Y43jtpHqlyiIEZ0S@hovoldconsulting.com>
- <20221205130048.GD20192@thinkpad>
- <Y43uUA2X4Vzn+VLF@hovoldconsulting.com>
- <20221205133712.GE20192@thinkpad>
- <2699840b-9746-473b-fa17-900258db555d@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U+fxm9YTmv9JfkvctmWrMw1uJzYw0A6ddSWm2DcTfh4=;
+        b=cpI+vwLa3PJ9qpLpK+yqTSup4cIQx1CIioIsODI7g1RpW1R7mSYDf7f8JPReiZcv+1
+         +Tlz9gmvfD/VSkVqyh0zXthHv3UzG2/UH+2952ypCzQOGKCLWy6X1PTGUguXnPhlnGO9
+         +3D1iiTwJzMrQR7KLEZzG9ONuxuxaOionPX7Eop5XAfL9gH/HrZbChHWoJjIJYwT1yVm
+         a7BIFfmUdy7Qjk55a6AD6/SWZ96UQYLA7XOhms6rjBu19AtdIDItAkvVOded6XiFWbgh
+         GkyII28PJZtvOKInB0uiDmBPLfSkjnPH3Badw/mM9P8/rFm7/JRCxRFmO1nA2FX8HF7L
+         aMFQ==
+X-Gm-Message-State: ANoB5pk7vRDJKdTsfYIM+rA1ZWOV0IIpcES+H5cXCXeBd6cKs+gxpaR5
+        MSGhP4xqgJYljPHaLJ41G0HTzFnDYPeIXKbV3ew=
+X-Google-Smtp-Source: AA0mqf5d8uc1OW9kDo+vs3txxtsxPOjtgmnKTtoagFg6Uf4h1rNHwVGjMS3M09jEM2gFVlWLTIitSlqPsVE3oDgjOXI=
+X-Received: by 2002:a63:d52:0:b0:477:66cb:b99 with SMTP id 18-20020a630d52000000b0047766cb0b99mr60852174pgn.10.1670320311315;
+ Tue, 06 Dec 2022 01:51:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2699840b-9746-473b-fa17-900258db555d@linaro.org>
+References: <20221116214841.1116735-1-robimarko@gmail.com> <20221116214841.1116735-2-robimarko@gmail.com>
+ <20221205215253.itobukkyiecn7xi7@builder.lan>
+In-Reply-To: <20221205215253.itobukkyiecn7xi7@builder.lan>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Tue, 6 Dec 2022 10:51:40 +0100
+Message-ID: <CAOX2RU5C6uYKS4Hc7NBwnzRju1=gzewrEHudMksUAL1XdKcfCQ@mail.gmail.com>
+Subject: Re: [PATCH 2/9] arm64: dts: qcom: ipq8074: fix Gen3 PCIe QMP PHY
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mani@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        svarbanov@mm-sol.com, shawn.guo@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 06, 2022 at 09:14:30AM +0100, Krzysztof Kozlowski wrote:
-> On 05/12/2022 14:37, Manivannan Sadhasivam wrote:
-> > On Mon, Dec 05, 2022 at 02:12:48PM +0100, Johan Hovold wrote:
-> >> On Mon, Dec 05, 2022 at 06:30:48PM +0530, Manivannan Sadhasivam wrote:
-> >>> On Mon, Dec 05, 2022 at 01:27:34PM +0100, Johan Hovold wrote:
-> >>>> On Mon, Dec 05, 2022 at 05:50:18PM +0530, Manivannan Sadhasivam wrote:
-> >>>>> On Mon, Dec 05, 2022 at 01:07:16PM +0100, Johan Hovold wrote:
-> >>>>>> On Mon, Dec 05, 2022 at 05:29:06PM +0530, Manivannan Sadhasivam wrote:
-> >>>>>>> On Mon, Dec 05, 2022 at 11:08:36AM +0100, Johan Hovold wrote:
-> >>>>>>>> UFS controllers may be cache coherent and must be marked as such in the
-> >>>>>>>> devicetree to avoid data corruption.
-> >>>>>>>>
-> >>>>>>>> This is specifically needed on recent Qualcomm platforms like SC8280XP.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >>
-> >>>>>> Yes, it would be a valid, but it will only be added to the DTs of SoCs
-> >>>>>> that actually require it. No need to re-encode the dtsi in the binding.
-> >>>>>>
-> >>>>>
-> >>>>> But if you make a property valid in the binding then it implies that anyone
-> >>>>> could add it to DTS which is wrong. You should make this property valid for
-> >>>>> SoCs that actually support it.
-> >>>>
-> >>>> No, it's not wrong.
-> >>>>
-> >>>> Note that the binding only requires 'compatible' and 'regs', all other
-> >>>> properties are optional, and you could, for example, add a
-> >>>> 'reset' property to a node for a device which does not have a reset
-> >>>> without the DT validation failing.
-> 
-> Optional properties are optional primarily looking at one variant. It
-> means that on different boards with the same SoC, things can be routed a
-> bit differently and some property can be skipped. E.g. sometimes
-> regulators come from PMIC and sometimes are wired to some VBATT, so we
-> do not have regulator in DTS for them. Or some interrupt/pin is not
-> connected.
-> 
-> Now between variants of devices - different SoCs: I don't think that
-> "optional" should be used in such context, except special cases or lack
-> of knowledge about hardware. For given SoC/variant, the property is either:
-> 1. valid and possible (can be required or optional),
-> 2. not valid, not possible.
-> And this we should express in constraints, if doable with reasonable
-> complexity.
-> 
-> Therefore the question is: is dma-coherent not valid for other SoCs?
-> 
+On Mon, 5 Dec 2022 at 22:52, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Wed, Nov 16, 2022 at 10:48:34PM +0100, Robert Marko wrote:
+> > IPQ8074 comes in 2 silicon versions:
+> > * v1 with 2x Gen2 PCIe ports and QMP PHY-s
+> > * v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
+> >
+> > v2 is the final and production version that is actually supported by the
+> > kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+> >
+> > Now that we have Gen3 QMP PHY support, we can start fixing the PCIe support
+> > by fixing the Gen3 QMP PHY node first.
+> >
+> > Change the compatible to the Gen3 QMP PHY, correct the register space start
+> > and size, add the missing misc PCS register space.
+> >
+>
+> Does this imply that the current node doesn't actually work?
 
-Yes, it is not valid on older SoCs because they don't support I/O coherency.
-So setting this property on those un-supported SoCs may lead to wierd behavior.
-This was the concern I had for setting this property valid for all SoCs.
+Hi Bjorn,
+Yes, the node is for a completely different PHY generation, basically
+PCIe on IPQ8074
+is completely broken, hence this patch series.
 
-So far we only know that SC8280XP and newer SoCs support I/O coherency.
+>
+> If that's the case, could we perhaps adopt Johan Hovolds' new binding
+> and drop the subnode in favor of just a flat reg covering the whole
+> QMP region?
 
-Thanks,
-Mani
+I have not seen that so far, any examples?
 
-> If it is "not needed" for other SoCs, then I would leave it like this.
-> Consider also what Rob said, that otherwise we would create DTS from the
-> bindings.
-> 
-> Also, too many allOf:if:then: constraints in the bindings make them
-> trickier to read.
-> 
-> >>>>
-> >>>
-> >>> Then what is the point of devicetree validation using bindings?
-> >>
-> >> You're still making sure that no properties are added that are not
-> >> documented, number of clocks, names of clocks, etc.
-> >>
-> >>> There is also a comment from Krzysztof: https://lkml.org/lkml/2022/11/24/390
-> >>
-> >> Speaking of Krzysztof:
-> >>
-> >> 	https://lore.kernel.org/lkml/20221204094717.74016-5-krzysztof.kozlowski@linaro.org/
-> 
-> That's not the best example, because I just do not know where
-> dma-coherent is applicable and where it is not, thus I added it as valid
-> for all variants. Also, I think that all variants are capable of using
-> IOMMU - it isn't restricted per variant. If they are capable of IOMMU,
-> then dma-coherent is a possible choice.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Regards,
+Robert
+>
+> Regards,
+> Bjorn
+>
+> > Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 15 ++++++++-------
+> >  1 file changed, 8 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > index 6649a758d8df..9503dfb25d50 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > @@ -232,9 +232,9 @@ qusb_phy_0: phy@79000 {
+> >                       status = "disabled";
+> >               };
+> >
+> > -             pcie_qmp0: phy@86000 {
+> > -                     compatible = "qcom,ipq8074-qmp-pcie-phy";
+> > -                     reg = <0x00086000 0x1c4>;
+> > +             pcie_qmp0: phy@84000 {
+> > +                     compatible = "qcom,ipq8074-qmp-gen3-pcie-phy";
+> > +                     reg = <0x00084000 0x1bc>;
+> >                       #address-cells = <1>;
+> >                       #size-cells = <1>;
+> >                       ranges;
+> > @@ -248,10 +248,11 @@ pcie_qmp0: phy@86000 {
+> >                                     "common";
+> >                       status = "disabled";
+> >
+> > -                     pcie_phy0: phy@86200 {
+> > -                             reg = <0x86200 0x16c>,
+> > -                                   <0x86400 0x200>,
+> > -                                   <0x86800 0x4f4>;
+> > +                     pcie_phy0: phy@84200 {
+> > +                             reg = <0x84200 0x16c>,
+> > +                                   <0x84400 0x200>,
+> > +                                   <0x84800 0x1f0>,
+> > +                                   <0x84c00 0xf4>;
+> >                               #phy-cells = <0>;
+> >                               #clock-cells = <0>;
+> >                               clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+> > --
+> > 2.38.1
+> >
