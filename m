@@ -2,209 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97389645A64
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 14:06:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDA26645B49
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 14:48:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiLGNGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 08:06:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42552 "EHLO
+        id S229891AbiLGNss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 08:48:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbiLGNGm (ORCPT
+        with ESMTP id S230048AbiLGNsn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 08:06:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF2A56ED6;
-        Wed,  7 Dec 2022 05:06:38 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7D0LGD020573;
-        Wed, 7 Dec 2022 13:06:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bOAg0Vvvp7/3vL2Zj7x0dkYwND2lwJwNT02kWj6Wk1g=;
- b=nrzdv0vhGikCme8+jM0FYlQQYq+oS8LYyxLdL+wf5OTxWZQtDYXlEHT66F8xgF+J91xJ
- Mv006ZUjqjvSilqIHk7N+w3n6PdfCGIefqM1HX2qE9YQsam+GqVCse8yCdwXEVN/71RW
- zNwWjWtBBS1zdcmoa+cWhdp7kWFExr+MmiM5AjDiuKPnMXcq2VUJB/cVhlHiq33poEgS
- PW6fnN+Z8suZK06lfg/Zn2obPZSCLEKZnSIOFkm69ZWk9eG0rKgBy4jygCt49DF5XJMk
- KFz4umbw9R1BLkvxc23vhnAOVQrcAllR7G8/0iJYyJptI3PexmFdONE99Q415WtbZaD6 8w== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3macsysqe8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Dec 2022 13:06:31 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7D6VUm016229
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Dec 2022 13:06:31 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 7 Dec 2022 05:06:27 -0800
-From:   Sarannya S <quic_sarannya@quicinc.com>
-To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH V4 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-Date:   Wed, 7 Dec 2022 18:34:18 +0530
-Message-ID: <1670418258-11502-4-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
+        Wed, 7 Dec 2022 08:48:43 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAC454B08
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 05:48:41 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id g7so4815660qts.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 05:48:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NzBRyLD561qmIWotQyudFLrHJSeS7EIDsYiZPKC19uo=;
+        b=WlSEyPfgKxdZBKvH4LdeVsPz/hb3gsRN/OMZqG0zhp4g8yF3iglcAtoy2a3EbTKNLy
+         ZbvPDlzof7NIen0zkkN7jXv1Q277VE1/Du/05SXux7yeUw7+Hg8PwU/Nv3cwqxuxwirU
+         3O4dbnFOc9mymRR7soxSdi03Pl8EAsQiLf5wxNO3GIoW1Cc/fyGe+4VajrT4hcLObijJ
+         i+7ry39SnWszBmZzcI7loDep9jTinFi+i/yC32AoWM8YevlkWRpNshLAnJ5i0aEDNj2Q
+         dmoqQzqJV4+NBWuWF402tErim3XF1qQcvPBztzzZMTsZuafqILQ6UWECVY7pFjvhVTuq
+         M3GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NzBRyLD561qmIWotQyudFLrHJSeS7EIDsYiZPKC19uo=;
+        b=00BD94EwmEz3ycSPObfG6+2gRm1Svwt4MCabkDmze7kiQluYtZwfKKS+LohDn1WMVx
+         LR7VqxIt6Q7V69ZUKJkzMFPwxoHvEh6lHXbYtqIlAKOCf+z522tkWjcpAodkC6LOCPU4
+         c3rdMruHF3LXVXz6PPZcLyP3BWf15blnK07JFNW6QbCWeHGNr53d7VCGj7y1pVW8q7tJ
+         ftvzyMm58Sc+0yXi4ROl/idNBYtvjQ+cpWN+y61r81O0SCKrIb3qcfcuMAmv8KCjWXpV
+         5XrzWsASnUPzLOvxxl2628VWaAPg2YC5Wntn8FB+h/vhYmX8VegwjpEP56gZyybTn9Lu
+         4zcA==
+X-Gm-Message-State: ANoB5pk96KTMU8LPnAqs1mny+EQrIGSwEWi1Kg8A17pZKFytYxQ+CVCW
+        s88LO7FnVV3nYLLnks0acgY2gTkL/4cfgO/1
+X-Google-Smtp-Source: AA0mqf6mGTngoW7IJNDdsF95b0xhcq7Ra7LVGdp5ULxgy1AnwEyOXzOxZN/aOiKC5lHw59s8MEDIeg==
+X-Received: by 2002:ac8:70cf:0:b0:3a5:9e69:b8ac with SMTP id g15-20020ac870cf000000b003a59e69b8acmr68955183qtp.459.1670420920518;
+        Wed, 07 Dec 2022 05:48:40 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id y6-20020a05620a44c600b006fa7b5ea2d1sm17472330qkp.125.2022.12.07.05.48.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Dec 2022 05:48:39 -0800 (PST)
+Message-ID: <793fc25f-a5bf-8200-f468-22a6dad7e094@linaro.org>
+Date:   Wed, 7 Dec 2022 07:48:38 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mb9rlgMJz75SGG3o8xi1AyM7A0dRajef
-X-Proofpoint-ORIG-GUID: mb9rlgMJz75SGG3o8xi1AyM7A0dRajef
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-07_05,2022-12-07_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0 spamscore=0
- mlxlogscore=999 priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212070113
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 01/18] clk: qcom: smd-rpm: remove duplication between
+ MMXI and MMAXI defines
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+ <20221207001503.93790-2-dmitry.baryshkov@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20221207001503.93790-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
-to get/set the low level transport signals.
+On 12/6/22 6:14 PM, Dmitry Baryshkov wrote:
+> The commit 644c42295592 ("clk: qcom: smd: Add SM6375 clocks") added a
+> duplicate of the existing define QCOM_SMD_RPM_MMAXI_CLK, drop it now.
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
----
- drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 52 insertions(+), 8 deletions(-)
+Looks good.
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index 3e0b8f3..8109d18 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -23,6 +23,7 @@
- #include <linux/rpmsg.h>
- #include <linux/skbuff.h>
- #include <linux/slab.h>
-+#include <linux/termios.h>
- #include <linux/uaccess.h>
- #include <uapi/linux/rpmsg.h>
- 
-@@ -68,6 +69,8 @@ struct rpmsg_eptdev {
- 	struct sk_buff_head queue;
- 	wait_queue_head_t readq;
- 
-+	u32 remote_signals;
-+	bool signals_pending;
- };
- 
- int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-@@ -109,7 +112,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
- 	skb_queue_tail(&eptdev->queue, skb);
- 	spin_unlock(&eptdev->queue_lock);
- 
--	/* wake up any blocking processes, waiting for new data */
-+	wake_up_interruptible(&eptdev->readq);
-+
-+	return 0;
-+}
-+
-+static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-+{
-+	struct rpmsg_eptdev *eptdev = priv;
-+
-+	if (enable)
-+		eptdev->remote_signals = TIOCM_DSR | TIOCM_CTS;
-+	else
-+		eptdev->remote_signals = 0;
-+
-+	eptdev->signals_pending = true;
-+
- 	wake_up_interruptible(&eptdev->readq);
- 
- 	return 0;
-@@ -146,6 +164,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 		return -EINVAL;
- 	}
- 
-+	ept->flow_cb = rpmsg_ept_flow_cb;
- 	eptdev->ept = ept;
- 	filp->private_data = eptdev;
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -166,6 +185,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
- 		eptdev->ept = NULL;
- 	}
- 	mutex_unlock(&eptdev->ept_lock);
-+	eptdev->signals_pending = false;
- 
- 	/* Discard all SKBs */
- 	skb_queue_purge(&eptdev->queue);
-@@ -279,6 +299,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
- 	if (!skb_queue_empty(&eptdev->queue))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	if (eptdev->signals_pending)
-+		mask |= EPOLLPRI;
-+
- 	mask |= rpmsg_poll(eptdev->ept, filp, wait);
- 
- 	return mask;
-@@ -289,14 +312,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
- {
- 	struct rpmsg_eptdev *eptdev = fp->private_data;
- 
--	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
--		return -EINVAL;
--
--	/* Don't allow to destroy a default endpoint. */
--	if (eptdev->default_ept)
--		return -EINVAL;
-+	bool set;
-+	u32 val;
-+	int ret;
-+	
-+	switch (cmd) {
-+	case TIOCMGET:
-+		eptdev->signals_pending = false;
-+		ret = put_user(eptdev->remote_signals, (int __user *)arg);
-+		break;
-+	case TIOCMSET:
-+		ret = get_user(val, (int __user *)arg);
-+		if (ret)
-+			break;
-+		set = (val & (TIOCM_DTR | TIOCM_RTS)) ? true : false;
-+		ret = rpmsg_set_flow_control(eptdev->ept, set, 0);
-+		break;
-+	case RPMSG_DESTROY_EPT_IOCTL:
-+		/* Don't allow to destroy a default endpoint. */
-+		if (eptdev->default_ept) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+		break;
-+	default:
-+		ret = -EINVAL;
-+	}
- 
--	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+	return ret;
- }
- 
- static const struct file_operations rpmsg_eptdev_fops = {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Alex Elder <elder@linaro.org>
+
+> 
+> Fixes: 644c42295592 ("clk: qcom: smd: Add SM6375 clocks")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/clk/qcom/clk-smd-rpm.c   | 4 ++--
+>   include/linux/soc/qcom/smd-rpm.h | 1 -
+>   2 files changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+> index fea505876855..4947d5eab591 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -1120,8 +1120,8 @@ static const struct rpm_smd_clk_desc rpm_clk_sm6115 = {
+>   };
+>   
+>   /* SM6375 */
+> -DEFINE_CLK_SMD_RPM(sm6375, mmnrt_clk, mmnrt_a_clk, QCOM_SMD_RPM_MMXI_CLK, 0);
+> -DEFINE_CLK_SMD_RPM(sm6375, mmrt_clk, mmrt_a_clk, QCOM_SMD_RPM_MMXI_CLK, 1);
+> +DEFINE_CLK_SMD_RPM(sm6375, mmnrt_clk, mmnrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 0);
+> +DEFINE_CLK_SMD_RPM(sm6375, mmrt_clk, mmrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 1);
+>   DEFINE_CLK_SMD_RPM(qcm2290, hwkm_clk, hwkm_a_clk, QCOM_SMD_RPM_HWKM_CLK, 0);
+>   DEFINE_CLK_SMD_RPM(qcm2290, pka_clk, pka_a_clk, QCOM_SMD_RPM_PKA_CLK, 0);
+>   DEFINE_CLK_SMD_RPM_BRANCH(sm6375, bimc_freq_log, bimc_freq_log_a, QCOM_SMD_RPM_MISC_CLK, 4, 1);
+> diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
+> index 3ab8c07f71c0..82c9d489833a 100644
+> --- a/include/linux/soc/qcom/smd-rpm.h
+> +++ b/include/linux/soc/qcom/smd-rpm.h
+> @@ -41,7 +41,6 @@ struct qcom_smd_rpm;
+>   #define QCOM_SMD_RPM_HWKM_CLK	0x6d6b7768
+>   #define QCOM_SMD_RPM_PKA_CLK	0x616b70
+>   #define QCOM_SMD_RPM_MCFG_CLK	0x6766636d
+> -#define QCOM_SMD_RPM_MMXI_CLK	0x69786d6d
+>   
+>   int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+>   		       int state,
 
