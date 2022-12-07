@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6B8645BE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:02:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12B36645BEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:02:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230440AbiLGOC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 09:02:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56432 "EHLO
+        id S229955AbiLGOCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 09:02:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbiLGOB4 (ORCPT
+        with ESMTP id S230325AbiLGOCE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 09:01:56 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F7D65E3D9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 06:00:53 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so1711171pjj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 06:00:53 -0800 (PST)
+        Wed, 7 Dec 2022 09:02:04 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 297545E9C2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 06:00:59 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id q1so16434890pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 06:00:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/tmf4FhGP2SUfnQq67BBBvYtBbMtS0YXHrJVypV9j0Y=;
-        b=jJKHCRg2Vybbn81b+bh3LhDDZKfk6Zo4u+chNJ134DR47RDufb6UiGNDlWNKDWAVBn
-         5YHBNMa8bWOD8MhBE8cEtjcdPqrx39mIauUf5FAAQ+10zcTwvTvmveZ28tMwcKcDt+7C
-         MUjdQufCjZpdPyMEvZW0ISl1mXNlVuKKXK66SlA/wqH8dtxN5GSrFb8AXgV8dHYhBq7P
-         f8cayHyFOYtR+AQ5GNJrkxjTPCMSEwhW1rqy+JPu9wDrBwZFM48e4AdkI/Yb7YYy3ph2
-         +TRue+hi4xHgBreIskOrLJPuu82H66zLOpfVIReN8YHDXZ07Qj4WPGX5pLU61t3QLX4m
-         ePVw==
+        bh=NhWX6rKQWUP57iw8+d4GFT7tQjEcrRRRTsFAecr4akA=;
+        b=A9v9lLV56An3GhPsH89Ik473JrofRyBdoLoOAQPzQLQbyppH1iHysZpC0Uli4f28PT
+         Jr+UzCAhJ4Wmoy3JXe25IScBIloO1gSmuRDg/+uUUiSrFA3Ynl/fFocpgyVhDgy4zcOM
+         qjjxN2afRdMvUNXqPEmQQ+764HOjVcqIxAHRYgPi+ape3usBOAhruzcg2KTwLGMDc/wO
+         yqYuQBDDfPOooe0BZ/f8ZXZQPlGYCAovECjM7P7/RSySESbiVolMeg4tljpXO7yboMlE
+         VkUz0E2umgbcDz7IPJcOYaAsUgoxzeJ6NNR8J1XfkRA8WO8KFS6R38WBc7ozgXuvZQMF
+         uZfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/tmf4FhGP2SUfnQq67BBBvYtBbMtS0YXHrJVypV9j0Y=;
-        b=MwR1k7grYmJ96LH8aoUza7MBzA2tFpMYP0R/Qh1WzwOo+QTDMbvr+fIBZIVZKfPkiW
-         UGFyhKTmSQGfe5Z+S/yLz8d5Pd7pEw2U6sGvhKjH9i1O7+Ok4ZuO+DGvaZSr+aPDrhjt
-         VPsav8TJDybYwt0hNK0rPaWWSezydRUQ61fJB1LPfVo0akxBKYnc2mPZmwUSLIGtqpqO
-         2Zqp1xn6TSCBbpWxoyenheLno2Dl6quLA4PLjhxsKfj3TFkPqT0CjFeGYWZXZrUoebos
-         cpBP1NMewsROFkihSQvfPb2ANJhNlQSJVKwOQsc+s06kUbbW/HleSQZ7u3WnZCIZCqum
-         rHLw==
-X-Gm-Message-State: ANoB5pnj68k/QuzaRYuexo5aCiermOsDg0a3GKWgAgzBIsA5UKYo74HK
-        rzq6i3LAJ0CfXeFp8/o0Ynju
-X-Google-Smtp-Source: AA0mqf4DdbseasoYATfDJ7od5fTSrO9ZdSchGfXWVYpuzkqBUxpv6xlPrmwgrzdB0/R3N8B1Nas3Pw==
-X-Received: by 2002:a17:90a:708a:b0:20a:eaab:137 with SMTP id g10-20020a17090a708a00b0020aeaab0137mr101141295pjk.206.1670421652404;
-        Wed, 07 Dec 2022 06:00:52 -0800 (PST)
+        bh=NhWX6rKQWUP57iw8+d4GFT7tQjEcrRRRTsFAecr4akA=;
+        b=ALiVdf/BcUhrEtKZpIUgDAsCUxtg/9bMLpCtyjpfrDz5zajuecTPrHBn7dNtDOkB9u
+         EpN5C3eC3ol7x+AlO/F1uiGQ7Ljo1Nb5xYuxN/u5QgsDt6lZ/IVZh788q1MCCwQEPfAB
+         ASaKT/m/lMyL1jG8cSZdLSqj9RhkrmVVjdOAMVlWd/hSwuG76XFVb0z466x3bwbm8YAa
+         nUr2aPJJVtdi9TV/h+t4m/0ipZizsHUP34S4aBAdeiMxcmrGlDvCTNjj0CI2iI/fonHh
+         RuR5o+KyLZlopAe9KpoSO69Kp5EOok+uo5e9iUKzhsrsbkfXM86lwquxptcvcgH0WBU3
+         Sauw==
+X-Gm-Message-State: ANoB5pl8WhrCvbH/lIeYNKnqufBHcGox5AtlRd4S2h9+0T1zQR2tup4o
+        SjYv2SGAprc0Y7bsH1WrhYi2
+X-Google-Smtp-Source: AA0mqf4RYtHL2QYHXNhUfXa/ongclBqtFtdfIORIDRXHajHgTCyU9tFwKK+wtOPwDBZD/b7xdrRcJA==
+X-Received: by 2002:a65:5aca:0:b0:478:b2d5:d843 with SMTP id d10-20020a655aca000000b00478b2d5d843mr14474926pgt.415.1670421658483;
+        Wed, 07 Dec 2022 06:00:58 -0800 (PST)
 Received: from localhost.localdomain ([117.216.123.5])
-        by smtp.gmail.com with ESMTPSA id c18-20020a170902d49200b00186b69157ecsm14720160plg.202.2022.12.07.06.00.45
+        by smtp.gmail.com with ESMTPSA id c18-20020a170902d49200b00186b69157ecsm14720160plg.202.2022.12.07.06.00.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 06:00:51 -0800 (PST)
+        Wed, 07 Dec 2022 06:00:57 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
@@ -60,9 +60,9 @@ Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
         linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         stable@vger.kernel.org
-Subject: [PATCH 12/12] llcc/edac: Fix the base address used for accessing LLCC banks
-Date:   Wed,  7 Dec 2022 19:29:21 +0530
-Message-Id: <20221207135922.314827-13-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 12/12] qcom: llcc/edac: Fix the base address used for accessing LLCC banks
+Date:   Wed,  7 Dec 2022 19:29:22 +0530
+Message-Id: <20221207135922.314827-14-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
 References: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
@@ -78,20 +78,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The LLCC driver has been using a fixed register offset stride for accessing
-the CSRs of each LLCC bank. This offset only works for some SoCs like
-SDM845 for which driver support was initially added.
+The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+accessing the (Control and Status Registers) CSRs of each LLCC bank.
+This stride only works for some SoCs like SDM845 for which driver
+support was initially added.
 
 But the later SoCs use different register stride that vary between the
 banks with holes in-between. So it is not possible to use a single register
-stride for accessing the CSRs of each bank.
+stride for accessing the CSRs of each bank. By doing so could result in a
+crash.
 
-Hence, obtain the base address of each LLCC bank from devicetree and get
-rid of the fixed stride.
+For fixing this issue, let's obtain the base address of each LLCC bank from
+devicetree and get rid of the fixed stride.
 
 Cc: <stable@vger.kernel.org> # 4.20
 Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
 Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
+Reported-by: Parikshit Pareek <quic_ppareek@quicinc.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
  drivers/edac/qcom_edac.c           | 14 +++----
