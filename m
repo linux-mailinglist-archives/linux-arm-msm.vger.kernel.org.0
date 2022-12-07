@@ -2,142 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF9D96455D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 09:54:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 612E464574E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 11:15:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiLGIyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 03:54:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45814 "EHLO
+        id S230234AbiLGKPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 05:15:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229985AbiLGIxp (ORCPT
+        with ESMTP id S230064AbiLGKPe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 03:53:45 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748512CC8D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 00:51:28 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id d14so18972117edj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 00:51:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yqiGB1qJo9i4koQEznwBgARqYhiQjawzilyF1S0bHz0=;
-        b=wsHiGoBkGiPkzXqlVpyDN2/RMMe2GW3aN+QhETuRef17+VhfDR9NfC7Kw5j0MF5Xpa
-         TqmDEw2O8IffSj2VHuUXm9iiSuSwILYc+FSv478+5PIvl9NSQXOq9mba98wIexLCyYB+
-         KaNP+koWBDEfaPpMHSF3CB6a6/npu2ofBSEAJ1rOHVVbrS2YUyvmMoGYPyjQ/7w0ltRZ
-         7byp9rRO4DYe+U0iYr4uQolUGnjfYx/z1ThfuoGiSDLGVkE1avZg/NlBgG8AFOfAhWPh
-         /onJqmHr+moB1qLDV3kFyC8Ua/4d4ogE2rU4lqwB2NPG3jfS6RcicEUBoeapVqUjg2Tb
-         yqrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yqiGB1qJo9i4koQEznwBgARqYhiQjawzilyF1S0bHz0=;
-        b=PJkWlJfqOAQ2LqANyZpZCgeBJyj6/3V98q8K5c9E5oEQ+8CGWgoDNAveiuk+IjKyKI
-         zLUC/44jwB3iuUgp3v3bDARAPNDNbnXF1X71QFZdv5d1yyOggeH3ciZqtKAmf0EW5B7E
-         zwxGSFx0i/H30X+Jn+g1FtcXOyykviLb6F4t9mR2xHVwV80aCnys/FN77SQ4Vag4E056
-         smmto8UKZtJr9NvvYZfRKLwz+5jQYh9IPfRzjobfcwIUvHuErgszcZ9+eMgqVowUJujw
-         ghDMrXKCeTKA5HNLLD6ZRLeKTRlZJGWhCNLsmKG6Dp0ztkoN/PV/Bk6YBii51sf4OfBE
-         b52A==
-X-Gm-Message-State: ANoB5pmAXpNIqPceR4UNtFzwtfVSowoiTV6hcLaY+RgqzVs25FTL2cgt
-        g8HiHYQPtl1tAS+CNVoXRn06SA==
-X-Google-Smtp-Source: AA0mqf4cJuZ4p+FwV2w7V2vdjr+9c6izYEMwlgbF5R3fZ2L2kiE8ij15YV0H5jQgD8QD4jZoerSqhA==
-X-Received: by 2002:a05:6402:1f87:b0:468:7df:c38c with SMTP id c7-20020a0564021f8700b0046807dfc38cmr15246278edc.150.1670403086998;
-        Wed, 07 Dec 2022 00:51:26 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id a2-20020a170906684200b007bf71053d97sm8328805ejs.40.2022.12.07.00.51.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Dec 2022 00:51:24 -0800 (PST)
-Message-ID: <50e6cc79-d2ca-7e7e-c7e0-f0561af40c96@linaro.org>
-Date:   Wed, 7 Dec 2022 09:51:21 +0100
+        Wed, 7 Dec 2022 05:15:34 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02761EE0E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 02:15:31 -0800 (PST)
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[IPv6:::1])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <l.stach@pengutronix.de>)
+        id 1p2rSa-0001Ko-Bo; Wed, 07 Dec 2022 11:15:28 +0100
+Message-ID: <d3433e207ff8ea243ff1d4cceeea19e4676c97c5.camel@pengutronix.de>
+Subject: Re: [PATCH] drm/msm: Add MSM_SUBMIT_BO_NO_IMPLICIT
+From:   Lucas Stach <l.stach@pengutronix.de>
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org
+Date:   Wed, 07 Dec 2022 11:15:25 +0100
+In-Reply-To: <20221206192123.661448-1-robdclark@gmail.com>
+References: <20221206192123.661448-1-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 (3.40.4-1.fc34) 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Add pmk8350 PMIC
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221207084045.270172-1-luca.weiss@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221207084045.270172-1-luca.weiss@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: l.stach@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rob,
 
+Am Dienstag, dem 06.12.2022 um 11:21 -0800 schrieb Rob Clark:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> In cases where implicit sync is used, it is still useful (for things
+> like sub-allocation, etc) to allow userspace to opt-out of implicit
+> sync on per-BO basis.
+> 
+Out of curiosity and because I have been thinking about something like
+that for etnaviv for while: do you only use this for immutable buffers
+or do you have some kind of userspace fencing in place for the
+suballocated buffers?
 
-On 07/12/2022 09:40, Luca Weiss wrote:
-> The PMK8350 (which is actually a PMK8003) is used for the RTC and has
-> ADC for thermals.
-> 
-> Since the adc_tm compatible used in PMK8350 is not yet supported, skip
-> configuring that and the associated thermal zone for now.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Regards,
+Lucas
+
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->   .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
+>  drivers/gpu/drm/msm/msm_drv.c        |  3 ++-
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++++++++
+>  include/uapi/drm/msm_drm.h           |  4 +++-
+>  3 files changed, 16 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> index c456e9594ea5..df05e5dc8696 100644
-> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> @@ -5,7 +5,11 @@
->   
->   /dts-v1/;
->   
-> +/* PMK8350 (in reality a PMK8003) is configured to use SID6 instead of 0 */
-> +#define PMK8350_SID 6
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 017a512982a2..e0e1199a822f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -45,9 +45,10 @@
+>   * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
+>   * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
+>   * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
+> + * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
+>   */
+>  #define MSM_VERSION_MAJOR	1
+> -#define MSM_VERSION_MINOR	9
+> +#define MSM_VERSION_MINOR	10
+>  #define MSM_VERSION_PATCHLEVEL	0
+>  
+>  static const struct drm_mode_config_funcs mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index eb3536e3d66a..8bad07a04f85 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -334,9 +334,20 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+>  		if (ret)
+>  			return ret;
+>  
+> +		/* If userspace has determined that explicit fencing is
+> +		 * used, it can disable implicit sync on the entire
+> +		 * submit:
+> +		 */
+>  		if (no_implicit)
+>  			continue;
+>  
+> +		/* Otherwise userspace can ask for implicit sync to be
+> +		 * disabled on specific buffers.  This is useful for internal
+> +		 * usermode driver managed buffers, suballocation, etc.
+> +		 */
+> +		if (submit->bos[i].flags & MSM_SUBMIT_BO_NO_IMPLICIT)
+> +			continue;
 > +
->   #include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
->   #include <dt-bindings/input/input.h>
->   #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> @@ -13,6 +17,7 @@
->   #include "pm6150l.dtsi"
->   #include "pm6350.dtsi"
->   #include "pm7250b.dtsi"
-> +#include "pmk8350.dtsi"
->   
->   / {
->   	model = "Fairphone 4";
-> @@ -426,6 +431,20 @@ conn-therm@1 {
->   	};
->   };
->   
-> +&pmk8350_rtc {
-> +	status = "okay";
-> +};
-> +
-> +&pmk8350_vadc {
-> +	adc-chan@644 {
-> +		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <200>;
-> +		qcom,pre-scaling = <1 1>;
-> +		label = "xo_therm";
-> +	};
-> +};
-> +
->   &qupv3_id_1 {
->   	status = "okay";
->   };
+>  		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
+>  							      obj,
+>  							      write);
+> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> index f54b48ef6a2d..329100016e7c 100644
+> --- a/include/uapi/drm/msm_drm.h
+> +++ b/include/uapi/drm/msm_drm.h
+> @@ -222,10 +222,12 @@ struct drm_msm_gem_submit_cmd {
+>  #define MSM_SUBMIT_BO_READ             0x0001
+>  #define MSM_SUBMIT_BO_WRITE            0x0002
+>  #define MSM_SUBMIT_BO_DUMP             0x0004
+> +#define MSM_SUBMIT_BO_NO_IMPLICIT      0x0008
+>  
+>  #define MSM_SUBMIT_BO_FLAGS            (MSM_SUBMIT_BO_READ | \
+>  					MSM_SUBMIT_BO_WRITE | \
+> -					MSM_SUBMIT_BO_DUMP)
+> +					MSM_SUBMIT_BO_DUMP | \
+> +					MSM_SUBMIT_BO_NO_IMPLICIT)
+>  
+>  struct drm_msm_gem_submit_bo {
+>  	__u32 flags;          /* in, mask of MSM_SUBMIT_BO_x */
+
+
