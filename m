@@ -2,115 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A785D645C98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:29:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88F9A645CDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:46:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbiLGO3N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 09:29:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52784 "EHLO
+        id S229700AbiLGOqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 09:46:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbiLGO2x (ORCPT
+        with ESMTP id S229441AbiLGOqR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 09:28:53 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A600A578E1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 06:28:39 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id cf42so23169656lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 06:28:39 -0800 (PST)
+        Wed, 7 Dec 2022 09:46:17 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 282385915F;
+        Wed,  7 Dec 2022 06:46:14 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id m6-20020a9d7e86000000b0066ec505ae93so5838067otp.9;
+        Wed, 07 Dec 2022 06:46:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jUFmlTkaTeb2gUSJldujrB4KJISeaHLq+47OfG+Sb0g=;
-        b=Lpy+WJM+yODekgzWzTxmrM1ACtNvsx0v+grZNUAV+beM/Yrumue3bBOm2ONS6c2j0A
-         iVqBdlPYC6wCOt6HeADL8fWlyyl0yX8iPtu6ssltQzn7Tc4Oug6BHy/rXBlJm8Dt13Ve
-         1C6SCt803MKb81d39YyT49WiAlT/FbUKVuUN3APVvdMBF9xwc6Yoyo812NgcZIC0IWGo
-         4luRJaAq8ejSDr+Yg/8aUZZYtOHlYiY0c+aMRWc48NB8p8CPb8qKF9DBoU9Spu+zKhE+
-         ecznS8Mx7R2CSLwl9dAoJ3TYxbf1/PNxnuFoD++KAXvqD+EIcQNV1QMqWp9OIkPZ9S38
-         K0vQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pCx/E76TgK/9YaFBrP8sS3CTQZp59lVD/AHPvEf9LTo=;
+        b=hOvi/ppN1s+rwt2vnOeSAFAGsHGLoFSY+ASbI5Kqs5egtVEYsq6csNx2XV/4S5iF+e
+         LhY77bBtB03M2NPj9vnMcXYE5vqSO3XcNMEkKbWUfWXJoH0P3IJyjOD2DjcwlbhHgyji
+         4aVxsbHjchRcrFRfDIfkk2tP5C5GoJjm1Kzfd+qdBPdUeR50a0VvjRTP6HxW5EqhiiGU
+         GiaWEgNA6T/06KhkSClbVg0ZmMbvTc86ID8d5V81EQ1BqgzW4M781QxRxpXlfLzE1tWh
+         bOl8+0Ige7/i+uYkhfCiXxpzeKNOIQujl6pXDGctLZsiu6lYUrMR7phFydDsWpx4mW4h
+         4e+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jUFmlTkaTeb2gUSJldujrB4KJISeaHLq+47OfG+Sb0g=;
-        b=5y1gIx6NX5yK0EG/bz/P/JTcnUECqyGfWLn/aCJOLPvBoAagnf904gOW4CLWax3247
-         yfC0Igz8cKYij3yrT0C/aldPIEdwl7jLYj9fiFKiBqCkj+zxGnMam/SdNE8dy9WHzZZb
-         7SDn3+2AOucLUky8CiTyo1A3ffkcOvkR1BaIyfpmJ9voA0rtBc7mq1Ci7mAxYe8D/ad5
-         /+3FupXMQWvxvtCgyhrlx4CpEldHXSdP6WZ/fS6DhxG0NbOR6PAxoPAcr8K0YcSypyWy
-         pgMt6nh6RUmfFt/cSDvhf9QpFMEAcoh7pJIjNdwZkF2sn5xTuFjOQq03hfa7WmdPgtZB
-         gIKg==
-X-Gm-Message-State: ANoB5pkSQNTsnzJJh6H0xPaQMYX/ZxDCQcRliDOLzR3CSLPu/MSTJzpk
-        veoVKStN5rxbt6s/HafKRKw8EA==
-X-Google-Smtp-Source: AA0mqf7cx7c/YeG785Vs1vUOt+3SoFwzJpe6TmpmVlCrtroFemClCPNAStWvJf6GOBWjJ51n9GnCvQ==
-X-Received: by 2002:ac2:5324:0:b0:4b5:6d83:1a87 with SMTP id f4-20020ac25324000000b004b56d831a87mr5831782lfh.375.1670423318034;
-        Wed, 07 Dec 2022 06:28:38 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id f27-20020a19381b000000b0049fff3f645esm2863430lfa.70.2022.12.07.06.28.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 06:28:37 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 3/3] drm/msm/dpu: add missing ubwc_swizzle setting to catalog
-Date:   Wed,  7 Dec 2022 16:28:33 +0200
-Message-Id: <20221207142833.204193-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221207142833.204193-1-dmitry.baryshkov@linaro.org>
-References: <20221207142833.204193-1-dmitry.baryshkov@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pCx/E76TgK/9YaFBrP8sS3CTQZp59lVD/AHPvEf9LTo=;
+        b=WVJVKpPMvqOtzrZaqKi0gZVWIglnGl6nFKUi2TjZypHU8oVu0wVcBXCOqVBKk++pEG
+         zlpSO0SUCynA1vFzRULLLbw1Heyl69F10vtonCCK/dHWmtKE9IhCmahKuiXP9G3UCDqN
+         LccSJTfgYvSHlu5uI3O0gOYZ1cAJlVah+hfcBLBFdj0w42KeyoT0HLNDwTY7rzb5q0U1
+         EECmNkzTPK8pKv/RRdmqfHFuaSBY3aqwKa42bD0JIntIysfivrRqHk7ljWtpWLG5gSqx
+         daVp70vAdZQuOi/HGbZOENZbWZvnCYz73/xVgFSYWkYPdFWqrDNj+RPRH3DCCcUJ7u//
+         EpBQ==
+X-Gm-Message-State: ANoB5pljLfyy3GT2Vf4zFupCrreoz1SDE2uPQ2rNoGxJAC9xcXlZG3f7
+        GhRGOpBs195BlbcR84iAk0eGu6treaBqOwUACVo=
+X-Google-Smtp-Source: AA0mqf4eof0tNHTw1xsmbn9ySQtKoofw7nwky/Tb+KzP9HTjiiwLw4FWjzKNXXQaSmGg3mwLh5PElZz2fFxLxErXwg0=
+X-Received: by 2002:a9d:75d5:0:b0:667:7361:7db5 with SMTP id
+ c21-20020a9d75d5000000b0066773617db5mr38441176otl.22.1670424373348; Wed, 07
+ Dec 2022 06:46:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221206192123.661448-1-robdclark@gmail.com> <d3433e207ff8ea243ff1d4cceeea19e4676c97c5.camel@pengutronix.de>
+In-Reply-To: <d3433e207ff8ea243ff1d4cceeea19e4676c97c5.camel@pengutronix.de>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 7 Dec 2022 06:46:08 -0800
+Message-ID: <CAF6AEGtO8hjJocOccsxwWmtLFUfMH7e1EMm-2xLKa2zSr0JCKQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Add MSM_SUBMIT_BO_NO_IMPLICIT
+To:     Lucas Stach <l.stach@pengutronix.de>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the values from the vendor DTs to set ubwc_swizzle in the catalog.
+On Wed, Dec 7, 2022 at 2:15 AM Lucas Stach <l.stach@pengutronix.de> wrote:
+>
+> Hi Rob,
+>
+> Am Dienstag, dem 06.12.2022 um 11:21 -0800 schrieb Rob Clark:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > In cases where implicit sync is used, it is still useful (for things
+> > like sub-allocation, etc) to allow userspace to opt-out of implicit
+> > sync on per-BO basis.
+> >
+> Out of curiosity and because I have been thinking about something like
+> that for etnaviv for while: do you only use this for immutable buffers
+> or do you have some kind of userspace fencing in place for the
+> suballocated buffers?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 +++
- 1 file changed, 3 insertions(+)
+yup, userspace fences.. which is a thing you'd really want for doing
+suballocation
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index a1b52b9b16f1..b80cc11a9a83 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -516,6 +516,7 @@ static const struct dpu_mdp_cfg sm6115_mdp[] = {
- 	.base = 0x0, .len = 0x494,
- 	.features = 0,
- 	.highest_bank_bit = 0x1,
-+	.ubwc_swizzle = 0x7,
- 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
- 		.reg_off = 0x2ac, .bit_off = 0},
- 	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
-@@ -529,6 +530,7 @@ static const struct dpu_mdp_cfg sm8250_mdp[] = {
- 	.base = 0x0, .len = 0x494,
- 	.features = 0,
- 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
-+	.ubwc_swizzle = 0x6,
- 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
- 			.reg_off = 0x2AC, .bit_off = 0},
- 	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
-@@ -558,6 +560,7 @@ static const struct dpu_mdp_cfg sm8450_mdp[] = {
- 	.base = 0x0, .len = 0x494,
- 	.features = BIT(DPU_MDP_PERIPH_0_REMOVED),
- 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
-+	.ubwc_swizzle = 0x6,
- 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
- 			.reg_off = 0x2AC, .bit_off = 0},
- 	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
--- 
-2.35.1
+BR,
+-R
 
+>
+> Regards,
+> Lucas
+>
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/msm_drv.c        |  3 ++-
+> >  drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++++++++
+> >  include/uapi/drm/msm_drm.h           |  4 +++-
+> >  3 files changed, 16 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> > index 017a512982a2..e0e1199a822f 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > @@ -45,9 +45,10 @@
+> >   * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
+> >   * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
+> >   * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
+> > + * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
+> >   */
+> >  #define MSM_VERSION_MAJOR    1
+> > -#define MSM_VERSION_MINOR    9
+> > +#define MSM_VERSION_MINOR    10
+> >  #define MSM_VERSION_PATCHLEVEL       0
+> >
+> >  static const struct drm_mode_config_funcs mode_config_funcs = {
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > index eb3536e3d66a..8bad07a04f85 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > @@ -334,9 +334,20 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+> >               if (ret)
+> >                       return ret;
+> >
+> > +             /* If userspace has determined that explicit fencing is
+> > +              * used, it can disable implicit sync on the entire
+> > +              * submit:
+> > +              */
+> >               if (no_implicit)
+> >                       continue;
+> >
+> > +             /* Otherwise userspace can ask for implicit sync to be
+> > +              * disabled on specific buffers.  This is useful for internal
+> > +              * usermode driver managed buffers, suballocation, etc.
+> > +              */
+> > +             if (submit->bos[i].flags & MSM_SUBMIT_BO_NO_IMPLICIT)
+> > +                     continue;
+> > +
+> >               ret = drm_sched_job_add_implicit_dependencies(&submit->base,
+> >                                                             obj,
+> >                                                             write);
+> > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> > index f54b48ef6a2d..329100016e7c 100644
+> > --- a/include/uapi/drm/msm_drm.h
+> > +++ b/include/uapi/drm/msm_drm.h
+> > @@ -222,10 +222,12 @@ struct drm_msm_gem_submit_cmd {
+> >  #define MSM_SUBMIT_BO_READ             0x0001
+> >  #define MSM_SUBMIT_BO_WRITE            0x0002
+> >  #define MSM_SUBMIT_BO_DUMP             0x0004
+> > +#define MSM_SUBMIT_BO_NO_IMPLICIT      0x0008
+> >
+> >  #define MSM_SUBMIT_BO_FLAGS            (MSM_SUBMIT_BO_READ | \
+> >                                       MSM_SUBMIT_BO_WRITE | \
+> > -                                     MSM_SUBMIT_BO_DUMP)
+> > +                                     MSM_SUBMIT_BO_DUMP | \
+> > +                                     MSM_SUBMIT_BO_NO_IMPLICIT)
+> >
+> >  struct drm_msm_gem_submit_bo {
+> >       __u32 flags;          /* in, mask of MSM_SUBMIT_BO_x */
+>
+>
