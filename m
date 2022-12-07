@@ -2,128 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91DA76461C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:32:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9ED36461CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:37:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbiLGTcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 14:32:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
+        id S229660AbiLGThK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 14:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbiLGTcY (ORCPT
+        with ESMTP id S229441AbiLGThJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 14:32:24 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE3C663DC;
-        Wed,  7 Dec 2022 11:32:23 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id q1so17241586pgl.11;
-        Wed, 07 Dec 2022 11:32:23 -0800 (PST)
+        Wed, 7 Dec 2022 14:37:09 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0929F4385D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 11:37:08 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-3e45d25de97so141361577b3.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 11:37:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=CJ93t0qOhK77peLQli38loBDZSZoHQBfLCudn8XKKkU=;
-        b=SXJMcwQ/DX/x1scl/JInhAOMSXhTgG6NMqn0+f7F4uJvfw1ENl1Owc16iAdMtuKYZV
-         +eUJ6MG53Lh01wqJMd6+BBLGW+ASLyrTILLY/k8fcy3T1q3c0G2guTpUxDEZ+Cw7xiwq
-         5nv71OjcKpcKe1o8yphT4VWCfosowXpVq8F5taWYUqk/X0jcJiSsHJEcfPvqzh70Md7I
-         pVJu4/p2YnToPdRxt7oQFXliv+t6JQHRnhBtkIWmA1PpDjP5ebiwdFx3ie9dbI1oq7T/
-         fVANQn9sC5L4Sogum8Mi1HJ4qls2Do89SgYD/trpNdfJjBuDX56pZV6W0HB7hvxFRpoE
-         /x9A==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1dGT2RVQlnmZbYYn31iEVNk3Sq6r/U1P4VLOHcEx5sE=;
+        b=swJSuvudVFJVSw2xAeuf7bAfy56peg4UCq/Kx4lq8+bIdVG8pzAV/EBJsmvt0TgEqr
+         WExctJjRqOqjLVHMLdewaJjbfhBUIBd0prS2JH7JiDqnsPlCK+yILlHpgu2BUAIqJ69t
+         HnSK0zrQ1+5AVBwBY+v79uKeJZg9/bSaVslYDlQfpeILnSdYH9QqpAPiAR2bANof+5iP
+         jguLye4n7GEEHAbLIETfhuSTDUwkoXmoDQiLZYALwZ1dcjYGu5bXUY67axtSUKHx/Igi
+         IqYQdMlk5AXOp2xPS81Ndpyi2Ne34ABjJxvPauI7xkWonsOR0+aererm916V3DYbbTik
+         yHgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CJ93t0qOhK77peLQli38loBDZSZoHQBfLCudn8XKKkU=;
-        b=P/NlZFRX/34uBIbzxctF94PRLIi1Lhstjs0drm2pHdGq6XsJCSmHYjqb7Tk0zWQRQT
-         zx9K4QMQigwFTLGy0Dp37knnEKH5ugtZTFh7vX432b6fdZPGFGGnWaI0VrlHNHJDXp9k
-         iECYCjLd87GWaNZ027FFQpGQ2TSvP4VVQsB83LSsDiNUWNwUom5vpspaDezPPPRlMvrz
-         5uXiWnTeeL6uItSLepU6q90MMc+f8xUHgIpDkB0sOp7IrlJiyjaKAB0ivDNMl9ChQE4r
-         Z93PQHaZ4PmY+/x1eE4oGzpCMIbfPKNp7nHI/OrARjLM95am1DFfeOo2bl8Z+WQtadAp
-         bJJw==
-X-Gm-Message-State: ANoB5pnPX0XBgM92mEpTOzNX2Z9jyWraiLuVjeiDmt5CWDkJpquJWHO2
-        5ajb+r3D+VY+fzzORthd/d4=
-X-Google-Smtp-Source: AA0mqf5S9Wbej7daA71TN/mdshSxOTWOgPe3L9BDEC6euYukOmVdhOpbd6Jrdw3mr8NfWxb0vDjJEQ==
-X-Received: by 2002:a62:1b05:0:b0:576:91fa:8ed0 with SMTP id b5-20020a621b05000000b0057691fa8ed0mr22190841pfb.15.1670441543186;
-        Wed, 07 Dec 2022 11:32:23 -0800 (PST)
-Received: from google.com ([2620:15c:9d:2:7a61:38c7:d37a:7f43])
-        by smtp.gmail.com with ESMTPSA id l16-20020a170903121000b0018157b415dbsm15089573plh.63.2022.12.07.11.32.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 11:32:22 -0800 (PST)
-Date:   Wed, 7 Dec 2022 11:32:19 -0800
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1dGT2RVQlnmZbYYn31iEVNk3Sq6r/U1P4VLOHcEx5sE=;
+        b=hXRA18oX+R8VDfBuzs512qbEczuOQ+eH8nDnQmIoKlrmPPida7tRJKtnZqkFzTvYyM
+         xZ5x1pIEOMMhJajXqeuqvcSP3jkF61wF6FH+9VX9iaSyLh+AHNwRjzk0ELi93Rgl9rSG
+         WnzQ/AcCTmhfFibG2QjftTQ696hnrDFSeiX/sZjrRv8GcJ+T9QlFW2K35w/32fCycsQR
+         YIE8d6NphsFAfAcHXB904AW7a7+zKtB9u8nnmcB2Y1D/kiI9CLRRGkMNp4yp5E6uqYRT
+         OTuAwLfSVsmUVtH+Z3ohOSffTP0sFK6HHLQQzcFmpp/CrrF92dvCS8tJQmCtTkj/uJ21
+         cRXQ==
+X-Gm-Message-State: ANoB5pnWKU5b9eqHUnQOckK0X6hESlh0KjMFft1qLCnKosGbTYDQBoDQ
+        WrMgj38BwFp75oTwXj5uP0e0+an5McJx7Y8ICGhJ1w==
+X-Google-Smtp-Source: AA0mqf7jFNbNjHHwit9S/nx0d3kZqwvfuZthVmtKujAKX+zpV7GGw9EEqUXa5FsW9phhPUMkW5RS8xMZ35pnbSe/HjE=
+X-Received: by 2002:a81:598b:0:b0:3b7:78c8:a205 with SMTP id
+ n133-20020a81598b000000b003b778c8a205mr58568868ywb.188.1670441827188; Wed, 07
+ Dec 2022 11:37:07 -0800 (PST)
+MIME-Version: 1.0
+References: <20221204055909.1351895-1-dmitry.baryshkov@linaro.org>
+ <20221204055909.1351895-9-dmitry.baryshkov@linaro.org> <2186df0393c6cf4dab88772aceed7202090f5a1d.camel@mailoo.org>
+ <b0d37b049ebedd5e04f69d505afb36ab6f0a1492.camel@mailoo.org> <97651945-428e-c667-b7d8-7e627f900d05@linaro.org>
+In-Reply-To: <97651945-428e-c667-b7d8-7e627f900d05@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 7 Dec 2022 21:36:56 +0200
+Message-ID: <CAA8EJppDcrmnGuwG2rPWjrnOHtxE0QFj6OOmjk20c8NGCj=Wgw@mail.gmail.com>
+Subject: Re: [PATCH v2 08/15] thermal/drivers/tsens: Drop single-cell code for msm8939
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     Vincent Knecht <vincent.knecht@mailoo.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
-        Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: input: qcom,pm8921-keypad: convert
- to YAML format
-Message-ID: <Y5DqQywrM6WjqwWA@google.com>
-References: <20221204061555.1355453-1-dmitry.baryshkov@linaro.org>
- <20221204061555.1355453-2-dmitry.baryshkov@linaro.org>
- <20221205220433.GA2684995-robh@kernel.org>
- <E5C1A37F-5758-4026-9412-F13760C465D0@linaro.org>
- <20221207170753.GA2402110-robh@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221207170753.GA2402110-robh@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 07, 2022 at 11:07:53AM -0600, Rob Herring wrote:
-> On Tue, Dec 06, 2022 at 05:20:16AM +0200, Dmitry Baryshkov wrote:
-> > 6 декабря 2022 г. 00:04:33 GMT+02:00, Rob Herring <robh@kernel.org> пишет:
-> > >On Sun, Dec 04, 2022 at 08:15:52AM +0200, Dmitry Baryshkov wrote:
-> > >> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
-> > >> PM8058 PMICs from text to YAML format.
-> > >> 
-> > >> While doing the conversion also change linux,keypad-no-autorepeat
-> > >> property to linux,input-no-autorepeat. The former property was never
-> > >> used by DT and was never handled by the driver.
-> > >
-> > >Changing from the documented one to one some drivers use. I guess 
-> > >that's a slight improvement. Please see this discussion[1]. 
-> > 
-> > Well, the problem is that the documentation is misleading. The driver 
-> > doesn't handle the documented property, so we should change either 
-> > the driver, or the docs. Which change is the preferred one?
-> 
-> The preference is autorepeat is not the default and setting 
-> 'autorepeat' enables it. You can't really change that unless you don't 
-> really need autorepeat by default. I can't see why it would be 
-> needed for the power button, but I haven't looked what else you have.
-> 
-> Of all the no autorepeat options, I prefer 'linux,no-autorepeat' as I 
-> find 'input' or 'keypad' redundant. But Dmitry T. didn't think it should 
-> be a common property at the time.
+On Mon, 5 Dec 2022 at 14:42, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 04/12/2022 19:25, Vincent Knecht wrote:
+> > Le dimanche 04 d=C3=A9cembre 2022 =C3=A0 19:42 +0100, Vincent Knecht a =
+=C3=A9crit :
+> >> Le dimanche 04 d=C3=A9cembre 2022 =C3=A0 07:59 +0200, Dmitry Baryshkov=
+ a =C3=A9crit :
+> >>> There is no dtsi file for msm8939 in the kernel sources. Drop the
+> >>> compatibility with unofficial dtsi and remove support for handling th=
+e
+> >>> single-cell calibration data on msm8939.
+> >>
+> >> Could one invoke a "msm8916-like exemption" here ?
 
-Right, I would prefer for new bindings we used assertive "autorepeat",
-instead of negating "no-autorepeat". However here we are dealing with
-existing binding.
+Colleagues, I know that it adds a bit of pain on your side, however
+I'd also kindly ask to rework the dtsi. I'd really like to drop as
+much of the 'legacy parsing' as possible. The existing code is painful
+to handle already, it is redundant, self-duplicated, etc.
+See, how easier is to handle the DT cells + nvmem_cell API vs old
+shifts and masks code.
 
-The issue is complicated with the driver using one option, binding
-specifying another, and existing in-kernel DTSes not using any and thus
-activating autorepeat as the default driver behavior.
+> >
+> > Ignore that, guess we'll just have to implement it like there:
+> > https://lore.kernel.org/linux-arm-msm/20221204055909.1351895-9-dmitry.b=
+aryshkov@linaro.org/T/#m19cffb13114b6f4f153058e3e7a1943251acaf81
+> >
+> >> Also, msm8939.dtsi was submitted once [1],
+> >> and if helps we could send a v2 this month...
+> >>
+> >> [1] https://lore.kernel.org/linux-arm-msm/20220419010903.3109514-1-bry=
+an.odonoghue@linaro.org/
+> >
+> > Offer still stands, the current community one is here:
+> > https://github.com/msm8916-mainline/linux/blob/msm8916/6.1-rc7/arch/arm=
+64/boot/dts/qcom/msm8939.dtsi
+> >
+> >
+> >
+>
+> heh - here's my current
+>
+> https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=
+=3Dtracking-qcomlt-msm8939
+>
+> I've been working on clearing out blockages in legacy yaml conversions
+>
+> phy
+> mdss-dsi-ctrl
+>
+> which thrown up errors on 8939
+>
+> I took a good bunch of feedback from the list for v1 into that dtsi -
+> there's not much left blocking v2.
+>
+> I'll see if I can get that out this week
+>
+> ---
+> bod
+>
+>
 
-Do we have an idea if there are out-of-tree users of this? If we are
-reasonable sure there are not we could converge on the standard
-"autorepeat" property.
 
--- 
+--=20
+With best wishes
 Dmitry
