@@ -2,126 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 781A864643C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 23:47:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FA47646503
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 00:26:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbiLGWrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 17:47:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
+        id S230084AbiLGX0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 18:26:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiLGWrW (ORCPT
+        with ESMTP id S229685AbiLGX0E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:47:22 -0500
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2612983E8D;
-        Wed,  7 Dec 2022 14:47:21 -0800 (PST)
-Received: by mail-oi1-f176.google.com with SMTP id l127so22423531oia.8;
-        Wed, 07 Dec 2022 14:47:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5cRmcqMTQRbqCVVPhtzGwVwk+S86YVEqZnamcUPsWuw=;
-        b=YEfSwL7KdqriBiBRTfuFoEtbawfx3D1hfTtXDap+QSEY5QdTtFDqdhCLn0L8QNByWj
-         2LqAMp8SN5yMv5itiL1P3crHU8Wde7UipZvZEMngi6JLLwUiqvfDzfs94bz+J6LV/Col
-         7n16z+qB7MIxbndXsRoeULqnHniZQkrmVTVcVgEeG+HcbnWFQvv6mh1kX3DekHbwNrJd
-         4VEJZCFqI6TqKQiBwSdYybhC4fCkkPKq1GySDNCF5XVz2YiwrsNdpf/tMyJLXtf5i3og
-         nIiPS8/nKaKly/oKO/kK1YWNJidgfrSpi2Y2tFYiK/mDjYx1PiakUc1an6xJrQuYeQJo
-         2gCw==
-X-Gm-Message-State: ANoB5pnYimu/JD3kMMYMBWlUS4AUHdq7f5/xGcNse0y60/a5gny8OcrZ
-        yLH9cEZHDTdLtARjVVjh0w==
-X-Google-Smtp-Source: AA0mqf5UlSOz+vfnlBDLHjJdPNx/RAAKOFNV0hMbjpB8wdnbtdb+4ZbqIsJvE/QfEIFpIlrXEl8IaQ==
-X-Received: by 2002:a54:4506:0:b0:35b:9cc2:bfa7 with SMTP id l6-20020a544506000000b0035b9cc2bfa7mr26513888oil.263.1670453240350;
-        Wed, 07 Dec 2022 14:47:20 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d15-20020a056830138f00b0066e64c59bbcsm10705775otq.6.2022.12.07.14.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 14:47:19 -0800 (PST)
-Received: (nullmailer pid 3099979 invoked by uid 1000);
-        Wed, 07 Dec 2022 22:47:18 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Wed, 7 Dec 2022 18:26:04 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5748A88B5D;
+        Wed,  7 Dec 2022 15:26:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1670455562; x=1701991562;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=X2Q0tE37VDp4hy/FQTBoYaG77TQ/eZFORCyeWxKtWp8=;
+  b=dk6gBEs0i4XW3Hhv1f/zGkRElirSqoxEW5R+94VTiP4xOBZ7KeKj68W7
+   W3rv3U6/k7nZIrXcDZPfwTuxt7Uugpbx4/se/RPkDYx0GNEgM/zpKTmKs
+   +jyaJ/0M6l7DpNgcJE0W0DTfELhY3o1sZXreT8uVB1WWXv7ingmI7Htib
+   I=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Dec 2022 15:26:02 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2022 15:26:01 -0800
+Received: from hu-collinsd-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 7 Dec 2022 15:26:01 -0800
+From:   David Collins <quic_collinsd@quicinc.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     David Collins <quic_collinsd@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/3] thermal: qcom-spmi-temp-alarm: add support for new TEMP_ALARM subtypes
+Date:   Wed, 7 Dec 2022 15:24:55 -0800
+Message-ID: <cover.1670454176.git.quic_collinsd@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     agross@kernel.org, dri-devel@lists.freedesktop.org,
-        daniel@ffwll.ch, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, robdclark@gmail.com,
-        linux-arm-msm@vger.kernel.org, airlied@gmail.com,
-        konrad.dybcio@somainline.org, swboyd@chromium.org,
-        quic_abhinavk@quicinc.com, andersson@kernel.org, vkoul@kernel.org,
-        linux-kernel@vger.kernel.org, airlied@linux.ie,
-        krzysztof.kozlowski+dt@linaro.org, freedreno@lists.freedesktop.org,
-        dianders@chromium.org, quic_sbillaka@quicinc.com,
-        robh+dt@kernel.org
-In-Reply-To: <1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com>
-References: <1670432278-30643-1-git-send-email-quic_khsieh@quicinc.com>
- <1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com>
-Message-Id: <167045316457.3098064.10722096707360943971.robh@kernel.org>
-Subject: Re: [PATCH v10 2/5] dt-bindings: msm/dp: add data-lanes and
- link-frequencies property
-Date:   Wed, 07 Dec 2022 16:47:18 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE.  The GEN2 rev 2
+subtype provides greater flexibility in temperature threshold
+specification by using an independent register value to configure
+each of the three thresholds.  The LITE subtype utilizes a simplified
+set of control registers to configure two thresholds: warning and
+shutdown.
 
-On Wed, 07 Dec 2022 08:57:55 -0800, Kuogee Hsieh wrote:
-> Add both data-lanes and link-frequencies property into endpoint
-> 
-> Changes in v7:
-> -- split yaml out of dtsi patch
-> -- link-frequencies from link rate to symbol rate
-> -- deprecation of old data-lanes property
-> 
-> Changes in v8:
-> -- correct Bjorn mail address to kernel.org
-> 
-> Changes in v10:
-> -- add menu item to data-lanes and link-frequecnis
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
-> ---
->  .../devicetree/bindings/display/msm/dp-controller.yaml      | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
+Also add support to avoid a potential issue on certain versions of
+the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+is disabled.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Changes since v2 [1]:
+* Added missing header <linux/bitfield.h> in the third patch
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: [error] syntax error: mapping values are not allowed here (syntax)
+Changes since v1 [2]:
+* Updated the thermal API usage in the patches to work with the recent commit
+  ca1b9a9eb3fd ("thermal/drivers/qcom: Switch to new of API")
 
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/display/msm/dp-controller.example.dts'
-Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed in this context
-make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/display/msm/dp-controller.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed in this context
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: ignoring, error parsing file
-make: *** [Makefile:1492: dt_binding_check] Error 2
+[1]: https://lore.kernel.org/lkml/cover.1670375556.git.quic_collinsd@quicinc.com/
+[2]: https://lore.kernel.org/lkml/cover.1663282895.git.quic_collinsd@quicinc.com/
 
-doc reference errors (make refcheckdocs):
+David Collins (3):
+  thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+  thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+    peripherals
+  thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 407 +++++++++++++++++++-
+ 1 file changed, 392 insertions(+), 15 deletions(-)
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+2.25.1
 
