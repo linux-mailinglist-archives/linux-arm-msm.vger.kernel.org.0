@@ -2,46 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 612E464574E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 11:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D18EA645765
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 11:18:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbiLGKPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 05:15:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43822 "EHLO
+        id S230310AbiLGKSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 05:18:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230064AbiLGKPe (ORCPT
+        with ESMTP id S230436AbiLGKSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 05:15:34 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02761EE0E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 02:15:31 -0800 (PST)
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[IPv6:::1])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <l.stach@pengutronix.de>)
-        id 1p2rSa-0001Ko-Bo; Wed, 07 Dec 2022 11:15:28 +0100
-Message-ID: <d3433e207ff8ea243ff1d4cceeea19e4676c97c5.camel@pengutronix.de>
-Subject: Re: [PATCH] drm/msm: Add MSM_SUBMIT_BO_NO_IMPLICIT
-From:   Lucas Stach <l.stach@pengutronix.de>
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org
-Date:   Wed, 07 Dec 2022 11:15:25 +0100
-In-Reply-To: <20221206192123.661448-1-robdclark@gmail.com>
-References: <20221206192123.661448-1-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.4 (3.40.4-1.fc34) 
+        Wed, 7 Dec 2022 05:18:09 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACEC045EEC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 02:18:00 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id 1so14329423lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 02:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BGXMJjz+2boCG5TJb22HyqmB9GaN/vs7mLP9UWEibWA=;
+        b=cKCponzWvvIu9wNcnUVlI6SLr2/gfKFZrZUbOWAl/2DzvZNWoq0tsO65o62GHwsYbl
+         2zq7rlqNINGnLJJoEvofvUj9cX+mbF1QvTIFW6g381oAGd2ZYbbWL1ZQ6Tk6WabjuUha
+         rvx4rTAAZsnDtp6peK8K9MDdFarhXQTGuRajYdPU3UQdWDsEUMRZlSdVrv5FPVAPnInY
+         zJcHsDB9yz5mVzbZnH5T18hyJqqqratqRfr2p9rLD9JkwR/deu4AwTRNu/O9nZX8kfho
+         8PiUWwRD23L43K6qRAOXT+xHxtZ4WQO4wjnKjt4z4Nkmh0VrscaGmJJ+rgbKkre/eZqa
+         AmDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BGXMJjz+2boCG5TJb22HyqmB9GaN/vs7mLP9UWEibWA=;
+        b=IJcJ+p+VQWZFB1FLopQCJGMMUmOcOca+JC3QJp+LCON9qKJu7fkLqKSp8lHKs9wCGL
+         6QzxLKj2Ly5+hlb6nIZFMyzxnRy0b+nGDlmepABQodKcNezjGlFKFtV7ggMfNIX3HEL3
+         e0x7/HECI4HA+vXiVqJimgXkDRIrAMhk+Ei6rkU+vvUZvM1ToOiDMvGDfsaKmfGAsjIX
+         pej3KRY89u9feLXrmj7paHOcq7fVrnO+uyyPxKZ8o2Wzt0xcQV5Dsr+zN44kKaGhp5De
+         +yhdab+s4HmMArkvJqFC5USQEqtbNhIeZkHInGCIQgrIF1ffByTMgy/GHe/5OPwYLTpk
+         1cTA==
+X-Gm-Message-State: ANoB5pks2ut7/2kOZQIT1CbOH+3O1+NOQQYcTxf911clBU0gOer60IF6
+        JXSBjxR6xqx0dXa7OYaKVffcKQ==
+X-Google-Smtp-Source: AA0mqf5uSZ7JFlb3ZS9gsXQQkKQHhrXnMFX9JcpcDIu9LiDGpEh5+G1JVZ4RabjdtxgM7GNP50gAQA==
+X-Received: by 2002:a05:6512:2c85:b0:4a2:5937:e9b with SMTP id dw5-20020a0565122c8500b004a259370e9bmr28743999lfb.11.1670408279176;
+        Wed, 07 Dec 2022 02:17:59 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id o5-20020ac24e85000000b004aa255e2e66sm2787699lfr.241.2022.12.07.02.17.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Dec 2022 02:17:58 -0800 (PST)
+Message-ID: <190ac5ef-d7fe-400a-f8a2-ec23c7a1ba1b@linaro.org>
+Date:   Wed, 7 Dec 2022 11:17:54 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm670: add qfprom node
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221206231729.164453-1-mailingradian@gmail.com>
+ <20221206231729.164453-2-mailingradian@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221206231729.164453-2-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
-X-SA-Exim-Mail-From: l.stach@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,88 +78,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
 
-Am Dienstag, dem 06.12.2022 um 11:21 -0800 schrieb Rob Clark:
-> From: Rob Clark <robdclark@chromium.org>
+
+On 07/12/2022 00:17, Richard Acayan wrote:
+> Some hardware quirks and capabilities can be determined by reading the
+> fuse-programmable read-only memory. Add the QFPROM node so consumers
+> know if they need to do anything extra to support the hardware.
 > 
-> In cases where implicit sync is used, it is still useful (for things
-> like sub-allocation, etc) to allow userspace to opt-out of implicit
-> sync on per-BO basis.
-> 
-Out of curiosity and because I have been thinking about something like
-that for etnaviv for while: do you only use this for immutable buffers
-or do you have some kind of userspace fencing in place for the
-suballocated buffers?
-
-Regards,
-Lucas
-
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c        |  3 ++-
->  drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++++++++
->  include/uapi/drm/msm_drm.h           |  4 +++-
->  3 files changed, 16 insertions(+), 2 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> Changes since v1:
+>   - offset address by 0x4000 and zero-pad regs
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 017a512982a2..e0e1199a822f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -45,9 +45,10 @@
->   * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
->   * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
->   * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
-> + * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
->   */
->  #define MSM_VERSION_MAJOR	1
-> -#define MSM_VERSION_MINOR	9
-> +#define MSM_VERSION_MINOR	10
->  #define MSM_VERSION_PATCHLEVEL	0
->  
->  static const struct drm_mode_config_funcs mode_config_funcs = {
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index eb3536e3d66a..8bad07a04f85 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -334,9 +334,20 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
->  		if (ret)
->  			return ret;
->  
-> +		/* If userspace has determined that explicit fencing is
-> +		 * used, it can disable implicit sync on the entire
-> +		 * submit:
-> +		 */
->  		if (no_implicit)
->  			continue;
->  
-> +		/* Otherwise userspace can ask for implicit sync to be
-> +		 * disabled on specific buffers.  This is useful for internal
-> +		 * usermode driver managed buffers, suballocation, etc.
-> +		 */
-> +		if (submit->bos[i].flags & MSM_SUBMIT_BO_NO_IMPLICIT)
-> +			continue;
+>   arch/arm64/boot/dts/qcom/sdm670.dtsi | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> index f93705bc549f..c78156e03d93 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> @@ -731,6 +731,13 @@ gcc: clock-controller@100000 {
+>   			#power-domain-cells = <1>;
+>   		};
+>   
+> +		qfprom: qfprom@784000 {
+> +			compatible = "qcom,sdm670-qfprom", "qcom,qfprom";
+> +			reg = <0 0x00784000 0 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +		};
 > +
->  		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
->  							      obj,
->  							      write);
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index f54b48ef6a2d..329100016e7c 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -222,10 +222,12 @@ struct drm_msm_gem_submit_cmd {
->  #define MSM_SUBMIT_BO_READ             0x0001
->  #define MSM_SUBMIT_BO_WRITE            0x0002
->  #define MSM_SUBMIT_BO_DUMP             0x0004
-> +#define MSM_SUBMIT_BO_NO_IMPLICIT      0x0008
->  
->  #define MSM_SUBMIT_BO_FLAGS            (MSM_SUBMIT_BO_READ | \
->  					MSM_SUBMIT_BO_WRITE | \
-> -					MSM_SUBMIT_BO_DUMP)
-> +					MSM_SUBMIT_BO_DUMP | \
-> +					MSM_SUBMIT_BO_NO_IMPLICIT)
->  
->  struct drm_msm_gem_submit_bo {
->  	__u32 flags;          /* in, mask of MSM_SUBMIT_BO_x */
-
-
+>   		sdhc_1: mmc@7c4000 {
+>   			compatible = "qcom,sdm670-sdhci", "qcom,sdhci-msm-v5";
+>   			reg = <0 0x007c4000 0 0x1000>,
