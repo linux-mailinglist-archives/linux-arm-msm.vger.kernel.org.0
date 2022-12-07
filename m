@@ -2,100 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3CD76461B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:27:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91DA76461C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:32:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbiLGT1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 14:27:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48730 "EHLO
+        id S229758AbiLGTcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 14:32:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbiLGT1i (ORCPT
+        with ESMTP id S229576AbiLGTcY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 14:27:38 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60EE02641;
-        Wed,  7 Dec 2022 11:27:37 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7GldIf026815;
-        Wed, 7 Dec 2022 19:27:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=OwRMRJb+7c5gqaDyHQE7ipnl64XWdQ3NjzWLz62hDzc=;
- b=niQn/KSAucucb7VnGASXwuQd/9hdeaICtEBourqlq03rlkRBE590OjlSW+jrW/fbLwQy
- CHoomo2MWNGFqY0Zab08L0E4IvbdnGpWAvf3IKTg4Vr3dXKobT6Kxjmz//BxXqIFdMM4
- EIHCDtZdXdob5H4uICtUh6nxVFQ6qvBqaM3PmEEjGQJkWA6el+RDMzYPnoWBV5ukSyk/
- U1Cu5ErJWdRBSmVKfN/j40wYl8lHGTifwPHj95l/zY1RoqDwcaAQVcZtJAMbJ/n4M/Cw
- o3RSr0C3YPwrM5jMjpHTuF8aCr+gUdFMP3vGdYMcPt/UF6J5aCuJFZ9+Y/ycTEJSZSLc nQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3man0k9uxg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Dec 2022 19:27:27 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7JRQpm007941
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Dec 2022 19:27:26 GMT
-Received: from carlv-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 7 Dec 2022 11:27:26 -0800
-From:   Carl Vanderlip <quic_carlv@quicinc.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Hemant Kumar <quic_hemantk@quicinc.com>
-CC:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Carl Vanderlip <quic_carlv@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] mhi: Update Makefile to used Kconfig flags
-Date:   Wed, 7 Dec 2022 11:26:13 -0800
-Message-ID: <20221207192613.2098614-1-quic_carlv@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 7 Dec 2022 14:32:24 -0500
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE3C663DC;
+        Wed,  7 Dec 2022 11:32:23 -0800 (PST)
+Received: by mail-pg1-x531.google.com with SMTP id q1so17241586pgl.11;
+        Wed, 07 Dec 2022 11:32:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CJ93t0qOhK77peLQli38loBDZSZoHQBfLCudn8XKKkU=;
+        b=SXJMcwQ/DX/x1scl/JInhAOMSXhTgG6NMqn0+f7F4uJvfw1ENl1Owc16iAdMtuKYZV
+         +eUJ6MG53Lh01wqJMd6+BBLGW+ASLyrTILLY/k8fcy3T1q3c0G2guTpUxDEZ+Cw7xiwq
+         5nv71OjcKpcKe1o8yphT4VWCfosowXpVq8F5taWYUqk/X0jcJiSsHJEcfPvqzh70Md7I
+         pVJu4/p2YnToPdRxt7oQFXliv+t6JQHRnhBtkIWmA1PpDjP5ebiwdFx3ie9dbI1oq7T/
+         fVANQn9sC5L4Sogum8Mi1HJ4qls2Do89SgYD/trpNdfJjBuDX56pZV6W0HB7hvxFRpoE
+         /x9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CJ93t0qOhK77peLQli38loBDZSZoHQBfLCudn8XKKkU=;
+        b=P/NlZFRX/34uBIbzxctF94PRLIi1Lhstjs0drm2pHdGq6XsJCSmHYjqb7Tk0zWQRQT
+         zx9K4QMQigwFTLGy0Dp37knnEKH5ugtZTFh7vX432b6fdZPGFGGnWaI0VrlHNHJDXp9k
+         iECYCjLd87GWaNZ027FFQpGQ2TSvP4VVQsB83LSsDiNUWNwUom5vpspaDezPPPRlMvrz
+         5uXiWnTeeL6uItSLepU6q90MMc+f8xUHgIpDkB0sOp7IrlJiyjaKAB0ivDNMl9ChQE4r
+         Z93PQHaZ4PmY+/x1eE4oGzpCMIbfPKNp7nHI/OrARjLM95am1DFfeOo2bl8Z+WQtadAp
+         bJJw==
+X-Gm-Message-State: ANoB5pnPX0XBgM92mEpTOzNX2Z9jyWraiLuVjeiDmt5CWDkJpquJWHO2
+        5ajb+r3D+VY+fzzORthd/d4=
+X-Google-Smtp-Source: AA0mqf5S9Wbej7daA71TN/mdshSxOTWOgPe3L9BDEC6euYukOmVdhOpbd6Jrdw3mr8NfWxb0vDjJEQ==
+X-Received: by 2002:a62:1b05:0:b0:576:91fa:8ed0 with SMTP id b5-20020a621b05000000b0057691fa8ed0mr22190841pfb.15.1670441543186;
+        Wed, 07 Dec 2022 11:32:23 -0800 (PST)
+Received: from google.com ([2620:15c:9d:2:7a61:38c7:d37a:7f43])
+        by smtp.gmail.com with ESMTPSA id l16-20020a170903121000b0018157b415dbsm15089573plh.63.2022.12.07.11.32.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 11:32:22 -0800 (PST)
+Date:   Wed, 7 Dec 2022 11:32:19 -0800
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
+        Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: input: qcom,pm8921-keypad: convert
+ to YAML format
+Message-ID: <Y5DqQywrM6WjqwWA@google.com>
+References: <20221204061555.1355453-1-dmitry.baryshkov@linaro.org>
+ <20221204061555.1355453-2-dmitry.baryshkov@linaro.org>
+ <20221205220433.GA2684995-robh@kernel.org>
+ <E5C1A37F-5758-4026-9412-F13760C465D0@linaro.org>
+ <20221207170753.GA2402110-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6liTA3p1_TSbQq8eDgr8GO49hyW_BrRQ
-X-Proofpoint-ORIG-GUID: 6liTA3p1_TSbQq8eDgr8GO49hyW_BrRQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-07_09,2022-12-07_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 adultscore=0 mlxlogscore=823
- clxscore=1011 priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212070164
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221207170753.GA2402110-robh@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Makefile was always suggesting to build subdirectories regardless of
-Kconfig. Use the Kconfig flags as intended.
+On Wed, Dec 07, 2022 at 11:07:53AM -0600, Rob Herring wrote:
+> On Tue, Dec 06, 2022 at 05:20:16AM +0200, Dmitry Baryshkov wrote:
+> > 6 декабря 2022 г. 00:04:33 GMT+02:00, Rob Herring <robh@kernel.org> пишет:
+> > >On Sun, Dec 04, 2022 at 08:15:52AM +0200, Dmitry Baryshkov wrote:
+> > >> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
+> > >> PM8058 PMICs from text to YAML format.
+> > >> 
+> > >> While doing the conversion also change linux,keypad-no-autorepeat
+> > >> property to linux,input-no-autorepeat. The former property was never
+> > >> used by DT and was never handled by the driver.
+> > >
+> > >Changing from the documented one to one some drivers use. I guess 
+> > >that's a slight improvement. Please see this discussion[1]. 
+> > 
+> > Well, the problem is that the documentation is misleading. The driver 
+> > doesn't handle the documented property, so we should change either 
+> > the driver, or the docs. Which change is the preferred one?
+> 
+> The preference is autorepeat is not the default and setting 
+> 'autorepeat' enables it. You can't really change that unless you don't 
+> really need autorepeat by default. I can't see why it would be 
+> needed for the power button, but I haven't looked what else you have.
+> 
+> Of all the no autorepeat options, I prefer 'linux,no-autorepeat' as I 
+> find 'input' or 'keypad' redundant. But Dmitry T. didn't think it should 
+> be a common property at the time.
 
-Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
----
- drivers/bus/mhi/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Right, I would prefer for new bindings we used assertive "autorepeat",
+instead of negating "no-autorepeat". However here we are dealing with
+existing binding.
 
-diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-index 46981331b38f..354204b0ef3a 100644
---- a/drivers/bus/mhi/Makefile
-+++ b/drivers/bus/mhi/Makefile
-@@ -1,5 +1,5 @@
- # Host MHI stack
--obj-y += host/
-+obj-$(CONFIG_MHI_BUS) += host/
- 
- # Endpoint MHI stack
--obj-y += ep/
-+obj-$(CONFIG_MHI_BUS_EP) += ep/
+The issue is complicated with the driver using one option, binding
+specifying another, and existing in-kernel DTSes not using any and thus
+activating autorepeat as the default driver behavior.
+
+Do we have an idea if there are out-of-tree users of this? If we are
+reasonable sure there are not we could converge on the standard
+"autorepeat" property.
+
 -- 
-2.25.1
-
+Dmitry
