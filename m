@@ -2,76 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59D8E645C05
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:07:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3482645C12
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 15:08:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbiLGOHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 09:07:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
+        id S229554AbiLGOIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 09:08:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230303AbiLGOGe (ORCPT
+        with ESMTP id S230094AbiLGOIk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 09:06:34 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136E063D7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 06:06:26 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id jn7so17102586plb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 06:06:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rZZ+QM1R3JQroiVfh8VlTCzZhA5RV6/2+12KVAmHsxk=;
-        b=QSad23HRE1YyJnW35CON5SbD+UmTc5ox7hcu4zwyR5Hp/5oxntOHNTDSoj3U2GfybP
-         9BLoTOn+geKrOMHj13SmGtIZyn4pdqeghKkTCepJbmHSh810XD1k2T4ZebivpE8J1UKp
-         WKTPZmBOyrdDAO9fn9OVptU/XWOb/+8wFY+GknMap6HdatNe3tKo97j0Wc98iKbo4LAz
-         oFrse5sFi/YyotkENvxQELzHidQjidhHVRAPY2W6q3OXieCllRhoYBXSelbgbCuuGG96
-         SIMe2isPdGaSOeuUyb2jUB6NiFfyPbhpAfAOcmd94yfbiQBLDDXq+kWS6Lz+ipxK+GFa
-         IKYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rZZ+QM1R3JQroiVfh8VlTCzZhA5RV6/2+12KVAmHsxk=;
-        b=YkW0Iasslw3e2BxKe4mBeIfGtZ595rzXApDJnbXaNT9gAysJJLiRI1E1q6jSvEnlXL
-         tF8fh9RBZhuK3+b/+L8qMrA2sPvaVIGr/H07AvmOMkpdWV2OFAhpUVRHYBVSxE5alXAw
-         sjI8WpxpKdPqr8CSEPslt1nmFhg6mHs4D3innuZOKJsofDwfifjA22mSL3Q8rhKaVY/t
-         XIge3rugsgYsFCSElg5VTo20DOGpMmRhNlykHEgWRuoADXyXEQK4cCpd5qGyn1ZefR1I
-         5cRh9fHcrI0La5C7hzH0krDGWVt/NAjjkgQhwz7OEWVTqqdSVeZZ0JU/XifjUh9qhdee
-         pN1A==
-X-Gm-Message-State: ANoB5pkLvl8PhfmgkasdtjqQxl6mi6ATjQJ8ZKBO9vfksCQ2iKCzhW1+
-        VKFvpriGi600urbPn4lUf8/B
-X-Google-Smtp-Source: AA0mqf60Ed271Trt9KBsA+UHPVieNuY+xz/SdSq8Uem3PNqiELt2wIslP8k5F6HxqOQK6vS66L4spQ==
-X-Received: by 2002:a17:903:41ca:b0:189:78d9:fe2e with SMTP id u10-20020a17090341ca00b0018978d9fe2emr54045472ple.96.1670421985450;
-        Wed, 07 Dec 2022 06:06:25 -0800 (PST)
-Received: from thinkpad ([117.216.123.5])
-        by smtp.gmail.com with ESMTPSA id fv3-20020a17090b0e8300b00217090ece49sm1253367pjb.31.2022.12.07.06.06.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 06:06:24 -0800 (PST)
-Date:   Wed, 7 Dec 2022 19:36:15 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com
-Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        stable@vger.kernel.org
-Subject: Re: [PATCH 12/12] llcc/edac: Fix the base address used for accessing
- LLCC banks
-Message-ID: <20221207140615.GA315152@thinkpad>
-References: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
- <20221207135922.314827-13-manivannan.sadhasivam@linaro.org>
+        Wed, 7 Dec 2022 09:08:40 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6EDA5C761
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 06:08:37 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 0E1893F291;
+        Wed,  7 Dec 2022 15:08:34 +0100 (CET)
+Date:   Wed, 7 Dec 2022 15:08:32 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com
+Subject: Re: [v10] drm/msm/disp/dpu1: add support for dspp sub block flush in
+ sc7280
+Message-ID: <20221207140832.6r2kznoulfek7yye@SoMainline.org>
+References: <1670417963-19426-1-git-send-email-quic_kalyant@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221207135922.314827-13-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1670417963-19426-1-git-send-email-quic_kalyant@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,230 +46,265 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 07, 2022 at 07:29:21PM +0530, Manivannan Sadhasivam wrote:
-> The LLCC driver has been using a fixed register offset stride for accessing
-> the CSRs of each LLCC bank. This offset only works for some SoCs like
-> SDM845 for which driver support was initially added.
+On 2022-12-07 04:59:23, Kalyan Thota wrote:
+> Flush mechanism for DSPP blocks has changed in sc7280 family, it
+> allows individual sub blocks to be flushed in coordination with
+> master flush control.
 > 
-> But the later SoCs use different register stride that vary between the
-> banks with holes in-between. So it is not possible to use a single register
-> stride for accessing the CSRs of each bank.
+> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
 > 
-> Hence, obtain the base address of each LLCC bank from devicetree and get
-> rid of the fixed stride.
+> This change adds necessary support for the above design.
 > 
-> Cc: <stable@vger.kernel.org> # 4.20
-> Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
-> Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Please ignore this patch as this is a duplicate that got sneaked in. I will
-remove it in next version.
-
-Thanks,
-Mani
-
+> Changes in v1:
+> - Few nits (Doug, Dmitry)
+> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
+> 
+> Changes in v2:
+> - Move the address offset to flush macro (Dmitry)
+> - Seperate ops for the sub block flush (Dmitry)
+> 
+> Changes in v3:
+> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
+> 
+> Changes in v4:
+> - Use shorter version for unsigned int (Stephen)
+> 
+> Changes in v5:
+> - Spurious patch please ignore.
+> 
+> Changes in v6:
+> - Add SOB tag (Doug, Dmitry)
+> 
+> Changes in v7:
+> - Cache flush mask per dspp (Dmitry)
+> - Few nits (Marijn)
+> 
+> Changes in v8:
+> - Few nits (Marijn)
+> 
+> Changes in v9:
+> - use DSPP enum while accessing flush mask to make it readable (Dmitry)
+> - Few nits (Dmitry)
+> 
+> Changes in v10:
+> - fix white spaces in a seperate patch (Dmitry)
+> 
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 > ---
->  drivers/edac/qcom_edac.c           | 14 +++----
->  drivers/soc/qcom/llcc-qcom.c       | 64 ++++++++++++++++++------------
->  include/linux/soc/qcom/llcc-qcom.h |  4 +-
->  3 files changed, 44 insertions(+), 38 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 44 ++++++++++++++++++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  5 ++-
+>  5 files changed, 55 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-> index 97a27e42dd61..70bd39a91b89 100644
-> --- a/drivers/edac/qcom_edac.c
-> +++ b/drivers/edac/qcom_edac.c
-> @@ -213,7 +213,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 601d687..4170fbe 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
 >  
->  	for (i = 0; i < reg_data.reg_cnt; i++) {
->  		synd_reg = reg_data.synd_reg + (i * 4);
-> -		ret = regmap_read(drv->regmap, drv->offsets[bank] + synd_reg,
-> +		ret = regmap_read(drv->regmap[bank], synd_reg,
->  				  &synd_val);
->  		if (ret)
->  			goto clear;
-> @@ -222,8 +222,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
->  			    reg_data.name, i, synd_val);
+>  		/* stage config flush mask */
+>  		ctl->ops.update_pending_flush_dspp(ctl,
+> -			mixer[i].hw_dspp->idx);
+> +			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
 >  	}
+>  }
 >  
-> -	ret = regmap_read(drv->regmap,
-> -			  drv->offsets[bank] + reg_data.count_status_reg,
-> +	ret = regmap_read(drv->regmap[bank], reg_data.count_status_reg,
->  			  &err_cnt);
->  	if (ret)
->  		goto clear;
-> @@ -233,8 +232,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
->  	edac_printk(KERN_CRIT, EDAC_LLCC, "%s: Error count: 0x%4x\n",
->  		    reg_data.name, err_cnt);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 27f029f..0eecb2f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -65,7 +65,10 @@
+>  	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
 >  
-> -	ret = regmap_read(drv->regmap,
-> -			  drv->offsets[bank] + reg_data.ways_status_reg,
-> +	ret = regmap_read(drv->regmap[bank], reg_data.ways_status_reg,
->  			  &err_ways);
->  	if (ret)
->  		goto clear;
-> @@ -296,8 +294,7 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
+>  #define CTL_SC7280_MASK \
+> -	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
+> +	(BIT(DPU_CTL_ACTIVE_CFG) | \
+> +	 BIT(DPU_CTL_FETCH_ACTIVE) | \
+> +	 BIT(DPU_CTL_VM_CFG) | \
+> +	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
 >  
->  	/* Iterate over the banks and look for Tag RAM or Data RAM errors */
->  	for (i = 0; i < drv->num_banks; i++) {
-> -		ret = regmap_read(drv->regmap,
-> -				  drv->offsets[i] + DRP_INTERRUPT_STATUS,
-> +		ret = regmap_read(drv->regmap[i], DRP_INTERRUPT_STATUS,
->  				  &drp_error);
+>  #define MERGE_3D_SM8150_MASK (0)
 >  
->  		if (!ret && (drp_error & SB_ECC_ERROR)) {
-> @@ -312,8 +309,7 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
->  		if (!ret)
->  			irq_rc = IRQ_HANDLED;
->  
-> -		ret = regmap_read(drv->regmap,
-> -				  drv->offsets[i] + TRP_INTERRUPT_0_STATUS,
-> +		ret = regmap_read(drv->regmap[i], TRP_INTERRUPT_0_STATUS,
->  				  &trp_error);
->  
->  		if (!ret && (trp_error & SB_ECC_ERROR)) {
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 23ce2f78c4ed..7264ac9993e0 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -62,8 +62,6 @@
->  #define LLCC_TRP_WRSC_CACHEABLE_EN    0x21f2c
->  #define LLCC_TRP_ALGO_CFG8	      0x21f30
->  
-> -#define BANK_OFFSET_STRIDE	      0x80000
-> -
->  #define LLCC_VERSION_2_0_0_0          0x02000000
->  #define LLCC_VERSION_2_1_0_0          0x02010000
->  #define LLCC_VERSION_4_1_0_0          0x04010000
-> @@ -927,6 +925,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	const struct llcc_slice_config *llcc_cfg;
->  	u32 sz;
->  	u32 version;
-> +	struct regmap *regmap;
->  
->  	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
->  	if (!drv_data) {
-> @@ -934,12 +933,46 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  		goto err;
->  	}
->  
-> -	drv_data->regmap = qcom_llcc_init_mmio(pdev, "llcc_base");
-> -	if (IS_ERR(drv_data->regmap)) {
-> -		ret = PTR_ERR(drv_data->regmap);
-> +	/* Initialize the first LLCC bank regmap */
-> +	regmap = qcom_llcc_init_mmio(pdev, "llcc0_base");
-> +	if (IS_ERR(regmap)) {
-> +		ret = PTR_ERR(regmap);
-> +		goto err;
-> +	}
-> +
-> +	cfg = of_device_get_match_data(&pdev->dev);
-> +
-> +	ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0],
-> +			  &num_banks);
-> +	if (ret)
-> +		goto err;
-> +
-> +	num_banks &= LLCC_LB_CNT_MASK;
-> +	num_banks >>= LLCC_LB_CNT_SHIFT;
-> +	drv_data->num_banks = num_banks;
-> +
-> +	drv_data->regmap = devm_kcalloc(dev, num_banks, sizeof(*drv_data->regmap), GFP_KERNEL);
-> +	if (!drv_data->regmap) {
-> +		ret = -ENOMEM;
->  		goto err;
->  	}
->  
-> +	drv_data->regmap[0] = regmap;
-> +
-> +	/* Initialize rest of LLCC bank regmaps */
-> +	for (i = 1; i < num_banks; i++) {
-> +		char *base = kasprintf(GFP_KERNEL, "llcc%d_base", i);
-> +
-> +		drv_data->regmap[i] = qcom_llcc_init_mmio(pdev, base);
-> +		if (IS_ERR(drv_data->regmap[i])) {
-> +			ret = PTR_ERR(drv_data->regmap[i]);
-> +			kfree(base);
-> +			goto err;
-> +		}
-> +
-> +		kfree(base);
-> +	}
-> +
->  	drv_data->bcast_regmap =
->  		qcom_llcc_init_mmio(pdev, "llcc_broadcast_base");
->  	if (IS_ERR(drv_data->bcast_regmap)) {
-> @@ -947,8 +980,6 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  		goto err;
->  	}
->  
-> -	cfg = of_device_get_match_data(&pdev->dev);
-> -
->  	/* Extract version of the IP */
->  	ret = regmap_read(drv_data->bcast_regmap, cfg->reg_offset[LLCC_COMMON_HW_INFO],
->  			  &version);
-> @@ -957,15 +988,6 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  
->  	drv_data->version = version;
->  
-> -	ret = regmap_read(drv_data->regmap, cfg->reg_offset[LLCC_COMMON_STATUS0],
-> -			  &num_banks);
-> -	if (ret)
-> -		goto err;
-> -
-> -	num_banks &= LLCC_LB_CNT_MASK;
-> -	num_banks >>= LLCC_LB_CNT_SHIFT;
-> -	drv_data->num_banks = num_banks;
-> -
->  	llcc_cfg = cfg->sct_data;
->  	sz = cfg->size;
->  
-> @@ -973,16 +995,6 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
->  			drv_data->max_slices = llcc_cfg[i].slice_id;
->  
-> -	drv_data->offsets = devm_kcalloc(dev, num_banks, sizeof(u32),
-> -							GFP_KERNEL);
-> -	if (!drv_data->offsets) {
-> -		ret = -ENOMEM;
-> -		goto err;
-> -	}
-> -
-> -	for (i = 0; i < num_banks; i++)
-> -		drv_data->offsets[i] = i * BANK_OFFSET_STRIDE;
-> -
->  	drv_data->bitmap = devm_bitmap_zalloc(dev, drv_data->max_slices,
->  					      GFP_KERNEL);
->  	if (!drv_data->bitmap) {
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index ad1fd718169d..4b8bf585f9ba 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -129,12 +129,11 @@ struct llcc_edac_reg_offset {
->   * @max_slices: max slices as read from device tree
->   * @num_banks: Number of llcc banks
->   * @bitmap: Bit map to track the active slice ids
-> - * @offsets: Pointer to the bank offsets array
->   * @ecc_irq: interrupt for llcc cache error detection and reporting
->   * @version: Indicates the LLCC version
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 38aa38a..126ee37 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -161,10 +161,12 @@ enum {
+>   * DSPP sub-blocks
+>   * @DPU_DSPP_PCC             Panel color correction block
+>   * @DPU_DSPP_GC              Gamma correction block
+> + * @DPU_DSPP_IGC             Inverse gamma correction block
 >   */
->  struct llcc_drv_data {
-> -	struct regmap *regmap;
-> +	struct regmap **regmap;
->  	struct regmap *bcast_regmap;
->  	const struct llcc_slice_config *cfg;
->  	const struct llcc_edac_reg_offset *edac_reg_offset;
-> @@ -143,7 +142,6 @@ struct llcc_drv_data {
->  	u32 max_slices;
->  	u32 num_banks;
->  	unsigned long *bitmap;
-> -	u32 *offsets;
->  	int ecc_irq;
->  	u32 version;
+>  enum {
+>  	DPU_DSPP_PCC = 0x1,
+>  	DPU_DSPP_GC,
+> +	DPU_DSPP_IGC,
+>  	DPU_DSPP_MAX
 >  };
-> -- 
-> 2.25.1
-> 
+>  
+> @@ -191,6 +193,7 @@ enum {
+>   * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
+>   * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
+>   * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
+> + * @DPU_CTL_DSPP_BLOCK_FLUSH  CTL config to support dspp sub-block flush
 
--- 
-மணிவண்ணன் சதாசிவம்
+The above uses tabs, why does this use spaces?
+
+>   * @DPU_CTL_MAX
+>   */
+>  enum {
+> @@ -198,6 +201,7 @@ enum {
+>  	DPU_CTL_ACTIVE_CFG,
+>  	DPU_CTL_FETCH_ACTIVE,
+>  	DPU_CTL_VM_CFG,
+> +	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
+>  	DPU_CTL_MAX
+>  };
+>  
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index a35ecb6..e801be1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -33,6 +33,7 @@
+>  #define   CTL_INTF_FLUSH                0x110
+>  #define   CTL_INTF_MASTER               0x134
+>  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+> +#define   CTL_DSPP_n_FLUSH(n)           ((0x13C) + ((n) * 4))
+>  
+>  #define CTL_MIXER_BORDER_OUT            BIT(24)
+>  #define CTL_FLUSH_MASK_CTL              BIT(17)
+> @@ -113,6 +114,9 @@ static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
+>  	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
+>  				     dpu_hw_ctl_get_flush_register(ctx));
+>  	ctx->pending_flush_mask = 0x0;
+> +
+> +	memset(ctx->pending_dspp_flush_mask, 0,
+> +		sizeof(ctx->pending_dspp_flush_mask));
+>  }
+>  
+>  static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
+> @@ -130,6 +134,8 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+>  
+>  static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+>  {
+> +	int dspp;
+> +
+>  	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
+>  		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
+>  				ctx->pending_merge_3d_flush_mask);
+> @@ -140,6 +146,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+>  		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
+>  				ctx->pending_wb_flush_mask);
+>  
+> +	for(dspp = DSPP_0; dspp < DSPP_MAX; dspp++)
+
+Space between for and (?
+
+> +		if (ctx->pending_dspp_flush_mask[dspp - DSPP_0])
+> +			DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(dspp - DSPP_0),
+> +				ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
+
+Shouldn't this loop as a whole check if _any_ DSPP flush is requested
+via `pending_flush_mask & BIT(29)`?  The other flushes don't check the
+per-block mask value either (and could write zero that way) but only
+base this check on the presence of a global flush mask for that block.
+
+> +
+>  	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+>  }
+>  
+> @@ -287,8 +298,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+>  }
+>  
+>  static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+> -	enum dpu_dspp dspp)
+> +	enum dpu_dspp dspp, u32 dspp_sub_blk)
+>  {
+> +
+
+Empty line needed for?
+
+>  	switch (dspp) {
+>  	case DSPP_0:
+>  		ctx->pending_flush_mask |= BIT(13);
+> @@ -307,6 +319,30 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+>  	}
+>  }
+>  
+> +static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
+> +	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
+> +{
+> +
+
+And here?
+
+> +	if (dspp >= DSPP_MAX)
+> +		return;
+> +
+> +	switch (dspp_sub_blk) {
+> +	case DPU_DSPP_IGC:
+> +		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(2);
+> +		break;
+> +	case DPU_DSPP_PCC:
+> +		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(4);
+> +		break;
+> +	case DPU_DSPP_GC:
+> +		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(5);
+> +		break;
+> +	default:
+> +		return;
+> +	}
+> +
+> +	ctx->pending_flush_mask |= BIT(29);
+
+Can/should we define an _IDX for this, like is done with MERGE_3D_IDX,
+DSC_IDX, INTF_IDX and WB_IDX?
+
+> +}
+> +
+>  static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
+>  {
+>  	struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> @@ -675,7 +711,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+>  	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+>  	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
+>  	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
+> -	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+> +	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+> +		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
+> +	else
+> +		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+> +
+>  	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
+>  		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+>  };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index 96c012e..78611a8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -152,9 +152,11 @@ struct dpu_hw_ctl_ops {
+>  	 * No effect on hardware
+>  	 * @ctx       : ctl path ctx pointer
+>  	 * @blk       : DSPP block index
+> +	 * @dspp_sub_blk : DSPP sub-block index
+>  	 */
+>  	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
+> -		enum dpu_dspp blk);
+> +		enum dpu_dspp blk, u32 dspp_sub_blk);
+> +
+>  	/**
+>  	 * Write the value of the pending_flush_mask to hardware
+>  	 * @ctx       : ctl path ctx pointer
+> @@ -242,6 +244,7 @@ struct dpu_hw_ctl {
+>  	u32 pending_intf_flush_mask;
+>  	u32 pending_wb_flush_mask;
+>  	u32 pending_merge_3d_flush_mask;
+> +	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
+>  
+>  	/* ops */
+>  	struct dpu_hw_ctl_ops ops;
+> -- 
+> 2.7.4
+> 
