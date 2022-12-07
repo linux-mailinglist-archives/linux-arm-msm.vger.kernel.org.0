@@ -2,150 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCC0B64612D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 19:36:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AF99646194
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:23:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbiLGSgT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 13:36:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48196 "EHLO
+        id S229696AbiLGTXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 14:23:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbiLGSgS (ORCPT
+        with ESMTP id S229555AbiLGTXe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 13:36:18 -0500
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437A41DDC2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 10:36:16 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-3bfd998fa53so195723907b3.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 10:36:16 -0800 (PST)
+        Wed, 7 Dec 2022 14:23:34 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C065563D5C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 11:23:32 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id d1so29483388wrs.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 11:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YkCBMDlB3hXmQeitr6CrurlYhqpOvhf1O6xFonNtxQo=;
-        b=Pj0CG1pyIpr6pqsivNG2FWlrW0K3xiy1hT4jNSjQvJHjeS6GZBsRrFqo9647GWmaiw
-         JSPjPZZRUFvAnVbiUhBimguRFOXzVJwfb7ZngeznjR025w4IK6yDuCeIhKG5/HV0BeQb
-         n3+WxW0n2ez+vrvcXYsegtuJVlDgD9tdis73WkkpQSXANiSEP4SetrLZrDHhPwk+hV+X
-         dqpx5h03FurSXVxNt95ojrqYSAcPjbuYPL+yDe0FOOrcFn3UKImHOcjjS+HHDPI+6miF
-         OkORjEdDExI0LWMAs5paMqseoVeIQ7nlGQ08/5MN0rzmw9Piywr1vcBFsD7DwxaHE5K2
-         ESaQ==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=C/ucFAOI2Iw49PsMpiLJ1W8f9WPorHFdTdwmC6zDH1Q=;
+        b=xZcGUw7j/udNJzp6q3v9DnUQWnrnBHrOYufYXtsJ11DOBsBVl/aA7pLZMQwWVGUDcO
+         GH99Jd7+2wXr9IlQRN/nL5tdSYmJ1Q3KAPLKvhO5bFoUdnvvpPGK6arrHluEu1yjUSEd
+         ikqYxDgj+iJkfRhPQYjrL368LyVoGdnSwJnXA9SAABpiyA4ifSi17L9F7KoB/bi3iLHF
+         np6OYplDTy7zLgw+6U/HpRLl/YS7uidTY5hhdWW7f853HhWLJuv4sSYpeYK3OKABHV7p
+         +hv69RTRQpHkImI6bRmhcZllEpOvRs68tFWtRiile+Xvpv5mDD6VL/Ke52Z/LCbBOwZY
+         Tkwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YkCBMDlB3hXmQeitr6CrurlYhqpOvhf1O6xFonNtxQo=;
-        b=zfnzFsXtEASqbourL4alhQVLS3IVGRQgXIBYRO2arxNdokbNTcpZ45QtwCq4KlRecR
-         L9LHbXNJ4NlPdWsqip+hgLuyWFpgGntdnkBd3eCTHSfjsnDedwyerw9zUTJHIH3z4WxM
-         aymmF2RCD+Ggthmz4UuDJEQDi2YzoS1oLvPIOy1ae5Bnouj+ojwq6NMQpou/+kBrBjqt
-         a99i8YgiYG91jUsJfe0Le+P+qsxXtOlc/wHYMX2USlVo0RG6NMbnuGlR1iWV+FnAhDiM
-         6b/DIASFEyKcJphCqAGukL/jv0sRHy5tE5svZCOPdUTt1rOmgI5SGEHTSd/pZ5hCJTwS
-         nhyw==
-X-Gm-Message-State: ANoB5pnINxE3CzW0Ku+jE1eh98bBh4O2D4RN+wjTLeteDNSY0aLK3971
-        LC3cP4c5vt0ix8oH9LqkETBEHOznMSu3P0jgxfydFw==
-X-Google-Smtp-Source: AA0mqf4m5wZ2kYRrz+V6Su/X0hXGCCxugC1U+MQcs7ps/3PXHRak9VUu+C2HY/CsHAxhi0AWrkS67g/lonIWB716Wek=
-X-Received: by 2002:a81:6c52:0:b0:370:4c23:eacc with SMTP id
- h79-20020a816c52000000b003704c23eaccmr21656043ywc.127.1670438175478; Wed, 07
- Dec 2022 10:36:15 -0800 (PST)
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C/ucFAOI2Iw49PsMpiLJ1W8f9WPorHFdTdwmC6zDH1Q=;
+        b=IOJM3mIOtn1KGWw6o9pZtcZh8Oh90z5NnTLp8V2QagP4ufyxck2/D1Y3bVazf94Eqr
+         AuASLs5Tg7tazlPrUmvj5DYTN2ERhDl4NlEeZQHINhEmhkc8Hl/KRqRm9lPIUzCWdiks
+         e7NOhXhQyL4qVPTlxsNRrgDe7pjLLiK+jZvrQhBsvhxoaNwkR6UJqC1fzlx25DNNm/Pw
+         Z3looQGBUgIkqTr8yrNDsKYe0m1igIn0QzPyOxWIdKEYBapmZ2Zc0GEzoUBLDsVzOxe+
+         yydhwLIII/HrC8baH6lv5hc9jXFowmI4o/Fpnqh12L0P/u1KprRbegunOOGMqXUXzrtl
+         N8qA==
+X-Gm-Message-State: ANoB5pkQwQG6IR1XaSII6zd3gsuuBQDoAtBTKbx4QyVhGg9urxQlPlGo
+        L8GYeZ/pweM/iFGc53ehJ3HDUQ==
+X-Google-Smtp-Source: AA0mqf7lUzeg/Mb/Jc7Mj6zbY1CYia5Xmj0KlBbI1SWWuFUnP5qsvIXERkQSaTKgQltRJR1knP0y0w==
+X-Received: by 2002:a5d:610d:0:b0:242:4fd1:1f5c with SMTP id v13-20020a5d610d000000b002424fd11f5cmr12540012wrt.376.1670441011388;
+        Wed, 07 Dec 2022 11:23:31 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id w1-20020a5d5441000000b002422b462975sm19400355wrv.34.2022.12.07.11.23.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 11:23:31 -0800 (PST)
+Subject: [PATCH v3 0/5] remoteproc: qcom_q6v5_pas: add support for SM8550 adsp, cdsp & mpss
 MIME-Version: 1.0
-References: <20221204061555.1355453-1-dmitry.baryshkov@linaro.org>
- <20221204061555.1355453-2-dmitry.baryshkov@linaro.org> <20221205220433.GA2684995-robh@kernel.org>
- <E5C1A37F-5758-4026-9412-F13760C465D0@linaro.org> <20221207170753.GA2402110-robh@kernel.org>
-In-Reply-To: <20221207170753.GA2402110-robh@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 7 Dec 2022 20:36:04 +0200
-Message-ID: <CAA8EJpoOuJqK7zGsU2C9Y1ZB-Lb5TvXcL30be6uVodOy=M6T5g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: input: qcom,pm8921-keypad: convert to
- YAML format
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIACrokGMC/52NQQ6CMBBFr0K6dkw7LRFdeQ/joq0FmkBLpkBiCHd3dOdSV5M3yX9vEyVQDEVcqk
+ 1QWGOJOTHoQyV8b1MXID6YBUpEpZSBZGksM+XUQRmbupawTMzBjkBhzHOYKHtopGl165w2rhXscrYE
+ cGST79mWlmHgZx/LnOn5aa+Kz+3XzKpAgpLGa+Oddmd1HSIv8zFTJ+6cWPEvLb616Dwi1rU5mS/tvu 8vabEcQjcBAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 07 Dec 2022 20:23:22 +0100
+Message-Id: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org>
+To:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-iio@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        linux-leds@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-remoteproc@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 7 Dec 2022 at 19:07, Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Dec 06, 2022 at 05:20:16AM +0200, Dmitry Baryshkov wrote:
-> > 6 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3. 00:04:33 GMT+=
-02:00, Rob Herring <robh@kernel.org> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> > >On Sun, Dec 04, 2022 at 08:15:52AM +0200, Dmitry Baryshkov wrote:
-> > >> Convert the bindings for the keypad subdevices of Qualcomm PM8921 an=
-d
-> > >> PM8058 PMICs from text to YAML format.
-> > >>
-> > >> While doing the conversion also change linux,keypad-no-autorepeat
-> > >> property to linux,input-no-autorepeat. The former property was never
-> > >> used by DT and was never handled by the driver.
-> > >
-> > >Changing from the documented one to one some drivers use. I guess
-> > >that's a slight improvement. Please see this discussion[1].
-> >
-> > Well, the problem is that the documentation is misleading. The driver
-> > doesn't handle the documented property, so we should change either
-> > the driver, or the docs. Which change is the preferred one?
->
-> The preference is autorepeat is not the default and setting
-> 'autorepeat' enables it. You can't really change that unless you don't
-> really need autorepeat by default. I can't see why it would be
-> needed for the power button, but I haven't looked what else you have.
+This patchsets adds support for the aDSP, cDSP and MPSS found in the
+SM8550 SoC.
 
-It's not a pon/resin. this is a full-fledged keypad. For example for
-apq8060-dragonboard:
+The aDSP, cDSP and MPSS boot process on SM8550 now requires a secondary
+"Devicetree" firmware to be passed along the main Firmware, and the cDSP
+a new power domain named "NSP".
 
-linux,keymap =3D <
-        MATRIX_KEY(0, 0, KEY_MENU)
-        MATRIX_KEY(0, 2, KEY_1)
-        MATRIX_KEY(0, 3, KEY_4)
-        MATRIX_KEY(0, 4, KEY_7)
-        MATRIX_KEY(1, 0, KEY_UP)
-        MATRIX_KEY(1, 1, KEY_LEFT)
-        MATRIX_KEY(1, 2, KEY_DOWN)
-        MATRIX_KEY(1, 3, KEY_5)
-        MATRIX_KEY(1, 3, KEY_8)
-        MATRIX_KEY(2, 0, KEY_HOME)
-        MATRIX_KEY(2, 1, KEY_REPLY)
-        MATRIX_KEY(2, 2, KEY_2)
-        MATRIX_KEY(2, 3, KEY_6)
-        MATRIX_KEY(3, 0, KEY_VOLUMEUP)
-        MATRIX_KEY(3, 1, KEY_RIGHT)
-        MATRIX_KEY(3, 2, KEY_3)
-        MATRIX_KEY(3, 3, KEY_9)
-        MATRIX_KEY(3, 4, KEY_SWITCHVIDEOMODE)
-        MATRIX_KEY(4, 0, KEY_VOLUMEDOWN)
-        MATRIX_KEY(4, 1, KEY_BACK)
-        MATRIX_KEY(4, 2, KEY_CAMERA)
-        MATRIX_KEY(4, 3, KEY_KBDILLUMTOGGLE)
-                                        >;
+In order to satisfy the load & authentication order required by the SM8550
+SoC, the following is implemented:
+- "Devicetree" firmware request & load in dedicated memory
+- Q6V5 prepare
+- Power Domain & Clocks enable
+- "Devicetree" firmware authentication
+- Main firmware load in dedicated memory
+- Main firmware authentication
+- Q6V5 startup
+- "Devicetree" firmware metadata release
+- Main metadata release
 
-> Of all the no autorepeat options, I prefer 'linux,no-autorepeat' as I
-> find 'input' or 'keypad' redundant. But Dmitry T. didn't think it should
-> be a common property at the time.
+When booting older platforms, the "Devicetree" steps would be
+bypassed and the load & authentication order would still be valid.
 
-We have not used any of the options in the in-kernel DTs. However the
-driver for the keypad has supported the 'linux,input-no-autorepeat'
-since March 2014. I'm just changing the docs to document the correct
-option. I can split the patch into two distinct patches (one for the
-bugfix, one for conversion), if you think that it would be better.
+Bindings changes depends on:
+- https://lore.kernel.org/all/20221124184333.133911-1-krzysztof.kozlowski@linaro.org/
 
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-remoteproc@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
---=20
-With best wishes
-Dmitry
+---
+Changes in v3:
+- fix mpss matching in bindings, tested against DT
+- Link to v2: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v2-0-12bc22255474@linaro.org
+
+Changes in v2:
+- Moved the SM8550 pas bindings on top of "split and reorganize PAS/PIL" v3 patchset 
+- Incorporated DSM memory support into pas bindings & driver
+- Moved second DTB firmware into second entry of firmware-name
+- Dropped applied "qcom,fastrpc: increase allowed iommus entries" patch
+- Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org
+
+---
+Neil Armstrong (5):
+      dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common
+      dt-bindings: remoteproc: qcom: adsp: document sm8550 adsp, cdsp & mpss compatible
+      remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading
+      remoteproc: qcom_q6v5_pas: add support for assigning memory to firmware
+      remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss compatible & data
+
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |   4 +
+ .../bindings/remoteproc/qcom,pas-common.yaml       |   8 -
+ .../bindings/remoteproc/qcom,qcs404-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sc7180-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sc8180x-pas.yaml      |   8 +
+ .../bindings/remoteproc/qcom,sc8280xp-pas.yaml     |   8 +
+ .../bindings/remoteproc/qcom,sdx55-pas.yaml        |   8 +
+ .../bindings/remoteproc/qcom,sm6350-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8150-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8350-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 178 ++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 271 ++++++++++++++++++++-
+ 12 files changed, 504 insertions(+), 21 deletions(-)
+---
+base-commit: 268975e1af25cd83994d24c46ad0d95753291f64
+change-id: 20221114-narmstrong-sm8550-upstream-remoteproc-804f3fbb34bf
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
