@@ -2,114 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 877276462DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 21:51:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FB5464631C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 22:13:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbiLGUvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 15:51:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33238 "EHLO
+        id S229571AbiLGVNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 16:13:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230086AbiLGUvF (ORCPT
+        with ESMTP id S229544AbiLGVNp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 15:51:05 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A19883E90;
-        Wed,  7 Dec 2022 12:49:51 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7KnbEs031095;
-        Wed, 7 Dec 2022 20:49:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=8SFDvbzQ1dlolm07vRWQ6nGPb415dRbXSJxfEmPGi4I=;
- b=pJ/a57BZCdU68XY9sSHFeZc49JnxtxJ9drOI27FiwBaIkJ+BQSaUs0Nx1deCbixWzZm7
- 0aH1n+4TFIF1m+kP422bjzx7PO+2PQhqadRMBzoKJq79tpvgFoBaDJocJbSY6Ws3+Ioo
- hzv4r37pmk96ZxY7HwHCYhxwcqtTgXsykzCkZVIsP4B77tyF/+GfZJNzncNBBBSapd7L
- qhstLkQOTZPb2ss4ZujzgQVLCzxkoQrXFA+VBh+CQHeYNntARgTQSbNvzhfR1Becef9i
- l4oltmFXfhv1hOPB7VM+QKUVBTpHU1y+qM2xebLg4u4VmTBIFzepTvA/x64sb/891V5w KQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3man0ka09f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Dec 2022 20:49:37 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7Knatq014967
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Dec 2022 20:49:36 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 7 Dec 2022 12:49:36 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
-        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v10 16/16] ufs: core: mcq: Enable Multi Circular Queue
-Date:   Wed, 7 Dec 2022 12:46:27 -0800
-Message-ID: <70f8760735786ff9397c5e38144c72aa5482de7f.1670445699.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1670445698.git.quic_asutoshd@quicinc.com>
-References: <cover.1670445698.git.quic_asutoshd@quicinc.com>
+        Wed, 7 Dec 2022 16:13:45 -0500
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4DB1741D;
+        Wed,  7 Dec 2022 13:13:44 -0800 (PST)
+Received: by mail-oi1-f176.google.com with SMTP id k189so3099068oif.7;
+        Wed, 07 Dec 2022 13:13:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ODpnYyfaXKRv/tcoyL5sYgiHCqzwZL7rK+tRZUQXp6o=;
+        b=6SOPW4fSks6mKZCVv0U5AxmZQ5GYJZflzPLiJiLbNFd4ZFfOLx6c4/gS8Viau1EL9x
+         tXQdCngs7idLXn5JUqBrdTtDKgwYzEEZdWkxLsHDkw0BpJLTPnW68UVWZImbqrASW9y9
+         YbxQIAXnOrI9y+v1sXIfR7JkOcljOnNWQIco3+VDEuZAu31qAUH6iplOsv81Y38r+YKb
+         X27EfRuqLnhUeYvl5XSUoMQNaZn4F5FTckljOk4pzex2/rci0k8ipnHrmtuiYBsc+G8A
+         Olhg7GAfWPUGEU3nLteHnoEq7jUYWtLHBEhVGncXsj+lmYrjw30lg2oS2ei+KDSLqAa/
+         chaA==
+X-Gm-Message-State: ANoB5pmH2R3DbVOa7gG9hmM+2P6UufXTpYu18xhnok+fFAkIjY/pAxVf
+        ZQE9Zus44a7GWQN2eQ9vmeXVkQPtjQ==
+X-Google-Smtp-Source: AA0mqf7XhwR8ZwBKB+ZE6mPcI5YuuPDn5J8tDe4dKM9yKhKS+fB6MIl0usQDA2+jWSXcGjkoFGfafw==
+X-Received: by 2002:a05:6808:188:b0:35c:3410:ac6d with SMTP id w8-20020a056808018800b0035c3410ac6dmr7797622oic.4.1670447623659;
+        Wed, 07 Dec 2022 13:13:43 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 24-20020aca1018000000b0035e461d9b1bsm311562oiq.50.2022.12.07.13.13.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 13:13:43 -0800 (PST)
+Received: (nullmailer pid 2849012 invoked by uid 1000);
+        Wed, 07 Dec 2022 21:13:42 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: Fix CPU nodes compatible string
+Date:   Wed,  7 Dec 2022 15:13:27 -0600
+Message-Id: <20221207211327.2848665-1-robh@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JA_cyClS-aZsCHyKr9bta4npkswA0E5S
-X-Proofpoint-ORIG-GUID: JA_cyClS-aZsCHyKr9bta4npkswA0E5S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-07_09,2022-12-07_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 adultscore=0 mlxlogscore=999
- clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212070174
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ in the Host Controller.
+'arm,kryo' is not documented and is not an Arm Ltd thing either as that
+is Qualcomm branding. The correct compatible is 'qcom,kryo'.
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index e42d642..7f0bc10 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8381,6 +8381,12 @@ static void ufshcd_config_mcq(struct ufs_hba *hba)
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 212580316d3e..f06cc7588acc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -166,7 +166,7 @@ cpus {
  
- 	hba->host->can_queue = hba->nutrs - UFSHCD_NUM_RESERVED;
- 	hba->reserved_slot = hba->nutrs - UFSHCD_NUM_RESERVED;
-+
-+	/* Select MCQ mode */
-+	ufshcd_writel(hba, ufshcd_readl(hba, REG_UFS_MEM_CFG) | 0x1,
-+		      REG_UFS_MEM_CFG);
-+	hba->mcq_enabled = true;
-+
- 	dev_info(hba->dev, "MCQ configured, nr_queues=%d, io_queues=%d, read_queue=%d, poll_queues=%d, queue_depth=%d\n",
- 		 hba->nr_hw_queues, hba->nr_queues[HCTX_TYPE_DEFAULT],
- 		 hba->nr_queues[HCTX_TYPE_READ], hba->nr_queues[HCTX_TYPE_POLL],
+ 		CPU0: cpu@0 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+@@ -189,7 +189,7 @@ L3_0: l3-cache {
+ 
+ 		CPU1: cpu@100 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x100>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+@@ -209,7 +209,7 @@ L2_100: l2-cache {
+ 
+ 		CPU2: cpu@200 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x200>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+@@ -229,7 +229,7 @@ L2_200: l2-cache {
+ 
+ 		CPU3: cpu@300 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x300>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+@@ -249,7 +249,7 @@ L2_300: l2-cache {
+ 
+ 		CPU4: cpu@400 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x400>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+@@ -269,7 +269,7 @@ L2_400: l2-cache {
+ 
+ 		CPU5: cpu@500 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x500>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+@@ -289,7 +289,7 @@ L2_500: l2-cache {
+ 
+ 		CPU6: cpu@600 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x600>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+@@ -309,7 +309,7 @@ L2_600: l2-cache {
+ 
+ 		CPU7: cpu@700 {
+ 			device_type = "cpu";
+-			compatible = "arm,kryo";
++			compatible = "qcom,kryo";
+ 			reg = <0x0 0x700>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
 -- 
-2.7.4
+2.35.1
 
