@@ -2,186 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFCD46461AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:24:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3CD76461B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 20:27:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbiLGTYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 14:24:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
+        id S229475AbiLGT1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 14:27:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbiLGTXj (ORCPT
+        with ESMTP id S229656AbiLGT1i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 14:23:39 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2E468C49
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 11:23:37 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id q7so29528995wrr.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 11:23:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hH3Pz0smggYd5Ax4I5h47Equ8+9UzMYchJCtdBeu9ys=;
-        b=hcbeHlPaAJNF3WmImvRG5DLoo7M25beGkY5dSkH58WD89csIImpKtFEl2aaojQMyuV
-         IILTAq7TfHZJrdT8TRoLOQMZFMfdPwQbHeAKpe2pdpDnzeR/AqhV+EkywSLnbf2LtTqG
-         o8eJtEJLypeI93tInZCXkaqy3e1OqK+y9KNX4RAhmCs7LvBPWOO23+SluSULsYW3Ib4H
-         qSPO7x5s7gM7JQKq6fmpa3iD1r7UHFHgwRPYSYfS84q1f3kJRQKCGk4WOk9rb/81Ji2F
-         kTFBQdUNOzPq0Lav1KuuJY/QtLsk9L/Y7kmtH6XviSukmEHlEnzDRAtpdg7/K8oIHXoP
-         HEcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hH3Pz0smggYd5Ax4I5h47Equ8+9UzMYchJCtdBeu9ys=;
-        b=StMzvHQhYpcJCdsumSwk0U6gyuY0lM/xxezmpWhbdi7XhXfl2wz3931df9c1oUexOV
-         S/DtsEWGJmwPFp8J8qnxcbPESrnGfZxNNtkMoZ6RNov4kTMqBRVlTO1UzMm253av8HLP
-         tri/QLcxCH8voay/RY5CxWnwifwVJuyLDlwA9nXA8emvLcKW4jMAAFrxeNv5qCG0iwug
-         AJD8boE36k28h33pim6Sr/ivdkjvPOr0OOcNhJr99BGJpc+OyZzbLhduRDqmfd6W5iY/
-         AVICO37XoeJnCqw6kf1xDVt3LRELu+D1KV3DhsYnRuuublK53bsNwnsUckSdAqtkF7zU
-         Tn2Q==
-X-Gm-Message-State: ANoB5pliPbtKk1/eY1VJSinLWY0ZtBX9rlC959h8Nrzc5xqp/toksyve
-        +J1cMbNytAHcjy6RU4+O+Atg3w==
-X-Google-Smtp-Source: AA0mqf70kRRjkYWg4dhDpQXT4Rp1YjC8VnDb/WpHKKyQZlLwRuTOnMeU/4+13H9UiGXRio/S0e2gxQ==
-X-Received: by 2002:a5d:440b:0:b0:241:f901:a7e3 with SMTP id z11-20020a5d440b000000b00241f901a7e3mr39430454wrq.511.1670441016606;
-        Wed, 07 Dec 2022 11:23:36 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id w1-20020a5d5441000000b002422b462975sm19400355wrv.34.2022.12.07.11.23.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 11:23:36 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 07 Dec 2022 20:23:27 +0100
-Subject: [PATCH v3 5/5] remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss
- compatible & data
+        Wed, 7 Dec 2022 14:27:38 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60EE02641;
+        Wed,  7 Dec 2022 11:27:37 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7GldIf026815;
+        Wed, 7 Dec 2022 19:27:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=OwRMRJb+7c5gqaDyHQE7ipnl64XWdQ3NjzWLz62hDzc=;
+ b=niQn/KSAucucb7VnGASXwuQd/9hdeaICtEBourqlq03rlkRBE590OjlSW+jrW/fbLwQy
+ CHoomo2MWNGFqY0Zab08L0E4IvbdnGpWAvf3IKTg4Vr3dXKobT6Kxjmz//BxXqIFdMM4
+ EIHCDtZdXdob5H4uICtUh6nxVFQ6qvBqaM3PmEEjGQJkWA6el+RDMzYPnoWBV5ukSyk/
+ U1Cu5ErJWdRBSmVKfN/j40wYl8lHGTifwPHj95l/zY1RoqDwcaAQVcZtJAMbJ/n4M/Cw
+ o3RSr0C3YPwrM5jMjpHTuF8aCr+gUdFMP3vGdYMcPt/UF6J5aCuJFZ9+Y/ycTEJSZSLc nQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3man0k9uxg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 07 Dec 2022 19:27:27 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7JRQpm007941
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 7 Dec 2022 19:27:26 GMT
+Received: from carlv-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 7 Dec 2022 11:27:26 -0800
+From:   Carl Vanderlip <quic_carlv@quicinc.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>
+CC:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Carl Vanderlip <quic_carlv@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] mhi: Update Makefile to used Kconfig flags
+Date:   Wed, 7 Dec 2022 11:26:13 -0800
+Message-ID: <20221207192613.2098614-1-quic_carlv@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-5-62162a1df718@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org>
-To:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-remoteproc@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        linux-kernel@vger.kernel.org
-X-Mailer: b4 0.10.1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6liTA3p1_TSbQq8eDgr8GO49hyW_BrRQ
+X-Proofpoint-ORIG-GUID: 6liTA3p1_TSbQq8eDgr8GO49hyW_BrRQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-07_09,2022-12-07_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 adultscore=0 mlxlogscore=823
+ clxscore=1011 priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212070164
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the compatible & data for the aDSP, cDSP and MPSS found in
-the SM8550 SoC.
+Makefile was always suggesting to build subdirectories regardless of
+Kconfig. Use the Kconfig flags as intended.
 
-This platform requires the "Devicetree" firmware to be loaded along the
-main firmware.
-
-The MPSS DSM memory to be assigned to the MPSS subsystem is the
-third memory-region entry as defined in the bindings.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 66 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+ drivers/bus/mhi/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index d6a288432b6c..2a29ffad83eb 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1125,6 +1125,69 @@ static const struct adsp_data sm8450_mpss_resource = {
- 	.ssctl_id = 0x12,
- };
+diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+index 46981331b38f..354204b0ef3a 100644
+--- a/drivers/bus/mhi/Makefile
++++ b/drivers/bus/mhi/Makefile
+@@ -1,5 +1,5 @@
+ # Host MHI stack
+-obj-y += host/
++obj-$(CONFIG_MHI_BUS) += host/
  
-+static const struct adsp_data sm8550_adsp_resource = {
-+	.crash_reason_smem = 423,
-+	.firmware_name = "adsp.mdt",
-+	.dtb_firmware_name = "adsp_dtb.mdt",
-+	.pas_id = 1,
-+	.dtb_pas_id = 0x24,
-+	.minidump_id = 5,
-+	.has_aggre2_clk = false,
-+	.auto_boot = false,
-+	.proxy_pd_names = (char*[]){
-+		"lcx",
-+		"lmx",
-+		NULL
-+	},
-+	.load_state = "adsp",
-+	.ssr_name = "lpass",
-+	.sysmon_name = "adsp",
-+	.ssctl_id = 0x14,
-+};
-+
-+static const struct adsp_data sm8550_cdsp_resource = {
-+	.crash_reason_smem = 601,
-+	.firmware_name = "cdsp.mdt",
-+	.dtb_firmware_name = "cdsp_dtb.mdt",
-+	.pas_id = 18,
-+	.dtb_pas_id = 0x25,
-+	.minidump_id = 7,
-+	.has_aggre2_clk = false,
-+	.auto_boot = false,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		"nsp",
-+		NULL
-+	},
-+	.load_state = "cdsp",
-+	.ssr_name = "cdsp",
-+	.sysmon_name = "cdsp",
-+	.ssctl_id = 0x17,
-+};
-+
-+static const struct adsp_data sm8550_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.dtb_firmware_name = "modem_dtb.mdt",
-+	.pas_id = 4,
-+	.dtb_pas_id = 0x26,
-+	.minidump_id = 3,
-+	.has_aggre2_clk = false,
-+	.auto_boot = false,
-+	.decrypt_shutdown = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mss",
-+		NULL
-+	},
-+	.load_state = "modem",
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+	.region_assign_idx = 2,
-+};
-+
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
-@@ -1165,6 +1228,9 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
- 	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
- 	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
-+	{ .compatible = "qcom,sm8550-adsp-pas", .data = &sm8550_adsp_resource},
-+	{ .compatible = "qcom,sm8550-cdsp-pas", .data = &sm8550_cdsp_resource},
-+	{ .compatible = "qcom,sm8550-mpss-pas", .data = &sm8550_mpss_resource},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, adsp_of_match);
-
+ # Endpoint MHI stack
+-obj-y += ep/
++obj-$(CONFIG_MHI_BUS_EP) += ep/
 -- 
-b4 0.10.1
+2.25.1
+
