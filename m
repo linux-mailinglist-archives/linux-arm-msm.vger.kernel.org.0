@@ -2,151 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FB5464631C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 22:13:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B797646397
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 23:00:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbiLGVNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 16:13:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
+        id S229996AbiLGWAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 17:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiLGVNp (ORCPT
+        with ESMTP id S229863AbiLGWAb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 16:13:45 -0500
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4DB1741D;
-        Wed,  7 Dec 2022 13:13:44 -0800 (PST)
-Received: by mail-oi1-f176.google.com with SMTP id k189so3099068oif.7;
-        Wed, 07 Dec 2022 13:13:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ODpnYyfaXKRv/tcoyL5sYgiHCqzwZL7rK+tRZUQXp6o=;
-        b=6SOPW4fSks6mKZCVv0U5AxmZQ5GYJZflzPLiJiLbNFd4ZFfOLx6c4/gS8Viau1EL9x
-         tXQdCngs7idLXn5JUqBrdTtDKgwYzEEZdWkxLsHDkw0BpJLTPnW68UVWZImbqrASW9y9
-         YbxQIAXnOrI9y+v1sXIfR7JkOcljOnNWQIco3+VDEuZAu31qAUH6iplOsv81Y38r+YKb
-         X27EfRuqLnhUeYvl5XSUoMQNaZn4F5FTckljOk4pzex2/rci0k8ipnHrmtuiYBsc+G8A
-         Olhg7GAfWPUGEU3nLteHnoEq7jUYWtLHBEhVGncXsj+lmYrjw30lg2oS2ei+KDSLqAa/
-         chaA==
-X-Gm-Message-State: ANoB5pmH2R3DbVOa7gG9hmM+2P6UufXTpYu18xhnok+fFAkIjY/pAxVf
-        ZQE9Zus44a7GWQN2eQ9vmeXVkQPtjQ==
-X-Google-Smtp-Source: AA0mqf7XhwR8ZwBKB+ZE6mPcI5YuuPDn5J8tDe4dKM9yKhKS+fB6MIl0usQDA2+jWSXcGjkoFGfafw==
-X-Received: by 2002:a05:6808:188:b0:35c:3410:ac6d with SMTP id w8-20020a056808018800b0035c3410ac6dmr7797622oic.4.1670447623659;
-        Wed, 07 Dec 2022 13:13:43 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 24-20020aca1018000000b0035e461d9b1bsm311562oiq.50.2022.12.07.13.13.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 13:13:43 -0800 (PST)
-Received: (nullmailer pid 2849012 invoked by uid 1000);
-        Wed, 07 Dec 2022 21:13:42 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 7 Dec 2022 17:00:31 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8042985645;
+        Wed,  7 Dec 2022 14:00:28 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7KtpkW022795;
+        Wed, 7 Dec 2022 22:00:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=JPXoq1IFqoOnCKk5Pmg/8TT1x/drI+wYVh5KWLZu3EI=;
+ b=Z4f3xyfy4hqEVCocoPeBvi+6JQbMoq5nacXQqVg7lxW1vX9tJ38aQJZ4XwNggoLLF8hV
+ YuoGXMV1+aRc4CnRdv4WYDOZBKT907r6bAx5CAmFEEvdM8ZFnK/mZNUREvmIfVpF6awg
+ Gj9V2SkACiNsh9dpIk6cE82h0J9HxTUojWwlovD4tg8H2z+AqSj0CGl9igEKmQOaCI1G
+ U5P1Aa7ScnVNOc3jZecSpJ9OwYgHe4AlovbJ/hhivpcxNFvXR1CF2m5R2xsQg8C2KacF
+ +yP/Eiw4nubuois15x9ewfz7AgLzFRF8LOpvQitx7S47Biupu5Ctmx78k44ye8Vml1q6 XA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3majt4a5q6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 07 Dec 2022 22:00:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7M0Ior027882
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 7 Dec 2022 22:00:18 GMT
+Received: from th-lint-050.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 7 Dec 2022 14:00:17 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc7280: Fix CPU nodes compatible string
-Date:   Wed,  7 Dec 2022 15:13:27 -0600
-Message-Id: <20221207211327.2848665-1-robh@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 00/12] drm/msm: Add SC8280XP support
+Date:   Wed, 7 Dec 2022 14:00:00 -0800
+Message-ID: <20221207220012.16529-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ifjefZuldzsU08NeFsTk4XpTyOsnVym4
+X-Proofpoint-ORIG-GUID: ifjefZuldzsU08NeFsTk4XpTyOsnVym4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-07_11,2022-12-07_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 bulkscore=0 clxscore=1015 adultscore=0 mlxscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212070186
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-'arm,kryo' is not documented and is not an Arm Ltd thing either as that
-is Qualcomm branding. The correct compatible is 'qcom,kryo'.
+This introduces support for the SC8280XP platform in the MDSS, DPU and
+DP driver. It reworks the HDP handling in the DP driver to support
+external HPD sources - such as the dp-connector, or USB Type-C altmode.
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+It then introduces the display clock controllers, mdss, dpu and
+displayport controllers and link everything together, for both the MDSS
+instances on the platform, and lastly enables EDP on the compute
+reference device and 6 of the MiniDP outputs on the automotive
+development platform.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 212580316d3e..f06cc7588acc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -166,7 +166,7 @@ cpus {
- 
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-@@ -189,7 +189,7 @@ L3_0: l3-cache {
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-@@ -209,7 +209,7 @@ L2_100: l2-cache {
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-@@ -229,7 +229,7 @@ L2_200: l2-cache {
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-@@ -249,7 +249,7 @@ L2_300: l2-cache {
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x400>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
-@@ -269,7 +269,7 @@ L2_400: l2-cache {
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x500>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
-@@ -289,7 +289,7 @@ L2_500: l2-cache {
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x600>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
-@@ -309,7 +309,7 @@ L2_600: l2-cache {
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "arm,kryo";
-+			compatible = "qcom,kryo";
- 			reg = <0x0 0x700>;
- 			enable-method = "psci";
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+
+The patches was previously sent separately, but submitting them together
+here as they (except dts addition) goes in the same tree.
+
+Bjorn Andersson (12):
+  dt-bindings: display/msm: Add binding for SC8280XP MDSS
+  drm/msm/dpu: Introduce SC8280XP
+  drm/msm: Introduce SC8280XP MDSS
+  dt-bindings: msm/dp: Add SDM845 and SC8280XP compatibles
+  drm/msm/dp: Stop using DP id as index in desc
+  drm/msm/dp: Add DP and EDP compatibles for SC8280XP
+  drm/msm/dp: Add SDM845 DisplayPort instance
+  drm/msm/dp: Rely on hpd_enable/disable callbacks
+  drm/msm/dp: Implement hpd_notify()
+  arm64: dts: qcom: sc8280xp: Define some of the display blocks
+  arm64: dts: qcom: sc8280xp-crd: Enable EDP
+  arm64: dts: qcom: sa8295-adp: Enable DP instances
+
+ .../bindings/display/msm/dp-controller.yaml   |   3 +
+ .../display/msm/qcom,sc8280xp-dpu.yaml        | 122 +++
+ .../display/msm/qcom,sc8280xp-mdss.yaml       | 143 +++
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 243 ++++-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  72 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 838 ++++++++++++++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 217 +++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c |  18 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |   3 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+ drivers/gpu/drm/msm/dp/dp_display.c           | 151 ++--
+ drivers/gpu/drm/msm/dp/dp_display.h           |   1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c               |   3 +
+ drivers/gpu/drm/msm/dp/dp_drm.h               |   4 +
+ drivers/gpu/drm/msm/msm_drv.h                 |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                |   4 +
+ 18 files changed, 1770 insertions(+), 57 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-dpu.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml
+
 -- 
-2.35.1
+2.37.3
 
