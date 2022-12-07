@@ -2,377 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19B916463B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 23:00:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 781A864643C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 23:47:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbiLGWA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 17:00:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43280 "EHLO
+        id S229705AbiLGWrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 17:47:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbiLGWAf (ORCPT
+        with ESMTP id S229437AbiLGWrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:00:35 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D4B84DE8;
-        Wed,  7 Dec 2022 14:00:32 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7LsCtt003017;
-        Wed, 7 Dec 2022 22:00:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=TMdu94/5OkuXtF4rkDkFZzzrpnVZt7h12PRb1jo2jCg=;
- b=hCkHOHoLfzcozih7juJBKg6+4c6VjyekdSOWefwX6mXKkBSMBK6Ytxt3Ym1Diye6jqXJ
- Uyju0FrHcz/UfzdKWfS88ZO1KTKLtDHoEDSJCFrOxCAgxvCsRkUnjrx5rQSaI+F3K7cu
- JvSFvLNbhZJ2L0WCedSYaqElJkgrSz0meYHao0AuTFAj43jF7i3R6Djrx9gTGaS+OeMu
- rxVepW9XjTSzesnU85MkgryGhGqq28wMLOIuiQwytsPJp/X1QLvTttm9KRlrrcdqR4fm
- FQt1NUSBZyLNfxOvKXHjh1+OAeaB1p6lYlS+DNK+AAvgsJlaLdKYK7ImduIcqeQ4rlPT fg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3maywmrew3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Dec 2022 22:00:27 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B7M0QM8006536
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Dec 2022 22:00:27 GMT
-Received: from th-lint-050.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 7 Dec 2022 14:00:25 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 12/12] arm64: dts: qcom: sa8295-adp: Enable DP instances
-Date:   Wed, 7 Dec 2022 14:00:12 -0800
-Message-ID: <20221207220012.16529-13-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20221207220012.16529-1-quic_bjorande@quicinc.com>
-References: <20221207220012.16529-1-quic_bjorande@quicinc.com>
+        Wed, 7 Dec 2022 17:47:22 -0500
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2612983E8D;
+        Wed,  7 Dec 2022 14:47:21 -0800 (PST)
+Received: by mail-oi1-f176.google.com with SMTP id l127so22423531oia.8;
+        Wed, 07 Dec 2022 14:47:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5cRmcqMTQRbqCVVPhtzGwVwk+S86YVEqZnamcUPsWuw=;
+        b=YEfSwL7KdqriBiBRTfuFoEtbawfx3D1hfTtXDap+QSEY5QdTtFDqdhCLn0L8QNByWj
+         2LqAMp8SN5yMv5itiL1P3crHU8Wde7UipZvZEMngi6JLLwUiqvfDzfs94bz+J6LV/Col
+         7n16z+qB7MIxbndXsRoeULqnHniZQkrmVTVcVgEeG+HcbnWFQvv6mh1kX3DekHbwNrJd
+         4VEJZCFqI6TqKQiBwSdYybhC4fCkkPKq1GySDNCF5XVz2YiwrsNdpf/tMyJLXtf5i3og
+         nIiPS8/nKaKly/oKO/kK1YWNJidgfrSpi2Y2tFYiK/mDjYx1PiakUc1an6xJrQuYeQJo
+         2gCw==
+X-Gm-Message-State: ANoB5pnYimu/JD3kMMYMBWlUS4AUHdq7f5/xGcNse0y60/a5gny8OcrZ
+        yLH9cEZHDTdLtARjVVjh0w==
+X-Google-Smtp-Source: AA0mqf5UlSOz+vfnlBDLHjJdPNx/RAAKOFNV0hMbjpB8wdnbtdb+4ZbqIsJvE/QfEIFpIlrXEl8IaQ==
+X-Received: by 2002:a54:4506:0:b0:35b:9cc2:bfa7 with SMTP id l6-20020a544506000000b0035b9cc2bfa7mr26513888oil.263.1670453240350;
+        Wed, 07 Dec 2022 14:47:20 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id d15-20020a056830138f00b0066e64c59bbcsm10705775otq.6.2022.12.07.14.47.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 14:47:19 -0800 (PST)
+Received: (nullmailer pid 3099979 invoked by uid 1000);
+        Wed, 07 Dec 2022 22:47:18 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bVrDuQrrrDY9cZdnNUry0sYOSnj4iJCF
-X-Proofpoint-GUID: bVrDuQrrrDY9cZdnNUry0sYOSnj4iJCF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-07_11,2022-12-07_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 impostorscore=0
- adultscore=0 malwarescore=0 bulkscore=0 mlxlogscore=945 lowpriorityscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212070186
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     agross@kernel.org, dri-devel@lists.freedesktop.org,
+        daniel@ffwll.ch, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, airlied@gmail.com,
+        konrad.dybcio@somainline.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, andersson@kernel.org, vkoul@kernel.org,
+        linux-kernel@vger.kernel.org, airlied@linux.ie,
+        krzysztof.kozlowski+dt@linaro.org, freedreno@lists.freedesktop.org,
+        dianders@chromium.org, quic_sbillaka@quicinc.com,
+        robh+dt@kernel.org
+In-Reply-To: <1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com>
+References: <1670432278-30643-1-git-send-email-quic_khsieh@quicinc.com>
+ <1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com>
+Message-Id: <167045316457.3098064.10722096707360943971.robh@kernel.org>
+Subject: Re: [PATCH v10 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
+Date:   Wed, 07 Dec 2022 16:47:18 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-The SA8295P ADP has, among other interfaces, six MiniDP connectors which
-are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
+On Wed, 07 Dec 2022 08:57:55 -0800, Kuogee Hsieh wrote:
+> Add both data-lanes and link-frequencies property into endpoint
+> 
+> Changes in v7:
+> -- split yaml out of dtsi patch
+> -- link-frequencies from link rate to symbol rate
+> -- deprecation of old data-lanes property
+> 
+> Changes in v8:
+> -- correct Bjorn mail address to kernel.org
+> 
+> Changes in v10:
+> -- add menu item to data-lanes and link-frequecnis
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
+> ---
+>  .../devicetree/bindings/display/msm/dp-controller.yaml      | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
 
-Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
-DP PHYs and link them all together.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: [error] syntax error: mapping values are not allowed here (syntax)
 
-Changes since v4:
-- None
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/display/msm/dp-controller.example.dts'
+Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed in this context
+make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/display/msm/dp-controller.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/display/msm/dp-controller.yaml:108:21: mapping values are not allowed in this context
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dp-controller.yaml: ignoring, error parsing file
+make: *** [Makefile:1492: dt_binding_check] Error 2
 
- arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
- 1 file changed, 241 insertions(+), 2 deletions(-)
+doc reference errors (make refcheckdocs):
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-index 6c29d7d757e0..d55c8c5304cc 100644
---- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-@@ -23,6 +23,90 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	dp2-connector {
-+		compatible = "dp-connector";
-+		label = "DP2";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			dp2_connector_in: endpoint {
-+				remote-endpoint = <&mdss1_dp0_phy_out>;
-+			};
-+		};
-+	};
-+
-+	dp3-connector {
-+		compatible = "dp-connector";
-+		label = "DP3";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			dp3_connector_in: endpoint {
-+				remote-endpoint = <&mdss1_dp1_phy_out>;
-+			};
-+		};
-+	};
-+
-+	edp0-connector {
-+		compatible = "dp-connector";
-+		label = "EDP0";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			edp0_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp2_phy_out>;
-+			};
-+		};
-+	};
-+
-+	edp1-connector {
-+		compatible = "dp-connector";
-+		label = "EDP1";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			edp1_connector_in: endpoint {
-+				remote-endpoint = <&mdss0_dp3_phy_out>;
-+			};
-+		};
-+	};
-+
-+	edp2-connector {
-+		compatible = "dp-connector";
-+		label = "EDP2";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			edp2_connector_in: endpoint {
-+				remote-endpoint = <&mdss1_dp2_phy_out>;
-+			};
-+		};
-+	};
-+
-+	edp3-connector {
-+		compatible = "dp-connector";
-+		label = "EDP3";
-+		type = "mini";
-+
-+		hpd-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+
-+		port {
-+			edp3_connector_in: endpoint {
-+				remote-endpoint = <&mdss1_dp3_phy_out>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -163,13 +247,168 @@ vreg_l7g: ldo7 {
- 
- 		vreg_l8g: ldo8 {
- 			regulator-name = "vreg_l8g";
--			regulator-min-microvolt = <880000>;
--			regulator-max-microvolt = <880000>;
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11g: ldo11 {
-+			regulator-name = "vreg_l11g";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
- };
- 
-+&dispcc0 {
-+	status = "okay";
-+};
-+
-+&dispcc1 {
-+	status = "okay";
-+};
-+
-+&mdss0 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp2 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss0_dp2_phy_out: endpoint {
-+				remote-endpoint = <&edp0_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss0_dp2_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l8g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
-+&mdss0_dp3 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss0_dp3_phy_out: endpoint {
-+				remote-endpoint = <&edp1_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss0_dp3_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l8g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
-+&mdss1 {
-+	status = "okay";
-+};
-+
-+&mdss1_dp0 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss1_dp0_phy_out: endpoint {
-+				remote-endpoint = <&dp2_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss1_dp0_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l11g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
-+&mdss1_dp1 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss1_dp1_phy_out: endpoint {
-+				remote-endpoint = <&dp3_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss1_dp1_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l11g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
-+&mdss1_dp2 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss1_dp2_phy_out: endpoint {
-+				remote-endpoint = <&edp2_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss1_dp2_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l11g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
-+&mdss1_dp3 {
-+	status = "okay";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss1_dp3_phy_out: endpoint {
-+				remote-endpoint = <&edp3_connector_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss1_dp3_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l11g>;
-+	vdda-pll-supply = <&vreg_l3g>;
-+};
-+
- &pcie2a {
- 	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
--- 
-2.37.3
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1670432278-30643-3-git-send-email-quic_khsieh@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
