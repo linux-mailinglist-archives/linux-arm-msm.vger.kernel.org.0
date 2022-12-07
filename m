@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F174A645014
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 01:15:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77ED5645018
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Dec 2022 01:15:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiLGAPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Dec 2022 19:15:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60432 "EHLO
+        id S229810AbiLGAPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Dec 2022 19:15:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiLGAPH (ORCPT
+        with ESMTP id S229733AbiLGAPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 6 Dec 2022 19:15:07 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E584B98D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 16:15:05 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id q7so19082602ljp.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 16:15:05 -0800 (PST)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 747A04AF11
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Dec 2022 16:15:06 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id q7so19082628ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Dec 2022 16:15:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=urGNpxJzzyeN0lSvCVEBP/kOzMc+wfTdziRseLi7aVg=;
-        b=XsPN61rD10Fz4uWkah7zjnqIyczDa8NqQB/OScOud/dvISx2MTxQqQKaHr2JK9WAip
-         oLRrtYyEBIiT1mq+N5ApsxOENzKsvw8UFJuPGKqNXOPJua44xjN6WXP+wzZeIjuGuyzr
-         +B99dUrU9gxSt9D4qI4kp3oMyuhEBfRf9mhi53LlBm6w5ZBrzAAL/xZ9sCw0P2yQEd4B
-         pNwvXsJXC+p4GVUUo1t9tTNkWWTS/TB5eeXYGTLieJZP3x8+H0DUpY1z+e4jlG+2tmkJ
-         hEHMbJ3Y3oMlJLRBApPDWUQJcQgy2Hqfj6i1Nk5UD/8Yg0D1arlFyoFJ00NdMpi1SJcu
-         h9yQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b0EduR0xpzdlfEb/KiEf2wXv/qnABxojAe9ELTL5B40=;
+        b=osefMl4ALcsRfGOKfcfwyUM+wLLmj7CSDvNH/83WZeycxgwo5cN22/qo+yyZc/2gLS
+         XqxxLoKjGoTmWVakR96MspRwpWuM8Ja5KUUULYtVZsOG6rjSdJZEstN9K5sNYmp3OCPc
+         cRQ5xUMdlm0wJNpr059A+9ap0bSiqYTySFNELGwF9VZbfusbP2DDfrnJA+6uDQ/xitba
+         0rOjK9V4OaXPaFdrks+nAYtyblOVdSFNHIUoumQx5fLphJSx6KVq61eAvoWzLnTCK79o
+         VEQoBPS8KDyb4UskUMsHOfDO4EV/xqUf5UZINf1isxgheUPoQ2yNf6XvrOCjVrGHPMxm
+         Y6KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=urGNpxJzzyeN0lSvCVEBP/kOzMc+wfTdziRseLi7aVg=;
-        b=xaMBGmhT49ZQ/75IQOygIdIk9gVPyqsVHRXvWBnSypbv8XogFGYkvAFVlr4WilGGLm
-         Tz42fljeSU8O67R5D+vh9H3xGr2LCrMJou0FVmjqRcerWrFeFZfBOWO4bJ1qd1+Re/VJ
-         rIREfhsCCUR/yffjueb+u0LskNjcMfbZbw8d6wbn48lwXJJsnkZyu8XKx3ws5oQxWSC8
-         ZGHbnJXXwo7lOzPQh9nFLOBRh9AzeNsvopYtZUgbhPLwGQxSI7go8Ol3Qeju3OyLUckP
-         QkrDlP9Vm1CPizo7oFDkFpEWObjZiIXTDZXdXurQtllSFIHFDkZvv+ktuXsW+Ox1asjQ
-         5mKw==
-X-Gm-Message-State: ANoB5pmF6RUXZBYR4EvtEKC5FQMxBYt8BnzuHaU3gXawfm4rpPK+RfPB
-        4iVglHoPNZvndflsOLS1zJboCg==
-X-Google-Smtp-Source: AA0mqf62ndvryLlt9OYAm0eA615XFtH/iCXevZFqLnXa282M1B5KoGkEAmijoJ8Qpy5/0rUsJqesQQ==
-X-Received: by 2002:a2e:b526:0:b0:26e:494a:de3f with SMTP id z6-20020a2eb526000000b0026e494ade3fmr28309477ljm.85.1670372104143;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b0EduR0xpzdlfEb/KiEf2wXv/qnABxojAe9ELTL5B40=;
+        b=5pqGZSBkAZ1cHlfxlhaI/Ui02/iGpJ6agfuLj8xktZgQOrUfKNVfMiWaaVDJpdqo0i
+         QOrWTH8VRryb61OqbhEbyyUej8vuLQ4OsRJ+EQzgJbd27ks4G6WCe8aaJLvoP7lLUo0E
+         Rz32RjQaQ0xLVpH5lF61/S1PYvIZTmrmvQu9OfYBmq836xhvybr7e/m2Og+SqPhm5+Ka
+         OMqv5kZEI28lgBf57XapkPuqVrOum57WyubJ4m3/ASYHGgymcC1BVnvSprLb8/c+Ky6L
+         7ebMBCoyiYbmFxMPIU+1PqRJhaxcpzKw7myr0L9P2iiWlj6RMEMDkTprynjD64J2vhb1
+         JDTg==
+X-Gm-Message-State: ANoB5pnAJzEBQW2S3T2TxsROnAu4C+UZyQr8067VeTEC0DxzaeTNhlpH
+        HhkB1KYtq6aLnrGaV3NLCGiy3Mcoqp+wwW29+c15SRpV
+X-Google-Smtp-Source: AA0mqf4+4hOiD6FmO8fdMuw6LlbrwVoLmkgNkuzZ9UUjfb6rAk1VF0ChRZY+tL4RBk+nsqOQxrVcbg==
+X-Received: by 2002:a05:651c:2388:b0:279:d60:ee7f with SMTP id bk8-20020a05651c238800b002790d60ee7fmr30013099ljb.404.1670372104846;
         Tue, 06 Dec 2022 16:15:04 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id 16-20020ac25f50000000b004b53eb60e3csm2308555lfz.256.2022.12.06.16.15.03
+        by smtp.gmail.com with ESMTPSA id 16-20020ac25f50000000b004b53eb60e3csm2308555lfz.256.2022.12.06.16.15.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 16:15:03 -0800 (PST)
+        Tue, 06 Dec 2022 16:15:04 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,10 +58,12 @@ To:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v2 00/18] clk: qcom: smd-rpm: drop platform names
-Date:   Wed,  7 Dec 2022 02:14:45 +0200
-Message-Id: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 01/18] clk: qcom: smd-rpm: remove duplication between MMXI and MMAXI defines
+Date:   Wed,  7 Dec 2022 02:14:46 +0200
+Message-Id: <20221207001503.93790-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,47 +75,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series concludes the previous work on Qualcomm RPM and RPMH clock
-drivers. It reworks the clk-smd-rpm driver to drop the SoC name from the
-clock symbol name, as the clock definitions are shared between different
-SoCs (platforms). Having an SoC name in the clock definition can lead to
-all sources of confusion and/or errors.
+The commit 644c42295592 ("clk: qcom: smd: Add SM6375 clocks") added a
+duplicate of the existing define QCOM_SMD_RPM_MMAXI_CLK, drop it now.
 
-Changes since v1:
- - Split the MMXI/MMAXI and sm6375 vs sm6125 changes into two different
-   patches
- - Reworked macro definitions and usage to remove empty arguments
- - Dropped qcm2290_bimc_gpu_clk definition in the corresponding patch
- - Alignment fixes
+Fixes: 644c42295592 ("clk: qcom: smd: Add SM6375 clocks")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/clk/qcom/clk-smd-rpm.c   | 4 ++--
+ include/linux/soc/qcom/smd-rpm.h | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-Dmitry Baryshkov (18):
-  clk: qcom: smd-rpm: remove duplication between MMXI and MMAXI defines
-  clk: qcom: smd-rpm: enable pin-controlled ln_bb_clk clocks on qcs404
-  clk: qcom: smd-rpm: remove duplication between qcs404 and qcm2290
-    clocks
-  clk: qcom: smd-rpm: add missing ln_bb_clkN clocks
-  clk: qcom: smd-rpm: use msm8998_ln_bb_clk2 for qcm2290 SoC
-  clk: qcom: smd-rpm: rename msm8992_ln_bb_* clocks to qcs404_ln_bb_*
-  clk: qcom: smd-rpm: remove duplication between sm6375 and sm6125
-    clocks
-  clk: qcom: smd-rpm: add XO_BUFFER clock for each XO_BUFFER_PINCTRL
-    clock
-  clk: qcom: smd-rpm: drop the rpm_status_id field
-  clk: qcom: smd-rpm: fix alignment of line breaking backslashes
-  clk: qcom: smd-rpm: move clock definitions together
-  clk: qcom: smd-rpm: rename some msm8974 active-only clocks
-  clk: qcom: smd-rpm: simplify XO_BUFFER clocks definitions
-  clk: qcom: smd-rpm: simplify SMD_RPM/_BRANCH/_QDSS clock definitions
-  clk: qcom: smd-rpm: rename SMD_RPM_BRANCH clock symbols
-  clk: qcom: smd-rpm: rename the qcm2290 rf_clk3 clocks
-  clk: qcom: smd-rpm: rename SMD_RPM_BUS clocks
-  clk: qcom: smd-rpm: remove usage of platform name
-
- drivers/clk/qcom/clk-smd-rpm.c         | 1441 ++++++++++++------------
- include/dt-bindings/clock/qcom,rpmcc.h |    2 +
- include/linux/soc/qcom/smd-rpm.h       |    1 -
- 3 files changed, 723 insertions(+), 721 deletions(-)
-
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index fea505876855..4947d5eab591 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -1120,8 +1120,8 @@ static const struct rpm_smd_clk_desc rpm_clk_sm6115 = {
+ };
+ 
+ /* SM6375 */
+-DEFINE_CLK_SMD_RPM(sm6375, mmnrt_clk, mmnrt_a_clk, QCOM_SMD_RPM_MMXI_CLK, 0);
+-DEFINE_CLK_SMD_RPM(sm6375, mmrt_clk, mmrt_a_clk, QCOM_SMD_RPM_MMXI_CLK, 1);
++DEFINE_CLK_SMD_RPM(sm6375, mmnrt_clk, mmnrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 0);
++DEFINE_CLK_SMD_RPM(sm6375, mmrt_clk, mmrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 1);
+ DEFINE_CLK_SMD_RPM(qcm2290, hwkm_clk, hwkm_a_clk, QCOM_SMD_RPM_HWKM_CLK, 0);
+ DEFINE_CLK_SMD_RPM(qcm2290, pka_clk, pka_a_clk, QCOM_SMD_RPM_PKA_CLK, 0);
+ DEFINE_CLK_SMD_RPM_BRANCH(sm6375, bimc_freq_log, bimc_freq_log_a, QCOM_SMD_RPM_MISC_CLK, 4, 1);
+diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
+index 3ab8c07f71c0..82c9d489833a 100644
+--- a/include/linux/soc/qcom/smd-rpm.h
++++ b/include/linux/soc/qcom/smd-rpm.h
+@@ -41,7 +41,6 @@ struct qcom_smd_rpm;
+ #define QCOM_SMD_RPM_HWKM_CLK	0x6d6b7768
+ #define QCOM_SMD_RPM_PKA_CLK	0x616b70
+ #define QCOM_SMD_RPM_MCFG_CLK	0x6766636d
+-#define QCOM_SMD_RPM_MMXI_CLK	0x69786d6d
+ 
+ int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+ 		       int state,
 -- 
 2.35.1
 
