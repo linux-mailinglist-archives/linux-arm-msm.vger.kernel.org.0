@@ -2,103 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E198646A01
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 08:59:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 538F5646BC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 10:18:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbiLHH7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 02:59:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47484 "EHLO
+        id S230406AbiLHJSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 04:18:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbiLHH7V (ORCPT
+        with ESMTP id S230207AbiLHJRs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 02:59:21 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC4F5445F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 23:59:20 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id s8so827681lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 23:59:20 -0800 (PST)
+        Thu, 8 Dec 2022 04:17:48 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A289A6F0C4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 01:16:29 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id vv4so2424266ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 01:16:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ifN3keePSqcP1VQvXgjgaCnpgDY0iz9KJSv9ZTvk64U=;
-        b=NyfoEAix9x9ZjuHYxTQNy67/Ymvezy9y2hj03fXPx8mIJA6dW8Vi3co8zXn82yON7M
-         UI15Ol21gzQW75izSCq/0gFibYIJ+JivwpvcRq1l4DDnVZW1gWGOFX73ZOK47ILqLNGC
-         meSCv2o3EBf/9napNBpTFnXQQYsAK0NcMy85+jpBU+dwpoK0BHsnHLOk7qUq9TBL47RA
-         Pxsvd4SPN+gRZ672am2fSNIjF5Zmts4mSiBR2YSuUMGAcfKQov7Y6hEXFoRfHSK4NOFj
-         JE+/se7E9BrUhJ3YGBSaKWzrq4mrY1+gUCQivvAQuClqU/oedzs1/IcaLrO/norEsYcE
-         4tGw==
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=elLETLSwT7VH5/W4TgvYIEFkfudJUq+gajumeb0E6/U=;
+        b=Xl8lOWPuf4BgoDd/DR8s1V45KSGql1YN70Pv5eJQ/LXtaGwoWHadHCKIlwDL6S3v4e
+         3XUIT3PgBdyik1lIe4RPpyMZKrqUuNAgd1/adXZ5ktp1QEdq3r5akAXTRrFwSZEibo6H
+         N4VPKByeukXcn3IRw4Qs70d9PMhIVYW3DFe0GgPzVHT1nZF4SeNunQ9IwTvKvE+uVYwx
+         mjW57fmwrHNLjt3LkDhHANcQYSRZcfKJDq3fI0bB2p80CZJM6+DW1dun0AYyK1qMQQLq
+         nX6ap/pjzA0gP7ZYgULa85ZZJ0n4TWr3PKg7gdWsL2EnMPLT7c/fESFvR0TLokhNzSmI
+         IEIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ifN3keePSqcP1VQvXgjgaCnpgDY0iz9KJSv9ZTvk64U=;
-        b=VQavVoXfy7hyDBQzPT5xaL3rigYeItz7Mj6M8/pcjjCop54XTvClla/anDoDF4ImJ8
-         FfUxgD4gL8MqKPdLCQcbb4e0SeCiL9odKyTtrL6Y/XI7kSyH7CJ5dfTgbRW4slox3XiZ
-         7imBN6w62B2QDdn5ovcRmPj5NPegEVtHvHKDfbL5t7XCZKB1VdZJRw5ks/bWszza4NZ1
-         3/GgQNEamcyA9X2oNDjGEIEkJUaGAhzuXa7kfNzcREuFwUWHRA2bW+zSYhaPgyUxpJXP
-         bHr6ZEXtk+Pf4+cvCRWt1OWdLuJr5x6lldQr07sZiCRw3yXomSGxrPJSmNyDqIHinzP/
-         rH6w==
-X-Gm-Message-State: ANoB5pl8LL7HYYGW+lhwfUx+gms358kV65beHXCq6Y8znvNX1sFE3tXD
-        jhwgGINOweVEwdYmCukobplrew==
-X-Google-Smtp-Source: AA0mqf6Ai63Lvn4lPSEHsIJqs5NWlG+yEnhX8s/K+t+sinQ058a/JdqLaNPM6UtafcdtITYNKx3R2g==
-X-Received: by 2002:a05:6512:33d2:b0:4b5:28fc:36e1 with SMTP id d18-20020a05651233d200b004b528fc36e1mr12149885lfg.179.1670486358836;
-        Wed, 07 Dec 2022 23:59:18 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id o9-20020ac25e29000000b0049465afdd38sm3247926lfg.108.2022.12.07.23.59.17
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=elLETLSwT7VH5/W4TgvYIEFkfudJUq+gajumeb0E6/U=;
+        b=OZ1t6MguLvqqY5YpWazhSKcDkr4VV+vthmQE/dwcSq7dYNCAlamnsa9WL7AzosCzAD
+         ds6245n8TWpu9hRZluOcRJd2OiKdfd7arkhKAC3BzcXErsoQDF/5L5VJ2WlVhi7D0YIz
+         qo5sajI+bteRIRi6fp+rNfbj65hGff1yCbaGfb05zY2gNSK90keGQGo4wul5MOiWlw2y
+         eVZO7MfU4iK+AIFd7VbIdUQoQ2UCeXklaNhsMxnasgbcgbt4JTLCMFYIYAjig7nN2+1T
+         iSg0ak1O9x8kZZd0WNsTMXHunQWv9JNTmicLKpJOxFov6YsEbRyxabJkvVx/V5ROqPIW
+         LDlQ==
+X-Gm-Message-State: ANoB5pkcwDIzfAPKXNUwLEvbsI8bEXbn1OzNQ4hgQ2pxgBSy+RRY0x5D
+        mEtq5OEDJYrAxj0Uioi7LbdpABLulr3AkLIl
+X-Google-Smtp-Source: AA0mqf5y9Eg/nNQNOVImTYmfbgy6DdU3Rw24mCguzwK/vdn477+84Aesq43eDYwB4GHXXvu7NYvbkQ==
+X-Received: by 2002:a17:907:cb83:b0:7a7:3f0c:e99b with SMTP id un3-20020a170907cb8300b007a73f0ce99bmr2022155ejc.6.1670490988109;
+        Thu, 08 Dec 2022 01:16:28 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id kv22-20020a17090778d600b007c0be4861e8sm5018404ejc.23.2022.12.08.01.16.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Dec 2022 23:59:18 -0800 (PST)
-Message-ID: <a2653b17-4ed4-6fe3-ca46-6f8917a58171@linaro.org>
-Date:   Thu, 8 Dec 2022 08:59:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH V6 1/2] dt-bindings: firmware: qcom,scm: Add optional
- interrupt
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, konrad.dybcio@somainline.org,
-        robimarko@gmail.com, quic_gurus@quicinc.com,
-        quic_rjendra@quicinc.com
-References: <20221208064031.2875-1-quic_sibis@quicinc.com>
- <20221208064031.2875-2-quic_sibis@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221208064031.2875-2-quic_sibis@quicinc.com>
+        Thu, 08 Dec 2022 01:16:27 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Date:   Thu, 08 Dec 2022 10:16:27 +0100
+Message-Id: <COWBMT72Y57W.2W8G3XDNT3T34@otso>
+Cc:     <quic_saipraka@quicinc.com>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <james.morse@arm.com>, <mchehab@kernel.org>, <rric@kernel.org>,
+        <linux-edac@vger.kernel.org>, <quic_ppareek@quicinc.com>
+Subject: Re: [PATCH 00/12] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <bp@alien8.de>,
+        <tony.luck@intel.com>
+X-Mailer: aerc 0.13.0
+References: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/12/2022 07:40, Sibi Sankar wrote:
-> From: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> 
-> Add an interrupt specification to the bindings to support the wait-queue
-> feature on SM8450 SoCs.
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
-> 
-> The interrupt property for scm firmware from a binding perspective is
-> completely optional i.e. not all tz fw running in the wild on sm8450
-> devices support this feature. The bootloader does the interrupt property
-> addition on sm8450 devices with wait-queue support.
+Hi Manivannan,
 
+On Wed Dec 7, 2022 at 2:59 PM CET, Manivannan Sadhasivam wrote:
+> The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+> accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+> This offset only works for some SoCs like SDM845 for which driver support
+> was initially added.
+>    =20
+> But the later SoCs use different register stride that vary between the
+> banks with holes in-between. So it is not possible to use a single regist=
+er
+> stride for accessing the CSRs of each bank. By doing so could result in a
+> crash with the current drivers. So far this crash is not reported since
+> EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+> driver extensively by triggering the EDAC IRQ (that's where each bank
+> CSRs are accessed).
+>    =20
+> For fixing this issue, let's obtain the base address of each LLCC bank fr=
+om
+> devicetree and get rid of the fixed stride.
+>
+> This series affects multiple platforms but I have only tested this on
+> SM8250 and SM8450. Testing on other platforms is welcomed.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+If you can tell me *how* I can test it, I'd be happy to test the series
+on sm6350, like how to trigger the EDAC IRQ.
 
-Best regards,
-Krzysztof
+So far without any extra patches I don't even see the driver probing,
+with this in kconfig
+
+  +CONFIG_EDAC=3Dy
+  +CONFIG_EDAC_QCOM=3Dy
+
+I do have /sys/bus/platform/drivers/qcom_llcc_edac at runtime but
+nothing in there (except bind, uevent and unbind), and also nothing
+interesting in dmesg with "llcc", with edac there's just this message:
+
+  [    0.064800] EDAC MC: Ver: 3.0.0
+
+From what I'm seeing now the edac driver is only registered if the
+interrupt is specified but it doesn't seem like sm6350 (=3Dlagoon) has
+this irq? Downstream dts is just this:
+
+	cache-controller@9200000 {
+		compatible =3D "lagoon-llcc-v1";
+		reg =3D <0x9200000 0x50000> , <0x9600000 0x50000>;
+		reg-names =3D "llcc_base", "llcc_broadcast_base";
+		cap-based-alloc-and-pwr-collapse;
+	};
+
+From looking at the downstream code, perhaps it's using the polling mode
+there?
+
+	/* Request for ecc irq */
+	ecc_irq =3D llcc_driv_data->ecc_irq;
+	if (ecc_irq < 0) {
+		dev_info(dev, "No ECC IRQ; defaulting to polling mode\n");
+
+Let me know what you think.
+
+Regards
+Luca
+
+>
+> Thanks,
+> Mani
+>
+> Manivannan Sadhasivam (12):
+>   dt-bindings: arm: msm: Update the maintainers for LLCC
+>   dt-bindings: arm: msm: Fix register regions used for LLCC banks
+>   arm64: dts: qcom: sdm845: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sc7180: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sc8280xp: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sm8150: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sm8250: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
+>   arm64: dts: qcom: sm6350: Fix the base addresses of LLCC banks
+>   qcom: llcc/edac: Fix the base address used for accessing LLCC banks
+>
+>  .../bindings/arm/msm/qcom,llcc.yaml           | 128 ++++++++++++++++--
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   5 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  10 +-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   7 +-
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   7 +-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   7 +-
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   7 +-
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   7 +-
+>  drivers/edac/qcom_edac.c                      |  14 +-
+>  drivers/soc/qcom/llcc-qcom.c                  |  64 +++++----
+>  include/linux/soc/qcom/llcc-qcom.h            |   4 +-
+>  13 files changed, 197 insertions(+), 67 deletions(-)
+>
+> --=20
+> 2.25.1
 
