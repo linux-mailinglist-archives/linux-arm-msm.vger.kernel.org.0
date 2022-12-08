@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD5B7646620
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 01:55:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9AD9646624
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 01:55:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbiLHAzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Dec 2022 19:55:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
+        id S229651AbiLHAzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Dec 2022 19:55:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbiLHAzD (ORCPT
+        with ESMTP id S229821AbiLHAzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Dec 2022 19:55:03 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59A484DF1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 16:55:02 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j4so31401289lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 16:55:02 -0800 (PST)
+        Wed, 7 Dec 2022 19:55:04 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769B089AE7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Dec 2022 16:55:03 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id a7so22741792ljq.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Dec 2022 16:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L/RmycL1Mv6ZSS27FwVTDu6/m14EDrtLYu+O7wuXKfc=;
-        b=dcXN8CrIwWj+WhiIr+k4CEInsAx52ZiTtEKU5oKIVxc2m0Oy6WhpOehgibHctHVcPe
-         DYzdhAhDj5JG6Qg3RYEy8W6T06IQC3MOwAirjDcicnZMSdlZojzybp1sFvBvsX/RdT9a
-         A7uxfuWg3nPriYSn+ZPCOxX+caIWkvto4J4zkM2EKiyVOs7yB1lYRHCtzlVGJvjSboWb
-         ezWCnD1Ndo/Y17pW/Nc7PwMx8DEpxFXCwxQTtzg6eAZduWU789oiH6wsD7uHVwy6ClJz
-         TViLnME8x6O6dkVyqGMETlcrK6fTc/vM/sObQ7hK9iB0nI90etAaLOTMGThqmYiTqZj4
-         9QJg==
+        bh=qZPnPCur3ovFUOH0LYhAuqFKoVf/x2ysNxNnklkbflE=;
+        b=Z0n6nWKpFQW/U3hRqkkWGv/Jb0DbHroQAvTC/kUChu/mZvqVpmao4hqnZUEstRDnar
+         jFyyH2TPR3cH1RLq/2o4c4TCgTrYZwOJaw5OZxWvsC9tCWL6BGI+94EYdu507Vppm1NL
+         SuKztwVjHMSpFB4FuD3UvvL4Gwj/jHnbJhciHElDwCMG2KfDmEI8FrgNAhd5FMLURQ+5
+         CE0RWcJ8ux4Xrq5d1oiGTIpxxVWE3nQJEPd+dtpvRjDvSfIRt1409B4gu6TVKz5fhVTg
+         Cr4940woTLVdGDKDR1LupLDIm3xmlNbZXGbOKmc6bpLuC0bsC6mfAIx7l4HKUGcWFxOJ
+         qahQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L/RmycL1Mv6ZSS27FwVTDu6/m14EDrtLYu+O7wuXKfc=;
-        b=X+Hk75CzY8YpcC/zngFKY2+dQCPXhq/WOfoUCzODuzuQ8Tit7wqV2FKm/NbSb2ehZh
-         AaoQqUnDsdJntSe3d/LWnjotpoUEsi8dVbeenSuHvtgV/cwywPoSawP373f8foxLShqs
-         JZxSl0qcr+I4bdNxv57RSz3k+CzVxXQzs9BywpqXCZ42+wXfhXHY9RpPt2+YjlSoNxmB
-         B2IyygWjkhRnhxB8kSIQsSLMWc2YJhgfWJhr/ptoo403tFPTnw/cuNKqygD9xdDWIoD0
-         1IuJR9EmsiY+t4dX6AfICh/vokLbXvC+Dv+J5IYnZJjkKsq55D3r5zmP/XRQD8K+90ET
-         Zrag==
-X-Gm-Message-State: ANoB5pkz39DY4ZkiClllAwNujjJ/b3oIkWYbf59ympKOBkRzU6KkwysE
-        rTKgA1dYOQUEu5dK79H05SOuOQ==
-X-Google-Smtp-Source: AA0mqf69gi2tQR9aBLCUz9azAEFIH0hbuGn9WAjHGko/R2B+a4Gqgt2JoRfRWtg7+JlcT2aKX43k2w==
-X-Received: by 2002:a05:6512:12d1:b0:4b5:869f:420a with SMTP id p17-20020a05651212d100b004b5869f420amr3049175lfg.353.1670460901051;
+        bh=qZPnPCur3ovFUOH0LYhAuqFKoVf/x2ysNxNnklkbflE=;
+        b=DHfizEw0C3gM8yOYXnY0AzxAJQqOjVcc/Ml1lyhLGFQoIbFqjY+fAmtMqCbbLPeToX
+         f+sd0HEVMPVcEN1bTLOKUwIp8zv+F819LK6NLZ+htm3qllUBTv1JVebLGJLmNeL+C0be
+         PbA+MjQMlh29njNU9h5+jeQQ9HjuTbnTVm7EuM4g4vRCmpYJW/PFWBz5MMV5vOiwfE03
+         PVc1UvHhITOtNBxf3zCWWVpL4qdE74ionoXbOEXRmYkGUmDK/cIo7Jwg1xvTVLWYSFYo
+         j8sNImZ91E8szikxSUTe20JLI0sgMuk2OeCOT4m82SZeUX9DYkGH7OtsqzVDC936Vw1s
+         Ukwg==
+X-Gm-Message-State: ANoB5plBu0PnUtL/BlA7iXitdcbMXswC+tZieXbd3NXNBqg/Gayu4aZB
+        N5WOfBb2JG0PRpH6+bV9mdbNRw==
+X-Google-Smtp-Source: AA0mqf7gr4D6xoe4jHfMdSszRKt/ebLETLphZftpO3yonssF15zrpEQCAd1CIHbl/lXZjCwUEqiigA==
+X-Received: by 2002:a05:651c:c85:b0:278:f572:c9ac with SMTP id bz5-20020a05651c0c8500b00278f572c9acmr31528058ljb.73.1670460901823;
         Wed, 07 Dec 2022 16:55:01 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id f27-20020a19381b000000b0049fff3f645esm3064159lfa.70.2022.12.07.16.55.00
+        by smtp.gmail.com with ESMTPSA id f27-20020a19381b000000b0049fff3f645esm3064159lfa.70.2022.12.07.16.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 16:55:00 -0800 (PST)
+        Wed, 07 Dec 2022 16:55:01 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,9 +63,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 2/4] dt-bindings: display/msm: add SoC-specific compats to qcom,mdp5.yaml
-Date:   Thu,  8 Dec 2022 02:54:56 +0200
-Message-Id: <20221208005458.328196-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 3/4] ARM: dts: qcom-msm8974: add SoC specific compat string to mdp5 node
+Date:   Thu,  8 Dec 2022 02:54:57 +0200
+Message-Id: <20221208005458.328196-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221208005458.328196-1-dmitry.baryshkov@linaro.org>
 References: <20221208005458.328196-1-dmitry.baryshkov@linaro.org>
@@ -73,51 +73,35 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add platform-specific compatible entries to the qcom,mdp5.yaml to allow
+Add SoC-specific compat string to the MDP5 device node to ease
 distinguishing between various platforms.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/display/msm/qcom,mdp5.yaml       | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
-index cbcbe8b47e9b..a7a97a4c46b4 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
-@@ -16,7 +16,24 @@ maintainers:
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 8d216a3c0851..0cd59088f9c7 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1549,7 +1549,7 @@ mdss: mdss@fd900000 {
+ 			ranges;
  
- properties:
-   compatible:
--    const: qcom,mdp5
-+    oneOf:
-+      - const: qcom,mdp5
-+        deprecated: true
-+      - items:
-+          - enum:
-+            # msm8998 should either use old single-string compat or new
-+            # qcom,msm8998-dpu
-+              - qcom,apq8084-mdp5
-+              - qcom,msm8916-mdp5
-+              - qcom,msm8917-mdp5
-+              - qcom,msm8953-mdp5
-+              - qcom,msm8974-mdp5
-+              - qcom,msm8976-mdp5
-+              - qcom,msm8994-mdp5
-+              - qcom,msm8996-mdp5
-+              - qcom,sdm630-mdp5
-+              - qcom,sdm660-mdp5
-+          - const: qcom,mdp5
+ 			mdp: mdp@fd900000 {
+-				compatible = "qcom,mdp5";
++				compatible = "qcom,msm8974-mdp5", "qcom,mdp5";
+ 				reg = <0xfd900100 0x22000>;
+ 				reg-names = "mdp_phys";
  
-   reg:
-     maxItems: 1
 -- 
 2.35.1
 
