@@ -2,114 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E09116479DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 00:23:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBA6A6479E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 00:24:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230210AbiLHXXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 18:23:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59962 "EHLO
+        id S230139AbiLHXYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 18:24:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbiLHXW5 (ORCPT
+        with ESMTP id S230252AbiLHXXR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 18:22:57 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2A9A504F;
-        Thu,  8 Dec 2022 15:21:55 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B8N7X3I015617;
-        Thu, 8 Dec 2022 23:21:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=8SFDvbzQ1dlolm07vRWQ6nGPb415dRbXSJxfEmPGi4I=;
- b=JX9Yl/S3uQf0i4ed0/klIrdU9A6WnqTbL4j2jZrskvQ/Q7PeieJ14gVOnXHrjPcWmkkF
- dsSV30pW/C2yYi/EMf5i2m1V/7p9Cy5B4f7NM9ax/Q+yihDwdVx9pyPFAUJn9TJFwEzh
- LgAiE+pg2JK27dCkh6aaUg85fZiTqddKRVqXNR/vMxBzGmQGh71Q1hVghP2hOjTvB9Mo
- APal3RyjSucj8rmjqZp+kLMMXzVjOgzv5OKpUjwbkfjPv+NiuohIX4o5Q0X7Vi8NOlUK
- 4LL2pMuuSTPsY3EJ9YeGlxGN5vgz7+IV4k1zJHcrKey96bZDfEgFR/8XAx/KuaAumZr+ CA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mavtf4y7c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Dec 2022 23:21:44 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B8NLiel017541
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Dec 2022 23:21:44 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 8 Dec 2022 15:21:43 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
-        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v11 16/16] ufs: core: mcq: Enable Multi Circular Queue
-Date:   Thu, 8 Dec 2022 15:18:42 -0800
-Message-ID: <b0efa2abeba389a7739ea26956e8b342c65deab1.1670541364.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1670541363.git.quic_asutoshd@quicinc.com>
-References: <cover.1670541363.git.quic_asutoshd@quicinc.com>
+        Thu, 8 Dec 2022 18:23:17 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B123E6ACCC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 15:22:08 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id r72so1196346iod.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 15:22:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kbpMQ63Zd0ddTl917YQAEJDL2fT9g2XYtpQwPSl/m6E=;
+        b=oZjo3h0jiJm+5LuEJLHVzKLTtbsfV4Yuzhhxd/0ah+FUxmwHzdKXsVKAZkW+Pt1cP7
+         bZJht87h69mLBsd1Tr8S5xNbfe5pJ8QSZtXBGHnH6b9s6QFQmWTOdTfyGBDZxslciDBi
+         xOg+nIOw+X5W+tU+P2FkZ0ukmTYoQuwun0OgE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kbpMQ63Zd0ddTl917YQAEJDL2fT9g2XYtpQwPSl/m6E=;
+        b=UyrpJ3zh0KY3DJoGkeyoZ1oOJMh/zg+mNcfhi8ikonfcqhMzypjxNboyaZVnDPK8pO
+         AYc3k7KjOM72vrw4chVu7SPw+Ri2ZZ/AjZjxYxHIuS/knPrMDGAgewwr4+6JqKUa6ave
+         Vpce5ABnkVxnpZ0v3aoUGaaX96dY8BrjbhOvwdV+/urIFhGJzzY4D0+XdJcL1iEx2Tzn
+         4tQJThc6M1imQqxEbDg84isYJBBkP11F8dPZSrUNCnnlKzsuop4XsDv0SrqFy6AGUh1G
+         6CWxiZcd8lALHy9NlLxUCAZVVvBRmUe2RI/g+VuO5gIlLRWrfENejZb7bW/y7Ryk63K9
+         9QCA==
+X-Gm-Message-State: ANoB5pnH4HmvtzZWE/1ETEof2YcR394NIkHWd2bupZlyvcHnwu7zwkaj
+        IClhhZJlHn/jVSXglGCPKufVug==
+X-Google-Smtp-Source: AA0mqf7R4a0/39caWEYz1Aqubo3foxnMQIfA4QfNcQ9VQeaAtG5do3746c/qrqrZlXYDXMfVE8x12A==
+X-Received: by 2002:a5d:8593:0:b0:6bc:d712:8bbc with SMTP id f19-20020a5d8593000000b006bcd7128bbcmr2168029ioj.4.1670541728078;
+        Thu, 08 Dec 2022 15:22:08 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id o7-20020a0566022e0700b006a49722dc6dsm7371iow.11.2022.12.08.15.22.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Dec 2022 15:22:07 -0800 (PST)
+Date:   Thu, 8 Dec 2022 23:22:07 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-input@vger.kernel.org,
+        Yunlong Jia <ecs.beijing2022@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc7180: Bump up trogdor ts_reset_l
+ drive strength
+Message-ID: <Y5Jxn01EzEZ8fE1G@google.com>
+References: <20221208192006.1070898-1-dianders@chromium.org>
+ <20221208111910.1.I39c387f1e3176fcf340039ec12d54047de9f8526@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xxePhSOhwBR-o6G3jTubTL-sbDvT-Oc_
-X-Proofpoint-ORIG-GUID: xxePhSOhwBR-o6G3jTubTL-sbDvT-Oc_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-08_12,2022-12-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- malwarescore=0 clxscore=1015 adultscore=0 spamscore=0 phishscore=0
- bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2212080192
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221208111910.1.I39c387f1e3176fcf340039ec12d54047de9f8526@changeid>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ in the Host Controller.
+On Thu, Dec 08, 2022 at 11:20:02AM -0800, Douglas Anderson wrote:
+> On at least one board (pazquel360) the reset line for the touchscreen
+> was scoped and found to take almost 2 ms to fall when we drove it
+> low. This wasn't great because the Linux driver for the touchscreen
+> (the elants_i2c driver) thinks it can do a 500 us reset pulse. If we
+> bump the drive strength to 8 mA then the reset line went down in ~421
+> us.
+> 
+> NOTE: we could apply this fix just for pazquel360, but:
+> * Probably other trogdor devices have similar timings and it's just
+>   that nobody has noticed it before.
+> * There are other trogdor boards using the same elan driver that tries
+>   to do 500 us reset pulses.
+> * Bumping the drive strength to 8mA across the board won't hurt. This
+>   isn't a high speed signal or anything.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
----
- drivers/ufs/core/ufshcd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index e42d642..7f0bc10 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8381,6 +8381,12 @@ static void ufshcd_config_mcq(struct ufs_hba *hba)
- 
- 	hba->host->can_queue = hba->nutrs - UFSHCD_NUM_RESERVED;
- 	hba->reserved_slot = hba->nutrs - UFSHCD_NUM_RESERVED;
-+
-+	/* Select MCQ mode */
-+	ufshcd_writel(hba, ufshcd_readl(hba, REG_UFS_MEM_CFG) | 0x1,
-+		      REG_UFS_MEM_CFG);
-+	hba->mcq_enabled = true;
-+
- 	dev_info(hba->dev, "MCQ configured, nr_queues=%d, io_queues=%d, read_queue=%d, poll_queues=%d, queue_depth=%d\n",
- 		 hba->nr_hw_queues, hba->nr_queues[HCTX_TYPE_DEFAULT],
- 		 hba->nr_queues[HCTX_TYPE_READ], hba->nr_queues[HCTX_TYPE_POLL],
--- 
-2.7.4
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
