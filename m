@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 585D46477E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 22:22:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54E32647801
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 22:33:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbiLHVWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 16:22:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37114 "EHLO
+        id S229781AbiLHVdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 16:33:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbiLHVWT (ORCPT
+        with ESMTP id S229691AbiLHVdf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 16:22:19 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42C1225E1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 13:22:18 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id b3so4000637lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 13:22:18 -0800 (PST)
+        Thu, 8 Dec 2022 16:33:35 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6751B2EF64
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 13:33:34 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id z144so1060859iof.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 13:33:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=abZKbKUJfOxCSq1MPfvZXV7QCvgG9o8fBXW4C3oMuuI=;
-        b=V+OOnCcFNysG2pLGicgTlbVl+LUJe54qHq5jnSwM7K2q8GJ2fYaDrkaH+bzLcWwxZK
-         WQn++2QsiBh+c9n2FnCTm1sggPfsPeqpmQYeOu+3umFug+H+uYmAUkPkIJwZQ2/OEK4D
-         dDa1ic+0ND/GUBShWRmzztzRNiAqtE01a28vMe4iceNpDfzzz0CfrkZGD6xJFPWC6+F4
-         qaz0aoYDNrCt1qa/tEFAkEg00AAq9gSN0JZw/QNH9Ylx+x4wVDINWw7TvLzbg12c2ZYK
-         3rmxDk+z80cxDIekpgpovY/1d+SoegDfQeqXwIhHLAUfULv2oYnjpUmxcdrGqL+A9hPo
-         x4Ew==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7FSa8Zfu/8xHbnZSuWDC6ttqZXGs49ojzvmsel6my90=;
+        b=D9tqPJu7STusgHs8sqgkYqGUsLh2aDAXfT6PVsxVzzi2ANsohxmjekjP6JZcuH3Fb5
+         Y0ykqc75MVGoHtSDg0b6c12GzzgzIXo+XU8M0m6wdefQI+yF4Le2aWF5GV1DpegX8zDM
+         IavYzYrnIEDTAt3fw6Mj/hDWduI2QSDC/12aGtg+hqtR+aMiJ32lJq259SaAge/bHJ70
+         Z+CekEUNtvNsv8r8LDEE/hxus4gDaZ+uftFeEi5J1qGz6T9ujcz65aLcYPFwi0NiiSdZ
+         ggxEvrNMCkMxSjCGi+/S89Hvcwyhqkxj15NNYrQqOSCI8vsSAPiUS3WiZGMTzRHFEWoe
+         TBHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=abZKbKUJfOxCSq1MPfvZXV7QCvgG9o8fBXW4C3oMuuI=;
-        b=FUWy11OcbeOCtwiy0+N5wBjN7vf4Fo09iixcFRLDzp8OXcHZ4xFjGMC1I37CrXNnMA
-         qxb/CqFbj84o0ot6RwUk36ILJreaffluTeeruWAKQmKinvbqjNpwzifZjdYV63qnLmQ7
-         K9ZlCjoWUh537QALVEU28zbmesUwF8BQyFhQvoshb4P6qLm4Cg8xkgReefadFlZgPtqX
-         qmh90u1+3B9dmWvpUdTnZuANkc+LK9fh7rbZT/hvxF5SaWZoS9tn0HpYiH8or0IsPHe9
-         L2ZvOqz4lQrcz5PMQs6Fl83XUm+5XvyUk6ZkrQuZERxuDcucKjBu2nLikgEURbwIyxHA
-         FcdQ==
-X-Gm-Message-State: ANoB5plfH/pNzDK2Qd280Wv5Q/l/5l39t0uaPIB9vBEjErjIEbNCUp63
-        Z9pMo5ICA0nSfK75o+BnK7ajBA==
-X-Google-Smtp-Source: AA0mqf57IDQUvyPzGFYIG1ByCLs5HahO5hw2LWOrgdpshJUChB20nKmieK/du4yTeDGn5f5XlsXN0w==
-X-Received: by 2002:a05:6512:22c5:b0:4b5:5880:8359 with SMTP id g5-20020a05651222c500b004b558808359mr7702628lfu.425.1670534536643;
-        Thu, 08 Dec 2022 13:22:16 -0800 (PST)
-Received: from [192.168.1.101] (95.49.125.53.neoplus.adsl.tpnet.pl. [95.49.125.53])
-        by smtp.gmail.com with ESMTPSA id v3-20020a05651203a300b004a4754c5db5sm3480550lfp.244.2022.12.08.13.22.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Dec 2022 13:22:16 -0800 (PST)
-Message-ID: <47b2fb29-1c2e-db6e-b14f-6dfe90341825@linaro.org>
-Date:   Thu, 8 Dec 2022 22:22:14 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7FSa8Zfu/8xHbnZSuWDC6ttqZXGs49ojzvmsel6my90=;
+        b=tPkV2Y06zraE0hBeA6FQs6IOi3erYT+1Kic8xddFNy1T+t43cmY9fGHR3M1BID9EVD
+         aSwRhFTFzsZ1hsqHhQOIaqba+eb+dPfc9Z32lS7YFLXdhpOSY6MRrGhh3fSx6oyHMe17
+         tzZnygKRX3L9QnIg+1I2kXqOGAsnFGM3a+30CFtakTk+LRlu9AqzaUYjPJ6zjydsK+Dl
+         4a1ZDpism1tkmIb0QYZ9a1R/RFqRrbFOg/0r0p3BQIrZbnD9dOKkKHUpXRXxAFZyveJZ
+         ngdXsiyJY9HXwfxkcGYCkKo9oLIajkk/F/oxfy6ailYKXUyAPYVCq1xnpO4ivR3e462d
+         XEWQ==
+X-Gm-Message-State: ANoB5pmbOEjxUWyz0scQMBccqxyu1QXY4bnSG8Jwj+2gi/AOLRmA3sPx
+        rNB4rfGgYMF+YqTvM0tcPlnarw==
+X-Google-Smtp-Source: AA0mqf7fwtNQxQ3tnxh0ts1pIJeXrIh/KEs6UGxsKxVhtsbvnWlEGc/R0c6pmsYGcUD19CXYniovxA==
+X-Received: by 2002:a5d:8351:0:b0:6df:e430:e8af with SMTP id q17-20020a5d8351000000b006dfe430e8afmr2130786ior.18.1670535213618;
+        Thu, 08 Dec 2022 13:33:33 -0800 (PST)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id a8-20020a021608000000b003755aa71fffsm9237846jaa.105.2022.12.08.13.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 13:33:33 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     luca.weiss@fairphone.com, elder@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] arm64: dts: qcom: sm6350: enable IPA
+Date:   Thu,  8 Dec 2022 15:33:28 -0600
+Message-Id: <20221208213330.937714-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH net-next 2/2] net: ipa: add IPA v4.7 support
-To:     Alex Elder <elder@linaro.org>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc:     andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-References: <20221208211529.757669-1-elder@linaro.org>
- <20221208211529.757669-3-elder@linaro.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221208211529.757669-3-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,47 +70,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable IPA for the SM6350 SoC, which implements IPA v4.7.  Enable it
+on the Fairphone 4, which incorporates IPA definitions used for the
+SM6350.
 
+Please delay applying this until after Linux v6.1 is tagged.
 
-On 8.12.2022 22:15, Alex Elder wrote:
-> Add the necessary register and data definitions needed for IPA v4.7,
-> which is found on the SM6350 SoC.
-> 
-> Co-developed-by: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
-[...]
-> +
-> +/* Memory configuration data for an SoC having IPA v4.7 */
-> +static const struct ipa_mem_data ipa_mem_data = {
-> +	.local_count	= ARRAY_SIZE(ipa_mem_local_data),
-> +	.local		= ipa_mem_local_data,
-> +	.imem_addr	= 0x146a9000,
-> +	.imem_size	= 0x00002000,
-Should probably be
+					-Alex
 
-0x146a8000
-0x00003000
+Luca Weiss (2):
+  arm64: dts: qcom: sm6350: add IPA node
+  arm64: dts: qcom: sm7225-fairphone-fp4: enable IPA
 
-with an appropriate change in dt to reserve that region.
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          | 47 +++++++++++++++++++
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |  7 +++
+ 2 files changed, 54 insertions(+)
 
-Qualcomm does:
-ipa@... { qcom,additional-mapping = <0x146a8000 0x146a8000 0x2000>; };
+-- 
+2.34.1
 
-which covers 0x146a8000-0x146a9fff
-
-plus
-
-imem@.. { reg = <0x146aa000 0x1000>; };
-
-which in total gives us 0x146a8000-0x146aafff
-
-
-That would also mean all of your writes are kind of skewed, unless
-you already applied some offsets to them.
-
-(IMEM on 6350 starts at 0x14680000 and is 0x2e000 long, as per
-the bootloader memory map)
-
-Konrad
