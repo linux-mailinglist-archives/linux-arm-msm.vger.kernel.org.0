@@ -2,436 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A3F647713
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 21:14:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10ECC6477AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 22:06:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiLHUOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 15:14:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51856 "EHLO
+        id S229877AbiLHVGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 16:06:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229879AbiLHUOf (ORCPT
+        with ESMTP id S229885AbiLHVGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 15:14:35 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17A737A190
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 12:14:23 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id 1so3743116lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 12:14:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QE/MPVWrPkQi2tEjQtLjQ0ec0nKxppkiun4hqaN8bS0=;
-        b=VfiUnEVpay226r0SJafv4wdNSH9JKbS4sHULqoggjl1AAPW4hUMbAurBhe+m1U0ZDU
-         2VP/ecZVjmYFw1ded4AL/o+FhYs1Nb+vzXb2ZcPP1Mt1n0P0WUw8kdVpF1ldUELQpM0x
-         udE8cjVKzBqmwe3I28BuFomBYuGEcQgO4v4cGVCkmftxAQ1wYQ0Pwl4yLe1P/JH3pB6R
-         7XDe/0GtvGtFrn8h/FYr0BjuxjokwWLBnwOumwZEc0gYKiPlgyStCFj1vVrgZPAT9bJy
-         WiduuTT4MMs9ADylJt6yYex5gWGuxf0c+TPBP345w/cI0dNz1vkdxDc/2v9etuyVK5g6
-         1S3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QE/MPVWrPkQi2tEjQtLjQ0ec0nKxppkiun4hqaN8bS0=;
-        b=5SC82ZwMqJhMhf6G3hjUDcw8BPq2nRMDIBWdRUYJ9QMjpvNPY/fOAzI+7PQkCaZ/rC
-         EQjJhjp0yKKdid9M23xiYQkR1amlqUxdsFmZVF+YfPxJ3RK0/WcQOGEUh7jo+/R0O3M+
-         u04Tc8amxRpP7GUJD2cKMpBbGFDeBumgjX0Tx2xutIT5sCnUSrX9TyHXGkbYDHSyNslb
-         6DMXjNunOwzUSpfWgIjcyxs3nCa4iAOFk8N1MqL5CjM0U/9c4M1blBY/JdQH/7Cst7Eu
-         Hx8/ewT11bYeYfLX04sllMUhGVK9qNY14gPDItagFn/iuFtXBgokvAQM1gGVwLipgZMb
-         3XgQ==
-X-Gm-Message-State: ANoB5pkmAGfilwai3QTS61sPjhweEKYfP/BgDUVqqK8YrFDSILH9g2Wl
-        bFsWaIga8Z68mi3VwOnGFqxIbky2zgowRmPP
-X-Google-Smtp-Source: AA0mqf7u2fLlrZWwWyu1RQ9LRZO7MsSM1CuLsoSJ7575yLTWeMcj0C0Ra1OgLU7Lrm2f2Zxmw6Rpbg==
-X-Received: by 2002:a05:6512:10d3:b0:4b5:830d:12bc with SMTP id k19-20020a05651210d300b004b5830d12bcmr3821909lfg.47.1670530461145;
-        Thu, 08 Dec 2022 12:14:21 -0800 (PST)
-Received: from localhost.localdomain (95.49.125.53.neoplus.adsl.tpnet.pl. [95.49.125.53])
-        by smtp.gmail.com with ESMTPSA id bi35-20020a0565120ea300b004ac6a444b26sm3466428lfb.141.2022.12.08.12.14.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 12:14:20 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 8 Dec 2022 16:06:31 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F1A755CAB;
+        Thu,  8 Dec 2022 13:06:27 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DCEE86206C;
+        Thu,  8 Dec 2022 21:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A378AC433EF;
+        Thu,  8 Dec 2022 21:06:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670533586;
+        bh=J4NaD5DiaIrHO6Wu1hSOZE75QqEaTQJzKrEN8RtbCZ0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fx5D9dQKhmKha4DqL4ADNc9N56jaJFC4a0Nav9VsD8KQd98OJHhuzqUkzIcDQrLEa
+         AHi8dWrttK1cGwRkcYhv7geKPay8pRJecRwfc8Ddf9NIcLieKc5IsmVeoKiwoCIwKj
+         ++TFWpeL2+Lt/PA9B/Qw43ZicB8TkCJubzrSVcFoUpJ0hvnRzbY70WOzpuwWSexGtt
+         Yjrotj7A0caG42eBy7j5uhVnZTI1iN/Dyd+SKspNtH9nJM0+SMTAFhOGxfZViTsQaq
+         qb5DsyPkTWjNl7Xcn0eAR3zdgcTmu3scbuF5XkmDx5Mpl6MwfFhAmq/fKxWTyZQqI0
+         pBngKijQukMBQ==
+Date:   Thu, 8 Dec 2022 15:06:22 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Douglas Anderson <dianders@chromium.org>,
+        krzysztof.kozlowski@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Iskren Chernev <me@iskren.info>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] arm64: dts: qcom: Add Lenovo Tab P11 (J606F/XiaoXin Pad) dts
-Date:   Thu,  8 Dec 2022 21:14:01 +0100
-Message-Id: <20221208201401.530555-5-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221208201401.530555-1-konrad.dybcio@linaro.org>
-References: <20221208201401.530555-1-konrad.dybcio@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 0/6] clk/qcom: Support gdsc collapse polling using
+ 'reset' interface
+Message-ID: <20221208210622.x656vbf7rum5hrl7@builder.lan>
+References: <1664960824-20951-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20221201225705.46r2m35ketvzipox@builder.lan>
+ <CAPDyKFofsqcoFbYt-9BcisbPdreLGqAAMWorqHi0_D1kwCdYhg@mail.gmail.com>
+ <20221207165457.kwdwwiycbwjpogxl@builder.lan>
+ <CAPDyKFpYgYkDdJ79xxkwr-Mqnj5CoBrV+ZZe6Xz4hGLNR4zUVw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpYgYkDdJ79xxkwr-Mqnj5CoBrV+ZZe6Xz4hGLNR4zUVw@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add an initial device tree for the Lenovo Tab P11. Currently it
-enables:
+On Thu, Dec 08, 2022 at 02:40:55PM +0100, Ulf Hansson wrote:
+> On Wed, 7 Dec 2022 at 17:55, Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Wed, Dec 07, 2022 at 05:00:51PM +0100, Ulf Hansson wrote:
+> > > On Thu, 1 Dec 2022 at 23:57, Bjorn Andersson <andersson@kernel.org> wrote:
+> > > >
+> > > > On Wed, Oct 05, 2022 at 02:36:58PM +0530, Akhil P Oommen wrote:
+> > > > >
+> > > >
+> > > > @Ulf, Akhil has a power-domain for a piece of hardware which may be
+> > > > voted active by multiple different subsystems (co-processors/execution
+> > > > contexts) in the system.
+> > > >
+> > > > As such, during the powering down sequence we don't wait for the
+> > > > power-domain to turn off. But in the event of an error, the recovery
+> > > > mechanism relies on waiting for the hardware to settle in a powered off
+> > > > state.
+> > > >
+> > > > The proposal here is to use the reset framework to wait for this state
+> > > > to be reached, before continuing with the recovery mechanism in the
+> > > > client driver.
+> > >
+> > > I tried to review the series (see my other replies), but I am not sure
+> > > I fully understand the consumer part.
+> > >
+> > > More exactly, when and who is going to pull the reset and at what point?
+> > >
+> > > >
+> > > > Given our other discussions on quirky behavior, do you have any
+> > > > input/suggestions on this?
+> > > >
+> > > > > Some clients like adreno gpu driver would like to ensure that its gdsc
+> > > > > is collapsed at hardware during a gpu reset sequence. This is because it
+> > > > > has a votable gdsc which could be ON due to a vote from another subsystem
+> > > > > like tz, hyp etc or due to an internal hardware signal. To allow
+> > > > > this, gpucc driver can expose an interface to the client driver using
+> > > > > reset framework. Using this the client driver can trigger a polling within
+> > > > > the gdsc driver.
+> > > >
+> > > > @Akhil, this description is fairly generic. As we've reached the state
+> > > > where the hardware has settled and we return to the client, what
+> > > > prevents it from being powered up again?
+> > > >
+> > > > Or is it simply a question of it hitting the powered-off state, not
+> > > > necessarily staying there?
+> > >
+> > > Okay, so it's indeed the GPU driver that is going to assert/de-assert
+> > > the reset at some point. Right?
+> > >
+> > > That seems like a reasonable approach to me, even if it's a bit
+> > > unclear under what conditions that could happen.
+> > >
+> >
+> > Generally the disable-path of the power-domain does not check that the
+> > power-domain is actually turned off, because the status might indicate
+> > that the hardware is voting for the power-domain to be on.
+> 
+> Is there a good reason why the HW needs to vote too, when the GPU
+> driver is already in control?
+> 
+> Or perhaps that depends on the running use case?
+> 
+> >
+> > As part of the recovery of the GPU after some fatal fault, the GPU
+> > driver does something which will cause the hardware votes for the
+> > power-domain to be let go, and then the driver does pm_runtime_put().
+> 
+> Okay. That "something", sounds like a device specific setting for the
+> corresponding gdsc, right?
+> 
+> So somehow the GPU driver needs to manage that setting, right?
+> 
+> >
+> > But in this case the GPU driver wants to ensure that the power-domain is
+> > actually powered down, before it does pm_runtime_get() again. To ensure
+> > that the hardware lost its state...
+> 
+> I see.
+> 
+> >
+> > The proposal here is to use a reset to reach into the power-domain
+> > provider and wait for the hardware to be turned off, before the GPU
+> > driver attempts turning the power-domain on again.
+> >
+> >
+> > In other words, there is no reset. This is a hack to make a normally
+> > asynchronous pd.power_off() to be synchronous in this particular case.
+> 
+> Alright, assuming I understood your clarifications above correctly
+> (thanks!), I think I have got a much better picture now.
+> 
+> Rather than abusing the reset interface, I think we should manage this
+> through the genpd's power on/off notifiers (GENPD_NOTIFY_OFF). The GPU
+> driver should register its corresponding device for them
+> (dev_pm_genpd_add_notifier()).
+> 
+> The trick however, is to make the behaviour of the power-domain for
+> the gdsc (the genpd->power_off() callback) conditional on whether the
+> HW is configured to vote or not. If the HW can vote, it should not
+> poll for the state - and vice versa when the HW can't vote.
+> 
 
-- simplefb
-- SD Card slot via SDHCI2
-- gpio-keys & PON keys
-- UFS
-- RPM regulators
-- USB2
+Per Akhil's description I misunderstood who the other voters are; but
+either way it's not the same "HW configured" mechanism as the one we're
+already discussing.
 
-This has been validated with a rev (62) device. You can check yours
-next to the serial no. on the sticker in the lower portion of the
-back side of your tablet.
 
-To get a successful boot run:
+But if we based on similar means could control if the power_off() ops
+should be blocking, waiting for the status indication to show that the
+hardware is indeed powered down, I think this would meet the needs.
 
-cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
-sm6115p-lenovo-j606f.dtb > .Image.gz-dtb
+And GENPD_NOTIFY_OFF seems to provide the notification that it was
+successful (i.e. happened within the timeout etc).
 
-~/mkbootimg/mkbootimg.py \
---kernel .Image.gz-dtb \
---ramdisk some/initrd.img \
---pagesize 4096 \
---base 0x0 \
---kernel_offset 0x8000 \
---ramdisk_offset 0x1000000 \
---tags_offset 0x100 \
---cmdline 'SOME_CMDLINE' \
---dtb_offset 0x1f00000 \
---header_version 1 \
---os_version 11 \
---os_patch_level 2022-11 \
--o j606f.img
+> Would this work?
+> 
 
-fastboot flash boot j606f.img
-fastboot flash dtbo empty.img
-fastboot flash recovery empty.img
-fastboot reboot
+If we can control the behavior of the genpd, I think it would.
 
-Where empty.img is 2 zero-bytes.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    | 290 ++++++++++++++++++
- 2 files changed, 291 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 3e79496292e7..5d281436172d 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -156,6 +156,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-new file mode 100644
-index 000000000000..102730dd49a7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -0,0 +1,290 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-+/*
-+ * Copyright (c) 2022 Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm6115.dtsi"
-+#include "pm6125.dtsi"
-+
-+/ {
-+	model = "Lenovo Tab P11";
-+	compatible = "lenovo,j606f", "qcom,sm6115p", "qcom,sm6115";
-+	chassis-type = "tablet";
-+
-+	/* required for bootloader to select correct board */
-+	qcom,msm-id = <445 0x10000>, <420 0x10000>;
-+	qcom,board-id = <34 3>;
-+
-+	aliases {
-+		mmc0 = &sdhc_2;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x5c000000 0 (2000 * 1200 * 4)>;
-+			width = <1200>;
-+			height = <2000>;
-+			stride = <(1200 * 4)>;
-+			format = "a8r8g8b8";
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vol_up_n>;
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm6125_gpio 5 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+	};
-+};
-+
-+&dispcc {
-+	/* HACK: disable until a panel driver is ready to retain simplefb */
-+	status = "disabled";
-+};
-+
-+&pm6125_gpio {
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		pm6125_s6: s6 {
-+			regulator-min-microvolt = <304000>;
-+			regulator-max-microvolt = <1456000>;
-+		};
-+
-+		pm6125_s7: s7 {
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <2080000>;
-+		};
-+
-+		pm6125_s8: s8 {
-+			regulator-min-microvolt = <1064000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		pm6125_l1: l1 {
-+			regulator-min-microvolt = <952000>;
-+			regulator-max-microvolt = <1152000>;
-+		};
-+
-+		pm6125_l4: l4 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm6125_l5: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			/* 3.056V capped to 2.96V for SDHCI */
-+			regulator-max-microvolt = <2960000>;
-+			regulator-allow-set-load;
-+			/* Broken hw, this one can't be turned off or SDHCI will break! */
-+			regulator-always-on;
-+		};
-+
-+		pm6125_l6: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		pm6125_l7: l7 {
-+			/* 1.2V-1.304V fixed at 1.256V for SDHCI bias */
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1256000>;
-+			/*
-+			 * TODO: SDHCI seems to also work with this one turned off, however
-+			 * there exists a possibility that it may not work with some very
-+			 * specific SDCard types, perhaps validating this against a wide
-+			 * range of models could rule that out, saving some power would
-+			 * certainly be nice..
-+			 */
-+			regulator-always-on;
-+		};
-+
-+		pm6125_l8: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		pm6125_l9: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		pm6125_l10: l10 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l11: l11 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		pm6125_l12: l12 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <1984000>;
-+		};
-+
-+		pm6125_l13: l13 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		pm6125_l14: l14 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l15: l15 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		pm6125_l16: l16 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l17: l17 {
-+			regulator-min-microvolt = <1152000>;
-+			regulator-max-microvolt = <1384000>;
-+		};
-+
-+		pm6125_l18: l18 {
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1312000>;
-+		};
-+
-+		pm6125_l19: l19 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		pm6125_l20: l20 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		pm6125_l21: l21 {
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+
-+		pm6125_l22: l22 {
-+			regulator-min-microvolt = <2952000>;
-+			/* 3.304V capped to 2.96V for SDHCI */
-+			regulator-max-microvolt = <2960000>;
-+			regulator-allow-set-load;
-+			/* Broken hw, this one can't be turned off or SDHCI will break! */
-+			regulator-always-on;
-+		};
-+
-+		pm6125_l23: l23 {
-+			regulator-min-microvolt = <3200000>;
-+			regulator-max-microvolt = <3400000>;
-+		};
-+
-+		pm6125_l24: l24 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+	};
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc2_state_on &sdc2_gate_pin>;
-+	pinctrl-1 = <&sdc2_state_off>;
-+	vmmc-supply = <&pm6125_l22>;
-+	vqmmc-supply = <&pm6125_l5>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32764>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <14 4>;
-+
-+	/*
-+	 * This is a wholly undocumented pin (other than a single vague "pwr-gpios" reference)
-+	 * that needs to be toggled for the SD Card slot to work properly..
-+	 */
-+	sdc2_gate_pin: sdc2-gate-state {
-+		pins = "gpio45";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+		output-high;
-+	};
-+};
-+
-+&ufs_mem_hc {
-+	vcc-supply = <&pm6125_l24>;
-+	vcc-max-microamp = <600000>;
-+	vccq2-supply = <&pm6125_l11>;
-+	vccq2-max-microamp = <600000>;
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&pm6125_l4>;
-+	vdda-pll-supply = <&pm6125_l12>;
-+	vddp-ref-clk-supply = <&pm6125_l18>;
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&pm6125_l4>;
-+	vdda-pll-supply = <&pm6125_l12>;
-+	vdda-phy-dpdm-supply = <&pm6125_l15>;
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
--- 
-2.38.1
-
+Thanks,
+Bjorn
