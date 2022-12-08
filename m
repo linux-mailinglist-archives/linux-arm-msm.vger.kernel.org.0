@@ -2,183 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66F6F647164
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 15:13:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF490647172
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 15:19:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229710AbiLHONe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 09:13:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
+        id S229788AbiLHOTR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 09:19:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbiLHONd (ORCPT
+        with ESMTP id S229479AbiLHOTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 09:13:33 -0500
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7BB7E43D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 06:13:31 -0800 (PST)
-Received: by mail-yb1-xb2b.google.com with SMTP id g4so1763668ybg.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 06:13:31 -0800 (PST)
+        Thu, 8 Dec 2022 09:19:16 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABEDD2FD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 06:19:15 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id x6so1687884lji.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 06:19:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Z5aJtLOuR7FuK5HbTy22FQpW8Dvr68E0rRJLO0HyBk=;
-        b=oMLFT7CiEH/WZJjXGiQcL2YeIFMSySLFJwOHBXqBfUpYtZhi/y3/hjBquUv7hfXXtK
-         RBd/4pWaU3C//J78g874Ftmevp3GEB9qEm/zre80CUs0NWyxnLfgX7oFYU2u4EUFXN7n
-         hPyfOg8BnP04XPhmfgLacW8ue8nLW9y8dhWB2t4DLSeiNQbtNtMNQed65frPzWuOjmKV
-         zVNdzEoD93UKR08k40tOWYhaRXvpnOqVQHUk36vPes1z8p3Xq7pWxsDt4Uu+CV/OyRay
-         PiAECURGS5pUAr2MwHmjm9wqV5EVcChv7PFxFXu9qQuhQNPjLwCvtZejxE92epJWpwQA
-         zVoA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zee3YNW88hhZh1L7P1Y/lqj8Rf3TbJlBPbbl5HQ00WQ=;
+        b=KmZ6nQNBkZV4OK5WS9FnD+qMCvPHHmybYxMD1fGYiDZDi+5B6NtbBY8b/CzrGuvMDH
+         eKoqGSM/9KdF4l9QeWUfNgDi/IPhqZEtJNBNWQvMVh0bAO/2ZFhSV2l8a3dC6S/QKdQy
+         qXnztYeRpmfqQS4DFwqVh6/xtSbBlg+QRpUxlXNr+D++Mi/LUQQfgeq4WBUvI1ULsJCq
+         FbtQ3HRgtf5j1ZRyw0Jrcrc7k/DbKFNxwijRxNGc70VyucSBKxVyZeIQRbClhXeXOnls
+         lchaLs4HJ2ck3jtksxU5GI+s10VM56sEbOcomN6p0Irg5eTXevrwqMsx5IR47Pape2o3
+         3F4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2Z5aJtLOuR7FuK5HbTy22FQpW8Dvr68E0rRJLO0HyBk=;
-        b=jz7WRQkauhjb9yPx2BdV1SvQ6UAKzLsHyuI/brTBEg1cGW6DzmfK/qXm5y2dSBuMJH
-         nALjPNaf5I2KwLpPgnxBUJfmj8xQQn3UcPhjKH+FcsNyNfr5NKg1/nZrkcTrYzWYC3bR
-         znaHfqy9zrOC+mwXOIrnSZ5dwWn3WYlh2nDY2ghPM/HcJRxZGtzgpl7cDJ3bThrjLklm
-         xKYyLMGaFPrm/T0t5zY8qm38oR3TwPxyzP2frZJ3w8rmOAqsfXDWXgxQJdpIkEy0DpRp
-         +aHIMHJBYbbfhyc6nnsG5C88TD7IFre0klKylQiAfJWSdz5s2TBwz0rDW6hEmMBKLdra
-         E5Kw==
-X-Gm-Message-State: ANoB5pk1RPfZ4JehcgzzTgx393GfunrhiJwOBC6GJty8zhRK9aN7JBrz
-        fO57BYXXjBFBwNh1DwmPjoMZV7awZ5MjvvprHWCGWg==
-X-Google-Smtp-Source: AA0mqf7BVGb/EIkFUaHqlMWOuRls39ddO5l5iNFgrXGZGIwAL1UtqvApnlXb3rvZfj2yAM/L4i77IP5/4pDvbZCoSqY=
-X-Received: by 2002:a05:6902:114f:b0:701:161b:d3b1 with SMTP id
- p15-20020a056902114f00b00701161bd3b1mr17092268ybu.194.1670508810698; Thu, 08
- Dec 2022 06:13:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20221207062913.3154262-1-bhupesh.sharma@linaro.org>
- <CAA8EJpo30L=KYvrkbnWOrSXGVPk5++r77MTqVd12SZtaUqo-_w@mail.gmail.com> <CAH=2Ntw7EKxkrRwp7mqkBm0gGE7=jVruViPa7ZiG1aSA0ipMzQ@mail.gmail.com>
-In-Reply-To: <CAH=2Ntw7EKxkrRwp7mqkBm0gGE7=jVruViPa7ZiG1aSA0ipMzQ@mail.gmail.com>
+        bh=Zee3YNW88hhZh1L7P1Y/lqj8Rf3TbJlBPbbl5HQ00WQ=;
+        b=IcYdOWz40lmRH5HjU728PPyAvbhFqSFzAPMCaEGrSPAx/+kQr000IfbcwxFSQEBGPJ
+         E1emjoyR9hZns0fKw4VvljNB2x2dALSp3FXdLCijau+rSFyhig+ISuSCqlWKJ1tWmgCr
+         MzDB81UrsvYedzVXTRjnvrH0IFTtsQECAwGMPTLf69V/8jDUXtK90NDho6JeQbpnjDTV
+         ZXYcLJU4x4vTTdM9/6Ay13+4EswYG4RsbFZbxCWm3r+xxkQ/YM9OqVoyClJnSIvcWPZH
+         QIKZsoPK1gjU+7qJseLrHyuhQr6GDlAoI5R81+Of8kKglBylm8lcf4zcU5ix2lv8yOQv
+         8AFQ==
+X-Gm-Message-State: ANoB5pnUIUcozGkD5G2Ud7VUZO11qmm1dTg6nGiPBxsNOVRSymxQ/PWo
+        IENIvHrm3HdkYTrqXsrfg/J/ww==
+X-Google-Smtp-Source: AA0mqf5EZ2ebcJ+J2+Q8WnkiDedlhZOJxuYOVR2/nsY20/svgIxR+ihixwWD28oGtlnkBcDKl7w0IA==
+X-Received: by 2002:a2e:9eca:0:b0:279:c410:958a with SMTP id h10-20020a2e9eca000000b00279c410958amr11256395ljk.327.1670509153834;
+        Thu, 08 Dec 2022 06:19:13 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id s17-20020a056512203100b004b578e52d81sm1514692lfs.176.2022.12.08.06.19.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 06:19:13 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 8 Dec 2022 17:13:20 +0300
-Message-ID: <CAA8EJpqUT+Zy0uD+0NnUTbQWOM_+CAfXTU+ED=GwgcNe2MpVHQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Fix iommu sid values for PCIe nodes
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
-        andersson@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH 1/3] clk: qcom: dispcc-sm6115: use parent_hws for disp_cc_mdss_rot_clk
+Date:   Thu,  8 Dec 2022 17:19:10 +0300
+Message-Id: <20221208141912.47262-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 8 Dec 2022 at 14:05, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> On Thu, 8 Dec 2022 at 16:14, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, 7 Dec 2022 at 09:29, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
-> > >
-> > > Fix the iommu sid values for the PCIe nodes present on
-> > > Qualcomm SM8150 SoC dtsi (in sync the with downstream code).
-> >
-> > The commit message describes what you did, not why. Is there any
-> > actual issue that you are trying to solve?
->
-> Right, I will add that in v2. We have a customer facing some sid
-> related IOMMU transactional errors on sm8150 based boards.
->
-> > It makes me wonder because all modern Qualcomm platforms share more or
-> > less the same setup.
->
-> Please see sdm845.dtsi, which does the same as suggested via this
-> patch for sm8150.
+Rework disp_cc_mdss_rot_clk to use parent_hws isntead of parent_names.
 
-Should we also apply the same change to other platforms?
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/clk/qcom/dispcc-sm6115.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->
-> Thanks,
-> Bhupesh
->
-> > > Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
-> > > Cc: Bjorn Andersson <andersson@kernel.org>
-> > > Cc: Rob Herring <robh+dt@kernel.org>
-> >
-> > No need to have regular maintainers in Cc tags. Please use regular
-> > git-send-email arguments instead.
-> >
-> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sm8150.dtsi | 32 ++++++++++++++++++++++++++--
-> > >  1 file changed, 30 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > index d1b64280ab0b..e88d1617a1ab 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > > @@ -1810,9 +1810,23 @@ pcie0: pci@1c00000 {
-> > >                                       "slave_q2a",
-> > >                                       "tbu";
-> > >
-> > > -                       iommus = <&apps_smmu 0x1d80 0x7f>;
-> > > +                       iommus = <&apps_smmu 0x1d80 0xf>;
-> > >                         iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
-> > >                                     <0x100 &apps_smmu 0x1d81 0x1>;
-> >
-> > it looks like the patch was not even compile-tested.
-> >
-> > > +                                   <0x200 &apps_smmu 0x1d82 0x1>,
-> > > +                                   <0x300 &apps_smmu 0x1d83 0x1>,
-> > > +                                   <0x400 &apps_smmu 0x1d84 0x1>,
-> > > +                                   <0x500 &apps_smmu 0x1d85 0x1>,
-> > > +                                   <0x600 &apps_smmu 0x1d86 0x1>,
-> > > +                                   <0x700 &apps_smmu 0x1d87 0x1>,
-> > > +                                   <0x800 &apps_smmu 0x1d88 0x1>,
-> > > +                                   <0x900 &apps_smmu 0x1d89 0x1>,
-> > > +                                   <0xa00 &apps_smmu 0x1d8a 0x1>,
-> > > +                                   <0xb00 &apps_smmu 0x1d8b 0x1>,
-> > > +                                   <0xc00 &apps_smmu 0x1d8c 0x1>,
-> > > +                                   <0xd00 &apps_smmu 0x1d8d 0x1>,
-> > > +                                   <0xe00 &apps_smmu 0x1d8e 0x1>,
-> > > +                                   <0xf00 &apps_smmu 0x1d8f 0x1>;
-> > >
-> > >                         resets = <&gcc GCC_PCIE_0_BCR>;
-> > >                         reset-names = "pci";
-> > > @@ -1909,9 +1923,23 @@ pcie1: pci@1c08000 {
-> > >                         assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
-> > >                         assigned-clock-rates = <19200000>;
-> > >
-> > > -                       iommus = <&apps_smmu 0x1e00 0x7f>;
-> > > +                       iommus = <&apps_smmu 0x1e00 0xf>;
-> > >                         iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
-> > >                                     <0x100 &apps_smmu 0x1e01 0x1>;
-> > > +                                   <0x200 &apps_smmu 0x1e02 0x1>,
-> > > +                                   <0x300 &apps_smmu 0x1e03 0x1>,
-> > > +                                   <0x400 &apps_smmu 0x1e04 0x1>,
-> > > +                                   <0x500 &apps_smmu 0x1e05 0x1>,
-> > > +                                   <0x600 &apps_smmu 0x1e06 0x1>,
-> > > +                                   <0x700 &apps_smmu 0x1e07 0x1>,
-> > > +                                   <0x800 &apps_smmu 0x1e08 0x1>,
-> > > +                                   <0x900 &apps_smmu 0x1e09 0x1>,
-> > > +                                   <0xa00 &apps_smmu 0x1e0a 0x1>,
-> > > +                                   <0xb00 &apps_smmu 0x1e0b 0x1>,
-> > > +                                   <0xc00 &apps_smmu 0x1e0c 0x1>,
-> > > +                                   <0xd00 &apps_smmu 0x1e0d 0x1>,
-> > > +                                   <0xe00 &apps_smmu 0x1e0e 0x1>,
-> > > +                                   <0xf00 &apps_smmu 0x1e0f 0x1>;
-> > >
-> > >                         resets = <&gcc GCC_PCIE_1_BCR>;
-> > >                         reset-names = "pci";
-> > > --
-> > > 2.38.1
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
-
-
+diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
+index 818bb8f4637c..1937edf23f21 100644
+--- a/drivers/clk/qcom/dispcc-sm6115.c
++++ b/drivers/clk/qcom/dispcc-sm6115.c
+@@ -466,8 +466,8 @@ static struct clk_branch disp_cc_mdss_rot_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "disp_cc_mdss_rot_clk",
+-			.parent_names = (const char *[]){
+-				"disp_cc_mdss_rot_clk_src",
++			.parent_hws = (const struct clk_hw*[]) {
++				&disp_cc_mdss_rot_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+ 			.flags = CLK_SET_RATE_PARENT,
 -- 
-With best wishes
-Dmitry
+2.30.2
+
