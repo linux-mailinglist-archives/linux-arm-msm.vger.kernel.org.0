@@ -2,209 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 479F9647A35
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 00:41:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75311647A3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 00:42:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230346AbiLHXlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 18:41:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53926 "EHLO
+        id S230246AbiLHXmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 18:42:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbiLHXld (ORCPT
+        with ESMTP id S230492AbiLHXmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 18:41:33 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC1B94190;
-        Thu,  8 Dec 2022 15:39:09 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B8NLbDG023958;
-        Thu, 8 Dec 2022 23:38:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vfVMr5PVP/PyqxS//lgn3F/cfbT5Kuc8CzRnXxY5PS0=;
- b=TUSZ9voDSZ6NkZOZsEKGJ9bpiCPoTu19KZWePiIZpru2+2twRiGCdmzDF3a/wArkDLOv
- CcySBYdwCgo5mNRlWSowL3eNz5JHKj3ZDDoSuM9tXR7D4gqj+djrr1zjMbmMBUCMBHJm
- oJdHAzf5aOu+6E/E4WiK/itThFUWGoJN6Q3CMsjfIx5cNi1PhLEQJ2615VVjYz1F10bA
- 6i1UUhm1C78tpv4+lJChdGmzx03VozldJCVkfN4FZRFFAZAvFX0il27qMTsx3AJhKOXr
- 4edkX/r8dkdJAr+rEPiyFwxxEcq2y0ywphwYj3xGBLD7+oEo2Edyv2KC0HmNlIqgKk7c 6g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3marj0vsja-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Dec 2022 23:38:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B8NcRkr014483
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Dec 2022 23:38:27 GMT
-Received: from [10.110.56.119] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 8 Dec 2022
- 15:38:25 -0800
-Message-ID: <5aa16223-dbf6-996c-1985-794302dcce91@quicinc.com>
-Date:   Thu, 8 Dec 2022 15:38:24 -0800
+        Thu, 8 Dec 2022 18:42:11 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE2C89588
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 15:39:46 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id o189so1236988iof.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 15:39:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DJeoCLQFLEcXPKMOTThWiocjzfFiXa/lSgHVK2Nng0s=;
+        b=QVdu5FC4oPAX8RxYvYIUWE1y4Q/ilXurCHFLGc3Tc4dGFGvxcUoOf9xt+86BYVutW4
+         oYe3qgOWxfVKg7Ww5lqd5r1tJ6RPh21l6AUE333JsjjanctNwrHEj/Nr0Djp99ZSsd0t
+         0cPZow6eza44fW1eyjYIOuOlev6TUd4XxBZAM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DJeoCLQFLEcXPKMOTThWiocjzfFiXa/lSgHVK2Nng0s=;
+        b=iws0ejXeDYAxgajTbqPeYSzyh1OtOi7N5r/EYUfZsBTD/tBgET5Z8xiaovebXU1Lpb
+         zhQHiREUJoIxX+g8frD9dXxt955NlHzbhUV4VviEhWv4QjnKZ3gIYQLl0gt8fSs0L8ZL
+         ILz+F//QHGlVz7Np9pzotIB8SZWLirN5RWaoU/SfbQjkKcviGABJDmGjG91AO/gGHgDY
+         EPhETcjIFE+TFOZa2dCGZK7bcmBU0v8dYWzPpXn10i7APTo97t0dd97NJVglwJvNc154
+         E6pdSKErA0NnnvKeEozGuKtf6+rTiuHwXRtIAW3uJRvTp3WYmNuUAUglukz9Tyz1BuOi
+         68aQ==
+X-Gm-Message-State: ANoB5pm2lM4ky9P1kPFA4DWHlmKoZua6Ch53nrVPixMJv13R4VxB0yX3
+        xvjR5Fbft0pd+QFDnOnujvdYMw==
+X-Google-Smtp-Source: AA0mqf61PL4z/iiDUVDUG4rHyolbpLtgVRGJ1pxGqY65GsUZCF5KiyCH6Vg3DF3vr2wfeHsAAeEqfw==
+X-Received: by 2002:a5d:9acd:0:b0:6df:e175:74c1 with SMTP id x13-20020a5d9acd000000b006dfe17574c1mr2752887ion.21.1670542786303;
+        Thu, 08 Dec 2022 15:39:46 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id ca6-20020a0566381c0600b0038a6d03db70sm1957617jab.34.2022.12.08.15.39.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Dec 2022 15:39:45 -0800 (PST)
+Date:   Thu, 8 Dec 2022 23:39:45 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-input@vger.kernel.org,
+        Yunlong Jia <ecs.beijing2022@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Johnny Chuang <johnny.chuang.emc@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/5] Input: elants_i2c: Delay longer with reset asserted
+Message-ID: <Y5J1wY/TzbU6BheD@google.com>
+References: <20221208192006.1070898-1-dianders@chromium.org>
+ <20221208111910.5.I6edfb3f459662c041563a54e5b7df727c27caaba@changeid>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v11 2/5] dt-bindings: msm/dp: add data-lanes and
- link-frequencies property
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
-        <airlied@gmail.com>
-CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1670539015-11808-1-git-send-email-quic_khsieh@quicinc.com>
- <1670539015-11808-3-git-send-email-quic_khsieh@quicinc.com>
- <5a3865ed-8847-db04-3d60-f35438250bef@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <5a3865ed-8847-db04-3d60-f35438250bef@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bPBU_QrodpkJA6crWCes3nfgZo0gx-FF
-X-Proofpoint-GUID: bPBU_QrodpkJA6crWCes3nfgZo0gx-FF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-08_12,2022-12-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- priorityscore=1501 spamscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212080194
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221208111910.5.I6edfb3f459662c041563a54e5b7df727c27caaba@changeid>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Dec 08, 2022 at 11:20:06AM -0800, Douglas Anderson wrote:
+> The elan touchscreen datasheet says that the reset GPIO only needs to
+> be asserted for 500us in order to reset the regulator. The problem is
+> that some boards need a level shifter between the signals on the GPIO
+> controller and the signals on the touchscreen. All of these extra
+> components on the line can slow the transition of the signals. On one
+> board, we measured the reset line and saw that it took almost 1.8ms to
+> go low. Even after we bumped up the "drive strength" of the signal
+> from the default 2mA to 8mA we still saw it take 421us for the signal
+> to go low.
+> 
+> In order to account for this we let's lengthen the amount of time that
 
-On 12/8/2022 3:33 PM, Dmitry Baryshkov wrote:
-> On 09/12/2022 00:36, Kuogee Hsieh wrote:
->> Add both data-lanes and link-frequencies property into endpoint
->>
->> Changes in v7:
->> -- split yaml out of dtsi patch
->> -- link-frequencies from link rate to symbol rate
->> -- deprecation of old data-lanes property
->>
->> Changes in v8:
->> -- correct Bjorn mail address to kernel.org
->>
->> Changes in v10:
->> -- add menu item to data-lanes and link-frequecnis
->>
->> Changes in v11:
->> -- add endpoint property at port@1
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
->
-> Applying: dt-bindings: msm/dp: add data-lanes and link-frequencies 
-> property
-> .git/rebase-apply/patch:47: trailing whitespace.
->
-> .git/rebase-apply/patch:51: trailing whitespace.
->
->
-> Also the dt_binding_check fails with an error for this schema. And 
-> after fixing the error in the schema I faced an example validation 
-> error. Did you check that the schema is correct and that the example 
-> validates against the schema?
+nit: s/we let's/we/ || s/we let's/let's/
 
-yes, but i run "make dt_binding_check 
-DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dp-controller.yaml" 
-at mu v5.15 branch since
+no need to re-spin just for this
 
-"make dt_binding_check" does not work at msm-next branch.
+> we keep the reset asserted. Let's bump it up from 500us to 5000us.
+> That's still a relatively short amount of time and is much safer.
+> 
+> It should be noted that this fixes real problems. Case in point:
+> 1. The touchscreen power rail may be shared with another device (like
+>    an eDP panel). That means that at probe time power might already be
+>    on.
+> 2. In probe we grab the reset GPIO and assert it (make it low).
+> 3. We turn on power (a noop since it was already on).
+> 4. We wait 500us.
+> 5. We deassert the reset GPIO.
+> 
+> With the above case and only a 500us delay we saw only a partial reset
+> asserted, which is bad. Giving it 5ms is overkill but feels safer in
+> case someone else has a different level shifter setup.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-But I did not check trainiling whitespace this time.
-
->
->> ---
->>   .../bindings/display/msm/dp-controller.yaml        | 27 
->> ++++++++++++++++++++++
->>   1 file changed, 27 insertions(+)
->>
->> diff --git 
->> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
->> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> index f2515af..2a7fdef8 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->> @@ -81,6 +81,7 @@ properties:
->>       data-lanes:
->>       $ref: /schemas/types.yaml#/definitions/uint32-array
->> +    deprecated: true
->>       minItems: 1
->>       maxItems: 4
->>       items:
->> @@ -96,6 +97,7 @@ properties:
->>       ports:
->>       $ref: /schemas/graph.yaml#/properties/ports
->> +
->>       properties:
->>         port@0:
->>           $ref: /schemas/graph.yaml#/properties/port
->> @@ -105,6 +107,29 @@ properties:
->>           $ref: /schemas/graph.yaml#/properties/port
->>           description: Output endpoint of the controller
->>   +        properties:
->> +          endpoint:
->> +            $ref: /schemas/media/video-interfaces.yaml#
->> +
->> +            properties:
->> +              remote-endpoint: true
->
-> PLease add empty lines between the property definitions
->
->> +              data-lanes:
->> +                $ref: /schemas/types.yaml#/definitions/uint32-array
->
-> This is already a part of video-interfaces, so you don't need $ref
->
->> +                minItems: 1
->> +                maxItems: 4
->> +                items:
->> +                  maximum: 3
->
-> enum: [0, 1, 2, 3]
->
->> +              link-frequencies:
->> +                $ref: /schemas/types.yaml#/definitions/uint64-array
->> +                minItems: 1
->> +                maxItems: 4
->> +                items:
->> +                  maximum: 8100000000
->
-> I think we can have enum here too.
->
->> +
->> +  required:
->> +    - port@0
->> +    - port@1
->> +
->>   required:
->>     - compatible
->>     - reg
->> @@ -193,6 +218,8 @@ examples:
->>                   reg = <1>;
->>                   endpoint {
->>                       remote-endpoint = <&typec>;
->> +                    data-lanes = <0 1>;
->> +                    link-frequencies = /bits/ 64 <1620000000 
->> 2700000000 5400000000 8100000000>;
->>                   };
->>               };
->>           };
->
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
