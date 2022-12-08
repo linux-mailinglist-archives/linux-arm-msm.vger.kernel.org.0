@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF4BB646FAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 13:30:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52877646FE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 13:41:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbiLHMaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 07:30:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
+        id S229632AbiLHMlW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 07:41:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbiLHMaO (ORCPT
+        with ESMTP id S229568AbiLHMlW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 07:30:14 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076A4303FC;
-        Thu,  8 Dec 2022 04:30:14 -0800 (PST)
+        Thu, 8 Dec 2022 07:41:22 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F6058000;
+        Thu,  8 Dec 2022 04:41:21 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 95D1761F0A;
-        Thu,  8 Dec 2022 12:30:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10221C433C1;
-        Thu,  8 Dec 2022 12:30:10 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 36B24B823A8;
+        Thu,  8 Dec 2022 12:41:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AC0C433D6;
+        Thu,  8 Dec 2022 12:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670502613;
-        bh=vuyR8NSZXgKNwfmsYoMv4Ol+ici2HnAMRbBD2K6WyGs=;
+        s=k20201202; t=1670503278;
+        bh=guRXS28m/8dvPiWOssAoPyp+RdnQmwEIlChPgMBYOc4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Twma8AYQ06LUktSgKmq71rkrveB+1CUCh9pDKVdsZGc543B9CJHs7cHmyyyLzeKC/
-         eKR5Bs7pQ2t49ZXvntQpsXNQFEMIFTlSduIq7VVzNhldG6uG+Y74gSLUm1Lv4kC8SJ
-         tiD7E8VomIU384oLv8pTZGpoJ+3ptYH0z3Q7i7+RZFVOGWQDGc/7eZAfVzlPtCwJjr
-         J0j2Yyvu4sH8O1M/R15XSQS4aScmrpZrqT2SOSthasErjuKtrnUIRPMeHhboJ4yKxJ
-         Bsr/y9PorPjqN8tY9eod5rU1W5W+0NiQiXKRdCakYWNCabDSEBJnbn2Rl0CjnwONE8
-         MxBxBfIE996Gg==
-Date:   Thu, 8 Dec 2022 12:30:07 +0000
+        b=N6iHS4cFWQRisqelIhLwLxtxPCuj/mVxKb8MKEyqCDVoBjbAGtKh45pJtiAoNAa9a
+         VlzXHdiRDrBHvIHO/M/HBt3naizFo/9p0YbUZ/QsG7gpr9S4DLo6yK+GgReDiwMnjR
+         0nxsI6WEsGjArAba0kAipL3OBk+AI80So3CviVS63FM3sGd6CRNQlliFIonV6lTvQl
+         uGRHWJCGkbxdgVSQV/V4ZMPw1hjMlZP9XRdcqgzas1cTrqODvb0EwaBrI+Z3LIS0PC
+         TNpwwTLDMrTruEGdjBfIGEe7tD+cGpT/ybl1dqa2j4YLfxzDIjdDMOl/8fqvTWlPyd
+         CJCZwi3WwpWUQ==
+Date:   Thu, 8 Dec 2022 12:41:13 +0000
 From:   Lee Jones <lee@kernel.org>
 To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -43,7 +43,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         Lee Jones <lee.jones@linaro.org>, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH 1/2] mfd: qcom_rpm: Fix an error handling path in
  qcom_rpm_probe()
-Message-ID: <Y5HYzzwdWCrpWOTv@google.com>
+Message-ID: <Y5Hbado70xVuy3iq@google.com>
 References: <e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,9 +75,7 @@ On Sun, 20 Nov 2022, Christophe JAILLET wrote:
 >  drivers/mfd/qcom_rpm.c | 4 +---
 >  1 file changed, 1 insertion(+), 3 deletions(-)
 
-Something funny going on here.
-
-I received 3 identical versions of the same patch.
+Applied, thanks.
 
 -- 
 Lee Jones [李琼斯]
