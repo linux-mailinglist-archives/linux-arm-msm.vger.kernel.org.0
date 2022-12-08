@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 538F5646BC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 10:18:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93E4D646C48
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 10:55:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbiLHJSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 04:18:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51438 "EHLO
+        id S230158AbiLHJzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 04:55:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbiLHJRs (ORCPT
+        with ESMTP id S229777AbiLHJzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 04:17:48 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A289A6F0C4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 01:16:29 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id vv4so2424266ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 01:16:29 -0800 (PST)
+        Thu, 8 Dec 2022 04:55:10 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4598B654ED
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 01:55:08 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id x6so982449lji.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 01:55:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=elLETLSwT7VH5/W4TgvYIEFkfudJUq+gajumeb0E6/U=;
-        b=Xl8lOWPuf4BgoDd/DR8s1V45KSGql1YN70Pv5eJQ/LXtaGwoWHadHCKIlwDL6S3v4e
-         3XUIT3PgBdyik1lIe4RPpyMZKrqUuNAgd1/adXZ5ktp1QEdq3r5akAXTRrFwSZEibo6H
-         N4VPKByeukXcn3IRw4Qs70d9PMhIVYW3DFe0GgPzVHT1nZF4SeNunQ9IwTvKvE+uVYwx
-         mjW57fmwrHNLjt3LkDhHANcQYSRZcfKJDq3fI0bB2p80CZJM6+DW1dun0AYyK1qMQQLq
-         nX6ap/pjzA0gP7ZYgULa85ZZJ0n4TWr3PKg7gdWsL2EnMPLT7c/fESFvR0TLokhNzSmI
-         IEIw==
+        bh=4tvlnAL8F9eDttmg1+fY9hAFHlP4ZueorayQfollF64=;
+        b=X67EBk0BvLFCF57EFgGmT9EHyQWozGOhaslVgdA8O+eNl5S2yMGEIjC9PW5PyFJHON
+         EJwjy0PDm4THRYg9i+PN57H7dGmsi2dNp1o3uvcxqDyEWFErRiy6UJXUr/fmjO3INVpp
+         iTCvYxg0R9CPlGhzqoBxz6lCMi1fQjrWyCKti73T8Zo2fb54LXqz8imtYnQtrysZ4RXd
+         zWXnj56SPuqVdxM6nx4B39lP23fDGeR6LMCxJ6RItwA7YTrIEbBgm4bm6BxDS/pT4zn/
+         gkl09ddmnG7iNSult5IO5C8ccc+nOsAhIIWUVj6ywaV2Zm2490D2hN0smtewMaecdi6P
+         jZmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=elLETLSwT7VH5/W4TgvYIEFkfudJUq+gajumeb0E6/U=;
-        b=OZ1t6MguLvqqY5YpWazhSKcDkr4VV+vthmQE/dwcSq7dYNCAlamnsa9WL7AzosCzAD
-         ds6245n8TWpu9hRZluOcRJd2OiKdfd7arkhKAC3BzcXErsoQDF/5L5VJ2WlVhi7D0YIz
-         qo5sajI+bteRIRi6fp+rNfbj65hGff1yCbaGfb05zY2gNSK90keGQGo4wul5MOiWlw2y
-         eVZO7MfU4iK+AIFd7VbIdUQoQ2UCeXklaNhsMxnasgbcgbt4JTLCMFYIYAjig7nN2+1T
-         iSg0ak1O9x8kZZd0WNsTMXHunQWv9JNTmicLKpJOxFov6YsEbRyxabJkvVx/V5ROqPIW
-         LDlQ==
-X-Gm-Message-State: ANoB5pkcwDIzfAPKXNUwLEvbsI8bEXbn1OzNQ4hgQ2pxgBSy+RRY0x5D
-        mEtq5OEDJYrAxj0Uioi7LbdpABLulr3AkLIl
-X-Google-Smtp-Source: AA0mqf5y9Eg/nNQNOVImTYmfbgy6DdU3Rw24mCguzwK/vdn477+84Aesq43eDYwB4GHXXvu7NYvbkQ==
-X-Received: by 2002:a17:907:cb83:b0:7a7:3f0c:e99b with SMTP id un3-20020a170907cb8300b007a73f0ce99bmr2022155ejc.6.1670490988109;
-        Thu, 08 Dec 2022 01:16:28 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id kv22-20020a17090778d600b007c0be4861e8sm5018404ejc.23.2022.12.08.01.16.27
+        bh=4tvlnAL8F9eDttmg1+fY9hAFHlP4ZueorayQfollF64=;
+        b=pq0vsai5uDeWUfV7ZIzGW5b0oeq+mQ1/1msJ3fAA6cmULZWqUvvLPBOPmwCN5GtmU/
+         yXhPRTox4mymONUO2cPEMlzp3mTlXgdZiR0w0HhcTBsnZB3KDBzbudAVPJm6oj0dVsaZ
+         JXVjK9W/W3tNzb2cn1olppVjYG39Snxc0ZUod+vKttxXU5NSJaMcmLqanHueFexo+MzJ
+         zd6r8N4FkaggYWTv5TBlKhRjMSs5s+AMufKWNrUSF4WRMivp7uWiqaNSGXTJsnVW9CUu
+         T2lFkZOfvwNHiKcmVEcHYYjUhvPeflcYcuudfdjV9hEw+PlYuci2w8nhR5AE6sQZsGID
+         L/HQ==
+X-Gm-Message-State: ANoB5pmfE3CfUfLcxnFTBxJ4OcQtikhHK8UkRejPKl8EjXRsxS/ZsAZU
+        sE03n2I2mqYJdaPmkM4N0FlgfQ==
+X-Google-Smtp-Source: AA0mqf42uSff93t8l4RjdGOY5kdkI7wq941SVNz6wYLR7v8N13Ym8Y5EINoBy4yuD2PTmuNZnrXaBw==
+X-Received: by 2002:a05:651c:54b:b0:276:d9a6:dc00 with SMTP id q11-20020a05651c054b00b00276d9a6dc00mr31085186ljp.379.1670493306642;
+        Thu, 08 Dec 2022 01:55:06 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id m8-20020a2e9108000000b0026dffa29989sm1929668ljg.23.2022.12.08.01.55.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Dec 2022 01:16:27 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 08 Dec 2022 10:16:27 +0100
-Message-Id: <COWBMT72Y57W.2W8G3XDNT3T34@otso>
-Cc:     <quic_saipraka@quicinc.com>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <james.morse@arm.com>, <mchehab@kernel.org>, <rric@kernel.org>,
-        <linux-edac@vger.kernel.org>, <quic_ppareek@quicinc.com>
-Subject: Re: [PATCH 00/12] Qcom: LLCC/EDAC: Fix base address used for LLCC
- banks
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <bp@alien8.de>,
-        <tony.luck@intel.com>
-X-Mailer: aerc 0.13.0
-References: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Thu, 08 Dec 2022 01:55:06 -0800 (PST)
+Message-ID: <6e584300-c025-e7d5-86f5-4e3c63fd7372@linaro.org>
+Date:   Thu, 8 Dec 2022 10:55:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Fix iommu sid values for PCIe
+ nodes
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, andersson@kernel.org
+References: <20221207062913.3154262-1-bhupesh.sharma@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221207062913.3154262-1-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,102 +76,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
 
-On Wed Dec 7, 2022 at 2:59 PM CET, Manivannan Sadhasivam wrote:
-> The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
-> accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
-> This offset only works for some SoCs like SDM845 for which driver support
-> was initially added.
->    =20
-> But the later SoCs use different register stride that vary between the
-> banks with holes in-between. So it is not possible to use a single regist=
-er
-> stride for accessing the CSRs of each bank. By doing so could result in a
-> crash with the current drivers. So far this crash is not reported since
-> EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
-> driver extensively by triggering the EDAC IRQ (that's where each bank
-> CSRs are accessed).
->    =20
-> For fixing this issue, let's obtain the base address of each LLCC bank fr=
-om
-> devicetree and get rid of the fixed stride.
->
-> This series affects multiple platforms but I have only tested this on
-> SM8250 and SM8450. Testing on other platforms is welcomed.
 
-If you can tell me *how* I can test it, I'd be happy to test the series
-on sm6350, like how to trigger the EDAC IRQ.
+On 07/12/2022 07:29, Bhupesh Sharma wrote:
+> Fix the iommu sid values for the PCIe nodes present on
+> Qualcomm SM8150 SoC dtsi (in sync the with downstream code).
+> 
+> Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8150.dtsi | 32 ++++++++++++++++++++++++++--
+>   1 file changed, 30 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index d1b64280ab0b..e88d1617a1ab 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1810,9 +1810,23 @@ pcie0: pci@1c00000 {
+>   				      "slave_q2a",
+>   				      "tbu";
+>   
+> -			iommus = <&apps_smmu 0x1d80 0x7f>;
+> +			iommus = <&apps_smmu 0x1d80 0xf>;
+>   			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+>   				    <0x100 &apps_smmu 0x1d81 0x1>;
+Should be a "," here.
 
-So far without any extra patches I don't even see the driver probing,
-with this in kconfig
 
-  +CONFIG_EDAC=3Dy
-  +CONFIG_EDAC_QCOM=3Dy
+> +				    <0x200 &apps_smmu 0x1d82 0x1>,
+> +				    <0x300 &apps_smmu 0x1d83 0x1>,
+> +				    <0x400 &apps_smmu 0x1d84 0x1>,
+> +				    <0x500 &apps_smmu 0x1d85 0x1>,
+> +				    <0x600 &apps_smmu 0x1d86 0x1>,
+> +				    <0x700 &apps_smmu 0x1d87 0x1>,
+> +				    <0x800 &apps_smmu 0x1d88 0x1>,
+> +				    <0x900 &apps_smmu 0x1d89 0x1>,
+> +				    <0xa00 &apps_smmu 0x1d8a 0x1>,
+> +				    <0xb00 &apps_smmu 0x1d8b 0x1>,
+> +				    <0xc00 &apps_smmu 0x1d8c 0x1>,
+> +				    <0xd00 &apps_smmu 0x1d8d 0x1>,
+> +				    <0xe00 &apps_smmu 0x1d8e 0x1>,
+> +				    <0xf00 &apps_smmu 0x1d8f 0x1>;
+>   
+>   			resets = <&gcc GCC_PCIE_0_BCR>;
+>   			reset-names = "pci";
+> @@ -1909,9 +1923,23 @@ pcie1: pci@1c08000 {
+>   			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>   			assigned-clock-rates = <19200000>;
+>   
+> -			iommus = <&apps_smmu 0x1e00 0x7f>;
+> +			iommus = <&apps_smmu 0x1e00 0xf>;
+>   			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+>   				    <0x100 &apps_smmu 0x1e01 0x1>;
+And here.
 
-I do have /sys/bus/platform/drivers/qcom_llcc_edac at runtime but
-nothing in there (except bind, uevent and unbind), and also nothing
-interesting in dmesg with "llcc", with edac there's just this message:
-
-  [    0.064800] EDAC MC: Ver: 3.0.0
-
-From what I'm seeing now the edac driver is only registered if the
-interrupt is specified but it doesn't seem like sm6350 (=3Dlagoon) has
-this irq? Downstream dts is just this:
-
-	cache-controller@9200000 {
-		compatible =3D "lagoon-llcc-v1";
-		reg =3D <0x9200000 0x50000> , <0x9600000 0x50000>;
-		reg-names =3D "llcc_base", "llcc_broadcast_base";
-		cap-based-alloc-and-pwr-collapse;
-	};
-
-From looking at the downstream code, perhaps it's using the polling mode
-there?
-
-	/* Request for ecc irq */
-	ecc_irq =3D llcc_driv_data->ecc_irq;
-	if (ecc_irq < 0) {
-		dev_info(dev, "No ECC IRQ; defaulting to polling mode\n");
-
-Let me know what you think.
-
-Regards
-Luca
-
->
-> Thanks,
-> Mani
->
-> Manivannan Sadhasivam (12):
->   dt-bindings: arm: msm: Update the maintainers for LLCC
->   dt-bindings: arm: msm: Fix register regions used for LLCC banks
->   arm64: dts: qcom: sdm845: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc7180: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc8280xp: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8150: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8250: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm6350: Fix the base addresses of LLCC banks
->   qcom: llcc/edac: Fix the base address used for accessing LLCC banks
->
->  .../bindings/arm/msm/qcom,llcc.yaml           | 128 ++++++++++++++++--
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   5 +-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  10 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm6350.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   7 +-
->  drivers/edac/qcom_edac.c                      |  14 +-
->  drivers/soc/qcom/llcc-qcom.c                  |  64 +++++----
->  include/linux/soc/qcom/llcc-qcom.h            |   4 +-
->  13 files changed, 197 insertions(+), 67 deletions(-)
->
-> --=20
-> 2.25.1
-
+Konrad
+> +				    <0x200 &apps_smmu 0x1e02 0x1>,
+> +				    <0x300 &apps_smmu 0x1e03 0x1>,
+> +				    <0x400 &apps_smmu 0x1e04 0x1>,
+> +				    <0x500 &apps_smmu 0x1e05 0x1>,
+> +				    <0x600 &apps_smmu 0x1e06 0x1>,
+> +				    <0x700 &apps_smmu 0x1e07 0x1>,
+> +				    <0x800 &apps_smmu 0x1e08 0x1>,
+> +				    <0x900 &apps_smmu 0x1e09 0x1>,
+> +				    <0xa00 &apps_smmu 0x1e0a 0x1>,
+> +				    <0xb00 &apps_smmu 0x1e0b 0x1>,
+> +				    <0xc00 &apps_smmu 0x1e0c 0x1>,
+> +				    <0xd00 &apps_smmu 0x1e0d 0x1>,
+> +				    <0xe00 &apps_smmu 0x1e0e 0x1>,
+> +				    <0xf00 &apps_smmu 0x1e0f 0x1>;
+>   
+>   			resets = <&gcc GCC_PCIE_1_BCR>;
+>   			reset-names = "pci";
