@@ -2,781 +2,478 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D02D2647176
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 15:19:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55C326471BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 15:27:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbiLHOTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 09:19:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
+        id S229695AbiLHO1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 09:27:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiLHOTT (ORCPT
+        with ESMTP id S230137AbiLHO0I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 09:19:19 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D741A83E9B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 06:19:16 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 1so2264364lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 06:19:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ulFqK8V316aETE4Ne37fO3IN4UHXQqpRxVPaabpLF6E=;
-        b=BSvurBtwjIzjcJNqyaS7g6Cxh2qEG1NwcW05TihXUHKtSXRamKuWF1vwhSDzEsimnh
-         NNKPAQGHV1N4tGrQ8a7QRorTVsIAqSKuunlhfHKsyb5h58E1H/Vs533MTg3f+zJeSETU
-         +NsyX+GKuHmed2Ovyx3q4S/HSNjQbhhoflPKUPZaN75vn/0cG9Ze4UiFssRFb6xSWP0A
-         KoCMXn9Bu8TVpe6oPEd4VqeJH8oOwlqztLe0Bhz9lvYXfTfYilfY4W4pF/dHL+KWQEib
-         bw/jrWZUBHVk4TsiCvR79G+kN0Tm1AZ6djvd2ZYYu2BqFJrU2t3bAYBN6YrXwhWjRnZB
-         GyRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ulFqK8V316aETE4Ne37fO3IN4UHXQqpRxVPaabpLF6E=;
-        b=BgTlo/+P0bsxh6OB5O3n77vC1U4rXquonuiZSv96J69xyCOupp/62T4Cs5+xKV74QI
-         F3Z0UHaAkhXljAvL3DbWoRc5PG7LIRqp1Kk+m5yrLU1N1MlIIuJa9ss96TBj4lNokfNc
-         XMLzz9b3oIkvRKXm/nT11HR37VUxSjOcNKmz/XMRbY7MO4poaNiGbCP5JLkH4zHYwgbX
-         kRSxLl3uJyoiXh2BfsS6QhFHA/TizS4IH2ngZxfFaKRW7FYsQ9v9tX4LQtKQdrmRYvFT
-         euE6z71c8px6GZBiOd63LDdts4uBSkeRPVYnPh5wOlH3yWujw1GLOvVhczm6wjES4MXd
-         +pAQ==
-X-Gm-Message-State: ANoB5plyKw+U+H433EAgD+JXfmgoO7tX/+D2A/1UD7SwUjIRtL074vnJ
-        vYHs/gxlchwpkAFEyhOmiIuWBw==
-X-Google-Smtp-Source: AA0mqf5SZMh9V2bV3ltqX4P0jg79/x38K1zR08WMSV117ZSxjpzlw6h83/kNPjJVYKHzAX+U7Vetyw==
-X-Received: by 2002:a19:6559:0:b0:4b5:6e66:7bbc with SMTP id c25-20020a196559000000b004b56e667bbcmr6198345lfj.487.1670509155119;
-        Thu, 08 Dec 2022 06:19:15 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id s17-20020a056512203100b004b578e52d81sm1514692lfs.176.2022.12.08.06.19.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 06:19:14 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH 3/3] clk: qcom: gcc-sm6375: use parent_hws where possible
-Date:   Thu,  8 Dec 2022 17:19:12 +0300
-Message-Id: <20221208141912.47262-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20221208141912.47262-1-dmitry.baryshkov@linaro.org>
-References: <20221208141912.47262-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 8 Dec 2022 09:26:08 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD6AD45A17;
+        Thu,  8 Dec 2022 06:25:58 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B8DJwAS031048;
+        Thu, 8 Dec 2022 14:25:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=2x4FctKgQPV6Z/H0SPs68LZKyHxcfHZ0YWVpGUUlRgc=;
+ b=lZhRpXsQWhGsRsHvj7A8Bv/LgXc70LUUlrSfsFgT+C5J8KrbcYSowz6B8JSL2z8QzqUd
+ kimPXjXgEGMCAC9JbiEpJmJb4pPt25aXikA5vLCnb2fy4m4MW48CkjzJKfaTfZokR1nn
+ ir088lNYMGZHFXv6hnNUCH10BQt6By+aSKK/V3EEnGZxTIddeYyEN8Tc6swb+mQ8Uw4s
+ giwjRlZosuNuuPWOGtVt4V6ypvihtcBrWRbJmPbkz9dkZDM3YWeGB3WTNIaHKNyiQ80t
+ tPu1ZUBL8kgJhzsUVNZiITn5MkDhTR6XkrvlmAq/BEBHm1u2Y7m/jIaOKZQMd9hiPjNH 0Q== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mb7bc9jqt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Dec 2022 14:25:52 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2B8EPmWG013724;
+        Thu, 8 Dec 2022 14:25:48 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3m8g0behce-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 08 Dec 2022 14:25:48 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2B8EPmcE013717;
+        Thu, 8 Dec 2022 14:25:48 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2B8EPm7r013716;
+        Thu, 08 Dec 2022 14:25:48 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 837584610; Thu,  8 Dec 2022 19:55:47 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com, vkoul@kernel.org,
+        quic_arandive@quicinc.com, quic_ramkri@quicinc.com,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [V4] spi: spi-geni-qcom: Add support for SE DMA mode
+Date:   Thu,  8 Dec 2022 19:55:44 +0530
+Message-Id: <1670509544-15977-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uYMcWZmUfxfmpQOI4KSvJkZRHMwxHAji
+X-Proofpoint-ORIG-GUID: uYMcWZmUfxfmpQOI4KSvJkZRHMwxHAji
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-08_07,2022-12-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 phishscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2212080120
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change several parent_data entries with only .hw entries to parent_hws
-instead.
+SE DMA mode can be used for larger transfers and FIFO mode
+for smaller transfers.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 ---
- drivers/clk/qcom/gcc-sm6375.c | 252 +++++++++++++++++-----------------
- 1 file changed, 126 insertions(+), 126 deletions(-)
+v4 -> v3:
+- remove cur_m_cmd field
+- add dma_addr fields to spi_geni_master
+- dont use dma_addr from xfer, use above
+- dev_warn instead of dev_err in handle_timeout
+- set xfer_mode to FIFO in set_cs
 
-diff --git a/drivers/clk/qcom/gcc-sm6375.c b/drivers/clk/qcom/gcc-sm6375.c
-index 6d75f735a7a6..ad3c4833990d 100644
---- a/drivers/clk/qcom/gcc-sm6375.c
-+++ b/drivers/clk/qcom/gcc-sm6375.c
-@@ -1766,8 +1766,8 @@ static struct clk_branch gcc_camss_axi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_axi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_axi_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_axi_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1784,8 +1784,8 @@ static struct clk_branch gcc_camss_cci_0_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cci_0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_cci_0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_cci_0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1802,8 +1802,8 @@ static struct clk_branch gcc_camss_cci_1_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cci_1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_cci_1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_cci_1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1820,8 +1820,8 @@ static struct clk_branch gcc_camss_cphy_0_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cphy_0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1838,8 +1838,8 @@ static struct clk_branch gcc_camss_cphy_1_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cphy_1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1856,8 +1856,8 @@ static struct clk_branch gcc_camss_cphy_2_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cphy_2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1874,8 +1874,8 @@ static struct clk_branch gcc_camss_cphy_3_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_cphy_3_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1892,8 +1892,8 @@ static struct clk_branch gcc_camss_csi0phytimer_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_csi0phytimer_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_csi0phytimer_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_csi0phytimer_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1910,8 +1910,8 @@ static struct clk_branch gcc_camss_csi1phytimer_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_csi1phytimer_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_csi1phytimer_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_csi1phytimer_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1928,8 +1928,8 @@ static struct clk_branch gcc_camss_csi2phytimer_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_csi2phytimer_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_csi2phytimer_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_csi2phytimer_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1946,8 +1946,8 @@ static struct clk_branch gcc_camss_csi3phytimer_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_csi3phytimer_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_csi3phytimer_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_csi3phytimer_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1964,8 +1964,8 @@ static struct clk_branch gcc_camss_mclk0_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_mclk0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_mclk0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_mclk0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -1982,8 +1982,8 @@ static struct clk_branch gcc_camss_mclk1_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_mclk1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_mclk1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_mclk1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2000,8 +2000,8 @@ static struct clk_branch gcc_camss_mclk2_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_mclk2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_mclk2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_mclk2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2018,8 +2018,8 @@ static struct clk_branch gcc_camss_mclk3_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_mclk3_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_mclk3_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_mclk3_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2036,8 +2036,8 @@ static struct clk_branch gcc_camss_mclk4_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_mclk4_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_mclk4_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_mclk4_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2067,8 +2067,8 @@ static struct clk_branch gcc_camss_ope_ahb_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_ope_ahb_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_ope_ahb_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_ope_ahb_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2085,8 +2085,8 @@ static struct clk_branch gcc_camss_ope_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_ope_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_ope_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_ope_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2116,8 +2116,8 @@ static struct clk_branch gcc_camss_tfe_0_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2134,8 +2134,8 @@ static struct clk_branch gcc_camss_tfe_0_cphy_rx_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_0_cphy_rx_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2152,8 +2152,8 @@ static struct clk_branch gcc_camss_tfe_0_csid_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_0_csid_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_0_csid_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_0_csid_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2170,8 +2170,8 @@ static struct clk_branch gcc_camss_tfe_1_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2188,8 +2188,8 @@ static struct clk_branch gcc_camss_tfe_1_cphy_rx_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_1_cphy_rx_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2206,8 +2206,8 @@ static struct clk_branch gcc_camss_tfe_1_csid_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_1_csid_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_1_csid_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_1_csid_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2224,8 +2224,8 @@ static struct clk_branch gcc_camss_tfe_2_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2242,8 +2242,8 @@ static struct clk_branch gcc_camss_tfe_2_cphy_rx_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_2_cphy_rx_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_cphy_rx_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2260,8 +2260,8 @@ static struct clk_branch gcc_camss_tfe_2_csid_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_tfe_2_csid_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_tfe_2_csid_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_tfe_2_csid_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2278,8 +2278,8 @@ static struct clk_branch gcc_camss_top_ahb_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_camss_top_ahb_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_camss_top_ahb_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_camss_top_ahb_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2298,8 +2298,8 @@ static struct clk_branch gcc_cfg_noc_usb3_prim_axi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_cfg_noc_usb3_prim_axi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_usb30_prim_master_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_usb30_prim_master_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2345,8 +2345,8 @@ static struct clk_branch gcc_disp_gpll0_div_clk_src = {
- 		.enable_mask = BIT(20),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_disp_gpll0_div_clk_src",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_disp_gpll0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_disp_gpll0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2408,8 +2408,8 @@ static struct clk_branch gcc_gp1_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_gp1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_gp1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_gp1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2426,8 +2426,8 @@ static struct clk_branch gcc_gp2_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_gp2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_gp2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_gp2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2444,8 +2444,8 @@ static struct clk_branch gcc_gp3_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_gp3_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_gp3_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_gp3_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2477,8 +2477,8 @@ static struct clk_branch gcc_gpu_gpll0_clk_src = {
- 		.enable_mask = BIT(15),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_gpu_gpll0_clk_src",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gpll0.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gpll0.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2494,8 +2494,8 @@ static struct clk_branch gcc_gpu_gpll0_div_clk_src = {
- 		.enable_mask = BIT(16),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_gpu_gpll0_div_clk_src",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gpll0_out_even.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gpll0_out_even.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2555,8 +2555,8 @@ static struct clk_branch gcc_pdm2_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_pdm2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_pdm2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_pdm2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2717,8 +2717,8 @@ static struct clk_branch gcc_qupv3_wrap0_s0_clk = {
- 		.enable_mask = BIT(10),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2735,8 +2735,8 @@ static struct clk_branch gcc_qupv3_wrap0_s1_clk = {
- 		.enable_mask = BIT(11),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2753,8 +2753,8 @@ static struct clk_branch gcc_qupv3_wrap0_s2_clk = {
- 		.enable_mask = BIT(12),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2771,8 +2771,8 @@ static struct clk_branch gcc_qupv3_wrap0_s3_clk = {
- 		.enable_mask = BIT(13),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s3_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s3_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s3_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2789,8 +2789,8 @@ static struct clk_branch gcc_qupv3_wrap0_s4_clk = {
- 		.enable_mask = BIT(14),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s4_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s4_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s4_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2807,8 +2807,8 @@ static struct clk_branch gcc_qupv3_wrap0_s5_clk = {
- 		.enable_mask = BIT(15),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap0_s5_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap0_s5_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap0_s5_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2851,8 +2851,8 @@ static struct clk_branch gcc_qupv3_wrap1_s0_clk = {
- 		.enable_mask = BIT(21),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s0_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s0_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2869,8 +2869,8 @@ static struct clk_branch gcc_qupv3_wrap1_s1_clk = {
- 		.enable_mask = BIT(22),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s1_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s1_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s1_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2887,8 +2887,8 @@ static struct clk_branch gcc_qupv3_wrap1_s2_clk = {
- 		.enable_mask = BIT(23),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s2_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s2_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s2_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2905,8 +2905,8 @@ static struct clk_branch gcc_qupv3_wrap1_s3_clk = {
- 		.enable_mask = BIT(24),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s3_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s3_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s3_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2923,8 +2923,8 @@ static struct clk_branch gcc_qupv3_wrap1_s4_clk = {
- 		.enable_mask = BIT(25),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s4_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s4_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s4_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -2941,8 +2941,8 @@ static struct clk_branch gcc_qupv3_wrap1_s5_clk = {
- 		.enable_mask = BIT(26),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_qupv3_wrap1_s5_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_qupv3_wrap1_s5_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_qupv3_wrap1_s5_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3032,8 +3032,8 @@ static struct clk_branch gcc_sdcc1_apps_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sdcc1_apps_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_sdcc1_apps_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_sdcc1_apps_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3052,8 +3052,8 @@ static struct clk_branch gcc_sdcc1_ice_core_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sdcc1_ice_core_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_sdcc1_ice_core_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_sdcc1_ice_core_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3083,8 +3083,8 @@ static struct clk_branch gcc_sdcc2_apps_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sdcc2_apps_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_sdcc2_apps_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_sdcc2_apps_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3103,8 +3103,8 @@ static struct clk_branch gcc_sys_noc_cpuss_ahb_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sys_noc_cpuss_ahb_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_cpuss_ahb_postdiv_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_cpuss_ahb_postdiv_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
-@@ -3121,8 +3121,8 @@ static struct clk_branch gcc_sys_noc_ufs_phy_axi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sys_noc_ufs_phy_axi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_ufs_phy_axi_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_ufs_phy_axi_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3141,8 +3141,8 @@ static struct clk_branch gcc_sys_noc_usb3_prim_axi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_sys_noc_usb3_prim_axi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_usb30_prim_master_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_usb30_prim_master_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3176,8 +3176,8 @@ static struct clk_branch gcc_ufs_phy_axi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_ufs_phy_axi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_ufs_phy_axi_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_ufs_phy_axi_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3196,8 +3196,8 @@ static struct clk_branch gcc_ufs_phy_ice_core_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_ufs_phy_ice_core_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_ufs_phy_ice_core_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_ufs_phy_ice_core_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3216,8 +3216,8 @@ static struct clk_branch gcc_ufs_phy_phy_aux_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_ufs_phy_phy_aux_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_ufs_phy_phy_aux_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_ufs_phy_phy_aux_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3262,8 +3262,8 @@ static struct clk_branch gcc_ufs_phy_unipro_core_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_ufs_phy_unipro_core_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_ufs_phy_unipro_core_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_ufs_phy_unipro_core_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3280,8 +3280,8 @@ static struct clk_branch gcc_usb30_prim_master_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_usb30_prim_master_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_usb30_prim_master_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_usb30_prim_master_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3298,8 +3298,8 @@ static struct clk_branch gcc_usb30_prim_mock_utmi_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_usb30_prim_mock_utmi_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_usb30_prim_mock_utmi_postdiv_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_usb30_prim_mock_utmi_postdiv_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3368,8 +3368,8 @@ static struct clk_branch gcc_usb3_prim_phy_com_aux_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_usb3_prim_phy_com_aux_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_usb3_prim_phy_aux_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_usb3_prim_phy_aux_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3488,8 +3488,8 @@ static struct clk_branch gcc_video_vcodec0_sys_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_video_vcodec0_sys_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_video_venus_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_video_venus_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
-@@ -3506,8 +3506,8 @@ static struct clk_branch gcc_video_venus_ctl_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_video_venus_ctl_clk",
--			.parent_data = &(const struct clk_parent_data){
--				.hw = &gcc_video_venus_clk_src.clkr.hw,
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&gcc_video_venus_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.flags = CLK_SET_RATE_PARENT,
+v2 -> v3:
+- indentation change
+- readability change
+
+v1 -> v2:
+- replace writel_relaxed with writel
+- corrected order of performing FSM reset and dma_unprep
+- added more comments in geni_can_dma
+- removed redundant change in spi_geni_init(DMA as default xfer_mode)
+- removed redundant initialisations in setup_se_xfer
+- removed redundant null checks in setup_se_xfer
+- added dma_tx_prep failure handling(rx un_map) in setup_se_xfer
+- move handing return of setip_se_xfer to transfer_one
+- apply irq error handling for DMA mode too in geni_spi_isr
+---
+ drivers/spi/spi-geni-qcom.c | 211 ++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 165 insertions(+), 46 deletions(-)
+
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 4e83cc5..e1b2e0b 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -87,6 +87,8 @@ struct spi_geni_master {
+ 	struct completion cs_done;
+ 	struct completion cancel_done;
+ 	struct completion abort_done;
++	struct completion tx_reset_done;
++	struct completion rx_reset_done;
+ 	unsigned int oversampling;
+ 	spinlock_t lock;
+ 	int irq;
+@@ -95,6 +97,8 @@ struct spi_geni_master {
+ 	struct dma_chan *tx;
+ 	struct dma_chan *rx;
+ 	int cur_xfer_mode;
++	dma_addr_t tx_se_dma;
++	dma_addr_t rx_se_dma;
+ };
+ 
+ static int get_spi_clk_cfg(unsigned int speed_hz,
+@@ -129,23 +133,27 @@ static int get_spi_clk_cfg(unsigned int speed_hz,
+ 	return ret;
+ }
+ 
+-static void handle_fifo_timeout(struct spi_master *spi,
++static void handle_se_timeout(struct spi_master *spi,
+ 				struct spi_message *msg)
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+ 	unsigned long time_left;
+ 	struct geni_se *se = &mas->se;
++	const struct spi_transfer *xfer;
+ 
+ 	spin_lock_irq(&mas->lock);
+ 	reinit_completion(&mas->cancel_done);
+-	writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
++	if (mas->cur_xfer_mode == GENI_SE_FIFO)
++		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
++
++	xfer = mas->cur_xfer;
+ 	mas->cur_xfer = NULL;
+ 	geni_se_cancel_m_cmd(se);
+ 	spin_unlock_irq(&mas->lock);
+ 
+ 	time_left = wait_for_completion_timeout(&mas->cancel_done, HZ);
+ 	if (time_left)
+-		return;
++		goto unmap_if_dma;
+ 
+ 	spin_lock_irq(&mas->lock);
+ 	reinit_completion(&mas->abort_done);
+@@ -162,6 +170,39 @@ static void handle_fifo_timeout(struct spi_master *spi,
+ 		 */
+ 		mas->abort_failed = true;
+ 	}
++
++unmap_if_dma:
++	if (mas->cur_xfer_mode == GENI_SE_DMA) {
++		if (xfer) {
++			if (xfer->tx_buf && mas->tx_se_dma) {
++				spin_lock_irq(&mas->lock);
++				reinit_completion(&mas->tx_reset_done);
++				writel(1, se->base + SE_DMA_TX_FSM_RST);
++				spin_unlock_irq(&mas->lock);
++				time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
++				if (!time_left)
++					dev_err(mas->dev, "DMA TX RESET failed\n");
++				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
++			}
++			if (xfer->rx_buf && mas->rx_se_dma) {
++				spin_lock_irq(&mas->lock);
++				reinit_completion(&mas->rx_reset_done);
++				writel(1, se->base + SE_DMA_RX_FSM_RST);
++				spin_unlock_irq(&mas->lock);
++				time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
++				if (!time_left)
++					dev_err(mas->dev, "DMA RX RESET failed\n");
++				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
++			}
++		} else {
++			/*
++			 * This can happen if a timeout happened and we had to wait
++			 * for lock in this function because isr was holding the lock
++			 * and handling transfer completion at that time.
++			 */
++			dev_warn(mas->dev, "Cancel/Abort on completed SPI transfer\n");
++		}
++	}
+ }
+ 
+ static void handle_gpi_timeout(struct spi_master *spi, struct spi_message *msg)
+@@ -178,7 +219,8 @@ static void spi_geni_handle_err(struct spi_master *spi, struct spi_message *msg)
+ 
+ 	switch (mas->cur_xfer_mode) {
+ 	case GENI_SE_FIFO:
+-		handle_fifo_timeout(spi, msg);
++	case GENI_SE_DMA:
++		handle_se_timeout(spi, msg);
+ 		break;
+ 	case GENI_GPI_DMA:
+ 		handle_gpi_timeout(spi, msg);
+@@ -250,6 +292,8 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	}
+ 
+ 	mas->cs_flag = set_flag;
++	/* set xfer_mode to FIFO to complete cs_done in isr */
++	mas->cur_xfer_mode = GENI_SE_FIFO;
+ 	reinit_completion(&mas->cs_done);
+ 	if (set_flag)
+ 		geni_se_setup_m_cmd(se, SPI_CS_ASSERT, 0);
+@@ -260,7 +304,7 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	time_left = wait_for_completion_timeout(&mas->cs_done, HZ);
+ 	if (!time_left) {
+ 		dev_warn(mas->dev, "Timeout setting chip select\n");
+-		handle_fifo_timeout(spi, NULL);
++		handle_se_timeout(spi, NULL);
+ 	}
+ 
+ exit:
+@@ -482,8 +526,12 @@ static bool geni_can_dma(struct spi_controller *ctlr,
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
+ 
+-	/* check if dma is supported */
+-	return mas->cur_xfer_mode != GENI_SE_FIFO;
++	/*
++	 * Return true if transfer needs to be mapped prior to
++	 * calling transfer_one which is the case only for GPI_DMA.
++	 * For SE_DMA mode, map/unmap is done in geni_se_*x_dma_prep.
++	 */
++	return mas->cur_xfer_mode == GENI_GPI_DMA;
+ }
+ 
+ static int spi_geni_prepare_message(struct spi_master *spi,
+@@ -494,6 +542,7 @@ static int spi_geni_prepare_message(struct spi_master *spi,
+ 
+ 	switch (mas->cur_xfer_mode) {
+ 	case GENI_SE_FIFO:
++	case GENI_SE_DMA:
+ 		if (spi_geni_is_abort_still_pending(mas))
+ 			return -EBUSY;
+ 		ret = setup_fifo_params(spi_msg->spi, spi);
+@@ -597,7 +646,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 			break;
+ 		}
+ 		/*
+-		 * in case of failure to get dma channel, we can still do the
++		 * in case of failure to get gpi dma channel, we can still do the
+ 		 * FIFO mode, so fallthrough
+ 		 */
+ 		dev_warn(mas->dev, "FIFO mode disabled, but couldn't get DMA, fall back to FIFO mode\n");
+@@ -716,12 +765,12 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
+ 	mas->rx_rem_bytes -= rx_bytes;
+ }
+ 
+-static void setup_fifo_xfer(struct spi_transfer *xfer,
++static int setup_se_xfer(struct spi_transfer *xfer,
+ 				struct spi_geni_master *mas,
+ 				u16 mode, struct spi_master *spi)
+ {
+ 	u32 m_cmd = 0;
+-	u32 len;
++	u32 len, fifo_size;
+ 	struct geni_se *se = &mas->se;
+ 	int ret;
+ 
+@@ -748,7 +797,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	/* Speed and bits per word can be overridden per transfer */
+ 	ret = geni_spi_set_clock_and_bw(mas, xfer->speed_hz);
+ 	if (ret)
+-		return;
++		return ret;
+ 
+ 	mas->tx_rem_bytes = 0;
+ 	mas->rx_rem_bytes = 0;
+@@ -772,17 +821,50 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 		mas->rx_rem_bytes = xfer->len;
+ 	}
+ 
++	/* Select transfer mode based on transfer length */
++	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
++	mas->cur_xfer_mode = (len <= fifo_size) ? GENI_SE_FIFO : GENI_SE_DMA;
++	geni_se_select_mode(se, mas->cur_xfer_mode);
++
+ 	/*
+ 	 * Lock around right before we start the transfer since our
+ 	 * interrupt could come in at any time now.
+ 	 */
+ 	spin_lock_irq(&mas->lock);
+ 	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
+-	if (m_cmd & SPI_TX_ONLY) {
++
++	if (mas->cur_xfer_mode == GENI_SE_DMA) {
++		if (m_cmd & SPI_RX_ONLY) {
++			ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
++				xfer->len, &mas->rx_se_dma);
++			if (ret) {
++				dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
++				mas->rx_se_dma = 0;
++				goto unlock_and_return;
++			}
++		}
++		if (m_cmd & SPI_TX_ONLY) {
++			ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
++				xfer->len, &mas->tx_se_dma);
++			if (ret) {
++				dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
++				mas->tx_se_dma = 0;
++				if (m_cmd & SPI_RX_ONLY) {
++					/* Unmap rx buffer if duplex transfer */
++					geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
++					mas->rx_se_dma = 0;
++				}
++				goto unlock_and_return;
++			}
++		}
++	} else if (m_cmd & SPI_TX_ONLY) {
+ 		if (geni_spi_handle_tx(mas))
+ 			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
+ 	}
++
++unlock_and_return:
+ 	spin_unlock_irq(&mas->lock);
++	return ret;
+ }
+ 
+ static int spi_geni_transfer_one(struct spi_master *spi,
+@@ -790,6 +872,7 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+ 				struct spi_transfer *xfer)
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
++	int ret;
+ 
+ 	if (spi_geni_is_abort_still_pending(mas))
+ 		return -EBUSY;
+@@ -798,9 +881,12 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+ 	if (!xfer->len)
+ 		return 0;
+ 
+-	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
+-		setup_fifo_xfer(xfer, mas, slv->mode, spi);
+-		return 1;
++	if (mas->cur_xfer_mode == GENI_SE_FIFO || mas->cur_xfer_mode == GENI_SE_DMA) {
++		ret = setup_se_xfer(xfer, mas, slv->mode, spi);
++		/* SPI framework expects +ve ret code to wait for transfer complete */
++		if (!ret)
++			ret = 1;
++		return ret;
+ 	}
+ 	return setup_gsi_xfer(xfer, mas, slv, spi);
+ }
+@@ -823,39 +909,70 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 
+ 	spin_lock(&mas->lock);
+ 
+-	if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
+-		geni_spi_handle_rx(mas);
+-
+-	if (m_irq & M_TX_FIFO_WATERMARK_EN)
+-		geni_spi_handle_tx(mas);
+-
+-	if (m_irq & M_CMD_DONE_EN) {
+-		if (mas->cur_xfer) {
++	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
++		if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
++			geni_spi_handle_rx(mas);
++
++		if (m_irq & M_TX_FIFO_WATERMARK_EN)
++			geni_spi_handle_tx(mas);
++
++		if (m_irq & M_CMD_DONE_EN) {
++			if (mas->cur_xfer) {
++				spi_finalize_current_transfer(spi);
++				mas->cur_xfer = NULL;
++				/*
++				 * If this happens, then a CMD_DONE came before all the
++				 * Tx buffer bytes were sent out. This is unusual, log
++				 * this condition and disable the WM interrupt to
++				 * prevent the system from stalling due an interrupt
++				 * storm.
++				 *
++				 * If this happens when all Rx bytes haven't been
++				 * received, log the condition. The only known time
++				 * this can happen is if bits_per_word != 8 and some
++				 * registers that expect xfer lengths in num spi_words
++				 * weren't written correctly.
++				 */
++				if (mas->tx_rem_bytes) {
++					writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
++					dev_err(mas->dev, "Premature done. tx_rem = %d bpw%d\n",
++						mas->tx_rem_bytes, mas->cur_bits_per_word);
++				}
++				if (mas->rx_rem_bytes)
++					dev_err(mas->dev, "Premature done. rx_rem = %d bpw%d\n",
++						mas->rx_rem_bytes, mas->cur_bits_per_word);
++			} else {
++				complete(&mas->cs_done);
++			}
++		}
++	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
++		const struct spi_transfer *xfer = mas->cur_xfer;
++		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
++		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
++
++		if (dma_tx_status)
++			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
++		if (dma_rx_status)
++			writel(dma_rx_status, se->base + SE_DMA_RX_IRQ_CLR);
++		if (dma_tx_status & TX_DMA_DONE)
++			mas->tx_rem_bytes = 0;
++		if (dma_rx_status & RX_DMA_DONE)
++			mas->rx_rem_bytes = 0;
++		if (dma_tx_status & TX_RESET_DONE)
++			complete(&mas->tx_reset_done);
++		if (dma_rx_status & RX_RESET_DONE)
++			complete(&mas->rx_reset_done);
++		if (!mas->tx_rem_bytes && !mas->rx_rem_bytes && xfer) {
++			if (xfer->tx_buf && mas->tx_se_dma) {
++				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
++				mas->tx_se_dma = 0;
++			}
++			if (xfer->rx_buf && mas->rx_se_dma) {
++				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
++				mas->rx_se_dma = 0;
++			}
+ 			spi_finalize_current_transfer(spi);
+ 			mas->cur_xfer = NULL;
+-			/*
+-			 * If this happens, then a CMD_DONE came before all the
+-			 * Tx buffer bytes were sent out. This is unusual, log
+-			 * this condition and disable the WM interrupt to
+-			 * prevent the system from stalling due an interrupt
+-			 * storm.
+-			 *
+-			 * If this happens when all Rx bytes haven't been
+-			 * received, log the condition. The only known time
+-			 * this can happen is if bits_per_word != 8 and some
+-			 * registers that expect xfer lengths in num spi_words
+-			 * weren't written correctly.
+-			 */
+-			if (mas->tx_rem_bytes) {
+-				writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+-				dev_err(mas->dev, "Premature done. tx_rem = %d bpw%d\n",
+-					mas->tx_rem_bytes, mas->cur_bits_per_word);
+-			}
+-			if (mas->rx_rem_bytes)
+-				dev_err(mas->dev, "Premature done. rx_rem = %d bpw%d\n",
+-					mas->rx_rem_bytes, mas->cur_bits_per_word);
+-		} else {
+-			complete(&mas->cs_done);
+ 		}
+ 	}
+ 
+@@ -949,6 +1066,8 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	init_completion(&mas->cs_done);
+ 	init_completion(&mas->cancel_done);
+ 	init_completion(&mas->abort_done);
++	init_completion(&mas->tx_reset_done);
++	init_completion(&mas->rx_reset_done);
+ 	spin_lock_init(&mas->lock);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
 -- 
-2.30.2
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
