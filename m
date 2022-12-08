@@ -2,146 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C1B16478A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 23:11:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D063B6478DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 23:37:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiLHWLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 17:11:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
+        id S229634AbiLHWhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 17:37:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiLHWLb (ORCPT
+        with ESMTP id S229478AbiLHWhh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 17:11:31 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C67EF63A2;
-        Thu,  8 Dec 2022 14:11:30 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 76BB7B82444;
-        Thu,  8 Dec 2022 22:11:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D071C433EF;
-        Thu,  8 Dec 2022 22:11:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670537488;
-        bh=DB+0qMdKjtuxVBpAklpgw2thOEWwaefsw0lzLkWkLpo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=m0bYfFmHU+daqGdraT30YlPTACU8OUdlbyHTuwfGhha5v0Qo6Zq0QIG2NQTDtRnvG
-         RXeTHbL75PxC/I1GCruhkIkQEnYtwtyRtPATX0QKuvsmYF5Ty1k9bYHPzudFDMMaJ3
-         6T+Vushs1vCbCbcg8Ajg5BPsR2XueNHigZw9eAwWlySt+3PpFDw1Vg4dzS+bPPa8nu
-         6+T1Ws0FH/yXEGYhc7g8/VAr9N5DJ6Q9WEWOEh3g8/eva1EiTaxR+7PhPkWT5rCXje
-         9aSGMkxcdMEEyXs8m5oZNalaxSN61901/Znvcjh3X3EC12hAQ25ClMR6XRr7U8mRgJ
-         AnMy5QTjNqPdw==
-Date:   Thu, 8 Dec 2022 16:11:25 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, robimarko@gmail.com,
-        quic_gurus@quicinc.com, quic_rjendra@quicinc.com
-Subject: Re: [PATCH V6 2/2] firmware: qcom: scm: Add wait-queue handling logic
-Message-ID: <20221208221125.bflo7unhcrgfsgbr@builder.lan>
-References: <20221208064031.2875-1-quic_sibis@quicinc.com>
- <20221208064031.2875-3-quic_sibis@quicinc.com>
+        Thu, 8 Dec 2022 17:37:37 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D18110D;
+        Thu,  8 Dec 2022 14:37:32 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B8MRbV7005509;
+        Thu, 8 Dec 2022 22:37:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=c/iQBf4lD2XGR39TCYiej/9tbgFPMIHjR3VhOtVSKtU=;
+ b=AQEyQzkSgkGN9kwiJLXYFKfrUBiCY0RenVjTWXgr6nWh9q+K9xzGYYad2R5LyMZ46yGY
+ LjHyl+BfrWbEGRhEAWvfaoq14UU07DtZ3IRMIO6OnlQw2p3uWGi159yMqpVQn/S8sV6Y
+ 5eS7Kk36xkdSGzjQRVmkGWInl7etkXlXCfyJyXDwER/iz1jrj9VQdq+fgpvA1oYI5OSD
+ 7u6iPStzVteRLHFVZHT0YkPWG0XDpLrXj3P2K5qMNV7knpPmh/+1Zi64ik4actQPvbPi
+ U9cv24nRkWKTlUt2mJERnOW6l42Yqoi0zWa0SePP85emvdzH3uyLFZCvD9Pip5HJtHIO kw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mbbfmacy5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Dec 2022 22:37:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2B8MbFTd014043
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Dec 2022 22:37:15 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 8 Dec 2022 14:37:14 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <devicetree@vger.kernel.org>, <airlied@gmail.com>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v11 0/5] Add data-lanes and link-frequencies to dp_out endpoint
+Date:   Thu, 8 Dec 2022 14:36:50 -0800
+Message-ID: <1670539015-11808-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221208064031.2875-3-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BPJB2MXy2EWYlrZsV7pGCKo6CMloDX-d
+X-Proofpoint-ORIG-GUID: BPJB2MXy2EWYlrZsV7pGCKo6CMloDX-d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-08_12,2022-12-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=861 spamscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212080186
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 08, 2022 at 12:10:31PM +0530, Sibi Sankar wrote:
-> diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
-[..]
-> +static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct arm_smccc_args *waitq,
-> +					   struct arm_smccc_res *res)
-> +{
-> +	struct qcom_scm *scm;
-> +	struct completion *wq = NULL;
-> +	struct arm_smccc_args resume;
-> +	u32 wq_ctx, smc_call_ctx, flags;
-> +	struct arm_smccc_args *smc = waitq;
-> +
-> +	do {
-> +		__scm_smc_do_quirk(smc, res);
-> +
-> +		if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
-> +			wq_ctx = res->a1;
-> +			smc_call_ctx = res->a2;
-> +			flags = res->a3;
-> +
-> +			if (!dev)
-> +				return -EPROBE_DEFER;
-> +
-> +			scm = dev_get_drvdata(dev);
-> +			wq = qcom_scm_lookup_wq(scm, wq_ctx);
-> +			if (IS_ERR_OR_NULL(wq)) {
-> +				dev_err(dev, "No waitqueue found for wq_ctx %d: %ld\n",
-> +					wq_ctx, PTR_ERR(wq));
-> +				return PTR_ERR(wq) ? : -EINVAL;
-> +			}
-> +
-> +			wait_for_completion(wq);
+Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
+functions to DP driver.
 
-I think it would be cleaner to push the lookup + wait_for_completion
-into a function in qcom_scm.c. Then you don't need to pull the drvdata
-and you have the wq handling grouped in one place.
+Kuogee Hsieh (5):
+  arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
+    endpoint
+  dt-bindings: msm/dp: add data-lanes and link-frequencies property
+  drm/msm/dp: parser data-lanes as property of dp_out endpoint
+  drm/msm/dp: parser link-frequencies as property of dp_out endpoint
+  drm/msm/dp: add support of max dp link rate
 
-> +			fill_wq_resume_args(&resume, smc_call_ctx);
-> +			smc = &resume;
-> +			wq = NULL;
-> +		}
-> +	} while (res->a0 == QCOM_SCM_WAITQ_SLEEP);
-> +
-> +	return 0;
-> +}
-[..]
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-[..]
-> +struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx)
-> +{
-> +	int err;
-> +	unsigned long flags;
-> +	u32 wq_ctx_idr = wq_ctx;
-> +	struct completion *wq = NULL;
-> +
-> +	spin_lock_irqsave(&scm->waitq.idr_lock, flags);
-> +	wq = idr_find(&scm->waitq.idr, wq_ctx);
-> +	if (wq)
-> +		goto out;
-> +
-> +	wq = &scm->waitq.waitq_comp;
+ .../bindings/display/msm/dp-controller.yaml        | 27 +++++++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  6 ++-
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |  6 ++-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  4 ++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  7 +--
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c                 | 52 ++++++++++++++++++----
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |  2 +
+ 8 files changed, 92 insertions(+), 13 deletions(-)
 
-The idr here gives an impression of providing similar functionality as
-in the previous post, but will actually always provide the same
-completion. As such, if the firmware would start to use multiple wq_ctx
-I believe this would should up as something fairly non-trivial to debug.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-I think it's better to make this dead simple and assert that wq_ctx is 0
-and just return the one and only completion.
-
-> +
-> +	err = idr_alloc_u32(&scm->waitq.idr, wq, &wq_ctx_idr,
-> +			    U32_MAX, GFP_ATOMIC);
-
-PS. Thinking about it further, imagine the firmware people deciding to
-be funny and allocating the wq_ctx in a cyclic fashion. The idr will
-consume all your ram after a while...
-
-Regards,
-Bjorn
-
-> +	if (err < 0)
-> +		wq = ERR_PTR(err);
-> +
-> +out:
-> +	spin_unlock_irqrestore(&scm->waitq.idr_lock, flags);
-> +	return wq;
-> +}
