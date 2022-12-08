@@ -2,95 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 139D3646E60
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 12:22:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF4BB646FAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 13:30:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbiLHLWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 06:22:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
+        id S229538AbiLHMaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 07:30:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbiLHLVi (ORCPT
+        with ESMTP id S229468AbiLHMaO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 06:21:38 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A586A58BEE;
-        Thu,  8 Dec 2022 03:21:00 -0800 (PST)
-Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Thu, 8 Dec 2022 07:30:14 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076A4303FC;
+        Thu,  8 Dec 2022 04:30:14 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DF7083F3FA;
-        Thu,  8 Dec 2022 12:20:56 +0100 (CET)
-Date:   Thu, 8 Dec 2022 12:20:55 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 95D1761F0A;
+        Thu,  8 Dec 2022 12:30:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10221C433C1;
+        Thu,  8 Dec 2022 12:30:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670502613;
+        bh=vuyR8NSZXgKNwfmsYoMv4Ol+ici2HnAMRbBD2K6WyGs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Twma8AYQ06LUktSgKmq71rkrveB+1CUCh9pDKVdsZGc543B9CJHs7cHmyyyLzeKC/
+         eKR5Bs7pQ2t49ZXvntQpsXNQFEMIFTlSduIq7VVzNhldG6uG+Y74gSLUm1Lv4kC8SJ
+         tiD7E8VomIU384oLv8pTZGpoJ+3ptYH0z3Q7i7+RZFVOGWQDGc/7eZAfVzlPtCwJjr
+         J0j2Yyvu4sH8O1M/R15XSQS4aScmrpZrqT2SOSthasErjuKtrnUIRPMeHhboJ4yKxJ
+         Bsr/y9PorPjqN8tY9eod5rU1W5W+0NiQiXKRdCakYWNCabDSEBJnbn2Rl0CjnwONE8
+         MxBxBfIE996Gg==
+Date:   Thu, 8 Dec 2022 12:30:07 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jonathan Cameron <jic23@kernel.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950
- peripheral
-Message-ID: <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org>
-References: <20221101161801.1058969-1-luca@z3ntu.xyz>
- <20221106193722.j64xrhitdencrjxy@SoMainline.org>
- <20221202093658.vg6t2ptar2arh7hn@SoMainline.org>
- <2656622.mvXUDI8C0e@g550jk>
- <20221208101232.536i3cmjf4uk2z52@SoMainline.org>
- <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] mfd: qcom_rpm: Fix an error handling path in
+ qcom_rpm_probe()
+Message-ID: <Y5HYzzwdWCrpWOTv@google.com>
+References: <e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-08 11:23:17, Krzysztof Kozlowski wrote:
-> On 08/12/2022 11:12, Marijn Suijten wrote:
-> > On 2022-12-04 17:19:05, Luca Weiss wrote:
-> >> On Freitag, 2. Dezember 2022 10:36:58 CET Marijn Suijten wrote:
-> >> [..]
-> >>
-> >> So the way this patch does it is good or does it need changes?
-> > 
-> > Except the typo(s?) pointed out in my first reply, this is good to go.
-> > 
-> > If we stick with generic adc-chan node names that should be documented
-> > in the bindings IMO, as it is currently only captured implicitly in the
-> > examples.  Krzysztof, what is your thought on this?
+On Sun, 20 Nov 2022, Christophe JAILLET wrote:
+
+> If an error occurs after the clk_prepare_enable() call, a corresponding
+> clk_disable_unprepare() should be called.
 > 
-> If I understand correctly, the outcome of other discussion [1] was to
-> use labels and generic node names.
+> Simplify code and switch to devm_clk_get_enabled() to fix it.
+> 
+> Fixes: 3526403353c2 ("mfd: qcom_rpm: Handle message RAM clock")
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> ---
+> This changes the order of the clean-ups if the .remove() function is called
+> but it looks fine to me.
+> ---
+>  drivers/mfd/qcom_rpm.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 
-The outcome was to use labels in the driver and disregard node names as
-the new fwnode API clobbers those names by including the @xx register
-bit.
+Something funny going on here.
 
-(I'll follow up with Jonathan whether or not to remove the current
-fallback to node names, as [1] ended up discussing many different issues
-and nits)
+I received 3 identical versions of the same patch.
 
-> In such case the patch was correct
-> (except other comments).
-
-As a consequence it _doesn't matter_ how nodes are named, and we _can_
-use generic node names.  My question for you is whether we should, and
-if we should lock that in via dt-bindings to guide everyone towards
-using labels (which i did _not_ do in the recently-landed PM8950 and
-PM6125, but will send followup for).
-
-> [1]
-> https://lore.kernel.org/linux-arm-msm/20221112162719.0ac87998@jic23-huawei/
-
-- Marijn
+-- 
+Lee Jones [李琼斯]
