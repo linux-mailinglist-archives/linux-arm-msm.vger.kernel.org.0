@@ -2,80 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1166470F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 14:42:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66F6F647164
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Dec 2022 15:13:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbiLHNmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 08:42:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52188 "EHLO
+        id S229710AbiLHONe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 09:13:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230157AbiLHNls (ORCPT
+        with ESMTP id S229676AbiLHONd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 08:41:48 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEC798573
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 05:41:32 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id w23so1510431ply.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 05:41:32 -0800 (PST)
+        Thu, 8 Dec 2022 09:13:33 -0500
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7BB7E43D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 06:13:31 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id g4so1763668ybg.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 06:13:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nsVDMGdrrcenDbAQ2t+1J/nqCclkhOqEn3pqIwRUG2w=;
-        b=uQy/0f7YV2jnlbCc1jSFqVrE4lbQvl+RRAJkhOLwNKMTRwuan4cjvWkayuWGs0R8oL
-         vnygiP558bf0VxQTsmO1gMaSyfuPFtroV61zbBi/whfupcirDxi2CZL1YSNKEfXqDE+T
-         5piNZUnqR67+TNZqTfGGTQsSVyDTmdMKrUSaB/GcKRURw0DdMy1ZRW3zLz+Mm9NTRcz4
-         dXo/Fy6vLBQU6ntaMD3EpYjq2lVYXCLz0x7AANz9QfcsPOPKY33HoqaaBT3zcY9lcMkH
-         yXHm35VDMvBDL6KcyGNoNfTrflmO5iPsaeb9inrWk2puhSN2S/QjoIr7Dnn/InlZbwtU
-         f9Dw==
+        bh=2Z5aJtLOuR7FuK5HbTy22FQpW8Dvr68E0rRJLO0HyBk=;
+        b=oMLFT7CiEH/WZJjXGiQcL2YeIFMSySLFJwOHBXqBfUpYtZhi/y3/hjBquUv7hfXXtK
+         RBd/4pWaU3C//J78g874Ftmevp3GEB9qEm/zre80CUs0NWyxnLfgX7oFYU2u4EUFXN7n
+         hPyfOg8BnP04XPhmfgLacW8ue8nLW9y8dhWB2t4DLSeiNQbtNtMNQed65frPzWuOjmKV
+         zVNdzEoD93UKR08k40tOWYhaRXvpnOqVQHUk36vPes1z8p3Xq7pWxsDt4Uu+CV/OyRay
+         PiAECURGS5pUAr2MwHmjm9wqV5EVcChv7PFxFXu9qQuhQNPjLwCvtZejxE92epJWpwQA
+         zVoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nsVDMGdrrcenDbAQ2t+1J/nqCclkhOqEn3pqIwRUG2w=;
-        b=nKV23AIXHYlwtzCtDYSDCyP+/SdhcKpLw1yBYM9fO6HpRNwRS0uhDCHm/LbMC7R1sd
-         kdADjjhBNopZmZ+MWb6xGN9Wc91ZrjV52a5ndyUI7AGqIW7R2E+QEOlZJJtQUWIqZ6YI
-         Y3wrIcSJgGlcljuVlt241c4Zjk3l8jrWq0uKF6kMA5E4Lpdz2DZTjMPWDOa3vJs/hi1Q
-         lsNqHqlGYpdruLVFi9jyApoZay3v8XUaoe1CDblLClqhu2slLXDTKuHoKtsXJNUPX103
-         8hkpw0SzIhUtuNVwXv7sEn+5QV8X06iE2rjeovOb8AGCORxuL/baH/mj6GxfIPh7kFK+
-         HS1Q==
-X-Gm-Message-State: ANoB5pnLWYvqCnlfbu9gdXWciroTW0so0SwEm3wslrv6rDJBISqqsJks
-        pXAqccZU3dO5SB9lq4a6vGQRP/zoZPuOtvENuQKzQw==
-X-Google-Smtp-Source: AA0mqf7MdR24OCVzRBWFHBA1Ih0rv9hUVtp5dojJr48004Fk2Ur1P7IRRT950dIzOhONwDL/P4n1lllvwgn2ibEO+gk=
-X-Received: by 2002:a17:903:40c6:b0:189:f799:676e with SMTP id
- t6-20020a17090340c600b00189f799676emr6120063pld.148.1670506892322; Thu, 08
- Dec 2022 05:41:32 -0800 (PST)
+        bh=2Z5aJtLOuR7FuK5HbTy22FQpW8Dvr68E0rRJLO0HyBk=;
+        b=jz7WRQkauhjb9yPx2BdV1SvQ6UAKzLsHyuI/brTBEg1cGW6DzmfK/qXm5y2dSBuMJH
+         nALjPNaf5I2KwLpPgnxBUJfmj8xQQn3UcPhjKH+FcsNyNfr5NKg1/nZrkcTrYzWYC3bR
+         znaHfqy9zrOC+mwXOIrnSZ5dwWn3WYlh2nDY2ghPM/HcJRxZGtzgpl7cDJ3bThrjLklm
+         xKYyLMGaFPrm/T0t5zY8qm38oR3TwPxyzP2frZJ3w8rmOAqsfXDWXgxQJdpIkEy0DpRp
+         +aHIMHJBYbbfhyc6nnsG5C88TD7IFre0klKylQiAfJWSdz5s2TBwz0rDW6hEmMBKLdra
+         E5Kw==
+X-Gm-Message-State: ANoB5pk1RPfZ4JehcgzzTgx393GfunrhiJwOBC6GJty8zhRK9aN7JBrz
+        fO57BYXXjBFBwNh1DwmPjoMZV7awZ5MjvvprHWCGWg==
+X-Google-Smtp-Source: AA0mqf7BVGb/EIkFUaHqlMWOuRls39ddO5l5iNFgrXGZGIwAL1UtqvApnlXb3rvZfj2yAM/L4i77IP5/4pDvbZCoSqY=
+X-Received: by 2002:a05:6902:114f:b0:701:161b:d3b1 with SMTP id
+ p15-20020a056902114f00b00701161bd3b1mr17092268ybu.194.1670508810698; Thu, 08
+ Dec 2022 06:13:30 -0800 (PST)
 MIME-Version: 1.0
-References: <1664960824-20951-1-git-send-email-quic_akhilpo@quicinc.com>
- <20221201225705.46r2m35ketvzipox@builder.lan> <CAPDyKFofsqcoFbYt-9BcisbPdreLGqAAMWorqHi0_D1kwCdYhg@mail.gmail.com>
- <20221207165457.kwdwwiycbwjpogxl@builder.lan>
-In-Reply-To: <20221207165457.kwdwwiycbwjpogxl@builder.lan>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 8 Dec 2022 14:40:55 +0100
-Message-ID: <CAPDyKFpYgYkDdJ79xxkwr-Mqnj5CoBrV+ZZe6Xz4hGLNR4zUVw@mail.gmail.com>
-Subject: Re: [PATCH v7 0/6] clk/qcom: Support gdsc collapse polling using
- 'reset' interface
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Douglas Anderson <dianders@chromium.org>,
-        krzysztof.kozlowski@linaro.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221207062913.3154262-1-bhupesh.sharma@linaro.org>
+ <CAA8EJpo30L=KYvrkbnWOrSXGVPk5++r77MTqVd12SZtaUqo-_w@mail.gmail.com> <CAH=2Ntw7EKxkrRwp7mqkBm0gGE7=jVruViPa7ZiG1aSA0ipMzQ@mail.gmail.com>
+In-Reply-To: <CAH=2Ntw7EKxkrRwp7mqkBm0gGE7=jVruViPa7ZiG1aSA0ipMzQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 8 Dec 2022 17:13:20 +0300
+Message-ID: <CAA8EJpqUT+Zy0uD+0NnUTbQWOM_+CAfXTU+ED=GwgcNe2MpVHQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Fix iommu sid values for PCIe nodes
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
+        andersson@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -87,107 +71,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 7 Dec 2022 at 17:55, Bjorn Andersson <andersson@kernel.org> wrote:
+On Thu, 8 Dec 2022 at 14:05, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
 >
-> On Wed, Dec 07, 2022 at 05:00:51PM +0100, Ulf Hansson wrote:
-> > On Thu, 1 Dec 2022 at 23:57, Bjorn Andersson <andersson@kernel.org> wrote:
-> > >
-> > > On Wed, Oct 05, 2022 at 02:36:58PM +0530, Akhil P Oommen wrote:
-> > > >
-> > >
-> > > @Ulf, Akhil has a power-domain for a piece of hardware which may be
-> > > voted active by multiple different subsystems (co-processors/execution
-> > > contexts) in the system.
-> > >
-> > > As such, during the powering down sequence we don't wait for the
-> > > power-domain to turn off. But in the event of an error, the recovery
-> > > mechanism relies on waiting for the hardware to settle in a powered off
-> > > state.
-> > >
-> > > The proposal here is to use the reset framework to wait for this state
-> > > to be reached, before continuing with the recovery mechanism in the
-> > > client driver.
+> On Thu, 8 Dec 2022 at 16:14, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 > >
-> > I tried to review the series (see my other replies), but I am not sure
-> > I fully understand the consumer part.
-> >
-> > More exactly, when and who is going to pull the reset and at what point?
-> >
+> > On Wed, 7 Dec 2022 at 09:29, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
 > > >
-> > > Given our other discussions on quirky behavior, do you have any
-> > > input/suggestions on this?
-> > >
-> > > > Some clients like adreno gpu driver would like to ensure that its gdsc
-> > > > is collapsed at hardware during a gpu reset sequence. This is because it
-> > > > has a votable gdsc which could be ON due to a vote from another subsystem
-> > > > like tz, hyp etc or due to an internal hardware signal. To allow
-> > > > this, gpucc driver can expose an interface to the client driver using
-> > > > reset framework. Using this the client driver can trigger a polling within
-> > > > the gdsc driver.
-> > >
-> > > @Akhil, this description is fairly generic. As we've reached the state
-> > > where the hardware has settled and we return to the client, what
-> > > prevents it from being powered up again?
-> > >
-> > > Or is it simply a question of it hitting the powered-off state, not
-> > > necessarily staying there?
+> > > Fix the iommu sid values for the PCIe nodes present on
+> > > Qualcomm SM8150 SoC dtsi (in sync the with downstream code).
 > >
-> > Okay, so it's indeed the GPU driver that is going to assert/de-assert
-> > the reset at some point. Right?
+> > The commit message describes what you did, not why. Is there any
+> > actual issue that you are trying to solve?
+>
+> Right, I will add that in v2. We have a customer facing some sid
+> related IOMMU transactional errors on sm8150 based boards.
+>
+> > It makes me wonder because all modern Qualcomm platforms share more or
+> > less the same setup.
+>
+> Please see sdm845.dtsi, which does the same as suggested via this
+> patch for sm8150.
+
+Should we also apply the same change to other platforms?
+
+>
+> Thanks,
+> Bhupesh
+>
+> > > Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+> > > Cc: Bjorn Andersson <andersson@kernel.org>
+> > > Cc: Rob Herring <robh+dt@kernel.org>
 > >
-> > That seems like a reasonable approach to me, even if it's a bit
-> > unclear under what conditions that could happen.
+> > No need to have regular maintainers in Cc tags. Please use regular
+> > git-send-email arguments instead.
 > >
->
-> Generally the disable-path of the power-domain does not check that the
-> power-domain is actually turned off, because the status might indicate
-> that the hardware is voting for the power-domain to be on.
+> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sm8150.dtsi | 32 ++++++++++++++++++++++++++--
+> > >  1 file changed, 30 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > > index d1b64280ab0b..e88d1617a1ab 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > > @@ -1810,9 +1810,23 @@ pcie0: pci@1c00000 {
+> > >                                       "slave_q2a",
+> > >                                       "tbu";
+> > >
+> > > -                       iommus = <&apps_smmu 0x1d80 0x7f>;
+> > > +                       iommus = <&apps_smmu 0x1d80 0xf>;
+> > >                         iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+> > >                                     <0x100 &apps_smmu 0x1d81 0x1>;
+> >
+> > it looks like the patch was not even compile-tested.
+> >
+> > > +                                   <0x200 &apps_smmu 0x1d82 0x1>,
+> > > +                                   <0x300 &apps_smmu 0x1d83 0x1>,
+> > > +                                   <0x400 &apps_smmu 0x1d84 0x1>,
+> > > +                                   <0x500 &apps_smmu 0x1d85 0x1>,
+> > > +                                   <0x600 &apps_smmu 0x1d86 0x1>,
+> > > +                                   <0x700 &apps_smmu 0x1d87 0x1>,
+> > > +                                   <0x800 &apps_smmu 0x1d88 0x1>,
+> > > +                                   <0x900 &apps_smmu 0x1d89 0x1>,
+> > > +                                   <0xa00 &apps_smmu 0x1d8a 0x1>,
+> > > +                                   <0xb00 &apps_smmu 0x1d8b 0x1>,
+> > > +                                   <0xc00 &apps_smmu 0x1d8c 0x1>,
+> > > +                                   <0xd00 &apps_smmu 0x1d8d 0x1>,
+> > > +                                   <0xe00 &apps_smmu 0x1d8e 0x1>,
+> > > +                                   <0xf00 &apps_smmu 0x1d8f 0x1>;
+> > >
+> > >                         resets = <&gcc GCC_PCIE_0_BCR>;
+> > >                         reset-names = "pci";
+> > > @@ -1909,9 +1923,23 @@ pcie1: pci@1c08000 {
+> > >                         assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+> > >                         assigned-clock-rates = <19200000>;
+> > >
+> > > -                       iommus = <&apps_smmu 0x1e00 0x7f>;
+> > > +                       iommus = <&apps_smmu 0x1e00 0xf>;
+> > >                         iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+> > >                                     <0x100 &apps_smmu 0x1e01 0x1>;
+> > > +                                   <0x200 &apps_smmu 0x1e02 0x1>,
+> > > +                                   <0x300 &apps_smmu 0x1e03 0x1>,
+> > > +                                   <0x400 &apps_smmu 0x1e04 0x1>,
+> > > +                                   <0x500 &apps_smmu 0x1e05 0x1>,
+> > > +                                   <0x600 &apps_smmu 0x1e06 0x1>,
+> > > +                                   <0x700 &apps_smmu 0x1e07 0x1>,
+> > > +                                   <0x800 &apps_smmu 0x1e08 0x1>,
+> > > +                                   <0x900 &apps_smmu 0x1e09 0x1>,
+> > > +                                   <0xa00 &apps_smmu 0x1e0a 0x1>,
+> > > +                                   <0xb00 &apps_smmu 0x1e0b 0x1>,
+> > > +                                   <0xc00 &apps_smmu 0x1e0c 0x1>,
+> > > +                                   <0xd00 &apps_smmu 0x1e0d 0x1>,
+> > > +                                   <0xe00 &apps_smmu 0x1e0e 0x1>,
+> > > +                                   <0xf00 &apps_smmu 0x1e0f 0x1>;
+> > >
+> > >                         resets = <&gcc GCC_PCIE_1_BCR>;
+> > >                         reset-names = "pci";
+> > > --
+> > > 2.38.1
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
-Is there a good reason why the HW needs to vote too, when the GPU
-driver is already in control?
 
-Or perhaps that depends on the running use case?
 
->
-> As part of the recovery of the GPU after some fatal fault, the GPU
-> driver does something which will cause the hardware votes for the
-> power-domain to be let go, and then the driver does pm_runtime_put().
-
-Okay. That "something", sounds like a device specific setting for the
-corresponding gdsc, right?
-
-So somehow the GPU driver needs to manage that setting, right?
-
->
-> But in this case the GPU driver wants to ensure that the power-domain is
-> actually powered down, before it does pm_runtime_get() again. To ensure
-> that the hardware lost its state...
-
-I see.
-
->
-> The proposal here is to use a reset to reach into the power-domain
-> provider and wait for the hardware to be turned off, before the GPU
-> driver attempts turning the power-domain on again.
->
->
-> In other words, there is no reset. This is a hack to make a normally
-> asynchronous pd.power_off() to be synchronous in this particular case.
-
-Alright, assuming I understood your clarifications above correctly
-(thanks!), I think I have got a much better picture now.
-
-Rather than abusing the reset interface, I think we should manage this
-through the genpd's power on/off notifiers (GENPD_NOTIFY_OFF). The GPU
-driver should register its corresponding device for them
-(dev_pm_genpd_add_notifier()).
-
-The trick however, is to make the behaviour of the power-domain for
-the gdsc (the genpd->power_off() callback) conditional on whether the
-HW is configured to vote or not. If the HW can vote, it should not
-poll for the state - and vice versa when the HW can't vote.
-
-Would this work?
-
-Kind regards
-Uffe
+-- 
+With best wishes
+Dmitry
