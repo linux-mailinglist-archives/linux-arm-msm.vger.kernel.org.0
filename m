@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E081B6485A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:33:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 102DE6485BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:43:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbiLIPd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:33:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54926 "EHLO
+        id S229992AbiLIPnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 10:43:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230254AbiLIPdV (ORCPT
+        with ESMTP id S229828AbiLIPnE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 10:33:21 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A2195BC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:33:20 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 1so7590051lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:33:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=ImNzBE3SlxRlVIPcifzS5JYjvJJ0yu9Pcf5kr6WJysFeUVzEC7UdQ0bmmbVunCMViY
-         E0MlsJxem/Hz01Y8SyHlWM9DBMZaiHK1jMGOMKkh8dYgQM3+FEhyuyT8IBNLAd2H/U2e
-         GzfKyW9CF1r3HpmON7O14EwkLeviC5pDTfEvgA1nOSi/mZFC8KMOUiH/6mquksUpIG0H
-         qsUzY5kpjUASHUPUCoDt0GoYOXmYQEOZp3krgLSmurmT2wHSnu/ZUrRutWFZnLeuTDWH
-         iWqxULpAWAmX385HAgonXg7/urodLc92Vd5hri2U0vDQUHLt1jApr5gaPrHw0m3b7aeS
-         M0qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=zF5oAf/VbqaLfCXVGpp8m8GtU8tMfmWAVj7iX7z0r/FZgRhp4tfqrspRWMy7RnEJVn
-         p+z+o3VVp2o0p9IeTA+axDOxYjvso0Ct/qQY/k110eLWEwnWwCIAp91QWls9PIAhHfFf
-         UvouIsBENJo1SritsEKjZIHgz7mKLzJ6eLOe5RR+xBGi69j9CDqf7hH1aas6PAvJKn3w
-         O0MuO4ND96ffPTUY81dv3ZEMDBbeF5nwBtYfmU+cbke2TcfWniZLNegsLPjE/OaNZYbP
-         6fOlehWr7eVXec5EV2S+72DO6opej/W8YXmXerEtYN05qIerRMYKnKkbPOBeKbYKWTCS
-         ydOw==
-X-Gm-Message-State: ANoB5plgfoDg26deTiD9vUivt5pMRALWaxaS8knRRPm9s7pgSmn3rcSA
-        l3gJ8kzUFQAgwYeK4l5HoaOu18m48WyKp9vSZQs=
-X-Google-Smtp-Source: AA0mqf6D6kxSW4zDDTaH0/5a6BIP6RsAc9Q5jTUD/01/ya+WnXoO/vjDBDDpP/ZeX3uGLCm4F5Io/ktuB6phl8ShcmQ=
-X-Received: by 2002:ac2:488e:0:b0:4b4:cf32:e105 with SMTP id
- x14-20020ac2488e000000b004b4cf32e105mr31530896lfc.110.1670599998863; Fri, 09
- Dec 2022 07:33:18 -0800 (PST)
+        Fri, 9 Dec 2022 10:43:04 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0885D2314A;
+        Fri,  9 Dec 2022 07:43:03 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 98EE762296;
+        Fri,  9 Dec 2022 15:43:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED432C433D2;
+        Fri,  9 Dec 2022 15:43:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670600582;
+        bh=oCEIGuHeYhxQrCwVo/soAElAtMLWGb4yuO0SHkYdARw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ik/yRMpIxgLkVL0fgXhIFgSsHW8u0esK0EQWhBy/bY5hAzu3m1YsNUwdBhGcXoYrE
+         hCAkf3JzdJXtnU/SR6apKalZFVs21lPhQzUnJZ62pfj2KGJgt6sHUWfM/YZZw7FxDb
+         7PR6OBtqptEbYnTbj782MsCVZE9I95cyUQIvJN0dK8q4j6upYgVSinVBzmUm/6xd+G
+         PTkMdvx6ftPR1+IWfZlV4ynHnswJ+nTJ0N4WcPIgcXtuu3dSS6ja6V+pFI9mkjtmNl
+         Hc7eoVYYCazXTNYgvi4LEW4fHChYVwzDEe8kqksIwObb48uG16qkF+MIwPEjOaTDa7
+         seddbxDxq4WTw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p3fWw-0001TN-5z; Fri, 09 Dec 2022 16:43:18 +0100
+Date:   Fri, 9 Dec 2022 16:43:18 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
+Message-ID: <Y5NXllrF3K+ga/GR@hovoldconsulting.com>
+References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
 MIME-Version: 1.0
-Received: by 2002:a2e:a988:0:0:0:0:0 with HTTP; Fri, 9 Dec 2022 07:33:18 -0800 (PST)
-Reply-To: Gregdenzell9@gmail.com
-From:   Greg Denzell <anonymusxt2@gmail.com>
-Date:   Fri, 9 Dec 2022 15:33:18 +0000
-Message-ID: <CAKr3oRRe+TLWTuDixFQK1dKgOEdNGVF1uL2LNXpgrc8kkfRbrA@mail.gmail.com>
-Subject: Hello, This is my second message to you regarding the funds of your
- late relative. I shall send you details after I receive your response.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=7.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,EMPTY_MESSAGE,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:12a listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4981]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [anonymusxt2[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [anonymusxt2[at]gmail.com]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [gregdenzell9[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  2.3 EMPTY_MESSAGE Message appears to have no textual parts
-        *  2.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *******
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Dec 09, 2022 at 03:29:47PM +0100, Luca Weiss wrote:
+> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
+> in the bindings so the existing dts can validate successfully.
+> 
+> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
+> sm8450: add Inline Crypto Engine registers and clock") so move the
+> compatible to the correct if.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> (no cover subject)
+> 
+> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
+> and sa8540p-ride.dtb:
+> 
+>   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
+> 
+> Maybe someone who knows something about this can handle this?
 
+That's being addressed here:
+
+	https://lore.kernel.org/lkml/20221205100837.29212-2-johan+linaro@kernel.org/
+
+Johan
