@@ -2,68 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51D6764867E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:29:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B8786486C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:49:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbiLIQ26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 11:28:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
+        id S229721AbiLIQtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 11:49:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiLIQ24 (ORCPT
+        with ESMTP id S229555AbiLIQs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 11:28:56 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4527185D08
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 08:28:54 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-3e45d25de97so58916847b3.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 08:28:54 -0800 (PST)
+        Fri, 9 Dec 2022 11:48:59 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E467993A40
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 08:48:57 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id d6so7907361lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 08:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KwUr6L0Dg5AexDWlnJDonhDDUddaY6L+83QoeCbsL6w=;
-        b=IJKobng0dU7tuEUHviEk+CoMH7eMgCrfzpJ4jYnAzBkOEqGMBhPE/sjKJ13PhqyAIE
-         oXkxPvPIPpHI4VBSMRDtWTG4aRkcOB5WhWSP3xOiv/rf/kicv9EsR4UNKdl3XHaAG0Iw
-         o3rim5zBRrpQ7ZNXED6sJ0UrUdblacX80XBM/RQS190ZXPfFjzHeTOrR+h1tnBi9DbIH
-         Eg+yRHm7a5qFA0ETC7jO/c3dxMWRlYkzkdarPtQ+O1JaHApABO4Y46GJy2zpyB+dLx3v
-         c/ijQ8hHtxCWQUsqrWYmx17TxQuWCbH4Vr/euCQVVn1KeZVPtHmEE9UaG07VItcO6QRH
-         x+yg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=J30FnQ0XiYOkHjVMLeIVpKVykgV1Qs0n+YPAOVIOpV4=;
+        b=b2D2uGJ8VV2as0TF1iNkhi3Q/zjaAfpIkf9XcqE8w9rpm8q7up3YA5WxPVwjsrahZH
+         LHPxphF3tauv7GfBtCx+k7iMQmR85VR0jbOAIeBBoUcwSOmp9B+v964HnrIFQJArDsqs
+         sGiW2VREDwkxJoz2iJc8qnCR9BRfNJinyYlyQY4MJEz/BfloTsvI3mrYoskO+YqGu5Mr
+         TmWQ0PTlYqC7yDdA2q52PuVvXo+uCcuvkRfsjQGZDLs5MDk8vpMAL8KVOGNds6lQ0X4P
+         qLaJfe0mHDoe22frX4AznQG/cuqryHPti8ECBfTmrDcQFWQynDLUT5IxoTafTHsvikGe
+         s77A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KwUr6L0Dg5AexDWlnJDonhDDUddaY6L+83QoeCbsL6w=;
-        b=UdBOHdjiF5x+CVA/rblBuSfcXuBwuUI+UA9x0OyKwbCxgWXWb5eDeBflcVm87wmNOV
-         gG1PSIQ/9lqymo40zIUeCGbKw2U1vDX3W7e3AKjZoUw8np5rUDLNbJEDVfd3k6YXrIJG
-         EyeFE7c4bC1r+9N4qFhK1vyVZFD1kJWb9A9ojFWDRgjUO8+lA6KcMFs4SLILE8TczXWX
-         WEsg/nlTffV+VbZ3o42FlBSJgEG1coLL360cUYMhx681JkZotg74Wmr3nnTJ0Tu8Nlf5
-         iBp8n7KBzgTHV9GAmy+LK/ojFzPz4jbCA2hDs9dDvyzeeQaDUe02pRV0QQwVejfFhvLU
-         5Sqg==
-X-Gm-Message-State: ANoB5plRb+eHSJKX8lmwvBwhcF28MLD5/xeh/6OzHgJFybuWsCIVebcR
-        JHnA0lTOiZp/14bmSd373+fR3e0Nv+n0/2w7oX0+CQ==
-X-Google-Smtp-Source: AA0mqf5JioR0tlkYsUfBOYPggxjH5nJhi6FqwWPFYXy7wZYWLeI99NpwomjbnOUpTdaEDlYnQ7/PvdsejSaSqaqmNzc=
-X-Received: by 2002:a81:6c52:0:b0:370:4c23:eacc with SMTP id
- h79-20020a816c52000000b003704c23eaccmr24817663ywc.127.1670603333277; Fri, 09
- Dec 2022 08:28:53 -0800 (PST)
-MIME-Version: 1.0
-References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
- <20221207001503.93790-3-dmitry.baryshkov@linaro.org> <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
-In-Reply-To: <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
+        bh=J30FnQ0XiYOkHjVMLeIVpKVykgV1Qs0n+YPAOVIOpV4=;
+        b=0LdkxKQqVdNtI0VE4xhBMGzrVsGJbj2Saza8S0GZTdsBzxEMBwgH/tFIXwHLoLbA0M
+         4AZjZMBod+HK8ZUUxjsEHJnMqT9ULJyafB/SkhOs0uYzXChGfNfAkTMRce4J5OXpAsqt
+         SZ1qWV5CZNnx6GiUI+u1RAZE4Di9VlGZAUIhdivPrb3J+NididNo7EFlz9w22ls5qoPf
+         UE67rJSG7qNnj7xMsL5aMtGEm8x+U7rBm7oHpV1fWcte0fTrW3At7q17vyrzy6qRN0wL
+         8pmmo4nlkec65M72hcCmWm07SkCGIAlviRsqjIbrd9FXQHHbOHCB9GJFnSzgmEMVsS+d
+         0Y1w==
+X-Gm-Message-State: ANoB5plTue8qPvAXPFynPw7kMDc5azjiCWol8SvumndaCVbWqiZ5fNZy
+        +PPmoelK5ok6Qia+j0lF4pQMWYmH/TJ/u+ee8w8=
+X-Google-Smtp-Source: AA0mqf6QHZX7sydljwe+pLb3NkfHGfOKw8Be2gecYqlnlnkhxnyLI7iY4fQjrJ3kufXVJrNts406fQ==
+X-Received: by 2002:ac2:4c4f:0:b0:4a4:68b8:f4f4 with SMTP id o15-20020ac24c4f000000b004a468b8f4f4mr3021215lfk.58.1670604536319;
+        Fri, 09 Dec 2022 08:48:56 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id y2-20020a05651c106200b002770fb5722fsm275242ljm.123.2022.12.09.08.48.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Dec 2022 08:48:55 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Dec 2022 18:28:42 +0200
-Message-ID: <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/18] clk: qcom: smd-rpm: enable pin-controlled
- ln_bb_clk clocks on qcs404
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, Alex Elder <elder@linaro.org>
+Subject: [PATCH v3 00/19] clk: qcom: smd-rpm: drop platform names
+Date:   Fri,  9 Dec 2022 18:48:36 +0200
+Message-Id: <20221209164855.128798-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -73,41 +75,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Dec 2022 at 18:14, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 07/12/2022 01:14, Dmitry Baryshkov wrote:
-> > The commit eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm
-> > clocks") defined the pin-controlled ln_bb_clk clocks, but didn't add
-> > them to the qcs404_clks array. Add them to make these clocks usable to
-> > platform devices.
-> >
->
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
->
-> > Fixes: eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm clocks")
-> > Reviewed-by: Alex Elder <elder@linaro.org?
->
-> Wrong character at the end.
->
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/clk/qcom/clk-smd-rpm.c         | 2 ++
-> >  include/dt-bindings/clock/qcom,rpmcc.h | 2 ++
-> >  2 files changed, 4 insertions(+)
-> >
->
-> No, bindings are separate.
+This series concludes the previous work on Qualcomm RPM and RPMH clock
+drivers. It reworks the clk-smd-rpm driver to drop the SoC name from the
+clock symbol name, as the clock definitions are shared between different
+SoCs (platforms). Having an SoC name in the clock definition can lead to
+all sources of confusion and/or errors.
 
-Argh, I didn't realise that this piece also goes into your realm.
-Please excuse me.
+Changes since v2:
+ - Split bindings into a separate patch
 
-I'll send v2.
+Changes since v1:
+ - Split the MMXI/MMAXI and sm6375 vs sm6125 changes into two different
+   patches
+ - Reworked macro definitions and usage to remove empty arguments
+ - Dropped qcm2290_bimc_gpu_clk definition in the corresponding patch
+ - Alignment fixes
+
+
+Dmitry Baryshkov (19):
+  dt-bindings: clocks: qcom: rpmcc: add LN_BB_CLK_PIN clocks
+  clk: qcom: smd-rpm: enable pin-controlled ln_bb_clk clocks on qcs404
+  clk: qcom: smd-rpm: remove duplication between MMXI and MMAXI defines
+  clk: qcom: smd-rpm: remove duplication between qcs404 and qcm2290
+    clocks
+  clk: qcom: smd-rpm: add missing ln_bb_clkN clocks
+  clk: qcom: smd-rpm: use msm8998_ln_bb_clk2 for qcm2290 SoC
+  clk: qcom: smd-rpm: rename msm8992_ln_bb_* clocks to qcs404_ln_bb_*
+  clk: qcom: smd-rpm: remove duplication between sm6375 and sm6125
+    clocks
+  clk: qcom: smd-rpm: add XO_BUFFER clock for each XO_BUFFER_PINCTRL
+    clock
+  clk: qcom: smd-rpm: drop the rpm_status_id field
+  clk: qcom: smd-rpm: fix alignment of line breaking backslashes
+  clk: qcom: smd-rpm: move clock definitions together
+  clk: qcom: smd-rpm: rename some msm8974 active-only clocks
+  clk: qcom: smd-rpm: simplify XO_BUFFER clocks definitions
+  clk: qcom: smd-rpm: simplify SMD_RPM/_BRANCH/_QDSS clock definitions
+  clk: qcom: smd-rpm: rename SMD_RPM_BRANCH clock symbols
+  clk: qcom: smd-rpm: rename the qcm2290 rf_clk3 clocks
+  clk: qcom: smd-rpm: rename SMD_RPM_BUS clocks
+  clk: qcom: smd-rpm: remove usage of platform name
+
+ drivers/clk/qcom/clk-smd-rpm.c         | 1441 ++++++++++++------------
+ include/dt-bindings/clock/qcom,rpmcc.h |    2 +
+ include/linux/soc/qcom/smd-rpm.h       |    1 -
+ 3 files changed, 723 insertions(+), 721 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.35.1
+
