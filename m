@@ -2,62 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 102DE6485BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:43:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B265564865D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:15:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbiLIPnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:43:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32994 "EHLO
+        id S229604AbiLIQPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 11:15:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbiLIPnE (ORCPT
+        with ESMTP id S229556AbiLIQOp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 10:43:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0885D2314A;
-        Fri,  9 Dec 2022 07:43:03 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 98EE762296;
-        Fri,  9 Dec 2022 15:43:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED432C433D2;
-        Fri,  9 Dec 2022 15:43:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670600582;
-        bh=oCEIGuHeYhxQrCwVo/soAElAtMLWGb4yuO0SHkYdARw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ik/yRMpIxgLkVL0fgXhIFgSsHW8u0esK0EQWhBy/bY5hAzu3m1YsNUwdBhGcXoYrE
-         hCAkf3JzdJXtnU/SR6apKalZFVs21lPhQzUnJZ62pfj2KGJgt6sHUWfM/YZZw7FxDb
-         7PR6OBtqptEbYnTbj782MsCVZE9I95cyUQIvJN0dK8q4j6upYgVSinVBzmUm/6xd+G
-         PTkMdvx6ftPR1+IWfZlV4ynHnswJ+nTJ0N4WcPIgcXtuu3dSS6ja6V+pFI9mkjtmNl
-         Hc7eoVYYCazXTNYgvi4LEW4fHChYVwzDEe8kqksIwObb48uG16qkF+MIwPEjOaTDa7
-         seddbxDxq4WTw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1p3fWw-0001TN-5z; Fri, 09 Dec 2022 16:43:18 +0100
-Date:   Fri, 9 Dec 2022 16:43:18 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Fri, 9 Dec 2022 11:14:45 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C55F26AA2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 08:14:44 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id p36so7750462lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 08:14:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2N4PRZ0R5QB+dpYQc+gz6ykV6COuuBPQXhMdAE79JWE=;
+        b=rApEoh1lE899Poqcc+tUHAUvNqZU510CC0xF82fzsN7pRa8XuIYnciE2YxmeKprG+U
+         mYK8I4gPTMYUqUoV/xy+6z0uQd0Y9q7wTGXyLWHV4Ya740MuNmyRQYXTzO++4YAXgnn9
+         Q05g65R0I5gyH7B10wLHYLBs1p7/HCtox9U7MEIhe3EKabTG34uV4lH061RlhtZTnt42
+         puBGKX4bTAxIi0onrMt54QDWSPQbYE+gKC4xbo3FFWaqdqz2JIHf5HU7P75dCTc1lTpI
+         F1UGVkZAREGWe3BTeZ2nx3WqqyxQu7EUvW7SSGCFydXgs0vrViiChVLtPNAT6nFI501s
+         AlQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2N4PRZ0R5QB+dpYQc+gz6ykV6COuuBPQXhMdAE79JWE=;
+        b=2NpwrATsXVrE3iqbCgNJlQmpt1H63L03hSP7QSMrkStp31a82qgkO4r0urE9syPVDY
+         8FqMDLQSC6UvHc1d8lhjsox9SnUEnii8/4pCwEUsFJ4ofMz5waVdD+cu9gaOQq6gTGkj
+         mUneetOQ+lgJfDxD85mDrTBT01Y+4pyJILKUN4FZrC7MeOCF4zPlAFxtbhgXDD04ReN+
+         3aTA/nlPh0cBslb4SOo+ThfNMMTXjObcIPWunIE5rFgkyBLodxoVhrGY0GQQhlC28uoA
+         uefBK5OHv6eej/R2NXET/KeGjsZFSeTgq4T+3UmbEwp7tkl0FPriGXNRq6YVQKeZJRFT
+         McsQ==
+X-Gm-Message-State: ANoB5pkAGSWQea9f1MCF8k0eo4tM3mP1H3+/tEjtrX/jrfUh+Kp0QbFf
+        la8VA1FFi8+VpLwTfTiOodimKg==
+X-Google-Smtp-Source: AA0mqf5aF3zQQHmRAZFnbPvXpL8T9yphqlfAtZnfpFzOtFW322aXLiMAtr10z6VTx8zczZqzqi4ndw==
+X-Received: by 2002:a05:6512:250f:b0:4a4:68b9:66d4 with SMTP id be15-20020a056512250f00b004a468b966d4mr2005721lfb.31.1670602482954;
+        Fri, 09 Dec 2022 08:14:42 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id p23-20020a056512329700b004b5853f0fc6sm312487lfe.246.2022.12.09.08.14.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Dec 2022 08:14:42 -0800 (PST)
+Message-ID: <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
+Date:   Fri, 9 Dec 2022 17:14:41 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 02/18] clk: qcom: smd-rpm: enable pin-controlled
+ ln_bb_clk clocks on qcs404
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
-Message-ID: <Y5NXllrF3K+ga/GR@hovoldconsulting.com>
-References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+ <20221207001503.93790-3-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221207001503.93790-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,27 +81,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 09, 2022 at 03:29:47PM +0100, Luca Weiss wrote:
-> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
-> in the bindings so the existing dts can validate successfully.
+On 07/12/2022 01:14, Dmitry Baryshkov wrote:
+> The commit eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm
+> clocks") defined the pin-controlled ln_bb_clk clocks, but didn't add
+> them to the qcs404_clks array. Add them to make these clocks usable to
+> platform devices.
 > 
-> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
-> sm8450: add Inline Crypto Engine registers and clock") so move the
-> compatible to the correct if.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
+
+> Fixes: eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm clocks")
+> Reviewed-by: Alex Elder <elder@linaro.org?
+
+Wrong character at the end.
+
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> (no cover subject)
+>  drivers/clk/qcom/clk-smd-rpm.c         | 2 ++
+>  include/dt-bindings/clock/qcom,rpmcc.h | 2 ++
+>  2 files changed, 4 insertions(+)
 > 
-> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
-> and sa8540p-ride.dtb:
-> 
->   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
-> 
-> Maybe someone who knows something about this can handle this?
 
-That's being addressed here:
+No, bindings are separate.
 
-	https://lore.kernel.org/lkml/20221205100837.29212-2-johan+linaro@kernel.org/
+Best regards,
+Krzysztof
 
-Johan
