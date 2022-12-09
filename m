@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30943647BE9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 03:06:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9063647BEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 03:07:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbiLICGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Dec 2022 21:06:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36552 "EHLO
+        id S229907AbiLICHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Dec 2022 21:07:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiLICGe (ORCPT
+        with ESMTP id S229797AbiLICGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Dec 2022 21:06:34 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639E2944FB
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 18:06:33 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so6588931pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 18:06:33 -0800 (PST)
+        Thu, 8 Dec 2022 21:06:38 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04CB8A0F96
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Dec 2022 18:06:35 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id jl24so3383577plb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Dec 2022 18:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=riB7LtyZ0lleKlmY9G6ocrA6pcHo/IAGW1ay3iZp0eQ=;
-        b=X+JYtgj8sgUEsF7jToHxDCYTMglL0aIOZ4+loh9W8HStvg47PVkIykK/WViQN8qXBK
-         GjYQ508/LrXK1k0wxNZCEu3/JqnBdZOnrAFBorD3+i/CA07NkAFrocN78evZiRColHr5
-         uftETNCdoUP898da50ms6V//mnUDPs9xOTcmU=
+        bh=EYHKt7eErryFsunPtjvbbKSRjv/mzx815uk+wD/pTQA=;
+        b=d49/UoZlVE5w3d9YzUdP39J9v1X4sYnfWRYbfkz4kRMG3f3MBGnFZoF8oeyfpj09BG
+         cFP+PcSftvmWByGj00bsk6B8QOC0edfwZ/94cvliN5dhM3a6QtVOi6KQzImXE4Xu1ie/
+         gkorIwsbpNx6+8bg3nBEGTwD/wgAQHl4nCDkE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=riB7LtyZ0lleKlmY9G6ocrA6pcHo/IAGW1ay3iZp0eQ=;
-        b=BX4Jq4JF523HfwzuD5CWrWIk/CNRfEJ7T9r4MhRAQaW+V3wVhuTZq4bxlv6CnIw72i
-         HYdxUqU8GNHb8vve9ywWqHrtHTk0ET3B8GBIReb/LH6QWl7pPRJGSVDK9c6/1ZwtJYcO
-         gVavY67fLy3TZJKhFuckZOYfqlngcvGPmlR4DLpQaW772XDh4u2dHPUIRQuJ3El2yfAc
-         NLrKyH35/bBM21Bw8d9psyO2rcPuYJIZ9OF5mX1tYT0x2/f9bE4ZrdehQ9VvCCmJWKPR
-         4HxiBTAaFZdoZLksDkg0HQqLoS37EcaUmraHBKqQU5aw/la7+B8jr3kNWK9KxUykrlED
-         lSew==
-X-Gm-Message-State: ANoB5pllwShRhx7o2LAaSpoJ210bJ2WW82Uv2ErVw94dm+oAt8bv/65i
-        0iihiXZRg7fi7clhjzdPvRQLwg==
-X-Google-Smtp-Source: AA0mqf5e81mya60xEl8F+ZSr8VdEDiUyt7BQLEsWUnydTPCssdcQFKXLZ9EuWMLf5QY19GrOyKTGFw==
-X-Received: by 2002:a17:90a:199b:b0:218:72de:1f77 with SMTP id 27-20020a17090a199b00b0021872de1f77mr4054831pji.6.1670551592946;
-        Thu, 08 Dec 2022 18:06:32 -0800 (PST)
+        bh=EYHKt7eErryFsunPtjvbbKSRjv/mzx815uk+wD/pTQA=;
+        b=a3UUgSdeeOMorVoUCvxiQ33QYIRGJAEQW4Hqf23d7OKUe0w5oalvwhazczCEU5uO9G
+         erJ7picF6/gXEiHYc89wQH+oVKp49oRUFeuMa2SfnWa/s8G+Kw3qMVCX2UG4Q7UIPcyK
+         NgvVFSRrHW6Owk0LK7wSNNEbqDgV7TO/R3Lh0qX+uRrz/YBq2+o4q8TuiVkX1B88VgNB
+         hrZ9d39y6rshZIx2cfoCGjLzDq+hFOy4Bt0rWBID7RIkF/cz0ViQoAHT2S7JtTODd037
+         KGc+O4oBE7Cs0pUGwvq8dwzUwzBFc6nfsa8VVAEfwu4xB8nQc0osO1qfmFH2hjL9M4fM
+         DaOg==
+X-Gm-Message-State: ANoB5pkxCwWHxAJWsEJ7BuO39Jn3Cm82FQJdDVFKZirHoLrdEUhqlHYc
+        BeUHpjUbCPezVIv6qxqHj1f4d9vI+UWbvXcycYo=
+X-Google-Smtp-Source: AA0mqf7uDUzumlQz01jBVxnxyEVFcy0Yo5fQx0dH1g79MUe7PgisOwmPsSg6vsxK4/zwUphVR1W31w==
+X-Received: by 2002:a17:90a:5281:b0:212:f0fe:bb45 with SMTP id w1-20020a17090a528100b00212f0febb45mr4080802pjh.40.1670551594503;
+        Thu, 08 Dec 2022 18:06:34 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:9a82:7898:7bf4:b4f])
-        by smtp.gmail.com with ESMTPSA id h3-20020a17090a648300b00218ddc8048bsm233473pjj.34.2022.12.08.18.06.31
+        by smtp.gmail.com with ESMTPSA id h3-20020a17090a648300b00218ddc8048bsm233473pjj.34.2022.12.08.18.06.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 18:06:32 -0800 (PST)
+        Thu, 08 Dec 2022 18:06:34 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <andersson@kernel.org>,
         Dmitry Torokhov <dmitry.torokhov@gmail.com>
@@ -55,13 +55,11 @@ Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-input@vger.kernel.org, swboyd@chromium.org,
         Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Johnny Chuang <johnny.chuang.emc@gmail.com>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/5] arm64: dts: qcom: sc7180: Add pazquel360 touschreen
-Date:   Thu,  8 Dec 2022 18:06:11 -0800
-Message-Id: <20221208180603.v2.4.Id132522bda31fd97684cb076a44a0907cd28097d@changeid>
+Subject: [PATCH v2 5/5] Input: elants_i2c: Delay longer with reset asserted
+Date:   Thu,  8 Dec 2022 18:06:12 -0800
+Message-Id: <20221208180603.v2.5.I6edfb3f459662c041563a54e5b7df727c27caaba@changeid>
 X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
 In-Reply-To: <20221209020612.1303267-1-dianders@chromium.org>
 References: <20221209020612.1303267-1-dianders@chromium.org>
@@ -77,50 +75,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The touchscreen was supposed to have been added when pazquel360 first
-was added upstream but was missed. Add it now.
+The elan touchscreen datasheet says that the reset GPIO only needs to
+be asserted for 500us in order to reset the regulator. The problem is
+that some boards need a level shifter between the signals on the GPIO
+controller and the signals on the touchscreen. All of these extra
+components on the line can slow the transition of the signals. On one
+board, we measured the reset line and saw that it took almost 1.8ms to
+go low. Even after we bumped up the "drive strength" of the signal
+from the default 2mA to 8mA we still saw it take 421us for the signal
+to go low.
+
+In order to account for this let's lengthen the amount of time that we
+keep the reset asserted. Let's bump it up from 500us to 5000us.
+That's still a relatively short amount of time and is much safer.
+
+It should be noted that this fixes real problems. Case in point:
+1. The touchscreen power rail may be shared with another device (like
+   an eDP panel). That means that at probe time power might already be
+   on.
+2. In probe we grab the reset GPIO and assert it (make it low).
+3. We turn on power (a noop since it was already on).
+4. We wait 500us.
+5. We deassert the reset GPIO.
+
+With the above case and only a 500us delay we saw only a partial reset
+asserted, which is bad. Giving it 5ms is overkill but feels safer in
+case someone else has a different level shifter setup.
+
+Note that bumping up the delay to 5000 means that some configs yell
+about using udelay(). We'll change to using usleep_range(). We give a
+small range here because:
+- This isn't a delay that happens very often so we don't need to worry
+  about giving a big range to allow for power efficiency.
+- usleep_range() is known to almost always pick the upper bound and
+  delay that long and we really don't want to slow down the power on
+  of the touchscreen that much.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 ---
 
-(no changes since v1)
+Changes in v2:
+- Fix typo in commit message (Matthias)
+- udelay -> usleep_range (Patches Robot, Dmitry)
 
- .../dts/qcom/sc7180-trogdor-pazquel360.dtsi   | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/input/touchscreen/elants_i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
-index 5702325d0c7b..54b89def8402 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
-@@ -14,6 +14,27 @@ &alc5682 {
- 	realtek,dmic-clk-rate-hz = <2048000>;
- };
+diff --git a/drivers/input/touchscreen/elants_i2c.c b/drivers/input/touchscreen/elants_i2c.c
+index 879a4d984c90..192d543e5aa9 100644
+--- a/drivers/input/touchscreen/elants_i2c.c
++++ b/drivers/input/touchscreen/elants_i2c.c
+@@ -114,7 +114,7 @@
+ /* calibration timeout definition */
+ #define ELAN_CALI_TIMEOUT_MSEC	12000
  
-+ap_ts_pen_1v8: &i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3915", "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		hid-descr-addr = <0x0001>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+		vccio-supply = <&pp1800_l10a>;
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
- &keyboard_controller {
- 	function-row-physmap = <
- 		MATRIX_KEY(0x00, 0x02, 0)	/* T1 */
+-#define ELAN_POWERON_DELAY_USEC	500
++#define ELAN_POWERON_DELAY_USEC	5000
+ #define ELAN_RESET_DELAY_MSEC	20
+ 
+ /* FW boot code version */
+@@ -1352,7 +1352,7 @@ static int elants_i2c_power_on(struct elants_data *ts)
+ 	 * We need to wait a bit after powering on controller before
+ 	 * we are allowed to release reset GPIO.
+ 	 */
+-	udelay(ELAN_POWERON_DELAY_USEC);
++	usleep_range(ELAN_POWERON_DELAY_USEC, ELAN_POWERON_DELAY_USEC + 100);
+ 
+ release_reset_gpio:
+ 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
 -- 
 2.39.0.rc1.256.g54fd8350bd-goog
 
