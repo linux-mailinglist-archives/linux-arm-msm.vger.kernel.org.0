@@ -2,163 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5F456484DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:19:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E081B6485A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:33:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbiLIPT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:19:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40496 "EHLO
+        id S229805AbiLIPd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 10:33:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbiLIPTZ (ORCPT
+        with ESMTP id S230254AbiLIPdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 10:19:25 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63C686F69
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:19:23 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id f16so5229344ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:19:23 -0800 (PST)
+        Fri, 9 Dec 2022 10:33:21 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A2195BC
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:33:20 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id 1so7590051lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cUqxyT1clmDwn9Zro9D+5wDVpGHXxnFJou8ChYK956o=;
-        b=yqUAlzbOfp2h1Yly7SCMDl7vy1sjcTlMrzPPb+6GWRQTgEXcGrspmSiRh2H4SLbbG8
-         9czrZSSrhqK4PMyPoGfvZc1LPseUaujdwvVZXiyfusWWCiW+20KVIhwIUz/ahQuC6OCQ
-         YDPRNPy43NFsyrZkX15D4QFKq66C5PLLN5sCk6dNP0CSk6uZgpmRoUuTcc+0vOrNtkAg
-         5Mkt5N3WWwJnM2OS8KqmyWaJACoGGiBsOdzTi/sCQmC+ajR/Lwfu0pQyPjrmFVICmPet
-         Cl1G5TvhwcGInk7WtWTX4OARn/hUCEHNOHVWzFPcosYnOsTikoO83MPNVH2Cbmfx11iH
-         qrew==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=ImNzBE3SlxRlVIPcifzS5JYjvJJ0yu9Pcf5kr6WJysFeUVzEC7UdQ0bmmbVunCMViY
+         E0MlsJxem/Hz01Y8SyHlWM9DBMZaiHK1jMGOMKkh8dYgQM3+FEhyuyT8IBNLAd2H/U2e
+         GzfKyW9CF1r3HpmON7O14EwkLeviC5pDTfEvgA1nOSi/mZFC8KMOUiH/6mquksUpIG0H
+         qsUzY5kpjUASHUPUCoDt0GoYOXmYQEOZp3krgLSmurmT2wHSnu/ZUrRutWFZnLeuTDWH
+         iWqxULpAWAmX385HAgonXg7/urodLc92Vd5hri2U0vDQUHLt1jApr5gaPrHw0m3b7aeS
+         M0qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=to:subject:message-id:date:from:reply-to:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cUqxyT1clmDwn9Zro9D+5wDVpGHXxnFJou8ChYK956o=;
-        b=XMgWt5MJv5ctXJCf4x39123/7fx8UQ4aJjU+TUf0UtbUjy4Hv8eX0k6TK0XjQMZhLZ
-         /d4dcKyXTEGMaN2j35wvxBj7VtJyccHoqIC3E0KcH/asl3dtaGMInbsPXhSPqSZrXqYv
-         M+GxfSIcxO+Q9+U3CNv7w5bpABodDZSWHk0Fnik+XMexSKG4PCdeKfnRf6ORa8xuYnRx
-         4JnHKVSE4011MD2+VeunbhEq7JRX1nB+Zqtoo2VJPJ7P0t6FsFhSZ8bKGwZKeIhocCkS
-         aJuMNRpSDtzCfAgoa4k3cKjttgM2aTmhfy1X0LuVYsYcXLszBJrBWgFtbJRMF0J7XMAo
-         NFew==
-X-Gm-Message-State: ANoB5pmaHeDZYdktRp6A5rSZdM6MVdhzEiaKFvkHuNvZTzXxphGjX3Zv
-        m18d/+890svsjL/bWzS5hpjEdg==
-X-Google-Smtp-Source: AA0mqf5f+iC1ajxI4MGe81943QW3HpslBZxD7S2QCV9T0YkIU4JpfAS0eNCTgGjB9xg7Zn00OIexUA==
-X-Received: by 2002:a05:651c:2118:b0:277:4c69:ee28 with SMTP id a24-20020a05651c211800b002774c69ee28mr3382419ljq.50.1670599162296;
-        Fri, 09 Dec 2022 07:19:22 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p20-20020a2eba14000000b002770566d642sm253305lja.17.2022.12.09.07.19.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 07:19:21 -0800 (PST)
-Message-ID: <a527720e-d4d9-6c90-f991-a5b123c4559b@linaro.org>
-Date:   Fri, 9 Dec 2022 16:19:20 +0100
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=zF5oAf/VbqaLfCXVGpp8m8GtU8tMfmWAVj7iX7z0r/FZgRhp4tfqrspRWMy7RnEJVn
+         p+z+o3VVp2o0p9IeTA+axDOxYjvso0Ct/qQY/k110eLWEwnWwCIAp91QWls9PIAhHfFf
+         UvouIsBENJo1SritsEKjZIHgz7mKLzJ6eLOe5RR+xBGi69j9CDqf7hH1aas6PAvJKn3w
+         O0MuO4ND96ffPTUY81dv3ZEMDBbeF5nwBtYfmU+cbke2TcfWniZLNegsLPjE/OaNZYbP
+         6fOlehWr7eVXec5EV2S+72DO6opej/W8YXmXerEtYN05qIerRMYKnKkbPOBeKbYKWTCS
+         ydOw==
+X-Gm-Message-State: ANoB5plgfoDg26deTiD9vUivt5pMRALWaxaS8knRRPm9s7pgSmn3rcSA
+        l3gJ8kzUFQAgwYeK4l5HoaOu18m48WyKp9vSZQs=
+X-Google-Smtp-Source: AA0mqf6D6kxSW4zDDTaH0/5a6BIP6RsAc9Q5jTUD/01/ya+WnXoO/vjDBDDpP/ZeX3uGLCm4F5Io/ktuB6phl8ShcmQ=
+X-Received: by 2002:ac2:488e:0:b0:4b4:cf32:e105 with SMTP id
+ x14-20020ac2488e000000b004b4cf32e105mr31530896lfc.110.1670599998863; Fri, 09
+ Dec 2022 07:33:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
- <24fa41d2-87d1-be19-af44-337784b0f0a4@linaro.org>
- <COXDTKRPPU1J.373YHYKBQIN38@otso>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <COXDTKRPPU1J.373YHYKBQIN38@otso>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a2e:a988:0:0:0:0:0 with HTTP; Fri, 9 Dec 2022 07:33:18 -0800 (PST)
+Reply-To: Gregdenzell9@gmail.com
+From:   Greg Denzell <anonymusxt2@gmail.com>
+Date:   Fri, 9 Dec 2022 15:33:18 +0000
+Message-ID: <CAKr3oRRe+TLWTuDixFQK1dKgOEdNGVF1uL2LNXpgrc8kkfRbrA@mail.gmail.com>
+Subject: Hello, This is my second message to you regarding the funds of your
+ late relative. I shall send you details after I receive your response.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=7.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,EMPTY_MESSAGE,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:12a listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4981]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [anonymusxt2[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [anonymusxt2[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [gregdenzell9[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  2.3 EMPTY_MESSAGE Message appears to have no textual parts
+        *  2.8 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 16:11, Luca Weiss wrote:
-> On Fri Dec 9, 2022 at 4:05 PM CET, Krzysztof Kozlowski wrote:
->> On 09/12/2022 15:29, Luca Weiss wrote:
->>> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
->>> in the bindings so the existing dts can validate successfully.
->>>
->>> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
->>> sm8450: add Inline Crypto Engine registers and clock") so move the
->>> compatible to the correct if.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> (no cover subject)
->>>
->>> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
->>> and sa8540p-ride.dtb:
->>>
->>>   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
->>>
->>> Maybe someone who knows something about this can handle this?
->>>
->>> And the patch adding qcom,sm6115-ufshc hasn't been applied yet.
->>> ---
->>>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 8 +++++++-
->>>  1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> index f2d6298d926c..58a2fb2c83c3 100644
->>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> @@ -102,7 +102,6 @@ allOf:
->>>                - qcom,sc8280xp-ufshc
->>>                - qcom,sm8250-ufshc
->>>                - qcom,sm8350-ufshc
->>> -              - qcom,sm8450-ufshc
->>>      then:
->>>        properties:
->>>          clocks:
->>> @@ -130,6 +129,7 @@ allOf:
->>>                - qcom,sdm845-ufshc
->>>                - qcom,sm6350-ufshc
->>>                - qcom,sm8150-ufshc
->>> +              - qcom,sm8450-ufshc
->>>      then:
->>>        properties:
->>>          clocks:
->>> @@ -149,6 +149,12 @@ allOf:
->>>          reg:
->>>            minItems: 2
->>>            maxItems: 2
->>> +        reg-names:
->>
->> There are no reg-names in top-level, so it's surprising to see its
->> customized here. It seems no one ever documented that usage...
-> 
-> From what I can tell, from driver side all devices not using ICE don't
-> need reg-names, only the "ice" reg is referenced by name in the driver.
-> 
-> I didn't add it top-level because with only one reg I think we're not
-> supposed to use reg-names, right?
-
-And you still won't need to use. Yet property should be rather described
-in top-level which also will unify the items here (so no different
-2-item reg-names in variants).
-
-Just add it to top-level with minItems: 1 and per variant customize:
-1. maxItems: 1
-2. minItems: 2 + required
-
-The "required" is a bit questionable... this was never added by Eric to
-the bindings. Driver support and DTS were added completely skipping
-bindings...
-
-Best regards,
-Krzysztof
 
