@@ -2,96 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3EF764847E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:02:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C434864849D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:07:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbiLIPCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:02:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S230229AbiLIPGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 10:06:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbiLIPBS (ORCPT
+        with ESMTP id S230196AbiLIPGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 10:01:18 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B40550D41
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:01:18 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id d6so7407223lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:01:18 -0800 (PST)
+        Fri, 9 Dec 2022 10:06:31 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F768933B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:05:53 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id q7so5188976ljp.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yJzA05MwGNcflYjJYNuBrRj2+RRU7jABtE3nBftkWdQ=;
-        b=KdP1RdmaMl2JqjYFykVCTHTeM0qz8Q3oCX9PGyFVR83pfY85tosGpd2JecdNloFV0q
-         H7lxsTBJH4h0wEMuYe51KxNOGrrTMAZBjvePX3Ifm9SvYjpzwCgm0tMsugvoJixp04wn
-         Xv5zp4NJ1y2kqflpO8zmy2+PQA5fsBhF41SVti8mI9RKe6gUv261JPXosaqGLgmmlSzp
-         KXsoZHPn54j+eDnG7/a8a8S9VpdsmqbVfQqTqinUSiURlVjpENBjwTkNwhK3Bs4nQZtw
-         IZ6FXgmZ8VtKUcNtxpw0fPVtyH/urZexmSzSDScKh8YqC9b3t4In97/g2fdk+4vA2zp4
-         MQjA==
+        bh=Eb+dzXKfFxLhKYjaGwUiIKvSA18uKRx27pJ/FmHwtEU=;
+        b=UaqEE2V7XWYGetw5n3TULGb3MoulZySHOYQ45kKm+9Eji+t1wo6MYUsW1LCCKdPiPY
+         Vu266DfbJXMo4NoR0PIPAf0q2mOUQQ0RzXKII/DP5rY/X7uagyLXuOCAZ/LIRCbMWkVD
+         KHE0DkBTFDkR9uIFeVYbEl7pJzQazF6EKMmuQyiP9Ktjxd+KxzAKbUj3M8Ha/IIGvVP/
+         UqHY/ruIR5qS9yi2gb/bpnCK86jZmpJhHENjwoSGG+GYN4OVQB8kPmFdHoLVIk5xwRNB
+         YH1m3qyByyMey0nxj7P+MukceClfttKeE3lSNC9BfGc+JFoXsYmUIrS4/89ZAatwcjmY
+         3CMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yJzA05MwGNcflYjJYNuBrRj2+RRU7jABtE3nBftkWdQ=;
-        b=axYfGpzNXqoHP/lSejdaLIvWjlTtj6IH5eBkpO356zRCjugITiajwcKE5rY5vlLpQ4
-         pq2Vjgenc36ODLFfIeOyDmlEVe+Ib7KnKNOn4+3o0+3VNLQxe7JR7U0mTsDB5OUvGg5v
-         t6cWWedQkLQu1VlxQM2dvmGNQPBxpnnDPBu2KNlRIvDDYV1ICXDl68UjrHaudZnH28X5
-         ibw6zEqjOOTydkloHvHPKNO6Jwuh8+ZEOmpPzbj7BAsOr1CiBd/fCw00jqfJORMUyXgb
-         imjIdQ739TVv2bKQ6HC9Snj5FkkHwsMBEq7NkWdMcjhA3IGDGF8Kr3cZMSIwebayWarh
-         2+5w==
-X-Gm-Message-State: ANoB5pkKrEwtm11Z4nsdd0EZ+SKajvB20m9inp4octCYXgCo3n6fSggd
-        UGIH8RTzLUAYIeRYalWNl4ATFg==
-X-Google-Smtp-Source: AA0mqf5WG0or+xIyHDOliiIM6VVP1kSsBSdGE/W5vP+LjJD4OkWazLGK22bZ0PkQ0vMtwxBSome9UA==
-X-Received: by 2002:a05:6512:5c2:b0:4b4:fbf2:608b with SMTP id o2-20020a05651205c200b004b4fbf2608bmr1592508lfo.30.1670598076570;
-        Fri, 09 Dec 2022 07:01:16 -0800 (PST)
+        bh=Eb+dzXKfFxLhKYjaGwUiIKvSA18uKRx27pJ/FmHwtEU=;
+        b=GAjh44N/PMn4bfR/kBTQ/++dPmMKC1lrgB5lJM5BT/c7BnmfDs+WrTPs7ZQNxZ7ZHA
+         O1mFAIsAtzSaQmhW3t8EGwksXKTh4oD0SLBvBXGODPNtRN8n1VvIu8TpFtj/Da4H1cO3
+         tTv3mJWr0Ioa2ysWA8tpNiF0UVSj2iQWS593DQR1+OWj2zLWrhBzH0msVYU0tvoUlkqS
+         /OYNYnnKfN3JufwNRt70YiKXinBz0XsfPXvp81K8opNbl3/Mn5xnKdMgF83ch/VeU76s
+         TOgvEOJj0jL4KEMsv2aVWHsXLU+LMufVA2t5mDoKt0s+qfk/6csJNDdI3/irtiD1V6RG
+         eeMQ==
+X-Gm-Message-State: ANoB5pmnygRDNjKL+VUzuTNyfM62P36uwaZ0Vky+yoIXJ0NU9vKcXput
+        JePMGq0A7ghhC3/7pCUd/k8iQg==
+X-Google-Smtp-Source: AA0mqf7t6HyCvjQbRm6lmUFP6R5mKqPRb4U9dlf9l9mifKdgF30nTCo9XZGo4dm2k9UFBPiA/WTurQ==
+X-Received: by 2002:a05:651c:94:b0:27a:7a8:c54b with SMTP id 20-20020a05651c009400b0027a07a8c54bmr1902929ljq.45.1670598351535;
+        Fri, 09 Dec 2022 07:05:51 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d25-20020a0565123d1900b004b5701b5337sm290805lfv.104.2022.12.09.07.01.15
+        by smtp.gmail.com with ESMTPSA id r23-20020a2eb617000000b00279cbcfd7dbsm245033ljn.30.2022.12.09.07.05.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 07:01:15 -0800 (PST)
-Message-ID: <026eafce-86b0-c063-c397-d4b82f2dc35f@linaro.org>
-Date:   Fri, 9 Dec 2022 16:01:14 +0100
+        Fri, 09 Dec 2022 07:05:50 -0800 (PST)
+Message-ID: <24fa41d2-87d1-be19-af44-337784b0f0a4@linaro.org>
+Date:   Fri, 9 Dec 2022 16:05:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH 1/3] dt-bindings: leds: spmi-flash-led: Add pm6150l
- compatible
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
 Content-Language: en-US
 To:     Luca Weiss <luca.weiss@fairphone.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
- <20221209-fp4-pm6150l-flash-v1-1-531521eb2a72@fairphone.com>
+References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221209-fp4-pm6150l-flash-v1-1-531521eb2a72@fairphone.com>
+In-Reply-To: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 14:54, Luca Weiss wrote:
-> Add the compatible for the flash-led block found on pm6150l PMIC.
+On 09/12/2022 15:29, Luca Weiss wrote:
+> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
+> in the bindings so the existing dts can validate successfully.
+> 
+> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
+> sm8450: add Inline Crypto Engine registers and clock") so move the
+> compatible to the correct if.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> (no cover subject)
+> 
+> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
+> and sa8540p-ride.dtb:
+> 
+>   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
+> 
+> Maybe someone who knows something about this can handle this?
+> 
+> And the patch adding qcom,sm6115-ufshc hasn't been applied yet.
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index f2d6298d926c..58a2fb2c83c3 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -102,7 +102,6 @@ allOf:
+>                - qcom,sc8280xp-ufshc
+>                - qcom,sm8250-ufshc
+>                - qcom,sm8350-ufshc
+> -              - qcom,sm8450-ufshc
+>      then:
+>        properties:
+>          clocks:
+> @@ -130,6 +129,7 @@ allOf:
+>                - qcom,sdm845-ufshc
+>                - qcom,sm6350-ufshc
+>                - qcom,sm8150-ufshc
+> +              - qcom,sm8450-ufshc
+>      then:
+>        properties:
+>          clocks:
+> @@ -149,6 +149,12 @@ allOf:
+>          reg:
+>            minItems: 2
+>            maxItems: 2
+> +        reg-names:
 
+There are no reg-names in top-level, so it's surprising to see its
+customized here. It seems no one ever documented that usage...
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +          items:
+> +            - const: std
+> +            - const: ice
+> +      required:
+> +        - reg-names
+>  
+>    - if:
+>        properties:
+> 
+> ---
+> base-commit: f925116b24c0c42dc6d5ab5111c55fd7f74e8dc7
+> change-id: 20221209-dt-binding-ufs-2d7f64797ff2
+> 
+> Best regards,
 
 Best regards,
 Krzysztof
