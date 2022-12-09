@@ -2,71 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A15648745
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 18:07:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA2A64875C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 18:10:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbiLIRHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 12:07:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51936 "EHLO
+        id S230033AbiLIRKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 12:10:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbiLIRHG (ORCPT
+        with ESMTP id S230036AbiLIRJw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 12:07:06 -0500
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCA5A3870
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 09:05:37 -0800 (PST)
-Received: by mail-yb1-xb32.google.com with SMTP id c140so6228598ybf.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:05:37 -0800 (PST)
+        Fri, 9 Dec 2022 12:09:52 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D86C64D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 09:09:34 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id fc4so12914789ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m/9lqzL8oZxDL1569exX5YdO2wK0A/N3Nq2LidbPWQo=;
-        b=O2sgNTTpu4+f1z7RaiuywBXHznwKn7oohJ0SsYKciDvJdgz1KByoN+lG65QlQ65EyY
-         DnHrPpFnJKtPBoghXu/fMSEWXgaiHpQHTDZLp8EjdKBTVbO5FAtnb+tTEaZWFskrxdI5
-         ozFDtWHnzmpO5E7PDdpMmvI0ejkmo6OLd84mpLmuCCYcSrrGSPVaHUgxHSOg4Zj4GpbN
-         3kl7jpwez0Q876GntLKTAC+hoDA1hlu/EBmGuCJ04d/MGHcq2zQHuTsW7axepMurTbDT
-         1Ui4RhK/5RAh3eLGG6NcZ88Z9oQWEe3rQa5j+R5Tu920AZuCIGpys2nbR1s314W1ovYP
-         ch1w==
+        bh=NXbFEB1xKk4N48FcslTMhY6JVh3nMLyk4J4qoIMRvnE=;
+        b=nUmD78MQ7NnK3IqCVJDUrdNthqq8xbLAX87n4IQsS384SzBm/UB+io7PLK0DDRodk5
+         z7o04SMoI/orbl8rDMTFvF6SuE574vHt4H2xj02QeYta2t/AzsrIeRZ8UKjyXS2DKdsQ
+         ANcCzBzXauN0otQHC6aH2BnFLuAGVKDZpXmAA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m/9lqzL8oZxDL1569exX5YdO2wK0A/N3Nq2LidbPWQo=;
-        b=hr/Ow7umQl+ZCdVvGqL3xNJHPGdw3ITQcQ+CAXU4tB0wFdQurgCo4O6HoA9JJa1/eB
-         hNk/2TT4F//YPxJJew4v+nsSbPVtEgVpYNxF7iC9yr/fFFOgwTga2G2czkNxrzqxQq1F
-         yHSXPGv6lDHQmvbqpFi7wXx1y+yzKUDtyLhbAeMJbsMZi7zK21vxM75XM3hKDtGWGHW9
-         dM5OJwmR6mU5NGlYqBFkhKj5a7QWyuncbu2nSQZShLFVUIGob9usoGLYJjrEjXv0iAn3
-         qyEL84GWrRwYV6sUhpBahSgaKNBvmTtMTRbK9uNrC8nV6S/vlg44AtgTubOwOg65l8yF
-         i31g==
-X-Gm-Message-State: ANoB5pkvQV9dDIeq7En8Ohm04s3b0TgrPjOkd36hWkARecjUlSsj8qsV
-        wfr7TBouRxiww5fmb4aGSqsZ9l4i2BBHa9CVnuQVSQ==
-X-Google-Smtp-Source: AA0mqf4s3Mtnfz9NzdoiqJVnGJFq75/XQF89HCf1bEvEfT/pCCTHt8Es+waUQ1GO55xwHc+7yR6TVMny+DZWGbLBrrA=
-X-Received: by 2002:a5b:e8e:0:b0:712:faac:e6b2 with SMTP id
- z14-20020a5b0e8e000000b00712faace6b2mr1649056ybr.632.1670605536934; Fri, 09
- Dec 2022 09:05:36 -0800 (PST)
+        bh=NXbFEB1xKk4N48FcslTMhY6JVh3nMLyk4J4qoIMRvnE=;
+        b=GlKvw+wQJLM84t/Zx4KDbQzpEmUQmH3eIavm+hOp8yhkAV7Nvx4iwhoVMQ17ijXYbu
+         armio0WPhhVLlGJ+R6KQ9EKgFq03Y2hMfMQP1jKuPrhN+DyrK9Gda7EZaWWByEjh3/iB
+         HfjL21f5DnjzmAT5bHvPoMAnKNlZDuFsqrA2b7/kOrmK+aKUmMrYHDiT/aQhiJfqFkBe
+         OqyIxaSgzdVqtF2Kdmnz/IgMaKT7oeh4nY7/JWJAKPNkTHzFHyxny6K6I63IVIjcyV6h
+         6DB6gg3hCPXG1ddLMAvqqcNeWzhSqtIFjXTGL+OQTVpfzFXD4UZH8dbU6EDeVtqtV1CQ
+         Uohw==
+X-Gm-Message-State: ANoB5pk6ap3ohfpNpUzTt2bf22o9+z/gnuGX4TURQuDsRFSrkEa5Jf3g
+        q8gwzu9ZkxsF0P07+q0tD79CsED9a0dETpo9Mgs=
+X-Google-Smtp-Source: AA0mqf4p1I+a8OhF+88p0injH6FAdXwBTp4kRJCVr81VtPGbaZTG1kPGi3Io62J20JhPSJKStV4saA==
+X-Received: by 2002:a17:907:c315:b0:7c0:c10e:1395 with SMTP id tl21-20020a170907c31500b007c0c10e1395mr6038126ejc.1.1670605772389;
+        Fri, 09 Dec 2022 09:09:32 -0800 (PST)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id ss2-20020a170907c00200b007aece68483csm116109ejc.193.2022.12.09.09.09.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Dec 2022 09:09:32 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id q7so5832594wrr.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:09:31 -0800 (PST)
+X-Received: by 2002:a5d:4943:0:b0:242:3ca3:b7bd with SMTP id
+ r3-20020a5d4943000000b002423ca3b7bdmr18075619wrs.583.1670605771352; Fri, 09
+ Dec 2022 09:09:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
- <20221207001503.93790-3-dmitry.baryshkov@linaro.org> <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
- <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
-In-Reply-To: <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date:   Fri, 9 Dec 2022 18:05:25 +0100
-Message-ID: <CAGE=qrpdcBM-s5yx7P4B+QcSsNxvjZZBswymr6Rx3hZA+YtR5w@mail.gmail.com>
-Subject: Re: [PATCH v2 02/18] clk: qcom: smd-rpm: enable pin-controlled
- ln_bb_clk clocks on qcs404
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20221209020612.1303267-1-dianders@chromium.org> <20221208180603.v2.4.Id132522bda31fd97684cb076a44a0907cd28097d@changeid>
+In-Reply-To: <20221208180603.v2.4.Id132522bda31fd97684cb076a44a0907cd28097d@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 9 Dec 2022 09:09:19 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WnjpOSvQ88gQJDJ5HFipBU5K5JRApRjZ0QYhi9AkYOTQ@mail.gmail.com>
+Message-ID: <CAD=FV=WnjpOSvQ88gQJDJ5HFipBU5K5JRApRjZ0QYhi9AkYOTQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] arm64: dts: qcom: sc7180: Add pazquel360 touschreen
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
+        Yunlong Jia <ecs.beijing2022@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+        linux-input@vger.kernel.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,50 +80,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Dec 2022 at 17:28, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Hi,
+
+On Thu, Dec 8, 2022 at 6:06 PM Douglas Anderson <dianders@chromium.org> wrote:
 >
-> On Fri, 9 Dec 2022 at 18:14, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 07/12/2022 01:14, Dmitry Baryshkov wrote:
-> > > The commit eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm
-> > > clocks") defined the pin-controlled ln_bb_clk clocks, but didn't add
-> > > them to the qcs404_clks array. Add them to make these clocks usable to
-> > > platform devices.
-> > >
-> >
-> > Please use scripts/get_maintainers.pl to get a list of necessary people
-> > and lists to CC.  It might happen, that command when run on an older
-> > kernel, gives you outdated entries.  Therefore please be sure you base
-> > your patches on recent Linux kernel.
-> >
-> > > Fixes: eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm clocks")
-> > > Reviewed-by: Alex Elder <elder@linaro.org?
-> >
-> > Wrong character at the end.
-> >
-> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/clk/qcom/clk-smd-rpm.c         | 2 ++
-> > >  include/dt-bindings/clock/qcom,rpmcc.h | 2 ++
-> > >  2 files changed, 4 insertions(+)
-> > >
-> >
-> > No, bindings are separate.
+> The touchscreen was supposed to have been added when pazquel360 first
+> was added upstream but was missed. Add it now.
 >
-> Argh, I didn't realise that this piece also goes into your realm.
-> Please excuse me.
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+> (no changes since v1)
+>
+>  .../dts/qcom/sc7180-trogdor-pazquel360.dtsi   | 21 +++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> index 5702325d0c7b..54b89def8402 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+> @@ -14,6 +14,27 @@ &alc5682 {
+>         realtek,dmic-clk-rate-hz = <2048000>;
+>  };
+>
+> +ap_ts_pen_1v8: &i2c4 {
+> +       status = "okay";
+> +       clock-frequency = <400000>;
+> +
+> +       ap_ts: touchscreen@10 {
+> +               compatible = "elan,ekth3915", "elan,ekth3500";
+> +               reg = <0x10>;
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
+> +
+> +               interrupt-parent = <&tlmm>;
+> +               interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +               hid-descr-addr = <0x0001>;
 
-That's we we have checkpatch:
+I happened to re-read this and did a facepalm here. The
+'hid-descr-addr' doesn't belong here at all (it's for a totally
+different type of touchscreen), but it was there in our downstream
+branch (incorrectly) and I just copied it over. I even had noticed it
+before, but forgot it yesterday when posting this series.
 
-WARNING: DT binding docs and includes should be a separate patch. See:
-Documentation/devicetree/bindings/submitting-patches.rst
+Just to get things out of the way, I'll post a v3 now. Sorry for the noise.
 
-Such issues are solved with tools. You will not miss any maintainers
-if you automate the sending command (e.g. with identity and
-tocmd/cccmd). The same with mixing files - checkpatch tests for it.
-
-Best regards,
-Krzysztof
+-Doug
