@@ -2,81 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 448BD64884B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 19:16:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A21D66488E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 20:18:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiLISQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 13:16:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44400 "EHLO
+        id S229604AbiLITSC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 14:18:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbiLISQ2 (ORCPT
+        with ESMTP id S229512AbiLITSB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 13:16:28 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94E06A658D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 10:16:27 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id bn5so5768875ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 10:16:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JoijXwXZ/QMJ+MHmkZyk6ZNFTzCacwwN6Dw+3qiPXXU=;
-        b=h+HpFt+vSKp8kV7WQ++6tCOuO+RtZ++ppnktlp1IbIk13aECw9XflFvc2XB5Yv+N09
-         bgU57OdhcTCbne6b1N/EnY0OuW91EQgCes/7Xox9Z7prerMqRvKGVwpurPHkeX0B2Kvl
-         9oRveEUnlks0l6TLSuDC4btGK/HyS1ZPam3qjzEVCOklNvgcJ2xojRD0bdHgBLPcycRR
-         jukmzQ/cFEKEKSQI0DUGQ3WcQ8hsGCgI24lGieyDvzrvJGOl3CrONkYyAp9QFBfk2vpk
-         jQabuwnUXPIQN3aAlsrIkqu6W2YLTVhtyJxwJbB5hYWBmwSkxErvRgNOXIsaHX0qJdHb
-         kMFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JoijXwXZ/QMJ+MHmkZyk6ZNFTzCacwwN6Dw+3qiPXXU=;
-        b=tuK2dKwYL0+0ld9B8lq2pkO96yS6X1pdcnp4PobYoNTBQSo2Ql36+A9tHu24jqbV6z
-         SgXxPL7zFeYRWFWgH8nhG0nUds9CDRhNULt+SyDfFztAGrLAudNpteW73Xc8nIEn2eCL
-         AEFNp+nI1CCusuocaawfpQB1i+MQdAL6bEQ5mZW7skXmlGF4vJaG0jONUjhWh23NwhGH
-         Kce8ple/b9++l5kVrn0p4TL7/7KCIhKgnBfLboQqnEQIS5duHycRuoSZqb3d8esy1MPd
-         eM7ViQRtKmAk8C8RvWBfJA94V9nHMCUxmzZk+WBlmHQALeGGWj0ty1QO10KCygzlTFUb
-         immg==
-X-Gm-Message-State: ANoB5pmZRpkRa4hrGAjEc6m3do/n8YH/KPr48tOXu/usjhfmMkv+yN/S
-        NNlO9I5skIZr0r+Uub2xjE8sdQ==
-X-Google-Smtp-Source: AA0mqf5r3ZO5zIYlFZLUCjVtJaiX96hnOAEKv0jeiM/6xAWJJKHfLoffaNGAMOsEnOBRAEYra8d6lg==
-X-Received: by 2002:a2e:9cce:0:b0:27a:1c5a:9faa with SMTP id g14-20020a2e9cce000000b0027a1c5a9faamr1898251ljj.24.1670609785903;
-        Fri, 09 Dec 2022 10:16:25 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id i124-20020a2e2282000000b0027712379ec8sm302618lji.28.2022.12.09.10.16.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 10:16:25 -0800 (PST)
-Message-ID: <0055a151-0f29-581f-f938-e7647105c3ec@linaro.org>
-Date:   Fri, 9 Dec 2022 19:16:24 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 9 Dec 2022 14:18:01 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 721AE1AA22;
+        Fri,  9 Dec 2022 11:17:57 -0800 (PST)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C6C333EEE4;
+        Fri,  9 Dec 2022 20:17:53 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221202155738.383301-1-krzysztof.kozlowski@linaro.org>
- <20221202155738.383301-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=UPLssDromnt89RYbSEU9qq_t+CSyd5VhmD7b-9JkcMFA@mail.gmail.com>
- <c0b660bf-93c2-89b6-e704-17489efe6840@linaro.org>
- <CAD=FV=UjwDkgXXmVcV-XNsPKOGh=TVsQexC0YQoU-_fz==y+UQ@mail.gmail.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=UjwDkgXXmVcV-XNsPKOGh=TVsQexC0YQoU-_fz==y+UQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH] arm64: dts: qcom: sm8150-kumano: Panel framebuffer is 2.5k instead of 4k
+Date:   Fri,  9 Dec 2022 20:17:33 +0100
+Message-Id: <20221209191733.1458031-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,67 +52,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 18:53, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Dec 9, 2022 at 2:25 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 02/12/2022 17:53, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Fri, Dec 2, 2022 at 7:57 AM Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>
->>>> DT schema expects TLMM pin configuration nodes to be named with
->>>> '-state' suffix and their optional children with '-pins' suffix.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>
->>>> ---
->>>>
->>>> Cc: Doug Anderson <dianders@chromium.org>
->>>>
->>>> Tested on Qualcomm RB3. Please kndly test a bit more on other devices.
->>>> This should not have an functional impact.
->>>>
->>>> Changes since v2:
->>>> 1. Bring back UART6 4-pin bias/drive strength to DTSI.
->>>
->>> Just to be clear, it doesn't actually belong in the DTSI, but it was
->>> there before your patch and it's fine if your patch series doesn't fix
->>> the whole world. I'm OK with this one staying in the DTSI for now just
->>> to keep things simpler.
->>>
->>> One change missing in v3 that I would have expected based on our
->>> discussion in the previous version would be to "Add UART3 4-pin mux
->>> settings for use in db845c." I think you said you would do this, but I
->>> don't see it done.
->>
->> Hm, I don't recall that. Changing db845c to usage of RTS/CTS is
->> independent problem, not related to fixes or aligning with DT schema.
-> 
-> It was in the message:
-> 
-> https://lore.kerne.org/r/68bcdf25-e8e3-f817-f213-efb0bce3f43a@linaro.org
-> 
-> I said:
-> 
->> FWIW, I would have expected that the SoC dtsi file would get a "4-pin"
->> definition (similar to what you did with qup_uart6_4pin) and then we'd
->> use that here.
-> 
-> You said:
-> 
->> Sure.
-> 
+The framebuffer configuration for kumano griffin, written in kumano dtsi
+(which is overwritten in bahamut dts for its smaller panel) has to use a
+1096x2560 configuration as this is what the panel (and framebuffer area)
+has been initialized to.  Downstream userspace also has access to (and
+uses) this 2.5k mode by default, and only switches the panel to 4k when
+requested.
 
-Yes, indeed and it see now I still keep there cts-rts-pins. Somehow I
-thought now we talk about UART6 or UART9...
+Fixes: d0a6ce59ea4e ("arm64: dts: qcom: sm8150: Add support for SONY Xperia 1 / 5 (Kumano platform)")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-However, the UART3 is disabled, so it will not have any effect, except
-for some downstream users.
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+index 8f1ddc969406..9f48a097927e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+@@ -35,9 +35,10 @@ chosen {
+ 		framebuffer: framebuffer@9c000000 {
+ 			compatible = "simple-framebuffer";
+ 			reg = <0 0x9c000000 0 0x2300000>;
+-			width = <1644>;
+-			height = <3840>;
+-			stride = <(1644 * 4)>;
++			/* Griffin BL initializes in 2.5k mode, not 4k */
++			width = <1096>;
++			height = <2560>;
++			stride = <(1096 * 4)>;
+ 			format = "a8r8g8b8";
+ 			/*
+ 			 * That's (going to be) a lot of clocks, but it's necessary due
+-- 
+2.38.1
 
