@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F14BD648117
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 11:44:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A64EC648127
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 11:52:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbiLIKor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 05:44:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56556 "EHLO
+        id S229772AbiLIKwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 05:52:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiLIKoq (ORCPT
+        with ESMTP id S229558AbiLIKwi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 05:44:46 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E342FBD9;
-        Fri,  9 Dec 2022 02:44:43 -0800 (PST)
+        Fri, 9 Dec 2022 05:52:38 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45CF2CB;
+        Fri,  9 Dec 2022 02:52:34 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 3B56CCE2912;
-        Fri,  9 Dec 2022 10:44:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29980C433F1;
-        Fri,  9 Dec 2022 10:44:40 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 631B0B82840;
+        Fri,  9 Dec 2022 10:52:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C35C433D2;
+        Fri,  9 Dec 2022 10:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670582680;
-        bh=OQ9wTdZ2DO0JGCC7roVOqbbbr7T4b+hZo3DWXx63pYE=;
+        s=k20201202; t=1670583152;
+        bh=o9FfYOP4Nba34okMWYDXu//OQ/cniqD18C4Lv486QRM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sQM13xgif5a+PLhbH/IjBoJEZxsoN2owWTZmnM9KMEtM3S2lTVDVfMJ5jQMhvLmlO
-         3Od8l3ME20UcEES5cCkBnF0EdqYBOgelrgHpjZiQJDH8p+mvZtx3B3NXUwkhVy4QmS
-         HTs54GfS6IrOPPrAmQOEoRFtTy9vh2+czbERrauplpnsQlIitlVa/FrH2elnG0aYtJ
-         Mba8xTQHrslJWgJAA0AmyoqYD77uJtEPHMY0hJdsc4IeUsIJU+RV9oN2Uw2o5EI5+c
-         lGe4vfNUm+/NKqcHGnQrdoz6I4ifCirH50aes9wUgbYYF4dUjuYPpxtRv0GaqoQQd+
-         R+j0rqxCGhnsw==
+        b=bOWW1rflKNE0DPBc807Nr5sPCK6BYhZ3AKzevIyF+8XjwE0cPAHgcSBAGn6/4ZAdo
+         Xh9QbOuTggQp7nEgT8sKcdJnGgfIY7bdgUe/AcjHXCHU6AWhxLNpVJrgchbG7fK/Wp
+         ubfQJK81PlZGbDwDrrL8MxYkQme5eumvZdLW3eg6cVg16SUWN1n8Q9HdK6WTpYJiqv
+         F0IMBOJm1Ev9YDO2EW955WXtztWjnJDmUCRR2t+pGUEVpWEy2YreHzscmaBzE+Gil9
+         f2RpQcrBZkbwVLGcrO4bNM/t5ik8A6ZprAw2s1I6CFxnTaaw7IEgbT9yXKCPc0c54g
+         aRD1VzcCSOtlA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1p3asB-0003rW-Js; Fri, 09 Dec 2022 11:44:56 +0100
-Date:   Fri, 9 Dec 2022 11:44:55 +0100
+        id 1p3azn-0003vN-AJ; Fri, 09 Dec 2022 11:52:48 +0100
+Date:   Fri, 9 Dec 2022 11:52:47 +0100
 From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -55,15 +55,15 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 12/12] arm64: dts: qcom: sa8295-adp: Enable DP
- instances
-Message-ID: <Y5MRp5rWmW8ib+9f@hovoldconsulting.com>
+Subject: Re: [PATCH v5 10/12] arm64: dts: qcom: sc8280xp: Define some of the
+ display blocks
+Message-ID: <Y5MTfzTENln1MqFt@hovoldconsulting.com>
 References: <20221207220012.16529-1-quic_bjorande@quicinc.com>
- <20221207220012.16529-13-quic_bjorande@quicinc.com>
+ <20221207220012.16529-11-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221207220012.16529-13-quic_bjorande@quicinc.com>
+In-Reply-To: <20221207220012.16529-11-quic_bjorande@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -73,14 +73,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 07, 2022 at 02:00:12PM -0800, Bjorn Andersson wrote:
+On Wed, Dec 07, 2022 at 02:00:10PM -0800, Bjorn Andersson wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> The SA8295P ADP has, among other interfaces, six MiniDP connectors which
-> are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
-> 
-> Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
-> DP PHYs and link them all together.
+> Define the display clock controllers, the MDSS instances, the DP phys
+> and connect these together.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
@@ -89,188 +86,88 @@ On Wed, Dec 07, 2022 at 02:00:12PM -0800, Bjorn Andersson wrote:
 > Changes since v4:
 > - None
 > 
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
->  1 file changed, 241 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 838 +++++++++++++++++++++++++
+>  1 file changed, 838 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index 6c29d7d757e0..d55c8c5304cc 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 9f3132ac2857..c2f186495506 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+ 
+> +		mdss0: display-subsystem@ae00000 {
+> +			compatible = "qcom,sc8280xp-mdss";
+> +			reg = <0 0x0ae00000 0 0x1000>;
+> +			reg-names = "mdss";
+> +
+> +			power-domains = <&dispcc0 MDSS_GDSC>;
+> +
+> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> +				 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
+> +				 <&dispcc0 DISP_CC_MDSS_MDP_CLK>;
+> +			clock-names = "iface",
+> +				      "ahb",
+> +				      "core";
+> +
+> +			resets = <&dispcc0 DISP_CC_MDSS_CORE_BCR>;
+> +
+> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
+> +
+> +			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +
+> +			iommus = <&apps_smmu 0x1000 0x402>;
+> +
+> +			status = "disabled";
 
-> +&mdss0_dp2 {
-> +	status = "okay";
-
-Please move 'status' last.
+Please move status last.
 
 > +
-> +	data-lanes = <0 1 2 3>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
 > +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp2_phy_out: endpoint {
-> +				remote-endpoint = <&edp0_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
+> +			mdss0_mdp: display-controller@ae01000 {
+
+[...]
+
+> +		mdss1: display-subsystem@22000000 {
+> +			compatible = "qcom,sc8280xp-mdss";
+> +			reg = <0 0x22000000 0 0x1000>;
+> +			reg-names = "mdss";
 > +
-> +&mdss0_dp2_phy {
-> +	status = "okay";
+> +			power-domains = <&dispcc1 MDSS_GDSC>;
+> +
+> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> +				 <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
+> +				 <&dispcc1 DISP_CC_MDSS_MDP_CLK>;
+> +			clock-names = "iface",
+> +				      "ahb",
+> +				      "core";
+> +
+> +			resets = <&dispcc1 DISP_CC_MDSS_CORE_BCR>;
+> +
+> +			interrupts = <GIC_SPI 865 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
+> +
+> +			interconnects = <&mmss_noc MASTER_MDP_CORE1_0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&mmss_noc MASTER_MDP_CORE1_1 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +
+> +			iommus = <&apps_smmu 0x1800 0x402>;
+> +
+> +			status = "disabled";
 
 Same here.
 
 > +
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
 > +
-> +&mdss0_dp3 {
-> +	status = "okay";
-
-And here.
-
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp1_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp3_phy {
-> +	status = "okay";
-
-And here.
-
-> +
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp0 {
-> +	status = "okay";
-
-And here.
-
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp0_phy_out: endpoint {
-> +				remote-endpoint = <&dp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp0_phy {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp1 {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp1_phy_out: endpoint {
-> +				remote-endpoint = <&dp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp1_phy {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp2 {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp2_phy_out: endpoint {
-> +				remote-endpoint = <&edp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp2_phy {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
-> +&mdss1_dp3 {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp3_phy {
-> +	status = "okay";
-
-Ditto.
-
-> +
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +};
-> +
->  &pcie2a {
->  	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
->  	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> +			mdss1_mdp: display-controller@22001000 {
 
 Johan
