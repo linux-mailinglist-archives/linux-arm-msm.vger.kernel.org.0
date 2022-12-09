@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E63164866E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:17:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51D6764867E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:29:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbiLIQRQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 11:17:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57402 "EHLO
+        id S229538AbiLIQ26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 11:28:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiLIQRO (ORCPT
+        with ESMTP id S229482AbiLIQ24 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 11:17:14 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54E480A11
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 08:17:13 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id m14so5685849wrh.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 08:17:13 -0800 (PST)
+        Fri, 9 Dec 2022 11:28:56 -0500
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4527185D08
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 08:28:54 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-3e45d25de97so58916847b3.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 08:28:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HZRdjoLhiay7rKGhBjP21w5dXWZeOk3rMigjidZEkO4=;
-        b=iB9SIKLbKTqAzlXxlbRhq3uNX4Bu/v5IItvffdm/E18MB436gwt9ULFqMKS2MfwaQJ
-         IGEqtfZT4elCowFL2fneHxc8dd+yUCl+o4iejAD0DeAUaEfRM53Mv/s14co8Z3kycBwp
-         m9UioyfWjuVQrWbocU8JJbdgaydfWbfpKcGxUCpliBLRHJIqMGEw45XbL7vMCY093Jzy
-         tcDO3XCOpKej9CwsncQYoNoJSJe18iRs0bfKIvyEuTIIXsOyqjhDyNSSEeNYUgJKuGcN
-         zBD7uNGV5rpYsQ9EYGf/bTfdK8YWPQQ1x26Y91ymSGSZ/raQPlvrlYp65nYNnYi9zoi0
-         fCmA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KwUr6L0Dg5AexDWlnJDonhDDUddaY6L+83QoeCbsL6w=;
+        b=IJKobng0dU7tuEUHviEk+CoMH7eMgCrfzpJ4jYnAzBkOEqGMBhPE/sjKJ13PhqyAIE
+         oXkxPvPIPpHI4VBSMRDtWTG4aRkcOB5WhWSP3xOiv/rf/kicv9EsR4UNKdl3XHaAG0Iw
+         o3rim5zBRrpQ7ZNXED6sJ0UrUdblacX80XBM/RQS190ZXPfFjzHeTOrR+h1tnBi9DbIH
+         Eg+yRHm7a5qFA0ETC7jO/c3dxMWRlYkzkdarPtQ+O1JaHApABO4Y46GJy2zpyB+dLx3v
+         c/ijQ8hHtxCWQUsqrWYmx17TxQuWCbH4Vr/euCQVVn1KeZVPtHmEE9UaG07VItcO6QRH
+         x+yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HZRdjoLhiay7rKGhBjP21w5dXWZeOk3rMigjidZEkO4=;
-        b=le/ROX15zqVdvIx4c5CMsCERgmjmirypPdXoUGlM5/HLmblJOf65geUczw64Cq8QOi
-         4T65udJB/rFTYbJkqi+9D65nGDnyMbCQ/vweRsBJKpmz2Lu4VuB09pcgqZViN9I9aSrA
-         Gp2Pq2lJjDwbuKZgEnNdkj/XA3lRDinoiwhAoShkG5bjtoxqr2gulek8g3wM2kdR7Tk2
-         OfwaKonUcJ+Wwk1/l3K67pIQ+Jj6vFECuEu9h7Cz2PeKn9Pz/bfq50Or7s4GbBhoNJoG
-         G6qUKHsj2bY7ns5oH6ezXADe7EIqeIb9nSn0KZn3beCgRFlhSflnCrPHgLV3Kp8N7L/m
-         edKw==
-X-Gm-Message-State: ANoB5pmNvZFer4ekQZIcQaDnxce8G/GIh7oCN3/ZInigSoTlakMZLycI
-        /qetFwBeq9a2rmpU07oYCal9Lg==
-X-Google-Smtp-Source: AA0mqf4vzhsI46yEkAUe684II+Suu9mHaXzB3maKYETUS4UkoF8Czv/zTDQGVl9iUkNSUgIVPA8gJA==
-X-Received: by 2002:adf:c7c3:0:b0:242:7a04:f49d with SMTP id y3-20020adfc7c3000000b002427a04f49dmr4592244wrg.10.1670602632264;
-        Fri, 09 Dec 2022 08:17:12 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bn1-20020a056000060100b00242269c8b8esm1802841wrb.25.2022.12.09.08.17.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 08:17:11 -0800 (PST)
-Message-ID: <a885c324-8ac5-da52-2b68-848f36fd045b@linaro.org>
-Date:   Fri, 9 Dec 2022 16:17:10 +0000
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KwUr6L0Dg5AexDWlnJDonhDDUddaY6L+83QoeCbsL6w=;
+        b=UdBOHdjiF5x+CVA/rblBuSfcXuBwuUI+UA9x0OyKwbCxgWXWb5eDeBflcVm87wmNOV
+         gG1PSIQ/9lqymo40zIUeCGbKw2U1vDX3W7e3AKjZoUw8np5rUDLNbJEDVfd3k6YXrIJG
+         EyeFE7c4bC1r+9N4qFhK1vyVZFD1kJWb9A9ojFWDRgjUO8+lA6KcMFs4SLILE8TczXWX
+         WEsg/nlTffV+VbZ3o42FlBSJgEG1coLL360cUYMhx681JkZotg74Wmr3nnTJ0Tu8Nlf5
+         iBp8n7KBzgTHV9GAmy+LK/ojFzPz4jbCA2hDs9dDvyzeeQaDUe02pRV0QQwVejfFhvLU
+         5Sqg==
+X-Gm-Message-State: ANoB5plRb+eHSJKX8lmwvBwhcF28MLD5/xeh/6OzHgJFybuWsCIVebcR
+        JHnA0lTOiZp/14bmSd373+fR3e0Nv+n0/2w7oX0+CQ==
+X-Google-Smtp-Source: AA0mqf5JioR0tlkYsUfBOYPggxjH5nJhi6FqwWPFYXy7wZYWLeI99NpwomjbnOUpTdaEDlYnQ7/PvdsejSaSqaqmNzc=
+X-Received: by 2002:a81:6c52:0:b0:370:4c23:eacc with SMTP id
+ h79-20020a816c52000000b003704c23eaccmr24817663ywc.127.1670603333277; Fri, 09
+ Dec 2022 08:28:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+ <20221207001503.93790-3-dmitry.baryshkov@linaro.org> <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
+In-Reply-To: <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 9 Dec 2022 18:28:42 +0200
+Message-ID: <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/18] clk: qcom: smd-rpm: enable pin-controlled
+ ln_bb_clk clocks on qcs404
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,23 +73,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 09:40, quic_mmitkov@quicinc.com wrote:
-> From: Milen Mitkov <quic_mmitkov@quicinc.com>
-> 
-> For v7:
-> - Fix an issue with output state for different versions of the IFE
->    hardware (for platforms different from QRB5, e.g. QRB3).
-> 
+On Fri, 9 Dec 2022 at 18:14, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 07/12/2022 01:14, Dmitry Baryshkov wrote:
+> > The commit eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm
+> > clocks") defined the pin-controlled ln_bb_clk clocks, but didn't add
+> > them to the qcs404_clks array. Add them to make these clocks usable to
+> > platform devices.
+> >
+>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC.  It might happen, that command when run on an older
+> kernel, gives you outdated entries.  Therefore please be sure you base
+> your patches on recent Linux kernel.
+>
+> > Fixes: eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm clocks")
+> > Reviewed-by: Alex Elder <elder@linaro.org?
+>
+> Wrong character at the end.
+>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/clk/qcom/clk-smd-rpm.c         | 2 ++
+> >  include/dt-bindings/clock/qcom,rpmcc.h | 2 ++
+> >  2 files changed, 4 insertions(+)
+> >
+>
+> No, bindings are separate.
 
-Yep.
+Argh, I didn't realise that this piece also goes into your realm.
+Please excuse me.
 
-Working for me on rb3 now and thank you for updating the git commit in 
-patch #4.
+I'll send v2.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-for the series.
-
----
-bod
+-- 
+With best wishes
+Dmitry
