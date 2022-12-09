@@ -2,135 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 722A764837B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 15:12:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFD596483CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 15:30:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbiLIOMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 09:12:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41516 "EHLO
+        id S229561AbiLIOaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 09:30:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbiLIOLe (ORCPT
+        with ESMTP id S229758AbiLIOaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 09:11:34 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8006248F7
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 06:07:51 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id m4-20020a05600c3b0400b003d1cb516ce0so5836246wms.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 06:07:51 -0800 (PST)
+        Fri, 9 Dec 2022 09:30:20 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C74327B10
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 06:30:18 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id ud5so11918431ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 06:30:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nofF3uq4mMCbmKOkK6zREu9Cnd568OqVIOgqPBzLczQ=;
-        b=7vgfFbEF2nf6NQkTEVbI4W1ni7qg48IYIHg46dDKOOO/5HNcsRjlzq3pRL8ZYe0X+Q
-         VonuKatsOY/CzkY4JOdxL4a8uzG94YJWp6vxqjuJIuSYDcwZPxPKQncRe8NDHknoMuyZ
-         IvYnnM68rI+nNRHSLqs6cJrlbqMzziLrSFTaoboDp3S21VpQvFSZw2OOT/bmaa3suZUj
-         Yzpnq/DDL6D/wSD3axjP4V50VmonoeN5+2sYGg09WRA1I/uqmUYH/djtSQPq9MmeS6t+
-         DghXv51PMutOGkAnEwtT4USksj8Cly2/oArCcG/a4yG4OmZVYjKqtn2zCVLOhsBevlfl
-         pBCg==
+        d=fairphone.com; s=fair;
+        h=message-id:cc:to:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8ahhIweHST2fVWw+QNEKcMc3YDUt5JUbQsb01fgMnKM=;
+        b=MKpLKku0oJT9B2Npz5IZA6cYSnr4/ZP33ndTpDqKEYHYny24sutnHlzL4pWa59heWc
+         QvaDZhuvjK+lzaMUw2yiCf2pSApJoGZlNyJTYZ89f+IXOsVH09yJmhzNuz32sJLY7hWZ
+         pwE2GI2KSgZ5hCKPQHmXxX7iVUJpibjfs5OdSfQzL8Kp4aUu2MmAu4FHuibFtoZQN39Z
+         /O1Yh5kCLlF1C04pyQK8eCKmrKAtHWMzIxPMFUADPduIXN0C4s6VHy566FxiFoWWEBAc
+         hYhMhO4qLjr1XJJMxzNnEm/ofqFEimHMmY6Wv1d1bAeR4N1wkKgxu68dG5ysOcgwu7mq
+         1rZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nofF3uq4mMCbmKOkK6zREu9Cnd568OqVIOgqPBzLczQ=;
-        b=n2kRXTuxy9FuJ1+NSn50g51hIEkkDSTdPQCzl8rIWdgvOyvcB2LEtiExUxRPEDf94S
-         J8wgAaS4rkOQKsq4aSWoleVryBgpwdG+qOY0wAHxiC6DPFEf57QQoywyfdTfPz4/6tUK
-         62Pal31dOBK1OgIGX/SIlPLn6vR5tcjF8mI0UOFfi/c1g78rKgqgDBV0NqVDAs29sNyG
-         t/9ROuNNmGxc3GyXdEzrxrDhL8VHXpaStfGFoXNWGvvyUOF5fc/OyAP9LnPsl0360ARN
-         xaZ//7VViREH/I0DN+VDy7L3JhYq56YA7M65MZtMS59UIUzoqY/dDdyvQhBW04iM4rTU
-         qOhg==
-X-Gm-Message-State: ANoB5pnAY4OXN02ijXzsyI+usXIdivJIpJoALBq98kJ28Wt4OnIkzS7q
-        qrhIHmjtcFrA17jxj2wJ3NebRg==
-X-Google-Smtp-Source: AA0mqf6v7YakytNoN0NrAI81R1P8GQ1jxvefsU4UuQfsuRoqiC+9Hy8r1tsShgHTdWQ+OC29fqGWgQ==
-X-Received: by 2002:a05:600c:34cd:b0:3cf:c2a5:5abc with SMTP id d13-20020a05600c34cd00b003cfc2a55abcmr5244101wmq.17.1670594857347;
-        Fri, 09 Dec 2022 06:07:37 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:51db:8fd7:45e0:fe69])
-        by smtp.gmail.com with ESMTPSA id q3-20020a1c4303000000b003cfa81e2eb4sm1869848wma.38.2022.12.09.06.07.36
+        h=message-id:cc:to:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8ahhIweHST2fVWw+QNEKcMc3YDUt5JUbQsb01fgMnKM=;
+        b=piud4k0pfl/aSTmWZc3GIeKC69z7eof/L4jqpP7qgRB1Zqjt2l86WwgId3HuRb453G
+         Jnx4TlffQnYoIyiV2yTVfPk5HTyP0C0zyxGQBSlSRNHGhL4By3te6G5MHI/MzZ5m5wmn
+         9c5A4CLey2gd4g8tsKtxR3xCWYyHokGsUV2Yu2Ic2E+L8IvEYeOp4zWJIk5GrtROubyF
+         UXuJpO+ItTt02g8Ey71Z4xlHq5QugkeRcwRguc0RlBMu8b7vtZexym5IxRwG6y7YJsFt
+         Vqe4jZRwdUkUVnaqDjDLIhs/W+vF+nzN+VdMLtj4T84PDGRVHF/lrssulf5/7+lGiwU7
+         KQzA==
+X-Gm-Message-State: ANoB5pkyFKZHu46VCFYcC5Z2yrE+pdtMjvv0wwA31JDfJyCQHzExUTnG
+        joE4xYCWn21Sau7sNmES6VVoMg==
+X-Google-Smtp-Source: AA0mqf7k6k5YG+Dp6ty81YR5OtHUag6/ksIZw1U6zjW68jA+uY5YSPGhIBQk2kcKxxdeh48jIBvYkQ==
+X-Received: by 2002:a17:906:fcd8:b0:7c0:b66b:9ec0 with SMTP id qx24-20020a170906fcd800b007c0b66b9ec0mr4884778ejb.16.1670596217069;
+        Fri, 09 Dec 2022 06:30:17 -0800 (PST)
+Received: from [172.16.240.113] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id kx17-20020a170907775100b007c0d6b34d54sm610520ejc.129.2022.12.09.06.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 06:07:36 -0800 (PST)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 2/2] tty: serial: qcom-geni-serial: use devres for uart port management
-Date:   Fri,  9 Dec 2022 15:07:31 +0100
-Message-Id: <20221209140731.573503-3-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20221209140731.573503-1-brgl@bgdev.pl>
-References: <20221209140731.573503-1-brgl@bgdev.pl>
+        Fri, 09 Dec 2022 06:30:16 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Date:   Fri, 09 Dec 2022 15:29:47 +0100
+Subject: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Message-Id: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
+X-Mailer: b4 0.11.0-dev-64ef0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
+in the bindings so the existing dts can validate successfully.
 
-Shrink and simplify the probe() and remove() code by using the managed
-variant of uart_add_one_port().
+Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
+sm8450: add Inline Crypto Engine registers and clock") so move the
+compatible to the correct if.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+(no cover subject)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 83b66b73303a..16532cb64465 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1469,7 +1469,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, port);
- 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
+The only remaining validation issues I see is the following on sc8280xp-crd.dtb
+and sa8540p-ride.dtb:
+
+  Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
+
+Maybe someone who knows something about this can handle this?
+
+And the patch adding qcom,sm6115-ufshc hasn't been applied yet.
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index f2d6298d926c..58a2fb2c83c3 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -102,7 +102,6 @@ allOf:
+               - qcom,sc8280xp-ufshc
+               - qcom,sm8250-ufshc
+               - qcom,sm8350-ufshc
+-              - qcom,sm8450-ufshc
+     then:
+       properties:
+         clocks:
+@@ -130,6 +129,7 @@ allOf:
+               - qcom,sdm845-ufshc
+               - qcom,sm6350-ufshc
+               - qcom,sm8150-ufshc
++              - qcom,sm8450-ufshc
+     then:
+       properties:
+         clocks:
+@@ -149,6 +149,12 @@ allOf:
+         reg:
+           minItems: 2
+           maxItems: 2
++        reg-names:
++          items:
++            - const: std
++            - const: ice
++      required:
++        - reg-names
  
--	ret = uart_add_one_port(drv, uport);
-+	ret = devm_uart_add_one_port(&pdev->dev, drv, uport);
- 	if (ret)
- 		return ret;
- 
-@@ -1478,7 +1478,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 			IRQF_TRIGGER_HIGH, port->name, uport);
- 	if (ret) {
- 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
--		uart_remove_one_port(drv, uport);
- 		return ret;
- 	}
- 
-@@ -1495,7 +1494,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 						port->wakeup_irq);
- 		if (ret) {
- 			device_init_wakeup(&pdev->dev, false);
--			uart_remove_one_port(drv, uport);
- 			return ret;
- 		}
- 	}
-@@ -1505,12 +1503,8 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 
- static int qcom_geni_serial_remove(struct platform_device *pdev)
- {
--	struct qcom_geni_serial_port *port = platform_get_drvdata(pdev);
--	struct uart_driver *drv = port->private_data.drv;
--
- 	dev_pm_clear_wake_irq(&pdev->dev);
- 	device_init_wakeup(&pdev->dev, false);
--	uart_remove_one_port(drv, &port->uport);
- 
- 	return 0;
- }
+   - if:
+       properties:
+
+---
+base-commit: f925116b24c0c42dc6d5ab5111c55fd7f74e8dc7
+change-id: 20221209-dt-binding-ufs-2d7f64797ff2
+
+Best regards,
 -- 
-2.37.2
-
+Luca Weiss <luca.weiss@fairphone.com>
