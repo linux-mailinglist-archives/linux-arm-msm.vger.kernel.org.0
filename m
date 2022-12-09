@@ -2,66 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED2AD64827C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 13:40:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DE95648303
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 14:54:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbiLIMkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 07:40:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
+        id S229810AbiLINyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 08:54:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbiLIMkf (ORCPT
+        with ESMTP id S229814AbiLINyL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 07:40:35 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0227125B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 04:40:33 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id f20so4805876lja.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 04:40:33 -0800 (PST)
+        Fri, 9 Dec 2022 08:54:11 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6631C75096
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 05:54:09 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id a16so3155757edb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 05:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0lXiAj3rzLz3gmBjsIDq3bXSlHIvyIVLqSnh/2V9Ecw=;
-        b=HJRurJGfi0QdLm21nvGmmiQ7/NUFhHdTBFsIbSNPkKSm0JAW9IsPajc0vdBvEgj/Te
-         8dOvggpPkwEfc4/1SIoCHqes+zSVNNAGf9WlmwXBR6VcX7C9yoOhLmQwoINzzo+U6SqT
-         HmeOfD12A2NtflGGRarRYtHDuyJ87sP3u5Gw30rgIvN8+EgUyddNOyET6RLZey6GeOLx
-         lihIOY6Ykx1lFQNClojI99+UsT4uTqa26/EuZW3UPOorTa8HkKM2Nfod9uFpEXf5N8ZW
-         qur6x/TN8Wjo9ODVFju466b3HWqGO64T0/Lc38DMdOloByEu6L/67kwW4wRE0NJsBHpR
-         nJ/w==
+        d=fairphone.com; s=fair;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=uZxmnAltC/TUl2zjR5eDxQLiAAZciTA+T7W8WnsB+F8=;
+        b=SKyHoHQmWl8JTBHt+lyEeCAkLam1UcmIy99kWXNOay4fka7zTwQBmKeXoDyfl3+GGB
+         Y+IFpZU2ILrdbMjQQnb7/l5zk80S2oeBXEw1aYvOVG+kUVESiKKFfKtflF87PAr4Vu4u
+         m9YDhDYaTD++8iZV+PepmcQkv0u2Bhwkw5ErQeYAYdyLes8Kn/tqKSAj7+DgyKDkHjsh
+         U7lFa7G7wkcTFD2IEhiOeEJU8rd8RDCd98EDzVC0M2thB6vdi3xc08fdBuasp8jKOyAA
+         zycx63y3G4YfpKqpU9TtZvtb55nP0OPRb9m5wLZIV0r9k9NuQGDJFnk4Bck13Z25388Q
+         DeOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0lXiAj3rzLz3gmBjsIDq3bXSlHIvyIVLqSnh/2V9Ecw=;
-        b=TN0DSBZLoAKMlULp937VXWOrSlcLmq+k93rCreIWXTzLcvnj1/tleJJsETc3pJiupT
-         qBfeb+AujRdwf+urj146hb+0pbvHbrlBIgd202XdtxGfpOjtl0KH2q9/pJ64eAaUdzzO
-         3mrOyCjQHTMhwEcmlbZZOnBUNaVOvlPbPrOPBJr9+RcC4h1XSOTwDw27TxoFUmp0PlZJ
-         FugvddN29nf9dnBT+QV1oz3l50K9T21/4KfiLJCM6IGJBdelaKkwTqH8b+nDn+TcVciy
-         upEEr8wxlnUwu+ewQaF3OsDyPXX/Q97t0SVWEWYYaoGwf7LO/rfdFlpZXgVAKNq+vuuz
-         +riA==
-X-Gm-Message-State: ANoB5pl7Abg9i+ElFdbM/H3BHx03m7si+Frj50qfRqito5hRBsP05F0j
-        djIkWNq8rurJ9l0bUQoGEULocVnoWtAiSe+u
-X-Google-Smtp-Source: AA0mqf7Xvklym2102Rz+/mU+VCWRfEQnUyjStcyCGkWf+VP//RUKes5I3Y4rubgJfbMqEVcZ1J4hgA==
-X-Received: by 2002:a2e:9d8b:0:b0:279:f30f:78db with SMTP id c11-20020a2e9d8b000000b00279f30f78dbmr1380251ljj.44.1670589631582;
-        Fri, 09 Dec 2022 04:40:31 -0800 (PST)
-Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id s25-20020a05651c049900b0026dcb07122csm203693ljc.117.2022.12.09.04.40.30
+        bh=uZxmnAltC/TUl2zjR5eDxQLiAAZciTA+T7W8WnsB+F8=;
+        b=x8JMEwVpDvcGJvIG0yl5/WXndqbXJhsbAg6dbQB29fs2Lw2CGfdPL0yD/6Uz+V40DT
+         VutR3JpTte9MdHC6PE+PgafJMi416rMyTUchhzAz/5Qp1QOJdrmFcpCwDkSOk6ORnfrD
+         GhqxvlskS7w1EtaeNfWm/k5waW/zyhiZpTj7EI85ZncJNXDLFp3mrY5Fl85lMVLcC3WX
+         QQ+R6rO4SaTvOuiN2wMbtOCNuDdHp9+ts+FSyBQMdvKUak/0Ib7hn/R7wN2h/BbF2vbL
+         cs9wZzyik3LAqvpGFGutW3qmtX2iUxWBWB9PsGv80KWZK5sZIUAshJYmiEwv7/ns9VM/
+         04ow==
+X-Gm-Message-State: ANoB5pn/CYtdu3gxu30t0GLXNU9PvnSPz0n9eveb/wgu6neJH97ncFqu
+        M85IDKCIrANUTVCu9eCBKAP5uQ==
+X-Google-Smtp-Source: AA0mqf4sH2aM9ERvdqbtbDd2i3lz9CQzsDKOssDrXykRzFaj1bN5SEGhKqlzScGgLUbcl2swVxhkPg==
+X-Received: by 2002:a05:6402:3907:b0:461:4c59:1284 with SMTP id fe7-20020a056402390700b004614c591284mr5103442edb.12.1670594047980;
+        Fri, 09 Dec 2022 05:54:07 -0800 (PST)
+Received: from [172.16.240.113] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id k19-20020aa7c393000000b0045b4b67156fsm656371edq.45.2022.12.09.05.54.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 04:40:31 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6115: Add thermal zones
-Date:   Fri,  9 Dec 2022 13:40:26 +0100
-Message-Id: <20221209124026.178764-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        Fri, 09 Dec 2022 05:54:07 -0800 (PST)
+Subject: [PATCH 0/3] Add PM6150L flash LED to Fairphone 4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAP09k2MC/w3LQQqAIBAAwK/EnltQSbF+Y7amYCYudQn/nsc5zA
+ dMLRHDNn3Q6E2c7jIg5wl8dOUkTMcwKKGUVGLFUBesl5FaZAzZcUS/aEE2GK+NhfF2x4R7c8XHMc
+ uTc+8/dZ/LdmgAAAA=
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Date:   Fri, 09 Dec 2022 14:54:05 +0100
+Message-Id: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.11.0-dev-64ef0
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -72,388 +79,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add thermal zones associated with the on-SoC temperature sensors.
+These patches add the necessary nodes and configuration for supporting the
+flash LED found on the Fairphone 4 that's powered by the pm6150l flash led
+block.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This depends on the patches by Fenglin Wu adding the driver, the latest
+revision can be found at [0].
+
+[0] https://lore.kernel.org/linux-arm-msm/20221110065420.2451436-1-quic_fenglinw@quicinc.com/
+
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Pavel Machek <pavel@ucw.cz>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-leds@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 364 +++++++++++++++++++++++++++
- 1 file changed, 364 insertions(+)
+Luca Weiss (3):
+      dt-bindings: leds: spmi-flash-led: Add pm6150l compatible
+      arm64: dts: qcom: pm6150l: add spmi-flash-led node
+      arm64: dts: qcom: sm7225-fairphone-fp4: configure flash LED
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 1d227b9b331c..25928fae1bb9 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1420,6 +1420,370 @@ cpufreq_hw: cpufreq@f521000 {
- 		};
- 	};
- 
-+	thermal-zones {
-+		mapss-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 0>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cdsp-hvx-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 1>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		wlan-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 2>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		camera-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 3>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		video-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 4>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		modem1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 5>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu4-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 6>;
-+
-+			trips {
-+				cpu4_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu4_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu4_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu5-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 7>;
-+
-+			trips {
-+				cpu5_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu5_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu5_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu6-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 8>;
-+
-+			trips {
-+				cpu6_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu6_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu6_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu7-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 9>;
-+
-+			trips {
-+				cpu7_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu7_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu7_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu45-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 10>;
-+
-+			trips {
-+				cpu45_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu45_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu45_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu67-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 11>;
-+
-+			trips {
-+				cpu67_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu67_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu67_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu0123-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 12>;
-+
-+			trips {
-+				cpu0123_alert0: trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu0123_alert1: trip-point1 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu0123_crit: cpu_crit {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		modem0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 13>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		display-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 14>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		gpu-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens0 15>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+	};
-+
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ .../bindings/leds/qcom,spmi-flash-led.yaml         |  1 +
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi              |  6 ++++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 23 ++++++++++++++++++++++
+ 3 files changed, 30 insertions(+)
+---
+base-commit: 0392f3ea67781a215382d2dba7d172d83d4aa37b
+change-id: 20221209-fp4-pm6150l-flash-c450e8f6c568
+
+Best regards,
 -- 
-2.38.1
-
+Luca Weiss <luca.weiss@fairphone.com>
