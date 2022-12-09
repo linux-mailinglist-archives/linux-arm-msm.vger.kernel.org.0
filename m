@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80CD9648766
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 18:13:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFB91648767
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 18:13:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229840AbiLIRNW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 12:13:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34660 "EHLO
+        id S229939AbiLIRNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 12:13:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiLIRNO (ORCPT
+        with ESMTP id S229734AbiLIRNV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 12:13:14 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B190A3D917
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 09:13:12 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id fa4-20020a17090af0c400b002198d1328a0so8730138pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:13:12 -0800 (PST)
+        Fri, 9 Dec 2022 12:13:21 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B30C4093E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 09:13:14 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id k88-20020a17090a4ce100b00219d0b857bcso5618977pjh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:13:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9fhG6NLEcguqmAuYDYowfad0qz2/TgWDY6TZ0P8EmmE=;
-        b=DwMtscjRx2e9DHcQ3qHJBjwp3qAxJlfIMS7enPtgMEzR0WF/RbYk4r3FVE2Y5EfIzG
-         WAGNKS+jVOFYh1j1/PSLbDGHWYpgFeChoeBPE+l5nrxDcJWnXc80fBL82aZsQVbLtwGK
-         EUe0yfSxwRf7jVat/QqcytPkeiqkhal6zYe9U=
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M88P4SMh5VCPJCyuLc/w2B8fWJUsM71IvdRT7VAjmHQ=;
+        b=fGd3e82N31A7l0GFrD4RELU4+SmeP8YESrYNFW7YbDq/1R5jPqb8HNf+yew8ZNCRFM
+         C7/4ccIgu7oVj7ehikAIRQtjKtveYz2hYbWdeapMVOiPP2ZlFmwVaQBpTsw0kUPnRo+M
+         A6RKaIjdiuS+DXbkVcxHNSKfFI/mfyREzSE9s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9fhG6NLEcguqmAuYDYowfad0qz2/TgWDY6TZ0P8EmmE=;
-        b=def2i5OSU02IkTpshz7VsK49JXDO/IcokkwIi5F7TvG0jfd4WnuQlrwiIL6I/8xOF6
-         h+giaaLZ+WsboVQAL3ryFHFOFIUVuCINfuLly9UUOXhxIjHa/5lPHbdZeMGSjvv+srcJ
-         U6PgN/fL5LkS0Tis/noGjFlzgT76n+nC7xGtySkjD9nZsV7UWgePfeYWGpzsOtNM285C
-         CCbwdKvMwzJwD+Rlh4fK6EdN7iiDMtdLEwZntEX17m4OQhwTFhta3l0KI4/Dh7EQoF0o
-         kuMviQE1pfP/QdZKuDEHw0nSt94FxkBg7iJEAlDqOcTH6diFpBFDK8Lj1X1AWUYAKGgX
-         Cidg==
-X-Gm-Message-State: ANoB5pkPP/CU8W0mnCeGaO59q1hNNa8KPJjp8BKIpe6L5+hI33oHU43v
-        DsdwwQ0lo66dQnQIVWA7MDCPkg==
-X-Google-Smtp-Source: AA0mqf5OyDHM0ikRuMBlseFYWLgr+l1YbcjXZ6ndqQTpvFks/CfHeWVr8qYzZCB34RzoZUjMcZEwkQ==
-X-Received: by 2002:a17:902:ab54:b0:189:6bda:e98f with SMTP id ij20-20020a170902ab5400b001896bdae98fmr6187571plb.58.1670605992266;
-        Fri, 09 Dec 2022 09:13:12 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M88P4SMh5VCPJCyuLc/w2B8fWJUsM71IvdRT7VAjmHQ=;
+        b=tSi8ih5hbn9RK6RoaW1gQ5cX9WsOSR3dZKnAtT/sbwm124BfKTjVfTSpiF0nIX9HtJ
+         g/KC/dD7/WNzka6mXJvwucmkFUcmFNmpnzKWFUB4CToAXAtQbtb8c82rs133OOBYy5DG
+         s5gnaqLb22ULtGLRQB+wFzf9TGcspH1OrV7qt2OgIApUtizMDEkDZBRnTWc5HET9jMrB
+         7HcwhYsfEnqkEC5Xoad7heE1E8mOnx5aUVSrIFRa8oWx5y9HkS7XrUjoD1rV2omAOC82
+         nHVcKv6/RfFNg39+rxWQ29Qg3tCRverYZwXVoyJeq4UnEhcdpPa7fWr/aM8PxcQNNjSx
+         6gDQ==
+X-Gm-Message-State: ANoB5pnEb+sMyF7yLle3EVKB/s08Ci5zc1CS7ZlY6aQRbde6dFUdtNTI
+        sOOhliLqadz1VZsoLtpOQvQ+6g==
+X-Google-Smtp-Source: AA0mqf5o0cdOIYZpQg4mEqTBzOqbSQQI2YnX0/UwHmDG/Y+0EqLsG00JvO50nunOCSXjjf7bSa5orQ==
+X-Received: by 2002:a17:902:aa08:b0:189:fb78:a7d4 with SMTP id be8-20020a170902aa0800b00189fb78a7d4mr6267571plb.21.1670605994046;
+        Fri, 09 Dec 2022 09:13:14 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:9a82:7898:7bf4:b4f])
-        by smtp.gmail.com with ESMTPSA id j16-20020a170902da9000b00189c62eac37sm1597503plx.32.2022.12.09.09.13.10
+        by smtp.gmail.com with ESMTPSA id j16-20020a170902da9000b00189c62eac37sm1597503plx.32.2022.12.09.09.13.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 09:13:11 -0800 (PST)
+        Fri, 09 Dec 2022 09:13:13 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     swboyd@chromium.org, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
@@ -58,74 +59,69 @@ Cc:     swboyd@chromium.org, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 0/4] arm64: dts: qcom: sc7180: Make pazquel360's touchscreen work
-Date:   Fri,  9 Dec 2022 09:12:36 -0800
-Message-Id: <20221209171240.1614904-1-dianders@chromium.org>
+Subject: [PATCH v3 1/4] arm64: dts: qcom: sc7180: Bump up trogdor ts_reset_l drive strength
+Date:   Fri,  9 Dec 2022 09:12:37 -0800
+Message-Id: <20221209091234.v3.1.I39c387f1e3176fcf340039ec12d54047de9f8526@changeid>
 X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
+In-Reply-To: <20221209171240.1614904-1-dianders@chromium.org>
+References: <20221209171240.1614904-1-dianders@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series of patches adds / fixes problems with pazquel360's
-touchscreen. A few notes here:
+On at least one board (pazquel360) the reset line for the touchscreen
+was scoped and found to take almost 2 ms to fall when we drove it
+low. This wasn't great because the Linux driver for the touchscreen
+(the elants_i2c driver) thinks it can do a 500 us reset pulse. If we
+bump the drive strength to 8 mA then the reset line went down in ~421
+us.
 
-1. Originally the touchscreen was supposed to be added as part of the
-first landing of the pazquel360 device tree. ...but the fact that
-Yunlong changed email addresses seems to have messed up Bjorn's
-scripts. What landed was v3 [1] instead of v5 [2]. The pazquel360 part
-of this series is that diff (minus the incorrect 'hid-descr-addr' property).
+NOTE: we could apply this fix just for pazquel360, but:
+* Probably other trogdor devices have similar timings and it's just
+  that nobody has noticed it before.
+* There are other trogdor boards using the same elan driver that tries
+  to do 500 us reset pulses.
+* Bumping the drive strength to 8mA across the board won't hurt. This
+  isn't a high speed signal or anything.
 
-2. We delayed sending the fixup till now because soon after the series
-landed upstream we found that some laptops were having trouble
-initting the touchscreen in cases where the eDP/touchscreen regulator
-was left on by the bootloader. We've been struggling to make sense of
-all of this. As part of this investigation we landed a85fbd649844
-("Input: elants_i2c - properly handle the reset GPIO when power is
-off") but that wasn't enough. That fix, together with the fixes in
-this series, is enough though.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+---
 
-3. In v1 and v2, this series included an elan driver patch too. That's
-landed, so v3 is just device tree stuff. It turns out that with
-_just_ the device tree changes things are actually working OK but
-the timing is tight, so getting a little extra breathing room
-from the Linux driver was nice.
+(no changes since v1)
 
-4. Despite the fact that we did debugging here on pazquel360, many of
-the changes here are made in general for trogdor devices. I believe
-that this will make the timing more correct on those devices even if
-we weren't actually seeing problems.
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-[1] https://lore.kernel.org/r/20220901024827.v3.2.Iea2d2918adfff2825b87d428b5732717425c196f@changeid
-[2] https://lore.kernel.org/r/20220923083657.v5.3.Iea2d2918adfff2825b87d428b5732717425c196f@changeid
-
-Changes in v3:
-- Removed hid-descr-addr
-
-Changes in v2:
-- Fix typo in commit message (Matthias)
-
-Douglas Anderson (4):
-  arm64: dts: qcom: sc7180: Bump up trogdor ts_reset_l drive strength
-  arm64: dts: qcom: sc7180: Add trogdor eDP/touchscreen regulator
-    off-on-time
-  arm64: dts: qcom: sc7180: Start the trogdor eDP/touchscreen regulator
-    on
-  arm64: dts: qcom: sc7180: Add pazquel360 touschreen
-
- .../dts/qcom/sc7180-trogdor-homestar.dtsi     | 18 +++++++++++++++++
- .../qcom/sc7180-trogdor-parade-ps8640.dtsi    | 20 +++++++++++++++++++
- .../dts/qcom/sc7180-trogdor-pazquel360.dtsi   | 19 ++++++++++++++++++
- .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi | 20 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 10 +++++++++-
- 5 files changed, 86 insertions(+), 1 deletion(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index f1defb94d670..ff1c7aa6a722 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -1376,7 +1376,15 @@ ts_reset_l: ts-reset-l-state {
+ 		pins = "gpio8";
+ 		function = "gpio";
+ 		bias-disable;
+-		drive-strength = <2>;
++
++		/*
++		 * The reset GPIO to the touchscreen takes almost 2ms to drop
++		 * at the default drive strength. When we bump it up to 8mA it
++		 * falls in under 500us. We want this to be fast since the Elan
++		 * datasheet (and any drivers written based on it) talk about using
++		 * a 500 us reset pulse.
++		 */
++		drive-strength = <8>;
+ 	};
+ 
+ 	sdc1_on: sdc1-on-state {
 -- 
 2.39.0.rc1.256.g54fd8350bd-goog
 
