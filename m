@@ -2,44 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A64EC648127
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 11:52:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7711E6481BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 12:30:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiLIKwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 05:52:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
+        id S229704AbiLILa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 06:30:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbiLIKwi (ORCPT
+        with ESMTP id S230053AbiLILaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 05:52:38 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45CF2CB;
-        Fri,  9 Dec 2022 02:52:34 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 631B0B82840;
-        Fri,  9 Dec 2022 10:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C35C433D2;
-        Fri,  9 Dec 2022 10:52:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670583152;
-        bh=o9FfYOP4Nba34okMWYDXu//OQ/cniqD18C4Lv486QRM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bOWW1rflKNE0DPBc807Nr5sPCK6BYhZ3AKzevIyF+8XjwE0cPAHgcSBAGn6/4ZAdo
-         Xh9QbOuTggQp7nEgT8sKcdJnGgfIY7bdgUe/AcjHXCHU6AWhxLNpVJrgchbG7fK/Wp
-         ubfQJK81PlZGbDwDrrL8MxYkQme5eumvZdLW3eg6cVg16SUWN1n8Q9HdK6WTpYJiqv
-         F0IMBOJm1Ev9YDO2EW955WXtztWjnJDmUCRR2t+pGUEVpWEy2YreHzscmaBzE+Gil9
-         f2RpQcrBZkbwVLGcrO4bNM/t5ik8A6ZprAw2s1I6CFxnTaaw7IEgbT9yXKCPc0c54g
-         aRD1VzcCSOtlA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1p3azn-0003vN-AJ; Fri, 09 Dec 2022 11:52:48 +0100
-Date:   Fri, 9 Dec 2022 11:52:47 +0100
-From:   Johan Hovold <johan@kernel.org>
+        Fri, 9 Dec 2022 06:30:18 -0500
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4091A45A04
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 03:30:17 -0800 (PST)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-3cbdd6c00adso47870247b3.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 03:30:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MjK0sQNHkAnOyNoLULfLFC8tBks0VDS2+NJ4Yo442sA=;
+        b=AfRGQFHE/4QABp88WIfbgyfDOy81cfakm17TWf4F5AZL2sftwRWRi4Lw8wdfsJhsF3
+         Y7mvb184t/fForLJn9H4L30W4vGAdc1fvQk1YT8e/fsDDvqK6BPEzt9vIWoW4xLTJ1Sw
+         ZEkV3zIA5IhMlYnmP4JqG0FBq8VX+S+ik/Tt9nKw5zzKB+tlYDBxAcApE6tfkoJVO69X
+         LLqFzyoEeXimzaNT/pDC/c+oR8nmUxjvdX9ynIITarYmjtFbIFpgDlmKR0r1O7OxuqGD
+         Vzpiivqk31devP9yFcv5nS0EIae97Jm6xS+ZZKzZ1Tq68Qk3vGm+2RoBEoGO90972p/f
+         H0yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MjK0sQNHkAnOyNoLULfLFC8tBks0VDS2+NJ4Yo442sA=;
+        b=2tAhkcmdeHDPlOg2cGzKQo3eADlC/92F08jj03mx1F8Sd/ayZNR/qfuodSozSffeM/
+         DsbHV8Ot7bQ9n0wAFN1vHljiyn4msb0LIidLRt3gjuJTmzI06uOifS8xfPTFnCQcknZ+
+         2kZlCW7iFq9mxTP2neX4KeyPVsiNGhEKw+vV9xohfYRD/zhlMZqjqSFW7u/LnieNoV/k
+         XatmwbHPsfxsz8hnW4VqHOO+yZXO9HKDSbgXspv53jJKU1lZDgt4NdhCXkgn++Abie9g
+         wpXC2o8KHkYhun4XA0g/5HtH6/qZGNXz2wKzKQJwgcKDfD2I5m8uJTqoRm3VQOSVYpoL
+         N6RQ==
+X-Gm-Message-State: ANoB5pmbnCApVXxFCedUe7SDHXDNmo4fXBbFMp2GDEbJMnHEZ0T3eHTV
+        a+xiCqIwtFPvbTKWcy/JR0uzZivRM94QwnA24UwYoQ==
+X-Google-Smtp-Source: AA0mqf7pP+1F8DEdZRZp5BrYvfzyUJzKOuvAkltgXILih6wgXJxMU+qZ+fTFB9kxIvC7pN/xfkx/C4gAsxyb+DTEbmc=
+X-Received: by 2002:a0d:db15:0:b0:3d6:2151:4038 with SMTP id
+ d21-20020a0ddb15000000b003d621514038mr36253472ywe.418.1670585416427; Fri, 09
+ Dec 2022 03:30:16 -0800 (PST)
+MIME-Version: 1.0
+References: <20221207220012.16529-1-quic_bjorande@quicinc.com> <20221207220012.16529-12-quic_bjorande@quicinc.com>
+In-Reply-To: <20221207220012.16529-12-quic_bjorande@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 9 Dec 2022 13:30:05 +0200
+Message-ID: <CAA8EJpp8oSW=yEi_QvL1PzF5yhfHsbC7WLD8Lic1R5A_o0i9SA@mail.gmail.com>
+Subject: Re: [PATCH v5 11/12] arm64: dts: qcom: sc8280xp-crd: Enable EDP
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -55,119 +70,118 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 10/12] arm64: dts: qcom: sc8280xp: Define some of the
- display blocks
-Message-ID: <Y5MTfzTENln1MqFt@hovoldconsulting.com>
-References: <20221207220012.16529-1-quic_bjorande@quicinc.com>
- <20221207220012.16529-11-quic_bjorande@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221207220012.16529-11-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 07, 2022 at 02:00:10PM -0800, Bjorn Andersson wrote:
+On Thu, 8 Dec 2022 at 00:00, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Define the display clock controllers, the MDSS instances, the DP phys
-> and connect these together.
-> 
+>
+> The SC8280XP CRD has a EDP display on MDSS0 DP3, enable relevant nodes
+> and link it together with the backlight control.
+>
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-> 
+>
 > Changes since v4:
 > - None
-> 
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 838 +++++++++++++++++++++++++
->  1 file changed, 838 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 9f3132ac2857..c2f186495506 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
- 
-> +		mdss0: display-subsystem@ae00000 {
-> +			compatible = "qcom,sc8280xp-mdss";
-> +			reg = <0 0x0ae00000 0 0x1000>;
-> +			reg-names = "mdss";
-> +
-> +			power-domains = <&dispcc0 MDSS_GDSC>;
-> +
-> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +				 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
-> +				 <&dispcc0 DISP_CC_MDSS_MDP_CLK>;
-> +			clock-names = "iface",
-> +				      "ahb",
-> +				      "core";
-> +
-> +			resets = <&dispcc0 DISP_CC_MDSS_CORE_BCR>;
-> +
-> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <1>;
-> +
-> +			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
-> +			interconnect-names = "mdp0-mem", "mdp1-mem";
-> +
-> +			iommus = <&apps_smmu 0x1000 0x402>;
-> +
-> +			status = "disabled";
+>
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 72 ++++++++++++++++++++++-
+>  1 file changed, 71 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index f09810e3d956..a7d2384cbbe8 100644
 
-Please move status last.
+[skipped]
+
+> @@ -230,6 +246,54 @@ vreg_l9d: ldo9 {
+>         };
+>  };
+>
+> +&dispcc0 {
+> +       status = "okay";
+> +};
+> +
+> +&mdss0 {
+> +       status = "okay";
+> +};
+> +
+> +&mdss0_dp3 {
+> +       compatible = "qcom,sc8280xp-edp";
+> +       status = "okay";
+> +
+> +       data-lanes = <0 1 2 3>;
+
+I hope to land Kuogee patches that move data-lanes to the endpoint
+node, where they belong. Do we have any good way to proceed here?
+Or would it be easier to land this patch as is and then, maybe next
+cycle, move the property?
 
 > +
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
+> +       aux-bus {
+> +               panel {
+> +                       compatible = "edp-panel";
+> +                       power-supply = <&vreg_edp_3p3>;
 > +
-> +			mdss0_mdp: display-controller@ae01000 {
+> +                       backlight = <&backlight>;
+> +
+> +                       ports {
+> +                               port {
+> +                                       edp_panel_in: endpoint {
+> +                                               remote-endpoint = <&mdss0_dp3_out>;
+> +                                       };
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +
+> +       ports {
+> +               port@1 {
+> +                       reg = <1>;
+> +                       mdss0_dp3_out: endpoint {
+> +                               remote-endpoint = <&edp_panel_in>;
+> +                       };
+> +               };
+> +       };
+> +};
+> +
+> +&mdss0_dp3_phy {
+> +       status = "okay";
+> +
+> +       vdda-phy-supply = <&vreg_l6b>;
+> +       vdda-pll-supply = <&vreg_l3b>;
+> +};
+> +
+>  &pcie2a {
+>         perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+>         wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> @@ -496,6 +560,12 @@ hastings_reg_en: hastings-reg-en-state {
+>  &tlmm {
+>         gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+>
+> +       edp_reg_en: edp-reg-en-state {
+> +               pins = "gpio25";
+> +               function = "gpio";
+> +               output-enable;
+> +       };
+> +
+>         kybd_default: kybd-default-state {
+>                 disable-pins {
+>                         pins = "gpio102";
+> --
+> 2.37.3
+>
 
-[...]
 
-> +		mdss1: display-subsystem@22000000 {
-> +			compatible = "qcom,sc8280xp-mdss";
-> +			reg = <0 0x22000000 0 0x1000>;
-> +			reg-names = "mdss";
-> +
-> +			power-domains = <&dispcc1 MDSS_GDSC>;
-> +
-> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +				 <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
-> +				 <&dispcc1 DISP_CC_MDSS_MDP_CLK>;
-> +			clock-names = "iface",
-> +				      "ahb",
-> +				      "core";
-> +
-> +			resets = <&dispcc1 DISP_CC_MDSS_CORE_BCR>;
-> +
-> +			interrupts = <GIC_SPI 865 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <1>;
-> +
-> +			interconnects = <&mmss_noc MASTER_MDP_CORE1_0 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&mmss_noc MASTER_MDP_CORE1_1 0 &mc_virt SLAVE_EBI1 0>;
-> +			interconnect-names = "mdp0-mem", "mdp1-mem";
-> +
-> +			iommus = <&apps_smmu 0x1800 0x402>;
-> +
-> +			status = "disabled";
-
-Same here.
-
-> +
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +
-> +			mdss1_mdp: display-controller@22001000 {
-
-Johan
+-- 
+With best wishes
+Dmitry
