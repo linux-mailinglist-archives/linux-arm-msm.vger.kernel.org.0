@@ -2,140 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63961648980
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 21:22:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8F8E64899B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 21:39:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbiLIUWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 15:22:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56702 "EHLO
+        id S229798AbiLIUjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 15:39:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbiLIUWm (ORCPT
+        with ESMTP id S229626AbiLIUi7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 15:22:42 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF20DF45
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 12:22:41 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id g7so496492ile.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 12:22:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/VCJPVUZ229VvXZG5wipT/tFOqRMGUxG79Y/d7XX9HM=;
-        b=Pfmwrwpae+fZaGlILeNFUaIoYSBOcivcDsDgcWEr2kPvYQwhfuFCFOPQHkF1i57cuy
-         ma6SHSiLL5TW//coHBlwCKRfOkI991QkAkeoCPcBgf2ylZZqjv9c13DbIpa80vrm1atb
-         Tq+IoF4nJpJG1ruBIE/4orsDLaYGqpqraP2wWSPSZz+XUpS5eVKaNPj/0Y7IZp6/RAID
-         shwZ9nP8Syw9N90PnyvLq12sYchx635S7YXS/omNUYqYSljx2ItSnNCRObTuEMO/B8xw
-         bhQ4tIIIdM3LWw7Zcodgv8mRr1BZXEt5YD3iDdozoaAjE8lvzL9eJRUcxW361tF/H/lX
-         H11w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/VCJPVUZ229VvXZG5wipT/tFOqRMGUxG79Y/d7XX9HM=;
-        b=kvepkmpztUSpM72rAudYPQs8d4iCoCkgAK9GsbLg1kuDup391w57oLudsW1d9he4eL
-         ethCipzzZDx8PVdy5IE+NH58z0OGZwpi/ylDzjK8GjBuGaLVd1L/opC66TUsEcwAngVG
-         MlE+S3lrTezDzYJRVgYdBMcud3l9KY2AMsMetFHBtmeuepXGXJteoMfSqLGjW6DENV6M
-         IQ+dCj/9tvr3GpJHuQGsk4cs26HMhjgxoK7yMR8o99QIGzUGxvKBuPE139vSzo1ApA5e
-         j9m1ZJFgipVVrxXflYyvN8FPcuAUrD/A8L5yKyyoFpSoWD2NXnFwIk/RdlTm5ZbN/akO
-         rgKg==
-X-Gm-Message-State: ANoB5pkpKf3cPchwM5iSTzOFSV1QVBt+5bmxLXm7SPobCtfaE2F3wQmm
-        fMFygKJJ6e+T5YyQr3wBM4lUBQ==
-X-Google-Smtp-Source: AA0mqf4YQB2PfPKgPfJ4UqAF0ol8toR/N7+zMhZkZRuFqZ1iKgHMCBx0XJMb7Nfd8oEJ1vhEM2p2Lg==
-X-Received: by 2002:a05:6e02:78e:b0:303:52d5:fefe with SMTP id q14-20020a056e02078e00b0030352d5fefemr4012562ils.31.1670617360670;
-        Fri, 09 Dec 2022 12:22:40 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id x16-20020a0566380cb000b00389e1142967sm753934jad.57.2022.12.09.12.22.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 12:22:40 -0800 (PST)
-Message-ID: <fa6d342e-0cfe-b870-b044-b0af476e3905@linaro.org>
-Date:   Fri, 9 Dec 2022 14:22:39 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH net-next 2/2] net: ipa: add IPA v4.7 support
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alex Elder <elder@linaro.org>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc:     andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        Fri, 9 Dec 2022 15:38:59 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D4AA4318;
+        Fri,  9 Dec 2022 12:38:57 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 349A63F1EB;
+        Fri,  9 Dec 2022 21:38:54 +0100 (CET)
+Date:   Fri, 9 Dec 2022 21:38:51 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-References: <20221208211529.757669-1-elder@linaro.org>
- <20221208211529.757669-3-elder@linaro.org>
- <47b2fb29-1c2e-db6e-b14f-6dfe90341825@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <47b2fb29-1c2e-db6e-b14f-6dfe90341825@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950
+ peripheral
+Message-ID: <20221209203851.sy37qqzczoaruuyb@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jonathan Cameron <jic23@kernel.org>
+References: <20221101161801.1058969-1-luca@z3ntu.xyz>
+ <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org>
+ <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org>
+ <5740737.DvuYhMxLoT@g550jk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5740737.DvuYhMxLoT@g550jk>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/8/22 3:22 PM, Konrad Dybcio wrote:
+On 2022-12-09 17:54:50, Luca Weiss wrote:
+> On Donnerstag, 8. Dezember 2022 12:20:55 CET Marijn Suijten wrote:
+> > On 2022-12-08 11:23:17, Krzysztof Kozlowski wrote:
+> > > On 08/12/2022 11:12, Marijn Suijten wrote:
+> > > > On 2022-12-04 17:19:05, Luca Weiss wrote:
+> > > >> On Freitag, 2. Dezember 2022 10:36:58 CET Marijn Suijten wrote:
+> > > >> [..]
+> > > >> 
+> > > >> So the way this patch does it is good or does it need changes?
+> > > > 
+> > > > Except the typo(s?) pointed out in my first reply, this is good to go.
+> > > > 
+> > > > If we stick with generic adc-chan node names that should be documented
+> > > > in the bindings IMO, as it is currently only captured implicitly in the
+> > > > examples.  Krzysztof, what is your thought on this?
+> > > 
+> > > If I understand correctly, the outcome of other discussion [1] was to
+> > > use labels and generic node names.
+> > 
+> > The outcome was to use labels in the driver and disregard node names as
+> > the new fwnode API clobbers those names by including the @xx register
+> > bit.
+> > 
+> > (I'll follow up with Jonathan whether or not to remove the current
+> > fallback to node names, as [1] ended up discussing many different issues
+> > and nits)
+> > 
+> > > In such case the patch was correct
+> > > (except other comments).
+> > 
+> > As a consequence it _doesn't matter_ how nodes are named, and we _can_
+> > use generic node names.  My question for you is whether we should, and
+> > if we should lock that in via dt-bindings to guide everyone towards
+> > using labels (which i did _not_ do in the recently-landed PM8950 and
+> > PM6125, but will send followup for).
 > 
+> FYI the patch has been merged already and is now in linux-next
+> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/arch/arm64/boot/dts/qcom/pmi8950.dtsi?id=0d97fdf380b478c358c94f50f1b942e87f407b9b
 > 
-> On 8.12.2022 22:15, Alex Elder wrote:
->> Add the necessary register and data definitions needed for IPA v4.7,
->> which is found on the SM6350 SoC.
->>
->> Co-developed-by: Luca Weiss <luca.weiss@fairphone.com>
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> Signed-off-by: Alex Elder <elder@linaro.org>
->> ---
-> [...]
->> +
->> +/* Memory configuration data for an SoC having IPA v4.7 */
->> +static const struct ipa_mem_data ipa_mem_data = {
->> +	.local_count	= ARRAY_SIZE(ipa_mem_local_data),
->> +	.local		= ipa_mem_local_data,
->> +	.imem_addr	= 0x146a9000,
->> +	.imem_size	= 0x00002000,
-> Should probably be
-> 
-> 0x146a8000
-> 0x00003000
-> 
-> with an appropriate change in dt to reserve that region.
-> 
-> Qualcomm does:
-> ipa@... { qcom,additional-mapping = <0x146a8000 0x146a8000 0x2000>; };
-> 
-> which covers 0x146a8000-0x146a9fff
-> 
-> plus
-> 
-> imem@.. { reg = <0x146aa000 0x1000>; };
-> 
-> which in total gives us 0x146a8000-0x146aafff
+> If you have any changes that need to be done please send a follow-up patch.
 
-Can you tell me where you found this information?
+Unfortunately saw that today as well, well after sending this reply.  I
+would've loved to correct the pmi8950_gpio label _gpios before someone
+starts relying on it in followup patches.
 
-> That would also mean all of your writes are kind of skewed, unless
-> you already applied some offsets to them.
+Fixing the v -> mv typo isn't hard though, I'll send a followup patch
+regardless.
 
-This region is used by the modem, but must be set up
-by the AP.
-
-> (IMEM on 6350 starts at 0x14680000 and is 0x2e000 long, as per
-> the bootloader memory map)
-
-On SM7250 (sorry, I don't know about 7225, or 6350 for that matter),
-the IMEM starts at 0x14680000 and has length 0x2c000.  However that
-memory is used by multiple entities.  The portion set aside for IPA
-starts at 0x146a9000 and has size 0x2000.
-
-					-Alex
-
-> Konrad
-
+- Marijn
