@@ -2,139 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57FBE648475
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:00:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3EF764847E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:02:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiLIPAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:00:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49940 "EHLO
+        id S230039AbiLIPCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 10:02:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbiLIO75 (ORCPT
+        with ESMTP id S230025AbiLIPBS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 09:59:57 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD1BD82F99
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 06:59:32 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id b3so7435247lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 06:59:32 -0800 (PST)
+        Fri, 9 Dec 2022 10:01:18 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B40550D41
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:01:18 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id d6so7407223lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:01:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NmUjgK6FRZP94VzXlEtRsOKP6XhurDo3G4diN6JCplI=;
-        b=P8OnmuYZn6zJLbKrlsyvKSV9tB35MUH5ctJxAmFnSNvn0KUTWbxJdmhVBTw1BgS93i
-         x770KSz59P6Uo/5f8buDoSrOejFOOoBC5waY9P/hnB+BZtwZqNlbG46/0srjzEQEZMZW
-         vHiX0HTGon/Z0tgiO52+J2gSp9DhIZQGSA50DBdeCkQ0wp2MKYgk+cv6Y6iEdaMSjIDI
-         eU95bFy3CO9Wjwh+XzE2+wPw9NegXtBmxw71hp9yVQpEOVkHARivNXgl+EK2YaYRSubY
-         fBt6PaInWybgAgqa3YzEk3grxkTSnoi4olLnlhKbrgwjtcWloZ2kLes9mK40we0kvByZ
-         c5aw==
+        bh=yJzA05MwGNcflYjJYNuBrRj2+RRU7jABtE3nBftkWdQ=;
+        b=KdP1RdmaMl2JqjYFykVCTHTeM0qz8Q3oCX9PGyFVR83pfY85tosGpd2JecdNloFV0q
+         H7lxsTBJH4h0wEMuYe51KxNOGrrTMAZBjvePX3Ifm9SvYjpzwCgm0tMsugvoJixp04wn
+         Xv5zp4NJ1y2kqflpO8zmy2+PQA5fsBhF41SVti8mI9RKe6gUv261JPXosaqGLgmmlSzp
+         KXsoZHPn54j+eDnG7/a8a8S9VpdsmqbVfQqTqinUSiURlVjpENBjwTkNwhK3Bs4nQZtw
+         IZ6FXgmZ8VtKUcNtxpw0fPVtyH/urZexmSzSDScKh8YqC9b3t4In97/g2fdk+4vA2zp4
+         MQjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NmUjgK6FRZP94VzXlEtRsOKP6XhurDo3G4diN6JCplI=;
-        b=sVVeIZaJ49yfr12mSstOU6999zlXXWkZKfjKytEe7akY26UUrf81E4eV//BjSQEaYm
-         ZInAQM+r6kmIVkCcxGWsLdAwmmaGCkkX9ojvO21BNsJXZFgTIxl5MoSzlr9gobacoSpB
-         hVaFzFBkyy8tkQEeHcOoFl7MpOKfZXFsdBuqyiMeShfBJKyKAXaEEUDHUsUpLSPQdznD
-         xYN46XejE6gBLQVnhOZJZa4aVKQ+gMQZZccG7nqFg7latM7zR1FIqgj4ZPP6xpHF1OnO
-         VCd6H1kD9AaRSA29n9hMfVrZ2ghkYj45lByXg6vLEMU1VE4J7TXrLBPBs/IIUOK77FLl
-         X1Pg==
-X-Gm-Message-State: ANoB5plrw1OfIqFOSwMYADp66rT0gmLNKwHCmowSunJaJtjUAWHN0D39
-        ffayM3RfhxmUNZOZtneh2an05w==
-X-Google-Smtp-Source: AA0mqf6EqdK2TYO+O/G2pbCffiYehV+tErEFWtMasQhx6QhqtEcO7WPCkUlL0TWrsKOSCnZJv+emBA==
-X-Received: by 2002:a05:6512:ba0:b0:4b1:44a4:a717 with SMTP id b32-20020a0565120ba000b004b144a4a717mr2003791lfv.61.1670597971148;
-        Fri, 09 Dec 2022 06:59:31 -0800 (PST)
+        bh=yJzA05MwGNcflYjJYNuBrRj2+RRU7jABtE3nBftkWdQ=;
+        b=axYfGpzNXqoHP/lSejdaLIvWjlTtj6IH5eBkpO356zRCjugITiajwcKE5rY5vlLpQ4
+         pq2Vjgenc36ODLFfIeOyDmlEVe+Ib7KnKNOn4+3o0+3VNLQxe7JR7U0mTsDB5OUvGg5v
+         t6cWWedQkLQu1VlxQM2dvmGNQPBxpnnDPBu2KNlRIvDDYV1ICXDl68UjrHaudZnH28X5
+         ibw6zEqjOOTydkloHvHPKNO6Jwuh8+ZEOmpPzbj7BAsOr1CiBd/fCw00jqfJORMUyXgb
+         imjIdQ739TVv2bKQ6HC9Snj5FkkHwsMBEq7NkWdMcjhA3IGDGF8Kr3cZMSIwebayWarh
+         2+5w==
+X-Gm-Message-State: ANoB5pkKrEwtm11Z4nsdd0EZ+SKajvB20m9inp4octCYXgCo3n6fSggd
+        UGIH8RTzLUAYIeRYalWNl4ATFg==
+X-Google-Smtp-Source: AA0mqf5WG0or+xIyHDOliiIM6VVP1kSsBSdGE/W5vP+LjJD4OkWazLGK22bZ0PkQ0vMtwxBSome9UA==
+X-Received: by 2002:a05:6512:5c2:b0:4b4:fbf2:608b with SMTP id o2-20020a05651205c200b004b4fbf2608bmr1592508lfo.30.1670598076570;
+        Fri, 09 Dec 2022 07:01:16 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v12-20020a056512348c00b004b5b4126237sm154851lfr.67.2022.12.09.06.59.29
+        by smtp.gmail.com with ESMTPSA id d25-20020a0565123d1900b004b5701b5337sm290805lfv.104.2022.12.09.07.01.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 06:59:30 -0800 (PST)
-Message-ID: <0fb1b2e4-6e07-f976-0103-d04d89677576@linaro.org>
-Date:   Fri, 9 Dec 2022 15:59:28 +0100
+        Fri, 09 Dec 2022 07:01:15 -0800 (PST)
+Message-ID: <026eafce-86b0-c063-c397-d4b82f2dc35f@linaro.org>
+Date:   Fri, 9 Dec 2022 16:01:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v11 2/5] dt-bindings: msm/dp: add data-lanes and
- link-frequencies property
+Subject: Re: [PATCH 1/3] dt-bindings: leds: spmi-flash-led: Add pm6150l
+ compatible
 Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        airlied@gmail.com
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1670539015-11808-1-git-send-email-quic_khsieh@quicinc.com>
- <1670539015-11808-3-git-send-email-quic_khsieh@quicinc.com>
- <5a3865ed-8847-db04-3d60-f35438250bef@linaro.org>
- <5aa16223-dbf6-996c-1985-794302dcce91@quicinc.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
+ <20221209-fp4-pm6150l-flash-v1-1-531521eb2a72@fairphone.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <5aa16223-dbf6-996c-1985-794302dcce91@quicinc.com>
+In-Reply-To: <20221209-fp4-pm6150l-flash-v1-1-531521eb2a72@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 00:38, Kuogee Hsieh wrote:
+On 09/12/2022 14:54, Luca Weiss wrote:
+> Add the compatible for the flash-led block found on pm6150l PMIC.
 > 
-> On 12/8/2022 3:33 PM, Dmitry Baryshkov wrote:
->> On 09/12/2022 00:36, Kuogee Hsieh wrote:
->>> Add both data-lanes and link-frequencies property into endpoint
->>>
->>> Changes in v7:
->>> -- split yaml out of dtsi patch
->>> -- link-frequencies from link rate to symbol rate
->>> -- deprecation of old data-lanes property
->>>
->>> Changes in v8:
->>> -- correct Bjorn mail address to kernel.org
->>>
->>> Changes in v10:
->>> -- add menu item to data-lanes and link-frequecnis
->>>
->>> Changes in v11:
->>> -- add endpoint property at port@1
->>>
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
->>
->> Applying: dt-bindings: msm/dp: add data-lanes and link-frequencies 
->> property
->> .git/rebase-apply/patch:47: trailing whitespace.
->>
->> .git/rebase-apply/patch:51: trailing whitespace.
->>
->>
->> Also the dt_binding_check fails with an error for this schema. And 
->> after fixing the error in the schema I faced an example validation 
->> error. Did you check that the schema is correct and that the example 
->> validates against the schema?
-> 
-> yes, but i run "make dt_binding_check 
-> DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dp-controller.yaml" 
-> at mu v5.15 branch since
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-v5.15 branch is not correct branch to work on a kernel. Please do not
-send patches based on this. You must work on mainline, maintainer's next
-branch or linux-next.
 
-> 
-> "make dt_binding_check" does not work at msm-next branch.
-
-Why would it not work there? I doubt that msm-next broke anything...
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
