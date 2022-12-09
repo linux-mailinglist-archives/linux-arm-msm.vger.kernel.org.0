@@ -2,109 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1A13648712
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 17:55:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A15648745
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 18:07:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiLIQzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 11:55:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46988 "EHLO
+        id S229963AbiLIRHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 12:07:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbiLIQzX (ORCPT
+        with ESMTP id S229968AbiLIRHG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 11:55:23 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23C4941AB;
-        Fri,  9 Dec 2022 08:55:22 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id BA1C9CA44B;
-        Fri,  9 Dec 2022 16:54:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1670604890; bh=JPxISEVGZ3issJ6dY6iVzvmxKxEEeRMzlzxN/ukUT/Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=Z70cN0BCSwfeW8Vsj/KfBq/QdTsGv9w/ZxNzZNuZK7BQVU4SGMbcosSXRPNiGLGtN
-         9PbrJVLFHS3iUh/C+2nxTB3/VU0Rybvn5pHYtfyoR9nhpF9Y441j8NvqUEvxKwye5r
-         CvDfv5l+Vfy806NOaQ5bS9qhLovI5HMF0kHMrKa8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jonathan Cameron <jic23@kernel.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950 peripheral
-Date:   Fri, 09 Dec 2022 17:54:50 +0100
-Message-ID: <5740737.DvuYhMxLoT@g550jk>
-In-Reply-To: <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org>
-References: <20221101161801.1058969-1-luca@z3ntu.xyz> <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org> <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org>
+        Fri, 9 Dec 2022 12:07:06 -0500
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCA5A3870
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 09:05:37 -0800 (PST)
+Received: by mail-yb1-xb32.google.com with SMTP id c140so6228598ybf.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 09:05:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=m/9lqzL8oZxDL1569exX5YdO2wK0A/N3Nq2LidbPWQo=;
+        b=O2sgNTTpu4+f1z7RaiuywBXHznwKn7oohJ0SsYKciDvJdgz1KByoN+lG65QlQ65EyY
+         DnHrPpFnJKtPBoghXu/fMSEWXgaiHpQHTDZLp8EjdKBTVbO5FAtnb+tTEaZWFskrxdI5
+         ozFDtWHnzmpO5E7PDdpMmvI0ejkmo6OLd84mpLmuCCYcSrrGSPVaHUgxHSOg4Zj4GpbN
+         3kl7jpwez0Q876GntLKTAC+hoDA1hlu/EBmGuCJ04d/MGHcq2zQHuTsW7axepMurTbDT
+         1Ui4RhK/5RAh3eLGG6NcZ88Z9oQWEe3rQa5j+R5Tu920AZuCIGpys2nbR1s314W1ovYP
+         ch1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m/9lqzL8oZxDL1569exX5YdO2wK0A/N3Nq2LidbPWQo=;
+        b=hr/Ow7umQl+ZCdVvGqL3xNJHPGdw3ITQcQ+CAXU4tB0wFdQurgCo4O6HoA9JJa1/eB
+         hNk/2TT4F//YPxJJew4v+nsSbPVtEgVpYNxF7iC9yr/fFFOgwTga2G2czkNxrzqxQq1F
+         yHSXPGv6lDHQmvbqpFi7wXx1y+yzKUDtyLhbAeMJbsMZi7zK21vxM75XM3hKDtGWGHW9
+         dM5OJwmR6mU5NGlYqBFkhKj5a7QWyuncbu2nSQZShLFVUIGob9usoGLYJjrEjXv0iAn3
+         qyEL84GWrRwYV6sUhpBahSgaKNBvmTtMTRbK9uNrC8nV6S/vlg44AtgTubOwOg65l8yF
+         i31g==
+X-Gm-Message-State: ANoB5pkvQV9dDIeq7En8Ohm04s3b0TgrPjOkd36hWkARecjUlSsj8qsV
+        wfr7TBouRxiww5fmb4aGSqsZ9l4i2BBHa9CVnuQVSQ==
+X-Google-Smtp-Source: AA0mqf4s3Mtnfz9NzdoiqJVnGJFq75/XQF89HCf1bEvEfT/pCCTHt8Es+waUQ1GO55xwHc+7yR6TVMny+DZWGbLBrrA=
+X-Received: by 2002:a5b:e8e:0:b0:712:faac:e6b2 with SMTP id
+ z14-20020a5b0e8e000000b00712faace6b2mr1649056ybr.632.1670605536934; Fri, 09
+ Dec 2022 09:05:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+References: <20221207001503.93790-1-dmitry.baryshkov@linaro.org>
+ <20221207001503.93790-3-dmitry.baryshkov@linaro.org> <74af29ba-0eaa-0c20-ea66-c5636162aaaf@linaro.org>
+ <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
+In-Reply-To: <CAA8EJpo7+h34YCBc4+vBi22eNNO7xAa8FhwjHkU-4ZvcZx-tvA@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Date:   Fri, 9 Dec 2022 18:05:25 +0100
+Message-ID: <CAGE=qrpdcBM-s5yx7P4B+QcSsNxvjZZBswymr6Rx3hZA+YtR5w@mail.gmail.com>
+Subject: Re: [PATCH v2 02/18] clk: qcom: smd-rpm: enable pin-controlled
+ ln_bb_clk clocks on qcs404
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Donnerstag, 8. Dezember 2022 12:20:55 CET Marijn Suijten wrote:
-> On 2022-12-08 11:23:17, Krzysztof Kozlowski wrote:
-> > On 08/12/2022 11:12, Marijn Suijten wrote:
-> > > On 2022-12-04 17:19:05, Luca Weiss wrote:
-> > >> On Freitag, 2. Dezember 2022 10:36:58 CET Marijn Suijten wrote:
-> > >> [..]
-> > >> 
-> > >> So the way this patch does it is good or does it need changes?
-> > > 
-> > > Except the typo(s?) pointed out in my first reply, this is good to go.
-> > > 
-> > > If we stick with generic adc-chan node names that should be documented
-> > > in the bindings IMO, as it is currently only captured implicitly in the
-> > > examples.  Krzysztof, what is your thought on this?
-> > 
-> > If I understand correctly, the outcome of other discussion [1] was to
-> > use labels and generic node names.
-> 
-> The outcome was to use labels in the driver and disregard node names as
-> the new fwnode API clobbers those names by including the @xx register
-> bit.
-> 
-> (I'll follow up with Jonathan whether or not to remove the current
-> fallback to node names, as [1] ended up discussing many different issues
-> and nits)
-> 
-> > In such case the patch was correct
-> > (except other comments).
-> 
-> As a consequence it _doesn't matter_ how nodes are named, and we _can_
-> use generic node names.  My question for you is whether we should, and
-> if we should lock that in via dt-bindings to guide everyone towards
-> using labels (which i did _not_ do in the recently-landed PM8950 and
-> PM6125, but will send followup for).
+On Fri, 9 Dec 2022 at 17:28, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Fri, 9 Dec 2022 at 18:14, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 07/12/2022 01:14, Dmitry Baryshkov wrote:
+> > > The commit eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm
+> > > clocks") defined the pin-controlled ln_bb_clk clocks, but didn't add
+> > > them to the qcs404_clks array. Add them to make these clocks usable to
+> > > platform devices.
+> > >
+> >
+> > Please use scripts/get_maintainers.pl to get a list of necessary people
+> > and lists to CC.  It might happen, that command when run on an older
+> > kernel, gives you outdated entries.  Therefore please be sure you base
+> > your patches on recent Linux kernel.
+> >
+> > > Fixes: eaeee28db289 ("clk: qcom: smd: Add support for QCS404 rpm clocks")
+> > > Reviewed-by: Alex Elder <elder@linaro.org?
+> >
+> > Wrong character at the end.
+> >
+> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  drivers/clk/qcom/clk-smd-rpm.c         | 2 ++
+> > >  include/dt-bindings/clock/qcom,rpmcc.h | 2 ++
+> > >  2 files changed, 4 insertions(+)
+> > >
+> >
+> > No, bindings are separate.
+>
+> Argh, I didn't realise that this piece also goes into your realm.
+> Please excuse me.
 
-FYI the patch has been merged already and is now in linux-next
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/arch/arm64/boot/dts/qcom/pmi8950.dtsi?id=0d97fdf380b478c358c94f50f1b942e87f407b9b
+That's we we have checkpatch:
 
-If you have any changes that need to be done please send a follow-up patch.
+WARNING: DT binding docs and includes should be a separate patch. See:
+Documentation/devicetree/bindings/submitting-patches.rst
 
-Regards
-Luca
+Such issues are solved with tools. You will not miss any maintainers
+if you automate the sending command (e.g. with identity and
+tocmd/cccmd). The same with mixing files - checkpatch tests for it.
 
-> 
-> > [1]
-> > https://lore.kernel.org/linux-arm-msm/20221112162719.0ac87998@jic23-huawei
-> > /
-> 
-> - Marijn
-
-
-
-
+Best regards,
+Krzysztof
