@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C434864849D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:07:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEAF26484AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Dec 2022 16:08:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbiLIPGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Dec 2022 10:06:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55444 "EHLO
+        id S230285AbiLIPIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Dec 2022 10:08:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbiLIPGb (ORCPT
+        with ESMTP id S230115AbiLIPIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Dec 2022 10:06:31 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F768933B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:05:53 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id q7so5188976ljp.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:05:53 -0800 (PST)
+        Fri, 9 Dec 2022 10:08:06 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB86B70B96
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Dec 2022 07:08:04 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id b13so7481691lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Dec 2022 07:08:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Eb+dzXKfFxLhKYjaGwUiIKvSA18uKRx27pJ/FmHwtEU=;
-        b=UaqEE2V7XWYGetw5n3TULGb3MoulZySHOYQ45kKm+9Eji+t1wo6MYUsW1LCCKdPiPY
-         Vu266DfbJXMo4NoR0PIPAf0q2mOUQQ0RzXKII/DP5rY/X7uagyLXuOCAZ/LIRCbMWkVD
-         KHE0DkBTFDkR9uIFeVYbEl7pJzQazF6EKMmuQyiP9Ktjxd+KxzAKbUj3M8Ha/IIGvVP/
-         UqHY/ruIR5qS9yi2gb/bpnCK86jZmpJhHENjwoSGG+GYN4OVQB8kPmFdHoLVIk5xwRNB
-         YH1m3qyByyMey0nxj7P+MukceClfttKeE3lSNC9BfGc+JFoXsYmUIrS4/89ZAatwcjmY
-         3CMw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pHsbFWG8VGfSFHxz3J5zcYdNhYft8cDHvZVuoaK7gTI=;
+        b=SHj5xUS38pmlYs4MHhz+rCpnhS0aSA1eDs0B2Xz0nI7TeqxyK49qa6XIhFefPs5L7G
+         YBkhhVMupwYCULFJd9G309qVX4hbVHkAaFvtP+CblRTbxWwA5kMHyK7MFK1R9y10ccRc
+         A8X7ZOaa+SxnJiAinjbEthKHllOsgKgMs0DzNr8ilhJioXQEF3RMCWgqMfxxD3FOaXHh
+         2T7hCj575qTXya1iVgpvnJJ3vpu/+amF4tbxs5jsKqweE5f7gesj/e7wgQhX/4oPp3G7
+         p8oCGZx1LWdpeh+0iDR4fXEoBKMOYijJqdeKzxPHxCOlMTPLk+o6ZDZEgFgnPFYowoF0
+         R+fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Eb+dzXKfFxLhKYjaGwUiIKvSA18uKRx27pJ/FmHwtEU=;
-        b=GAjh44N/PMn4bfR/kBTQ/++dPmMKC1lrgB5lJM5BT/c7BnmfDs+WrTPs7ZQNxZ7ZHA
-         O1mFAIsAtzSaQmhW3t8EGwksXKTh4oD0SLBvBXGODPNtRN8n1VvIu8TpFtj/Da4H1cO3
-         tTv3mJWr0Ioa2ysWA8tpNiF0UVSj2iQWS593DQR1+OWj2zLWrhBzH0msVYU0tvoUlkqS
-         /OYNYnnKfN3JufwNRt70YiKXinBz0XsfPXvp81K8opNbl3/Mn5xnKdMgF83ch/VeU76s
-         TOgvEOJj0jL4KEMsv2aVWHsXLU+LMufVA2t5mDoKt0s+qfk/6csJNDdI3/irtiD1V6RG
-         eeMQ==
-X-Gm-Message-State: ANoB5pmnygRDNjKL+VUzuTNyfM62P36uwaZ0Vky+yoIXJ0NU9vKcXput
-        JePMGq0A7ghhC3/7pCUd/k8iQg==
-X-Google-Smtp-Source: AA0mqf7t6HyCvjQbRm6lmUFP6R5mKqPRb4U9dlf9l9mifKdgF30nTCo9XZGo4dm2k9UFBPiA/WTurQ==
-X-Received: by 2002:a05:651c:94:b0:27a:7a8:c54b with SMTP id 20-20020a05651c009400b0027a07a8c54bmr1902929ljq.45.1670598351535;
-        Fri, 09 Dec 2022 07:05:51 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id r23-20020a2eb617000000b00279cbcfd7dbsm245033ljn.30.2022.12.09.07.05.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Dec 2022 07:05:50 -0800 (PST)
-Message-ID: <24fa41d2-87d1-be19-af44-337784b0f0a4@linaro.org>
-Date:   Fri, 9 Dec 2022 16:05:49 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pHsbFWG8VGfSFHxz3J5zcYdNhYft8cDHvZVuoaK7gTI=;
+        b=eHJu5GL1ct7KWcx+JWwWIXr/x58C2j7l9YWCMp3GfEaqmpT6c3H4FvHXgxyyvOiVkB
+         7SZjNmJSwwySt4Wfa4oaXRllIrjag4Xp6rrtG7j7NXiyXOiBhRirwsS2KBPCI2bPLmcz
+         A/4V4fRuVjj9V5R6Gbjx3hLVJ1n264DPRang7KkIwe408MVCyQhirgW93KnfOBDl2QQb
+         eEq25jtK6h9oPAxyW7UyPJCS1pqMvbAYBGtecUnCTDkxDVAyohgAxmrGaKf+HwmnxXdC
+         /sdu5oWUtYzTR/rSoVJwgrMVkpUT9qzOYUu5Wq6ggaO4kWbP+vWzxS+ParS3Oks4J58m
+         r6Rg==
+X-Gm-Message-State: ANoB5pno/kz+HhVj5ISF+qwPTF/Hcl1bOPHO+9h2Kb3Liggwuk6tdXkc
+        0N9zDmLPtF3Tfi4SQyAGD62czvuiWJs5t6rr
+X-Google-Smtp-Source: AA0mqf6/6y3zfT68FyCfvmjzCCC/sY99Qr6ncKEdxeDRuQDQMp+3y3UEm6hcVbrytRyRuJJVD0hTmA==
+X-Received: by 2002:a05:6512:3d01:b0:4b5:ab93:bb1a with SMTP id d1-20020a0565123d0100b004b5ab93bb1amr1724395lfv.24.1670598482958;
+        Fri, 09 Dec 2022 07:08:02 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id m20-20020a05651202f400b004994117b0fdsm290509lfq.281.2022.12.09.07.08.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Dec 2022 07:08:02 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] cpufreq: qcom-hw: Fix reading "reg" with address/size-cells != 2
+Date:   Fri,  9 Dec 2022 16:07:58 +0100
+Message-Id: <20221209150759.396255-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,74 +73,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 15:29, Luca Weiss wrote:
-> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
-> in the bindings so the existing dts can validate successfully.
-> 
-> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
-> sm8450: add Inline Crypto Engine registers and clock") so move the
-> compatible to the correct if.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> (no cover subject)
-> 
-> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
-> and sa8540p-ride.dtb:
-> 
->   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
-> 
-> Maybe someone who knows something about this can handle this?
-> 
-> And the patch adding qcom,sm6115-ufshc hasn't been applied yet.
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index f2d6298d926c..58a2fb2c83c3 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -102,7 +102,6 @@ allOf:
->                - qcom,sc8280xp-ufshc
->                - qcom,sm8250-ufshc
->                - qcom,sm8350-ufshc
-> -              - qcom,sm8450-ufshc
->      then:
->        properties:
->          clocks:
-> @@ -130,6 +129,7 @@ allOf:
->                - qcom,sdm845-ufshc
->                - qcom,sm6350-ufshc
->                - qcom,sm8150-ufshc
-> +              - qcom,sm8450-ufshc
->      then:
->        properties:
->          clocks:
-> @@ -149,6 +149,12 @@ allOf:
->          reg:
->            minItems: 2
->            maxItems: 2
-> +        reg-names:
+Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during
+probe") assumed that every reg variable is 4*u32 wide (as most new qcom
+SoCs set #address- and #size-cells to <2>. That is not the case for all of
+them though. Check the cells values dynamically to ensure the proper
+region of the DTB is being read.
 
-There are no reg-names in top-level, so it's surprising to see its
-customized here. It seems no one ever documented that usage...
+Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-> +          items:
-> +            - const: std
-> +            - const: ice
-> +      required:
-> +        - reg-names
->  
->    - if:
->        properties:
-> 
-> ---
-> base-commit: f925116b24c0c42dc6d5ab5111c55fd7f74e8dc7
-> change-id: 20221209-dt-binding-ufs-2d7f64797ff2
-> 
-> Best regards,
-
-Best regards,
-Krzysztof
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 340fed35e45d..22f48f789557 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -649,9 +649,10 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ {
+ 	struct clk_hw_onecell_data *clk_data;
+ 	struct device *dev = &pdev->dev;
++	struct device_node *soc_node;
+ 	struct device *cpu_dev;
+ 	struct clk *clk;
+-	int ret, i, num_domains;
++	int ret, i, num_domains, reg_sz;
+ 
+ 	clk = clk_get(dev, "xo");
+ 	if (IS_ERR(clk))
+@@ -679,7 +680,22 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 		return ret;
+ 
+ 	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
+-	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * 4);
++	soc_node = of_get_parent(dev->of_node);
++	if (!soc_node)
++		return -EINVAL;
++
++	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
++	if (ret)
++		return ret;
++
++	/* Reuse 'i', as it's only used later in the loop */
++	ret = of_property_read_u32(soc_node, "#size-cells", &i);
++	if (ret)
++		return ret;
++
++	reg_sz += i;
++
++	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
+ 	if (num_domains <= 0)
+ 		return num_domains;
+ 
+-- 
+2.38.1
 
