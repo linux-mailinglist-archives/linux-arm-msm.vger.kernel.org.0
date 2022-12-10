@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35D03648E3D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 11:58:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C68B3648E4B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 12:02:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbiLJK6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 05:58:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49588 "EHLO
+        id S229683AbiLJLCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 06:02:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbiLJK63 (ORCPT
+        with ESMTP id S229750AbiLJLCF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 05:58:29 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E7D1C40C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 02:58:27 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id q6so842333lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 02:58:27 -0800 (PST)
+        Sat, 10 Dec 2022 06:02:05 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B701C92B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:02:04 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id g7so10929161lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:02:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uLWU8UvLvUz+UPt+iZ/n8ZPOtKF07vffHOxQU5K8UgU=;
-        b=i2HHBJe6E7SskkvjwwGFpNZwVVx0TRnRKxu8beDwoiGPo6OJeP6gATP0/RVtcEaJQ7
-         zP8A3hYVq3BPi3KtNDi8sErXgidcrWNQkywjGheKVZdHIPVdnnpHlmx60i/xl4JwtsxZ
-         eHwm8gvOvxY01n2flE4vZA5JyLYxMpBcH7Uy3j+u0dNSkORQ586JwnB2FOIbQ7Vdqbgm
-         5g7napayHLM+VLqc5JTSI3h/8hEXGvtHZFiOdsRVrfkq3cun7nIOaPxIfSzFIHjAKdtp
-         4JvdD+0RTSHLJkbAqCmbBkjZlXBfsvUmI/0tCIzUm2YrpCXTWVNpRdtY2D0alhOOPXFE
-         4ZIw==
+        bh=qtLsUqxObl5gNvozPidJotWpMooTYg5mjWrhCt6bCKc=;
+        b=sa7G/COWN4N2/rdfMXhPIS4QNgjWvxGqmVy3Kc/nEw8P5EMBZI2C9N2iJ1ZOBf5Gtr
+         CZEe6BLdgqFCsRv4qp0Itb+kxQeZOjuF3zHRFkTVbQTLgI3xStpWZ6cvud8cbontaloD
+         b1S8+u79d2H5OY46sujlez8DAwRSB1znFSbOeFwavjs4T6j/5L6kw98dy9/vXPsWCZiX
+         FUWpLR/Lxz66vOnSxEmcpnmfj/waImf3y9bzM89ybGBDcvPGUooZaJfS9Wm+vIpqDayj
+         d5IlEvXfo1RR7jZ62abZyW1mZtdexBsNyUzRwZX6qTdWMe6fJb7HjXScpkRGzw0lDVmZ
+         CAyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uLWU8UvLvUz+UPt+iZ/n8ZPOtKF07vffHOxQU5K8UgU=;
-        b=Od2Pj9Tg1D1Op8EDD0cQ0F6inVFKCiaz3fbm+e323foxtYdZZOA0JldnfY66fX03A0
-         wZZ9BHAike9WJxccqHfMNm7L5SbkH3spxsCk+qfMmSs/6+ibCk6LwuRLaLZdLKvSG8k5
-         +Dfu+TSRAUwS/4kkrAYD8UNT0xs3bJyH0KiL8qp0wZRkGIdJuVmnLca8/GBzpzxNblJG
-         l2RZn8+8KmUjX+4gu1kYEI04V9JFKUQSFBlXmQORJG5CWD2w9BdoWbKzM5ulHFn9Us5J
-         34ORFATOiqGcXYFXAWflocskYU7qhS0aTgrAzXaG/sb4bFNZDLCbqvcMZVlUWy5TH3Jg
-         mgSA==
-X-Gm-Message-State: ANoB5pnn8Bku/B3OT3442CQVI3ESmEeV3U86zy3xjqbWiPGRKHv2U04b
-        CEAjEtqE5zNvJd0DDXcjxnI9IQ==
-X-Google-Smtp-Source: AA0mqf4fOIbUVu1NB5M9iRbvy7IONCEf0BukLaKFdJLcqL+0Ys3M22vqZKiOwMRi0e+4M9pHxMoMnQ==
-X-Received: by 2002:a05:6512:224a:b0:4a4:68b9:19fc with SMTP id i10-20020a056512224a00b004a468b919fcmr3875677lfu.36.1670669905727;
-        Sat, 10 Dec 2022 02:58:25 -0800 (PST)
+        bh=qtLsUqxObl5gNvozPidJotWpMooTYg5mjWrhCt6bCKc=;
+        b=DmZosrrXiTxwgjDO87zyFSEWUFqnpNrx6LvAhWA2Ex7fQByHTfgk2QvQ+9fw6qDIh6
+         BmFuM6L+z/YaHDGFNZ7RQ5knwI6ev9wk3kGTM8Zq99fi7hnRYCHTbRp2oLcKCe+/YXuN
+         E5X0wr9QCbdDlQZQEb6waT3lOtKsfwNDU0PjuYSMfej/+9KHtm19xk2nYj6DvkYuk4Lu
+         V1ZtC4vgFbt7P6lvAedXdO6c94CRo9FeLXZiSf0rkTMUMCWzNSZPW1oD3iCFtiFuWAbg
+         a5b2xeHth6xeMUr3X0YwlBeg6eGwG0DIqjol4DNpMce8OFMXwqK1fU5a/wNXR/JvgQM/
+         S9Dw==
+X-Gm-Message-State: ANoB5pmulQgtFN3vHh5QGjTGGujq/M9dOExxZsGfaz851XE79DJNDMZu
+        Znq+M+UVk44Bl6JUGrtMN6s7FQ==
+X-Google-Smtp-Source: AA0mqf4ukIq8f55ZwoT5lfBoGPIv3vIjf6EYKWXJHuBG4yXo1R8WH7bHnid2bOObROuEjdX9eqdlcg==
+X-Received: by 2002:ac2:569e:0:b0:4b5:9e59:8cdd with SMTP id 30-20020ac2569e000000b004b59e598cddmr1912500lfr.67.1670670120896;
+        Sat, 10 Dec 2022 03:02:00 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id z26-20020a195e5a000000b004b55b404d36sm671211lfi.156.2022.12.10.02.58.24
+        by smtp.gmail.com with ESMTPSA id s14-20020a056512202e00b004b5284a92f9sm674523lfs.208.2022.12.10.03.01.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Dec 2022 02:58:25 -0800 (PST)
-Message-ID: <4846bb5f-79a9-e199-6a1c-5021e975e7ee@linaro.org>
-Date:   Sat, 10 Dec 2022 11:58:24 +0100
+        Sat, 10 Dec 2022 03:02:00 -0800 (PST)
+Message-ID: <3c5aeda7-6773-0b41-9c02-5f423117c3b3@linaro.org>
+Date:   Sat, 10 Dec 2022 12:01:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950
- peripheral
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jonathan Cameron <jic23@kernel.org>
-References: <20221101161801.1058969-1-luca@z3ntu.xyz>
- <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org>
- <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org> <5740737.DvuYhMxLoT@g550jk>
- <20221209203851.sy37qqzczoaruuyb@SoMainline.org>
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
+ <24fa41d2-87d1-be19-af44-337784b0f0a4@linaro.org>
+ <COXDTKRPPU1J.373YHYKBQIN38@otso>
+ <a527720e-d4d9-6c90-f991-a5b123c4559b@linaro.org>
+ <Y5OOA2+OuwgZ1i7B@sol.localdomain>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221209203851.sy37qqzczoaruuyb@SoMainline.org>
+In-Reply-To: <Y5OOA2+OuwgZ1i7B@sol.localdomain>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,55 +89,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2022 21:38, Marijn Suijten wrote:
-> On 2022-12-09 17:54:50, Luca Weiss wrote:
->> On Donnerstag, 8. Dezember 2022 12:20:55 CET Marijn Suijten wrote:
->>> On 2022-12-08 11:23:17, Krzysztof Kozlowski wrote:
->>>> On 08/12/2022 11:12, Marijn Suijten wrote:
->>>>> On 2022-12-04 17:19:05, Luca Weiss wrote:
->>>>>> On Freitag, 2. Dezember 2022 10:36:58 CET Marijn Suijten wrote:
->>>>>> [..]
->>>>>>
->>>>>> So the way this patch does it is good or does it need changes?
+On 09/12/2022 20:35, Eric Biggers wrote:
+> On Fri, Dec 09, 2022 at 04:19:20PM +0100, Krzysztof Kozlowski wrote:
+>> On 09/12/2022 16:11, Luca Weiss wrote:
+>>> On Fri Dec 9, 2022 at 4:05 PM CET, Krzysztof Kozlowski wrote:
+>>>> On 09/12/2022 15:29, Luca Weiss wrote:
+>>>>> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
+>>>>> in the bindings so the existing dts can validate successfully.
 >>>>>
->>>>> Except the typo(s?) pointed out in my first reply, this is good to go.
+>>>>> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
+>>>>> sm8450: add Inline Crypto Engine registers and clock") so move the
+>>>>> compatible to the correct if.
 >>>>>
->>>>> If we stick with generic adc-chan node names that should be documented
->>>>> in the bindings IMO, as it is currently only captured implicitly in the
->>>>> examples.  Krzysztof, what is your thought on this?
+>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>> ---
+>>>>> (no cover subject)
+>>>>>
+>>>>> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
+>>>>> and sa8540p-ride.dtb:
+>>>>>
+>>>>>   Unevaluated properties are not allowed ('required-opps', 'dma-coherent' were unexpected)
+>>>>>
+>>>>> Maybe someone who knows something about this can handle this?
+>>>>>
+>>>>> And the patch adding qcom,sm6115-ufshc hasn't been applied yet.
+>>>>> ---
+>>>>>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 8 +++++++-
+>>>>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>>> index f2d6298d926c..58a2fb2c83c3 100644
+>>>>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>>> @@ -102,7 +102,6 @@ allOf:
+>>>>>                - qcom,sc8280xp-ufshc
+>>>>>                - qcom,sm8250-ufshc
+>>>>>                - qcom,sm8350-ufshc
+>>>>> -              - qcom,sm8450-ufshc
+>>>>>      then:
+>>>>>        properties:
+>>>>>          clocks:
+>>>>> @@ -130,6 +129,7 @@ allOf:
+>>>>>                - qcom,sdm845-ufshc
+>>>>>                - qcom,sm6350-ufshc
+>>>>>                - qcom,sm8150-ufshc
+>>>>> +              - qcom,sm8450-ufshc
+>>>>>      then:
+>>>>>        properties:
+>>>>>          clocks:
+>>>>> @@ -149,6 +149,12 @@ allOf:
+>>>>>          reg:
+>>>>>            minItems: 2
+>>>>>            maxItems: 2
+>>>>> +        reg-names:
 >>>>
->>>> If I understand correctly, the outcome of other discussion [1] was to
->>>> use labels and generic node names.
+>>>> There are no reg-names in top-level, so it's surprising to see its
+>>>> customized here. It seems no one ever documented that usage...
 >>>
->>> The outcome was to use labels in the driver and disregard node names as
->>> the new fwnode API clobbers those names by including the @xx register
->>> bit.
+>>> From what I can tell, from driver side all devices not using ICE don't
+>>> need reg-names, only the "ice" reg is referenced by name in the driver.
 >>>
->>> (I'll follow up with Jonathan whether or not to remove the current
->>> fallback to node names, as [1] ended up discussing many different issues
->>> and nits)
->>>
->>>> In such case the patch was correct
->>>> (except other comments).
->>>
->>> As a consequence it _doesn't matter_ how nodes are named, and we _can_
->>> use generic node names.  My question for you is whether we should, and
->>> if we should lock that in via dt-bindings to guide everyone towards
->>> using labels (which i did _not_ do in the recently-landed PM8950 and
->>> PM6125, but will send followup for).
+>>> I didn't add it top-level because with only one reg I think we're not
+>>> supposed to use reg-names, right?
 >>
->> FYI the patch has been merged already and is now in linux-next
->> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/arch/arm64/boot/dts/qcom/pmi8950.dtsi?id=0d97fdf380b478c358c94f50f1b942e87f407b9b
+>> And you still won't need to use. Yet property should be rather described
+>> in top-level which also will unify the items here (so no different
+>> 2-item reg-names in variants).
 >>
->> If you have any changes that need to be done please send a follow-up patch.
+>> Just add it to top-level with minItems: 1 and per variant customize:
+>> 1. maxItems: 1
+>> 2. minItems: 2 + required
+>>
+>> The "required" is a bit questionable... this was never added by Eric to
+>> the bindings. Driver support and DTS were added completely skipping
+>> bindings...
+>>
 > 
-> Unfortunately saw that today as well, well after sending this reply.  I
-> would've loved to correct the pmi8950_gpio label _gpios before someone
+> Sorry about that.  At the time
+> (https://lore.kernel.org/linux-scsi/20200722051143.GU388985@builder.lan/T/#t)
+> I didn't know there was a Documentation file that should have been updated.
 
-I don't understand what is there to correct. The "pmi8950_gpio" is a
-correct label. There is no single rule saying label should have "s" at
-the end. The only rules are: using underscores and having similar naming
-(e.g. mdss_ for all display labels).
+Any change regarding bindings (so adding/changing compatibles,
+properties, nodes) a driver is using must be followed by... change in
+the bindings.
+
+> 
+> The UFS core assumes that the reg at index 0 is the UFS standard registers.
+> It is not referenced by name.
+> 
+> ufs-qcom already had an optional reg at index 1.  I needed to add another
+> optional reg.  So I made the regs at index 1 and later be optional named regs:
+> dev_ref_clk_ctrl_mem and ice.  That seemed better than hardcoding the indices.
+> 
+> Is it causing a problem that the UFS standard reg at index 0 is being mixed with
+> named regs in the same list?
+
+The indexes should be ordered (hard-coded), not flexible. If there is
+already second IO address at index 1, then the patch does not look
+correct. When fixing, please fix it completely.
 
 Best regards,
 Krzysztof
