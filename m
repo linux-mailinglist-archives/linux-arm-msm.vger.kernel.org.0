@@ -2,101 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755C2648FFA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 18:16:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90379649050
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 20:07:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229548AbiLJRQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 12:16:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
+        id S229815AbiLJTHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 14:07:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiLJRQ3 (ORCPT
+        with ESMTP id S229685AbiLJTHQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 12:16:29 -0500
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 773F81FB;
-        Sat, 10 Dec 2022 09:16:28 -0800 (PST)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 399DF1C09F6; Sat, 10 Dec 2022 18:16:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1670692587;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=KdQHQ5s+tXy+ERTEJcEFuFB1iLfks/vH0fSWLk/R1XU=;
-        b=dWRl/z/DQFNmcGUBaWofIwuApXxBt7IaiY7S944ChkKAygdKedlqeVYseF8xjEqlWokFQJ
-        xGboTiYgmijEegmXoNXTRBOmyxNym2ra2+/eAwFUINi7AvnUqzvsNBEZJSeyi/yvMf/aCN
-        aaeiYcOZztfN/YsfKftqmtFX/056z7k=
-Date:   Sat, 10 Dec 2022 18:16:26 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sat, 10 Dec 2022 14:07:16 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907ADD129
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 11:07:15 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id b9so8386392ljr.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 11:07:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rt87QwziOHZdtbJ1ao1dwblyqOKmgeduTTRhwjbbl/o=;
+        b=pvG6T4UPslaseHi8Os6nLg62w/nrpVwWxTtKrVaZyE9+VEGAzAHczmCnj3ONGTMOo/
+         2nPsJaxbWHstajBtqTMPNQ7nCFENCZ2bXDW1OSS2a3PzcSEqbCyOz98ByuCV7NnUMT7U
+         K4IKFgzziIlZg5lq1J1TYjnI/E2dG+iszWc0E3BPCcuEz02eXchFQy8AIhSOJxdbuway
+         kpuo74BKSzAPx5Mtd5wY6MFpKPJFNLRoqlq5+2chJVmHAk3klpe7niuY40wAGuMBnHF9
+         ZV0/B1YgpkOoY86ARC6v20ZAlz9VEnKluuygzr84bZyVWLljBDpAovwRLxuqPpceYkAY
+         KU5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rt87QwziOHZdtbJ1ao1dwblyqOKmgeduTTRhwjbbl/o=;
+        b=5UX8UZotJ+oBKG6NCsBHs7NEtQs4FjHiSffpRrZX1rUbjEVq73qLQhHm6yTAUVFesf
+         2SlGa9duvxb/4J7s2VFFzMl5N0WRW5k49T0fe1euagva1A2pDNhEUtmTvEOHHUHhNQ4H
+         a6txPAvY/28krkN1ntYqTzTHt9luNUh4Mg31wmZudvW2u2M7czP/EPBpVSd1KrRgQ574
+         4emz4mi73gI0M7J99KczlVHXz78tjbuaDa2X0npVfIRHwRFeF2ge932+54cteSUii0//
+         KfuBIYcUggLQCRAUt+K4yBUbgm9uC3JNMnKtkxi+fna5ghKvkEYyWDxZfh0ARPuUWZB4
+         I53A==
+X-Gm-Message-State: ANoB5pm4u3bGN2NGKkKn44rmpbF60wmtbBi8AU2U9V1sgLc3AKgmmpMy
+        WZehBhNg+PnrfEe+7K14yoi/6Q==
+X-Google-Smtp-Source: AA0mqf5onjlj9KftX6EzEHDyUq7fYgEQKLRJKp0bfF7W1KI+oiNFwO9gU3yESbI8U/GSQ3Jdmeo3Fg==
+X-Received: by 2002:a2e:be28:0:b0:26f:db35:2e96 with SMTP id z40-20020a2ebe28000000b0026fdb352e96mr5076618ljq.8.1670699233442;
+        Sat, 10 Dec 2022 11:07:13 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id v14-20020a2e7a0e000000b00279e93c9c25sm701622ljc.29.2022.12.10.11.07.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Dec 2022 11:07:12 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: configure
- flash LED
-Message-ID: <Y5S+6j1yJ62RJU/v@duo.ucw.cz>
-References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
- <20221209-fp4-pm6150l-flash-v1-3-531521eb2a72@fairphone.com>
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v2 1/3] clk: qcom: dispcc-sm6115: use parent_hws for disp_cc_mdss_rot_clk
+Date:   Sat, 10 Dec 2022 22:07:10 +0300
+Message-Id: <20221210190712.451247-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="HG3oTbixxIVumDLy"
-Content-Disposition: inline
-In-Reply-To: <20221209-fp4-pm6150l-flash-v1-3-531521eb2a72@fairphone.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Rework disp_cc_mdss_rot_clk to use parent_hws instead of parent_names.
 
---HG3oTbixxIVumDLy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/qcom/dispcc-sm6115.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Hi!
+diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
+index 818bb8f4637c..1937edf23f21 100644
+--- a/drivers/clk/qcom/dispcc-sm6115.c
++++ b/drivers/clk/qcom/dispcc-sm6115.c
+@@ -466,8 +466,8 @@ static struct clk_branch disp_cc_mdss_rot_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "disp_cc_mdss_rot_clk",
+-			.parent_names = (const char *[]){
+-				"disp_cc_mdss_rot_clk_src",
++			.parent_hws = (const struct clk_hw*[]) {
++				&disp_cc_mdss_rot_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+ 			.flags = CLK_SET_RATE_PARENT,
+-- 
+2.30.2
 
-> Configure the pm6150l flash node for the dual flash LEDs found on FP4.
-
-> +&pm6150l_flash {
-> +	status =3D "okay";
-> +
-> +	led-0 {
-> +		function =3D LED_FUNCTION_FLASH;
-> +		color =3D <LED_COLOR_ID_YELLOW>;
-> +		led-sources =3D <1>;
-> +		led-max-microamp =3D <180000>;
-> +		flash-max-microamp =3D <1000000>;
-> +		flash-max-timeout-us =3D <1280000>;
-> +	};
-
-I'm pretty sure the flash is not yellow.
-
-Plus, how is the node in /sys/class/leds called? Can you make an entry
-in Documentation/leds/well-known-leds.txt and ensure the name stays
-consistent across devices?
-
-Best regards,
-								Pavel
---=20
-People of Russia, stop Putin before his war on Ukraine escalates.
-
---HG3oTbixxIVumDLy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY5S+6gAKCRAw5/Bqldv6
-8mv/AJ0bt0t8Kg/jefzjZ1+T0YiFck3AwQCgm0aNvzYQBqjPy6v98GKiO6emCiw=
-=zhQd
------END PGP SIGNATURE-----
-
---HG3oTbixxIVumDLy--
