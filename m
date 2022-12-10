@@ -2,65 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0B1B649078
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 20:45:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 815A264907C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 21:04:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbiLJTpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 14:45:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38258 "EHLO
+        id S229568AbiLJUEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 15:04:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiLJTpM (ORCPT
+        with ESMTP id S229538AbiLJUEE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 14:45:12 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850C815FCD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 11:45:11 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id q7so8446621ljp.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 11:45:11 -0800 (PST)
+        Sat, 10 Dec 2022 15:04:04 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D09413F6D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:04:03 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id x28so12230998lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:04:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GTxXPZd/zZjPTG8mdYq9Nva84UN185kLKQpiTCuVtMU=;
-        b=FZTjPlbWw+TbRJ2Kj0tMIaKWJVzalvhg7MHIHxG55fl8EdqXEsfD9jqMAc7f2UgFaA
-         NPv8vRO55RgRbfCEycV7+pKmENF66Od4YtX+HmZilRzCSHXisc9ctiofWX1+0UaWIMUA
-         uMfShdcz7vZRIZAr61QPbJYEwJLwTFUWmKa3M+TtgM/fD1egqL7nEDCDObw2XHG08P5O
-         lsCt6fKt2VZLqWABIETPckEYjsn/R8cg0WYRUR4NMlsIeEdlT+m/XATZCKmJazBXVAv3
-         twHK6c4a0GcYDfIkz4wbo3byGgkxXs38OnjHKe1QSliH0KFYU2Mt+dhT2GYIl2WWg2IQ
-         mKDg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=v+WGT3fNh6Yw17jViCrVV80kxl64BIoihM5Qf7fR2rc=;
+        b=tIYA8upjYipNFhZq4YKZCwsqc/hIWWhc9D8J3PinwckcrCq2VIo48wRy3I+YwHL391
+         eW8MrSuzCZQwbjZM0w9HPvvRb866k+AiM7CxNqcZZG8iyYQz9V7Z2BcaQ+0v57CeDOO2
+         YE+bEyTH+CsULvBuBrN76opBsr1VZE34yGD0yDvrK9w+0jqyXkLNx+1N9esmZE2F0RAR
+         lQdtrkV2KM4SlOP8qRUz/T5gewYxtswvkwggkS5o+JDSdLJJtxb5MeeE2i5MOMwN+MyZ
+         fxvwI6A5+oadZ3M1142xvsOmAyw7hrEiQ5VnFTveNvhdKmZRb13Qf2M9MKen2UNv7pXJ
+         p/yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GTxXPZd/zZjPTG8mdYq9Nva84UN185kLKQpiTCuVtMU=;
-        b=Mt3WZcnqw1WGZ/aPi82MZukt7qQfcjiQhRz7eDAKug5IdkBMa9EXJqLNMRWvkkGHiP
-         rrPG6WDTkCR+s5MAz5AcmZVAICUJmJS3PIrApR8Sp4xbFsj1yuDtnGrjyKxpTI99TLB1
-         ZkCO6r112s0W6HZe1MO0qHkfHsOw36RNiS9NXYockaTG+Y79TEngrUfQqIm907e5RBSb
-         V79o5bcMAbzQqimxZDnKrg+66hynnOkUdHP1h8YDL6R2pM8x2Me7G7fgqCijb7BKDi97
-         45CswLWSSK9IDWExWunsh4alKl/LjfQa4VwB4jw5WslCKzVTIND3XZT/JvRUGMagBWRY
-         1Y1w==
-X-Gm-Message-State: ANoB5pnhPlst0TQavoxoMP8XMvb++92WobaXN96cfRCK/CAQa7L1y1Mf
-        X6AzlbiimT1nveRwOqhSFUTgug==
-X-Google-Smtp-Source: AA0mqf6J2jcLAR9SYvdeH3fneOmZZXtIjvdA8btylCzXRdtef9icrhaJTY4kR9G4eviPPpHXtHVfYA==
-X-Received: by 2002:a2e:9b89:0:b0:279:fa66:a154 with SMTP id z9-20020a2e9b89000000b00279fa66a154mr2594996lji.34.1670701502839;
-        Sat, 10 Dec 2022 11:45:02 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id e9-20020a05651c038900b0026c42f67eb8sm721952ljp.7.2022.12.10.11.45.02
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v+WGT3fNh6Yw17jViCrVV80kxl64BIoihM5Qf7fR2rc=;
+        b=N+v6wfsWLpLFqThBfvCahUHMHR5zDIbaPzh+Zhujw0H8lq/Ygdyq5srUJ1AE9MMTk7
+         JXUXX8CZlaD7Majv91hgoIjjnzsYt1KyVbDdLAwe9jgNtaK5bbYGksrJXXwQ9uPxtZKP
+         CODPAUY3sLgQ7ncM9SdPhTS5o65j9UUuxwEuPsovWevtSApukBXw99/dvK95wCq4h6dG
+         oY6B4qC2zJ1VhRvu/Itxu4r8HAjSJnN3veU3UTx6I4FrB308JKKzhYhVMDTQWt/VLg3j
+         Cc24wmu63DvR4EE4jq7EBMBQgNs4q3M2w+BT0QVnW4FtzQoM5pT4G6p6Kjid9F1ZUuND
+         ybXw==
+X-Gm-Message-State: ANoB5pmhey2vYvS21BMJDbId2Nz3fWCtkVeXDmqLs1ZLrkCDMC/L/NXC
+        4OT4XPjbZtJpMtwKx79J6zbdcsjhQUZqLqJ/
+X-Google-Smtp-Source: AA0mqf60nWT98TqdJr4WnzYvHDTNg01GRGjJQrf6z0tpIZB+YD6fif8SuGnGMu+NMfbndTvyFLIreQ==
+X-Received: by 2002:a05:6512:1108:b0:4b5:5ca8:93bc with SMTP id l8-20020a056512110800b004b55ca893bcmr3430632lfg.23.1670702641455;
+        Sat, 10 Dec 2022 12:04:01 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id h28-20020ac2597c000000b004b4f1ea713csm839628lfp.73.2022.12.10.12.04.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Dec 2022 11:45:02 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 10 Dec 2022 12:04:01 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/3] arm64: defconfig: build SDM_LPASSCC_845 as a module
-Date:   Sat, 10 Dec 2022 22:45:00 +0300
-Message-Id: <20221210194500.464556-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20221210194500.464556-1-dmitry.baryshkov@linaro.org>
-References: <20221210194500.464556-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/5] MSM8996 eMMC boot fix
+Date:   Sat, 10 Dec 2022 21:03:48 +0100
+Message-Id: <20221210200353.418391-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,26 +69,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the low-power clock controller driver used on Qualcomm SDM845
-platform (Thundercomm RB3 board).
+In a very unfortunate turn of events, enabling interconnect on non-UFS
+devices (or more precisely devices-with-UFS-clocks-disabled-from-
+bootloader) crashes the device, as a memory read to an unlocked peripheral
+is attempted. This series tries to fix that with the least amount of
+casualties..
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Konrad Dybcio (5):
+  dt-bindings: interconnect: Add UFS clocks to MSM8996 A2NoC
+  interconnect: qcom: msm8996: Provide UFS clocks to A2NoC
+  interconnect: qcom: msm8996: Fix regmap max_register values
+  interconnect: qcom: rpm: Use _optional func for provider clocks
+  arm64: dts: qcom: msm8996: Add additional A2NoC clocks
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 536276b1610f..2ba78e91ad2f 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1108,6 +1108,7 @@ CONFIG_SDM_CAMCC_845=m
- CONFIG_SDM_GPUCC_845=y
- CONFIG_SDM_VIDEOCC_845=y
- CONFIG_SDM_DISPCC_845=y
-+CONFIG_SDM_LPASSCC_845=m
- CONFIG_SM_CAMCC_8250=m
- CONFIG_SM_DISPCC_8250=y
- CONFIG_SM_GCC_6115=y
+ .../bindings/interconnect/qcom,rpm.yaml       | 24 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  6 +++--
+ drivers/interconnect/qcom/icc-rpm.c           |  2 +-
+ drivers/interconnect/qcom/msm8996.c           | 19 +++++++++++----
+ 4 files changed, 42 insertions(+), 9 deletions(-)
+
 -- 
-2.30.2
+2.38.1
 
