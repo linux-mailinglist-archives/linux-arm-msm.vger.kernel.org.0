@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68C2D648F26
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 15:15:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 937EC648F3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 15:41:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbiLJOPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 09:15:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46476 "EHLO
+        id S229665AbiLJOlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 09:41:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbiLJOPC (ORCPT
+        with ESMTP id S229475AbiLJOlf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 09:15:02 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1122E175BD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 06:15:01 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id h7so7856618wrs.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 06:15:00 -0800 (PST)
+        Sat, 10 Dec 2022 09:41:35 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7DB617E01
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 06:41:33 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id q7so7885143wrr.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 06:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bpyotPft42ZV60u0TngY41SM20HFUNP0Glod1vYIdB8=;
-        b=K3qcscChK3t3/dx/b601XowcWiGEKiasE0saMoFPkEWBhwby25BPEMO6+Et5j3PJQK
-         +XnBTW323hxe+cOA1+AC552/9Atbuxavy4GzZvszgBvpjfBvXNNEt9kccZK6pnMkOvSs
-         2ZxF2SMn4qZGZY7B9KhHQLB/xL+J9BzuUHzvD/oARisLfcC0UX0v0Khll+MCo8tIcxYz
-         puwPXq41YO0ZgJtysNLLQLwBG0EQ8bk1k1zkz2nMKYwha9qnkxIZr4JLL+gGGJU5s5NG
-         bxZkH1cbmfjYE/30qZ11YTZKZ/42VpqMR6/CBb9UBaDgrBYH0Uo49vXG0mQ2jEtssSKP
-         xpfw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=caCw02a57gWGRWx8zPRw8a1fhnbDipRs6pe9fbRP2lg=;
+        b=t1oVeJs3URAwTinNH05NIKLzfvtC3zNVYPnP2dt1gz+UleUW+lD6nUsLWIJq7+h7dZ
+         dznAL3cwBbC1vP8uY9zAcUGxuF0DkIhKWys/lelwp+OGDkDJ0ZuM7S/8qW9VkQ7QBBER
+         b3DE8nh/d+k6wLtzuapD9qZz0lwzFJrQEFVVunOAIDE+A1+7uXfSpy5Lh3/xCZFh7tyh
+         4b+iPnutWHCyWY1qAWxLNbDkfFAAHczTm0c4kG8hb/OvkLb/R68ciC9s9rP/hQc5LiPt
+         XwaDdAM+F98et9Jp2ZAWnmYe+5W4gg00mpnpCXadxGK0DsNv9DiCruO98ceFcnWcLHn5
+         5+Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bpyotPft42ZV60u0TngY41SM20HFUNP0Glod1vYIdB8=;
-        b=ugVaeDhdyHoS77K0AtGrsDrGyANcDrCkbyN0GA3YPy/3t0hOWTye0LNRdVGDvSvi95
-         rd7nicor/eISwucw7uREC2HS+1JyP7H3zHW/7nxBHHx+6QTucFQJTMgsbvL6kpeCpnXG
-         pKIRGwwdLm74VsA+j8Ji58xgN/vl7NcsiF6t1TN32IrA34HB7EtnqT/efbgWnXfvTS4R
-         Cmb4/dCYPPfWH36F39c8e0QnF8EFsz4Eq1Zn1a0PFQ6VEMX6CmJsaN9R+lx1upFN0fPw
-         yJY1Th/rXzAG0I7WCTCtKrfpSAGjEtK18pqjK2Q7xEXWwXmtZkjdWCQa7njxBjD+4eAB
-         Kkjw==
-X-Gm-Message-State: ANoB5plB+TOh6xgLfMImgRxuxpTQNWGLcAwNcjLgeDr7LOLQmw9jtLhy
-        a/1e9qPR7FsCPQC/3iKQCH8ujpxLDEhyNHj1
-X-Google-Smtp-Source: AA0mqf5LgOj4pB1jzSksCkqXwVPTChw10DqfAzOym5ouXClHMmQB9+TBsaGcVkwicGHxof5kwFMsvg==
-X-Received: by 2002:a2e:8e31:0:b0:277:2:bb81 with SMTP id r17-20020a2e8e31000000b002770002bb81mr2277570ljk.11.1670680692732;
-        Sat, 10 Dec 2022 05:58:12 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=caCw02a57gWGRWx8zPRw8a1fhnbDipRs6pe9fbRP2lg=;
+        b=0wVxBHqkHD/XJXZD7Z4qCzUl7RcgAmpbqwckUmYNwRTbJqt3jl5LHmloWchL11d7R5
+         oZIOMeGZGi8JM7kQpUiCWibnnQYlwA2yuVpcPGorHiIpjpgk3GyxrEVBM41hhpULpUQC
+         Woqahl/MEAYFryPQL4is920wtHfEBSBg6TMe0vSkqhipemVPK2uy7l+nPFuDPUdcy2rR
+         zF5cS9QOWstDEPvquy3j8Mpw/50rGzJyWCFyxFJTWmuqDcGH0Tl3DP92XsBPLTZXaZp1
+         dPre0Iy5aVzu9Q+IhylVRbGxCkcEcvJ5Q3S3uaScwBcDomtMvH1b4iYa6iQm5H5Ya/Dx
+         I/lA==
+X-Gm-Message-State: ANoB5pn6LOOf59KdllV6Ive8gNr8LFWcXkNNrEJY2GoeRbKaqho2z1Cm
+        U8tj+EmE6LoZXUYXUs4/q2sF6MsxZiexWDi9
+X-Google-Smtp-Source: AA0mqf75tPF4lZOnv8BC4wB75VCoJOTpPk8CgE/dbeexhStC0NsKbg0Z+dO/zv3cC8/gqZvesZ40hg==
+X-Received: by 2002:a05:651c:158f:b0:26f:db34:a13f with SMTP id h15-20020a05651c158f00b0026fdb34a13fmr2380844ljq.2.1670680694350;
+        Sat, 10 Dec 2022 05:58:14 -0800 (PST)
 Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id p20-20020a2eba14000000b002770566d642sm614567lja.17.2022.12.10.05.58.11
+        by smtp.gmail.com with ESMTPSA id p20-20020a2eba14000000b002770566d642sm614567lja.17.2022.12.10.05.58.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Dec 2022 05:58:12 -0800 (PST)
+        Sat, 10 Dec 2022 05:58:13 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -59,10 +60,12 @@ Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: remoteproc: qcom,adsp: Add SM6375 MPSS
-Date:   Sat, 10 Dec 2022 14:58:06 +0100
-Message-Id: <20221210135807.10688-1-konrad.dybcio@linaro.org>
+Subject: [PATCH 2/2] remoteproc: qcom: pas: Add SM6375 MPSS
+Date:   Sat, 10 Dec 2022 14:58:07 +0100
+Message-Id: <20221210135807.10688-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221210135807.10688-1-konrad.dybcio@linaro.org>
+References: <20221210135807.10688-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,50 +78,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add entries for SM6375 MPSS. Unlike most other modems, this one only
-expects a single (cx) power domain.
+Add a config for the MPSS present on SM6375.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index a9219c7c8349..434d34578fc5 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -42,6 +42,7 @@ properties:
-       - qcom,sm6350-mpss-pas
-       - qcom,sm6375-adsp-pas
-       - qcom,sm6375-cdsp-pas
-+      - qcom,sm6375-mpss-pas
-       - qcom,sm8150-adsp-pas
-       - qcom,sm8150-cdsp-pas
-       - qcom,sm8150-mpss-pas
-@@ -201,6 +202,7 @@ allOf:
-               - qcom,sm6350-mpss-pas
-               - qcom,sm6375-adsp-pas
-               - qcom,sm6375-cdsp-pas
-+              - qcom,sm6375-mpss-pas
-               - qcom,sm8150-adsp-pas
-               - qcom,sm8150-cdsp-pas
-               - qcom,sm8150-mpss-pas
-@@ -350,6 +352,7 @@ allOf:
-               - qcom,sc8180x-mpss-pas
-               - qcom,sdx55-mpss-pas
-               - qcom,sm6350-mpss-pas
-+              - qcom,sm6375-mpss-pas
-               - qcom,sm8150-mpss-pas
-               - qcom,sm8350-mpss-pas
-               - qcom,sm8450-mpss-pas
-@@ -379,6 +382,7 @@ allOf:
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8998-adsp-pas
-               - qcom,sm6375-cdsp-pas
-+              - qcom,sm6375-mpss-pas
-               - qcom,sm8150-adsp-pas
-               - qcom,sm8150-cdsp-pas
-     then:
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 920f8e54db36..405a144c9c3e 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -854,6 +854,22 @@ static const struct adsp_data slpi_resource_init = {
+ 		.ssctl_id = 0x16,
+ };
+ 
++static const struct adsp_data sm6375_mpss_resource = {
++	.crash_reason_smem = 421,
++	.firmware_name = "modem.mdt",
++	.pas_id = 4,
++	.minidump_id = 3,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.proxy_pd_names = (char*[]){
++		"cx",
++		NULL
++	},
++	.ssr_name = "mpss",
++	.sysmon_name = "modem",
++	.ssctl_id = 0x12,
++};
++
+ static const struct adsp_data sm8150_slpi_resource = {
+ 		.crash_reason_smem = 424,
+ 		.firmware_name = "slpi.mdt",
+@@ -977,6 +993,7 @@ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,sm6350-mpss-pas", .data = &mpss_resource_init},
+ 	{ .compatible = "qcom,sm6375-adsp-pas", .data = &sm6350_adsp_resource},
+ 	{ .compatible = "qcom,sm6375-cdsp-pas", .data = &sm8150_cdsp_resource},
++	{ .compatible = "qcom,sm6375-mpss-pas", .data = &sm6375_mpss_resource},
+ 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource},
+ 	{ .compatible = "qcom,sm8150-cdsp-pas", .data = &sm8150_cdsp_resource},
+ 	{ .compatible = "qcom,sm8150-mpss-pas", .data = &mpss_resource_init},
 -- 
 2.38.1
 
