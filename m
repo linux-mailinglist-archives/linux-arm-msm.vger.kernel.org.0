@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ED176490B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 21:54:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FD656490BD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 21:54:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229722AbiLJUyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 15:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51436 "EHLO
+        id S229733AbiLJUyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 15:54:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbiLJUyA (ORCPT
+        with ESMTP id S229762AbiLJUya (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 15:54:00 -0500
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120F0165B7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:53:59 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-40b40ff39f1so58461617b3.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:53:59 -0800 (PST)
+        Sat, 10 Dec 2022 15:54:30 -0500
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81CD417067
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:54:28 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id s11so9487489ybe.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 12:54:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mhrAb+yQ8r5Pj6JbLxX6H679hMkP8WxpYQ53O58DWDA=;
-        b=RbF+zsbkFenK5oP6pcpKvnk2q8et0ziZuupBucQguQu4GEqvyuCPTcXn5uANp7pTCZ
-         ZVUkGih6xULK3gVfvZAvg6xIq+visBaDzsQP6Nxt0IO9340ODMtzdcNxI0FV5IwBzN9G
-         u7WpoKfaM5hgUmT0PqGdJtXV5umTsNasJsVkUhIkDc2H7CXncszicY+FqnH9q05xl290
-         eIHq9KAEMsW/xtaPZC1TQSIK2bpGH3/Qu9IToLO7UW4FdfX+cBk1qZU6GercHqSv/X5u
-         +7DW8P4iB08wemfc0Bkyq++1a30UlOqLYZMCYVaZlyBWK+PF8mpwW06XUyv6y7bZprxH
-         GQug==
+        bh=Q16cxr3s5Ib/3QCtLbMCElaACH8JgEzemBLFcm7MiOY=;
+        b=R7AKYZndABWJMDjQgvNBO5XgFt85b6LX7zTVDJMZsdueHvaM+Z135Q1XPrHodiM2He
+         MoisOf/uej3tuCrxds1VVXgZUfv+Zsr+8qUU5pZfgDFTzmtvyZdG0MjGg8x1PKFkAUBI
+         0MQeqI3t1694tpSlNEgAIQIRHMOhvgxLZg2pE/tDFuju9CMuV2Je18n8RJIWAJm95tUO
+         kDAZfMfk2qaV1HlMAYERx41LZ1LyDJNPAYF5tKfkzeCAFnAQLdUnq+IjXfTSYbgQufM2
+         NOptWSc+ja72x5n7+7N9AkvsNqfa5deh7gFQao7PIXNUogBqPT3+vbIVE2NYHyR8fPFh
+         UrfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mhrAb+yQ8r5Pj6JbLxX6H679hMkP8WxpYQ53O58DWDA=;
-        b=KPr5TRJr6uFU96s44TVu1mhBXPIyd5OYlWwNbEPIT+7u2Lwf3qi4RsKjwhmmXzmMqg
-         2lfvhdJLfgayXutS5eUps32jBsPj+fVMsOer9eeKIBGMyyvRkYLzkL1FLWCV840Y6v0g
-         BcUd1MwCWMILFKG3b6QThoxxu9lNBe7mhDl3bxK4i8/ORGRv7TI6b8Pyceuy+os5aVls
-         3ziSRJ3ifUiBDE6oDmD/kRRfZvL2PGcPWEK3Gv2YUGC3rtxH+hab6N6KehIB2ITRrbN3
-         bTBOVvM7dASp0vOEa6Pkcwem2o3ApR06go3obu92SuUCFo2LNDa98sVjVJfBiPaUOZr4
-         da/Q==
-X-Gm-Message-State: ANoB5pmDFuxgDwfFSwWWGw45ACwOQG4NteEP3aTq4dMszlrQHw9GZaul
-        lTVMBuY4InnKUpHyCJzl3Yc8GLFoYUO8Z72gKgqidg==
-X-Google-Smtp-Source: AA0mqf6Euj77tZGpcvvSY4sr3yOGyX27MYYokI5ryaiVO9AZutI69pj2NuNT2S9i+T+aEe+S9Uo4ft9kiJCYkcye4dU=
-X-Received: by 2002:a81:6704:0:b0:3d2:61bc:e6a with SMTP id
- b4-20020a816704000000b003d261bc0e6amr40897805ywc.132.1670705638304; Sat, 10
- Dec 2022 12:53:58 -0800 (PST)
+        bh=Q16cxr3s5Ib/3QCtLbMCElaACH8JgEzemBLFcm7MiOY=;
+        b=Obu/fEwCoN29RJeriKlGHmMEIS93QphkCU66lgv9/0Wo+as35NIwj7zKutpwxMF11J
+         NsWegDyldBzXXmURv5H1MUfGiKazcTFhmeyU1lGUJDb0rJg3oSGil1nO+D6NzmKOb7sm
+         YLhMaEy8aL9oSyRJlvoLi4+YpaMk31VBEYzj9u5cLa/T+oQkxC1KkuLSpdoS4w7tduyc
+         3HEosGS3QxspuAHf8pc9PxK/WStDTtgwWjO/Fqhz2niOHn5REhOi3EE1gGKBycQFMHym
+         0DJAWcogq/E9r3SfgPUSR4ek2OQIN1sfDJ0HvQ7Fa8YrKRYtKZPlImC/YDF66ObHUsbw
+         VfRg==
+X-Gm-Message-State: ANoB5pmKtSodsEc82hwRT/KlS0JYfe6o2uyAYH/NQcOZkFKA9H01ofJu
+        EHeC4oePz5FWWWeL0iYI/t265+ubp75syQmXe6qn7A==
+X-Google-Smtp-Source: AA0mqf44ulwHZCa6/pZ9L/2X+QF6ko7HvjIj/me7Y25mH3+MX+Gpz6y6Sw/vv0/48I8yKLLFWHcXUZ3+TTtMDLEtJzI=
+X-Received: by 2002:a25:4dd7:0:b0:6f1:535f:2f38 with SMTP id
+ a206-20020a254dd7000000b006f1535f2f38mr65304962ybb.153.1670705667741; Sat, 10
+ Dec 2022 12:54:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20221210200353.418391-1-konrad.dybcio@linaro.org> <20221210200353.418391-6-konrad.dybcio@linaro.org>
-In-Reply-To: <20221210200353.418391-6-konrad.dybcio@linaro.org>
+References: <20221210200353.418391-1-konrad.dybcio@linaro.org> <20221210200353.418391-5-konrad.dybcio@linaro.org>
+In-Reply-To: <20221210200353.418391-5-konrad.dybcio@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 10 Dec 2022 23:53:47 +0300
-Message-ID: <CAA8EJppQu=f5aXn3F_xAxZ6h+YgGYfCe6M8J77S_LLWH7NkE4g@mail.gmail.com>
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8996: Add additional A2NoC clocks
+Date:   Sat, 10 Dec 2022 23:54:17 +0300
+Message-ID: <CAA8EJppJoc8bCOgFjiWagbiVOF3RCFWmEEYObcErv26bfeuM9Q@mail.gmail.com>
+Subject: Re: [PATCH 4/5] interconnect: qcom: rpm: Use _optional func for
+ provider clocks
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -72,19 +72,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sat, 10 Dec 2022 at 23:04, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> On eMMC devices, the UFS clocks aren't started in the bootloader (or well,
-> at least it should not be, as that would just leak power..), which results
-> in platform reboots when trying to access the unclocked UFS hardware,
-> which unfortunately happens on each and every boot, as interconnect calls
-> sync_state and goes over each and every path.
+> It turned out that - very unfortunately - msm8996 needs a binding
+> update, adding 2 more clocks to the A2NoC node. Use the _optional
+> variant of devm_clk_get to make sure old DTs will still probe with
+> newer versions of the driver.
 >
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  drivers/interconnect/qcom/icc-rpm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 
 -- 
 With best wishes
