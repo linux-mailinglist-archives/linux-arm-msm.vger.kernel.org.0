@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A5C4648E6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 12:33:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB5DA648E86
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 12:57:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbiLJLdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 06:33:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58468 "EHLO
+        id S229756AbiLJL5L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 06:57:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiLJLds (ORCPT
+        with ESMTP id S229634AbiLJL5K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 06:33:48 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49181FCF3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:33:44 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id x11so7545426ljh.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:33:44 -0800 (PST)
+        Sat, 10 Dec 2022 06:57:10 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 855001900A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:57:09 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id p8so11035911lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 03:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xRz05yeN/qwQTBz5e4TtGZQYPrI+58FT6y/SfoGhOcI=;
-        b=WKFsm+iQRYcy8IU0O5tdPshc/ALdntlsOveHBL5R3cQ5IFiUbysAll/R5E4LZn6yiP
-         UIoo5zbYnWLMVTLVKajPlzt87NoX4LY52meVzO4OyZL6rNM2WNcrA4Iq5qgseCa/zaA9
-         KRrfOjjEA5F0s0VhuUhmfKiCfkiP6kdlDiLDQxb0ATjY+BAvbGX4oKPe0UxPCfPCV7HD
-         CTQCQ4QLyTjiDXJmjRrZUxFnLbXOm/de6YIEGICS33VfzIPY4KtTx0pllsBVO1MnKnPA
-         P056Jxvz4FOyjntYixN/wf4D971i2EKsIHW15CkAqxojKS7UjQ2nBzbNTv6Z2FPdxYcw
-         to/g==
+        bh=PXM/ZzQf3i83h9TWbUQNWzaHxNpC3fWU4P5IeO/SlrM=;
+        b=pi/xxaQJP3Gab0CcC8mIr8CIVqw5IgnkcLFWRo8KmH9qXJg6yESHyINGyzUKjb5fmF
+         0D89U8j6bo5hy1JIHnKczyEfHvL6STsIutwDlm+sLu5EPZqu1N3ALILNjj5POrY4p8Lt
+         JXjU3Wp8BPvcAmXJ/rrLMBcK54xQoI202IXBhUeqj5haVaTHqRxsFxO0ZV3y6TrbgiZs
+         cfkwd4hV7pP95Abx2fRmYiWg4L79WvsJyLi0Ep3gOKHK2wR7SY9bfphqLyUMWGRwV9zM
+         k0DeR6a0Soq5xI1HdXlvkwP2R/QmtvrKmpnC+lHwI6kHPan2qYFPaj4fON1/cRlAPSfS
+         WbKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xRz05yeN/qwQTBz5e4TtGZQYPrI+58FT6y/SfoGhOcI=;
-        b=Lv0JuOihOy/XX9bbnkhkHDhEosn+x+G5oUjQ0Rh0VifGBdpi/BllOOZE1fSdjVApxD
-         BFrTKf2tmeMyYPbneMvYtrXgAvz7B38TcYaiPivhPNa6+0RPb1Y+IYLro/7Up6jarjmT
-         mylEcRR7CmKHGQ/FWZ1ic1KnGB3MT3pLWH9FflfyUYayVegX7HXg8vyFnfb45y6qJYWz
-         xmpgaRO6QeEaf7XxlDazffYfjoEz2+oWTatWIbX51BewSWGjxImj2OeBAlceB+I/thvH
-         G6LD5NRXWfWbd2RWuud2vgmosa7vvzuMRtT1ezrilKOY3RPzibVZYtiosB9Gax1clykZ
-         VoFQ==
-X-Gm-Message-State: ANoB5pkWjpZJcnfKEdhr/Q2Tx2benCBph5uBB9sGGjAHs0lNlbyVVeeF
-        OEdCbgsueCx8QTBqpHQL+8FlIQ==
-X-Google-Smtp-Source: AA0mqf65nzdmBAIdxQ65zS4pveV0d/c2xKSl/0rtWSo0HucAb9+YTa9kH+OMLjhuF4uoqblzBBqe8g==
-X-Received: by 2002:a05:651c:49d:b0:279:dfe9:df87 with SMTP id s29-20020a05651c049d00b00279dfe9df87mr2185668ljc.36.1670672022887;
-        Sat, 10 Dec 2022 03:33:42 -0800 (PST)
+        bh=PXM/ZzQf3i83h9TWbUQNWzaHxNpC3fWU4P5IeO/SlrM=;
+        b=cKhJ2dLd8DSOH6W29D9NnxXXZ6wb8XWDFWXWJfcyrJ+1h4CQiH8SuhJtaaKzty5dNB
+         7XB0d/FhIh7+9iQ9q9cCda8bNDzAyGzwLFtmvhgecmfJ5w2IHUVyeHH1EFPylhp4UZAC
+         8T5WHjgMAVuYrv9z5+nThA3KcYCjC83tigTHqbtbapLNVScdK3rMDe+WB5NsthGIlekl
+         xrS6XjhHtwnQ4qu6Zg4Q4ZfH+rrWD9QQTv2mF1bwXkod3nxTd1p4MDsV/jCAmGylnTkU
+         ldwrRQTvDpg2Wns9Q9j3V0CI1uzduXlcyLEUHxGj0gkjOwnuUbqp20lRGXy01g7o2+nM
+         CBVQ==
+X-Gm-Message-State: ANoB5pl5PdjOAIJuOwFfeL9rCWc/TfKbpwOMSPPkYGKTFCmMOxAKBjwy
+        Hg4N0yP6f+4aZXQ+xLFvMEN36w==
+X-Google-Smtp-Source: AA0mqf5XaOq7OV4/HZSBVoFJvhrmxRR53GKZ/sazpnkP5JCsmbrdEjUcBJ7GAqW3DoEHSzIT7rPbfw==
+X-Received: by 2002:a05:6512:3c99:b0:4b5:5f2e:3cc6 with SMTP id h25-20020a0565123c9900b004b55f2e3cc6mr4395279lfv.47.1670673427883;
+        Sat, 10 Dec 2022 03:57:07 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id b13-20020a2eb90d000000b00278e9c0d3a2sm571741ljb.33.2022.12.10.03.33.41
+        by smtp.gmail.com with ESMTPSA id u20-20020a2eb814000000b002778d482800sm578343ljo.59.2022.12.10.03.57.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Dec 2022 03:33:42 -0800 (PST)
+        Sat, 10 Dec 2022 03:57:07 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sdm845: drop 0x from unit address
-Date:   Sat, 10 Dec 2022 12:33:40 +0100
-Message-Id: <20221210113340.63833-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/4] arm64: dts: qcom: sc7180: move QUP and QSPI opp tables out of SoC node
+Date:   Sat, 10 Dec 2022 12:57:01 +0100
+Message-Id: <20221210115704.97614-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -74,26 +74,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-By coding style, unit address should not start with 0x.
+The SoC node is a simple-bus and its schema expect to have nodes only
+with unit addresses:
+
+  sc7180-trogdor-lazor-r3.dtb: soc@0: opp-table-qspi: {'compatible': ['operating-points-v2'], 'phandle': [[186]], 'opp-75000000':
+    ...  'required-opps': [[47]]}} should not be valid under {'type': 'object'}
+
+Move to top-level OPP tables:
+ - QUP which is shared between multiple nodes,
+ - QSPI which cannot be placed in its node due to address/size cells.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 76 ++++++++++++++--------------
+ 1 file changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 1a257f672887..a63dbd12230f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1636,7 +1636,7 @@ uart7: serial@89c000 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index ea886cf08b4d..735581097295 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -538,6 +538,44 @@ cpu6_opp16: opp-2553600000 {
+ 		};
+ 	};
+ 
++	qspi_opp_table: opp-table-qspi {
++		compatible = "operating-points-v2";
++
++		opp-75000000 {
++			opp-hz = /bits/ 64 <75000000>;
++			required-opps = <&rpmhpd_opp_low_svs>;
++		};
++
++		opp-150000000 {
++			opp-hz = /bits/ 64 <150000000>;
++			required-opps = <&rpmhpd_opp_svs>;
++		};
++
++		opp-300000000 {
++			opp-hz = /bits/ 64 <300000000>;
++			required-opps = <&rpmhpd_opp_nom>;
++		};
++	};
++
++	qup_opp_table: opp-table-qup {
++		compatible = "operating-points-v2";
++
++		opp-75000000 {
++			opp-hz = /bits/ 64 <75000000>;
++			required-opps = <&rpmhpd_opp_low_svs>;
++		};
++
++		opp-100000000 {
++			opp-hz = /bits/ 64 <100000000>;
++			required-opps = <&rpmhpd_opp_svs>;
++		};
++
++		opp-128000000 {
++			opp-hz = /bits/ 64 <128000000>;
++			required-opps = <&rpmhpd_opp_nom>;
++		};
++	};
++
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+@@ -739,25 +777,6 @@ opp-384000000 {
  			};
  		};
  
--		gpi_dma1: dma-controller@0xa00000 {
-+		gpi_dma1: dma-controller@a00000 {
- 			#dma-cells = <3>;
- 			compatible = "qcom,sdm845-gpi-dma";
- 			reg = <0 0x00a00000 0 0x60000>;
+-		qup_opp_table: opp-table-qup {
+-			compatible = "operating-points-v2";
+-
+-			opp-75000000 {
+-				opp-hz = /bits/ 64 <75000000>;
+-				required-opps = <&rpmhpd_opp_low_svs>;
+-			};
+-
+-			opp-100000000 {
+-				opp-hz = /bits/ 64 <100000000>;
+-				required-opps = <&rpmhpd_opp_svs>;
+-			};
+-
+-			opp-128000000 {
+-				opp-hz = /bits/ 64 <128000000>;
+-				required-opps = <&rpmhpd_opp_nom>;
+-			};
+-		};
+-
+ 		qupv3_id_0: geniqup@8c0000 {
+ 			compatible = "qcom,geni-se-qup";
+ 			reg = <0 0x008c0000 0 0x6000>;
+@@ -2655,25 +2674,6 @@ opp-202000000 {
+ 			};
+ 		};
+ 
+-		qspi_opp_table: opp-table-qspi {
+-			compatible = "operating-points-v2";
+-
+-			opp-75000000 {
+-				opp-hz = /bits/ 64 <75000000>;
+-				required-opps = <&rpmhpd_opp_low_svs>;
+-			};
+-
+-			opp-150000000 {
+-				opp-hz = /bits/ 64 <150000000>;
+-				required-opps = <&rpmhpd_opp_svs>;
+-			};
+-
+-			opp-300000000 {
+-				opp-hz = /bits/ 64 <300000000>;
+-				required-opps = <&rpmhpd_opp_nom>;
+-			};
+-		};
+-
+ 		qspi: spi@88dc000 {
+ 			compatible = "qcom,sc7180-qspi", "qcom,qspi-v1";
+ 			reg = <0 0x088dc000 0 0x600>;
 -- 
 2.34.1
 
