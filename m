@@ -2,138 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20ACB648EB1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 13:33:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5D3C648EE6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 14:39:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiLJMdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 07:33:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
+        id S229568AbiLJNi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 08:38:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbiLJMdk (ORCPT
+        with ESMTP id S229563AbiLJNi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 07:33:40 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F11413D31
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 04:33:38 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id cf42so11182071lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 04:33:38 -0800 (PST)
+        Sat, 10 Dec 2022 08:38:58 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DD71A225
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 05:38:56 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id a7so7739468ljq.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 05:38:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j54S5Em5+8fuXtAhZt+VBjnKSV0CzJD1XR4mN9x18UM=;
-        b=u0c26ti67BTJLnOKzoiTFRBdFQ70JeRXVorvxrjfQL0/JT91RIxF7ge9BKWwf+jKZh
-         /PRGuba3uldElOiRWMNaGjLHFiNeM57AR0EE+INZUOyhrocLl6bfYotaxx2Grg3polYG
-         XRgeLQwKr3lUa3pQA8lb5JHbA+qq/yQHrHSzuBnceI0f9HGCXaGXqM3ifgG33Tj5KGz8
-         ZxRigeAZSkhboqUgKwcGklGaflHn7j3UtcQfOZf8KT9FFn9cu8fLrnxJS5zt19efClSJ
-         iYnDt4tpPlepejmc8av5INjjxgdSoAwULAP6NCysrjaycpumb1rvgQmEwsHSVCH6sjuQ
-         pKtg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dSQKkxRzbEqk8NGysQnios/WZfjA0FuVvZI1N95s5Ak=;
+        b=SdA04jqB0UoHdIJkeCpZLL5hrjqwJnYjNYgtb8KK61KaFXvfk5vDXphWTHwMToj80O
+         FFLj+XlDxAX0GjxHzhUYM/lTAy2nKPahLb5bbfySjWNrEM2OL6UE6U1xp4RVxhS7rGuv
+         PtYWyxYtT0JH/T5fM1MsRtltDgOfZaZJ/ySa1DkMdImn51J93NhtJnBqtoLyBHY9rEaw
+         TGFYGnqOovVcOnsKtPz63KiUd33qtOceMCaaKGkq5ZwuGSE1uXMb+EkjLupRAOLZUsMA
+         GVkvgdL4YR/mzomfbEFjNNrWJEm1rzSg3iZ5sp6/eDYnitspPnWJz6HUDSwQ25w2BiHl
+         maXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j54S5Em5+8fuXtAhZt+VBjnKSV0CzJD1XR4mN9x18UM=;
-        b=x2ZzB3/4B/ocWVnL+0K/yj60tty1GQybAjs23d/MVj8xSLFDbzwPW6qNStdQaa+DKJ
-         w/hwv1TUgA8zR2MmSWSgAsExJxVk2L2A9AetX0A1lPz1zNC9WI8485r0dQUX0EyISdJo
-         Mxj6UjmXHjNZGvZdwGM4xIc6YPQF6Y46KnWLuo97THxiq3a9Sk000EflTV7Ak5FYFpAD
-         ODXKS0miwKzbDR/khrp8T8tUoDw6VvRlKIpTjFrOe/G3qnO177dDWeWZGwbH0qRBnwqC
-         Wfg1aVHf29FEo3noY7ZTSvnm3V5IEg2ppl8+BJ6ZZzS+hMTYhgD615VNExD/3iy0ruB0
-         YTbw==
-X-Gm-Message-State: ANoB5plICqJnyN8cijwSn4bUqwZaqaKnKMZ5LhB6ZydvTRZyQMyJQM8R
-        N+uIjgbqmTgBgOphMdjS1zPplA==
-X-Google-Smtp-Source: AA0mqf5sTbXNIj4peDSXi1jFPi5ColXFTS69QqfLw5bBrS1dWKTI+x0SjojBJPRrOC0eTZuccH4PKQ==
-X-Received: by 2002:a05:6512:2007:b0:4b5:650b:ba3f with SMTP id a7-20020a056512200700b004b5650bba3fmr2516614lfb.12.1670675616841;
-        Sat, 10 Dec 2022 04:33:36 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id c6-20020a056512324600b00492e3a8366esm708109lfr.9.2022.12.10.04.33.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Dec 2022 04:33:36 -0800 (PST)
-Message-ID: <68796aa4-2dc5-d4a3-a104-1587b8589a81@linaro.org>
-Date:   Sat, 10 Dec 2022 13:33:35 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: configure
- flash LED
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
- <20221209-fp4-pm6150l-flash-v1-3-531521eb2a72@fairphone.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dSQKkxRzbEqk8NGysQnios/WZfjA0FuVvZI1N95s5Ak=;
+        b=MvjsO8CqAExP+OfhmCLVu7IZgXVIHG0Z0t3LGL9GYqsUg71ISLn49/xyIKRQFDaRa3
+         KOeiyEC7pHO7EwEmVEHgRw2kLHmhkKaCBB1s5wFbNNdlFatLyWn2gelfBgtYKwcgGsaB
+         iXAMPi71pDm5V1foJVnxWH+h6TaX+r8w4siRAvWteLrSM6oa6hPY1rZnsOEYu+P9fVmy
+         WbBux98YhG+vDG/NXhPVHvyADBScw7DGWcVeBCpqowNsQ+c7LGqtn5L/6ZeXKVXeE5uy
+         zsbAefQ7gd3Pd+8XgAhI3Yaeh9YtAuUq9MMFacOOxRmLkVsM0CjIgcZvoJCGUjdhr26N
+         owGA==
+X-Gm-Message-State: ANoB5pnW3oQzy+oXcL3wo9Xm5NkVDhgfX114c/5p2KfWBubEJB1RfyWj
+        6Pl81XSxL503z2k8jP/JMJNqnqaSGRzVuc/s
+X-Google-Smtp-Source: AA0mqf5//g7RtnurYSmzlilQego85/+M/3CO6DQQUrfZUnsocmkGcLiPK2bC4qeGFlu1DQUpKbQVdg==
+X-Received: by 2002:a05:651c:17a7:b0:276:5727:c57a with SMTP id bn39-20020a05651c17a700b002765727c57amr3116582ljb.29.1670679534637;
+        Sat, 10 Dec 2022 05:38:54 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id 11-20020a2eb94b000000b0026c5579c64csm605052ljs.89.2022.12.10.05.38.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Dec 2022 05:38:54 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221209-fp4-pm6150l-flash-v1-3-531521eb2a72@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
+Date:   Sat, 10 Dec 2022 14:38:50 +0100
+Message-Id: <20221210133850.3664-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+With enough pins set properly, the hardware buttons now also work
+like a charm.
 
+Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 24 ++++++++++
+ .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 47 ++++++++++++++++++-
+ 2 files changed, 70 insertions(+), 1 deletion(-)
 
-On 9.12.2022 14:54, Luca Weiss wrote:
-> Configure the pm6150l flash node for the dual flash LEDs found on FP4.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+index e6824c8c2774..6fa830bdc6bd 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+@@ -10,6 +10,20 @@
+ / {
+ 	model = "Sony Xperia 5 III";
+ 	compatible = "sony,pdx214-generic", "qcom,sm8350";
++
++	gpio-keys {
++		pinctrl-names = "default";
++		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
++
++		key-google-assist {
++			label = "Google Assistant Key";
++			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_LEFTMETA>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			gpio-key,wakeup;
++		};
++	};
+ };
+ 
+ &framebuffer {
+@@ -18,6 +32,16 @@ &framebuffer {
+ 	stride = <(1080 * 4)>;
+ };
+ 
++&pm8350_gpios {
++	g_assist_n: g-assist-n-state {
++		pins = "gpio9";
++		function = "normal";
++		power-source = <1>;
++		bias-pull-up;
++		input-enable;
++	};
++};
++
+ &pm8350b_gpios {
+ 	gpio-line-names = "NC", /* GPIO_1 */
+ 			  "NC",
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+index d73e1f3fa501..557b4538a031 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+@@ -49,7 +49,26 @@ framebuffer: framebuffer@e1000000 {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+-		/* For reasons still unknown, GAssist key and Camera Focus/Shutter don't work.. */
++		pinctrl-names = "default";
++		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
++
++		key-camera-focus {
++			label = "Camera Focus";
++			linux,code = <KEY_CAMERA_FOCUS>;
++			gpios = <&pm8350b_gpios 8 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			gpio-key,wakeup;
++		};
++
++		key-camera-snapshot {
++			label = "Camera Snapshot";
++			linux,code = <KEY_CAMERA>;
++			gpios = <&pm8350b_gpios 5 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			gpio-key,wakeup;
++		};
+ 
+ 		key-vol-down {
+ 			label = "Volume Down";
+@@ -547,11 +566,37 @@ &pm8350_gpios {
+ 			  "PM8350_OPTION"; /* GPIO_10 */
+ };
+ 
++&pm8350b_gpios {
++	snapshot_n: snapshot-n-state {
++		pins = "gpio5";
++		function = "normal";
++		power-source = <0>;
++		bias-pull-up;
++		input-enable;
++	};
++
++	focus_n: focus-n-state {
++		pins = "gpio8";
++		function = "normal";
++		power-source = <0>;
++		input-enable;
++		bias-pull-up;
++	};
++};
++
+ &pmk8350_gpios {
+ 	gpio-line-names = "NC", /* GPIO_1 */
+ 			  "NC",
+ 			  "VOL_DOWN_N",
+ 			  "PMK8350_OPTION";
++
++	vol_down_n: vol-down-n-state {
++		pins = "gpio3";
++		function = "normal";
++		power-source = <0>;
++		bias-pull-up;
++		input-enable;
++	};
+ };
+ 
+ &pmk8350_rtc {
+-- 
+2.38.1
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> index c456e9594ea5..fef7d1d02925 100644
-> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> @@ -7,6 +7,7 @@
->  
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/input/input.h>
-> +#include <dt-bindings/leds/common.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "sm7225.dtsi"
-> @@ -367,6 +368,28 @@ &mpss {
->  	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
->  };
->  
-> +&pm6150l_flash {
-> +	status = "okay";
-> +
-> +	led-0 {
-> +		function = LED_FUNCTION_FLASH;
-> +		color = <LED_COLOR_ID_YELLOW>;
-> +		led-sources = <1>;
-> +		led-max-microamp = <180000>;
-> +		flash-max-microamp = <1000000>;
-> +		flash-max-timeout-us = <1280000>;
-> +	};
-> +
-> +	led-1 {
-> +		function = LED_FUNCTION_FLASH;
-> +		color = <LED_COLOR_ID_WHITE>;
-> +		led-sources = <2>;
-> +		led-max-microamp = <180000>;
-> +		flash-max-microamp = <1000000>;
-> +		flash-max-timeout-us = <1280000>;
-> +	};
-> +};
-> +
->  &pm6150l_wled {
->  	status = "okay";
->  
-> 
