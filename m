@@ -2,115 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E07AA648FDE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 18:05:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77861648FF6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Dec 2022 18:15:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbiLJRFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 12:05:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58312 "EHLO
+        id S229756AbiLJRPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Dec 2022 12:15:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbiLJRFf (ORCPT
+        with ESMTP id S229929AbiLJROq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 12:05:35 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E185815A19
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 09:05:34 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DDAFD1F887;
-        Sat, 10 Dec 2022 18:05:32 +0100 (CET)
-Date:   Sat, 10 Dec 2022 18:05:31 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Sat, 10 Dec 2022 12:14:46 -0500
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7449DCE1;
+        Sat, 10 Dec 2022 09:14:36 -0800 (PST)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id D5C421C09F6; Sat, 10 Dec 2022 18:14:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+        t=1670692473;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=80WcLoHKqeSS0b27wIQAfQcpCvbdZiyOk/DnuqmgX2A=;
+        b=hsgKXY8TClZYyEU1c4oj7VPIUQhLbSHuVQxNbkh5qsnEZWg/OFN7lX/N0LZM6WBR4BMfMj
+        cdoCQ0IHrQyL1WQK2W6MXQeXEq+F1jiPpAzP7NxY1itLMs718T5QjvCNvUk9T6vJqPnBrh
+        woB/16Zm5f1D4CZDp8GZ8Fo0HlOKUwo=
+Date:   Sat, 10 Dec 2022 18:14:33 +0100
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use plural _gpios node label for
- PMIC gpios
-Message-ID: <20221210170531.pxoux2kje4vgor5y@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221209220450.1793421-1-marijn.suijten@somainline.org>
- <714ac62a-7bab-e16e-e3b6-bdd86e422699@linaro.org>
+        Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: pm6150l: add spmi-flash-led node
+Message-ID: <Y5S+eUnn9UauVbrS@duo.ucw.cz>
+References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
+ <20221209-fp4-pm6150l-flash-v1-2-531521eb2a72@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="wyVEfKsp86X4iaBk"
 Content-Disposition: inline
-In-Reply-To: <714ac62a-7bab-e16e-e3b6-bdd86e422699@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221209-fp4-pm6150l-flash-v1-2-531521eb2a72@fairphone.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-10 11:50:51, Krzysztof Kozlowski wrote:
-> On 09/12/2022 23:04, Marijn Suijten wrote:
-> > The gpio node in PMIC dts'es define access to multiple GPIOs.  Most Qcom
-> > PMICs were already using the plural _gpios label to point to this node,
-> > but a few PMICs were left behind including the recently-pulled
-> > pm(i)8950.
-> > 
-> > Rename it from *_gpio to *_gpios for pm6125, pm6150(l), pm8005,
-> > pm(i)8950, and pm(i)8998.
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > 
-> > ---
-> > 
-> > This was brought up for discussion in [1] but hasn't seen any relevant
-> > reply, unfortunately.
-> 
-> This is just a label, it does not matter. Why changing all exisitng
-> files? I don't think it was a part of previous discussions...
 
-I would've let it slide if it was corrected in the patch that was
-reviewed, but since that didn't happen it wouldn't make sense to only
-correct pmi8950 (and the other bindings submitted or co-authored by
-myself, such as pm6125 and pm8950) for "consistency" - that wouldn't be
-consistent at all.
+--wyVEfKsp86X4iaBk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-To me (and supposedly, to other as well) it does matter.  People keep
-copy-pasting these to to add a newer PMIC and sooner rather than later
-we'll end up with both conventions.
+On Fri 2022-12-09 14:54:07, Luca Weiss wrote:
+> Add a node describing the flash block found on pm6150l.
+>=20
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Regardless, labels are already a mess all over the place, and unless we
-can steer them with bindings or written conventions we're unlikely to
-ever clean that up.
+Acked-by: Pavel Machek <pavel@ucw.cz>
 
-> To me it is unneeded churn.
 
-Just like -state and -pins suffix, sometimes even the unnecessary
--pins-pins suffix?  To me that is the same kind of churn, and *it is
-needed* to keep the bindings somewhat clean, consistent and digestible.
-In this specific case it's not even that many changes, IMO.
+> ---
+>  arch/arm64/boot/dts/qcom/pm6150l.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/pm6150l.dtsi b/arch/arm64/boot/dts/=
+qcom/pm6150l.dtsi
+> index 90aac61ad264..86e659fcbba6 100644
+> --- a/arch/arm64/boot/dts/qcom/pm6150l.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm6150l.dtsi
+> @@ -112,6 +112,12 @@ pm6150l_lsid5: pmic@5 {
+>  		#address-cells =3D <1>;
+>  		#size-cells =3D <0>;
+> =20
+> +		pm6150l_flash: led-controller@d300 {
+> +			compatible =3D "qcom,pm6150l-flash-led", "qcom,spmi-flash-led";
+> +			reg =3D <0xd300>;
+> +			status =3D "disabled";
+> +		};
+> +
+>  		pm6150l_wled: leds@d800 {
+>  			compatible =3D "qcom,pm6150l-wled";
+>  			reg =3D <0xd800>, <0xd900>;
+>=20
 
-That being said my limited hobby time is probably too valuable to be
-spent on binding cleanup rather than fixes and feature enablement
-elsewhere in the kernel.
 
-- Marijn
+--=20
+People of Russia, stop Putin before his war on Ukraine escalates.
+
+--wyVEfKsp86X4iaBk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY5S+eQAKCRAw5/Bqldv6
+8jp0AJ9+Bi1jsFkyWvDuuR9d1JCXoukodQCfUW8l65JIIeXGODF+oeTZuBLI0rA=
+=A5co
+-----END PGP SIGNATURE-----
+
+--wyVEfKsp86X4iaBk--
