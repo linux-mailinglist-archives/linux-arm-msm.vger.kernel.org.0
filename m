@@ -2,81 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3588964961C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 21:12:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AA8264961F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 21:13:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbiLKUL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Dec 2022 15:11:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59166 "EHLO
+        id S230071AbiLKUN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Dec 2022 15:13:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiLKUL4 (ORCPT
+        with ESMTP id S229696AbiLKUN2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Dec 2022 15:11:56 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E48D13B
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 12:11:55 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id g7so15305424lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 12:11:55 -0800 (PST)
+        Sun, 11 Dec 2022 15:13:28 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3782B645F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 12:13:27 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id h10so10509145ljk.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 12:13:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=A0OWNKlbeOkPe9L1NS206ZBEmQO1vAikJVPG0qmLgEk=;
-        b=xNq0tno4eHxGvl6EDMTGkeWOKGQIIB86C4Sy5Gro6+3AAJAmXYRrS9DHabRwDJVfbF
-         VmVlAHx3jY4fjfkQpHCakOm0+2Z/ml46g6LOPd13KnVoaStQEMcsrXpzQ2jWoUAF+ugX
-         g+WTVx44A5WWL5btufRAzJnJcKnUgpqlpP612Fm6GZWsVjx92v8DYUmbq9vCQuU3zsq0
-         T/xIjwmuFhBYpn/sjCVx2dkzM8tjfcHhJie3obN6scgNSTRjDc6SWZbbIhBVVqKn3ytP
-         vbf/CdS+x8mITi0tNTFPzMR88zJ30pCcK9j86jisKE4rV2+eqDpYQKjTe01ueE8iLmLe
-         SVkw==
+        bh=2aIUqy6xITmiixDl/UAUB5VEYZloM6SDbzN9CnuO/W4=;
+        b=od7v1JmOQwSD+sEg8epOQXQq7+4fL22Th+fnYtDdxsE2LFFtSFlUnTf2zcInLTsbyT
+         Gp/w+IdNDDk08Kb5+vMJ542ZJAwt5w5mQVWQclouRfthr8kaGJQuJgFo0DJv+QZgwwEA
+         UHhmgFkeZYDOJ/ba7KQ3wzzfH7wLlP4FeMyTu/FaTruhuomu7xYgMqQqy9+PW+rPLPzb
+         IeUokJIen8Sl0IH19UMp1Jd/Yi9VsyFAfdR/8LYpoaxPueoROGnOBLmrTuZc2BzGk9F6
+         L0iuEGiiLjIye/LR2TC0lflua70t2u7JADh4BvzBv5/pW+F3+uZeTemKTlNe1GCafsXg
+         9amw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A0OWNKlbeOkPe9L1NS206ZBEmQO1vAikJVPG0qmLgEk=;
-        b=HW5N1vSdxs7CojCJlP+6ZdUhbONJgm9x1CT7m3iuUadMA1xY+p2DqFH8idDwzLbt5q
-         ELYfqEX9I0iVGJ1tVEESMDk6hnc68c3Onak/mlw4TI5tty2QbJ6FpTDGocXqcCDHa8Lh
-         GGluQkFZdGekR1zQClg56m8K875SHDJyr0Q8cwjtWtMyqwxi0K72gCDhXdxSQiQlfY7q
-         f/tKh91yuPlFTLFnEiq/uFl+p6OOz0d5RPT3J7bygcu6qnnbvfFxm8xdW8FsXIoXH8Pq
-         lPKW4I/06tnAXdshZ902gdVy58Idh2KUh2YAG5Znlc6S1LyVYQTa6JnuMH05faJZ7Rmp
-         XY5g==
-X-Gm-Message-State: ANoB5pnqSVdvTQIQELnOqIRwUDn9ykubwd0DnsaYxSC1V4EblWahCEuP
-        Qs3bJ3SCLGVGjEIwHh6mRA2pEg==
-X-Google-Smtp-Source: AA0mqf6ECTxubNG56VQO3fJn67Skx7uGGKuWK9StzoRZc5C/F5YoeODZ0IIbj5+badtCnmtBjQtQpQ==
-X-Received: by 2002:a05:6512:3495:b0:4b5:5616:ecd2 with SMTP id v21-20020a056512349500b004b55616ecd2mr3323177lfr.55.1670789513224;
-        Sun, 11 Dec 2022 12:11:53 -0800 (PST)
+        bh=2aIUqy6xITmiixDl/UAUB5VEYZloM6SDbzN9CnuO/W4=;
+        b=iRJKGpdml8hxE+aeRM/mNCbYSPnuoMkjTosg3TDI7xZHcWwg4WPUf/WLxqjFAUcfEt
+         lbuE5PijGN+lTG2/4KySOTZNqZbybqUPlKsEECjATTV//kAvCBMaA76di8qfyV9iAsiG
+         pfS/OhsNPe5YIpzHAUwbMbDRROP/o1LR+w8xklEBdhVB8lN9Qylr/KQjMAoHFZtbUFUE
+         EJcidcJcyz+raYmg9LH5Jn3qVRJZoyQE7QkYp7oom7Ps9xb2z45DAvsIREJh89a2+auX
+         8McPxzJnwNJyv8Ac7AsUoO5XQIduY92CkZRdO3yBYixxCXqWrFBJNh3NrQtlfk0DroHR
+         iZKQ==
+X-Gm-Message-State: ANoB5pnFF5EdgjoqWnzDJRWZkVQm7eplR4/m1n9/v7fbsjQ93IB1p7w4
+        gxlCMGfmiq9KSjmWIw2mbMcVzg==
+X-Google-Smtp-Source: AA0mqf5/jhibW52nDfYy3VXumCm94PK3z5WkppMY6y1QXUlvpoH6swreS4FOUXwzJJ+xKrRM52RmiA==
+X-Received: by 2002:a05:651c:1797:b0:26f:db35:c02c with SMTP id bn23-20020a05651c179700b0026fdb35c02cmr4174716ljb.6.1670789605630;
+        Sun, 11 Dec 2022 12:13:25 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id j5-20020a056512028500b004b59871f457sm1315412lfp.247.2022.12.11.12.11.51
+        by smtp.gmail.com with ESMTPSA id bd1-20020a05651c168100b0026bf43a4d72sm1011840ljb.115.2022.12.11.12.13.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Dec 2022 12:11:52 -0800 (PST)
-Message-ID: <cd23d45c-f0a0-d81f-5230-a7de2bb90c07@linaro.org>
-Date:   Sun, 11 Dec 2022 21:11:51 +0100
+        Sun, 11 Dec 2022 12:13:25 -0800 (PST)
+Message-ID: <61b4b894-2c49-881f-c2eb-107e8e558232@linaro.org>
+Date:   Sun, 11 Dec 2022 21:13:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950
- peripheral
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8250: move sound and codec nodes
+ out of soc
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jonathan Cameron <jic23@kernel.org>
-References: <20221101161801.1058969-1-luca@z3ntu.xyz>
- <36eb03e8-aace-f7ce-edc8-53715021c0ea@linaro.org>
- <20221208112055.m7sqg3ysxzskqjp4@SoMainline.org> <5740737.DvuYhMxLoT@g550jk>
- <20221209203851.sy37qqzczoaruuyb@SoMainline.org>
- <4846bb5f-79a9-e199-6a1c-5021e975e7ee@linaro.org>
- <20221210163121.woacrjuicb3vuzcn@SoMainline.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221210115704.97614-1-krzysztof.kozlowski@linaro.org>
+ <20221210115704.97614-4-krzysztof.kozlowski@linaro.org>
+ <f1aa7f4c-35e4-47d2-2443-8271175dc5af@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221210163121.woacrjuicb3vuzcn@SoMainline.org>
+In-Reply-To: <f1aa7f4c-35e4-47d2-2443-8271175dc5af@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,83 +81,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/12/2022 17:31, Marijn Suijten wrote:
-> On 2022-12-10 11:58:24, Krzysztof Kozlowski wrote:
->> On 09/12/2022 21:38, Marijn Suijten wrote:
->>> On 2022-12-09 17:54:50, Luca Weiss wrote:
->>>> On Donnerstag, 8. Dezember 2022 12:20:55 CET Marijn Suijten wrote:
->>>>> On 2022-12-08 11:23:17, Krzysztof Kozlowski wrote:
->>>>>> On 08/12/2022 11:12, Marijn Suijten wrote:
->>>>>>> On 2022-12-04 17:19:05, Luca Weiss wrote:
->>>>>>>> On Freitag, 2. Dezember 2022 10:36:58 CET Marijn Suijten wrote:
->>>>>>>> [..]
->>>>>>>>
->>>>>>>> So the way this patch does it is good or does it need changes?
->>>>>>>
->>>>>>> Except the typo(s?) pointed out in my first reply, this is good to go.
->>>>>>>
->>>>>>> If we stick with generic adc-chan node names that should be documented
->>>>>>> in the bindings IMO, as it is currently only captured implicitly in the
->>>>>>> examples.  Krzysztof, what is your thought on this?
->>>>>>
->>>>>> If I understand correctly, the outcome of other discussion [1] was to
->>>>>> use labels and generic node names.
->>>>>
->>>>> The outcome was to use labels in the driver and disregard node names as
->>>>> the new fwnode API clobbers those names by including the @xx register
->>>>> bit.
->>>>>
->>>>> (I'll follow up with Jonathan whether or not to remove the current
->>>>> fallback to node names, as [1] ended up discussing many different issues
->>>>> and nits)
->>>>>
->>>>>> In such case the patch was correct
->>>>>> (except other comments).
->>>>>
->>>>> As a consequence it _doesn't matter_ how nodes are named, and we _can_
->>>>> use generic node names.  My question for you is whether we should, and
->>>>> if we should lock that in via dt-bindings to guide everyone towards
->>>>> using labels (which i did _not_ do in the recently-landed PM8950 and
->>>>> PM6125, but will send followup for).
->>>>
->>>> FYI the patch has been merged already and is now in linux-next
->>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/arch/arm64/boot/dts/qcom/pmi8950.dtsi?id=0d97fdf380b478c358c94f50f1b942e87f407b9b
->>>>
->>>> If you have any changes that need to be done please send a follow-up patch.
->>>
->>> Unfortunately saw that today as well, well after sending this reply.  I
->>> would've loved to correct the pmi8950_gpio label _gpios before someone
->>
->> I don't understand what is there to correct. The "pmi8950_gpio" is a
->> correct label. There is no single rule saying label should have "s" at
->> the end. The only rules are: using underscores and having similar naming
->> (e.g. mdss_ for all display labels).
+On 10/12/2022 13:31, Konrad Dybcio wrote:
 > 
-> If we were able to have rules for labels, would I then be allowed to
-> "correct" this?
+> 
+> On 10.12.2022 12:57, Krzysztof Kozlowski wrote:
+>> The sound and codec nodes are not a property of a soc, but rather board
+>> as it describes the sound configuration.
+> * in this case, there exist SoC-internal codecs
 
-If we had rules, yes. But we do not have. That's like - I will rename
-all variables because of some non-existing rules... There is no rule, no
-coding style (except what I wrote)...
+wcd9380 is not SoC internal, so to which codec you refer to? Sound node
+is for sound configuration, not codec, and sound configuration is board
+specific.
 
->  The inconsistency between DTs is /super/ annoying (and
-> it looks wrong to have a singular _gpio named thing contain /multiple
-> gpios/), 
-
-What do you mean - looks wrong? It's just a label which does not matter,
-so how it can be wrong?
-
-> but just because we can't express this in dt-bindings (or so I
-> think) we shouldn't change it?
-
-No, it just does not matter, so there is no benefit to change it, in my
-opinion, if label is readable and follows generic convention
-(underscores). Of course someone might treat its readability different
-and maybe for someone the missing "s" at the end is important. I am just
-saying that, unlike the node names, the label has little impact/effect.
-
-However just be clear - this change also does not harm, so I am
-perfectly fine with it.
+> 
+>  It also does not have unit
+>> address:
+>>
+>>   sm8250-hdk.dtb: soc@0: sound: {} should not be valid under {'type': 'object'}
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Best regards,
 Krzysztof
