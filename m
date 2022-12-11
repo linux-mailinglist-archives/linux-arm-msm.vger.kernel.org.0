@@ -2,59 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B0886491FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 03:37:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF8E6492F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 07:50:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbiLKCg4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Dec 2022 21:36:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39524 "EHLO
+        id S229982AbiLKGuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Dec 2022 01:50:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229960AbiLKCgy (ORCPT
+        with ESMTP id S229900AbiLKGuQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Dec 2022 21:36:54 -0500
-X-Greylist: delayed 642 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 10 Dec 2022 18:36:49 PST
-Received: from webmail.no-log.org (webmail.no-log.org [80.67.172.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894C113E90;
-        Sat, 10 Dec 2022 18:36:48 -0800 (PST)
-Received: from webmail.no-log.org (webmail.no-log.org [80.67.172.39])
-        by webmail.no-log.org (Postfix) with ESMTP id 086E0825F6;
-        Sun, 11 Dec 2022 03:25:50 +0100 (CET)
-X-Squirrel-UserHash: V14GBR0HRykaRAADAkByWl1KAAAFRyEdSg==
-X-Squirrel-FromHash: AVRfCVhbXX4=
-Message-ID: <dfe2460d670a5f238cad2cb026c500dd.squirrel@webmail.no-log.org>
-Date:   Sun, 11 Dec 2022 03:25:50 +0100
-Subject: Reply
-From:   "Mrs Susanne Hanna" <claire.guillet1@no-log.org>
-Reply-To: hanna.susanne@aol.com
-User-Agent: SquirrelMail/1.4.23 [SVN]
+        Sun, 11 Dec 2022 01:50:16 -0500
+Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8348FAFD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Dec 2022 22:50:13 -0800 (PST)
+Received: from pop-os.home ([86.243.100.34])
+        by smtp.orange.fr with ESMTPA
+        id 4GA4pPlLH5FWA4GA4pDe1A; Sun, 11 Dec 2022 07:50:10 +0100
+X-ME-Helo: pop-os.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 11 Dec 2022 07:50:10 +0100
+X-ME-IP: 86.243.100.34
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/hdm: Fix the error handling path of msm_hdmi_dev_probe()
+Date:   Sun, 11 Dec 2022 07:50:06 +0100
+Message-Id: <b3d9dac978f1e2e42a40ec61f58aa98c44c85dfd.1670741386.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Priority: 3 (Normal)
-Importance: Normal
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,HK_NAME_MR_MRS,MISSING_HEADERS,
-        REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,SPF_PASS autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5843]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  1.0 MISSING_HEADERS Missing To: header
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  1.0 HK_NAME_MR_MRS No description available.
-        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+If an error occurs after a successful msm_hdmi_get_phy() call, it must be
+undone by a corresponding msm_hdmi_put_phy(), as already done in the
+remove function.
 
+Fixes: 437365464043 ("drm/msm/hdmi: move msm_hdmi_get_phy() to msm_hdmi_dev_probe()")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+Not sure if the Fixes tag is correct. At least it is when the probe needs
+to be fixed but the issue was maybe there elsewhere before.
+---
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-
-Money was donated to you.
-Contact: hanna.susanne@aol.com
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 4d3fdc806bef..97372bb241d8 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -532,11 +532,19 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_pm_runtime_enable(&pdev->dev);
+ 	if (ret)
+-		return ret;
++		goto err_put_phy;
+ 
+ 	platform_set_drvdata(pdev, hdmi);
+ 
+-	return component_add(&pdev->dev, &msm_hdmi_ops);
++	ret = component_add(&pdev->dev, &msm_hdmi_ops);
++	if (ret)
++		goto err_put_phy;
++
++	return 0;
++
++err_put_phy:
++	msm_hdmi_put_phy(hdmi);
++	return ret;
+ }
+ 
+ static int msm_hdmi_dev_remove(struct platform_device *pdev)
+-- 
+2.34.1
 
