@@ -2,145 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E15C649497
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 15:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1293649574
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Dec 2022 18:55:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiLKOCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Dec 2022 09:02:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S230006AbiLKRzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Dec 2022 12:55:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiLKOCg (ORCPT
+        with ESMTP id S229656AbiLKRzQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Dec 2022 09:02:36 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A28DF6B;
-        Sun, 11 Dec 2022 06:02:35 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B8DBC60DC9;
-        Sun, 11 Dec 2022 14:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C67C433F0;
-        Sun, 11 Dec 2022 14:02:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670767354;
-        bh=qbLdcwHUSakHdBthMKlWZnGRsrtDuG/VUTavNAVkCbU=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=S/AP9d93h1gVNufHPENhK8MQiLLfvo81gOZUBHnabPS/zwKMbxLoZkAG1ytQkaJXa
-         oSh/GvVIs/U94x9gd95SSS6G21HqazC+AMporVhhEaHZ8EnM4m+KjHgHKRey7E9bu6
-         rbqFWrTgny0leNUkgARaE54PTyj/UzcyG1y+1OSJakjHXbiwQkIuaZoyktu3k4iJbP
-         6CkShtbVoZj6z6tsgG8gA7UqRSEPf2YcQjnDLIvWgFBDSMSACUW5Mn9aDCmJ17vg0Z
-         08HeScdMr06j99op26cW7iQfijNXyYId/Mx+J2nQmEaZkANQGDn3+ryT7ulNb0TVOt
-         Y6du7WsIdvy9g==
-Date:   Sun, 11 Dec 2022 14:15:26 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use labels with generic node
- names for ADC channels
-Message-ID: <20221211141526.463f43e6@jic23-huawei>
-In-Reply-To: <20221210165434.3hhen5mgtvflghks@SoMainline.org>
-References: <20221209215308.1781047-1-marijn.suijten@somainline.org>
-        <3d5b29f3-8d8d-93a7-a485-5261e2d8891d@linaro.org>
-        <20221210165434.3hhen5mgtvflghks@SoMainline.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.35; x86_64-pc-linux-gnu)
+        Sun, 11 Dec 2022 12:55:16 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D894DDF38;
+        Sun, 11 Dec 2022 09:55:14 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id fc4so22684505ejc.12;
+        Sun, 11 Dec 2022 09:55:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MAddJwHgewPsnld86N0dxc/Wppl/CL1frgmKU+R46B4=;
+        b=EpEpD/JsFEF5dXYwIb6iq2aS/hPKXAjDuTHUsvGhFumW7hbNDQbmBfPsX1AmVf4r9l
+         Zzz8O6rXPavAcrFx2B0VJ8NK8A+C1050iEKdnzND5tDr3AJACjWhoUxxxAG24odKD1yf
+         FJz/gqCw4OxZ/LQb5hRsuTnEdKLMl+cqDIPURjo5i4Pp4MNjufFhddXg9APtDo//e/vD
+         B8taftBjx3mJG1ponvDIfvQCsd+f4u2Io8o02szp/n29NZ4JK/gHjUqtg/i1AlClLvbj
+         4FvJzQem1AC5U3FN0F7jPuxP5JUfu76iGr+/MWsCvsKXhdvxQZwi/mBht1dWboVnrgpL
+         6whw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MAddJwHgewPsnld86N0dxc/Wppl/CL1frgmKU+R46B4=;
+        b=3UbZQqRXhT+WQ6dcd+ZO8+Q4dVn1dgqZ5BFQdIF1O5vYIzb+r+bU7Pe7wTsJnHaF3Y
+         l1U6rFC5irAtAvGd7Esl+hcBxfDL4niETeOhvv0X1wFmCOxibsKkNw0pXirPgFqYcyi/
+         78o88/HsYplB5N+S7AzLNF/OzayxqtFAK5McPUoaVWSeY+09TmrAxRQTGUeUuhZ96dfZ
+         wvXHzDzCQM7RmoiiEo1xLF12NDyWRXCOyczWwGkIFa3y2Qrx10rNLjzqN3lGgCrblyEl
+         LcQf966uznWYWAxAYLodD/n+k46b/9LsCfqk+XTlkLMdhaMiWo+N7ER5OiInW6+wfEq7
+         ZD1g==
+X-Gm-Message-State: ANoB5pnNQCEV+YdzN7pTqo+UPL+LsNXAqn2uAKwa7MXRvcIabdf/4dqU
+        xKuVelh4UBIQlLX66crN2toFraUoaToXovYsJw4=
+X-Google-Smtp-Source: AA0mqf40eVxkao/JBHEgZam23E3uixw9KD+TzzIF+nAqJUVk8cK/AvNSTNet7+fsGe9fZ6GCriBCqP+5QZ2M7cuXxPs=
+X-Received: by 2002:a17:907:2bf3:b0:7c0:ebbb:8e8b with SMTP id
+ gv51-20020a1709072bf300b007c0ebbb8e8bmr15730602ejc.683.1670781313389; Sun, 11
+ Dec 2022 09:55:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221211100501.82323-1-dominikkobinski314@gmail.com>
+In-Reply-To: <20221211100501.82323-1-dominikkobinski314@gmail.com>
+From:   Petr Vorel <petr.vorel@gmail.com>
+Date:   Sun, 11 Dec 2022 18:55:01 +0100
+Message-ID: <CAB1t1CzXzt4idK2wkvF7hqXdOF=obkb7oG0Tu4PGwKYAX5nwNg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] arm64: dts: msm8992-bullhead: add memory hole region
+To:     Dominik Kobinski <dominikkobinski314@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, pevik@seznam.cz, agross@kernel.org,
+        alexeymin@postmarketos.org, quic_bjorande@quicinc.com,
+        bribbers@disroot.org, devicetree@vger.kernel.org,
+        konrad.dybcio@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 10 Dec 2022 17:54:34 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
+Hi all,
 
-> On 2022-12-10 12:02:03, Krzysztof Kozlowski wrote:
-> > On 09/12/2022 22:53, Marijn Suijten wrote:  
-> > > As discussed in [1] the DT should use labels to describe ADC channels,
-> > > with generic node names, since the IIO drivers now moved to the fwnode
-> > > API where node names include the `@xx` address suffix.
-> > > 
-> > > Especially for the ADC5 driver that uses extend_name - which cannot be
-> > > removed for compatibility reasons - this results in sysfs files with the
-> > > @xx name that wasn't previously present, and leads to an unpleasant
-> > > file-browsing experience.
-> > > 
-> > > Also remove all the unused channel labels in pm660.dtsi.
-> > > 
-> > > [1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-> > > 
-> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>  
-> > 
-> > The talk was in context of bindings, not about changing all existing
-> > users thus affecting DTS.  
-> 
-> And as a consequence, DTS.  The already-merged transition from OF to
-> fwnode resulted in `@xx` to be included in the ADC channel name - and in
-> the case of ADC5 even in sysfs filenames - so this seems like a
-> necessary change to make.
+Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 
-Gah. We missed that at the time.  Arguably we should first fix that
-particular issue as we will have lots of old DT out there.
-(add a bit of code to strip the @xxx bit from that particular usecase).
-It gets tricky because now we might have code relying on the new
-broken behavior.
+Thanks for this fix!
 
-> 
-> At the very least I would have changed the bindings submitted or
-> co-authored /by myself/ since I initially decided to rely on this (now
-> obviously) wrong behaviour, and should have used labels from the get go.
-> 
-> > What's more, to me "skin-temp-thermistor" is
-> > quite generic name, maybe "thermistor" would be more and reflects the
-> > purpose of the node, so it was more or less fine.  
-> 
-> Are you suggesting to not use "adc-chan", but "thermistor" as node name
-> (and still use skin_temp as label)?  Or to keep the fully-written-out
-> "thermistor" word in the label?
-> 
-> > Anyway I am against such changes without expressing it in the bindings.  
-> 
-> As expressed in [1] I suggested and am all for locking this change in
-> via bindings, and you are right to expect that to have gone paired with
-> this patch.
-> 
-> I'll submit that as the leading patch to this in v2, with the wildcard
-> pattern changed to adc-chan (or something else pending the discussion
-> above), and should I then also require the label property via `label:
-> true`?
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20221208101232.536i3cmjf4uk2z52@SoMainline.org/
-
-So the 'fun' here is what to do with old DTS as we need to support that
-even if we update the binding docs and all in kernel users.
-
-Probably right option in driver is:
-a) Use label if present
-b) Use node name if it's not adc-chan but strip the @xxx off it.
-c) return an error.
-
-p.s. Please add iio@vger.kernel.org to future versions of this. If nothing
-else I tend to lose direct emails about IIO stuff as they aren't in the
-relevant patchwork instance.
-
-> 
-> - Marijn
-
+Kind regards,
+Petr
