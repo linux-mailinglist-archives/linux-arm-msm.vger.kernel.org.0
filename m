@@ -2,161 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04436649A51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 09:48:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F774649A5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 09:51:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231540AbiLLIsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 03:48:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56740 "EHLO
+        id S231645AbiLLIvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 03:51:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231503AbiLLIsb (ORCPT
+        with ESMTP id S231652AbiLLIvN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 03:48:31 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354E4E0BF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:48:30 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j4so17432941lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:48:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=McWLAbiWx9EGavkST5tPBJkjslGPyy5JJT1sS66lkrc=;
-        b=yw1soTR3eNoJeK6G4Nxj3tt/u1brSadf7TQ8/L1v8irqzZUcQgy5fsvbXNOA4UTh86
-         i6C17yXhCn6c3iMCXo031/raTvGe+ym8uSWcBt5a+GWWWRDukwlzy+kvYsAcwv1r1VQP
-         5Y9af8NZEOeI09smYFP0XnC1QRSssvmZTSJaOq3iPfs38KSZqtaYIlQXFtxn3YEviqKT
-         iV5PSE1ByoUwj7/CA3zIiEDCGnCRWYVSRe1aMQR/HRsin/6UePnLir1ooFuo3tga/0+r
-         Bm8oHT+9pK1e6qVCgNOmIFtiYqDTSVNLbOR3V1bECZoLRCA5WYjlZUOB7rN/eOFwXOMD
-         5z2A==
+        Mon, 12 Dec 2022 03:51:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D375AE018
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:50:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1670835023;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=RQ50d8UumI9ueJpEwOflt6TAhpxY1IdtCPs4SpFp+ys=;
+        b=avFilSqk0sTuZdlBwUuMNIucuGCOyrqpn0QkTOr7BHFxEeCKy1qdQFkQVDGua6LhtRZJwe
+        by1+6H1+tWJHmBEiie3T5EpbPtlwMs7cDrr9xjLvazjoAoO/R1LlDuVgg4RYeLXShQ+S9X
+        ZPaAZpbMIK1n9s88Va3xiIw/avQeWaM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-400-8ZISQB3QMMmqTu3B2TC0Fw-1; Mon, 12 Dec 2022 03:50:22 -0500
+X-MC-Unique: 8ZISQB3QMMmqTu3B2TC0Fw-1
+Received: by mail-wm1-f71.google.com with SMTP id bg25-20020a05600c3c9900b003cf3ed7e27bso3047803wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:50:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=McWLAbiWx9EGavkST5tPBJkjslGPyy5JJT1sS66lkrc=;
-        b=FaGGA2L71sgzk/OQkqvs1y3dh25fI4LU2wijj+YedeJRcS4XQZCO8rMEFDsHZd6eYX
-         Z4XNbIQIiKtyQnyNHUZc4G9eKsjpO9QqOea0rpxWfIR9M2iy33KGCzSvnvj9eMBpmpMO
-         ne0wW+QFTyLmhbVb5H2Mc3ICPtLVtNZoo3V513X1cHKk2vG53E8AfjB/hAhtF+1Ob4vK
-         kAyAEAI7PqZaLP1U9NbaZerFcC8htVFtR0fPN4NFbx87yZSwhRY7EtVdNr7vOr4CTozr
-         jvfR4rE2OX56D2xnWlxWcgku7IuptT3H3DkOrbnTZz3DmJ+wiN12y9uDTwUP/vx1UAe6
-         LFqw==
-X-Gm-Message-State: ANoB5pm8MXAMO3nYQMI/6utp8ZCwOsSNy2N7yXGyMz/Kqdj4Cp1YqS7K
-        ewLNkuwiiGwjZBBqGHTskMlhfw==
-X-Google-Smtp-Source: AA0mqf7er3Sp7wf4I5oY705f4HD5tE4QhtM3l0kUAYfPKwEVgmRgeFfNKU0dGLLA1d1sEXdkFl8d8Q==
-X-Received: by 2002:a05:6512:1108:b0:4b5:5ca8:93bc with SMTP id l8-20020a056512110800b004b55ca893bcmr4806140lfg.23.1670834908485;
-        Mon, 12 Dec 2022 00:48:28 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c16-20020a056512075000b004a47e7b91c4sm1554307lfs.195.2022.12.12.00.48.27
+        bh=RQ50d8UumI9ueJpEwOflt6TAhpxY1IdtCPs4SpFp+ys=;
+        b=UdK3dNQibE1O7WGOW43+xzkzN+V+Er8rUtI2MtGPJVc1KMp3Jmk6Vid5Flrs+6vgqN
+         GMTxRJlAUOiEd1JHqpiY3dw0fF8SFH7+gaiLxX0vjogoc1ObbAywB/zitkOhZP4qXlSn
+         sN+yHpqt4fOsois7uYjVpQ4AuCOJtXaPQ7N2KPdHwTbIKuQB271d6SfFSudEilgEYsj6
+         cj8N3fTJBA2xuDIsfpZuxQWiGN6zzOAgSEnR5H22kRpmiZWeIL5uSxJUGZijy0v3potB
+         nmm+GeLmnxCnybDS0jWXoL6VYJOqKGEnEyRrBplBK+mO3ZrXHKpE3GVTRnWgjm3TAK25
+         LjkQ==
+X-Gm-Message-State: ANoB5pnPAWQ2T/pihpI46S0ICKHua+7ikf4ewDw0jlkRNPX3nYl0wGGH
+        HKgg/c9Vs0LKGgdlclVPHsMBR2WgA3PASqpfsQQFYsu0eqAPi8tQV8XApiL0fHs0p9wYOcK2+m9
+        jsQmYkjsr2atx6CiDO2J149WvqA==
+X-Received: by 2002:a1c:f614:0:b0:3cf:5502:8a0 with SMTP id w20-20020a1cf614000000b003cf550208a0mr11802786wmc.27.1670835019073;
+        Mon, 12 Dec 2022 00:50:19 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf5LzC9pS4sHGm+Dp6NvZaYYWCLhmBeZhJRNbTAjUPxhj+YiexNiySqJFPuqRgC7vVOTWvawqA==
+X-Received: by 2002:a1c:f614:0:b0:3cf:5502:8a0 with SMTP id w20-20020a1cf614000000b003cf550208a0mr11802769wmc.27.1670835018821;
+        Mon, 12 Dec 2022 00:50:18 -0800 (PST)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id iw3-20020a05600c54c300b003d220ef3232sm5080177wmb.34.2022.12.12.00.50.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Dec 2022 00:48:27 -0800 (PST)
-Message-ID: <0bc1eba8-bc26-0bdb-16bf-78160c27c57b@linaro.org>
-Date:   Mon, 12 Dec 2022 09:48:26 +0100
+        Mon, 12 Dec 2022 00:50:18 -0800 (PST)
+Message-ID: <549800ec-6da2-64ad-62a6-c8e4a35dc212@redhat.com>
+Date:   Mon, 12 Dec 2022 09:50:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use labels with generic node names
- for ADC channels
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 1/4] driver core: Make driver_deferred_probe_timeout a
+ static variable
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        John Stultz <jstultz@google.com>
+Cc:     linux-kernel@vger.kernel.org, Brian Masney <bmasney@redhat.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221209215308.1781047-1-marijn.suijten@somainline.org>
- <3d5b29f3-8d8d-93a7-a485-5261e2d8891d@linaro.org>
- <20221210165434.3hhen5mgtvflghks@SoMainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221210165434.3hhen5mgtvflghks@SoMainline.org>
+        Douglas Anderson <dianders@chromium.org>,
+        Peter Robinson <pbrobinson@redhat.com>,
+        Enric Balletbo i Serra <eballetbo@redhat.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Rob Herring <robh@kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org,
+        Saravana Kannan <saravanak@google.com>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+References: <20221116115348.517599-1-javierm@redhat.com>
+ <20221116115348.517599-2-javierm@redhat.com>
+ <CANDhNCoa+LRu8B4+M+uU4_m2kd=HriO0SyNP=n=XpXwXG2k9LA@mail.gmail.com>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <CANDhNCoa+LRu8B4+M+uU4_m2kd=HriO0SyNP=n=XpXwXG2k9LA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/12/2022 17:54, Marijn Suijten wrote:
-> On 2022-12-10 12:02:03, Krzysztof Kozlowski wrote:
->> On 09/12/2022 22:53, Marijn Suijten wrote:
->>> As discussed in [1] the DT should use labels to describe ADC
->>> channels, with generic node names, since the IIO drivers now
->>> moved to the fwnode API where node names include the `@xx`
->>> address suffix.
->>> 
->>> Especially for the ADC5 driver that uses extend_name - which
->>> cannot be removed for compatibility reasons - this results in
->>> sysfs files with the @xx name that wasn't previously present, and
->>> leads to an unpleasant file-browsing experience.
->>> 
->>> Also remove all the unused channel labels in pm660.dtsi.
->>> 
->>> [1]:
->>> https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
->>>
->>>
->>> 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> 
->> The talk was in context of bindings, not about changing all
->> existing users thus affecting DTS.
+Hello Greg,
+
+On 11/17/22 20:14, John Stultz wrote:
+> On Wed, Nov 16, 2022 at 3:54 AM Javier Martinez Canillas
+> <javierm@redhat.com> wrote:
+>>
+>> It is not used outside of its compilation unit, so there's no need to
+>> export this variable.
+>>
+>> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+>> ---
+>>
+>> (no changes since v1)
+>>
+>>  drivers/base/dd.c             | 6 ++----
+>>  include/linux/device/driver.h | 1 -
+>>  2 files changed, 2 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+>> index 3dda62503102..040b4060f903 100644
+>> --- a/drivers/base/dd.c
+>> +++ b/drivers/base/dd.c
+>> @@ -257,13 +257,11 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+>>  DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+>>
+>>  #ifdef CONFIG_MODULES
+>> -int driver_deferred_probe_timeout = 10;
+>> +static int driver_deferred_probe_timeout = 10;
+>>  #else
+>> -int driver_deferred_probe_timeout;
+>> +static int driver_deferred_probe_timeout;
+>>  #endif
+>>
+>> -EXPORT_SYMBOL_GPL(driver_deferred_probe_timeout);
+>> -
 > 
-> And as a consequence, DTS.  The already-merged transition from OF to 
-> fwnode resulted in `@xx` to be included in the ADC channel name - and
-> in the case of ADC5 even in sysfs filenames - so this seems like a 
-> necessary change to make.
+> Yeah, I added the EXPORT for the regulator code to use it in
+> dca0b44957e5 but that got backed out when setting
+> driver_deferred_probe_timeout to 30s was reverted, and this bit was
+> forgotten.
 > 
-> At the very least I would have changed the bindings submitted or 
-> co-authored /by myself/ since I initially decided to rely on this
-> (now obviously) wrong behaviour, and should have used labels from the
-> get go.
+> Thanks for catching this!
 > 
->> What's more, to me "skin-temp-thermistor" is quite generic name,
->> maybe "thermistor" would be more and reflects the purpose of the
->> node, so it was more or less fine.
-> 
-> Are you suggesting to not use "adc-chan", but "thermistor" as node
-> name (and still use skin_temp as label)?
+> Acked-by: John Stultz <jstultz@google.com>
+>
 
-No, I am just saying that some of the names were correct, so the
-reasoning in commit msg is not entirely accurate.
+Could you please pick this patch? Is a fix independent of the other
+patches in the series and it has already been acked by John.
 
-> Or to keep the fully-written-out "thermistor" word in the label?
-
-No, I don't refer to labels. Labels don't matter, they are being removed
-entirely during DTS build.
-
-> 
->> Anyway I am against such changes without expressing it in the
->> bindings.
-> 
-> As expressed in [1] I suggested and am all for locking this change
-> in via bindings, and you are right to expect that to have gone paired
-> with this patch.
-
-Yes, I expect such changes to have both binding and DTS change together.
-
-> 
-> I'll submit that as the leading patch to this in v2, with the
-> wildcard pattern changed to adc-chan (or something else pending the
-> discussion above), and should I then also require the label property
-> via `label: true`?
-
-I don't think label is required.
-
+-- 
 Best regards,
-Krzysztof
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
