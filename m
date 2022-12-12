@@ -2,74 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04209649C0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 11:26:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69BE0649D08
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 12:07:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbiLLK0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 05:26:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52070 "EHLO
+        id S232144AbiLLLHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 06:07:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231923AbiLLK0R (ORCPT
+        with ESMTP id S231960AbiLLLG5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 05:26:17 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAEE8FD1F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:26:14 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id m14so11547690wrh.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:26:14 -0800 (PST)
+        Mon, 12 Dec 2022 06:06:57 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D89A811815
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:54:06 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id b13so17894705lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:54:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l879BTu/5FIA2goMiwpSyg0RiCbHZeU5mD7R/xhw8bw=;
-        b=yW2MyZalUc/SpObXMNTqeAocoV8ESWARha0NEbcxQn0kvvy7O4NPpGf3YBJ9qad1s0
-         VDK9Deol0Go5qBJtuxblNnbrAINeo9Bx/bAuTxZ5HJFBuFa5iPfYzvNInlDVQHN4r7h3
-         S4yec+JLVfWEPOd6Lda4XJPvVZdSS2g2FXmY98HxEl7+G2LA7d0/TP+yo1/Gw9/gFse8
-         8vQBwhzD8/BYh4v+V1KHJ0TvdQMDp3NTYXSMAtnTFqJh7nzV74IN/xupxMaq7vVrDLHX
-         7iVEK19lEI1iT6uCNAF1aV01ddWtDZdomACZ7gRmtt6/f4RjrCxsPWSSOIMcdycDaoUt
-         NXZg==
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jN9sEBY3LAhBIsC2SKGFeUTMmLXmYwsXUk6CCQcXwxI=;
+        b=OPkAol+cxiEfwUWOLToSowmwiWak4vBJdX05KL5JTgLv8JWbaYjlXWQUg5ptE8F2GL
+         1AFXhyXnq/XU9mQ9eU9alzRptl4z0b0r8KvdRa9Ar6xhV4SMrAwyg73t6r/V/YVw3ozC
+         1W5UNNcY3YorB1N5bXyYyPtwfn971LYYhdAUqAQ+LX8U10BJPF5zOQ442H7HU5WVlyAa
+         qR8Lw0aX8qRO7LXYfgV54PN+44wrSV1KgNhhDHvSIu9f/tQXKktrR+X0cFf7FjN8ysrS
+         cxVxpB2iJ1v7rwHUJqs+ErxxVx+FcNn+L4SiQfiZv+8B0y70qmVAZ2F/BxuGWocOkwtb
+         5llg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l879BTu/5FIA2goMiwpSyg0RiCbHZeU5mD7R/xhw8bw=;
-        b=qh5Vn4lf9FVcDD1gdEijFWZYLbT2rxMltX1xg1lzR9SguLqYx8QeHfxlDrkmwy4xDM
-         JsSYZglTv8qmo4sNNYzDXJCtRv6o0upgzpjGQy8NCfU7BcQGp/HyT8rOom21NcHBFIB1
-         bS8fpC2OAG0eJZz0EWEosPECB9dI79gHro5bHmvxS5EhAFNYoifXH0Jx1ykeK7i3juEa
-         4TWfLXTi9LYsUm5tZq8Haov8S53fXLkKEpECQ6rUMuiRor/9druZ0X9mVQvpE4MHYx0g
-         oZYHKQ4Hf+L/2zfzeS3IZgl2kdz4p2ayd8dgXDOVtQ1xGQAGY/OuxEnJyD3aV5TMnuDI
-         JMaw==
-X-Gm-Message-State: ANoB5pm1gOVi9zYT2ydOwv9ifwFIN/uB3sw96J75STJ6MWsawX6+eegv
-        H0PP3ufER1MpqIggmP+EqH0f3A==
-X-Google-Smtp-Source: AA0mqf5KrtnfirbxeovkqOmIygQa6AoENqfsXGTkQpDsvRN/QXqRL9nx2Ve64S6iGXcP+QimZftwZw==
-X-Received: by 2002:a5d:5d0b:0:b0:23a:5a31:29f5 with SMTP id ch11-20020a5d5d0b000000b0023a5a3129f5mr11257752wrb.23.1670840773405;
-        Mon, 12 Dec 2022 02:26:13 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id y7-20020a5d6147000000b00226dba960b4sm8493877wrt.3.2022.12.12.02.26.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Dec 2022 02:26:12 -0800 (PST)
-Message-ID: <0b5ca79c-5d8c-5720-cd14-cfa4697b628d@linaro.org>
-Date:   Mon, 12 Dec 2022 10:26:11 +0000
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jN9sEBY3LAhBIsC2SKGFeUTMmLXmYwsXUk6CCQcXwxI=;
+        b=yW9i1mOfEsV5WMu4lG2Ym53/PFagO6SvrtsqkLLZJ2GKdbqvLAI6X/9MkUBiRQZUIw
+         cYj5RUUoiQpZW/xGaqrhuhHtH7DT2jhHEkRknkc+NxyN+m3UZ/JBWpR0bQIR6KagcO1J
+         Oks2gdclhz9AJGOy4YpncWlhZ5k1MVggucP5Mkd9wXJyB8D0pnwHEVMgaDBxrxx1wLfz
+         8DverTnPBE1CuRMq/Id3a4Fm0Bn+RvJ9tsaaMxIG4FIDzxtuHuPO37lbdV1G5h1aIFlu
+         fQolYy2hSiMwdFaELSfyuYgq/8enVsc9x81e0O5KjpQ5V1Vg+YCB6XMVhhHsvp+4s9Yw
+         azbw==
+X-Gm-Message-State: ANoB5pkjftPopzWiCelxKp04glHLVRlGa8xqKqjPANG0Dyf6LPWs4df0
+        n1obMDxAAhuFUaCNuM+WTlBNKQ==
+X-Google-Smtp-Source: AA0mqf5FK4Y1X52q+deu6rdGbCIJ2U5TFCkzrIkKv3HQ4S4H1QrelaJC+P8CW+wTRYBgXdgV0LCdFA==
+X-Received: by 2002:a19:5f5a:0:b0:4b5:9b5b:ae92 with SMTP id a26-20020a195f5a000000b004b59b5bae92mr3978862lfj.10.1670842445212;
+        Mon, 12 Dec 2022 02:54:05 -0800 (PST)
+Received: from [127.0.0.1] ([94.25.229.102])
+        by smtp.gmail.com with ESMTPSA id h28-20020a056512055c00b00494942bec60sm1588845lfl.17.2022.12.12.02.54.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Dec 2022 02:54:04 -0800 (PST)
+Date:   Mon, 12 Dec 2022 13:53:59 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+CC:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: Add DISPCC node
+User-Agent: K-9 Mail for Android
+In-Reply-To: <80168963-0e17-e8aa-6d99-a1c53f63c934@linaro.org>
+References: <20221212093315.11390-1-konrad.dybcio@linaro.org> <20221212093315.11390-2-konrad.dybcio@linaro.org> <FF242AC6-01EC-4C8E-BE49-BB54FC9D2FEE@linaro.org> <80168963-0e17-e8aa-6d99-a1c53f63c934@linaro.org>
+Message-ID: <16CE34C3-ADAE-47EC-AAFB-4436C4D8C842@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] slimbus: qcom-ngd: Add check for platform_driver_register
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, agross@kernel.org,
-        konrad.dybcio@somainline.org
-Cc:     linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-References: <20221212094950.23050-1-jiasheng@iscas.ac.cn>
-Content-Language: en-US
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20221212094950.23050-1-jiasheng@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,32 +84,88 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12/12/2022 09:49, Jiasheng Jiang wrote:
-> Add the check for the return value of platform_driver_register
-> in order to catch the exception.
-> 
-> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+On 12 December 2022 13:23:50 GMT+03:00, Konrad Dybcio <konrad=2Edybcio@lin=
+aro=2Eorg> wrote:
+>
+>
+>On 12=2E12=2E2022 11:18, Dmitry Baryshkov wrote:
+>>=20
+>>=20
+>> On 12 December 2022 12:33:13 GMT+03:00, Konrad Dybcio <konrad=2Edybcio@=
+linaro=2Eorg> wrote:
+>>> Years after the SoC support has been added, it's high time for it to
+>>> get dispcc going=2E Add the node to ensure that=2E
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg>
+>>> ---
+>>> arch/arm64/boot/dts/qcom/sm8150=2Edtsi | 26 ++++++++++++++++++++++++++
+>>> 1 file changed, 26 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8150=2Edtsi b/arch/arm64/boot/=
+dts/qcom/sm8150=2Edtsi
+>>> index a0c57fb798d3=2E=2Eff04397777f4 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8150=2Edtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8150=2Edtsi
+>>> @@ -3579,6 +3579,32 @@ camnoc_virt: interconnect@ac00000 {
+>>> 			qcom,bcm-voters =3D <&apps_bcm_voter>;
+>>> 		};
+>>>
+>>> +		dispcc: clock-controller@af00000 {
+>>> +			compatible =3D "qcom,sm8150-dispcc";
+>>> +			reg =3D <0 0x0af00000 0 0x10000>;
+>>> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+>>> +				 <0>,
+>>> +				 <0>,
+>>> +				 <0>,
+>>> +				 <0>,
+>>> +				 <0>,
+>>> +				 <0>;
+>>> +			clock-names =3D "bi_tcxo",
+>>> +				      "dsi0_phy_pll_out_byteclk",
+>>> +				      "dsi0_phy_pll_out_dsiclk",
+>>> +				      "dsi1_phy_pll_out_byteclk",
+>>> +				      "dsi1_phy_pll_out_dsiclk",
+>>> +				      "dp_phy_pll_link_clk",
+>>> +				      "dp_phy_pll_vco_div_clk";
+>>> +			#clock-cells =3D <1>;
+>>> +			#reset-cells =3D <1>;
+>>> +			#power-domain-cells =3D <1>;
+>>> +
+>>> +			power-domains =3D <&rpmhpd SM8150_MMCX>;
+>>> +			/* TODO: Maybe rpmhpd_opp_min_svs could work as well? */
+>>> +			required-opps =3D <&rpmhpd_opp_low_svs>;
+>>=20
+>> Is it required for the dispcc, for the DSI or for the dpu? We have stum=
+bled upon the similar issue when working on the 8350, see the latest Robert=
+'s patchset=2E
+>While I don't have any hard evidence, it seems like it is required for
+>any "interesting" multimedia components, AFAIU even including video and
+>camera clocks=2E=2E
+>
+>Seems like it's a deep down dependency for a lot of things on this
+>particular SoC (and likely also on newer ones, remember the initial
+>mess with 8250 mmcx?)
 
-Applied thanks,
+Yes=2E I was questioning the opp level rather than the domain itself=2E Us=
+ually the least possible mmcx level is enough to get dispcc going=2E Then t=
+he consumers (via the PLLs) bump this requirement=2E=20
 
---srini
-> ---
->   drivers/slimbus/qcom-ngd-ctrl.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 76c5e446d243..c16fc9e6d1c6 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -1590,7 +1590,10 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
->   		goto err_pdr_lookup;
->   	}
->   
-> -	platform_driver_register(&qcom_slim_ngd_driver);
-> +	ret = platform_driver_register(&qcom_slim_ngd_driver);
-> +	if (ret < 0)
-> +		goto err_pdr_lookup; > +
->   	return of_qcom_slim_ngd_register(dev, ctrl);
->   
->   err_pdr_alloc:
+In this particular case the vendor dtsi (sm8150-regulator=2Edtsi) declares=
+ that the minimum level for mmcx is low_svs=2E So, I think, you can drop th=
+e todo completely=2E
+
+
+>
+>Konrad
+>>=20
+>>=20
+>>> +		};
+>>> +
+>>> 		pdc: interrupt-controller@b220000 {
+>>> 			compatible =3D "qcom,sm8150-pdc", "qcom,pdc";
+>>> 			reg =3D <0 0x0b220000 0 0x400>;
+>>=20
+
+--=20
+With best wishes
+Dmitry
