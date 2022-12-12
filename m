@@ -2,304 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D86264A643
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 18:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D04664A6FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 19:24:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232815AbiLLRwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 12:52:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52736 "EHLO
+        id S231370AbiLLSYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 13:24:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232706AbiLLRvv (ORCPT
+        with ESMTP id S229629AbiLLSYS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 12:51:51 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC3BDF582;
-        Mon, 12 Dec 2022 09:51:49 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BCEnoLe022710;
-        Mon, 12 Dec 2022 17:51:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vX19RixNXtE5JzIcwAaYuGfkWjixcyt3CqvWW6bxrsg=;
- b=eDZi9K7Bu0C3QoQaPrEuA5UVNbz9NgupTaAuY20YsC+Q6kAzhnUr/GQvzQ1Gt8orX7/6
- wBMDPhYGlEREx+T6yijnOM38SqRKy2fwDQN/hxHFGTAmfL4mCScCS/nP682lKIQmGGLp
- 1LSGl/o5aIJiuUEikRI2tpHyQnRT7aSVCgscQ9A/07UTzT1mf+ebRkt6LXhKD0hruW05
- ZPAz718H4tdlIPVvYrvbH1F9O0/A3bZIiFbpFTWR6ajPNBFhfzb4hOynM82Sbrl8XzhV
- AFOpW+4GFtZ02xN+mlQXULYqYcJPQ0QnPpUO4mmSNyMu/WPSBWrhJEFHvJfEWWsVcQXR Zw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3me09g9fh6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Dec 2022 17:51:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BCHpdrZ016805
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Dec 2022 17:51:39 GMT
-Received: from [10.110.7.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 12 Dec
- 2022 09:51:37 -0800
-Message-ID: <8b306c8f-3089-4aaf-7fc1-038a8330c89a@quicinc.com>
-Date:   Mon, 12 Dec 2022 09:51:37 -0800
+        Mon, 12 Dec 2022 13:24:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3B99FDC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 10:23:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1670869404;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=Tx9zUylKBDfFBr3UTAZ+7it8/woVWVXeZHnqYTyyfFg=;
+        b=CTzga9szZGNbHgYAVHkPdAH1BvclSihP+ASJb8GZ/Kh72ZFnCbXNYKgsJaQXNwClwrNSmP
+        m6f7bqA/JB7WEATI86V9CzGWKAFf8SkKhEA2KXeUlePb49tPqqc5hcZ4me8xed5CNPfvj3
+        /C6IetDbZCRxpf3otm2xEbHh8o1zdtE=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-125--ESTu5t3NhWKmNiXXMOhxg-1; Mon, 12 Dec 2022 13:23:23 -0500
+X-MC-Unique: -ESTu5t3NhWKmNiXXMOhxg-1
+Received: by mail-qv1-f72.google.com with SMTP id q17-20020a056214019100b004b1d3c9f3acso12340904qvr.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 10:23:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tx9zUylKBDfFBr3UTAZ+7it8/woVWVXeZHnqYTyyfFg=;
+        b=L8mBSxwN3oMzcSyuMADdR/oWRXycakHoSmFdyp4RC/FgURGSdnElqzLvYO6GTeSKEO
+         PIAiHWOa4p99njagiNeGg2kdRjPWQvYKCf95r92AkScj/8AbgmTD2E4GB4p2fHhZ/yV2
+         LoKtGs5O4yAiGbF1Wf5UeE9wM6VvOsaXletjEBwr0N2sVSaRSEHHkKWFlp3kmnrbIYXE
+         5yk5IiUOSPIu9oSIdRgcXvwSHJG2iDxnKKQMdqsWoi/R5ASEqqldr+fSs0MjZ4ApIioy
+         qa09CeMyW88KM3p/LyOLIChzDjPg3SzuO2kBUyQEt0ahQxHwhGepbt4voMvqbUcjLdoD
+         f+jg==
+X-Gm-Message-State: ANoB5plir9uNELPDsJRfzDXf7BTNIT9Mx9tC1z5JiI6eZPcDQDhFztEP
+        68JPtt3Yp/ZsKdCrsrTaA4N7g16HwtCtEgKelZZjHLUqTqRXu2wZA7CH5VJJsN8wxvR8R0SCfYu
+        auCpk5A6ZcNp9rWKe4YpeLlenew==
+X-Received: by 2002:a05:622a:40d:b0:3a6:9cfa:d6a with SMTP id n13-20020a05622a040d00b003a69cfa0d6amr34143905qtx.30.1670869403163;
+        Mon, 12 Dec 2022 10:23:23 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf68yCfVvT7yzOgIFVasf/aQAthqe8C5fxTiuJLYFSRNww7CRo4RPR7WgE0z5yI/hHFsRNgkEQ==
+X-Received: by 2002:a05:622a:40d:b0:3a6:9cfa:d6a with SMTP id n13-20020a05622a040d00b003a69cfa0d6amr34143873qtx.30.1670869402946;
+        Mon, 12 Dec 2022 10:23:22 -0800 (PST)
+Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id 3-20020ac85643000000b003a816011d51sm1998185qtt.38.2022.12.12.10.23.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 10:23:22 -0800 (PST)
+From:   Brian Masney <bmasney@redhat.com>
+To:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com, quic_shazhuss@quicinc.com
+Subject: [PATCH 0/4] arm64: dts: qcom: sc8280xp: add i2c and spi nodes
+Date:   Mon, 12 Dec 2022 13:23:10 -0500
+Message-Id: <20221212182314.1902632-1-bmasney@redhat.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v11 2/5] dt-bindings: msm/dp: add data-lanes and
- link-frequencies property
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
-        <airlied@gmail.com>
-CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1670539015-11808-1-git-send-email-quic_khsieh@quicinc.com>
- <1670539015-11808-3-git-send-email-quic_khsieh@quicinc.com>
- <5a3865ed-8847-db04-3d60-f35438250bef@linaro.org>
- <5aa16223-dbf6-996c-1985-794302dcce91@quicinc.com>
- <be1411e8-1d07-7643-977c-a306016fd660@linaro.org>
- <b6d90c1f-5365-7197-be63-96c3d8cf0746@quicinc.com>
- <e53844b7-601b-f355-302b-cc871962a446@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <e53844b7-601b-f355-302b-cc871962a446@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QrhoEHetR2ye-nVKglRGVqESAFaIt6LU
-X-Proofpoint-GUID: QrhoEHetR2ye-nVKglRGVqESAFaIt6LU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-12_02,2022-12-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- bulkscore=0 phishscore=0 adultscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212120161
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch series adds the i2c and spi nodes that are missing on the
+sc8280xp platform.
 
-On 12/8/2022 4:35 PM, Dmitry Baryshkov wrote:
-> On 09/12/2022 02:22, Kuogee Hsieh wrote:
->>
->> On 12/8/2022 4:11 PM, Dmitry Baryshkov wrote:
->>> On 09/12/2022 01:38, Kuogee Hsieh wrote:
->>>>
->>>> On 12/8/2022 3:33 PM, Dmitry Baryshkov wrote:
->>>>> On 09/12/2022 00:36, Kuogee Hsieh wrote:
->>>>>> Add both data-lanes and link-frequencies property into endpoint
->>>>>>
->>>>>> Changes in v7:
->>>>>> -- split yaml out of dtsi patch
->>>>>> -- link-frequencies from link rate to symbol rate
->>>>>> -- deprecation of old data-lanes property
->>>>>>
->>>>>> Changes in v8:
->>>>>> -- correct Bjorn mail address to kernel.org
->>>>>>
->>>>>> Changes in v10:
->>>>>> -- add menu item to data-lanes and link-frequecnis
->>>>>>
->>>>>> Changes in v11:
->>>>>> -- add endpoint property at port@1
->>>>>>
->>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
->>>>>
->>>>> Applying: dt-bindings: msm/dp: add data-lanes and link-frequencies 
->>>>> property
->>>>> .git/rebase-apply/patch:47: trailing whitespace.
->>>>>
->>>>> .git/rebase-apply/patch:51: trailing whitespace.
->>>>>
->>>>>
->>>>> Also the dt_binding_check fails with an error for this schema. And 
->>>>> after fixing the error in the schema I faced an example validation 
->>>>> error. Did you check that the schema is correct and that the 
->>>>> example validates against the schema?
->>>>
->>>> yes, but i run "make dt_binding_check 
->>>> DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dp-controller.yaml" 
->>>> at mu v5.15 branch since
->>>
->>> I wouldn't ask you to post the log here. But I don't think that 
->>> either of the errors that I see here is related to 5.15 vs 6.1-rc.
->>>
->>> In fact after applying this patch against 5.15 I saw the expected 
->>> failure:
->>>
->>> Documentation/devicetree/bindings/display/msm/dp-controller.yaml: 
->>> properties:required: ['port@0', 'port@1'] is not of type 'object', 
->>> 'boolean'
->>> Documentation/devicetree/bindings/display/msm/dp-controller.yaml: 
->>> properties: 'required' should not be valid under {'$ref': 
->>> '#/definitions/json-schema-prop-names'}
->>> Documentation/devicetree/bindings/display/msm/dp-controller.yaml: 
->>> ignoring, error in schema: properties: required
->>>
->>>>
->>>> "make dt_binding_check" does not work at msm-next branch.
->>>
->>> I went ahead and just checked.
->>>
->>> `make dt_binding_check DT_SCHEMA_FILES=display/msm`  works cleanly 
->>> in msm-next and reports a single example-related warning in 
->>> msm-next-lumag. I pushed a patch to fix that warning (wich can 
->>> hopefully be picked up by Abhinav into msm-fixes). So you can assume 
->>> that both these branches have consistent error-free display/msm 
->>> schemas.
->>>
->> I have clean msm-next branch (without my data-lines yaml patch 
->> applied) and run "make dt_binding_check 
->> DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dp-controller.yaml", 
->> then I saw below error messages.
->>
->> Have you run into this problem?
->
-> No.
+Note that this series needs to be applied on top of:
+[PATCH v3] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
+https://lore.kernel.org/lkml/20221212150045.4252-1-quic_shazhuss@quicinc.com/
 
-Did you do anything to fix "older dtschema instance"?
+Brian Masney (4):
+  arm64: dts: qcom: sc8280xp: rename i2c5 to i2c21
+  arm64: dts: qcom: sc8280xp: add missing i2c nodes
+  arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and qup2_i2c18 nodes
+  arm64: dts: qcom: sc8280xp: add missing spi nodes
 
-I had run "pip3 install dtschema --upgrade" according Rob Herring response.
-but it still shows same problem.
-Please let know how can I fix this problem.
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  46 ++
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |   6 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |   6 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 738 +++++++++++++++++-
+ 4 files changed, 789 insertions(+), 7 deletions(-)
 
->
->>
->>    HOSTCC  scripts/basic/fixdep
->>    HOSTCC  scripts/dtc/dtc.o
->>    HOSTCC  scripts/dtc/flattree.o
->>    HOSTCC  scripts/dtc/fstree.o
->>    HOSTCC  scripts/dtc/data.o
->>    HOSTCC  scripts/dtc/livetree.o
->>    HOSTCC  scripts/dtc/treesource.o
->>    HOSTCC  scripts/dtc/srcpos.o
->>    HOSTCC  scripts/dtc/checks.o
->>    HOSTCC  scripts/dtc/util.o
->>    LEX     scripts/dtc/dtc-lexer.lex.c
->>    HOSTCC  scripts/dtc/dtc-lexer.lex.o
->>    HOSTCC  scripts/dtc/dtc-parser.tab.o
->>    HOSTLD  scripts/dtc/dtc
->> sort: -:2: disorder: 2022.1
->> ERROR: dtschema minimum version is v2022.3
->> make[2]: *** [check_dtschema_version] Error 1
->> make[1]: *** [dt_binding_check] Error 2
->> make: *** [__sub-make] Error 2
->
-> This means that somewhere in your path you have an older dtschema 
-> instance.
->
-> When you sent me a question regarding this error, I asked for the 
-> additional info. You provided none. Instead you went on sending the 
-> untested patch that doesn't work.
+-- 
+2.38.1
 
-since i can not test it on msm-next so that I did test it at my v5-15 
-branch.
-
-besides, i think i have to sent the whole series patches include this 
-one to address your new comments on other patch.
-
-is this correct?
-
-
->
->>
->>>>
->>>> But I did not check trainiling whitespace this time.
->>>>
->>>>>
->>>>>> ---
->>>>>>   .../bindings/display/msm/dp-controller.yaml        | 27 
->>>>>> ++++++++++++++++++++++
->>>>>>   1 file changed, 27 insertions(+)
->>>>>>
->>>>>> diff --git 
->>>>>> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml 
->>>>>> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>>>>> index f2515af..2a7fdef8 100644
->>>>>> --- 
->>>>>> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>>>>> +++ 
->>>>>> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>>>>> @@ -81,6 +81,7 @@ properties:
->>>>>>       data-lanes:
->>>>>>       $ref: /schemas/types.yaml#/definitions/uint32-array
->>>>>> +    deprecated: true
->>>>>>       minItems: 1
->>>>>>       maxItems: 4
->>>>>>       items:
->>>>>> @@ -96,6 +97,7 @@ properties:
->>>>>>       ports:
->>>>>>       $ref: /schemas/graph.yaml#/properties/ports
->>>>>> +
->>>>>>       properties:
->>>>>>         port@0:
->>>>>>           $ref: /schemas/graph.yaml#/properties/port
->>>>>> @@ -105,6 +107,29 @@ properties:
->>>>>>           $ref: /schemas/graph.yaml#/properties/port
->>>>>>           description: Output endpoint of the controller
->>>>>>   +        properties:
->>>>>> +          endpoint:
->>>>>> +            $ref: /schemas/media/video-interfaces.yaml#
->>>>>> +
->>>>>> +            properties:
->>>>>> +              remote-endpoint: true
->>>>>
->>>>> PLease add empty lines between the property definitions
->>>>>
->>>>>> +              data-lanes:
->>>>>> +                $ref: /schemas/types.yaml#/definitions/uint32-array
->>>>>
->>>>> This is already a part of video-interfaces, so you don't need $ref
->>>>>
->>>>>> +                minItems: 1
->>>>>> +                maxItems: 4
->>>>>> +                items:
->>>>>> +                  maximum: 3
->>>>>
->>>>> enum: [0, 1, 2, 3]
->>>>>
->>>>>> +              link-frequencies:
->>>>>> +                $ref: /schemas/types.yaml#/definitions/uint64-array
->>>>>> +                minItems: 1
->>>>>> +                maxItems: 4
->>>>>> +                items:
->>>>>> +                  maximum: 8100000000
->>>>>
->>>>> I think we can have enum here too.
->>>>>
->>>>>> +
->>>>>> +  required:
->>>>>> +    - port@0
->>>>>> +    - port@1
->>>>>> +
->>>>>>   required:
->>>>>>     - compatible
->>>>>>     - reg
->>>>>> @@ -193,6 +218,8 @@ examples:
->>>>>>                   reg = <1>;
->>>>>>                   endpoint {
->>>>>>                       remote-endpoint = <&typec>;
->>>>>> +                    data-lanes = <0 1>;
->>>>>> +                    link-frequencies = /bits/ 64 <1620000000 
->>>>>> 2700000000 5400000000 8100000000>;
->>>>>>                   };
->>>>>>               };
->>>>>>           };
->>>>>
->>>
->
