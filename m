@@ -2,108 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6E4464A1E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 14:47:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E55B864A1F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 14:47:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232633AbiLLNrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 08:47:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45034 "EHLO
+        id S233121AbiLLNri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 08:47:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233043AbiLLNqo (ORCPT
+        with ESMTP id S233153AbiLLNrR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 08:46:44 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A299214096
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:46:42 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id y4so3593994ljc.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:46:42 -0800 (PST)
+        Mon, 12 Dec 2022 08:47:17 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1F49C60
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:47:15 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id p36so18630314lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AxHGtMq5GSN/TzBMFNMESrcfJh01WQBJhakkXVkndX8=;
-        b=oYeP7GzOhdz43PVU01F4GAuR16JUjwiXYXR5PMFrtLB7hVLhGGsGcfH5Tr68zU4nFk
-         MsKVjBWcCMoQr2lOaep7zvMeiPWG6nnxqvcWJx28OPElIEVDkK2ujtCZYVKhcywKYlFV
-         a+seyWGjquCdhjaUgF2gNsL4lr1CkP75b6AFs5dOho1EZ+JtZb8FL17QTT2jfXl9VT/a
-         cv9hc88jm4pzca+TuN4uXfAeTkgVVbZmjpJ2FzXMRYfWH3iuSVxQwLmVVD6bl97V4jtF
-         /KCNHZvwJsXAmCqfMpalJiHmtdvpGeN2hieF7SDO36EYZD526fqOjYMe/gmaj+Gj6qmW
-         iyXw==
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fwa7UHeP4jWr8lw9HsvvYN2BPWxn5fGIfh6v2PbeSVw=;
+        b=uGXb6zN5+CR+1yVrTz8KgytqXqqgC/zOKLH4rIJMHaAwhG0KidU1J5uCwMUt9cmjUQ
+         /YHkYuM/C5+gsLwjfADnJZF4Xx5eADunA83FlWFbYU1pbisutKxWsQAO8Zu2KgG30OEI
+         ECyzC6l4wlagv9bVrBOsBdWn2WzNeyVMNck2lEQDe1+AJIgJfd04isE+UmDb3HCN7xgb
+         LOeiZpfBdADTX3y5S/O8tC1Uspf0m4iqrbUvSViohqp2NtSYbrnwxJNUo1QXWGtMeh/b
+         46K4qFVHNQIBzqEA9e4eZkrGOYpWWjDWTttwJNVTtmToJA/3McFmNrCNVk+ipduQmJ97
+         Xekg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AxHGtMq5GSN/TzBMFNMESrcfJh01WQBJhakkXVkndX8=;
-        b=TgF4ywaCr5ReavBBT5Te8FYz7ogdv9o+sdKLzUrJ8d5gnrP7DvFG+C0NkuCisPnTi1
-         GV/kANjRUWqTxk4x0Yx7Cn64n35ZkSNPW7mpyMb8RHJk9/Pz3/FdU9RAUGLX3E1FzoBZ
-         kP0iJySCW2Zm+aOZ9PeQADZ8FEpocFOcUNlsdkgTtycMdZpxBnZR7vAcGcI9ViGQZ7T2
-         /e6mLPRLKBFEhl6ZvdoH/iteR/qj20nk6Re4btzRfiQxtySyq6iUAkolYiOvk1grCnGC
-         Q5/lzka8JxTO/QvjzWX5DvdW51VN0O7E8IvVyuBaE7YjmX0nx+6GdiTwteQv18AHianG
-         sLfQ==
-X-Gm-Message-State: ANoB5pmv6w7QGt8ZDk2tBJGEu8F1dY4E4GjHk3NSRPLrUlLYoRo9q9KP
-        24Q673x1YNb8Jk47sC2mFVki1w==
-X-Google-Smtp-Source: AA0mqf5meH8yZGLAtys7fm0t3QYrs/uHUbC8iab3mJrPDQGd04iQ3YgbZrKhKk+Dq3QvQj9WAnThIw==
-X-Received: by 2002:a2e:894f:0:b0:27a:2e09:c5be with SMTP id b15-20020a2e894f000000b0027a2e09c5bemr4047601ljk.16.1670852801021;
-        Mon, 12 Dec 2022 05:46:41 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p7-20020a2eb107000000b00279f3c58278sm1215055ljl.51.2022.12.12.05.46.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Dec 2022 05:46:40 -0800 (PST)
-Message-ID: <e9a61363-a43a-5ee9-80d0-129b9b328040@linaro.org>
-Date:   Mon, 12 Dec 2022 14:46:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: rename AOSS QMP node to pmu
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fwa7UHeP4jWr8lw9HsvvYN2BPWxn5fGIfh6v2PbeSVw=;
+        b=DIER+CZtTnxUDfMSX9tFcwAM3mi172pkdXbHJxe3FxuY6AQNrUis9DyYZprsXa3Dj6
+         tqGQw3JBiACh4/J979WylZANKkm9U22xTemFzuD3tJC0v2IYM7cR0i65UHcFyYl2UF2a
+         c5bKbLzEKEkfmxENmyksZ5/We1giLNheMcfL3pJ4PyiEOYnp3vnOkIbpD8uqmZRtXrrm
+         Sq4B/t1pOszKxD+mLw8asURQYymjKuCz9FLzfABJnBit2MpEm+5TTBy7vyset5P1vVJ6
+         dCuo4E+yhhIuSxNXNT5nTZG4ElqPVWEZszq96P+4mZVc/s2VuT30kdnWFltyY0Jvdn3U
+         xKGQ==
+X-Gm-Message-State: ANoB5pn8JM2Sr9gSVKTwsj4dxIWT5pFWaAPQ8mbFVKxeaocjXVQ5322K
+        F6/EnIJkhMhiwM5/ZI3Vdmb+CQ==
+X-Google-Smtp-Source: AA0mqf6S9ilREXYP4pJVvd2O0SwbUhO/LdlOqSxcoQLTs+D42tILpcbn5Ti8IubBFgBb79ELwQY5Xg==
+X-Received: by 2002:ac2:52b9:0:b0:4b5:83ba:8c55 with SMTP id r25-20020ac252b9000000b004b583ba8c55mr4024394lfm.8.1670852834104;
+        Mon, 12 Dec 2022 05:47:14 -0800 (PST)
+Received: from [127.0.0.1] ([94.25.229.102])
+        by smtp.gmail.com with ESMTPSA id y20-20020a05651c021400b002797d6bb516sm1209659ljn.20.2022.12.12.05.47.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Dec 2022 05:47:13 -0800 (PST)
+Date:   Mon, 12 Dec 2022 16:47:10 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+CC:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221212133303.39610-1-krzysztof.kozlowski@linaro.org>
- <20221212133303.39610-4-krzysztof.kozlowski@linaro.org>
- <20fcf298-7d91-0458-489d-4fb65cdff380@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20fcf298-7d91-0458-489d-4fb65cdff380@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/6=5D_arm64=3A_dts=3A_qcom=3A_sc7?= =?US-ASCII?Q?180=3A_order_top-level_nodes_alphabetically?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20221212100232.138519-1-krzysztof.kozlowski@linaro.org>
+References: <20221212100232.138519-1-krzysztof.kozlowski@linaro.org>
+Message-ID: <725A4567-0024-451A-99F1-30E6FED04E5B@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/12/2022 14:38, Konrad Dybcio wrote:
-> 
-> 
-> On 12.12.2022 14:33, Krzysztof Kozlowski wrote:
->> The Always On Subsystem (AOSS) QMP is not a power domain controller
->> since commit 135780456218 ("arm64: dts: qcom: sc7180: Use QMP property
->> to control load state") and few others.  In fact, it was never a power
->> domain controller but rather control of power state of remote
->> processors.  This power state control is know handled differently, thus
->> the AOSS QMP nodes do not have power-domain-cells:
->>
->>   sc7280-idp.dtb: power-controller@c300000: '#power-domain-cells' is a required property
->>   From schema: Documentation/devicetree/bindings/power/power-domain.yaml
->>
->> AOSS QMP is an interface to the actuall AOSS subsystem responsible for
->> some of power management functions, thus let's call the nodes as "pmu" -
->> Power Management Unit.
-> power-management@ is used on apple and rockchip and pmu is very
-> ambiguous (power management or performance measurement unit).
 
-Sure, can be power-management. Samsung uses also pmu, but indeed it is
-easy to confuse with PMU counters.
 
-Best regards,
-Krzysztof
+On 12 December 2022 13:02:27 GMT+03:00, Krzysztof Kozlowski <krzysztof=2Ek=
+ozlowski@linaro=2Eorg> wrote:
+>Order top-level nodes like memory, reserved-memory, opp-table-cpu
+>alphabetically for easier code maintenance=2E  No functional change (same
+>dtx_diff)=2E
+>
+>Signed-off-by: Krzysztof Kozlowski <krzysztof=2Ekozlowski@linaro=2Eorg>
 
+Reviewed-by: Dmitry Baryshkov<dmitry=2Ebaryshkov@linaro=2Eorg>
+
+>
+>---
+>
+>Changes since v1:
+>1=2E New patch
+>---
+> arch/arm64/boot/dts/qcom/sc7180=2Edtsi | 144 +++++++++++++--------------
+> 1 file changed, 72 insertions(+), 72 deletions(-)
+>
+>diff --git a/arch/arm64/boot/dts/qcom/sc7180=2Edtsi b/arch/arm64/boot/dts=
+/qcom/sc7180=2Edtsi
+>index ea886cf08b4d=2E=2E6d3e86ce2936 100644
+>--- a/arch/arm64/boot/dts/qcom/sc7180=2Edtsi
+>+++ b/arch/arm64/boot/dts/qcom/sc7180=2Edtsi
+>@@ -27,8 +27,6 @@ / {
+> 	#address-cells =3D <2>;
+> 	#size-cells =3D <2>;
+>=20
+>-	chosen { };
+>-
+> 	aliases {
+> 		mmc1 =3D &sdhc_1;
+> 		mmc2 =3D &sdhc_2;
+>@@ -54,6 +52,8 @@ aliases {
+> 		spi11 =3D &spi11;
+> 	};
+>=20
+>+	chosen { };
+>+
+> 	clocks {
+> 		xo_board: xo-board {
+> 			compatible =3D "fixed-clock";
+>@@ -68,62 +68,6 @@ sleep_clk: sleep-clk {
+> 		};
+> 	};
+>=20
+>-	reserved_memory: reserved-memory {
+>-		#address-cells =3D <2>;
+>-		#size-cells =3D <2>;
+>-		ranges;
+>-
+>-		hyp_mem: memory@80000000 {
+>-			reg =3D <0x0 0x80000000 0x0 0x600000>;
+>-			no-map;
+>-		};
+>-
+>-		xbl_mem: memory@80600000 {
+>-			reg =3D <0x0 0x80600000 0x0 0x200000>;
+>-			no-map;
+>-		};
+>-
+>-		aop_mem: memory@80800000 {
+>-			reg =3D <0x0 0x80800000 0x0 0x20000>;
+>-			no-map;
+>-		};
+>-
+>-		aop_cmd_db_mem: memory@80820000 {
+>-			reg =3D <0x0 0x80820000 0x0 0x20000>;
+>-			compatible =3D "qcom,cmd-db";
+>-			no-map;
+>-		};
+>-
+>-		sec_apps_mem: memory@808ff000 {
+>-			reg =3D <0x0 0x808ff000 0x0 0x1000>;
+>-			no-map;
+>-		};
+>-
+>-		smem_mem: memory@80900000 {
+>-			reg =3D <0x0 0x80900000 0x0 0x200000>;
+>-			no-map;
+>-		};
+>-
+>-		tz_mem: memory@80b00000 {
+>-			reg =3D <0x0 0x80b00000 0x0 0x3900000>;
+>-			no-map;
+>-		};
+>-
+>-		ipa_fw_mem: memory@8b700000 {
+>-			reg =3D <0 0x8b700000 0 0x10000>;
+>-			no-map;
+>-		};
+>-
+>-		rmtfs_mem: memory@94600000 {
+>-			compatible =3D "qcom,rmtfs-mem";
+>-			reg =3D <0x0 0x94600000 0x0 0x200000>;
+>-			no-map;
+>-
+>-			qcom,client-id =3D <1>;
+>-			qcom,vmid =3D <15>;
+>-		};
+>-	};
+>-
+> 	cpus {
+> 		#address-cells =3D <2>;
+> 		#size-cells =3D <0>;
+>@@ -398,6 +342,18 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
+> 		};
+> 	};
+>=20
+>+	firmware {
+>+		scm {
+>+			compatible =3D "qcom,scm-sc7180", "qcom,scm";
+>+		};
+>+	};
+>+
+>+	memory@80000000 {
+>+		device_type =3D "memory";
+>+		/* We expect the bootloader to fill in the size */
+>+		reg =3D <0 0x80000000 0 0>;
+>+	};
+>+
+> 	cpu0_opp_table: opp-table-cpu0 {
+> 		compatible =3D "operating-points-v2";
+> 		opp-shared;
+>@@ -538,20 +494,69 @@ cpu6_opp16: opp-2553600000 {
+> 		};
+> 	};
+>=20
+>-	memory@80000000 {
+>-		device_type =3D "memory";
+>-		/* We expect the bootloader to fill in the size */
+>-		reg =3D <0 0x80000000 0 0>;
+>-	};
+>-
+> 	pmu {
+> 		compatible =3D "arm,armv8-pmuv3";
+> 		interrupts =3D <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
+> 	};
+>=20
+>-	firmware {
+>-		scm {
+>-			compatible =3D "qcom,scm-sc7180", "qcom,scm";
+>+	psci {
+>+		compatible =3D "arm,psci-1=2E0";
+>+		method =3D "smc";
+>+	};
+>+
+>+	reserved_memory: reserved-memory {
+>+		#address-cells =3D <2>;
+>+		#size-cells =3D <2>;
+>+		ranges;
+>+
+>+		hyp_mem: memory@80000000 {
+>+			reg =3D <0x0 0x80000000 0x0 0x600000>;
+>+			no-map;
+>+		};
+>+
+>+		xbl_mem: memory@80600000 {
+>+			reg =3D <0x0 0x80600000 0x0 0x200000>;
+>+			no-map;
+>+		};
+>+
+>+		aop_mem: memory@80800000 {
+>+			reg =3D <0x0 0x80800000 0x0 0x20000>;
+>+			no-map;
+>+		};
+>+
+>+		aop_cmd_db_mem: memory@80820000 {
+>+			reg =3D <0x0 0x80820000 0x0 0x20000>;
+>+			compatible =3D "qcom,cmd-db";
+>+			no-map;
+>+		};
+>+
+>+		sec_apps_mem: memory@808ff000 {
+>+			reg =3D <0x0 0x808ff000 0x0 0x1000>;
+>+			no-map;
+>+		};
+>+
+>+		smem_mem: memory@80900000 {
+>+			reg =3D <0x0 0x80900000 0x0 0x200000>;
+>+			no-map;
+>+		};
+>+
+>+		tz_mem: memory@80b00000 {
+>+			reg =3D <0x0 0x80b00000 0x0 0x3900000>;
+>+			no-map;
+>+		};
+>+
+>+		ipa_fw_mem: memory@8b700000 {
+>+			reg =3D <0 0x8b700000 0 0x10000>;
+>+			no-map;
+>+		};
+>+
+>+		rmtfs_mem: memory@94600000 {
+>+			compatible =3D "qcom,rmtfs-mem";
+>+			reg =3D <0x0 0x94600000 0x0 0x200000>;
+>+			no-map;
+>+
+>+			qcom,client-id =3D <1>;
+>+			qcom,vmid =3D <15>;
+> 		};
+> 	};
+>=20
+>@@ -640,11 +645,6 @@ ipa_smp2p_in: ipa-modem-to-ap {
+> 		};
+> 	};
+>=20
+>-	psci {
+>-		compatible =3D "arm,psci-1=2E0";
+>-		method =3D "smc";
+>-	};
+>-
+> 	soc: soc@0 {
+> 		#address-cells =3D <2>;
+> 		#size-cells =3D <2>;
+
+--=20
+With best wishes
+Dmitry
