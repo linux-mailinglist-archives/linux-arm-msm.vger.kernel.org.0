@@ -2,84 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36153649B6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 10:50:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F15A649B92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 11:03:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbiLLJuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 04:50:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33160 "EHLO
+        id S231963AbiLLKC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 05:02:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbiLLJuD (ORCPT
+        with ESMTP id S231986AbiLLKCs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 04:50:03 -0500
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DDA2DE8B;
-        Mon, 12 Dec 2022 01:50:01 -0800 (PST)
-Received: from localhost.localdomain (unknown [124.16.138.125])
-        by APP-05 (Coremail) with SMTP id zQCowAAXH_NA+ZZj5q2tBg--.62925S2;
-        Mon, 12 Dec 2022 17:49:52 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     agross@kernel.org, konrad.dybcio@somainline.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] slimbus: qcom-ngd: Add check for platform_driver_register
-Date:   Mon, 12 Dec 2022 17:49:50 +0800
-Message-Id: <20221212094950.23050-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Mon, 12 Dec 2022 05:02:48 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C954CB29
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:02:45 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id s10so11963549ljg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 02:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3vEjbU4OBSDOtUCM9Wt4KBN/qFz8DdboyKF7lJ0Y5bA=;
+        b=AQZfai+wn5sBVMoXTo5P2/oNGdHPFWIDDOxs/DDGifb5xh4E6qFlNGvvpdTXeNbcro
+         ohnAKOwNnLBSpbUyVnKdLXNwsntNWt35/sNpM8ytt8JscxeWZ4Br4p2A/9uYLihyl/FU
+         h5qWA0YpM9HrFCFstOz/8lB+mMhUiKp63NKLVaRCbBpgrHG7J7Mvl8hjs5xMtrsY70KP
+         /gjTrW3rGZvZSgOvvuiZ7aVwVTVhDKwYOcy2m2e5lwfU9hG8c+qbvyQRmuIfpZ9CzfJi
+         eIzzyjfsmlMCNyGK+dR2wJ2WvLdNczeZDXtVJUod3PBeOpX5Ynv4n0AI7fuITFRLHwZo
+         DtRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3vEjbU4OBSDOtUCM9Wt4KBN/qFz8DdboyKF7lJ0Y5bA=;
+        b=QCPrM6TyI95Qyc9EsbvvYsZv50g/aVjxTf3vlBwln0hdFC30kU4ck5tgGgqqYk573f
+         ZzFiOdWkOFEYgRiZVIR25kOjVI0PLktvwq5sTVWxHMOFrlXrGQjp30NOcWnAT1P5obMg
+         bACRRjvA887M/CxQPwa+XvN8+k/CVQaIxK7e+TiLQLwg0PbvyRL6McAlR1MaFBTi+h0d
+         8O1Q28upmmFSKGOxXyZ8MBimdYxdiBrIEdiP64Zf1a2eCvbIXNgp9V8+V28lOw2IPWUJ
+         /UjhoFGOGmHl6AH8EUAYcHNypyKt6uryCdekWL9DY0pVjFqhZ9yVqOoasLR1ZtHc+yno
+         rUiQ==
+X-Gm-Message-State: ANoB5plqP7kXSZIBmrq+ATPceiR2nkVzt8yUb31DUBJiQwsvbGbzuC/q
+        RCFBqH0Hv8Ui5uLuEHxcW3srqA==
+X-Google-Smtp-Source: AA0mqf66ulkIMS8nB+P3zSg1GOCpwZC8sb72bFEi+FWYCNNZ4PRqd59cX1A4sUI1Dmoif2oR3KIeYA==
+X-Received: by 2002:a2e:a58e:0:b0:279:8e95:a3d with SMTP id m14-20020a2ea58e000000b002798e950a3dmr5093821ljp.13.1670839364154;
+        Mon, 12 Dec 2022 02:02:44 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id i124-20020a2e2282000000b0027712379ec8sm1145101lji.28.2022.12.12.02.02.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 02:02:43 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/6] arm64: dts: qcom: sc7180: order top-level nodes alphabetically
+Date:   Mon, 12 Dec 2022 11:02:27 +0100
+Message-Id: <20221212100232.138519-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAAXH_NA+ZZj5q2tBg--.62925S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7JFW3tFyUuw4rXFWfGF4DArb_yoWfAwcEkr
-        yS9F9FyrsxCrnIvFnFqF43Z34IyF98WFs5uw4jvry3trWxJF1DXr4Yvr4UCF4UCrWUtw17
-        J3s0yrWfAryxGjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb2AFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-        Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-        jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8uwCF
-        04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
-        18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vI
-        r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
-        1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvE
-        x4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU4BT5UUUUU=
-X-Originating-IP: [124.16.138.125]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the check for the return value of platform_driver_register
-in order to catch the exception.
+Order top-level nodes like memory, reserved-memory, opp-table-cpu
+alphabetically for easier code maintenance.  No functional change (same
+dtx_diff).
 
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 76c5e446d243..c16fc9e6d1c6 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1590,7 +1590,10 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 		goto err_pdr_lookup;
- 	}
+Changes since v1:
+1. New patch
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 144 +++++++++++++--------------
+ 1 file changed, 72 insertions(+), 72 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index ea886cf08b4d..6d3e86ce2936 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -27,8 +27,6 @@ / {
+ 	#address-cells = <2>;
+ 	#size-cells = <2>;
  
--	platform_driver_register(&qcom_slim_ngd_driver);
-+	ret = platform_driver_register(&qcom_slim_ngd_driver);
-+	if (ret < 0)
-+		goto err_pdr_lookup;
+-	chosen { };
+-
+ 	aliases {
+ 		mmc1 = &sdhc_1;
+ 		mmc2 = &sdhc_2;
+@@ -54,6 +52,8 @@ aliases {
+ 		spi11 = &spi11;
+ 	};
+ 
++	chosen { };
 +
- 	return of_qcom_slim_ngd_register(dev, ctrl);
+ 	clocks {
+ 		xo_board: xo-board {
+ 			compatible = "fixed-clock";
+@@ -68,62 +68,6 @@ sleep_clk: sleep-clk {
+ 		};
+ 	};
  
- err_pdr_alloc:
+-	reserved_memory: reserved-memory {
+-		#address-cells = <2>;
+-		#size-cells = <2>;
+-		ranges;
+-
+-		hyp_mem: memory@80000000 {
+-			reg = <0x0 0x80000000 0x0 0x600000>;
+-			no-map;
+-		};
+-
+-		xbl_mem: memory@80600000 {
+-			reg = <0x0 0x80600000 0x0 0x200000>;
+-			no-map;
+-		};
+-
+-		aop_mem: memory@80800000 {
+-			reg = <0x0 0x80800000 0x0 0x20000>;
+-			no-map;
+-		};
+-
+-		aop_cmd_db_mem: memory@80820000 {
+-			reg = <0x0 0x80820000 0x0 0x20000>;
+-			compatible = "qcom,cmd-db";
+-			no-map;
+-		};
+-
+-		sec_apps_mem: memory@808ff000 {
+-			reg = <0x0 0x808ff000 0x0 0x1000>;
+-			no-map;
+-		};
+-
+-		smem_mem: memory@80900000 {
+-			reg = <0x0 0x80900000 0x0 0x200000>;
+-			no-map;
+-		};
+-
+-		tz_mem: memory@80b00000 {
+-			reg = <0x0 0x80b00000 0x0 0x3900000>;
+-			no-map;
+-		};
+-
+-		ipa_fw_mem: memory@8b700000 {
+-			reg = <0 0x8b700000 0 0x10000>;
+-			no-map;
+-		};
+-
+-		rmtfs_mem: memory@94600000 {
+-			compatible = "qcom,rmtfs-mem";
+-			reg = <0x0 0x94600000 0x0 0x200000>;
+-			no-map;
+-
+-			qcom,client-id = <1>;
+-			qcom,vmid = <15>;
+-		};
+-	};
+-
+ 	cpus {
+ 		#address-cells = <2>;
+ 		#size-cells = <0>;
+@@ -398,6 +342,18 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 		};
+ 	};
+ 
++	firmware {
++		scm {
++			compatible = "qcom,scm-sc7180", "qcom,scm";
++		};
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		/* We expect the bootloader to fill in the size */
++		reg = <0 0x80000000 0 0>;
++	};
++
+ 	cpu0_opp_table: opp-table-cpu0 {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+@@ -538,20 +494,69 @@ cpu6_opp16: opp-2553600000 {
+ 		};
+ 	};
+ 
+-	memory@80000000 {
+-		device_type = "memory";
+-		/* We expect the bootloader to fill in the size */
+-		reg = <0 0x80000000 0 0>;
+-	};
+-
+ 	pmu {
+ 		compatible = "arm,armv8-pmuv3";
+ 		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
+ 	};
+ 
+-	firmware {
+-		scm {
+-			compatible = "qcom,scm-sc7180", "qcom,scm";
++	psci {
++		compatible = "arm,psci-1.0";
++		method = "smc";
++	};
++
++	reserved_memory: reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		hyp_mem: memory@80000000 {
++			reg = <0x0 0x80000000 0x0 0x600000>;
++			no-map;
++		};
++
++		xbl_mem: memory@80600000 {
++			reg = <0x0 0x80600000 0x0 0x200000>;
++			no-map;
++		};
++
++		aop_mem: memory@80800000 {
++			reg = <0x0 0x80800000 0x0 0x20000>;
++			no-map;
++		};
++
++		aop_cmd_db_mem: memory@80820000 {
++			reg = <0x0 0x80820000 0x0 0x20000>;
++			compatible = "qcom,cmd-db";
++			no-map;
++		};
++
++		sec_apps_mem: memory@808ff000 {
++			reg = <0x0 0x808ff000 0x0 0x1000>;
++			no-map;
++		};
++
++		smem_mem: memory@80900000 {
++			reg = <0x0 0x80900000 0x0 0x200000>;
++			no-map;
++		};
++
++		tz_mem: memory@80b00000 {
++			reg = <0x0 0x80b00000 0x0 0x3900000>;
++			no-map;
++		};
++
++		ipa_fw_mem: memory@8b700000 {
++			reg = <0 0x8b700000 0 0x10000>;
++			no-map;
++		};
++
++		rmtfs_mem: memory@94600000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0x0 0x94600000 0x0 0x200000>;
++			no-map;
++
++			qcom,client-id = <1>;
++			qcom,vmid = <15>;
+ 		};
+ 	};
+ 
+@@ -640,11 +645,6 @@ ipa_smp2p_in: ipa-modem-to-ap {
+ 		};
+ 	};
+ 
+-	psci {
+-		compatible = "arm,psci-1.0";
+-		method = "smc";
+-	};
+-
+ 	soc: soc@0 {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
 -- 
-2.25.1
+2.34.1
 
