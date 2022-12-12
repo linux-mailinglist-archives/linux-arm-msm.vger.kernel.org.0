@@ -2,146 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F6D8649906
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 07:44:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 003E6649A03
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 09:31:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231341AbiLLGoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 01:44:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42048 "EHLO
+        id S231526AbiLLIbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 03:31:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230105AbiLLGop (ORCPT
+        with ESMTP id S231314AbiLLIbN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 01:44:45 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83214BC37
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 22:44:43 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id p24so11102522plw.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Dec 2022 22:44:43 -0800 (PST)
+        Mon, 12 Dec 2022 03:31:13 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA85DB7F7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:31:12 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id e7-20020a17090a77c700b00216928a3917so14892268pjs.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 00:31:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EOjA9NfakO0KzNqsNg9qNeYV4CGLM+TuQ0nmxpOQJ9w=;
-        b=NjejaRF65HoJIwMgYJNZ2uHBni9SoDbWmw2/nUmggtYtnNlEULVD737xk/yG+5b03d
-         dhVGEuBsfX1ImiMdFRS8N8OPcHSyuQNpjEormx3zxQIymbpRrfMN95k+AsubPB7RE16i
-         EUvgH5gHy1AemZZl7GVhEq/hpmaaDiJur81ATJ9oiAubIFEsBFrpp8Md5E4yByeL9J+G
-         FBKQZdhYtUPPtG/ter0AC6BRMcryh0KfTj+zHQs8HFVg7ow9cfA+D2rwfBaaESpGi5Wr
-         X8xUYzhK+D5Fu8fxrEbaoQSqGksGXg5W155s3tIm82aC77v33yCbmGCHxCpL9wQwpiIu
-         sxXA==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iWyqcbEobVY6MJH71CuFBWxe9XmeeKvZO6SIVIyqpig=;
+        b=nKIeqNHGRJB6T98ir5rkARvWH/vB1natI0w21/uQ2CUCTH6Pzva6OJJLipesiEydXl
+         HeOuvTrNeIom3knzVR6TjSh/GF2fpvtx14dySdlJA+WibjR0RKeYC/U4ODnpCUMhlAaP
+         JqQ/1Cb5ksE2rE88wMdvWzupLHegqBZm/DObm2dljRg5RD9se8FRyOgX1HyQj9ROhoRP
+         9WAnToJ/oXGZ4M7And9YvRufqqICUyB0CeOPOSHN7E2301aa3PLKTCppt+2+N8hXSXVr
+         r8YgzG5GwhSKwvKq3SM/ncuvQXZ/GfP/x5cGIv+oQZDQRNZHK7T0eQNnQrAaJMdp2XE8
+         pD7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EOjA9NfakO0KzNqsNg9qNeYV4CGLM+TuQ0nmxpOQJ9w=;
-        b=ry2C2ZEIhXvAthFIoQnefe7ACrX3j/BLDzu1k1iP2TyQIzqhVYLGU+YPuwtXpPW5Wf
-         SbrIyZS0UjaDZSdy2lxbA/jVabC1NEVE/6ja7nEvicCkmctoxt7xSKlYblPHVj3dHKrj
-         J8CRdwoTzaajwj7T+yjZwvDLQTvjHgwe54bdDRwSVOlqPo/0QAxc6xR9MEoyprfy5MEC
-         BJg6Hyu8UETI32L2fXUV+/cln1hgh92bxTlem/TWMmAlVXechHrI0LPMHhPyvdiiuqBj
-         EyopN9dWtVcFhTt0z+GXdaKpQ9bHzgGSSCIk5AlT/2wBixtxf4i6cDnu8Es39Qb+Yff9
-         mbig==
-X-Gm-Message-State: ANoB5pn6NFFogMFxwGUNoYSu5jkVHnveQqi6089mTLxdvAveMBs85391
-        eAjijdjvxIIqv6+ffQ7mBxJSNA==
-X-Google-Smtp-Source: AA0mqf6CHXOLXeo961oUYQ/dv8RCRHdTmBZ+IUt/DaTwfAsoYw7AYzzump04kUDuhfRp24a8KqE2bw==
-X-Received: by 2002:a05:6a20:6b90:b0:ad:2f8b:ed7c with SMTP id bu16-20020a056a206b9000b000ad2f8bed7cmr11492531pzb.56.1670827482314;
-        Sun, 11 Dec 2022 22:44:42 -0800 (PST)
-Received: from localhost ([122.172.87.149])
-        by smtp.gmail.com with ESMTPSA id q8-20020a170902eb8800b001868d4600b8sm5411190plg.158.2022.12.11.22.44.39
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iWyqcbEobVY6MJH71CuFBWxe9XmeeKvZO6SIVIyqpig=;
+        b=K4YOrEOWJ34LqN4c8kg9o+/f+CzS/PXks/By8tNPYVuaYmZywjubNAM+wLtpPT+0+9
+         ow2XS9Nvwc8xgXsj3kntUb9OM52bKFBRL1J0UPRcyWAoL3rbcKfKC9gJ1hnf2d28voGS
+         xkwhykCsoUdRzF8qwRHo4zJxiflEZl7wpd9/I1Ax+Wx90SSZZOokO5MJUVVcrkH/Z4Wy
+         f9B6QnA/mfLdGfnZ2afML7h52bwwe6J/DpZ2EfKKL0odPhirZxVr2zEw4W6UVQ3g2bbY
+         AOz29P3Hp04hnpsk14DEf0uzKbbLYAexqT9fg98nSmha6jHn9wTouXCoAeNFO3/m4QeE
+         RtPQ==
+X-Gm-Message-State: ANoB5plNvSVIIfMzgOT8arXCgnfFAXpDrSewHv3jm/ldxClGZre/Cwj6
+        TKjBWaCVS+7pc5hcZwZq0jfg
+X-Google-Smtp-Source: AA0mqf5YVHazpTO71ZrnKrYEDHTRfJPDKITohRgEWwQpgS65K5BiYVb/ehEEU4wTA2QcZ5twGgAn1A==
+X-Received: by 2002:a17:902:bb8a:b0:189:abdd:400a with SMTP id m10-20020a170902bb8a00b00189abdd400amr16646760pls.15.1670833872372;
+        Mon, 12 Dec 2022 00:31:12 -0800 (PST)
+Received: from thinkpad ([220.158.159.33])
+        by smtp.gmail.com with ESMTPSA id x18-20020a170902ec9200b00188fc6766d6sm5697322plg.219.2022.12.12.00.31.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Dec 2022 22:44:40 -0800 (PST)
-Date:   Mon, 12 Dec 2022 12:14:37 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        patches@linaro.org, "Rafael J. Wysocki" <rafael@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-hw: Fix reading "reg" with
- address/size-cells != 2
-Message-ID: <20221212064437.pvk3ynghuahxort4@vireshk-i7>
-References: <20221209150759.396255-1-konrad.dybcio@linaro.org>
+        Mon, 12 Dec 2022 00:31:11 -0800 (PST)
+Date:   Mon, 12 Dec 2022 14:01:04 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
+        tony.luck@intel.com, quic_saipraka@quicinc.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, james.morse@arm.com,
+        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
+        quic_ppareek@quicinc.com
+Subject: Re: [PATCH 00/12] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Message-ID: <20221212083104.GC20655@thinkpad>
+References: <20221207135922.314827-1-manivannan.sadhasivam@linaro.org>
+ <COWBMT72Y57W.2W8G3XDNT3T34@otso>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221209150759.396255-1-konrad.dybcio@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <COWBMT72Y57W.2W8G3XDNT3T34@otso>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-12-22, 16:07, Konrad Dybcio wrote:
-> Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during
-> probe") assumed that every reg variable is 4*u32 wide (as most new qcom
+Hi Luca,
 
-                                                        corresponding ")" is missing.
-
-> SoCs set #address- and #size-cells to <2>. That is not the case for all of
-> them though. Check the cells values dynamically to ensure the proper
-> region of the DTB is being read.
+On Thu, Dec 08, 2022 at 10:16:27AM +0100, Luca Weiss wrote:
+> Hi Manivannan,
 > 
-> Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
+> On Wed Dec 7, 2022 at 2:59 PM CET, Manivannan Sadhasivam wrote:
+> > The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+> > accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+> > This offset only works for some SoCs like SDM845 for which driver support
+> > was initially added.
+> >     
+> > But the later SoCs use different register stride that vary between the
+> > banks with holes in-between. So it is not possible to use a single register
+> > stride for accessing the CSRs of each bank. By doing so could result in a
+> > crash with the current drivers. So far this crash is not reported since
+> > EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+> > driver extensively by triggering the EDAC IRQ (that's where each bank
+> > CSRs are accessed).
+> >     
+> > For fixing this issue, let's obtain the base address of each LLCC bank from
+> > devicetree and get rid of the fixed stride.
+> >
+> > This series affects multiple platforms but I have only tested this on
+> > SM8250 and SM8450. Testing on other platforms is welcomed.
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 340fed35e45d..22f48f789557 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -649,9 +649,10 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
->  {
->  	struct clk_hw_onecell_data *clk_data;
->  	struct device *dev = &pdev->dev;
-> +	struct device_node *soc_node;
->  	struct device *cpu_dev;
->  	struct clk *clk;
-> -	int ret, i, num_domains;
-> +	int ret, i, num_domains, reg_sz;
->  
->  	clk = clk_get(dev, "xo");
->  	if (IS_ERR(clk))
-> @@ -679,7 +680,22 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
->  		return ret;
->  
->  	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
-> -	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * 4);
-> +	soc_node = of_get_parent(dev->of_node);
+> If you can tell me *how* I can test it, I'd be happy to test the series
+> on sm6350, like how to trigger the EDAC IRQ.
+> 
 
-This must be dropped on failures later ?
+I suppose there is no manual way to trigger EDAC IRQ on Qcom platforms.
+For testing the series, I manually called the EDAC IRQ handler to verify
+that it doesn't crash reading the registers.
 
-> +	if (!soc_node)
-> +		return -EINVAL;
-> +
-> +	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Reuse 'i', as it's only used later in the loop */
+> So far without any extra patches I don't even see the driver probing,
+> with this in kconfig
+> 
+>   +CONFIG_EDAC=y
+>   +CONFIG_EDAC_QCOM=y
+> 
+> I do have /sys/bus/platform/drivers/qcom_llcc_edac at runtime but
+> nothing in there (except bind, uevent and unbind), and also nothing
+> interesting in dmesg with "llcc", with edac there's just this message:
+> 
+>   [    0.064800] EDAC MC: Ver: 3.0.0
+> 
+> From what I'm seeing now the edac driver is only registered if the
+> interrupt is specified but it doesn't seem like sm6350 (=lagoon) has
+> this irq? Downstream dts is just this:
+> 
 
-This can be dropped in my opinion.
+Right. The upstream EDAC driver only works in IRQ mode. So you need the
+interrupts property in LLCC devicetree node for probing.
 
-> +	ret = of_property_read_u32(soc_node, "#size-cells", &i);
+> 	cache-controller@9200000 {
+> 		compatible = "lagoon-llcc-v1";
+> 		reg = <0x9200000 0x50000> , <0x9600000 0x50000>;
+> 		reg-names = "llcc_base", "llcc_broadcast_base";
+> 		cap-based-alloc-and-pwr-collapse;
+> 	};
+> 
+> From looking at the downstream code, perhaps it's using the polling mode
+> there?
+> 
+> 	/* Request for ecc irq */
+> 	ecc_irq = llcc_driv_data->ecc_irq;
+> 	if (ecc_irq < 0) {
+> 		dev_info(dev, "No ECC IRQ; defaulting to polling mode\n");
+> 
 
-Should i be initialized ?
+In the next version, I will add polling support so that you can test the
+series on your platform without any hacks.
 
-> +	if (ret)
-> +		return ret;
-> +
-> +	reg_sz += i;
-> +
-> +	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
->  	if (num_domains <= 0)
->  		return num_domains;
->  
-> -- 
-> 2.38.1
+Thanks,
+Mani
+
+> Let me know what you think.
+> 
+> Regards
+> Luca
+> 
+> >
+> > Thanks,
+> > Mani
+> >
+> > Manivannan Sadhasivam (12):
+> >   dt-bindings: arm: msm: Update the maintainers for LLCC
+> >   dt-bindings: arm: msm: Fix register regions used for LLCC banks
+> >   arm64: dts: qcom: sdm845: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sc7180: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sc8280xp: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sm8150: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sm8250: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
+> >   arm64: dts: qcom: sm6350: Fix the base addresses of LLCC banks
+> >   qcom: llcc/edac: Fix the base address used for accessing LLCC banks
+> >
+> >  .../bindings/arm/msm/qcom,llcc.yaml           | 128 ++++++++++++++++--
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   5 +-
+> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  10 +-
+> >  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   7 +-
+> >  arch/arm64/boot/dts/qcom/sm6350.dtsi          |   2 +-
+> >  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   7 +-
+> >  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   7 +-
+> >  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   7 +-
+> >  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   7 +-
+> >  drivers/edac/qcom_edac.c                      |  14 +-
+> >  drivers/soc/qcom/llcc-qcom.c                  |  64 +++++----
+> >  include/linux/soc/qcom/llcc-qcom.h            |   4 +-
+> >  13 files changed, 197 insertions(+), 67 deletions(-)
+> >
+> > -- 
+> > 2.25.1
+> 
 
 -- 
-viresh
+மணிவண்ணன் சதாசிவம்
