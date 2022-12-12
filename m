@@ -2,168 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB5AF649E95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 13:22:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84B16649EB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 13:33:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231871AbiLLMWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 07:22:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39666 "EHLO
+        id S232295AbiLLMdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 07:33:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232023AbiLLMWE (ORCPT
+        with ESMTP id S232174AbiLLMdW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 07:22:04 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C0B210FF8;
-        Mon, 12 Dec 2022 04:22:03 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BC6mGOd001381;
-        Mon, 12 Dec 2022 12:21:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=3XkvgNx5sTLY+I2azRwSZJ5pkzu7ohIy979ecHKzVSk=;
- b=fbak5wwS7xQ3auEB1el4uRct9K9nJ33BMoLBOgmRyioPjjVD51tig8VytJC25craPwCQ
- Uyhay+19+mIDz8Uw1R5yqjRg6QSNNTYUmR3+LbD8/pOb7ar0Ch9NmK4JUGdgi+i49KQt
- OfQ1If49h1bEPrBASKnGkPSg89yLWW4cuSFAPTq84zIM4W0vlZ19fhxm+9FThB7grdWe
- IMhMAupRk3K69ing+/yWKfaKroGOKOhXt8Vk9SuIR6f8CKujAlmkh9o/FY7ad0w8QZy5
- cT/v19fx8Q/l8Kv4sm0OO8LV8g0xy5khJUsn/5yKWDeQqtd0gaNcm0y76EG4eijW0VBk UQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mch30m565-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Dec 2022 12:21:58 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BCCLvEd017647
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Dec 2022 12:21:57 GMT
-Received: from shazhuss-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 12 Dec 2022 04:21:53 -0800
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-To:     <andersson@kernel.org>, <johan@kernel.org>
-CC:     <bmasney@redhat.com>, Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
-Date:   Mon, 12 Dec 2022 17:50:59 +0530
-Message-ID: <20221212122058.597-1-quic_shazhuss@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Mon, 12 Dec 2022 07:33:22 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0860510FEB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 04:33:21 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id fy4so11583567pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 04:33:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iGi/0ZZ+vc4iAtcuWt8z9nWG7TbhSoTIkcPUXrevRhg=;
+        b=S0YmWiQ5kBfkN9C3UpzdcfTJZbyqaeWyCehKwvetGznDI982bAfbU+TlbBOLkrwoiH
+         wkv98IXhSJcagT5xDXRDTn4he3qqUUoZcpszeIlzwSE4KmLqM5vx+ZYgl9WmwYYS/x9Z
+         g6ReqxkIXK0B4zVNryiiNhZs2DfL26V3AYXbpGqvlZr+zjTc8nJYbgAhlQyG9HHZJRCD
+         GeTLSgr/CuchT5qeGDewKyo3TVt2K0sgcJDo4CZFjFQeYpXDXHXhe5ccbLWUJMSNBbL3
+         3B6/qXDrVu/SaprLSY/YXUZp+l87GasVlVfHCjofZaLQMrvsbfHpVoMHstO40BK4Hhzl
+         ertA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iGi/0ZZ+vc4iAtcuWt8z9nWG7TbhSoTIkcPUXrevRhg=;
+        b=P0i2uGiiJMb35HDbAGG3c8+XxChYvLp0AHNOws97HxJJbgw7TNjVa2IQq+SwL6X5Ww
+         pHpbQKZOXEG1Ey1HuarWNeMXyyCCXuPYI5JsMtYkorOTWYyxD1S649DXLTuNJcOS5ddX
+         jdkpi3tWecr1arNGxo689/ppXKSH9Rgyhp5o/JmJFkAUUqoVKwSKcHxuSZAfpAIi5iqP
+         a89qIS0lPp2i9G4JqAq7Rlln8Io46kUDwvGWrfUyi/84xdkHQDS/pOKYVSIX9ZFdN+SK
+         Bk9wmwoNlPUt91xSfqpKvM8CO9UyiEygB9UFnO8P0VImxROTpPbLwsan2ot3P9c21Ngs
+         HIeQ==
+X-Gm-Message-State: ANoB5pn9srFYf5s+pYmv+XAzp09Rd6A/eOytuJPiqMIGa6A+RTu4axGn
+        4z8Q42jc+XmQjzK47REO7y6e
+X-Google-Smtp-Source: AA0mqf4GZipn+jU2gOJXBOz2ZPxMB06bAfqGIAo5ENag8B8OQ8Uz4ePTdVEfD8k/tVxZnUZvtIxeqw==
+X-Received: by 2002:a17:903:40d1:b0:189:dedd:a4da with SMTP id t17-20020a17090340d100b00189dedda4damr19024132pld.34.1670848400473;
+        Mon, 12 Dec 2022 04:33:20 -0800 (PST)
+Received: from localhost.localdomain ([220.158.159.33])
+        by smtp.gmail.com with ESMTPSA id j14-20020a170902da8e00b00189c93ce5easm6252557plx.166.2022.12.12.04.33.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 04:33:19 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
+        tony.luck@intel.com
+Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
+        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
+        luca.weiss@fairphone.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC banks
+Date:   Mon, 12 Dec 2022 18:02:58 +0530
+Message-Id: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: td3KUA4tTdibcTH039d7S_m1ZXgYf2If
-X-Proofpoint-GUID: td3KUA4tTdibcTH039d7S_m1ZXgYf2If
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-12_02,2022-12-12_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- adultscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212120114
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the pcie2a, pcie2a_phy, and respective tlmm
-nodes that are needed to get pcie 2a controller
-enabled on Qdrive3.
+The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+This offset only works for some SoCs like SDM845 for which driver support
+was initially added.
+    
+But the later SoCs use different register stride that vary between the
+banks with holes in-between. So it is not possible to use a single register
+stride for accessing the CSRs of each bank. By doing so could result in a
+crash with the current drivers. So far this crash is not reported since
+EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+driver extensively by triggering the EDAC IRQ (that's where each bank
+CSRs are accessed).
+    
+For fixing this issue, let's obtain the base address of each LLCC bank from
+devicetree and get rid of the fixed stride.
 
-This patch enables 4GB 64bit memory space for
-PCIE_2A to have BAR allocations of 64bit pref mem
-needed on this Qdrive3 platform with dual SoCs
-for root port and switch NT-EP. Hence this ranges
-property is overridden in sa8540p-ride.dts only.
+This series affects multiple platforms but I have only tested this on
+SM8250 and SM8450. Testing on other platforms is welcomed.
 
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
----
-Changes since v1:
-- Fix ranges property indentation (Konrad)
+Thanks,
+Mani
 
-This patch depends on below patch series for vreg_l11a.
+Changes in v2:
 
-[v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-https://lore.kernel.org/all/20221206161916.315640-1-bmasney@redhat.com/
+* Removed reg-names property and used index of reg property to parse LLCC
+  bank base address (Bjorn)
+* Collected Ack from Sai for binding
+* Added a new patch for polling mode (Luca)
+* Renamed subject of patches targeting SC7180 and SM6350
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 44 +++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+Manivannan Sadhasivam (13):
+  dt-bindings: arm: msm: Update the maintainers for LLCC
+  dt-bindings: arm: msm: Fix register regions used for LLCC banks
+  arm64: dts: qcom: sdm845: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sc7180: Remove reg-names property from LLCC node
+  arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sc8280xp: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sm8150: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sm8250: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
+  arm64: dts: qcom: sm6350: Remove reg-names property from LLCC node
+  qcom: llcc/edac: Fix the base address used for accessing LLCC banks
+  qcom: llcc/edac: Support polling mode for ECC handling
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index bb4afd3a9632..7ce104fea4f8 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -146,6 +146,27 @@ vreg_l8g: ldo8 {
- 	};
- };
- 
-+&pcie2a {
-+	ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-+		 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>,
-+		 <0x03000000 0x5 0x00000000 0x5 0x00000000 0x1 0x00000000>;
-+
-+	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 145 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie2a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie2a_phy {
-+	vdda-phy-supply = <&vreg_l11a>;
-+	vdda-pll-supply = <&vreg_l3a>;
-+
-+	status = "okay";
-+};
-+
- &pcie3a {
- 	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
- 	         <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-@@ -247,6 +268,29 @@ &xo_board_clk {
- /* PINCTRL */
- 
- &tlmm {
-+	pcie2a_default: pcie2a-default-state {
-+		perst-pins {
-+			pins = "gpio143";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio142";
-+			function = "pcie2a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio145";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie3a_default: pcie3a-default-state {
- 		perst-pins {
- 			pins = "gpio151";
+ .../bindings/arm/msm/qcom,llcc.yaml           | 100 +++++++++++++++---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   1 -
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |   7 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |   1 -
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   5 +-
+ drivers/edac/qcom_edac.c                      |  51 +++++----
+ drivers/soc/qcom/llcc-qcom.c                  |  85 ++++++++-------
+ include/linux/soc/qcom/llcc-qcom.h            |   6 +-
+ 13 files changed, 186 insertions(+), 94 deletions(-)
+
 -- 
-2.38.0
+2.25.1
 
