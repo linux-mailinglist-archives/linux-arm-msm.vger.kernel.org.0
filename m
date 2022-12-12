@@ -2,128 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52341649D37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 12:10:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1C50649D40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 12:16:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231715AbiLLLKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 06:10:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S232048AbiLLLQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 06:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231903AbiLLLJP (ORCPT
+        with ESMTP id S231742AbiLLLQP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 06:09:15 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74C9E0D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 03:00:14 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id z26so19376lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 03:00:14 -0800 (PST)
+        Mon, 12 Dec 2022 06:16:15 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD402DDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 03:10:46 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id b13so17965203lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 03:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M3x0iqp5aFPz8f2kzDNdPrCsTS3tTCB8nihQCK7Ujcw=;
-        b=bXRlZpMTIild+Dxjk6apgmlu9Il+qjLhPOq9J0J1hEypjodLTVRxyg8MNOMvWqhqRP
-         T45c287U3setZH4Mti8QK6YaAgHzKER67ZSyAPK4j4AkmGoVZ/CaRcqxY1QsqpY0I2/i
-         6HL6vf6SvYzlrNHCEMkqrBOQmqlX8VnEDvYr38G+yovRYxUerOzwjOFYYw+OTg0bjSRB
-         QY91vvJK+u4tOW5JNYp1Rd2HwQi8EWzuXEDRjowdUlT7TNZ7apq5EGDRpyWlTqcS7gvO
-         txFxxZ/uEQmsE1729bgdw1quhYnSqArU0SSRNGjsGKRCyY5AR3fR1GIxbmzDUrMYiuUC
-         i3eQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=erkfVo9De5Tzxsulwp0pwt0Zyb1o2nyIpSq2ceHJRrM=;
+        b=q6ujZj6YVcQUo0nwt/V+fhx5M8w4G/NrpHonHQ3B0aLFdyURKvRaj1kLcnra7e5o4Q
+         xIxkR0sMpEAPhDKYD8LEJfBaQfG6l5GMdbf5JbArUxoqygUKXCc2AJFRemK+CP44yCgk
+         cPzEU4nY8Cgx/hqRiqW8Fg4j5J3VCAPIaOHvSLAQ/Kn0bOkTmJFLIq+HzSJxbCf7IbA5
+         /p5XCk31cTIYhEIreuI0RqQI6mU2p24n6pWxSIMR105Cr2/U09iKrN5yrvM+7Yuw46m+
+         stLdaW/cCu+tgbH0bNDOIlnA++wSTs09B116/Nrz5Ssx1mVlVF1ttOVEW8Od979I9/GQ
+         DI9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M3x0iqp5aFPz8f2kzDNdPrCsTS3tTCB8nihQCK7Ujcw=;
-        b=h6VzWJG0Q3RzHX7y3rIK2lD9IJnnCJtFcF03xpCEylfPvdsHJEDNLHkygZ4eBbDq7M
-         dgVS4Qh4f4qFk7AO/60jifHwuSv2BSPJN5WB6yYknmEgXAoPqmLI1sAXmt6qP+fwWImW
-         mpBOjWu5mMO734pz44+hbbpfMi+HGGi2PeWButJ9Fso8y8D9fsYjgrtfVN7vYpDg8/Tq
-         Q4QjfiUi4HMObB8tLPO+V1HHCdmpl+XKRodnEbyTQGTVxMx5g7LlywKs6uzNMkGLaR36
-         sp5jn/8nu2Yr6u6rittfRWIzei6xKN2N/9huUAJDhJ48aIQEfUmggWpeL8wQFUBrz0lK
-         jtqg==
-X-Gm-Message-State: ANoB5plD6ziCZJC3CrIARb70jAs7wU1W2iJzc/7o72h12Qbk0GJr4lxe
-        OIuDphiae/BGaVvWIVI3hJiC8g==
-X-Google-Smtp-Source: AA0mqf4qaFlUlwvilOU1C1c17UbZjKzRgdAXx+vap0wTJcndFZ0qJ/knDQkSYUBNQirD9djsjr4DTg==
-X-Received: by 2002:ac2:5f6a:0:b0:4b5:61e8:8934 with SMTP id c10-20020ac25f6a000000b004b561e88934mr3245177lfc.64.1670842813000;
-        Mon, 12 Dec 2022 03:00:13 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id p14-20020a056512312e00b004b550c26949sm1578128lfd.290.2022.12.12.03.00.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Dec 2022 03:00:12 -0800 (PST)
-Message-ID: <57d3ba20-f1de-d7f3-d689-b25a02174379@linaro.org>
-Date:   Mon, 12 Dec 2022 12:00:10 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Add SM8150 DPU compatible
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        linux-kernel@vger.kernel.org
-References: <20221212100617.18190-1-konrad.dybcio@linaro.org>
- <552EFDD5-4BBE-408D-90EA-C96F4A0876B7@linaro.org>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=erkfVo9De5Tzxsulwp0pwt0Zyb1o2nyIpSq2ceHJRrM=;
+        b=ePpwwKHCI26gwY/bIkXs5AMhKzgyW7vN0qScbO+PQicojC/S0ZBRNZVrJt42XoS+a3
+         w/UH5McTmjeE649tP9+zBA1pjxPoZBvCMLxkasqJk/carwmQHhzkuokOvzl3/pvmp5x3
+         6E/rPSYzkTMRAnkoJX+d5DmEBFB6DOnRmlrib+UB2m1a112equH/Js7nheMUtgho1bdI
+         pbNl8pECQbTz/G4sSXvOB3Pb3QlKAH6DYFLlXQo3dfk4iTEBp3vw468U2uqn5U/OMP5B
+         /8FCd85GVlDnlIZrczzzKc5AvMj/m7sz4fCQTeZrvikPiFetmqVV6FqTqUxKItf30mZJ
+         9KoQ==
+X-Gm-Message-State: ANoB5pmfDDK/CBc6Jdr83xgN/Xca97KnMN7a2s84kmRDq1RDWsKJL9/d
+        BS4CtrMl+j3k62WJem0XR1iCNYFKjBvdNcp5
+X-Google-Smtp-Source: AA0mqf5tV8Hcyxf3GyZLEoHhfGVcem7cmR5cBmHGwTOoicfxtOLyX9xxsQTSIWIQYvxfVZV8oFCdhQ==
+X-Received: by 2002:a05:6512:746:b0:4a4:68b8:f4d1 with SMTP id c6-20020a056512074600b004a468b8f4d1mr3849495lfs.23.1670843445012;
+        Mon, 12 Dec 2022 03:10:45 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id b4-20020a056512060400b004b57a810e09sm1599110lfe.288.2022.12.12.03.10.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 03:10:44 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <552EFDD5-4BBE-408D-90EA-C96F4A0876B7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/9] Lowercase hexification of arm64/dts/qcom
+Date:   Mon, 12 Dec 2022 12:10:28 +0100
+Message-Id: <20221212111037.98160-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Almost all device trees use lowercase hex, fix up the remaining ones to
+match the style and prevent introduction of more uppercase hex from
+copypasting and referencing.
 
+Konrad Dybcio (9):
+  arm64: dts: qcom: ipq6018: Use lowercase hex
+  arm64: dts: qcom: msm8996: Use lowercase hex
+  arm64: dts: qcom: msm8998: Use lowercase hex
+  arm64: dts: qcom: sdm630: Use lowercase hex
+  arm64: dts: qcom: sdm660: Use lowercase hex
+  arm64: dts: qcom: sdm845: Use lowercase hex
+  arm64: dts: qcom: sm8250: Use lowercase hex
+  arm64: dts: qcom: sm8150: Use lowercase hex
+  arm64: dts: qcom: sdm845: Fix some whitespace/newlines
 
-On 12.12.2022 11:58, Dmitry Baryshkov wrote:
-> 
-> 
-> On 12 December 2022 13:06:16 GMT+03:00, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->> From: Marijn Suijten <marijn.suijten@somainline.org>
->>
->> Add the SM8150 DPU compatible to clients compatible list, as it also
->> needs the workarounds.
-> 
-> Please rebase on top of linux-next, this part was rewritten.
-This one wasn't, but yeah it is based on some local changes
-(see 6350/6375)..
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  8 ++---
+ .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |  4 +--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         | 12 +++----
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         | 14 ++++----
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          | 16 ++++-----
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          | 14 ++++----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  8 ++---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 34 +++++++++----------
+ 9 files changed, 55 insertions(+), 57 deletions(-)
 
-Konrad
-> 
-> 
->>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->> Depends on the binding here:
->>
->> [1] https://lore.kernel.org/linux-arm-msm/20221212093315.11390-1-konrad.dybcio@linaro.org/T/#t
->>
->> drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->> 1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> index 6610f5d2877d..cd74c1efcfde 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> @@ -255,6 +255,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->> 	{ .compatible = "qcom,sdm845-mss-pil" },
->> 	{ .compatible = "qcom,sm6350-mdss" },
->> 	{ .compatible = "qcom,sm6375-mdss" },
->> +	{ .compatible = "qcom,sm8150-mdss" },
->> 	{ .compatible = "qcom,sm8250-mdss" },
->> 	{ }
->> };
-> 
+-- 
+2.38.1
+
