@@ -2,199 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC31D649EF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 13:36:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9E9649F58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 14:05:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232361AbiLLMg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 07:36:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43416 "EHLO
+        id S231433AbiLLNFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 08:05:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232259AbiLLMfm (ORCPT
+        with ESMTP id S232476AbiLLNEu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 07:35:42 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800CE12759
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 04:34:48 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id b13-20020a17090a5a0d00b0021906102d05so12032606pjd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 04:34:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jie7lgdvEnIQyGE6zlhbT0B1hTmWl4xcVmRV6TIX7Ks=;
-        b=eaCgJOSU0Eenl1pCm9rc7ZdHXRGdaf8ehej2UyKExNX14OP9y9q7t6bzQA9F6MFh8Y
-         H5ULrBo5EayBNpm/RX2smnE8G548NKB+F/i7bd6N6gqpr21/w2Qd0P8N/nVI+2EMt6rF
-         AAlK2EEuSaJIAuKutAfLU9L72haqT/M1tnZ2bOVub6MnlWS+qDQNFOZE/CyiureudYl6
-         9FcYjh41G5dtfMEYlWm98BRgL2o/VV5IpCu6tGc4VFD/0yOf4LyBy4Ybbompy1W5lgXb
-         CGQ3l29KZo7FTLPLFOP7UcSTCXflCzB4YR7lqMTRmCQVsTMalLhAO8tzybd3nJVE4QwW
-         yeWA==
+        Mon, 12 Dec 2022 08:04:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC1F413F36
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:01:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1670850090;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=IAcys2kevC/gc9nuZ3z+Y7/oT9oEQ4M5JbDnTp/1RaM=;
+        b=ASbrJ3q7YOv84DiC26fVFxddQJEWj4SelvaQnlFRgPE3LIci0iV2Dks6z6ZlOfk3rUzooA
+        bQr1UpoQf/RI5m+j9+aBXpzvPZ+L6Wd3b0m4iaLrMh485z5qwAkF6/ydgP62H4DApRzs4b
+        DoQfzWhW4lus3rQdWcoajWX0uQyKQBA=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-591-xNUDCojsNGGylnGavNQLxg-1; Mon, 12 Dec 2022 08:01:29 -0500
+X-MC-Unique: xNUDCojsNGGylnGavNQLxg-1
+Received: by mail-io1-f72.google.com with SMTP id f23-20020a5d8157000000b006dfb209094fso6160729ioo.18
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 05:01:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Jie7lgdvEnIQyGE6zlhbT0B1hTmWl4xcVmRV6TIX7Ks=;
-        b=Oxo6NpgiQzUjRVzmRnEAjR/U+doF1z7k7nsl6aCkPFEpYlzZIfbfFA1UhYHbm46mk1
-         bmefZj4mX1g8nmKAlhxON4jg+ZcFmI3f1TMvgQu5sQPUU78eoCaNUY8LQg/pIQVinSth
-         /3FG4plL8H0nGQXeRowFv6m1U04QdLtDSoLspEDKWztK7g7LvBpr9aYJkfdqMzPPhKH4
-         gVOGKdHth/Lg4HcE0ObFm1LdM7Nr7IOjB7Xh9SBHwslyMxPyGUNUVUZYl9o1tRTGa4Uj
-         OpqQZCwKf8ydyGJfZFRPqoS+yrNNYImRZwetl+x4NKE8gAZOmutroiCAsf74u3P/JbMX
-         w5Iw==
-X-Gm-Message-State: ANoB5plsLlxyv8TaPsEuR1cWsaAC2vak9yr2MVJ1EKGEcbJ2KxbfLEih
-        eF5Zr5Jp9eEUJ2iDYkYdjAKJ
-X-Google-Smtp-Source: AA0mqf5LpwGxW+PLMAvFM3kf27MXz56pW7cTMD9M0+puHlZxDzlk3HeUecpzAWk/fLvCVmfLeMnunA==
-X-Received: by 2002:a17:902:9891:b0:189:2688:c97f with SMTP id s17-20020a170902989100b001892688c97fmr14982727plp.50.1670848481155;
-        Mon, 12 Dec 2022 04:34:41 -0800 (PST)
-Received: from localhost.localdomain ([220.158.159.33])
-        by smtp.gmail.com with ESMTPSA id j14-20020a170902da8e00b00189c93ce5easm6252557plx.166.2022.12.12.04.34.35
+        bh=IAcys2kevC/gc9nuZ3z+Y7/oT9oEQ4M5JbDnTp/1RaM=;
+        b=GeeiOSKFKKOoy7nfRgCumfFmpSMq4/PUyp7KqKYp72tC1zRDSSl1KD9p8Qg1MkXliN
+         /HMFWsPRkzrDqHAiCCt7G66DwAZpFSUf68tX+KapZgfAMWLUeyfEJGZA5TE7aW3Dtoma
+         FmNncwXXXdEXdFRF+jhRSxbttehBzbqGgJ1SeVQM0wRUr0OR2OfFqKwhgWrD1MELzQti
+         4xxzj2A8o9qI2ewxXxe4PHyfq4yEKapSVBxHxffNcCdBC9gzesWWePQZ44ltBxM6ves5
+         rZAq65J+cqRMGHPdvUfj0osKcrM0ojgO6XPmP6X1Txx1Kt3qh/RGoWKNfIJMjRUDAn7j
+         jKhQ==
+X-Gm-Message-State: ANoB5pkUGsKXAeXQnis3W3KMicXcc3fxXHbDK+ShJwx3clugSOpG+41D
+        NRsx+9uhlcknEWGB60Qw0H8oNIFtD9cEr7n349MM9j9OUsq4NLLndsF0wDI7VZiPy2jan2h6e13
+        uGpsbMhMVAXgvl8XAnW+zBJo7ZA==
+X-Received: by 2002:a5d:8ad3:0:b0:6d6:d016:b57f with SMTP id e19-20020a5d8ad3000000b006d6d016b57fmr8804454iot.8.1670850088669;
+        Mon, 12 Dec 2022 05:01:28 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf7lMCNzvapRWQgP9Do1GVyF6UNm0BOoIJpWHXZg7697fb7i7kT6Bj/WI5IK4JVElqXRUziw4g==
+X-Received: by 2002:a5d:8ad3:0:b0:6d6:d016:b57f with SMTP id e19-20020a5d8ad3000000b006d6d016b57fmr8804420iot.8.1670850088386;
+        Mon, 12 Dec 2022 05:01:28 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id q33-20020a027b21000000b00363fe31cf55sm3063507jac.40.2022.12.12.05.01.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 04:34:40 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com
-Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        luca.weiss@fairphone.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 13/13] qcom: llcc/edac: Support polling mode for ECC handling
-Date:   Mon, 12 Dec 2022 18:03:11 +0530
-Message-Id: <20221212123311.146261-14-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
-References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+        Mon, 12 Dec 2022 05:01:27 -0800 (PST)
+Date:   Mon, 12 Dec 2022 08:01:26 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>
+Cc:     andersson@kernel.org, johan@kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
+Message-ID: <Y5cmJu5NoBm9lctA@x1>
+References: <20221212122058.597-1-quic_shazhuss@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221212122058.597-1-quic_shazhuss@quicinc.com>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Not all Qcom platforms support IRQ mode for ECC handling. For those
-platforms, the current EDAC driver will not be probed due to missing ECC
-IRQ in devicetree.
+On Mon, Dec 12, 2022 at 05:50:59PM +0530, Shazad Hussain wrote:
+> Add the pcie2a, pcie2a_phy, and respective tlmm
+> nodes that are needed to get pcie 2a controller
+> enabled on Qdrive3.
+> 
+> This patch enables 4GB 64bit memory space for
+> PCIE_2A to have BAR allocations of 64bit pref mem
+> needed on this Qdrive3 platform with dual SoCs
+> for root port and switch NT-EP. Hence this ranges
+> property is overridden in sa8540p-ride.dts only.
+> 
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> ---
+> Changes since v1:
+> - Fix ranges property indentation (Konrad)
+> 
+> This patch depends on below patch series for vreg_l11a.
+> 
+> [v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
+> https://lore.kernel.org/all/20221206161916.315640-1-bmasney@redhat.com/
 
-So add support for polling mode so that the EDAC driver can be used on all
-Qcom platforms supporting LLCC.
+I verified that this matches what's in downstream.
 
-The polling delay of 5000ms is chosed based on Qcom downstream/vendor
-driver.
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/edac/qcom_edac.c     | 37 +++++++++++++++++++++++++-----------
- drivers/soc/qcom/llcc-qcom.c | 13 ++++++-------
- 2 files changed, 32 insertions(+), 18 deletions(-)
+I'm not able to test this yet since we're still on an old version of the
+PCIe switch firmware and I need to get that upgraded first.
 
-diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-index 5be93577fc03..f7afb5375293 100644
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -76,6 +76,8 @@
- #define DRP0_INTERRUPT_ENABLE           BIT(6)
- #define SB_DB_DRP_INTERRUPT_ENABLE      0x3
- 
-+#define ECC_POLL_MSEC			5000
-+
- enum {
- 	LLCC_DRAM_CE = 0,
- 	LLCC_DRAM_UE,
-@@ -283,8 +285,7 @@ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
- 	return ret;
- }
- 
--static irqreturn_t
--llcc_ecc_irq_handler(int irq, void *edev_ctl)
-+static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
- {
- 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
- 	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-@@ -328,6 +329,11 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
- 	return irq_rc;
- }
- 
-+static void llcc_ecc_check(struct edac_device_ctl_info *edev_ctl)
-+{
-+	llcc_ecc_irq_handler(0, edev_ctl);
-+}
-+
- static int qcom_llcc_edac_probe(struct platform_device *pdev)
- {
- 	struct llcc_drv_data *llcc_driv_data = pdev->dev.platform_data;
-@@ -356,22 +362,31 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
- 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
- 	edev_ctl->pvt_info = llcc_driv_data;
- 
-+	/* Check if LLCC driver has passed ECC IRQ */
-+	ecc_irq = llcc_driv_data->ecc_irq;
-+	if (ecc_irq > 0) {
-+		/* Use interrupt mode if IRQ is available */
-+		edac_op_state = EDAC_OPSTATE_INT;
-+	} else {
-+		/* Fall back to polling mode otherwise */
-+		edac_op_state = EDAC_OPSTATE_POLL;
-+		edev_ctl->poll_msec = ECC_POLL_MSEC;
-+		edev_ctl->edac_check = llcc_ecc_check;
-+	}
-+
- 	rc = edac_device_add_device(edev_ctl);
- 	if (rc)
- 		goto out_mem;
- 
- 	platform_set_drvdata(pdev, edev_ctl);
- 
--	/* Request for ecc irq */
--	ecc_irq = llcc_driv_data->ecc_irq;
--	if (ecc_irq < 0) {
--		rc = -ENODEV;
--		goto out_dev;
--	}
--	rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
-+	/* Request ECC IRQ if available */
-+	if (ecc_irq > 0) {
-+		rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
- 			      IRQF_TRIGGER_HIGH, "llcc_ecc", edev_ctl);
--	if (rc)
--		goto out_dev;
-+		if (rc)
-+			goto out_dev;
-+	}
- 
- 	return rc;
- 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index a29f22dad7fa..e044e6756415 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -1011,13 +1011,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 		goto err;
- 
- 	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
--	if (drv_data->ecc_irq >= 0) {
--		llcc_edac = platform_device_register_data(&pdev->dev,
--						"qcom_llcc_edac", -1, drv_data,
--						sizeof(*drv_data));
--		if (IS_ERR(llcc_edac))
--			dev_err(dev, "Failed to register llcc edac driver\n");
--	}
-+
-+	llcc_edac = platform_device_register_data(&pdev->dev,
-+					"qcom_llcc_edac", -1, drv_data,
-+					sizeof(*drv_data));
-+	if (IS_ERR(llcc_edac))
-+		dev_err(dev, "Failed to register llcc edac driver\n");
- 
- 	return 0;
- err:
--- 
-2.25.1
+Note that your patch won't apply to linux-next since the v3 of my pcie3a
+patch is what was actually merged into the qcom tree. Can you resend? You
+can move the tlmm node to the bottom and add the PINCTRL comment.
+
+I have some i2c and SPI changes that I'll be posting soon where I already
+made that change but I'll hold off for you to post a new version and base
+on top of yours.
+
+Brian
 
