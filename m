@@ -2,237 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AB5064A4A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 17:16:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBBD164A4CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Dec 2022 17:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232699AbiLLQQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 11:16:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32940 "EHLO
+        id S232019AbiLLQfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 11:35:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232692AbiLLQQO (ORCPT
+        with ESMTP id S229827AbiLLQfl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 11:16:14 -0500
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625FD12620
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 08:16:12 -0800 (PST)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-143ffc8c2b2so8972138fac.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 08:16:12 -0800 (PST)
+        Mon, 12 Dec 2022 11:35:41 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E263B0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 08:35:38 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id x28so313689lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 08:35:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QwyU+vog2X8+88FLCitziFDJsiNyNVqviVu4YNxzWhA=;
-        b=fvsojd5uPuW1sVKC2t09PmNc9dUArcYdabQpt/0gpPl44SKQTVZAHf6tnYHW5q65Ch
-         pgK7uV9ZqVBGN9ableCg9wBPxNPcb3Dd9UZBoHjEoswlMdjnA591zi047/wf28vmo7oM
-         n7aDK8UR7Gz8qhW+Z2rNjGaEUo7MPdaFp4JutCd5Sk+PIPWlTUsTlV9cvdmuEkl1Z7sy
-         ZiAvmrUpTdGOdk4sInfoBGPtKNsP6krjHIx2fi/YILoztKOnjMcF/1B+cglyYuXO4HHV
-         PiSidEwEBe+h+xv7HKpRcjoB77iT4aqU83+/VvCSG4wGdh8aLBPZC1t+pon+6z0UUWWJ
-         +rMw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ai7DRTu5Ju7JecvhYYJbDduggLKq/Lu2jurxO6GnUFo=;
+        b=zuHTLfNgNkL/2WjnKIW6VFbXHeTdI3po8GZXAGyluCsuBn8wc6GpZWDjsLWeCR7IgP
+         GiaskF05b2d5f1vVUdckQf+Hf/5ioH31m79t/P3jgaR8vONwqForTqvKpArM1xIP5hkI
+         V5zQIg0InlwTTSkuzFVX+Cb3t0brxupL1qrDicJL5yLYZbRNRhZl35RLW7A99yQVcRiw
+         K2esMbruw5sD5Bz5QCltb+k74TOArbIEL+vbvkg44DCdbQJK2AqZnq2x9Vh2CeM8R0ZV
+         Rufww3h0LdPbSa13xdQilEoWdG5pQXR/Rto++7GFW859jUwUKoxspkQ1s0m7a7I2CJnr
+         DDkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QwyU+vog2X8+88FLCitziFDJsiNyNVqviVu4YNxzWhA=;
-        b=r3/4S+DGUeDToKFzU8FDKuw3MqWu3sXhgF8JKAHIIZzNL2b6TZAoAr6uUf59wUEgO0
-         cdrmscgEtyQzwE3zmlxk+5lbZIE+j2e+qLOLX3JHaneETfUCaYxmDKkFdgTTNDtycPTO
-         SgiJhKc4V3vSEk6Kc5WX6NyhERi+mPcdX15MLmjuGmAUfiBjWNcRdZ54p08OdIxN2nM1
-         1AriTy5KAI3yFhCOaSkw2l1EQdvUJD3YAWJf9S/ngMFMuQOYz54bLfX1lYrl5N3n+kDb
-         9Xn2y7SamE2vmL1KhMdmXH/0M/YYxuTXyF+G/rUT2NdM3eQx0xtCAnRERpJgs63zp8Bz
-         zMWA==
-X-Gm-Message-State: ANoB5plddETA/igb0TwmdMGpdBEqg0Q3kXb6YQttM0dYCiQMTUL5NhI0
-        r7F5SpBq5eZ+KcqI5mFGuFSV
-X-Google-Smtp-Source: AA0mqf4jECA6+WrYPxmdo3NUAL8rdtdjiwMHPdw5qDGbK/O81VmLwSgVRLdL5QKtH6Zx5cDoQDomsg==
-X-Received: by 2002:a05:6358:bb9b:b0:e0:23fa:d4c3 with SMTP id df27-20020a056358bb9b00b000e023fad4c3mr1216964rwb.31.1670861771531;
-        Mon, 12 Dec 2022 08:16:11 -0800 (PST)
-Received: from thinkpad ([103.197.115.108])
-        by smtp.gmail.com with ESMTPSA id mp20-20020a17090b191400b00218ae9916c4sm5668820pjb.35.2022.12.12.08.16.06
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ai7DRTu5Ju7JecvhYYJbDduggLKq/Lu2jurxO6GnUFo=;
+        b=NfO2ELm2SGxhowHSOxdvuM0v8q6F8nyr3eh716mQ4jaZl79rx14g5pPcnk8uvASskX
+         8D3FgSFxNKT8qqQdN/p7eCt54oVIvFqgAKXOlBl78QD9tpIWM8NX5sZQj6Sfh0AMz9Zu
+         nMzvmRxcLan9LLSBKD/4bHY62nQfZ7SBJ85lI54W+pg2hpHjoqQgfaSlF+cLTvBN4QG3
+         sRVvg5K/aSH/8O8zrgztOoboioszwRb2e1UlMTc0N+tttfHREMhItxvGVqKhmLFDX+j3
+         qp0zGVYOIaN6JXmC6lIwPyg/6+aNBGSZfGDe13UEb33C+uDX51Jp9vIS9YGFR0imbsBe
+         0IHQ==
+X-Gm-Message-State: ANoB5pnyOdQ0uiaz1jbDy2ew8Ie7vFli/PaGG30wGjnOBX6hl21VVi8S
+        LgkWAaWgHj4zkTHdLN3pNNxAZw==
+X-Google-Smtp-Source: AA0mqf5uJxoaapU1bf9LXRq5Fh8Reo57NvF4j+JDtO4HpTstx2QxBTh+ICLXxlu0Dej51ORVBguwSw==
+X-Received: by 2002:ac2:5594:0:b0:4a4:68b7:f889 with SMTP id v20-20020ac25594000000b004a468b7f889mr6767309lfg.45.1670862937080;
+        Mon, 12 Dec 2022 08:35:37 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id v16-20020ac25b10000000b004acff58a951sm29209lfn.133.2022.12.12.08.35.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 08:16:10 -0800 (PST)
-Date:   Mon, 12 Dec 2022 21:46:04 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com
-Subject: Re: [PATCH v2 13/13] qcom: llcc/edac: Support polling mode for ECC
- handling
-Message-ID: <20221212161604.GE20655@thinkpad>
-References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
- <20221212123311.146261-14-manivannan.sadhasivam@linaro.org>
- <COZYL8MWN97H.MROQ391BGA09@otso>
+        Mon, 12 Dec 2022 08:35:36 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 01/12] dt-bindings: watchdog: qcom-wdt: require fallback for IPQ4019
+Date:   Mon, 12 Dec 2022 17:35:21 +0100
+Message-Id: <20221212163532.142533-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <COZYL8MWN97H.MROQ391BGA09@otso>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 12, 2022 at 04:53:49PM +0100, Luca Weiss wrote:
-> Hi Manivannan,
-> 
-> On Mon Dec 12, 2022 at 1:33 PM CET, Manivannan Sadhasivam wrote:
-> > Not all Qcom platforms support IRQ mode for ECC handling. For those
-> > platforms, the current EDAC driver will not be probed due to missing ECC
-> > IRQ in devicetree.
-> >
-> > So add support for polling mode so that the EDAC driver can be used on all
-> > Qcom platforms supporting LLCC.
-> >
-> > The polling delay of 5000ms is chosed based on Qcom downstream/vendor
-> > driver.
-> 
-> I think it does work for me on SM6350, I get this in dmesg:
-> 
-> [    0.054608] EDAC MC: Ver: 3.0.0
-> [    0.273913] EDAC DEVICE0: Giving out device to module qcom_llcc_edac controller llcc: DEV qcom_llcc_edac (POLLED)
-> 
-> What I've noticed though is that the 5000ms poll you defined in the
-> driver doesn't seem to be reflected at runtime? Or am I looking at
-> different things?
-> 
-> / # cat /sys/devices/system/edac/qcom-llcc/poll_msec 
-> 1000
-> 
+The device specific compatibles ("qcom,kpss-wdt-ipq4019") should be
+follwed by fallback "qcom,kpss-wdt", which is actually used by Linux
+driver for binding.
 
-Oops... Looks like the interval is hardcoded in edac_device driver:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/edac/edac_device.c#n449
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This clearly needs to be fixed. Will do so in next version.
-
-Thanks a lot for testing the series. I will also consider this as your t-b tag
-for SM6350 and driver patches.
-
-Thanks,
-Mani
-
-> Regards
-> Luca
-> 
-> >
-> > Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/edac/qcom_edac.c     | 37 +++++++++++++++++++++++++-----------
-> >  drivers/soc/qcom/llcc-qcom.c | 13 ++++++-------
-> >  2 files changed, 32 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-> > index 5be93577fc03..f7afb5375293 100644
-> > --- a/drivers/edac/qcom_edac.c
-> > +++ b/drivers/edac/qcom_edac.c
-> > @@ -76,6 +76,8 @@
-> >  #define DRP0_INTERRUPT_ENABLE           BIT(6)
-> >  #define SB_DB_DRP_INTERRUPT_ENABLE      0x3
-> >  
-> > +#define ECC_POLL_MSEC			5000
-> > +
-> >  enum {
-> >  	LLCC_DRAM_CE = 0,
-> >  	LLCC_DRAM_UE,
-> > @@ -283,8 +285,7 @@ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
-> >  	return ret;
-> >  }
-> >  
-> > -static irqreturn_t
-> > -llcc_ecc_irq_handler(int irq, void *edev_ctl)
-> > +static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
-> >  {
-> >  	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
-> >  	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-> > @@ -328,6 +329,11 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
-> >  	return irq_rc;
-> >  }
-> >  
-> > +static void llcc_ecc_check(struct edac_device_ctl_info *edev_ctl)
-> > +{
-> > +	llcc_ecc_irq_handler(0, edev_ctl);
-> > +}
-> > +
-> >  static int qcom_llcc_edac_probe(struct platform_device *pdev)
-> >  {
-> >  	struct llcc_drv_data *llcc_driv_data = pdev->dev.platform_data;
-> > @@ -356,22 +362,31 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
-> >  	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
-> >  	edev_ctl->pvt_info = llcc_driv_data;
-> >  
-> > +	/* Check if LLCC driver has passed ECC IRQ */
-> > +	ecc_irq = llcc_driv_data->ecc_irq;
-> > +	if (ecc_irq > 0) {
-> > +		/* Use interrupt mode if IRQ is available */
-> > +		edac_op_state = EDAC_OPSTATE_INT;
-> > +	} else {
-> > +		/* Fall back to polling mode otherwise */
-> > +		edac_op_state = EDAC_OPSTATE_POLL;
-> > +		edev_ctl->poll_msec = ECC_POLL_MSEC;
-> > +		edev_ctl->edac_check = llcc_ecc_check;
-> > +	}
-> > +
-> >  	rc = edac_device_add_device(edev_ctl);
-> >  	if (rc)
-> >  		goto out_mem;
-> >  
-> >  	platform_set_drvdata(pdev, edev_ctl);
-> >  
-> > -	/* Request for ecc irq */
-> > -	ecc_irq = llcc_driv_data->ecc_irq;
-> > -	if (ecc_irq < 0) {
-> > -		rc = -ENODEV;
-> > -		goto out_dev;
-> > -	}
-> > -	rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
-> > +	/* Request ECC IRQ if available */
-> > +	if (ecc_irq > 0) {
-> > +		rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
-> >  			      IRQF_TRIGGER_HIGH, "llcc_ecc", edev_ctl);
-> > -	if (rc)
-> > -		goto out_dev;
-> > +		if (rc)
-> > +			goto out_dev;
-> > +	}
-> >  
-> >  	return rc;
-> >  
-> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> > index a29f22dad7fa..e044e6756415 100644
-> > --- a/drivers/soc/qcom/llcc-qcom.c
-> > +++ b/drivers/soc/qcom/llcc-qcom.c
-> > @@ -1011,13 +1011,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
-> >  		goto err;
-> >  
-> >  	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
-> > -	if (drv_data->ecc_irq >= 0) {
-> > -		llcc_edac = platform_device_register_data(&pdev->dev,
-> > -						"qcom_llcc_edac", -1, drv_data,
-> > -						sizeof(*drv_data));
-> > -		if (IS_ERR(llcc_edac))
-> > -			dev_err(dev, "Failed to register llcc edac driver\n");
-> > -	}
-> > +
-> > +	llcc_edac = platform_device_register_data(&pdev->dev,
-> > +					"qcom_llcc_edac", -1, drv_data,
-> > +					sizeof(*drv_data));
-> > +	if (IS_ERR(llcc_edac))
-> > +		dev_err(dev, "Failed to register llcc edac driver\n");
-> >  
-> >  	return 0;
-> >  err:
-> > -- 
-> > 2.25.1
-> 
-
+diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+index a1f17c9e02db..e76364c52fc7 100644
+--- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+@@ -17,6 +17,7 @@ properties:
+     oneOf:
+       - items:
+           - enum:
++              - qcom,kpss-wdt-ipq4019
+               - qcom,apss-wdt-msm8994
+               - qcom,apss-wdt-qcs404
+               - qcom,apss-wdt-sc7180
+@@ -35,7 +36,6 @@ properties:
+               - qcom,kpss-wdt
+               - qcom,kpss-timer
+               - qcom,kpss-wdt-apq8064
+-              - qcom,kpss-wdt-ipq4019
+               - qcom,kpss-wdt-ipq8064
+               - qcom,kpss-wdt-msm8960
+               - qcom,scss-timer
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
