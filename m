@@ -2,85 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8825064B7AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 15:46:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8856164B7BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 15:48:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235306AbiLMOqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 09:46:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33110 "EHLO
+        id S235467AbiLMOs5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 09:48:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235501AbiLMOqQ (ORCPT
+        with ESMTP id S235574AbiLMOsc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 09:46:16 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50188F39;
-        Tue, 13 Dec 2022 06:46:14 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BDDZLYf006070;
-        Tue, 13 Dec 2022 14:46:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=EGe9MlTvJ2aLFex6rOiIFHMOwOeimXkvfudSdAnLD/w=;
- b=QpJDUxGkHJTTBdPWkFn0njkCmMd/5C9Rdw4FcvdCXbSmUhbLrM2d1CrRouckzUvrURA6
- VYVAxKRmyXtO934EAMC7LHVzvmS7WhnolT7adC3JqP6s4KzJe51dLiYyyqOmeW3B2MN2
- 4l0F+r1ud/yOpSHQ9iLFKfmTEyUckDnJGTOqPxIX4qb9lZ/AdZLuH+TqbYNz4sFmbIo4
- izbxtiMJf+KQFnlypTmQGDgkymofimh5f+iQyYCa/CUreFWItyj7p4PGnDEMKS95wHfC
- GiKbudaaob4F1yKEXFjcvKZo527AlC6wA4hrkVQgR4uDO4P58bvZ7TP9uZK/joCCM6uB Tw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3meq7qguua-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 14:46:06 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDEk6NO022048
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 14:46:06 GMT
-Received: from [10.216.48.1] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 13 Dec
- 2022 06:46:01 -0800
-Message-ID: <91663103-b675-5b68-1cc7-21bce4579b9e@quicinc.com>
-Date:   Tue, 13 Dec 2022 20:15:58 +0530
+        Tue, 13 Dec 2022 09:48:32 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB288110B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 06:48:30 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id x28so5276564lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 06:48:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=12/6BmOhRQtkOACZ0Csfo8o5YslC75aSQ1sUnCFEdqM=;
+        b=CBVln09sOZEFYyYJR7Wb8th4jx3ulHFz/EDuoetDAhaZv2B8QBOWVBJCYpHuDOm0Ui
+         zN/8InFPOmeM83z9WzgNDyjfRAqxdXvdUyo6CO++MkbAApGUz6eIRGhTH6xw4P5DxFpC
+         LjN4oCnHLVEDMzV619DJGb0hchoM3oN4wsY4rGWPlDGcMd7Vy+rMJ2O0VURYmbVva5lA
+         A6xCYEKyMtiklETUtNi947Yr+RfIRNWaT5p/wQmERVd6t2XWOlimNXpF7/L9DSAnBD7V
+         lZDhsQ7CExX9hwsAU/rxHIVwX2rO+foaAbCXq+EQPes+B/kZHu3GrrjBzII4q/JUQzXt
+         YfAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=12/6BmOhRQtkOACZ0Csfo8o5YslC75aSQ1sUnCFEdqM=;
+        b=7GX5Cf9TPmiUG8/Iy69RKBycP1bUykbf60iwWSprBL5SrXiMZRXT0FRBbInnLvDOJJ
+         Mpl2hbxvbbbJcjKhlK9HbAHQzo6+4RWA9W/ii+R4S+RMzqWeO8QaoPPMm+9ALjHOkMDB
+         WPPVp5Apd+nTSwGbtV2xMRxvP2S1IqK5H8XoD9iygyyKT4T0aVedyB9LV/MmKGTpB2Yq
+         Ev6TxrnZwWkKdVVVrdbyKt9tHSK5v6NIpib9Uw2h4cVjbz77y+bPUXGDVNH+E4mP/Tgm
+         b5b+IBOqDMhBySDV15ZFY3od+Yj9kX0msyWWcFdkKr1b47iEIV3v3HFySUAS0jN4YBY+
+         eNgg==
+X-Gm-Message-State: ANoB5pmOHchqjabbHx72z7WjJTNufzbcBlw+CR0v6CmyCjL2KLMN5YWR
+        nvoZz+aixHIGlfeqeRi+WLXpfA==
+X-Google-Smtp-Source: AA0mqf6XcaD3Q9O8tTx3t7Ouoa+VcUybXP7OmV19cGf/61eUdjet6ipxLVzB2c1e5zGWd4zOPCPtnQ==
+X-Received: by 2002:a05:6512:22d2:b0:4a4:68b9:66b8 with SMTP id g18-20020a05651222d200b004a468b966b8mr6687562lfu.3.1670942909161;
+        Tue, 13 Dec 2022 06:48:29 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id s21-20020a056512203500b004a2c3fd32edsm392757lfs.144.2022.12.13.06.48.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 06:48:28 -0800 (PST)
+Message-ID: <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org>
+Date:   Tue, 13 Dec 2022 15:48:27 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: add missing spi nodes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
+ qup2_i2c18 nodes
 Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>,
-        Javier Martinez Canillas <javierm@redhat.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mark Brown <broonie@kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <ahalaney@redhat.com>,
-        <echanude@redhat.com>, <linux-spi@vger.kernel.org>
+To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     robh+dt@kernel.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com, quic_shazhuss@quicinc.com
 References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-5-bmasney@redhat.com>
- <c1c7b1eb-08e7-2ba5-d89a-e0be8f76fd69@quicinc.com> <Y5hvlX35nr8xQKEd@x1>
- <77c29d8c-34b3-f508-26bf-22520ccc1f2a@linaro.org>
- <13238048-f07c-3e8d-f170-5330ce94767c@redhat.com> <Y5iN48rA899u1++7@x1>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <Y5iN48rA899u1++7@x1>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ <20221212182314.1902632-4-bmasney@redhat.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221212182314.1902632-4-bmasney@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -pg7YRXxxA3ON0XKPz1esOtYT0GSG9Vy
-X-Proofpoint-ORIG-GUID: -pg7YRXxxA3ON0XKPz1esOtYT0GSG9Vy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=747 suspectscore=0
- adultscore=0 priorityscore=1501 clxscore=1011 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212130131
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,40 +81,112 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12/13/2022 8:06 PM, Brian Masney wrote:
-> On Tue, Dec 13, 2022 at 02:08:47PM +0100, Javier Martinez Canillas wrote:
->> On 12/13/22 14:02, Krzysztof Kozlowski wrote:
->>> On 13/12/2022 13:27, Brian Masney wrote:
->>> qcom,spi-video-codec is still not specific enough. You need to describe
->>> real device behind spidev. To be clear - you do not describe userspace,
->>> but the device.
->>>
->>
->> Agree.
->>
->> I believe Brian just used "qcom,spi-video-codec" as an example but is only
->> a make up name to illustrate the concept. QC needs to determine what would
->> be the correct <vendor,device> tuple for the IP block that the user-space
->> driver will drive.
+On 12.12.2022 19:23, Brian Masney wrote:
+> Add the necessary nodes in order to get qup1_i2c15 and qup2_i2c18
+> functioning on the automotive board and exposed to userspace.
 > 
-> Yes, that was just an example.
+> This work was derived from various patches that Qualcomm delivered
+> to Red Hat in a downstream kernel. This change was validated by using
+> i2c-tools 4.3.3 on CentOS Stream 9:
 > 
-> Shazad: Is this thread clear about what QC needs for spidev? I'll let QC
-> take care of sending patch(es) to add the various compatibles since I'm
-> not sure what hardware will be backed by spidev.
+> [root@localhost ~]# i2cdetect -l
+> i2c-15  i2c             Geni-I2C                                I2C adapter
+> i2c-18  i2c             Geni-I2C                                I2C adapter
 > 
-
-I think for qup2_spi22 we can use qcom,spi-msm-codec-slave as 
-compatible. As this is what used in downstream.
-
-> I'll take care of making sure that sc8280xp.dtsi gets the spi controller
-> nodes added.
-
-Yes, for qup1_spi9 we can add it later when needed. This is for 
-display/touch 2nd.
-
-Shazad
-
+> [root@localhost ~]# i2cdetect -a -y 15
+> Warning: Can't use SMBus Quick Write command, will skip some addresses
+>      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> 00:
+> 10:
+> 20:
+> 30: -- -- -- -- -- -- -- --
+> 40:
+> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 60:
+> 70:
 > 
-> Brian
+> Bus 18 has the same output. I validated that we get the same output on
+> the downstream kernel.
 > 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 46 +++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index d70859803fbd..6dc3f3ff8ece 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -17,6 +17,8 @@ / {
+>  	compatible = "qcom,sa8540p-ride", "qcom,sa8540p";
+>  
+>  	aliases {
+> +		i2c15 = &qup1_i2c15;
+> +		i2c18 = &qup2_i2c18;
+>  		serial0 = &qup2_uart17;
+>  	};
+>  
+> @@ -188,10 +190,28 @@ &pcie3a_phy {
+>  	status = "okay";
+>  };
+>  
+> +&qup1 {
+> +	status = "okay";
+> +};
+> +
+> +&qup1_i2c15 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qup1_i2c15_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qup2 {
+>  	status = "okay";
+>  };
+>  
+> +&qup2_i2c18 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qup2_i2c18_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qup2_uart17 {
+>  	compatible = "qcom,geni-debug-uart";
+>  	status = "okay";
+> @@ -313,4 +333,30 @@ wake-pins {
+>  			bias-pull-up;
+>  		};
+>  	};
+> +
+> +	qup1_i2c15_default: qup1-i2c15-state {
+You can drop mux/config-pins and have the pin properties live directly
+under the qup1-i2cN-state node.
+
+Konrad
+> +		mux-pins {
+> +			pins = "gpio36", "gpio37";
+> +			function = "qup15";
+> +		};
+> +
+> +		config-pins {
+> +			pins = "gpio36", "gpio37";
+> +			drive-strength = <0x02>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	qup2_i2c18_default: qup2-i2c18-state {
+> +		mux-pins {
+> +			pins = "gpio66", "gpio67";
+> +			function = "qup18";
+> +		};
+> +
+> +		config-pins {
+> +			pins = "gpio66", "gpio67";
+> +			drive-strength = <0x02>;
+> +			bias-pull-up;
+> +		};
+> +	};
+>  };
