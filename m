@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9583F64ACE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 02:18:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CFEA64AD10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 02:34:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234004AbiLMBSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 20:18:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
+        id S234120AbiLMBeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 20:34:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbiLMBSI (ORCPT
+        with ESMTP id S234119AbiLMBeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 20:18:08 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA4BDEBC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 17:18:07 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j4so2560950lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 17:18:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=RfH8kkxJvYDkHZoR/+BVEo4zBkqyra3aG6rgjb414Ng=;
-        b=L8/+nHhrB5o0UVC+DKEp6OeXAyYCcbQ1Gx+fHf44e2LTIul/4cVxGKqcx3N+vzNBuM
-         D86JhEjjQbXnaeOn8Has1S8iUh5QKw8Z/GeDuUlA8yZzqFP4A/ojkv0L/gna0H99D6gb
-         KQ+Gsm5idOZ4nS79g350yi8jbzLAF3h+yhkelLeM+Xfp1TuQzZycHizPtYE47i9ka8O+
-         9BRgB8JyULLNxJHlReyXVL/98W3jnVOj8TQWwdDeBJNMbIOKlzCis0v5n8PmI1B4YDAm
-         haVrOtxFuhKoh1wZ+7Vi0Ryy/9A4UgVDyfaIhkMXJKh7zigztGY7XQyC2OmzVTFIvXJE
-         hmMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RfH8kkxJvYDkHZoR/+BVEo4zBkqyra3aG6rgjb414Ng=;
-        b=OwwsO9/vgWyC2KiEm8epTI8KN7kDa1WBPY5/LRat/OR7VNmeGHF7xME2g76vur5K4e
-         7GE6y/B7MLqeiINPGGt0gY5gI6FrAF8B7kePwWTnV3h3JCU3ZysLPIat4b8/UPBzej0y
-         gdG9/7RFcEMcZyrmGjElIWgIZ3NdlrA0saZimW/26xGBZO5IECEaTLump07W5hLHXa3a
-         lg/pI4kuwEH7qDIdoLt0lJmmZW2Gt7Fh7gwpNAey42mDNFMgyuaA7PuD4p2EUmZGFJQx
-         4uSAPnj0BnpHKL8/HU6gYAwaIzznZRdoyQwQk5+W0GJtFdauKRsqOVU2bHiLAd5hzb4K
-         eWeQ==
-X-Gm-Message-State: ANoB5pmcf70WpaOZH2PJbUwsYhZel1QSkQl9vo11On9xxrqQy3EYh/DW
-        A5pP9aixUAhLKnBbvwEFbdLULA==
-X-Google-Smtp-Source: AA0mqf4NCJGtrfXxBc+iPdhZjn5t+SS+bxDYJ+lmD2OeQt33SGuvuPsJ+J8h19c5b0KrraKt06Jjog==
-X-Received: by 2002:ac2:4e4e:0:b0:4a4:68b9:608a with SMTP id f14-20020ac24e4e000000b004a468b9608amr3963518lfr.21.1670894285445;
-        Mon, 12 Dec 2022 17:18:05 -0800 (PST)
-Received: from [127.0.0.1] ([94.25.229.107])
-        by smtp.gmail.com with ESMTPSA id t17-20020a195f11000000b004ac980a1ba1sm158445lfb.24.2022.12.12.17.18.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Dec 2022 17:18:05 -0800 (PST)
-Date:   Tue, 13 Dec 2022 04:18:00 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Eric Chanudet <echanude@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: pm8450a: add rtc node
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20221213005539.1133443-1-echanude@redhat.com>
-References: <20221213005539.1133443-1-echanude@redhat.com>
-Message-ID: <219F5CF2-BA91-4749-A32C-84BCF541ECE0@linaro.org>
+        Mon, 12 Dec 2022 20:34:20 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09F3CE14;
+        Mon, 12 Dec 2022 17:34:19 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BD03MNe010740;
+        Tue, 13 Dec 2022 01:34:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5+8/YDQ288G/Z8Q4oQOfBT1VF6Bip11T6SOrzp5A/P0=;
+ b=pxObVYxfxpNUYdtK4pG8kDcJ/rHCfzTZ6y7ri4qEbzEWdUCyjl/BZiDfqu4O1R6NNqjs
+ 7jk5sEg2q6e/l7Srj2XkfXM5YwWsELjFI7312FdIzki/SrekyQqL5B2/YGCgmr47tAOs
+ NY3vbzRvFQE4rXX6+Osd0o7Rk1qzIjsbej+qWP7vucBBUwRVjHf0IPcoHX+4HvkaTiiJ
+ bPhwg/h4OkEq5nq8ooAT9nM9U4Y5g1hNadKK9W6rVMZXaqfira9MEH6UHkVU5mbaLOaZ
+ R2apqjHfshchindEUJL8DXUlOpcrBrLQ92syCQHqFsX7BSh45K6LBX3FR34zFPR9j5nb EA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3me83sh9pt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 01:34:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BD1Y4uR000520
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 01:34:04 GMT
+Received: from [10.111.167.12] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 12 Dec
+ 2022 17:34:02 -0800
+Message-ID: <b34374ed-0444-6bd9-4994-7f890455b451@quicinc.com>
+Date:   Mon, 12 Dec 2022 17:34:00 -0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/hdm: Fix the error handling path of
+ msm_hdmi_dev_probe()
+Content-Language: en-US
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <b3d9dac978f1e2e42a40ec61f58aa98c44c85dfd.1670741386.git.christophe.jaillet@wanadoo.fr>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <b3d9dac978f1e2e42a40ec61f58aa98c44c85dfd.1670741386.git.christophe.jaillet@wanadoo.fr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6neReONNFfXua5foUnIghkB8yBhfT9Kd
+X-Proofpoint-ORIG-GUID: 6neReONNFfXua5foUnIghkB8yBhfT9Kd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-12_02,2022-12-12_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ mlxlogscore=999 bulkscore=0 suspectscore=0 clxscore=1011 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212130014
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,41 +86,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13 December 2022 03:55:38 GMT+03:00, Eric Chanudet <echanude@redhat=2Ec=
-om> wrote:
->Add the rtc block on pm8450a first pmic to enable the rtc for
->sa8540p-ride=2E
->
->Signed-off-by: Eric Chanudet <echanude@redhat=2Ecom>
->---
-> arch/arm64/boot/dts/qcom/pm8450a=2Edtsi | 8 ++++++++
-> 1 file changed, 8 insertions(+)
->
->diff --git a/arch/arm64/boot/dts/qcom/pm8450a=2Edtsi b/arch/arm64/boot/dt=
-s/qcom/pm8450a=2Edtsi
->index 34fc72896761=2E=2Eaf761dbfbc66 100644
->--- a/arch/arm64/boot/dts/qcom/pm8450a=2Edtsi
->+++ b/arch/arm64/boot/dts/qcom/pm8450a=2Edtsi
->@@ -13,6 +13,14 @@ pm8450a: pmic@0 {
-> 		#address-cells =3D <1>;
-> 		#size-cells =3D <0>;
->=20
->+		rtc@6000 {
->+			compatible =3D "qcom,pm8941-rtc";
->+			reg =3D <0x6000>;
->+			reg-names =3D "rtc", "alarm";
->+			interrupts =3D <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+On 12/10/2022 10:50 PM, Christophe JAILLET wrote:
+> If an error occurs after a successful msm_hdmi_get_phy() call, it must be
+> undone by a corresponding msm_hdmi_put_phy(), as already done in the
+> remove function.
+> 
+> Fixes: 437365464043 ("drm/msm/hdmi: move msm_hdmi_get_phy() to msm_hdmi_dev_probe()")
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-0x60?
+> ---
+> Not sure if the Fixes tag is correct. At least it is when the probe needs
+> to be fixed but the issue was maybe there elsewhere before.
 
->+			wakeup-source;
->+		};
->+
-> 		pm8450a_gpios: gpio@c000 {
-> 			compatible =3D "qcom,pm8150-gpio", "qcom,spmi-gpio";
-> 			reg =3D <0xc000>;
+Seems right to me.
 
---=20
-With best wishes
-Dmitry
+> ---
+>   drivers/gpu/drm/msm/hdmi/hdmi.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 4d3fdc806bef..97372bb241d8 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -532,11 +532,19 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+>   
+>   	ret = devm_pm_runtime_enable(&pdev->dev);
+>   	if (ret)
+> -		return ret;
+> +		goto err_put_phy;
+>   
+>   	platform_set_drvdata(pdev, hdmi);
+>   
+> -	return component_add(&pdev->dev, &msm_hdmi_ops);
+> +	ret = component_add(&pdev->dev, &msm_hdmi_ops);
+> +	if (ret)
+> +		goto err_put_phy;
+> +
+> +	return 0;
+> +
+> +err_put_phy:
+> +	msm_hdmi_put_phy(hdmi);
+> +	return ret;
+>   }
+>   
+>   static int msm_hdmi_dev_remove(struct platform_device *pdev)
