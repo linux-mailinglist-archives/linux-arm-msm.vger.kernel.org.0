@@ -2,78 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C425164B943
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 17:07:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AB6D64B954
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 17:13:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235238AbiLMQHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 11:07:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56046 "EHLO
+        id S235898AbiLMQNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 11:13:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235183AbiLMQHd (ORCPT
+        with ESMTP id S235670AbiLMQNS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 11:07:33 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E2020F4E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:07:31 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id 3-20020a17090a098300b00219041dcbe9so4019756pjo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:07:31 -0800 (PST)
+        Tue, 13 Dec 2022 11:13:18 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C709619C02
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:13:16 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id c1so5711326lfi.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:13:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nYw4Wk/wT807/LgiPPGHkV8/oRES3dPfmE3Ij+E1SAo=;
-        b=Xs/xsqkeq31qsNHywwgOOgSJX1yEBuermKIh1MbCQwT1W4Dl3GEpID73Teg8B6DOFL
-         oLChZdH2BQrzoODEwB0TBC3dcJD1lltMvsOpJbxUgSdznEEjKQRlIbnxE8JJVb4C3wyQ
-         HNRJalJ98EyBxebiasEruKBwih+z++EAW8A7aEw8wikzcuBvK0LZKkWEkNvsH8KcfwUI
-         jDJ7s8igxveDoRvquxWuocHp7Ahi5hGJkHQXLckffjl3HfP6xVs/4uPa/5kbFc7SnFIL
-         /WK4HGkHmbkINqfOD08hzk2pU+J+Iti54r1KGbhAIJm95S1LFiA8sz1ZUn33Q7mv5eKY
-         l4RQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uTHFFzZQr0D0s/TddQwmyWpE56rA5HP2motUuyby9M0=;
+        b=ldysZifELvLGnjG6hYBNuNfpC+0HP54PjSah4EQ5n5X2+eeYz8u8jG0mPdZtK/eTmR
+         4HsyVpMnS4Hxfp4lQatvpvMxOYxa9trXrlZFOp3HHk+D8XAAvZ2XbUVu/5QGMMYO0hh9
+         5ga6z4Z6UG3fR2/sb9E2kVZMduFS7XzDYRwUj/Mc7TkkDQ3lf+r8Kb4ut27tEKvilYAp
+         xpD80fhJvPlX/ScsqY3h3oQAOEYlB95wUJi961h8q4dMSAXzoTCqBnrMK3Y72yKhQL93
+         gftJJvyhbUGZN37TsaSrpdiLbWALvHRXXn+DfJszgg4m2B3cZzlGaNxo4gFn1FiSLCaI
+         GqLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nYw4Wk/wT807/LgiPPGHkV8/oRES3dPfmE3Ij+E1SAo=;
-        b=wEGocDUTFvmNY1dF/FeHrnVEaKw0B9lK19FWWEDgr8PjAzb6f6e2VDxO1gWmjWWohn
-         9bDbQEBlf9SkGjoPYcGcLxAnEfo01dcnUxH2SIWSkRNRphPsrZDdgVylieBiG1ysNu7D
-         NOReaTFPRoW+qQBQ21O4e/SForwaEuTiwvt2nhwhbF/Dh4AMLwVhj40CbgJzUoTl2+AS
-         ga4Ocj93sX/LE6/NmkNtz1JcT7xH9NKnKZe+CbnNt3JJOBaiiBzI9SL3t9fJnIT5NErB
-         mIMsaiFkWQ4uuG1ZkvFW0RdlZ9pgrt2TjmmiQNxJE8JW53ywPiApixCDCo9Vsmk9B6hs
-         zDpA==
-X-Gm-Message-State: ANoB5pm3HSJ3DxEpL2Fg++grPMmVYvv3OIGriEZcB1BsJa2rjU+sf8cr
-        wfxmlC6NX1Iq0dP/4djlf1fgL9oU8j7PWEs=
-X-Google-Smtp-Source: AA0mqf5lNgVAYbeR20LH33Pew7cxwbJr3xKNxnrgLTg/m5BvVaQK2XVV8mo5CNRr/eBmtnM38Z1IzA==
-X-Received: by 2002:a17:90a:bb15:b0:20d:bd61:b531 with SMTP id u21-20020a17090abb1500b0020dbd61b531mr20764576pjr.37.1670947651041;
-        Tue, 13 Dec 2022 08:07:31 -0800 (PST)
-Received: from thinkpad ([27.111.75.5])
-        by smtp.gmail.com with ESMTPSA id f4-20020a63dc44000000b004786c63c21esm7056939pgj.42.2022.12.13.08.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 08:07:29 -0800 (PST)
-Date:   Tue, 13 Dec 2022 21:37:22 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        regressions@leemhuis.info, sumit.semwal@linaro.org,
-        will@kernel.org, catalin.marinas@arm.com
-Subject: Re: [PATCH 4/4] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
-Message-ID: <20221213160722.GC4862@thinkpad>
-References: <20221213140724.8612-1-quic_sibis@quicinc.com>
- <20221213140724.8612-5-quic_sibis@quicinc.com>
- <741b64c2-0b09-6475-5736-d2cd3e33c34c@arm.com>
- <ba258979-0c65-4671-dd01-c1916c26e81b@quicinc.com>
+        bh=uTHFFzZQr0D0s/TddQwmyWpE56rA5HP2motUuyby9M0=;
+        b=t3q6RZjA58xuTVQ9occOgdrSzIaA5biM74H59ZjUxlX0nyPwpQNMvomAbag+FK1gIz
+         JIp6Dr5uSSYnJu2DqhJjXjJM2S4tDMDSTJdc/whfhkvgp5uAw76FJHbWuEJgPnAE5S28
+         Ye+7uEsOes4OiXq5l9pPqXMAox9zTIi5+hhX09n0XP9XKezKANygfg8noB0Da4XX1CH0
+         yVIjpM8jisSvaC+gWP3T+oWI452+pTBv5oTDDE+fmqujqmLWczc2HpGvgkmOxF6VkSXa
+         JJcHyDV/6u0oYE6duEZ4eQWbS0Q3Ij2LdJzQjGr+YRfMPQjqG1a8X7XwXW4qbqcuRGlv
+         jHdg==
+X-Gm-Message-State: ANoB5plsd/grIbKExsDxDG45HueZpTqKuFy9wvQQ4Rptp3QjkFAm4U3/
+        0chJe2+1hg/Aod1J02sE8Q1SBg==
+X-Google-Smtp-Source: AA0mqf56BC3tFEz26JjphXioBNUiiagbJ08QbY1qKzcbJQ8xTgAcKWEhWw0FXQonhqJWpolB6cPrcg==
+X-Received: by 2002:a05:6512:6d1:b0:4b1:8830:85e8 with SMTP id u17-20020a05651206d100b004b1883085e8mr6855783lff.26.1670947995148;
+        Tue, 13 Dec 2022 08:13:15 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a2-20020a2eb542000000b0026df5232c7fsm309641ljn.42.2022.12.13.08.13.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 08:13:14 -0800 (PST)
+Message-ID: <183329b4-b99c-862b-02fe-651e5f68707e@linaro.org>
+Date:   Tue, 13 Dec 2022 17:13:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ba258979-0c65-4671-dd01-c1916c26e81b@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 06/12] dt-bindings: watchdog: qcom-wdt: merge MSM timer
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20221212163532.142533-1-krzysztof.kozlowski@linaro.org>
+ <20221212163532.142533-6-krzysztof.kozlowski@linaro.org>
+ <20221213154049.GA1426116-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221213154049.GA1426116-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,188 +85,149 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 13, 2022 at 09:27:04PM +0530, Sibi Sankar wrote:
-> Hey Robin,
+On 13/12/2022 16:40, Rob Herring wrote:
+> On Mon, Dec 12, 2022 at 05:35:26PM +0100, Krzysztof Kozlowski wrote:
+>> Merge Qualcomm MSM timer bindings into watchdog, because the timer
+>> compatibles are already included here and the hardware is quite similar.
+>>
+>> While converting the MSM timer bindings, adjust clock-frequency
+>> property to take only one frequency, instead of two, because:
+>> 1. DT schema does not allow to frequencies,
+>> 2. The Linux timer driver reads only first frequency.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/timer/qcom,msm-timer.txt         | 47 ------------------
+>>  .../bindings/watchdog/qcom-wdt.yaml           | 49 +++++++++++++++++++
+>>  2 files changed, 49 insertions(+), 47 deletions(-)
+>>  delete mode 100644 Documentation/devicetree/bindings/timer/qcom,msm-timer.txt
+>>
+>> diff --git a/Documentation/devicetree/bindings/timer/qcom,msm-timer.txt b/Documentation/devicetree/bindings/timer/qcom,msm-timer.txt
+>> deleted file mode 100644
+>> index 5e10c345548f..000000000000
+>> --- a/Documentation/devicetree/bindings/timer/qcom,msm-timer.txt
+>> +++ /dev/null
+>> @@ -1,47 +0,0 @@
+>> -* MSM Timer
+>> -
+>> -Properties:
+>> -
+>> -- compatible : Should at least contain "qcom,msm-timer". More specific
+>> -               properties specify which subsystem the timers are paired with.
+>> -
+>> -               "qcom,kpss-timer" - krait subsystem
+>> -               "qcom,scss-timer" - scorpion subsystem
+>> -
+>> -- interrupts : Interrupts for the debug timer, the first general purpose
+>> -               timer, and optionally a second general purpose timer, and
+>> -               optionally as well, 2 watchdog interrupts, in that order.
+>> -
+>> -- reg : Specifies the base address of the timer registers.
+>> -
+>> -- clocks: Reference to the parent clocks, one per output clock. The parents
+>> -          must appear in the same order as the clock names.
+>> -
+>> -- clock-names: The name of the clocks as free-form strings. They should be in
+>> -               the same order as the clocks.
+>> -
+>> -- clock-frequency : The frequency of the debug timer and the general purpose
+>> -                    timer(s) in Hz in that order.
+>> -
+>> -Optional:
+>> -
+>> -- cpu-offset : per-cpu offset used when the timer is accessed without the
+>> -               CPU remapping facilities. The offset is
+>> -               cpu-offset + (0x10000 * cpu-nr).
+>> -
+>> -Example:
+>> -
+>> -       timer@200a000 {
+>> -               compatible = "qcom,scss-timer", "qcom,msm-timer";
+>> -               interrupts = <1 1 0x301>,
+>> -                            <1 2 0x301>,
+>> -                            <1 3 0x301>,
+>> -                            <1 4 0x301>,
+>> -                            <1 5 0x301>;
+>> -               reg = <0x0200a000 0x100>;
+>> -               clock-frequency = <19200000>,
+>> -                                 <32768>;
+>> -               clocks = <&sleep_clk>;
+>> -               clock-names = "sleep";
+>> -               cpu-offset = <0x40000>;
+>> -       };
+>> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> index b7fc57f4800e..697caf1937cc 100644
+>> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> @@ -10,6 +10,9 @@ maintainers:
+>>    - Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>  
+>>  properties:
+>> +  $nodename:
+>> +    pattern: "^(watchdog|timer)@[0-9a-f]+$"
+>> +
+>>    compatible:
+>>      oneOf:
+>>        - items:
+>> @@ -48,6 +51,20 @@ properties:
+>>    clocks:
+>>      maxItems: 1
+>>  
+>> +  clock-names:
+>> +    items:
+>> +      - const: sleep
+>> +
+>> +  clock-frequency:
+>> +    description:
+>> +      The frequency of the general purpose timer in Hz in that order.
 > 
-> Thanks for taking time to review the series.
-> 
-> On 12/13/22 20:37, Robin Murphy wrote:
-> > On 2022-12-13 14:07, Sibi Sankar wrote:
-> > > The memory region allocated using dma_alloc_attr with no kernel mapping
-> > > attribute set would still be a part of the linear kernel map. Any access
-> > > to this region by the application processor after assigning it to the
-> > > remote Q6 will result in a XPU violation. Fix this by replacing the
-> > > dynamically allocated memory region with a no-map carveout and unmap the
-> > > modem metadata memory region before passing control to the remote Q6.
-> > > 
-> > > Reported-by: Amit Pundir <amit.pundir@linaro.org>
-> > > Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for
-> > > mem ownership switch")
-> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > > ---
-> > > 
-> > > The addition of the carveout and memunmap is required only on SoCs that
-> > > mandate memory protection before transferring control to Q6, hence the
-> > > driver falls back to dynamic memory allocation in the absence of the
-> > > modem metadata carveout.
-> > 
-> > The DMA_ATTR_NO_KERNEL_MAPPING stuff is still broken and pointless, so
-> > I'd expect to see this solution replacing it, not being added alongside.
-> > It's just silly to say pass the "I don't need a CPU mapping" flag, then
-> > manually open-code the same CPU mapping you would have got if you
-> > hadn't, in a way that only works at all when a cacheable alias exists
-> > anyway.
-> 
-> only a subset of SoCs supported by the driver are affected by
-> the bug i.e. on the others dma_alloc_attr would still work
-> without problems. I can perhaps drop the NO_KERNEL_MAPPING along
-> with the vmap/vunmap and simplify things for those SoCs.
-> 
+> 'in that order'?
 
-Or perhaps revert fc156629b23a?
+Left over, as I initial binding had here two frequencies. I'll remove it.
 
-Thanks,
-Mani
-
-> - Sibi
 > 
-> > 
-> > Thanks,
-> > Robin.
-> > 
-> > >   drivers/remoteproc/qcom_q6v5_mss.c | 85 +++++++++++++++++++++---------
-> > >   1 file changed, 61 insertions(+), 24 deletions(-)
-> > > 
-> > > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c
-> > > b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > index fddb63cffee0..8264275ecbd0 100644
-> > > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > @@ -211,6 +211,7 @@ struct q6v5 {
-> > >       size_t mba_size;
-> > >       size_t dp_size;
-> > > +    phys_addr_t mdata_phys;
-> > >       phys_addr_t mpss_phys;
-> > >       phys_addr_t mpss_reloc;
-> > >       size_t mpss_size;
-> > > @@ -935,6 +936,7 @@ static int q6v5_mpss_init_image(struct q6v5
-> > > *qproc, const struct firmware *fw,
-> > >   {
-> > >       unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS |
-> > > DMA_ATTR_NO_KERNEL_MAPPING;
-> > >       unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
-> > > +    void *mdata_region;
-> > >       struct page **pages;
-> > >       struct page *page;
-> > >       dma_addr_t phys;
-> > > @@ -951,34 +953,48 @@ static int q6v5_mpss_init_image(struct q6v5
-> > > *qproc, const struct firmware *fw,
-> > >       if (IS_ERR(metadata))
-> > >           return PTR_ERR(metadata);
-> > > -    page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL,
-> > > dma_attrs);
-> > > -    if (!page) {
-> > > -        kfree(metadata);
-> > > -        dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> > > -        return -ENOMEM;
-> > > -    }
-> > > +    if (qproc->mdata_phys) {
-> > > +        mdata_region = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
-> > > +        if (!mdata_region) {
-> > > +            dev_err(qproc->dev, "unable to map memory region:
-> > > %pa+%zx\n",
-> > > +                &qproc->mdata_phys, size);
-> > > +            ret = -EBUSY;
-> > > +            goto free_dma_attrs;
-> > > +        }
-> > > -    count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-> > > -    pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-> > > -    if (!pages) {
-> > > -        ret = -ENOMEM;
-> > > -        goto free_dma_attrs;
-> > > -    }
-> > > +        memcpy(mdata_region, metadata, size);
-> > > +        memunmap(mdata_region);
-> > > +        phys = qproc->mdata_phys;
-> > > +    } else {
-> > > +        page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL,
-> > > dma_attrs);
-> > > +        if (!page) {
-> > > +            kfree(metadata);
-> > > +            dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> > > +            return -ENOMEM;
-> > > +        }
-> > > -    for (i = 0; i < count; i++)
-> > > -        pages[i] = nth_page(page, i);
-> > > +        count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-> > > +        pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-> > > +        if (!pages) {
-> > > +            ret = -ENOMEM;
-> > > +            goto free_dma_attrs;
-> > > +        }
-> > > -    vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
-> > > -    kfree(pages);
-> > > -    if (!vaddr) {
-> > > -        dev_err(qproc->dev, "unable to map memory region:
-> > > %pa+%zx\n", &phys, size);
-> > > -        ret = -EBUSY;
-> > > -        goto free_dma_attrs;
-> > > -    }
-> > > +        for (i = 0; i < count; i++)
-> > > +            pages[i] = nth_page(page, i);
-> > > -    memcpy(vaddr, metadata, size);
-> > > +        vaddr = vmap(pages, count, flags,
-> > > pgprot_dmacoherent(PAGE_KERNEL));
-> > > +        kfree(pages);
-> > > +        if (!vaddr) {
-> > > +            dev_err(qproc->dev, "unable to map memory region:
-> > > %pa+%zx\n", &phys, size);
-> > > +            ret = -EBUSY;
-> > > +            goto free_dma_attrs;
-> > > +        }
-> > > -    vunmap(vaddr);
-> > > +        memcpy(vaddr, metadata, size);
-> > > +
-> > > +        vunmap(vaddr);
-> > > +    }
-> > >       /* Hypervisor mapping to access metadata by modem */
-> > >       mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-> > > @@ -1008,7 +1024,8 @@ static int q6v5_mpss_init_image(struct q6v5
-> > > *qproc, const struct firmware *fw,
-> > >                "mdt buffer not reclaimed system may become unstable\n");
-> > >   free_dma_attrs:
-> > > -    dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-> > > +    if (!qproc->mdata_phys)
-> > > +        dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-> > >       kfree(metadata);
-> > >       return ret < 0 ? ret : 0;
-> > > @@ -1882,6 +1899,26 @@ static int q6v5_alloc_memory_region(struct
-> > > q6v5 *qproc)
-> > >       qproc->mpss_phys = qproc->mpss_reloc = r.start;
-> > >       qproc->mpss_size = resource_size(&r);
-> > > +    if (!child) {
-> > > +        node = of_parse_phandle(qproc->dev->of_node,
-> > > "memory-region", 2);
-> > > +    } else {
-> > > +        child = of_get_child_by_name(qproc->dev->of_node, "metadata");
-> > > +        node = of_parse_phandle(child, "memory-region", 0);
-> > > +        of_node_put(child);
-> > > +    }
-> > > +
-> > > +    if (!node)
-> > > +        return 0;
-> > > +
-> > > +    ret = of_address_to_resource(node, 0, &r);
-> > > +    of_node_put(node);
-> > > +    if (ret) {
-> > > +        dev_err(qproc->dev, "unable to resolve metadata region\n");
-> > > +        return ret;
-> > > +    }
-> > > +
-> > > +    qproc->mdata_phys = r.start;
-> > > +
-> > >       return 0;
-> > >   }
+>> +
+>> +  cpu-offset:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      Per-CPU offset used when the timer is accessed without the CPU remapping
+>> +      facilities. The offset is cpu-offset + (0x10000 * cpu-nr).
+>> +
+>>    interrupts:
+>>      minItems: 1
+>>      maxItems: 5
+>> @@ -67,12 +84,27 @@ allOf:
+>>              const: qcom,kpss-wdt
+>>      then:
+>>        properties:
+>> +        clock-frequency: false
+>> +        cpu-offset: false
+>>          interrupts:
+>>            minItems: 1
+>>            items:
+>>              - description: Bark
+>>              - description: Bite
+>>  
+>> +    else:
+>> +      properties:
+>> +        interrupts:
+>> +          minItems: 3
+>> +          items:
+>> +            - description: Debug
+>> +            - description: First general purpose timer
+>> +            - description: Second general purpose timer
+>> +            - description: First watchdog
+>> +            - description: Second watchdog
+> 
+> Okay, here they are. No need to set it to 2 then change to 5 in the 
+> series.
 
--- 
-மணிவண்ணன் சதாசிவம்
+My previous patch where you noticed the difference sets it to maxItems:5
+in top-level and only specific variant has two described interrupts.
+
+So if I understand your comment correctly, it is okay and I will just
+fix the clock-frequency description ("in that order").
+
+Best regards,
+Krzysztof
+
