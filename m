@@ -2,111 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D71364B83C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:19:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A622E64B851
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:24:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236124AbiLMPTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 10:19:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53964 "EHLO
+        id S236113AbiLMPX7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 10:23:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236099AbiLMPTK (ORCPT
+        with ESMTP id S229893AbiLMPX6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 10:19:10 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A1A52183C;
-        Tue, 13 Dec 2022 07:19:04 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AE4B66159F;
-        Tue, 13 Dec 2022 15:19:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3C8C433EF;
-        Tue, 13 Dec 2022 15:19:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670944742;
-        bh=jZsLp8bpAs8v+aLzKXeFWiL5E5Xn6zfVmUtVQ0BqEkA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qs4HAK4Emz9hzOJYaySZadvmLsY1XogOTrknWHgknYcJ1tzdk5NmCtS33VakU2y4P
-         oaq56P6CVD0ex1VhWDRWaIHKwKGWCiivBU3q/vSFEaNBmwJEIHr6BysRgQwmCtUidb
-         y+9IX0EACcJ/A+Bz+d6VhUJfCK7hhydabm6xZaFsD+pI8fBJpNS2Z2VGROrLHKEd3O
-         K09ZrBpEc05bFzcW+CzCzeOdBo1bt58oK+rpTihS1m0KMs5Cr9g3+QkVKxvOT8Z0UL
-         x6/DrToWHbVwWoj9JLpXWTO3GcG2XBRIi0B9n0hXaZ2cx4WcI9BZm8T1WkzN9lwCcD
-         lns7X3M6GQB7A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1p5744-00054f-Qt; Tue, 13 Dec 2022 16:19:28 +0100
-Date:   Tue, 13 Dec 2022 16:19:28 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: rename i2c5 to i2c21
-Message-ID: <Y5iYAAdkJVfLrITf@hovoldconsulting.com>
-References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-2-bmasney@redhat.com>
- <Y5iSDehp72mQPc+h@hovoldconsulting.com>
- <5ac2a022-59e5-1189-bcba-e67b4974cbad@quicinc.com>
+        Tue, 13 Dec 2022 10:23:58 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F05F2B5D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:23:57 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id r26so18174235edc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:23:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YNJl4dW3INoFLSur18KGvAEZEys7Zg7HXl7mE/l9WMc=;
+        b=cAdyHfnfTDl6Q1NGQlVuUwFnzVmOszYJerLagpzhCTJsBpIZzvJpbcry6wj/DZ8C9b
+         T9PXTL/orC/c9TALqWuJtqWUmDhBkUsA8tOl3F3l7VFJ0DdeeepXJiUhgllK03T8m01h
+         Vkjo0Sj5XyI7TYIDUEcxxq+unpUGpbk9fqbwU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YNJl4dW3INoFLSur18KGvAEZEys7Zg7HXl7mE/l9WMc=;
+        b=GyDnKEw3S8E1xkYs01bH0uGXwrP5NTnF8rem0GumJSkyO7uufntDASLPE8ol9x2rnc
+         MeljLMc4oMyoqXQkPwSN6gPewEfiqUS/Ss5cgB/U89TxDT9AUK727COZdmOZ+i/G2ucN
+         /rvUpPKfce1LG80LNPsB2maKIj6muOnNa3MjnDcJBr95jBmD+ZN3jNuuCf95M1cS4BQ5
+         H2H0rRKLbziyVw20jgPN0wI2heeg4xZhDkLGNR+YK3Y4ez8NUTltgWqyBtedyIFPNISj
+         3xdd1WE2+jrX5dNlgzdVEv2ms7WSs4uRDjdLmUaqp2+IsDZe4gNY4OQs4BZe6dmZIQ+g
+         luqg==
+X-Gm-Message-State: ANoB5pmjfDyWdCl2Kqr68W4MVx+q1DVZI6FDNMRZDqfm0TQjwtkslToc
+        m+43BWhQ9fr5rNswOIIXDptL/tQppXrnO/lZl54=
+X-Google-Smtp-Source: AA0mqf6d4LoQe4IYWbFia82tCEvgy6Z//iFx/L2t/mdFNgN9Ci9eGYUhmzUmgweuh2iFFGm28NvTlA==
+X-Received: by 2002:a05:6402:65a:b0:46c:2034:f481 with SMTP id u26-20020a056402065a00b0046c2034f481mr20879697edx.8.1670945035286;
+        Tue, 13 Dec 2022 07:23:55 -0800 (PST)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id p8-20020a056402154800b0046ac460da13sm5132091edx.53.2022.12.13.07.23.53
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 07:23:53 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id o15so8632461wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:23:53 -0800 (PST)
+X-Received: by 2002:a7b:ce10:0:b0:3cf:5731:53db with SMTP id
+ m16-20020a7bce10000000b003cf573153dbmr220771wmc.85.1670945032985; Tue, 13 Dec
+ 2022 07:23:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5ac2a022-59e5-1189-bcba-e67b4974cbad@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221213002423.259039-1-konrad.dybcio@linaro.org> <20221213002423.259039-5-konrad.dybcio@linaro.org>
+In-Reply-To: <20221213002423.259039-5-konrad.dybcio@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 13 Dec 2022 07:23:40 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U+prbiaQfWRcqp17oRgxFV=JvmweNFoK0+xYcnfoJr=A@mail.gmail.com>
+Message-ID: <CAD=FV=U+prbiaQfWRcqp17oRgxFV=JvmweNFoK0+xYcnfoJr=A@mail.gmail.com>
+Subject: Re: [PATCH 4/7] drm/msm/a6xx: Add support for A650 speed binning
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 13, 2022 at 08:34:56PM +0530, Shazad Hussain wrote:
-> 
-> 
-> On 12/13/2022 8:24 PM, Johan Hovold wrote:
-> > On Mon, Dec 12, 2022 at 01:23:11PM -0500, Brian Masney wrote:
-> >> According to the downstream 5.4 kernel sources for the sa8540p,
-> >> i2c@894000 is labeled i2c bus 21, not 5. The interrupts and clocks
-> >> also match. Let's go ahead and correct the name that's used in the
-> >> three files where this is listed.
-> >>
-> >> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> >> Fixes: 152d1faf1e2f3 ("arm64: dts: qcom: add SC8280XP platform")
-> >> Fixes: ccd3517faf183 ("arm64: dts: qcom: sc8280xp: Add reference device")
-> >> Fixes: 32c231385ed43 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
-> > 
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> >> index 109c9d2b684d..875cc91324ce 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> >> @@ -827,7 +827,7 @@ qup2_uart17: serial@884000 {
-> >>   				status = "disabled";
-> >>   			};
-> >>   
-> >> -			qup2_i2c5: i2c@894000 {
-> >> +			qup2_i2c21: i2c@894000 {
-> > 
-> > Note that the node is labelled qup2_i2c5 and not qup_i2c5.
-> > 
-> > That is, the QUP nodes are labelled using two indices, and specifically
-> > 
-> > 	qup2_i2c5
-> > 
-> > would be another name for
-> > 
-> > 	qup_i2c21
-> > 
-> > if we'd been using such a flat naming scheme (there are 8 engines per
-> > QUP).
-> > 
-> > So there's nothing wrong with how these nodes are currently named, but
-> > mixing the two scheme as you are suggesting would not be correct.
-> 
-> Wondering we might need to change qup2_uart17 to qup2_uart1 then ?
+Hi,
 
-Right, I just noticed that too.
+On Mon, Dec 12, 2022 at 4:24 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> Add support for matching QFPROM fuse values to get the correct speed bin
+> on A650 (SM8250) GPUs.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 2c1630f0c04c..f139ec57c32d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1887,6 +1887,20 @@ static u32 a640_get_speed_bin(u32 fuse)
+>         return UINT_MAX;
+>  }
+>
+> +static u32 a650_get_speed_bin(u32 fuse)
+> +{
+> +       if (fuse == 0)
+> +               return 0;
+> +       else if (fuse == 1)
+> +               return 1;
+> +       else if (fuse == 2)
+> +               return 2;
+> +       else if (fuse == 3)
+> +               return 3;
+> +
+> +       return UINT_MAX;
 
-Johan
+Unlike some of the other functions, you don't need any complexity. Just do:
+
+if (fuse <= 3)
+  return fuse;
+
+return UINT_MAX;
+
+
+I'd also suggest that perhaps "UINT_MAX" isn't exactly the right
+return value for when we have an unrecognized fuse. The return type
+for the function is "u32" which is a fixed size type. UINT_MAX,
+however, is a type that is automatically sized by the compiler. Though
+it's unlikely, theoretically a compiler could be configured such that
+"unsigned int" was something other than 32 bits. Ideally either the
+return type would be changed to "unsigned int" or you'd return
+0xffffffff as the sentinel value.
+
+-Doug
