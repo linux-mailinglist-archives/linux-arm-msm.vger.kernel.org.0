@@ -2,111 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C168B64B689
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 14:46:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 497B064B6BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 15:05:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235689AbiLMNqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 08:46:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54750 "EHLO
+        id S235788AbiLMOFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 09:05:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235511AbiLMNqg (ORCPT
+        with ESMTP id S235785AbiLMOFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 08:46:36 -0500
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D8CB23;
-        Tue, 13 Dec 2022 05:46:35 -0800 (PST)
-Received: by mail-oi1-f180.google.com with SMTP id c129so14269614oia.0;
-        Tue, 13 Dec 2022 05:46:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OFR9/k0a0Z+UiRC/7xhBYa61yTAUE8KhJLjHg3KEXCI=;
-        b=KkVtxjYmnDh5RTSfr1gwuxmY0zRuq9O0dZz+EVJ9fBxfMyUMJd/FOjQ/ew2f4i5ddS
-         z5cTDKg/1cCCazoUNW9BQXu0yrjUr7Vr2S7JVUNjiAkj1QTiNNdn+8LhHizD2cOgRiTX
-         op0ptWXWnVW7uLnDmudu1Qj8hzlWOFfvloTo618WQ3BVakpFFeyauhBv566rPIv7mJ/j
-         wMU/I1ccwPXStwogA0pwHWHAAfv57/kYlvmUhlBZpO3LZDO+PGSvNJJJWe9Cr/gFLk3x
-         uWcYPdlFaIbjAuiYToI5qQZ/pJHZ3QcgsU+Z1Pium1n9B/4ljyeGyQck6SRCDaRrA3PU
-         QmBw==
-X-Gm-Message-State: ANoB5pkFsErC2VYTJkE2saL/rZ2qU5rbjeSg0WqkyZWINburY2UfZi98
-        TYMC8Ex7N110Ol5inmNNAQ==
-X-Google-Smtp-Source: AA0mqf4/eZTm3aoDTMYTU00TvoIrYcFPo5RbO6GHzIifs3RSEjL4U7Hwto/vONwLGDL1IwvTt8bjYw==
-X-Received: by 2002:a05:6808:355:b0:35c:4d3a:6ce4 with SMTP id j21-20020a056808035500b0035c4d3a6ce4mr9303200oie.54.1670939194772;
-        Tue, 13 Dec 2022 05:46:34 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a14-20020a05680802ce00b0035763a9a36csm1630117oid.44.2022.12.13.05.46.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 05:46:34 -0800 (PST)
-Received: (nullmailer pid 914676 invoked by uid 1000);
-        Tue, 13 Dec 2022 13:46:32 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Tue, 13 Dec 2022 09:05:09 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F4E63DF;
+        Tue, 13 Dec 2022 06:05:08 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BDCJQb5008062;
+        Tue, 13 Dec 2022 14:04:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=s3Cn0XuaHR45db4sSCFl4kAjyRjvDPc/VA0vF5EIuss=;
+ b=oavohSaeTqeDOuw7J78oURrhJVF0KFc6JLoayqWg1toBTrqVAnJK/JPNxfjGWh5qGvEl
+ itm/i1nPxNsaf/zIpLDeKK+CDjgC/pXBJQPn9ZVAo5KwIhJpSUZnOq+Wpkwb7lo+SMIP
+ UvaKOMH/IbBLyMJhJMqn53rR8NTmRg6aFJrVv7WKdOYgBfsm5eeS9rPlkeKhaRdPVB0n
+ 9TfmwIj8sqsMYZfhUyhPglJSdltBEPBOkyi3q5ZapwgLsv0laP0shvDOUJqvBU3/VTK+
+ wD4cqtEmNKe6GFbG3W0bTuymEHJZdEj/4nB9vt3n+MdO+QJOZ8lNZvtWPh2kIE2hz+sT tQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mehje1h8m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 14:04:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDE4mNp011365
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 14:04:48 GMT
+Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 13 Dec 2022 06:04:44 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <manivannan.sadhasivam@linaro.org>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robh+dt@kernel.org>, <konrad.dybcio@somainline.org>,
+        <amit.pundir@linaro.org>, <regressions@leemhuis.info>,
+        <sumit.semwal@linaro.org>, <will@kernel.org>,
+        <catalin.marinas@arm.com>, <robin.murphy@arm.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH 0/2] Add support for CPUCP mailbox controller
+Date:   Tue, 13 Dec 2022 19:34:07 +0530
+Message-ID: <20221213140409.772-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        krzysztof.kozlowski@linaro.org, linux-i2c@vger.kernel.org,
-        marijn.suijten@somainline.org, andersson@kernel.org,
-        agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20221213115628.105149-1-konrad.dybcio@linaro.org>
-References: <20221213115628.105149-1-konrad.dybcio@linaro.org>
-Message-Id: <167093911669.912918.15733755245227436716.robh@kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: i2c: qcom,i2c-cci: Fall back to common
- compatibles
-Date:   Tue, 13 Dec 2022 07:46:32 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TmpijNi31auZCrO2a5gyQhBam3v1INu9
+X-Proofpoint-ORIG-GUID: TmpijNi31auZCrO2a5gyQhBam3v1INu9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=810
+ bulkscore=0 clxscore=1011 malwarescore=0 priorityscore=1501 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212130125
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support for CPUSS Control Processor (CPUCP) mailbox controller
+which enables communication between AP and CPUCP by acting as a
+doorbell between them.
 
-On Tue, 13 Dec 2022 12:56:25 +0100, Konrad Dybcio wrote:
-> Almost every compatible string in the CCI driver is a duplicate. Adjust
-> the bindings to include a common (first-soc-implementing-vX) compatible
-> to remove the need to keep adding superfluous compatible strings.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml | 25 +++++++++++++------
->  1 file changed, 17 insertions(+), 8 deletions(-)
-> 
+Sibi Sankar (2):
+  dt-bindings: mailbox: Add dt binding for QTI CPUCP mailbox controller
+  mailbox: Add support for QTI CPUCP mailbox controller
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+ .../bindings/mailbox/qcom,cpucp-mbox.yaml          |  51 ++++++
+ drivers/mailbox/Kconfig                            |   9 ++
+ drivers/mailbox/Makefile                           |   2 +
+ drivers/mailbox/qcom-cpucp-mbox.c                  | 176 +++++++++++++++++++++
+ 4 files changed, 238 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+ create mode 100644 drivers/mailbox/qcom-cpucp-mbox.c
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.example.dtb: cci@ac4a000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,sdm845-cci'] is too short
-	'qcom,sdm845-cci' is not one of ['qcom,msm8226-cci', 'qcom,msm8974-cci', 'qcom,msm8996-cci']
-	'qcom,sdm845-cci' is not one of ['qcom,msm8916-cci']
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221213115628.105149-1-konrad.dybcio@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+2.7.4
 
