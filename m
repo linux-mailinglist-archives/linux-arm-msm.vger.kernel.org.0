@@ -2,189 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD85D64B1E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 10:08:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C7AC64B213
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 10:14:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234737AbiLMJI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 04:08:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
+        id S235162AbiLMJOH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 04:14:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234916AbiLMJH7 (ORCPT
+        with ESMTP id S235130AbiLMJNH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 04:07:59 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FD81F2E0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:04:43 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1F3FE201E6;
-        Tue, 13 Dec 2022 10:03:51 +0100 (CET)
-Date:   Tue, 13 Dec 2022 10:03:49 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        patches@linaro.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
-Message-ID: <20221213090349.bvatkmozbf5tjsxc@SoMainline.org>
-References: <20221210133850.3664-1-konrad.dybcio@linaro.org>
+        Tue, 13 Dec 2022 04:13:07 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2839E164BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:11:31 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso7335664wme.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uw1voEWUp0+0v05jbG+NYaaxMpvPtik5wxTtm6xJtnc=;
+        b=mmCPbBux9a5PQtx4gbSUNSg56ycUpi8ANwAZbb1Od/wJyAAsIqXhsPBDz7qK9Das2/
+         1jUOy4JuW24JJ7ffMfxYaREfxU3cZQppmH60uP6TqfI5ziv81DyyHWDxyeKA61tO3M8a
+         eGhmb2OJslJzwOP+4XURDoe3f0Ov20ZN/8q+Sw6xGmujQnqgJGTYCMuj4975w+ZvdVMI
+         ylbfHJJ4n3LT+K/F6pMmhGAsJF/bMUMpQi5cKjMM1qe+oN1X/Kyzk1zFPIVfu1cYEmG1
+         EdMlE/4nRk7o6ifyYlOPzKoFmA4eA1vJmwpKpw+ld6ALCYYaNoWz3Qsw380NGmfUBsAX
+         4xuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uw1voEWUp0+0v05jbG+NYaaxMpvPtik5wxTtm6xJtnc=;
+        b=8KGmaue4PMKMYNQfElQ9NGMrgGDPe9sBLS+oOF9Ia2EbZDeuroMLcj4uMb/5XXfAta
+         bk83hK00H1Mei92dYJalVA0gXNuZOafW3MAqxuUZOuvLG4cyxcBVIrz0KBNm/zDPlIgz
+         zz2bkSxt3K+KIPAoWYAF27bj7z+G7ls2VAPkmcGM8Oz6BU4BgTaCfKGmP7k/W0J6DexS
+         nbbSoEGICOFF9Y6OTH+v/301/FEQnAmyHNiy4nQ51F9w0pVLLnOJe+T6d76HqjYqwT+b
+         tmNPPPd4I3FPKNjtkW1tsEcSl+QzJn5Cfzz+1biinwYAcLIfhBJgNgDJoralImyYGoI6
+         j58g==
+X-Gm-Message-State: ANoB5pn0VRn+G/MnW/71DHSR8rvGfStONySpz7FgGzKX2s4IGiygLmuG
+        +GjhYv8RhSHQSOr0WGX/jah90g==
+X-Google-Smtp-Source: AA0mqf5qMOYPOTj8H5LDaHHrXGWetVbN10xSkU6EVkmeROZ/YDkQbYFFOw+e7zoZAzAGvlBsiLofVw==
+X-Received: by 2002:a05:600c:5407:b0:3c6:e63e:89a6 with SMTP id he7-20020a05600c540700b003c6e63e89a6mr15269539wmb.2.1670922689669;
+        Tue, 13 Dec 2022 01:11:29 -0800 (PST)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id f13-20020a05600c4e8d00b003c70191f267sm13320087wmq.39.2022.12.13.01.11.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 01:11:29 -0800 (PST)
+Message-ID: <ffd36b9a-4d8f-3405-1926-668151e2ecbb@linaro.org>
+Date:   Tue, 13 Dec 2022 10:11:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221210133850.3664-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 06/12] dt-bindings: watchdog: qcom-wdt: merge MSM timer
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20221212163532.142533-1-krzysztof.kozlowski@linaro.org>
+ <20221212163532.142533-6-krzysztof.kozlowski@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20221212163532.142533-6-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-10 14:38:50, Konrad Dybcio wrote:
-> With enough pins set properly, the hardware buttons now also work
-> like a charm.
+On 12/12/2022 17:35, Krzysztof Kozlowski wrote:
+> Merge Qualcomm MSM timer bindings into watchdog, because the timer
+> compatibles are already included here and the hardware is quite similar.
 > 
-> Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Xperia 5 III
-
-However I also tested this on Xperia 1 III, and...
-
+> While converting the MSM timer bindings, adjust clock-frequency
+> property to take only one frequency, instead of two, because:
+> 1. DT schema does not allow to frequencies,
+> 2. The Linux timer driver reads only first frequency.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 24 ++++++++++
->  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 47 ++++++++++++++++++-
->  2 files changed, 70 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-> index e6824c8c2774..6fa830bdc6bd 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
-> @@ -10,6 +10,20 @@
->  / {
->  	model = "Sony Xperia 5 III";
->  	compatible = "sony,pdx214-generic", "qcom,sm8350";
-> +
-> +	gpio-keys {
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
-> +
-> +		key-google-assist {
-> +			label = "Google Assistant Key";
-> +			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_LEFTMETA>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			gpio-key,wakeup;
-> +		};
-> +	};
 
-... please move this to board DTS.  Xperia 1 III would also like to have
-it mapped.  Downstream DT indicates, and my local testing confirms, that
-it is identical to Xperia 5 III (i.e. common to the Sagami board).
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-The other buttons work great on both devices!
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
->  };
->  
->  &framebuffer {
-> @@ -18,6 +32,16 @@ &framebuffer {
->  	stride = <(1080 * 4)>;
->  };
->  
-> +&pm8350_gpios {
-> +	g_assist_n: g-assist-n-state {
-> +		pins = "gpio9";
-> +		function = "normal";
-> +		power-source = <1>;
-> +		bias-pull-up;
-> +		input-enable;
-> +	};
-> +};
-> +
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
-(And this too, of course)
-
-- Marijn
-
->  &pm8350b_gpios {
->  	gpio-line-names = "NC", /* GPIO_1 */
->  			  "NC",
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> index d73e1f3fa501..557b4538a031 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> @@ -49,7 +49,26 @@ framebuffer: framebuffer@e1000000 {
->  	gpio-keys {
->  		compatible = "gpio-keys";
->  
-> -		/* For reasons still unknown, GAssist key and Camera Focus/Shutter don't work.. */
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-> +
-> +		key-camera-focus {
-> +			label = "Camera Focus";
-> +			linux,code = <KEY_CAMERA_FOCUS>;
-> +			gpios = <&pm8350b_gpios 8 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			gpio-key,wakeup;
-> +		};
-> +
-> +		key-camera-snapshot {
-> +			label = "Camera Snapshot";
-> +			linux,code = <KEY_CAMERA>;
-> +			gpios = <&pm8350b_gpios 5 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			gpio-key,wakeup;
-> +		};
->  
->  		key-vol-down {
->  			label = "Volume Down";
-> @@ -547,11 +566,37 @@ &pm8350_gpios {
->  			  "PM8350_OPTION"; /* GPIO_10 */
->  };
->  
-> +&pm8350b_gpios {
-> +	snapshot_n: snapshot-n-state {
-> +		pins = "gpio5";
-> +		function = "normal";
-> +		power-source = <0>;
-> +		bias-pull-up;
-> +		input-enable;
-> +	};
-> +
-> +	focus_n: focus-n-state {
-> +		pins = "gpio8";
-> +		function = "normal";
-> +		power-source = <0>;
-> +		input-enable;
-> +		bias-pull-up;
-> +	};
-> +};
-> +
->  &pmk8350_gpios {
->  	gpio-line-names = "NC", /* GPIO_1 */
->  			  "NC",
->  			  "VOL_DOWN_N",
->  			  "PMK8350_OPTION";
-> +
-> +	vol_down_n: vol-down-n-state {
-> +		pins = "gpio3";
-> +		function = "normal";
-> +		power-source = <0>;
-> +		bias-pull-up;
-> +		input-enable;
-> +	};
->  };
->  
->  &pmk8350_rtc {
-> -- 
-> 2.38.1
-> 
