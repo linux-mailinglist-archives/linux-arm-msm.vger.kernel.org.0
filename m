@@ -2,146 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECBFE64B67E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 14:42:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C168B64B689
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 14:46:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235709AbiLMNmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 08:42:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53346 "EHLO
+        id S235689AbiLMNqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 08:46:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235729AbiLMNmm (ORCPT
+        with ESMTP id S235511AbiLMNqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 08:42:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69820319;
-        Tue, 13 Dec 2022 05:42:41 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BD9wGqY029177;
-        Tue, 13 Dec 2022 13:42:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=XrZbGC6xqJZQMHq1bEwiY8nPFiDOlrB2h9CcFtTYOII=;
- b=HcapBWXGRcRfMx9l8rqhgvf2tEqCizXpYUygFV4ISpKlE/DgkY+L8ygKJDHEXZB4srii
- XdN8yavL8065nysa9M0M20Qg3jmtg9VMbO3+j3aIOerWedyHCGCL8IhC8MHLeEntD3la
- IO0q/2l8li9jC0BQBf+0+FjlTK1HE6S0DS+a7zIbxExnixtwF4kQY8nF/f3UygO7Ef1u
- ++4/4T2vYqoaZoswivzDnFMj6tf2HARx8u5QHLXnSzMpx48tpfRmWHJze5Daqe+4A2Mw
- lFMUit/kufyt4rPN2CvggF3R+yYzdqaHwukBpIGwwhhRV0Gohwfq6PO6jawJOes+J3hN bA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3meq7qgqbg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 13:42:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDDgb41022791
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 13:42:37 GMT
-Received: from [10.216.62.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 13 Dec
- 2022 05:42:31 -0800
-Message-ID: <367fdcef-7360-055a-897b-71a66063b4ba@quicinc.com>
-Date:   Tue, 13 Dec 2022 19:12:10 +0530
+        Tue, 13 Dec 2022 08:46:36 -0500
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D8CB23;
+        Tue, 13 Dec 2022 05:46:35 -0800 (PST)
+Received: by mail-oi1-f180.google.com with SMTP id c129so14269614oia.0;
+        Tue, 13 Dec 2022 05:46:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OFR9/k0a0Z+UiRC/7xhBYa61yTAUE8KhJLjHg3KEXCI=;
+        b=KkVtxjYmnDh5RTSfr1gwuxmY0zRuq9O0dZz+EVJ9fBxfMyUMJd/FOjQ/ew2f4i5ddS
+         z5cTDKg/1cCCazoUNW9BQXu0yrjUr7Vr2S7JVUNjiAkj1QTiNNdn+8LhHizD2cOgRiTX
+         op0ptWXWnVW7uLnDmudu1Qj8hzlWOFfvloTo618WQ3BVakpFFeyauhBv566rPIv7mJ/j
+         wMU/I1ccwPXStwogA0pwHWHAAfv57/kYlvmUhlBZpO3LZDO+PGSvNJJJWe9Cr/gFLk3x
+         uWcYPdlFaIbjAuiYToI5qQZ/pJHZ3QcgsU+Z1Pium1n9B/4ljyeGyQck6SRCDaRrA3PU
+         QmBw==
+X-Gm-Message-State: ANoB5pkFsErC2VYTJkE2saL/rZ2qU5rbjeSg0WqkyZWINburY2UfZi98
+        TYMC8Ex7N110Ol5inmNNAQ==
+X-Google-Smtp-Source: AA0mqf4/eZTm3aoDTMYTU00TvoIrYcFPo5RbO6GHzIifs3RSEjL4U7Hwto/vONwLGDL1IwvTt8bjYw==
+X-Received: by 2002:a05:6808:355:b0:35c:4d3a:6ce4 with SMTP id j21-20020a056808035500b0035c4d3a6ce4mr9303200oie.54.1670939194772;
+        Tue, 13 Dec 2022 05:46:34 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id a14-20020a05680802ce00b0035763a9a36csm1630117oid.44.2022.12.13.05.46.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 05:46:34 -0800 (PST)
+Received: (nullmailer pid 914676 invoked by uid 1000);
+        Tue, 13 Dec 2022 13:46:32 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] spmi: Add check for remove callback in spmi_drv_remove
- API
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <devicetree@vger.kernel.org>, <robh+dt@kernel.org>,
-        <linus.walleij@linaro.org>, <quic_kamalw@quicinc.com>,
-        <quic_jestar@quicinc.com>, <sboyd@kernel.org>,
-        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-msm-owner@vger.kernel.org>
-References: <1670145780-13111-1-git-send-email-quic_jprakash@quicinc.com>
- <1670145780-13111-2-git-send-email-quic_jprakash@quicinc.com>
- <Y5hqMFw0xl6lmJYL@kroah.com>
-From:   Jishnu Prakash <quic_jprakash@quicinc.com>
-In-Reply-To: <Y5hqMFw0xl6lmJYL@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: R7W2dDGa3t7pIn16aSIt_MUAB9o0Zs_L
-X-Proofpoint-ORIG-GUID: R7W2dDGa3t7pIn16aSIt_MUAB9o0Zs_L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=677 suspectscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212130122
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        krzysztof.kozlowski@linaro.org, linux-i2c@vger.kernel.org,
+        marijn.suijten@somainline.org, andersson@kernel.org,
+        agross@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20221213115628.105149-1-konrad.dybcio@linaro.org>
+References: <20221213115628.105149-1-konrad.dybcio@linaro.org>
+Message-Id: <167093911669.912918.15733755245227436716.robh@kernel.org>
+Subject: Re: [PATCH 1/4] dt-bindings: i2c: qcom,i2c-cci: Fall back to common
+ compatibles
+Date:   Tue, 13 Dec 2022 07:46:32 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg
 
-These are two SPMI drivers without remove callbacks defined:
-
-drivers/mfd/qcom-spmi-pmic.c
-drivers/mfd/hi6421-spmi-pmic.c
-
-We made this change after noticing an issue internally with the first 
-one above, there was a crash when trying to remove it with rmmod, which 
-is fixed by this change. In addition, since the probe of the QCOM SPMI 
-PMIC driver uses devm_ functions throughout, we could see that with this 
-change, when we remove the device with rmmod, the cleanup does happen 
-correctly even though there is no remove function defined in the driver. 
-The last function called in the probe of our SPMI PMIC driver is 
-devm_of_platform_populate(), to probe all the PMIC peripheral drivers 
-under this one, and when this driver module was  removed with rmmod, we 
-could see that the individual PMIC drivers under it also got depopulated 
-with their remove APIs getting called.
-
-If it is possible for a SPMI driver to be removed correctly by rmmod 
-without having a remove API defined, this change should be right, what 
-do you think?
-
-Thanks,
-
-Jishnu
-
-On 12/13/2022 5:34 PM, Greg KH wrote:
-> On Sun, Dec 04, 2022 at 02:53:00PM +0530, Jishnu Prakash wrote:
->> Add a check for remove callback presence before calling it for a
->> spmi driver, to avoid NULL pointer dereference error if remove callback
->> has not been specified for that SPMI driver.
->>
->> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
->> ---
->>   drivers/spmi/spmi.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
->> index a456ce5..6b34356 100644
->> --- a/drivers/spmi/spmi.c
->> +++ b/drivers/spmi/spmi.c
->> @@ -350,7 +350,8 @@ static void spmi_drv_remove(struct device *dev)
->>   	const struct spmi_driver *sdrv = to_spmi_driver(dev->driver);
->>   
->>   	pm_runtime_get_sync(dev);
->> -	sdrv->remove(to_spmi_device(dev));
->> +	if (sdrv->remove)
->> +		sdrv->remove(to_spmi_device(dev));
->>   	pm_runtime_put_noidle(dev);
->>   
->>   	pm_runtime_disable(dev);
+On Tue, 13 Dec 2022 12:56:25 +0100, Konrad Dybcio wrote:
+> Almost every compatible string in the CCI driver is a duplicate. Adjust
+> the bindings to include a common (first-soc-implementing-vX) compatible
+> to remove the need to keep adding superfluous compatible strings.
 > 
-> What in-kernel spmi driver does not have a remove function set that
-> requires this change?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml | 25 +++++++++++++------
+>  1 file changed, 17 insertions(+), 8 deletions(-)
 > 
-> thanks,
-> 
-> greg k-h
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.example.dtb: cci@ac4a000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sdm845-cci'] is too short
+	'qcom,sdm845-cci' is not one of ['qcom,msm8226-cci', 'qcom,msm8974-cci', 'qcom,msm8996-cci']
+	'qcom,sdm845-cci' is not one of ['qcom,msm8916-cci']
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221213115628.105149-1-konrad.dybcio@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
