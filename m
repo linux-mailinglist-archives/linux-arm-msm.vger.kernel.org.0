@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA3564B5EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 14:17:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF13364B617
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 14:26:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234454AbiLMNQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 08:16:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
+        id S235545AbiLMNZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 08:25:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235463AbiLMNQt (ORCPT
+        with ESMTP id S235546AbiLMNZZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 08:16:49 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C44320190
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 05:16:47 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id h10so3228954ljk.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 05:16:47 -0800 (PST)
+        Tue, 13 Dec 2022 08:25:25 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA74D20375
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 05:25:22 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id x28so4873417lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 05:25:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vpGS/sLfJxOssPdaaO0i3vLsbjRZ/QFKT+W7Ixf+RBA=;
-        b=JMhitTV6dbHSNBi5lG8kfpe0v4v4PjALRyni8Tgoy5X1fILLoiestrd2zMSm+8ed7E
-         jP+HSNbSB6NZQoZCdfD8KUZRbTT5oCGQ4LG+Wsl7K6JFurtUpRz0cRzVzmvueh/oo3DB
-         lwHBUoKoolhS3i4YWJLzv6U1DUpd8I6Rb120N6tBefDLyEd+wiY0po51Zq+L57vtKgO6
-         ogCycbgCvMZIjexasVJke6cpxeOMCwBwV8Y8TqCubqG9V6EaTAkeJAjXhnscln9lDzlY
-         dAp7FOyomZ7sRUvV1i638x2Pw0q3DgHXHHleS8sgCeRKIIgcu8shWeZ/+Xfzm9pFn0Wi
-         Zd/A==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zbT0fafmzTHukwKRXE1XU496DYVTEGMa/YXTFnZk2Hs=;
+        b=t+nh+QQwG1a3tUQ/DJyuMDQDHAF+B3fbEABr+cam+Z6IzFe6SqjafVZFGoLhxQqewX
+         yqxSP+M0SCfyGDsGe2JUD1FYgWmgDM1SKaOREFgRlsjcoS4sZ7oDASIdmmawNF0jTaOU
+         FB6S6658trp61k879qJJJQifXMMC3SRaw0iFBI6j4mKKeBMerpC9fwWtXiN2JaJCCxOj
+         XHlZyVs8MukN6G5T0XiQptzkygqgKktSZ7gPWezL61sUgR7QWTwUscsab6bL6qxL9J+D
+         MWe9+wQuK9LW2i50TLq/DlG7gPyEgV+xB0kvWHs0pIc7S+zDcQXnzXChoiDBLbNamv2t
+         8PsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vpGS/sLfJxOssPdaaO0i3vLsbjRZ/QFKT+W7Ixf+RBA=;
-        b=CBViPu6F8CfEOJJfuu3ec8KeSwnozKDu0IyUS1MeoPJECxRvSCWZTrA30ucuUN7zag
-         5NOEbR5cvhBFMuJkipPU+hbMbKm1ucyoTNknpaZhOG2YQlVKiFqFRIWwHxheEwRn/iNH
-         qOUZquJNm3dW4Wj63YYlCCv9D1IUlLtnOTPB0Azo/JjNAsjhygV1yQVd+KD2eAMoAJYY
-         fSiJyJLUZ6dF0k1Wkgz9BJWgI1qpuJhiHi7ILAJvOt3tyHCbO3URH4psubPXD770AfaA
-         5iQtEzcx/SurPH0L6WlDPIJNapk9+YziaWss6ppYttPWfIuiuVSFBld/hNI/6L7F61kO
-         bY7w==
-X-Gm-Message-State: ANoB5plFSqNQeuPbxmIWUHKYdaquHVNeqjU4ewwLQibWpjGHaeyAuJGb
-        bzOTC5GfljTJqbcoXfckfR1vnA==
-X-Google-Smtp-Source: AA0mqf7h9JdmO1o4fZ5CvwWZSLzxNP4uB3CqDgju8Mga2Rm0IHZvbY8kfyTBYoVwBBTX1+MYSw75Nw==
-X-Received: by 2002:a05:651c:198b:b0:26f:e24e:a41f with SMTP id bx11-20020a05651c198b00b0026fe24ea41fmr6573438ljb.49.1670937405820;
-        Tue, 13 Dec 2022 05:16:45 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id i6-20020a2ea226000000b0027730261350sm258386ljm.131.2022.12.13.05.16.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 05:16:45 -0800 (PST)
-Message-ID: <336ad377-8273-0eb5-d4a7-006e84707b7f@linaro.org>
-Date:   Tue, 13 Dec 2022 14:16:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 2/7] dt-bindings: nvmem: Add compatible for SM8250
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zbT0fafmzTHukwKRXE1XU496DYVTEGMa/YXTFnZk2Hs=;
+        b=fO9Ky8voTqQVRO9H3wyw+9OO+eg8my9CIFNRr/bA+8poDlSX8Wrlp5alMY7vJU7PuA
+         QVGMdcmrSu4PkHHIXa5GGBnA2FNN/qAbY51K/AYs8juYLmgs13MroziNc/JfC+NIBhtw
+         jgUzKhYBjZKm4VqN70Z1mlSTezXix10WZzdI6KqFpMoB1Bg+VvxekT/Foltj3wVVJ6Zo
+         gHQpm8ela3wcCm1lLFdAlbFu4iQ2nWouJtg4LPSF8D+euTUVmJ95tJSXjU2xoNrQOVsk
+         4o1IE5sZsaGfxbfqB9/EpjL+e7ObVn7EiRHx5iwIAmoFjXpmc23UqsD3ZMJrUb9aucFT
+         ofjw==
+X-Gm-Message-State: ANoB5pmVjLKL17ppRTaoNqSbRbyCKv/B1ZofKPasbbPs/sl3ELDTGeoX
+        mIbdReMGdGYp/Q0jkTgKqXUl1KHyKVbzNoo5
+X-Google-Smtp-Source: AA0mqf6isKEIc0Od+et/Fjj46eJY5oJB/zV5/1mJn+DMAAO4ifVJV+bIKTTZRX3FWL2h6Wt7bnjXZw==
+X-Received: by 2002:ac2:4e4e:0:b0:4a4:68b9:608a with SMTP id f14-20020ac24e4e000000b004a468b9608amr4437277lfr.21.1670937920436;
+        Tue, 13 Dec 2022 05:25:20 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id k8-20020ac257c8000000b004b0a1e77cb2sm366564lfo.137.2022.12.13.05.25.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 05:25:20 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221213002423.259039-1-konrad.dybcio@linaro.org>
- <20221213002423.259039-3-konrad.dybcio@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221213002423.259039-3-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH 1/3] arm64: dts: qcom: sm8250-edo: Remove misleading comments
+Date:   Tue, 13 Dec 2022 14:25:15 +0100
+Message-Id: <20221213132517.203609-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,17 +73,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/12/2022 01:24, Konrad Dybcio wrote:
-> Docuemnt the QFPROM on SM8250.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+As much as it hurts me, there is no FM radio chips on these devices.
+It seems to be present on Japanese models, but these are not available
+globally and differ in a few more ways anyway (such as a super high-tech
+NFC chip).
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index fdfed4c3201e..bf484ee20b21 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -529,10 +529,8 @@ &i2c15 {
+ 	clock-frequency = <400000>;
+ 
+ 	/* Qcom SMB1390 @ 10 */
+-	/* Silicon Labs SI4704 FM Radio Receiver @ 11 */
+ 	/* Qcom SMB1390_slave @ 18 */
+ 	/* HALO HL6111R Qi charger @ 25 */
+-	/* Richwave RTC6226 FM Radio Receiver @ 64 */
+ };
+ 
+ &pcie0 {
+-- 
+2.39.0
 
