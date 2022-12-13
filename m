@@ -2,194 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C086B64ACB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 01:58:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D488864ACBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 02:03:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233718AbiLMA6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 19:58:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36774 "EHLO
+        id S233773AbiLMBDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 20:03:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233250AbiLMA6F (ORCPT
+        with ESMTP id S232791AbiLMBDD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 19:58:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB297FCEB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 16:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1670893026;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=LmjUSyg67D39D4GXwHdsjU8ybX4fVmhyxG/436wX9C0=;
-        b=EY00KgQ3lWMlNVbKfaEVQoJNkta+TIOvCVLSOPl5RR5utbgYsgLCLCRlUnPozGUe4LfZcL
-        YJIQ0sGpLtU/+GOHt+G717ZOFZItGEPQEAnSeBYIJCjgJmf9qY5zGnXxrdsnk4J+CEWJ+8
-        zDyfVukr7vhml8CGcBvKJTl5ixizcKY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-15-Tc11qnRoNM-55hnpY4ml0w-1; Mon, 12 Dec 2022 19:57:04 -0500
-X-MC-Unique: Tc11qnRoNM-55hnpY4ml0w-1
-Received: by mail-qv1-f69.google.com with SMTP id s9-20020a0cf789000000b004d544bd8258so9088986qvn.16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 16:57:04 -0800 (PST)
+        Mon, 12 Dec 2022 20:03:03 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2011462E4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 17:03:02 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id g14so1798869ljh.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 17:03:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=c4uydtI+TJBxOHIdUWp7WaxP1AbUhc5qkc9V6EJvCic=;
+        b=EEdB7Du271URciEUZOFlwc+L+uTXvnK00CZKbKg9UqPqnIdokWLS99gx8neaY6Qime
+         mU18qWCUImn9sISphSIkjx68Am3qUuykYENCcvzeQQ3R7Awa9tfyPpSeub/FCZcs0e0M
+         Fn7nubnlMx0U5HmdCvKJjz6jecoh26tWUcJ4CihrMn35UwC5Ozhh8Syq/P+VDu5e9DhH
+         +TFIMHEwBKnp53TtMBbKqZ5o9gGLJ5kI/Gud9EdQqTcMByhFFKrwJfJ42ZhQUwy06Edu
+         DB7Oqt0MdVb0Sn0Bi5pGhQcBrD607m/d0amc5XjWKHjKM6vlyBa/LdaPaCIb8QXAcEbd
+         9ZsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LmjUSyg67D39D4GXwHdsjU8ybX4fVmhyxG/436wX9C0=;
-        b=Mmf1SwiLBYZ0sLgjLJyl7VuIsC0iyyg/+N5DtXob+S9CUcUs+CoRebEecCsc/ja4Li
-         zzuj6O+YaS/H9aoaYx0XM9qDrJyu/OEUXwESuMe+SuUrNCNnVe9I30JL5KWz4+drf6CT
-         AfIM4tAd5T7iTGBoPx56fdcrkgqyT9GG1PgBExDPJQ4hJbK1G/gniIBkeHZQW2mFAsZa
-         0fSCZ8hJ7T+4EHuMulCJXGlpbNOVb38xuXhn19TdxLJYoggcJrjkwnkmufXexZ2Fnt9A
-         eTihWu6sKKzOvU/87s8oZ1Op/9oNnm+jptc31M6O3OokswPmib5Gw+L9oZghnAST1m+Q
-         EDxQ==
-X-Gm-Message-State: ANoB5plSSUC0ac5MeQOCFBJXGK1XGmx/W3ZOlY/KGwJm3yudiEoI6zaf
-        zijTJq3xCDJvlQ+bVBV0n+SvKapfBs8IFeFR8V83q/aaH4z+Atnt3hlOjIkZbqxRKEnNPAytzf/
-        V6sPzjlsT2NRxF62fk74u2eyTCA==
-X-Received: by 2002:ac8:774b:0:b0:3a6:8f7c:5936 with SMTP id g11-20020ac8774b000000b003a68f7c5936mr1754135qtu.25.1670893024249;
-        Mon, 12 Dec 2022 16:57:04 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf674cJF6yhclcLs4EvITmWpHOXQVs9weEWZ55ytja8rJmZ3rdmQO2pxz9sI7RA8elgBIz1d6A==
-X-Received: by 2002:ac8:774b:0:b0:3a6:8f7c:5936 with SMTP id g11-20020ac8774b000000b003a68f7c5936mr1754116qtu.25.1670893024030;
-        Mon, 12 Dec 2022 16:57:04 -0800 (PST)
-Received: from localhost (pool-96-230-116-121.bstnma.fios.verizon.net. [96.230.116.121])
-        by smtp.gmail.com with ESMTPSA id m11-20020a05620a290b00b006fc6529abaesm6829570qkp.101.2022.12.12.16.57.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 16:57:03 -0800 (PST)
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        Eric Chanudet <echanude@redhat.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8295p-adp: use pm8450a dtsi
-Date:   Mon, 12 Dec 2022 19:55:39 -0500
-Message-Id: <20221213005539.1133443-2-echanude@redhat.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221213005539.1133443-1-echanude@redhat.com>
-References: <20221213005539.1133443-1-echanude@redhat.com>
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c4uydtI+TJBxOHIdUWp7WaxP1AbUhc5qkc9V6EJvCic=;
+        b=5lCnSl5RBSxuyK2m0SopeyntWA7LTv1i9KRP2XQUpQ9gDFP4S3dzf2ljbvq2eNVagE
+         bcB5nNBCD9YZ8p3JeiEw1mIioM+FWK8is/TkKKwgrB3+Jx0DkV4UB8ph7ulyWOFXxrAc
+         fdpY8Skw9IqYW03PCfkuA7zm8HcPv3xBSGse8RL0TW602EYeRuY7Slz+NHqiUItBuTyS
+         dl3tRc3xPdi16r7RypKG0g7ik9uq1ElMpHpjgQi3IH+QN80mV9/Pte80E/6lUKsEsgqs
+         pODs8APYn6Ah+uELcksyWfjZcKBTwUqGaxQMr+eFPZUyzKZ+3fGbdQDnfa+NvfO5zSHy
+         aABA==
+X-Gm-Message-State: ANoB5pljC9rvAZmcfJpCykxgTb1ZKAelbz1/ARAZKU9idxcemaV43BGt
+        p4Upc4eogLPIIPRFjw0ZwwmtJIIdTsCDVhF3NwM=
+X-Google-Smtp-Source: AA0mqf6/0+m1rsZkaUSHO7NwIJA9CMcebS/GmvIxG6UAb/gfbNFdP87gMoYB+be+y+4Mw4ambQTXOg==
+X-Received: by 2002:a2e:3a15:0:b0:27a:129f:770d with SMTP id h21-20020a2e3a15000000b0027a129f770dmr4414846lja.45.1670893380349;
+        Mon, 12 Dec 2022 17:03:00 -0800 (PST)
+Received: from [127.0.0.1] ([94.25.229.107])
+        by smtp.gmail.com with ESMTPSA id u16-20020a05651c131000b0027760138c53sm137967lja.72.2022.12.12.17.02.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Dec 2022 17:02:59 -0800 (PST)
+Date:   Tue, 13 Dec 2022 04:02:54 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        devicetree@vger.kernel.org, airlied@gmail.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v11_2/5=5D_dt-bindings=3A_msm/dp=3A_a?= =?US-ASCII?Q?dd_data-lanes_and_link-frequencies_property?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <a9e2f269-b9df-814f-adcd-f5577f590fa7@quicinc.com>
+References: <1670539015-11808-1-git-send-email-quic_khsieh@quicinc.com> <1670539015-11808-3-git-send-email-quic_khsieh@quicinc.com> <5a3865ed-8847-db04-3d60-f35438250bef@linaro.org> <5aa16223-dbf6-996c-1985-794302dcce91@quicinc.com> <be1411e8-1d07-7643-977c-a306016fd660@linaro.org> <b6d90c1f-5365-7197-be63-96c3d8cf0746@quicinc.com> <e53844b7-601b-f355-302b-cc871962a446@linaro.org> <8b306c8f-3089-4aaf-7fc1-038a8330c89a@quicinc.com> <CAA8EJpr5RYyQa7xu1_xJ0F-dn-H9aOf0KE-CDgDCwnZu3HPgXg@mail.gmail.com> <a9e2f269-b9df-814f-adcd-f5577f590fa7@quicinc.com>
+Message-ID: <46971A33-D9A4-4A84-9058-62F69C5618F4@linaro.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Include the dtsi to use a single pmic descriptions.
-Both sa8295p-adp and sa8540p-adp have the same spmi pmic apparently.
 
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
----
- arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 79 +-----------------------
- 1 file changed, 1 insertion(+), 78 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-index 84cb6f3eeb56..889259df3287 100644
---- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-@@ -11,6 +11,7 @@
- #include <dt-bindings/spmi/spmi.h>
- 
- #include "sa8540p.dtsi"
-+#include "pm8450a.dtsi"
- 
- / {
- 	model = "Qualcomm SA8295P ADP";
-@@ -260,84 +261,6 @@ &remoteproc_nsp1 {
- 	status = "okay";
- };
- 
--&spmi_bus {
--	pm8450a: pmic@0 {
--		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0x0 SPMI_USID>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		rtc@6000 {
--			compatible = "qcom,pm8941-rtc";
--			reg = <0x6000>;
--			reg-names = "rtc", "alarm";
--			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
--			wakeup-source;
--		};
--
--		pm8450a_gpios: gpio@c000 {
--			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
--			reg = <0xc000>;
--			gpio-controller;
--			gpio-ranges = <&pm8450a_gpios 0 0 10>;
--			#gpio-cells = <2>;
--			interrupt-controller;
--			#interrupt-cells = <2>;
--		};
--	};
--
--	pm8450c: pmic@4 {
--		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0x4 SPMI_USID>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		pm8450c_gpios: gpio@c000 {
--			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
--			reg = <0xc000>;
--			gpio-controller;
--			gpio-ranges = <&pm8450c_gpios 0 0 10>;
--			#gpio-cells = <2>;
--			interrupt-controller;
--			#interrupt-cells = <2>;
--		};
--	};
--
--	pm8450e: pmic@8 {
--		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0x8 SPMI_USID>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		pm8450e_gpios: gpio@c000 {
--			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
--			reg = <0xc000>;
--			gpio-controller;
--			gpio-ranges = <&pm8450e_gpios 0 0 10>;
--			#gpio-cells = <2>;
--			interrupt-controller;
--			#interrupt-cells = <2>;
--		};
--	};
--
--	pm8450g: pmic@c {
--		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0xc SPMI_USID>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		pm8450g_gpios: gpio@c000 {
--			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
--			reg = <0xc000>;
--			gpio-controller;
--			gpio-ranges = <&pm8450g_gpios 0 0 10>;
--			#gpio-cells = <2>;
--			interrupt-controller;
--			#interrupt-cells = <2>;
--		};
--	};
--};
--
- &ufs_mem_hc {
- 	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
- 
--- 
-2.38.1
+On 13 December 2022 02:41:55 GMT+03:00, Abhinav Kumar <quic_abhinavk@quici=
+nc=2Ecom> wrote:
+>Hi Dmitry
+>
+>On 12/12/2022 2:35 PM, Dmitry Baryshkov wrote:
+>> On Mon, 12 Dec 2022 at 19:51, Kuogee Hsieh <quic_khsieh@quicinc=2Ecom> =
+wrote:
+>>>=20
+>>>=20
+>>> On 12/8/2022 4:35 PM, Dmitry Baryshkov wrote:
+>>>> On 09/12/2022 02:22, Kuogee Hsieh wrote:
+>>>>>=20
+>>>>> On 12/8/2022 4:11 PM, Dmitry Baryshkov wrote:
+>>>>>> On 09/12/2022 01:38, Kuogee Hsieh wrote:
+>>>>>>>=20
+>>>>>>> On 12/8/2022 3:33 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On 09/12/2022 00:36, Kuogee Hsieh wrote:
+>>>>>>>>> Add both data-lanes and link-frequencies property into endpoint
+>>>>>>>>>=20
+>>>>>>>>> Changes in v7:
+>>>>>>>>> -- split yaml out of dtsi patch
+>>>>>>>>> -- link-frequencies from link rate to symbol rate
+>>>>>>>>> -- deprecation of old data-lanes property
+>>>>>>>>>=20
+>>>>>>>>> Changes in v8:
+>>>>>>>>> -- correct Bjorn mail address to kernel=2Eorg
+>>>>>>>>>=20
+>>>>>>>>> Changes in v10:
+>>>>>>>>> -- add menu item to data-lanes and link-frequecnis
+>>>>>>>>>=20
+>>>>>>>>> Changes in v11:
+>>>>>>>>> -- add endpoint property at port@1
+>>>>>>>>>=20
+>>>>>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>`
+>>>>>>>>=20
+>>>>>>>> Applying: dt-bindings: msm/dp: add data-lanes and link-frequencie=
+s
+>>>>>>>> property
+>>>>>>>> =2Egit/rebase-apply/patch:47: trailing whitespace=2E
+>>>>>>>>=20
+>>>>>>>> =2Egit/rebase-apply/patch:51: trailing whitespace=2E
+>>>>>>>>=20
+>>>>>>>>=20
+>>>>>>>> Also the dt_binding_check fails with an error for this schema=2E =
+And
+>>>>>>>> after fixing the error in the schema I faced an example validatio=
+n
+>>>>>>>> error=2E Did you check that the schema is correct and that the
+>>>>>>>> example validates against the schema?
+>>>>>>>=20
+>>>>>>> yes, but i run "make dt_binding_check
+>>>>>>> DT_SCHEMA_FILES=3DDocumentation/devicetree/bindings/display/msm/dp=
+-controller=2Eyaml"
+>>>>>>> at mu v5=2E15 branch since
+>>>>>>=20
+>>>>>> I wouldn't ask you to post the log here=2E But I don't think that
+>>>>>> either of the errors that I see here is related to 5=2E15 vs 6=2E1-=
+rc=2E
+>>>>>>=20
+>>>>>> In fact after applying this patch against 5=2E15 I saw the expected
+>>>>>> failure:
+>>>>>>=20
+>>>>>> Documentation/devicetree/bindings/display/msm/dp-controller=2Eyaml:
+>>>>>> properties:required: ['port@0', 'port@1'] is not of type 'object',
+>>>>>> 'boolean'
+>>>>>> Documentation/devicetree/bindings/display/msm/dp-controller=2Eyaml:
+>>>>>> properties: 'required' should not be valid under {'$ref':
+>>>>>> '#/definitions/json-schema-prop-names'}
+>>>>>> Documentation/devicetree/bindings/display/msm/dp-controller=2Eyaml:
+>>>>>> ignoring, error in schema: properties: required
+>>>>>>=20
+>>>>>>>=20
+>>>>>>> "make dt_binding_check" does not work at msm-next branch=2E
+>>>>>>=20
+>>>>>> I went ahead and just checked=2E
+>>>>>>=20
+>>>>>> `make dt_binding_check DT_SCHEMA_FILES=3Ddisplay/msm`  works cleanl=
+y
+>>>>>> in msm-next and reports a single example-related warning in
+>>>>>> msm-next-lumag=2E I pushed a patch to fix that warning (wich can
+>>>>>> hopefully be picked up by Abhinav into msm-fixes)=2E So you can ass=
+ume
+>>>>>> that both these branches have consistent error-free display/msm
+>>>>>> schemas=2E
+>>>>>>=20
+>>>>> I have clean msm-next branch (without my data-lines yaml patch
+>>>>> applied) and run "make dt_binding_check
+>>>>> DT_SCHEMA_FILES=3DDocumentation/devicetree/bindings/display/msm/dp-c=
+ontroller=2Eyaml",
+>>>>> then I saw below error messages=2E
+>>>>>=20
+>>>>> Have you run into this problem?
+>>>>=20
+>>>> No=2E
+>>>=20
+>>> Did you do anything to fix "older dtschema instance"?
+>>=20
+>> I did not since I hadn't had such a problem=2E I can refer again to the
+>> steps I provided you beforehand=2E The email was sent 6 days ago=2E No
+>> answer from your side since that time=2E
+>>=20
+>>> I had run  "pip3 install dtschema --upgrade" and still not work=2E
+>>=20
+>> Can you please post a full log of this command?
+>>=20
+>>>=20
+>>> D you know how to fix this problem?
+>>>=20
+>>> Thanks,
+>>>=20
+>>> kuogee
+>>>=20
+>>> sort: -:2: disorder: 2022=2E1
+>>> ERROR: dtschema minimum version is v2022=2E3
+>>> make[2]: *** [check_dtschema_version] Error 1
+>>> make[1]: *** [dt_binding_check] Error 2
+>>> make: *** [__sub-make] Error 2
+>>=20
+>> Please add the output of:
+>>=20
+>> which dt-validate
+>> dt-validate -V
+>>=20
+>> And also a full log of your failing kernel build=2E
+>>=20
+>>=20
+>>=20
+>>> I had run "pip3 install dtschema --upgrade" according Rob Herring resp=
+onse=2E
+>>> but it still shows same problem=2E
+>>> Please let know how can I fix this problem=2E
+>>>=20
+>>>>=20
+>>>>>=20
+>>>>>     HOSTCC  scripts/basic/fixdep
+>>>>>     HOSTCC  scripts/dtc/dtc=2Eo
+>>>>>     HOSTCC  scripts/dtc/flattree=2Eo
+>>>>>     HOSTCC  scripts/dtc/fstree=2Eo
+>>>>>     HOSTCC  scripts/dtc/data=2Eo
+>>>>>     HOSTCC  scripts/dtc/livetree=2Eo
+>>>>>     HOSTCC  scripts/dtc/treesource=2Eo
+>>>>>     HOSTCC  scripts/dtc/srcpos=2Eo
+>>>>>     HOSTCC  scripts/dtc/checks=2Eo
+>>>>>     HOSTCC  scripts/dtc/util=2Eo
+>>>>>     LEX     scripts/dtc/dtc-lexer=2Elex=2Ec
+>>>>>     HOSTCC  scripts/dtc/dtc-lexer=2Elex=2Eo
+>>>>>     HOSTCC  scripts/dtc/dtc-parser=2Etab=2Eo
+>>>>>     HOSTLD  scripts/dtc/dtc
+>>>>> sort: -:2: disorder: 2022=2E1
+>>>>> ERROR: dtschema minimum version is v2022=2E3
+>>>>> make[2]: *** [check_dtschema_version] Error 1
+>>>>> make[1]: *** [dt_binding_check] Error 2
+>>>>> make: *** [__sub-make] Error 2
+>>>>=20
+>>>> This means that somewhere in your path you have an older dtschema
+>>>> instance=2E
+>>>>=20
+>>>> When you sent me a question regarding this error, I asked for the
+>>>> additional info=2E You provided none=2E Instead you went on sending t=
+he
+>>>> untested patch that doesn't work=2E
+>>>=20
+>>> since i can not test it on msm-next so that I did test it at my v5-15
+>>> branch=2E
+>>=20
+>> Wrong=2E
+>>=20
+>>>=20
+>>> besides, i think i have to sent the whole series patches include this
+>>> one to address your new comments on other patch=2E
+>>>=20
+>>> is this correct?
+>>=20
+>> No=2E Please fix your system first, validate your patches and send them
+>> afterwards=2E You can not expect others to do your job=2E
+>>=20
+>
+>Just finished working with kuogee on this=2E This issue had been reported=
+ by few others earlier (example https://lore=2Ekernel=2Eorg/lkml/bc9be279-a=
+130-d5e7-4397-bbb389d14403@intel=2Ecom/T/)=2E
 
+Thanks a lot for helping Kuogee!
+
+
+>
+>So let me summarize the fix:
+>
+>1) We do need up upgrade the dtschema first
+>
+>pip3 install git+https://github=2Ecom/devicetree-org/dt-schema=2Egit@main
+
+I'd stick to the released version, unless there is any indication that the=
+ trunk has any significant features=2E Rob, Krzysztof, please correct me if=
+ I'm wrong=2E
+
+
+>
+>2) Python version issues were hitting some of the developers so even if w=
+e had the right version installed the PATH wasnt pointing to the right one
+
+Yes, that is what I expected, when I asked for the pip command log and for=
+ the `which' command output=2E
+
+I usually install dtschema to my user's dir and add ~/=2Elocal/bin to PATH=
+=2E
+
+>
+>3) We had to install yamllint
+>
+>We have documented these now for the benefit of others internally=2E
+>
+>With all these 3 done, we can compile msm-next-lumag using
+>make dt_binding_check DT_SCHEMA_FILES=3Ddisplay/msm
+>
+>Apologies for the setup issues on our end=2E These are resolved now and k=
+uogee will post a v12 for this=2E
+
+Great, I'm looking forward to seeing it and finally merging it!
+
+
+>
+>Thanks
+>
+>Abhinav
+>> --
+>> With best wishes
+>> Dmitry
+
+--=20
+With best wishes
+Dmitry
