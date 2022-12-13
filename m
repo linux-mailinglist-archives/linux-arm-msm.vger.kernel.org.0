@@ -2,74 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C1CC64B555
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:41:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FEDC64B56D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:47:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235517AbiLMMle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 07:41:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        id S230349AbiLMMrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 07:47:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235531AbiLMMky (ORCPT
+        with ESMTP id S235450AbiLMMro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 07:40:54 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5411F2EA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:39:56 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id c1so4683988lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:39:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5hUr7FZEDFGX4ApwwkadvNdgk7btCuzU4oXDTJnctuE=;
-        b=a2+pV2nP6odjnwkrP+T75Lo+hB11K4UsPJ6USnAI6bayp83qhyYovNVL+Ez1Memn6p
-         QbjTD15BojBHI7Vs1dbhdbniwnrXc4O/YUpLyd1xBz2FsZoDWhJjzP2Cq5vlZrxcdGev
-         5l0+kZcv5c4/nwIqMd2TJzHTJQVOWOq+YF05loi4v1sKdx12/d7LFgtcAsWvFarUWvV9
-         XyHSNTOdFh6VLgLKIIkJ6e1SqtLFrKWPe2i5qFSyhXktPtxyOGnMVxvcKv9OcM9KMBKv
-         5gtyu8tNLGnQbyQLrMBYR9KYuBsz9MSLy1sZrCjiQaxB8r53p7034h2G7B03lbZKmx9d
-         kv6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5hUr7FZEDFGX4ApwwkadvNdgk7btCuzU4oXDTJnctuE=;
-        b=QSOwKnRi30B3O+ySMUFw0KtV3lyFBTlV6RBXI5g+71QSrpSboNcjwCaDdMKN3cXT/M
-         biNrTiSDQ+Zxn5MpskQkIY0wWRX0Xm4AZ+zrrd+U/LJVLiZxm1GQUvJaCRkuN8P2X7p/
-         RiHVQeYBKmQEeCgFMEsp4EPEdaMhMMan9ldPllSrIAkw/N6Pq0ViphmGlllB/FhTCZPY
-         Al3zzYU3OnYFwg/Tr8gpH2BCcjfWm/qdakJxp5ZetW7UWYaSkRiXyujV+5ylUOjrJ1fW
-         +hBUPalCrU6LWlnOow6Dbhj5EwgIncv4PdVbx8G28R4jPUhW5Wy8rFt1g4THQ8EkFGCB
-         gpkw==
-X-Gm-Message-State: ANoB5pl4Rd5gqNCEgwIFQSdAhcKJw/jAZInF/B8f0a+SC6vbKgfrgjNZ
-        UgCHjyp1kbCzH0tywstuE42ywA==
-X-Google-Smtp-Source: AA0mqf7QBrHwuTWYkyaTlujJ5o7iekzXF5KKimynvhPeE6TZ0W7Z5AVlyWabPb3rwOfaglNs0TP0cA==
-X-Received: by 2002:ac2:5288:0:b0:4b6:e4c8:8a48 with SMTP id q8-20020ac25288000000b004b6e4c88a48mr2742278lfm.63.1670935194698;
-        Tue, 13 Dec 2022 04:39:54 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id p8-20020ac24ec8000000b004b4e4671212sm348193lfr.232.2022.12.13.04.39.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 04:39:54 -0800 (PST)
-Message-ID: <8aa0ee9f-46e1-7022-4728-7e09eadfee6c@linaro.org>
-Date:   Tue, 13 Dec 2022 13:39:53 +0100
+        Tue, 13 Dec 2022 07:47:44 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CB21008;
+        Tue, 13 Dec 2022 04:47:43 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C6BA8B811B9;
+        Tue, 13 Dec 2022 12:47:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8A4C433EF;
+        Tue, 13 Dec 2022 12:47:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670935660;
+        bh=C0kWfzBMeUnkMCqjJc8AA1etPAtrgwywD/A/JsLxtAY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nUa9dHjgNMtaO5Rte1RyIlkjg7PjS9qLM5wvmaPtlIm1i+M9BtZ2oLTLpADlhDu3o
+         x1m2S4yg9KCU9g/fw7NRbXQjMa0ezQBmBpZfj9x9GIjN2oGNqXIYNFRS7/VW/K9gJR
+         r7+ipzGE9olQsN3hF39wOKbfLDJI6d3MFKIfCMh9AZjM5RPWhXW9mm2JpICki85o2f
+         iQ52HZAkGfoQnBgWsoKGf5uX809LMyrMCQWivN2P21DRritJ6ctRyYTKZ5wTtsDxPR
+         Yf+LYN33DOt5nLomrpDTGVVFV3tfp4KdO1fxgFVyI0ikrgItl2w+JXPTU+2KPpk9MA
+         J/osE4R5HaU8Q==
+Date:   Tue, 13 Dec 2022 12:47:34 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com, linux-spi@vger.kernel.org,
+        Javier Martinez Canillas <fmartine@redhat.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: add missing spi nodes
+Message-ID: <Y5h0ZiGaPg2tx0qs@sirena.org.uk>
+References: <20221212182314.1902632-1-bmasney@redhat.com>
+ <20221212182314.1902632-5-bmasney@redhat.com>
+ <c1c7b1eb-08e7-2ba5-d89a-e0be8f76fd69@quicinc.com>
+ <Y5hvlX35nr8xQKEd@x1>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm6115: Cleanup USB node names
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, andersson@kernel.org
-References: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
- <20221213123823.455731-2-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221213123823.455731-2-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wyNsimEDc1OgCcyo"
+Content-Disposition: inline
+In-Reply-To: <Y5hvlX35nr8xQKEd@x1>
+X-Cookie: Edwin Meese made me wear CORDOVANS!!
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,72 +64,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--wyNsimEDc1OgCcyo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 13.12.2022 13:38, Bhupesh Sharma wrote:
-> There is only one USB controller present on SM6115 / SM4250
-> Qualcomm SoC, so drop the numbering used with USB nodes
-> in the dtsi and the related sm4250-oneplus-billie2.dts.
-> 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Tue, Dec 13, 2022 at 07:27:01AM -0500, Brian Masney wrote:
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts | 4 ++--
->  arch/arm64/boot/dts/qcom/sm6115.dtsi                | 8 ++++----
->  2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> index a3f1c7c41fd73..fa57f4bf58256 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> @@ -225,11 +225,11 @@ &ufs_mem_phy {
->  	status = "okay";
->  };
->  
-> -&usb_1 {
-> +&usb {
->  	status = "okay";
->  };
->  
-> -&usb_1_hsphy {
-> +&usb_hsphy {
->  	vdd-supply = <&vreg_l4a>;
->  	vdda-pll-supply = <&vreg_l12a>;
->  	vdda-phy-dpdm-supply = <&vreg_l15a>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 572bf04adf906..b5f7480c2e713 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -565,7 +565,7 @@ gcc: clock-controller@1400000 {
->  			#power-domain-cells = <1>;
->  		};
->  
-> -		usb_1_hsphy: phy@1613000 {
-> +		usb_hsphy: phy@1613000 {
->  			compatible = "qcom,sm6115-qusb2-phy";
->  			reg = <0x01613000 0x180>;
->  			#phy-cells = <0>;
-> @@ -991,7 +991,7 @@ spi5: spi@4a94000 {
->  			};
->  		};
->  
-> -		usb_1: usb@4ef8800 {
-> +		usb: usb@4ef8800 {
->  			compatible = "qcom,sm6115-dwc3", "qcom,dwc3";
->  			reg = <0x04ef8800 0x400>;
->  			#address-cells = <1>;
-> @@ -1019,11 +1019,11 @@ usb_1: usb@4ef8800 {
->  			qcom,select-utmi-as-pipe-clk;
->  			status = "disabled";
->  
-> -			usb_1_dwc3: usb@4e00000 {
-> +			usb_dwc3: usb@4e00000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x04e00000 0xcd00>;
->  				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
-> -				phys = <&usb_1_hsphy>;
-> +				phys = <&usb_hsphy>;
->  				phy-names = "usb2-phy";
->  				iommus = <&apps_smmu 0x120 0x0>;
->  				snps,dis_u2_susphy_quirk;
+> We can't add a generic qcom,spidev compatible to the spidev driver since
+> this is just a software abstraction. Instead, each type of device will
+> need to have it's own compatible that uniquely describes the type of
+> device. So you might have a compatible like qcom,spi-video-codec. There
+> will need to be a DT binding added that describes the hardware. I suspect
+> that a SPI device can simply be added to trivial-devices.yaml. Once the
+> DT binding is accepted, the compatible can be added to the spidev.c
+> driver. If an in-kernel driver is written in the future, then the=20
+> compatible can be moved from spidev to the new driver.
+
+> Mark: Is my understanding above correct? If so, will it be a problem to
+> get a compatible added to spidev.c if the corresponding userspace code is
+> closed source and proprietary?
+
+No restriction on what the userspace is.
+
+--wyNsimEDc1OgCcyo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmOYdGUACgkQJNaLcl1U
+h9CzHwf+JP5CRJsjmYyyOlQmaCl1IOkTdl4br1Sd0Op4ooGVbIFEieXnBYfuUNon
+mPjbGv0f9Pn24dLxRMprh//Yh+Fv40ri4NEAVxq9OyShVcpg69lqzBdVlU8aGgds
+ljdMeZk7F3SqvHDKMzmL/cWho+aEh8ANg103ipEEq9nEYZZMXcyCLzPExqWcGw/3
+9djKGOGHrBl0b7LiCrQhQkbBh2I20mPKxGInjDdpyM0ck9AtFvhEsnii9DS7/Xsv
+DRPUvphwzRjpZBNLMXAaDJNcPQcJFh98VCm32/nBVHyT18bNHWo1aQzNAqoIqNqV
+FtASMiphe8tykKruLxRsrCwQOT9yJQ==
+=TKvN
+-----END PGP SIGNATURE-----
+
+--wyNsimEDc1OgCcyo--
