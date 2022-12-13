@@ -2,127 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66A7564BA87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 18:04:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D3E64BA93
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 18:05:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235810AbiLMRDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 12:03:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33028 "EHLO
+        id S235689AbiLMREd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 12:04:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236300AbiLMRDC (ORCPT
+        with ESMTP id S235361AbiLMRDz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 12:03:02 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CF023BFC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:01:14 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id bp15so5894442lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:01:14 -0800 (PST)
+        Tue, 13 Dec 2022 12:03:55 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED595DF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:53 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id cf42so5976179lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jZkkTB2vVZy5PFl0F2Kz7lMoOg/jX2YmaB9YFMk1IuU=;
-        b=D36Tk+AKZRb1HHf7I8HW3An/qmmMmOAp8Mk/nupG82DmaofvnIRpwFofAP7Td9KVj3
-         zCzv/ARz/g+HYtxK2zxvNQ/qbP0peQUwYQYS4AkNNp0CjBPtKJ0b9tSVCYEqFZZruzqV
-         vkYUP+XXW+5ZaNOXMGW/jlXPEThpPGINVj1gBzKa44Zyrtbfftazjuf9WcXZX64sBT8n
-         bPb6NQb1oRtkduSfECFo85TQINt0fmnYk293oMXCDfCuLodRx69ynQoGeJB1jiIXhAyq
-         neDeWbbr7VoFOq1Zgh21G/MfixoggnEZm9SWIP03O2ZOmexyImHVI+xpuke1IqC5n0pH
-         U3KA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9whwM05lxda1ZLYL23P+3imYfDYTBHNqamA4JNSFNFI=;
+        b=denNa49m9X7502D9PP+mm3zEdhaFEkwFeb0OqDobKmiEJhPtkRw8O0sKZ2/3c7ocEq
+         WwxlbFZafpNNrugpEnnjtsKX8GYHp6Zs6uBAQi7Qf2jEl5Vm8prDP1mUSUOL/cqfQiHo
+         0pZTN8lZscPgYcsvZvB05nVyUJl3SoY29FeiwMQAA3UE8LNMoyLaZhBNhWFAU/x3loe2
+         FXTK9w5ofKoZ1Mjz1BP/8rk6W4XLRNS5CvE/AfZFv39e/CGddqZBsP6mI3wq4KNwWlDJ
+         D8oQDDldNe53tN2GLwxY+GCjiv+5VMVwhlP0XSMOy5Udrm7avwL+2MMBBeGUNwTlsTu0
+         re9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jZkkTB2vVZy5PFl0F2Kz7lMoOg/jX2YmaB9YFMk1IuU=;
-        b=o1FqtHVUqxlRRCwSoGyDOHfRLnUzm8szvKpy5tBoyNlnQq4D33ItQ4oi9sqsZQUHPn
-         16t806hVqEQ0iCH9KBjQTO6KWc81/q6MFNhgQTXFYHL36bT6JXzL64EvgxtFtKj1o4hj
-         WObjZDp5MgeXVMq333bNxgoHKohaHSBm/TFw44kNIR4dvPyBEEqKACPiAuOglqqAVjzA
-         8m8lNozXKQZ2mVvEk6TfZnghmj/9NtPw3AWrsGdn/ARV0usqqj6MOwIUTEF7g+mUMR4v
-         nXU9rly136g7cQiO9b9MFVkITVSVoaWAtERbKL6XD6b4eESzXoy5zrjIrTOVtymUiICn
-         cOnA==
-X-Gm-Message-State: ANoB5plEvWfglp/s45p0zc168SEVRJNQ5ltBkZJ472ZhCi3UXKxBcLQk
-        QMZn17v11xYSAmpdsEZNzkMNZw==
-X-Google-Smtp-Source: AA0mqf6IsyLAWx1ryfbYJap6V4JVf8QaCT3d/ZARAIXp+XyrWMM+lZo/jDkWivsgVkvxm17PzWv42Q==
-X-Received: by 2002:a05:6512:2829:b0:4b6:f30c:c7a9 with SMTP id cf41-20020a056512282900b004b6f30cc7a9mr2249509lfb.1.1670950873219;
-        Tue, 13 Dec 2022 09:01:13 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id z2-20020a056512370200b004b5766f48d8sm443208lfr.19.2022.12.13.09.01.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 09:01:12 -0800 (PST)
-Message-ID: <b289a9c5-54de-5ca4-b247-90751be05fa9@linaro.org>
-Date:   Tue, 13 Dec 2022 18:01:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/4] dt-bindings: i2c: qcom,i2c-cci: Fall back to common
- compatibles
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9whwM05lxda1ZLYL23P+3imYfDYTBHNqamA4JNSFNFI=;
+        b=75JhWYTYD0e/qdSqr6zyMyD7Cj6S1jRDmaeHdDWth7OW39pzMOADyx1cSlHFjeX+kh
+         9ZctncSfMIo2da+mSMqMkHMuCc+UcuWFp6F/tMv0arawJd/yW+1esm3bCstmBkaYM/Gw
+         cv29AYJ9tV+pqYrryOjD9CG1GmcxuVylXs/6RUZbegzk10dJz04tNxLjPhhfOvh8Ckm4
+         IhcrzKEr8wnDf+T89ZV7ffEMZWU17cIL1VqfeiLCSSAh9JoMGIHLdrmCYOlrcO99BZEq
+         WyXPcBpSFZFU83ZgNf9uj7EGha2y5RA9OQlSMnVR3LRj/5gTDHwsZx/2H/jx1HxEagXH
+         zSaA==
+X-Gm-Message-State: ANoB5pk1n+sFPk0npxLSLu1DUGKq3Ku3p99MuVgN9HGZI9hqbERRfth1
+        Y897L8NBgApe7I50vvX/JxJHfnzVFbFuEjQm
+X-Google-Smtp-Source: AA0mqf4jHH75SmQqWvHYvfNT7mfYPRnT7ZFgWdWH/FIcr6rzs+0QZDhPU790s+T0HexPk9lB/MgOFw==
+X-Received: by 2002:a05:6512:1512:b0:4b6:f647:a98f with SMTP id bq18-20020a056512151200b004b6f647a98fmr1381190lfb.62.1670951032070;
+        Tue, 13 Dec 2022 09:03:52 -0800 (PST)
+Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id e2-20020a05651236c200b004b56bebdc4esm446874lfs.14.2022.12.13.09.03.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 09:03:51 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221213115628.105149-1-konrad.dybcio@linaro.org>
- <b8be66e0-f987-b3ec-b78e-5be8bf54b05e@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b8be66e0-f987-b3ec-b78e-5be8bf54b05e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: reserved-memory: rmtfs: Document qcom,assign-to-nav
+Date:   Tue, 13 Dec 2022 18:03:39 +0100
+Message-Id: <20221213170340.456252-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some SoCs mandate that the RMTFS is also assigned to the NAV VM, while
+others really don't want that. Since it has to be conditional, add a
+bool property to toggle this behavior.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml  | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-On 13.12.2022 17:58, Krzysztof Kozlowski wrote:
-> On 13/12/2022 12:56, Konrad Dybcio wrote:
->> Almost every compatible string in the CCI driver is a duplicate. Adjust
->> the bindings to include a common (first-soc-implementing-vX) compatible
->> to remove the need to keep adding superfluous compatible strings.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml | 25 +++++++++++++------
->>  1 file changed, 17 insertions(+), 8 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->> index cf9f8fda595f..65cf7860a9a0 100644
->> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->> @@ -12,14 +12,23 @@ maintainers:
->>  
->>  properties:
->>    compatible:
->> -    enum:
->> -      - qcom,msm8226-cci
->> -      - qcom,msm8916-cci
->> -      - qcom,msm8974-cci
->> -      - qcom,msm8996-cci
->> -      - qcom,sdm845-cci
->> -      - qcom,sm8250-cci
->> -      - qcom,sm8450-cci
->> +    oneOf:
-> 
-> Except missing test,
-Hm? I tested this locally with dt_binding_check and it passed..
+diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+index 2998f1c8f0db..1d8c4621178a 100644
+--- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
++++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+@@ -31,6 +31,11 @@ properties:
+     description: >
+       vmid of the remote processor, to set up memory protection
+ 
++  qcom,assign-to-nav:
++    type: boolean
++    description: >
++      whether to also assign the region to the NAV VM
++
+ required:
+   - qcom,client-id
+ 
+-- 
+2.39.0
 
-how about also adding a comment to the driver, that
-> list of compatibles should not grow when not needed?
-Sure.
-
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
