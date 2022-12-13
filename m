@@ -2,80 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7980A64B807
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:06:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 754CD64B810
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:08:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235183AbiLMPGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 10:06:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46408 "EHLO
+        id S235742AbiLMPIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 10:08:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235949AbiLMPGZ (ORCPT
+        with ESMTP id S236144AbiLMPH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 10:06:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E02218A3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:05:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1670943931;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=R9+NLd3jxdSYaQWEDRounaRV4J5+VnhfuGCpFV9Scak=;
-        b=EUPDZqfXPFWiK2T73C/9OzleKJaNyDCqclxvAJVz7Bjb72w5HGzXhUI6yFU7C0zz9pPEjV
-        pIvq6p9XJUMhdOHp38fUzVqrgXjTgv24NFBZdzhLqT/yQOZYIi6DZfWjOe8U6gZ9QDLiNX
-        zNtV+EPwVeAt39x/llWDtGNyRWztPXI=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-510-99-rVDd7P4qdYEVpo9CtIw-1; Tue, 13 Dec 2022 10:05:30 -0500
-X-MC-Unique: 99-rVDd7P4qdYEVpo9CtIw-1
-Received: by mail-qk1-f198.google.com with SMTP id h8-20020a05620a284800b006b5c98f09fbso18021534qkp.21
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:05:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R9+NLd3jxdSYaQWEDRounaRV4J5+VnhfuGCpFV9Scak=;
-        b=pDUddh09+eGqcELT+70DqabJTQ7+Tz4wju683PhqswmiNIh6f4qMS6x4ii1KcEHuEc
-         ZOxNqIQgRS7R/3wSihnTWGT8vs6LHhQsm3PXX3OZsJYVwgD+imC6eoosGFjzAxirnHS/
-         3xcRBIM6Vm++x5vXqilTpzGaGM9cS/3BzYAP2oFaZrdib0BZEYEgAU/XyqOBKJzc8TBt
-         LXvxIEoYf3igj7bmICzXsJRtBGmOXbI1WFCSsiwQnV+d2MuiVf110jJTsW2KXTOEXfDl
-         5vHHcXvEHCXgzFU8F/TeBTvfaqn5y/4r8VAX9cVwVlBpw2s1DqBaOEoaBWUS+G0QTqXt
-         Vl1A==
-X-Gm-Message-State: ANoB5pl+GgSU1soOLyxnssPzknWW81EQvD81DgPzj4863kTQ1+FaYf0U
-        /4QSsX9NFH3voXnUWdJAcGRZ9EHiAYfgnDqPdQwyT9hlNpWw6vkYr7JqPNTrdJMfacRCS/HI+Mk
-        mhcyVvtlWLMUy0P/avE7k2WvFjw==
-X-Received: by 2002:a05:622a:4ac6:b0:3a5:2d37:eec3 with SMTP id fx6-20020a05622a4ac600b003a52d37eec3mr29577493qtb.4.1670943921485;
-        Tue, 13 Dec 2022 07:05:21 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf5luC77xo0MLHMxsKzx3NKc6Ahtqb9hI1942FD7kdl7LQrB5D6dHNM0CS1pPXwf5qk8fkH5Iw==
-X-Received: by 2002:a05:622a:4ac6:b0:3a5:2d37:eec3 with SMTP id fx6-20020a05622a4ac600b003a52d37eec3mr29577465qtb.4.1670943921283;
-        Tue, 13 Dec 2022 07:05:21 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id p10-20020ac8740a000000b003a4f435e381sm14250qtq.18.2022.12.13.07.05.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 07:05:20 -0800 (PST)
-Date:   Tue, 13 Dec 2022 10:05:19 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ahalaney@redhat.com, echanude@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: rename i2c5 to i2c21
-Message-ID: <Y5iUr0V4QYoAa4Du@x1>
-References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-2-bmasney@redhat.com>
- <Y5iSDehp72mQPc+h@hovoldconsulting.com>
+        Tue, 13 Dec 2022 10:07:56 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D0A692188A;
+        Tue, 13 Dec 2022 07:07:53 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D157E2F4;
+        Tue, 13 Dec 2022 07:08:33 -0800 (PST)
+Received: from [10.57.87.129] (unknown [10.57.87.129])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 115063F71E;
+        Tue, 13 Dec 2022 07:07:50 -0800 (PST)
+Message-ID: <741b64c2-0b09-6475-5736-d2cd3e33c34c@arm.com>
+Date:   Tue, 13 Dec 2022 15:07:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y5iSDehp72mQPc+h@hovoldconsulting.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 4/4] remoteproc: qcom_q6v5_mss: Use a carveout to
+ authenticate modem headers
+Content-Language: en-GB
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
+        regressions@leemhuis.info, sumit.semwal@linaro.org,
+        will@kernel.org, catalin.marinas@arm.com
+References: <20221213140724.8612-1-quic_sibis@quicinc.com>
+ <20221213140724.8612-5-quic_sibis@quicinc.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20221213140724.8612-5-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,25 +52,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 13, 2022 at 03:54:05PM +0100, Johan Hovold wrote:
-> Note that the node is labelled qup2_i2c5 and not qup_i2c5.
+On 2022-12-13 14:07, Sibi Sankar wrote:
+> The memory region allocated using dma_alloc_attr with no kernel mapping
+> attribute set would still be a part of the linear kernel map. Any access
+> to this region by the application processor after assigning it to the
+> remote Q6 will result in a XPU violation. Fix this by replacing the
+> dynamically allocated memory region with a no-map carveout and unmap the
+> modem metadata memory region before passing control to the remote Q6.
 > 
-> That is, the QUP nodes are labelled using two indices, and specifically
+> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 > 
-> 	qup2_i2c5
-> 
-> would be another name for
-> 
-> 	qup_i2c21
-> 
-> if we'd been using such a flat naming scheme (there are 8 engines per
-> QUP).
-> 
-> So there's nothing wrong with how these nodes are currently named, but
-> mixing the two scheme as you are suggesting would not be correct.
+> The addition of the carveout and memunmap is required only on SoCs that
+> mandate memory protection before transferring control to Q6, hence the
+> driver falls back to dynamic memory allocation in the absence of the
+> modem metadata carveout.
 
-OK, I see; that makes sense. I'll drop this patch in v2 and fix up the
-new nodes accordingly. Thank you for the explanation!
+The DMA_ATTR_NO_KERNEL_MAPPING stuff is still broken and pointless, so 
+I'd expect to see this solution replacing it, not being added alongside. 
+It's just silly to say pass the "I don't need a CPU mapping" flag, then 
+manually open-code the same CPU mapping you would have got if you 
+hadn't, in a way that only works at all when a cacheable alias exists 
+anyway.
 
-Brian
+Thanks,
+Robin.
 
+>   drivers/remoteproc/qcom_q6v5_mss.c | 85 +++++++++++++++++++++---------
+>   1 file changed, 61 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index fddb63cffee0..8264275ecbd0 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -211,6 +211,7 @@ struct q6v5 {
+>   	size_t mba_size;
+>   	size_t dp_size;
+>   
+> +	phys_addr_t mdata_phys;
+>   	phys_addr_t mpss_phys;
+>   	phys_addr_t mpss_reloc;
+>   	size_t mpss_size;
+> @@ -935,6 +936,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>   {
+>   	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
+>   	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
+> +	void *mdata_region;
+>   	struct page **pages;
+>   	struct page *page;
+>   	dma_addr_t phys;
+> @@ -951,34 +953,48 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>   	if (IS_ERR(metadata))
+>   		return PTR_ERR(metadata);
+>   
+> -	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> -	if (!page) {
+> -		kfree(metadata);
+> -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> -		return -ENOMEM;
+> -	}
+> +	if (qproc->mdata_phys) {
+> +		mdata_region = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
+> +		if (!mdata_region) {
+> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+> +				&qproc->mdata_phys, size);
+> +			ret = -EBUSY;
+> +			goto free_dma_attrs;
+> +		}
+>   
+> -	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+> -	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+> -	if (!pages) {
+> -		ret = -ENOMEM;
+> -		goto free_dma_attrs;
+> -	}
+> +		memcpy(mdata_region, metadata, size);
+> +		memunmap(mdata_region);
+> +		phys = qproc->mdata_phys;
+> +	} else {
+> +		page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> +		if (!page) {
+> +			kfree(metadata);
+> +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> +			return -ENOMEM;
+> +		}
+>   
+> -	for (i = 0; i < count; i++)
+> -		pages[i] = nth_page(page, i);
+> +		count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+> +		pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+> +		if (!pages) {
+> +			ret = -ENOMEM;
+> +			goto free_dma_attrs;
+> +		}
+>   
+> -	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
+> -	kfree(pages);
+> -	if (!vaddr) {
+> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
+> -		ret = -EBUSY;
+> -		goto free_dma_attrs;
+> -	}
+> +		for (i = 0; i < count; i++)
+> +			pages[i] = nth_page(page, i);
+>   
+> -	memcpy(vaddr, metadata, size);
+> +		vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
+> +		kfree(pages);
+> +		if (!vaddr) {
+> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
+> +			ret = -EBUSY;
+> +			goto free_dma_attrs;
+> +		}
+>   
+> -	vunmap(vaddr);
+> +		memcpy(vaddr, metadata, size);
+> +
+> +		vunmap(vaddr);
+> +	}
+>   
+>   	/* Hypervisor mapping to access metadata by modem */
+>   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+> @@ -1008,7 +1024,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>   			 "mdt buffer not reclaimed system may become unstable\n");
+>   
+>   free_dma_attrs:
+> -	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
+> +	if (!qproc->mdata_phys)
+> +		dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
+>   	kfree(metadata);
+>   
+>   	return ret < 0 ? ret : 0;
+> @@ -1882,6 +1899,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+>   	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+>   	qproc->mpss_size = resource_size(&r);
+>   
+> +	if (!child) {
+> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+> +	} else {
+> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
+> +		node = of_parse_phandle(child, "memory-region", 0);
+> +		of_node_put(child);
+> +	}
+> +
+> +	if (!node)
+> +		return 0;
+> +
+> +	ret = of_address_to_resource(node, 0, &r);
+> +	of_node_put(node);
+> +	if (ret) {
+> +		dev_err(qproc->dev, "unable to resolve metadata region\n");
+> +		return ret;
+> +	}
+> +
+> +	qproc->mdata_phys = r.start;
+> +
+>   	return 0;
+>   }
+>   
