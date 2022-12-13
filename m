@@ -2,68 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15C2B64B531
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:29:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F57764B54D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:41:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235721AbiLMM3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 07:29:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
+        id S231939AbiLMMlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 07:41:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235700AbiLMM3U (ORCPT
+        with ESMTP id S235266AbiLMMkS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 07:29:20 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A36991F2E1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:29:19 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id h33so10295974pgm.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:29:19 -0800 (PST)
+        Tue, 13 Dec 2022 07:40:18 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A891B9F0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:34 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so3365802pjj.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PE+N1Gt7gGhT7n4RSqzdZOvLJC2LaUfbxIBsv2ZH22E=;
-        b=c0vjS0nWa0vtcHTHwwgvDJUpfJLA8wLcA+h4xzxkUaFFMu7alJOjtQOFHBtfipU2ro
-         lcC50Ke9qOuIC7bXqZsGxdNFgRJiAvn7SJwAHDoZHFB0+9ob5y5MWPnjXME2MPWBqtUe
-         br0mKI+1reVRTjp6rBFCa04joQZBwKYtnnEa0P0+kALh6PtsDVSigsTr8yzjhG00FMoX
-         5ICrfB9iLhfZdqDs25kzK2gnSz7VK4+jfMhSc99zZ0US/08IKupYykB5YN3ED03vsJWK
-         xSzWQTKXZN8DTt2FjXPWttv6E+waW+bIsajy0SFBAUJzg+H+5f+hAV7ap5l9bIGX7xxu
-         etqw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/BF8JndXAe7RFMWzoj2II+IDSsudG7x0IX18blakTqU=;
+        b=aFeUADQqf2xN9haWcEEq176sYYEkoT66D6W4F6Cc0gBcIuvjXrhMg04MXvqZEZbRFS
+         aHuMSYQ9sjBA/JggARg3iYMm0U6tCKHiX252IW4BZI95aRV/0ZZ1W27hQGBSx+btTGZX
+         512gTKbiWw2KgyvJzgw+33CAlNZF4ztarYfF2/1w5rnY+XA+JPBBJdicdPfZGQT8Kd1M
+         qdYHRUa6cXP8T7D+5pEiebcqdpQ2cJtU1gd1yL3Hmwn9wpKiMs42cgFtaEu2jAhf3blS
+         /OKzz5cYnIsbSqn4up74jE8C81Q+xWks4xtS7L5U+3CkM4PRNQVEd8+CacOFZcQlMuDs
+         0k2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PE+N1Gt7gGhT7n4RSqzdZOvLJC2LaUfbxIBsv2ZH22E=;
-        b=U7UYprbwOJcVzOYpWyQMHpf35YQ9GyyPQ1ZlAV5mLt5RlybQXBElWZl/xdfQpuiN84
-         PIoCKcZoxVco1b1AgR54bMHlaF9SQUGEaIReJvrK7CeaVBYE9ZFp/1kni6KMWt218g+A
-         4o4DCH2oxKGjg+IEK5+1R6E42NcT+xszGGbXIK4qeazJHj24tL+lPXsRzk/TsyyK4FI5
-         PeGP7BI/dlp9HHBKTbc8Td+9uijMuTQF+hFGvkVkF3p1j/VXTRZFgv+CjNQLXTtAAO8r
-         0U5O1Cobe4xBCCpJG59HXhPCzgiqocjI/P4HzXx3m5/cMyZ52mM0Wj73TLbXLbglAER3
-         0NJA==
-X-Gm-Message-State: ANoB5plQ8OpUVUhLs4A7xjQfHuXyJnFo8v89/PxbtJIH2Yc0nwOgELvH
-        UaCggOveZWq8y46/JKDb+fxxLA==
-X-Google-Smtp-Source: AA0mqf42wIJlaGrjyscSyxfrsCX6wYLLGGWN2fZBuQgon8p4dxNSQ3PcWR2HLv9MPBgwK7o5KQZ2og==
-X-Received: by 2002:a62:e21a:0:b0:576:d2cc:1ad2 with SMTP id a26-20020a62e21a000000b00576d2cc1ad2mr20161699pfi.6.1670934559070;
-        Tue, 13 Dec 2022 04:29:19 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/BF8JndXAe7RFMWzoj2II+IDSsudG7x0IX18blakTqU=;
+        b=HcLqtc2zVAnU7JrddsO2SwAYAt3hjZmgwP3CEYoJU4Xuc6doHu55RyWj9itKhnCrzN
+         SQeHR/KndR5dSRX+l500JxwJfbo9uzIlwEvAvAi26NrjOdfuX1FcnHnN3AQ1Ai+BoPPj
+         atikPB1+FRw1mfyAGDgi932/vITRCVmJqKoj0RsJ+aZfTdNr1JdLkYzwsUP5V6ikV2pw
+         0oL7UwkrTLyaFu3TT3YDOAo0XWY0z//kEcn3vDsonDFFN+zCoq6INd9TYa0Uv2/3t6H0
+         pUyVP96L7hDgcafeP4mYY0M6su39lJ3tCLC8b/vTrZZUibHDRA7yl/5fFT54dnQBZjUV
+         pFww==
+X-Gm-Message-State: ANoB5pnH9RJ59K8t9v2j74hXCN+FsxQj8E5H+ewQdsBpgYGKh+0FAHwI
+        2m1RA+rb7JwJ+MTb3IGT9aaHcIVGtrSttFy9mSo=
+X-Google-Smtp-Source: AA0mqf5MSPjudIpNA6MAReWXCCofjZkVhmBjYKad9SStcXY7QUi9Q3DdzYkcPANTvyE8t2ry11ff5A==
+X-Received: by 2002:a17:902:9b8d:b0:186:605b:7527 with SMTP id y13-20020a1709029b8d00b00186605b7527mr19263795plp.48.1670935113345;
+        Tue, 13 Dec 2022 04:38:33 -0800 (PST)
 Received: from localhost.localdomain ([2401:4900:1c60:4bad:5c3:ab51:3d81:6264])
-        by smtp.gmail.com with ESMTPSA id y10-20020aa793ca000000b0057555d35f79sm7602468pff.101.2022.12.13.04.29.14
+        by smtp.gmail.com with ESMTPSA id m12-20020a170902c44c00b001889e58d520sm8297011plm.184.2022.12.13.04.38.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 04:29:18 -0800 (PST)
+        Tue, 13 Dec 2022 04:38:32 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     vkoul@kernel.org, linux-phy@lists.infradead.org
-Cc:     shawn.guo@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org
-Subject: [PATCH 3/3] phy: qcom-qmp-usb: Add Qualcomm SM6115 / SM4250 USB3 PHY support
-Date:   Tue, 13 Dec 2022 17:58:43 +0530
-Message-Id: <20221213122843.454845-4-bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
+        konrad.dybcio@linaro.org, andersson@kernel.org
+Subject: [PATCH 0/3] arm64: dts: sm6115: Add USB SS qmp phy node and perform some cleanups  
+Date:   Tue, 13 Dec 2022 18:08:20 +0530
+Message-Id: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221213122843.454845-1-bhupesh.sharma@linaro.org>
-References: <20221213122843.454845-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,30 +71,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable SM6115 / SM4250 USB3 PHY support by adding the
-qmp_phy_cfg data. Since this PHY is the same as the
-one used on QCM2290, reuse the QCM2290 qmp_phy_cfg data
-already available.
+This series adds USB SS qmp phy node for Qualcomm SM6115 / SM4250 SoC
+dtsi and also performs some related cleanups for USB nodes.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 3 +++
- 1 file changed, 3 insertions(+)
+Note that this series is rebased on linux-next/master and is also
+dependent on the corresponding dt-bindings and driver series sent via [1].
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 7a847ffe46daf..8ede8a6ab5e02 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -2622,6 +2622,9 @@ static const struct of_device_id qmp_usb_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sdx65-qmp-usb3-uni-phy",
- 		.data = &sdx65_usb3_uniphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm6115-qmp-usb3-phy",
-+		.data = &qcm2290_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,sm8150-qmp-usb3-phy",
- 		.data = &sm8150_usb3phy_cfg,
+[1]. https://lore.kernel.org/linux-arm-msm/20221213122843.454845-1-bhupesh.sharma@linaro.org/
+
+Bhupesh Sharma (3):
+  arm64: dts: qcom: sm6115: Cleanup USB node names
+  arm64: dts: qcom: sm6115: Move USB node's 'maximum-speed' and
+    'dr_mode' properties to dts
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  9 +++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 46 ++++++++++++++++---
+ 2 files changed, 46 insertions(+), 9 deletions(-)
+
 -- 
 2.38.1
 
