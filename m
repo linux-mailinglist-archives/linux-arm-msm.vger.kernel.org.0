@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D3E64BA93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 18:05:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F0D964BA9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 18:05:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235689AbiLMREd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 12:04:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32860 "EHLO
+        id S235964AbiLMREg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 12:04:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235361AbiLMRDz (ORCPT
+        with ESMTP id S236221AbiLMRD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 12:03:55 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED595DF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:53 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id cf42so5976179lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:53 -0800 (PST)
+        Tue, 13 Dec 2022 12:03:58 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90713C3B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:57 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id j4so6032822lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 09:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9whwM05lxda1ZLYL23P+3imYfDYTBHNqamA4JNSFNFI=;
-        b=denNa49m9X7502D9PP+mm3zEdhaFEkwFeb0OqDobKmiEJhPtkRw8O0sKZ2/3c7ocEq
-         WwxlbFZafpNNrugpEnnjtsKX8GYHp6Zs6uBAQi7Qf2jEl5Vm8prDP1mUSUOL/cqfQiHo
-         0pZTN8lZscPgYcsvZvB05nVyUJl3SoY29FeiwMQAA3UE8LNMoyLaZhBNhWFAU/x3loe2
-         FXTK9w5ofKoZ1Mjz1BP/8rk6W4XLRNS5CvE/AfZFv39e/CGddqZBsP6mI3wq4KNwWlDJ
-         D8oQDDldNe53tN2GLwxY+GCjiv+5VMVwhlP0XSMOy5Udrm7avwL+2MMBBeGUNwTlsTu0
-         re9g==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=szYuQKkpwRTzwOk3epQzQRwK6PcLRVEX0v7Brg6XO+E=;
+        b=gR54zbVLpSNZRO/CMCTifP4zMaW+8m+2Ct3vOe68Recyk7nDqclNm34byp7Vpd9vXN
+         nbOXn6Hb5kQ2uW0cXgIdSrlp6vYbFc1JEieGCg9bYhds8ywG3xybVLsTr+QYsGT6UX37
+         bzghylyIBP1EVkjELY4pGkb3MAs5ryRH0+zKRSVgWjWcwiQaiB2ts0NXboQ+jAg2M4Jb
+         j8ZC7McM2A3Na9LBMP7vIwsjMCuc2H/WhP0sgCnQgvGZIW+d//U7HD289jiN1NUBCRdC
+         tSpMyolVctBUnmEGa3DvQNDGuAbzA1v+Oe2067Us65o3fkyTlXSRNUQhikpIzlIsUQC3
+         LvMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9whwM05lxda1ZLYL23P+3imYfDYTBHNqamA4JNSFNFI=;
-        b=75JhWYTYD0e/qdSqr6zyMyD7Cj6S1jRDmaeHdDWth7OW39pzMOADyx1cSlHFjeX+kh
-         9ZctncSfMIo2da+mSMqMkHMuCc+UcuWFp6F/tMv0arawJd/yW+1esm3bCstmBkaYM/Gw
-         cv29AYJ9tV+pqYrryOjD9CG1GmcxuVylXs/6RUZbegzk10dJz04tNxLjPhhfOvh8Ckm4
-         IhcrzKEr8wnDf+T89ZV7ffEMZWU17cIL1VqfeiLCSSAh9JoMGIHLdrmCYOlrcO99BZEq
-         WyXPcBpSFZFU83ZgNf9uj7EGha2y5RA9OQlSMnVR3LRj/5gTDHwsZx/2H/jx1HxEagXH
-         zSaA==
-X-Gm-Message-State: ANoB5pk1n+sFPk0npxLSLu1DUGKq3Ku3p99MuVgN9HGZI9hqbERRfth1
-        Y897L8NBgApe7I50vvX/JxJHfnzVFbFuEjQm
-X-Google-Smtp-Source: AA0mqf4jHH75SmQqWvHYvfNT7mfYPRnT7ZFgWdWH/FIcr6rzs+0QZDhPU790s+T0HexPk9lB/MgOFw==
-X-Received: by 2002:a05:6512:1512:b0:4b6:f647:a98f with SMTP id bq18-20020a056512151200b004b6f647a98fmr1381190lfb.62.1670951032070;
-        Tue, 13 Dec 2022 09:03:52 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=szYuQKkpwRTzwOk3epQzQRwK6PcLRVEX0v7Brg6XO+E=;
+        b=jlMwIecFKx3VXeuMI37Kn9h/XvCqZ2gqrGWfmrSUdDmvhRC2xgLquXtD3buPjQTOPS
+         huYCK+YlxoBU+ernSyqotG04HRNptSXPGd5obDGzZfOEabX5f1/Ul+tDJGC/y+2UPeIG
+         OtbUzV+2oUr28IrvnMOD5v+7R2DcBIEvtzagHr+cNFdSKQ/p05GhQEmPAZsdVSOJyreC
+         TDV9Sun67qd7H6fHmb3horweVAF46Nm7/T8ta+lzxBseFs21JdMqc07fR1KcEY3X6KXf
+         mDiP23fnficu5TsmbWZ49c9mLx7mLGiRZqYIElTc39KPWhQARi3gx5PZYNiAHQgl+vmA
+         MDGQ==
+X-Gm-Message-State: ANoB5pnCbNJUcVLOlfN+QApHAZqirvEI3FnJrPMehl/fsymwdsyQ3Fxr
+        +rqeD+Jth5xNGpACk/EXWyq+AlWlsEPmLgT0
+X-Google-Smtp-Source: AA0mqf4tWn453nW+I33H443hop8FMMDkSd2lzh5fozXf35tb4FIVf0uJXI9rRvGTKW04lL+GwhALxA==
+X-Received: by 2002:a05:6512:1115:b0:4b5:b7ba:cae with SMTP id l21-20020a056512111500b004b5b7ba0caemr4116987lfg.48.1670951035718;
+        Tue, 13 Dec 2022 09:03:55 -0800 (PST)
 Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id e2-20020a05651236c200b004b56bebdc4esm446874lfs.14.2022.12.13.09.03.50
+        by smtp.gmail.com with ESMTPSA id e2-20020a05651236c200b004b56bebdc4esm446874lfs.14.2022.12.13.09.03.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 09:03:51 -0800 (PST)
+        Tue, 13 Dec 2022 09:03:55 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -56,11 +57,17 @@ Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: reserved-memory: rmtfs: Document qcom,assign-to-nav
-Date:   Tue, 13 Dec 2022 18:03:39 +0100
-Message-Id: <20221213170340.456252-1-konrad.dybcio@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 2/2] soc: qcom: rmtfs: Optionally map RMTFS to NAV VM
+Date:   Tue, 13 Dec 2022 18:03:40 +0100
+Message-Id: <20221213170340.456252-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221213170340.456252-1-konrad.dybcio@linaro.org>
+References: <20221213170340.456252-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,31 +80,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some SoCs mandate that the RMTFS is also assigned to the NAV VM, while
-others really don't want that. Since it has to be conditional, add a
-bool property to toggle this behavior.
+From: Loic Poulain <loic.poulain@linaro.org>
 
+Some SoCs require that RMTFS is also mapped to the NAV VM. Trying to
+power on the modem without that results in the whole platform crashing
+and forces a hard reboot within about 2 seconds.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+[Konrad: reword, make conditional, add a define for NAV VMID]
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml  | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soc/qcom/rmtfs_mem.c | 22 +++++++++++++++-------
+ include/linux/qcom_scm.h     |  1 +
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-index 2998f1c8f0db..1d8c4621178a 100644
---- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-+++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-@@ -31,6 +31,11 @@ properties:
-     description: >
-       vmid of the remote processor, to set up memory protection
+diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
+index 0feaae357821..999f2c5b49b0 100644
+--- a/drivers/soc/qcom/rmtfs_mem.c
++++ b/drivers/soc/qcom/rmtfs_mem.c
+@@ -171,12 +171,13 @@ static void qcom_rmtfs_mem_release_device(struct device *dev)
+ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+-	struct qcom_scm_vmperm perms[2];
++	struct qcom_scm_vmperm perms[3];
+ 	struct reserved_mem *rmem;
+ 	struct qcom_rmtfs_mem *rmtfs_mem;
++	bool assign_to_nav;
+ 	u32 client_id;
+ 	u32 vmid;
+-	int ret;
++	int ret, cnt = 0;
  
-+  qcom,assign-to-nav:
-+    type: boolean
-+    description: >
-+      whether to also assign the region to the NAV VM
+ 	rmem = of_reserved_mem_lookup(node);
+ 	if (!rmem) {
+@@ -191,6 +192,8 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+ 
+ 	}
+ 
++	assign_to_nav = of_property_read_bool(node, "qcom,assign-to-nav");
 +
- required:
-   - qcom,client-id
+ 	rmtfs_mem = kzalloc(sizeof(*rmtfs_mem), GFP_KERNEL);
+ 	if (!rmtfs_mem)
+ 		return -ENOMEM;
+@@ -236,14 +239,19 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+ 			goto remove_cdev;
+ 		}
  
+-		perms[0].vmid = QCOM_SCM_VMID_HLOS;
+-		perms[0].perm = QCOM_SCM_PERM_RW;
+-		perms[1].vmid = vmid;
+-		perms[1].perm = QCOM_SCM_PERM_RW;
++		perms[cnt].vmid = QCOM_SCM_VMID_HLOS;
++		perms[cnt++].perm = QCOM_SCM_PERM_RW;
++		perms[cnt].vmid = vmid;
++		perms[cnt++].perm = QCOM_SCM_PERM_RW;
++
++		if (assign_to_nav) {
++			perms[cnt].vmid = QCOM_SCM_VMID_NAV;
++			perms[cnt++].perm = QCOM_SCM_PERM_RW;
++		}
+ 
+ 		rmtfs_mem->perms = BIT(QCOM_SCM_VMID_HLOS);
+ 		ret = qcom_scm_assign_mem(rmtfs_mem->addr, rmtfs_mem->size,
+-					  &rmtfs_mem->perms, perms, 2);
++					  &rmtfs_mem->perms, perms, cnt);
+ 		if (ret < 0) {
+ 			dev_err(&pdev->dev, "assign memory failed\n");
+ 			goto remove_cdev;
+diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+index f8335644a01a..150b72edb879 100644
+--- a/include/linux/qcom_scm.h
++++ b/include/linux/qcom_scm.h
+@@ -55,6 +55,7 @@ enum qcom_scm_ice_cipher {
+ #define QCOM_SCM_VMID_MSS_MSA    0xF
+ #define QCOM_SCM_VMID_WLAN       0x18
+ #define QCOM_SCM_VMID_WLAN_CE    0x19
++#define QCOM_SCM_VMID_NAV        0x2B
+ #define QCOM_SCM_PERM_READ       0x4
+ #define QCOM_SCM_PERM_WRITE      0x2
+ #define QCOM_SCM_PERM_EXEC       0x1
 -- 
 2.39.0
 
