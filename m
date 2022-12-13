@@ -2,110 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA5D064BA35
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 17:51:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A036B64BA71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 17:57:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236147AbiLMQvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 11:51:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
+        id S235771AbiLMQ5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 11:57:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235940AbiLMQvb (ORCPT
+        with ESMTP id S236346AbiLMQ41 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 11:51:31 -0500
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3EDD1580B;
-        Tue, 13 Dec 2022 08:51:29 -0800 (PST)
-Received: by mail-oo1-f50.google.com with SMTP id v62-20020a4a7c41000000b004a0a214dfbaso2459884ooc.9;
-        Tue, 13 Dec 2022 08:51:29 -0800 (PST)
+        Tue, 13 Dec 2022 11:56:27 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D7B323E96
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:55:04 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id f20so3921922lja.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 08:55:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K+q9dHIAvDf5WdQnh9GflHshtAb0HGooV+00C3PXCO0=;
+        b=DDbr/cxiZKAiaoP5Z9oe6GAJInMKVGPFMv2FHk0AjMWMYDqxxydgX/t/B9vqdyVkLH
+         eeGztqCjsey5soHWK/I3+egsrPRKaO18Tbu1TelbxboVjuSklVo3Kd5W4CaOuvGAnFS1
+         Z2odjCQmKRTtGmqPkG8id7yxfjfqtNkPQPSBhnQAZstmsRYzgBQA4gNhpcNwyIkaWvNF
+         8AzFlf5bKX5S8zj+146jUXzJd0UD8DjOxF+lGmpr3Uuq4SoCYly6eeDbgMoBQc8ImHrX
+         MK3uBgNLTA3o3KcFkQBMj28vY+oHzaDojD4qzTCd6LhaHvxwKxTQu7BRahDKSPYiSF5y
+         OtBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=l3ZUJv9Y+27Bs9i0rYBQ2dQ+xTle+B/Uw+LnnqewtAI=;
-        b=ttrtRAfsjfnxcNpjVSvMFGfmf+TmB908iqlSNhomGlkSeIehvXrIeLjM5tPvSN30zx
-         S9zI9+bfSWxCQ7tdc+apeLNdAFZMT83bV9sxgAPRcJvtho3nlqIkXehziffgJQbjInZ2
-         dGrYkKINORpCTzwvSG3LNzCX6euw1eQEML1uB1f79fMfloUkBIfGDf6ICA2GZ1y0tVp8
-         C5u4T+JnG06qWWCYgzbPuDLMCsIBA+SvdVe4tdXy2Whj2S8irkSYJEPOGizYNVSj+BgD
-         IIzIn1pKlqlEEcuESteVxQJgITY0pSQ4rB43K4kx5vO5MLw+ZmRsR6jS9x91zgudRf2x
-         SEJw==
-X-Gm-Message-State: ANoB5plnxPclqT8303SODIQhnKn/3CR5MTcVXDGGjl2Qxt85RMN4vgYs
-        dYkX2lC8/HI/Yqh1sS9K23IqSqDIaQ==
-X-Google-Smtp-Source: AA0mqf4uxiz8zVTcATxrPc5TgQzwdrBo/FmFnmMQ4bp0twsxdG8ie2Zm4wjNl+XN7ym6jo+a7thPDg==
-X-Received: by 2002:a4a:e051:0:b0:4a0:ad7a:b260 with SMTP id v17-20020a4ae051000000b004a0ad7ab260mr10406051oos.3.1670950289042;
-        Tue, 13 Dec 2022 08:51:29 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id h4-20020a4aa284000000b004a3cc18e86asm1288376ool.40.2022.12.13.08.51.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 08:51:28 -0800 (PST)
-Received: (nullmailer pid 2037521 invoked by uid 1000);
-        Tue, 13 Dec 2022 16:51:27 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=K+q9dHIAvDf5WdQnh9GflHshtAb0HGooV+00C3PXCO0=;
+        b=CD1BnV3jjFkC0+SV8DiueKR9SvlUXEJH0QW4oe7mHxpaQtt9QmRSOJBmmfyOr0p7Z4
+         U3L58GNapQ3sU0UlLnZ9lSst5sdrST/OAcdUJBlJwMdg7caFQAL56JnTeKCK4CaJNrHT
+         g8gU4mPTV1DVKIXazXhplKpAcwITXZyjD0vlxDCrQgGqsue9bXJjNLKYO7UPeINTNeGA
+         Zb9Y13TD9n83Yr0S/fez2l7wZXAm1tvHpN6R8Jhb/ZNbsZAmn5n2porrFtc+xWXRCyos
+         63PQBXp4Hc/G4Q8CsSnNYOuaLDGRTCf9le3oany3qCHgSOb7246vZu3N9U6nu2lnZSF9
+         Fg7g==
+X-Gm-Message-State: ANoB5pm8EbRijyodulMXhAqpPrYYqEOF4FWwIC4RnWb608y7nf0ZSlkG
+        JKLJc+JCYGn5qOMhZGdZGW4zOgSdDXXA23em
+X-Google-Smtp-Source: AA0mqf5xUeTGSPd6Jz0TOmt+lk6CT5hymUSCegIYfi/Kvmu8yr9GUDkGvV8J1kmF32Ft5oXa3uxiWw==
+X-Received: by 2002:a05:651c:247:b0:277:af4:aa34 with SMTP id x7-20020a05651c024700b002770af4aa34mr4957085ljn.36.1670950498042;
+        Tue, 13 Dec 2022 08:54:58 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id 13-20020a05651c128d00b0026dd4be2290sm323317ljc.90.2022.12.13.08.54.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Dec 2022 08:54:57 -0800 (PST)
+Message-ID: <ec64e3a0-085d-7830-fd4e-6969c1c9bbdf@linaro.org>
+Date:   Tue, 13 Dec 2022 17:54:56 +0100
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, robin.murphy@arm.com,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, sumit.semwal@linaro.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        catalin.marinas@arm.com, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, regressions@leemhuis.info,
-        will@kernel.org
-In-Reply-To: <20221213140409.772-2-quic_sibis@quicinc.com>
-References: <20221213140409.772-1-quic_sibis@quicinc.com>
- <20221213140409.772-2-quic_sibis@quicinc.com>
-Message-Id: <167095022641.2035001.13548295585567513866.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: Add dt binding for QTI CPUCP
- mailbox controller
-Date:   Tue, 13 Dec 2022 10:51:27 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andrew Halaney <ahalaney@redhat.com>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
+        tony.luck@intel.com, quic_saipraka@quicinc.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, james.morse@arm.com,
+        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
+        quic_ppareek@quicinc.com, luca.weiss@fairphone.com
+References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+ <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
+ <20221213052802.GB4862@thinkpad>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221213052802.GB4862@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 13 Dec 2022 19:34:08 +0530, Sibi Sankar wrote:
-> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
-> controller.
+On 13/12/2022 06:28, Manivannan Sadhasivam wrote:
+> On Mon, Dec 12, 2022 at 01:23:40PM -0600, Andrew Halaney wrote:
+>> On Mon, Dec 12, 2022 at 06:02:58PM +0530, Manivannan Sadhasivam wrote:
+>>> The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+>>> accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+>>> This offset only works for some SoCs like SDM845 for which driver support
+>>> was initially added.
+>>>
+>>> But the later SoCs use different register stride that vary between the
+>>> banks with holes in-between. So it is not possible to use a single register
+>>> stride for accessing the CSRs of each bank. By doing so could result in a
+>>> crash with the current drivers. So far this crash is not reported since
+>>> EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+>>> driver extensively by triggering the EDAC IRQ (that's where each bank
+>>> CSRs are accessed).
+>>>
+>>> For fixing this issue, let's obtain the base address of each LLCC bank from
+>>> devicetree and get rid of the fixed stride.
+>>>
+>>> This series affects multiple platforms but I have only tested this on
+>>> SM8250 and SM8450. Testing on other platforms is welcomed.
+>>>
+>>
+>> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+>>
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  .../bindings/mailbox/qcom,cpucp-mbox.yaml          | 51 ++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+> Thanks!
 > 
+>> I took this for a quick spin on the qdrive3 I've got access to without
+>> any issue:
+>>
+>>     [root@localhost ~]# modprobe qcom_edac
+>>     [root@localhost ~]# dmesg | grep -i edac
+>>     [    0.620723] EDAC MC: Ver: 3.0.0
+>>     [    1.165417] ghes_edac: GHES probing device list is empty
+>>     [  594.688103] EDAC DEVICE0: Giving out device to module qcom_llcc_edac controller llcc: DEV qcom_llcc_edac (INTERRUPT)
+>>     [root@localhost ~]# cat /proc/interrupts | grep ecc
+>>     174:          0          0          0          0          0          0          0          0     GICv3 614 Level     llcc_ecc
+>>     [root@localhost ~]#
+>>
+>> Potentially stupid question, but are users expected to manually load the
+>> driver as I did? I don't see how it would be loaded automatically in the
+>> current state, but thought it was funny that I needed to modprobe
+>> myself.
+>>
+>> Please let me know if you want me to do any more further testing!
+>>
+> 
+> Well, I always ended up using the driver as a built-in. I do make it module for
+> build test but never really used it as a module, so didn't catch this issue.
+> 
+> This is due to the module alias not exported by the qcom_edac driver. Below
+> diff allows kernel to autoload it:
+> 
+> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+> index f7afb5375293..13919d01c22d 100644
+> --- a/drivers/edac/qcom_edac.c
+> +++ b/drivers/edac/qcom_edac.c
+> @@ -419,3 +419,4 @@ module_platform_driver(qcom_llcc_edac_driver);
+>  
+>  MODULE_DESCRIPTION("QCOM EDAC driver");
+>  MODULE_LICENSE("GPL v2");
+> +MODULE_ALIAS("platform:qcom_llcc_edac");
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+While this is a way to fix it, but instead of creating aliases for wrong
+names, either a correct name should be used or driver should receive ID
+table.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.example.dtb: mailbox@17400000: reg: [[0, 398458880], [0, 16], [0, 408486656], [0, 1792]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221213140409.772-2-quic_sibis@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
