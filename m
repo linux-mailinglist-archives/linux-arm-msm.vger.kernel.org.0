@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3184C64BF09
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:05:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4AB564BF10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:06:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236292AbiLMWFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 17:05:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56368 "EHLO
+        id S236656AbiLMWGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 17:06:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236748AbiLMWFi (ORCPT
+        with ESMTP id S236784AbiLMWG3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 17:05:38 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8F210059
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:05:36 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id b13so7313100lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:05:36 -0800 (PST)
+        Tue, 13 Dec 2022 17:06:29 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 104521114F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:06:27 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id s10so4867103ljg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=YcFX+pC6oKMWEjAMll8cWnWDKBHIN45PyY2bvtn3d+4=;
-        b=usp6+i4vosXV1+xTbRN/vYaZVxRdMMNfEe1WR8pKwy4u7Ks/30SM8nW8UDMm/hgBbh
-         2dFrC3/sHZ83NhRcskOmh0psxlnDaPxMv5c5rt69R80ywtXSocj7r+uUYs6WlXo6vL2a
-         +Y+1AEF6AjEEVPDpadS4kOTIJaq1rxjItRD6RepIhvu7KlFeEN8ftMxG+uLmOvnoUKCa
-         P/+rZHrrhcKenm0wSzwoFyOglRv/68qI/SA3hI9fLkUGjN2CduFVQcThfXxd7gBmwasI
-         SMqpWetp7X6WFGzUAxh5r0AWyG6qkLQdynaQDm10Y1Z1Wsuenr2JW/pdb5TCSAouNLPD
-         EGww==
+        bh=PHThMmwwapkBACqPYp+PHJPVYJlx4hVFJm7MzOxx0AQ=;
+        b=zyIABU4u5XC9lj24aumsl6geFLLMFUkaXLx1rjZ6EOJ6sOD4OTHlJXPcJ2xQwAdXQl
+         OvEw8d6Ql/8FZQVrkcuz0TA7/81wX9ThJ8NmZt22U9L2VHxVgKwHPYk+Jj2S70CGgK/m
+         rkFa/EjyNrloqJllfe4/l8VhKHuraIoGAIFMeCTAJuamYHZx6+1TWx8tldNjuH/B4tNZ
+         bFfOPyX3XipyS6htaw94ZTzGdh582g5A/WqlZaOO2Pk9FGT8hBk7TJbZMcaU+LaSNoLf
+         9ZiHtj+fA/8nk419KphXaDVfHrAlmuqr/041inbRX7WfYrPgwb0tDj3mjoW0EQLXBV2i
+         RCzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YcFX+pC6oKMWEjAMll8cWnWDKBHIN45PyY2bvtn3d+4=;
-        b=hevD8imHqNDUnIoWu5ffZ+4KJteqme7Tm1nuTSZiFFgvZNbHISohauFzph7bnu/XA+
-         x0j2WQQdMY2wZxxLV7haa9p3SyMUKV53Wv7rCfyZEgwlhdnRcBdOWtkjXxhjuMCpwIzR
-         QdWYp2eryLUg1a1klh2/a9dC5ef2dgWsnhsXfa2PESRlG7+2jHxiKKCsU1OWLPDagtD+
-         hnUU7+7kmV2l+pVh5oGPb1I68V0OPyRQ3m80E0c/t7nmCCnz5zqvf1uoClNZQqv/o/1A
-         OUbH6Tle646fLvpGZ4g5dN3t+kPUZe9wcci2p2YLipb237ZoKMAsetrx/2NczN/hWj/a
-         1guQ==
-X-Gm-Message-State: ANoB5pmRqcy/1bcPJHlglN0+Hov9ixAzHlRT1K2ZdjKL4y2sWcY2AiPm
-        lfXPcUqGOsHJIuLLi0RSi03qQQ==
-X-Google-Smtp-Source: AA0mqf5M8Djzuycc38JR/hFtxMBw3/6t86+xUx1PIWOq9IMKdUk8BXmlYzR/Kxn2wDeAA8cXFQOYUQ==
-X-Received: by 2002:ac2:4902:0:b0:4b7:8291:d4b with SMTP id n2-20020ac24902000000b004b782910d4bmr263779lfi.13.1670969134795;
-        Tue, 13 Dec 2022 14:05:34 -0800 (PST)
+        bh=PHThMmwwapkBACqPYp+PHJPVYJlx4hVFJm7MzOxx0AQ=;
+        b=4ill1VZaY/Ar97xopGuUg15YvtsWy5wrFH8CjxIjarb6et6xDPkoG4/bcYHIA7aFhZ
+         N4PvtlJJveefUiDmTtGyjIncteqp7z3RBgXwmY+iVojBXpYH+n0MtPYGAoWtVe8KyCma
+         6PJskTw4OdkhrVxdiyA4yrkmkTKkxXdAusAu0V5Cdw0Hvgx80WfplBb0934x9ADjCYR7
+         yHA3R5MXQK6r0IHQaY6JWPkv9Y4B0IK51eirtYP4sCcbnlOn291fd29uyYhTY1nu2kWp
+         joZmD+KwtLGnxREy2fStFIiHbAoFZ7GNv0uWfc9YbogVr+f+MpBtRW0EWOrIaqD6pk4g
+         srFA==
+X-Gm-Message-State: ANoB5pm6p43hCEx7ndmE2Q7ytkrXtPS07pYr2iD3Gbq7aKff9INg47ri
+        h7bxbPqInrU1Z7smXrKSs5F0Pg==
+X-Google-Smtp-Source: AA0mqf5x9JQNyXDM15td8Hcfv9iyRYDTIvPJgNyej6Avufwz3ylJoGP8oNR4c9fzBciDVfV7f+Vpug==
+X-Received: by 2002:a05:651c:154d:b0:27b:5080:d03d with SMTP id y13-20020a05651c154d00b0027b5080d03dmr3722979ljp.10.1670969185336;
+        Tue, 13 Dec 2022 14:06:25 -0800 (PST)
 Received: from ?IPv6:::1? (dzccz6yfpdgdc5vwjcs5y-3.rev.dnainternet.fi. [2001:14ba:a085:4d00:8c19:462c:c647:13f2])
-        by smtp.gmail.com with ESMTPSA id z14-20020a056512370e00b004aa95889063sm534262lfr.43.2022.12.13.14.05.33
+        by smtp.gmail.com with ESMTPSA id k8-20020ac257c8000000b004b0a1e77cb2sm527474lfo.137.2022.12.13.14.06.24
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Dec 2022 14:05:34 -0800 (PST)
-Date:   Wed, 14 Dec 2022 00:02:59 +0200
+        Tue, 13 Dec 2022 14:06:24 -0800 (PST)
+Date:   Wed, 14 Dec 2022 00:06:21 +0200
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -62,18 +62,19 @@ To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
 CC:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v12_2/5=5D_dt-bindings=3A_msm/dp=3A_a?= =?US-ASCII?Q?dd_data-lanes_and_link-frequencies_property?=
+Subject: Re: [PATCH v12 5/5] drm/msm/dp: add support of max dp link rate
 User-Agent: K-9 Mail for Android
-In-Reply-To: <1670967848-31475-3-git-send-email-quic_khsieh@quicinc.com>
-References: <1670967848-31475-1-git-send-email-quic_khsieh@quicinc.com> <1670967848-31475-3-git-send-email-quic_khsieh@quicinc.com>
-Message-ID: <04C3BCD6-5ABE-45FF-995E-DB7E60E8406C@linaro.org>
+In-Reply-To: <1670967848-31475-6-git-send-email-quic_khsieh@quicinc.com>
+References: <1670967848-31475-1-git-send-email-quic_khsieh@quicinc.com> <1670967848-31475-6-git-send-email-quic_khsieh@quicinc.com>
+Message-ID: <8FEED6F1-4F23-4B17-AD4C-8145CDE8C47B@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,106 +83,96 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13 December 2022 23:44:05 EET, Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>=
+On 13 December 2022 23:44:08 EET, Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>=
  wrote:
->Add both data-lanes and link-frequencies property into endpoint
+>By default, HBR2 (5=2E4G) is the max link link be supported=2E This patch=
+ uses the
+>actual limit specified by DT and removes the artificial limitation to 5=
+=2E4 Gbps=2E
+>Supporting HBR3 is a consequence of that=2E
 >
->Changes in v7:
->-- split yaml out of dtsi patch
->-- link-frequencies from link rate to symbol rate
->-- deprecation of old data-lanes property
+>Changes in v2:
+>-- add max link rate from dtsi
 >
->Changes in v8:
->-- correct Bjorn mail address to kernel=2Eorg
+>Changes in v3:
+>-- parser max_data_lanes and max_dp_link_rate from dp_out endpoint
 >
->Changes in v10:
->-- add menu item to data-lanes and link-frequecnis
+>Changes in v4:
+>-- delete unnecessary pr_err
 >
->Changes in v11:
->-- add endpoint property at port@1
+>Changes in v5:
+>-- split parser function into different patch
 >
->Changes in v12:
->-- use enum for item at data-lanes and link-frequencies
-
-This is not a full list of changes
-
+>Changes in v9:
+>-- revised commit test
 >
->Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>`
+>Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc=2Ecom>
+>Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 >---
-> =2E=2E=2E/bindings/display/msm/dp-controller=2Eyaml        | 30 ++++++++=
-++++++++++++--
-> 1 file changed, 28 insertions(+), 2 deletions(-)
+> drivers/gpu/drm/msm/dp/dp_display=2Ec | 4 ++++
+> drivers/gpu/drm/msm/dp/dp_panel=2Ec   | 7 ++++---
+> drivers/gpu/drm/msm/dp/dp_panel=2Eh   | 1 +
+> 3 files changed, 9 insertions(+), 3 deletions(-)
 >
->diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller=
-=2Eyaml b/Documentation/devicetree/bindings/display/msm/dp-controller=2Eyam=
-l
->index f2515af=2E=2E8fb9fa5 100644
->--- a/Documentation/devicetree/bindings/display/msm/dp-controller=2Eyaml
->+++ b/Documentation/devicetree/bindings/display/msm/dp-controller=2Eyaml
->@@ -81,6 +81,7 @@ properties:
+>diff --git a/drivers/gpu/drm/msm/dp/dp_display=2Ec b/drivers/gpu/drm/msm/=
+dp/dp_display=2Ec
+>index bfd0aef=2E=2Eedee550 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_display=2Ec
+>+++ b/drivers/gpu/drm/msm/dp/dp_display=2Ec
+>@@ -390,6 +390,10 @@ static int dp_display_process_hpd_high(struct dp_dis=
+play_private *dp)
+> 	struct edid *edid;
 >=20
->   data-lanes:
->     $ref: /schemas/types=2Eyaml#/definitions/uint32-array
->+    deprecated: true
->     minItems: 1
->     maxItems: 4
->     items:
->@@ -96,14 +97,37 @@ properties:
->=20
->   ports:
->     $ref: /schemas/graph=2Eyaml#/properties/ports
+> 	dp->panel->max_dp_lanes =3D dp->parser->max_dp_lanes;
+>+	dp->panel->max_dp_link_rate =3D dp->parser->max_dp_link_rate;
 >+
->     properties:
->       port@0:
->-        $ref: /schemas/graph=2Eyaml#/properties/port
->+        $ref: "/schemas/graph=2Eyaml#/$defs/port-base"
->         description: Input endpoint of the controller
->+        properties:
->+          endpoint:
->+            $ref: /schemas/media/video-interfaces=2Eyaml#
-
-
-I'd keep it as is=2E There are no video properties at this side of the gra=
-ph=2E
-
+>+	drm_dbg_dp(dp->drm_dev, "max_lanes=3D%d max_link_rate=3D%d\n",
+>+		dp->panel->max_dp_lanes, dp->panel->max_dp_link_rate);
 >=20
->       port@1:
->-        $ref: /schemas/graph=2Eyaml#/properties/port
->+        $ref: "/schemas/graph=2Eyaml#/$defs/port-base"
->         description: Output endpoint of the controller
->+        properties:
->+          endpoint:
->+            $ref: /schemas/media/video-interfaces=2Eyaml#
->+            properties:
->+              data-lanes:
->+                minItems: 1
->+                maxItems: 4
->+                items:
->+                  enum: [ 0, 1, 2, 3 ]
->+
->+              link-frequencies:
->+                minItems: 1
->+                maxItems: 4
->+                items:
->+                  enum: [ 1620000000, 2700000000, 5400000000, 8100000000=
- ]
->+
->+    required:
->+      - port@0
->+      - port@1
+> 	rc =3D dp_panel_read_sink_caps(dp->panel, dp->dp_display=2Econnector);
+> 	if (rc)
+>diff --git a/drivers/gpu/drm/msm/dp/dp_panel=2Ec b/drivers/gpu/drm/msm/dp=
+/dp_panel=2Ec
+>index 5149ceb=2E=2E933fa9c 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_panel=2Ec
+>+++ b/drivers/gpu/drm/msm/dp/dp_panel=2Ec
+>@@ -75,12 +75,13 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_pan=
+el)
+> 	link_info->rate =3D drm_dp_bw_code_to_link_rate(dpcd[DP_MAX_LINK_RATE])=
+;
+> 	link_info->num_lanes =3D dpcd[DP_MAX_LANE_COUNT] & DP_MAX_LANE_COUNT_MA=
+SK;
 >=20
-> required:
->   - compatible
->@@ -193,6 +217,8 @@ examples:
->                 reg =3D <1>;
->                 endpoint {
->                     remote-endpoint =3D <&typec>;
->+                    data-lanes =3D <0 1>;
->+                    link-frequencies =3D /bits/ 64 <1620000000 270000000=
-0 5400000000 8100000000>;=20
->                 };
->             };
->         };
+>+	/* Limit data lanes from data-lanes of endpoint properity of dtsi */
+
+Nit: property=2E And below too=2E
+
+> 	if (link_info->num_lanes > dp_panel->max_dp_lanes)
+> 		link_info->num_lanes =3D dp_panel->max_dp_lanes;
+>=20
+>-	/* Limit support upto HBR2 until HBR3 support is added */
+>-	if (link_info->rate >=3D (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
+>-		link_info->rate =3D drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
+>+	/* Limit link rate from link-frequencies of endpoint properity of dtsi =
+*/
+>+	if (link_info->rate > dp_panel->max_dp_link_rate)
+>+		link_info->rate =3D dp_panel->max_dp_link_rate;
+>=20
+> 	drm_dbg_dp(panel->drm_dev, "version: %d=2E%d\n", major, minor);
+> 	drm_dbg_dp(panel->drm_dev, "link_rate=3D%d\n", link_info->rate);
+>diff --git a/drivers/gpu/drm/msm/dp/dp_panel=2Eh b/drivers/gpu/drm/msm/dp=
+/dp_panel=2Eh
+>index d861197a=2E=2Ef04d021 100644
+>--- a/drivers/gpu/drm/msm/dp/dp_panel=2Eh
+>+++ b/drivers/gpu/drm/msm/dp/dp_panel=2Eh
+>@@ -50,6 +50,7 @@ struct dp_panel {
+>=20
+> 	u32 vic;
+> 	u32 max_dp_lanes;
+>+	u32 max_dp_link_rate;
+>=20
+> 	u32 max_bw_code;
+> };
 
 --=20
 With best wishes
