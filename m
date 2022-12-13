@@ -2,112 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E410564B7FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:05:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7980A64B807
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 16:06:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235511AbiLMPFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 10:05:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45994 "EHLO
+        id S235183AbiLMPGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 10:06:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230200AbiLMPFO (ORCPT
+        with ESMTP id S235949AbiLMPGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 10:05:14 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3D1DFEA;
-        Tue, 13 Dec 2022 07:05:13 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BDEEsSm025406;
-        Tue, 13 Dec 2022 15:05:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3mdHWz8hrvFV53AcHIB2oMArONg9HoIGdISTDDxqZi8=;
- b=K1b+/yosgFNYJU+/fvO+/57bszgmTqzXG1FU/9Jo8pyAggE1brtqEhqqptMumOoplgjj
- VKDHK3cw0fYFUGxKwfXnqHb3TL8C98TwNgqlc0kCoo/p9XlsKZ139tcqfD2FTIfEWzhc
- HTKoBWzvXkhCVRDx1npVB4HgihfdawRJyA475+4hbO79+IfyfemJ5RO0HcsXCIbWrbyl
- frP3siPxpr8TtmDqdvA/mRdLpKZNfXDfO6N10y6ykzjkQorFEAfeFoiqJUf9o6s0Q0cU
- EUXPrLoBsri6+B+/AlL+IEe54Y0hKyqPjvg46zFVvOkZYjEh/1ROk280/Ity237/i2ux Vg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mes4a8ejm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 15:05:06 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDF55kU032253
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 15:05:05 GMT
-Received: from [10.216.48.1] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 13 Dec
- 2022 07:05:00 -0800
-Message-ID: <5ac2a022-59e5-1189-bcba-e67b4974cbad@quicinc.com>
-Date:   Tue, 13 Dec 2022 20:34:56 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
+        Tue, 13 Dec 2022 10:06:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E02218A3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:05:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1670943931;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=R9+NLd3jxdSYaQWEDRounaRV4J5+VnhfuGCpFV9Scak=;
+        b=EUPDZqfXPFWiK2T73C/9OzleKJaNyDCqclxvAJVz7Bjb72w5HGzXhUI6yFU7C0zz9pPEjV
+        pIvq6p9XJUMhdOHp38fUzVqrgXjTgv24NFBZdzhLqT/yQOZYIi6DZfWjOe8U6gZ9QDLiNX
+        zNtV+EPwVeAt39x/llWDtGNyRWztPXI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-510-99-rVDd7P4qdYEVpo9CtIw-1; Tue, 13 Dec 2022 10:05:30 -0500
+X-MC-Unique: 99-rVDd7P4qdYEVpo9CtIw-1
+Received: by mail-qk1-f198.google.com with SMTP id h8-20020a05620a284800b006b5c98f09fbso18021534qkp.21
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 07:05:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R9+NLd3jxdSYaQWEDRounaRV4J5+VnhfuGCpFV9Scak=;
+        b=pDUddh09+eGqcELT+70DqabJTQ7+Tz4wju683PhqswmiNIh6f4qMS6x4ii1KcEHuEc
+         ZOxNqIQgRS7R/3wSihnTWGT8vs6LHhQsm3PXX3OZsJYVwgD+imC6eoosGFjzAxirnHS/
+         3xcRBIM6Vm++x5vXqilTpzGaGM9cS/3BzYAP2oFaZrdib0BZEYEgAU/XyqOBKJzc8TBt
+         LXvxIEoYf3igj7bmICzXsJRtBGmOXbI1WFCSsiwQnV+d2MuiVf110jJTsW2KXTOEXfDl
+         5vHHcXvEHCXgzFU8F/TeBTvfaqn5y/4r8VAX9cVwVlBpw2s1DqBaOEoaBWUS+G0QTqXt
+         Vl1A==
+X-Gm-Message-State: ANoB5pl+GgSU1soOLyxnssPzknWW81EQvD81DgPzj4863kTQ1+FaYf0U
+        /4QSsX9NFH3voXnUWdJAcGRZ9EHiAYfgnDqPdQwyT9hlNpWw6vkYr7JqPNTrdJMfacRCS/HI+Mk
+        mhcyVvtlWLMUy0P/avE7k2WvFjw==
+X-Received: by 2002:a05:622a:4ac6:b0:3a5:2d37:eec3 with SMTP id fx6-20020a05622a4ac600b003a52d37eec3mr29577493qtb.4.1670943921485;
+        Tue, 13 Dec 2022 07:05:21 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf5luC77xo0MLHMxsKzx3NKc6Ahtqb9hI1942FD7kdl7LQrB5D6dHNM0CS1pPXwf5qk8fkH5Iw==
+X-Received: by 2002:a05:622a:4ac6:b0:3a5:2d37:eec3 with SMTP id fx6-20020a05622a4ac600b003a52d37eec3mr29577465qtb.4.1670943921283;
+        Tue, 13 Dec 2022 07:05:21 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id p10-20020ac8740a000000b003a4f435e381sm14250qtq.18.2022.12.13.07.05.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 07:05:20 -0800 (PST)
+Date:   Tue, 13 Dec 2022 10:05:19 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com, quic_shazhuss@quicinc.com
 Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: rename i2c5 to i2c21
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>, Brian Masney <bmasney@redhat.com>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <johan+linaro@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <ahalaney@redhat.com>, <echanude@redhat.com>
+Message-ID: <Y5iUr0V4QYoAa4Du@x1>
 References: <20221212182314.1902632-1-bmasney@redhat.com>
  <20221212182314.1902632-2-bmasney@redhat.com>
  <Y5iSDehp72mQPc+h@hovoldconsulting.com>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <Y5iSDehp72mQPc+h@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DXNr_Zn5E8fkrgaFJJXClRtI_8bplx1t
-X-Proofpoint-ORIG-GUID: DXNr_Zn5E8fkrgaFJJXClRtI_8bplx1t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 spamscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 suspectscore=0 mlxlogscore=974 adultscore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212130133
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12/13/2022 8:24 PM, Johan Hovold wrote:
-> On Mon, Dec 12, 2022 at 01:23:11PM -0500, Brian Masney wrote:
->> According to the downstream 5.4 kernel sources for the sa8540p,
->> i2c@894000 is labeled i2c bus 21, not 5. The interrupts and clocks
->> also match. Let's go ahead and correct the name that's used in the
->> three files where this is listed.
->>
->> Signed-off-by: Brian Masney <bmasney@redhat.com>
->> Fixes: 152d1faf1e2f3 ("arm64: dts: qcom: add SC8280XP platform")
->> Fixes: ccd3517faf183 ("arm64: dts: qcom: sc8280xp: Add reference device")
->> Fixes: 32c231385ed43 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> index 109c9d2b684d..875cc91324ce 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> @@ -827,7 +827,7 @@ qup2_uart17: serial@884000 {
->>   				status = "disabled";
->>   			};
->>   
->> -			qup2_i2c5: i2c@894000 {
->> +			qup2_i2c21: i2c@894000 {
-> 
+On Tue, Dec 13, 2022 at 03:54:05PM +0100, Johan Hovold wrote:
 > Note that the node is labelled qup2_i2c5 and not qup_i2c5.
 > 
 > That is, the QUP nodes are labelled using two indices, and specifically
@@ -124,9 +100,8 @@ On 12/13/2022 8:24 PM, Johan Hovold wrote:
 > So there's nothing wrong with how these nodes are currently named, but
 > mixing the two scheme as you are suggesting would not be correct.
 
-Wondering we might need to change qup2_uart17 to qup2_uart1 then ?
+OK, I see; that makes sense. I'll drop this patch in v2 and fix up the
+new nodes accordingly. Thank you for the explanation!
 
-Shazad
+Brian
 
-> 
-> Johan
