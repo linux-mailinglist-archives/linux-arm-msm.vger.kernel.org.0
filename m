@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E11A364B54F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:41:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F59864B553
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 13:41:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234310AbiLMMlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 07:41:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46466 "EHLO
+        id S234884AbiLMMlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 07:41:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235068AbiLMMkU (ORCPT
+        with ESMTP id S235408AbiLMMkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 07:40:20 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 350171FCD2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:38 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id d15so5858644pls.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:38 -0800 (PST)
+        Tue, 13 Dec 2022 07:40:22 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0DA1FF98
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:42 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id q17-20020a17090aa01100b002194cba32e9so3402723pjp.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 04:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wKPVsv2TqsP8zux8ohBTaLzqLXnKFjC2mxPTp1lrDzo=;
-        b=pRkn7CERucvFWodZldKONF9Sc3CWZ5+E2aWS2cNNcv38w0mNCRE0sMmaG2VaE/Kwvf
-         viS3cXILhSRSGiOMd9Sxi9s+40tXTMfqfK3ZI+GeJ2rgsmxNmJvmcOS5gGc8t8xzUTeF
-         p7q5bOYgnA0rv93Yalk1qWGktpGkJxSo2R/9Gtg14Njk7pqo3d3HHnxeQitdNfPLXBMn
-         vsb+41wvux/AFaQm5vFVuX68M0pdEP12N9FkRzbpGw0UuZOMlIZNGUdgb2kWhjuvWzHD
-         ZRhJvCpMmPykClY3mctXRQWyAJPvTyR7oDvR7iA09AzG97XIlFLuB+gXhP3/hqoLnl4y
-         Fjiw==
+        bh=7RVsCHc65/n25Apk0UMd5OFnRvCxYzOfIak3gevXkuc=;
+        b=fst2QKHMJERtQiH16RRC3rKQIEuuNljc0CVfv+0XMUPYg9KlibsyhsD0p59YFXX8XM
+         /L4skjMsfkhD0BfpCHlLCU8h/TwgevUNKj6rY+Lcejee8/YadDX/GruHfgP0NOPCh7eE
+         0IlvUWP0rMiR1gyh0K9Boejq6J2inl9i1eYiLa9PK3J4W17Cs5mk5E3BDtzwgkBW5/lA
+         x65/s26oLhjrglThUidAB2P8cHLdR7H6CNiPDvGCxjh9FQrg+OXkCzxU5sF8ob0+pTmP
+         GcH9FrknynLa9D6d7Jj4rgWwdBGpm5KSpbKk82HsXCogzDuf5BTdlLjzz1Q07A8n7RJL
+         RKGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wKPVsv2TqsP8zux8ohBTaLzqLXnKFjC2mxPTp1lrDzo=;
-        b=1LyLygwfE1FVQHQnyBOKBeJW6Mb+Vn3J2rDHO9tO+qbYclbmaCkCFBG+XWOD1EzI2I
-         sRbpi7QyLnmTTUs7+8nlsTw9heKrKaCuR895Jh3/uu0IU4BzBAWlv3SDqqK7Fan4IsDt
-         ddaXF6vWZEdK9sXZQ7wGx3+R/FoMeczcih2YeFVsv5UAm2IsXxlxck4Y66cYz2CT+wp7
-         79dq/23Kr3hS8amueMVNJfbyi+j3xVkYuQ+oEwrmbEHAyBzFS1jYekKHYW3XclvwM71t
-         wgIiOOxB/5c6ZTkaeym7nlceqaWj5Yzj0qyD1ZE62cfrddezvdA7gZhxip/8PAhhNTlx
-         UtdA==
-X-Gm-Message-State: ANoB5pmvjOei3Ge8mpJFDzNJdc2cSIWS3LZquigNJ/9f5Difz39YRwzz
-        6MdC3n8YFAyt3ubttyVHxIyd5ws+b+K5tse6L+o=
-X-Google-Smtp-Source: AA0mqf4EcKeBgZ7Qh6fEUbVbfs34/Rm5aKLLEN7nKMXzJCBYSbAcmgBi/Jzjnz6BZ+LNCt4GOegkkA==
-X-Received: by 2002:a17:902:d412:b0:18f:37ec:9675 with SMTP id b18-20020a170902d41200b0018f37ec9675mr9524687ple.21.1670935117264;
-        Tue, 13 Dec 2022 04:38:37 -0800 (PST)
+        bh=7RVsCHc65/n25Apk0UMd5OFnRvCxYzOfIak3gevXkuc=;
+        b=jh1pEUdsgB/VeRZCnXudFwGLeZeqSB1bJqHnwii8P3nJlTv/7kS8Fu4+afMPGkBKY5
+         2cUz6cFSdgE5j+q7htaUzEbTuJMNPu/UNppcJznkDlxwZiMHsg+Hd97632s6Qel/FT8g
+         m4rmfH0+PpZfH+W2hZpjfzeFJFcTIUj2kU2xrRoyRdFKvjHAhNAzOhzOch1KXV0T5qhW
+         uzXvHIS3kRibJmIXwQtxMd6mhFv+W9Ln8MrBT55Nmogc1ov8rr0VpMF0Mselxv/a6Krp
+         /PhriXT4c0B2HBkZm6hB29S6zh2g7vrk9oC97UJIXk8bmfpsqUv9Ws9w99iDbWxM1x6y
+         7sFQ==
+X-Gm-Message-State: ANoB5pmUGmR5CFqtbYfV7tjfJm4LHPXS925eDWq43jopsHl6gh1aSrhw
+        ztpX++meFnyvTKJGflM8u14ckb90IdIYwFCtb+c=
+X-Google-Smtp-Source: AA0mqf4yhWgLXFEtHPOzR+dKB3bwqHUul+V7vZkVUZ8+EhHWweTcRbp2fdEAgwBcm2hyVJuYZo8gDA==
+X-Received: by 2002:a17:902:7890:b0:188:fc0c:cdb1 with SMTP id q16-20020a170902789000b00188fc0ccdb1mr20388196pll.16.1670935121723;
+        Tue, 13 Dec 2022 04:38:41 -0800 (PST)
 Received: from localhost.localdomain ([2401:4900:1c60:4bad:5c3:ab51:3d81:6264])
-        by smtp.gmail.com with ESMTPSA id m12-20020a170902c44c00b001889e58d520sm8297011plm.184.2022.12.13.04.38.33
+        by smtp.gmail.com with ESMTPSA id m12-20020a170902c44c00b001889e58d520sm8297011plm.184.2022.12.13.04.38.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 04:38:36 -0800 (PST)
+        Tue, 13 Dec 2022 04:38:41 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     agross@kernel.org, bhupesh.sharma@linaro.org,
         bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
         konrad.dybcio@linaro.org, andersson@kernel.org
-Subject: [PATCH 1/3] arm64: dts: qcom: sm6115: Cleanup USB node names
-Date:   Tue, 13 Dec 2022 18:08:21 +0530
-Message-Id: <20221213123823.455731-2-bhupesh.sharma@linaro.org>
+Subject: [PATCH 2/3] arm64: dts: qcom: sm6115: Move USB node's 'maximum-speed' and 'dr_mode' properties to dts
+Date:   Tue, 13 Dec 2022 18:08:22 +0530
+Message-Id: <20221213123823.455731-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
 References: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
@@ -74,70 +74,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is only one USB controller present on SM6115 / SM4250
-Qualcomm SoC, so drop the numbering used with USB nodes
-in the dtsi and the related sm4250-oneplus-billie2.dts.
+Normally the 'maximum-speed' and 'dr_mode' properties
+of a USB controller + port is dependent on the type of
+the ports, regulators and mode change interrupt routing
+available on the board(s).
+
+So, move the same from the sm6115 dtsi file to respective
+board file(s).
 
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts | 4 ++--
- arch/arm64/boot/dts/qcom/sm6115.dtsi                | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts | 5 +++++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi                | 2 --
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index a3f1c7c41fd73..fa57f4bf58256 100644
+index fa57f4bf58256..3f39f25e0721e 100644
 --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
 +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -225,11 +225,11 @@ &ufs_mem_phy {
+@@ -229,6 +229,11 @@ &usb {
  	status = "okay";
  };
  
--&usb_1 {
-+&usb {
- 	status = "okay";
- };
- 
--&usb_1_hsphy {
-+&usb_hsphy {
++&usb_dwc3 {
++	maximum-speed = "high-speed";
++	dr_mode = "peripheral";
++};
++
+ &usb_hsphy {
  	vdd-supply = <&vreg_l4a>;
  	vdda-pll-supply = <&vreg_l12a>;
- 	vdda-phy-dpdm-supply = <&vreg_l15a>;
 diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 572bf04adf906..b5f7480c2e713 100644
+index b5f7480c2e713..e4ce135264f3d 100644
 --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -565,7 +565,7 @@ gcc: clock-controller@1400000 {
- 			#power-domain-cells = <1>;
- 		};
- 
--		usb_1_hsphy: phy@1613000 {
-+		usb_hsphy: phy@1613000 {
- 			compatible = "qcom,sm6115-qusb2-phy";
- 			reg = <0x01613000 0x180>;
- 			#phy-cells = <0>;
-@@ -991,7 +991,7 @@ spi5: spi@4a94000 {
+@@ -1031,8 +1031,6 @@ usb_dwc3: usb@4e00000 {
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+ 				snps,usb3_lpm_capable;
+-				maximum-speed = "high-speed";
+-				dr_mode = "peripheral";
  			};
  		};
  
--		usb_1: usb@4ef8800 {
-+		usb: usb@4ef8800 {
- 			compatible = "qcom,sm6115-dwc3", "qcom,dwc3";
- 			reg = <0x04ef8800 0x400>;
- 			#address-cells = <1>;
-@@ -1019,11 +1019,11 @@ usb_1: usb@4ef8800 {
- 			qcom,select-utmi-as-pipe-clk;
- 			status = "disabled";
- 
--			usb_1_dwc3: usb@4e00000 {
-+			usb_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x04e00000 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
--				phys = <&usb_1_hsphy>;
-+				phys = <&usb_hsphy>;
- 				phy-names = "usb2-phy";
- 				iommus = <&apps_smmu 0x120 0x0>;
- 				snps,dis_u2_susphy_quirk;
 -- 
 2.38.1
 
