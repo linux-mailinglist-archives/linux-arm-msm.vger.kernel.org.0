@@ -2,178 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 430D364B0F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 09:19:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD85D64B1E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 10:08:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234546AbiLMITW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 03:19:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
+        id S234737AbiLMJI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 04:08:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233635AbiLMITU (ORCPT
+        with ESMTP id S234916AbiLMJH7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 03:19:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E86DF5AC;
-        Tue, 13 Dec 2022 00:19:19 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 13 Dec 2022 04:07:59 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FD81F2E0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:04:43 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 191F361355;
-        Tue, 13 Dec 2022 08:19:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB59C433D2;
-        Tue, 13 Dec 2022 08:19:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670919558;
-        bh=yY2CBwuvD37TBBn1YVRIQf5C8+KaMDI6W4l+pvlpPa0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lh7GH3rF4j1xjuSIE0oMEm3C8qe6u0yXRQ3Go5NTcFizeEhbj9tPTrPEm63VvBiD3
-         0zaZPm+5hBE1AOXTBti0S36eREIkoXOw+bX9JtK3ZWT1Lo6aTyTZDCsKcOsiXiKWDn
-         P1lYnb4R6PROtm5ZhHD1uDKXNolmV2Phk5zF6mpTldC6K4MgorZQ9bgi1vrpZSOETk
-         oSDjWfF06pJ6/nrqRFn/KdCbfRRGexhN5HLtWIkbkKLxpmkzN9/IVOwhI78cd4D4WE
-         Qv9Te1donqVPYH8RyHKzrtcGVScjVUllboi4mOT5a3WeC0GxC+Pb66eT1aIlQr7FUv
-         2WclzIoyvub0A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1p50Vq-0004l2-SD; Tue, 13 Dec 2022 09:19:43 +0100
-Date:   Tue, 13 Dec 2022 09:19:42 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     andersson@kernel.org, bmasney@redhat.com,
-        kernel test robot <lkp@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1F3FE201E6;
+        Tue, 13 Dec 2022 10:03:51 +0100 (CET)
+Date:   Tue, 13 Dec 2022 10:03:49 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patches@linaro.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
-Message-ID: <Y5g1ntW1sOBBgcJ/@hovoldconsulting.com>
-References: <20221213051109.8685-1-quic_shazhuss@quicinc.com>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
+Message-ID: <20221213090349.bvatkmozbf5tjsxc@SoMainline.org>
+References: <20221210133850.3664-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221213051109.8685-1-quic_shazhuss@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221210133850.3664-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 13, 2022 at 10:41:08AM +0530, Shazad Hussain wrote:
-> Add the pcie2a, pcie2a_phy, and respective tlmm
-> nodes that are needed to get pcie 2a controller
-> enabled on Qdrive3.
+On 2022-12-10 14:38:50, Konrad Dybcio wrote:
+> With enough pins set properly, the hardware buttons now also work
+> like a charm.
 > 
-> This patch enables 4GB 64bit memory space for
-> PCIE_2A to have BAR allocations of 64bit pref mem
-> needed on this Qdrive3 platform with dual SoCs
-> for root port and switch NT-EP. Hence this ranges
-> property is overridden in sa8540p-ride.dts only.
+> Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Please break your lines at 72 columns or so (not 50).
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Xperia 5 III
 
-> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-
-No need for this Reported-by (even if some people may disagree).
+However I also tested this on Xperia 1 III, and...
 
 > ---
-> Changes since v3:
-> - Fix syntax error and add Reported-by (Kernel test robot)
+>  .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 24 ++++++++++
+>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 47 ++++++++++++++++++-
+>  2 files changed, 70 insertions(+), 1 deletion(-)
 > 
-> Changes since v2:
-> - Discard below patch as v3 is merged in qcom tree
->   [v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
->   https://lore.kernel.org/all/20221206161916.315640-1-bmasney@redhat.com/
-> - Move tlmm PINCTRL to the end and add R-b (Brian)
-> 
-> Changes since v1:
-> - Fix ranges property indentation (Konrad)
-> 
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 96 +++++++++++++++++------
->  1 file changed, 71 insertions(+), 25 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index 6c547f1b13dc..d70859803fbd 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -146,6 +146,27 @@ vreg_l8g: ldo8 {
->  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> index e6824c8c2774..6fa830bdc6bd 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> @@ -10,6 +10,20 @@
+>  / {
+>  	model = "Sony Xperia 5 III";
+>  	compatible = "sony,pdx214-generic", "qcom,sm8350";
+> +
+> +	gpio-keys {
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
+> +
+> +		key-google-assist {
+> +			label = "Google Assistant Key";
+> +			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_LEFTMETA>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +	};
+
+... please move this to board DTS.  Xperia 1 III would also like to have
+it mapped.  Downstream DT indicates, and my local testing confirms, that
+it is identical to Xperia 5 III (i.e. common to the Sagami board).
+
+The other buttons work great on both devices!
+
 >  };
 >  
-> +&pcie2a {
-> +	ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-> +		 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>,
-> +		 <0x03000000 0x5 0x00000000 0x5 0x00000000 0x1 0x00000000>;
-> +
-> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_HIGH>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie2a_default>;
-> +
-> +	status = "okay";
+>  &framebuffer {
+> @@ -18,6 +32,16 @@ &framebuffer {
+>  	stride = <(1080 * 4)>;
+>  };
+>  
+> +&pm8350_gpios {
+> +	g_assist_n: g-assist-n-state {
+> +		pins = "gpio9";
+> +		function = "normal";
+> +		power-source = <1>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
 > +};
 > +
-> +&pcie2a_phy {
-> +	vdda-phy-supply = <&vreg_l11a>;
-> +	vdda-pll-supply = <&vreg_l3a>;
+
+(And this too, of course)
+
+- Marijn
+
+>  &pm8350b_gpios {
+>  	gpio-line-names = "NC", /* GPIO_1 */
+>  			  "NC",
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> index d73e1f3fa501..557b4538a031 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> @@ -49,7 +49,26 @@ framebuffer: framebuffer@e1000000 {
+>  	gpio-keys {
+>  		compatible = "gpio-keys";
+>  
+> -		/* For reasons still unknown, GAssist key and Camera Focus/Shutter don't work.. */
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
 > +
-> +	status = "okay";
+> +		key-camera-focus {
+> +			label = "Camera Focus";
+> +			linux,code = <KEY_CAMERA_FOCUS>;
+> +			gpios = <&pm8350b_gpios 8 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +
+> +		key-camera-snapshot {
+> +			label = "Camera Snapshot";
+> +			linux,code = <KEY_CAMERA>;
+> +			gpios = <&pm8350b_gpios 5 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+>  
+>  		key-vol-down {
+>  			label = "Volume Down";
+> @@ -547,11 +566,37 @@ &pm8350_gpios {
+>  			  "PM8350_OPTION"; /* GPIO_10 */
+>  };
+>  
+> +&pm8350b_gpios {
+> +	snapshot_n: snapshot-n-state {
+> +		pins = "gpio5";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +
+> +	focus_n: focus-n-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		input-enable;
+> +		bias-pull-up;
+> +	};
 > +};
 > +
->  &pcie3a {
->  	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
->  		 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-> @@ -186,31 +207,6 @@ &remoteproc_nsp1 {
->  	status = "okay";
+>  &pmk8350_gpios {
+>  	gpio-line-names = "NC", /* GPIO_1 */
+>  			  "NC",
+>  			  "VOL_DOWN_N",
+>  			  "PMK8350_OPTION";
+> +
+> +	vol_down_n: vol-down-n-state {
+> +		pins = "gpio3";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
 >  };
 >  
-> -&tlmm {
-> -	pcie3a_default: pcie3a-default-state {
-> -		perst-pins {
-> -			pins = "gpio151";
-> -			function = "gpio";
-> -			drive-strength = <2>;
-> -			bias-pull-down;
-> -		};
-> -
-> -		clkreq-pins {
-> -			pins = "gpio150";
-> -			function = "pcie3a_clkreq";
-> -			drive-strength = <2>;
-> -			bias-pull-up;
-> -		};
-> -
-> -		wake-pins {
-> -			pins = "gpio56";
-> -			function = "gpio";
-> -			drive-strength = <2>;
-> -			bias-pull-up;
-> -		};
-> -	};
-> -};
-> -
-
-This is a separate change which should go in its own patch. (We sometimes
-make exceptions to this general rule, but then you must least mention
-that you're also moving the tlmm nodes and why you're doing so in the
-commit message.)
-
->  &ufs_mem_hc {
->  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
->  
-> @@ -268,3 +264,53 @@ &usb_2_qmpphy0 {
->  &xo_board_clk {
->  	clock-frequency = <38400000>;
->  };
-> +
-> +/* PINCTRL */
-> +
-> +&tlmm {
-
-Johan
+>  &pmk8350_rtc {
+> -- 
+> 2.38.1
+> 
