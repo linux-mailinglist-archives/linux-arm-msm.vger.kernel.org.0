@@ -2,166 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 988E364BFBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:57:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D8B764C03C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 00:07:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236830AbiLMW5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 17:57:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52230 "EHLO
+        id S236942AbiLMXGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 18:06:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236801AbiLMW4x (ORCPT
+        with ESMTP id S236937AbiLMXGt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 17:56:53 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A0B2229D;
-        Tue, 13 Dec 2022 14:56:52 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BDMQZRS014260;
-        Tue, 13 Dec 2022 22:56:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=WkAJ2SZyaHUbH9fFpqfbaYKvKWX5dlJ6xd3Kje9WbaM=;
- b=hNCqZK/f5t4S1Nr/5jz0kYQlC0O8hnJxgFxn8hRaRyAsyLprBP4GjfLOCkIobDWI/Kxd
- PeirWKIbIsxFCFNEi6uFHi+S7SxNusYqt41KkimrH1lsQpTHHXfjKP5u12eCOb30/2Vh
- pSb0rkvFUKzRSlqUiwpdntyBeO5AHY/9HRdkpJHmi4ySjlDDGBM3RK8VXon+3O209man
- IpkxJVc4EpMLWwrumvVuufoQtNILA3H0nx/Jt/qDGyfhNUVatZbSKAiF7Zh0zgVXXHzH
- wptB8AZqr8sbD3Q0D13aePNC3mnEMkuCiSO/HLkPJAlzynZ2x9qTIwn21J4biPaVVd9D ZA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3meyf2rfh0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 22:56:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDMuhJ2009163
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 22:56:43 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 13 Dec 2022 14:56:42 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
-        <airlied@gmail.com>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v13 5/5] drm/msm/dp: add support of max dp link rate
-Date:   Tue, 13 Dec 2022 14:56:21 -0800
-Message-ID: <1670972181-4961-6-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1670972181-4961-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1670972181-4961-1-git-send-email-quic_khsieh@quicinc.com>
+        Tue, 13 Dec 2022 18:06:49 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC931A05C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 15:06:48 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id j4so7625849lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 15:06:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kQ9UDEKrGBlUcNO4sH3ZDmuGjEg0UnW+K0pM704i6h4=;
+        b=EGJYsfsdcAfUgmOpZg5H+z1o0EFyoU43QuVvL1htgp3oMzcw4T7CFqEnzUyIV6sEVH
+         iMwFo/ZITg75aSSv9eHw1EMtytTUQZcoo1PpRnIjp2T/mqSWh9InDNRx0fnTCWSj8ELI
+         a/A8MpamBle04ND8JnGfcgbBsnBgpTEck5elM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kQ9UDEKrGBlUcNO4sH3ZDmuGjEg0UnW+K0pM704i6h4=;
+        b=pSJhqa1UIRU+ntfQFdfnCJk9HKw4R94mNCiR/nJ9HkJAHBZjzrXEmqZjUvNgi2tIr1
+         2avyhp9hbdaxU5b1m1pqdDZlwkjEtrH/Jg4t3SgAR2yzA1w9SP7+8Wx/LBxdNXxoaAHm
+         gdAsg+mYGbhwuAEH9G7oyG8cKoEM83Iql5N43qFq5cYavvOTb2N2Y9/Y9CsQjz+kx7el
+         yQ9fFJiwKJma9LWYcq98TzWRcF61l8Hpx4DX8t2GF53NjpXRLl5mgKvQ/jPM15dovv/B
+         RmMtnAX0qwA15pMTSlqS0bk4RytJOf9WOf1JbSQUW4NE13a1+dd50NbaZ+h3txGsiGnR
+         skBQ==
+X-Gm-Message-State: ANoB5pmYKTIYugY7dRfz3DMU+c7GMtc7kNqAObXUCNrrunAD9XtsVCkG
+        49IOfag22NFqdPTpdMHmSw0GsWar9+i41pS0UwJpAg==
+X-Google-Smtp-Source: AA0mqf7E+0gYIlsn+eJZUnoQxwAAegzX06aJJjONxcWqY6lnTQGcJuvpNtrGrbvAPrVBHen0DXMLaf3G2kd78m/boGs=
+X-Received: by 2002:ac2:4189:0:b0:4b1:2447:6971 with SMTP id
+ z9-20020ac24189000000b004b124476971mr27184258lfh.83.1670972806927; Tue, 13
+ Dec 2022 15:06:46 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 13 Dec 2022 15:06:46 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eIhegNukVclMZDzaGzGl9cEScyM_duSV
-X-Proofpoint-ORIG-GUID: eIhegNukVclMZDzaGzGl9cEScyM_duSV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
- adultscore=0 suspectscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2212130199
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1670967848-31475-3-git-send-email-quic_khsieh@quicinc.com>
+References: <1670967848-31475-1-git-send-email-quic_khsieh@quicinc.com> <1670967848-31475-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 13 Dec 2022 15:06:46 -0800
+Message-ID: <CAE-0n52eHYCqxUJqQXoaQ8vyqCk-QfouSun+zUp3yo5DufWbwg@mail.gmail.com>
+Subject: Re: [PATCH v12 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@gmail.com, andersson@kernel.org, daniel@ffwll.ch,
+        devicetree@vger.kernel.org, dianders@chromium.org,
+        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-By default, HBR2 (5.4G) is the max link link be supported. This patch uses the
-actual limit specified by DT and removes the artificial limitation to 5.4 Gbps.
-Supporting HBR3 is a consequence of that.
+Quoting Kuogee Hsieh (2022-12-13 13:44:05)
+> Add both data-lanes and link-frequencies property into endpoint
 
-Changes in v2:
--- add max link rate from dtsi
+Why do we care? Please tell us why it's important.
 
-Changes in v3:
--- parser max_data_lanes and max_dp_link_rate from dp_out endpoint
+>
+> Changes in v7:
+> -- split yaml out of dtsi patch
+> -- link-frequencies from link rate to symbol rate
+> -- deprecation of old data-lanes property
+>
+> Changes in v8:
+> -- correct Bjorn mail address to kernel.org
+>
+> Changes in v10:
+> -- add menu item to data-lanes and link-frequecnis
+>
+> Changes in v11:
+> -- add endpoint property at port@1
+>
+> Changes in v12:
+> -- use enum for item at data-lanes and link-frequencies
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
+                                                       ^
+Stray ` here? -----------------------------------------/
 
-Changes in v4:
--- delete unnecessary pr_err
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 30 ++++++++++++++++++++--
+>  1 file changed, 28 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index f2515af..8fb9fa5 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -96,14 +97,37 @@ properties:
+>
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+> +
+>      properties:
+>        port@0:
+> -        $ref: /schemas/graph.yaml#/properties/port
+> +        $ref: "/schemas/graph.yaml#/$defs/port-base"
+>          description: Input endpoint of the controller
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/media/video-interfaces.yaml#
+>
+>        port@1:
+> -        $ref: /schemas/graph.yaml#/properties/port
+> +        $ref: "/schemas/graph.yaml#/$defs/port-base"
 
-Changes in v5:
--- split parser function into different patch
+I thought the quotes weren't needed?
 
-Changes in v9:
--- revised commit test
+>          description: Output endpoint of the controller
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/media/video-interfaces.yaml#
 
-Changes in v13:
--- repalced "properity" with "property"
+Does this need 'unevaluatedProperties: false' here?
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 4 ++++
- drivers/gpu/drm/msm/dp/dp_panel.c   | 7 ++++---
- drivers/gpu/drm/msm/dp/dp_panel.h   | 1 +
- 3 files changed, 9 insertions(+), 3 deletions(-)
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +                items:
+> +                  enum: [ 0, 1, 2, 3 ]
+> +
+> +              link-frequencies:
+> +                minItems: 1
+> +                maxItems: 4
+> +                items:
+> +                  enum: [ 1620000000, 2700000000, 5400000000, 8100000000 ]
+> +
+> +    required:
+> +      - port@0
+> +      - port@1
+>
+>  required:
+>    - compatible
+> @@ -193,6 +217,8 @@ examples:
+>                  reg = <1>;
+>                  endpoint {
+>                      remote-endpoint = <&typec>;
+> +                    data-lanes = <0 1>;
+> +                    link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+>                  };
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index bfd0aef..edee550 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -390,6 +390,10 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	struct edid *edid;
- 
- 	dp->panel->max_dp_lanes = dp->parser->max_dp_lanes;
-+	dp->panel->max_dp_link_rate = dp->parser->max_dp_link_rate;
-+
-+	drm_dbg_dp(dp->drm_dev, "max_lanes=%d max_link_rate=%d\n",
-+		dp->panel->max_dp_lanes, dp->panel->max_dp_link_rate);
- 
- 	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
- 	if (rc)
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 5149ceb..1800d89 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -75,12 +75,13 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
- 	link_info->rate = drm_dp_bw_code_to_link_rate(dpcd[DP_MAX_LINK_RATE]);
- 	link_info->num_lanes = dpcd[DP_MAX_LANE_COUNT] & DP_MAX_LANE_COUNT_MASK;
- 
-+	/* Limit data lanes from data-lanes of endpoint property of dtsi */
- 	if (link_info->num_lanes > dp_panel->max_dp_lanes)
- 		link_info->num_lanes = dp_panel->max_dp_lanes;
- 
--	/* Limit support upto HBR2 until HBR3 support is added */
--	if (link_info->rate >= (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
--		link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
-+	/* Limit link rate from link-frequencies of endpoint property of dtsi */
-+	if (link_info->rate > dp_panel->max_dp_link_rate)
-+		link_info->rate = dp_panel->max_dp_link_rate;
- 
- 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
- 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index d861197a..f04d021 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -50,6 +50,7 @@ struct dp_panel {
- 
- 	u32 vic;
- 	u32 max_dp_lanes;
-+	u32 max_dp_link_rate;
- 
- 	u32 max_bw_code;
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+So far we haven't used the output port on the DP controller in DT.
 
+I'm still not clear on what we should do in general for DP because
+there's a PHY that actually controls a lane count and lane mapping. In
+my mental model of the SoC, this DP controller's output port is
+connected to the DP PHY, which then sends the DP lanes out of the SoC to
+the next downstream device (i.e. a DP connector or type-c muxer). Having
+a remote-endpoint property with a phandle to typec doesn't fit my mental
+model. I'd expect it to be the typec PHY.
+
+That brings up the question: when we have 2 lanes vs. 4 lanes will we
+duplicate the data-lanes property in the PHY binding? I suspect we'll
+have to. Hopefully that sort of duplication is OK?
+
+Similarly, we may have a redriver that limits the link-frequencies
+property further (e.g. only support <= 2.7GHz). Having multiple
+link-frequencies along the graph is OK, right? And isn't the
+link-frequencies property known here by fact that the DP controller
+tells us which SoC this controller is for, and thus we already know the
+supported link frequencies?
+
+Finally, I wonder if we should put any of this in the DP controller's
+output endpoint, or if we can put these sorts of properties in the DP
+PHY binding directly? Can't we do that and then when the DP controller
+tries to set 4 lanes, the PHY immediately fails the call and the link
+training algorithm does its thing and tries fewer lanes? And similarly,
+if link-frequencies were in the PHY's binding, the PHY could fail to set
+those frequencies during link training, returning an error to the DP
+controller, letting the training move on to a lower frequency. If we did
+that this patch series would largely be about modifying the PHY binding,
+updating the PHY driver to enforce constraints, and handling errors
+during link training in the DP controller (which may already be done? I
+didn't check).
