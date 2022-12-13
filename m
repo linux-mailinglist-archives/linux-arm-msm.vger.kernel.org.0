@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60AB864B322
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 11:22:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD2E264B328
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 11:23:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234027AbiLMKWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 05:22:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54542 "EHLO
+        id S233923AbiLMKXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 05:23:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235072AbiLMKVO (ORCPT
+        with ESMTP id S234636AbiLMKXR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 05:21:14 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1AA1CFDF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:20:46 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id z26so4123362lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:20:46 -0800 (PST)
+        Tue, 13 Dec 2022 05:23:17 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F5F8F66
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:23:15 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id q6so4112803lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8HgfJ03fylnPu1kaLui/ybL/iBydNvPLkIgg7Jofsws=;
-        b=cd7vei+gPqw5MMp7Nj3Icuy20KI2qZMC36a8ZbRLMh6WwZ5IOAa/P0G/uh02XjErQd
-         ArUWPdcMG3dSGzSs1KMhgRFSBuadx21RdKBvGhYmx3LXHHMDZ+JJ8IVpyT1QhNfEwyF+
-         pdtB1nF+nd50fp71uisobmRrSWKqQIS5TolIH5VO3IqwmLXNORoziOusxObl2zv2sWpE
-         h81naWthItI8ldOM2+Gw3aWpWg1ppHz36Y1YeydaxlZFADcuO9Xfkyh20kyQQSzGbmab
-         EK6IzTYwOU/KF2VxhUPkJk667lqAuK+GQe7ZWTd0Ynj2+G5SdQAGbNybUb7QD66O3E1T
-         6b0Q==
+        bh=8phRAs4VxLeXM30VhIXOVy1FLv/sabkEs4Ulbx1ACsk=;
+        b=DoZbYrm+mRTsgJ4Opi835UDO6x0OjpVpH8BGmOvYOmdBFEvU4g7qe6xLhrBSgVuvJx
+         QV9adWHfXYwluoopDA7m/uQV/JuujSURodWNm2QiJmtGHvlmfvAo+8vpzTMLnEZGvdFR
+         KUedqUcS2NWlr1fG5pOjRuL2aJ9aw6aggm3RmJtZIUzmV6bARHYfCZP1Lc0EPZef0tG2
+         mnQKPTCHDdXkYVy1a5cwLlVQV8LucKSfA5yUo+jS872q7Hkr6Csu6dT0580tbbnLHvIo
+         84ABO9LZhqlsl95e8zXjNg+ixEijeVOqobfmmqqlRt3WrdgQOlNTP0GmdJTQcA+xKxN7
+         MSqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8HgfJ03fylnPu1kaLui/ybL/iBydNvPLkIgg7Jofsws=;
-        b=FaBCJeAt0LUj2OESHQySHedEK2dr8Y5CPQw5Y9HEaiJGKIa2+1ivavaKQO/G9dmeSx
-         WYo0RaowP9GAtxN7zcxHg96v8pR++lyCAigtA9USvoiAa3PjSid2cSJM57s6BHLM0IbP
-         H12YWo8aTIsDjI4oO6NaHXA2cuIUPNruj1a8ulP1gkhjOe6jkSIsuUiC2kXsKhFRk2kf
-         OtvjeVtpb+NKNu2y+g3R5tyt2wQPXdwVlhPNB6xFrR6IEo0dvmcEHPapG3z18EUnw3+P
-         Nhgfry/zkW9VMEOM8TWkVVf7cH151LoKsh+aGLMSRDm8+RLRf6Hg9UGbohR00D6rvvxA
-         uAQw==
-X-Gm-Message-State: ANoB5plR+0f9MGibcHF9lJMdU9XjPwIPphbAo1zPEWCTRTmeY5UbtENC
-        lQktDZ68/tOEYhx7XDF2oC8Irg==
-X-Google-Smtp-Source: AA0mqf5Gfk0X7UBA1VMD/Ax+odvOtySouVK99GyO7qUfbFECWbo9xjNNKrTF18kpizULo6SESEd2sA==
-X-Received: by 2002:a05:6512:5c2:b0:4b4:fbf2:608b with SMTP id o2-20020a05651205c200b004b4fbf2608bmr4668994lfo.30.1670926844425;
-        Tue, 13 Dec 2022 02:20:44 -0800 (PST)
+        bh=8phRAs4VxLeXM30VhIXOVy1FLv/sabkEs4Ulbx1ACsk=;
+        b=YNcqSJFPaWOU5NeIZjAvLNpwauHVdnT5jQ0aVK08zzMyN0bN7wEQFopN1vMXLBK9zF
+         KkZ6uMSd2IVzWz/oRo/iaPZPy52QYVVackUpM/9m6lmQDrp/FjKpwSBHDs8Xp7Nq0rBa
+         hxfYfQ2AuB0XkqOY0E05wcimxFw19BUNzyzlBrBOxAQiCP2y0v7crqVVBp5pUjIsM2Tz
+         JwTjoB4kLB2q/VdmmWUEws+yhcfIldLHBwQab+MaRIruL7x0u49Pj1McJfK+ALfUgWPJ
+         myqPvC8mM/bzBWD7H0H3WHDiFny1eKI45XtQ+mPCBCo1rfx4gcIvAXR/JFpxnzw6e0Ig
+         gcLg==
+X-Gm-Message-State: ANoB5pn71mSyDTZ+EJImr4GtTZQL0DPHTXUijigc0jRsfK7euC0q8Jy4
+        mz2qnxkbpxbRGSJKWdr+LHshXA==
+X-Google-Smtp-Source: AA0mqf4yVNrMzZx2LkTnhWlkRn7FFmzl2kpkpB79EgBT+uPRPx2bRUhMAQ+fS0Jw4Q9bLlnC9FOubw==
+X-Received: by 2002:ac2:4151:0:b0:4b6:f4bb:e53b with SMTP id c17-20020ac24151000000b004b6f4bbe53bmr759084lfi.36.1670926993995;
+        Tue, 13 Dec 2022 02:23:13 -0800 (PST)
 Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id h27-20020ac2597b000000b004b578e52d81sm305848lfp.176.2022.12.13.02.20.43
+        by smtp.gmail.com with ESMTPSA id v11-20020ac258eb000000b004b5831b69dcsm300899lfo.140.2022.12.13.02.23.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 02:20:43 -0800 (PST)
-Message-ID: <1716ecf5-2c91-ba01-397f-950cbbf47409@linaro.org>
-Date:   Tue, 13 Dec 2022 11:20:42 +0100
+        Tue, 13 Dec 2022 02:23:13 -0800 (PST)
+Message-ID: <0c6bad50-500c-00b0-30c3-853b0c0a6d5e@linaro.org>
+Date:   Tue, 13 Dec 2022 11:23:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: rename AOSS QMP nodes
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221213101921.47924-1-krzysztof.kozlowski@linaro.org>
- <20221213101921.47924-4-krzysztof.kozlowski@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patches@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221210133850.3664-1-konrad.dybcio@linaro.org>
+ <20221213090349.bvatkmozbf5tjsxc@SoMainline.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221213101921.47924-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221213090349.bvatkmozbf5tjsxc@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,156 +81,158 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13.12.2022 11:19, Krzysztof Kozlowski wrote:
-> The Always On Subsystem (AOSS) QMP is not a power domain controller
-> since commit 135780456218 ("arm64: dts: qcom: sc7180: Use QMP property
-> to control load state") and few others.  In fact, it was never a power
-> domain controller but rather control of power state of remote
-> processors.  This power state control is now handled differently, thus
-> the AOSS QMP nodes do not have power-domain-cells:
+On 13.12.2022 10:03, Marijn Suijten wrote:
+> On 2022-12-10 14:38:50, Konrad Dybcio wrote:
+>> With enough pins set properly, the hardware buttons now also work
+>> like a charm.
+>>
+>> Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
->   sc7280-idp.dtb: power-controller@c300000: '#power-domain-cells' is a required property
->   From schema: Documentation/devicetree/bindings/power/power-domain.yaml
+> Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Xperia 5 III
 > 
-> AOSS QMP is an interface to the actuall AOSS subsystem responsible for
-> some of power management functions, thus let's call the nodes as
-> "power-management".
+> However I also tested this on Xperia 1 III, and...
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 24 ++++++++++
+>>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 47 ++++++++++++++++++-
+>>  2 files changed, 70 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+>> index e6824c8c2774..6fa830bdc6bd 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+>> @@ -10,6 +10,20 @@
+>>  / {
+>>  	model = "Sony Xperia 5 III";
+>>  	compatible = "sony,pdx214-generic", "qcom,sm8350";
+>> +
+>> +	gpio-keys {
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
+>> +
+>> +		key-google-assist {
+>> +			label = "Google Assistant Key";
+>> +			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
+>> +			linux,code = <KEY_LEFTMETA>;
+>> +			debounce-interval = <15>;
+>> +			linux,can-disable;
+>> +			gpio-key,wakeup;
+>> +		};
+>> +	};
 > 
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ... please move this to board DTS.  Xperia 1 III would also like to have
+> it mapped.  Downstream DT indicates, and my local testing confirms, that
+> it is identical to Xperia 5 III (i.e. common to the Sagami board).
+> 
+> The other buttons work great on both devices!
+While I'd agree that having it like that would be nice for completeness,
+it's:
+
+- not necessary, as the button is not physically there, so the user will
+never come into contact with it
+
+- it will leak power, the plan is to park all unused pins after we get
+"good enough" support for our devices (not now, so as not to mess with
+ourselves in the dev process)
 
 Konrad
 > 
-> Changes since v1:
-> 1. Call the nodes "power-management"
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sm6350.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sm8150.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sm8450.dtsi   | 2 +-
->  9 files changed, 9 insertions(+), 9 deletions(-)
+>>  };
+>>  
+>>  &framebuffer {
+>> @@ -18,6 +32,16 @@ &framebuffer {
+>>  	stride = <(1080 * 4)>;
+>>  };
+>>  
+>> +&pm8350_gpios {
+>> +	g_assist_n: g-assist-n-state {
+>> +		pins = "gpio9";
+>> +		function = "normal";
+>> +		power-source = <1>;
+>> +		bias-pull-up;
+>> +		input-enable;
+>> +	};
+>> +};
+>> +
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 906fb9343bcc..1370b7adccd8 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3248,7 +3248,7 @@ aoss_reset: reset-controller@c2a0000 {
->  			#reset-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sc7180-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 7c24c2129800..4768ae74d61f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -4257,7 +4257,7 @@ aoss_reset: reset-controller@c2a0000 {
->  			#reset-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sc7280-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 3cb4ca6c53eb..05086169d873 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1921,7 +1921,7 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sc8280xp-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP IRQ_TYPE_EDGE_RISING>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 5f1f7cb52c90..a749e6b9d5ac 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4965,7 +4965,7 @@ aoss_reset: reset-controller@c2a0000 {
->  			#reset-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index 0f01ff4feb55..8dda257178c9 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -1273,7 +1273,7 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm6350-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x1000>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index d1b64280ab0b..089f730beb76 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -3589,7 +3589,7 @@ pdc: interrupt-controller@b220000 {
->  			interrupt-controller;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm8150-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0x0 0x0c300000 0x0 0x400>;
->  			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index fbbbae29e0c2..a4e171a59409 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3741,7 +3741,7 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm8250-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index 49db223a0777..1fd0df2e343f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1717,7 +1717,7 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm8350-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index e0d30dadbf8b..e9a835e34ad2 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2453,7 +2453,7 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm8450-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
+> (And this too, of course)
+> 
+> - Marijn
+> 
+>>  &pm8350b_gpios {
+>>  	gpio-line-names = "NC", /* GPIO_1 */
+>>  			  "NC",
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> index d73e1f3fa501..557b4538a031 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+>> @@ -49,7 +49,26 @@ framebuffer: framebuffer@e1000000 {
+>>  	gpio-keys {
+>>  		compatible = "gpio-keys";
+>>  
+>> -		/* For reasons still unknown, GAssist key and Camera Focus/Shutter don't work.. */
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
+>> +
+>> +		key-camera-focus {
+>> +			label = "Camera Focus";
+>> +			linux,code = <KEY_CAMERA_FOCUS>;
+>> +			gpios = <&pm8350b_gpios 8 GPIO_ACTIVE_LOW>;
+>> +			debounce-interval = <15>;
+>> +			linux,can-disable;
+>> +			gpio-key,wakeup;
+>> +		};
+>> +
+>> +		key-camera-snapshot {
+>> +			label = "Camera Snapshot";
+>> +			linux,code = <KEY_CAMERA>;
+>> +			gpios = <&pm8350b_gpios 5 GPIO_ACTIVE_LOW>;
+>> +			debounce-interval = <15>;
+>> +			linux,can-disable;
+>> +			gpio-key,wakeup;
+>> +		};
+>>  
+>>  		key-vol-down {
+>>  			label = "Volume Down";
+>> @@ -547,11 +566,37 @@ &pm8350_gpios {
+>>  			  "PM8350_OPTION"; /* GPIO_10 */
+>>  };
+>>  
+>> +&pm8350b_gpios {
+>> +	snapshot_n: snapshot-n-state {
+>> +		pins = "gpio5";
+>> +		function = "normal";
+>> +		power-source = <0>;
+>> +		bias-pull-up;
+>> +		input-enable;
+>> +	};
+>> +
+>> +	focus_n: focus-n-state {
+>> +		pins = "gpio8";
+>> +		function = "normal";
+>> +		power-source = <0>;
+>> +		input-enable;
+>> +		bias-pull-up;
+>> +	};
+>> +};
+>> +
+>>  &pmk8350_gpios {
+>>  	gpio-line-names = "NC", /* GPIO_1 */
+>>  			  "NC",
+>>  			  "VOL_DOWN_N",
+>>  			  "PMK8350_OPTION";
+>> +
+>> +	vol_down_n: vol-down-n-state {
+>> +		pins = "gpio3";
+>> +		function = "normal";
+>> +		power-source = <0>;
+>> +		bias-pull-up;
+>> +		input-enable;
+>> +	};
+>>  };
+>>  
+>>  &pmk8350_rtc {
+>> -- 
+>> 2.38.1
+>>
