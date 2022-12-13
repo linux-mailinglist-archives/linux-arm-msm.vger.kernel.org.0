@@ -2,73 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AE4C64BF3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:18:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 586F764BF4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:24:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235112AbiLMWSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 17:18:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35120 "EHLO
+        id S236617AbiLMWYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 17:24:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbiLMWSn (ORCPT
+        with ESMTP id S235112AbiLMWYX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 17:18:43 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C551123
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:18:39 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id b13so7368350lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 14:18:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ErvQcEY/kiChWV8/GLnplJvEj1BCwrs+5TFv7+hZzm8=;
-        b=qKfODtdCaYMPxdOgBIEcqWRL2PmXZy0/i5Lh9WhLdvP+PXsj+5jd5tIbUI8phLhejL
-         1mC0mG2KO5XkR9bk6oq3WYjRdj+U7sidwhoBgJ1/i6LgI3m+/+EVs5XdmMHvqUPfDgFm
-         ZKg5cxfhWsfYF/n0+znRhgMsXOt/SU0LB3ybTGn2DuBfpVAHn9x5ibPA/lg+TviwlJsX
-         P5ijjqzx/48LhUHE0hG6pM2bzUVolyQiNG4Sxp1+0xSzgVsHu5AqRB5+EuLqOxv5Jker
-         69HF6fibSpxREVHwPf/ZPo7OnRz62a07B2g5rudJbvuAsy1WbsLOO0bBRWHs2Y+4KcBS
-         P5Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ErvQcEY/kiChWV8/GLnplJvEj1BCwrs+5TFv7+hZzm8=;
-        b=LU45kOQpTbgn0vm/kQdytLC61M/1bUi82vLW1KAG/zteVHtRGe47ALTaNDPFdbCkyr
-         8b2KrPIJ6qv5/xlFNN+Q+iojwBRTaEDVfF4Z6NgbBpUuFqTiG0kA+haa+zAa0a0UjjbE
-         ItZJmNEm0O0lW4Ho5p07iMOKO3vRqgpNpm3GDVF+Ns02jQ7uLgcv/wjebvC5aYh+gZ3Z
-         2uDurCwLVp1djhMBrHBxApjyi6lCgEb2qVQf/kViiE714qkcPDLiRJcxM/4LfUl57dJt
-         lgtng2dalLThBM5JSdeALMWrUcTwxlo5CjUMrCwZnfdyQ3AyIl32rcvit8VV6fNpr4SC
-         OFew==
-X-Gm-Message-State: ANoB5pno89gWsRbNxZ20K0NyABtuo0ny3guuVWKH52kjWTK+71Mfi5hc
-        J6d3Z3eAyF3qmP+U0lYWke1RXg==
-X-Google-Smtp-Source: AA0mqf6W8jYtpVN4bLPhlNSCYPnSEZmAVr8niPaF6J78JNgjmYImHMFBSNSdEad5QDmSttwiiKlhVA==
-X-Received: by 2002:ac2:5453:0:b0:4a4:68b9:60b3 with SMTP id d19-20020ac25453000000b004a468b960b3mr5036408lfn.62.1670969918243;
-        Tue, 13 Dec 2022 14:18:38 -0800 (PST)
-Received: from ?IPv6:::1? (dzccz6yfpdgdc5vwjcs5y-3.rev.dnainternet.fi. [2001:14ba:a085:4d00:8c19:462c:c647:13f2])
-        by smtp.gmail.com with ESMTPSA id g26-20020a19e05a000000b004b094730074sm528203lfj.267.2022.12.13.14.18.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Dec 2022 14:18:37 -0800 (PST)
-Date:   Wed, 14 Dec 2022 00:18:34 +0200
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-CC:     agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, andersson@kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20bd4594-7302-5823-447f-b980c476323e@linaro.org>
-References: <20221213123823.455731-1-bhupesh.sharma@linaro.org> <20221213123823.455731-4-bhupesh.sharma@linaro.org> <20bd4594-7302-5823-447f-b980c476323e@linaro.org>
-Message-ID: <8D9809D9-AB2F-4D9E-9272-2BFC27FF49E5@linaro.org>
+        Tue, 13 Dec 2022 17:24:23 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F5AC28;
+        Tue, 13 Dec 2022 14:24:22 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3451E615B9;
+        Tue, 13 Dec 2022 22:24:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B112C433D2;
+        Tue, 13 Dec 2022 22:24:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670970261;
+        bh=8KDQaVBEYbG4DZdbHVeTVitMLcZQSUsPaXO6w4+Dp4s=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Ci3hzPgReGmg2iGCZgyMvJTXpbfQvPs9pvHUgu+dkZHx3AQq/Iy25IUX9PgkGlmZ5
+         Wle730BtgUeflp+YObvw32o3HCZUu+miBCvt9ZD78brAmN/PvEmA3XhFzqzPBTyzif
+         WhWF+CmMqOgFX3g+t3T0Uuo3I+dNGO1jJkt0Qe8RzcBNmEnS8M1ajFlODuYVh4JPJO
+         Ls7ynxnSqxdj1vO+hNKcHsb0WDZoVRtK0qJHfSQlW3exuUCWAe6EwAiXSU+qUuxQU1
+         r6X1m25pfVPjnmgp6bZI9CB8Q/w2DsAjN5D99src0AdNenpJH1Q6r66/jg71nGINMG
+         gl79zOUBbn+Fw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20221213104333.27548-1-konrad.dybcio@linaro.org>
+References: <20221213104333.27548-1-konrad.dybcio@linaro.org>
+Subject: Re: [PATCH] clk: qcom: dispcc-sm6115: Shrink single-parent definitions
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Date:   Tue, 13 Dec 2022 14:24:19 -0800
+User-Agent: alot/0.10
+Message-Id: <20221213222421.7B112C433D2@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,90 +58,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Konrad Dybcio (2022-12-13 02:43:33)
+> @@ -284,12 +268,13 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src =
+=3D {
+>         .cmd_rcgr =3D 0x20a4,
+>         .mnd_width =3D 0,
+>         .hid_width =3D 5,
+> -       .parent_map =3D disp_cc_parent_map_1,
+>         .freq_tbl =3D ftbl_disp_cc_mdss_esc0_clk_src,
+>         .clkr.hw.init =3D &(struct clk_init_data){
+>                 .name =3D "disp_cc_mdss_vsync_clk_src",
+> -               .parent_data =3D disp_cc_parent_data_1,
+> -               .num_parents =3D ARRAY_SIZE(disp_cc_parent_data_1),
+> +               .parent_data =3D &(const struct clk_parent_data){
+> +                       .index =3D DT_BI_TCXO,
+> +               },
+> +               .num_parents =3D 1,
+>                 .flags =3D CLK_SET_RATE_PARENT,
+>                 .ops =3D &clk_rcg2_shared_ops,
 
-
-On 13 December 2022 14:49:05 EET, Konrad Dybcio <konrad=2Edybcio@linaro=2E=
-org> wrote:
->
->
->On 13=2E12=2E2022 13:38, Bhupesh Sharma wrote:
->> Add USB superspeed qmp phy node to dtsi=2E
->>=20
->> Signed-off-by: Bhupesh Sharma <bhupesh=2Esharma@linaro=2Eorg>
->> ---
->Please run make dtbs_check before sending dt patches, this one
->introduces new errors=2E
->
->
->>  arch/arm64/boot/dts/qcom/sm6115=2Edtsi | 38 ++++++++++++++++++++++++++=
---
->>  1 file changed, 36 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/arch/arm64/boot/dts/qcom/sm6115=2Edtsi b/arch/arm64/boot/d=
-ts/qcom/sm6115=2Edtsi
->> index e4ce135264f3d=2E=2E9c5c024919f92 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6115=2Edtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6115=2Edtsi
->> @@ -579,6 +579,40 @@ usb_hsphy: phy@1613000 {
->>  			status =3D "disabled";
->>  		};
->> =20
->> +		usb_qmpphy: phy@1615000 {
->> +			compatible =3D "qcom,sm6115-qmp-usb3-phy";
->> +			reg =3D <0x01615000 0x200>;
->> +			#clock-cells =3D <1>;
->> +			#address-cells =3D <1>;
->> +			#size-cells =3D <1>;
->> +			ranges;
->These -cells and ranges properties could go after status=3Ddisabled
->
->Konrad
->> +			clocks =3D <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->> +				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
->> +				 <&gcc GCC_AHB2PHY_USB_CLK>;
->> +			clock-names =3D "com_aux",
->> +				      "ref",
->> +				      "cfg_ahb";
->> +			resets =3D <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
->> +				 <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
->> +			reset-names =3D "phy", "phy_phy";
->> +			status =3D "disabled";
->> +
->> +			usb_ssphy: phy@1615200 {
-
-We should not introduce additional qmp-with-child PHY nodes=2E
-
-
->> +				reg =3D <0x01615200 0x200>,
->> +				      <0x01615400 0x200>,
->> +				      <0x01615c00 0x400>,
->> +				      <0x01615600 0x200>,
->> +				      <0x01615800 0x200>,
->> +				      <0x01615a00 0x100>;
->> +				#phy-cells =3D <0>;
->> +				#clock-cells =3D <1>;
->> +				clocks =3D <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->> +				clock-names =3D "pipe0";
->> +				clock-output-names =3D "usb3_phy_pipe_clk_src";
->> +			};
->> +		};
->> +
->> +
->>  		qfprom@1b40000 {
->>  			compatible =3D "qcom,sm6115-qfprom", "qcom,qfprom";
->>  			reg =3D <0x01b40000 0x7000>;
->> @@ -1023,8 +1057,8 @@ usb_dwc3: usb@4e00000 {
->>  				compatible =3D "snps,dwc3";
->>  				reg =3D <0x04e00000 0xcd00>;
->>  				interrupts =3D <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
->> -				phys =3D <&usb_hsphy>;
->> -				phy-names =3D "usb2-phy";
->> +				phys =3D <&usb_hsphy>, <&usb_ssphy>;
->> +				phy-names =3D "usb2-phy", "usb3-phy";
->>  				iommus =3D <&apps_smmu 0x120 0x0>;
->>  				snps,dis_u2_susphy_quirk;
->>  				snps,dis_enblslpm_quirk;
-
---=20
-With best wishes
-Dmitry
+Is clk_rcg2_shared_ops and clk_rcg2_ops prepared for a NULL
+'parent_map' pointer? _freq_tbl_determine_rate() is never called?
