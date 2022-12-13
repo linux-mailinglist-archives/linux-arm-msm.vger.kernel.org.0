@@ -2,78 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6F3564BD64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 20:40:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E13264BD70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 20:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236878AbiLMTkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 14:40:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44916 "EHLO
+        id S236890AbiLMTlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 14:41:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236870AbiLMTkK (ORCPT
+        with ESMTP id S236705AbiLMTls (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 14:40:10 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD91C20996
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:40:09 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id 1so6705352lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:40:09 -0800 (PST)
+        Tue, 13 Dec 2022 14:41:48 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE7C2099C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:41:46 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id t17so39242278eju.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=stMgisODdzyH4aN9LIZZcNZJPHp6Z9airQGZMCS/JmI=;
-        b=lnuWbyxHtMgkf+s8hZe/8hCnZCC7+HHjgxiVIZWGD3xYLqrwLQNZ6cLRNuoVQeTCy1
-         FhkAGxyZ8OLHM44vGTbCm5NTIhfVtZfe8PE8hFfKjhOzuzmGiXNxFsBjUqElZs5uLJVm
-         80ciQiGXMH8vO3WP0xeS4/o4222BnwweyItIGsmH128KwZhNrmj5bHcjQAiOXWlZfA36
-         CdV4A+Tuq4dwkucxsADtZum6EIn+vu9X83sk6OQauwLdjMgnLDda3BNXoVlhBEOr6BaU
-         tk/39pFIA6xmz6E86JiGhTHtvpC59oAj3v6JOg50LFTHJKlr0jl9aP4UQJYHWDmT6c7O
-         FBhA==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RetF3ngpYBh7s+6+XvCxexcjP9OVby+dlAZpg2RiTJc=;
+        b=YTDOji7eAwfiy0T0P67y9PKtfkZszKaZT9WVox0oDPg6GO3lBviChe2pj5KWoJYDBn
+         j1/x48DOx/Ba7wL0qUZXz/3B71iPKF9yiLpi3saTxMOrYbywo6lmnOe4nH+sEZZKh4qj
+         GN8BUu8isRTNF7dHvrxcXgHDqANTX9F489dJ8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=stMgisODdzyH4aN9LIZZcNZJPHp6Z9airQGZMCS/JmI=;
-        b=rMnTULIo8RwFbVOch/ivfpALaTBcuJiHIczHzN6Unj0wTSp6LI+S8lpa1JxH/FRrqe
-         IbyCkewWfKNhLGaWO1DGpxSNKcfnPJhL8kDikTNzsC9UdSWw6PJ94ov7fVDpoo6ws674
-         HMxubB+S1bX3V/tDVcn4efgIN4XcneeZTk+D5XhMvMP83cPcfs4ja/gasPZa5F53cXod
-         fvq5+YVZ5xsy+f3BjCDfFQdhvAGbeokTojrJwHP1aX8XqRebqYtADSnmg84s624uoKiU
-         M70ZwcxB4Fc+W6muSuoM4y9+WiG+6rfL6YmFa3zyTcW18vCDUr9MYIDgm3pZYezGeWZX
-         BpSQ==
-X-Gm-Message-State: ANoB5pl3BEnZlDqNYB4Hk0CJR4oscZqtOkKz596TxTA2UOcVqOGs7WGN
-        jV2xVi2xcV0gCFPS8nT6pDgurQ==
-X-Google-Smtp-Source: AA0mqf4xduEXYMBNDtHzHJzMXgofyK1mhvwF6l+vax3uSnOA9pG3heegKXIuaG/Sd0203pCUeoGUVg==
-X-Received: by 2002:a05:6512:c3:b0:4b5:7054:3b55 with SMTP id c3-20020a05651200c300b004b570543b55mr4959790lfp.68.1670960408270;
-        Tue, 13 Dec 2022 11:40:08 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id q6-20020a056512210600b004b15bc0ff63sm477326lfr.277.2022.12.13.11.40.06
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RetF3ngpYBh7s+6+XvCxexcjP9OVby+dlAZpg2RiTJc=;
+        b=oReiMHmoh6mYGMOeWt7n510B/NgNNAOEiJQPHmSsEi9frYfi3m9CHPy6OmO3O5v3U8
+         OKUZ/f765E+B55U412YxisFU+Yu/A6SV6cIeFucaK/PzlB27t4w6iCk4sNnvJBpfUqOY
+         ot1FYVjj8lkbE6q9FbNmrPhCv8fCsWlsug4LnqIvw55tJ1utJk/G/PCL3RvQDps5aBGD
+         q5VjnSmR40KEOuHyh3GKLW5nol1S6NiBKXNwSP+2Eb9QpxfFgAss2fh2RzbfLNmu4P2d
+         PUv5zZb4fxXwO9302CVUiMBIqoCPJtm9nREXinGJLaL1w3l7TwRSLeMa15NSYUsCN3Aw
+         FSqw==
+X-Gm-Message-State: ANoB5pksdHy+F63QRZkCnJsQ4wD5Fc5CnHBVPjaXQGjOWg+XqoSqtdwH
+        aMpbskNkDlrevLV+YHoYEGMp+k30+sRN8U1STy4=
+X-Google-Smtp-Source: AA0mqf5giisN8SRmWAIxKLd71jm7qIRvBDOec57LZxM1F3sTsZRBd+qaR2O25VQQy+mXjxLJSmAIyQ==
+X-Received: by 2002:a17:906:ae82:b0:7ae:4de9:68ff with SMTP id md2-20020a170906ae8200b007ae4de968ffmr17636974ejb.64.1670960505326;
+        Tue, 13 Dec 2022 11:41:45 -0800 (PST)
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
+        by smtp.gmail.com with ESMTPSA id pj15-20020a170906d78f00b007bff9fb211fsm4917716ejb.57.2022.12.13.11.41.44
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 11:40:07 -0800 (PST)
-Message-ID: <7ea03855-4806-f4ca-e0c3-4044e1095d6b@linaro.org>
-Date:   Tue, 13 Dec 2022 20:40:06 +0100
+        Tue, 13 Dec 2022 11:41:44 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id w15so16849970wrl.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:41:44 -0800 (PST)
+X-Received: by 2002:a5d:4943:0:b0:242:3ca3:b7bd with SMTP id
+ r3-20020a5d4943000000b002423ca3b7bdmr18561534wrs.583.1670960503788; Tue, 13
+ Dec 2022 11:41:43 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: Introduce a carveout for modem
- metadata
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        regressions@leemhuis.info, sumit.semwal@linaro.org,
-        will@kernel.org, catalin.marinas@arm.com, robin.murphy@arm.com
-References: <20221213140724.8612-1-quic_sibis@quicinc.com>
- <20221213140724.8612-2-quic_sibis@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221213140724.8612-2-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <1670509544-15977-1-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1670509544-15977-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 13 Dec 2022 11:41:31 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VTkpZ84RzaKYmb15AG+hiVUM0mk0ieGmDHWYVLQgsrnA@mail.gmail.com>
+Message-ID: <CAD=FV=VTkpZ84RzaKYmb15AG+hiVUM0mk0ieGmDHWYVLQgsrnA@mail.gmail.com>
+Subject: Re: [V4] spi: spi-geni-qcom: Add support for SE DMA mode
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, vkoul@kernel.org,
+        quic_arandive@quicinc.com, quic_ramkri@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,54 +77,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/12/2022 15:07, Sibi Sankar wrote:
-> Introduce a new carveout for modem metadata. This will serve as a
-> replacement for the memory region used by MSA to authenticate modem
-> ELF headers.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Hi,
 
-Thank you for your patch. There is something to discuss/improve.
+On Thu, Dec 8, 2022 at 6:25 AM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> SE DMA mode can be used for larger transfers and FIFO mode
+> for smaller transfers.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+> v4 -> v3:
+> - remove cur_m_cmd field
+> - add dma_addr fields to spi_geni_master
+> - dont use dma_addr from xfer, use above
+> - dev_warn instead of dev_err in handle_timeout
+> - set xfer_mode to FIFO in set_cs
+>
+> v2 -> v3:
+> - indentation change
+> - readability change
+>
+> v1 -> v2:
+> - replace writel_relaxed with writel
+> - corrected order of performing FSM reset and dma_unprep
+> - added more comments in geni_can_dma
+> - removed redundant change in spi_geni_init(DMA as default xfer_mode)
+> - removed redundant initialisations in setup_se_xfer
+> - removed redundant null checks in setup_se_xfer
+> - added dma_tx_prep failure handling(rx un_map) in setup_se_xfer
+> - move handing return of setip_se_xfer to transfer_one
+> - apply irq error handling for DMA mode too in geni_spi_isr
+> ---
+>  drivers/spi/spi-geni-qcom.c | 211 ++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 165 insertions(+), 46 deletions(-)
 
->  
->  	aliases {
-> @@ -865,7 +870,7 @@ hp_i2c: &i2c9 {
->  	clock-names = "iface", "bus", "nav", "snoc_axi", "mnoc_axi", "xo";
->  
->  	iommus = <&apps_smmu 0x461 0x0>, <&apps_smmu 0x444 0x3>;
-> -	memory-region = <&mba_mem &mpss_mem>;
-> +	memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
->  
->  	/* This gets overridden for SKUs with LTE support. */
->  	firmware-name = "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> index bf522a64b172..bda0495aa0b5 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-> @@ -17,6 +17,11 @@
->  			reg = <0x0 0x9c700000 0x0 0x200000>;
->  			no-map;
->  		};
-> +
-> +		mdata_mem: memory@9d100000 {
-> +			reg = <0x0 0x9d100000 0x0 0x4000>;
-> +			no-map;
-> +		};
->  	};
->  };
->  
-> @@ -32,7 +37,7 @@
->  
->  	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
->  	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
-> -	memory-region = <&mba_mem>, <&mpss_mem>;
-> +	memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
+This looks reasonable to me now, thanks.
 
-Only two memory regions are allowed by bindings... unless you fix it in
-further patchset. If so, please re-order to have the bindings first. It
-helps reviewers not to have such questions. :)
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+A note to Mark since he was also concerned about the fact that we
+aren't using the SPI framework to manage the DMA [1] and Vijay didn't
+respond directly to him on this issue. The issue here has to do with
+the fact that the driver wanted to use geni_se_tx_dma_prep() /
+geni_se_rx_dma_prep() and that function overlaps with what the SPI
+framework does. Eventually it seems like geni_se_tx_dma_prep() /
+geni_se_rx_dma_prep() should be reworked so as not to overlap, but I
+agree with Vijay that it can be future work. I'm at least happy now
+that the driver is using its own storage for the dma_addr_t variables
+now.Obviously, though, the final say is yours. :-)
 
-Best regards,
-Krzysztof
-
+[1] https://lore.kernel.org/r/Y4kxVP97C66oi0Bi@sirena.org.uk
