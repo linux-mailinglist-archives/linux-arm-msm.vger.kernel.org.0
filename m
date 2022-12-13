@@ -2,153 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A94764B363
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 11:43:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29C1E64B3E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 12:12:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234581AbiLMKnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 05:43:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
+        id S230093AbiLMLMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 06:12:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234670AbiLMKnk (ORCPT
+        with ESMTP id S235321AbiLMLLf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 05:43:40 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3CD15F90
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:43:38 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id v11so2844659ljk.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:43:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2E0qygprK2sYZwkFh7NifzS8fG2xh0C3icv9H7MjHJ4=;
-        b=QVnF+cvC6zmbGOTJI32I36lh9wzNKQDbFyTniN84PEYjPl3xg2sOD+Pnf/emQEwrMD
-         U/b0By/yq6DO+TW4izGWB3tLbMFNjg/ta6MmEcoNCSPcTk7FeP75H7SoUI8FmV9/8wzv
-         ijIoWxHG0KB0tepNQtXtpn1+6u6H5jhbFEK26n+MRROL98sLxb8lxdw8luYRv8fwbYDH
-         TXYotuOEKe8NKwP92dsQ/JOb5mPe6RCdvY+FS3ofxmQGMVSNLYz2SzWTI7DAOcTjKvbK
-         bOuwVYqvVosWPuNpP6sAv7zCaDQc5NSTwsMaZutuSLA4R+Q/14CZoetu0Oqfdo+ONe+k
-         MFXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2E0qygprK2sYZwkFh7NifzS8fG2xh0C3icv9H7MjHJ4=;
-        b=w2E5P4ncpjsnNBwwusvezxlFpw7+aiVlUnAvMIUK9tbumaWl86SShZSbw/BVCy95OI
-         pI44lSIQ5Y6mAupQv9E7WvFnp0wVnYYKn2kqQLXP7obJgd+aEXmkTVgRY73TZWlrS95P
-         pIILesoNg2EbtPheIYoX25cO8/GyvGoQ7H6Z26xv7eZKc5c9F+h7x/5Jwv6OBui1Dg/I
-         YGTRnkkoO35O4LfbbAYkhNCTOxXD1GYutzZl1h1RgsJ0/ULhkQAGpJvcZQfUtkXyaJew
-         FVQrer6ZJogIOMbVefxpn7Q3UHZe0uAfNLt7/zQTW4AQUSItlCSkWCwxqBlF64wy98g5
-         PtqQ==
-X-Gm-Message-State: ANoB5pmZfsWLcQEMcaiTI64d7picCVxqpu19YGghdM2qRKgiADvj5X2F
-        GuOS5SOzXXwhRV1caAp/+7xA2sl/0fjRw/6A
-X-Google-Smtp-Source: AA0mqf45LGu9EHSkKKj759y7PxRYEKh1u1LPxFrm0B4KuUGx2TX0/dMsdxVzld6XCjYGf6Hfp7xbbA==
-X-Received: by 2002:a2e:7e0c:0:b0:27b:65aa:db22 with SMTP id z12-20020a2e7e0c000000b0027b65aadb22mr196657ljc.20.1670928216956;
-        Tue, 13 Dec 2022 02:43:36 -0800 (PST)
-Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id u14-20020a2e91ce000000b00279a7266874sm213830ljg.98.2022.12.13.02.43.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 02:43:36 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: dispcc-sm6115: Shrink single-parent definitions
-Date:   Tue, 13 Dec 2022 11:43:33 +0100
-Message-Id: <20221213104333.27548-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
+        Tue, 13 Dec 2022 06:11:35 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186E4F08
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 03:11:22 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5B01F3F664;
+        Tue, 13 Dec 2022 12:11:20 +0100 (CET)
+Date:   Tue, 13 Dec 2022 12:11:19 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patches@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
+Message-ID: <20221213111119.g3lzt5heevfarvf7@SoMainline.org>
+References: <20221210133850.3664-1-konrad.dybcio@linaro.org>
+ <20221213090349.bvatkmozbf5tjsxc@SoMainline.org>
+ <0c6bad50-500c-00b0-30c3-853b0c0a6d5e@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0c6bad50-500c-00b0-30c3-853b0c0a6d5e@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's no need to provide both a parent map and a parent data struct when
-there's precisely a single parent. Collapse this to save a few bytes.
+On 2022-12-13 11:23:12, Konrad Dybcio wrote:
+> 
+> 
+> On 13.12.2022 10:03, Marijn Suijten wrote:
+> > On 2022-12-10 14:38:50, Konrad Dybcio wrote:
+> >> With enough pins set properly, the hardware buttons now also work
+> >> like a charm.
+> >>
+> >> Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > 
+> > Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Xperia 5 III
+> > 
+> > However I also tested this on Xperia 1 III, and...
+> > 
+> >> ---
+> >>  .../qcom/sm8350-sony-xperia-sagami-pdx214.dts | 24 ++++++++++
+> >>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 47 ++++++++++++++++++-
+> >>  2 files changed, 70 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> >> index e6824c8c2774..6fa830bdc6bd 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dts
+> >> @@ -10,6 +10,20 @@
+> >>  / {
+> >>  	model = "Sony Xperia 5 III";
+> >>  	compatible = "sony,pdx214-generic", "qcom,sm8350";
+> >> +
+> >> +	gpio-keys {
+> >> +		pinctrl-names = "default";
+> >> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
+> >> +
+> >> +		key-google-assist {
+> >> +			label = "Google Assistant Key";
+> >> +			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
+> >> +			linux,code = <KEY_LEFTMETA>;
+> >> +			debounce-interval = <15>;
+> >> +			linux,can-disable;
+> >> +			gpio-key,wakeup;
+> >> +		};
+> >> +	};
+> > 
+> > ... please move this to board DTS.  Xperia 1 III would also like to have
+> > it mapped.  Downstream DT indicates, and my local testing confirms, that
+> > it is identical to Xperia 5 III (i.e. common to the Sagami board).
+> > 
+> > The other buttons work great on both devices!
+> While I'd agree that having it like that would be nice for completeness,
+> it's:
+> 
+> - not necessary, as the button is not physically there, so the user will
+> never come into contact with it
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/dispcc-sm6115.c | 30 ++++++++----------------------
- 1 file changed, 8 insertions(+), 22 deletions(-)
+I have the device in my hand right now and, unless I take an angle
+grinder to it, it has this button.
 
-diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
-index 818bb8f4637c..a6105033ff7e 100644
---- a/drivers/clk/qcom/dispcc-sm6115.c
-+++ b/drivers/clk/qcom/dispcc-sm6115.c
-@@ -103,14 +103,6 @@ static const struct clk_parent_data disp_cc_parent_data_0[] = {
- 	{ .index = DT_DSI0_PHY_PLL_OUT_BYTECLK },
- };
- 
--static const struct parent_map disp_cc_parent_map_1[] = {
--	{ P_BI_TCXO, 0 },
--};
--
--static const struct clk_parent_data disp_cc_parent_data_1[] = {
--	{ .index = DT_BI_TCXO },
--};
--
- static const struct parent_map disp_cc_parent_map_2[] = {
- 	{ P_BI_TCXO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 4 },
-@@ -141,14 +133,6 @@ static const struct clk_parent_data disp_cc_parent_data_4[] = {
- 	{ .index = DT_DSI0_PHY_PLL_OUT_DSICLK },
- };
- 
--static const struct parent_map disp_cc_parent_map_5[] = {
--	{ P_SLEEP_CLK, 0 },
--};
--
--static const struct clk_parent_data disp_cc_parent_data_5[] = {
--	{ .index = DT_SLEEP_CLK, },
--};
--
- static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
- 	.cmd_rcgr = 0x20bc,
- 	.mnd_width = 0,
-@@ -284,12 +268,13 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
- 	.cmd_rcgr = 0x20a4,
- 	.mnd_width = 0,
- 	.hid_width = 5,
--	.parent_map = disp_cc_parent_map_1,
- 	.freq_tbl = ftbl_disp_cc_mdss_esc0_clk_src,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "disp_cc_mdss_vsync_clk_src",
--		.parent_data = disp_cc_parent_data_1,
--		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
-+		.parent_data = &(const struct clk_parent_data){
-+			.index = DT_BI_TCXO,
-+		},
-+		.num_parents = 1,
- 		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_rcg2_shared_ops,
- 	},
-@@ -304,12 +289,13 @@ static struct clk_rcg2 disp_cc_sleep_clk_src = {
- 	.cmd_rcgr = 0x6050,
- 	.mnd_width = 0,
- 	.hid_width = 5,
--	.parent_map = disp_cc_parent_map_5,
- 	.freq_tbl = ftbl_disp_cc_sleep_clk_src,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "disp_cc_sleep_clk_src",
--		.parent_data = disp_cc_parent_data_5,
--		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
-+		.parent_data = &(const struct clk_parent_data){
-+			.index = DT_SLEEP_CLK,
-+		},
-+		.num_parents = 1,
- 		.ops = &clk_rcg2_ops,
- 	},
- };
--- 
-2.39.0
+How else did you expect me to successfully test it?
 
+Maybe you are confused with Xperia 1 IV, which does _not_ have the
+button.  Nor does Xperia 1 II, for that matter.
+
+- Marijn
+
+> - it will leak power, the plan is to park all unused pins after we get
+> "good enough" support for our devices (not now, so as not to mess with
+> ourselves in the dev process)
+> 
+> Konrad
