@@ -2,234 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7109E64B2E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 11:00:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3426F64B314
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 11:19:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235094AbiLMKAG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 05:00:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46388 "EHLO
+        id S234949AbiLMKTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 05:19:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235103AbiLMKAA (ORCPT
+        with ESMTP id S235130AbiLMKTa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 05:00:00 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EBB01BE92;
-        Tue, 13 Dec 2022 01:59:57 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BD9bSNO012508;
-        Tue, 13 Dec 2022 09:59:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=sKicjOtyNXUd+QKtpwYCqd7avhGkebka6aje7UC2ukE=;
- b=ffyrZr5QyHMDLx2vfP4QEfFY9R1Xl326gJWgyXra1e2yQgCE0MKOHXo1PDyQPnxoLgpi
- S+Z6enkBoqIsYJMswXQc4MnUdnllSbHvWbYFroN6yoLpgO3HcBlLGb5UBfEhcfBq+vUF
- BnGuQQOoS6NWSunoX/fYyCexbTcLGT07Jr98swgzRi0sssUVrDEiB3M1HVjjY0BzZ2OY
- HPY7t0BMS4LoAv5EVVuu6S9R+da8IFiKRIA77/P575ipyTiQ5KbPScejBVB3zDvb/GN+
- n7/y/PcG1Hnqbhg6XxYhpNiTehZ85C/HI+tOroigJeYVABRd5U74CznIs1HB+cBa9HXp IA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mek41gjp7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 09:59:52 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BD9xpJY021833
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 09:59:51 GMT
-Received: from shazhuss-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 13 Dec 2022 01:59:47 -0800
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-To:     <andersson@kernel.org>, <johan@kernel.org>
-CC:     <bmasney@redhat.com>, Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>,
+        Tue, 13 Dec 2022 05:19:30 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E28171C420
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:19:29 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id x28so4129047lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 02:19:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dAp4hskFZjGN9y85+kSjx75sUPK/6e/z3wevYeNaTXA=;
+        b=dUoAwJ8JaVf8oHHkfNK/gOqgjmNxvUu+Qp+Q0gFQlqdOqvQXHTJizZG7ezH6bq6Vdc
+         s59ryiH+uO2BNlCyq/HeMYYk6WMPrQa/YCT/hh1v8h623w1XB47e2mCJ/NKuqukuuwO5
+         DuVvd7uHX8uhEJ6/R9/Nkfp6wvduQ5D+B7B88ZQUMTw62GFjvw0a9GsWaD+NVlPZcY6l
+         P2Y0F4ulg9Zj5KAuerOStnS/DrW0M7VxFAeEhZ56c0TUXtiEO0+A3ZVayyhLaSYEw5WK
+         cEqTb05f+MoTwOlx2ecaYiPkgdgG1DTKkFpmRGt7VqK6mNsIriKCDdiv3X3rALabj1Yk
+         g2Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dAp4hskFZjGN9y85+kSjx75sUPK/6e/z3wevYeNaTXA=;
+        b=KJWSFSmSs/CE5ixPK5KkJ7xyIUMB05X1VVqmfBP3bJMKqwV3/0RBF4bWWjKZ0vXDNw
+         GqRyIo/kjkWC/d8dA2JoYWpDYsbSVLoZ3QMVNp9hsYWxzI+gjaF/zp0hTrKR+FdISdlR
+         bAHkap4JOmJVB55ICPVh/6DQNfzJpdF/orH8PF7pCHy4xT815FXXaO1Ya7JeHP3KdiMI
+         9xCBMv3mPerbEWEuNPn7TaqpyQRocwWWoRuyuW4WP7XisWIkyIjMmzI0dQJRpILzRYBx
+         keh8Yz8GzWURngbpjRuZzmrnLVvWZqqoJ0qfvwGT1++SEeeB/UD0hQ+gaBYFnnJDTFu/
+         4IBA==
+X-Gm-Message-State: ANoB5pmQWYWxS7uyi9k0j0cK3S6+8H19HbUEvJ+sAuHDYCiN+QUdDECt
+        TaAQ9pGcXDu/oJhUTehc2EYW5Q==
+X-Google-Smtp-Source: AA0mqf5QBIa3tHvXhuX4FOmUOD94PbeJ7R2eJhlkRSDqXBTixxuOzBy2Mx6kPvpkKqtwe3SClyD0Zg==
+X-Received: by 2002:ac2:5f47:0:b0:4b5:9dc4:e785 with SMTP id 7-20020ac25f47000000b004b59dc4e785mr4381473lfz.45.1670926768251;
+        Tue, 13 Dec 2022 02:19:28 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id o11-20020ac25e2b000000b004b5732080d1sm302460lfg.150.2022.12.13.02.19.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 02:19:27 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
-Date:   Tue, 13 Dec 2022 15:29:21 +0530
-Message-ID: <20221213095922.11649-1-quic_shazhuss@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Kiran Gunda <kgunda@codeaurora.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/4] arm64: dts: qcom: sc7180: correct SPMI bus address cells
+Date:   Tue, 13 Dec 2022 11:19:17 +0100
+Message-Id: <20221213101921.47924-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MhHq7AQ50rBXjMOjofWWOqKDoPLmbHsb
-X-Proofpoint-ORIG-GUID: MhHq7AQ50rBXjMOjofWWOqKDoPLmbHsb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_03,2022-12-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 suspectscore=0 adultscore=0 impostorscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212130089
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the pcie2a, pcie2a_phy, and respective tlmm nodes that are needed to
-get pcie 2a controller enabled on Qdrive3.
+The SPMI bus uses two address cells and zero size cells (second reg
+entry - SPMI_USID - is not the size):
 
-This patch enables 4GB 64bit memory space for PCIE_2A to have BAR
-allocations of 64bit pref mem needed on this Qdrive3 platform with dual
-SoCs for root port and switch NT-EP. Hence this ranges property is
-overridden in sa8540p-ride.dts only.
+  spmi@c440000: #address-cells:0:0: 2 was expected
 
-Moved tlmm node at the end as it tends to become rahter long.
+Fixes: 0f9dc5f09fbd ("arm64: dts: qcom: sc7180: Add SPMI PMIC arbiter device")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Link: https://lore.kernel.org/lkml/Y49k1k8ayI9%2FrK+R@hovoldconsulting.com/
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
 ---
-Changes since v4:
-- Drop Reported-by robot (Krzysztof)
-- Allign commit message and link for moving tlmm at the end (Johan)
-
-Changes since v3:
-- Fix syntax error and add Reported-by (Kernel test robot)
-
-Changes since v2:
-- Discard below patch as v3 is merged in qcom tree
-  [v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-  https://lore.kernel.org/all/20221206161916.315640-1-bmasney@redhat.com/
-- Move tlmm PINCTRL to the end and add R-b (Brian)
 
 Changes since v1:
-- Fix ranges property indentation (Konrad)
+1. secoond->second
+2. Add tags
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 96 +++++++++++++++++------
- 1 file changed, 71 insertions(+), 25 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 6c547f1b13dc..d70859803fbd 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -146,6 +146,27 @@ vreg_l8g: ldo8 {
- 	};
- };
- 
-+&pcie2a {
-+	ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-+		 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>,
-+		 <0x03000000 0x5 0x00000000 0x5 0x00000000 0x1 0x00000000>;
-+
-+	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 145 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie2a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie2a_phy {
-+	vdda-phy-supply = <&vreg_l11a>;
-+	vdda-pll-supply = <&vreg_l3a>;
-+
-+	status = "okay";
-+};
-+
- &pcie3a {
- 	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
- 		 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-@@ -186,31 +207,6 @@ &remoteproc_nsp1 {
- 	status = "okay";
- };
- 
--&tlmm {
--	pcie3a_default: pcie3a-default-state {
--		perst-pins {
--			pins = "gpio151";
--			function = "gpio";
--			drive-strength = <2>;
--			bias-pull-down;
--		};
--
--		clkreq-pins {
--			pins = "gpio150";
--			function = "pcie3a_clkreq";
--			drive-strength = <2>;
--			bias-pull-up;
--		};
--
--		wake-pins {
--			pins = "gpio56";
--			function = "gpio";
--			drive-strength = <2>;
--			bias-pull-up;
--		};
--	};
--};
--
- &ufs_mem_hc {
- 	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
- 
-@@ -268,3 +264,53 @@ &usb_2_qmpphy0 {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+/* PINCTRL */
-+
-+&tlmm {
-+	pcie2a_default: pcie2a-default-state {
-+		perst-pins {
-+			pins = "gpio143";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio142";
-+			function = "pcie2a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio145";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie3a_default: pcie3a-default-state {
-+		perst-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio150";
-+			function = "pcie3a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio56";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index eb1e1ea12ff6..906fb9343bcc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3274,8 +3274,8 @@ spmi_bus: spmi@c440000 {
+ 			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+ 			qcom,ee = <0>;
+ 			qcom,channel = <0>;
+-			#address-cells = <1>;
+-			#size-cells = <1>;
++			#address-cells = <2>;
++			#size-cells = <0>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <4>;
+ 			cell-index = <0>;
 -- 
-2.38.0
+2.34.1
 
