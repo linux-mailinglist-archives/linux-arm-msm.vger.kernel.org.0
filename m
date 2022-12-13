@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6296964BCCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 20:10:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8E664BCD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 20:11:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236733AbiLMTKx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 14:10:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55266 "EHLO
+        id S236744AbiLMTK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 14:10:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236687AbiLMTKq (ORCPT
+        with ESMTP id S236692AbiLMTKs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 14:10:46 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E189125C66
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:10:43 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id s10so4387321ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:10:43 -0800 (PST)
+        Tue, 13 Dec 2022 14:10:48 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772B523E85
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:10:45 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id s10so4387407ljg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 11:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=08W4M5ecrrhDdw881i3P0twnVzROKcZey0x07rUUL38=;
-        b=tHKiLpkK7CqXBNo391zBO1Wqcc37AhhKYcicBLSW3SDI4wuxZbmQd8GlAm7K5MiG2H
-         irSBilrVT5VUk+3NmAZnAK/HpLZ/yk4M3HTOUmmLgwj4lBYg2gGgBvvdEJQx1whFyEVv
-         TpjsFJQ2EWvtZY2uikg+zsf3OvnW7MoM1vcn6w4TxKDM1Pb2f2/SbA/bGdq802UxG1sB
-         dtxzbgrv3ITnxXZYFuvsMj+pMCZt1g3Y8X4ppWgFPRh0P31XURZ39gb2VQrg0n9actaV
-         g8AbheiFDFU//qX32kbk8WA49Bsa3XQA8xF6v3LKkk+vzfP34ndZ9pPbaY1UHpGi2da0
-         /MCg==
+        bh=f9MORplhhfdi/jL2+RcflqsTy0dwAHC7rMffa/ngD80=;
+        b=c46V/vZqZwivcFoi24votpdSH3QEBmnIV14/WlnWj1uZcMB4+FO2DyzoZZCW09mXH7
+         rsisuLq0mcdPAcTZvPVRxATCiw7FtR2NVctUEWRMj6tePOXZizO8hbWtiaAYF4vzpERk
+         mGN/OhpS9jFp78XT7hec5bJ1tslMhQR9xEwPRaeFboyvDeIPIhAFRwbCGBo1FYLJu9vB
+         DpXJbeOJd5i23U7UJucXoYUDNso8w5qVqtdkh9dLX4CAVEi0yZx0eCzxWw6xQGpmWHwz
+         /P/gzbaAqwEWTirj4Etm7METQDzstZsYVyRhDdiBKJKrZcJq6Y4v+szyLqFHT1JxSuGO
+         H4LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=08W4M5ecrrhDdw881i3P0twnVzROKcZey0x07rUUL38=;
-        b=gvalfzkyhUQQHdLi6oou35QImdyUl9eYwKOLkESeoa+n/xunVvKh82cMayGhX1PRiu
-         fLUVbUXFTUBwUZXZA8ESDWm74gcjq4+pRquQJCZwsHcSS8u2pTylX7VSirkeYoD8Ah8q
-         O9UxhzWcgsKcXDJn5C3o976eoBlcw12FDIkM8UXweReuo0ogpYpHKUgfQwCXel3A1Et0
-         z5ajTYBapoShUE6DR7DxYNcRR8ZP5cIQM7d3SI2ReEWVXDgYxWQ0ZeR2SYvAjlnWbIYt
-         ut0HpfkRTdQYDUEYX+zVX9zzGn8lnPh/q4dzSJ0afw9pRojvgrUDNXw2I2Al4EDQU4Qo
-         xrsw==
-X-Gm-Message-State: ANoB5pnqjCwyHCRnyMPfWWzpJjIg6v2YneeEaHk7/4qLJUd9PsIuW4Lh
-        8YTp8daEw4HDlOJ2UkDB0WIiEU/3EbAyWZmQ
-X-Google-Smtp-Source: AA0mqf6FgGAGi5hv6VNmifSRh5rdt/V0r+gPARkCVrqAEhaAVL8ZBK8Rte3tEVImDZ5wCxFNikcIQQ==
-X-Received: by 2002:a2e:854b:0:b0:279:eb16:5bb5 with SMTP id u11-20020a2e854b000000b00279eb165bb5mr5388032ljj.40.1670958642014;
-        Tue, 13 Dec 2022 11:10:42 -0800 (PST)
+        bh=f9MORplhhfdi/jL2+RcflqsTy0dwAHC7rMffa/ngD80=;
+        b=7l8jwlDD0klg7jiMeZBqcS4xn/xUYkp2CA9SrsAl2neCWMvhOkOM85Cji93v+ogWYd
+         niiFZjhk18LH3X6lehLMdRng3wiV8fwxLawVr2p0GU/aOtlpWjz4QSPwx1A2+SaJ8kcY
+         QRnFGc8ZjEV1JfT4Mvu7bY2ke8KdXCaqgeHM1ZuR6SpHLr9KUPb3qrs3Z7PHATWDLOAc
+         Y7w5CXH+Us/WK/M8CgfyxeUyI5ZlsK8ksECsL65Cp+6C/euIepyD6ud9+G3rHv8blhWH
+         EDOr1blMJI+l6sSru4nW876AMxzOrNQEu83VRL8WiHVmmQ/tl056qJLXZzvNp5WI1Llg
+         bong==
+X-Gm-Message-State: ANoB5pnKDTAHDS0su17SalfVTyCaId0jrwmHDHTF/kaJmt2GNXGwRLV4
+        X6BXHs4WuOmiZn1Sug3JJlsjK18ShSmr87dr
+X-Google-Smtp-Source: AA0mqf4gtxPAKFzMevFm9WHRQUDf0dCnaJr9A4B0Q7nkeoS/deP5oT2isovmcALg1W687r53F8VwmQ==
+X-Received: by 2002:a2e:b889:0:b0:278:fe64:12e8 with SMTP id r9-20020a2eb889000000b00278fe6412e8mr6805001ljp.38.1670958643565;
+        Tue, 13 Dec 2022 11:10:43 -0800 (PST)
 Received: from localhost.localdomain (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id w28-20020a05651c119c00b0026dfbdfc1ddsm372023ljo.11.2022.12.13.11.10.40
+        by smtp.gmail.com with ESMTPSA id w28-20020a05651c119c00b0026dfbdfc1ddsm372023ljo.11.2022.12.13.11.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 11:10:41 -0800 (PST)
+        Tue, 13 Dec 2022 11:10:43 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -59,9 +59,9 @@ Cc:     marijn.suijten@somainline.org, Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/7] arm64: dts: qcom: sm8450-nagara: Include PMIC DTSIs
-Date:   Tue, 13 Dec 2022 20:10:31 +0100
-Message-Id: <20221213191036.611241-2-konrad.dybcio@linaro.org>
+Subject: [PATCH 3/7] arm64: dts: qcom: sm8450-nagara: Add GPIO line names for PMIC GPIOs
+Date:   Tue, 13 Dec 2022 20:10:32 +0100
+Message-Id: <20221213191036.611241-3-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221213191036.611241-1-konrad.dybcio@linaro.org>
 References: <20221213191036.611241-1-konrad.dybcio@linaro.org>
@@ -77,31 +77,137 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that SPMI is finally in place, include the DTSIs of PMICs present
-on Nagara.
+Sony ever so graciously provides GPIO line names in their downstream
+kernel (though sometimes they are not 100% accurate and you can judge
+that by simply looking at them and with what drivers they are used).
+
+Add these to the PDX223&224 DTSIs to better document the hardware.
+
+Diff between 223 and 224:
+pm8350b
+< 			  "CAM_PWR_LD_EN",
+> 			  "NC",
+
+pm8350c
+<			  "RGBC_IR_PWR_EN",
+> 			  "NC",
+
+Which is due to different camera power wiring on 223 and lack of a
+ToF sensor on 224.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 23 ++++++++++++++++
+ .../qcom/sm8450-sony-xperia-nagara-pdx224.dts | 23 ++++++++++++++++
+ .../dts/qcom/sm8450-sony-xperia-nagara.dtsi   | 27 +++++++++++++++++++
+ 3 files changed, 73 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+index b83500316a81..561cd4f09ab7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
++++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+@@ -13,6 +13,29 @@ / {
+ 	compatible = "sony,pdx223", "qcom,sm8450";
+ };
+ 
++&pm8350b_gpios {
++	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "SNAPSHOT_N",
++			  "CAM_PWR_LD_EN",
++			  "NC",
++			  "FOCUS_N";
++};
++
++&pm8350c_gpios {
++	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
++			  "FL_STROBE_TRIG_TELE",
++			  "WLC_ID",
++			  "WLC_TXPWR_EN",
++			  "NC",
++			  "RGBC_IR_PWR_EN",
++			  "NC",
++			  "NC",
++			  "WIDEC_PWR_EN";
++};
++
+ &tlmm {
+ 	gpio-line-names = "NC", /* GPIO_0 */
+ 			  "NC",
+diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
+index 13c2fc4bccfc..fc9d74d0f227 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
++++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dts
+@@ -20,6 +20,29 @@ imx563_vdig_vreg: imx563-vdig-regulator {
+ 	};
+ };
+ 
++&pm8350b_gpios {
++	gpio-line-names = "CAM_PWR_A_CS", /* GPIO_1 */
++			  "NC",
++			  "NC",
++			  "NC",
++			  "SNAPSHOT_N",
++			  "NC",
++			  "NC",
++			  "FOCUS_N";
++};
++
++&pm8350c_gpios {
++	gpio-line-names = "FL_STROBE_TRIG_WIDE", /* GPIO_1 */
++			  "FL_STROBE_TRIG_TELE",
++			  "WLC_ID",
++			  "WLC_TXPWR_EN",
++			  "NC",
++			  "NC", /* RGBCIR uses a PMIC vreg, so it's most likely NC. */
++			  "NC",
++			  "NC",
++			  "WIDEC_PWR_EN";
++};
++
+ &tlmm {
+ 	gpio-line-names = "TELE_SPI_MISO", /* GPIO_0 */
+ 			  "TELE_SPI_MOSI", /* SONY says NC, but it only makes sense this way.. */
 diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-index 45ee922de4e8..e29fb7adc780 100644
+index e29fb7adc780..8e128efcb128 100644
 --- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-@@ -5,6 +5,12 @@
+@@ -551,6 +551,33 @@ &pcie0_phy {
+ 	status = "okay";
+ };
  
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8450.dtsi"
-+#include "pm8350.dtsi"
-+#include "pm8350b.dtsi"
-+#include "pm8350c.dtsi"
-+#include "pm8450.dtsi"
-+#include "pmk8350.dtsi"
-+#include "pmr735a.dtsi"
- 
- /delete-node/ &adsp_mem;
- /delete-node/ &rmtfs_mem;
++&pm8350_gpios {
++	gpio-line-names = "ASSIGN1_THERM", /* GPIO_1 */
++			  "LCD_ID",
++			  "SDR_MMW_THERM",
++			  "RF_ID",
++			  "NC",
++			  "VOL_DOWN_N",
++			  "NC",
++			  "NC",
++			  "NC",
++			  "PM8350_OPTION"; /* GPIO_10 */
++};
++
++&pm8450_gpios {
++	gpio-line-names = "FP_LDO_EN", /* GPIO_1 */
++			  "",
++			  "",
++			  "";
++};
++
++&pmk8350_gpios {
++	gpio-line-names = "NC", /* GPIO_1 */
++			  "NC",
++			  "DISP_THERM",
++			  "PMK8350_OPTION";
++};
++
+ &remoteproc_adsp {
+ 	firmware-name = "qcom/sm8350/Sony/nagara/adsp.mbn";
+ 	status = "okay";
 -- 
 2.39.0
 
