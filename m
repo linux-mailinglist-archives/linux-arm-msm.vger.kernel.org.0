@@ -2,231 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 635D364AF3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 06:14:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D954F64AF52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 06:28:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234526AbiLMFOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 00:14:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55582 "EHLO
+        id S229975AbiLMF2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 00:28:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234581AbiLMFN2 (ORCPT
+        with ESMTP id S232930AbiLMF2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 00:13:28 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CA429B;
-        Mon, 12 Dec 2022 21:11:45 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BCNpAjl030148;
-        Tue, 13 Dec 2022 05:11:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=VHuKGfxKnjNTt9JHWWViCO5yp0B2gIsVyNTdUxzDOvI=;
- b=EoZXWHJiWJZlTlv2PGGOpn+MW9pEl5T5WH+03Z3Nr9bjbE9uUSFjKMFXMEW6UgJmn3x7
- eVGJPnP/ZDCutZuCVqWuJBXmoHtCqKupznxGSBGwssdfUkAlystD4uFbjctkb68UnRUp
- Sb7PucS419Qv6Ra5dVD1IPb69dGsKRrDzMjC2s53qsmO+wbpN3D9mkxyUS4WAZl6eXZN
- SXCCQr0wfmdGCTBTj9jGZQHZXNzWRmF3aKJ8L//kpMHKg+yWL2VdRT6IyJcGLtpH6GP2
- SvE+uGZxhwhPnoFpRri6viXdTZB4a7uUxxJ7ng8xNRSeFZCQswj0JGlCKELp+8xfK2Sy jg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mcjb96c1k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 05:11:39 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BD5BcwW000929
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 05:11:38 GMT
-Received: from shazhuss-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 12 Dec 2022 21:11:34 -0800
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-To:     <andersson@kernel.org>, <johan@kernel.org>
-CC:     <bmasney@redhat.com>, Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "kernel test robot" <lkp@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
-Date:   Tue, 13 Dec 2022 10:41:08 +0530
-Message-ID: <20221213051109.8685-1-quic_shazhuss@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Tue, 13 Dec 2022 00:28:11 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA072BC25
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 21:28:09 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id w37so9711766pga.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Dec 2022 21:28:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iYoYQhWJou1xY1HILvG4sxk2kvaHAyApw8QYJCywc2w=;
+        b=GYoAsi06rrW5fX9uclJQ/U+KcRh994V7NNddvGeQgqaJsIShMY16lqpMQcmkI94N0e
+         aXmTcJ49MbnwIobDFBLBR+Oq5Jg9ADxXk1qH2L3pl2tfMq1aQgTwHbrjfmmH/M2Hp8sz
+         EK2B8VbkVfZlVGlXpFuJ21ssVb3qa5kF47JoFU56F+vKWXzlh3l3GvjdhLDuYVpT5Ndg
+         kbx9gp7N78U6sffwrjRQoTCHhKYqBhmE/TDH0QpIHH3lD5H7fHrQ7x20NwGzSNPpevWC
+         hXbXKCS3T17oWNBvzZsNoZovgOwwntIEfWwI9M5sF0/CHraxIT1Lz209ych8BLRjk9k5
+         Z/Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iYoYQhWJou1xY1HILvG4sxk2kvaHAyApw8QYJCywc2w=;
+        b=eEq3jSHrHKZapT6bqk0RGzZIq11Xv4PSStySPwC5dSGU90Fx7Qsnzj73xGhNdfRrY2
+         vlgVlXfdJ+5NrZpv7l+pDWHLS0o0B0/9ABEcRGqHZxQ7IvqPpGp5w5mioGzM6d2Ee4iC
+         CRY3GnNM4GCp05oRPHanl0H5imspVmxksYH0ecRePiWHRx5w2SkfdGgZ6km5SnAYlfQw
+         ljB3/fLvMYMY3CYLp54etwF2v38bv/TBTeEx+DgqgjYl/aJ1cdOPntnUoix5tV7AjoFM
+         /Xhb4bjy5Fxt+iKsxJLnoLf/vxKKUQgF03L7SKOopBCI4+ouAsD+NRBc6RKAY1dzylTf
+         WPdQ==
+X-Gm-Message-State: ANoB5plPUBTxI4WZazIq8p8HIhC0b/prP6ZcHpmJPzBmlG3E7eE3FgFE
+        NNOprzrXVEAxv33OQ23KPHE9q9wqrSOdf0A=
+X-Google-Smtp-Source: AA0mqf4LHRNZwtxKRfKFXi7Own+x57zRKuhgTPc0qGBE3kpBEnjgCc5OBnfMufu1S7lqqDn6XmcS3A==
+X-Received: by 2002:a62:cd0c:0:b0:577:2a9:96ef with SMTP id o12-20020a62cd0c000000b0057702a996efmr21025176pfg.28.1670909289300;
+        Mon, 12 Dec 2022 21:28:09 -0800 (PST)
+Received: from thinkpad ([220.158.158.136])
+        by smtp.gmail.com with ESMTPSA id z13-20020aa79e4d000000b005779110635asm6715221pfq.51.2022.12.12.21.28.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 21:28:08 -0800 (PST)
+Date:   Tue, 13 Dec 2022 10:58:02 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
+        tony.luck@intel.com, quic_saipraka@quicinc.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, james.morse@arm.com,
+        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
+        quic_ppareek@quicinc.com, luca.weiss@fairphone.com
+Subject: Re: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Message-ID: <20221213052802.GB4862@thinkpad>
+References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+ <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eCTdV3gDJ3atKV60O8ka-PIvaC-wD9sk
-X-Proofpoint-ORIG-GUID: eCTdV3gDJ3atKV60O8ka-PIvaC-wD9sk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-13_02,2022-12-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 mlxscore=0
- malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0 mlxlogscore=999
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212130047
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the pcie2a, pcie2a_phy, and respective tlmm
-nodes that are needed to get pcie 2a controller
-enabled on Qdrive3.
+On Mon, Dec 12, 2022 at 01:23:40PM -0600, Andrew Halaney wrote:
+> On Mon, Dec 12, 2022 at 06:02:58PM +0530, Manivannan Sadhasivam wrote:
+> > The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+> > accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+> > This offset only works for some SoCs like SDM845 for which driver support
+> > was initially added.
+> >
+> > But the later SoCs use different register stride that vary between the
+> > banks with holes in-between. So it is not possible to use a single register
+> > stride for accessing the CSRs of each bank. By doing so could result in a
+> > crash with the current drivers. So far this crash is not reported since
+> > EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+> > driver extensively by triggering the EDAC IRQ (that's where each bank
+> > CSRs are accessed).
+> >
+> > For fixing this issue, let's obtain the base address of each LLCC bank from
+> > devicetree and get rid of the fixed stride.
+> >
+> > This series affects multiple platforms but I have only tested this on
+> > SM8250 and SM8450. Testing on other platforms is welcomed.
+> >
+> 
+> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+> 
 
-This patch enables 4GB 64bit memory space for
-PCIE_2A to have BAR allocations of 64bit pref mem
-needed on this Qdrive3 platform with dual SoCs
-for root port and switch NT-EP. Hence this ranges
-property is overridden in sa8540p-ride.dts only.
+Thanks!
 
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reported-by: kernel test robot <lkp@intel.com>
----
-Changes since v3:
-- Fix syntax error and add Reported-by (Kernel test robot)
+> I took this for a quick spin on the qdrive3 I've got access to without
+> any issue:
+> 
+>     [root@localhost ~]# modprobe qcom_edac
+>     [root@localhost ~]# dmesg | grep -i edac
+>     [    0.620723] EDAC MC: Ver: 3.0.0
+>     [    1.165417] ghes_edac: GHES probing device list is empty
+>     [  594.688103] EDAC DEVICE0: Giving out device to module qcom_llcc_edac controller llcc: DEV qcom_llcc_edac (INTERRUPT)
+>     [root@localhost ~]# cat /proc/interrupts | grep ecc
+>     174:          0          0          0          0          0          0          0          0     GICv3 614 Level     llcc_ecc
+>     [root@localhost ~]#
+> 
+> Potentially stupid question, but are users expected to manually load the
+> driver as I did? I don't see how it would be loaded automatically in the
+> current state, but thought it was funny that I needed to modprobe
+> myself.
+> 
+> Please let me know if you want me to do any more further testing!
+> 
 
-Changes since v2:
-- Discard below patch as v3 is merged in qcom tree
-  [v4] arm64: dts: qcom: sa8540p-ride: enable PCIe support
-  https://lore.kernel.org/all/20221206161916.315640-1-bmasney@redhat.com/
-- Move tlmm PINCTRL to the end and add R-b (Brian)
+Well, I always ended up using the driver as a built-in. I do make it module for
+build test but never really used it as a module, so didn't catch this issue.
 
-Changes since v1:
-- Fix ranges property indentation (Konrad)
+This is due to the module alias not exported by the qcom_edac driver. Below
+diff allows kernel to autoload it:
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 96 +++++++++++++++++------
- 1 file changed, 71 insertions(+), 25 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 6c547f1b13dc..d70859803fbd 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -146,6 +146,27 @@ vreg_l8g: ldo8 {
- 	};
- };
+diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+index f7afb5375293..13919d01c22d 100644
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -419,3 +419,4 @@ module_platform_driver(qcom_llcc_edac_driver);
  
-+&pcie2a {
-+	ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-+		 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>,
-+		 <0x03000000 0x5 0x00000000 0x5 0x00000000 0x1 0x00000000>;
-+
-+	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 145 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie2a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie2a_phy {
-+	vdda-phy-supply = <&vreg_l11a>;
-+	vdda-pll-supply = <&vreg_l3a>;
-+
-+	status = "okay";
-+};
-+
- &pcie3a {
- 	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
- 		 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x20000000>,
-@@ -186,31 +207,6 @@ &remoteproc_nsp1 {
- 	status = "okay";
- };
- 
--&tlmm {
--	pcie3a_default: pcie3a-default-state {
--		perst-pins {
--			pins = "gpio151";
--			function = "gpio";
--			drive-strength = <2>;
--			bias-pull-down;
--		};
--
--		clkreq-pins {
--			pins = "gpio150";
--			function = "pcie3a_clkreq";
--			drive-strength = <2>;
--			bias-pull-up;
--		};
--
--		wake-pins {
--			pins = "gpio56";
--			function = "gpio";
--			drive-strength = <2>;
--			bias-pull-up;
--		};
--	};
--};
--
- &ufs_mem_hc {
- 	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
- 
-@@ -268,3 +264,53 @@ &usb_2_qmpphy0 {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+/* PINCTRL */
-+
-+&tlmm {
-+	pcie2a_default: pcie2a-default-state {
-+		perst-pins {
-+			pins = "gpio143";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio142";
-+			function = "pcie2a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio145";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie3a_default: pcie3a-default-state {
-+		perst-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio150";
-+			function = "pcie3a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		wake-pins {
-+			pins = "gpio56";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+};
+ MODULE_DESCRIPTION("QCOM EDAC driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_ALIAS("platform:qcom_llcc_edac");
+
+Please test and let me know. I will add this as a new patch in next version.
+
+Thanks,
+Mani
+
+> Thanks,
+> Andrew
+> 
+
 -- 
-2.38.0
-
+மணிவண்ணன் சதாசிவம்
