@@ -2,145 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F0D64AD1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 02:36:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7CF764AD25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 02:36:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234154AbiLMBgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Dec 2022 20:36:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52060 "EHLO
+        id S234192AbiLMBgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Dec 2022 20:36:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234163AbiLMBgI (ORCPT
+        with ESMTP id S234180AbiLMBgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Dec 2022 20:36:08 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B151D32D;
-        Mon, 12 Dec 2022 17:36:07 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BD1KIIc002952;
-        Tue, 13 Dec 2022 01:36:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pCZeAfDoRhwWqONc4flZx60RTmPIhwedWOry2zw04m8=;
- b=ESnm0JDYvat8UpXraksERXMqs2Kj/Hl8XfKh3gRys+XF7yzraas7zLQqRa/1ZDGyGwat
- MK0l50xPL+2Gr0v8KfdYMqpwew3Ts6JqZnq+jvI7D5TeD/tb2foZfDlAGqfH9czfIoF1
- qL5+GYIZagzoACiWw4L1taWnjIcfP1c+vt4yzfB8q/yMgJEGXQSQYypDw+7/OAiWuPZq
- fdMBEZRhPa89inkvf6VKasKjLQZ7PRVF10WUlwE6MJBF+UaFKF28pPKL+nmXLkCXHCf3
- jPMD5uXteUh47bd4nRBLjIKHeO+Uifyw8ba8zeYaj1Fozf/gQg1k7QhIXrx3yHMVf/oh LA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mchesdsy7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 01:36:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BD1a2c2022801
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Dec 2022 01:36:02 GMT
-Received: from [10.111.167.12] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 12 Dec
- 2022 17:36:00 -0800
-Message-ID: <46c1f014-7c3f-88c4-d576-7b6bd5e1590d@quicinc.com>
-Date:   Mon, 12 Dec 2022 17:35:58 -0800
+        Mon, 12 Dec 2022 20:36:36 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27B651D642;
+        Mon, 12 Dec 2022 17:36:35 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id z26so2515172lfu.8;
+        Mon, 12 Dec 2022 17:36:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gkXRGTeYk3totrxjicy/YMmtCnEnptDqd4J8k9vI8nY=;
+        b=jtzJPT36io9O+jtDg+i02EFBIsisrizM6g9Wcksnq3ss1gwhzHkqhwxZidqcIAzTGa
+         eB/n80jEOnOmEekXkVpirjTJ65wxlZTfcFRoAk8b0ak2aWR9Hb8KOprrjBQBeBTOFnr4
+         JBd5/JAUXtmGgyX+t5J8KyipwZYK0BPbTiQ4093rvLtRZ/PqVyxjn9jLJMX5/RMH1QZm
+         L+U/NMOVUOmqilghc/5tQ1Z73MvxtZRF7zAx9q1IDRYBPCPYacp/dLD/NEaOZy4xai9f
+         FRFoN6AR8bqk3zvytCFLKeXYXSTpsU3LIEsRg5SGXxbSczTYWGXB9KRv5eQviCHJBu2V
+         5HeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gkXRGTeYk3totrxjicy/YMmtCnEnptDqd4J8k9vI8nY=;
+        b=R/oKdbVhsjVXSSjTrRFkFakdAxv9KyByp39xY4vB8DXYFhX+ScXL75Un5uSVPMNJ9G
+         wDUvQo4vFW7B9M2dPxWKgAt9MVQRilBs0PQdckU9NXntoLkGc9+chZpJqmCvZXhJ7eNI
+         x08RYa4LI++Vi0FQb729tbabi7fLieEPNwPrH9QeU/BQRkpFrXL4HjtJsDcqd3MC1oo+
+         VJmD+vBJbreLBhGL3TwNyZFQKGEf+cdubZIxeLT2mWycMVo9L6EbxyZ5OT4whsfQXFsT
+         NL67NAcwBDRfleDhoZnebe1OSK6Lbr7jvlKg9+j8PKcRLWxneEZVMeV9HTNkqRHv0ijp
+         CGWg==
+X-Gm-Message-State: ANoB5plKMUnK0pnmg4BEEnqY0X1599+7Q+2bKayR4ukQr7+gb0U6v2LU
+        BibXTILXuePfagmsrhQ6fiZoeWNu/t9PTXI7eg==
+X-Google-Smtp-Source: AA0mqf4VT4kUSse4hGyGngXID4CFSPgFNvw0mlASJB2/gRLS9q54bJwO6ectd11va4JINTv+9LAWMOhTTJHLhKvgZ+w=
+X-Received: by 2002:a05:6512:104a:b0:4b5:6683:795c with SMTP id
+ c10-20020a056512104a00b004b56683795cmr7038881lfb.101.1670895393221; Mon, 12
+ Dec 2022 17:36:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH] drm/msm/hdm: Fix the error handling path of
- msm_hdmi_dev_probe()
-Content-Language: en-US
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>
-References: <b3d9dac978f1e2e42a40ec61f58aa98c44c85dfd.1670741386.git.christophe.jaillet@wanadoo.fr>
- <b34374ed-0444-6bd9-4994-7f890455b451@quicinc.com>
-In-Reply-To: <b34374ed-0444-6bd9-4994-7f890455b451@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QiioKxyM5fxSL8PC9z6BgRR-vYYuuoh5
-X-Proofpoint-GUID: QiioKxyM5fxSL8PC9z6BgRR-vYYuuoh5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-12_02,2022-12-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212130014
+References: <cover.1670541363.git.quic_asutoshd@quicinc.com> <2d0824aaad6624aba41b3b5546e7473033c6b920.1670541364.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <2d0824aaad6624aba41b3b5546e7473033c6b920.1670541364.git.quic_asutoshd@quicinc.com>
+From:   Stanley Chu <chu.stanley@gmail.com>
+Date:   Tue, 13 Dec 2022 09:36:21 +0800
+Message-ID: <CAGaU9a-R6CbEZBW5x1_+eMYhORHLya-5CRFv+LCKSTi-7xeqwQ@mail.gmail.com>
+Subject: Re: [PATCH v11 15/16] ufs: core: mcq: Add completion support in poll
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        eddie.huang@mediatek.com, daejun7.park@samsung.com,
+        bvanassche@acm.org, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        Keoseong Park <keosung.park@samsung.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Dec 9, 2022 at 7:32 AM Asutosh Das <quic_asutoshd@quicinc.com> wrote:
+>
+> Complete cqe requests in poll. Assumption is that
+> several poll completion may happen in different CPUs
+> for the same completion queue. Hence a spin lock
+> protection is added.
+>
+> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-
-On 12/12/2022 5:34 PM, Abhinav Kumar wrote:
-> 
-> 
-> On 12/10/2022 10:50 PM, Christophe JAILLET wrote:
->> If an error occurs after a successful msm_hdmi_get_phy() call, it must be
->> undone by a corresponding msm_hdmi_put_phy(), as already done in the
->> remove function.
->>
->> Fixes: 437365464043 ("drm/msm/hdmi: move msm_hdmi_get_phy() to 
->> msm_hdmi_dev_probe()")
->> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-Actually, i missed one nit
-
-In the subject line, it should be "drm/msm/hdmi"
-
-The "i" is missing.
-
-Please fix that and post it.
-
-> 
->> ---
->> Not sure if the Fixes tag is correct. At least it is when the probe needs
->> to be fixed but the issue was maybe there elsewhere before.
-> 
-> Seems right to me.
-> 
->> ---
->>   drivers/gpu/drm/msm/hdmi/hdmi.c | 12 ++++++++++--
->>   1 file changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c 
->> b/drivers/gpu/drm/msm/hdmi/hdmi.c
->> index 4d3fdc806bef..97372bb241d8 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
->> @@ -532,11 +532,19 @@ static int msm_hdmi_dev_probe(struct 
->> platform_device *pdev)
->>       ret = devm_pm_runtime_enable(&pdev->dev);
->>       if (ret)
->> -        return ret;
->> +        goto err_put_phy;
->>       platform_set_drvdata(pdev, hdmi);
->> -    return component_add(&pdev->dev, &msm_hdmi_ops);
->> +    ret = component_add(&pdev->dev, &msm_hdmi_ops);
->> +    if (ret)
->> +        goto err_put_phy;
->> +
->> +    return 0;
->> +
->> +err_put_phy:
->> +    msm_hdmi_put_phy(hdmi);
->> +    return ret;
->>   }
->>   static int msm_hdmi_dev_remove(struct platform_device *pdev)
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
