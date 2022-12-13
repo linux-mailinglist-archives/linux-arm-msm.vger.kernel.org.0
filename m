@@ -2,80 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 586F764BF4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:24:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CDE564BFA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 23:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236617AbiLMWYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 17:24:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
+        id S236404AbiLMW4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 17:56:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235112AbiLMWYX (ORCPT
+        with ESMTP id S229820AbiLMW4o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 17:24:23 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F5AC28;
-        Tue, 13 Dec 2022 14:24:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3451E615B9;
-        Tue, 13 Dec 2022 22:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B112C433D2;
-        Tue, 13 Dec 2022 22:24:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1670970261;
-        bh=8KDQaVBEYbG4DZdbHVeTVitMLcZQSUsPaXO6w4+Dp4s=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Ci3hzPgReGmg2iGCZgyMvJTXpbfQvPs9pvHUgu+dkZHx3AQq/Iy25IUX9PgkGlmZ5
-         Wle730BtgUeflp+YObvw32o3HCZUu+miBCvt9ZD78brAmN/PvEmA3XhFzqzPBTyzif
-         WhWF+CmMqOgFX3g+t3T0Uuo3I+dNGO1jJkt0Qe8RzcBNmEnS8M1ajFlODuYVh4JPJO
-         Ls7ynxnSqxdj1vO+hNKcHsb0WDZoVRtK0qJHfSQlW3exuUCWAe6EwAiXSU+qUuxQU1
-         r6X1m25pfVPjnmgp6bZI9CB8Q/w2DsAjN5D99src0AdNenpJH1Q6r66/jg71nGINMG
-         gl79zOUBbn+Fw==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 13 Dec 2022 17:56:44 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C0D2627;
+        Tue, 13 Dec 2022 14:56:43 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BDMG1MC003873;
+        Tue, 13 Dec 2022 22:56:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=eGf/kQjP7CRvthcLJP4X8yzvmDFF9Ieg2xIDcosGcRQ=;
+ b=jnTY0zfjpnGGSJKcw7evXUj2+NULr7Pbk7l2WSUriIz/jUKDH89sGtitPfWCI2vK8pDy
+ 5912OIeNVxs4xRaSPy2JbZEpgsmDsiz0PaP54/4XByMrKScuH2yo/eQvJF8tBA43i/WX
+ mFBnrBJjL429OiGqUFQiWdsGkIcyr2tQtSlM56E2KsYIm9UCmX/ojbvQPJ35DLUN4EIP
+ 9zKZSgYfCyAJA0v1U3oC7FnCgKHDtdZEzfkkLRKNzZ9QlM2ePe2e7WzA73WAWwDPDN8J
+ GNNR3zPfvLfhHERgjDu87s/5M0SQGYRCER0qthrOaEnAfNMCg/6jFIFjgMpEn3eMphTw +A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3meyf7rg20-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 22:56:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BDMuX0k032715
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Dec 2022 22:56:33 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 13 Dec 2022 14:56:32 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
+        <airlied@gmail.com>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v13 0/5] Add data-lanes and link-frequencies to dp_out endpoint
+Date:   Tue, 13 Dec 2022 14:56:16 -0800
+Message-ID: <1670972181-4961-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221213104333.27548-1-konrad.dybcio@linaro.org>
-References: <20221213104333.27548-1-konrad.dybcio@linaro.org>
-Subject: Re: [PATCH] clk: qcom: dispcc-sm6115: Shrink single-parent definitions
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski@linaro.org,
-        linux-arm-msm@vger.kernel.org
-Date:   Tue, 13 Dec 2022 14:24:19 -0800
-User-Agent: alot/0.10
-Message-Id: <20221213222421.7B112C433D2@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BQr_Ir_HiH0b4NzsovmFC7ZO4bo9KirS
+X-Proofpoint-ORIG-GUID: BQr_Ir_HiH0b4NzsovmFC7ZO4bo9KirS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-13_03,2022-12-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 phishscore=0 mlxlogscore=853 impostorscore=0 suspectscore=0
+ mlxscore=0 bulkscore=0 spamscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212130199
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2022-12-13 02:43:33)
-> @@ -284,12 +268,13 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src =
-=3D {
->         .cmd_rcgr =3D 0x20a4,
->         .mnd_width =3D 0,
->         .hid_width =3D 5,
-> -       .parent_map =3D disp_cc_parent_map_1,
->         .freq_tbl =3D ftbl_disp_cc_mdss_esc0_clk_src,
->         .clkr.hw.init =3D &(struct clk_init_data){
->                 .name =3D "disp_cc_mdss_vsync_clk_src",
-> -               .parent_data =3D disp_cc_parent_data_1,
-> -               .num_parents =3D ARRAY_SIZE(disp_cc_parent_data_1),
-> +               .parent_data =3D &(const struct clk_parent_data){
-> +                       .index =3D DT_BI_TCXO,
-> +               },
-> +               .num_parents =3D 1,
->                 .flags =3D CLK_SET_RATE_PARENT,
->                 .ops =3D &clk_rcg2_shared_ops,
+Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
+functions to DP driver.
 
-Is clk_rcg2_shared_ops and clk_rcg2_ops prepared for a NULL
-'parent_map' pointer? _freq_tbl_determine_rate() is never called?
+Kuogee Hsieh (5):
+  arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
+    endpoint
+  dt-bindings: msm/dp: add data-lanes and link-frequencies property
+  drm/msm/dp: parser data-lanes as property of dp_out endpoint
+  drm/msm/dp: parser link-frequencies as property of dp_out endpoint
+  drm/msm/dp: add support of max dp link rate
+
+ .../bindings/display/msm/dp-controller.yaml        | 26 ++++++++++-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  6 ++-
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |  6 ++-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  4 ++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  7 +--
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c                 | 52 ++++++++++++++++++----
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |  2 +
+ 8 files changed, 89 insertions(+), 15 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
