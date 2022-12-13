@@ -2,72 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80C9964C05E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 00:18:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2BF664C06B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 00:22:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236977AbiLMXSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 18:18:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36152 "EHLO
+        id S236575AbiLMXWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 18:22:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236975AbiLMXSH (ORCPT
+        with ESMTP id S236983AbiLMXWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 18:18:07 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB0214090
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 15:18:05 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id s10so5022125ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 15:18:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3tQIDZYHqSXvl3rMBu3fM2B9opAFevnmmjQK+/CnUiw=;
-        b=ZCM1ih2O5nIV21RaO126GpcWprmrejLKCAYG4TY4abv+FUJra9PGnA1DoK1+dEt1sc
-         BOfoOD67t7zYd3rjIQMqEULG2FcP3ov2EgWa0J19qw4PDsvi4EoDLu4+E6ufZt2ggDve
-         OE9lOb8DffIXzfohHA87G4ExcZviB1kiTniCg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3tQIDZYHqSXvl3rMBu3fM2B9opAFevnmmjQK+/CnUiw=;
-        b=nx/EUe0zAnhk75mVbH9fv828YFk0YJPDdiCqbTEx8lUrW02USytDJbYVqEjWxZDtk8
-         QZCeg1Ski6BMg+Phq2pCy+lqgRpTC6rUN0R4F2F8vsT54BzO5i/XM8gHQ7saHi2zuQW+
-         3dvY1KxMS07y0hD55p26yyYQ/94FPl67htiCuqEGnWFicTKf/Ou3ep5uq0Vfp1SlL24+
-         IiuauYkdM3QJnULkRNvDrD9/UCYCr01JYauxlYyFkWCMLHWeEZ+byC8g+tKuFNgFcTxo
-         PAyAhgeP20et4M+aJMyc+kVJ4P7DhzqNI0ghKG8T58NRtp0jue6B43JT1Rh5Adm3U2ny
-         zgKw==
-X-Gm-Message-State: ANoB5plzbJ8LTYe94BEwvYcHFAtKkLtSwlvnMRIsh2bVgXXu3dMOUUQd
-        NKA1aSm9VQIK1AzHA4Eas+hxvcxPsYVooIp1BPxUQg==
-X-Google-Smtp-Source: AA0mqf6qDCm9nv+NYUT3uVfSOnlQSIUHgFPIjejPDyIPaV7TOQ+N4R3Dqz6pILclJZQXgiTcNqhaFWq2Pta1k87delg=
-X-Received: by 2002:a2e:bd88:0:b0:279:86e:7a09 with SMTP id
- o8-20020a2ebd88000000b00279086e7a09mr31358191ljq.277.1670973483417; Tue, 13
- Dec 2022 15:18:03 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 13 Dec 2022 15:18:02 -0800
+        Tue, 13 Dec 2022 18:22:21 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC78826ACB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 15:22:19 -0800 (PST)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B691E1F99C;
+        Wed, 14 Dec 2022 00:22:16 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        sunliming <sunliming@kylinos.cn>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/6] drm/msm: DSC Electric Boogaloo for sm8[12]50
+Date:   Wed, 14 Dec 2022 00:22:01 +0100
+Message-Id: <20221213232207.113607-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-In-Reply-To: <1670967848-31475-5-git-send-email-quic_khsieh@quicinc.com>
-References: <1670967848-31475-1-git-send-email-quic_khsieh@quicinc.com> <1670967848-31475-5-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 13 Dec 2022 15:18:02 -0800
-Message-ID: <CAE-0n51G3sUbGftFr5RTsM2xwxCDW3y0N9KzAsZrSQX09_N0GA@mail.gmail.com>
-Subject: Re: [PATCH v12 4/5] drm/msm/dp: parser link-frequencies as property
- of dp_out endpoint
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@gmail.com, andersson@kernel.org, daniel@ffwll.ch,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,79 +67,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-12-13 13:44:07)
-> Add capability to parser and retrieve max DP link supported rate from
+This preliminary Display Stream Compression support package for
+(initially tested on) sm8[12]50 is based on comparing DSC behaviour
+between downstream and mainline.  Some new callbacks are added (for
+binding blocks on active CTLs), logic bugs are corrected, zeroed struct
+members are now assigned proper values, and RM allocation and hw block
+retrieval now hand out (or not) DSC blocks without causing null-pointer
+dereferences.
 
-to parse
+Unfortunately it is not yet enough to get rid of completely corrupted
+display output on the boards I tested here:
+- Sony Xperia 1 (sm8150), 1644x3840 or 1096x2560 pixels;
+- Sony Xperia 5II (sm8250), 1080x2520, at 60 or 120Hz;
+- (can include more Xperia boards if desired)
 
-> link-frequencies property of dp_out endpoint.
->
-> Changes in v6:
-> -- second patch after split parser patch into two patches
->
-> Changes in v7:
-> -- without checking cnt against DP_MAX_NUM_DP_LANES to retrieve link rate
->
-> Changes in v9:
-> -- separate parser link-frequencies out of data-lanes
->
-> Changes in v10:
-> -- add dp_parser_link_frequencies()
->
-> Changes in v11:
-> -- return 0 if(!endpoint)
->
-> Changes in v12:
-> -- replace khz with kbytes at dp_parser.h
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
+Both devices use the DUALPIPE_DSCMERGE topology downstream: dual LM, PP
+and DSC, but only a single INTF/encoder/DSI-link.
 
-Same parser in subject.
+Hopefully this spawns some community/upstream interest to help rootcause
+our corruption issues (after we open a drm/msm report on GitLab for more
+appropriate tracking).
 
->  drivers/gpu/drm/msm/dp/dp_parser.c | 27 +++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_parser.h |  2 ++
->  2 files changed, 29 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index b5f7e70..5549495 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -91,6 +91,29 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
->         return 0;
->  }
->
-> +static u32 dp_parser_link_frequencies(struct device_node *of_node)
-> +{
-> +       struct device_node *endpoint;
-> +       u64 frequency = 0;
-> +       int cnt = 0;
+The Sony Xperia XZ3 (sdm845) was fully tested and validated with this
+series to not cause any regressions (an one of the math fixes now allows
+us to change slice_count in the panel driver, which would corrupt
+previously).
 
-'cnt' doesn't need to be initialized here.
+Marijn Suijten (6):
+  drm/msm/dpu1: Implement DSC binding to PP block for CTL V1
+  drm/msm/dpu1: Add DSC config for sm8150 and sm8250
+  drm/msm/dpu1: Wire up DSC mask for active CTL configuration
+  drm/msm/dsi: Use DSC slice(s) packet size to compute word count
+  drm/msm/dsi: Flip greater-than check for slice_count and
+    slice_per_intf
+  drm/msm/dpu: Disallow unallocated (DSC) resources to be returned
 
-> +
-> +       endpoint = of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
-> +       if (!endpoint)
-> +               return 0;
-> +
-> +       cnt = of_property_count_u64_elems(endpoint, "link-frequencies");
-> +
-> +       if (cnt > 0)
-> +               of_property_read_u64_index(endpoint, "link-frequencies",
-> +                                               cnt - 1, &frequency);
-> +       of_node_put(endpoint);
-> +
-> +       frequency /= 10;        /* from symbol rate to link rate */
-> +       frequency /= 1000;      /* kbytes */
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  3 +++
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  1 +
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  1 +
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  2 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 23 +++++++++++-----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  9 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 27 +++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  4 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 10 +++++++
+ drivers/gpu/drm/msm/dsi/dsi_host.c            |  6 ++---
+ 10 files changed, 77 insertions(+), 9 deletions(-)
 
-Use do_div(frequency, 10 * 1000)? If you want comments it could maybe be
-like this:
+--
+2.38.1
 
-	do_div(frequency,
-	       10 * /* from symbol rate to link rate */
-	       1000); /* kbytes */
-
-> +
-> +       return frequency;
-> +}
-> +
