@@ -2,76 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8856164B7BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 15:48:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D370964B7DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 15:54:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235467AbiLMOs5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 09:48:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35280 "EHLO
+        id S235638AbiLMOyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 09:54:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235574AbiLMOsc (ORCPT
+        with ESMTP id S235895AbiLMOxq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 09:48:32 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB288110B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 06:48:30 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id x28so5276564lfn.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 06:48:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=12/6BmOhRQtkOACZ0Csfo8o5YslC75aSQ1sUnCFEdqM=;
-        b=CBVln09sOZEFYyYJR7Wb8th4jx3ulHFz/EDuoetDAhaZv2B8QBOWVBJCYpHuDOm0Ui
-         zN/8InFPOmeM83z9WzgNDyjfRAqxdXvdUyo6CO++MkbAApGUz6eIRGhTH6xw4P5DxFpC
-         LjN4oCnHLVEDMzV619DJGb0hchoM3oN4wsY4rGWPlDGcMd7Vy+rMJ2O0VURYmbVva5lA
-         A6xCYEKyMtiklETUtNi947Yr+RfIRNWaT5p/wQmERVd6t2XWOlimNXpF7/L9DSAnBD7V
-         lZDhsQ7CExX9hwsAU/rxHIVwX2rO+foaAbCXq+EQPes+B/kZHu3GrrjBzII4q/JUQzXt
-         YfAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=12/6BmOhRQtkOACZ0Csfo8o5YslC75aSQ1sUnCFEdqM=;
-        b=7GX5Cf9TPmiUG8/Iy69RKBycP1bUykbf60iwWSprBL5SrXiMZRXT0FRBbInnLvDOJJ
-         Mpl2hbxvbbbJcjKhlK9HbAHQzo6+4RWA9W/ii+R4S+RMzqWeO8QaoPPMm+9ALjHOkMDB
-         WPPVp5Apd+nTSwGbtV2xMRxvP2S1IqK5H8XoD9iygyyKT4T0aVedyB9LV/MmKGTpB2Yq
-         Ev6TxrnZwWkKdVVVrdbyKt9tHSK5v6NIpib9Uw2h4cVjbz77y+bPUXGDVNH+E4mP/Tgm
-         b5b+IBOqDMhBySDV15ZFY3od+Yj9kX0msyWWcFdkKr1b47iEIV3v3HFySUAS0jN4YBY+
-         eNgg==
-X-Gm-Message-State: ANoB5pmOHchqjabbHx72z7WjJTNufzbcBlw+CR0v6CmyCjL2KLMN5YWR
-        nvoZz+aixHIGlfeqeRi+WLXpfA==
-X-Google-Smtp-Source: AA0mqf6XcaD3Q9O8tTx3t7Ouoa+VcUybXP7OmV19cGf/61eUdjet6ipxLVzB2c1e5zGWd4zOPCPtnQ==
-X-Received: by 2002:a05:6512:22d2:b0:4a4:68b9:66b8 with SMTP id g18-20020a05651222d200b004a468b966b8mr6687562lfu.3.1670942909161;
-        Tue, 13 Dec 2022 06:48:29 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id s21-20020a056512203500b004a2c3fd32edsm392757lfs.144.2022.12.13.06.48.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 06:48:28 -0800 (PST)
-Message-ID: <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org>
-Date:   Tue, 13 Dec 2022 15:48:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
- qup2_i2c18 nodes
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     robh+dt@kernel.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com, quic_shazhuss@quicinc.com
+        Tue, 13 Dec 2022 09:53:46 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A25120B4;
+        Tue, 13 Dec 2022 06:53:42 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3C3ACB81222;
+        Tue, 13 Dec 2022 14:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A62C433D2;
+        Tue, 13 Dec 2022 14:53:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1670943220;
+        bh=0ssVJDgvZbB9LnC5sqEOsvKmP5VomXOUSJCqaAQ4RLI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b0l8P6ZVrL/TkvsRKU/S0gkk7uXRtpi0SZ5oltfRx3Sbl6NiGvi8oOpfEcCETte7+
+         JOmrM4kudD/MTa4lRbiXUPNgFfehwS0tfeoyjllnLFa43XbptpTi5+W7qkSb0Y9/bI
+         OcmCtJ+DfRJeeA2iJmRkcuaI+AM4IGrcJGYIPBItI+lRH9vqtf+BeBv97mqaOKxDUr
+         y6fYQQAzuu4eIssTVF46UumGB/Y3ZUaPa4i7ODBdZ323qO36MwK+y/vHE/6KNRwbcA
+         qO/SRTRxcOMluig5biLiT0UjdTHZlwS5XigC/1TUJ3wqDgPr/4xUUPVeZ2QrSfDxn7
+         +sq9CIf3MPbyQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p56fV-0004hh-Ob; Tue, 13 Dec 2022 15:54:05 +0100
+Date:   Tue, 13 Dec 2022 15:54:05 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: rename i2c5 to i2c21
+Message-ID: <Y5iSDehp72mQPc+h@hovoldconsulting.com>
 References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-4-bmasney@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221212182314.1902632-4-bmasney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+ <20221212182314.1902632-2-bmasney@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221212182314.1902632-2-bmasney@redhat.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,114 +60,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12.12.2022 19:23, Brian Masney wrote:
-> Add the necessary nodes in order to get qup1_i2c15 and qup2_i2c18
-> functioning on the automotive board and exposed to userspace.
-> 
-> This work was derived from various patches that Qualcomm delivered
-> to Red Hat in a downstream kernel. This change was validated by using
-> i2c-tools 4.3.3 on CentOS Stream 9:
-> 
-> [root@localhost ~]# i2cdetect -l
-> i2c-15  i2c             Geni-I2C                                I2C adapter
-> i2c-18  i2c             Geni-I2C                                I2C adapter
-> 
-> [root@localhost ~]# i2cdetect -a -y 15
-> Warning: Can't use SMBus Quick Write command, will skip some addresses
->      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-> 00:
-> 10:
-> 20:
-> 30: -- -- -- -- -- -- -- --
-> 40:
-> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 60:
-> 70:
-> 
-> Bus 18 has the same output. I validated that we get the same output on
-> the downstream kernel.
+On Mon, Dec 12, 2022 at 01:23:11PM -0500, Brian Masney wrote:
+> According to the downstream 5.4 kernel sources for the sa8540p,
+> i2c@894000 is labeled i2c bus 21, not 5. The interrupts and clocks
+> also match. Let's go ahead and correct the name that's used in the
+> three files where this is listed.
 > 
 > Signed-off-by: Brian Masney <bmasney@redhat.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 46 +++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index d70859803fbd..6dc3f3ff8ece 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -17,6 +17,8 @@ / {
->  	compatible = "qcom,sa8540p-ride", "qcom,sa8540p";
->  
->  	aliases {
-> +		i2c15 = &qup1_i2c15;
-> +		i2c18 = &qup2_i2c18;
->  		serial0 = &qup2_uart17;
->  	};
->  
-> @@ -188,10 +190,28 @@ &pcie3a_phy {
->  	status = "okay";
->  };
->  
-> +&qup1 {
-> +	status = "okay";
-> +};
-> +
-> +&qup1_i2c15 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&qup1_i2c15_default>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &qup2 {
->  	status = "okay";
->  };
->  
-> +&qup2_i2c18 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&qup2_i2c18_default>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &qup2_uart17 {
->  	compatible = "qcom,geni-debug-uart";
->  	status = "okay";
-> @@ -313,4 +333,30 @@ wake-pins {
->  			bias-pull-up;
->  		};
->  	};
-> +
-> +	qup1_i2c15_default: qup1-i2c15-state {
-You can drop mux/config-pins and have the pin properties live directly
-under the qup1-i2cN-state node.
+> Fixes: 152d1faf1e2f3 ("arm64: dts: qcom: add SC8280XP platform")
+> Fixes: ccd3517faf183 ("arm64: dts: qcom: sc8280xp: Add reference device")
+> Fixes: 32c231385ed43 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
 
-Konrad
-> +		mux-pins {
-> +			pins = "gpio36", "gpio37";
-> +			function = "qup15";
-> +		};
-> +
-> +		config-pins {
-> +			pins = "gpio36", "gpio37";
-> +			drive-strength = <0x02>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	qup2_i2c18_default: qup2-i2c18-state {
-> +		mux-pins {
-> +			pins = "gpio66", "gpio67";
-> +			function = "qup18";
-> +		};
-> +
-> +		config-pins {
-> +			pins = "gpio66", "gpio67";
-> +			drive-strength = <0x02>;
-> +			bias-pull-up;
-> +		};
-> +	};
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 109c9d2b684d..875cc91324ce 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -827,7 +827,7 @@ qup2_uart17: serial@884000 {
+>  				status = "disabled";
+>  			};
+>  
+> -			qup2_i2c5: i2c@894000 {
+> +			qup2_i2c21: i2c@894000 {
+
+Note that the node is labelled qup2_i2c5 and not qup_i2c5.
+
+That is, the QUP nodes are labelled using two indices, and specifically
+
+	qup2_i2c5
+
+would be another name for
+
+	qup_i2c21
+
+if we'd been using such a flat naming scheme (there are 8 engines per
+QUP).
+
+So there's nothing wrong with how these nodes are currently named, but
+mixing the two scheme as you are suggesting would not be correct.
+
+Johan
