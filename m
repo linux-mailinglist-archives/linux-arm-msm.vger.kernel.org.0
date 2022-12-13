@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A1A764B260
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 10:31:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E6E64B265
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Dec 2022 10:34:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234747AbiLMJbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 04:31:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58842 "EHLO
+        id S229667AbiLMJeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 04:34:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234296AbiLMJbm (ORCPT
+        with ESMTP id S234822AbiLMJeI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 04:31:42 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1FB7D4E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:31:40 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id y25so3914411lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:31:40 -0800 (PST)
+        Tue, 13 Dec 2022 04:34:08 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB92E958D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:34:04 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id y25so3923208lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 01:34:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eBNGkpSXOiqxD0QFw5sTJNcEwlVctRLV2sWFD35T7yM=;
-        b=wgXxB7i9Myiz3fetBQR2uDgOzp8pixRPZY7JajZqv2ZHuw8Kvfs/kjuy2Bc75ziv6G
-         g52YZfw4cCzgQkGCl1TJ3RNbIZsp14K9L/rv1Ztk70RnbeuzXbwESSNQ5pcRJrFPOLOa
-         riEgRB/yPlM8Kc+5K9HnrO4AQdafEnkm4a2OChbhDyBnB7dENko89aPBrZ/LkDQex0YR
-         ZPmip2txg/tQ1mJvow0qD6k8xHx79Ny0guy661fLdbcKB2umPv+JlY7AF1zX+tcDfJnx
-         ij6jK3IinSGQpapR7FSZ7dSPJX5ynlX1dma59irSYrYmqTrhLRKUHfdsRlJwQqw2rNRY
-         8uWg==
+        bh=kmXfRp8+zWW7vcrjP5R8dP/cHgn+D6C7qU8K2sV42hY=;
+        b=tf5cvCtxg3RipKpZCMT2eCrMBD2I6e95ldX2lrSPBSZ1pIcDZ4QxORkEaeOHYfDp98
+         3/eQi33pKkxp+f5GAWYWpJU2H9xNRXqQ3LyTK+j2xURI1s7YKEERogI5DkFlhSCkpgip
+         iH+VAMFUhnIMx2dfYQZ5BbEZuB0tGqphDi9aN8x46ojCUPGbKEyr64cskDwkaw/aFTTO
+         UXpv3mUjHcXaetKucXAC/orTELDuub+s+ZR2hJl1FV4gE3lZ+McJyBELZ401msD3zfU6
+         i0+EsinQ+f4JONhrZ35QzHPi2lM7z2heQGcJLNzD5T1VWBouNjf/6L8MrM/KwQvILL7W
+         kaPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eBNGkpSXOiqxD0QFw5sTJNcEwlVctRLV2sWFD35T7yM=;
-        b=XhoqOQR5I3jhvK9AIeT9cHiQjrH/fGFUJaT6ac8kvGtwqdVA/r4k5gp8Q7VupwyaUQ
-         aF+5kN8k6S54ANtcfkSXd/obA99JS7vLebEauE9dPTXULaGZ7lEsUhlrzLgrB4Ydwg4G
-         C7ckeLXF0uC557sIw01uNlEzkZzUhmB6Ze93kxMhUZtXEMWsXx5t0ABp9A2eJWld0t0I
-         dKk1KkKWHK3Va0az/PblCRjJCf05IDEuJGX4PjLqC/H9U6jVfFg5goyiiiVU5EA86h7H
-         0uxrFsrhWKNs4UcayBPgPljST08D75zBrEu/TyVy8jhbZIUfwiOKhrBDbHABWYyNPBvx
-         f8zg==
-X-Gm-Message-State: ANoB5pnbcPgtk7C6g0FncO/rIQpa8rKi/Hwcf72PimpD5O/ANmWtrslS
-        /Qvbveo+WNf6uan+A+JJ1pijlg==
-X-Google-Smtp-Source: AA0mqf5FI/j9Le7pQBHJzExIQOzU6406ebgIjketJYTAuv2HASPjuYxFAMBnopyXLe0ptTyK/+cLNQ==
-X-Received: by 2002:a05:6512:3092:b0:4a4:68b7:dedd with SMTP id z18-20020a056512309200b004a468b7deddmr7261189lfd.57.1670923899326;
-        Tue, 13 Dec 2022 01:31:39 -0800 (PST)
+        bh=kmXfRp8+zWW7vcrjP5R8dP/cHgn+D6C7qU8K2sV42hY=;
+        b=DPbKYxq+sfyRvX83gvNbEIlm80ptRLV6bGHn3zifG2orsredcbN9nLbG8EG2qzKTB5
+         /zWQxm1fQranbD9wa0TdpefdapcIipoZYHdh4ebBEkcNBAUut7d1otkgDEwSHM54vOxV
+         kLjBV6gEQ9+48IPhlJN8iNrRMqly/dYtWDGxQ7o4vravWr7hep8c+Mo3IfA/zt1gU+yK
+         qnPuVLZ5tuj2LFWIyQsXJamhOGN64tttB9p74wq4r2/T6d5l66r37fwZJBf0aMbxOYsI
+         PPzSGvImKVOaKNx8Phk2++ZPdzm2Zf7nM2/yxO6iAWm5e0FOlmxq5o3OPqo7XMAqdOWi
+         k+IA==
+X-Gm-Message-State: ANoB5pneQCPyYS/VyJq/EbdRzI09ILBnIoL316D3p4dv9uQCUONPGbE5
+        7gqYaAjM4TOz3eS54FeyfQ9fpA==
+X-Google-Smtp-Source: AA0mqf52jIdmRc18RlMNwbjzET3m41DOMkwgsZPAeb3pbLq8ANlMfAq3jp58jxXF6P5wQ5v42NGL/w==
+X-Received: by 2002:ac2:4474:0:b0:4b5:9365:cd4f with SMTP id y20-20020ac24474000000b004b59365cd4fmr4643502lfl.42.1670924043214;
+        Tue, 13 Dec 2022 01:34:03 -0800 (PST)
 Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id f22-20020a19dc56000000b004b4ea0f4e7fsm285654lfj.299.2022.12.13.01.31.38
+        by smtp.gmail.com with ESMTPSA id h10-20020ac24d2a000000b004949a8df775sm292226lfk.33.2022.12.13.01.34.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 01:31:38 -0800 (PST)
-Message-ID: <48bda658-2312-809c-6dac-227b15f3ec40@linaro.org>
-Date:   Tue, 13 Dec 2022 10:31:37 +0100
+        Tue, 13 Dec 2022 01:34:02 -0800 (PST)
+Message-ID: <784f0f72-2058-67cd-b79b-4418eb6df28d@linaro.org>
+Date:   Tue, 13 Dec 2022 10:34:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH 07/12] ARM: dts: qcom: reverse compatibles to match
- bindings
+Subject: Re: [PATCH 08/12] ARM: dts: qcom: apq8064: drop second clock
+ frequency from timer
+Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -65,16 +66,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221212163532.142533-1-krzysztof.kozlowski@linaro.org>
- <20221212163532.142533-7-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
+ <20221212163532.142533-8-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221212163532.142533-7-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221212163532.142533-8-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,74 +83,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 12.12.2022 17:35, Krzysztof Kozlowski wrote:
-> The most specific compatible should be upfront.
+> Keep only one clock frequency for timer, because:
+> 1. DT schema does not allow multiple frequencies in such property,
+> 2. The Linux timer driver reads only first frequency.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm/boot/dts/qcom-apq8064.dtsi | 4 ++--
->  arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
->  arch/arm/boot/dts/qcom-msm8960.dtsi | 4 ++--
->  4 files changed, 7 insertions(+), 7 deletions(-)
+>  arch/arm/boot/dts/qcom-apq8064.dtsi | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
 > diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> index 0da9623ea084..79575d6b3a81 100644
+> index 79575d6b3a81..9da6459c9f67 100644
 > --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
 > +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> @@ -375,8 +375,8 @@ intc: interrupt-controller@2000000 {
->  		};
->  
->  		timer@200a000 {
-> -			compatible = "qcom,kpss-timer",
-> -				     "qcom,kpss-wdt-apq8064", "qcom,msm-timer";
-> +			compatible = "qcom,kpss-wdt-apq8064", "qcom,kpss-timer",
-> +				     "qcom,msm-timer";
->  			interrupts = <1 1 0x301>,
+> @@ -381,8 +381,7 @@ timer@200a000 {
 >  				     <1 2 0x301>,
 >  				     <1 3 0x301>;
-> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> index acb08dcf9442..a73c3a17b6a4 100644
-> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> @@ -400,7 +400,7 @@ blsp1_uart2: serial@78b0000 {
+>  			reg = <0x0200a000 0x100>;
+> -			clock-frequency = <27000000>,
+> -					  <32768>;
+> +			clock-frequency = <27000000>;
+>  			cpu-offset = <0x80000>;
 >  		};
 >  
->  		watchdog: watchdog@b017000 {
-> -			compatible = "qcom,kpss-wdt", "qcom,kpss-wdt-ipq4019";
-> +			compatible = "qcom,kpss-wdt-ipq4019", "qcom,kpss-wdt";
->  			reg = <0xb017000 0x40>;
->  			clocks = <&sleep_clk>;
->  			timeout-sec = <10>;
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> index 7e784b0995da..9daafe9de02a 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> @@ -549,8 +549,8 @@ intc: interrupt-controller@2000000 {
->  		};
->  
->  		timer@200a000 {
-> -			compatible = "qcom,kpss-timer",
-> -				     "qcom,kpss-wdt-ipq8064", "qcom,msm-timer";
-> +			compatible = "qcom,kpss-wdt-ipq8064", "qcom,kpss-timer",
-> +				     "qcom,msm-timer";
->  			interrupts = <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(2) |
->  						 IRQ_TYPE_EDGE_RISING)>,
->  				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(2) |
-> diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-> index 7debf9db7cb1..63c3c40fe9a2 100644
-> --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-> @@ -103,8 +103,8 @@ intc: interrupt-controller@2000000 {
->  		};
->  
->  		timer@200a000 {
-> -			compatible = "qcom,kpss-timer",
-> -				     "qcom,kpss-wdt-msm8960", "qcom,msm-timer";
-> +			compatible = "qcom,kpss-wdt-msm8960", "qcom,kpss-timer",
-> +				     "qcom,msm-timer";
->  			interrupts = <GIC_PPI 1 0x301>,
->  				     <GIC_PPI 2 0x301>,
->  				     <GIC_PPI 3 0x301>;
