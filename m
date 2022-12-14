@@ -2,104 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93A8F64C940
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:50:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64A6D64C945
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:51:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237995AbiLNMur (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 07:50:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53564 "EHLO
+        id S238229AbiLNMvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 07:51:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236681AbiLNMu0 (ORCPT
+        with ESMTP id S237486AbiLNMvf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 07:50:26 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A686BBC9;
-        Wed, 14 Dec 2022 04:49:56 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E8EFAFEC;
-        Wed, 14 Dec 2022 04:50:36 -0800 (PST)
-Received: from [10.57.88.237] (unknown [10.57.88.237])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2339E3F73B;
-        Wed, 14 Dec 2022 04:49:54 -0800 (PST)
-Message-ID: <fb8c5053-6dfc-f512-24a0-d00dd3f759a8@arm.com>
-Date:   Wed, 14 Dec 2022 12:49:47 +0000
+        Wed, 14 Dec 2022 07:51:35 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06691B98
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:51:34 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id x28so10260630lfn.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:51:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OVScZoGYXPRG6pr8K0FDRs95YCKdU6JOC0cKjJMDlpY=;
+        b=H9/BhWDfDTgnDfIpQdcDw8Z7WHmTQimH3hZ2RcdHCffmFofT9vJl55kjNxUg8Av+U4
+         oGN873S+/7Ey3euYNeutwigec44YkgWMr4b6BhSzkz2g0C1/jkzhXImCtzycf78XT/Ds
+         6zdwr86Q0F7COSlbu0KP1jj1QQC/9yrlgVIe8i3oqzAKcWgNyKuTgtnWRnjxSXEL7MJ7
+         YXh9vvlm79NRioMoKalqTQMGhEgnv/URI0yQ5tjEvYLCEp7JatH8Prm2UZU06nQxdQMl
+         IYj8BhB8HHxrvaJSwH2q0f9Zo7dCmbuP15lMRvZ2G8uLYG74ZCO+yh5jZKEAJ+Q+wTi7
+         2tHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OVScZoGYXPRG6pr8K0FDRs95YCKdU6JOC0cKjJMDlpY=;
+        b=L4S5URMyD3gUnpgzXBwAkN5VaIoghNiu+ohhpw2y8EiQ+bsLBK8Nt+7u7sfZqo+WOo
+         bhdxhts92U9bNyFuLE5O1mp/adaIWLUGxb8njo0yTsjVDrB9Z21FM6OK6HOOiczdsjrg
+         W/F1soAetaRR5JPAIJnJA/vyh8oI73qBEffSpeF5eIOZrtR3x4Gjc16IUufA6EhHPoGk
+         OzZLilVw4e3pfygTEchyqq9SiWTwKzDcLNESR7xPHSFwim4/Bs4oR3BhdA+UqTpejQ06
+         RtOr/a4pyAPQktKLSRFUMPPMh4+KDdOvDrUx1bb7l0p+6TR8BMiqR5AXcNkSJd1QwUUf
+         pkvA==
+X-Gm-Message-State: ANoB5pn4MQswDbkfrXTh0v+rhowxd2tNI+LmUiNOHP3M0dcS4HSYdC8m
+        I48gW3YeT1JouDJs3ES06Iv0Og==
+X-Google-Smtp-Source: AA0mqf5M3wtgE78WiTNZSFw2dDZQwdxnhEmls6SUeeoYhbTWz91zBfC8Wh/xGMOzMoO8XImJ1EwC6w==
+X-Received: by 2002:a19:e34e:0:b0:4b5:178f:a14c with SMTP id c14-20020a19e34e000000b004b5178fa14cmr6799888lfk.16.1671022292405;
+        Wed, 14 Dec 2022 04:51:32 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id s27-20020a056512203b00b004afac783b5esm790585lfs.238.2022.12.14.04.51.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Dec 2022 04:51:31 -0800 (PST)
+Message-ID: <c7979199-3932-00dc-d349-c0aeb96f5c24@linaro.org>
+Date:   Wed, 14 Dec 2022 13:51:30 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH 4/4] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        amit.pundir@linaro.org, regressions@leemhuis.info,
-        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com
-References: <20221213140724.8612-1-quic_sibis@quicinc.com>
- <20221213140724.8612-5-quic_sibis@quicinc.com>
- <741b64c2-0b09-6475-5736-d2cd3e33c34c@arm.com>
- <ba258979-0c65-4671-dd01-c1916c26e81b@quicinc.com>
- <20221213160722.GC4862@thinkpad>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20221213160722.GC4862@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
+ qup2_i2c18 nodes
+To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com, quic_shazhuss@quicinc.com
+References: <20221212182314.1902632-1-bmasney@redhat.com>
+ <20221212182314.1902632-4-bmasney@redhat.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221212182314.1902632-4-bmasney@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-13 16:07, Manivannan Sadhasivam wrote:
-> On Tue, Dec 13, 2022 at 09:27:04PM +0530, Sibi Sankar wrote:
->> Hey Robin,
->>
->> Thanks for taking time to review the series.
->>
->> On 12/13/22 20:37, Robin Murphy wrote:
->>> On 2022-12-13 14:07, Sibi Sankar wrote:
->>>> The memory region allocated using dma_alloc_attr with no kernel mapping
->>>> attribute set would still be a part of the linear kernel map. Any access
->>>> to this region by the application processor after assigning it to the
->>>> remote Q6 will result in a XPU violation. Fix this by replacing the
->>>> dynamically allocated memory region with a no-map carveout and unmap the
->>>> modem metadata memory region before passing control to the remote Q6.
->>>>
->>>> Reported-by: Amit Pundir <amit.pundir@linaro.org>
->>>> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for
->>>> mem ownership switch")
->>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>> ---
->>>>
->>>> The addition of the carveout and memunmap is required only on SoCs that
->>>> mandate memory protection before transferring control to Q6, hence the
->>>> driver falls back to dynamic memory allocation in the absence of the
->>>> modem metadata carveout.
->>>
->>> The DMA_ATTR_NO_KERNEL_MAPPING stuff is still broken and pointless, so
->>> I'd expect to see this solution replacing it, not being added alongside.
->>> It's just silly to say pass the "I don't need a CPU mapping" flag, then
->>> manually open-code the same CPU mapping you would have got if you
->>> hadn't, in a way that only works at all when a cacheable alias exists
->>> anyway.
->>
->> only a subset of SoCs supported by the driver are affected by
->> the bug i.e. on the others dma_alloc_attr would still work
->> without problems. I can perhaps drop the NO_KERNEL_MAPPING along
->> with the vmap/vunmap and simplify things for those SoCs.
->>
+On 12/12/2022 19:23, Brian Masney wrote:
+> Add the necessary nodes in order to get qup1_i2c15 and qup2_i2c18
+> functioning on the automotive board and exposed to userspace.
 > 
-> Or perhaps revert fc156629b23a?
+> This work was derived from various patches that Qualcomm delivered
+> to Red Hat in a downstream kernel. This change was validated by using
+> i2c-tools 4.3.3 on CentOS Stream 9:
+> 
+> [root@localhost ~]# i2cdetect -l
+> i2c-15  i2c             Geni-I2C                                I2C adapter
+> i2c-18  i2c             Geni-I2C                                I2C adapter
+> 
+> [root@localhost ~]# i2cdetect -a -y 15
+> Warning: Can't use SMBus Quick Write command, will skip some addresses
+>      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> 00:
+> 10:
+> 20:
+> 30: -- -- -- -- -- -- -- --
+> 40:
+> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 60:
+> 70:
+> 
+> Bus 18 has the same output. I validated that we get the same output on
+> the downstream kernel.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 46 +++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index d70859803fbd..6dc3f3ff8ece 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -17,6 +17,8 @@ / {
+>  	compatible = "qcom,sa8540p-ride", "qcom,sa8540p";
+>  
+>  	aliases {
+> +		i2c15 = &qup1_i2c15;
+> +		i2c18 = &qup2_i2c18;
+>  		serial0 = &qup2_uart17;
+>  	};
+>  
+> @@ -188,10 +190,28 @@ &pcie3a_phy {
+>  	status = "okay";
+>  };
+>  
+> +&qup1 {
+> +	status = "okay";
+> +};
+> +
+> +&qup1_i2c15 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qup1_i2c15_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qup2 {
+>  	status = "okay";
+>  };
+>  
+> +&qup2_i2c18 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qup2_i2c18_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qup2_uart17 {
+>  	compatible = "qcom,geni-debug-uart";
+>  	status = "okay";
+> @@ -313,4 +333,30 @@ wake-pins {
+>  			bias-pull-up;
+>  		};
+>  	};
+> +
+> +	qup1_i2c15_default: qup1-i2c15-state {
+> +		mux-pins {
+> +			pins = "gpio36", "gpio37";
+> +			function = "qup15";
+> +		};
+> +
+> +		config-pins {
+> +			pins = "gpio36", "gpio37";
+> +			drive-strength = <0x02>;
 
-Oh, indeed, if it's already self-contained that's even neater. Basically 
-that whole commit is based on a misunderstanding, doesn't actually do 
-what it thinks it does, and you'd be far better off not maintaining the 
-extra code.
+Except the problem pointed out by Konrad (we do not have separate mux
+and config pins anymore), this is not a hex, it's mA.
 
-Thanks,
-Robin.
+
+
+
+Best regards,
+Krzysztof
+
