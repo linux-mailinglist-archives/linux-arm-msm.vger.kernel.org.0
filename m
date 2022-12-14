@@ -2,148 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14F5064CE48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 17:45:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 530E264CEA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 18:12:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238278AbiLNQp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 11:45:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
+        id S237480AbiLNRMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 12:12:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238848AbiLNQpz (ORCPT
+        with ESMTP id S237451AbiLNRMl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 11:45:55 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE881B1F0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:45:53 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id z26so11412775lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:45:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RRWASIa+62gB90taCgH38XNmbnY0IGXkKz42ekdHkC8=;
-        b=jAAGbPTy++KAAsmhxh0DStHS8KA4dG5vvOWIhsKqYMw5HRtrcqNFtSbxIKqYafvpa5
-         4y4gpbdQIxwoObYuDT6HrPFOaAsVEs7c88J8M9mV795+zXVNeRVyPI1e1GIyQAxNzTZM
-         Eu2Hl8eYcoFiKB1eV/4GlX2gUh0b2FXtp2n4P4DXw+9GR+MRjKeOGtx1F0E4YgnT0Zcu
-         2IMwk/RQQdCE7z/zfoeKXGpTHyH+y9sPP5QkLTmTNX0eTrX0Xr4XiXrpcc7/Op4g/jHc
-         WL8862bK7laWpsAQ4zCCg6W81RMRdextNH/bUGfz96QGSqUXnzEkWIYdTrhCvvqPRj4p
-         8TKg==
+        Wed, 14 Dec 2022 12:12:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F218723EAD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 09:11:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1671037919;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=KGReCTY92sW4eCJTIrgAB3lo0my0hNp6y4ogvcT9V4A=;
+        b=biYjYjX/oXeQGQ+/GsXMZ+6dPCEzd5dP2MTQjpleUhTJpF3bwwuD/TuPaYkWcBP8G4Y8hn
+        Ga/PsfU6O+Ka0+GozFy8Vkyoky9tpg6rLLc/D9QacRPCqFjL6e2Uok3asCWJcsXLcA01N0
+        P3VvJOklSvL5NM0cE//9r5lXlshCyoo=
+Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
+ [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-408-ZpU6fwLNOuGYTHL1PJtKzA-1; Wed, 14 Dec 2022 12:11:58 -0500
+X-MC-Unique: ZpU6fwLNOuGYTHL1PJtKzA-1
+Received: by mail-yb1-f200.google.com with SMTP id y66-20020a25c845000000b00733b5049b6fso484756ybf.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 09:11:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RRWASIa+62gB90taCgH38XNmbnY0IGXkKz42ekdHkC8=;
-        b=0uVmEUuzUbr9MpwfFr8svGbkk8e3/ETOfbPsUoZyFU/uzaFXoiNsvyxA1vBBd0lhzp
-         wO/BLdDMC63xzYLp3Hfv2S0NFRKWdYaJyHqBZmlCKn49qv32i+sYZuujdoE+v/8ZISAR
-         4B4/qt0I/8171tE4zwLXOB//N/gV1D3PdMTioVTa/ad3fxnXAvBRY4CqofisgiA/weXV
-         UcyAZnrTBMeZZ4fZauSMXhuTxTuMGsrqFT0EMZoCpFXkIL3L7Xa5uxpR5q91tX6fATS1
-         k+7ZEs/8VYb/uZ/PdEnyLZSS0h7m926fNjWOB25rjudJU5XmwhJEHc9+U1KaKmX2cb+L
-         nZWw==
-X-Gm-Message-State: ANoB5pkmjDl1svLUGa5d2nluMduTLmWChG3Q8XbwCRSo9EmBQBqylQ6e
-        q7iIcUC/v0lR4K2sELb2LivSKQ==
-X-Google-Smtp-Source: AA0mqf6mEH7Kh/a6DQm4wbe5vmd7x1r9nWU0U76qIRLS6eUZ+BwnpSMqDv+zISaqINx24x9As9eKsg==
-X-Received: by 2002:a05:6512:b10:b0:4a4:68b7:f878 with SMTP id w16-20020a0565120b1000b004a468b7f878mr11949015lfu.28.1671036351559;
-        Wed, 14 Dec 2022 08:45:51 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a26-20020a194f5a000000b004b4930d53b5sm868909lfk.134.2022.12.14.08.45.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 08:45:51 -0800 (PST)
-Message-ID: <65ccd0c9-8bd9-fc3c-ef33-78b905adf294@linaro.org>
-Date:   Wed, 14 Dec 2022 17:45:49 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH] dt-bindings: arm: qcom: add board-id/msm-id for MSM8956,
- SDM636 and SM4250
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KGReCTY92sW4eCJTIrgAB3lo0my0hNp6y4ogvcT9V4A=;
+        b=yQt8qwS0Fuwaimk/L9fVi8Vw08MOFsbPVi95231IZ9jZe7UeiOyo4NLi6Ndc6CGiPA
+         +T+wlzvqY71u7Ja1PmW3Ttf2C7BaggxkavW/Bknq9QIgNeUh7lywz1byO3+4g8fW8rsz
+         bReMi8M7shgbTMZUPSZcRJBiN78vzWZKp4NSSYf4gQAN/ezepx92mCK1MuyvEH2jRoAH
+         GfVsO6YBwvk7rwlweRTWW2ZjYmA0Qf+PgqGpCDIzFN1eV1lpsxJsIQsA0yPIbqCYf6bi
+         09mSzbHGroij8XcT+sb420bwL8YKvbUCMOqOHUDNSGno/J2XyXfcD4e3nrElIGUygMLC
+         LAAw==
+X-Gm-Message-State: ANoB5pnd4M+osT2h4W83sSz07+t1dYOsmiKTiql8GKOjCsV3q2vGK4UY
+        VxMMYvV3fUzdo9RHpTDwurno7DRGurtEuj03SPP6rjABkIHK9uZC5FLyFmK59JaUhlO8NuPBFBS
+        iczlAYBvHKfDGRCtpxEKYDL9fLw==
+X-Received: by 2002:a05:7500:5d87:b0:ec:6820:4e82 with SMTP id fg7-20020a0575005d8700b000ec68204e82mr2227482gab.73.1671037917676;
+        Wed, 14 Dec 2022 09:11:57 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6PqYOzBOifnm/ejg1UfiWKL6kNn2wSa/oOIe30mlxLcjjHX/pwGMHebi3pueMk8BXNZ8aRwQ==
+X-Received: by 2002:a05:7500:5d87:b0:ec:6820:4e82 with SMTP id fg7-20020a0575005d8700b000ec68204e82mr2227448gab.73.1671037917276;
+        Wed, 14 Dec 2022 09:11:57 -0800 (PST)
+Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id t30-20020a37ea1e000000b006eef13ef4c8sm10305477qkj.94.2022.12.14.09.11.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Dec 2022 09:11:56 -0800 (PST)
+From:   Brian Masney <bmasney@redhat.com>
+To:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_shazhuss@quicinc.com, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, johan+linaro@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221214150605.173346-1-krzysztof.kozlowski@linaro.org>
- <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com
+Subject: [PATCH v2 0/7] dts: qcom: sc8280xp: add i2c, spi, and rng nodes
+Date:   Wed, 14 Dec 2022 12:11:38 -0500
+Message-Id: <20221214171145.2913557-1-bmasney@redhat.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/12/2022 16:29, Marijn Suijten wrote:
-> On 2022-12-14 16:06:05, Krzysztof Kozlowski wrote:
->> Allow qcom,board-id and qcom,msm-id leagcy properties on these older
->> platforms: MSM8956, SDM636 and SM4250.  Also mention more OnePlus
->> devices using modified qcom,board-id field.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
->> ---
->>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index d45e2129fce3..cfb7f5caf606 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -925,15 +925,18 @@ allOf:
->>                - qcom,apq8026
->>                - qcom,apq8094
->>                - qcom,apq8096
->> +              - qcom,msm8956
-> 
-> I am certain this (and msm8976) were added in [1] but it somehow got
-> lost when that was merged as 05c0c38dc752 ("dt-bindings: arm: qcom:
-> Document msm8956 and msm8976 SoC and devices")?
-> 
-> Should we also add qcom,msm8976 or only when a user for that board is
-> added?
+This patch series adds the i2c and spi nodes that are missing on the
+sc8280xp platform. Since I am already making changes to sc8280xp.dtsi
+in this series, I also included a change to enable the rng node for this
+platform as well.
 
-Bjorn,
-You need to fix your scripts. It's not the first time when applied patch
-is changed and its pieces are gone.
+The first three patches in this series are new in v2 and rename one node
+at a time to try to make the review easier. Each patch has a changelog.
 
-This is patchwork:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20221111120156.48040-9-angelogioacchino.delregno@collabora.com/
+Note that this series needs to be applied on top of:
+[PATCH v5] arm64: dts: qcom: sa8540p-ride: enable pcie2a node
+https://lore.kernel.org/lkml/20221213095922.11649-1-quic_shazhuss@quicinc.com/
 
-This is git:
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=arm64-for-6.2&id=05c0c38dc752eb9244e53d72ce1030f36153daf8
+Brian Masney (7):
+  arm64: dts: qcom: sc8280xp: rename qup2_uart17 to uart17
+  arm64: dts: qcom: sc8280xp: rename qup2_i2c5 to i2c21
+  arm64: dts: qcom: sc8280xp: rename qup0_i2c4 to i2c4
+  arm64: dts: qcom: sc8280xp: add missing i2c nodes
+  arm64: dts: qcom: sc8280xp: add missing spi nodes
+  arm64: dts: qcom: sa8540p-ride: add i2c nodes
+  arm64: dts: qcom: sc8280xp: add rng device tree node
 
-Two different patches.
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  12 +-
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  91 ++-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 162 ++--
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 178 ++---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 725 +++++++++++++++++-
+ 5 files changed, 985 insertions(+), 183 deletions(-)
 
-
-> 
->>                - qcom,msm8992
->>                - qcom,msm8994
->>                - qcom,msm8996
->>                - qcom,msm8998
->>                - qcom,sdm630
->>                - qcom,sdm632
->> +              - qcom,sdm636
->>                - qcom,sdm845
->>                - qcom,sdx55
->>                - qcom,sdx65
->> +              - qcom,sm4250
-> 
-> qcom,sm6115 could be added as well unless you rather leave that to the
-> person(s) adding the board compatible later on.
-
-There is no board, I think, so I did not add compatible.
-
-Best regards,
-Krzysztof
+-- 
+2.38.1
 
