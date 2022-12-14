@@ -2,165 +2,370 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F67264D01A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 20:32:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 282AF64D145
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:34:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238944AbiLNTb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 14:31:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48402 "EHLO
+        id S230249AbiLNUee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 15:34:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238502AbiLNTbt (ORCPT
+        with ESMTP id S230202AbiLNUeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 14:31:49 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CF9186CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 11:31:48 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 80F2B1F541;
-        Wed, 14 Dec 2022 20:31:45 +0100 (CET)
-Date:   Wed, 14 Dec 2022 20:31:44 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        sunliming <sunliming@kylinos.cn>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 6/6] drm/msm/dpu: Disallow unallocated (DSC)
- resources to be returned
-Message-ID: <20221214193144.to6yk5tr46akfy5m@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        sunliming <sunliming@kylinos.cn>, Sam Ravnborg <sam@ravnborg.org>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221213232207.113607-1-marijn.suijten@somainline.org>
- <20221213232207.113607-7-marijn.suijten@somainline.org>
- <4b7b4fb0-b99b-1022-b0f6-e91a84e8d082@linaro.org>
+        Wed, 14 Dec 2022 15:34:12 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB3C442D6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:27:16 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id z26so12396968lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:27:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5jdBIBSBtwqHInA24/RAynPGJTAquxojB3hFzekjdJM=;
+        b=wto1y5eNO5bCE0RDlK/WBPoH0U4c9fYxMejY9QkgopYgnVLuRPEBD6Z+rPr8/KPDpR
+         b6uBpqUKfQG3MFD6ztAxVFmZstpkpvPhBz2xb5Sjb87Opxtr5iubYtormSn2ANRd5k2J
+         pULwS8RFLG/Q5J0X4O9ZjvQyCVGM4bbLGI39Jem8Yco1ilBs8kFrJKvt9XSegjCGBEAt
+         9ebzJGuZZtv+y+iIjUkWkShIYp04kwNk+RmGcJ1BZHlQAPzoalueLMAYkCZUNfjXluvg
+         t6imjt1zAmfmitdE/WZUBc15c5cgkw6G3h2DjQYc7aSLNEE51FPqo1BSBPCeZJxu8EDI
+         +uXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5jdBIBSBtwqHInA24/RAynPGJTAquxojB3hFzekjdJM=;
+        b=h+T9/h87msRJ4u79X1Eb2Yg3m4XT9RG+m/3/AvSQQAgJwoBicOm1Er+mHNyFiHH4Ix
+         NQGk3sWiCXTznRJUI30rqrEA6c2ln48xTj8PNZBa/86SXBE17pt5XxEdfYJFnKcxSj41
+         UHxcPIuuuZJAWyAIEYyqWEqp+TaJQ1vwF8cYO9v/Dg0Uh4KyTyc9EH9oYY/+MbX6HHXh
+         raEGMixjmYmKhRtFNA/tfijgobur4Du5tGJRh6M8cUuvA1qDMGZLEGD5OXLx+wgSsLh2
+         shXskEfSu3bgpWDO9kWuMjIWN28FkniQkybszT5sJIM0XwIhdexR/9hFVJ/4JHDDlcsQ
+         OfGA==
+X-Gm-Message-State: ANoB5pnNDzg3ipfVwkGZSdjgM8CmnNRC1oVtuBHEWmNd3AZDtCTQXxLa
+        1RZBxd2/LKRA3w/GIfpz9Ss6vQ==
+X-Google-Smtp-Source: AA0mqf4gNu8oEYGafcFFLQkhlXqbCwBt+ltW2Tduc2ZdlTGyj0WREmRKJgmrd1hMn3Upxp7LsBZG0Q==
+X-Received: by 2002:ac2:4e81:0:b0:4b5:8176:10d2 with SMTP id o1-20020ac24e81000000b004b5817610d2mr9903826lfr.44.1671049634566;
+        Wed, 14 Dec 2022 12:27:14 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id s12-20020a056512202c00b00494935ddb88sm924389lfs.240.2022.12.14.12.27.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Dec 2022 12:27:13 -0800 (PST)
+Message-ID: <b62090b2-0772-7e9f-7a03-e97533d62230@linaro.org>
+Date:   Wed, 14 Dec 2022 21:27:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4b7b4fb0-b99b-1022-b0f6-e91a84e8d082@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6125: Initial support for
+ xiaomi-laurel_sprout
+To:     Lux Aliaga <they@mint.lgbt>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221214093342.153479-1-they@mint.lgbt>
+ <ea20c58f-3a53-7cdd-8669-228c4acac49a@linaro.org>
+ <5a511002-5cd2-b95b-a45a-faaf78e2f4a7@mint.lgbt>
+ <cd025494-862b-70ec-a008-4be219f7f72f@mint.lgbt>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <cd025494-862b-70ec-a008-4be219f7f72f@mint.lgbt>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-14 20:56:30, Dmitry Baryshkov wrote:
-> On 14/12/2022 01:22, Marijn Suijten wrote:
-> > In the event that the topology requests resources that have not been
-> > created by the system (because they are typically not represented in
-> > dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
-> > blocks) remain NULL but will still be returned out of
-> > dpu_rm_get_assigned_resources, where the caller expects to get an array
-> > containing num_blks valid pointers (but instead gets these NULLs).
-> > 
-> > To prevent this from happening, where null-pointer dereferences
-> > typically result in a hard-to-debug platform lockup, num_blks shouldn't
-> > increase past NULL blocks and will print an error and break instead.
-> > After all, max_blks represents the static size of the maximum number of
-> > blocks whereas the actual amount varies per platform.
-> > 
-> > In the specific case of DSC initial resource allocation should behave
-> > more like LMs and CTLs where NULL resources are skipped.  The current
-> > hardcoded mapping of DSC blocks should be loosened separately as DPU
-> > 5.0.0 introduced a crossbar where DSC blocks can be "somewhat" freely
-> > bound to any PP and CTL, but that hardcoding currently means that we
-> > will return an error when the topology reserves a DSC that isn't
-> > available, instead of looking for the next free one.
-> > 
-> > ^1: which can happen after a git rebase ended up moving additions to
-> > _dpu_cfg to a different struct which has the same patch context.
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > index 73b3442e7467..dcbf03d2940a 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > @@ -496,6 +496,11 @@ static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
-> >   
-> >   	/* check if DSC required are allocated or not */
-> >   	for (i = 0; i < num_dsc; i++) {
-> > +		if (!rm->dsc_blks[i]) {
-> > +			DPU_ERROR("DSC %d does not exist\n", i);
-> > +			return -EIO;
-> > +		}
-> > +
-> >   		if (global_state->dsc_to_enc_id[i]) {
-> >   			DPU_ERROR("DSC %d is already allocated\n", i);
-> >   			return -EIO;
-> > @@ -660,6 +665,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
-> >   				  blks_size, enc_id);
-> >   			break;
-> >   		}
-> > +		if (!hw_blks[i]) {
-> > +			DPU_ERROR("No more resource %d available to assign to enc %d\n",
-> > +				  type, enc_id);
-> > +			break;
-> > +		}
-> >   		blks[num_blks++] = hw_blks[i];
-> >   	}
-> >  
+
+
+On 14.12.2022 18:45, Lux Aliaga wrote:
+> Ok. I think that comment is incorrect. Changing the node name on extcon_usb breaks the "extcon" property in &usb3_dwc3, even after changing the reference.
 > 
-> These two chunks should come as two separate patches, each having it's 
-> own Fixes tag.
+Please don't toppost, reply under the paragraph you're referencing.
 
-Ack.  They are indeed addressing different issues (with the same
-outcome) with differing "backportability".  Will address in v2, thanks
-for pointing it out (and missing a Fixes: in the first place, of which
-we already have so many...).
-
-- Marijn
+Konrad
+> On 14/12/2022 14:26, Lux Aliaga wrote:
+>> I'm a bit confused at the "Node name: usb-id" comment. Should I change "extcon_usb" or "extcon-usb" to usb-id?
+>>
+>> On 14/12/2022 06:52, Krzysztof Kozlowski wrote:
+>>> On 14/12/2022 10:33, Lux Aliaga wrote:
+>>>> This commit implements support for the Xiaomi Mi A3
+>>>> (xiaomi-laurel_sprout). Here's a summary on what's working.
+>>>>
+>>>> - dmesg output to bootloader preconfigured display
+>>>> - USB
+>>>> - UFS
+>>>> - SMD RPM regulators
+>>>>
+>>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>>   .../dts/qcom/sm6125-xiaomi-laurel_sprout.dts  | 251 ++++++++++++++++++
+>>>>   2 files changed, 252 insertions(+)
+>>>>   create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>>> index d7669a7cee9f..7b4fbb4cbb84 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>>> @@ -140,6 +140,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += sdm845-shift-axolotl.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sdm850-lenovo-yoga-c630.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sdm850-samsung-w737.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm6125-sony-xperia-seine-pdx201.dtb
+>>>> +dtb-$(CONFIG_ARCH_QCOM)    += sm6125-xiaomi-laurel_sprout.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm6350-sony-xperia-lena-pdx213.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm7225-fairphone-fp4.dtb
+>>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8150-hdk.dtb
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
+>>>> new file mode 100644
+>>>> index 000000000000..edc5f13bae28
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
+>>>> @@ -0,0 +1,251 @@
+>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>> +/*
+>>>> + * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
+>>>> + */
+>>>> +
+>>>> +/dts-v1/;
+>>>> +
+>>>> +#include "sm6125.dtsi"
+>>>> +#include <dt-bindings/gpio/gpio.h>
+>>>> +#include <dt-bindings/input/input.h>
+>>>> +#include <dt-bindings/input/gpio-keys.h>
+>>>> +
+>>>> +/ {
+>>>> +    /* required for bootloader to select correct board */
+>>>> +    qcom,msm-id = <0x18a 0x00>; /* sm6125 v1 */
+>>>> +    qcom,board-id = <0x0b 0x00>;
+>>>> +
+>>>> +    model = "Xiaomi Mi A3";
+>>>> +    compatible = "xiaomi,laurel_sprout", "qcom,sm6125";
+>>>> +    chassis-type = "handset";
+>>>> +
+>>>> +    chosen {
+>>>> +        #address-cells = <2>;
+>>>> +        #size-cells = <2>;
+>>>> +        ranges;
+>>>> +
+>>>> +        framebuffer0: framebuffer@5c000000 {
+>>>> +            compatible = "simple-framebuffer";
+>>>> +            reg = <0 0x5c000000 0 (1560 * 720 * 4)>;
+>>>> +            width = <720>;
+>>>> +            height = <1560>;
+>>>> +            stride = <(720 * 4)>;
+>>>> +            format = "a8r8g8b8";
+>>>> +        };
+>>>> +    };
+>>>> +
+>>>> +    extcon_usb: extcon-usb {
+>>> Node name: usb-id
+>>>
+>>>> +        compatible = "linux,extcon-usb-gpio";
+>>>> +        id-gpio = <&tlmm 102 GPIO_ACTIVE_HIGH>;
+>>>> +    };
+>>>> +
+>>>> +    reserved_memory {
+>>> No underscores in node names. Use same node name as other boards, don't
+>>> invent own stuff.
+>>>
+>>>> +        #address-cells = <2>;
+>>>> +        #size-cells = <2>;
+>>>> +        debug_mem: memory@ffb00000 {
+>>>> +            reg = <0x0 0xffb00000 0x0 0xc0000>;
+>>>> +            no-map;
+>>>> +        };
+>>>> +
+>>>> +        last_log_mem: memory@ffbc0000 {
+>>>> +            reg = <0x0 0xffbc0000 0x0 0x80000>;
+>>>> +            no-map;
+>>>> +        };
+>>>> +
+>>>> +        pstore_mem: ramoops@ffc00000 {
+>>>> +            compatible = "ramoops";
+>>>> +            reg = <0x0 0xffc40000 0x0 0xc0000>;
+>>>> +            record-size = <0x1000>;
+>>>> +            console-size = <0x40000>;
+>>>> +            msg-size = <0x20000 0x20000>;
+>>>> +        };
+>>>> +
+>>>> +        cmdline_mem: memory@ffd00000 {
+>>>> +            reg = <0x0 0xffd40000 0x0 0x1000>;
+>>>> +            no-map;
+>>>> +        };
+>>>> +    };
+>>>> +};
+>>>> +
+>>>> +&rpm_requests {
+>>>> +    regulators-0 {
+>>>> +        compatible = "qcom,rpm-pm6125-regulators";
+>>>> +
+>>>> +        vreg_s6a: s6 {
+>>>> +            regulator-min-microvolt = <936000>;
+>>>> +            regulator-max-microvolt = <1422000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l1a: l1 {
+>>>> +            regulator-min-microvolt = <1200000>;
+>>>> +            regulator-max-microvolt = <1256000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l2a: l2 {
+>>>> +            regulator-min-microvolt = <1000000>;
+>>>> +            regulator-max-microvolt = <1056000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l3a: l3 {
+>>>> +            regulator-min-microvolt = <1000000>;
+>>>> +            regulator-max-microvolt = <1064000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l4a: l4 {
+>>>> +            regulator-min-microvolt = <872000>;
+>>>> +            regulator-max-microvolt = <976000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l5a: l5 {
+>>>> +            regulator-min-microvolt = <1648000>;
+>>>> +            regulator-max-microvolt = <3104000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l6a: l6 {
+>>>> +            regulator-min-microvolt = <576000>;
+>>>> +            regulator-max-microvolt = <656000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l7a: l7 {
+>>>> +            regulator-min-microvolt = <872000>;
+>>>> +            regulator-max-microvolt = <976000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l8a: l8 {
+>>>> +            regulator-min-microvolt = <400000>;
+>>>> +            regulator-max-microvolt = <728000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l9a: l9 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1896000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l10a: l10 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1896000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l11a: l11 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1952000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l12a: l12 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1996000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l13a: l13 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1832000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l14a: l14 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1904000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l15a: l15 {
+>>>> +            regulator-min-microvolt = <3104000>;
+>>>> +            regulator-max-microvolt = <3232000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l16a: l16 {
+>>>> +            regulator-min-microvolt = <1800000>;
+>>>> +            regulator-max-microvolt = <1904000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l17a: l17 {
+>>>> +            regulator-min-microvolt = <1248000>;
+>>>> +            regulator-max-microvolt = <1304000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l18a: l18 {
+>>>> +            regulator-min-microvolt = <1200000>;
+>>>> +            regulator-max-microvolt = <1264000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l19a: l19 {
+>>>> +            regulator-min-microvolt = <1648000>;
+>>>> +            regulator-max-microvolt = <2952000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l20a: l20 {
+>>>> +            regulator-min-microvolt = <1648000>;
+>>>> +            regulator-max-microvolt = <2952000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l21a: l21 {
+>>>> +            regulator-min-microvolt = <2600000>;
+>>>> +            regulator-max-microvolt = <2856000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l22a: l22 {
+>>>> +            regulator-min-microvolt = <2944000>;
+>>>> +            regulator-max-microvolt = <3304000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l23a: l23 {
+>>>> +            regulator-min-microvolt = <3000000>;
+>>>> +            regulator-max-microvolt = <3400000>;
+>>>> +        };
+>>>> +
+>>>> +        vreg_l24a: l24 {
+>>>> +            regulator-min-microvolt = <2944000>;
+>>>> +            regulator-max-microvolt = <3304000>;
+>>>> +        };
+>>>> +    };
+>>>> +};
+>>>> +
+>>>> +&hsusb_phy1 {
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>> +
+>>>> +&sdc2_off_state {
+>>>> +    sd-cd {
+>>> Does not look like you tested the DTS against bindings. Please run `make
+>>> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+>>> for instructions).
+>>>
+>>> that's missing -pins suffix but most likely it does not match other DTS
+>>> neither. So probably was based on some old kernel.
+>>>
+>>>> +        pins = "gpio98";
+>>>> +        bias-disable;
+>>>> +        drive-strength = <2>;
+>>>> +    };
+>>>> +};
+>>>> +
+>>>> +&sdc2_on_state {
+>>>> +    sd-cd {
+>>> Same problems.
+>>>
+>>>> +        pins = "gpio98";
+>>>> +        bias-pull-up;
+>>>> +        drive-strength = <2>;
+>>>> +    };
+>>>> +};
+>>> Best regards,
+>>> Krzysztof
+>>>
