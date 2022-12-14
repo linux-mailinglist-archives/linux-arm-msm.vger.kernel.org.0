@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9541D64D00F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 20:23:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B16B064D014
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 20:30:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238964AbiLNTXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 14:23:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
+        id S238688AbiLNTac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 14:30:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238634AbiLNTX1 (ORCPT
+        with ESMTP id S229558AbiLNTab (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 14:23:27 -0500
+        Wed, 14 Dec 2022 14:30:31 -0500
 Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC87423EB3;
-        Wed, 14 Dec 2022 11:23:25 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1894D286C1;
+        Wed, 14 Dec 2022 11:30:30 -0800 (PST)
 Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7D8A920189;
-        Wed, 14 Dec 2022 20:23:23 +0100 (CET)
-Date:   Wed, 14 Dec 2022 20:23:22 +0100
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B993820222;
+        Wed, 14 Dec 2022 20:30:27 +0100 (CET)
+Date:   Wed, 14 Dec 2022 20:30:26 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
@@ -51,8 +51,9 @@ Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Vladimir Lypak <vladimir.lypak@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 0/6] drm/msm: DSC Electric Boogaloo for sm8[12]50
-Message-ID: <20221214192322.vs4tvhlzjc265bva@SoMainline.org>
+Subject: Re: [RFC PATCH 3/6] drm/msm/dpu1: Wire up DSC mask for active CTL
+ configuration
+Message-ID: <20221214193026.dv2fuubysctcvlkg@SoMainline.org>
 Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
@@ -80,11 +81,12 @@ Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20221213232207.113607-1-marijn.suijten@somainline.org>
- <154b2e08-25a0-c8b7-1dc8-2d41b8787f05@linaro.org>
+ <20221213232207.113607-4-marijn.suijten@somainline.org>
+ <184d22f1-7ed1-4a67-1c25-9fafeb94db83@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <154b2e08-25a0-c8b7-1dc8-2d41b8787f05@linaro.org>
+In-Reply-To: <184d22f1-7ed1-4a67-1c25-9fafeb94db83@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -93,54 +95,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-14 20:40:06, Dmitry Baryshkov wrote:
+On 2022-12-14 20:43:29, Dmitry Baryshkov wrote:
 > On 14/12/2022 01:22, Marijn Suijten wrote:
-> > This preliminary Display Stream Compression support package for
-> > (initially tested on) sm8[12]50 is based on comparing DSC behaviour
-> > between downstream and mainline.  Some new callbacks are added (for
-> > binding blocks on active CTLs), logic bugs are corrected, zeroed struct
-> > members are now assigned proper values, and RM allocation and hw block
-> > retrieval now hand out (or not) DSC blocks without causing null-pointer
-> > dereferences.
+> > Active CTLs have to configure what DSC block(s) have to be enabled, and
+> > what DSC block(s) have to be flushed; this value was initialized to zero
+> > resulting in the necessary register writes to never happen (or would
+> > write zero otherwise).  This seems to have gotten lost in the DSC v4->v5
+> > series while refactoring how the combination with merge_3d was handled.
 > > 
-> > Unfortunately it is not yet enough to get rid of completely corrupted
-> > display output on the boards I tested here:
-> > - Sony Xperia 1 (sm8150), 1644x3840 or 1096x2560 pixels;
-> > - Sony Xperia 5II (sm8250), 1080x2520, at 60 or 120Hz;
-> > - (can include more Xperia boards if desired)
+> > Fixes: 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in encoder")
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c  | 2 ++
+> >   3 files changed, 4 insertions(+)
 > > 
-> > Both devices use the DUALPIPE_DSCMERGE topology downstream: dual LM, PP
-> > and DSC, but only a single INTF/encoder/DSI-link.
-> > 
-> > Hopefully this spawns some community/upstream interest to help rootcause
-> > our corruption issues (after we open a drm/msm report on GitLab for more
-> > appropriate tracking).
-> > 
-> > The Sony Xperia XZ3 (sdm845) was fully tested and validated with this
-> > series to not cause any regressions (an one of the math fixes now allows
-> > us to change slice_count in the panel driver, which would corrupt
-> > previously).
-> > 
-> > Marijn Suijten (6):
-> >    drm/msm/dpu1: Implement DSC binding to PP block for CTL V1
-> >    drm/msm/dpu1: Add DSC config for sm8150 and sm8250
-> >    drm/msm/dpu1: Wire up DSC mask for active CTL configuration
-> >    drm/msm/dsi: Use DSC slice(s) packet size to compute word count
-> >    drm/msm/dsi: Flip greater-than check for slice_count and
-> >      slice_per_intf
-> >    drm/msm/dpu: Disallow unallocated (DSC) resources to be returned
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > index ae28b2b93e69..35791f93c33d 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > @@ -61,6 +61,7 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+> >   	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_CMD;
+> >   	intf_cfg.stream_sel = cmd_enc->stream_sel;
+> >   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+> > +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
+> >   	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
+> >   
+> >   	/* setup which pp blk will connect to this intf */
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > index 0f71e8fe7be7..9ee3a7306a5f 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > @@ -274,6 +274,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+> >   	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_VID;
+> >   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
+> >   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+> > +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
+> >   	if (phys_enc->hw_pp->merge_3d)
+> >   		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
+> >   
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > index 7cbcef6efe17..92ddf9995b37 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > @@ -209,6 +209,7 @@ static void dpu_encoder_phys_wb_setup_cdp(struct dpu_encoder_phys *phys_enc)
+> >   
+> >   		intf_cfg.intf = DPU_NONE;
+> >   		intf_cfg.wb = hw_wb->idx;
+> > +		intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
 > 
-> General comment: patches with Fixes ideally should come first. Usually 
-> they are picked into -fixes and/or stable kernels. If the Fixes patches 
-> are in the middle of the series, one can not be sure that they do not 
-> have dependencies on previous patches. If there is one, it should 
-> probably be stated clearly to ease work on backporting them.
+> We usually don't have DSC with the writeback, don't we?
 
-Ack, I may have rushed these RFC patches straight off my branches onto
-the lists in hopes of sparking some suggestions on what may still be
-broken or missing to get DSC working on sm[12]50, but will keep this in
-mind for v2 after receiving some more review.
+I am unsure so ended up adding them in writeback regardless.  Downstream
+uses a separate callback to process intf_cfg.dsc instead of going
+through setup_intf_cfg().
 
-That said, any suggestions?
+To prevent these from being missed again (in the case of copy&paste),
+how about instead having some function that sets up intf_cfg with these
+default values from a phys_enc?  That way most of this remains oblivious
+to the caller.
+
+On the same note, that callback on non-DPU_CTL_ACTIVE_CFG hardware
+doesn't use the intf_cfg.dsc member anyway, but it was again added to
+keep the blocks somewhat consistent (in case it ever becomes used?).
+
+> >   		if (mode_3d && hw_pp && hw_pp->merge_3d)
+> >   			intf_cfg.merge_3d = hw_pp->merge_3d->idx;
+> > @@ -230,6 +231,7 @@ static void dpu_encoder_phys_wb_setup_cdp(struct dpu_encoder_phys *phys_enc)
+> >   		intf_cfg.wb = hw_wb->idx;
+> >   		intf_cfg.mode_3d =
+> >   			dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+> > +		intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
+> >   		phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
+> >   	}
+> >   }
 
 - Marijn
