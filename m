@@ -2,141 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68C0764D261
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 23:29:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF3E64D26E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 23:37:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbiLNW3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 17:29:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59858 "EHLO
+        id S229469AbiLNWhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 17:37:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbiLNW3k (ORCPT
+        with ESMTP id S229446AbiLNWhv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 17:29:40 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D65DB5A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 14:29:38 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id d20so24742725edn.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 14:29:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1bSdi2nTZFfN0KO3twl810Uns3X1CbpenS2xYlJiGPM=;
-        b=QS+/BUVNsbN6h+tQwIBW7N0LXW4/Jg584fdK+n867YoxGH2EVT3pvpOv0U+9ZxfOF/
-         rC+A8JiiEJr2R7MGbILNYNFTad0rr0C8KD/sy/c1V8PbqBkKH32/xb29IPq+heVzZkXp
-         klpRQ11wYfFmdLXqkEepJLbDXUndJHe8njFAk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1bSdi2nTZFfN0KO3twl810Uns3X1CbpenS2xYlJiGPM=;
-        b=oCIuFH01dYURHpVWTHWkEiQgxGXeabc9KTOcp5/65K+ykNLpburgOxrHyjpe9m9RKe
-         L/ihyw0RQsfTYriqj43JTSg8L3ND4iTgrEV1Q3CQDSqdieZTQZTm8KlxlRIqcU3Hsg0T
-         YCF7V1VA9+GYCBFAWjDZq/3sxB22abQm3WYLhd7Sq36a4efIfBjmhdvR1AH37cPeE6eI
-         I+d4aLTlBwuDIqAGGeQAe0IM5grVTQJPakbzeew30bRdjKg2bMpnf9kXyL1xzfYAfqBS
-         M/4lArAYVw8OFEWZIJq0ERMZV6P4nlilFL4KaaoBSRZHMqHxYRZkIinfLOhVaEmxKOH7
-         ZAbQ==
-X-Gm-Message-State: ANoB5pmbPgbGO1OS+Evp06FL4vfO8PA5rRITHQ/O+4MQK1G2kDZLaQJf
-        WZQx/egYzGTWGQWcneETGaKHaZktJUmtqzY4s8o=
-X-Google-Smtp-Source: AA0mqf6+dtM+l3srjsQDtww4TQW5EpB1ot2V04JNN2Le2MK+FbtfjmwMh2kXZ0bQNFX1ZMWBp4APyw==
-X-Received: by 2002:a05:6402:655:b0:46a:8e28:5541 with SMTP id u21-20020a056402065500b0046a8e285541mr20854157edx.42.1671056976803;
-        Wed, 14 Dec 2022 14:29:36 -0800 (PST)
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
-        by smtp.gmail.com with ESMTPSA id t11-20020aa7db0b000000b004702caff4f6sm2586878eds.73.2022.12.14.14.29.35
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 14:29:35 -0800 (PST)
-Received: by mail-wm1-f46.google.com with SMTP id h8-20020a1c2108000000b003d1efd60b65so554313wmh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 14:29:35 -0800 (PST)
-X-Received: by 2002:a05:600c:2d91:b0:3d0:69f4:d3d0 with SMTP id
- i17-20020a05600c2d9100b003d069f4d3d0mr191822wmg.93.1671056974914; Wed, 14 Dec
- 2022 14:29:34 -0800 (PST)
+        Wed, 14 Dec 2022 17:37:51 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D4036C62;
+        Wed, 14 Dec 2022 14:37:49 -0800 (PST)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5F54620376;
+        Wed, 14 Dec 2022 23:37:47 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Michael Srba <Michael.Srba@seznam.cz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] Revert "phy: qualcomm: usb28nm: Add MDM9607 init sequence"
+Date:   Wed, 14 Dec 2022 23:37:32 +0100
+Message-Id: <20221214223733.648167-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <1671052890-11627-1-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1671052890-11627-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 14 Dec 2022 14:29:21 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UTeCU7BcfPMXz8J-9uOp_7Fn9PFdtFMsu46x5wKa0RyQ@mail.gmail.com>
-Message-ID: <CAD=FV=UTeCU7BcfPMXz8J-9uOp_7Fn9PFdtFMsu46x5wKa0RyQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq
- is not for aux transfer
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This reverts commit 557a28811c7e0286d3816842032db5eb7bb5f156.
 
-On Wed, Dec 14, 2022 at 1:21 PM Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> There are 3 possible interrupt sources are handled by DP controller,
-> HPDstatus, Controller state changes and Aux read/write transaction.
-> At every irq, DP controller have to check isr status of every interrupt
-> sources and service the interrupt if its isr status bits shows interrupts
-> are pending. There is potential race condition may happen at current aux
-> isr handler implementation since it is always complete dp_aux_cmd_fifo_tx()
-> even irq is not for aux read or write transaction. This may cause aux read
-> transaction return premature if host aux data read is in the middle of
-> waiting for sink to complete transferring data to host while irq happen.
-> This will cause host's receiving buffer contains unexpected data. This
-> patch fixes this problem by checking aux isr and return immediately at
-> aux isr handler if there are no any isr status bits set.
->
-> Follows are the signature at kernel logs when problem happen,
-> EDID has corrupt header
-> panel-simple-dp-aux aux-aea0000.edp: Couldn't identify panel via EDID
-> panel-simple-dp-aux aux-aea0000.edp: error -EIO: Couldn't detect panel nor find a fallback
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_aux.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index d030a93..8f8b12a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -423,6 +423,13 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
->
->         isr = dp_catalog_aux_get_irq(aux->catalog);
->
-> +       /*
-> +        * if this irq is not for aux transfer,
-> +        * then return immediately
-> +        */
+This commit introduced an init sequence from downstream DT [1] in the
+driver.  As mentioned by the comment above the HSPHY_INIT_CFG macro for
+this sequence:
 
-Why do you need 4 lines for a comment that fits on one line?
+    /*
+     * The macro is used to define an initialization sequence.  Each tuple
+     * is meant to program 'value' into phy register at 'offset' with 'delay'
+     * in us followed.
+     */
 
-> +       if (!isr)
-> +               return;
+Instead of corresponding to offsets into the phy register, the sequence
+read by the downstream driver [2] is passed into ulpi_write [3] which
+crafts the address-value pair into a new value and writes it into the
+same register at USB_ULPI_VIEWPORT [4].  In other words, this init
+sequence is programmed into the hardware in a totally different way than
+downstream and is unlikely to achieve the desired result, if the hsphy
+is working at all.
 
-I can confirm that this works for me. I could reproduce the EDID
-problems in the past and I can't after this patch. ...so I could give
-a:
+An alternative method needs to be found to write these init values at
+the desired location.  Fortunately mdm9607 did not land upstream yet [5]
+and should have its compatible revised to use the generic one, instead
+of a compatible that writes wrong data to the wrong registers.
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+[1]: https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/arch/arm/boot/dts/qcom/mdm9607.dtsi#585
+[2]: https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/usb/phy/phy-msm-usb.c#4183
+[3]: https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/usb/phy/phy-msm-usb.c#468
+[4]: https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/usb/phy/phy-msm-usb.c#418
+[5]: https://lore.kernel.org/linux-arm-msm/20210805222812.40731-1-konrad.dybcio@somainline.org/
 
-I'm not an expert on this part of the code, so feel free to ignore my
-other comments if everyone else thinks this patch is fine as-is, but
-to me something here feels a little fragile. It feels a little weird
-that we'll "complete" for _any_ interrupt that comes through now
-rather than relying on dp_aux_native_handler() / dp_aux_i2c_handler()
-to specifically identify interrupts that caused the end of the
-transfer. I guess that idea is that every possible interrupt we get
-causes the end of the transfer?
+Reported-by: Michael Srba <Michael.Srba@seznam.cz>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ .../devicetree/bindings/phy/qcom,usb-hs-28nm.yaml   |  1 -
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c         | 13 -------------
+ 2 files changed, 14 deletions(-)
 
--Doug
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
+index abcc4373f39e..ca6a0836b53c 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
+@@ -16,7 +16,6 @@ properties:
+   compatible:
+     enum:
+       - qcom,usb-hs-28nm-femtophy
+-      - qcom,usb-hs-28nm-mdm9607
+ 
+   reg:
+     maxItems: 1
+diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c b/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+index 8807e59a1162..a52a9bf13b75 100644
+--- a/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+@@ -401,26 +401,13 @@ static const struct hsphy_init_seq init_seq_femtophy[] = {
+ 	HSPHY_INIT_CFG(0x90, 0x60, 0),
+ };
+ 
+-static const struct hsphy_init_seq init_seq_mdm9607[] = {
+-	HSPHY_INIT_CFG(0x80, 0x44, 0),
+-	HSPHY_INIT_CFG(0x81, 0x38, 0),
+-	HSPHY_INIT_CFG(0x82, 0x24, 0),
+-	HSPHY_INIT_CFG(0x83, 0x13, 0),
+-};
+-
+ static const struct hsphy_data hsphy_data_femtophy = {
+ 	.init_seq = init_seq_femtophy,
+ 	.init_seq_num = ARRAY_SIZE(init_seq_femtophy),
+ };
+ 
+-static const struct hsphy_data hsphy_data_mdm9607 = {
+-	.init_seq = init_seq_mdm9607,
+-	.init_seq_num = ARRAY_SIZE(init_seq_mdm9607),
+-};
+-
+ static const struct of_device_id qcom_snps_hsphy_match[] = {
+ 	{ .compatible = "qcom,usb-hs-28nm-femtophy", .data = &hsphy_data_femtophy, },
+-	{ .compatible = "qcom,usb-hs-28nm-mdm9607", .data = &hsphy_data_mdm9607, },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, qcom_snps_hsphy_match);
+-- 
+2.39.0
+
