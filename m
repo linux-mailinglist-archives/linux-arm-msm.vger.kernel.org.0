@@ -2,100 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F1EC64CEF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 18:47:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F37464CF87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 19:40:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbiLNRrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 12:47:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56632 "EHLO
+        id S238843AbiLNSkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 13:40:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiLNRrG (ORCPT
+        with ESMTP id S238699AbiLNSkK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 12:47:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43FA27C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 09:46:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1671039979;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=MRU/7YOQt2xy6rWvIiu4YOafJ8TK5XKhpXf423rIVa8=;
-        b=L/4qZDQv4LJghmqNw7XEe8U+TWPvjr0iEpfkbcDhbXoxKyhh8Fkgsj23nwVwhTM16LC0FL
-        +JNGmJtMkkxw3kviP4XGv632DFl39ruY9rEkXbbHsE5PI44AF8KQs7WYTSgt281SiYveFk
-        HQMNNq6okiyVLkkAc0RyDiQIhbOZOdY=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-44-DolYIoRoOkay5pdNozN0qg-1; Wed, 14 Dec 2022 12:46:17 -0500
-X-MC-Unique: DolYIoRoOkay5pdNozN0qg-1
-Received: by mail-io1-f70.google.com with SMTP id o16-20020a056602225000b006e032e361ccso4274230ioo.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 09:46:17 -0800 (PST)
+        Wed, 14 Dec 2022 13:40:10 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30FB13D58
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 10:40:08 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id bp15so11905713lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 10:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=84PVzy06Jez7WrqpA7scvmaFQfIAuLwwfaDiUooPlFI=;
+        b=gR3RUbdtP2h5rhjbu9ETN1ccQZp6hk7IaSQibahbKZZXwXTSnp2ECnJDrlylJ+3Pss
+         3v4rTXnsLW1NgvfHGi1LkaSvMo65xG1F1zka65Yiszsmd2AePNGZH1GkKM1OgvbKJ/1t
+         oGmX0Fy5dluJbI+LK9yOhT2hO6h36iaiuPHxXifUHvV71nucTO83hZChn6a71Z6sgeVz
+         SW5u/8R2anqRl+qwBkF44JOBU9ewze/ElC2l5Vu8BXLv7wXLhOqpU0USfBkxVO1O67RZ
+         cKyMrT7oGQ6jCy0oUw+B2UuuoJ753yzWd/JI9P7frzi9p9xwfUY0x7zNAeyulvEFyeDu
+         Ewzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MRU/7YOQt2xy6rWvIiu4YOafJ8TK5XKhpXf423rIVa8=;
-        b=kgawUjwtuX1+UKgAnrEsWgbfP4uLdRNuy2lj8NPqVK6mDdLd9s3u1lQoRHRP7femCe
-         F+rurAjwGYrjlKkp8wiq+32NvQYw4kg6s5AXzoDOjeyCCnJ/Pea1pAZ2UA5TKQXdKhJe
-         jjI/EPleO0llaJnm88vsibQlfXmTCh8JmhdsHIT0pegxQljRggTyXPvZgdv5kPs8SIUM
-         VjBQWdz02Rlplhqyc2PuQUSJrjoI+1BT1Sm0PInHjvPyxazImBqvdtaShdmfrZGjXatr
-         D8IQ7nA+fyBGa2h/vWDB6xHU/D2JrFOBZJ5WdeLOy3YrwcFCbVLHPbpTU7czJzh3vj/9
-         DkzA==
-X-Gm-Message-State: ANoB5pnP96CloZI0GBPYApDGO+f7Ytc0gkLlibIEZheyyWODqiYmmzpe
-        22WydGvlNnMi34iOY0SBvH5QZ08sXUMDAYTNNC8P2+9KnQad4HGSzIE6P4GSZJeTF5i07beQy5A
-        PD8t/URU5fiwaKu9G1gO5+w9++g==
-X-Received: by 2002:a92:d644:0:b0:302:3883:e567 with SMTP id x4-20020a92d644000000b003023883e567mr12733989ilp.29.1671039977124;
-        Wed, 14 Dec 2022 09:46:17 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf4SQFXckK9/JRL6xKFoc8c9f5Tf7g8nePOQ32v8JjKhIjrT887ZPaM+qLxN/EXk8MQ3BE7Eqw==
-X-Received: by 2002:a92:d644:0:b0:302:3883:e567 with SMTP id x4-20020a92d644000000b003023883e567mr12733970ilp.29.1671039976890;
-        Wed, 14 Dec 2022 09:46:16 -0800 (PST)
-Received: from x1.redhat.com (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id t11-20020a02b18b000000b0038ab4a09610sm1898401jah.112.2022.12.14.09.46.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Dec 2022 09:46:16 -0800 (PST)
-From:   Brian Masney <bmasney@redhat.com>
-To:     catalin.marinas@arm.com, will@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: defconfig: enable crypto userspace API
-Date:   Wed, 14 Dec 2022 12:46:07 -0500
-Message-Id: <20221214174607.2948497-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.38.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=84PVzy06Jez7WrqpA7scvmaFQfIAuLwwfaDiUooPlFI=;
+        b=u6xczC2Ne0kJWhIWH4E/crX6ovMGCx+upWEhAPEITXrbZuJlldJhdz6Q1elkS7A7mO
+         WOdpmp+XrqNdOju8xd4rJ5fj008Bb5yqeEZpHFEW7NNxYP+z6ote+dp515f69P0fBb2F
+         BSrwVA1ekVQkqph+Wm57VJis+m9OIqSjVLNALiXEr3c13PaQENCTfDS41tBC7g6+K4jt
+         xqANst2HKSLA2DBt+CrwDE5ENtHPwT44sIpOrEM0barWeO/uz1xBrTP8bw7Ibs95YM7N
+         3t1yKsfGi5M+h/rSGd+fztCxs38ddrRKNqRlJnLA63vYtY5MQGEZX4ZwztLobg/ogxUy
+         i5KA==
+X-Gm-Message-State: ANoB5pmVqXhA7/R014QXiMykNgt6w9Y8A9svUhfwN1X0zzjJHKwvgSEQ
+        KqnSCLZCzQrRU97BhitqC851Hg==
+X-Google-Smtp-Source: AA0mqf5huwxvJLpqWw8CtVjdxW1TVZkauT4Q4In5DVwTzyMs2NKw3KRNjJwviMs2hFfphsK4vzn7Pw==
+X-Received: by 2002:ac2:4f0e:0:b0:4a4:68b9:19e1 with SMTP id k14-20020ac24f0e000000b004a468b919e1mr7586088lfr.9.1671043207234;
+        Wed, 14 Dec 2022 10:40:07 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id a23-20020a19f817000000b0049465afdd38sm901628lff.108.2022.12.14.10.40.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Dec 2022 10:40:06 -0800 (PST)
+Message-ID: <154b2e08-25a0-c8b7-1dc8-2d41b8787f05@linaro.org>
+Date:   Wed, 14 Dec 2022 20:40:06 +0200
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [RFC PATCH 0/6] drm/msm: DSC Electric Boogaloo for sm8[12]50
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        sunliming <sunliming@kylinos.cn>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221213232207.113607-1-marijn.suijten@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221213232207.113607-1-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable CONFIG_CRYPTO_USER so that libkcapi can be used. This was tested
-using kcapi-rng on a Qualcomm SA8540p automotive development board.
+On 14/12/2022 01:22, Marijn Suijten wrote:
+> This preliminary Display Stream Compression support package for
+> (initially tested on) sm8[12]50 is based on comparing DSC behaviour
+> between downstream and mainline.  Some new callbacks are added (for
+> binding blocks on active CTLs), logic bugs are corrected, zeroed struct
+> members are now assigned proper values, and RM allocation and hw block
+> retrieval now hand out (or not) DSC blocks without causing null-pointer
+> dereferences.
+> 
+> Unfortunately it is not yet enough to get rid of completely corrupted
+> display output on the boards I tested here:
+> - Sony Xperia 1 (sm8150), 1644x3840 or 1096x2560 pixels;
+> - Sony Xperia 5II (sm8250), 1080x2520, at 60 or 120Hz;
+> - (can include more Xperia boards if desired)
+> 
+> Both devices use the DUALPIPE_DSCMERGE topology downstream: dual LM, PP
+> and DSC, but only a single INTF/encoder/DSI-link.
+> 
+> Hopefully this spawns some community/upstream interest to help rootcause
+> our corruption issues (after we open a drm/msm report on GitLab for more
+> appropriate tracking).
+> 
+> The Sony Xperia XZ3 (sdm845) was fully tested and validated with this
+> series to not cause any regressions (an one of the math fixes now allows
+> us to change slice_count in the panel driver, which would corrupt
+> previously).
+> 
+> Marijn Suijten (6):
+>    drm/msm/dpu1: Implement DSC binding to PP block for CTL V1
+>    drm/msm/dpu1: Add DSC config for sm8150 and sm8250
+>    drm/msm/dpu1: Wire up DSC mask for active CTL configuration
+>    drm/msm/dsi: Use DSC slice(s) packet size to compute word count
+>    drm/msm/dsi: Flip greater-than check for slice_count and
+>      slice_per_intf
+>    drm/msm/dpu: Disallow unallocated (DSC) resources to be returned
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+General comment: patches with Fixes ideally should come first. Usually 
+they are picked into -fixes and/or stable kernels. If the Fixes patches 
+are in the middle of the series, one can not be sure that they do not 
+have dependencies on previous patches. If there is one, it should 
+probably be stated clearly to ease work on backporting them.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 851e8f9be06d..cbe4ed6403d0 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1370,6 +1370,7 @@ CONFIG_9P_FS=y
- CONFIG_NLS_CODEPAGE_437=y
- CONFIG_NLS_ISO8859_1=y
- CONFIG_SECURITY=y
-+CONFIG_CRYPTO_USER=y
- CONFIG_CRYPTO_ECHAINIV=y
- CONFIG_CRYPTO_MICHAEL_MIC=m
- CONFIG_CRYPTO_ANSI_CPRNG=y
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  3 +++
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  1 +
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  1 +
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  2 ++
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 23 +++++++++++-----
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  9 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 27 +++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  4 +++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 10 +++++++
+>   drivers/gpu/drm/msm/dsi/dsi_host.c            |  6 ++---
+>   10 files changed, 77 insertions(+), 9 deletions(-)
+> 
+> --
+> 2.38.1
+> 
+
 -- 
-2.38.1
+With best wishes
+Dmitry
 
