@@ -2,147 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A48164C4BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 09:12:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8595464C4C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 09:13:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237512AbiLNIMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 03:12:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37200 "EHLO
+        id S237543AbiLNINC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 03:13:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237375AbiLNILh (ORCPT
+        with ESMTP id S229797AbiLNIMK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 03:11:37 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D19E13EA1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 00:09:10 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id p36so9126328lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 00:09:10 -0800 (PST)
+        Wed, 14 Dec 2022 03:12:10 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB3A257
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 00:11:49 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id n1so5881319ljg.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 00:11:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OpxduO24RNKiHe7qgJOcOcCob/2sJ/YLTZskR12FTNA=;
-        b=BeVHY8eEoIKiIZpXg/sfmOQ4jlKDpPHhWyAhDMWNpXLZ4442OJXmgb6yfpAPrH/drL
-         8dEtmBRLQ8VXtcNHcMarxqm7r+Cx01k+E+VRi3+9QgAVNO7DZIdKe90IQ6fmnLdxAWZS
-         E9GIcv+tPgYLuoELD6C2awAYDxglz1nTg7ycrLqxfEQVV3Ufk1OJbSERfQn8o4kLuKLL
-         GXVxRkrwx0akTCUZ4tIMx5yuRubk4T2aek4YXHywxdJpFmkqUvLmwbua5R75ii20vvfy
-         gajh/9wzRxyKoKYiO8rjb7oT0RPxC97aZvjH8YPJ8xGTKLuLvBv2ESqOOJpUm2ZHDNFU
-         YoFg==
+        bh=ip0serP3xmmQbIfs4fDtH7mgxkF1llT1RnwM7UmnRxc=;
+        b=y9eh1KomaAEcgSF+zPUM9+IKthe5Z61BSrr2KkQzhUJ3CoMOAP2TBO5WaUqLUeuIBQ
+         bmO6KPMtdivLDpVoN2F2ldk4lnU+hz/rSDhdR4xjnQDZ4UsM6imYDQ5zWaiONmIOR+g7
+         AlFi51ewsRfZYiUvEirTK5cZ8VUG8rjfeXQbBi0MOOsxyG9xgRDpGN1ZAmtOhl5vUgwv
+         cUqgGVQCop9Aoxq+hr3fOrGp8t9eI6O8r/9QnfNnvhyaObmgQo0vIGxcA4HYOHDW6qc8
+         iWG/Y7M12pz+FaXCdeVXXDdra/X4WSOds7z519eSPFpZu3AFK4vDfEocMzyrDAmV7yeZ
+         IE1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OpxduO24RNKiHe7qgJOcOcCob/2sJ/YLTZskR12FTNA=;
-        b=dMj1Dk13nLs2II/GN/TkPktm2445MiRkgE+PqneFlEmAAfOww503ZcOA5tFrRfgsYW
-         UTOjPcoMdfkRbW4bkYFezWxOsrZxKZo0mgwrlX+iYTO3zoYqb1z6Pgod7w3t2fE3b4sp
-         Na8pd6W67TvnPqR9nONzMUpuJtJ/KiY6WgEj4evxAaEZwcdWCB8i2tmj5vnCoXjp7HjI
-         B1dOJgrsYRaddaW6Z/O45jNczXwei+7rrEbD5sk4RsLIgcc9wrMvAEx7aLOCRElcgsUp
-         Iz0KMgUDkaQaIFwgNMQuIsKfrbx2YbYMbbL2eziGzl22e8SH1mnQlvfbYXnJZaP1ABkW
-         XN+Q==
-X-Gm-Message-State: ANoB5pnAze98QTnJvQ+//nnWJNzWwNQuhtqMRCIc0Owa4YO6Vu0oR4ip
-        Xih5oJy4z9EndY137/tNtx3gDXbEC+k7rob1
-X-Google-Smtp-Source: AA0mqf5ORcU2VhODrzF1Mr8QjolUDvL4SNlSAy9EI75Xqlqtp44H45VTH4pKT45haDrIPNCNoEki6A==
-X-Received: by 2002:a05:6512:1329:b0:4b5:853c:ed30 with SMTP id x41-20020a056512132900b004b5853ced30mr9575872lfu.23.1671005348688;
-        Wed, 14 Dec 2022 00:09:08 -0800 (PST)
+        bh=ip0serP3xmmQbIfs4fDtH7mgxkF1llT1RnwM7UmnRxc=;
+        b=M9L0aQGno3XqVHtoHEWj4EaNbtU551AgJPuIatwFSD3vEOLHJEnwo/g9HNkZH4Kp+I
+         gMUzD/tRCNY956DyWftNRvY6JfHpRDoZMJ+ON970QxS4+JWbtL4u7xDfDXMGWUxZsE/I
+         GCbSup98IpmVVvacMWIJfsaYMUdrs4SX3FzrFOaTIzq6evIGJ4neWIA4DXMP/UBKkCN1
+         ansA36nUQjt8UCA0KbikYFfZLyP/vzE2RKnTi8UzR90GTayW8X2nBStJPDoDl/R11cxB
+         VNg2DCONtMfQIFk6hW5h7Yio9Kzo+qU5Oe1iasB3QcOqtzYY0UY8i5WkrD2SBuzJHaaC
+         +h1Q==
+X-Gm-Message-State: ANoB5pnzbXzZr+3WI+ZBM0j2MIzmtLgq3MmXhbtvLXWVdRAaCRTaaEVQ
+        PXnNhfBytW/iMPQVfyRHCmFtBA==
+X-Google-Smtp-Source: AA0mqf7MPF0BZwKj8sqR8TNQS+aLTPnWVDGKHcSD+DqGHkLhS9ezekrute2N8ZC+NaYodC1ke+k0MQ==
+X-Received: by 2002:a2e:a4b4:0:b0:279:fb4d:34f5 with SMTP id g20-20020a2ea4b4000000b00279fb4d34f5mr5939057ljm.40.1671005507615;
+        Wed, 14 Dec 2022 00:11:47 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n13-20020a056512310d00b004b59c9b7fb4sm707250lfb.126.2022.12.14.00.09.07
+        by smtp.gmail.com with ESMTPSA id u16-20020a2eb810000000b00277041268absm527879ljo.78.2022.12.14.00.11.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 00:09:08 -0800 (PST)
-Message-ID: <c4ef3f7f-5b1d-5a11-f869-d1c61dd2c26e@linaro.org>
-Date:   Wed, 14 Dec 2022 09:09:06 +0100
+        Wed, 14 Dec 2022 00:11:47 -0800 (PST)
+Message-ID: <e79ae240-95ce-1629-70f3-378d98f38841@linaro.org>
+Date:   Wed, 14 Dec 2022 09:11:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: Introduce a carveout for modem
- metadata
+Subject: Re: [PATCH 1/2] dt-bindings: reserved-memory: rmtfs: Document
+ qcom,assign-to-nav
 Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        regressions@leemhuis.info, sumit.semwal@linaro.org,
-        will@kernel.org, catalin.marinas@arm.com, robin.murphy@arm.com
-References: <20221213140724.8612-1-quic_sibis@quicinc.com>
- <20221213140724.8612-2-quic_sibis@quicinc.com>
- <7ea03855-4806-f4ca-e0c3-4044e1095d6b@linaro.org>
- <96c1e60d-de12-5e60-4c06-70ea4b9c49f8@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221213170340.456252-1-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <96c1e60d-de12-5e60-4c06-70ea4b9c49f8@quicinc.com>
+In-Reply-To: <20221213170340.456252-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/12/2022 07:49, Sibi Sankar wrote:
-> Hey Krzysztof,
+On 13/12/2022 18:03, Konrad Dybcio wrote:
+> Some SoCs mandate that the RMTFS is also assigned to the NAV VM, while
+> others really don't want that. Since it has to be conditional, add a
+> bool property to toggle this behavior.
 > 
-> Thanks for taking time to review the series.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml  | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> On 12/14/22 01:10, Krzysztof Kozlowski wrote:
->> On 13/12/2022 15:07, Sibi Sankar wrote:
->>> Introduce a new carveout for modem metadata. This will serve as a
->>> replacement for the memory region used by MSA to authenticate modem
->>> ELF headers.
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>
->> Thank you for your patch. There is something to discuss/improve.
->>
->>>   
->>>   	aliases {
->>> @@ -865,7 +870,7 @@ hp_i2c: &i2c9 {
->>>   	clock-names = "iface", "bus", "nav", "snoc_axi", "mnoc_axi", "xo";
->>>   
->>>   	iommus = <&apps_smmu 0x461 0x0>, <&apps_smmu 0x444 0x3>;
->>> -	memory-region = <&mba_mem &mpss_mem>;
->>> +	memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
->>>   
->>>   	/* This gets overridden for SKUs with LTE support. */
->>>   	firmware-name = "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->>> index bf522a64b172..bda0495aa0b5 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->>> @@ -17,6 +17,11 @@
->>>   			reg = <0x0 0x9c700000 0x0 0x200000>;
->>>   			no-map;
->>>   		};
->>> +
->>> +		mdata_mem: memory@9d100000 {
->>> +			reg = <0x0 0x9d100000 0x0 0x4000>;
->>> +			no-map;
->>> +		};
->>>   	};
->>>   };
->>>   
->>> @@ -32,7 +37,7 @@
->>>   
->>>   	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
->>>   	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
->>> -	memory-region = <&mba_mem>, <&mpss_mem>;
->>> +	memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
->>
->> Only two memory regions are allowed by bindings... unless you fix it in
->> further patchset. If so, please re-order to have the bindings first. It
->> helps reviewers not to have such questions. :)
-> 
-> I felt that Rob's dt_bindings check bot might report an error
-> if the dt changes weren't placed before the bindings changes.
-> But since you asked for the logical order I guess the bindings
-> check are done only after the entire series is applied. I'll
-> change the order in the next re-spin.
+> diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> index 2998f1c8f0db..1d8c4621178a 100644
+> --- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> @@ -31,6 +31,11 @@ properties:
+>      description: >
+>        vmid of the remote processor, to set up memory protection
+>  
+> +  qcom,assign-to-nav:
+> +    type: boolean
+> +    description: >
 
-AFAIR, Rob's bot ignores DTS patches anyway.
+No need for '>'
+
+> +      whether to also assign the region to the NAV VM
+
+Here and in property name you express desired Linux driver action, but
+it is better to express the property of the hardware. What is
+different/special in these SoCs or their configuration that additional
+assignment is needed?
+
 
 Best regards,
 Krzysztof
