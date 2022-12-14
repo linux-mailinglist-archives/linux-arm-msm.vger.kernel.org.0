@@ -2,62 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D874264C576
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 10:06:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7720164C613
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 10:37:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237539AbiLNJGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 04:06:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60456 "EHLO
+        id S237778AbiLNJhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 04:37:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbiLNJGW (ORCPT
+        with ESMTP id S229739AbiLNJhv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 04:06:22 -0500
-Received: from mail.lokoho.com (mail.lokoho.com [217.61.105.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D788913F32
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:06:21 -0800 (PST)
-Received: by mail.lokoho.com (Postfix, from userid 1001)
-        id 3ACD886867; Wed, 14 Dec 2022 09:06:04 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lokoho.com; s=mail;
-        t=1671008780; bh=Z0N5VlX9/JlryGOL5I747Le9USomZJCRNNGRT3LbbKc=;
-        h=Date:From:To:Subject:From;
-        b=Ibf1TeUKL4apcI9AiGnGLlpwcWz0zEK2OmbwuhZbr0kravsUzgVfycW7pn5I7Ah3y
-         zLiVO+buwREBrJnFlWeRzAHFg61nFw4wsQfK68XjRYk+y5zMLS0vXsPUzn6H2QZZ4K
-         Li0nJ0RhDDu2K0tPR0ZJ0wqn+CNaBGCgFioV0VZrgs4gibus4vOPFPKRgiRPJ2ODnJ
-         VxujqkhIfiU9q9Te4MS0seFQG9xN4p7c3qchk/WQ/F3mg2LsHSBGbpHijzYnyZIRFJ
-         t69fFeIq74eQTjrUTXymfRIzTBwUPNUzmVsnXutyqI1rw/AKsyEPxsemxsWFmcIhu0
-         PgrxL7gcaV+VA==
-Received: by mail.lokoho.com for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 09:05:06 GMT
-Message-ID: <20221214074502-0.1.2t.9r1o.0.ghge5dfmb2@lokoho.com>
-Date:   Wed, 14 Dec 2022 09:05:06 GMT
-From:   "Adam Charachuta" <adam.charachuta@lokoho.com>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: =?UTF-8?Q?S=C5=82owa_kluczowe_do_wypozycjonowania?=
-X-Mailer: mail.lokoho.com
+        Wed, 14 Dec 2022 04:37:51 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54AC2631F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:37:50 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NX98w6MDhz1S5Cq
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:31:12 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:mime-version:x-mailer:message-id:date
+        :subject:to:from; s=dkim; t=1671010272; x=1671874273; bh=Te4FoBB
+        7d0qQIWej9mZZ8GF8WNlyMDQYAP3Nesnb9Uw=; b=rkbsc0vbIW2js+GmOt5opLa
+        kt49RXAY3ZaJ1s15rhvzUCkPy+W83lUgTC9M65qjBdbs2CZe7b/TA43boF3/80lp
+        F+1NOJtu8UN4evsn8SEQOSNFcKP+6LgrzHRBgfyOYFJ1BhnitCNHxvX30M2nRfWm
+        0qLicSgQSWiGYJkpTO6pY5sqlQcYMTHJaKtA4FjRH+Wgxou7PfpDx6lii/DfrGv0
+        4Qj8GORAu+lBoGlYajqTbQZ8fHu5is0RaHlpezW2klIW0ZGOkQ3flx1ozVwfdPHc
+        vkNwvCez7W4v+kdDM4/qV90zK9kbpr50qA8LLDnMDoGMqHKZKWA6COrZnLd3A/w=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id rIzXQIMjT3BN for <linux-arm-msm@vger.kernel.org>;
+        Wed, 14 Dec 2022 04:31:12 -0500 (EST)
+Received: from dorothy.. (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NX98n3vJCz1S52g;
+        Wed, 14 Dec 2022 04:31:04 -0500 (EST)
+From:   Lux Aliaga <they@mint.lgbt>
+Cc:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/4] dt-bindings: ufs: qcom: Add SM6125 compatible string
+Date:   Wed, 14 Dec 2022 06:30:52 -0300
+Message-Id: <20221214093053.152713-1-they@mint.lgbt>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+Document the compatible for UFS found on the SM6125.
 
-zapozna=C5=82em si=C4=99 z Pa=C5=84stwa ofert=C4=85 i z przyjemno=C5=9Bci=
-=C4=85 przyznaj=C4=99, =C5=BCe przyci=C4=85ga uwag=C4=99 i zach=C4=99ca d=
-o dalszych rozm=C3=B3w.=20
+Signed-off-by: Lux Aliaga <they@mint.lgbt>
+---
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-Pomy=C5=9Bla=C5=82em, =C5=BCe mo=C5=BCe m=C3=B3g=C5=82bym mie=C4=87 sw=C3=
-=B3j wk=C5=82ad w Pa=C5=84stwa rozw=C3=B3j i pom=C3=B3c dotrze=C4=87 z t=C4=
-=85 ofert=C4=85 do wi=C4=99kszego grona odbiorc=C3=B3w. Pozycjonuj=C4=99 =
-strony www, dzi=C4=99ki czemu generuj=C4=85 =C5=9Bwietny ruch w sieci.
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docume=
+ntation/devicetree/bindings/ufs/qcom,ufs.yaml
+index f2d6298d926c..4d3cb12e4882 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -33,6 +33,7 @@ properties:
+           - qcom,sm8250-ufshc
+           - qcom,sm8350-ufshc
+           - qcom,sm8450-ufshc
++          - qcom,sm6125-ufshc
+       - const: qcom,ufshc
+       - const: jedec,ufs-2.0
+=20
+@@ -178,6 +179,31 @@ allOf:
+           minItems: 1
+           maxItems: 1
+=20
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm6125-ufshc
++    then:
++      properties:
++        clocks:
++          minItems: 8
++          maxItems: 8
++        clock-names:
++          items:
++            - const: core_clk
++            - const: bus_aggr_clk
++            - const: iface_clk
++            - const: core_clk_unipro
++            - const: core_clk_ice
++            - const: ref_clk
++            - const: tx_lane0_sync_clk
++            - const: rx_lane0_sync_clk
++        reg:
++          minItems: 2
++          maxItems: 2
++
+     # TODO: define clock bindings for qcom,msm8994-ufshc
+=20
+ unevaluatedProperties: false
+--=20
+2.38.1
 
-Mo=C5=BCemy porozmawia=C4=87 w najbli=C5=BCszym czasie?
-
-
-Pozdrawiam
-Adam Charachuta
