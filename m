@@ -2,162 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 782C064D186
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:56:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5BDB64D193
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 22:05:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbiLNU4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 15:56:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
+        id S229623AbiLNVFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 16:05:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiLNU4B (ORCPT
+        with ESMTP id S229572AbiLNVFV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 15:56:01 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58DA192B5;
-        Wed, 14 Dec 2022 12:55:59 -0800 (PST)
+        Wed, 14 Dec 2022 16:05:21 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13B5A2CC88
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 13:05:20 -0800 (PST)
 Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DE4203F353;
-        Wed, 14 Dec 2022 21:55:57 +0100 (CET)
-Date:   Wed, 14 Dec 2022 21:55:56 +0100
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 983FE3F790;
+        Wed, 14 Dec 2022 22:05:17 +0100 (CET)
+Date:   Wed, 14 Dec 2022 22:05:16 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use labels with generic node names
- for ADC channels
-Message-ID: <20221214205556.jdbcv3e4fkvm7f3y@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221209215308.1781047-1-marijn.suijten@somainline.org>
- <3d5b29f3-8d8d-93a7-a485-5261e2d8891d@linaro.org>
- <20221210165434.3hhen5mgtvflghks@SoMainline.org>
- <0bc1eba8-bc26-0bdb-16bf-78160c27c57b@linaro.org>
+To:     Kalyan Thota <kalyant@qti.qualcomm.com>
+Cc:     "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "robdclark@chromium.org" <robdclark@chromium.org>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Subject: Re: [v10] drm/msm/disp/dpu1: add support for dspp sub block flush in
+ sc7280
+Message-ID: <20221214210516.u7drmdhc74a7rxvk@SoMainline.org>
+References: <1670417963-19426-1-git-send-email-quic_kalyant@quicinc.com>
+ <20221207140832.6r2kznoulfek7yye@SoMainline.org>
+ <BN0PR02MB81425C5E341E0FF1C374A3A496E29@BN0PR02MB8142.namprd02.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0bc1eba8-bc26-0bdb-16bf-78160c27c57b@linaro.org>
+In-Reply-To: <BN0PR02MB81425C5E341E0FF1C374A3A496E29@BN0PR02MB8142.namprd02.prod.outlook.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-12 09:48:26, Krzysztof Kozlowski wrote:
-> On 10/12/2022 17:54, Marijn Suijten wrote:
-> > On 2022-12-10 12:02:03, Krzysztof Kozlowski wrote:
-> >> On 09/12/2022 22:53, Marijn Suijten wrote:
-> >>> As discussed in [1] the DT should use labels to describe ADC
-> >>> channels, with generic node names, since the IIO drivers now
-> >>> moved to the fwnode API where node names include the `@xx`
-> >>> address suffix.
-> >>> 
-> >>> Especially for the ADC5 driver that uses extend_name - which
-> >>> cannot be removed for compatibility reasons - this results in
-> >>> sysfs files with the @xx name that wasn't previously present, and
-> >>> leads to an unpleasant file-browsing experience.
-> >>> 
-> >>> Also remove all the unused channel labels in pm660.dtsi.
-> >>> 
-> >>> [1]:
-> >>> https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-> >>>
-> >>>
-> >>> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >> 
-> >> The talk was in context of bindings, not about changing all
-> >> existing users thus affecting DTS.
-> > 
-> > And as a consequence, DTS.  The already-merged transition from OF to 
-> > fwnode resulted in `@xx` to be included in the ADC channel name - and
-> > in the case of ADC5 even in sysfs filenames - so this seems like a 
-> > necessary change to make.
-> > 
-> > At the very least I would have changed the bindings submitted or 
-> > co-authored /by myself/ since I initially decided to rely on this
-> > (now obviously) wrong behaviour, and should have used labels from the
-> > get go.
-> > 
-> >> What's more, to me "skin-temp-thermistor" is quite generic name,
-> >> maybe "thermistor" would be more and reflects the purpose of the
-> >> node, so it was more or less fine.
-> > 
-> > Are you suggesting to not use "adc-chan", but "thermistor" as node
-> > name (and still use skin_temp as label)?
-> 
-> No, I am just saying that some of the names were correct, so the
-> reasoning in commit msg is not entirely accurate.
+On 2022-12-12 11:35:15, Kalyan Thota wrote:
+> [..]
+> >> +             if (ctx->pending_dspp_flush_mask[dspp - DSPP_0])
+> >> +                     DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(dspp - DSPP_0),
+> >> +                             ctx->pending_dspp_flush_mask[dspp -
+> >> + DSPP_0]);
+> >
+> >Shouldn't this loop as a whole check if _any_ DSPP flush is requested via
+> >`pending_flush_mask & BIT(29)`?  The other flushes don't check the per-block
+> >mask value either (and could write zero that way) but only base this check on the
+> >presence of a global flush mask for that block.
+> >
+> BIT(29) enables dspp flush only from DPU rev 7.x.x where hierarchal flush is introduced. For other targets that supports CTL_ACTIVE, it's a NOP.
 
-The commit msg doesn't state that any of these names was wrong, rather
-that the label property should be used to convey a name to the driver.
+The only way this patch ever writes pending_dspp_flush_mask is followed
+by unconditionally setting BIT(29) in pending_flush_mask.  I was under
+the assumption that pending_dspp_flush_mask should be considered invalid
+or irrelevant unless BIT(29) is set.
 
-If you think multiple /node names/ are acceptable, please discuss in
-that direction.  Do we use a predetermined set of names (adc-chan@xx,
-thermistor@xx, ...) or do you have another suggestion?
+> With the check "pending_flush_mask & BIT(29)", unintended DSPP registers for that CTL path will be programmed to "0" which is not correct IMO.
 
-> > Or to keep the fully-written-out "thermistor" word in the label?
-> 
-> No, I don't refer to labels. Labels don't matter, they are being removed
-> entirely during DTS build.
+You can also keep the second `if` to guard against that; as said the
+code above does exactly this though, but I think we could assume that
+if a pending sub-block flush is set, pending_dspp_flush_mask is nonzero?
 
-Ugh, I knew this was becoming a problem, even in an earlier IIO
-discussions with Jonathan it was sometimes hard to keep apart:
+> Secondly "pending_flush_mask & BIT(29)" although will not be true for DPU 6.x.x versions but can be confusing w.r.t code readability.
+> Let me know your thoughts.
 
-I am /not/ referring to DTS labels, but to the `label =` node
-attribute/property, which is read by the driver (which isn't removed,
-how else would the driver fish this value out at runtime...).
+Ack, it is /super/ confusing that BIT(29) is used for DSPP (sub-block)
+flush, but also to flash INTF_2??
 
-After all none of this patch has any DTS labels, in fact a bunch of
-unused ones in pm660 have been removed... but this patch /does add/ the
-`label =` property to many nodes.
-
-> >> Anyway I am against such changes without expressing it in the
-> >> bindings.
-> > 
-> > As expressed in [1] I suggested and am all for locking this change
-> > in via bindings, and you are right to expect that to have gone paired
-> > with this patch.
-> 
-> Yes, I expect such changes to have both binding and DTS change together.
-> 
-> > 
-> > I'll submit that as the leading patch to this in v2, with the
-> > wildcard pattern changed to adc-chan (or something else pending the
-> > discussion above), and should I then also require the label property
-> > via `label: true`?
-> 
-> I don't think label is required.
-
-My commit message explains why the ADC5/VADC driver should really
-receive a label property instead of using the node name.
+In fact there are many overlapping flush bits used for different
+components.  Only few are clarified via a #define.  Can you confirm
+whether this is correct?  And whether these should all be pulled out
+into numerically-sorted defines to improve readability and document
+intentional overlap?
 
 - Marijn
