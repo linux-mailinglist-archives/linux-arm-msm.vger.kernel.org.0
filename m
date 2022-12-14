@@ -2,370 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 282AF64D145
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:34:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5435364D14A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:36:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbiLNUee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 15:34:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36134 "EHLO
+        id S230256AbiLNUgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 15:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230202AbiLNUeM (ORCPT
+        with ESMTP id S229891AbiLNUfm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 15:34:12 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB3C442D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:27:16 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id z26so12396968lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:27:16 -0800 (PST)
+        Wed, 14 Dec 2022 15:35:42 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5F131DC1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:31:45 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id u5so8190511pjy.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:31:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5jdBIBSBtwqHInA24/RAynPGJTAquxojB3hFzekjdJM=;
-        b=wto1y5eNO5bCE0RDlK/WBPoH0U4c9fYxMejY9QkgopYgnVLuRPEBD6Z+rPr8/KPDpR
-         b6uBpqUKfQG3MFD6ztAxVFmZstpkpvPhBz2xb5Sjb87Opxtr5iubYtormSn2ANRd5k2J
-         pULwS8RFLG/Q5J0X4O9ZjvQyCVGM4bbLGI39Jem8Yco1ilBs8kFrJKvt9XSegjCGBEAt
-         9ebzJGuZZtv+y+iIjUkWkShIYp04kwNk+RmGcJ1BZHlQAPzoalueLMAYkCZUNfjXluvg
-         t6imjt1zAmfmitdE/WZUBc15c5cgkw6G3h2DjQYc7aSLNEE51FPqo1BSBPCeZJxu8EDI
-         +uXw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ct/3m2PY/FS9T1URKRfeRUFxhLFHkaGZAzLhD0lvuyA=;
+        b=pWGr4QtMpreRigeqMX+I/wFjpKYI1x288BNobSD1qxsLyPMo2G12MMXhZfOuR/MWLy
+         j2xET9aSD2dm6YCoUvGF8wk1sZXavwSK/RnpUyGZKgmG87bHZgsLKZznB4PNYiXZqSyM
+         tH+wBVaquRCvPVyq9Sj1DDEuIQNH/YXvGl+tk/inOwm8ZQLW2DY0shs8kPp5wcnEY9rs
+         S5zyTf+hoA9SE5F2xT6/KbQeo33WKZOg7x0yiREtJNLEF443zk6lI0glBDJR1SVp7Kop
+         K9MIjnCs4Ig1HeoLy9WqRP7kagYyIt4flG9tmWceeG0iIOrp5BN0DGWnoOONfV8ZK6Z6
+         dhpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5jdBIBSBtwqHInA24/RAynPGJTAquxojB3hFzekjdJM=;
-        b=h+T9/h87msRJ4u79X1Eb2Yg3m4XT9RG+m/3/AvSQQAgJwoBicOm1Er+mHNyFiHH4Ix
-         NQGk3sWiCXTznRJUI30rqrEA6c2ln48xTj8PNZBa/86SXBE17pt5XxEdfYJFnKcxSj41
-         UHxcPIuuuZJAWyAIEYyqWEqp+TaJQ1vwF8cYO9v/Dg0Uh4KyTyc9EH9oYY/+MbX6HHXh
-         raEGMixjmYmKhRtFNA/tfijgobur4Du5tGJRh6M8cUuvA1qDMGZLEGD5OXLx+wgSsLh2
-         shXskEfSu3bgpWDO9kWuMjIWN28FkniQkybszT5sJIM0XwIhdexR/9hFVJ/4JHDDlcsQ
-         OfGA==
-X-Gm-Message-State: ANoB5pnNDzg3ipfVwkGZSdjgM8CmnNRC1oVtuBHEWmNd3AZDtCTQXxLa
-        1RZBxd2/LKRA3w/GIfpz9Ss6vQ==
-X-Google-Smtp-Source: AA0mqf4gNu8oEYGafcFFLQkhlXqbCwBt+ltW2Tduc2ZdlTGyj0WREmRKJgmrd1hMn3Upxp7LsBZG0Q==
-X-Received: by 2002:ac2:4e81:0:b0:4b5:8176:10d2 with SMTP id o1-20020ac24e81000000b004b5817610d2mr9903826lfr.44.1671049634566;
-        Wed, 14 Dec 2022 12:27:14 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id s12-20020a056512202c00b00494935ddb88sm924389lfs.240.2022.12.14.12.27.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 12:27:13 -0800 (PST)
-Message-ID: <b62090b2-0772-7e9f-7a03-e97533d62230@linaro.org>
-Date:   Wed, 14 Dec 2022 21:27:10 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ct/3m2PY/FS9T1URKRfeRUFxhLFHkaGZAzLhD0lvuyA=;
+        b=uhsKA/FCpdH1C85K/aNbArzmj4Rh2ps4jtN4ls5V2yYtIibjzIh1bzdd954er48bhi
+         ge/I+1F2Ih0JnlgYEg1LvVLl3i0QJDByd7KkbcwNHr3MP0BavK21+fqN93sV6utqhYco
+         A7TrBk+TtO1epvyD3FcaJl0GIh/2PeTuSRY3rg52UEg7J1b0hz+QzKMHD+qcClYdLepF
+         7rrUriqAW4qNwiL5M+mCnTFGLc1U116achETIEIiUI4CXPU1rBD7T4Ti+C6GLJCEhupV
+         9SqqP6TPxS7GWcm/D1urywQ7rk/Ktuf8kRRGKkk0vgf0tcdVlsTkAj6becmbDdQJKz1D
+         vCCw==
+X-Gm-Message-State: ANoB5pko15QM2KtzxpU4ER2HQwaczgZhfTCznTyqozc/LrP3LyER00YD
+        exGE5CJwJKSifgjaWM+I90oa9Cfq4BkFcn4yrnk=
+X-Google-Smtp-Source: AA0mqf6oaWXA/LJq+F1qibT4R0ukuqqLdc/rX/PcMp201wLwAxIrgIrZtihIZNQ9UxXpzsjy21PmIQ==
+X-Received: by 2002:a17:90a:7e93:b0:219:6626:3b63 with SMTP id j19-20020a17090a7e9300b0021966263b63mr27127615pjl.25.1671049904799;
+        Wed, 14 Dec 2022 12:31:44 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c60:4bad:5c3:ab51:3d81:6264])
+        by smtp.gmail.com with ESMTPSA id gx13-20020a17090b124d00b00219e38b42f5sm1812238pjb.26.2022.12.14.12.31.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Dec 2022 12:31:44 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
+        konrad.dybcio@linaro.org, andersson@kernel.org
+Subject: [PATCH v2 0/3] arm64: dts: sm6115: Add USB SS qmp phy node and perform some cleanups  
+Date:   Thu, 15 Dec 2022 02:01:21 +0530
+Message-Id: <20221214203124.564537-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6125: Initial support for
- xiaomi-laurel_sprout
-To:     Lux Aliaga <they@mint.lgbt>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221214093342.153479-1-they@mint.lgbt>
- <ea20c58f-3a53-7cdd-8669-228c4acac49a@linaro.org>
- <5a511002-5cd2-b95b-a45a-faaf78e2f4a7@mint.lgbt>
- <cd025494-862b-70ec-a008-4be219f7f72f@mint.lgbt>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <cd025494-862b-70ec-a008-4be219f7f72f@mint.lgbt>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v1:
+-----------------
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20221213123823.455731-1-bhupesh.sharma@linaro.org/
+- Addressed the review comments from Konrad and Krzysztof regarding the
+  USB HS and SS Phy usage in sm4250 oneplus board dts ([PATCH 3/3]).
+- Collected R-B received from Konrad on v1 patches [1/3] and [2/3].
 
+This series adds USB SS qmp phy node for Qualcomm SM6115 / SM4250 SoC
+dtsi and also performs some related cleanups for USB nodes.
 
-On 14.12.2022 18:45, Lux Aliaga wrote:
-> Ok. I think that comment is incorrect. Changing the node name on extcon_usb breaks the "extcon" property in &usb3_dwc3, even after changing the reference.
-> 
-Please don't toppost, reply under the paragraph you're referencing.
+Note that this series is rebased on linux-next/master and is also
+dependent on the corresponding dt-bindings and driver series sent via [1].
 
-Konrad
-> On 14/12/2022 14:26, Lux Aliaga wrote:
->> I'm a bit confused at the "Node name: usb-id" comment. Should I change "extcon_usb" or "extcon-usb" to usb-id?
->>
->> On 14/12/2022 06:52, Krzysztof Kozlowski wrote:
->>> On 14/12/2022 10:33, Lux Aliaga wrote:
->>>> This commit implements support for the Xiaomi Mi A3
->>>> (xiaomi-laurel_sprout). Here's a summary on what's working.
->>>>
->>>> - dmesg output to bootloader preconfigured display
->>>> - USB
->>>> - UFS
->>>> - SMD RPM regulators
->>>>
->>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>>   .../dts/qcom/sm6125-xiaomi-laurel_sprout.dts  | 251 ++++++++++++++++++
->>>>   2 files changed, 252 insertions(+)
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>>> index d7669a7cee9f..7b4fbb4cbb84 100644
->>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>> @@ -140,6 +140,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += sdm845-shift-axolotl.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sdm850-lenovo-yoga-c630.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sdm850-samsung-w737.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm6125-sony-xperia-seine-pdx201.dtb
->>>> +dtb-$(CONFIG_ARCH_QCOM)    += sm6125-xiaomi-laurel_sprout.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm6350-sony-xperia-lena-pdx213.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm7225-fairphone-fp4.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8150-hdk.dtb
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
->>>> new file mode 100644
->>>> index 000000000000..edc5f13bae28
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
->>>> @@ -0,0 +1,251 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
->>>> + */
->>>> +
->>>> +/dts-v1/;
->>>> +
->>>> +#include "sm6125.dtsi"
->>>> +#include <dt-bindings/gpio/gpio.h>
->>>> +#include <dt-bindings/input/input.h>
->>>> +#include <dt-bindings/input/gpio-keys.h>
->>>> +
->>>> +/ {
->>>> +    /* required for bootloader to select correct board */
->>>> +    qcom,msm-id = <0x18a 0x00>; /* sm6125 v1 */
->>>> +    qcom,board-id = <0x0b 0x00>;
->>>> +
->>>> +    model = "Xiaomi Mi A3";
->>>> +    compatible = "xiaomi,laurel_sprout", "qcom,sm6125";
->>>> +    chassis-type = "handset";
->>>> +
->>>> +    chosen {
->>>> +        #address-cells = <2>;
->>>> +        #size-cells = <2>;
->>>> +        ranges;
->>>> +
->>>> +        framebuffer0: framebuffer@5c000000 {
->>>> +            compatible = "simple-framebuffer";
->>>> +            reg = <0 0x5c000000 0 (1560 * 720 * 4)>;
->>>> +            width = <720>;
->>>> +            height = <1560>;
->>>> +            stride = <(720 * 4)>;
->>>> +            format = "a8r8g8b8";
->>>> +        };
->>>> +    };
->>>> +
->>>> +    extcon_usb: extcon-usb {
->>> Node name: usb-id
->>>
->>>> +        compatible = "linux,extcon-usb-gpio";
->>>> +        id-gpio = <&tlmm 102 GPIO_ACTIVE_HIGH>;
->>>> +    };
->>>> +
->>>> +    reserved_memory {
->>> No underscores in node names. Use same node name as other boards, don't
->>> invent own stuff.
->>>
->>>> +        #address-cells = <2>;
->>>> +        #size-cells = <2>;
->>>> +        debug_mem: memory@ffb00000 {
->>>> +            reg = <0x0 0xffb00000 0x0 0xc0000>;
->>>> +            no-map;
->>>> +        };
->>>> +
->>>> +        last_log_mem: memory@ffbc0000 {
->>>> +            reg = <0x0 0xffbc0000 0x0 0x80000>;
->>>> +            no-map;
->>>> +        };
->>>> +
->>>> +        pstore_mem: ramoops@ffc00000 {
->>>> +            compatible = "ramoops";
->>>> +            reg = <0x0 0xffc40000 0x0 0xc0000>;
->>>> +            record-size = <0x1000>;
->>>> +            console-size = <0x40000>;
->>>> +            msg-size = <0x20000 0x20000>;
->>>> +        };
->>>> +
->>>> +        cmdline_mem: memory@ffd00000 {
->>>> +            reg = <0x0 0xffd40000 0x0 0x1000>;
->>>> +            no-map;
->>>> +        };
->>>> +    };
->>>> +};
->>>> +
->>>> +&rpm_requests {
->>>> +    regulators-0 {
->>>> +        compatible = "qcom,rpm-pm6125-regulators";
->>>> +
->>>> +        vreg_s6a: s6 {
->>>> +            regulator-min-microvolt = <936000>;
->>>> +            regulator-max-microvolt = <1422000>;
->>>> +        };
->>>> +
->>>> +        vreg_l1a: l1 {
->>>> +            regulator-min-microvolt = <1200000>;
->>>> +            regulator-max-microvolt = <1256000>;
->>>> +        };
->>>> +
->>>> +        vreg_l2a: l2 {
->>>> +            regulator-min-microvolt = <1000000>;
->>>> +            regulator-max-microvolt = <1056000>;
->>>> +        };
->>>> +
->>>> +        vreg_l3a: l3 {
->>>> +            regulator-min-microvolt = <1000000>;
->>>> +            regulator-max-microvolt = <1064000>;
->>>> +        };
->>>> +
->>>> +        vreg_l4a: l4 {
->>>> +            regulator-min-microvolt = <872000>;
->>>> +            regulator-max-microvolt = <976000>;
->>>> +        };
->>>> +
->>>> +        vreg_l5a: l5 {
->>>> +            regulator-min-microvolt = <1648000>;
->>>> +            regulator-max-microvolt = <3104000>;
->>>> +        };
->>>> +
->>>> +        vreg_l6a: l6 {
->>>> +            regulator-min-microvolt = <576000>;
->>>> +            regulator-max-microvolt = <656000>;
->>>> +        };
->>>> +
->>>> +        vreg_l7a: l7 {
->>>> +            regulator-min-microvolt = <872000>;
->>>> +            regulator-max-microvolt = <976000>;
->>>> +        };
->>>> +
->>>> +        vreg_l8a: l8 {
->>>> +            regulator-min-microvolt = <400000>;
->>>> +            regulator-max-microvolt = <728000>;
->>>> +        };
->>>> +
->>>> +        vreg_l9a: l9 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1896000>;
->>>> +        };
->>>> +
->>>> +        vreg_l10a: l10 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1896000>;
->>>> +        };
->>>> +
->>>> +        vreg_l11a: l11 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1952000>;
->>>> +        };
->>>> +
->>>> +        vreg_l12a: l12 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1996000>;
->>>> +        };
->>>> +
->>>> +        vreg_l13a: l13 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1832000>;
->>>> +        };
->>>> +
->>>> +        vreg_l14a: l14 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1904000>;
->>>> +        };
->>>> +
->>>> +        vreg_l15a: l15 {
->>>> +            regulator-min-microvolt = <3104000>;
->>>> +            regulator-max-microvolt = <3232000>;
->>>> +        };
->>>> +
->>>> +        vreg_l16a: l16 {
->>>> +            regulator-min-microvolt = <1800000>;
->>>> +            regulator-max-microvolt = <1904000>;
->>>> +        };
->>>> +
->>>> +        vreg_l17a: l17 {
->>>> +            regulator-min-microvolt = <1248000>;
->>>> +            regulator-max-microvolt = <1304000>;
->>>> +        };
->>>> +
->>>> +        vreg_l18a: l18 {
->>>> +            regulator-min-microvolt = <1200000>;
->>>> +            regulator-max-microvolt = <1264000>;
->>>> +        };
->>>> +
->>>> +        vreg_l19a: l19 {
->>>> +            regulator-min-microvolt = <1648000>;
->>>> +            regulator-max-microvolt = <2952000>;
->>>> +        };
->>>> +
->>>> +        vreg_l20a: l20 {
->>>> +            regulator-min-microvolt = <1648000>;
->>>> +            regulator-max-microvolt = <2952000>;
->>>> +        };
->>>> +
->>>> +        vreg_l21a: l21 {
->>>> +            regulator-min-microvolt = <2600000>;
->>>> +            regulator-max-microvolt = <2856000>;
->>>> +        };
->>>> +
->>>> +        vreg_l22a: l22 {
->>>> +            regulator-min-microvolt = <2944000>;
->>>> +            regulator-max-microvolt = <3304000>;
->>>> +        };
->>>> +
->>>> +        vreg_l23a: l23 {
->>>> +            regulator-min-microvolt = <3000000>;
->>>> +            regulator-max-microvolt = <3400000>;
->>>> +        };
->>>> +
->>>> +        vreg_l24a: l24 {
->>>> +            regulator-min-microvolt = <2944000>;
->>>> +            regulator-max-microvolt = <3304000>;
->>>> +        };
->>>> +    };
->>>> +};
->>>> +
->>>> +&hsusb_phy1 {
->>>> +    status = "okay";
->>>> +};
->>>> +
->>>> +
->>>> +&sdc2_off_state {
->>>> +    sd-cd {
->>> Does not look like you tested the DTS against bindings. Please run `make
->>> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
->>> for instructions).
->>>
->>> that's missing -pins suffix but most likely it does not match other DTS
->>> neither. So probably was based on some old kernel.
->>>
->>>> +        pins = "gpio98";
->>>> +        bias-disable;
->>>> +        drive-strength = <2>;
->>>> +    };
->>>> +};
->>>> +
->>>> +&sdc2_on_state {
->>>> +    sd-cd {
->>> Same problems.
->>>
->>>> +        pins = "gpio98";
->>>> +        bias-pull-up;
->>>> +        drive-strength = <2>;
->>>> +    };
->>>> +};
->>> Best regards,
->>> Krzysztof
->>>
+[1]. https://lore.kernel.org/linux-arm-msm/20221213122843.454845-1-bhupesh.sharma@linaro.org/
+
+Bhupesh Sharma (3):
+  arm64: dts: qcom: sm6115: Cleanup USB node's label
+  arm64: dts: qcom: sm6115: Move USB node's 'maximum-speed' and
+    'dr_mode' properties to dts
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 12 ++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 46 ++++++++++++++++---
+ 2 files changed, 49 insertions(+), 9 deletions(-)
+
+-- 
+2.38.1
+
