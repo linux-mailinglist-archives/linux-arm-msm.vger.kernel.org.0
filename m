@@ -2,219 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EABA64C309
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 05:08:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE81364C336
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 05:43:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237348AbiLNEIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 23:08:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51640 "EHLO
+        id S237109AbiLNEn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 23:43:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237402AbiLNEIk (ORCPT
+        with ESMTP id S237028AbiLNEnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 23:08:40 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80825DF21;
-        Tue, 13 Dec 2022 20:08:38 -0800 (PST)
+        Tue, 13 Dec 2022 23:43:25 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31DEC60FF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 20:43:24 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id q6so8549222lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 20:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1670990919; x=1702526919;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=oIXeANiSO2xeKVP26joYA3LvkoR6iSGiERvirdV0NJg=;
-  b=lZ7JKHYbIzZWJR09PfDXCQHVi6nsjGaZDpd3duezEc/jK5Xyf8Y3ZWHb
-   DxECvZJ1R/F8UD7nlvWwBNXPWCiJDLHtS1Y7kpvwVDL68MOCdYv7K1VSJ
-   12v7X650uBEDSuTfNbUjVTc/55zrqJ9RuXJV3Nz6vS+bo5uPEns0koLkv
-   s=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Dec 2022 20:08:38 -0800
-X-QCInternal: smtphost
-Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 13 Dec 2022 20:08:37 -0800
-Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
-        id BCD4C20DF0; Tue, 13 Dec 2022 20:08:37 -0800 (PST)
-From:   Can Guo <quic_cang@quicinc.com>
-To:     quic_asutoshd@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        stanley.chu@mediatek.com, adrian.hunter@intel.com,
-        beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com
-Cc:     linux-scsi@vger.kernel.org, Can Guo <quic_cang@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/3] ufs-host: qcom: Add MCQ ESI config vendor specific ops
-Date:   Tue, 13 Dec 2022 20:06:02 -0800
-Message-Id: <1670990763-30806-4-git-send-email-quic_cang@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1670990763-30806-1-git-send-email-quic_cang@quicinc.com>
-References: <1670990763-30806-1-git-send-email-quic_cang@quicinc.com>
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ePtSpP/HbBedS26PomtLLslHHJHJCj5dUEEqmQ5fMs4=;
+        b=dQQSHhxq4b0+PXDE0vgYFieN6asUOV9bubVkHrSjANmo1qh/dZNP7TgcGfe1uehreM
+         hSL7v3Ck9YMwRrM15ptA/N1vB9gdkGCgZLSfbsv/34/xZ0m/W9eDEUB0TUa3F11gYUVV
+         2Ms+RK69RdWYFrmynzhyzH/IRHpjuf9kWL4278VwKRbYuDl5mt2aXmXT/Y7u/67TBEkA
+         B2TFYPvh9X7nX4H5MHSXqIgSLYUS8Nh5240LDFWzhIznXNCeWJcqeMjQmJarOLdMY33g
+         gu6x9XRjQdijude3+rkuSAUsCoUeq5flOEak2ugooJbw98yeVvr0iYi1VyRdg2RuREDP
+         RWgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ePtSpP/HbBedS26PomtLLslHHJHJCj5dUEEqmQ5fMs4=;
+        b=eF3HpPVuY6k8DFm2E8p4t5P7gd85DqRJOfo+bNYM0NpsRXIZkhx7YWa9YsOXLbconS
+         Tlddsh+jXqbHXUQqkMpgG/XzXiHaDooKB+xfNu7U0K7FP8uW2Q2ZlFsSoj4I6fQz7Mg1
+         liQXBDn+rE1w6vCrkpeyfxE0gFU+tzDYuJqhjFYceSdeLWcgkn3/1SADKjxgIjHJBZGv
+         HT0t9FcbXFgbBBuw35NIVYkJlP7O27g1B42ryJObkfsmNjBfHnT0FkpHYdGnKweo+TSU
+         /zfGLSL28dkEUMB7Ze20F0w+NvQKR9jZuJzSU9zvLBiMig8MSnej/x3jLNMgFLUgqoSX
+         AN9A==
+X-Gm-Message-State: ANoB5plC/Qsr3hVpqn5cLYfCC6wjqQcNqFkZYTRkLf918HRaEdlAmqBk
+        aNf9qr/LZ94AjuMskFt7Baei2MlCjTQYkSqNlr4VQw==
+X-Google-Smtp-Source: AA0mqf7H6b/wLDU/ymtPnzM3dE/TBbaPlmrFJvkxaeAGzVLzeBH0KAomCqO+0tBvHqDEY7QwFKWx2QUFu95xPDkqocM=
+X-Received: by 2002:a05:6512:a83:b0:4aa:f944:f7ec with SMTP id
+ m3-20020a0565120a8300b004aaf944f7ecmr27772242lfu.467.1670993002358; Tue, 13
+ Dec 2022 20:43:22 -0800 (PST)
+MIME-Version: 1.0
+References: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
+ <20221213123823.455731-4-bhupesh.sharma@linaro.org> <20bd4594-7302-5823-447f-b980c476323e@linaro.org>
+ <8D9809D9-AB2F-4D9E-9272-2BFC27FF49E5@linaro.org>
+In-Reply-To: <8D9809D9-AB2F-4D9E-9272-2BFC27FF49E5@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Wed, 14 Dec 2022 10:13:11 +0530
+Message-ID: <CAH=2NtyyqoX2B32OCbAva_zdq6g+GbvOFMwdcKoMhArv03+Xeg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, andersson@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add MCQ ESI config vendor specific ops.
+On Wed, 14 Dec 2022 at 03:48, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+>
+>
+> On 13 December 2022 14:49:05 EET, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >
+> >
+> >On 13.12.2022 13:38, Bhupesh Sharma wrote:
+> >> Add USB superspeed qmp phy node to dtsi.
+> >>
+> >> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> >> ---
+> >Please run make dtbs_check before sending dt patches, this one
+> >introduces new errors.
+> >
+> >
+> >>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 38 ++++++++++++++++++++++++++--
+> >>  1 file changed, 36 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >> index e4ce135264f3d..9c5c024919f92 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >> @@ -579,6 +579,40 @@ usb_hsphy: phy@1613000 {
+> >>                      status = "disabled";
+> >>              };
+> >>
+> >> +            usb_qmpphy: phy@1615000 {
+> >> +                    compatible = "qcom,sm6115-qmp-usb3-phy";
+> >> +                    reg = <0x01615000 0x200>;
+> >> +                    #clock-cells = <1>;
+> >> +                    #address-cells = <1>;
+> >> +                    #size-cells = <1>;
+> >> +                    ranges;
+> >These -cells and ranges properties could go after status=disabled
+> >
+> >Konrad
+> >> +                    clocks = <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> >> +                             <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> >> +                             <&gcc GCC_AHB2PHY_USB_CLK>;
+> >> +                    clock-names = "com_aux",
+> >> +                                  "ref",
+> >> +                                  "cfg_ahb";
+> >> +                    resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
+> >> +                             <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
+> >> +                    reset-names = "phy", "phy_phy";
+> >> +                    status = "disabled";
+> >> +
+> >> +                    usb_ssphy: phy@1615200 {
+>
+> We should not introduce additional qmp-with-child PHY nodes.
 
-Co-developed-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 97 +++++++++++++++++++++++++++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h |  5 +++
- 2 files changed, 102 insertions(+)
+Not sure I understand your point. Is there some recent change (being
+discussed) regarding the same?
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 96a58b4..ea5b5f7 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1568,6 +1568,101 @@ static int ufs_qcom_get_outstanding_cqs(struct ufs_hba *hba,
- 	return 0;
- }
- 
-+#ifdef CONFIG_GENERIC_MSI_IRQ_DOMAIN
-+static void ufs_qcom_write_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
-+{
-+	struct device *dev = msi_desc_to_dev(desc);
-+	struct ufs_hba *hba = dev_get_drvdata(dev);
-+
-+	ufshcd_mcq_config_esi(hba, msg);
-+}
-+
-+static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *__hba)
-+{
-+	struct ufs_hba *hba = __hba;
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	u32 id = irq - host->esi_base;
-+	struct ufs_hw_queue *hwq = &hba->uhq[id];
-+
-+	ufshcd_mcq_write_cqis(hba, 0x1, id);
-+	ufshcd_mcq_poll_cqe_nolock(hba, hwq);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static int ufs_qcom_config_esi(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct msi_desc *desc;
-+	struct msi_desc *failed_desc = NULL;
-+	int nr_irqs, ret;
-+
-+	if (host->esi_enabled)
-+		return 0;
-+	else if (host->esi_base < 0)
-+		return -EINVAL;
-+
-+	/*
-+	 * 1. We only handle CQs as of now.
-+	 * 2. Poll queues do not need ESI.
-+	 */
-+	nr_irqs = hba->nr_hw_queues - hba->nr_queues[HCTX_TYPE_POLL];
-+	ret = platform_msi_domain_alloc_irqs(hba->dev, nr_irqs,
-+					     ufs_qcom_write_msi_msg);
-+	if (ret)
-+		goto out;
-+
-+	msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
-+		if (!desc->msi_index)
-+			host->esi_base = desc->irq;
-+
-+		ret = devm_request_irq(hba->dev, desc->irq,
-+				       ufs_qcom_mcq_esi_handler,
-+				       IRQF_SHARED, "qcom-mcq-esi", hba);
-+		if (ret) {
-+			dev_err(hba->dev, "%s: Fail to request IRQ for %d, err = %d\n",
-+				__func__, desc->irq, ret);
-+			failed_desc = desc;
-+			break;
-+		}
-+	}
-+
-+	if (ret) {
-+		/* Rewind */
-+		msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
-+			if (desc == failed_desc)
-+				break;
-+			devm_free_irq(hba->dev, desc->irq, hba);
-+		}
-+		platform_msi_domain_free_irqs(hba->dev);
-+	} else {
-+		if (host->hw_ver.major == 6 && host->hw_ver.minor == 0 &&
-+		    host->hw_ver.step == 0) {
-+			ufshcd_writel(hba,
-+				      ufshcd_readl(hba, REG_UFS_CFG3) | 0x1F000,
-+				      REG_UFS_CFG3);
-+		}
-+		ufshcd_mcq_enable_esi(hba);
-+	}
-+
-+out:
-+	if (ret) {
-+		host->esi_base = -1;
-+		dev_warn(hba->dev, "Failed to request Platform MSI %d\n", ret);
-+	} else {
-+		host->esi_enabled = true;
-+	}
-+
-+	return ret;
-+}
-+
-+#else
-+static int ufs_qcom_config_esi(struct ufs_hba *hba)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
-+
- /*
-  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
-  *
-@@ -1595,6 +1690,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
- 	.get_hba_mac		= ufs_qcom_get_hba_mac,
- 	.op_runtime_config	= ufs_qcom_op_runtime_config,
- 	.get_outstanding_cqs	= ufs_qcom_get_outstanding_cqs,
-+	.config_esi		= ufs_qcom_config_esi,
- };
- 
- /**
-@@ -1628,6 +1724,7 @@ static int ufs_qcom_remove(struct platform_device *pdev)
- 
- 	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_remove(hba);
-+	platform_msi_domain_free_irqs(hba->dev);
- 	return 0;
- }
- 
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 6912bdf..7937b41 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -54,6 +54,8 @@ enum {
- 	 * added in HW Version 3.0.0
- 	 */
- 	UFS_AH8_CFG				= 0xFC,
-+
-+	REG_UFS_CFG3				= 0x271C,
- };
- 
- /* QCOM UFS host controller vendor specific debug registers */
-@@ -226,6 +228,9 @@ struct ufs_qcom_host {
- 	struct reset_controller_dev rcdev;
- 
- 	struct gpio_desc *device_reset;
-+
-+	int esi_base;
-+	bool esi_enabled;
- };
- 
- static inline u32
--- 
-2.7.4
+Thanks,
+Bhupesh
 
+>
+> >> +                            reg = <0x01615200 0x200>,
+> >> +                                  <0x01615400 0x200>,
+> >> +                                  <0x01615c00 0x400>,
+> >> +                                  <0x01615600 0x200>,
+> >> +                                  <0x01615800 0x200>,
+> >> +                                  <0x01615a00 0x100>;
+> >> +                            #phy-cells = <0>;
+> >> +                            #clock-cells = <1>;
+> >> +                            clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> >> +                            clock-names = "pipe0";
+> >> +                            clock-output-names = "usb3_phy_pipe_clk_src";
+> >> +                    };
+> >> +            };
+> >> +
+> >> +
+> >>              qfprom@1b40000 {
+> >>                      compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
+> >>                      reg = <0x01b40000 0x7000>;
+> >> @@ -1023,8 +1057,8 @@ usb_dwc3: usb@4e00000 {
+> >>                              compatible = "snps,dwc3";
+> >>                              reg = <0x04e00000 0xcd00>;
+> >>                              interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+> >> -                            phys = <&usb_hsphy>;
+> >> -                            phy-names = "usb2-phy";
+> >> +                            phys = <&usb_hsphy>, <&usb_ssphy>;
+> >> +                            phy-names = "usb2-phy", "usb3-phy";
+> >>                              iommus = <&apps_smmu 0x120 0x0>;
+> >>                              snps,dis_u2_susphy_quirk;
+> >>                              snps,dis_enblslpm_quirk;
+>
+> --
+> With best wishes
+> Dmitry
