@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE1464CDF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 17:25:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F5064CE48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 17:45:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238972AbiLNQZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 11:25:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45956 "EHLO
+        id S238278AbiLNQp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 11:45:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238967AbiLNQZG (ORCPT
+        with ESMTP id S238848AbiLNQpz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 11:25:06 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4D128728
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:25:04 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id f20so7115354lja.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:25:04 -0800 (PST)
+        Wed, 14 Dec 2022 11:45:55 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE881B1F0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:45:53 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id z26so11412775lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 08:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X9dLBk+UvJ4GGITPeSeolCfzI5QUbeeelXxES7ST1nA=;
-        b=T5G2vJ4vOoMXdUA/9S7c2+Yae3QPm+f2bdcTXQF3fD2C4OqCHUNBGVQEY+WhP4I2W4
-         SW9F56rFJO0LVa5NMoT1DpLLftG5sJuyTaKevL6dPhS5Yj4ZziJRJYRLn9qPuhLRP3Bp
-         tbhTjFeaOubm2gvffyOuQBstCaZokYT+w081Gepp9IW53Lk+mcnxVKsIIVmqkHFsDR3w
-         d65jU073a0JqbDuc3awKzQeondMQqTXWOOjVkYFauGjAcagCCuOQrVRCfocDSK2ezYCe
-         OH6vyqQZuc+0YE6KVz7QMtAVo3a94aFJj08CeXVbxyxUDCRBzQQ4tS2mmZfr9bZ/Mc6S
-         KcfQ==
+        bh=RRWASIa+62gB90taCgH38XNmbnY0IGXkKz42ekdHkC8=;
+        b=jAAGbPTy++KAAsmhxh0DStHS8KA4dG5vvOWIhsKqYMw5HRtrcqNFtSbxIKqYafvpa5
+         4y4gpbdQIxwoObYuDT6HrPFOaAsVEs7c88J8M9mV795+zXVNeRVyPI1e1GIyQAxNzTZM
+         Eu2Hl8eYcoFiKB1eV/4GlX2gUh0b2FXtp2n4P4DXw+9GR+MRjKeOGtx1F0E4YgnT0Zcu
+         2IMwk/RQQdCE7z/zfoeKXGpTHyH+y9sPP5QkLTmTNX0eTrX0Xr4XiXrpcc7/Op4g/jHc
+         WL8862bK7laWpsAQ4zCCg6W81RMRdextNH/bUGfz96QGSqUXnzEkWIYdTrhCvvqPRj4p
+         8TKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X9dLBk+UvJ4GGITPeSeolCfzI5QUbeeelXxES7ST1nA=;
-        b=hckrk85qBGQGJrDHid74r0CZhAydTJn4vyjEuNnFtlW8J94X7Oot9qoUG7/JljtV9r
-         CPgMiFlP/U/+qE/3+ggtTqhwfIKTrl9bZvP9GiR4ss4LizwnG5dZ7ELbUJXw8iRKdItC
-         g1N8/yiKj6jRPmp8GTj1mDL2kAK6JOxcKCc7Q+onUrMpto/z/uNL78a3qANj3D7euBlE
-         7NjwdwtRW6s3Ja9Hg182hHFk/E8zuNitbyOy+kWWRal9o3LKMZPEzKtiFaEsMooFQhv1
-         +y3Uagjgc7+K4R2CAQ2bqiy4XnRy77wyM1r+VmmfCGnYXNafsdH11WCMfYTbrZnKlwN4
-         SURA==
-X-Gm-Message-State: ANoB5pllY7kIfJK0BuFeYmjYymwtZDshYOWk0z6K0bAW8Vj8a7wapg0F
-        c6kfPyAKbINq1eWpl2Ea++zULw==
-X-Google-Smtp-Source: AA0mqf7duV2/358tTC/pnwCBvsLRoFvgwzJqOeoEBv6o3iLr9aNv/23ln7Vx+bKA6lr+wk4/+y97Bg==
-X-Received: by 2002:a05:651c:158d:b0:26f:db35:1d5a with SMTP id h13-20020a05651c158d00b0026fdb351d5amr6588903ljq.4.1671035102622;
-        Wed, 14 Dec 2022 08:25:02 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b12-20020a05651c032c00b0027b52a73b47sm654314ljp.18.2022.12.14.08.25.01
+        bh=RRWASIa+62gB90taCgH38XNmbnY0IGXkKz42ekdHkC8=;
+        b=0uVmEUuzUbr9MpwfFr8svGbkk8e3/ETOfbPsUoZyFU/uzaFXoiNsvyxA1vBBd0lhzp
+         wO/BLdDMC63xzYLp3Hfv2S0NFRKWdYaJyHqBZmlCKn49qv32i+sYZuujdoE+v/8ZISAR
+         4B4/qt0I/8171tE4zwLXOB//N/gV1D3PdMTioVTa/ad3fxnXAvBRY4CqofisgiA/weXV
+         UcyAZnrTBMeZZ4fZauSMXhuTxTuMGsrqFT0EMZoCpFXkIL3L7Xa5uxpR5q91tX6fATS1
+         k+7ZEs/8VYb/uZ/PdEnyLZSS0h7m926fNjWOB25rjudJU5XmwhJEHc9+U1KaKmX2cb+L
+         nZWw==
+X-Gm-Message-State: ANoB5pkmjDl1svLUGa5d2nluMduTLmWChG3Q8XbwCRSo9EmBQBqylQ6e
+        q7iIcUC/v0lR4K2sELb2LivSKQ==
+X-Google-Smtp-Source: AA0mqf6mEH7Kh/a6DQm4wbe5vmd7x1r9nWU0U76qIRLS6eUZ+BwnpSMqDv+zISaqINx24x9As9eKsg==
+X-Received: by 2002:a05:6512:b10:b0:4a4:68b7:f878 with SMTP id w16-20020a0565120b1000b004a468b7f878mr11949015lfu.28.1671036351559;
+        Wed, 14 Dec 2022 08:45:51 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a26-20020a194f5a000000b004b4930d53b5sm868909lfk.134.2022.12.14.08.45.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 08:25:02 -0800 (PST)
-Message-ID: <6fc64fae-e616-2038-0424-34ce0cb7e16d@linaro.org>
-Date:   Wed, 14 Dec 2022 18:25:01 +0200
+        Wed, 14 Dec 2022 08:45:51 -0800 (PST)
+Message-ID: <65ccd0c9-8bd9-fc3c-ef33-78b905adf294@linaro.org>
+Date:   Wed, 14 Dec 2022 17:45:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v6 4/5] clk: qcom: rpmh: Add support for SM8550 rpmh
- clocks
-Content-Language: en-GB
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH] dt-bindings: arm: qcom: add board-id/msm-id for MSM8956,
+ SDM636 and SM4250
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20221206224515.1495457-1-abel.vesa@linaro.org>
- <20221206224515.1495457-5-abel.vesa@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221206224515.1495457-5-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221214150605.173346-1-krzysztof.kozlowski@linaro.org>
+ <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,180 +82,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/12/2022 00:45, Abel Vesa wrote:
-> Adds the RPMH clocks present in SM8550 SoC.
+On 14/12/2022 16:29, Marijn Suijten wrote:
+> On 2022-12-14 16:06:05, Krzysztof Kozlowski wrote:
+>> Allow qcom,board-id and qcom,msm-id leagcy properties on these older
+>> platforms: MSM8956, SDM636 and SM4250.  Also mention more OnePlus
+>> devices using modified qcom,board-id field.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/clk/qcom/clk-rpmh.c | 110 +++++++++++++++++++++++++++++-------
->   1 file changed, 90 insertions(+), 20 deletions(-)
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index 2c2ef4b6d130..ce81c76ed0fd 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -130,6 +130,34 @@ static DEFINE_MUTEX(rpmh_clk_lock);
->   		},							\
->   	}
->   
-> +#define DEFINE_CLK_FIXED_FACTOR(_name, _parent_name, _div)		\
-> +	static struct clk_fixed_factor clk_fixed_factor##_##_name = {	\
-> +		.mult = 1,						\
-> +		.div = _div,						\
-> +		.hw.init = &(struct clk_init_data){			\
-> +			.ops = &clk_fixed_factor_ops,			\
-> +			.name = #_name,					\
-> +			.parent_data =  &(const struct clk_parent_data){ \
-> +				.fw_name = #_parent_name,		\
-> +				.name = #_parent_name,			\
-> +			},						\
-> +			.num_parents = 1,				\
-> +		},							\
-> +	};								\
-> +	static struct clk_fixed_factor clk_fixed_factor##_##_name##_ao = { \
-> +		.mult = 1,						\
-> +		.div = _div,						\
-> +		.hw.init = &(struct clk_init_data){			\
-> +			.ops = &clk_fixed_factor_ops,			\
-> +			.name = #_name "_ao",				\
-> +			.parent_data =  &(const struct clk_parent_data){ \
-> +				.fw_name = #_parent_name "_ao",		\
-> +				.name = #_parent_name "_ao",		\
-> +			},						\
-> +			.num_parents = 1,				\
-> +		},							\
-> +	}
-> +
->   static inline struct clk_rpmh *to_clk_rpmh(struct clk_hw *_hw)
->   {
->   	return container_of(_hw, struct clk_rpmh, hw);
-> @@ -345,6 +373,8 @@ DEFINE_CLK_RPMH_ARC(bi_tcxo, "xo.lvl", 0x3, 2);
->   DEFINE_CLK_RPMH_ARC(bi_tcxo, "xo.lvl", 0x3, 4);
->   DEFINE_CLK_RPMH_ARC(qlink, "qphy.lvl", 0x1, 4);
->   
-> +DEFINE_CLK_FIXED_FACTOR(bi_tcxo_div2, bi_tcxo, 2);
-> +
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk1, _a2, "lnbclka1", 2);
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _a2, "lnbclka2", 2);
->   DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a2, "lnbclka3", 2);
-> @@ -366,6 +396,16 @@ DEFINE_CLK_RPMH_VRM(rf_clk2, _d, "rfclkd2", 1);
->   DEFINE_CLK_RPMH_VRM(rf_clk3, _d, "rfclkd3", 1);
->   DEFINE_CLK_RPMH_VRM(rf_clk4, _d, "rfclkd4", 1);
->   
-> +DEFINE_CLK_RPMH_VRM(clk1, _a1, "clka1", 1);
-> +DEFINE_CLK_RPMH_VRM(clk2, _a1, "clka2", 1);
-> +DEFINE_CLK_RPMH_VRM(clk3, _a1, "clka3", 1);
-> +DEFINE_CLK_RPMH_VRM(clk4, _a1, "clka4", 1);
-> +DEFINE_CLK_RPMH_VRM(clk5, _a1, "clka5", 1);
-> +
-> +DEFINE_CLK_RPMH_VRM(clk6, _a2, "clka6", 2);
-> +DEFINE_CLK_RPMH_VRM(clk7, _a2, "clka7", 2);
-> +DEFINE_CLK_RPMH_VRM(clk8, _a2, "clka8", 2);
-> +
->   DEFINE_CLK_RPMH_VRM(div_clk1, _div2, "divclka1", 2);
->   
->   DEFINE_CLK_RPMH_BCM(ce, "CE0");
-> @@ -576,6 +616,33 @@ static const struct clk_rpmh_desc clk_rpmh_sm8450 = {
->   	.num_clks = ARRAY_SIZE(sm8450_rpmh_clocks),
->   };
->   
-> +static struct clk_hw *sm8550_rpmh_clocks[] = {
-> +	[RPMH_CXO_PAD_CLK]      = &clk_rpmh_bi_tcxo_div2.hw,
-> +	[RPMH_CXO_PAD_CLK_A]    = &clk_rpmh_bi_tcxo_div2_ao.hw,
-> +	[RPMH_CXO_CLK]		= &clk_fixed_factor_bi_tcxo_div2.hw,
-> +	[RPMH_CXO_CLK_A]	= &clk_fixed_factor_bi_tcxo_div2_ao.hw,
-> +	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
-> +	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2.hw,
-> +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
-> +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
-> +	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1.hw,
-> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_ao.hw,
-> +	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1.hw,
-> +	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_ao.hw,
-> +	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a1.hw,
-> +	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a1_ao.hw,
-> +	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a1.hw,
-> +	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_ao.hw,
-> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
-> +};
-> +
-> +static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
-> +	.clks = sm8550_rpmh_clocks,
-> +	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
-> +};
-> +
->   static struct clk_hw *sc7280_rpmh_clocks[] = {
->   	[RPMH_CXO_CLK]      = &clk_rpmh_bi_tcxo_div4.hw,
->   	[RPMH_CXO_CLK_A]    = &clk_rpmh_bi_tcxo_div4_ao.hw,
-> @@ -683,29 +750,31 @@ static int clk_rpmh_probe(struct platform_device *pdev)
->   
->   		name = hw_clks[i]->init->name;
->   
-> -		rpmh_clk = to_clk_rpmh(hw_clks[i]);
-> -		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
-> -		if (!res_addr) {
-> -			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
-> -				rpmh_clk->res_name);
-> -			return -ENODEV;
-> -		}
-> +		if (hw_clks[i]->init->ops != &clk_fixed_factor_ops) {
+>> ---
+>>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index d45e2129fce3..cfb7f5caf606 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -925,15 +925,18 @@ allOf:
+>>                - qcom,apq8026
+>>                - qcom,apq8094
+>>                - qcom,apq8096
+>> +              - qcom,msm8956
+> 
+> I am certain this (and msm8976) were added in [1] but it somehow got
+> lost when that was merged as 05c0c38dc752 ("dt-bindings: arm: qcom:
+> Document msm8956 and msm8976 SoC and devices")?
+> 
+> Should we also add qcom,msm8976 or only when a user for that board is
+> added?
 
-We discussed this separately, the fixed factor clocks will be moved to 
-the child nodes, leaving rpmhcc with only cmd-db based clocks.
+Bjorn,
+You need to fix your scripts. It's not the first time when applied patch
+is changed and its pieces are gone.
 
-> +			rpmh_clk = to_clk_rpmh(hw_clks[i]);
-> +			res_addr = cmd_db_read_addr(rpmh_clk->res_name);
-> +			if (!res_addr) {
-> +				dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
-> +					rpmh_clk->res_name);
-> +				return -ENODEV;
-> +			}
->   
-> -		data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
-> -		if (IS_ERR(data)) {
-> -			ret = PTR_ERR(data);
-> -			dev_err(&pdev->dev,
-> -				"error reading RPMh aux data for %s (%d)\n",
-> -				rpmh_clk->res_name, ret);
-> -			return ret;
-> -		}
-> +			data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
-> +			if (IS_ERR(data)) {
-> +				ret = PTR_ERR(data);
-> +				dev_err(&pdev->dev,
-> +					"error reading RPMh aux data for %s (%d)\n",
-> +					rpmh_clk->res_name, ret);
-> +				return ret;
-> +			}
->   
-> -		/* Convert unit from Khz to Hz */
-> -		if (aux_data_len == sizeof(*data))
-> -			rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
-> +			/* Convert unit from Khz to Hz */
-> +			if (aux_data_len == sizeof(*data))
-> +				rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
->   
-> -		rpmh_clk->res_addr += res_addr;
-> -		rpmh_clk->dev = &pdev->dev;
-> +			rpmh_clk->res_addr += res_addr;
-> +			rpmh_clk->dev = &pdev->dev;
-> +		}
->   
->   		ret = devm_clk_hw_register(&pdev->dev, hw_clks[i]);
->   		if (ret) {
-> @@ -741,6 +810,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
->   	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
->   	{ .compatible = "qcom,sm8350-rpmh-clk", .data = &clk_rpmh_sm8350},
->   	{ .compatible = "qcom,sm8450-rpmh-clk", .data = &clk_rpmh_sm8450},
-> +	{ .compatible = "qcom,sm8550-rpmh-clk", .data = &clk_rpmh_sm8550},
->   	{ .compatible = "qcom,sc7280-rpmh-clk", .data = &clk_rpmh_sc7280},
->   	{ }
->   };
+This is patchwork:
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20221111120156.48040-9-angelogioacchino.delregno@collabora.com/
 
--- 
-With best wishes
-Dmitry
+This is git:
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=arm64-for-6.2&id=05c0c38dc752eb9244e53d72ce1030f36153daf8
+
+Two different patches.
+
+
+> 
+>>                - qcom,msm8992
+>>                - qcom,msm8994
+>>                - qcom,msm8996
+>>                - qcom,msm8998
+>>                - qcom,sdm630
+>>                - qcom,sdm632
+>> +              - qcom,sdm636
+>>                - qcom,sdm845
+>>                - qcom,sdx55
+>>                - qcom,sdx65
+>> +              - qcom,sm4250
+> 
+> qcom,sm6115 could be added as well unless you rather leave that to the
+> person(s) adding the board compatible later on.
+
+There is no board, I think, so I did not add compatible.
+
+Best regards,
+Krzysztof
 
