@@ -2,150 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60F0964C8AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:04:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6B264C911
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:33:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238160AbiLNMEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 07:04:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40154 "EHLO
+        id S238309AbiLNMdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 07:33:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237754AbiLNME1 (ORCPT
+        with ESMTP id S238325AbiLNMdQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 07:04:27 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A158E27DC4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:02:54 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id 130so4267509pfu.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:02:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura.hr; s=sartura;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=peaw+2jBoexT/V/OL/klaMSfRkpK0w1QubB8hlHtjKU=;
-        b=IffZpvmos6IFA8F2Mu7UX03vFoZdzSvAl4wArexI2TJ+mCg8LYPObJ0caqqBk6KELc
-         7e96IX0TGhm3EbfxrnJUHspRY4C5kzZjXA8RPZhE2bOdCe6tjVnt+Z3CF0kf/nY0nL+5
-         zhLxH/gVF/oPszrMxuCbjkfNqT6s3OZYE50HYnrLZ7oMjvbFnJ2FU0kVIkcZhH46wiwl
-         wLPAdUYt+VKJPhUoSBgt566qcUxTJYhAUxZrXrKHxPKFY8264tYoNHL+XtQdD6DjNdwK
-         dtgAPPBovln+d78d738YPXAKKoU4rCSJQNQzmoESEN0DTVhkyEgeq7ajtPDj3m1qgn+h
-         UaHw==
+        Wed, 14 Dec 2022 07:33:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC85A27DC1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:30:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1671021017;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+vO4DoxPTo+v6Z3oofYVvH1iS9HtJtB6HPIOFQQBy8E=;
+        b=dT/B/u+VDWX93quk9rpNLoTkORZ4Zsv/tcPOMlPZlhK7eA++vwjgV95YwM9MpCQd/OyL2c
+        JkDTNy+u6ph+FmW09OfHKu8eqVX3mMbzPB+UPiyBxFkBPdnkRPElApR4GDEZF/PJJHwI1z
+        oDvZtyPHNjNJduovaxxzJHTbHjNaXLw=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-600-fsX6G8U0PXij82UAOIwMTA-1; Wed, 14 Dec 2022 07:30:16 -0500
+X-MC-Unique: fsX6G8U0PXij82UAOIwMTA-1
+Received: by mail-qv1-f70.google.com with SMTP id ld9-20020a056214418900b004d0ab346633so14522590qvb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:30:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=peaw+2jBoexT/V/OL/klaMSfRkpK0w1QubB8hlHtjKU=;
-        b=8RhTnQ84Y6KCTddwo3H8N3pEhNAW/lZYuq7Dw1Pz88TsSMNwKlLmB6J0xWnz6YAWvj
-         9IIzXOR2ptk6o+AZYLs0yBpFcKoNlDMnO9BqY+S76R8fRIJN2v50Qs1dxavWy+X4vNUA
-         Ybl59mgA02KMhj0bC8r5vvvpjon74JtZ4H7iVefRvTXUQWrRGBdKQtMRxsI/VZ5a2x86
-         qv4ZmElIPm5aM4CzFm+gi8jNIlVZJiYYbrTDqSI98y9JKrDNBeaep/j/BKNAriRxsE9a
-         UvKphpSzof/9lSHqyeO9592SOR3TXwfBWOXvKJ/AJ/8ZWW6qPQLILhpkgPDU8ROoQkvj
-         8sWQ==
-X-Gm-Message-State: ANoB5pkcupaVEIKUBhCIgKvNAjYij22e5J9QPhSzCUWHCeTSIubdfWce
-        08yuGNqq7Zj2nSPciPOfrzkEFgKwecuiOvNxvEsSBw==
-X-Google-Smtp-Source: AA0mqf6ACT1hXHaNkKcTvIqqDuxXiD+Qw3prO4hyGi38uOl9IwijS+lvf8GiQLNL3EwGrPbufcxLrNNbvCYdwt6fqnk=
-X-Received: by 2002:a62:8409:0:b0:575:1168:a970 with SMTP id
- k9-20020a628409000000b005751168a970mr54638196pfd.54.1671019373770; Wed, 14
- Dec 2022 04:02:53 -0800 (PST)
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+vO4DoxPTo+v6Z3oofYVvH1iS9HtJtB6HPIOFQQBy8E=;
+        b=SAuU6OKPb5R1yQM9s7BNgr0Yqz1ZxsrEzdK8pV0zwUK/OLnSU2eCAJaq4vjQ9jJKo1
+         c8ZuMJ/ErQqNvrasfPbuR4dBI7pTlSQsw+zuv8jRdelR5FtXJAUAt3gTl0TpSvBgVdLp
+         HVzi7YGXydQEQAD2EHUOusXMZ5+1ArL6uN6fRy8ADR8t1Ti69T50NY0iBZdGmFJstpoG
+         g8tz3qEZODPZ33mZyC1Ncvuk5LAFtmCED+Uhxsv4mQ6kk6PukVuhSgoSFHJlLbklstV5
+         BN/pdidmD9syrQt3FyT3JAo2+NlYYPgLL8ZEwB8TRK2Ltsgz85Jv2tuJtLHcHGklzTdB
+         WB1w==
+X-Gm-Message-State: ANoB5pmXs4ALbkoLw5UVTLwSWGc2OhMbp9WyVJrjckbl+oGBIqKhOMP0
+        XYadI/isgiORVPFBmk3ZgMrECgyMrf6gYmyCfSyrcoWBq4ulwz3rsu/K87BPgSsLBtangz92bot
+        ugF9cWg5Cd+RUAAR4AZWthwvqUw==
+X-Received: by 2002:a05:6214:843:b0:4c7:9c7:e6ac with SMTP id dg3-20020a056214084300b004c709c7e6acmr31106898qvb.47.1671021015838;
+        Wed, 14 Dec 2022 04:30:15 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf5S0C9daEbB6SI7DneQvvEiKJe0pIWT/bd1pm4rhI2+NTF7dxpZeZ9sV05cB3CG574f5Cic0A==
+X-Received: by 2002:a05:6214:843:b0:4c7:9c7:e6ac with SMTP id dg3-20020a056214084300b004c709c7e6acmr31106876qvb.47.1671021015551;
+        Wed, 14 Dec 2022 04:30:15 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id do36-20020a05620a2b2400b006fb8239db65sm9825555qkb.43.2022.12.14.04.30.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Dec 2022 04:30:14 -0800 (PST)
+Date:   Wed, 14 Dec 2022 07:30:13 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, quic_shazhuss@quicinc.com
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
+ qup2_i2c18 nodes
+Message-ID: <Y5nB1epKN4nbk3ma@x1>
+References: <20221212182314.1902632-1-bmasney@redhat.com>
+ <20221212182314.1902632-4-bmasney@redhat.com>
+ <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org>
 MIME-Version: 1.0
-References: <20221105194943.826847-1-robimarko@gmail.com> <20221105194943.826847-2-robimarko@gmail.com>
- <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org> <877czn8c2n.fsf@kernel.org>
-In-Reply-To: <877czn8c2n.fsf@kernel.org>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Wed, 14 Dec 2022 13:02:42 +0100
-Message-ID: <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
-To:     Kalle Valo <kvalo@kernel.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        gregkh@linuxfoundation.org, elder@linaro.org,
-        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
-        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, ansuelsmth@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 12:26 PM Kalle Valo <kvalo@kernel.org> wrote:
+On Tue, Dec 13, 2022 at 03:48:27PM +0100, Konrad Dybcio wrote:
+> > +	qup1_i2c15_default: qup1-i2c15-state {
+> > +		mux-pins {
+> > +			pins = "gpio36", "gpio37";
+> > +			function = "qup15";
+> > +		};
+> > +
+> > +		config-pins {
+> > +			pins = "gpio36", "gpio37";
+> > +			drive-strength = <0x02>;
+> > +			bias-pull-up;
+> > +		};
+> > +	};
 >
-> Kalle Valo <kvalo@kernel.org> writes:
->
-> > Manivannan Sadhasivam <mani@kernel.org> writes:
-> >
-> >> On Sat, Nov 05, 2022 at 08:49:43PM +0100, Robert Marko wrote:
-> >>> Currently, trying to use AHB + PCI/MHI cards or multiple PCI/MHI cards
-> >>> will cause a clash in the QRTR instance node ID and prevent the driver
-> >>> from talking via QMI to the card and thus initializing it with:
-> >>> [    9.836329] ath11k c000000.wifi: host capability request failed: 1 90
-> >>> [    9.842047] ath11k c000000.wifi: failed to send qmi host cap: -22
-> >>>
-> >>
-> >> There is still an outstanding issue where you cannot connect two WLAN modules
-> >> with same node id.
-> >>
-> >>> So, in order to allow for this combination of cards, especially AHB + PCI
-> >>> cards like IPQ8074 + QCN9074 (Used by me and tested on) set the desired
-> >>> QRTR instance ID offset by calculating a unique one based on PCI domain
-> >>> and bus ID-s and writing it to bits 7-0 of BHI_ERRDBG2 MHI register by
-> >>> using the SBL state callback that is added as part of the series.
-> >>> We also have to make sure that new QRTR offset is added on top of the
-> >>> default QRTR instance ID-s that are currently used in the driver.
-> >>>
-> >>
-> >> Register BHI_ERRDBG2 is listed as Read only from Host as per the BHI spec.
-> >> So I'm not sure if this solution is going to work on all ath11k supported
-> >> chipsets.
-> >>
-> >> Kalle, can you confirm?
-> >
-> > I can't look at this in detail right now, but hopefully in few days.
-> > I'll get back to you.
->
-> The solution we have been thinking internally would not use
-> MHI_CB_EE_SBL_MODE at all, it's not clear for me yet why the mode was
-> not needed in our solution. Maybe there are firmware modifications? I
-> think it's best that we submit our proposal as well, then we can then
-> compare implementations and see what is the best course of action.
+> You can drop mux/config-pins and have the pin properties live directly
+> under the qup1-i2cN-state node.
 
-Kalle, any ETA when you will post your idea?
-I am constantly hitting this crazy limitation and my idea does not work on cards
-like QCA6390 so it's not a viable workaround at all.
+Hi Konrad (and Shazad below), 
 
-Regards,
-Robert
->
-> But it looks that not all ath11k hardware and firmware releases support
-> this feature, we would need meta data information from the firmware to
-> detect it. I am working on adding firmware meta data support[1] to
-> ath11k, will post patches for that "soon".
->
-> [1] similar to firmware-N.bin support ath10k has
->
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
->
-> --
-> ath11k mailing list
-> ath11k@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/ath11k
+I need to enable 5 i2c buses (0, 1, 12, 15, 18) on this board. I tried
+the following combinations with the pin mapping configuration and the
+only one that seems to work reliably for me is what I originally had.
+
+With the following, only 2 out of the 5 buses are detected. There's no
+i2c mesages in dmesg.
+
+    i2c0_default: i2c0-default-state {
+        pins = "gpio135", "gpio136";
+        function = "qup15";
+    };
+
+Next, I added a drive-strength and bias-pull-up. All 5 buses are
+detected. One bus throws read errors when I probe it with i2cdetect, two
+others 'i2cdetect -a -y $BUSNUM' takes ~5 seconds to run, and the
+remaining two are fast.
+
+    i2c0_default: i2c0-default-state {
+        pins = "gpio135", "gpio136";
+        function = "qup15";
+        drive-strength = <2>;
+        bias-pull-up;
+    };
+
+This is the style where i2cdetect seems to be happy for all 5 buses and
+is fast:
+
+    i2c0_default: i2c0-default-state {
+        mux-pins {
+            pins = "gpio135", "gpio136";
+            function = "qup0";
+        };
+
+        config-pins {
+            pins = "gpio135", "gpio136";
+            drive-strength = <2>;
+            bias-pull-up;
+        };
+    };
 
 
+Shazad: 'i2cdetect -a -y $BUSNUM) shows that all 5 buses have the same
+addresses listening. Is that expected? That seems a bit odd to me.
 
--- 
-Robert Marko
-Staff Embedded Linux Engineer
-Sartura Ltd.
-Lendavska ulica 16a
-10000 Zagreb, Croatia
-Email: robert.marko@sartura.hr
-Web: www.sartura.hr
+[root@localhost ~]# i2cdetect -a -y 0
+Warning: Can't use SMBus Quick Write command, will skip some addresses
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:                                                 
+10:                                                 
+20:                                                 
+30: -- -- -- -- -- -- -- --                         
+40:                                                 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60:                                                 
+70:                                                 
+
+I triple checked that I have the QUP pins defined correctly for the 5
+buses. I checked them against what's in the downstream kernel and I also
+checked them against what's in upstream's
+drivers/pinctrl/qcom/pinctrl-sc8280xp.c. This is the pin mapping that I
+have:
+
+    i2c0: gpio135, gpio136
+    i2c1: gpio158, gpio159
+    i2c12: gpio0, gpio1
+    i2c15: gpio36, gpio37
+    i2c18: gpio66, gpio67
+
+Brian
+
