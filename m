@@ -2,177 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13ED664C673
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 10:56:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7587564C685
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 11:06:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238043AbiLNJ41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 04:56:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58944 "EHLO
+        id S237991AbiLNKG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 05:06:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238047AbiLNJ4V (ORCPT
+        with ESMTP id S238011AbiLNKGY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 04:56:21 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93E521A0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:56:20 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id 1so9557833lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:56:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aNJNTOII/kcONJd8CaNcXxHzCuywHLZopRKDpGjPQGY=;
-        b=I2ZYbEUz/VnpqOOO9tLIGFPE++82w7iP+LU8JFd5EAl5dEsxMlntD+vTpOtmeINzKk
-         xLJ7Kt7W2MyRT+ZwBwDGJLY0UbNNBnQx2sqJ2KxsVtlVRrOcSWklj4JbYfZ+IwqjAfl4
-         jzTXG+olvbujK5q4FfGwLItl3Qpi1qJtMNZMVb0kphfCXUENQ16qLzoXuouKTrGfTJNe
-         m9Dhy5D59N1UJSZTdaJggEEAowq3H/3mbcZJzuTbapyCkt1d8+HNArH0zNwx5g7aMuPc
-         T7e9PDffMRHodpazN/LoMIcHZJQazT46dRaFzmAh3w+pk2KVBmlkK9mOzbK1ty7Ql6lT
-         r5Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aNJNTOII/kcONJd8CaNcXxHzCuywHLZopRKDpGjPQGY=;
-        b=G62tsRLKYjeSFtDvlm3NVsW80zcAmfeGoN5wH2XS/lSAtd9/SV8B8a6FSe1viaI4bX
-         odLP64TLTPtizFd500+OcnWLSOjLcYybAoTiDBdY16/8QaG7/VVLpj90a8kDHiWXp+7s
-         KsgmTkwOgI51nYiSYSucSaX/2mwXDgx8TjOtCvUljZj1tugAO0R5Mr6gDmZa0NCw7uga
-         Am/s29h9vmxvLi8Iz05p0W9zGIV42VYYE4sNrPn0Jn6rHw3ecf3KHnbpKTA+8m7sWTf9
-         pSzhlNFYWQFpjJBu8X0zNtgTKWbq8iWZhUodF0nPgEWmf16EgpqjObJU33Ri1EMsJ6yl
-         F95g==
-X-Gm-Message-State: ANoB5pnQWm8AHEFjXI70tuPKIrn05KmBPxzQli8+gepsEuAJKVm0E527
-        cZOzTlF/mlY7no2h1NH0zBP3HQ==
-X-Google-Smtp-Source: AA0mqf4xW64tVM5DPefPl+m+tqJT3zPBAIQOsntrDEuumQIYumNk5ua9B4HLuOQeoT7ewEkVS0u9RQ==
-X-Received: by 2002:a05:6512:39d2:b0:4b6:fdc3:a65f with SMTP id k18-20020a05651239d200b004b6fdc3a65fmr1987539lfu.11.1671011779131;
-        Wed, 14 Dec 2022 01:56:19 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id w3-20020a05651234c300b004a9b9ccfbe6sm746744lfr.51.2022.12.14.01.56.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 01:56:18 -0800 (PST)
-Message-ID: <c428b894-6c6c-bd26-6815-ca8c091c6ac5@linaro.org>
-Date:   Wed, 14 Dec 2022 10:56:17 +0100
+        Wed, 14 Dec 2022 05:06:24 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ED11A3B3;
+        Wed, 14 Dec 2022 02:06:22 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BE8W5Kc030331;
+        Wed, 14 Dec 2022 10:06:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=9y/88DdkI/G9hNs9Fl/eOPbhCg58hYvWMInMkUsjCf4=;
+ b=DCBtS+gk3gBWSLgSnm7pPoeKvjqtq/Zix0Q4CBwN/TMF0AxfHP2TSYbag58D0axsNUqH
+ 8SDR+DqimKfp6RlNYLMfMo2Afg0698yFgyvIKEZDBPhy/u1nVxWraGqElfhVDm0yCPUQ
+ xiESyUsrn067Tq8cdmK7rCUePU6p6THSsfNrLSk+V3SP83AKI9HcxgIdwQfOIxX4QYRF
+ UGMl2FSIRfjZOZ2SgtxBpuJTj/t/KO9wq55kmL05Sf8wangq0O5SD4CIIcdSf2WqwmMe
+ PTI1tvbSYX35IqaBhbHTPMBwsQkdFnrmE5b2RPlb7x3soh0zubm7b9U/PtsdwEMJj+Di Sw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mf6rkgn7x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Dec 2022 10:06:17 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BEA6GGs013183
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Dec 2022 10:06:16 GMT
+Received: from vpolimer-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 14 Dec 2022 02:06:10 -0800
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
+CC:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <quic_kalyant@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <quic_khsieh@quicinc.com>, <quic_vproddut@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>
+Subject: [PATCH v9 00/15] Add PSR support for eDP 
+Date:   Wed, 14 Dec 2022 15:35:37 +0530
+Message-ID: <1671012352-1825-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        andersson@kernel.org
-References: <20221213123823.455731-1-bhupesh.sharma@linaro.org>
- <20221213123823.455731-4-bhupesh.sharma@linaro.org>
- <39ff2174-6d04-ec21-b762-377ed28088cb@linaro.org>
- <CAH=2NtwUODvzLx=JThuZpADv+x+NtLx688Ox-95b_T9PtRf4_w@mail.gmail.com>
- <ecb2c9ff-b092-22fa-c91e-01ead6266457@linaro.org>
- <CAH=2NtynGaNH+wm-wavj=NsGFQrWVHqjYmivN2nuq-YSXFs0tw@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAH=2NtynGaNH+wm-wavj=NsGFQrWVHqjYmivN2nuq-YSXFs0tw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d0YX5aHblkjiz9qdF83x1r6g43DmGk8N
+X-Proofpoint-ORIG-GUID: d0YX5aHblkjiz9qdF83x1r6g43DmGk8N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-14_04,2022-12-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212140079
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes in v2:
+  - Use dp bridge to set psr entry/exit instead of dpu_enocder.
+  - Don't modify whitespaces.
+  - Set self refresh aware from atomic_check.
+  - Set self refresh aware only if psr is supported.
+  - Provide a stub for msm_dp_display_set_psr.
+  - Move dp functions to bridge code.
 
+Changes in v3:
+  - Change callback names to reflect atomic interfaces.
+  - Move bridge callback change to separate patch as suggested by Dmitry.
+  - Remove psr function declaration from msm_drv.h.
+  - Set self_refresh_aware flag only if psr is supported.
+  - Modify the variable names to simpler form.
+  - Define bit fields for PSR settings.
+  - Add comments explaining the steps to enter/exit psr.
+  - Change DRM_INFO to drm_dbg_db. 
 
-On 14.12.2022 06:20, Bhupesh Sharma wrote:
-> On Wed, 14 Dec 2022 at 00:29, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 13/12/2022 19:52, Bhupesh Sharma wrote:
->>> Hi Krzysztof,
->>>
->>> On Tue, 13 Dec 2022 at 18:26, Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>
->>>> On 13/12/2022 13:38, Bhupesh Sharma wrote:
->>>>> Add USB superspeed qmp phy node to dtsi.
->>>>>
->>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 38 ++++++++++++++++++++++++++--
->>>>>  1 file changed, 36 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>> index e4ce135264f3d..9c5c024919f92 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>> @@ -579,6 +579,40 @@ usb_hsphy: phy@1613000 {
->>>>>                       status = "disabled";
->>>>>               };
->>>>>
->>>>> +             usb_qmpphy: phy@1615000 {
->>>>> +                     compatible = "qcom,sm6115-qmp-usb3-phy";
->>>>> +                     reg = <0x01615000 0x200>;
->>>>> +                     #clock-cells = <1>;
->>>>> +                     #address-cells = <1>;
->>>>> +                     #size-cells = <1>;
->>>>> +                     ranges;
->>>>> +                     clocks = <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->>>>> +                              <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
->>>>> +                              <&gcc GCC_AHB2PHY_USB_CLK>;
->>>>> +                     clock-names = "com_aux",
->>>>> +                                   "ref",
->>>>> +                                   "cfg_ahb";
->>>>> +                     resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
->>>>> +                              <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
->>>>> +                     reset-names = "phy", "phy_phy";
->>>>> +                     status = "disabled";
->>>>
->>>> Hm, you add a disabled PHY which is used by existing controller. The
->>>> controller is enabled in board DTS, but new PHY node isn't. Aren't you
->>>> now breaking it?
->>>
->>> The USB controller is connected to two PHYs - one is HS PHY and the other is SS
->>> QMP Phy. So while the exiting board dts describes and uses only the HS
->>> PHY, newer
->>> board dts files (which will soon be sent out as a separate patch),
->>
->> Then I miss how do you narrow the existing DTS to use only one PHY. I
->> don't see anything in this patchset.
->>
->>> will use both the HS and SS
->>> USB PHYs.
->>>
->>> So, this will not break the existing board dts files.
->>
->> I still think it will be. The board boots with USB with one phy enabled
->> and one disabled. The driver gets phys unconditionally and one of them
->> is disabled.
->>
->> Even if Linux implementation will work (devm_usb_get_phy_by_phandle will
->> return -ENXIO or -ENODEV for disabled node), it is still a bit confusing
->> and I wonder how other users of such DTS should behave. Although it will
->> affect only one board, so maybe there are no other users?
-> 
-> Ah, now I get your point. So how does the following fix in
-> sm4250-oneplus-billie2.dts look like. It allows the base dtsi to carry
-> the usb nodes as exposed by the SoC and allows other board dts files
-> to use both the USB2 and UBS3 PHYs.
-> 
-> Please let me know.
-> 
-> --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> @@ -232,6 +232,9 @@ &usb {
->  &usb_dwc3 {
->         maximum-speed = "high-speed";
->         dr_mode = "peripheral";
-> +
-> +       phys = <&usb_hsphy>;
-> +       phy-names = "usb2-phy";
->  };
-Looks good now!
+Changes in v4:
+  - Move the get crtc functions to drm_atomic.
+  - Add atomic functions for DP bridge too.
+  - Add ternary operator to choose eDP or DP ops.
+  - Return true/false instead of 1/0.
+  - mode_valid missing in the eDP bridge ops.
+  - Move the functions to get crtc into drm_atomic.c.
+  - Fix compilation issues.
+  - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc.
+  - Check for crtc state enable while reserving resources.
 
-Konrad
-> 
-> Thanks.
+Changes in v5:
+  - Move the mode_valid changes into a different patch.
+  - Complete psr_op_comp only when isr is set.
+  - Move the DP atomic callback changes to a different patch.
+  - Get crtc from drm connector state crtc.
+  - Move to separate patch for check for crtc state enable while
+reserving resources.
+
+Changes in v6:
+  - Remove crtc from dpu_encoder_virt struct.
+  - fix crtc check during vblank toggle crtc.
+  - Misc changes. 
+
+Changes in v7:
+  - Add fix for underrun issue on kasan build.
+
+Changes in v8:
+  - Drop the enc spinlock as it won't serve any purpose in
+protetcing conn state.(Dmitry/Doug)
+
+Changes in v9:
+  - Update commit message and fix alignment using spaces.(Marijn)
+  - Misc changes.(Marijn)
+
+Sankeerth Billakanti (1):
+  drm/msm/dp: disable self_refresh_aware after entering psr
+
+Vinod Polimera (14):
+  drm/msm/disp/dpu: clear dpu_assign_crtc and get crtc from connector
+    state instead of dpu_enc
+  drm: add helper functions to retrieve old and new crtc
+  drm/msm/dp: use atomic callbacks for DP bridge ops
+  drm/msm/dp: Add basic PSR support for eDP
+  drm/msm/dp: use the eDP bridge ops to validate eDP modes
+  drm/bridge: use atomic enable/disable callbacks for panel bridge
+  drm/bridge: add psr support for panel bridge callbacks
+  drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
+    functions
+  drm/msm/disp/dpu: check for crtc enable rather than crtc active to
+    release shared resources
+  drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
+  drm/msm/disp/dpu: get timing engine status from intf status register
+  drm/msm/disp/dpu: wait for extra vsync till timing engine status is
+    disabled
+  drm/msm/disp/dpu: reset the datapath after timing engine disable
+  drm/msm/disp/dpu: clear active interface in the datapath cleanup
+
+ drivers/gpu/drm/bridge/panel.c                     |  68 ++++++-
+ drivers/gpu/drm/drm_atomic.c                       |  60 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  17 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  71 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   8 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  22 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |  80 ++++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |   4 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  80 ++++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   3 +
+ drivers/gpu/drm/msm/dp/dp_display.c                |  36 ++--
+ drivers/gpu/drm/msm/dp/dp_display.h                |   2 +
+ drivers/gpu/drm/msm/dp/dp_drm.c                    | 206 ++++++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |   9 +-
+ drivers/gpu/drm/msm/dp/dp_link.c                   |  36 ++++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  22 +++
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |   6 +
+ drivers/gpu/drm/msm/dp/dp_reg.h                    |  27 +++
+ include/drm/drm_atomic.h                           |   7 +
+ 23 files changed, 703 insertions(+), 86 deletions(-)
+
+-- 
+2.7.4
+
