@@ -2,357 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED93F64C609
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 10:34:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7720264C624
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 10:41:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237841AbiLNJeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 04:34:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45580 "EHLO
+        id S229836AbiLNJku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 04:40:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237856AbiLNJeC (ORCPT
+        with ESMTP id S237453AbiLNJkf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 04:34:02 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FE7BF53
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:34:00 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4NX9D71G6cz1S5Cx
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:33:59 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:mime-version:x-mailer:message-id:date
-        :subject:to:from; s=dkim; t=1671010438; x=1671874439; bh=+4eI0BR
-        yErHUQAcVy7S9osoMtm4H8W2qLOP03Y0Xnss=; b=NJGUE+Ua9zbQR6hPluyKHpd
-        r95fOcgWsaG6tDFR6pkJpQy0W2aUz0Hahha/73Wm0JMKI9jAl6pMB/cwGCSW5oSr
-        yveU223alxRHIwn/3KA79zmbFhETb4/gmVew1o6efM53gzVeNbtRGcGCeXq9Mnsz
-        UqIKCQQxUn2wptJcdv6+e/H9Uuriq9diU8zec2pfA8J8gmcylDWc4P7++/3nBXZr
-        g7VvnqqT6FNDxbnqE9vtS+B+ZNT+TCFsdBkO4FyehSvyW+I+UqzdnwLnb/ZOeriP
-        w/sMvbEGTfGDSYanh8G9qKryc5avM1B57Rv0kQHMW0obcLkkSmXAsw8MdfIPOEA=
-        =
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id vrgPQSIg9_OE for <linux-arm-msm@vger.kernel.org>;
-        Wed, 14 Dec 2022 04:33:58 -0500 (EST)
-Received: from dorothy.. (unknown [190.196.92.66])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NX9D01JJ5z1S52g;
-        Wed, 14 Dec 2022 04:33:51 -0500 (EST)
-From:   Lux Aliaga <they@mint.lgbt>
-Cc:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Wed, 14 Dec 2022 04:40:35 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1471FFA0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:40:33 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id g7so9483739lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 01:40:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Na1nf8qjjb1uMGoebJs/VqSMr6q5uwCqvQJ2Ul04o+w=;
+        b=YBVPuBr0jQKvXOKcWIdTT4V+PF+IEh9EFO+h1JTbjhB86iMmEgTMXkROy9xjNdDqx4
+         jpGYcATEhqkzZ9RjQomgPHMwbMFBmfCT+MuIFYt4KAU/hZ/3PtVIf0k7OgAC/Oy+Gz7t
+         pu5Sde0A8HvWabj8UWSQd1hR+2bRnXI8l5G3BWDfayRUqbnVAnABL83boyiBoI4g1KjP
+         JCUJaCqOtHUfyIybEzQgcI0ItHC1kgpfx9SXRrszffu05E/dzlJ0kMahaf4hsPK+J4gv
+         bYTywPFS6eB5+Bj1CjC+ywEQIULQgC5wjCG7SLXM+Obb4EKuOfB+Jg+UCnvECyGA1/aW
+         XeDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Na1nf8qjjb1uMGoebJs/VqSMr6q5uwCqvQJ2Ul04o+w=;
+        b=R9fC2Xn90/4gOiViyVYxK2Bu0gHpyr2sglyCan/bTGGqVIESwSIiH8K3e8HUlrEhpW
+         GkrmL6n55uZvBXV7ffuo5+Q44KlNZoGk+izl4b1XWPHqTD/K08cwQkrw4UFkp6rzF2SK
+         xBpz9u4cWTcMQRIv6VwW6BAp0cpcHAiIWrxiPiebD1nf9/jatgRrGZX4Q3LxpoRcymdZ
+         FSFNo1m13e1by/Vec8EcjiTtWLjVWp1j0DRGLGGO+8klbJxrZl2twvC/SNYBK3IQb9Bu
+         Kz2jd6nC/9NVcMqnBG0MlSWk4DYlajjkHlda8sIJJZO0+qzCV5EEjGo9khzR5cv0IAct
+         MmDw==
+X-Gm-Message-State: ANoB5ploJzGodvlkdr8vIzoYl9sPyGsV79wvLzfyU4MCtUF+Mc+JsPRP
+        X1c+J/K9BFAbT/vU0FSyrjYTkQ==
+X-Google-Smtp-Source: AA0mqf5bAzf6oxaXCjoLImk3QkwtNBbzrPPDJ1DfSP1B46ND5nVtJkfVfzcY7e3jBODV9kNLTtpEMQ==
+X-Received: by 2002:a05:6512:308b:b0:4b6:e4b3:d82d with SMTP id z11-20020a056512308b00b004b6e4b3d82dmr4229361lfd.7.1671010831840;
+        Wed, 14 Dec 2022 01:40:31 -0800 (PST)
+Received: from [127.0.0.1] (85-76-128-40-nat.elisa-mobile.fi. [85.76.128.40])
+        by smtp.gmail.com with ESMTPSA id p7-20020a2e9ac7000000b0026c2d2a9b92sm544123ljj.101.2022.12.14.01.40.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Dec 2022 01:40:31 -0800 (PST)
+Date:   Wed, 14 Dec 2022 11:40:29 +0200
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>
+CC:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: sm6125: Initial support for xiaomi-laurel_sprout
-Date:   Wed, 14 Dec 2022 06:33:41 -0300
-Message-Id: <20221214093342.153479-1-they@mint.lgbt>
-X-Mailer: git-send-email 2.38.1
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_01/12=5D_dt-bindings=3A_displa?= =?US-ASCII?Q?y=3A_msm=3A_Rename_mdss_node_name_in_example?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <86FA3AF9-5B35-4E27-80DA-8B5BF9E6B3AC@linaro.org>
+References: <20221130200950.144618-1-a39.skl@gmail.com> <20221130200950.144618-2-a39.skl@gmail.com> <19e78a06-2f3d-92af-1988-b22dc3ffc84e@linaro.org> <ad7ecffc-3fc9-7859-82b7-9d161fc28cae@quicinc.com> <86FA3AF9-5B35-4E27-80DA-8B5BF9E6B3AC@linaro.org>
+Message-ID: <558C636F-850D-41AF-9CA1-CC3E8E5C04F9@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit implements support for the Xiaomi Mi A3
-(xiaomi-laurel_sprout). Here's a summary on what's working.
+14 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3=2E 00:11:58 GMT+0=
+2:00, Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg> =D0=BF=D0=B8=D1=88=
+=D0=B5=D1=82:
+>
+>
+>On 13 December 2022 23:53:48 EET, Abhinav Kumar <quic_abhinavk@quicinc=2E=
+com> wrote:
+>>
+>>
+>>On 12/1/2022 11:54 AM, Dmitry Baryshkov wrote:
+>>> On 30/11/2022 22:09, Adam Skladowski wrote:
+>>
+>>>=20
+>>> We will pick this into msm-fixes during the next cycle=2E
+>>
+>>Yes, we can with the above fixes tags but first, can you please send a M=
+R from msm-next-lumag to msm-next? So that I can send a MR for fixes to msm=
+-next=2E
+>
+>This would create an additional merge commit in msm-next for no particula=
+r reason=2E You can branch -fixes from rc1, or from the msm-next-lumag and =
+then send MR to msm-next=2E
 
-- dmesg output to bootloader preconfigured display
-- USB
-- UFS
-- SMD RPM regulators
+Another option would be to base msm-fixes on drm-next directly=2E
 
-Signed-off-by: Lux Aliaga <they@mint.lgbt>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/sm6125-xiaomi-laurel_sprout.dts  | 251 ++++++++++++++++++
- 2 files changed, 252 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.=
-dts
+>
+>>
+>>ATM, they are out of sync=2E
+>>
+>>
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom=
-/Makefile
-index d7669a7cee9f..7b4fbb4cbb84 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -140,6 +140,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-shift-axolotl.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm850-samsung-w737.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sm6125-sony-xperia-seine-pdx201.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+=3D sm6125-xiaomi-laurel_sprout.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sm6350-sony-xperia-lena-pdx213.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sm7225-fairphone-fp4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+=3D sm8150-hdk.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts b/a=
-rch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
-new file mode 100644
-index 000000000000..edc5f13bae28
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel_sprout.dts
-@@ -0,0 +1,251 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm6125.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+
-+/ {
-+	/* required for bootloader to select correct board */
-+	qcom,msm-id =3D <0x18a 0x00>; /* sm6125 v1 */
-+	qcom,board-id =3D <0x0b 0x00>;
-+
-+	model =3D "Xiaomi Mi A3";
-+	compatible =3D "xiaomi,laurel_sprout", "qcom,sm6125";
-+	chassis-type =3D "handset";
-+
-+	chosen {
-+		#address-cells =3D <2>;
-+		#size-cells =3D <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible =3D "simple-framebuffer";
-+			reg =3D <0 0x5c000000 0 (1560 * 720 * 4)>;
-+			width =3D <720>;
-+			height =3D <1560>;
-+			stride =3D <(720 * 4)>;
-+			format =3D "a8r8g8b8";
-+		};
-+	};
-+
-+	extcon_usb: extcon-usb {
-+		compatible =3D "linux,extcon-usb-gpio";
-+		id-gpio =3D <&tlmm 102 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	reserved_memory {
-+		#address-cells =3D <2>;
-+		#size-cells =3D <2>;
-+		debug_mem: memory@ffb00000 {
-+			reg =3D <0x0 0xffb00000 0x0 0xc0000>;
-+			no-map;
-+		};
-+
-+		last_log_mem: memory@ffbc0000 {
-+			reg =3D <0x0 0xffbc0000 0x0 0x80000>;
-+			no-map;
-+		};
-+
-+		pstore_mem: ramoops@ffc00000 {
-+			compatible =3D "ramoops";
-+			reg =3D <0x0 0xffc40000 0x0 0xc0000>;
-+			record-size =3D <0x1000>;
-+			console-size =3D <0x40000>;
-+			msg-size =3D <0x20000 0x20000>;
-+		};
-+
-+		cmdline_mem: memory@ffd00000 {
-+			reg =3D <0x0 0xffd40000 0x0 0x1000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible =3D "qcom,rpm-pm6125-regulators";
-+
-+		vreg_s6a: s6 {
-+			regulator-min-microvolt =3D <936000>;
-+			regulator-max-microvolt =3D <1422000>;
-+		};
-+
-+		vreg_l1a: l1 {
-+			regulator-min-microvolt =3D <1200000>;
-+			regulator-max-microvolt =3D <1256000>;
-+		};
-+
-+		vreg_l2a: l2 {
-+			regulator-min-microvolt =3D <1000000>;
-+			regulator-max-microvolt =3D <1056000>;
-+		};
-+
-+		vreg_l3a: l3 {
-+			regulator-min-microvolt =3D <1000000>;
-+			regulator-max-microvolt =3D <1064000>;
-+		};
-+
-+		vreg_l4a: l4 {
-+			regulator-min-microvolt =3D <872000>;
-+			regulator-max-microvolt =3D <976000>;
-+		};
-+
-+		vreg_l5a: l5 {
-+			regulator-min-microvolt =3D <1648000>;
-+			regulator-max-microvolt =3D <3104000>;
-+		};
-+
-+		vreg_l6a: l6 {
-+			regulator-min-microvolt =3D <576000>;
-+			regulator-max-microvolt =3D <656000>;
-+		};
-+
-+		vreg_l7a: l7 {
-+			regulator-min-microvolt =3D <872000>;
-+			regulator-max-microvolt =3D <976000>;
-+		};
-+
-+		vreg_l8a: l8 {
-+			regulator-min-microvolt =3D <400000>;
-+			regulator-max-microvolt =3D <728000>;
-+		};
-+
-+		vreg_l9a: l9 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1896000>;
-+		};
-+
-+		vreg_l10a: l10 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1896000>;
-+		};
-+
-+		vreg_l11a: l11 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1952000>;
-+		};
-+
-+		vreg_l12a: l12 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1996000>;
-+		};
-+
-+		vreg_l13a: l13 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1832000>;
-+		};
-+
-+		vreg_l14a: l14 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1904000>;
-+		};
-+
-+		vreg_l15a: l15 {
-+			regulator-min-microvolt =3D <3104000>;
-+			regulator-max-microvolt =3D <3232000>;
-+		};
-+
-+		vreg_l16a: l16 {
-+			regulator-min-microvolt =3D <1800000>;
-+			regulator-max-microvolt =3D <1904000>;
-+		};
-+
-+		vreg_l17a: l17 {
-+			regulator-min-microvolt =3D <1248000>;
-+			regulator-max-microvolt =3D <1304000>;
-+		};
-+
-+		vreg_l18a: l18 {
-+			regulator-min-microvolt =3D <1200000>;
-+			regulator-max-microvolt =3D <1264000>;
-+		};
-+
-+		vreg_l19a: l19 {
-+			regulator-min-microvolt =3D <1648000>;
-+			regulator-max-microvolt =3D <2952000>;
-+		};
-+
-+		vreg_l20a: l20 {
-+			regulator-min-microvolt =3D <1648000>;
-+			regulator-max-microvolt =3D <2952000>;
-+		};
-+
-+		vreg_l21a: l21 {
-+			regulator-min-microvolt =3D <2600000>;
-+			regulator-max-microvolt =3D <2856000>;
-+		};
-+
-+		vreg_l22a: l22 {
-+			regulator-min-microvolt =3D <2944000>;
-+			regulator-max-microvolt =3D <3304000>;
-+		};
-+
-+		vreg_l23a: l23 {
-+			regulator-min-microvolt =3D <3000000>;
-+			regulator-max-microvolt =3D <3400000>;
-+		};
-+
-+		vreg_l24a: l24 {
-+			regulator-min-microvolt =3D <2944000>;
-+			regulator-max-microvolt =3D <3304000>;
-+		};
-+	};
-+};
-+
-+&hsusb_phy1 {
-+	status =3D "okay";
-+};
-+
-+
-+&sdc2_off_state {
-+	sd-cd {
-+		pins =3D "gpio98";
-+		bias-disable;
-+		drive-strength =3D <2>;
-+	};
-+};
-+
-+&sdc2_on_state {
-+	sd-cd {
-+		pins =3D "gpio98";
-+		bias-pull-up;
-+		drive-strength =3D <2>;
-+	};
-+};
-+
-+&ufs_mem_hc {
-+	vcc-supply =3D <&vreg_l24a>;
-+	vccq2-supply =3D <&vreg_l11a>;
-+	vcc-max-microamp =3D <600000>;
-+	vccq2-max-microamp =3D <600000>;
-+
-+	status =3D "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply =3D <&vreg_l4a>;
-+	vdda-pll-supply =3D <&vreg_l10a>;
-+	vdda-phy-max-microamp =3D <51400>;
-+	vdda-pll-max-microamp =3D <14200>;
-+	vddp-ref-clk-supply =3D <&vreg_l18a>;
-+
-+	status =3D "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges =3D <22 2>, <28 6>;
-+};
-+
-+&usb3 {
-+	status =3D "okay";
-+};
-+
-+&usb3_dwc3 {
-+	extcon =3D <&extcon_usb>;
-+};
---=20
-2.38.1
 
