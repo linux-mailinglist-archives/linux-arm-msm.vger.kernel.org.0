@@ -2,136 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC0FE64C0FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 01:02:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 969F964C2E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 04:48:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236975AbiLNACW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Dec 2022 19:02:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33508 "EHLO
+        id S236626AbiLNDr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Dec 2022 22:47:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236598AbiLNACV (ORCPT
+        with ESMTP id S236598AbiLNDr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Dec 2022 19:02:21 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE18222B15
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 16:02:19 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id x28so7722904lfn.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Dec 2022 16:02:19 -0800 (PST)
+        Tue, 13 Dec 2022 22:47:57 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33920101D9;
+        Tue, 13 Dec 2022 19:47:57 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id s196so1194567pgs.3;
+        Tue, 13 Dec 2022 19:47:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F4wzLNz6dwbsx5heN6y8ApOHwBgCymyPsBRS4COOYFM=;
-        b=cz6w9iekOtz1phgLx4mKtqjxhJ5PKY8yopabUl8Vl8TR8IfUTFb1WeZ/L9L6vt30wV
-         bbDs6rV5b9mkcsN3I6ndGH+zrjdGdYMSBxtI0XeuO1yOBOIuKodL2cA3wihjs1eUCADn
-         9XNmnQlcqiKmpcJ3dmLNz8axo2Qiz8zgFSLKCKSGfpnVE7gK9iz9emddeREw1pX1G5zr
-         f0Wu2tsrSLrn9Mx2f9qmlO0KgakSX1ZY35ZIApdiFLC2YRYj2tlzfMaSUj0xqxEQ4wu7
-         4Cltns0mpYlYlXejav8yiWL/maxSPolVjgPeJWK0LTI7sytbYE8EzjdKIPoWHgks1XSJ
-         I+dg==
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tiIUzn2EddNcRpM3N08+Qqa+e8XOkPQxsi5T8BK8zVw=;
+        b=Z20/VECNGDJ+fdiwSWlYkmV00xGED3fXWdN6MmZulRGw7TFyaaM1cWxa7QBg+2bB10
+         uJNCRR37WRAL1o552kCDQ4tUA+dHUkCqLBxHhRmQGl5/jGElwAKCaMPoMpoRWbLRAgHy
+         n/3ChyCo/ez44S1ETrwlCdLg27O30JW64jPaGsJzJmbBDNJlVj1eBQdHDg9sSwLRpDq/
+         FFqDr/zVI6MXEqNJiHWpDE9FXtHv8V8KDwFkLfNss/K18o/qicnq+Qkmv9jSUbElV2rk
+         7Ll9dnfpHO3boO+KkehaNhpSOfREDuD0bq6EWTBbt1Y6le1WKftCHuVykHLuJdYRN282
+         kZdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F4wzLNz6dwbsx5heN6y8ApOHwBgCymyPsBRS4COOYFM=;
-        b=m5mW6SKn+LM1HGuj2myyz2TS4hqZZ5CobBD4nNqCdzWQ2i1Dnas0lsiwZMsfKMeTjV
-         dilZfAdbkr1eVyjBdOCrYdeE88bsr3U1fd6TsoZuAfG+WVOIS9vF5eTIEgDWhgVagaUC
-         VYLBo+0Vqp9MHDnetHdOZKbjGEgF0iGIAWrOft3AICCjuJljDjREYhXN5Av1BYsY1viR
-         G37pp3VsaFkaBAbkG4ug0tZwGhf2Dg6b2cWeeYdlFEQhnggUzEam6PSS3Ok+p4RsrEDQ
-         hL1EXUkXULzO7UpfZ62+K7BkMKARtplTOqgfmocpMbbdyfSF2fF4JwsauNc3s3OFKMw9
-         szpQ==
-X-Gm-Message-State: ANoB5pkarW5wGrHc41vEiREjyNpQ0+GyFTV6VQDM+CAzrsW8saCGuxmo
-        qn9EHtzZd8i/XNJejPDkigcSpA==
-X-Google-Smtp-Source: AA0mqf4OPQ41A6YQWwi4U9K/lp0Wdyo5nPJOWKYHo+40cNenTg2e7rXr3g3txA7AaybzmQI7F4YIJw==
-X-Received: by 2002:a05:6512:15a6:b0:4b4:b5bf:3ce6 with SMTP id bp38-20020a05651215a600b004b4b5bf3ce6mr9902578lfb.38.1670976137948;
-        Tue, 13 Dec 2022 16:02:17 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id p17-20020ac246d1000000b0049e9122bd0esm558261lfo.114.2022.12.13.16.02.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Dec 2022 16:02:17 -0800 (PST)
-Message-ID: <c5e33d9f-0dc4-fdd2-244a-3d463be1c4e8@linaro.org>
-Date:   Wed, 14 Dec 2022 01:02:14 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [RFC PATCH 5/6] drm/msm/dsi: Flip greater-than check for
- slice_count and slice_per_intf
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tiIUzn2EddNcRpM3N08+Qqa+e8XOkPQxsi5T8BK8zVw=;
+        b=zoSU1fduq5FIodBW69eZgFIgPC0aUNqYM3dsHqXxYUclbIS8BPATfnMoJKI+uNLO7H
+         bj3IWaYa+nXuf/A635Hp1ezuBQXn4JTBFwa6XD+CkrjKQE3viE7tmVrxHHhNCEq0npYs
+         J8FdMGz/kSlQCPF/iRi7kTlBr5AcG2npvgx01I8tJeX2ztkOGUImPhV8F1L0PCsR+q4o
+         V3+JaQnt7F5eH3wknzBjg+c/WolzJaKMnITeFxb+TEzPSdWhOxl6LW3jkShyrdEaUH9g
+         M94iuKM5SGHcTFtZPNrH2gybosBkKpuC4SNr7oLeP0pHLysm4EvMKdk+8j638s8/hVLh
+         DGXA==
+X-Gm-Message-State: ANoB5pkupJC1BV0iuwLaMpWuQzlDoYbiLC0xQUmvswSlnQnDlBOPIORo
+        VS18jsg7UIcwzwbuOEkZtLHQWDugrvM=
+X-Google-Smtp-Source: AA0mqf6H2OBSBAxYI4WkZp03aw/T1TXpTZDT4oH8lB5YG7yctBHqLKsgGFZ1JT1R8EkRrKw6QC+I8w==
+X-Received: by 2002:a62:de04:0:b0:577:3885:9d43 with SMTP id h4-20020a62de04000000b0057738859d43mr23280525pfg.18.1670989676318;
+        Tue, 13 Dec 2022 19:47:56 -0800 (PST)
+Received: from localhost.localdomain (2001-b400-e28b-7065-982a-58d7-b612-9bf3.emome-ip6.hinet.net. [2001:b400:e28b:7065:982a:58d7:b612:9bf3])
+        by smtp.gmail.com with ESMTPSA id o24-20020aa79798000000b005745eb7eccasm8319817pfp.112.2022.12.13.19.47.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Dec 2022 19:47:55 -0800 (PST)
+From:   Owen Yang <ecs.taipeikernel@gmail.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Matthias Kaehlcke <mka@google.com>,
+        Doug Anderson <dianders@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
+        Abner Yen <abner.yen@ecs.com.tw>,
+        Bob Moragues <moragues@google.com>,
+        Gavin Lee <gavin.lee@ecs.com.tw>, Harvey <hunge@google.com>,
+        Owen Yang <ecs.taipeikernel@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        sunliming <sunliming@kylinos.cn>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221213232207.113607-1-marijn.suijten@somainline.org>
- <20221213232207.113607-6-marijn.suijten@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221213232207.113607-6-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add zombie with NVMe
+Date:   Wed, 14 Dec 2022 11:47:48 +0800
+Message-Id: <20221214114706.1.Ie4ca64ad56748de5aacd36237d42c80dd003c1a9@changeid>
+X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add entries in the device tree binding for sc7280-zombie with NVMe.
 
+Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
+---
 
-On 14.12.2022 00:22, Marijn Suijten wrote:
-> According to downstream /and the comment copied from it/ this comparison
-> should be the other way around.  In other words, when the panel driver
-> requests to use more slices per packet than what could be sent over this
-> interface, it is bumped down to only use a single slice per packet (and
-> strangely not the number of slices that could fit on the interface).
-> 
-> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-> ---
-Missing s-o-b
+ Documentation/devicetree/bindings/arm/qcom.yaml | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 0686c35a6fd4..9bdfa0864cdf 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -855,11 +855,11 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
->  	 */
->  	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
->  
-> -	/* If slice_per_pkt is greater than slice_per_intf
-> +	/* If slice_count is greater than slice_per_intf
->  	 * then default to 1. This can happen during partial
->  	 * update.
->  	 */
-> -	if (slice_per_intf > dsc->slice_count)
-> +	if (dsc->slice_count > slice_per_intf)
->  		dsc->slice_count = 1;
->  
->  	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 27063a045bd0..0f8fabcae907 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -679,6 +679,18 @@ properties:
+           - const: google,zombie-sku512
+           - const: qcom,sc7280
+ 
++      - description: Google Zombie with NVMe (newest rev)
++        items:
++          - const: google,zombie-sku2
++          - const: google,zombie-sku3
++          - const: google,zombie-sku515
++          - const: qcom,sc7280
++
++      - description: Google Zombie with LTE and NVMe (newest rev)
++        items:
++          - const: google,zombie-sku514
++          - const: qcom,sc7280
++
+       - items:
+           - enum:
+               - lenovo,flex-5g
+-- 
+2.17.1
+
