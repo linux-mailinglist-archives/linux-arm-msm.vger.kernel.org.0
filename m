@@ -2,177 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6EBA64C94C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:53:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7270664C950
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 13:54:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238194AbiLNMxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 07:53:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55968 "EHLO
+        id S238268AbiLNMyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 07:54:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237708AbiLNMxn (ORCPT
+        with ESMTP id S238263AbiLNMyq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 07:53:43 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74CB25F8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:53:41 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id bp15so10226491lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:53:41 -0800 (PST)
+        Wed, 14 Dec 2022 07:54:46 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCC425DD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:54:45 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id z26so10268000lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 04:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XK95zLBX9Dtieu1aqBT/9HXsnzsIwMAqX7jYd/9IRMA=;
-        b=Tw1gNdqSJGWzoTjJm1lgEogkgPhRAY7KSerdf8VkmwzSGABPwrJzcGirLVqSoPw27G
-         mKIU2AxuV6q813f3xULTZQQBUlb8XSxhZaeFtTWs4Z9yyPH5nZYstDspcYHm7JqSBgca
-         aUiLt2hEm4/wpzndv2MFkr1RhfztFMos0VcKNIbnjrqiYBUYl9a0sXh72UQdsI88NYWN
-         a1N7Q5Wan85/XtfCTBDBdoVmxn8lVpg69NmcEMg0NZlgr1iAtKWSwEUurazhUU3cokC3
-         B7X9mwGN8Nz1XLv1Ej8ddFQqoATKIITxLybaY3J5YW37EuU+ohyYPx3+j+62NUXaFLuY
-         dbTA==
+        bh=KmH88KzkS+gJt9BIgea63AAFIfznRKrEnzAlPNS+MtI=;
+        b=Ep+jpPqYQrlI+OxVeOzWQigrl4mCYr7zbbURxbBBhWxccT4nn8nKk6wxkBjq6kFlLw
+         6Ns9fQ3f2dDf7Ddexwe7pdUQI7eK9M2Y70YklWk/WKBbTJxQeK2Fs2JPaeuyuOvYfHOK
+         uMVamGEANM16lSkoyRsUtIyI3P+/Nem/Bp3USHoxtcporUp9GcVMHIDqIqUScQQFCV2U
+         K3oPTWnNwz1/wIwH6+goMCPMTAeO7s6GlGemubENQlCdS5AwQ28OCj9UrtX4G7AaMipU
+         uTXUVkS94fR4HP9eKSSB2shgj+XJAco0LChKwmyjKnSukahkLS/xp/0VWHp/Z7r3GFv/
+         9njQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XK95zLBX9Dtieu1aqBT/9HXsnzsIwMAqX7jYd/9IRMA=;
-        b=2gcAw8sU7MVtIHScQcqu91+8w5TmhGTSo8IVF03jT16KiZw9mBSESCNauyWJP2o/BW
-         qbRDUNfIlHglRYcZB7+2Otl/4lfnDeEomRNWVOAo+wxk5dlDiLhBHSGarEVV+nhHkbl5
-         uFfy9UtrThN1i/MgssodPwzXnRKevqUBzyjgAlJM9HFUzxqDyoiqGu3yPqvjpL7Ws5xX
-         aFwJVKSJOVHJn9PkfhobrC/YYg4Q2s75+p2RFdsXRUZcm/JLDG/X83gZuqWINFUcU1k7
-         oHFa3RI7qAgHby6R/FWirNJun8tbB0eWNLdk7wvtaynkZMDtC/wTGog6QbNQ1UedvXzB
-         72Qg==
-X-Gm-Message-State: ANoB5pm4KR0ykjxErpc0PoqwNrFFhvwwxErvkubN0sOAUkKxpYgrTuvO
-        n7Q0xz80NVPmzFLLU6+9fL2UIw==
-X-Google-Smtp-Source: AA0mqf6iiztO0ZW8Bq4J+cymQz8gXYvbwZweyy6yLRNNGO4+febt/gdFadXTAHSOU4TxpKIHcy2lsA==
-X-Received: by 2002:a05:6512:3050:b0:4b5:1545:222b with SMTP id b16-20020a056512305000b004b51545222bmr7985241lfb.47.1671022420105;
-        Wed, 14 Dec 2022 04:53:40 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id u15-20020ac258cf000000b004a47e7b91c4sm793797lfo.195.2022.12.14.04.53.38
+        bh=KmH88KzkS+gJt9BIgea63AAFIfznRKrEnzAlPNS+MtI=;
+        b=i7fpugdoGG7raRSmTGYCefHBarU2ewu93MIZydNNiLL+N6kiNqnrK9BnGpbTjz1lZb
+         bMszMTFvVAL8lhhOMFeBHvR+yWq96bpuQyMM9Tc1L1WMU9yibK5+2HG+DXOMWmxu83PK
+         0Lo5osgTOirx/tc75kvpWxngLNL+aPA9fWtNuAGOUUNe0UadT7XtD+yjzh6KDrihYjm8
+         pLIeunUQfmpL/ysU2QUmpraxZy4FgbkH328E+g7nkKSZd7Ng/YWV62mCYX3q9UE6ECnb
+         YHd4Ij5Y7YkTjcwh0xSWlJkGtxl1MwRAEY1SaIEWg2yS6RbkBKjM1MpRI9A6D31pOzgH
+         8i0w==
+X-Gm-Message-State: ANoB5plO45j3KzqO767ckeZRlpkAFV8B6yHPXg0h7vzgtt4URvKvbMyP
+        vnViw4B2cSzlCC2ecuTXaVU2uw==
+X-Google-Smtp-Source: AA0mqf71h17arQ/96Pdx8ppYwEg5p/9+JVeSMKp2P4WVlM89ImUc6qlSRoBmGXOxtSaPGAv9bahuZg==
+X-Received: by 2002:ac2:5e29:0:b0:4b5:b10b:6830 with SMTP id o9-20020ac25e29000000b004b5b10b6830mr5604533lfg.54.1671022483559;
+        Wed, 14 Dec 2022 04:54:43 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id f4-20020a19ae04000000b004a478c2f4desm799640lfc.163.2022.12.14.04.54.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 04:53:39 -0800 (PST)
-Message-ID: <db668bab-ab6e-32a0-872b-5118a6f5cdaa@linaro.org>
-Date:   Wed, 14 Dec 2022 13:53:38 +0100
+        Wed, 14 Dec 2022 04:54:43 -0800 (PST)
+Message-ID: <95074120-f4db-0d88-531b-f509d0807796@linaro.org>
+Date:   Wed, 14 Dec 2022 13:54:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
- qup2_i2c18 nodes
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: Introduce a carveout for modem
+ metadata
 Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>, quic_shazhuss@quicinc.com
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com
-References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-4-bmasney@redhat.com>
- <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org> <Y5nB1epKN4nbk3ma@x1>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <Y5nB1epKN4nbk3ma@x1>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
+        regressions@leemhuis.info, sumit.semwal@linaro.org,
+        will@kernel.org, catalin.marinas@arm.com, robin.murphy@arm.com
+References: <20221213140724.8612-1-quic_sibis@quicinc.com>
+ <20221213140724.8612-2-quic_sibis@quicinc.com>
+ <f23f3db8-08a7-78a9-a516-de211c53b6f4@linaro.org>
+ <72fc8328-6e15-3a83-ad0b-905b2cc7a560@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <72fc8328-6e15-3a83-ad0b-905b2cc7a560@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 14.12.2022 13:30, Brian Masney wrote:
-> On Tue, Dec 13, 2022 at 03:48:27PM +0100, Konrad Dybcio wrote:
->>> +	qup1_i2c15_default: qup1-i2c15-state {
->>> +		mux-pins {
->>> +			pins = "gpio36", "gpio37";
->>> +			function = "qup15";
->>> +		};
+On 14/12/2022 12:44, Sibi Sankar wrote:
+> 
+> 
+> On 12/14/22 16:57, Krzysztof Kozlowski wrote:
+>> On 13/12/2022 15:07, Sibi Sankar wrote:
+>>> Introduce a new carveout for modem metadata. This will serve as a
+>>> replacement for the memory region used by MSA to authenticate modem
+>>> ELF headers.
+>>>
+>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi    | 6 ++++++
+>>>   arch/arm64/boot/dts/qcom/msm8996.dtsi                  | 9 +++++++++
+>>>   arch/arm64/boot/dts/qcom/msm8998.dtsi                  | 9 +++++++++
+>>>   arch/arm64/boot/dts/qcom/sc7180-idp.dts                | 7 ++++++-
+>>>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi           | 7 ++++++-
+>>>   arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 7 ++++++-
+>>>   arch/arm64/boot/dts/qcom/sdm845.dtsi                   | 9 +++++++++
+>>>   7 files changed, 51 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>> index 5b47b8de69da..4242f8587c19 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>> @@ -127,6 +127,12 @@
+>>>   			reg = <0x0 0xf6f00000 0x0 0x100000>;
+>>>   			no-map;
+>>>   		};
 >>> +
->>> +		config-pins {
->>> +			pins = "gpio36", "gpio37";
->>> +			drive-strength = <0x02>;
->>> +			bias-pull-up;
+>>> +		/delete-node/ memory@91700000;
+>>> +		mdata_mem: memory@f7100000 {
+>>> +			reg = <0x0 0xf7100000 0x0 0x4000>;
+>>> +			no-map;
 >>> +		};
->>> +	};
+>>>   	};
+>>>   
+>>>   	vph_pwr: vph-pwr-regulator {
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>> index cc65f52bb80f..3f5fb08e2341 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>> @@ -462,6 +462,11 @@
+>>>   			reg = <0x0 0x91500000 0x0 0x200000>;
+>>>   			no-map;
+>>>   		};
+>>> +
+>>> +		mdata_mem: memory@91700000 {
+>>> +			reg = <0x0 0x91700000 0x0 0x4000>;
+>>> +			no-map;
+>>> +		};
+>>>   	};
+>>>   
+>>>   	rpm-glink {
+>>> @@ -2458,6 +2463,10 @@
+>>>   				memory-region = <&mpss_mem>;
+>>>   			};
+>>>   
+>>> +			metadata {
 >>
->> You can drop mux/config-pins and have the pin properties live directly
->> under the qup1-i2cN-state node.
+>> Does it pass dtbs_check?
 > 
-> Hi Konrad (and Shazad below), 
-> 
-> I need to enable 5 i2c buses (0, 1, 12, 15, 18) on this board. I tried
-> the following combinations with the pin mapping configuration and the
-> only one that seems to work reliably for me is what I originally had.
-> 
-> With the following, only 2 out of the 5 buses are detected. There's no
-> i2c mesages in dmesg.
-> 
->     i2c0_default: i2c0-default-state {
->         pins = "gpio135", "gpio136";
->         function = "qup15";
->     };
-> 
-> Next, I added a drive-strength and bias-pull-up. All 5 buses are
-> detected. One bus throws read errors when I probe it with i2cdetect, two
-> others 'i2cdetect -a -y $BUSNUM' takes ~5 seconds to run, and the
-> remaining two are fast.
-> 
->     i2c0_default: i2c0-default-state {
->         pins = "gpio135", "gpio136";
->         function = "qup15";
->         drive-strength = <2>;
->         bias-pull-up;
->     };
-> 
-> This is the style where i2cdetect seems to be happy for all 5 buses and
-> is fast:
-> 
->     i2c0_default: i2c0-default-state {
->         mux-pins {
->             pins = "gpio135", "gpio136";
->             function = "qup0";
->         };
-> 
->         config-pins {
->             pins = "gpio135", "gpio136";
->             drive-strength = <2>;
->             bias-pull-up;
->         };
->     };
-Unless you made a typo somewhere, I genuinely have no explanation for this..
+> ^^ portion of the bindings aren't in yaml yet please see patch 3.
 
-Konrad
-> 
-> 
-> Shazad: 'i2cdetect -a -y $BUSNUM) shows that all 5 buses have the same
-> addresses listening. Is that expected? That seems a bit odd to me.
-> 
-> [root@localhost ~]# i2cdetect -a -y 0
-> Warning: Can't use SMBus Quick Write command, will skip some addresses
->      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-> 00:                                                 
-> 10:                                                 
-> 20:                                                 
-> 30: -- -- -- -- -- -- -- --                         
-> 40:                                                 
-> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-> 60:                                                 
-> 70:                                                 
-> 
-> I triple checked that I have the QUP pins defined correctly for the 5
-> buses. I checked them against what's in the downstream kernel and I also
-> checked them against what's in upstream's
-> drivers/pinctrl/qcom/pinctrl-sc8280xp.c. This is the pin mapping that I
-> have:
-> 
->     i2c0: gpio135, gpio136
->     i2c1: gpio158, gpio159
->     i2c12: gpio0, gpio1
->     i2c15: gpio36, gpio37
->     i2c18: gpio66, gpio67
-> 
-> Brian
-> 
+Ah, you touch here multiple files. Please split per SoC.
+
+Best regards,
+Krzysztof
+
