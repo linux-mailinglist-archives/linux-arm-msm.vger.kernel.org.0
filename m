@@ -2,244 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC07A64CD21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 16:34:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B988D64CD27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 16:37:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238662AbiLNPe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 10:34:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45204 "EHLO
+        id S230115AbiLNPhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 10:37:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238450AbiLNPez (ORCPT
+        with ESMTP id S238805AbiLNPhE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 10:34:55 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2176815A38
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 07:34:53 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id x28so11077390lfn.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 07:34:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LfLGc8H0I57r8ivKkghHG64oFuRf3tw+vOp/DqNecyU=;
-        b=ghuliCB4AOFHBgRCgYCpYXDD4aY74iucshLj6KoTgMZgN4kgui0MZZcsHIwcZnnMTc
-         lcaKVgruEn6Ehy8wLDIT7TraZRJAMEzrIwECsvoENj/yM7gzwGw5Azex0AIKGe5GauMj
-         IEtzJ1rCjIwcgm2d0MmrbcKzrqxYH6IlFZhF0JMXAy/RuoWBqPdUHHo2MGZNB+jdUX5r
-         K1SSS74hDc6a+rfyzCgUD/ZzZx/uc5s8Gneee7d6NWb/miw4s5r1wDWwaeiR+G1Uj44E
-         2FdgzX6qNYtkcvnii3LnIg5jE8ZNV+C1kssYtmFFlNSFOnijnrccVzAO90+tjC0RMgg2
-         x5Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LfLGc8H0I57r8ivKkghHG64oFuRf3tw+vOp/DqNecyU=;
-        b=R61nrzLDBccSSnyC8bTLZ/KKQnUzt4mzaUl7Nrp+YuMvw83SdOF7ZGMtXJPeH8/oy2
-         ZM3kr/0Wu03VpvaUGTybi6/MDAoa4vHvE90boA1aAAWNaczWYDjQR/w13dl58MPkhNrp
-         yomjN8ertWJv4tsG/LHGOQhe+7lduS52Sn9mPHZkra0aIGnTOvI7k36aYgHdxqlKmNVx
-         OB0po0og8WwJBlZhVZbg6Rt5LB3+t8/3CauwkdYs1Ii7rPl7nwms8A2xphOUFQkPaJbm
-         ocObkAqyoItMoTwgjopZutBQO+HXGaJmvUH2dhXhSU+RCmUDWxR45RwAUI9dF5UVUJax
-         0t0A==
-X-Gm-Message-State: ANoB5pk+hFswSbRJoGhq96cbnN9lrxrM+P4MqkB5z2G8d1+seAnMFaMX
-        2Czk1OO2OScJB5m0pvWDS10nzg==
-X-Google-Smtp-Source: AA0mqf7C/AuVssYspK9k2X1NXWgvrBfv3+9IsvXuCSjd3FHzSDdH3ELko+juNZ8p7CwXPr4P65JVNg==
-X-Received: by 2002:ac2:4bd6:0:b0:4a4:68b9:60b0 with SMTP id o22-20020ac24bd6000000b004a468b960b0mr7377213lfq.59.1671032091319;
-        Wed, 14 Dec 2022 07:34:51 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o8-20020a05651205c800b00494978b0caesm835069lfo.276.2022.12.14.07.34.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Dec 2022 07:34:50 -0800 (PST)
-Message-ID: <7ad7654a-b0a0-c08a-d111-cd34d38c36e0@linaro.org>
-Date:   Wed, 14 Dec 2022 17:34:49 +0200
+        Wed, 14 Dec 2022 10:37:04 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F520F4A;
+        Wed, 14 Dec 2022 07:37:02 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BEETXOg032294;
+        Wed, 14 Dec 2022 15:36:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=K34UEmoqbP0hWiVBhYRS7Hke1YifchYcU0nimLAPkjA=;
+ b=N+OcPXCzcbOAtDBEozHDEsEMlE10THeXOePL9ZeUE4i45KMNyWXjZ9wfsZMqBo2IYTa0
+ CRUqeedDNfGTWdYGtnuqto+6sloMHJ55mgYe7qWO/C9KQfBhUIWZtBVvoq6D4YvIxRmx
+ hAiE1X/TK9knov7dYK7aOyH0TSMyAEEKR52ZRAKvPEZRYbP/QDk9lvvV6nZqUZ2POzq3
+ AQtNZnWY6QXcqxen8wzzQNu5MqbtXgVSL0rsRIliVKYkKSJtLoGpxpoLDRvnpi5NOrfx
+ slYBFT68A8yPAEdkA5mlTifl38gj0CFdqdahRgICOvo2ZSdTmqiGkhSjo7TUQDQR4Ybm RQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mf6re9jyq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Dec 2022 15:36:56 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BEFattS008841
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Dec 2022 15:36:55 GMT
+Received: from [10.216.38.200] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 14 Dec
+ 2022 07:36:51 -0800
+Message-ID: <6ab9171e-127b-12f3-cfe6-0fbf2b37080c@quicinc.com>
+Date:   Wed, 14 Dec 2022 21:06:48 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v9 01/15] drm/msm/disp/dpu: clear dpu_assign_crtc and get
- crtc from connector state instead of dpu_enc
-To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
-        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
-        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com
-References: <1671012352-1825-1-git-send-email-quic_vpolimer@quicinc.com>
- <1671012352-1825-2-git-send-email-quic_vpolimer@quicinc.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1671012352-1825-2-git-send-email-quic_vpolimer@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
+ qup2_i2c18 nodes
+Content-Language: en-US
+To:     Brian Masney <bmasney@redhat.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <ahalaney@redhat.com>,
+        <echanude@redhat.com>
+References: <20221212182314.1902632-1-bmasney@redhat.com>
+ <20221212182314.1902632-4-bmasney@redhat.com>
+ <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org> <Y5nB1epKN4nbk3ma@x1>
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <Y5nB1epKN4nbk3ma@x1>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PFH_am0EmoDmQGnZn6Wm7Mwmuoc0x-av
+X-Proofpoint-ORIG-GUID: PFH_am0EmoDmQGnZn6Wm7Mwmuoc0x-av
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-14_07,2022-12-14_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212140125
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/12/2022 12:05, Vinod Polimera wrote:
-> Update crtc retrieval from dpu_enc to dpu_enc connector state,
-> since new links get set as part of the dpu enc virt mode set.
-> The dpu_enc->crtc cache is no more needed, hence cleaning it as
-> part of this change.
+
+
+On 12/14/2022 6:00 PM, Brian Masney wrote:
+> On Tue, Dec 13, 2022 at 03:48:27PM +0100, Konrad Dybcio wrote:
+>>> +	qup1_i2c15_default: qup1-i2c15-state {
+>>> +		mux-pins {
+>>> +			pins = "gpio36", "gpio37";
+>>> +			function = "qup15";
+>>> +		};
+>>> +
+>>> +		config-pins {
+>>> +			pins = "gpio36", "gpio37";
+>>> +			drive-strength = <0x02>;
+>>> +			bias-pull-up;
+>>> +		};
+>>> +	};
+>>
+>> You can drop mux/config-pins and have the pin properties live directly
+>> under the qup1-i2cN-state node.
 > 
-> This patch is dependent on the series:
-> https://patchwork.freedesktop.org/series/110969/
+> Hi Konrad (and Shazad below),
 > 
-> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 +++++++++--------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  8 ------
->   3 files changed, 13 insertions(+), 41 deletions(-)
+> I need to enable 5 i2c buses (0, 1, 12, 15, 18) on this board. I tried
+> the following combinations with the pin mapping configuration and the
+> only one that seems to work reliably for me is what I originally had.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 3f72d38..289d51e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1029,7 +1029,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
->   		 */
->   		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
->   			release_bandwidth = true;
-> -		dpu_encoder_assign_crtc(encoder, NULL);
->   	}
->   
->   	/* wait for frame_event_done completion */
-> @@ -1099,9 +1098,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
->   	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
->   	dpu_crtc->enabled = true;
->   
-> -	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
-> -		dpu_encoder_assign_crtc(encoder, crtc);
-> -
->   	/* Enable/restore vblank irq handling */
->   	drm_crtc_vblank_on(crtc);
->   }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index a585036..b9b254d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -132,11 +132,6 @@ enum dpu_enc_rc_states {
->    * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
->    *			for partial update right-only cases, such as pingpong
->    *			split where virtual pingpong does not generate IRQs
-> - * @crtc:		Pointer to the currently assigned crtc. Normally you
-> - *			would use crtc->state->encoder_mask to determine the
-> - *			link between encoder/crtc. However in this case we need
-> - *			to track crtc in the disable() hook which is called
-> - *			_after_ encoder_mask is cleared.
->    * @connector:		If a mode is set, cached pointer to the active connector
->    * @crtc_kickoff_cb:		Callback into CRTC that will flush & start
->    *				all CTL paths
-> @@ -181,7 +176,6 @@ struct dpu_encoder_virt {
->   
->   	bool intfs_swapped;
->   
-> -	struct drm_crtc *crtc;
->   	struct drm_connector *connector;
->   
->   	struct dentry *debugfs_root;
-> @@ -1317,7 +1311,7 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
->   		struct dpu_encoder_phys *phy_enc)
->   {
->   	struct dpu_encoder_virt *dpu_enc = NULL;
-> -	unsigned long lock_flags;
-> +	struct drm_crtc *crtc;
->   
->   	if (!drm_enc || !phy_enc)
->   		return;
-> @@ -1325,12 +1319,13 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
->   	DPU_ATRACE_BEGIN("encoder_vblank_callback");
->   	dpu_enc = to_dpu_encoder_virt(drm_enc);
->   
-> -	atomic_inc(&phy_enc->vsync_cnt);
-> +	if (!dpu_enc->connector || !dpu_enc->connector->state ||
-> +	    !dpu_enc->connector->state->crtc)
-> +		return;
->   
-> -	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> -	if (dpu_enc->crtc)
-> -		dpu_crtc_vblank_callback(dpu_enc->crtc);
-> -	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> +	atomic_inc(&phy_enc->vsync_cnt);
-> +	crtc = dpu_enc->connector->state->crtc;
-> +	dpu_crtc_vblank_callback(crtc);
->   
->   	DPU_ATRACE_END("encoder_vblank_callback");
->   }
-> @@ -1353,33 +1348,22 @@ static void dpu_encoder_underrun_callback(struct drm_encoder *drm_enc,
->   	DPU_ATRACE_END("encoder_underrun_callback");
->   }
->   
-> -void dpu_encoder_assign_crtc(struct drm_encoder *drm_enc, struct drm_crtc *crtc)
-> -{
-> -	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> -	unsigned long lock_flags;
-> -
-> -	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> -	/* crtc should always be cleared before re-assigning */
-> -	WARN_ON(crtc && dpu_enc->crtc);
-> -	dpu_enc->crtc = crtc;
-> -	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> -}
-> -
->   void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder *drm_enc,
->   					struct drm_crtc *crtc, bool enable)
->   {
->   	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> -	unsigned long lock_flags;
-> +	struct drm_crtc *new_crtc;
->   	int i;
->   
->   	trace_dpu_enc_vblank_cb(DRMID(drm_enc), enable);
->   
-> -	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
-> -	if (dpu_enc->crtc != crtc) {
-> -		spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
-> +	if (!dpu_enc->connector || !dpu_enc->connector->state)
-> +		return;
-> +
-> +	new_crtc = dpu_enc->connector->state->crtc;
-> +	if (!new_crtc || new_crtc != crtc) {
+> With the following, only 2 out of the 5 buses are detected. There's no
+> i2c mesages in dmesg.
+> 
+>      i2c0_default: i2c0-default-state {
+>          pins = "gpio135", "gpio136";
+>          function = "qup15";
+>      };
+> 
+> Next, I added a drive-strength and bias-pull-up. All 5 buses are
+> detected. One bus throws read errors when I probe it with i2cdetect, two
+> others 'i2cdetect -a -y $BUSNUM' takes ~5 seconds to run, and the
 
-I don't like going through all the pointers and states without locks. 
-The connector->state can potentially check. So, I'd propose even simpler 
-solution: just store the crtc in the dpu_enc at the creation time. Then 
-you can use the rest of the current dpu_enc->crtc as expected.
+This I have also observed on downstream as well, where scanning all 
+addresses takes some amount of time near to 5-6 seconds.
 
->   		return;
->   	}
-> -	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
->   
->   	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->   		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 7f3d823..eb9fc7c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -40,14 +40,6 @@ struct msm_display_info {
->   };
->   
->   /**
-> - * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
-> - * @encoder:	encoder pointer
-> - * @crtc:	crtc pointer
-> - */
-> -void dpu_encoder_assign_crtc(struct drm_encoder *encoder,
-> -			     struct drm_crtc *crtc);
-> -
-> -/**
->    * dpu_encoder_toggle_vblank_for_crtc - Toggles vblank interrupts on or off if
->    *	the encoder is assigned to the given crtc
->    * @encoder:	encoder pointer
+> remaining two are fast.
+> 
+>      i2c0_default: i2c0-default-state {
+>          pins = "gpio135", "gpio136";
+>          function = "qup15";
+>          drive-strength = <2>;
+>          bias-pull-up;
+>      };
+> 
 
--- 
-With best wishes
-Dmitry
+This is the default config we should use.
 
+> This is the style where i2cdetect seems to be happy for all 5 buses and
+> is fast:
+> 
+>      i2c0_default: i2c0-default-state {
+>          mux-pins {
+>              pins = "gpio135", "gpio136";
+>              function = "qup0";
+>          };
+> 
+>          config-pins {
+>              pins = "gpio135", "gpio136";
+>              drive-strength = <2>;
+>              bias-pull-up;
+>          };
+>      };
+> 
+> 
+> Shazad: 'i2cdetect -a -y $BUSNUM) shows that all 5 buses have the same
+> addresses listening. Is that expected? That seems a bit odd to me.
+> 
+
+Brian, even I haven't checked with all enabled, let me check this on 
+other projects and with downstream as well and get back to you.
+
+-Shazad
+
+> [root@localhost ~]# i2cdetect -a -y 0
+> Warning: Can't use SMBus Quick Write command, will skip some addresses
+>       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> 00:
+> 10:
+> 20:
+> 30: -- -- -- -- -- -- -- --
+> 40:
+> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 60:
+> 70:
+> 
+> I triple checked that I have the QUP pins defined correctly for the 5
+> buses. I checked them against what's in the downstream kernel and I also
+> checked them against what's in upstream's
+> drivers/pinctrl/qcom/pinctrl-sc8280xp.c. This is the pin mapping that I
+> have:
+> 
+>      i2c0: gpio135, gpio136
+>      i2c1: gpio158, gpio159
+>      i2c12: gpio0, gpio1
+>      i2c15: gpio36, gpio37
+>      i2c18: gpio66, gpio67
+> 
+> Brian
+> 
