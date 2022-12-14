@@ -2,99 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6FBF64CB6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 14:36:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFA9664CBC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 15:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbiLNNgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 08:36:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
+        id S238573AbiLNOC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 09:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238219AbiLNNgg (ORCPT
+        with ESMTP id S238548AbiLNOCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 08:36:36 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5832613B;
-        Wed, 14 Dec 2022 05:36:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1671024996; x=1702560996;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=zsIf6fMmGrA6HPgd11/NKhffPf9edGm/f/8PsrgH+Fo=;
-  b=JcWpmKa+0jzmv2P5MU1vp7XUsintz6aGs/onVIiyCLqDPTd0k88kN3cS
-   JRTqzehGJ3niR9M8DEn0i26s03I/MPt+RQeehPDHnf0GuZxgNN/jEhnrM
-   vs2Gz7B8XpDYY9uXWSpt7bhxTxTOIGowzI8ChAP61b/VCw6EtIiRw81zF
-   A=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Dec 2022 05:36:36 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2022 05:36:36 -0800
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 14 Dec 2022 05:36:33 -0800
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH] remoteproc: qcom: pas: Fix subdevice add order
-Date:   Wed, 14 Dec 2022 19:06:23 +0530
-Message-ID: <1671024983-22634-1-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 14 Dec 2022 09:02:25 -0500
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E58511E3EC;
+        Wed, 14 Dec 2022 06:02:23 -0800 (PST)
+Received: by mail-qv1-f43.google.com with SMTP id u10so12557814qvp.4;
+        Wed, 14 Dec 2022 06:02:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5J5l9PHNH3hAPkvemcjxbJ/Q/3nbdWjzIYM+AXgHrFA=;
+        b=41HwYnyiwXLeTftAUEDCuwO0jDXGdJSaNNA/PUjeDm1t7SP/+iAE8nkCz3nVe1c82c
+         BTJE0LqAKmmZ0XImyC0AFkE/qKttl4RthV3++9xuRFjoH/1Wc60hB1SutgEECG1T9xQn
+         yOiq8HXQ8zMWKlOKpxdKrWUEhJyOf7Dive8ow3TaG7ndEL76YnL6lT+TbHGomJnfdkQ2
+         7+jMOf4QYs20+KZTjoWqGSs3cKOzr2sAQ+CfOrrYNdWAoGsu5B0YjDDk8FHQ7wa3zsuC
+         qAHmmjW43IFDcPsj/CIAxKuiDDF+dP1om4kybQD9b/1kGdfusr2OFp4GJ8qDI0Qb+opa
+         TnGQ==
+X-Gm-Message-State: ANoB5pm8KhXimx/uROFW7Cge42Sj+RgPZSuM/LeNduxfMGu6vnt+AMef
+        64AZmUNjHg/lXLWB6/gJO9ai3Ns85S7wBZD5VC4=
+X-Google-Smtp-Source: AA0mqf7xzEzMqCeas0yquK7x82mUOIhnAdFVlNjmSgz6/8Cv2sAjkGMVNZQlSV+dzJnDteLF4AnlNeFIX5JoxiM/ciE=
+X-Received: by 2002:ad4:534b:0:b0:4b1:8429:a8a7 with SMTP id
+ v11-20020ad4534b000000b004b18429a8a7mr69941479qvs.52.1671026543044; Wed, 14
+ Dec 2022 06:02:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221214131617.2447-1-johan+linaro@kernel.org>
+In-Reply-To: <20221214131617.2447-1-johan+linaro@kernel.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Wed, 14 Dec 2022 15:02:12 +0100
+Message-ID: <CAJZ5v0gY-Lhgf_1Kfg6P5O8s+YMkP4TxggxyS=LU9jVgJikAkg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] thermal: fix locking regressions in linux-next
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the notification like QCOM_SSR_BEFORE_SHUTDOWN is not exactly
-sent before starting shutdown activity on remote subsystem but it is
-getting sent after sysmon shutdown request to remote.
+On Wed, Dec 14, 2022 at 2:18 PM Johan Hovold <johan+linaro@kernel.org> wrote:
+>
+> This series fixes some of the fallout after the thermal changes that
+> just landed in linux-next.
+>
+> Lockdep reported a lock inversion in one of the Qualcomm drivers and a
+> closer review revealed that the changes had also broken the sysfs
+> interface for at least three drivers.
+>
+> Note that a simple revert of the offending patches was not an option as
+> some of the infrastructure that the old implementation relied on has
+> also been removed.
 
-On getting QCOM_SSR_BEFORE_SHUTDOWN, some client want remote subsystem
-to be alive to communicate but as sysmon shutdown request is getting
-sent to remote before QCOM_SSR_BEFORE_SHUTDOWN notification sent to
-kernel client due to which remote is not in a condition to communicate
-with kernel clients.
+I've dropped that material from my linux-next branch and Daniel,
+please also remove it from your branch that is pulled by linux-next so
+that it doesn't show up in there until 6.2-rc1 is out.
 
-Fixing the subdevice ordering will fix this as ssr subdevice will be
-first one to get triggered in shutdown/stop path.
+It clearly is not ready for merging in its current form.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It is still present in my bleeding-edge branch, though, so please
+apply the patches from Johan on top of it and send a new PR to me, so
+I can add it back to my linux-next branch once 6.2-rc1 appears.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 6afd094..5e34d59 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -538,7 +538,6 @@ static int adsp_probe(struct platform_device *pdev)
- 
- 	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
- 	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
--	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
- 	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
- 					      desc->sysmon_name,
- 					      desc->ssctl_id);
-@@ -547,6 +546,7 @@ static int adsp_probe(struct platform_device *pdev)
- 		goto detach_proxy_pds;
- 	}
- 
-+	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
- 	ret = rproc_add(rproc);
- 	if (ret)
- 		goto detach_proxy_pds;
--- 
-2.7.4
+It would be good to check the code again too for any more similar fallout.
 
+Thanks!
