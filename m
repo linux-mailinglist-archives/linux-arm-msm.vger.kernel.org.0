@@ -2,191 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B988D64CD27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 16:37:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C66E64CDD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 17:20:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230115AbiLNPhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 10:37:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
+        id S238827AbiLNQUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 11:20:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238805AbiLNPhE (ORCPT
+        with ESMTP id S238949AbiLNQUD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 10:37:04 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F520F4A;
-        Wed, 14 Dec 2022 07:37:02 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BEETXOg032294;
-        Wed, 14 Dec 2022 15:36:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=K34UEmoqbP0hWiVBhYRS7Hke1YifchYcU0nimLAPkjA=;
- b=N+OcPXCzcbOAtDBEozHDEsEMlE10THeXOePL9ZeUE4i45KMNyWXjZ9wfsZMqBo2IYTa0
- CRUqeedDNfGTWdYGtnuqto+6sloMHJ55mgYe7qWO/C9KQfBhUIWZtBVvoq6D4YvIxRmx
- hAiE1X/TK9knov7dYK7aOyH0TSMyAEEKR52ZRAKvPEZRYbP/QDk9lvvV6nZqUZ2POzq3
- AQtNZnWY6QXcqxen8wzzQNu5MqbtXgVSL0rsRIliVKYkKSJtLoGpxpoLDRvnpi5NOrfx
- slYBFT68A8yPAEdkA5mlTifl38gj0CFdqdahRgICOvo2ZSdTmqiGkhSjo7TUQDQR4Ybm RQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mf6re9jyq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Dec 2022 15:36:56 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BEFattS008841
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Dec 2022 15:36:55 GMT
-Received: from [10.216.38.200] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 14 Dec
- 2022 07:36:51 -0800
-Message-ID: <6ab9171e-127b-12f3-cfe6-0fbf2b37080c@quicinc.com>
-Date:   Wed, 14 Dec 2022 21:06:48 +0530
+        Wed, 14 Dec 2022 11:20:03 -0500
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E9E286F3;
+        Wed, 14 Dec 2022 08:19:58 -0800 (PST)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-12c8312131fso17225061fac.4;
+        Wed, 14 Dec 2022 08:19:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pmxnkBtZ4+9GBAc6tSJuQtB+ybkrmuXMMJ4mdgofo5Q=;
+        b=oPIagKHqwlIJdy8bOyPYe/oPl+fyy1m+ieTJq5HUljujwsYysieVueQeLSieGHcTtN
+         /l8+JIURRtg6ptzfwnA0OqMN14dmdjWU8fTBhEjrE5p2MgnARv+K4Fzv8BOyvh9GwYN7
+         E4HXvId20iJn1n3JVtz/n4LPjfW595eU9JxYxmN3roKUSuHp3yWXFXyO8h1k9xknYXDJ
+         ue4OxTI6pJaiYUQO8NrABvW5LpFx+ftDfGGRWXxRa5jfDffCZxtX9Z6I30ScvnZdCyk8
+         m8reHaVQSEDIjymQ3tXmky1vRsFBJ4m1P2IVKF2ahU8adfYHNNY6JZyVjwuwY+FRrAki
+         0e5A==
+X-Gm-Message-State: ANoB5pktGN3hr5KMeA/wtl2ag0U8tESRQSnVmnpXRRp+TRYbtsw/m4L1
+        QPw8Qz/Qyf+P/sb9KLKxUugHvCvxCA==
+X-Google-Smtp-Source: AA0mqf6e3VGZKdUfXLywAorV3vsZOOgy1lwiko6BtumOLTx0JRi0nVu+raQ/iZcLaTVqcLb++8wnEw==
+X-Received: by 2002:a05:6871:213:b0:142:9258:b78d with SMTP id t19-20020a056871021300b001429258b78dmr12829578oad.12.1671034798148;
+        Wed, 14 Dec 2022 08:19:58 -0800 (PST)
+Received: from robh_at_kernel.org (rrcs-98-6-157-194.sw.biz.rr.com. [98.6.157.194])
+        by smtp.gmail.com with ESMTPSA id h4-20020a056870170400b0011f22e74d5fsm2888651oae.20.2022.12.14.08.19.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Dec 2022 08:19:56 -0800 (PST)
+Received: (nullmailer pid 1168312 invoked by uid 1000);
+        Wed, 14 Dec 2022 16:19:38 -0000
+Date:   Wed, 14 Dec 2022 10:19:38 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, agross@kernel.org,
+        dmitry.baryshkov@linaro.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        devicetree@vger.kernel.org, airlied@gmail.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v13 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
+Message-ID: <20221214161938.GA1164047-robh@kernel.org>
+References: <1670972181-4961-1-git-send-email-quic_khsieh@quicinc.com>
+ <1670972181-4961-3-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8540p-ride: add qup1_i2c15 and
- qup2_i2c18 nodes
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <ahalaney@redhat.com>,
-        <echanude@redhat.com>
-References: <20221212182314.1902632-1-bmasney@redhat.com>
- <20221212182314.1902632-4-bmasney@redhat.com>
- <309b3fad-933c-6c45-5cd7-4e082da62c15@linaro.org> <Y5nB1epKN4nbk3ma@x1>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <Y5nB1epKN4nbk3ma@x1>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PFH_am0EmoDmQGnZn6Wm7Mwmuoc0x-av
-X-Proofpoint-ORIG-GUID: PFH_am0EmoDmQGnZn6Wm7Mwmuoc0x-av
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-14_07,2022-12-14_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212140125
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1670972181-4961-3-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Dec 13, 2022 at 02:56:18PM -0800, Kuogee Hsieh wrote:
+> Add both data-lanes and link-frequencies property into endpoint
+> 
+> Changes in v7:
+> -- split yaml out of dtsi patch
+> -- link-frequencies from link rate to symbol rate
+> -- deprecation of old data-lanes property
+> 
+> Changes in v8:
+> -- correct Bjorn mail address to kernel.org
+> 
+> Changes in v10:
+> -- add menu item to data-lanes and link-frequecnis
+> 
+> Changes in v11:
+> -- add endpoint property at port@1
+> 
+> Changes in v12:
+> -- use enum for item at data-lanes and link-frequencies
+> 
+> Changes in v13:
+> -- revised changes at port@0
+> -- use correct ref schemas for both port@0 and port@1
+> -- mark both port@0 and port@1 are required
+> -- add line between data-lanes and link-frequencies properties
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>`
+> ---
+>  .../bindings/display/msm/dp-controller.yaml        | 26 ++++++++++++++++++++--
+>  1 file changed, 24 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index f2515af..9d002de 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -81,6 +81,7 @@ properties:
+>  
+>    data-lanes:
+>      $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    deprecated: true
+>      minItems: 1
+>      maxItems: 4
+>      items:
+> @@ -98,12 +99,31 @@ properties:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      properties:
+>        port@0:
+> -        $ref: /schemas/graph.yaml#/properties/port
+> +        $ref: "/schemas/graph.yaml#/$defs/port-base"
 
+This means you have extra properties to add in the endpoint, but you 
+didn't define any.
 
-On 12/14/2022 6:00 PM, Brian Masney wrote:
-> On Tue, Dec 13, 2022 at 03:48:27PM +0100, Konrad Dybcio wrote:
->>> +	qup1_i2c15_default: qup1-i2c15-state {
->>> +		mux-pins {
->>> +			pins = "gpio36", "gpio37";
->>> +			function = "qup15";
->>> +		};
->>> +
->>> +		config-pins {
->>> +			pins = "gpio36", "gpio37";
->>> +			drive-strength = <0x02>;
->>> +			bias-pull-up;
->>> +		};
->>> +	};
->>
->> You can drop mux/config-pins and have the pin properties live directly
->> under the qup1-i2cN-state node.
-> 
-> Hi Konrad (and Shazad below),
-> 
-> I need to enable 5 i2c buses (0, 1, 12, 15, 18) on this board. I tried
-> the following combinations with the pin mapping configuration and the
-> only one that seems to work reliably for me is what I originally had.
-> 
-> With the following, only 2 out of the 5 buses are detected. There's no
-> i2c mesages in dmesg.
-> 
->      i2c0_default: i2c0-default-state {
->          pins = "gpio135", "gpio136";
->          function = "qup15";
->      };
-> 
-> Next, I added a drive-strength and bias-pull-up. All 5 buses are
-> detected. One bus throws read errors when I probe it with i2cdetect, two
-> others 'i2cdetect -a -y $BUSNUM' takes ~5 seconds to run, and the
+>          description: Input endpoint of the controller
+>  
+>        port@1:
+> -        $ref: /schemas/graph.yaml#/properties/port
+> +        $ref: "/schemas/graph.yaml#/$defs/port-base"
 
-This I have also observed on downstream as well, where scanning all 
-addresses takes some amount of time near to 5-6 seconds.
+Don't need quotes. Why did you add them?
 
-> remaining two are fast.
-> 
->      i2c0_default: i2c0-default-state {
->          pins = "gpio135", "gpio136";
->          function = "qup15";
->          drive-strength = <2>;
->          bias-pull-up;
->      };
-> 
-
-This is the default config we should use.
-
-> This is the style where i2cdetect seems to be happy for all 5 buses and
-> is fast:
-> 
->      i2c0_default: i2c0-default-state {
->          mux-pins {
->              pins = "gpio135", "gpio136";
->              function = "qup0";
+>          description: Output endpoint of the controller
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/media/video-interfaces.yaml#
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +                items:
+> +                  enum: [ 0, 1, 2, 3 ]
+> +
+> +              link-frequencies:
+> +                minItems: 1
+> +                maxItems: 4
+> +                items:
+> +                  enum: [ 1620000000, 2700000000, 5400000000, 8100000000 ]
+> +
+> +    required:
+> +      - port@0
+> +      - port@1
+>  
+>  required:
+>    - compatible
+> @@ -193,6 +213,8 @@ examples:
+>                  reg = <1>;
+>                  endpoint {
+>                      remote-endpoint = <&typec>;
+> +                    data-lanes = <0 1>;
+> +                    link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>; 
+>                  };
+>              };
 >          };
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
->          config-pins {
->              pins = "gpio135", "gpio136";
->              drive-strength = <2>;
->              bias-pull-up;
->          };
->      };
-> 
-> 
-> Shazad: 'i2cdetect -a -y $BUSNUM) shows that all 5 buses have the same
-> addresses listening. Is that expected? That seems a bit odd to me.
-> 
-
-Brian, even I haven't checked with all enabled, let me check this on 
-other projects and with downstream as well and get back to you.
-
--Shazad
-
-> [root@localhost ~]# i2cdetect -a -y 0
-> Warning: Can't use SMBus Quick Write command, will skip some addresses
->       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-> 00:
-> 10:
-> 20:
-> 30: -- -- -- -- -- -- -- --
-> 40:
-> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 60:
-> 70:
-> 
-> I triple checked that I have the QUP pins defined correctly for the 5
-> buses. I checked them against what's in the downstream kernel and I also
-> checked them against what's in upstream's
-> drivers/pinctrl/qcom/pinctrl-sc8280xp.c. This is the pin mapping that I
-> have:
-> 
->      i2c0: gpio135, gpio136
->      i2c1: gpio158, gpio159
->      i2c12: gpio0, gpio1
->      i2c15: gpio36, gpio37
->      i2c18: gpio66, gpio67
-> 
-> Brian
 > 
