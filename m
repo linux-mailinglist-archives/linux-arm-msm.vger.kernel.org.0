@@ -2,70 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D522164D152
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:36:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAE364D160
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 21:39:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbiLNUgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 15:36:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
+        id S230264AbiLNUjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 15:39:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbiLNUfp (ORCPT
+        with ESMTP id S229961AbiLNUjc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 15:35:45 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4F452BFB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:31:56 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id a9so4593040pld.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:31:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HPIAhqEAUFnaQX9FYqtKlCHsyyM8Y3BpxN8o+Dy0qmY=;
-        b=U1+8X6QnTAv8LJbEQ5qFXSEdbpe4APhf2SYNK3m2nFrNtbn8nxtzlY7N9Si8dw+JSJ
-         Y0wL/hPH/AnvIHGLSTsFLl6TfIBEBFRbH6T3VeuqvS2saU8IhRPBbGrwvaGRSAf+9UvP
-         wSwKHpFlvqgHUkF3sZXLdHnoMNfWXcfYBoRpGbycuOLi/GJ2q8cECsOdBT5eWXqchA9d
-         vBq9+mau2GFRyJNe8TgN3ZL0BdxQk9YB7ggFD8a39ixUZQ4q9ayL4X8jtGvZ69WxVwwD
-         DZX4NDLn8xmYbXheVnRSb1L+Kx3LFzdWaD+tqolVtTYeJiHyQ4CD4GlSeHg9m07LpwJ9
-         Jb5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HPIAhqEAUFnaQX9FYqtKlCHsyyM8Y3BpxN8o+Dy0qmY=;
-        b=Wuu18LPN0Ft9s5xqByiV4nvpKd94UJj56giH2twWxXw03cYUQuWcmIYQC1GEdEwTQU
-         6iozOYIWduc9X1k5IFYLIHR5OoucGTi+fnAQvF/xEqEQ43/ei2rJMoTXxZuCQPYTxY7P
-         xMydlkonvxFzpH6zcqWPB/8OE8KpGL1xiWizwklLzrQsJNXaRF3WjZvTS4e1Zgygw/2b
-         fynTznXdX9txsJ5ulsfW9lCrKxHD5GTXJ9OmLd3093Qa4tF3nYM3FIV4sZh14mzNKpaq
-         9P099eAXbcmzHjFxYHevwwwrDPfIBQkcR92C9NuHdpMaQnl3+8Wc7IbWcL9hxYgiCP5a
-         VqBg==
-X-Gm-Message-State: ANoB5pn9WzgEsfkYSf9PxdhW3EGJrrpIe8K53/H4tD/sm7y2Xh6mT6c+
-        ImpthLDs8WlYg0s1RUo5srA0OlFSqa9nTQac9bs=
-X-Google-Smtp-Source: AA0mqf4kKDPrcLvLDV+cKqx6gJIYkhue388PwYZrWAvT4JfEBcApaMKK8+6JllstPRE+MIgdgGR4jw==
-X-Received: by 2002:a17:90a:1b0b:b0:219:396c:9e32 with SMTP id q11-20020a17090a1b0b00b00219396c9e32mr27101974pjq.16.1671049915966;
-        Wed, 14 Dec 2022 12:31:55 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:1c60:4bad:5c3:ab51:3d81:6264])
-        by smtp.gmail.com with ESMTPSA id gx13-20020a17090b124d00b00219e38b42f5sm1812238pjb.26.2022.12.14.12.31.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Dec 2022 12:31:55 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
-        konrad.dybcio@linaro.org, andersson@kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-Date:   Thu, 15 Dec 2022 02:01:24 +0530
-Message-Id: <20221214203124.564537-4-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221214203124.564537-1-bhupesh.sharma@linaro.org>
-References: <20221214203124.564537-1-bhupesh.sharma@linaro.org>
+        Wed, 14 Dec 2022 15:39:32 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 596442BB3C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Dec 2022 12:37:41 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 03B163F256;
+        Wed, 14 Dec 2022 21:37:38 +0100 (CET)
+Date:   Wed, 14 Dec 2022 21:37:37 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH] arm64: dts: qcom: Use plural _gpios node label for
+ PMIC gpios
+Message-ID: <20221214203737.icoc6zan5edkhtcz@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221209220450.1793421-1-marijn.suijten@somainline.org>
+ <714ac62a-7bab-e16e-e3b6-bdd86e422699@linaro.org>
+ <20221210170531.pxoux2kje4vgor5y@SoMainline.org>
+ <5795a42d-7920-713a-0d90-df32d657d365@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5795a42d-7920-713a-0d90-df32d657d365@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,86 +71,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add USB superspeed qmp phy node to dtsi.
-Make sure that the oneplus board dts (which includes the
-sm4250.dtsi) continues to work as intended.
+On 2022-12-11 21:07:47, Krzysztof Kozlowski wrote:
+> On 10/12/2022 18:05, Marijn Suijten wrote:
+> > [..]
+> > Just like -state and -pins suffix, sometimes even the unnecessary
+> > -pins-pins suffix?  To me that is the same kind of churn, and *it is
+> 
+> You compare now to node names. The node names have visible impact (name
+> of devices in sysfs and in system), is affected by DT schema (is parsed)
+> and should follow DT spec rules.
+> 
+> There is nothing like that about labels, therefore they do not have the
+> same rules or importance.
+> 
+> I understand that consistency in labels might be good thing... but also
+> it does not matter. The labels really do not matter, except the code
+> readability. pmgpio or pmgpios is basically the same readable.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
- arch/arm64/boot/dts/qcom/sm6115.dtsi          | 38 ++++++++++++++++++-
- 2 files changed, 39 insertions(+), 2 deletions(-)
+For me the latter is more readable, and not only catering to
+userspace/sysfs but also to the developer reading/writing these DTs is a
+good thing (where it doesn't affect userspace nor sysfs, like this
+patch).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index 3f39f25e0721e..4f0d65574448b 100644
---- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -232,6 +232,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index e4ce135264f3d..15f311dcd289f 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -579,6 +579,40 @@ usb_hsphy: phy@1613000 {
- 			status = "disabled";
- 		};
- 
-+		usb_qmpphy: phy@1615000 {
-+			compatible = "qcom,sm6115-qmp-usb3-phy";
-+			reg = <0x01615000 0x200>;
-+			clocks = <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_AHB2PHY_USB_CLK>;
-+			clock-names = "com_aux",
-+				      "ref",
-+				      "cfg_ahb";
-+			resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
-+				 <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
-+			reset-names = "phy", "phy_phy";
-+			status = "disabled";
-+			#clock-cells = <1>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			usb_ssphy: phy@1615200 {
-+				reg = <0x01615200 0x200>,
-+				      <0x01615400 0x200>,
-+				      <0x01615c00 0x400>,
-+				      <0x01615600 0x200>,
-+				      <0x01615800 0x200>,
-+				      <0x01615a00 0x100>;
-+				#phy-cells = <0>;
-+				#clock-cells = <1>;
-+				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "usb3_phy_pipe_clk_src";
-+			};
-+		};
-+
-+
- 		qfprom@1b40000 {
- 			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
- 			reg = <0x01b40000 0x7000>;
-@@ -1023,8 +1057,8 @@ usb_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x04e00000 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
--				phys = <&usb_hsphy>;
--				phy-names = "usb2-phy";
-+				phys = <&usb_hsphy>, <&usb_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
- 				iommus = <&apps_smmu 0x120 0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
--- 
-2.38.1
-
+- Marijn
