@@ -2,120 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE40264CAFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 14:19:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6FBF64CB6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Dec 2022 14:36:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238502AbiLNNTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Dec 2022 08:19:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
+        id S229676AbiLNNgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Dec 2022 08:36:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238520AbiLNNTA (ORCPT
+        with ESMTP id S238219AbiLNNgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Dec 2022 08:19:00 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12920209AC;
-        Wed, 14 Dec 2022 05:18:57 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C3B0DB818BA;
-        Wed, 14 Dec 2022 13:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A14FC433EF;
-        Wed, 14 Dec 2022 13:18:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671023934;
-        bh=xwJ2F+HL8Yk0Fx3XqoMXtNfS5GIPd1gzxcsg5dDoon8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QP7v+ZzVI06/yPy1cj0gYDD7mG1of1hKuSt/w5bpOrTOsOETjgUEc6Dxsq65g4/hQ
-         Fjy5ZqjxlEO4FPBy+HmWmxUARSuxIc328Fzp+FLLmftMf0i9OO7JDX0pfLb1AAELxO
-         4F2oUr73dVKcnjM84Sm1+0uoO332iQyxBEjrQDzgOhOchxhbfaBaP0GiecxfOpt8U7
-         2RgX4K0g69VvqkFaH3Oy4ffIl4AFigY7gl+xIltPIJbjXCwlSdgufiiDPMDhPmI97X
-         cp5rZOCf/Bmf7NFqdGdEGrwTBsae1YJmG5SHuHSmoPTDEGuXLGZ97M7gAlRE+SBO+a
-         iT520n6hJ8R2Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1p5RfO-0000gO-Nm; Wed, 14 Dec 2022 14:19:22 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 4/4] thermal/drivers/qcom: fix lock inversion
-Date:   Wed, 14 Dec 2022 14:16:17 +0100
-Message-Id: <20221214131617.2447-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.4
-In-Reply-To: <20221214131617.2447-1-johan+linaro@kernel.org>
-References: <20221214131617.2447-1-johan+linaro@kernel.org>
+        Wed, 14 Dec 2022 08:36:36 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5832613B;
+        Wed, 14 Dec 2022 05:36:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1671024996; x=1702560996;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=zsIf6fMmGrA6HPgd11/NKhffPf9edGm/f/8PsrgH+Fo=;
+  b=JcWpmKa+0jzmv2P5MU1vp7XUsintz6aGs/onVIiyCLqDPTd0k88kN3cS
+   JRTqzehGJ3niR9M8DEn0i26s03I/MPt+RQeehPDHnf0GuZxgNN/jEhnrM
+   vs2Gz7B8XpDYY9uXWSpt7bhxTxTOIGowzI8ChAP61b/VCw6EtIiRw81zF
+   A=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Dec 2022 05:36:36 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2022 05:36:36 -0800
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 14 Dec 2022 05:36:33 -0800
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH] remoteproc: qcom: pas: Fix subdevice add order
+Date:   Wed, 14 Dec 2022 19:06:23 +0530
+Message-ID: <1671024983-22634-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal-zone-device lock is held by core when setting trip points
-and the driver takes its chip lock in the corresponding callback.
+Currently, the notification like QCOM_SSR_BEFORE_SHUTDOWN is not exactly
+sent before starting shutdown activity on remote subsystem but it is
+getting sent after sysmon shutdown request to remote.
 
-Fetching the thermal trip points using thermal_zone_get_trip() also
-involves taking the thermal-zone-device lock, which means that the chip
-lock can not be held when doing so.
+On getting QCOM_SSR_BEFORE_SHUTDOWN, some client want remote subsystem
+to be alive to communicate but as sysmon shutdown request is getting
+sent to remote before QCOM_SSR_BEFORE_SHUTDOWN notification sent to
+kernel client due to which remote is not in a condition to communicate
+with kernel clients.
 
-Drop the chip lock temporarily during probe to avoid the lock inversion
-that was detected by lockdep:
+Fixing the subdevice ordering will fix this as ssr subdevice will be
+first one to get triggered in shutdown/stop path.
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  6.1.0-next-20221213 #122 Not tainted
-  ------------------------------------------------------
-  systemd-udevd/264 is trying to acquire lock:
-  ffff741e444a0920 (&chip->lock){+.+.}-{3:3}, at: qpnp_tm_get_temp+0xb4/0x1b0 [qcom_spmi_temp_alarm]
-
-  but task is already holding lock:
-  ffff741e44341618 (&tz->lock){+.+.}-{3:3}, at: thermal_zone_device_update+0x2c/0x70
-
-  which lock already depends on the new lock.
-
-Fixes: 78c3e2429be8 ("thermal/drivers/qcom: Use generic thermal_zone_get_trip() function")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 ---
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index bfaec74f13b2..e2429676d0d2 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -348,7 +348,12 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
- 	if (stage)
- 		chip->temp = qpnp_tm_decode_temp(chip, stage);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 6afd094..5e34d59 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -538,7 +538,6 @@ static int adsp_probe(struct platform_device *pdev)
  
-+	mutex_unlock(&chip->lock);
-+
- 	crit_temp = qpnp_tm_get_critical_trip_temp(chip);
-+
-+	mutex_lock(&chip->lock);
-+
- 	ret = qpnp_tm_update_critical_trip_temp(chip, crit_temp);
- 	if (ret < 0)
- 		goto out;
+ 	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
+ 	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
+-	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
+ 	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
+ 					      desc->sysmon_name,
+ 					      desc->ssctl_id);
+@@ -547,6 +546,7 @@ static int adsp_probe(struct platform_device *pdev)
+ 		goto detach_proxy_pds;
+ 	}
+ 
++	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
+ 	ret = rproc_add(rproc);
+ 	if (ret)
+ 		goto detach_proxy_pds;
 -- 
-2.37.4
+2.7.4
 
