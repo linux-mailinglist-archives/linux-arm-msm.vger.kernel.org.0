@@ -2,189 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CA8A64DD47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 16:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2324B64DD57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 16:10:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229789AbiLOPIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 10:08:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37856 "EHLO
+        id S229517AbiLOPKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 10:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230096AbiLOPHu (ORCPT
+        with ESMTP id S229736AbiLOPKx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 10:07:50 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC39F30F44
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:07:31 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id g7so16121873lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:07:31 -0800 (PST)
+        Thu, 15 Dec 2022 10:10:53 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35AC02A953
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:10:51 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id y25so16098775lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OHEZTLvWgdyrOQot+L47psSwEWI47oL6dy58VC6SxRY=;
-        b=gthgYGSob376qfygaieOqcwlKjC4cePcc5b5FCyW0N+L5ulTId+S+BrZ/sojLFWKqM
-         0IZb9McMm4b1F/AxvVmvsk39QzfawRgq1rSvo78mqkEpxidMkHCB4y6s+NGckKP1oUDa
-         ulziUNK9ERN2proroZBZtCRwf/P96LhWu4mrhIu1SeS/k61GoqJrdOaklVilQBIFbjR8
-         dM8QKdQS9hgNmxx44xrAv0rlDwdD8glDIookd7N6s7KCuUDE0U6aTjeUBVOs/ijWLsGr
-         bnPjSJUHSeRkfiUj88Q5hy8c/ngbZs8H72ymW2YvvJVEfgl463vZs3gY+d4dkBkY1Vgz
-         8VMw==
+        bh=petCtMT6h9gBTrPqM4wSXPuKYj7TltVBXvRJZq1Vl4A=;
+        b=wxAxGHVqRSAWNyWfmK7P70u9SxsXJSH1r5fH7taXrSq+Rfu6lZsny9oPYIOPs8dfUI
+         Au5EXXc7iW4c4KkVhWpjHc0/brvLjJ5i2+OG2OBKvIhvzP24oce4CpugSmER6l54FebS
+         7W1RwoY/HEFeVHT0lyCyC2RZuR+XSsYgDB+sHt2UWdcBiKMWcT4IA6x6bvN72p29Hdgg
+         krpL0Fr8Y+DroU3qi9xpQHisGZfOcIBstLZ2jXAClrCKcOPF+xZ3P9Qdx8c/UN7BJ78P
+         VwJ0NyhO1g2gQjnvd6Tuc3hd/sY0p7OhuMy04LH2xjvkjAqomlNP/VnfiEL2sRdNMwMi
+         Tbdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OHEZTLvWgdyrOQot+L47psSwEWI47oL6dy58VC6SxRY=;
-        b=KXy2gJpsoE12kjTj4Z/3hsLs3k9aCS/n1STbCAviMzJCQUqo5qXEcF0a5EPXITnDtV
-         +7q+ZsHFHCK4w5yx5emQC1oWAmxbSWsw/D9dpvExLgqcpV0cK8IWh8Uvb5iZsWI8UPBO
-         fdQHSXfdLWWNrhcZ+EseEZZbXa9CWETCAsUvLEfhAuGZ1QdvxOcqv9vghCIjv593Uv4/
-         AxGR5E3RNWY6B+ychCL9PQD2WSFLNf4C0TSRHoXLYNdexbb4HgqZjPWl6ZgAMUn0t8MV
-         lj6nIaEV2BWWIyLrookuPm6Mf4tiZEoXwoX2cQZ8Qk1Tb/D/x85pU1yOTGDuo4Glcr3U
-         ByCg==
-X-Gm-Message-State: ANoB5plFYgplVb74x2FdEd7R/HZv7jndKdi8d4Y39r4q90zEKL5yU+as
-        zyif0L3sDsiIPQtIOK6aYbTpIw==
-X-Google-Smtp-Source: AA0mqf7yxuN7bC/Ylx9eWFYVUsuAAnC0ELx3Vb+9nC7Xd+WKKPZ8VSz/8PjGRYlM97Zqh9IJ6N/X2Q==
-X-Received: by 2002:a05:6512:304b:b0:4b5:892:3987 with SMTP id b11-20020a056512304b00b004b508923987mr16424937lfb.9.1671116850313;
-        Thu, 15 Dec 2022 07:07:30 -0800 (PST)
+        bh=petCtMT6h9gBTrPqM4wSXPuKYj7TltVBXvRJZq1Vl4A=;
+        b=yykRzPn/5WkbQEasn/5sV5dKOxBPEFOnMrB0xNb5XZXB2ZPV8+RcHvFibMm2P+NpoC
+         +ryspx8W87YsHl2Tq20LAhN9sqlswaMkISkZzWVZrEZC/sx72JYuTkkGETFdMxYGEBT7
+         CaSUaBKV2rbkvQJ/SIbiQjxIOfYkCerLxcMCUKf4LfNUg8hQkeRR4P/ofMPX9M6wX0Wr
+         anTUceRcxc++1PECIer+Am9rYL1eVuWmLiJUBRmNu/NxYCTIxSHwdeE8LC56AUeD5o5a
+         h/i1WJSPu5apYZXsABcgr3lw8tMWxutf0LehM4Rzi5ZTpT9biszyFmpP9S99v95hyA/R
+         lB0A==
+X-Gm-Message-State: ANoB5plSUyA5L+hR+Y05zh6PgfDU5D+spLBy6fcQadLatkS1D0QNeOYF
+        kTDneumcmLcByCZKC8snRaO/MQ==
+X-Google-Smtp-Source: AA0mqf4mYmzjbcewsbtx2GMO4Z0urxIS7tt5k3wtucHMuRDUfjlTrJFPUq3Rj8Jakr44QpceqaDxVw==
+X-Received: by 2002:ac2:4e4e:0:b0:4a4:68b9:608a with SMTP id f14-20020ac24e4e000000b004a468b9608amr6993443lfr.21.1671117049557;
+        Thu, 15 Dec 2022 07:10:49 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k20-20020a0565123d9400b004abc977ad7fsm1175853lfv.294.2022.12.15.07.07.29
+        by smtp.gmail.com with ESMTPSA id w5-20020a05651234c500b004b0b131453csm1183121lfr.49.2022.12.15.07.10.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 07:07:29 -0800 (PST)
-Message-ID: <1c467305-15b2-5a0d-0312-f7241deae812@linaro.org>
-Date:   Thu, 15 Dec 2022 17:07:29 +0200
+        Thu, 15 Dec 2022 07:10:48 -0800 (PST)
+Message-ID: <9e94c0b9-f901-5ac9-2abb-40e958cbe5a2@linaro.org>
+Date:   Thu, 15 Dec 2022 17:10:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+Subject: Re: [PATCH v5 5/8] iommu/arm-smmu-qcom: Add SM6115 support
 Content-Language: en-GB
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Emma Anholt <emma@anholt.net>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         linux-kernel@vger.kernel.org
-References: <20221118192241.29384-1-quic_molvera@quicinc.com>
- <20221118192241.29384-3-quic_molvera@quicinc.com>
- <fed1d538-d133-6987-12d4-3f1516d519e5@linaro.org>
- <85b7060c-4f52-b8bf-cb19-29068a0a9083@quicinc.com>
+References: <20221030094258.486428-1-iskren.chernev@gmail.com>
+ <20221030094258.486428-6-iskren.chernev@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <85b7060c-4f52-b8bf-cb19-29068a0a9083@quicinc.com>
+In-Reply-To: <20221030094258.486428-6-iskren.chernev@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/11/2022 00:15, Melody Olvera wrote:
+On 30/10/2022 11:42, Iskren Chernev wrote:
+> From: Adam Skladowski <a39.skl@gmail.com>
 > 
+> Add the Qualcomm SM6115 platform to the list of compatible,
+> this target uses MMU500 for both APSS and GPU.
 > 
-> On 11/21/2022 5:07 AM, Konrad Dybcio wrote:
->>
->> On 18.11.2022 20:22, Melody Olvera wrote:
->>> Add DTs for Qualcomm IDP platforms using the QDU1000 and QRU1000
->>> SoCs.
->>>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/Makefile        |   2 +
->>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 266 +++++++++++++++++++++++
->>>   arch/arm64/boot/dts/qcom/qru1000-idp.dts | 266 +++++++++++++++++++++++
->>>   3 files changed, 534 insertions(+)
->>>   create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>   create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>> index afe496a93f94..da66d4a0a884 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -53,7 +53,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> new file mode 100644
->>> index 000000000000..5aed483201fa
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> @@ -0,0 +1,266 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>> +#include "qdu1000.dtsi"
->>> +#include "pm8150.dtsi"
->>> +
->>> +/ {
->>> +	model = "Qualcomm Technologies, Inc. QDU1000 IDP";
->>> +	compatible = "qcom,qdu1000-idp", "qcom,qdu1000";
->> Missing chassis-type
-> 
-> Sorry, not sure what you mean here... Do you mean like QRD, HDK, MTP, etc.?
-> If so, then IDP is the chassis type.
-> 
->>
->>> +
->>> +	aliases {
->>> +		serial0 = &uart7;
->>> +	};
->>> +
->>> +	clocks {
->>> +		xo_board: xo-board {
->>> +			compatible = "fixed-clock";
->>> +			clock-frequency = <19200000>;
->>> +			clock-output-names = "xo_board";
->>> +			#clock-cells = <0>;
->>> +		};
->>> +
->>> +		sleep_clk: sleep-clk {
->>> +			compatible = "fixed-clock";
->>> +			clock-frequency = <32000>;
->>> +			#clock-cells = <0>;
->>> +		};
->>> +
->>> +		pcie_0_pipe_clk: pcie-0-pipe-clk {
->>> +			compatible = "fixed-clock";
->>> +			clock-frequency = <1000>;
->>> +			clock-output-names = "pcie_0_pipe_clk";
->>> +			#clock-cells = <0>;
->>> +		};
->>> +
->>> +		pcie_0_phy_aux_clk: pcie-0-phy-aux-clk {
->>> +			compatible = "fixed-clock";
->>> +			clock-frequency = <1000>;
->>> +			clock-output-names = "pcie_0_phy_aux_clk";
->>> +			#clock-cells = <0>;
->>> +		};
->>> +
->>> +		usb3_phy_wrapper_pipe_clk: usb3-phy-wrapper-pipe-clk {
->>> +			compatible = "fixed-clock";
->>> +			clock-frequency = <1000>;
->>> +			clock-output-names = "usb3_phy_wrapper_pipe_clk";
->>> +			#clock-cells = <0>;
->>> +		};
->> Do these pipe clocks not come from QMPPHY?
-> 
-> Yes they do; I just don't have those phys ready yet. I can put a TODO here to
-> move them if necessary.
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 
-Just use <0> instead of adding a dummy fixed clock.
+This needs to rebased on linux-next (or 6.2-rc1 once it's out).
+
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index b2708de25ea3..526fec79b4fe 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -432,6 +432,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>   	{ .compatible = "qcom,sc8280xp-smmu-500" },
+>   	{ .compatible = "qcom,sdm630-smmu-v2" },
+>   	{ .compatible = "qcom,sdm845-smmu-500" },
+> +	{ .compatible = "qcom,sm6115-smmu-500" },
+>   	{ .compatible = "qcom,sm6125-smmu-500" },
+>   	{ .compatible = "qcom,sm6350-smmu-500" },
+>   	{ .compatible = "qcom,sm6375-smmu-500" },
 
 -- 
 With best wishes
