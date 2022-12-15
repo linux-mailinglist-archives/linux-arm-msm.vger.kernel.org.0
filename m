@@ -2,73 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B75CD64DBDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 14:02:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9453364DC17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 14:17:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbiLONB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 08:01:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
+        id S229848AbiLONRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 08:17:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbiLONBy (ORCPT
+        with ESMTP id S229517AbiLONRf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 08:01:54 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6652BB21
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 05:01:53 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id q6so15505821lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 05:01:53 -0800 (PST)
+        Thu, 15 Dec 2022 08:17:35 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B710F2DA98
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 05:17:32 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id p8so15579670lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 05:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Azv+l1o5feIvU2IPvHHOfcOOXq+7SwDjmkm9LdHDhRA=;
-        b=Gw2OdyD294YVkOZYYaefKZvE+ZNzfh5PNJrfMu1oXxIgqqQUmV1eAqBJPLHgOR9FaR
-         BX/+l6xev+4/37+oHAU0CuN3G34mFp/zd9gRt7B9jhlmH/N7DbKSB8fBL5uI2piC4HdA
-         3wqpCPGON6kvnwwpyxd7cuwZD/jSafsbkexnmORuDJClIAlfQzyjy6nweGPUavjU8DFY
-         a1UFwzWm0VziXWCTITi6uWNjGAG4UCeJ9c+t0g6x0DxvwtGcudg3yfXwJggCIg7G9nWS
-         aW3MoB+e6rjnACJq5Bo1nEcTpBMDZRsTB1A+K0sV/KLB2JU5z0ByFKCtpHiGwYvSEODa
-         FNyA==
+        bh=Sg/7PKZ2PpLj44QUzjyo60iofeYQC0nT1+8EbxEYeYk=;
+        b=paqjLWLQjV3QM7o0g45iNNwnnTCrY5fNU98IFbOl88i8N05oz/7pwz8U4konc2LKBI
+         4im+yTolmz5RvPwIXBBUAW69FKxIc9OOOjJtXmEHrf/WorTXyD6pQItLL9R1llswJIIJ
+         3TN68XWRZQ1cYIxLWbygHK9yuR1hPGe3XyTaV59MCbZJXTPJ2HVCbLMnOee/0KYhenAV
+         sREeEt+/+7zk3hgKUtaTsTOMs291dD1X1zcivWER55m+BRaEQ+HSuEeE1A1s0kI4i/Hy
+         AGldpgU9DwGbNITetJbtATshSvEbWobZWYd4M+5KsBU2ThZ3zLb5YRcyXcyUrN0ywf5d
+         nzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Azv+l1o5feIvU2IPvHHOfcOOXq+7SwDjmkm9LdHDhRA=;
-        b=KQ3gxpt6262InaaHzuB7B0EEGki4SxccqxQDbJtXIIdkvxwwFc0i4mAPsneK9omAJR
-         G8mIX0IX/9oc9A/Ux+bMeLBrYn5yAResL48Bv8nNg/AvNkx07WeppvhnyLX+386NvGSK
-         MJIiYRIixpFaYJIc+aBDLp75mb4Ryw9bx86jwJUsUtVUwI+Hrozgm+4dGpBshCNDKMxe
-         3qZrj9Cp6wCjHuOV7gNB3bwGrYL7IVZOCDWbYRgBJyvNjd6QDyxEQ4+WVaUQolqwwCqL
-         VabFLZCHnuTE9un+JLO1kq2UWCCaMhHvbPpmXkCpZJVT3z32UlMe9dq8i/Wey+STuxyT
-         IuQA==
-X-Gm-Message-State: ANoB5pm6mLjvDARiWCNTWbMnRMmUy2hQe9Vd4m5LO1aM3oXoDLce1yLK
-        eO/sbFHCbJzYhxO/EexbnYsNbA==
-X-Google-Smtp-Source: AA0mqf7ZNIPtsT5ah14ZxYpFuZEh9ro1LNuZvfCT2BaZ4frYgwm9oLvmiL8F1BbZSF0hrITqSDS0VA==
-X-Received: by 2002:a05:6512:3fa4:b0:4a4:68b9:19d9 with SMTP id x36-20020a0565123fa400b004a468b919d9mr10752592lfa.1.1671109310240;
-        Thu, 15 Dec 2022 05:01:50 -0800 (PST)
+        bh=Sg/7PKZ2PpLj44QUzjyo60iofeYQC0nT1+8EbxEYeYk=;
+        b=3cc6Y4NXO/BmWRkfQDTPuNvnkldUo+zS75alo53YEaqWPzCXwRLYUQpgUWaqMuidlq
+         qoOEPy+b/B+ft1az/3ZOTmTduoxDDwMXhPa4sdeYDCfsYxmfLU37BiZQwuYhSUUhzR5j
+         1ftiTOzpJORXBHZSyn0z6WyT5iw3fUgJd+2InhMfMGrkjPk+Arn5S1R6gT0lHwjCa0TW
+         TIFncYFgoyADkaVFB00QDn+JNL503vVLg2XTqm4DfAH3B7oqquseDfe5SPSkKdMQFXDz
+         L9r12tEXkqRgG4lBavs3Ri1FbiGd+Yg8hY7ACXDR/OP5e7sItSx0xpA7KE/QxHHKYBHW
+         v65A==
+X-Gm-Message-State: ANoB5pki+ET0GK7I5b8Uq4qVdzpBBPvq6J/wwj4RIH+Shx0l7JXLspkc
+        I/pC1oSYbGQkdxRgCFWekwzfVA==
+X-Google-Smtp-Source: AA0mqf6adzOmCFsfsG4Pco2bqy42zVq9ZhzDRHVcRCAsSdpPIgPtuFiVQeUoqpWpdoJCmTZoxIVM0w==
+X-Received: by 2002:a05:6512:1690:b0:4b6:eca8:f6ca with SMTP id bu16-20020a056512169000b004b6eca8f6camr6144996lfb.67.1671110251085;
+        Thu, 15 Dec 2022 05:17:31 -0800 (PST)
 Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id y12-20020a19914c000000b004b55a1c4649sm1157350lfj.38.2022.12.15.05.01.46
+        by smtp.gmail.com with ESMTPSA id o9-20020a05651205c900b0049478cc4eb9sm1156938lfo.230.2022.12.15.05.17.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 05:01:48 -0800 (PST)
-Message-ID: <28eceb7c-fbd7-896b-8951-f640cd510c4c@linaro.org>
-Date:   Thu, 15 Dec 2022 14:01:45 +0100
+        Thu, 15 Dec 2022 05:17:29 -0800 (PST)
+Message-ID: <57e7f32b-86d6-81b4-1501-d732deee6c48@linaro.org>
+Date:   Thu, 15 Dec 2022 14:17:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: pm8941-rtc add alarm register
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: msm8956-loire: Add usb vbus and id
+ extcons to ci-hdrc
 Content-Language: en-US
-To:     Eric Chanudet <echanude@redhat.com>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>
-References: <20221214210908.1788284-1-echanude@redhat.com>
- <20221214210908.1788284-3-echanude@redhat.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221214232049.703484-1-marijn.suijten@somainline.org>
+ <20221214232049.703484-3-marijn.suijten@somainline.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221214210908.1788284-3-echanude@redhat.com>
+In-Reply-To: <20221214232049.703484-3-marijn.suijten@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,101 +93,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 14.12.2022 22:09, Eric Chanudet wrote:
-> A few descriptions including a qcom,pm8941-rtc describe two reg-names
-> for the "rtc" and "alarm" register banks, but only one offset. For
-> consistency with reg-names, add the "alarm" register offset. No
-> functional change is expected from this.
+On 15.12.2022 00:20, Marijn Suijten wrote:
+> ci-hdrc does not have the ability to detect voltage presence (5V vbus)
+> on the USB connector nor the role (via an ID sensing pin), and relies on
+> the PMIC-side charger to provide such information through an extcon
+> driver.
 > 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+> index 67baced639c9..700583a56a0e 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+> @@ -77,6 +77,8 @@ &gcc {
+>  
+>  &otg {
+>  	status = "okay";
+> +
+> +	extcon = <&pmi8950_usb_vbus>, <&pmi8950_usb_id>;
+Please add it above to keep status as the last property.
 
 Konrad
->  arch/arm64/boot/dts/qcom/pm8150.dtsi      | 2 +-
->  arch/arm64/boot/dts/qcom/pm8916.dtsi      | 3 ++-
->  arch/arm64/boot/dts/qcom/pm8950.dtsi      | 2 +-
->  arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/pmp8074.dtsi     | 2 +-
->  arch/arm64/boot/dts/qcom/pms405.dtsi      | 2 +-
->  6 files changed, 7 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> index 574fa95a2871..db90c55fa2cf 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-> @@ -121,7 +121,7 @@ pm8150_adc_tm: adc-tm@3500 {
+>  };
 >  
->  		rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
->  		};
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> index 08f9ca006e72..e2a6b66d8847 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -93,7 +93,8 @@ adc-chan@f {
->  
->  		rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
-> +			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
->  		};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/pm8950.dtsi b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> index 07c3896bd36f..d7df4ad60509 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> @@ -126,7 +126,7 @@ xo-therm-buf@3c {
->  
->  		rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
->  		};
-> diff --git a/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi b/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
-> index 20c5d60c8c2c..ee1e428d3a6e 100644
-> --- a/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
-> @@ -108,7 +108,7 @@ pmm8155au_1_adc_tm: adc-tm@3500 {
->  
->  		pmm8155au_1_rtc: rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/pmp8074.dtsi b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
-> index ceb2e6358b3d..580684411d74 100644
-> --- a/arch/arm64/boot/dts/qcom/pmp8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pmp8074.dtsi
-> @@ -74,7 +74,7 @@ vph-pwr@131 {
->  
->  		pmp8074_rtc: rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
->  			allow-set-time;
-> diff --git a/arch/arm64/boot/dts/qcom/pms405.dtsi b/arch/arm64/boot/dts/qcom/pms405.dtsi
-> index ffe9e33808d0..22edb47c6a84 100644
-> --- a/arch/arm64/boot/dts/qcom/pms405.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pms405.dtsi
-> @@ -125,7 +125,7 @@ xo_therm: xo_temp@76 {
->  
->  		rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> +			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
->  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
->  		};
+>  &pm8004_spmi_regulators {
