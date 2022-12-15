@@ -2,127 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14B2E64E163
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 19:54:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A1BF64E184
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 20:04:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbiLOSyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 13:54:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48188 "EHLO
+        id S230522AbiLOTEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 14:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230013AbiLOSyC (ORCPT
+        with ESMTP id S230504AbiLOTEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 13:54:02 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24B146653
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:54:01 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id b13so17098515lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:54:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fWLzVy/UjP62SOghGlsb4BhhW+Tj4T8m11Npbmlrl9I=;
-        b=WkdkYFD1Ufbuf8MJcf979R+l4T1zJKE+kz7eDNSr1V9FEbOatUy0v9YixpqzSfu2jw
-         83mLIyH+VZNs1AdFuOlfijov2rxDYtxP+J8/hO3/OjQ+2RTdU3uOucaJWsYt1DvFLSF2
-         oQl24/k4nJHRbkwooJ02qAVJUgwJWVaJrKdERWWU2mMn8Hvfhj6liEEZq89Nh69OYABd
-         fqDYz8FQe/5XEqqEyq2FWoaTQlIW4m2d9VDfw16VPf1E0Rhu2Hb5sccDnl2rFWliM8qI
-         Nuvx1uqOD/T7UAJFrILRKBOWtB5gcpmdan1gkwQIc7i4TxemrccQgFRmFEBQuL5QEHOT
-         CmiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWLzVy/UjP62SOghGlsb4BhhW+Tj4T8m11Npbmlrl9I=;
-        b=oOc6blGVPi1wWc5Wt7bs6dXO7t6gVHAyMGQE9leAXwGHBGwtxVuFFSStlDrO2oY6z7
-         +g2RPgQNSrxYoOypmVmjs9M34W92JJvT1CKjks6y5sdhgcKaDP/9ZabrULFAuVCDWNw5
-         q7bTjs9pi//f3qTol5Ozy/Tez578nlWNYKvBJtTTpezEuFvjjJoH1iGmCkLl/CmOXJnD
-         wp9CXqD/8jPaNYnYWN6DTFKmbNS8jPym2mTd6giBTmkxHjlCPTyO32QlS9zGrECRfeex
-         ew4BnKsFUROtM0wp9Zv81506IjUJeuDePaxtQbuI4GyR7milvOxZZVvTopRycMjOaH+H
-         aB1Q==
-X-Gm-Message-State: ANoB5pn4xqSc4+G3fp1GZWnLfvo22j9YTtfRv16zwtJamgbwaTd6blRj
-        l4LJnMdS2Z5Yg5piLPm6QHt2TiK3sIcUhAFx
-X-Google-Smtp-Source: AA0mqf7Vr8AVO/V6SDoyOHADl4vG/68vz/2MP/NJZPABzm+cJlnOzwOUuDpZJaGMvbaPDfAeAH9l5Q==
-X-Received: by 2002:ac2:4215:0:b0:4b4:b5c1:77f3 with SMTP id y21-20020ac24215000000b004b4b5c177f3mr7595138lfh.16.1671130440055;
-        Thu, 15 Dec 2022 10:54:00 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id 10-20020ac25f4a000000b004bea5274fbfsm1558lfz.160.2022.12.15.10.53.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 10:53:59 -0800 (PST)
-Message-ID: <fa818a64-4535-ba61-067c-e9f553c25726@linaro.org>
-Date:   Thu, 15 Dec 2022 19:53:58 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 15 Dec 2022 14:04:21 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8323E379C8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 11:04:20 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NY1ql07Mzz1S5D0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 14:04:18 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:mime-version:x-mailer:message-id:date
+        :subject:to:from; s=dkim; t=1671131058; x=1671995059; bh=We5xjhG
+        qrFdJQxR93Npt09VH/7a6fXPhQTRN9HYr93I=; b=i/wA5B90bKG6yMpIqJBpB/U
+        4Rps2rqYAkjkqaeCBl+/vixjnB8T9C5hTCzcuLiHcBau7NzjO/IQUeWt0vKzROHN
+        AjVxLx4dbiY1/vomsa63+GRumbUcS9LhSN2X+NUZxeYQvRsLa7aA5QOpolRZlo60
+        aSUuvHzoT0GD9JFiUgKKrX8eYIlW2Sc2Uj5stZfK8iorbl4TfdD606+m75O0Ndfi
+        AakAzflHXFQlSff+SFVwIt0Zdp+kYSVtxRxWl7fxuKjxNh0gqdnBvfDvN/3oW/Ou
+        7eKKTTltTNSribRtCMldA3b3XgjnuCdgj+3vTaTzH9aZG84oiXyw0oqTjqK2SLA=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id O9MQTaSDoQRx for <linux-arm-msm@vger.kernel.org>;
+        Thu, 15 Dec 2022 14:04:18 -0500 (EST)
+Received: from dorothy.. (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NY1qb10q2z1S4yj;
+        Thu, 15 Dec 2022 14:04:10 -0500 (EST)
+From:   Lux Aliaga <they@mint.lgbt>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Lux Aliaga <they@mint.lgbt>, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221118192241.29384-1-quic_molvera@quicinc.com>
- <20221118192241.29384-3-quic_molvera@quicinc.com>
- <20221202033721.4slwz2utw5u6rv7b@builder.lan>
- <9e4e6149-bc24-b727-fff7-3fb7038fc066@quicinc.com>
- <5cd9e71c-8147-2ce1-b137-0342e271031b@linaro.org>
- <82620abd-105a-6ebc-ae58-e77fa058852b@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <82620abd-105a-6ebc-ae58-e77fa058852b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v4 1/4] dt-bindings: ufs: qcom: Add SM6125 compatible string
+Date:   Thu, 15 Dec 2022 16:04:01 -0300
+Message-Id: <20221215190404.398788-1-they@mint.lgbt>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/12/2022 18:56, Melody Olvera wrote:
-> 
-> 
-> On 12/15/2022 12:44 AM, Krzysztof Kozlowski wrote:
->> On 14/12/2022 19:59, Melody Olvera wrote:
->>>>> +			#clock-cells = <0>;
->>>>> +		};
->>>>> +
->>>>> +		sleep_clk: sleep-clk {
->>>>> +			compatible = "fixed-clock";
->>>>> +			clock-frequency = <32000>;
->>>>> +			#clock-cells = <0>;
->>>>> +		};
->>>>> +
->>>>> +		pcie_0_pipe_clk: pcie-0-pipe-clk {
->>>> Afaict these clocks are not referenced anywhere, so please skip them.
->>> Yes, so I included them to be consistent with the bindings. They will be needed later;
->>> should I still remove?
->>>
->> If they are not referenced anywhere, how is it consistent with bindings?
->> Where do the bindings require defining such nodes?
-> 
-> These bindings here: https://lore.kernel.org/all/20221118181826.28269-2-quic_molvera@quicinc.com/
-> I believe you commented that we either have these clocks or we don't, correct? I added them to
-> the dt since these clocks exist and will be needed later when USB and PCIE nodes are added.
-> As Konrad noted, these technically belong in the PHYs, but I was told to put stub fixed
-> clocks instead here: https://lore.kernel.org/lkml/2c8c4642-8aee-3da3-7698-5e08b4c5894d@linaro.org/
-> 
-> How is this to be handled? Should I remove the clocks from the dt and the bindings and add them
+Document the compatible for UFS found on the SM6125.
 
-This was a discussion about clock controller. You either have these
-clocks as input of the clock controller or not. If you have - drop
-minItems. If you do not have - trim the list to just two items.
+Signed-off-by: Lux Aliaga <they@mint.lgbt>
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-What do you actually write in DTS is of course connected with the
-bindings but separate problem. I was not referring to what should be or
-should not be in DTS. We talked about clock controller and its inputs.
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docume=
+ntation/devicetree/bindings/ufs/qcom,ufs.yaml
+index b517d76215e3..42422f3471b3 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -29,6 +29,7 @@ properties:
+           - qcom,sc8280xp-ufshc
+           - qcom,sdm845-ufshc
+           - qcom,sm6115-ufshc
++          - qcom,sm6125-ufshc
+           - qcom,sm6350-ufshc
+           - qcom,sm8150-ufshc
+           - qcom,sm8250-ufshc
+@@ -185,6 +186,7 @@ allOf:
+           contains:
+             enum:
+               - qcom,sm6115-ufshc
++              - qcom,sm6125-ufshc
+     then:
+       properties:
+         clocks:
+--=20
+2.38.1
 
