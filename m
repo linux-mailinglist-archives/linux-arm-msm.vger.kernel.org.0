@@ -2,134 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D7164DF1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:57:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C9A064DF5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 18:10:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230051AbiLOQ5L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 11:57:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49140 "EHLO
+        id S230327AbiLORKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 12:10:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbiLOQ46 (ORCPT
+        with ESMTP id S230512AbiLORJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 11:56:58 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3993B9F2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 08:56:53 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4NXz0g4fbhz1S5Cw
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 11:56:51 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:content-type:in-reply-to:from
-        :references:to:content-language:subject:user-agent:mime-version
-        :date:message-id; s=dkim; t=1671123408; x=1671987409; bh=tjNVkyH
-        xOJqidYPV+BTvYS5ENh1t/1Ue/IBzdpA5tYw=; b=Kx5UdYsFpC98GCHU4ntG2Ys
-        FA7ZQQx5vcwGM7ttxj55bVRUucqy1zj5mRjdLYVZG3z2GwODR2hRkIpBDmkYUi1S
-        P+mRiHNQEWJothIotGeXD0/DbiR0OR1rOSCc21S7xvEO3mdeRQ/dZbl4t+cmhEWf
-        S2gDfh+jGwdNG7alWv7JsdbKB2MUF8d6eC9n8xkX37qABrnAQjhQxiIqG/UEqj6w
-        jet15wpYPiMpyNXGbxFzh/x74OUzBhPoMTq9Yvvb/B6kje8LKnMHweUUroYuKeOi
-        p+FtXY0G8hwOEHXVHNekrS3JAc8Ml9etEeuVMo0BJoDTFOoEWRGQPMHIagmPuww=
-        =
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id q57JRcbu7pIS for <linux-arm-msm@vger.kernel.org>;
-        Thu, 15 Dec 2022 11:56:48 -0500 (EST)
-Received: from [192.168.4.25] (unknown [190.196.92.66])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NXz0X6DF6z1S4yj;
-        Thu, 15 Dec 2022 11:56:44 -0500 (EST)
-Message-ID: <0c53ff07-8cf4-3e80-97fc-67dd2f2612f9@mint.lgbt>
-Date:   Thu, 15 Dec 2022 13:56:42 -0300
+        Thu, 15 Dec 2022 12:09:35 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4954665B;
+        Thu, 15 Dec 2022 09:08:17 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BFAx4PE032127;
+        Thu, 15 Dec 2022 17:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M0OvoBEarEDDSW9TE5oRDZThFsRuINIsSjYUPWCjjWQ=;
+ b=FBoFICHuxW+Zy7yyKyJIop8ZZmswoLcurntZVxSbuQSyleesRylbUOCH2Pweeo1v0ZRa
+ LwUCO1IK4fYXSKa2/tLJyo4b6WXpUOl1QHWr7E8Y5IjWXPysj0nMK+xGf5kQsq0OIP3Y
+ KqcOHYmpfTsj8Za+1VxOh06WnBvte3h4V7swpUZ9vc+HHuIJ313hoEBCaESt9lQ5HCa/
+ q49ssUCacIr34aMITCeiTvJVO6474rxbjHRCGk6Pfnge6n73ULk8QTTKhWyz8qfwNESj
+ sIl0A+FguAmC9qUuW7hFTPkltVlGd7czn/r4TuRBZYvDK9rvg72yGfl2+sR/TmxBsrq/ Og== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mfxse9svc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Dec 2022 17:08:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BFH86JD025829
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Dec 2022 17:08:06 GMT
+Received: from [10.110.66.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 15 Dec
+ 2022 09:08:05 -0800
+Message-ID: <98cc6d55-f9c7-a369-6004-42b242d01339@quicinc.com>
+Date:   Thu, 15 Dec 2022 09:08:04 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+Subject: Re: [PATCH v12 2/5] dt-bindings: msm/dp: add data-lanes and
+ link-frequencies property
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221215161258.355962-1-they@mint.lgbt>
- <20221215161258.355962-2-they@mint.lgbt>
- <875bd0a8-fc08-1d19-2c75-65713d9d2317@linaro.org>
-From:   Lux Aliaga <they@mint.lgbt>
-In-Reply-To: <875bd0a8-fc08-1d19-2c75-65713d9d2317@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@gmail.com>, <andersson@kernel.org>, <daniel@ffwll.ch>,
+        <devicetree@vger.kernel.org>, <dianders@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <dri-devel@lists.freedesktop.org>,
+        <konrad.dybcio@somainline.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robdclark@gmail.com>,
+        <robh+dt@kernel.org>, <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1670967848-31475-1-git-send-email-quic_khsieh@quicinc.com>
+ <1670967848-31475-3-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n52eHYCqxUJqQXoaQ8vyqCk-QfouSun+zUp3yo5DufWbwg@mail.gmail.com>
+ <b38af164-08bc-07e7-dfaf-fb4d6d89d7db@quicinc.com>
+ <CAE-0n53Cb6TFGfM6AYup5aP4=24j0ujVPi463oVqmzfNV2B4RA@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n53Cb6TFGfM6AYup5aP4=24j0ujVPi463oVqmzfNV2B4RA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5LPWoTS4BoluYneg5ILBA4kZFgz2ChaE
+X-Proofpoint-GUID: 5LPWoTS4BoluYneg5ILBA4kZFgz2ChaE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-15_10,2022-12-15_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2212150141
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/12/2022 13:18, Konrad Dybcio wrote:
 
-> On 15.12.2022 17:12, Lux Aliaga wrote:
->> Adds a UFS host controller node and its corresponding PHY to
->> the sm6125 platform.
+On 12/14/2022 4:38 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-12-14 14:56:23)
+>> On 12/13/2022 3:06 PM, Stephen Boyd wrote:
+>>> Quoting Kuogee Hsieh (2022-12-13 13:44:05)
+>>>> Add both data-lanes and link-frequencies property into endpoint
+>>> Why do we care? Please tell us why it's important.
+> Any response?
+yes, i did that at my local patch already.
+>
+>>>> @@ -193,6 +217,8 @@ examples:
+>>>>                    reg = <1>;
+>>>>                    endpoint {
+>>>>                        remote-endpoint = <&typec>;
+>>>> +                    data-lanes = <0 1>;
+>>>> +                    link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+>>>>                    };
+>>> So far we haven't used the output port on the DP controller in DT.
+>>>
+>>> I'm still not clear on what we should do in general for DP because
+>>> there's a PHY that actually controls a lane count and lane mapping. In
+>>> my mental model of the SoC, this DP controller's output port is
+>>> connected to the DP PHY, which then sends the DP lanes out of the SoC to
+>>> the next downstream device (i.e. a DP connector or type-c muxer). Having
+>>> a remote-endpoint property with a phandle to typec doesn't fit my mental
+>>> model. I'd expect it to be the typec PHY.
+>> ack
+>>> That brings up the question: when we have 2 lanes vs. 4 lanes will we
+>>> duplicate the data-lanes property in the PHY binding? I suspect we'll
+>>> have to. Hopefully that sort of duplication is OK?
+>> Current we have limitation by reserve 2 data lanes for usb2, i am not
+>> sure duplication to 4 lanes will work automatically.
+>>> Similarly, we may have a redriver that limits the link-frequencies
+>>> property further (e.g. only support <= 2.7GHz). Having multiple
+>>> link-frequencies along the graph is OK, right? And isn't the
+>>> link-frequencies property known here by fact that the DP controller
+>>> tells us which SoC this controller is for, and thus we already know the
+>>> supported link frequencies?
+>>>
+>>> Finally, I wonder if we should put any of this in the DP controller's
+>>> output endpoint, or if we can put these sorts of properties in the DP
+>>> PHY binding directly? Can't we do that and then when the DP controller
+>>> tries to set 4 lanes, the PHY immediately fails the call and the link
+>>> training algorithm does its thing and tries fewer lanes? And similarly,
+>>> if link-frequencies were in the PHY's binding, the PHY could fail to set
+>>> those frequencies during link training, returning an error to the DP
+>>> controller, letting the training move on to a lower frequency. If we did
+>>> that this patch series would largely be about modifying the PHY binding,
+>>> updating the PHY driver to enforce constraints, and handling errors
+>>> during link training in the DP controller (which may already be done? I
+>>> didn't check).
 >>
->> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->> ---
->>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 66 ++++++++++++++++++++++++++++
->>   1 file changed, 66 insertions(+)
+>> phy/pll have different configuration base on link lanes and rate.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> index 7e25a4f85594..6d4534c7a2fe 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->> @@ -508,6 +508,72 @@ sdhc_2: mmc@4784000 {
->>   			status = "disabled";
->>   		};
->>   
->> +		ufs_mem_hc: ufs@4804000 {
->> +			compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->> +			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
->> +			reg-names = "std", "ice";
->> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
->> +			phys = <&ufs_mem_phy_lanes>;
->> +			phy-names = "ufsphy";
->> +			lanes-per-direction = <1>;
->> +			#reset-cells = <1>;
->> +			resets = <&gcc GCC_UFS_PHY_BCR>;
->> +			reset-names = "rst";
->> +
->> +			clock-names = "core_clk",
->> +				"bus_aggr_clk",
->> +				"iface_clk",
->> +				"core_clk_unipro",
->> +				"ref_clk",
->> +				"tx_lane0_sync_clk",
->> +				"rx_lane0_sync_clk",
->> +				"ice_core_clk";
->> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->> +				<&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
->> +				<&gcc GCC_UFS_PHY_AHB_CLK>,
->> +				<&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->> +				<&rpmcc RPM_SMD_XO_CLK_SRC>,
->> +				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->> +				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->> +				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->> +			freq-table-hz = <50000000 240000000>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<37500000 150000000>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<75000000 300000000>;
-> The indentation is wrong. Make sure your tab size is set to 8
-> and all the <> entries align with the first one.
-Should I do this with clocks and clock-names too?
+>> it has to be set up before link training can start.
+>>
+>> Once link training start, then there are no any interactions between
+>> controller and phy during link training session.
+> What do you mean? The DP controller calls phy_configure() and changes
+> the link rate. The return value from phy_configure() should be checked
+> and link training should skip link rates that aren't supported and/or
+> number of lanes that aren't supported.
+>
+>> Link training only happen between dp controller and sink since link
+>> status is reported by sink (read back from sink's dpcd register directly).
+>>
+>> T achieve link symbol locked, link training will start from reduce link
+>> rate until lowest rate, if it still failed, then it will reduce lanes
+>> with highest rate and start training  again.
+>>
+>> it will repeat same process until lowest lane (one lane), if it still
+>> failed, then it will give up and declare link training failed.
+> Yes, that describes the link training algorithm. I don't see why
+> phy_configure() return value can't be checked and either number of lanes
+> or link frequencies be checked. If only two lanes are supported, then
+> phy_configure() will fail for the 4 link rates and the algorithm will
+> reduce the number of lanes and go back to the highest rate. Then when
+> the highest rate isn't supported it will drop link rate until the link
+> rate is supported.
+>
+>> Therefore I think add data-lanes and link-frequencies properties in the
+>> DP PHY binding directly will not helps.
+>>
+> I didn't follow your logic. Sorry.
 
--- 
-Lux Aliaga
-https://nixgoat.me/
+Sorry, probably i did not understand your proposal clearly.
+
+1) move both data-lanes and link-frequencies property from dp controller 
+endpoint to phy
+
+2) phy_configure() return succeed if both data-lanes and link 
+frequencies are supported. otherwise return failed.
+
+is above two summary items correct?
+
+Currently phy_configure()  is part of link training process and called 
+if link lanes or rate changes.
+
+however, since current phy_configure() implementation always return 0, 
+the return value is not checking.
+
+This proposal is new, can we discuss more detail at meeting and decide 
+to implement it or not.
+
+Meanwhile can we merge current implementation (both data-lanes and 
+link-frequqncies at dp controller end point) first?
+
+
+
 
