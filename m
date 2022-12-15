@@ -2,147 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8462164D8F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 10:48:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AF1F64DABC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 12:58:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230246AbiLOJsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 04:48:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46684 "EHLO
+        id S229829AbiLOL6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 06:58:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230229AbiLOJry (ORCPT
+        with ESMTP id S230166AbiLOL6K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 04:47:54 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB18D2E9F1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 01:47:07 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id bf43so1496809lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 01:47:06 -0800 (PST)
+        Thu, 15 Dec 2022 06:58:10 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B3742DAA6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 03:58:07 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id d82so6520281pfd.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 03:58:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=w0ykWWBKW8/ZBMZU3VIzhqp7T3vPa6pgVpq4cSGMlg0=;
-        b=fgs9z7V83Xphm9Tb2ZsNfDTHKudzIQGMDRXRybBuAd/t+P+YYElj4tBpeNKRq817P7
-         Xf7gv5n4xHLyZfvcHRxTx45qFv2tnVO/9XHgz7R8lWEW48qaOZKfAoMqA7z0h4esYwkI
-         HDmOFPzFQGDkEZHdiy4b0CKpzoqoKjK/b7rNWuKY0DRAeuviQQ0cUT8ANhG2127bVRjz
-         ZmVfTqdpNVYAPaiJOehXLkQRNTGkpruDhsH6tKhn6FuaDMlQ97xN3PT7bzKVzCMFv+zl
-         lxWJvyHsX+1Mg9wn0cl6RfRspA6tUBKiU0HZ0mCmrV4sMUw5+/J5fYpXuanJOa0DpN4F
-         zE0A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pZOfOCT1uqUyQOZ3Q6ejDEihZSzQYrZucgCadknyvEo=;
+        b=TaTybFJOhH5EPK/eBhO184gTI9rZ6NpPjNfPTGQmv+4pde+ovnS4o3OcSTPB07hU3j
+         u8Gyneh47OfOatEVMn3wPktBWSiEx17Hm2qO/9QkhlOpPHF4cESHo62ysUOcZjFY1UgW
+         46qjT3Wvo4pE17HeOcATjOBvTJdy3LzoYMors5zHe7mX7B3BLz3LEP6fnNuGiKxaXZZY
+         KsH/VLtse+zcMYOJ2Mwrbu4HzaTUx12stdo25n1fyi4kfyjqVV/KGeFtufPgS4e4ZoQu
+         94kCq1g/b7CCX8aW/1AaQk1I6DccFrnHOdxDBPOTDmYJi1rAlE3T2tMbtlW2BhxhuP21
+         4Zcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w0ykWWBKW8/ZBMZU3VIzhqp7T3vPa6pgVpq4cSGMlg0=;
-        b=rE8JwK1bIfcpKFpz4DffNJ8Dwj9YolfimmtgUkKljWzP7PY6G0kgICEvuXo8RR1M8d
-         XOJGGdGp1TDezXMIOhzM0F/tkYC21J6uTxalMWuik1SKmLrUmdGIyK/xRGxDIiKKc9jr
-         8sbPuuT6SW+acjSRNDRnkAA8dLUwkWm0zfSS1hIBp+VJjcgDTHqa9/P1E5/sq9j1jU9a
-         qrCTLYjXMUtmW6xg1wHAOJCseaeUBxSbEjmZHvey3EkG66wFdhcnbwlp8BZKxJGEBK3y
-         hwcOQiHUwo9pULhvNBpv6vGqJoXTB+IGNRp1qMb0x7Fo/0T7hQphnMrI50YhqCUaCA8M
-         ExgA==
-X-Gm-Message-State: ANoB5plEL+dfXfIYe6IpS90IcBVixNVb6azZm1Na7e2ztvET5p3zNHMC
-        vhoVTWFYIz6bAekl6LDyp3uWru7cLPY/YVU3EukLCIWAIWJbw4E8
-X-Google-Smtp-Source: AA0mqf505m+SddZABkA7fouzchAPJq45jpr0VwmD2u0n7HZnbMPDQTn6v6VHx1n2Or7OUL9zBeTAozudY0O570Zf6L4=
-X-Received: by 2002:a19:6b19:0:b0:4a2:740b:5b02 with SMTP id
- d25-20020a196b19000000b004a2740b5b02mr30983264lfa.122.1671097623236; Thu, 15
- Dec 2022 01:47:03 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZOfOCT1uqUyQOZ3Q6ejDEihZSzQYrZucgCadknyvEo=;
+        b=uplAl/krHie38PDfcIXfO76s9jI2o8LgXDxbrFIMpqlXkx9VQqeKgR39UE9CfbjfRp
+         Ken9MlHNj6GRBY0yO+30NxGCmeyBMOZDoogL9jeyJ/dx53+xThcp0dIzUY/taBdO9S9D
+         DTgJ4Sg9k9KI1kSbIBHeFwyIhPgyi1y7q5uvmn2XkNYjift2GhRceLHemm99MaYqG9YX
+         5yzsicpKCpKI4QVQ2rCsx7/Didwu8HCiPkrS5HxoscAVJqN7hZbdfjLZbe/s276url/M
+         XfJJIv8oeGQ6Sdjv21XUVY4KdaTHe3li9DAyfrahHdn41wQjGwq8iUEvETCNtjlR9xfi
+         H7jA==
+X-Gm-Message-State: ANoB5plHJF2cpbEvcQ5JqewLmClQTWNrg7Q4Hff2lgl5LaFIUTDo6OBs
+        WWBfJxY+RSs0HeiNmVD6RVdihA==
+X-Google-Smtp-Source: AA0mqf6zAOBI8FNjjz3fd3sqz5D+xV3IlJL7UUHXxCKfMPTOyHmWW9qt9YBU98dbCUcKtQgdAWvb4g==
+X-Received: by 2002:a62:e814:0:b0:577:271e:e66f with SMTP id c20-20020a62e814000000b00577271ee66fmr28704053pfi.27.1671105487018;
+        Thu, 15 Dec 2022 03:58:07 -0800 (PST)
+Received: from ?IPV6:2401:4900:1c5f:4e45:ae49:8018:6d22:e5b4? ([2401:4900:1c5f:4e45:ae49:8018:6d22:e5b4])
+        by smtp.gmail.com with ESMTPSA id h66-20020a62de45000000b00576145a9bd0sm1554392pfg.127.2022.12.15.03.57.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Dec 2022 03:58:06 -0800 (PST)
+Message-ID: <1d3d8169-1011-cdfd-f9f7-b7828acdc1ac@linaro.org>
+Date:   Thu, 15 Dec 2022 17:27:57 +0530
 MIME-Version: 1.0
-References: <20221214203124.564537-1-bhupesh.sharma@linaro.org>
- <20221214203124.564537-4-bhupesh.sharma@linaro.org> <f77cc097-56ac-845f-9882-e67aab82b02c@linaro.org>
-In-Reply-To: <f77cc097-56ac-845f-9882-e67aab82b02c@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v5 1/8] dt-bindings: ufs: qcom: Add sm6115 binding
+Content-Language: en-US
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221030094258.486428-1-iskren.chernev@gmail.com>
+ <20221030094258.486428-2-iskren.chernev@gmail.com>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Thu, 15 Dec 2022 15:16:51 +0530
-Message-ID: <CAH=2NtxeovBZq9UGUzS73iY5oXhb24vZgaq44-hcOOztZDsrAQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, andersson@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20221030094258.486428-2-iskren.chernev@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 15 Dec 2022 at 13:49, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 14/12/2022 21:31, Bhupesh Sharma wrote:
-> > Add USB superspeed qmp phy node to dtsi.
-> > Make sure that the oneplus board dts (which includes the
-> > sm4250.dtsi) continues to work as intended.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
-> >  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 38 ++++++++++++++++++-
-> >  2 files changed, 39 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > index 3f39f25e0721e..4f0d65574448b 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > @@ -232,6 +232,9 @@ &usb {
-> >  &usb_dwc3 {
-> >       maximum-speed = "high-speed";
-> >       dr_mode = "peripheral";
-> > +
-> > +     phys = <&usb_hsphy>;
-> > +     phy-names = "usb2-phy";
-> >  };
-> >
-> >  &usb_hsphy {
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > index e4ce135264f3d..15f311dcd289f 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > @@ -579,6 +579,40 @@ usb_hsphy: phy@1613000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             usb_qmpphy: phy@1615000 {
-> > +                     compatible = "qcom,sm6115-qmp-usb3-phy";
-> > +                     reg = <0x01615000 0x200>;
-> > +                     clocks = <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> > +                              <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> > +                              <&gcc GCC_AHB2PHY_USB_CLK>;
-> > +                     clock-names = "com_aux",
-> > +                                   "ref",
-> > +                                   "cfg_ahb";
-> > +                     resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
-> > +                              <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
-> > +                     reset-names = "phy", "phy_phy";
-> > +                     status = "disabled";
-> > +                     #clock-cells = <1>;
-> > +                     #address-cells = <1>;
-> > +                     #size-cells = <1>;
-> > +                     ranges;
-> > +
-> > +                     usb_ssphy: phy@1615200 {
-> > +                             reg = <0x01615200 0x200>,
-> > +                                   <0x01615400 0x200>,
-> > +                                   <0x01615c00 0x400>,
-> > +                                   <0x01615600 0x200>,
-> > +                                   <0x01615800 0x200>,
-> > +                                   <0x01615a00 0x100>;
-> > +                             #phy-cells = <0>;
-> > +                             #clock-cells = <1>;
-> > +                             clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > +                             clock-names = "pipe0";
-> > +                             clock-output-names = "usb3_phy_pipe_clk_src";
-> > +                     };
-> > +             };
-> > +
-> > +
->
-> Still two blank lines.
 
-Ok, I have sent a fixed v3. Please help review.
+On 10/30/22 3:12 PM, Iskren Chernev wrote:
+> Add SM6115 UFS to DT schema.
+> 
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+>   1 file changed, 26 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index f2d6298d926c..b517d76215e3 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -28,6 +28,7 @@ properties:
+>             - qcom,msm8998-ufshc
+>             - qcom,sc8280xp-ufshc
+>             - qcom,sdm845-ufshc
+> +          - qcom,sm6115-ufshc
+>             - qcom,sm6350-ufshc
+>             - qcom,sm8150-ufshc
+>             - qcom,sm8250-ufshc
+> @@ -178,6 +179,31 @@ allOf:
+>             minItems: 1
+>             maxItems: 1
+>   
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sm6115-ufshc
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 8
+> +          maxItems: 8
+> +        clock-names:
+> +          items:
+> +            - const: core_clk
+> +            - const: bus_aggr_clk
+> +            - const: iface_clk
+> +            - const: core_clk_unipro
+> +            - const: ref_clk
+> +            - const: tx_lane0_sync_clk
+> +            - const: rx_lane0_sync_clk
+> +            - const: ice_core_clk
+> +        reg:
+> +          minItems: 2
+> +          maxItems: 2
+> +
+>       # TODO: define clock bindings for qcom,msm8994-ufshc
+>   
+>   unevaluatedProperties: false
 
-Thanks,
-Bhupesh
+Seems this hasn't made way to linux-next yet. Hence we get the following 
+error with $ make dtbs_check:
+
+arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: ufs@4804000: 
+compatible:0: 'qcom,sm6115-ufshc' is not one of ['qcom,msm8994-ufshc', 
+'qcom,msm8996-ufshc', 'qcom,msm8998-ufshc', 'qcom,sc8280xp-ufshc', 
+'qcom,sdm845-ufshc', 'qcom,sm6350-ufshc', 'qcom,sm8150-ufshc', 
+'qcom,sm8250-ufshc', 'qcom,sm8350-ufshc', 'qcom,sm8450-ufshc']
+	From schema: Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+
+arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: ufs@4804000: 
+Unevaluated properties are not allowed ('compatible' was unexpected)
+	From schema: Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+
+If, it helps to get the review / merge happen:
+
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+
+@Rob, @Krzysztof: Please help merge this.
+
+Thanks.
