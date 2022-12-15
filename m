@@ -2,126 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB7C464DF0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:55:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D7164DF1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbiLOQzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 11:55:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46682 "EHLO
+        id S230051AbiLOQ5L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 11:57:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbiLOQzB (ORCPT
+        with ESMTP id S230425AbiLOQ46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 11:55:01 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA09389FF;
-        Thu, 15 Dec 2022 08:54:59 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B0DC61E50;
-        Thu, 15 Dec 2022 16:54:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27427C433F0;
-        Thu, 15 Dec 2022 16:54:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671123299;
-        bh=ZKM76IKVl+oE/V0fQ6ck+h5jxYKKktSIJud+zEgrvtw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=FUCD/0mGC+mr3xUpe1YDVg3Porf4rdwuX1j3GZbLYLmsTjoSJBArBSPXRWWMr18YM
-         +KCVjQWfZRGvxISu7QdnUE+ORzVgZstqZSyrXufueEmZphky1YTM45xgzczB5AxAIn
-         4iCRnmt3mV5vLaVJYl/+VOyKujyYwS1vQx+PEeRE7cwYx8GpmI9JP7jXvxH8Xh1l/a
-         rCil2nKv4khTnlniQ7uC/MuSekCXUc6Hjmf7MiqJvVF5FhT2yugGYujDS3TabPXiOk
-         aWEicCIQxvXf01s3v683x+mGYVkfVSudRvCh+vNi2bdCrwP9BRQYHCGhIXyytx7rhj
-         /2yMhk8sgtQIg==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Aniket Randive <quic_arandive@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] tty: serial: qcom_geni: avoid duplicate struct member init
-Date:   Thu, 15 Dec 2022 17:54:24 +0100
-Message-Id: <20221215165453.1864836-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Thu, 15 Dec 2022 11:56:58 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3993B9F2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 08:56:53 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NXz0g4fbhz1S5Cw
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 11:56:51 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:from
+        :references:to:content-language:subject:user-agent:mime-version
+        :date:message-id; s=dkim; t=1671123408; x=1671987409; bh=tjNVkyH
+        xOJqidYPV+BTvYS5ENh1t/1Ue/IBzdpA5tYw=; b=Kx5UdYsFpC98GCHU4ntG2Ys
+        FA7ZQQx5vcwGM7ttxj55bVRUucqy1zj5mRjdLYVZG3z2GwODR2hRkIpBDmkYUi1S
+        P+mRiHNQEWJothIotGeXD0/DbiR0OR1rOSCc21S7xvEO3mdeRQ/dZbl4t+cmhEWf
+        S2gDfh+jGwdNG7alWv7JsdbKB2MUF8d6eC9n8xkX37qABrnAQjhQxiIqG/UEqj6w
+        jet15wpYPiMpyNXGbxFzh/x74OUzBhPoMTq9Yvvb/B6kje8LKnMHweUUroYuKeOi
+        p+FtXY0G8hwOEHXVHNekrS3JAc8Ml9etEeuVMo0BJoDTFOoEWRGQPMHIagmPuww=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id q57JRcbu7pIS for <linux-arm-msm@vger.kernel.org>;
+        Thu, 15 Dec 2022 11:56:48 -0500 (EST)
+Received: from [192.168.4.25] (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NXz0X6DF6z1S4yj;
+        Thu, 15 Dec 2022 11:56:44 -0500 (EST)
+Message-ID: <0c53ff07-8cf4-3e80-97fc-67dd2f2612f9@mint.lgbt>
+Date:   Thu, 15 Dec 2022 13:56:42 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221215161258.355962-1-they@mint.lgbt>
+ <20221215161258.355962-2-they@mint.lgbt>
+ <875bd0a8-fc08-1d19-2c75-65713d9d2317@linaro.org>
+From:   Lux Aliaga <they@mint.lgbt>
+In-Reply-To: <875bd0a8-fc08-1d19-2c75-65713d9d2317@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+On 15/12/2022 13:18, Konrad Dybcio wrote:
 
-When -Woverride-init is enabled in a build, gcc points out that
-qcom_geni_serial_pm_ops contains conflicting initializers:
+> On 15.12.2022 17:12, Lux Aliaga wrote:
+>> Adds a UFS host controller node and its corresponding PHY to
+>> the sm6125 platform.
+>>
+>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 66 ++++++++++++++++++++++++++++
+>>   1 file changed, 66 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> index 7e25a4f85594..6d4534c7a2fe 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> @@ -508,6 +508,72 @@ sdhc_2: mmc@4784000 {
+>>   			status = "disabled";
+>>   		};
+>>   
+>> +		ufs_mem_hc: ufs@4804000 {
+>> +			compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+>> +			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
+>> +			reg-names = "std", "ice";
+>> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+>> +			phys = <&ufs_mem_phy_lanes>;
+>> +			phy-names = "ufsphy";
+>> +			lanes-per-direction = <1>;
+>> +			#reset-cells = <1>;
+>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+>> +			reset-names = "rst";
+>> +
+>> +			clock-names = "core_clk",
+>> +				"bus_aggr_clk",
+>> +				"iface_clk",
+>> +				"core_clk_unipro",
+>> +				"ref_clk",
+>> +				"tx_lane0_sync_clk",
+>> +				"rx_lane0_sync_clk",
+>> +				"ice_core_clk";
+>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>> +				<&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
+>> +				<&gcc GCC_UFS_PHY_AHB_CLK>,
+>> +				<&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+>> +				<&rpmcc RPM_SMD_XO_CLK_SRC>,
+>> +				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>> +				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>> +				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+>> +			freq-table-hz = <50000000 240000000>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<37500000 150000000>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<75000000 300000000>;
+> The indentation is wrong. Make sure your tab size is set to 8
+> and all the <> entries align with the first one.
+Should I do this with clocks and clock-names too?
 
-drivers/tty/serial/qcom_geni_serial.c:1586:20: error: initialized field overwritten [-Werror=override-init]
- 1586 |         .restore = qcom_geni_serial_sys_hib_resume,
-      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/tty/serial/qcom_geni_serial.c:1586:20: note: (near initialization for 'qcom_geni_serial_pm_ops.restore')
-drivers/tty/serial/qcom_geni_serial.c:1587:17: error: initialized field overwritten [-Werror=override-init]
- 1587 |         .thaw = qcom_geni_serial_sys_hib_resume,
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Open-code the initializers with the version that was already used,
-and use the pm_sleep_ptr() method to deal with unused ones,
-in place of the __maybe_unused annotation.
-
-Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/tty/serial/qcom_geni_serial.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index b487823f0e61..03dda47184d9 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1516,7 +1516,7 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
-+static int qcom_geni_serial_sys_suspend(struct device *dev)
- {
- 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
- 	struct uart_port *uport = &port->uport;
-@@ -1533,7 +1533,7 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
- 	return uart_suspend_port(private_data->drv, uport);
- }
- 
--static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
-+static int qcom_geni_serial_sys_resume(struct device *dev)
- {
- 	int ret;
- 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
-@@ -1581,10 +1581,12 @@ static int qcom_geni_serial_sys_hib_resume(struct device *dev)
- }
- 
- static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
--	SET_SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_sys_suspend,
--					qcom_geni_serial_sys_resume)
--	.restore = qcom_geni_serial_sys_hib_resume,
--	.thaw = qcom_geni_serial_sys_hib_resume,
-+	.suspend = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
-+	.resume = pm_sleep_ptr(qcom_geni_serial_sys_resume),
-+	.freeze = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
-+	.poweroff = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
-+	.restore = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
-+	.thaw = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
- };
- 
- static const struct of_device_id qcom_geni_serial_match_table[] = {
 -- 
-2.35.1
+Lux Aliaga
+https://nixgoat.me/
 
