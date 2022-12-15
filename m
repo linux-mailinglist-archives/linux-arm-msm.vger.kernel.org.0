@@ -2,110 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E28A664DEE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:45:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB7C464DF0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:55:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbiLOQpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 11:45:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
+        id S230317AbiLOQzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 11:55:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbiLOQpC (ORCPT
+        with ESMTP id S229948AbiLOQzB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 11:45:02 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795D337FBA;
-        Thu, 15 Dec 2022 08:45:01 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id a16so27860588edb.9;
-        Thu, 15 Dec 2022 08:45:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Fdysh/ijYewRV7bbddoJgpW8W2b/pWo97s985wV5pOE=;
-        b=l43YPQBwPDpWHKLNjBQoFqrC0/4N+jGpwN+XEb8FFKxxf2FifYF+vz7mpBMZ2a1XXN
-         94NBYk4aDFLF1mx/wNkTSR0YEBRNwmye72EF91SRz1Iptzfm4yLAA/x7CBDhLi+Yq5AO
-         6dMowHOgi7GDSZrNEgJGgbwrmWSOYuGIdLpw9RuJRx/JbZe03Ee3+caPsH9VTlQ8xeRt
-         mSMRJfzHSL97rEl0VCjEZhO2duM3+NY1YuxHZ2O+NDoBq+12rxIcez7O8GV/jXlgTKcI
-         vdb5HG4Vpyt8FyGEcxZYAF+NPN3xr4jq0p5hv8iloBUjEbMneJhcJAD9zwUQ24ZzDWCc
-         Pc3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fdysh/ijYewRV7bbddoJgpW8W2b/pWo97s985wV5pOE=;
-        b=vae5tiRkMX19FUU+dxLt1VP+XS2Z0fr6KV+4UIf7n/Ad8gjwsZtZKsqu4R1wZpUeyO
-         FKSsjiH5V6OkHVRyGaugv+iyTtaI7li/l5BJzjP1dcqwL5WndcTm42anBZBtRlAJ7/y9
-         hqO5Z7Q0rS6JlhHkOuRPGuKE/JSh3KTVFavWD+/iyD6F81eNuavYABgCx63/XOOkEw7F
-         p77SgBxgs3mQqEHrENquUw9o7saeiZNm7ueu3+3EIEkKEBocp/h5WdNICntDgmND+F8W
-         KKG13krj99nDBSr8Cpo9lVQPyA+ox85szjyFQKH1tqE8A7b8dRlk1MItVhvh8yEUwATa
-         OPxg==
-X-Gm-Message-State: AFqh2kqMZ8DbHTAnJsHD6Ux7m6XDG67Rnq6UvxSv71f+rdSFzGYPbgwR
-        pVhN7yX9s6g5YehHJZkBgw0=
-X-Google-Smtp-Source: AMrXdXvQrHfotHCvkzUGBDmw98seVFtR2I7MIBfvPATXve2iauxvcnzNJePNvumxSQb3pCgDN4t1hA==
-X-Received: by 2002:aa7:d384:0:b0:472:7c75:832 with SMTP id x4-20020aa7d384000000b004727c750832mr6025450edq.16.1671122699985;
-        Thu, 15 Dec 2022 08:44:59 -0800 (PST)
-Received: from ?IPV6:2003:c5:871f:9993:b1c0:fc77:1081:c93c? (p200300c5871f9993b1c0fc771081c93c.dip0.t-ipconnect.de. [2003:c5:871f:9993:b1c0:fc77:1081:c93c])
-        by smtp.gmail.com with ESMTPSA id kv4-20020a17090778c400b007c0b530f3cfsm7216202ejc.72.2022.12.15.08.44.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 08:44:59 -0800 (PST)
-Message-ID: <4d8e2b27-2804-e8ad-1e35-0942538b5617@gmail.com>
-Date:   Thu, 15 Dec 2022 17:44:58 +0100
+        Thu, 15 Dec 2022 11:55:01 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA09389FF;
+        Thu, 15 Dec 2022 08:54:59 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B0DC61E50;
+        Thu, 15 Dec 2022 16:54:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27427C433F0;
+        Thu, 15 Dec 2022 16:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671123299;
+        bh=ZKM76IKVl+oE/V0fQ6ck+h5jxYKKktSIJud+zEgrvtw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FUCD/0mGC+mr3xUpe1YDVg3Porf4rdwuX1j3GZbLYLmsTjoSJBArBSPXRWWMr18YM
+         +KCVjQWfZRGvxISu7QdnUE+ORzVgZstqZSyrXufueEmZphky1YTM45xgzczB5AxAIn
+         4iCRnmt3mV5vLaVJYl/+VOyKujyYwS1vQx+PEeRE7cwYx8GpmI9JP7jXvxH8Xh1l/a
+         rCil2nKv4khTnlniQ7uC/MuSekCXUc6Hjmf7MiqJvVF5FhT2yugGYujDS3TabPXiOk
+         aWEicCIQxvXf01s3v683x+mGYVkfVSudRvCh+vNi2bdCrwP9BRQYHCGhIXyytx7rhj
+         /2yMhk8sgtQIg==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Aniket Randive <quic_arandive@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] tty: serial: qcom_geni: avoid duplicate struct member init
+Date:   Thu, 15 Dec 2022 17:54:24 +0100
+Message-Id: <20221215165453.1864836-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v11 00/16] Add Multi Circular Queue Support
-Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
-        daejun7.park@samsung.com, bvanassche@acm.org, avri.altman@wdc.com,
-        mani@kernel.org, beanhuo@micron.com, linux-arm-msm@vger.kernel.org
-References: <cover.1670541363.git.quic_asutoshd@quicinc.com>
-From:   Bean Huo <huobean@gmail.com>
-In-Reply-To: <cover.1670541363.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Asutosh,
+From: Arnd Bergmann <arnd@arndb.de>
 
-I reviewed the entire patch series and applied them to Martin's 
-6.2/staging branch,
+When -Woverride-init is enabled in a build, gcc points out that
+qcom_geni_serial_pm_ops contains conflicting initializers:
 
+drivers/tty/serial/qcom_geni_serial.c:1586:20: error: initialized field overwritten [-Werror=override-init]
+ 1586 |         .restore = qcom_geni_serial_sys_hib_resume,
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/tty/serial/qcom_geni_serial.c:1586:20: note: (near initialization for 'qcom_geni_serial_pm_ops.restore')
+drivers/tty/serial/qcom_geni_serial.c:1587:17: error: initialized field overwritten [-Werror=override-init]
+ 1587 |         .thaw = qcom_geni_serial_sys_hib_resume,
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-No logic issues were found, other than these minor compilation warnings:
+Open-code the initializers with the version that was already used,
+and use the pm_sleep_ptr() method to deal with unused ones,
+in place of the __maybe_unused annotation.
 
+Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/tty/serial/qcom_geni_serial.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-drivers/ufs/core/ufs-mcq.c:87: warning: Function parameter or member 
-'hba' not described in 'ufshcd_mcq_config_mac'
-drivers/ufs/core/ufs-mcq.c:87: warning: Function parameter or member 
-'max_active_cmds' not described in 'ufshcd_mcq_config_mac'
-drivers/ufs/core/ufs-mcq.c:107: warning: Function parameter or member 
-'hba' not described in 'ufshcd_mcq_req_to_hwq'
-drivers/ufs/core/ufs-mcq.c:107: warning: Function parameter or member 
-'req' not described in 'ufshcd_mcq_req_to_hwq'
-drivers/ufs/core/ufs-mcq.c:128: warning: Function parameter or member 
-'hba' not described in 'ufshcd_mcq_decide_queue_depth'
-
-so:
-
-
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-
-
-
-Kind regards,
-
-Bean
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index b487823f0e61..03dda47184d9 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1516,7 +1516,7 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
++static int qcom_geni_serial_sys_suspend(struct device *dev)
+ {
+ 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+ 	struct uart_port *uport = &port->uport;
+@@ -1533,7 +1533,7 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
+ 	return uart_suspend_port(private_data->drv, uport);
+ }
+ 
+-static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
++static int qcom_geni_serial_sys_resume(struct device *dev)
+ {
+ 	int ret;
+ 	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+@@ -1581,10 +1581,12 @@ static int qcom_geni_serial_sys_hib_resume(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_sys_suspend,
+-					qcom_geni_serial_sys_resume)
+-	.restore = qcom_geni_serial_sys_hib_resume,
+-	.thaw = qcom_geni_serial_sys_hib_resume,
++	.suspend = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
++	.resume = pm_sleep_ptr(qcom_geni_serial_sys_resume),
++	.freeze = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
++	.poweroff = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
++	.restore = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
++	.thaw = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
+ };
+ 
+ static const struct of_device_id qcom_geni_serial_match_table[] = {
+-- 
+2.35.1
 
