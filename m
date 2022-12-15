@@ -2,297 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E8D964E25A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 21:31:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 401E564E284
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 21:47:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbiLOUbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 15:31:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36516 "EHLO
+        id S229634AbiLOUrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 15:47:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiLOUbA (ORCPT
+        with ESMTP id S229572AbiLOUrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 15:31:00 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F176B25C8;
-        Thu, 15 Dec 2022 12:30:57 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BFJXLVQ006630;
-        Thu, 15 Dec 2022 20:30:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ivclD4ZjYk405PGRQkkcLZYQK2uA+gJcpKZXUisdsXo=;
- b=OJWb/ria/Q8TMapnc7JuYlSk9VNhTOE4toXfiZ0ZR/vI+B22V1VWhzUL+7V1jTbDwFfX
- 9nrTNFmlt1g5CH7lHrIm4QAPTnn/bmh49dKzSS6w6KAym9A3prMiQ3pM+fdzEetc+Xao
- jmuupf0jQDqtZ9Oytk+ZCO6EOrKmbmkfYb06B4pmYmb5j3NbPqzvOdjvGjX3CO1wLSkN
- DQniwhNPYXQXc6efVW5e9bAlscP27EgOH9ohVvgyG+vor1bnV5v7+Iudqv+U9hfh2u3d
- eU8AJt8+mwNi9EMF6aie8c18lZoEnSbiPoBta4ElpOSogH0wGqWSoLjYf1jesWAw7p+e ZA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mg6terwqt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Dec 2022 20:30:50 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BFKUnxs020185
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Dec 2022 20:30:49 GMT
-Received: from [10.110.127.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 15 Dec
- 2022 12:30:47 -0800
-Message-ID: <da01c5b0-dd2d-1bcf-353c-76fea5015504@quicinc.com>
-Date:   Thu, 15 Dec 2022 12:30:47 -0800
+        Thu, 15 Dec 2022 15:47:10 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E90C64D5CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 12:47:06 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id vv4so1510369ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 12:47:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VxVyPZKSysf+HLi7nhh+VUixxCogFeRsVo86ZrnztgQ=;
+        b=hxzxmAZbiyk38wc8gz9+Ee2T8BOYtvW5SiTPnrxwx4lOkojFHNVaj0lvh5AJI9zjSp
+         z1LbbrCXSyJnMlxM2SWfndRjFiopwVhc7pMCfEsmD2JaOTOxR8rXZmrwBoHCKySl7Hvg
+         dTFJBmC7oIU/73t9a6PjJcbym1vMucF0MPJdo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VxVyPZKSysf+HLi7nhh+VUixxCogFeRsVo86ZrnztgQ=;
+        b=JP4VHi71PALhEv0G0acMorCX5l/mL9ahzcXp+QyJEnpQARmUuJVp0xZOuoNR+MlLd1
+         ouicSraxDMy4GUsClYCxH4xlvHVkSoHAvDP+3KgjWtgG4yO83dk4GqUx89DlAlWokbEi
+         19IWU9zGuNqnJdO58+4ZurbyKFe+e0lV86wBBYe7RWMMmHOiMDCh+kPFii7cbFLnbzi4
+         tKrXT4GeFteHvMzJZcj1LH1NOnbOX/hP9KveCxZQ9e89hkP5L0kMxcL6WfqnMCKufLRD
+         IdgQp3GGYOlt6cFtDVIWZeR4G/Fc1ZkC++WDuZGeP4LuAI1WODcCJf8WMUBIqrnmTkM+
+         UUzg==
+X-Gm-Message-State: AFqh2krh7ELrh7l7nyK0fd+p7sUDmuz16pxqrczA36uBwuAxnf7cBnJo
+        7y0voiMP224l9d8mLdRvKXlMrdFBm0NDNAT0LNk=
+X-Google-Smtp-Source: AA0mqf5irA9yarrYZUWj8ab/BNOT5EjTeQV+HnFc+BnL9tOxUvREysFSXmKkcdqa9aUt8L5KSXcqJQ==
+X-Received: by 2002:a17:907:6e0f:b0:7c4:f343:77a8 with SMTP id sd15-20020a1709076e0f00b007c4f34377a8mr8355262ejc.9.1671137225347;
+        Thu, 15 Dec 2022 12:47:05 -0800 (PST)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
+        by smtp.gmail.com with ESMTPSA id ss1-20020a170907c00100b007c0d41736c0sm68125ejc.39.2022.12.15.12.47.03
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Dec 2022 12:47:03 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so331473wms.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 12:47:03 -0800 (PST)
+X-Received: by 2002:a05:600c:4153:b0:3d2:191d:2427 with SMTP id
+ h19-20020a05600c415300b003d2191d2427mr176059wmm.188.1671137223155; Thu, 15
+ Dec 2022 12:47:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if
- irq is not for aux transfer
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC:     <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1671129159-31105-1-git-send-email-quic_khsieh@quicinc.com>
- <ca15a54b-8040-5e4f-a78e-12b7f8a554e1@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <ca15a54b-8040-5e4f-a78e-12b7f8a554e1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _uiniIUgIX97M3nY9Iy1Oz5wuu0CHpou
-X-Proofpoint-GUID: _uiniIUgIX97M3nY9Iy1Oz5wuu0CHpou
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-15_11,2022-12-15_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 clxscore=1015 adultscore=0 mlxscore=0 bulkscore=0
- spamscore=0 phishscore=0 mlxlogscore=955 lowpriorityscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212150171
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221215165453.1864836-1-arnd@kernel.org>
+In-Reply-To: <20221215165453.1864836-1-arnd@kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 15 Dec 2022 12:46:51 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U6pfSk0nY+s-p4f43Gq6-arfr8hQe8d9NC0nS0ckMYKw@mail.gmail.com>
+Message-ID: <CAD=FV=U6pfSk0nY+s-p4f43Gq6-arfr8hQe8d9NC0nS0ckMYKw@mail.gmail.com>
+Subject: Re: [PATCH] tty: serial: qcom_geni: avoid duplicate struct member init
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Aniket Randive <quic_arandive@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On Thu, Dec 15, 2022 at 8:55 AM Arnd Bergmann <arnd@kernel.org> wrote:
+>
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> When -Woverride-init is enabled in a build, gcc points out that
+> qcom_geni_serial_pm_ops contains conflicting initializers:
+>
+> drivers/tty/serial/qcom_geni_serial.c:1586:20: error: initialized field overwritten [-Werror=override-init]
+>  1586 |         .restore = qcom_geni_serial_sys_hib_resume,
+>       |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> drivers/tty/serial/qcom_geni_serial.c:1586:20: note: (near initialization for 'qcom_geni_serial_pm_ops.restore')
+> drivers/tty/serial/qcom_geni_serial.c:1587:17: error: initialized field overwritten [-Werror=override-init]
+>  1587 |         .thaw = qcom_geni_serial_sys_hib_resume,
+>       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> Open-code the initializers with the version that was already used,
+> and use the pm_sleep_ptr() method to deal with unused ones,
+> in place of the __maybe_unused annotation.
+>
+> Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index b487823f0e61..03dda47184d9 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1516,7 +1516,7 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
+>         return 0;
+>  }
+>
+> -static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
+> +static int qcom_geni_serial_sys_suspend(struct device *dev)
+
+Officially the removal of "__maybe_unused" could be a totally
+different patch, right? SET_SYSTEM_SLEEP_PM_OPS() already eventually
+used pm_sleep_ptr() even without your change, so the removal of these
+tags is unrelated to the rest of your change, right?
 
 
-On 12/15/2022 10:46 AM, Dmitry Baryshkov wrote:
-> On 15/12/2022 20:32, Kuogee Hsieh wrote:
->> There are 3 possible interrupt sources are handled by DP controller,
->> HPDstatus, Controller state changes and Aux read/write transaction.
->> At every irq, DP controller have to check isr status of every interrupt
->> sources and service the interrupt if its isr status bits shows interrupts
->> are pending. There is potential race condition may happen at current aux
->> isr handler implementation since it is always complete 
->> dp_aux_cmd_fifo_tx()
->> even irq is not for aux read or write transaction. This may cause aux 
->> read
->> transaction return premature if host aux data read is in the middle of
->> waiting for sink to complete transferring data to host while irq happen.
->> This will cause host's receiving buffer contains unexpected data. This
->> patch fixes this problem by checking aux isr and return immediately at
->> aux isr handler if there are no any isr status bits set.
->>
->> Current there is a bug report regrading eDP edid corruption happen during
->> system booting up. After lengthy debugging to found that VIDEO_READY
->> interrupt was continuously firing during system booting up which cause
->> dp_aux_isr() to complete dp_aux_cmd_fifo_tx() prematurely to retrieve 
->> data
->> from aux hardware buffer which is not yet contains complete data transfer
->> from sink. This cause edid corruption.
->>
->> Follows are the signature at kernel logs when problem happen,
->> EDID has corrupt header
->> panel-simple-dp-aux aux-aea0000.edp: Couldn't identify panel via EDID
->> panel-simple-dp-aux aux-aea0000.edp: error -EIO: Couldn't detect panel 
->> nor find a fallback
->>
->> Changes in v2:
->> -- do complete if (ret == IRQ_HANDLED) ay dp-aux_isr()
->> -- add more commit text
-> 
-> Usually it's a single dash.
-> 
->>
->> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> 
-> There should be no empty lines between the tags.
-> 
->> Tested-by: Douglas Anderson <dianders@chromium.org>
->> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_aux.c | 87 
->> +++++++++++++++++++++++++++++------------
->>   1 file changed, 63 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c 
->> b/drivers/gpu/drm/msm/dp/dp_aux.c
->> index d030a93..f31e5c1 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
->> @@ -162,45 +162,78 @@ static ssize_t dp_aux_cmd_fifo_rx(struct 
->> dp_aux_private *aux,
->>       return i;
->>   }
->> -static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
->> +static irqreturn_t dp_aux_native_handler(struct dp_aux_private *aux, 
->> u32 isr)
->>   {
->> -    if (isr & DP_INTR_AUX_I2C_DONE)
->> +    irqreturn_t ret = IRQ_NONE;
->> +
->> +    if (isr & DP_INTR_AUX_I2C_DONE) {
->>           aux->aux_error_num = DP_AUX_ERR_NONE;
->> -    else if (isr & DP_INTR_WRONG_ADDR)
->> +        ret = IRQ_HANDLED;
->> +    } else if (isr & DP_INTR_WRONG_ADDR) {
->>           aux->aux_error_num = DP_AUX_ERR_ADDR;
->> -    else if (isr & DP_INTR_TIMEOUT)
->> +        ret = IRQ_HANDLED;
->> +    } else if (isr & DP_INTR_TIMEOUT) {
->>           aux->aux_error_num = DP_AUX_ERR_TOUT;
->> -    if (isr & DP_INTR_NACK_DEFER)
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->> +    if (isr & DP_INTR_NACK_DEFER) {
->>           aux->aux_error_num = DP_AUX_ERR_NACK;
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->>       if (isr & DP_INTR_AUX_ERROR) {
->>           aux->aux_error_num = DP_AUX_ERR_PHY;
->>           dp_catalog_aux_clear_hw_interrupts(aux->catalog);
->> +        ret = IRQ_HANDLED;
->>       }
->> +
->> +    return ret;
->>   }
->> -static void dp_aux_i2c_handler(struct dp_aux_private *aux, u32 isr)
->> +static irqreturn_t dp_aux_i2c_handler(struct dp_aux_private *aux, u32 
->> isr)
->>   {
->> +    irqreturn_t ret = IRQ_NONE;
->> +
->>       if (isr & DP_INTR_AUX_I2C_DONE) {
->>           if (isr & (DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER))
->>               aux->aux_error_num = DP_AUX_ERR_NACK;
->>           else
->>               aux->aux_error_num = DP_AUX_ERR_NONE;
->> -    } else {
->> -        if (isr & DP_INTR_WRONG_ADDR)
->> -            aux->aux_error_num = DP_AUX_ERR_ADDR;
->> -        else if (isr & DP_INTR_TIMEOUT)
->> -            aux->aux_error_num = DP_AUX_ERR_TOUT;
->> -        if (isr & DP_INTR_NACK_DEFER)
->> -            aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
->> -        if (isr & DP_INTR_I2C_NACK)
->> -            aux->aux_error_num = DP_AUX_ERR_NACK;
->> -        if (isr & DP_INTR_I2C_DEFER)
->> -            aux->aux_error_num = DP_AUX_ERR_DEFER;
->> -        if (isr & DP_INTR_AUX_ERROR) {
->> -            aux->aux_error_num = DP_AUX_ERR_PHY;
->> -            dp_catalog_aux_clear_hw_interrupts(aux->catalog);
->> -        }
->> +
->> +        return IRQ_HANDLED;
->> +    }
->> +
->> +    if (isr & DP_INTR_WRONG_ADDR) {
->> +        aux->aux_error_num = DP_AUX_ERR_ADDR;
->> +        ret = IRQ_HANDLED;
->> +    } else if (isr & DP_INTR_TIMEOUT) {
->> +        aux->aux_error_num = DP_AUX_ERR_TOUT;
->> +        ret = IRQ_HANDLED;
->>       }
->> +
->> +    if (isr & DP_INTR_NACK_DEFER) {
->> +        aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->> +    if (isr & DP_INTR_I2C_NACK) {
->> +        aux->aux_error_num = DP_AUX_ERR_NACK;
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->> +    if (isr & DP_INTR_I2C_DEFER) {
->> +        aux->aux_error_num = DP_AUX_ERR_DEFER;
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->> +    if (isr & DP_INTR_AUX_ERROR) {
->> +        aux->aux_error_num = DP_AUX_ERR_PHY;
->> +        dp_catalog_aux_clear_hw_interrupts(aux->catalog);
->> +        ret = IRQ_HANDLED;
->> +    }
->> +
->> +    return ret;
->>   }
->>   static void dp_aux_update_offset_and_segment(struct dp_aux_private 
->> *aux,
->> @@ -413,6 +446,7 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
->>   {
->>       u32 isr;
->>       struct dp_aux_private *aux;
->> +    irqreturn_t ret = IRQ_NONE;
-> 
-> No need to assign a value here. It will be overwritten in both of code 
-> branches.
-> 
->>       if (!dp_aux) {
->>           DRM_ERROR("invalid input\n");
->> @@ -423,15 +457,20 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
->>       isr = dp_catalog_aux_get_irq(aux->catalog);
->> +    /* no interrupts pending, return immediately */
->> +    if (!isr)
->> +        return;
->> +
-> 
-> A separate commit please.
-> 
->>       if (!aux->cmd_busy)
->>           return;
->>       if (aux->native)
->> -        dp_aux_native_handler(aux, isr);
->> +        ret = dp_aux_native_handler(aux, isr);
->>       else
->> -        dp_aux_i2c_handler(aux, isr);
->> +        ret = dp_aux_i2c_handler(aux, isr);
->> -    complete(&aux->comp);
->> +    if (ret == IRQ_HANDLED)
->> +        complete(&aux->comp);
-> 
-> Can you just move the complete() into the individual handling functions? 
-> Then you won't have to return the error code from dp_aux_*_handler() at 
-> all. You can check `isr' in that function and call complete if there was 
-> any error.
-> 
-> Also could you please describe, why is it necessary to complete() 
-> condition at all? Judging from your commit message the `if (!isr) 
-> return;' part should be enough.
-> 
+>  {
+>         struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>         struct uart_port *uport = &port->uport;
+> @@ -1533,7 +1533,7 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
+>         return uart_suspend_port(private_data->drv, uport);
+>  }
+>
+> -static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
+> +static int qcom_geni_serial_sys_resume(struct device *dev)
+>  {
+>         int ret;
+>         struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+> @@ -1581,10 +1581,12 @@ static int qcom_geni_serial_sys_hib_resume(struct device *dev)
+>  }
+>
+>  static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
+> -       SET_SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_sys_suspend,
+> -                                       qcom_geni_serial_sys_resume)
+> -       .restore = qcom_geni_serial_sys_hib_resume,
+> -       .thaw = qcom_geni_serial_sys_hib_resume,
+> +       .suspend = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
+> +       .resume = pm_sleep_ptr(qcom_geni_serial_sys_resume),
+> +       .freeze = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
+> +       .poweroff = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
+> +       .restore = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
+> +       .thaw = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
 
-Yes, and thats why I wrote that from a functionality standpoint, the 
-original v1 posted was enough to fix this issue.
+Personally, the order you listed them is less intuitive than the order
+that SET_SYSTEM_SLEEP_PM_OPS() lists functions. IMO it's better to
+consistently alternate matching suspend/resume functions. ;-)
 
-But, this version is better because of the irq return value.
+Both of those are nits, so I'm also fine with:
 
-So, if IRQ_HANDLED Vs IRQ_NONE handling is better with this.
-
->>   }
->>   void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
