@@ -2,147 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86C0264E028
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 19:02:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1461B64E03C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 19:11:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbiLOSCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 13:02:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38174 "EHLO
+        id S229469AbiLOSLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 13:11:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiLOSCf (ORCPT
+        with ESMTP id S230221AbiLOSK6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 13:02:35 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D73441FCF7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:02:33 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id p36so16875891lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:02:33 -0800 (PST)
+        Thu, 15 Dec 2022 13:10:58 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216202E9D8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:10:57 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id z12so206847qtv.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=ieee.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rpKy2M+1xTceyI06vSLlckoJe7LD35YbU+PTPi0rKDM=;
-        b=YjH5xlGT3cTRpULF/LGszL0dl2Cw4WpBjvowxr58+hoevF3Wvac6hRkNwnbI86v103
-         c5aYwS/yIWSV9i3iYSr4zprpgEcV1mPtAoo649RBsoYK8EvlL6XOBtJ1j19k9F6EWUzB
-         F7fHMuD3qmbtiX2irY445IMjEajhjZ5AS4werdMOJdXtNeT2viE8rlTilJbdImBP3sS+
-         kz6YtbLTRvrqFATRm4KI7K1D3OvLRgtKdayqAEphXTBvxQxwSQW6lNRRMqmEb6KT7xK/
-         /YZVNF1pU2OuIn2COPd94tzC0bKR4x2VUcFvJMc59MR0nB6N2ijDtUKFKPLwzhUKVknE
-         bSpg==
+        bh=YG+0Rm2jjJBdDqmN8Ttr20QoiXVl3Uv9oEGlc46bveo=;
+        b=ZB0jhIhSEOHra6B1YQUlgFF+ymijtV1D53w5jNp8hIlXEZ3u0UAMnjYbgnh2hnB+iE
+         3VS0fAoDYKYvlash2fysc5pxkb1NhqbStXUUfzySkOLx7rf0wl0Xl5wtGpmtZ0HU6iTy
+         PF4Vpj8ec/A/AliXDJ5Qbcx/w1d9GYrXkz6Yw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rpKy2M+1xTceyI06vSLlckoJe7LD35YbU+PTPi0rKDM=;
-        b=R9MH0hTpCSG4bFIAN4nb5U3IGwP6B5FI5F6Uamu9p8oX7q+bTW3+KD23Pv3LijCYgo
-         5XuGW7m3E79b6c2V0otRTcxgMqkBSMxxOUScF3FLXpvBdZTXoGOskaMSUix8WI3QhVzS
-         hU/2TKdjxv8UFicEFqbXt95/FcwAqD3ItlonCQGDv3HDFHJWZlM4cfYEYElkITDqQn9T
-         a+80MVG64Pm2D8ykCNpv+pq/89BbAB6xCiuYVfShH0uN/MgeQC2Z4Xn6hh1yLGIAWNh2
-         Aqc3MScB53A0WTx7NUFUINvHEw2EYh6gpzh+PXnV3YosjarOGHyUxpilg818Wh9QkN0B
-         qOVg==
-X-Gm-Message-State: ANoB5pkKJHPP/GswFzfziGoznG6+EVPTRrBq2RZOjoAyt9D81tRnsOY1
-        UOV4Tj8fGPMc6L55/cFH5exU4Q==
-X-Google-Smtp-Source: AA0mqf7n5rAlsQjQNz3aAcI4rjK0IqOpQADETQT00LwtKjvbTYtLF3Grp2vDJKTL/L4qJajpkFwwpA==
-X-Received: by 2002:ac2:4474:0:b0:4b5:9365:cd4f with SMTP id y20-20020ac24474000000b004b59365cd4fmr7640127lfl.42.1671127352250;
-        Thu, 15 Dec 2022 10:02:32 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id g7-20020a19e047000000b004b58fadba35sm1221068lfj.296.2022.12.15.10.02.31
+        bh=YG+0Rm2jjJBdDqmN8Ttr20QoiXVl3Uv9oEGlc46bveo=;
+        b=q7FEr7l/KVnjNc4ovn5JV2+tRLYcg47tAVGuZy+fBjurN+8tigyHLiFPL1gYZ/xqCi
+         +TPqOPtsLTmvvpXTYKBPmnBfE7x1ZaKOuYOJhJMyqQN4xdRQYiBIQJAJe0qrW03wZMmD
+         wQYQJbp+vE76FxJ4S4A8Q+ijBgobX2vVXzvgd7gw482jOncQgATPGVyTk60h9KxDrXwe
+         9ll3Jo8bfZ+zBc+vLRi5xJf5iEy7YLM7yGsvEegDnKKHuE4nqoYZqJsbGdsatgj+/kEf
+         3q3wI6bYrTPkJhBxCX3VoGYhCTw+gzPwiAozamOcn9X1z7D1aTvxOtjPuB8ep4OezRoE
+         yrWw==
+X-Gm-Message-State: ANoB5plYSEb/GePmPHMLfiz3EcVmyTNkjoP+lWVZVJm6vPYX0mM75Wyb
+        YwMV3o9L6Vuh8FoxkZiYTwgadw==
+X-Google-Smtp-Source: AA0mqf7RBcIiUGEjs2ruJb5Gpo9nNZ2fWhTarkZrIs3D93QDLsw2nGS8V3n0HJDN/Gyk5WAvvkkFBw==
+X-Received: by 2002:a05:622a:1cce:b0:3a8:28b2:af69 with SMTP id bc14-20020a05622a1cce00b003a828b2af69mr10952843qtb.58.1671127856216;
+        Thu, 15 Dec 2022 10:10:56 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id o25-20020ac86999000000b003a5430ee366sm3894807qtq.60.2022.12.15.10.10.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 10:02:31 -0800 (PST)
-Message-ID: <ab5d99c0-d5a8-d144-6153-27116e20442c@linaro.org>
-Date:   Thu, 15 Dec 2022 19:02:30 +0100
+        Thu, 15 Dec 2022 10:10:55 -0800 (PST)
+Message-ID: <6ec85678-9029-4725-eadf-39e814ff807d@ieee.org>
+Date:   Thu, 15 Dec 2022 12:10:54 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable IPA in
+ sc7280-herobrine-lte-sku.dtsi
 Content-Language: en-US
-To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221215161258.355962-1-they@mint.lgbt>
- <20221215161258.355962-2-they@mint.lgbt>
- <875bd0a8-fc08-1d19-2c75-65713d9d2317@linaro.org>
- <0c53ff07-8cf4-3e80-97fc-67dd2f2612f9@mint.lgbt>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <0c53ff07-8cf4-3e80-97fc-67dd2f2612f9@mint.lgbt>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221208183837.505454-1-elder@linaro.org>
+ <a5ec259a-9f78-a54d-c15a-291f192ee220@quicinc.com>
+ <78cd38f1-6ebc-097c-07f1-f7a028f07315@linaro.org>
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <78cd38f1-6ebc-097c-07f1-f7a028f07315@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 15.12.2022 17:56, Lux Aliaga wrote:
-> On 15/12/2022 13:18, Konrad Dybcio wrote:
+On 12/15/22 12:01 PM, Konrad Dybcio wrote:
 > 
->> On 15.12.2022 17:12, Lux Aliaga wrote:
->>> Adds a UFS host controller node and its corresponding PHY to
->>> the sm6125 platform.
+> 
+> On 15.12.2022 18:38, Sibi Sankar wrote:
+>> Alex,
+>>
+>> Thanks for the patch.
+>>
+>> On 12/9/22 00:08, Alex Elder wrote:
+>>> IPA is only needed on a platform if it includes a modem, and not all
+>>> SC7280 SoC variants do.  The file "sc7280-herobrine-lte-sku.dtsi" is
+>>> used to encapsulate definitions related to Chrome OS SC7280 devices
+>>> where a modem is present, and that's the proper place for the IPA
+>>> node to be enabled.
 >>>
->>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>>> Currently IPA is enabled in "sc7280-idp.dtsi", which is included by
+>>> DTS files for Qualcomm reference platforms (all of which include the
+>>> modem).  That also includes "sc7280-herobrine-lte-sku.dtsi", so
+>>> enabling IPA there would make it unnecessary for "sc7280-idp.dtsi"
+>>> to enable it.
+>>>
+>>> The only other place IPA is enabled is "sc7280-qcard.dtsi".
+>>> That file is included only by "sc7280-herobrine.dtsi", which
+>>> is (eventually) included only by these top-level DTS files:
+>>>     sc7280-herobrine-crd.dts
+>>>     sc7280-herobrine-herobrine-r1.dts
+>>>     sc7280-herobrine-evoker.dts
+>>>     sc7280-herobrine-evoker-lte.dts
+>>>     sc7280-herobrine-villager-r0.dts
+>>>     sc7280-herobrine-villager-r1.dts
+>>>     sc7280-herobrine-villager-r1-lte.dts
+>>> All of but two of these include "sc7280-herobrine-lte-sku.dtsi", and
+>>> for those cases, enabling IPA there means there is no need for it to
+>>> be enabled in "sc7280-qcard.dtsi".
+>>>
+>>> The two remaining cases will no longer enable IPA as a result of
+>>> this change:
+>>>     sc7280-herobrine-evoker.dts
+>>>     sc7280-herobrine-villager-r1.dts
+>>> Both of these have "lte" counterparts, and are meant to represent
+>>> board variants that do *not* have a modem.
+>>>
+>>> This is exactly the desired configuration.
+>>>
+>>> Signed-off-by: Alex Elder <elder@linaro.org>
 >>> ---
->>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 66 ++++++++++++++++++++++++++++
->>>   1 file changed, 66 insertions(+)
+>>>    arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 5 +++++
+>>>    arch/arm64/boot/dts/qcom/sc7280-idp.dtsi               | 5 -----
+>>>    arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi             | 5 -----
+>>>    3 files changed, 5 insertions(+), 10 deletions(-)
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> index 7e25a4f85594..6d4534c7a2fe 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> @@ -508,6 +508,72 @@ sdhc_2: mmc@4784000 {
->>>               status = "disabled";
->>>           };
->>>   +        ufs_mem_hc: ufs@4804000 {
->>> +            compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->>> +            reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
->>> +            reg-names = "std", "ice";
->>> +            interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
->>> +            phys = <&ufs_mem_phy_lanes>;
->>> +            phy-names = "ufsphy";
->>> +            lanes-per-direction = <1>;
->>> +            #reset-cells = <1>;
->>> +            resets = <&gcc GCC_UFS_PHY_BCR>;
->>> +            reset-names = "rst";
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>> index ad66e5e9db4ed..956708397f035 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>>> @@ -34,3 +34,8 @@ &remoteproc_mpss {
+>>>    &rmtfs_mem {
+>>>        reg = <0x0 0x9c900000 0x0 0x800000>;
+>>>    };
 >>> +
->>> +            clock-names = "core_clk",
->>> +                "bus_aggr_clk",
->>> +                "iface_clk",
->>> +                "core_clk_unipro",
->>> +                "ref_clk",
->>> +                "tx_lane0_sync_clk",
->>> +                "rx_lane0_sync_clk",
->>> +                "ice_core_clk";
->>> +            clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->>> +                <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
->>> +                <&gcc GCC_UFS_PHY_AHB_CLK>,
->>> +                <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->>> +                <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>> +                <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->>> +                <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->>> +                <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->>> +            freq-table-hz = <50000000 240000000>,
->>> +                <0 0>,
->>> +                <0 0>,
->>> +                <37500000 150000000>,
->>> +                <0 0>,
->>> +                <0 0>,
->>> +                <0 0>,
->>> +                <75000000 300000000>;
->> The indentation is wrong. Make sure your tab size is set to 8
->> and all the <> entries align with the first one.
-> Should I do this with clocks and clock-names too?
-Yes, every "vertical list" (for a lack of a better name)
-should be aligned. Add as many tabs as you can and fill
-the rest with spaces.
+>>> +&ipa {
+>>> +    status = "okay";
+>>> +    modem-init;
+>>> +};
+>>
+>> nit; You'll probably want to move the ipa node above remoteproc node to
+>> maintain sorting.
+>>
+>> Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> Tested-by: Sibi Sankar <quic_sibis@quicinc.com>
+> That + please flip the property order, as we're trying to
+> keep status last wherever possible.
 
-Konrad
+Thank you, I'll post version 2 this afternoon.	-Alex
+
 > 
+> Konrad
+>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>> index f7efb9966afd1..0ddbe7f732bd9 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>> @@ -376,11 +376,6 @@ &gpi_dma1 {
+>>>        status = "okay";
+>>>    };
+>>>    -&ipa {
+>>> -    status = "okay";
+>>> -    modem-init;
+>>> -};
+>>> -
+>>>    &lpass_cpu {
+>>>        status = "okay";
+>>>    diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>>> index df49564ae6dc1..cd6ee84b36fd4 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>>> @@ -336,11 +336,6 @@ vreg_bob: bob {
+>>>      /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
+>>>    -&ipa {
+>>> -    status = "okay";
+>>> -    modem-init;
+>>> -};
+>>> -
+>>>    &lpass_va_macro {
+>>>        vdd-micb-supply = <&vreg_bob>;
+>>>    };
+
