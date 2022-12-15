@@ -2,117 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F373564DE0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 16:48:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA45F64DE2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:06:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230221AbiLOPs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 10:48:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33606 "EHLO
+        id S229868AbiLOQGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 11:06:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230154AbiLOPs2 (ORCPT
+        with ESMTP id S229866AbiLOQGe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 10:48:28 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B292DA9C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:48:27 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id x11so10323909ljh.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:48:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0FBCMfI6MLyMBcUp7QJ4Mt6HQ0Pr+2qKYBVP3YZd0J0=;
-        b=QoCbzNXOwNLZs/3wzoj9wq3aJqgVSPiTZgS0dbRTVipPNYaxwpgaU5knXDDYtEcyjN
-         /FlHgmmZXuDw+twq8BK122AOf2/RN3BxeVab3oO4OFtgUGJXkCMQ4F4ADTwjz3pdf+Gn
-         HonwfcBeUYtCNTRqSqCSw2K1hvBWboULsOY/jWbTdE73RumI/+8k880YuZoR6vhCdpZI
-         +rJMI4YKk9e+ra+0Ed763d5IMAvLNSluRvIKaVZl0NFVS/joiGfIP7QMlBBVd1Q0Kjcm
-         dUbq+kTH2w26pVfAfl42ul5Or6lALR1kKy4LMoglFvmdpDkt+qSMjkA+KY8SBhXDOSVn
-         7erQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0FBCMfI6MLyMBcUp7QJ4Mt6HQ0Pr+2qKYBVP3YZd0J0=;
-        b=xOL0DG+uEkpmYoZWSVRlVmQp6CaL+SyzX5LFJNzYIK0oX7FMixB48yB9+BUuWzK4oR
-         UqXrtdh9NfHJv0S0Dnsin8lA0u5qAKSkFJ2uXIfT0Xkw+np9V4X/I+ifHuu0abop8npe
-         sNTOwbedNir+SyMyM3hIrkqSPwRWUjBrxKwjW8Xg903hGZGp6+jZHn/O0fvI4UFDZSnN
-         KjpENhHVwLBqEdnhyTQmhKRx+Ik7nnTLsPLetLHFEB0ZVyAzkkykB+SojFn3Isw39zZt
-         ERHlvN3XJN7CxhIsFh/H2O06yYOiS9RCAtW3AOzqzOJ5jfvhKnQufypHhV0+XLq4zoYP
-         bRKg==
-X-Gm-Message-State: ANoB5pmmX0s4pfxp2vz0wGi9JB20vOGj7aD1aLIRi3tCgZS3VeoTV/Kb
-        IkYhfso9OuWeHI4zGVso4+itJvwycXvtFZkj5Xs=
-X-Google-Smtp-Source: AA0mqf7atQJp9a3VCnhj1pKzMlLJYVft6bxTO+Y/UFyJO59nCmN1ejDyrBIiDTjoEYeUtsZF/n3bkQ==
-X-Received: by 2002:a2e:a9a7:0:b0:277:3e88:4fb4 with SMTP id x39-20020a2ea9a7000000b002773e884fb4mr9781590ljq.30.1671119305553;
-        Thu, 15 Dec 2022 07:48:25 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id bi19-20020a05651c231300b0027a2e0b8766sm875656ljb.9.2022.12.15.07.48.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 07:48:25 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: qcs404: use symbol names for PCIe resets
-Date:   Thu, 15 Dec 2022 17:48:24 +0200
-Message-Id: <20221215154824.84198-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Thu, 15 Dec 2022 11:06:34 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A583135A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 08:06:31 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NXxtY2KZzz1S5Cm
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 11:06:29 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:subject:from
+        :references:to:content-language:user-agent:mime-version:date
+        :message-id; s=dkim; t=1671120388; x=1671984389; bh=7D6doDStC7gK
+        c0KFHyAb+1CP6XE+sVmchO92TAxtxJA=; b=FLb4uV+2Nbm8lCpkHgPl6gx+dPjp
+        kF16PTm5OhsE6NUveS1vChwccFN3ndZjBcC3H0ggUsL4MO+P95Z1ovSapmhkUIYU
+        DbgmVlRhwsQmwNp4VUzBliwdBAFkDDTVnNoeZ7ejcgaMe0aNJ9L+BTsvxj/DsWZu
+        cgY6NXiiZ24S8EHZBWlOkk2zGAYAjghRyCiteTvgyr4o55MHAl0iPcVTzUtGzHCV
+        SQTsgqWqVTAP59EqOwqiTYTEw/JZuxOFlOmpuwc7neqC4GdlTd64KcrVQAvGykp+
+        Qime8jfOadwm5RKe1Gzfa8sG05c63i4dTRM9ljoTzRiJFoDgcS55s62QDg==
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 4u11TjxKTDzO for <linux-arm-msm@vger.kernel.org>;
+        Thu, 15 Dec 2022 11:06:28 -0500 (EST)
+Received: from [192.168.4.25] (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NXxtQ22Qbz1S4t9;
+        Thu, 15 Dec 2022 11:06:21 -0500 (EST)
+Message-ID: <4fb08532-47b5-b5e8-07ad-a5e3f42b93aa@mint.lgbt>
+Date:   Thu, 15 Dec 2022 13:06:19 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221214093342.153479-1-they@mint.lgbt>
+ <ea20c58f-3a53-7cdd-8669-228c4acac49a@linaro.org>
+ <5a511002-5cd2-b95b-a45a-faaf78e2f4a7@mint.lgbt>
+ <cd025494-862b-70ec-a008-4be219f7f72f@mint.lgbt>
+ <245b1554-5f61-3f1b-c04e-fd8326e62e8e@linaro.org>
+From:   Lux Aliaga <they@mint.lgbt>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6125: Initial support for
+ xiaomi-laurel_sprout
+In-Reply-To: <245b1554-5f61-3f1b-c04e-fd8326e62e8e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets") added names
-for PCIe resets, but it did not change the existing qcs404.dtsi to use
-these names. Do it now and use symbol names to make it easier to check
-and modify the dtsi in future.
+On 15/12/2022 05:31, Krzysztof Kozlowski wrote:
 
-Fixes: e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> On 14/12/2022 18:45, Lux Aliaga wrote:
+>> Ok. I think that comment is incorrect. Changing the node name on
+>> extcon_usb breaks the "extcon" property in &usb3_dwc3, even after
+>> changing the reference.
+> You top-post and I have no clue what do you refer to. Don't top-post.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index a5324eecb50a..502dd6db491e 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -806,7 +806,7 @@ pcie_phy: phy@7786000 {
- 
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
- 			resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
--				 <&gcc 21>;
-+				 <&gcc GCC_PCIE_0_PIPE_ARES>;
- 			reset-names = "phy", "pipe";
- 
- 			clock-output-names = "pcie_0_pipe_clk";
-@@ -1336,12 +1336,12 @@ pcie: pci@10000000 {
- 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
- 			clock-names = "iface", "aux", "master_bus", "slave_bus";
- 
--			resets = <&gcc 18>,
--				 <&gcc 17>,
--				 <&gcc 15>,
--				 <&gcc 19>,
-+			resets = <&gcc GCC_PCIE_0_AXI_MASTER_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_SLAVE_ARES>,
-+				 <&gcc GCC_PCIE_0_AXI_MASTER_STICKY_ARES>,
-+				 <&gcc GCC_PCIE_0_CORE_STICKY_ARES>,
- 				 <&gcc GCC_PCIE_0_BCR>,
--				 <&gcc 16>;
-+				 <&gcc GCC_PCIE_0_AHB_ARES>;
- 			reset-names = "axi_m",
- 				      "axi_s",
- 				      "axi_m_sticky",
+My apologies. I replied a bit too quickly and didn't check if the 
+concerns I proposed were redacted correctly. An email you sent already 
+answered my concern, so I'll proceed to send a new version of the patchset.
+
+Kind regards.
+
 -- 
-2.35.1
+Lux Aliaga
+https://nixgoat.me/
 
