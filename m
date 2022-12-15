@@ -2,118 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 575E864DD8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 16:15:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F373564DE0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 16:48:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbiLOPPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 10:15:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42880 "EHLO
+        id S230221AbiLOPs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 10:48:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbiLOPOp (ORCPT
+        with ESMTP id S230154AbiLOPs2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 10:14:45 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A37032B8F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:14:20 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id l8so10188469ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:14:20 -0800 (PST)
+        Thu, 15 Dec 2022 10:48:28 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B292DA9C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:48:27 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id x11so10323909ljh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 07:48:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HKBX4dCAGxM9FIuN9j+5uOON5e07EkYesLemjwlfmRc=;
-        b=jqn4qm5AQpP3pXvXfNliwLe7ReHlO3yIHYcnTzDqLfHZgOwC6WadMZBme+JdN8Gkv6
-         /vxPZyh2V3v9oYIFj3/3kwY2F9FV0aO87kSiQ6MTjUbP41o2odJf48YT0QN6+hKZJavQ
-         iIZ0Qo3q1fa1Skc5gFObSpyjXV40tVK1zBX1OAUgcRzUU6u7swwq2uPqxpXGRYzOpRHp
-         uSs01A6CQyZAhyrWmYlbjhs2edJRSWNSroK9l2tqX57M7PQKZMn17PX4XBl48dPyQa9B
-         dfRkOdAouTe1CGXiJhlfozBXWe+xweUJvhIcG/xMbXqKi1jiVwE+7D1ZHeeQr3HAc+dw
-         omQA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0FBCMfI6MLyMBcUp7QJ4Mt6HQ0Pr+2qKYBVP3YZd0J0=;
+        b=QoCbzNXOwNLZs/3wzoj9wq3aJqgVSPiTZgS0dbRTVipPNYaxwpgaU5knXDDYtEcyjN
+         /FlHgmmZXuDw+twq8BK122AOf2/RN3BxeVab3oO4OFtgUGJXkCMQ4F4ADTwjz3pdf+Gn
+         HonwfcBeUYtCNTRqSqCSw2K1hvBWboULsOY/jWbTdE73RumI/+8k880YuZoR6vhCdpZI
+         +rJMI4YKk9e+ra+0Ed763d5IMAvLNSluRvIKaVZl0NFVS/joiGfIP7QMlBBVd1Q0Kjcm
+         dUbq+kTH2w26pVfAfl42ul5Or6lALR1kKy4LMoglFvmdpDkt+qSMjkA+KY8SBhXDOSVn
+         7erQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HKBX4dCAGxM9FIuN9j+5uOON5e07EkYesLemjwlfmRc=;
-        b=bblNu8GONTnQZP9FX0y9KoCQldcGldXiJelKzB3ApOc4qocwZPExKGUD3l+SA+LsQz
-         foMGOjAiU0pHcjJsNCVNCwGIMD0sNs07SyYrZHnl4L3creRBSm3QVa8tLg8eL8taZeHp
-         TW8zFtN84iM/oFjrHLLC3nt1OAWrmc1Uv3r61SH7xBQt9JadEYU7F4aSoqgk3lN9m+7n
-         jgIpvS0jhvYhJG5Ocexa7ekz7D0RLWdMgp+pFS0U8JJbIGrosfjUVfkWX80g7nNM+lVI
-         sgAJCaq8GfdFIe3yL976+X5Zc13hPwVsd+0oFrvzzIGy24jgxPEy0Mlu9pJ5TGM3lE+r
-         O5cA==
-X-Gm-Message-State: ANoB5plVJyjLDlsSBuAF5Yow4+VtgTZMk5mammo/XhJTMrH5MyAGxTyA
-        /UECqtbsH8tnc7q3ZMe6TOVRqQ==
-X-Google-Smtp-Source: AA0mqf638NFbBfGyPPGUbiWU9jAZwDUrabmGYbZxWlmgWMVwFUJj7vPxpXSFyFHzx/HqOpwBT5wIvg==
-X-Received: by 2002:a2e:a809:0:b0:278:ed26:60e3 with SMTP id l9-20020a2ea809000000b00278ed2660e3mr7180275ljq.25.1671117258550;
-        Thu, 15 Dec 2022 07:14:18 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id q18-20020a2eb4b2000000b00279f213302bsm859063ljm.57.2022.12.15.07.14.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 07:14:18 -0800 (PST)
-Message-ID: <3134ba66-27bb-7015-8988-6c8dec046b0f@linaro.org>
-Date:   Thu, 15 Dec 2022 17:14:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v5 5/8] iommu/arm-smmu-qcom: Add SM6115 support
-Content-Language: en-GB
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0FBCMfI6MLyMBcUp7QJ4Mt6HQ0Pr+2qKYBVP3YZd0J0=;
+        b=xOL0DG+uEkpmYoZWSVRlVmQp6CaL+SyzX5LFJNzYIK0oX7FMixB48yB9+BUuWzK4oR
+         UqXrtdh9NfHJv0S0Dnsin8lA0u5qAKSkFJ2uXIfT0Xkw+np9V4X/I+ifHuu0abop8npe
+         sNTOwbedNir+SyMyM3hIrkqSPwRWUjBrxKwjW8Xg903hGZGp6+jZHn/O0fvI4UFDZSnN
+         KjpENhHVwLBqEdnhyTQmhKRx+Ik7nnTLsPLetLHFEB0ZVyAzkkykB+SojFn3Isw39zZt
+         ERHlvN3XJN7CxhIsFh/H2O06yYOiS9RCAtW3AOzqzOJ5jfvhKnQufypHhV0+XLq4zoYP
+         bRKg==
+X-Gm-Message-State: ANoB5pmmX0s4pfxp2vz0wGi9JB20vOGj7aD1aLIRi3tCgZS3VeoTV/Kb
+        IkYhfso9OuWeHI4zGVso4+itJvwycXvtFZkj5Xs=
+X-Google-Smtp-Source: AA0mqf7atQJp9a3VCnhj1pKzMlLJYVft6bxTO+Y/UFyJO59nCmN1ejDyrBIiDTjoEYeUtsZF/n3bkQ==
+X-Received: by 2002:a2e:a9a7:0:b0:277:3e88:4fb4 with SMTP id x39-20020a2ea9a7000000b002773e884fb4mr9781590ljq.30.1671119305553;
+        Thu, 15 Dec 2022 07:48:25 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id bi19-20020a05651c231300b0027a2e0b8766sm875656ljb.9.2022.12.15.07.48.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 07:48:25 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Emma Anholt <emma@anholt.net>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        linux-kernel@vger.kernel.org
-References: <20221030094258.486428-1-iskren.chernev@gmail.com>
- <20221030094258.486428-6-iskren.chernev@gmail.com>
- <9e94c0b9-f901-5ac9-2abb-40e958cbe5a2@linaro.org>
-In-Reply-To: <9e94c0b9-f901-5ac9-2abb-40e958cbe5a2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qcs404: use symbol names for PCIe resets
+Date:   Thu, 15 Dec 2022 17:48:24 +0200
+Message-Id: <20221215154824.84198-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/12/2022 17:10, Dmitry Baryshkov wrote:
-> On 30/10/2022 11:42, Iskren Chernev wrote:
->> From: Adam Skladowski <a39.skl@gmail.com>
->>
->> Add the Qualcomm SM6115 platform to the list of compatible,
->> this target uses MMU500 for both APSS and GPU.
->>
->> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> 
-> This needs to rebased on linux-next (or 6.2-rc1 once it's out).
+The commit e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets") added names
+for PCIe resets, but it did not change the existing qcs404.dtsi to use
+these names. Do it now and use symbol names to make it easier to check
+and modify the dtsi in future.
 
-To add on top of that. linux-next has the following comment:
+Fixes: e5bbbff5b7d7 ("clk: gcc-qcs404: Add PCIe resets")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-/*
-  * Do not add any more qcom,SOC-smmu-500 entries to this list, unless 
-they need
-  * special handling and can not be covered by the qcom,smmu-500 entry.
-  */
-
-So, hopefully you can skip this patch completely by depending on the 
-generic "qcom,smmu-500" compatible.
-
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index a5324eecb50a..502dd6db491e 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -806,7 +806,7 @@ pcie_phy: phy@7786000 {
+ 
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
+ 			resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
+-				 <&gcc 21>;
++				 <&gcc GCC_PCIE_0_PIPE_ARES>;
+ 			reset-names = "phy", "pipe";
+ 
+ 			clock-output-names = "pcie_0_pipe_clk";
+@@ -1336,12 +1336,12 @@ pcie: pci@10000000 {
+ 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
+ 			clock-names = "iface", "aux", "master_bus", "slave_bus";
+ 
+-			resets = <&gcc 18>,
+-				 <&gcc 17>,
+-				 <&gcc 15>,
+-				 <&gcc 19>,
++			resets = <&gcc GCC_PCIE_0_AXI_MASTER_ARES>,
++				 <&gcc GCC_PCIE_0_AXI_SLAVE_ARES>,
++				 <&gcc GCC_PCIE_0_AXI_MASTER_STICKY_ARES>,
++				 <&gcc GCC_PCIE_0_CORE_STICKY_ARES>,
+ 				 <&gcc GCC_PCIE_0_BCR>,
+-				 <&gcc 16>;
++				 <&gcc GCC_PCIE_0_AHB_ARES>;
+ 			reset-names = "axi_m",
+ 				      "axi_s",
+ 				      "axi_m_sticky",
 -- 
-With best wishes
-Dmitry
+2.35.1
 
