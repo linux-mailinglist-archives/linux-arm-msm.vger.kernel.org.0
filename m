@@ -2,141 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ED9A64D80C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 09:51:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3034B64D8E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 10:45:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiLOIvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 03:51:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42428 "EHLO
+        id S230097AbiLOJpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 04:45:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiLOIvc (ORCPT
+        with ESMTP id S230117AbiLOJpt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 03:51:32 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A4D26483
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 00:51:31 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id s25so9266770lji.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 00:51:31 -0800 (PST)
+        Thu, 15 Dec 2022 04:45:49 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB8B272B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 01:45:47 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id o12so9886125pjo.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 01:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pecYI2Wxf2sv6LmohLERH3VYYJ/4cVx07ayYX6z9h/s=;
-        b=L7lt4ZkLZifQmwNbt0yl+olfrtq7W/yIU4r3g0cNYk70fS0VGDDSTZ1Y8FYs87fp4T
-         4FnLrkcWp3nbFvYwlRDfJTm9wjqhkZW+TAZsTyHPgAlVmqGfQCfEC/zXZp8gGWZBN7ZM
-         4Mj7CplmPstozha7jDhHDiG57D/MiZwLdT5TBu9d5EjCJIGts8M/9i9CNR19qiZEQBj4
-         Nipcs59d4TJ3IvZM8EBAHOAIHi8LUhZelxErM3u9KR6zu0FrtyAek1anaGyW+g0rI6/8
-         E57PSWjC0/rnAQC/5w04EqrubtkhOlb1bcvDeVjkNo8dVf6SqPRiSu0in3f3/Nf42weW
-         VN3w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=69DTVCg+3X6hPpP3I2st4EfUly1VECQI6r/v/bEiKyM=;
+        b=m+JARgKSuAmfQ3OGq2EV4c/JFF0K9yB5R1E5cHpLT1wIA/x29W5v2nDtF8eRV1qiSO
+         gy0Sz6uaZ6Fz/YYocDittXvsUOXpOK4aEw8tNcK2OcaIwxfgdpKHkxPBzaSL1GdGfBI8
+         AimKxI/2X27WuhMvSOFDAEp+2ONZAich7uNrr1F7Pf5Qa4sXoYtM8X4CiRpm2UPsGRGM
+         tkJ4gz2wNldNV7Etxt71GdCEnLpjQp1cgNjfxc2qWnKjdkX83h+THcOn/fyZWGIluq4/
+         hU+WL/IddkWOnIUj5RmmthXczAuUzUXhJ30sPCIo1K1BzF1hE5ddzzLdGh9ulyEtJyT5
+         FPdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pecYI2Wxf2sv6LmohLERH3VYYJ/4cVx07ayYX6z9h/s=;
-        b=2eLLka+sV4MdVaq3lgqvd5FMmqMLwyqHQSB1vgaFODiCaPt06ImRXJyl18yy/szWmo
-         H/YnKo8wlulPJvZxYlHFw1nIm8RhDLlrUW4krpMT8jjiULODzACkqfnT8x2tagkIQ3lT
-         TLR+qZ09YP419payFLCqmVcukl2VvU20PGfHxtSa9izXtC5hQUnXZwNUdLQt34/5l5eP
-         ql9FS2MFTxY+t749BaP5LMr1tMzjoaF/J46Po5ZOn8qh19YXkD1LjVLZtLc59zJ+qo+R
-         B6J+Ol6DY2PlHDbMYyDTd9K4Su/PJKTMWm5XPMj/0erI04aQyp0TScWmmKZH8dlM3mnW
-         l8yQ==
-X-Gm-Message-State: ANoB5plY+x4Q24OrxyBeYPeHi+D+iyLolgFhkCPGriuHuSsFZGwB1PWe
-        SMvj0FtsxlRTRboN5CP8os/U4Q==
-X-Google-Smtp-Source: AA0mqf7RQnZt8Jg4Jb4ob2J4Gkt1xR+Q6+E7uufexHrEt78eEsXBCQJCD4+fbwAu/psxmpKrl0L9NQ==
-X-Received: by 2002:a2e:9582:0:b0:27b:4e29:1073 with SMTP id w2-20020a2e9582000000b0027b4e291073mr4346367ljh.29.1671094289694;
-        Thu, 15 Dec 2022 00:51:29 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id b20-20020a2eb914000000b002797892025csm789133ljb.137.2022.12.15.00.51.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 00:51:29 -0800 (PST)
-Message-ID: <66fa228f-d35d-6e03-0ef3-09c6aa0bb66d@linaro.org>
-Date:   Thu, 15 Dec 2022 09:51:28 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=69DTVCg+3X6hPpP3I2st4EfUly1VECQI6r/v/bEiKyM=;
+        b=7Wg+mJxO/1ho7RAibFz8QqPwsf3AhB4SmCfkyxEhrvvfxXVOTcRUId9/h4CsOolV2Q
+         Ut+Bqs2QLcGF2A5rOjKfVm0r1dlAXtLlROue64HlGIeWHsUW0xgK9mibVG9NtLzZqzCE
+         VaWM+oRVFAs5RcZZFr9+BAMzgdOkaQY82eCBviDTNkQmLsBbI/0vgg3lBYyIirEyggdH
+         TgmCPCexuRsZTd8NNgYpTB97YyQKebHVcR/D+De1euSxYqFgFVY1bnbB+i5dmCdChFvN
+         mLit4RE5FhkQHlmDKxWi6nVykyhb1Z8SV4Yn8+0osufgCcbG+LUJV/fA8A4v0lrTPJLz
+         KB0g==
+X-Gm-Message-State: ANoB5plrCr5Clxj+CmKndB+1wLySrt64dIszL902Zb+zCUhVELFiOPeQ
+        bwVFZmnVnHvu2EGWivrPATOQXF/JBgFL4lSGjG0=
+X-Google-Smtp-Source: AA0mqf4vsjXuCsyebttyjsOalmUalRLKZVTz/aYCl4Y+ivTXSOXjLOZ5Ksvbs+/IMzQRLlaV62mIGA==
+X-Received: by 2002:a17:902:b284:b0:189:c62e:ac34 with SMTP id u4-20020a170902b28400b00189c62eac34mr33042797plr.47.1671097546111;
+        Thu, 15 Dec 2022 01:45:46 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c5f:4e45:ae49:8018:6d22:e5b4])
+        by smtp.gmail.com with ESMTPSA id b5-20020a170902650500b0018971fba556sm3342646plk.139.2022.12.15.01.45.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 01:45:45 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
+        konrad.dybcio@linaro.org, andersson@kernel.org
+Subject: [PATCH v3 0/3] arm64: dts: sm6115: Add USB SS qmp phy node and perform some cleanups  
+Date:   Thu, 15 Dec 2022 15:15:29 +0530
+Message-Id: <20221215094532.589291-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 4/4] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        regressions@leemhuis.info, sumit.semwal@linaro.org,
-        will@kernel.org, catalin.marinas@arm.com, robin.murphy@arm.com
-References: <20221213140724.8612-1-quic_sibis@quicinc.com>
- <20221213140724.8612-5-quic_sibis@quicinc.com>
- <8739f59b-c551-2da4-5523-a89f960bd402@linaro.org>
- <f4595a18-23bd-d54f-4e50-c0ed63008225@quicinc.com>
- <1d3c7d01-bfa9-6654-28d9-b9f4964a88a4@linaro.org>
- <e4bef035-c448-7c75-13a6-d9c61aa8cde7@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <e4bef035-c448-7c75-13a6-d9c61aa8cde7@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/12/2022 12:51, Sibi Sankar wrote:
-> 
-> 
-> On 12/14/22 16:58, Krzysztof Kozlowski wrote:
->> On 14/12/2022 11:33, Sibi Sankar wrote:
->>>
->>>
->>> On 12/14/22 01:17, Krzysztof Kozlowski wrote:
->>>> On 13/12/2022 15:07, Sibi Sankar wrote:
->>>>> The memory region allocated using dma_alloc_attr with no kernel mapping
->>>>> attribute set would still be a part of the linear kernel map. Any access
->>>>> to this region by the application processor after assigning it to the
->>>>> remote Q6 will result in a XPU violation. Fix this by replacing the
->>>>> dynamically allocated memory region with a no-map carveout and unmap the
->>>>> modem metadata memory region before passing control to the remote Q6.
->>>>>
->>>>> Reported-by: Amit Pundir <amit.pundir@linaro.org>
->>>>> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
->>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>> ---
->>>>
->>>> Thank you for your patch. There is something to discuss/improve.
->>>>>    
->>>>>    	return ret < 0 ? ret : 0;
->>>>> @@ -1882,6 +1899,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
->>>>>    	qproc->mpss_phys = qproc->mpss_reloc = r.start;
->>>>>    	qproc->mpss_size = resource_size(&r);
->>>>>    
->>>>> +	if (!child) {
->>>>> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
->>>>> +	} else {
->>>>> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
->>>>
->>>> Bindings do not allow to have child "metadata", do they?
->>>
->>> memory-region property was used to specify mba/mpss region in a phandle
->>> array only from SC7180 SoC. All the older dtbs in the wild/upstream
->>> still had sub-nodes to achieve the same. Patch 3 allows for a sub-set
->>> of the SoCs (MSM8996/MSM8998/SDM845) to use metadata as a sub-node so
->>> as to not break bindings when newer kernel uses a older dtb.
->>
->> This does not explain why you extend the driver without extending the
->> bindings. You do not do it for legacy stuff but for SC7180. But even for
->> legacy devices you cannot add new properties without having it in some
->> legacy bindings.
-> 
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20221213140724.8612-4-quic_sibis@quicinc.com/
-> 
-> The legacy bindings are a part of patch 3 ^^.
+Changes since v2:
+-----------------
+- v2 can be seen here: https://lore.kernel.org/linux-arm-msm/20221214203124.564537-1-bhupesh.sharma@linaro.org/
+- Fixed a blank line issue in [PATCH 3/3]
 
-Ah, ok.
+Changes since v1:
+-----------------
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20221213123823.455731-1-bhupesh.sharma@linaro.org/
+- Addressed the review comments from Konrad and Krzysztof regarding the
+  USB HS and SS Phy usage in sm4250 oneplus board dts ([PATCH 3/3]).
+- Collected R-B received from Konrad on v1 patches [1/3] and [2/3].
 
-Best regards,
-Krzysztof
+This series adds USB SS qmp phy node for Qualcomm SM6115 / SM4250 SoC
+dtsi and also performs some related cleanups for USB nodes.
+
+Note that this series is rebased on linux-next/master and is also
+dependent on the corresponding dt-bindings and driver series sent via [1].
+
+[1]. https://lore.kernel.org/linux-arm-msm/20221213122843.454845-1-bhupesh.sharma@linaro.org/
+
+Bhupesh Sharma (3):
+  arm64: dts: qcom: sm6115: Cleanup USB node's label
+  arm64: dts: qcom: sm6115: Move USB node's 'maximum-speed' and
+    'dr_mode' properties to dts
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 12 ++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 45 ++++++++++++++++---
+ 2 files changed, 48 insertions(+), 9 deletions(-)
+
+-- 
+2.38.1
 
