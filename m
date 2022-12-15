@@ -2,130 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7574064E393
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 22:58:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EC4464E3D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 23:37:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbiLOV56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 16:57:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49282 "EHLO
+        id S229795AbiLOWhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 17:37:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbiLOV5v (ORCPT
+        with ESMTP id S229660AbiLOWhC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 16:57:51 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE2C5D692;
-        Thu, 15 Dec 2022 13:57:45 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BFK7hXd028350;
-        Thu, 15 Dec 2022 21:57:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3oI5Crq41qMyHxMddn7qmdwHvswRUAK3S/5DvS27CEU=;
- b=SPwR5Sw000VA6ReSIFpnvhcqhWUSOM1//++qLDHUkZXWYHouhgfbHMpHOKCTHu5/MqNH
- jzQKzR+RWGiVoRZYMLbmcWZezzoUc9SwsfQDalc+V7hEheIiq8jOshS5o6O6o6ck7hWb
- IzYNtNzPZknlieZ9OV1VIFCd6mvs2Oee1VcoxCBCvP6BnmcEWIUlQ3FO0/BSP9qA9naJ
- SHynA5qfWc1lsfWoj4NXvT5gQZjcq0qUXgPjQq8U2SlvY/5XsZTmUbowK/YtSAOGxFVT
- 3hd9pzpB451sTkLeOBnXkxGjuKVubYXoHgyvecnFc3ljnLcfehWNlFCtaPDUgRW1k2yc mQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mfxseaqnm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Dec 2022 21:57:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BFLvXnR017105
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Dec 2022 21:57:33 GMT
-Received: from [10.110.127.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 15 Dec
- 2022 13:57:32 -0800
-Message-ID: <f11ec176-35b8-6e8a-a9a1-63f73a000d13@quicinc.com>
-Date:   Thu, 15 Dec 2022 13:57:31 -0800
+        Thu, 15 Dec 2022 17:37:02 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F2449B73;
+        Thu, 15 Dec 2022 14:36:58 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 92FD41F676;
+        Thu, 15 Dec 2022 23:36:55 +0100 (CET)
+Date:   Thu, 15 Dec 2022 23:36:54 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8250: Add GPU speedbin support
+Message-ID: <20221215223654.y4j4s3uei57pergj@SoMainline.org>
+References: <20221213002423.259039-1-konrad.dybcio@linaro.org>
+ <20221213002423.259039-8-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if
- irq is not for aux transfer
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, <agross@kernel.org>,
-        <airlied@gmail.com>, <andersson@kernel.org>, <daniel@ffwll.ch>,
-        <dianders@chromium.org>, <robdclark@gmail.com>, <sean@poorly.run>,
-        <vkoul@kernel.org>
-CC:     <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1671129159-31105-1-git-send-email-quic_khsieh@quicinc.com>
- <ca15a54b-8040-5e4f-a78e-12b7f8a554e1@linaro.org>
- <CAE-0n53bREwEMV4aP=ySPuPP8mMbDr=Unbjw_bW0MNN7hTsWRw@mail.gmail.com>
- <d41e29a9-5da6-3843-5018-9674e7d56505@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <d41e29a9-5da6-3843-5018-9674e7d56505@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YD0Zo7geZT_GGuaJB40KHbKRJAplotXo
-X-Proofpoint-GUID: YD0Zo7geZT_GGuaJB40KHbKRJAplotXo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-15_11,2022-12-15_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=879
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2212150182
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221213002423.259039-8-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12/15/2022 1:15 PM, Dmitry Baryshkov wrote:
-> On 15/12/2022 22:10, Stephen Boyd wrote:
->> Quoting Dmitry Baryshkov (2022-12-15 10:46:42)
->>> On 15/12/2022 20:32, Kuogee Hsieh wrote:
->>>>        if (!aux->cmd_busy)
->>>>                return;
->>>>
->>>>        if (aux->native)
->>>> -             dp_aux_native_handler(aux, isr);
->>>> +             ret = dp_aux_native_handler(aux, isr);
->>>>        else
->>>> -             dp_aux_i2c_handler(aux, isr);
->>>> +             ret = dp_aux_i2c_handler(aux, isr);
->>>>
->>>> -     complete(&aux->comp);
->>>> +     if (ret == IRQ_HANDLED)
->>>> +             complete(&aux->comp);
->>>
->>> Can you just move the complete() into the individual handling functions?
->>> Then you won't have to return the error code from dp_aux_*_handler() at
->>> all. You can check `isr' in that function and call complete if there was
->>> any error.
->>
->> I'd prefer we apply my patch and pass the irqreturn_t variable to the
->> caller of this function so spurious irqs are shutdown. Should I send it
->> as a proper patch?
+On 2022-12-13 01:24:23, Konrad Dybcio wrote:
+> SM8250 has (at least) four GPU speed bins. With the support added on the
+> driver side, wire up bin detection in the DTS to restrict lower-quality
+> SKUs from running at frequencies they were not validated at.
 > 
-> I'm for handling the spurious IRQs in a proper way. However I believe 
-> that it's not related to the issue Kuogee is trying to fix.
-> 
-> Thus I think we should have two separate patches: one fixing the EDID 
-> corruption issue (for which the proper fix is !isr check, IIUC) and the 
-> irqreturn_t. And for the irqreturn_t it might be beneficial to move 
-> complete() call to the dp_aux_foo_handler(). Or might be not. That would 
-> depend on the patch itself.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Ack.
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Sony Xperia 5 II (speed bin 0x7)
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 23 ++++++++++++++++++++++-
+>  1 file changed, 22 insertions(+), 1 deletion(-)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index c008f49b5852..0c4ecdab1244 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -955,6 +955,18 @@ ipcc: mailbox@408000 {
+>  			#mbox-cells = <2>;
+>  		};
+>  
+> +		qfprom: efuse@784000 {
+> +			compatible = "qcom,sm8250-qfprom", "qcom,qfprom";
+> +			reg = <0 0x00784000 0 0x8ff>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			gpu_speed_bin: gpu_speed_bin@19b {
+> +				reg = <0x19b 0x1>;
+> +				bits = <5 3>;
+> +			};
+> +		};
+> +
+>  		rng: rng@793000 {
+>  			compatible = "qcom,prng-ee";
+>  			reg = <0 0x00793000 0 0x1000>;
+> @@ -2563,49 +2575,58 @@ gpu: gpu@3d00000 {
+>  
+>  			qcom,gmu = <&gmu>;
+>  
+> +			nvmem-cells = <&gpu_speed_bin>;
+> +			nvmem-cell-names = "speed_bin";
+> +
+>  			status = "disabled";
+>  
+>  			zap-shader {
+>  				memory-region = <&gpu_mem>;
+>  			};
+>  
+> -			/* note: downstream checks gpu binning for 670 Mhz */
+>  			gpu_opp_table: opp-table {
+>  				compatible = "operating-points-v2";
+>  
+>  				opp-670000000 {
+>  					opp-hz = /bits/ 64 <670000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +					opp-supported-hw = <0x6>;
+>  				};
+>  
+>  				opp-587000000 {
+>  					opp-hz = /bits/ 64 <587000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +					opp-supported-hw = <0x7>;
+>  				};
+>  
+>  				opp-525000000 {
+>  					opp-hz = /bits/ 64 <525000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+> +					opp-supported-hw = <0xf>;
+>  				};
+>  
+>  				opp-490000000 {
+>  					opp-hz = /bits/ 64 <490000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +					opp-supported-hw = <0xf>;
+>  				};
+>  
+>  				opp-441600000 {
+>  					opp-hz = /bits/ 64 <441600000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
+> +					opp-supported-hw = <0xf>;
+>  				};
+>  
+>  				opp-400000000 {
+>  					opp-hz = /bits/ 64 <400000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +					opp-supported-hw = <0xf>;
+>  				};
+>  
+>  				opp-305000000 {
+>  					opp-hz = /bits/ 64 <305000000>;
+>  					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +					opp-supported-hw = <0xf>;
+>  				};
+>  			};
+>  		};
+> -- 
+> 2.39.0
 > 
