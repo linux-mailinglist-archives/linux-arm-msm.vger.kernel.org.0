@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C883E64E108
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 19:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C2AC64E11A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 19:40:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230311AbiLOShO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 13:37:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33006 "EHLO
+        id S229603AbiLOSkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 13:40:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbiLOSgp (ORCPT
+        with ESMTP id S229704AbiLOSkg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 13:36:45 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 943CD4AF0B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:35:03 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id g7so17033592lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:35:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zJWfZA9lb6SueW3DXeKSzLEsUDmmTJCRV+wmNHW5G+U=;
-        b=pEtuWDXdRArr5c+XNWAICkBVcAvET7Xs8sxEpuSppouXY0ZuoJltHg9nkUS4K4S503
-         752k+xKl53pB9UDDwr3vYiqV/WGfVbWqi/v9vRmWTldArfbeTzrZ77060VBpOjkh6KEW
-         rkA6rSA1cDxeyPP8wlgt5GP7bBqM7v6DcWQiPACNXopkAKod5BsN2rtj9p2Y6eKsmCZP
-         0frgsTjGNUGJ8GXRgtN4cvkEh8Ww07NMQceVmJnEMfiTR3TC80sicCDXq9t7ry9L1HPT
-         XfgNdSS5T8JHZhR+Qg1oCLPftjVsG3cZxC9YLp/77XI9XWrYqj3/BhUmDtXyaaBWm4H0
-         DUkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zJWfZA9lb6SueW3DXeKSzLEsUDmmTJCRV+wmNHW5G+U=;
-        b=WoyKnwACZhuFze/p5RJrCj0UB7tqOWoskz8ELWqPtsCybF4aFtBzfRKaKB/5ccMJbd
-         VOXZBlQYlvYV1gP6luzrxcjJbvZ9NhyU87GKECC8Rtqi+SkaY9OoABOj5EjuaD2dhZAX
-         hzQ7xkMMP0v7Mp9AJRMzcXrXasmqGiKny9zZ/U/B3NvLHzIrg45tP9cud9X98nNxWvQG
-         ORhbTRz5tqTFX4WHwDFCc6GbwKxiGqEUpCt1Vca2X+nNOyEiXcZs1hjl5YhU8cwDRimA
-         Ao2GXTH3b3EU1+XHoVSoqdsOTJGgu0dO6q7pV4e7JhEZLaD68VxSFOEr45tPePE+PN7p
-         2ULg==
-X-Gm-Message-State: ANoB5pk4T+UYDvT018ph4HqhyxQP2e0YBTLcMennO+jKFHABgn+Px2v7
-        u9zNYlokyN2HZUGI0J4MHx7WZg==
-X-Google-Smtp-Source: AA0mqf6X7yI3BJ7QJ1ceRqBxVWmBUaKE0UClqb9c/OeJxiMbSt8YocWwwaRUjGqMzVcswKV1ZyZcGw==
-X-Received: by 2002:ac2:52b1:0:b0:4b5:7859:349f with SMTP id r17-20020ac252b1000000b004b57859349fmr8137842lfm.48.1671129302028;
-        Thu, 15 Dec 2022 10:35:02 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id g12-20020ac24d8c000000b004b0b2212315sm1231966lfe.121.2022.12.15.10.35.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 10:35:01 -0800 (PST)
-Message-ID: <d387f52b-5c3e-9e3f-c5b9-4201a622abaf@linaro.org>
-Date:   Thu, 15 Dec 2022 19:34:59 +0100
+        Thu, 15 Dec 2022 13:40:36 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7C2C05
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 10:40:35 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NY1JK0Gswz1S5Cm
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 13:40:32 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:from
+        :references:to:content-language:subject:user-agent:mime-version
+        :date:message-id; s=dkim; t=1671129631; x=1671993632; bh=NBGPxf8
+        Uk+YFqUwrijQq4lTC0II0fQREHSPsU0b1IsU=; b=BgqkkVSWs5KiLPUCv1r5GJg
+        bpouceHE8LGh9stq8Sh8rUBNhkNxvtPQN6glD5Qcw6O6bYFlnYVIrV2D0VKkV2lv
+        sr6gtCXgktMncxaA1+qUJwkYLJZGseVxrUvr2EagIw5FRYQ2Bjajp/jDULk5M+C8
+        KhQlnBz7zeqLtS5j7/0R2Lrg0HHUBeuPwDqqnoTylmY6lyDJu/v2pQupl6NFFqCF
+        ZgLR87rLFu0MRSRewM3nSLehc3Jkip4vYqKiGy/oONlxHvsdslw3QJK7gD9UNMGO
+        X5ZmAIIs3u6oZ/TQpa3wU0puppQRZ60cMy5CwMn64ajSN4UzvCs8iF4YG4EsxvQ=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id SEozAIFkJ20B for <linux-arm-msm@vger.kernel.org>;
+        Thu, 15 Dec 2022 13:40:31 -0500 (EST)
+Received: from [192.168.4.25] (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NY1JB5cHkz1S4yj;
+        Thu, 15 Dec 2022 13:40:26 -0500 (EST)
+Message-ID: <c44d30a1-9ca3-e7c3-aeb5-7d058033141d@mint.lgbt>
+Date:   Thu, 15 Dec 2022 15:40:24 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sm6125: Initial support for
+ xiaomi-laurel-sprout
 Content-Language: en-US
-To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
 References: <20221215182412.386064-1-they@mint.lgbt>
- <20221215182412.386064-2-they@mint.lgbt>
- <7c6dc327-9cc3-ca00-479b-25b1f6e071dc@linaro.org>
- <8dcbd512-7f3b-919f-34ec-82e28b6282d3@mint.lgbt>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <8dcbd512-7f3b-919f-34ec-82e28b6282d3@mint.lgbt>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <20221215182412.386064-4-they@mint.lgbt>
+ <7c30fc89-8801-7801-de5c-c05fde423bf8@linaro.org>
+From:   Lux Aliaga <they@mint.lgbt>
+In-Reply-To: <7c30fc89-8801-7801-de5c-c05fde423bf8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,98 +75,27 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 15.12.2022 19:33, Lux Aliaga wrote:
-> 
-> On 15/12/2022 15:28, Konrad Dybcio wrote:
->> On 15.12.2022 19:24, Lux Aliaga wrote:
->>> Adds a UFS host controller node and its corresponding PHY to
->>> the sm6125 platform.
->>>
->>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 67 ++++++++++++++++++++++++++++
->>>   1 file changed, 67 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> index 7e25a4f85594..22c945d5fc7a 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> @@ -508,6 +508,73 @@ sdhc_2: mmc@4784000 {
->>>               status = "disabled";
->>>           };
->>>   +        ufs_mem_hc: ufs@4804000 {
->>> +            compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->>> +            reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
->>> +            reg-names = "std", "ice";
->>> +            interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
->>> +            phys = <&ufs_mem_phy_lanes>;
->>> +            phy-names = "ufsphy";
->>> +            lanes-per-direction = <1>;
->>> +            #reset-cells = <1>;
->>> +            resets = <&gcc GCC_UFS_PHY_BCR>;
->>> +            reset-names = "rst";
->>> +
->>> +            clock-names = "core_clk",
->>> +                      "bus_aggr_clk",
->>> +                      "iface_clk",
->>> +                      "core_clk_unipro",
->>> +                      "ref_clk",
->>> +                      "tx_lane0_sync_clk",
->>> +                      "rx_lane0_sync_clk",
->>> +                      "ice_core_clk";
->>> +            clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->>> +                 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
->>> +                 <&gcc GCC_UFS_PHY_AHB_CLK>,
->>> +                 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->>> +                 <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>> +                 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->>> +                 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->>> +                 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->>> +            freq-table-hz = <50000000 240000000>,
->>> +                    <0 0>,
->>> +                    <0 0>,
->>> +                    <37500000 150000000>,
->>> +                    <0 0>,
->>> +                    <0 0>,
->>> +                    <0 0>,
->>> +                    <75000000 300000000>;
->>> +
->>> +            non-removable;
->>> +            status = "disabled";
->>> +        };
->>> +
->>> +        ufs_mem_phy: phy@4807000 {
->>> +            compatible = "qcom,sm6115-qmp-ufs-phy";
->>> +            reg = <0x04807000 0x1c4>;
->>> +
->>> +            power-domains = <&gcc UFS_PHY_GDSC>;
->>> +
->>> +            clock-names = "ref", "ref_aux";
->>> +            clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
->>> +                     <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
->>> +
->>> +            resets = <&ufs_mem_hc 0>;
->>> +            reset-names = "ufsphy";
->>> +            status = "disabled";
->>> +
->>> +            ufs_mem_phy_lanes: lanes@4807400 {
->>> +                reg = <0x4807400 0x098>,
->>> +                      <0x4807600 0x130>,
->>> +                      <0x4807c00 0x16c>;
->>> +                #phy-cells = <0>;
->>> +            };
->>> +
->>> +            #address-cells = <1>;
->>> +            #size-cells = <1>;
->>> +            ranges;
->> That won't compile. Properties must precede subnodes.
+On 15/12/2022 15:34, Konrad Dybcio wrote:
+> On 15.12.2022 19:24, Lux Aliaga wrote:
+>> Adds support for the Xiaomi Mi A3 (xiaomi-laurel-sprout). Here's a
+>> summary on what's working.
 >>
->> Konrad
-> Wait, so should I move it above the status property?
-Status should be the last *property*.
+>> - dmesg output to bootloader preconfigured display
+>> - USB
+>> - UFS
+>> - SMD RPM regulators
+>>
+>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>> ---
+> You don't seem to have addressed the review comments from
+> v2 on this patch.
+>
+> Konrad
+Pardon me, but most of the review comments were addressed. I only missed 
+moving the qcom,msm-id and qcom,board-id properties below chassis-type, 
+but the rest should be addressed as intended.
 
-If I'm not mistaken, this will not even compile as-is..
+-- 
+Lux Aliaga
+https://nixgoat.me/
 
-Konrad
-> 
