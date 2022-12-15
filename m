@@ -2,84 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AF1F64DABC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 12:58:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A6D764DB97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 13:49:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbiLOL6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 06:58:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58010 "EHLO
+        id S229848AbiLOMt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 07:49:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230166AbiLOL6K (ORCPT
+        with ESMTP id S229733AbiLOMtI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 06:58:10 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B3742DAA6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 03:58:07 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id d82so6520281pfd.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 03:58:07 -0800 (PST)
+        Thu, 15 Dec 2022 07:49:08 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D56705F54
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 04:49:04 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 1so15516599lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 04:49:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pZOfOCT1uqUyQOZ3Q6ejDEihZSzQYrZucgCadknyvEo=;
-        b=TaTybFJOhH5EPK/eBhO184gTI9rZ6NpPjNfPTGQmv+4pde+ovnS4o3OcSTPB07hU3j
-         u8Gyneh47OfOatEVMn3wPktBWSiEx17Hm2qO/9QkhlOpPHF4cESHo62ysUOcZjFY1UgW
-         46qjT3Wvo4pE17HeOcATjOBvTJdy3LzoYMors5zHe7mX7B3BLz3LEP6fnNuGiKxaXZZY
-         KsH/VLtse+zcMYOJ2Mwrbu4HzaTUx12stdo25n1fyi4kfyjqVV/KGeFtufPgS4e4ZoQu
-         94kCq1g/b7CCX8aW/1AaQk1I6DccFrnHOdxDBPOTDmYJi1rAlE3T2tMbtlW2BhxhuP21
-         4Zcg==
+        bh=WfT89eaBmCMQmtonczLRbdlvyXOUyfcZDQHrYJPUDhM=;
+        b=g90Ijv3dZYlnt3LOm41pP9z4hSebp/XoDdDjDZdOf4memohHmJfBcUX1DsjlqNy5vv
+         tFTX2A12tIf8cM9lStAHhX5o8hBt7g8oxNgvv87s+suuf/vGT9ejpryMVoL1gp4fzABM
+         /GypcQqBjasHMV8sNDKsoEUI83UF3P8SoXQdVAykxmPImqvl/zp8t74KkOv0DF81r2Wy
+         Y2i8XOZS7l9Ed3Q5j+dweS9vCrFh0m38NWtj8QlIMrnUKj9HPwqSaySWqMiDRbGWlLsG
+         cD4ujeft9aXGmOHaZk35sq+/3ghqVsJ72seEvl5vTefi7qyxStD42axI98yvjRBCOnJb
+         j8sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pZOfOCT1uqUyQOZ3Q6ejDEihZSzQYrZucgCadknyvEo=;
-        b=uplAl/krHie38PDfcIXfO76s9jI2o8LgXDxbrFIMpqlXkx9VQqeKgR39UE9CfbjfRp
-         Ken9MlHNj6GRBY0yO+30NxGCmeyBMOZDoogL9jeyJ/dx53+xThcp0dIzUY/taBdO9S9D
-         DTgJ4Sg9k9KI1kSbIBHeFwyIhPgyi1y7q5uvmn2XkNYjift2GhRceLHemm99MaYqG9YX
-         5yzsicpKCpKI4QVQ2rCsx7/Didwu8HCiPkrS5HxoscAVJqN7hZbdfjLZbe/s276url/M
-         XfJJIv8oeGQ6Sdjv21XUVY4KdaTHe3li9DAyfrahHdn41wQjGwq8iUEvETCNtjlR9xfi
-         H7jA==
-X-Gm-Message-State: ANoB5plHJF2cpbEvcQ5JqewLmClQTWNrg7Q4Hff2lgl5LaFIUTDo6OBs
-        WWBfJxY+RSs0HeiNmVD6RVdihA==
-X-Google-Smtp-Source: AA0mqf6zAOBI8FNjjz3fd3sqz5D+xV3IlJL7UUHXxCKfMPTOyHmWW9qt9YBU98dbCUcKtQgdAWvb4g==
-X-Received: by 2002:a62:e814:0:b0:577:271e:e66f with SMTP id c20-20020a62e814000000b00577271ee66fmr28704053pfi.27.1671105487018;
-        Thu, 15 Dec 2022 03:58:07 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c5f:4e45:ae49:8018:6d22:e5b4? ([2401:4900:1c5f:4e45:ae49:8018:6d22:e5b4])
-        by smtp.gmail.com with ESMTPSA id h66-20020a62de45000000b00576145a9bd0sm1554392pfg.127.2022.12.15.03.57.59
+        bh=WfT89eaBmCMQmtonczLRbdlvyXOUyfcZDQHrYJPUDhM=;
+        b=tZrul1Yhnz55/8lKmhEeZ7QtgvDyLuFsqmNKLpuPSrsmnzFeFktrJXqpmwV80UB65/
+         Q/V/ASajyzmr/V3VV+EYUlwCrW5H1P6S89l5ZT9MsqvZAn8ZzpKMpfkAC/j0VEXQ4Pvk
+         yFDepj64RU4DLuY+z3Y1kFWnuWxiZfhE7I9YEJhGe27r9ECsmoBD3vgwmKYJCFWBYmFp
+         esPX6RWy4XFZh9h01JN9AC/DoFd/E2nHehTceRaPelCvDny1bYJZpv2ycCaay1zdyBGZ
+         Jav33W7Q1Ps2uuW/nFoMA5Pwf0j0LQVCwfcBGw4CcyF8+v/jw0i1jWyHSnESB+4Bx/ce
+         xY0w==
+X-Gm-Message-State: ANoB5pkzlIk+qLpNaikCGIBneYzuHNDAdEolDJwHP7NyZr6fCDPXcg/8
+        +NWXcKMZRed/tB2Nom7y0oetng==
+X-Google-Smtp-Source: AA0mqf7DD9iJev7KjfRdZ4KseOkEeyzD+eOrjtJuK8oaocNzCIfGOnAARthk22KNRjLcpdoyZk23vA==
+X-Received: by 2002:a05:6512:acd:b0:4b6:f0ac:7af8 with SMTP id n13-20020a0565120acd00b004b6f0ac7af8mr5545156lfu.67.1671108543153;
+        Thu, 15 Dec 2022 04:49:03 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id g12-20020ac24d8c000000b004b0b2212315sm1154062lfe.121.2022.12.15.04.49.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 03:58:06 -0800 (PST)
-Message-ID: <1d3d8169-1011-cdfd-f9f7-b7828acdc1ac@linaro.org>
-Date:   Thu, 15 Dec 2022 17:27:57 +0530
+        Thu, 15 Dec 2022 04:49:02 -0800 (PST)
+Message-ID: <af9e5b18-5494-6060-d280-efda8f67693c@linaro.org>
+Date:   Thu, 15 Dec 2022 13:49:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v5 1/8] dt-bindings: ufs: qcom: Add sm6115 binding
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 1/7] arm64: dts: qcom: sc8280xp: rename qup2_uart17 to
+ uart17
+To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_shazhuss@quicinc.com, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com
+References: <20221214171145.2913557-1-bmasney@redhat.com>
+ <20221214171145.2913557-2-bmasney@redhat.com>
 Content-Language: en-US
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221030094258.486428-1-iskren.chernev@gmail.com>
- <20221030094258.486428-2-iskren.chernev@gmail.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <20221030094258.486428-2-iskren.chernev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221214171145.2913557-2-bmasney@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,78 +80,151 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/30/22 3:12 PM, Iskren Chernev wrote:
-> Add SM6115 UFS to DT schema.
+
+On 14.12.2022 18:11, Brian Masney wrote:
+> In preparation for adding the missing SPI and I2C nodes to
+> sc8280xp.dtsi, it was decided to rename all of the existing qupX_
+> uart, spi, and i2c nodes to drop the qupX_ prefix. Let's go ahead
+> and rename qup2_uart17 to uart17. Note that some nodes are moved in the
+> file by this patch to preserve the expected sort order in the file.
 > 
-> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Link: https://lore.kernel.org/lkml/20221212182314.1902632-1-bmasney@redhat.com/
 > ---
->   .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
->   1 file changed, 26 insertions(+)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> This is a new patch that's introduced in v2.
 > 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index f2d6298d926c..b517d76215e3 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -28,6 +28,7 @@ properties:
->             - qcom,msm8998-ufshc
->             - qcom,sc8280xp-ufshc
->             - qcom,sdm845-ufshc
-> +          - qcom,sm6115-ufshc
->             - qcom,sm6350-ufshc
->             - qcom,sm8150-ufshc
->             - qcom,sm8250-ufshc
-> @@ -178,6 +179,31 @@ allOf:
->             minItems: 1
->             maxItems: 1
->   
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sm6115-ufshc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 8
-> +          maxItems: 8
-> +        clock-names:
-> +          items:
-> +            - const: core_clk
-> +            - const: bus_aggr_clk
-> +            - const: iface_clk
-> +            - const: core_clk_unipro
-> +            - const: ref_clk
-> +            - const: tx_lane0_sync_clk
-> +            - const: rx_lane0_sync_clk
-> +            - const: ice_core_clk
-> +        reg:
-> +          minItems: 2
-> +          maxItems: 2
+>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts  | 12 ++++++------
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 12 ++++++------
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 14 +++++++-------
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi    |  2 +-
+>  4 files changed, 20 insertions(+), 20 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> index 84cb6f3eeb56..61f2e44e70c1 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -17,7 +17,7 @@ / {
+>  	compatible = "qcom,sa8295p-adp", "qcom,sa8540p";
+>  
+>  	aliases {
+> -		serial0 = &qup2_uart17;
+> +		serial0 = &uart17;
+>  	};
+>  
+>  	chosen {
+> @@ -240,11 +240,6 @@ &qup2 {
+>  	status = "okay";
+>  };
+>  
+> -&qup2_uart17 {
+> -	compatible = "qcom,geni-debug-uart";
+> -	status = "okay";
+> -};
+> -
+>  &remoteproc_adsp {
+>  	firmware-name = "qcom/sa8540p/adsp.mbn";
+>  	status = "okay";
+> @@ -338,6 +333,11 @@ pm8450g_gpios: gpio@c000 {
+>  	};
+>  };
+>  
+> +&uart17 {
+> +	compatible = "qcom,geni-debug-uart";
+> +	status = "okay";
+> +};
 > +
->       # TODO: define clock bindings for qcom,msm8994-ufshc
->   
->   unevaluatedProperties: false
-
-Seems this hasn't made way to linux-next yet. Hence we get the following 
-error with $ make dtbs_check:
-
-arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: ufs@4804000: 
-compatible:0: 'qcom,sm6115-ufshc' is not one of ['qcom,msm8994-ufshc', 
-'qcom,msm8996-ufshc', 'qcom,msm8998-ufshc', 'qcom,sc8280xp-ufshc', 
-'qcom,sdm845-ufshc', 'qcom,sm6350-ufshc', 'qcom,sm8150-ufshc', 
-'qcom,sm8250-ufshc', 'qcom,sm8350-ufshc', 'qcom,sm8450-ufshc']
-	From schema: Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-
-arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: ufs@4804000: 
-Unevaluated properties are not allowed ('compatible' was unexpected)
-	From schema: Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-
-If, it helps to get the review / merge happen:
-
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-
-@Rob, @Krzysztof: Please help merge this.
-
-Thanks.
+>  &ufs_mem_hc {
+>  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index 21f3ff024910..b6e0db5508c7 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -17,7 +17,7 @@ / {
+>  	compatible = "qcom,sa8540p-ride", "qcom,sa8540p";
+>  
+>  	aliases {
+> -		serial0 = &qup2_uart17;
+> +		serial0 = &uart17;
+>  	};
+>  
+>  	chosen {
+> @@ -192,11 +192,6 @@ &qup2 {
+>  	status = "okay";
+>  };
+>  
+> -&qup2_uart17 {
+> -	compatible = "qcom,geni-debug-uart";
+> -	status = "okay";
+> -};
+> -
+>  &remoteproc_nsp0 {
+>  	firmware-name = "qcom/sa8540p/cdsp.mbn";
+>  	status = "okay";
+> @@ -207,6 +202,11 @@ &remoteproc_nsp1 {
+>  	status = "okay";
+>  };
+>  
+> +&uart17 {
+> +	compatible = "qcom,geni-debug-uart";
+> +	status = "okay";
+> +};
+> +
+>  &ufs_mem_hc {
+>  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index 551768f97729..db273face248 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -17,7 +17,7 @@ / {
+>  	compatible = "qcom,sc8280xp-crd", "qcom,sc8280xp";
+>  
+>  	aliases {
+> -		serial0 = &qup2_uart17;
+> +		serial0 = &uart17;
+>  	};
+>  
+>  	backlight {
+> @@ -363,12 +363,6 @@ keyboard@68 {
+>  	};
+>  };
+>  
+> -&qup2_uart17 {
+> -	compatible = "qcom,geni-debug-uart";
+> -
+> -	status = "okay";
+> -};
+> -
+>  &remoteproc_adsp {
+>  	firmware-name = "qcom/sc8280xp/qcadsp8280.mbn";
+>  
+> @@ -381,6 +375,12 @@ &remoteproc_nsp0 {
+>  	status = "okay";
+>  };
+>  
+> +&uart17 {
+> +	compatible = "qcom,geni-debug-uart";
+> +
+> +	status = "okay";
+> +};
+> +
+>  &ufs_mem_hc {
+>  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 109c9d2b684d..951cb1b6fcc4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -813,7 +813,7 @@ qup2: geniqup@8c0000 {
+>  
+>  			status = "disabled";
+>  
+> -			qup2_uart17: serial@884000 {
+> +			uart17: serial@884000 {
+>  				compatible = "qcom,geni-uart";
+>  				reg = <0 0x00884000 0 0x4000>;
+>  				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
