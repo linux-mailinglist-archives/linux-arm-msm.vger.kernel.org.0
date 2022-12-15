@@ -2,98 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0840164DEA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:29:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E28A664DEE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Dec 2022 17:45:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiLOQ3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 11:29:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54888 "EHLO
+        id S229872AbiLOQpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 11:45:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbiLOQ31 (ORCPT
+        with ESMTP id S230039AbiLOQpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 11:29:27 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40D3232B84;
-        Thu, 15 Dec 2022 08:29:13 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CD69861E62;
-        Thu, 15 Dec 2022 16:29:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18432C433D2;
-        Thu, 15 Dec 2022 16:29:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671121752;
-        bh=hTVlrLLNPPrnPwLwZn/P6XxxNEQh61wi48u/i/H+3Fk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=sMsCqgJjCYkzb8omjFTfh4gJjfPdKVca1gyUvNd+kGHH2Catybh3ApOuNimtbNH5M
-         WpFGmqWe2JnVK4HAJ9xt+ydJm1FkNeDwlX5w1c7ODEOVgxpmO2QDbWH6Z1m3W7hYX8
-         cQJ8Xi3DUs88KozktfLLO+cHB4MEPeQlmyO6WO82RwNzMfCsG3O1rDhEICcCWYbP8P
-         B/BdfesiqAZDfiLF54HDkICKCyI+XLUcAXQ7YLEzeJPzJ2pIuYBocpBMgDljBvpYYf
-         pN6UdnmV0KSsLbq2Qy/2z2zwwjlYV7GySiFPy7kYXbIwO1GtB9ZywIpRxdLA+XTx1P
-         1bnxVt5LBn6NQ==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>
-Cc:     Josh Poimboeuf <jpoimboe@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] media: camss: csiphy-3ph: avoid undefined behavior
-Date:   Thu, 15 Dec 2022 17:28:46 +0100
-Message-Id: <20221215162905.3960806-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Thu, 15 Dec 2022 11:45:02 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795D337FBA;
+        Thu, 15 Dec 2022 08:45:01 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id a16so27860588edb.9;
+        Thu, 15 Dec 2022 08:45:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Fdysh/ijYewRV7bbddoJgpW8W2b/pWo97s985wV5pOE=;
+        b=l43YPQBwPDpWHKLNjBQoFqrC0/4N+jGpwN+XEb8FFKxxf2FifYF+vz7mpBMZ2a1XXN
+         94NBYk4aDFLF1mx/wNkTSR0YEBRNwmye72EF91SRz1Iptzfm4yLAA/x7CBDhLi+Yq5AO
+         6dMowHOgi7GDSZrNEgJGgbwrmWSOYuGIdLpw9RuJRx/JbZe03Ee3+caPsH9VTlQ8xeRt
+         mSMRJfzHSL97rEl0VCjEZhO2duM3+NY1YuxHZ2O+NDoBq+12rxIcez7O8GV/jXlgTKcI
+         vdb5HG4Vpyt8FyGEcxZYAF+NPN3xr4jq0p5hv8iloBUjEbMneJhcJAD9zwUQ24ZzDWCc
+         Pc3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fdysh/ijYewRV7bbddoJgpW8W2b/pWo97s985wV5pOE=;
+        b=vae5tiRkMX19FUU+dxLt1VP+XS2Z0fr6KV+4UIf7n/Ad8gjwsZtZKsqu4R1wZpUeyO
+         FKSsjiH5V6OkHVRyGaugv+iyTtaI7li/l5BJzjP1dcqwL5WndcTm42anBZBtRlAJ7/y9
+         hqO5Z7Q0rS6JlhHkOuRPGuKE/JSh3KTVFavWD+/iyD6F81eNuavYABgCx63/XOOkEw7F
+         p77SgBxgs3mQqEHrENquUw9o7saeiZNm7ueu3+3EIEkKEBocp/h5WdNICntDgmND+F8W
+         KKG13krj99nDBSr8Cpo9lVQPyA+ox85szjyFQKH1tqE8A7b8dRlk1MItVhvh8yEUwATa
+         OPxg==
+X-Gm-Message-State: AFqh2kqMZ8DbHTAnJsHD6Ux7m6XDG67Rnq6UvxSv71f+rdSFzGYPbgwR
+        pVhN7yX9s6g5YehHJZkBgw0=
+X-Google-Smtp-Source: AMrXdXvQrHfotHCvkzUGBDmw98seVFtR2I7MIBfvPATXve2iauxvcnzNJePNvumxSQb3pCgDN4t1hA==
+X-Received: by 2002:aa7:d384:0:b0:472:7c75:832 with SMTP id x4-20020aa7d384000000b004727c750832mr6025450edq.16.1671122699985;
+        Thu, 15 Dec 2022 08:44:59 -0800 (PST)
+Received: from ?IPV6:2003:c5:871f:9993:b1c0:fc77:1081:c93c? (p200300c5871f9993b1c0fc771081c93c.dip0.t-ipconnect.de. [2003:c5:871f:9993:b1c0:fc77:1081:c93c])
+        by smtp.gmail.com with ESMTPSA id kv4-20020a17090778c400b007c0b530f3cfsm7216202ejc.72.2022.12.15.08.44.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Dec 2022 08:44:59 -0800 (PST)
+Message-ID: <4d8e2b27-2804-e8ad-1e35-0942538b5617@gmail.com>
+Date:   Thu, 15 Dec 2022 17:44:58 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v11 00/16] Add Multi Circular Queue Support
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, bvanassche@acm.org, avri.altman@wdc.com,
+        mani@kernel.org, beanhuo@micron.com, linux-arm-msm@vger.kernel.org
+References: <cover.1670541363.git.quic_asutoshd@quicinc.com>
+From:   Bean Huo <huobean@gmail.com>
+In-Reply-To: <cover.1670541363.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+Asutosh,
 
-Marking a case of the switch statement as unreachable means the
-compiler treats it as undefined behavior, which is then caught by
-an objtool warning:
+I reviewed the entire patch series and applied them to Martin's 
+6.2/staging branch,
 
-drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.o: warning: objtool: csiphy_lanes_enable() falls through to next function csiphy_lanes_disable()
 
-Instead of simply continuing execution at a random place of the
-driver, print a warning and return from to the caller, which
-makes it possible to understand what happens and avoids the
-warning.
+No logic issues were found, other than these minor compilation warnings:
 
-Fixes: 53655d2a0ff2 ("media: camss: csiphy-3ph: add support for SM8250 CSI DPHY")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index 451a4c9b3d30..04baa80494c6 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -429,7 +429,8 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
- 		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
- 		break;
- 	default:
--		unreachable();
-+		WARN(1, "unknown cspi version\n");
-+		return;
- 	}
- 
- 	for (l = 0; l < 5; l++) {
--- 
-2.35.1
+drivers/ufs/core/ufs-mcq.c:87: warning: Function parameter or member 
+'hba' not described in 'ufshcd_mcq_config_mac'
+drivers/ufs/core/ufs-mcq.c:87: warning: Function parameter or member 
+'max_active_cmds' not described in 'ufshcd_mcq_config_mac'
+drivers/ufs/core/ufs-mcq.c:107: warning: Function parameter or member 
+'hba' not described in 'ufshcd_mcq_req_to_hwq'
+drivers/ufs/core/ufs-mcq.c:107: warning: Function parameter or member 
+'req' not described in 'ufshcd_mcq_req_to_hwq'
+drivers/ufs/core/ufs-mcq.c:128: warning: Function parameter or member 
+'hba' not described in 'ufshcd_mcq_decide_queue_depth'
+
+so:
+
+
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+
+
+
+Kind regards,
+
+Bean
 
