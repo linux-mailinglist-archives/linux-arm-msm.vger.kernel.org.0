@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1279464F541
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 00:40:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7691864F545
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 00:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbiLPXke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 18:40:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60430 "EHLO
+        id S230114AbiLPXmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 18:42:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbiLPXkd (ORCPT
+        with ESMTP id S229968AbiLPXmQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 18:40:33 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA9B1758E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:31 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bf43so5795125lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g/bLk04dhGvObgv0ibnCNcEYZnqfFntTEvodjggi70o=;
-        b=J072llu5NfA6FPCI0kSB6d9eWuWAoO5i4aFxwLXXZq/JJMYLPfmWT6NWEIOlK70wUD
-         ZuhE0Bg1O7B6SARBI8G2FGjIeIMsm0oVgXUjW2KcL0pi3zQ/cGucyEfBDKHrOTHheRSN
-         B/SR2Olo68a3ZDOekdmIMiDyIumvA6A5hRgjQ6AVV6cXxUtauGg2U+isTW9mcFrr79ff
-         KhQHHRF3Ty63pyfTiUCQsDzG2+jTTcLWKxJOtvcG6Ro2/9rumyH89sSaHU4mzHhjrSxs
-         fzc6ccZ9W5jOB+3Ftdhn5J6JlpPPjxkCEKtL9wb5fuGBwMZ/iqmwUGTWOSuLOe0WG4We
-         geHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g/bLk04dhGvObgv0ibnCNcEYZnqfFntTEvodjggi70o=;
-        b=JQg1f40Cigc2pW15M++2epvtLqM2ovgjZzktRV4+pziq2bCYP4MZi6eqwtag4su44c
-         rqfB97AU9WBwtcQEHxcATswGOjzj0iRqEM9JJ34UKPH1Bqe+NNhqYJchYoLWmMj5iOlV
-         Kt+n0NeR6gy2NI0F4Ml6P/OFYLMcC4cU6x2R0lUnCqgf0bEZCneRRZ37m5EXLvT/Ttsa
-         6/c9am6UPVKE4mIj6To3Pm4KCFIiZ6BhujRdeNSH5F6NdNcasBzV0Nv9p1ttSR4x0StV
-         1xDV1DM3WymwVZ7Z6tZrSTRX1UE5pvQYxB+zI+9seS8irTCJNYspYs0p6jTH8mXif1Bu
-         wBlg==
-X-Gm-Message-State: AFqh2kqIq9FymlL5eSSXblai/M0QWNTA7YLxEAAVdtJgKMdb+UvqMVOZ
-        xci1Cm2UOylhRrzpLS/ZBMQ2gw==
-X-Google-Smtp-Source: AMrXdXu5EMtQvFkCcKMVgrjQBjg12/f7JLtr0e3sjyWv4wljAUzxoT+/cbrxL9uucWk+Con97pufQQ==
-X-Received: by 2002:a05:6512:12c1:b0:4b6:ff4a:885a with SMTP id p1-20020a05651212c100b004b6ff4a885amr10191927lfg.37.1671234030228;
-        Fri, 16 Dec 2022 15:40:30 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a21-20020ac25055000000b004b40c2fccfdsm336950lfm.59.2022.12.16.15.40.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Dec 2022 15:40:29 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 16 Dec 2022 18:42:16 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784E44D5C9;
+        Fri, 16 Dec 2022 15:42:15 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5AB513F360;
+        Sat, 17 Dec 2022 00:42:13 +0100 (CET)
+Date:   Sat, 17 Dec 2022 00:42:12 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: qcs404: register PCIe PHY as a clock provider
-Date:   Sat, 17 Dec 2022 01:40:27 +0200
-Message-Id: <20221216234027.539917-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
-References: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Robert Marko <robimarko@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] thermal: qcom-spmi-adc5: Suppress probe-deferral error
+ message
+Message-ID: <20221216234212.5rm3uwzci2zjq67d@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Robert Marko <robimarko@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221216190945.902754-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221216190945.902754-1-marijn.suijten@somainline.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,25 +75,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add #clock-cells to the pcie_phy node. It provides a PCIe PIPE clock.
+Whoops, that tile must of course have started with:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+    iio: adc: qcom-spmi-adc5:
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index a5324eecb50a..ffffaa7507cf 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -810,6 +810,7 @@ pcie_phy: phy@7786000 {
- 			reset-names = "phy", "pipe";
- 
- 			clock-output-names = "pcie_0_pipe_clk";
-+			#clock-cells = <0>;
- 			#phy-cells = <0>;
- 
- 			status = "disabled";
--- 
-2.35.1
+instead of blindly copying the suffix from the thermal monitor patch
+(this driver is not a thermal monitor...).  I'll send a v2 if there are
+no other objections, unless this can be fixed up when the patch is
+applied.
 
+On 2022-12-16 20:09:45, Marijn Suijten wrote:
+> Much like 807efb7102e8 ("thermal: qcom-spmi-adc-tm5: suppress
+> probe-deferral error message") the ADC5 driver also spams a similar
+> probe-deferral error on startup when a channel is not yet available:
+> 
+>     [    0.343136] qcom-spmi-adc-tm5 1c40000.spmi:pmic@0:adc-tm@3500: get dt data failed: -517
+> 
+> Suppress it by using dev_err_probe instead, which also takes care of
+> storing the message as reason for deferring.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  drivers/iio/adc/qcom-spmi-adc5.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index 821fee60a765..69cc36004b5a 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -894,10 +894,8 @@ static int adc5_probe(struct platform_device *pdev)
+>  	mutex_init(&adc->lock);
+>  
+>  	ret = adc5_get_fw_data(adc);
+> -	if (ret) {
+> -		dev_err(dev, "adc get dt data failed\n");
+> -		return ret;
+> -	}
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "adc get dt data failed\n");
+>  
+>  	irq_eoc = platform_get_irq(pdev, 0);
+>  	if (irq_eoc < 0) {
+> -- 
+> 2.39.0
+> 
+
+Apologies for the clumsiness.
+
+- Marijn
