@@ -2,205 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22B6264E515
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 01:16:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0147264E57F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 02:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbiLPAQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 19:16:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48780 "EHLO
+        id S229689AbiLPBBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 20:01:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiLPAQq (ORCPT
+        with ESMTP id S229524AbiLPBBV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 19:16:46 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908B7396EE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 16:16:42 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id j4so1100317lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 16:16:42 -0800 (PST)
+        Thu, 15 Dec 2022 20:01:21 -0500
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05CE18B34
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 17:01:19 -0800 (PST)
+Received: by mail-il1-x131.google.com with SMTP id o13so564826ilc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 17:01:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kRw9NosyKCoLQzJxnba7zzcyE0l9B5s5iM+v2n7vWEI=;
-        b=wpjEBWCy0R6NjVJ+C8PgFTksxRS9zH9OhoKXGLCwK18mr/7o3/tNuMyt7TWbBpADRy
-         +bQ/NzBmXUeR8ftCqJcn6ikvHoCXUw1n161TrUEVwgaRZBACpRXDIwMgrDdQ7YLIaNvp
-         cMJqPgBzMDohxB8HfHoLhLvd52lMtc396eBRmF08/ofkzD96Y6swb9OR+qXfqDe0JHsv
-         0iJoBVQ3+BCHtvdh1KSRXzR4JYxTptC7M50REBAcWT5VZ6dQUH+7iAXfXFKf1RhNJe35
-         0k7GGcdeGJgT+ZBhGFrnX4I+Zt5K1NNqWmL6//NM+2E4KyG+iZPgQCR7/OXQ5wwV1lrS
-         YEfA==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g08NksEKoOrU8KMw47a1woD21yieKuv5YfZnJWjlF2A=;
+        b=WK0BCJRkm8uppwvGebpPX5SnM2eeJ7ZP6cQ3Dhz8iASi+JJ7u+NoHWJFt5s4aOX/Zc
+         JCMgJePxJea9Nt++2tHIvgqaw8Cbc8OBPaFpFfruaytR1TfLtnHAvYPzCRp6Gk0ruUtI
+         IG6SYugnQRhvV0RKu73Syv4uC4Ny4PEaMhB/4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kRw9NosyKCoLQzJxnba7zzcyE0l9B5s5iM+v2n7vWEI=;
-        b=bjGWMu9O3ljHTyUStoLGLNXnTIL7TXadOxxFixeD14D/OMikzmeS/Rk1Mez5o4tRN2
-         G2xz1MEgZ5tTK9N4k/mzXp0mBPgtCbab48cRCODmFd4zSyVPYvX8YctwnAGDD7l8d7Ll
-         mNdVyyeEPmJ12Dy//aTpWUP+MVyzOdDbcTjMoQrj5mlV38hrcEEUNUyEJJ98tfEIkki5
-         zq4XOUTm7phTEp6hGcNTs1dRXhUzApCYXNW9rQeDBc6L2iS4pzpuYWu9MOubLAVGWSr+
-         tP23vwGMSWem+yreJ3lu2sufYvUFYTtMTBaaRuYAxXTqffHjyaJK/Gvk6+Oum5GIKxJL
-         RvRg==
-X-Gm-Message-State: ANoB5plDlQiNrIWjuZtXTIq5kNg00S/kcW4pJlxqOCpwWUqLoREFjgG3
-        i1hiCPKaSm/h5+nFZVxvfMNvVQ==
-X-Google-Smtp-Source: AA0mqf6yQuvPJwr6lilxSPk5K679p5RQghfxCvY9VemYiZmO40/mgLzuvrybWqODEa0kVXYNGmmYoQ==
-X-Received: by 2002:a05:6512:3990:b0:4b6:d28a:2558 with SMTP id j16-20020a056512399000b004b6d28a2558mr13048452lfu.49.1671149800890;
-        Thu, 15 Dec 2022 16:16:40 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id c2-20020a197602000000b004a764f9d653sm50821lff.242.2022.12.15.16.16.38
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g08NksEKoOrU8KMw47a1woD21yieKuv5YfZnJWjlF2A=;
+        b=UI4YbGgYqa8vHYBTpTH6Wj6ZD95/b/ZFn6/TSi+DoVO2OlupZpMs6GKEE9nBQDmDpM
+         slnm8TVgabAoAt+rLwMg+0oZmd1Ds88p3za1yIxrdWEQ3Q0g/7zrp0S26R7kkQtTU727
+         0cver0PSZ9JwDoc5+sUzRrX6+va7fn/mLdXloWVNxd0I9TTs4vSmiO5Y7JcMu2GMqjxT
+         abKGOG1izwCH1QdwfDb20G3mVvneSR3yzstofTmB8lTMHtFsyBbu6CAOPzhnGHMgt26X
+         kLJHzdGoEuW10DIe6rMn1ZSMMXFLegom1GIwu2sIdX4EQ1zSX0xSvbVQUvDRStZRgr6f
+         IoMA==
+X-Gm-Message-State: ANoB5pnpikKppySToroTUA35c6diS62gWsi5PUbUoJ+8/hQpM4gOeYE0
+        WG5bk8Aq0fJSSdZcI+ha6eyxYg==
+X-Google-Smtp-Source: AA0mqf6Z3EP0FVuJ9aPL1X1LLxeikpzpLlGGOwb5PJeZpFwguYvehqnlLzh4Sgf96Gw0oBTMiv8iUg==
+X-Received: by 2002:a92:ccca:0:b0:300:e8df:4901 with SMTP id u10-20020a92ccca000000b00300e8df4901mr16927674ilq.10.1671152479106;
+        Thu, 15 Dec 2022 17:01:19 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id r9-20020a92c5a9000000b003039e7d680fsm270394ilt.11.2022.12.15.17.01.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 16:16:40 -0800 (PST)
-Message-ID: <d3d28673-934b-08aa-6301-ec56e6509010@linaro.org>
-Date:   Fri, 16 Dec 2022 01:16:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1 pins
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Adam Skladowski <a39.skl@gmail.com>,
+        Thu, 15 Dec 2022 17:01:18 -0800 (PST)
+Date:   Fri, 16 Dec 2022 01:01:18 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        quic_sibis@quicinc.com, elder@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221214232049.703484-1-marijn.suijten@somainline.org>
- <20221214232049.703484-5-marijn.suijten@somainline.org>
- <60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org>
- <20221215210010.on44gmoefbnsokvt@SoMainline.org>
- <20221215210246.rcx7f6unbhj52dkb@SoMainline.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221215210246.rcx7f6unbhj52dkb@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: enable IPA in
+ sc7280-herobrine-lte-sku.dtsi
+Message-ID: <Y5vDXm4oo2cn3etX@google.com>
+References: <20221215224552.1232449-1-elder@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221215224552.1232449-1-elder@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Dec 15, 2022 at 04:45:52PM -0600, Alex Elder wrote:
 
+> Subject: arm64: dts: qcom: sc7280: enable IPA in sc7280-herobrine-lte-sku.dtsi
 
-On 15.12.2022 22:02, Marijn Suijten wrote:
-> On 2022-12-15 22:00:12, Marijn Suijten wrote:
->> On 2022-12-15 14:19:41, Konrad Dybcio wrote:
->>>
->>>
->>> On 15.12.2022 00:20, Marijn Suijten wrote:
->>>> Add the pinctrl states for SDC1 and use them on sdhc_1.
->>>>
->>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/msm8976.dtsi | 55 +++++++++++++++++++++++++++
->>>>  1 file changed, 55 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
->>>> index 05dcb30b0779..7d4c7548882c 100644
->>>> --- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
->>>> @@ -508,6 +508,56 @@ tlmm: pinctrl@1000000 {
->>>>  			interrupt-controller;
->>>>  			#interrupt-cells = <2>;
->>>>  
->>>> +			sdc1_off_state: sdc1-off-state {
->>>> +				clk-pins {
->>>> +					pins = "sdc1_clk";
->>>> +					drive-strength = <2>;
->>>> +					bias-disable;
->>>> +				};
->>>> +
->>>> +				cmd-pins {
->>>> +					pins = "sdc1_cmd";
->>>> +					drive-strength = <2>;
->>>> +					bias-pull-up;
->>>> +				};
->>>> +
->>>> +				data-pins {
->>>> +					pins = "sdc1_data";
->>>> +					drive-strength = <2>;
->>>> +					bias-pull-up;
->>>> +				};
->>>> +
->>>> +				rclk-pins {
->>>> +					pins = "sdc1_rclk";
->>>> +					bias-pull-down;
->>>> +				};
->>>> +			};
->>>> +
->>>> +			sdc1_on_state: sdc1-on-state {
->>>> +				clk-pins {
->>>> +					pins = "sdc1_clk";
->>>> +					drive-strength = <16>;
->>>> +					bias-disable;
->>>> +				};
->>>> +
->>>> +				cmd-pins {
->>>> +					pins = "sdc1_cmd";
->>>> +					drive-strength = <10>;
->>>> +					bias-pull-up;
->>>> +				};
->>>> +
->>>> +				data-pins {
->>>> +					pins = "sdc1_data";
->>>> +					drive-strength = <10>;
->>>> +					bias-pull-up;
->>>> +				};
->>>> +
->>>> +				rclk-pins {
->>>> +					pins = "sdc1_rclk";
->>>> +					bias-pull-down;
->>>> +				};
->>>> +			};
->>>> +
->>>>  			spi1_default: spi0-default-state {
->>>>  				spi-pins {
->>>>  					pins = "gpio0", "gpio1", "gpio3";
->>>> @@ -680,6 +730,11 @@ sdhc_1: mmc@7824000 {
->>>>  				 <&gcc GCC_SDCC1_APPS_CLK>,
->>>>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
->>>>  			clock-names = "iface", "core", "xo";
->>>> +
->>>> +			pinctrl-0 = <&sdc1_on_state>;
->>>> +			pinctrl-1 = <&sdc1_off_state>;
->>>> +			pinctrl-names = "default", "sleep";
->>> pinctrl-names usually goes before pinctrl-N
->>
->> I thought I had seen them _after_ nowadays, same for reg-names,
->> phy-names, interrupt-names and clock-names.  What is it?
->>
->> Regardless, I'd rather keep this consistent across this file (sdc2 also
->> has it after, same for other *-names)
-> 
-> Excuse me, I was looking at sm6125 DT while writing this, sdc2 for
-> msm8976 is introduced _and used by sdhc_2 in a followup patch.
-> 
-> The other points still stand though, everything has -names last.
-Hm, that's a good point, perhaps we should apply it to pinctrl-
-too then. I like this.
+nit: that sounds as if IPA wasn't enabled previously. It would be
+clearer to say something like: "sc7280: only enable IPA for boards
+with a modem".
 
-Konrad
+> IPA is only needed on a platform if it includes a modem, and not all
+> SC7280 SoC variants do.  The file "sc7280-herobrine-lte-sku.dtsi" is
+> used to encapsulate definitions related to Chrome OS SC7280 devices
+> where a modem is present, and that's the proper place for the IPA
+> node to be enabled.
 > 
-> - Marijn
+> Currently IPA is enabled in "sc7280-idp.dtsi", which is included by
+> DTS files for Qualcomm reference platforms (all of which include the
+> modem).  That also includes "sc7280-herobrine-lte-sku.dtsi", so
+> enabling IPA there would make it unnecessary for "sc7280-idp.dtsi"
+> to enable it.
 > 
->> and correct it at once in a
->> separate patch, if someone really cares.
->>
->> But really, we should have a checker/autoformatter for these "rules",
->> instead of all this manual back-and-forth (is this order already set in
->> stone under Documentation/ or something?).
->>
->> - Marijn
+> The only other place IPA is enabled is "sc7280-qcard.dtsi".
+> That file is included only by "sc7280-herobrine.dtsi", which
+> is (eventually) included only by these top-level DTS files:
+>   sc7280-herobrine-crd.dts
+>   sc7280-herobrine-herobrine-r1.dts
+>   sc7280-herobrine-evoker.dts
+>   sc7280-herobrine-evoker-lte.dts
+>   sc7280-herobrine-villager-r0.dts
+>   sc7280-herobrine-villager-r1.dts
+>   sc7280-herobrine-villager-r1-lte.dts
+> All of but two of these include "sc7280-herobrine-lte-sku.dtsi", and
+> for those cases, enabling IPA there means there is no need for it to
+> be enabled in "sc7280-qcard.dtsi".
+> 
+> The two remaining cases will no longer enable IPA as a result of
+> this change:
+>   sc7280-herobrine-evoker.dts
+>   sc7280-herobrine-villager-r1.dts
+> Both of these have "lte" counterparts, and are meant to represent
+> board variants that do *not* have a modem.
+> 
+> This is exactly the desired configuration.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Tested-by: Sibi Sankar <quic_sibis@quicinc.com>
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
