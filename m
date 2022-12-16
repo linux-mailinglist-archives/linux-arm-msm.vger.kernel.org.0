@@ -2,96 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7464D64E9EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:03:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06EC264EA39
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:23:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiLPLDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 06:03:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48170 "EHLO
+        id S230449AbiLPLX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 06:23:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230213AbiLPLDE (ORCPT
+        with ESMTP id S231131AbiLPLXU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 06:03:04 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB691B1F1;
-        Fri, 16 Dec 2022 03:03:03 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        Fri, 16 Dec 2022 06:23:20 -0500
+Received: from desiato.infradead.org (desiato.infradead.org [IPv6:2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 243F525F6;
+        Fri, 16 Dec 2022 03:23:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=7uUzUe05b7rr2RFoVxzKl8oM+JPXRAqmcWlIXshXf6k=; b=aga5oUqtu32MOEtQdA/9l8SgYw
+        eqK6h6wN132DVT+oU0J1vAaAqnDD9XVidOHg/mfgKt/l/NNxUEKYmN87y75crq7LwwGSN5uc4Tc28
+        LYhn+wq2JNxB9tcorqMrSKjTFx4mLCntL1j2kK16eSjrmZhZ6D/GzC3RXxMXJ3Lwf6Xxtcxrtwzan
+        uk7dbMJsjiNaaBQxysHX/awOSdIIxqAIkqaOjc5sgYID/MPPhRVZp+ZjTQ6+wnitR7qIQ0MjkY0eK
+        voyqKYu+AJCZBYN91XImzkkURLZtTL+QidKTG6/Ds3aRvOlUVBrICeXyXjIa718NB8LZwntbhghTt
+        2g8BSGDw==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+        by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1p68o3-00B973-GA; Fri, 16 Dec 2022 11:23:11 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7A88220094;
-        Fri, 16 Dec 2022 12:03:01 +0100 (CET)
-Date:   Fri, 16 Dec 2022 12:03:00 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (Client did not present a certificate)
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 0A374300652;
+        Fri, 16 Dec 2022 12:23:10 +0100 (CET)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+        id E5E6F209E6740; Fri, 16 Dec 2022 12:23:09 +0100 (CET)
+Date:   Fri, 16 Dec 2022 12:23:09 +0100
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use labels with generic node names
- for ADC channels
-Message-ID: <20221216110300.rnlblgfjuojhlxny@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221209215308.1781047-1-marijn.suijten@somainline.org>
- <3d5b29f3-8d8d-93a7-a485-5261e2d8891d@linaro.org>
- <20221210165434.3hhen5mgtvflghks@SoMainline.org>
- <0bc1eba8-bc26-0bdb-16bf-78160c27c57b@linaro.org>
- <20221214205556.jdbcv3e4fkvm7f3y@SoMainline.org>
- <49be7501-916a-8d84-9757-fd31fab991dd@linaro.org>
+Subject: Re: [PATCH] media: camss: csiphy-3ph: avoid undefined behavior
+Message-ID: <Y5xVHU5FBr5qzAOs@hirez.programming.kicks-ass.net>
+References: <20221215162905.3960806-1-arnd@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <49be7501-916a-8d84-9757-fd31fab991dd@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221215162905.3960806-1-arnd@kernel.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-16 11:49:09, Krzysztof Kozlowski wrote:
-> [..]
-> > My commit message explains why the ADC5/VADC driver should really
-> > receive a label property instead of using the node name.
+On Thu, Dec 15, 2022 at 05:28:46PM +0100, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> The reason "unpleasant file-browsing experience" is usually OS specific,
-> so it does not justify requiring a label property. Label is just a
-> helper for the users.
+> Marking a case of the switch statement as unreachable means the
+> compiler treats it as undefined behavior, which is then caught by
+> an objtool warning:
+> 
+> drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.o: warning: objtool: csiphy_lanes_enable() falls through to next function csiphy_lanes_disable()
+> 
+> Instead of simply continuing execution at a random place of the
+> driver, print a warning and return from to the caller, which
+> makes it possible to understand what happens and avoids the
+> warning.
+> 
+> Fixes: 53655d2a0ff2 ("media: camss: csiphy-3ph: add support for SM8250 CSI DPHY")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 451a4c9b3d30..04baa80494c6 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -429,7 +429,8 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>  		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+>  		break;
+>  	default:
+> -		unreachable();
+> +		WARN(1, "unknown cspi version\n");
+> +		return;
+>  	}
 
-Ack.  Then it's up to the driver to figure out what's best here.  My
-suggestion on top of the proposed handling by Jonathan:
-
-a) Use label if present.
-b) Use node name if it's not adc-chan but strip the @xxx off it.
-c) Use (currently unused) hardcoded name in the driver.
-
-Unfortunately we have two drivers (VADC and ADC5) to deal with, where the
-VADC driver is not affected by any of these filename problems, nor won't
-be.  It doesn't have a label in Linux at all yet so there's no userspace
-ABI to (un)break, only DT ABI.
-
-- Marijn
+So no real objection here; but unreachable() does have an objtool
+annotation inside, so clearly the compiler managed to defeat that --
+perhaps we should look at that too.
