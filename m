@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6466764F53D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 00:40:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D08F64F53F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 00:40:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbiLPXkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 18:40:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60408 "EHLO
+        id S230097AbiLPXke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 18:40:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230097AbiLPXkc (ORCPT
+        with ESMTP id S229526AbiLPXkc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 16 Dec 2022 18:40:32 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7844D63C6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:30 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id cf42so5830658lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:30 -0800 (PST)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BEE16429
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:31 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id o6so916860lfi.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 15:40:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Eot6Ch9ktr7c1NPzEakSz2KfZ2lWHPXfKY4tvkPLu3o=;
-        b=J9+eGa40Eo6lbkO1rPjMNhpDL/MN8HHT9atYShSM7fXGdez37iIQCpmkgX4QJxWpR+
-         MMJECNAhX1S3dxnE2jIk4raaTsmc+xAxxf27bWjhz/iikt+v665xV6rc2x5AvWwi8LDv
-         fhBFaKb8SlwvBW7wkZ6Yos33PDVAygfoXFHbOqGhIzfV9cy0pFUSZT3heWKRrH2UNHCZ
-         Ab84TdhDmJGDVfNDRrrk8dIdi7kwE2LfoQUdR5S+WyHFTzfpeR/jGa084RQ/fcCD8jLl
-         iCdy3zcadtD45OtXujOSsRNWI5nbaGrryu/wSBaNBXm4aM2BRV83Pi1kd14YThYEsqIi
-         D4gw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7cZwQ38RrZGBM4qHYSFGd7K3TwyC7n/w0FHJkPUy2UM=;
+        b=mO6GTEu8x/YM6wnvapt5u40IbV3efRsxnbpPo9jpp2d/qIdvVJ/I+NSdS4K5e09bbc
+         bLPi/pf8fMQR4Mgz/LzlNEdN7+aVGsQempHQm9YJaTRyV2SbT2CX8ltb2jRgLwltuLti
+         oMjrXTk/B8qk2KawhYNGWqEZ+k6z7IU35rNIUMtN6uBE9AoJiXmvxXNVWW7rxo4eV8Lm
+         9VW88mGVFkA/n5GEFy0P7ishOxc+akf1xQLAmxJ3n4fBcu9EIwBm6ZWbVuEXPh1vhq5v
+         0Po7UAgMl4y0stvdPm4FCgytDr6VzlS6VwhH17ZWa8ai1hjMcaDkXqSRGF4NAYCLjPzJ
+         dxuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Eot6Ch9ktr7c1NPzEakSz2KfZ2lWHPXfKY4tvkPLu3o=;
-        b=Kt2iIODv0G0MS8CcqWZVnEQ9GzPQ4IEjtxL00ItoMgkP+umA5d6DdfFWItuQpSxlk7
-         QQ4CA3sd4hPArojPXtY7VdajiyQaAC3zNRhhOmmpKo9QIGt2QzyV2+ZxtI6pp8RH0Lc/
-         yEVjsd3/KAm5qwe3KWMobPC62ms/O6ykTwFr1xTB6C+AE46W8RXLgY54oPxee0gmyReM
-         kno/762PzL94WooGlxNIgCf9roPAFEx1J6QvcV0WGEoVFgNViRMZNsZodkMlcMH2YKn6
-         vYMgADtd+IKSnPkAcpRevZpuWXS56WhJ4cV35o8vcu710ylYRl/g3rmNM2dNnKLTEMu6
-         /yUA==
-X-Gm-Message-State: ANoB5plChvs/eLYq8nsunJuJKn2dSdAu2KCOeGOVFdWo+s8QnECIyJ6M
-        eHc0u6b8PYMrNcj5k/PBk7XEgw==
-X-Google-Smtp-Source: AA0mqf77Bq7wd745sA6uN3Qyen+p2FVXlZKvVvCcfiw8EUSGttr+gsd0BMnibFt3vht0ivXPL/cXVw==
-X-Received: by 2002:a05:6512:b8c:b0:4b5:7d49:4a05 with SMTP id b12-20020a0565120b8c00b004b57d494a05mr13684431lfv.0.1671234028721;
-        Fri, 16 Dec 2022 15:40:28 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7cZwQ38RrZGBM4qHYSFGd7K3TwyC7n/w0FHJkPUy2UM=;
+        b=rlmfzLsoBaCyVnSsrpadcEuKEvtulYS7gcXpPYVB0bnSlmL1op058nxp1aguTC7KZA
+         Oj4X8D5sKHvcoxAqHVZyEBMup+jckqmMLG5wGg1fEVMBdtMxG+hUNJUUGMoJ/UwCMlWQ
+         95Bs9+mko+p0wTnzWklDtlU8iPgynbdm/zhqqasNZW361ZTreAptDGFCXGJRR74TeUnT
+         2ChXAJ871hOtA546tCBlKlVfUGiBHaWpHBu7EbxJHX9lD4XO0h/y2/I5mo/MovsHlwKn
+         L5G+rQVVkQ8ARQ2HTZwvY+mY6fUQlQb1Jr8z1EuYOWqheGnOd1qTR/s4R+7qiPdAdwLU
+         62yg==
+X-Gm-Message-State: ANoB5plVu14d/CWcuxc/ecedR+yNUT36NZnPbRJ0wnMnQ15hECcQUJv6
+        TUYx5l4ecDRNnFjGqcwqVZSk8g==
+X-Google-Smtp-Source: AA0mqf6LBdEGcgyFkutG3rmz4Csb86TyQrexMg3SEuzL6EnIva7pNhA9wUTmnPTfxzPeybD5RMF5Ig==
+X-Received: by 2002:ac2:5a43:0:b0:4b5:90c5:281c with SMTP id r3-20020ac25a43000000b004b590c5281cmr9295436lfn.19.1671234029557;
+        Fri, 16 Dec 2022 15:40:29 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a21-20020ac25055000000b004b40c2fccfdsm336950lfm.59.2022.12.16.15.40.27
+        by smtp.gmail.com with ESMTPSA id a21-20020ac25055000000b004b40c2fccfdsm336950lfm.59.2022.12.16.15.40.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Dec 2022 15:40:28 -0800 (PST)
+        Fri, 16 Dec 2022 15:40:29 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,10 +61,12 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 1/3] dt-bindings: phy: qcom,pcie2-phy: convert to YAML format
-Date:   Sat, 17 Dec 2022 01:40:25 +0200
-Message-Id: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/3] phy: qualcomm: pcie2: register as clock provider
+Date:   Sat, 17 Dec 2022 01:40:26 +0200
+Message-Id: <20221216234027.539917-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
+References: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,158 +79,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the bindings for the Qualcomm PCIe2 PHY into the YAML format
-from the text description.
+Register pcie2 PHY as a clock provider to enable using it in the
+DT-based clock lookup.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/phy/qcom,pcie2-phy.yaml          | 87 +++++++++++++++++++
- .../bindings/phy/qcom-pcie2-phy.txt           | 42 ---------
- 2 files changed, 87 insertions(+), 42 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
- delete mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
+ drivers/phy/qualcomm/phy-qcom-pcie2.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
-new file mode 100644
-index 000000000000..497850a5b428
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
-@@ -0,0 +1,87 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+diff --git a/drivers/phy/qualcomm/phy-qcom-pcie2.c b/drivers/phy/qualcomm/phy-qcom-pcie2.c
+index 5407e59bb185..11a2bb958681 100644
+--- a/drivers/phy/qualcomm/phy-qcom-pcie2.c
++++ b/drivers/phy/qualcomm/phy-qcom-pcie2.c
+@@ -243,7 +243,11 @@ static int phy_pipe_clksrc_register(struct qcom_phy *qphy)
+ 	fixed->fixed_rate = 250000000;
+ 	fixed->hw.init = &init;
+ 
+-	return devm_clk_hw_register(qphy->dev, &fixed->hw);
++	ret = devm_clk_hw_register(qphy->dev, &fixed->hw);
++	if (ret < 0)
++		return ret;
 +
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,pcie2-phy.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PCIe2 PHY controller
-+
-+maintainers:
-+  - Vinod Koul <vkoul@kernel.org>
-+
-+description:
-+  The Qualcomm PCIe2 PHY is a Synopsys based phy found in a number of Qualcomm
-+  platforms.
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,qcs404-pcie2-phy
-+      - const: qcom,pcie2-phy
-+
-+  reg:
-+    items:
-+      - description: PHY register set
-+
-+  clocks:
-+    items:
-+      - description: a clock-specifier pair for the "pipe" clock
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  vdda-vp-supply:
-+    description: phandle to low voltage regulator
-+
-+  vdda-vph-supply:
-+    description: phandle to high voltage regulator
-+
-+  resets:
-+    maxItems: 2
-+
-+  reset-names:
-+    items:
-+      - const: phy
-+      - const: pipe
-+  "#clock-cells":
-+    const: 0
-+
-+  clock-output-names:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#phy-cells"
-+  - clocks
-+  - vdda-vp-supply
-+  - vdda-vph-supply
-+  - resets
-+  - reset-names
-+  - clock-output-names
-+  - "#clock-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
-+    phy@7786000 {
-+      compatible = "qcom,qcs404-pcie2-phy", "qcom,pcie2-phy";
-+      reg = <0x07786000 0xb8>;
-+
-+      clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
-+      resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
-+               <&gcc GCC_PCIE_0_PIPE_ARES>;
-+      reset-names = "phy", "pipe";
-+
-+      vdda-vp-supply = <&vreg_l3_1p05>;
-+      vdda-vph-supply = <&vreg_l5_1p8>;
-+
-+      clock-output-names = "pcie_0_pipe_clk";
-+      #clock-cells = <0>;
-+      #phy-cells = <0>;
-+    };
-+...
-+
-diff --git a/Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt b/Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
-deleted file mode 100644
-index 30064253f290..000000000000
---- a/Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
-+++ /dev/null
-@@ -1,42 +0,0 @@
--Qualcomm PCIe2 PHY controller
--=============================
--
--The Qualcomm PCIe2 PHY is a Synopsys based phy found in a number of Qualcomm
--platforms.
--
--Required properties:
-- - compatible: compatible list, should be:
--	       "qcom,qcs404-pcie2-phy", "qcom,pcie2-phy"
--
-- - reg: offset and length of the PHY register set.
-- - #phy-cells: must be 0.
--
-- - clocks: a clock-specifier pair for the "pipe" clock
--
-- - vdda-vp-supply: phandle to low voltage regulator
-- - vdda-vph-supply: phandle to high voltage regulator
--
-- - resets: reset-specifier pairs for the "phy" and "pipe" resets
-- - reset-names: list of resets, should contain:
--		"phy" and "pipe"
--
-- - clock-output-names: name of the outgoing clock signal from the PHY PLL
-- - #clock-cells: must be 0
--
--Example:
-- phy@7786000 {
--	compatible = "qcom,qcs404-pcie2-phy", "qcom,pcie2-phy";
--	reg = <0x07786000 0xb8>;
--
--	clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
--	resets = <&gcc GCC_PCIEPHY_0_PHY_BCR>,
--	         <&gcc GCC_PCIE_0_PIPE_ARES>;
--	reset-names = "phy", "pipe";
--
--	vdda-vp-supply = <&vreg_l3_1p05>;
--	vdda-vph-supply = <&vreg_l5_1p8>;
--
--	clock-output-names = "pcie_0_pipe_clk";
--	#clock-cells = <0>;
--	#phy-cells = <0>;
-- };
++	return devm_of_clk_add_hw_provider(qphy->dev, of_clk_hw_simple_get, &fixed->hw);
+ }
+ 
+ static int qcom_pcie2_phy_probe(struct platform_device *pdev)
 -- 
 2.35.1
 
