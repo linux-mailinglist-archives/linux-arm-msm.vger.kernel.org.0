@@ -2,189 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9523A64E9C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 11:53:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E81B64E9DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 11:59:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230312AbiLPKxc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 05:53:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
+        id S230415AbiLPK76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 05:59:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229849AbiLPKxa (ORCPT
+        with ESMTP id S230391AbiLPK7t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 05:53:30 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700F3442C6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 02:53:27 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id EAF3D1F9B2;
-        Fri, 16 Dec 2022 11:53:22 +0100 (CET)
-Date:   Fri, 16 Dec 2022 11:53:21 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] arm64: dts: qcom: Use labels with generic node names
- for ADC channels
-Message-ID: <20221216105321.bxol64or5j4jeynh@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221209215308.1781047-1-marijn.suijten@somainline.org>
- <3d5b29f3-8d8d-93a7-a485-5261e2d8891d@linaro.org>
- <20221210165434.3hhen5mgtvflghks@SoMainline.org>
- <20221211141526.463f43e6@jic23-huawei>
- <20221214204933.eo6sxodlnmcisc47@SoMainline.org>
- <01f7ef3c-910e-43fc-5cbf-c4caf223dc7c@linaro.org>
+        Fri, 16 Dec 2022 05:59:49 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3108554FE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 02:59:45 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id t62so1600029oib.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 02:59:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C/X5f1b3Jd5E8SVV/ERglFPxZyk8fr+L/PokTEbRk3Y=;
+        b=zKSRWyyH6dbufGau63jnR/+AbZ1uw0rc6CbAIWPGoncNBLYiur5SDIGqtBkYsDWvx/
+         kJLpQHLtJCXyySVVExoj7nuey6U7BRo3gBi/Atr4BcTzfbl8AWOYmGIoh8IjDgnTTjF2
+         IIQ6qdi2HqSnB3oOFMqdsQ1q1LUR3yluo/zEkXXhRdm8I5kyprIdXVlFpYqD0U50HkIb
+         ORaPFYpMYu4AqdnDcRy1PHM6omb65tyZTeYv9PdAmXByJXpcG3K4AT2Ztury9QwBqIZA
+         GUapTjDiFx8rt6U6sLRTBz69KYCTQEj2XpJGRSioOHl1D7EnociSSR1FxtE8wDh+N6kY
+         o3wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C/X5f1b3Jd5E8SVV/ERglFPxZyk8fr+L/PokTEbRk3Y=;
+        b=2Vgol95+Nn23of3zm4pFISODUGSS1M3yC/lzy0NprEn8FLia5TDoSOcRlPDcRKM3wC
+         jsA1Y13fnLdJaXl/xyjrTAuxnACTZ7ACJ9ECRB1nNnvi0DWb8HQRa9jUhiumyymZi1iy
+         vFI1Y7zm5kZ+FhhNtB4gfry2qRvbIm9ziomlnpXCymjzTkjJVh7Os7OjgIwzY+QAv3S3
+         lWAOq2SQdlCf70P3pNRQY3t3PycxanWAupalo8fpbwji7xyO3IY+Onk5LrTAuxK8rl3m
+         gUZzoxPj3kHhBYqKVpaO1Ib7JgI0+V2EuDVd/+DxPKN5LWu+8RzavFS4f2C2RD/tC5FQ
+         m+xg==
+X-Gm-Message-State: ANoB5pmaUcvhL8fe6Qg7sqz2PNO5sxSZF1oyjIB7S6G61Si+ESo1dnJZ
+        2zr05g1Qr+cPbGzFiyTnGlTsrA5g473RsBmEOAfyZg==
+X-Google-Smtp-Source: AA0mqf7lqofw6GNI3Y6Di93mOEjknDpnuUaSQ7N5EQdUyvuNwrTkHlh788t0GM2DeGmmxZm+wcAF6BNG+4L4vwEYLDE=
+X-Received: by 2002:a05:6808:1b2b:b0:35e:5a1b:825c with SMTP id
+ bx43-20020a0568081b2b00b0035e5a1b825cmr615149oib.155.1671188385246; Fri, 16
+ Dec 2022 02:59:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <01f7ef3c-910e-43fc-5cbf-c4caf223dc7c@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221215162905.3960806-1-arnd@kernel.org>
+In-Reply-To: <20221215162905.3960806-1-arnd@kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 16 Dec 2022 11:59:34 +0100
+Message-ID: <CAG3jFyun2NhHT_mQjrRvt44Adk_O7UqE49YQNm4_G8wZ5JOskA@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: csiphy-3ph: avoid undefined behavior
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Todor Tomov <todor.too@gmail.com>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Jonathan Marek <jonathan@marek.ca>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-16 11:44:34, Krzysztof Kozlowski wrote:
-> On 14/12/2022 21:49, Marijn Suijten wrote:
-> > On 2022-12-11 14:15:26, Jonathan Cameron wrote:
-> >> On Sat, 10 Dec 2022 17:54:34 +0100
-> >> Marijn Suijten <marijn.suijten@somainline.org> wrote:
-> >>
-> >>> On 2022-12-10 12:02:03, Krzysztof Kozlowski wrote:
-> >>>> On 09/12/2022 22:53, Marijn Suijten wrote:  
-> >>>>> As discussed in [1] the DT should use labels to describe ADC channels,
-> >>>>> with generic node names, since the IIO drivers now moved to the fwnode
-> >>>>> API where node names include the `@xx` address suffix.
-> >>>>>
-> >>>>> Especially for the ADC5 driver that uses extend_name - which cannot be
-> >>>>> removed for compatibility reasons - this results in sysfs files with the
-> >>>>> @xx name that wasn't previously present, and leads to an unpleasant
-> >>>>> file-browsing experience.
-> >>>>>
-> >>>>> Also remove all the unused channel labels in pm660.dtsi.
-> >>>>>
-> >>>>> [1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-> >>>>>
-> >>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>  
-> >>>>
-> >>>> The talk was in context of bindings, not about changing all existing
-> >>>> users thus affecting DTS.  
-> >>>
-> >>> And as a consequence, DTS.  The already-merged transition from OF to
-> >>> fwnode resulted in `@xx` to be included in the ADC channel name - and in
-> >>> the case of ADC5 even in sysfs filenames - so this seems like a
-> >>> necessary change to make.
-> >>
-> >> Gah. We missed that at the time.  Arguably we should first fix that
-> >> particular issue as we will have lots of old DT out there.
-> >> (add a bit of code to strip the @xxx bit from that particular usecase).
-> >> It gets tricky because now we might have code relying on the new
-> >> broken behavior.
-> > 
-> > Before rushing to fix that, my idea was to simply only read DT labels in
-> > the driver, and otherwise fall back to the hardcoded names inside that
-> > IIO driver (again: ADC5 defines friendly names in the driver, but
-> > doesn't ever reference them besides a worthless non-NULL check).
-> > 
-> >>> At the very least I would have changed the bindings submitted or
-> >>> co-authored /by myself/ since I initially decided to rely on this (now
-> >>> obviously) wrong behaviour, and should have used labels from the get go.
-> >>>
-> >>>> What's more, to me "skin-temp-thermistor" is
-> >>>> quite generic name, maybe "thermistor" would be more and reflects the
-> >>>> purpose of the node, so it was more or less fine.  
-> >>>
-> >>> Are you suggesting to not use "adc-chan", but "thermistor" as node name
-> >>> (and still use skin_temp as label)?  Or to keep the fully-written-out
-> >>> "thermistor" word in the label?
-> >>>
-> >>>> Anyway I am against such changes without expressing it in the bindings.  
-> >>>
-> >>> As expressed in [1] I suggested and am all for locking this change in
-> >>> via bindings, and you are right to expect that to have gone paired with
-> >>> this patch.
-> >>>
-> >>> I'll submit that as the leading patch to this in v2, with the wildcard
-> >>> pattern changed to adc-chan (or something else pending the discussion
-> >>> above), and should I then also require the label property via `label:
-> >>> true`?
-> >>>
-> >>> [1]: https://lore.kernel.org/linux-arm-msm/20221208101232.536i3cmjf4uk2z52@SoMainline.org/
-> >>
-> >> So the 'fun' here is what to do with old DTS as we need to support that
-> >> even if we update the binding docs and all in kernel users.
-> > 
-> > Personally I have never cared about backwards compat as all my devices
-> > rely on the DT and drivers to be brought up in tandem, but yes that is a
-> > problem for others...
-> 
-> Yeah, but we do not accept patches with each other person point of view
-> of ABI. ABI rules are generic, otherwise it would not be ABI, right?
+On Thu, 15 Dec 2022 at 17:29, Arnd Bergmann <arnd@kernel.org> wrote:
+>
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> Marking a case of the switch statement as unreachable means the
+> compiler treats it as undefined behavior, which is then caught by
+> an objtool warning:
+>
+> drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.o: warning: objtool: csiphy_lanes_enable() falls through to next function csiphy_lanes_disable()
+>
+> Instead of simply continuing execution at a random place of the
+> driver, print a warning and return from to the caller, which
+> makes it possible to understand what happens and avoids the
+> warning.
+>
+> Fixes: 53655d2a0ff2 ("media: camss: csiphy-3ph: add support for SM8250 CSI DPHY")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 451a4c9b3d30..04baa80494c6 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -429,7 +429,8 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>                 array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+>                 break;
+>         default:
+> -               unreachable();
+> +               WARN(1, "unknown cspi version\n");
+> +               return;
+>         }
+>
+>         for (l = 0; l < 5; l++) {
+> --
+> 2.35.1
+>
 
-Hence I am not outright rejecting the proposal to maintain ABI
-compatibility.
-
-However I won't be the one reverting the fwnode conversion or writing
-the code to strip the `@xx` suffix.  We're already on a tangent of a
-tangent, with my original goal to add the missing label names to the
-VADC driver.
-
-> > 
-> >> Probably right option in driver is:
-> >> a) Use label if present
-> >> b) Use node name if it's not adc-chan but strip the @xxx off it.
-> > 
-> > Perhaps we can skip this entirely: as shown by this patch the use of
-> > node names instead of labels is limited to "newer" devices and SoCs,
-> > given their "active" development leads to the assumption they must also
-> 
-> Only SM8550, SC8280xp and maybe SM8450 qualify to such "active"
-> development platforms.
-
-I guess we'll have to agree to disagree here.  Many more SoCs are still
-in swing or so incomplete that it hardly makes any sense to not update
-/both/ regularly.
-
-That's not a valid argument to break ABI though, so we'll leave it at
-that.
-
-> > flash their kernel and DTB updates in tandem? 
-> 
-> No, DTS is used outside in other projects and out of tree kernels. Just
-> because you use them together does not change the requirements of DTS
-> and kernel of not breaking other users, without clear, justified reason.
-
-That's known, but inconvenient nevertheless given the rate at which both
-"evolve".
-
- - Marijn
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
