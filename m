@@ -2,87 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 149CF64F33C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 22:34:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 288DC64F353
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 22:45:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbiLPVeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 16:34:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57784 "EHLO
+        id S229731AbiLPVp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 16:45:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbiLPVeK (ORCPT
+        with ESMTP id S229613AbiLPVpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 16:34:10 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB156B235
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 13:34:02 -0800 (PST)
-Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6AADD1F892;
-        Fri, 16 Dec 2022 22:33:55 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6125: Reorder HSUSB PHY clocks to match bindings
-Date:   Fri, 16 Dec 2022 22:33:43 +0100
-Message-Id: <20221216213343.1140143-1-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.39.0
+        Fri, 16 Dec 2022 16:45:24 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CB596DCE8;
+        Fri, 16 Dec 2022 13:45:22 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BGKvYqD016777;
+        Fri, 16 Dec 2022 21:45:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=/DpM4lS1iEF8fb5OIUdAjxkvnMu6ssge6xQo4LyLuz0=;
+ b=HGWZNtgiuE9SjZL429zX3tdJ/5X1ZrFFrW45Z+lY8asrrF9iDm/Rkc6cYrfnZvo+fKY7
+ vUH0D03H12O22pCsosiBWAXWk1u324RKx3dNnM57C3UAVWhzwGidsCXjWMb3Suq3/jgp
+ Fe1ks/QEHs4CZBTiSon/xwcdkywJDBWWGnBUSVR63OnsWgLGJ3rFqXHdhltmclO+J6r8
+ O1lQjnAjjq2RjMLeEVlOdm63y05/GeQ1NB45IE1rBENbHDZvQ5IWyBrqJDevBLc5NAG5
+ 2gc4MefvTCc/oDUNMaWKu1NpYgtp9BKSTrlzFkRvSp9ho+bYglWIFO/94E/CUTlbh0IL 8A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mg8e6bta6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Dec 2022 21:45:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BGLjBrf003803
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Dec 2022 21:45:11 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 16 Dec 2022 13:45:10 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
+        <airlied@gmail.com>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v15 0/5] Add data-lanes and link-frequencies to dp_out endpoint
+Date:   Fri, 16 Dec 2022 13:44:57 -0800
+Message-ID: <1671227102-21717-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JuMh4I74UZm0ACkOkudVMovIVhzCx755
+X-Proofpoint-ORIG-GUID: JuMh4I74UZm0ACkOkudVMovIVhzCx755
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-16_14,2022-12-15_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=949 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 clxscore=1015 phishscore=0 mlxscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2212160194
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reorder the clocks and corresponding names to match the QUSB2 phy
-schema, fixing the following CHECK_DTBS errors:
+Add DP both data-lanes and link-frequencies property to dp_out endpoint and support
+functions to DP driver.
 
-    arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: phy@1613000: clock-names:0: 'cfg_ahb' was expected
-            From schema: /newdata/aosp-r/kernel/mainline/kernel/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-    arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: phy@1613000: clock-names:1: 'ref' was expected
-            From schema: /newdata/aosp-r/kernel/mainline/kernel/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+Kuogee Hsieh (5):
+  arm64: dts: qcom: add data-lanes and link-freuencies into dp_out
+    endpoint
+  dt-bindings: msm/dp: add data-lanes and link-frequencies property
+  drm/msm/dp: parse data-lanes as property of dp_out endpoint
+  Add capability to parser and retrieve max DP link supported rate from 
+       link-frequencies property of dp_out endpoint.
+  drm/msm/dp: add support of max dp link rate
 
-Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../bindings/display/msm/dp-controller.yaml        | 25 ++++++++++-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  4 ++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |  4 ++
+ drivers/gpu/drm/msm/dp/dp_display.c                |  4 ++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  7 +--
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c                 | 50 ++++++++++++++++++----
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |  2 +
+ 8 files changed, 85 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 7e25a4f85594..bf9e8d45ee44 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -442,9 +442,9 @@ hsusb_phy1: phy@1613000 {
- 			reg = <0x01613000 0x180>;
- 			#phy-cells = <0>;
- 
--			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
--				 <&gcc GCC_AHB2PHY_USB_CLK>;
--			clock-names = "ref", "cfg_ahb";
-+			clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-+				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+			clock-names = "cfg_ahb", "ref";
- 
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
- 			status = "disabled";
 -- 
-2.39.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
