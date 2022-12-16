@@ -2,384 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4489D64EAA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:32:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF7F764EAD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:49:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230373AbiLPLc0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 06:32:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39690 "EHLO
+        id S231160AbiLPLtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 06:49:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbiLPLcW (ORCPT
+        with ESMTP id S229495AbiLPLtB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 06:32:22 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40051DC2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:32:21 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id y25so3022504lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:32:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dAx/1r3Bgtwb5gejIiLMQD2z5RpFJAB22ApCDcu9cys=;
-        b=W1KEfyCP1EPfqe+EFNlDgY5uuLVCqJqF03dWExRdMCHQMkE620y1TrUDuyeEdg7zUn
-         he3UdSCXrYIQEAWmuOhh49saZvkmtFB1Xqt6PhZVezQ+vtdxBgWZ/kXCUeYULPklY0L7
-         DPOjHIrcWJMpNb3Hwv8Yh03PYGIV9yPmbf2dRUc+Wh75AFVgF4vURfQOl3XjGvArm9nJ
-         lXoTdoXgvIom2IPMjZ7f2lO8AtGsLPwvn1iAW/H0ExJSiEswKHUILoUFFKVfJNvEWDfH
-         uznUELjCuBDB4D4viwgTqsEc5yVKqyr2xk+hDkNHGAp7ZRHTMxpKjR+coH2yH/r2BD08
-         I7/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAx/1r3Bgtwb5gejIiLMQD2z5RpFJAB22ApCDcu9cys=;
-        b=UeIQRCRpkEx9KmbIoX1hVwbhcebMeQ4s8R92f4WEWCXxPnWtaPZioDZSLp4MAB0AWh
-         S2jyy89ZEzm+mvSZGtTo3VI/5l3aODVlHkG+6CjCochGW1X2u+H4Pn+RujBt0thrnaOl
-         v3e+pXGGKBN2VNd9ZjMpC8u+9cOktzJRiTlo/tB79xHoHOBYZKf1n1tOaUWo3n+LJ12q
-         yS1DtHl9nz2Eim6o65ji/dpD66QKo5twT0rFEOtf0MlugpkDU3cGDLf2pyqI6+MVkh64
-         Ox/5iojgpC3aW/kDMwquXS+oXjDlFzABSOzyAuBqEo0sVTfuii3VJ1kNcIW/WkKPkLVc
-         QzwA==
-X-Gm-Message-State: ANoB5pn0rbZWUAZfJ2N0beeyKDM0glLMJ/bM0w9cKi7o/5TJCKT/F8/a
-        F39kO/O6w3QkXT8eAcRxuNf+0A==
-X-Google-Smtp-Source: AA0mqf4ZhjmOvV5922vukAGUOlFpL4ayukZvFPADDzt+0ywiaB2yUSwWv14YnGU6D0lvb15/zE87vg==
-X-Received: by 2002:ac2:4f8d:0:b0:4a4:68b9:19f1 with SMTP id z13-20020ac24f8d000000b004a468b919f1mr8730959lfs.25.1671190339565;
-        Fri, 16 Dec 2022 03:32:19 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id w1-20020a05651234c100b004b5b4126237sm198535lfr.67.2022.12.16.03.32.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Dec 2022 03:32:19 -0800 (PST)
-Message-ID: <afcb9378-f331-df8c-ced5-1c10999f5fb8@linaro.org>
-Date:   Fri, 16 Dec 2022 12:32:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sm6125: Initial support for
- xiaomi-laurel-sprout
-Content-Language: en-US
-To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20221215190404.398788-1-they@mint.lgbt>
- <20221215190404.398788-4-they@mint.lgbt>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221215190404.398788-4-they@mint.lgbt>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fri, 16 Dec 2022 06:49:01 -0500
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50A692CCA0;
+        Fri, 16 Dec 2022 03:49:00 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 0F9DE3200708;
+        Fri, 16 Dec 2022 06:48:56 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Fri, 16 Dec 2022 06:48:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1671191336; x=1671277736; bh=kU35CPgp3n
+        vA6LdQKqXJPSk0/v+oA3trIRauG4K8Ze0=; b=bcxr5jnvgRjNAFsqIBEUVIt+AM
+        i+MXSxqI3uaAXNLpW6x7DxeBtlw5PepzNy9d8k9oY74QONmfqLlBJKAr5MC5Uixy
+        r7lMONGsst2KWE3OMMcLFLU9zRKCLk1uM9WcZWjVtUlbqcRxcc/RJ8WRhIorSbwT
+        FXVfnXGHrq07mMlG3tkFoylttAanLPuhZUjqp0pzokUKu4JE4aXyptENgzcbk5Z0
+        mrJhFK71CS4qTkPzbxABHuIWmyoEdZ/FnIDpluuEcokB5jhX69gK9rnTt4kOlw/h
+        2r7hlk5gWVBGYayJBppElHT7/IhilkH0dKj43oP61t6ey8nRwVBl0MJm4eWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm2; t=1671191336; x=1671277736; bh=kU35CPgp3nvA6LdQKqXJPSk0/v+o
+        A3trIRauG4K8Ze0=; b=GtuKxE2Fsy1VJWC9GQp1T6cVuRJdx/SLgWoWsrRKMvmS
+        sfEMV20HBaeSCe46xNZI3MuEcg07PHqNVOnthQUse3Ozj3BFpV5WGl4TVjeCRKpO
+        IvANQ2eJGgVRHcMxipykj2xP7frSZiKHiTyk6ruubW50n44h1+zGE20tMiqK05bt
+        VZmr9A4zT19v+VH4xbdMlpBgZYBqrGpBISj1M6dKorf+9icgkFcaS8lF1JBeupvM
+        5M+XJcRUKv1N4aWFtOZxdarUNYoz+ytKn+/R7x8kbLhYpbFXgFi0Mi6mmG1N7WTT
+        RuSWUkHZ1qY3YzbxPBXkFHuKRkQtS0xyJaK5zcXZKQ==
+X-ME-Sender: <xms:J1ucY1rESxiX0OHiXDQUlWcF5SxiWbkeif3nDFiOhFeH1bdSahhfnw>
+    <xme:J1ucY3qSmcH4nOlvasc7udse7hQztflWUuoOVBe3oBBnx6tBxY50Y49t3t0ZaAjdn
+    Rp9L1g5IcQ4ROInGPc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeejgdefudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesmhdtreerreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeekledvieevudeltefghefggffgtdelveetieejhfelteevieehteeljedtkefg
+    ueenucffohhmrghinhepphgrshhtvggsihhnrdgtohhmnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:J1ucYyNS1TP6Hp1o-4ji_qxbcWyhYoAO_ZZrHt5ate5FSRUhe3Uh0A>
+    <xmx:J1ucYw7XxhC3HtwokQFaHoihPuuUQfFfokF-p3GrfQt4hy1jL8aVqA>
+    <xmx:J1ucY07pC2ugwLoYZIHNc5Fr1AikuPwcosLAm8j9CT6iZxo3-sJm9g>
+    <xmx:KFucY_IQvnnkR0sXZAd3mx--HVxiNrRyuU7IRuujQueCerfBcGqcQQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 9135EB60086; Fri, 16 Dec 2022 06:48:55 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1185-g841157300a-fm-20221208.002-g84115730
+Mime-Version: 1.0
+Message-Id: <7528ccc8-7337-4e7f-9474-0d94ed6152ed@app.fastmail.com>
+In-Reply-To: <Y5xVHU5FBr5qzAOs@hirez.programming.kicks-ass.net>
+References: <20221215162905.3960806-1-arnd@kernel.org>
+ <Y5xVHU5FBr5qzAOs@hirez.programming.kicks-ass.net>
+Date:   Fri, 16 Dec 2022 12:46:18 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Peter Zijlstra" <peterz@infradead.org>,
+        "Arnd Bergmann" <arnd@kernel.org>
+Cc:     "Robert Foss" <robert.foss@linaro.org>,
+        "Todor Tomov" <todor.too@gmail.com>,
+        "Josh Poimboeuf" <jpoimboe@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        "Hans Verkuil" <hverkuil-cisco@xs4all.nl>,
+        "Jonathan Marek" <jonathan@marek.ca>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Nick Desaulniers" <ndesaulniers@google.com>
+Subject: Re: [PATCH] media: camss: csiphy-3ph: avoid undefined behavior
+Content-Type: multipart/mixed;
+ boundary=2a2f36a5189a4026b84f150ff64abf18
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+--2a2f36a5189a4026b84f150ff64abf18
+Content-Type: text/plain
+
+On Fri, Dec 16, 2022, at 12:23, Peter Zijlstra wrote:
+> On Thu, Dec 15, 2022 at 05:28:46PM +0100, Arnd Bergmann wrote:
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index 451a4c9b3d30..04baa80494c6 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -429,7 +429,8 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>>  		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+>>  		break;
+>>  	default:
+>> -		unreachable();
+>> +		WARN(1, "unknown cspi version\n");
+>> +		return;
+>>  	}
+>
+> So no real objection here; but unreachable() does have an objtool
+> annotation inside, so clearly the compiler managed to defeat that --
+> perhaps we should look at that too.
+
+Ah, I forgot this annotation existed. I see that this
+particular objtool warning only happens with clang (I used
+version 14.0.6), but it does not happen with gcc-12.2.
+
+I see the function ends in
+
+	jmp	.LBB3_45
+.LBB3_54:
+	#APP
+.Ltmp0:
+	.section	.discard.unreachable,"",@progbits
+.Ltmp1:
+	.long	.Ltmp0-.Ltmp1
+	.text
+ 	#NO_APP
+.Lfunc_end3:
+	.size	csiphy_lanes_enable, .Lfunc_end3-csiphy_lanes_enable
+                                        # -- End function
 
 
-On 15.12.2022 20:04, Lux Aliaga wrote:
-> Adds support for the Xiaomi Mi A3 (xiaomi-laurel-sprout). Here's a
-> summary on what's working.
-> 
-> - dmesg output to bootloader preconfigured display
-> - USB
-> - UFS
-> - SMD RPM regulators
-> 
-> Signed-off-by: Lux Aliaga <they@mint.lgbt>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/sm6125-xiaomi-laurel-sprout.dts  | 254 ++++++++++++++++++
->  2 files changed, 255 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 3e79496292e7..2b2a0170db14 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -157,6 +157,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> new file mode 100644
-> index 000000000000..86e1ec47bf5e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> @@ -0,0 +1,254 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/input/gpio-keys.h>
-> +#include "sm6125.dtsi"
-> +
-> +/ {
-> +	model = "Xiaomi Mi A3";
-> +	compatible = "xiaomi,laurel-sprout", "qcom,sm6125";
-> +	chassis-type = "handset";
-> +
-> +	/* required for bootloader to select correct board */
-> +	qcom,msm-id = <394 0>; /* sm6125 v0 */
-Unless you have a prototype device, this is not correct.
+full assembler output at https://pastebin.com/F8HGCUvk, object file
+attached.
 
-Please run `cat /sys/bus/soc/devices/soc0/revision` and confirm
-which revision is used on your phone.
-> +	qcom,board-id = <11 0>;
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		framebuffer0: framebuffer@5c000000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x5c000000 0 (1560 * 720 * 4)>;
-> +			width = <720>;
-> +			height = <1560>;
-> +			stride = <(720 * 4)>;
-> +			format = "a8r8g8b8";
-> +		};
-> +	};
-> +
-> +	extcon_usb: usb-id {
-'r' < 'u', usb-id should go after reserved-memory.
+    Arnd
+--2a2f36a5189a4026b84f150ff64abf18
+Content-Disposition: attachment; filename="camss-csiphy-3ph-1-0.o.xz"
+Content-Type: application/x-xz; name="camss-csiphy-3ph-1-0.o.xz"
+Content-Transfer-Encoding: BASE64
 
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpio = <&tlmm 102 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +
-> +		debug_mem: memory@ffb00000 {
-Memory node names should be more specific, for example
-debug@ instead of memory@.
+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
+Z/sCAAAAAARZWg==
 
-Konrad
-> +			reg = <0x0 0xffb00000 0x0 0xc0000>;
-> +			no-map;
-> +		};
-> +
-> +		last_log_mem: memory@ffbc0000 {
-> +			reg = <0x0 0xffbc0000 0x0 0x80000>;
-> +			no-map;
-> +		};
-> +
-> +		pstore_mem: ramoops@ffc00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xffc40000 0x0 0xc0000>;
-> +			record-size = <0x1000>;
-> +			console-size = <0x40000>;
-> +			msg-size = <0x20000 0x20000>;
-> +		};
-> +
-> +		cmdline_mem: memory@ffd00000 {
-> +			reg = <0x0 0xffd40000 0x0 0x1000>;
-> +			no-map;
-> +		};
-> +	};
-> +};
-> +
-> +
-> +&hsusb_phy1 {
-> +	status = "okay";
-> +};
-> +
-> +&rpm_requests {
-> +	regulators-0 {
-> +		compatible = "qcom,rpm-pm6125-regulators";
-> +
-> +		vreg_s6a: s6 {
-> +			regulator-min-microvolt = <936000>;
-> +			regulator-max-microvolt = <1422000>;
-> +		};
-> +
-> +		vreg_l1a: l1 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1256000>;
-> +		};
-> +
-> +		vreg_l2a: l2 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1056000>;
-> +		};
-> +
-> +		vreg_l3a: l3 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1064000>;
-> +		};
-> +
-> +		vreg_l4a: l4 {
-> +			regulator-min-microvolt = <872000>;
-> +			regulator-max-microvolt = <976000>;
-> +		};
-> +
-> +		vreg_l5a: l5 {
-> +			regulator-min-microvolt = <1648000>;
-> +			regulator-max-microvolt = <3104000>;
-> +		};
-> +
-> +		vreg_l6a: l6 {
-> +			regulator-min-microvolt = <576000>;
-> +			regulator-max-microvolt = <656000>;
-> +		};
-> +
-> +		vreg_l7a: l7 {
-> +			regulator-min-microvolt = <872000>;
-> +			regulator-max-microvolt = <976000>;
-> +		};
-> +
-> +		vreg_l8a: l8 {
-> +			regulator-min-microvolt = <400000>;
-> +			regulator-max-microvolt = <728000>;
-> +		};
-> +
-> +		vreg_l9a: l9 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1896000>;
-> +		};
-> +
-> +		vreg_l10a: l10 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1896000>;
-> +		};
-> +
-> +		vreg_l11a: l11 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1952000>;
-> +		};
-> +
-> +		vreg_l12a: l12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1996000>;
-> +		};
-> +
-> +		vreg_l13a: l13 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1832000>;
-> +		};
-> +
-> +		vreg_l14a: l14 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1904000>;
-> +		};
-> +
-> +		vreg_l15a: l15 {
-> +			regulator-min-microvolt = <3104000>;
-> +			regulator-max-microvolt = <3232000>;
-> +		};
-> +
-> +		vreg_l16a: l16 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1904000>;
-> +		};
-> +
-> +		vreg_l17a: l17 {
-> +			regulator-min-microvolt = <1248000>;
-> +			regulator-max-microvolt = <1304000>;
-> +		};
-> +
-> +		vreg_l18a: l18 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1264000>;
-> +		};
-> +
-> +		vreg_l19a: l19 {
-> +			regulator-min-microvolt = <1648000>;
-> +			regulator-max-microvolt = <2952000>;
-> +		};
-> +
-> +		vreg_l20a: l20 {
-> +			regulator-min-microvolt = <1648000>;
-> +			regulator-max-microvolt = <2952000>;
-> +		};
-> +
-> +		vreg_l21a: l21 {
-> +			regulator-min-microvolt = <2600000>;
-> +			regulator-max-microvolt = <2856000>;
-> +		};
-> +
-> +		vreg_l22a: l22 {
-> +			regulator-min-microvolt = <2944000>;
-> +			regulator-max-microvolt = <3304000>;
-> +		};
-> +
-> +		vreg_l23a: l23 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3400000>;
-> +		};
-> +
-> +		vreg_l24a: l24 {
-> +			regulator-min-microvolt = <2944000>;
-> +			regulator-max-microvolt = <3304000>;
-> +		};
-> +	};
-> +};
-> +
-> +&sdc2_off_state {
-> +	sd-cd-pins {
-> +		pins = "gpio98";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +};
-> +
-> +&sdc2_on_state {
-> +	sd-cd-pins {
-> +		pins = "gpio98";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <22 2>, <28 6>;
-> +};
-> +
-> +&ufs_mem_hc {
-> +	vcc-supply = <&vreg_l24a>;
-> +	vccq2-supply = <&vreg_l11a>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-max-microamp = <600000>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l4a>;
-> +	vdda-pll-supply = <&vreg_l10a>;
-> +	vdda-phy-max-microamp = <51400>;
-> +	vdda-pll-max-microamp = <14200>;
-> +	vddp-ref-clk-supply = <&vreg_l18a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&usb3_dwc3 {
-> +	extcon = <&extcon_usb>;
-> +};
+--2a2f36a5189a4026b84f150ff64abf18--
