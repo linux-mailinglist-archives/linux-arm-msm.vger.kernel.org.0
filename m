@@ -2,378 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC69264E501
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 01:09:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22B6264E515
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 01:16:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbiLPAJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Dec 2022 19:09:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45508 "EHLO
+        id S229901AbiLPAQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Dec 2022 19:16:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbiLPAJ1 (ORCPT
+        with ESMTP id S229728AbiLPAQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Dec 2022 19:09:27 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 994385E0BD;
-        Thu, 15 Dec 2022 16:09:26 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BFMkpQC026731;
-        Fri, 16 Dec 2022 00:09:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=xpwQYPvfF7M2ny2Mrmu4NKAivyR1gnmTU100F0C3cr0=;
- b=cBh9H4HCrOrTdCt/30a/Q4Cs7jteo6VumBmMHRxw/QYaUtZKnGENfcsAFvJRpeXOW1Ko
- 0dyxl323G/R8x6SHiAAsqZAoaMlzlt7iL7HuGtZFDPnVcGvBDN5Kl5cZiRHZqKAZIkhi
- O2gYr7trIIqdJ7kJ/025F28SsoEqyznQexBRYnRzsnJMIwsKZTMnmAoy3D5Jf5hKOhIl
- bZhnNnMcJqnz/sKXHUP0pljAahMkWJVochqVjgJ6bkeWiZeEbC56LOTOAZ+1vjGLJLFf
- +jLxAkDr+a7x6ZAb9krwd2OYVM0UaN3J57bgl1UEKm3ioYh4lbTqseg7xYmHaCoW1AiZ uA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mg3f8t4f7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Dec 2022 00:09:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BG09JJL024702
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Dec 2022 00:09:19 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 15 Dec 2022 16:09:19 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 2/2] drm/msm/dp: enhance dp controller isr
-Date:   Thu, 15 Dec 2022 16:09:03 -0800
-Message-ID: <1671149343-312-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1671149343-312-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1671149343-312-1-git-send-email-quic_khsieh@quicinc.com>
+        Thu, 15 Dec 2022 19:16:46 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908B7396EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 16:16:42 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id j4so1100317lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Dec 2022 16:16:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kRw9NosyKCoLQzJxnba7zzcyE0l9B5s5iM+v2n7vWEI=;
+        b=wpjEBWCy0R6NjVJ+C8PgFTksxRS9zH9OhoKXGLCwK18mr/7o3/tNuMyt7TWbBpADRy
+         +bQ/NzBmXUeR8ftCqJcn6ikvHoCXUw1n161TrUEVwgaRZBACpRXDIwMgrDdQ7YLIaNvp
+         cMJqPgBzMDohxB8HfHoLhLvd52lMtc396eBRmF08/ofkzD96Y6swb9OR+qXfqDe0JHsv
+         0iJoBVQ3+BCHtvdh1KSRXzR4JYxTptC7M50REBAcWT5VZ6dQUH+7iAXfXFKf1RhNJe35
+         0k7GGcdeGJgT+ZBhGFrnX4I+Zt5K1NNqWmL6//NM+2E4KyG+iZPgQCR7/OXQ5wwV1lrS
+         YEfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kRw9NosyKCoLQzJxnba7zzcyE0l9B5s5iM+v2n7vWEI=;
+        b=bjGWMu9O3ljHTyUStoLGLNXnTIL7TXadOxxFixeD14D/OMikzmeS/Rk1Mez5o4tRN2
+         G2xz1MEgZ5tTK9N4k/mzXp0mBPgtCbab48cRCODmFd4zSyVPYvX8YctwnAGDD7l8d7Ll
+         mNdVyyeEPmJ12Dy//aTpWUP+MVyzOdDbcTjMoQrj5mlV38hrcEEUNUyEJJ98tfEIkki5
+         zq4XOUTm7phTEp6hGcNTs1dRXhUzApCYXNW9rQeDBc6L2iS4pzpuYWu9MOubLAVGWSr+
+         tP23vwGMSWem+yreJ3lu2sufYvUFYTtMTBaaRuYAxXTqffHjyaJK/Gvk6+Oum5GIKxJL
+         RvRg==
+X-Gm-Message-State: ANoB5plDlQiNrIWjuZtXTIq5kNg00S/kcW4pJlxqOCpwWUqLoREFjgG3
+        i1hiCPKaSm/h5+nFZVxvfMNvVQ==
+X-Google-Smtp-Source: AA0mqf6yQuvPJwr6lilxSPk5K679p5RQghfxCvY9VemYiZmO40/mgLzuvrybWqODEa0kVXYNGmmYoQ==
+X-Received: by 2002:a05:6512:3990:b0:4b6:d28a:2558 with SMTP id j16-20020a056512399000b004b6d28a2558mr13048452lfu.49.1671149800890;
+        Thu, 15 Dec 2022 16:16:40 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id c2-20020a197602000000b004a764f9d653sm50821lff.242.2022.12.15.16.16.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Dec 2022 16:16:40 -0800 (PST)
+Message-ID: <d3d28673-934b-08aa-6301-ec56e6509010@linaro.org>
+Date:   Fri, 16 Dec 2022 01:16:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Z7vGQF9lVz1mnCfS-_Ub2v6MrH5-Spww
-X-Proofpoint-ORIG-GUID: Z7vGQF9lVz1mnCfS-_Ub2v6MrH5-Spww
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-15_12,2022-12-15_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
- adultscore=0 phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212160000
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1 pins
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221214232049.703484-1-marijn.suijten@somainline.org>
+ <20221214232049.703484-5-marijn.suijten@somainline.org>
+ <60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org>
+ <20221215210010.on44gmoefbnsokvt@SoMainline.org>
+ <20221215210246.rcx7f6unbhj52dkb@SoMainline.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221215210246.rcx7f6unbhj52dkb@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dp_display_irq_handler() is the main isr handler with the helps
-of two sub isr, dp_aux_isr and dp_ctrl_isr, to service all DP
-interrupts on every irq triggered. Current all three isr does
-not return IRQ_HANDLED if there are any interrupts it had
-serviced. This patch fix this ambiguity by having all isr
-return IRQ_HANDLED if there are interrupts had been serviced
-or IRQ_NONE otherwise.
 
-Changes in v5:
--- move complete into dp_aux_native_handler()
--- move complete into dp_aux_i2c_handler()
--- restore null ctrl check at isr
--- return IRQ_NODE directly
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_aux.c     | 95 ++++++++++++++++++++++++++-----------
- drivers/gpu/drm/msm/dp/dp_aux.h     |  2 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 12 ++++-
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
- drivers/gpu/drm/msm/dp/dp_display.c | 16 +++++--
- 5 files changed, 89 insertions(+), 38 deletions(-)
+On 15.12.2022 22:02, Marijn Suijten wrote:
+> On 2022-12-15 22:00:12, Marijn Suijten wrote:
+>> On 2022-12-15 14:19:41, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 15.12.2022 00:20, Marijn Suijten wrote:
+>>>> Add the pinctrl states for SDC1 and use them on sdhc_1.
+>>>>
+>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/msm8976.dtsi | 55 +++++++++++++++++++++++++++
+>>>>  1 file changed, 55 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+>>>> index 05dcb30b0779..7d4c7548882c 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+>>>> @@ -508,6 +508,56 @@ tlmm: pinctrl@1000000 {
+>>>>  			interrupt-controller;
+>>>>  			#interrupt-cells = <2>;
+>>>>  
+>>>> +			sdc1_off_state: sdc1-off-state {
+>>>> +				clk-pins {
+>>>> +					pins = "sdc1_clk";
+>>>> +					drive-strength = <2>;
+>>>> +					bias-disable;
+>>>> +				};
+>>>> +
+>>>> +				cmd-pins {
+>>>> +					pins = "sdc1_cmd";
+>>>> +					drive-strength = <2>;
+>>>> +					bias-pull-up;
+>>>> +				};
+>>>> +
+>>>> +				data-pins {
+>>>> +					pins = "sdc1_data";
+>>>> +					drive-strength = <2>;
+>>>> +					bias-pull-up;
+>>>> +				};
+>>>> +
+>>>> +				rclk-pins {
+>>>> +					pins = "sdc1_rclk";
+>>>> +					bias-pull-down;
+>>>> +				};
+>>>> +			};
+>>>> +
+>>>> +			sdc1_on_state: sdc1-on-state {
+>>>> +				clk-pins {
+>>>> +					pins = "sdc1_clk";
+>>>> +					drive-strength = <16>;
+>>>> +					bias-disable;
+>>>> +				};
+>>>> +
+>>>> +				cmd-pins {
+>>>> +					pins = "sdc1_cmd";
+>>>> +					drive-strength = <10>;
+>>>> +					bias-pull-up;
+>>>> +				};
+>>>> +
+>>>> +				data-pins {
+>>>> +					pins = "sdc1_data";
+>>>> +					drive-strength = <10>;
+>>>> +					bias-pull-up;
+>>>> +				};
+>>>> +
+>>>> +				rclk-pins {
+>>>> +					pins = "sdc1_rclk";
+>>>> +					bias-pull-down;
+>>>> +				};
+>>>> +			};
+>>>> +
+>>>>  			spi1_default: spi0-default-state {
+>>>>  				spi-pins {
+>>>>  					pins = "gpio0", "gpio1", "gpio3";
+>>>> @@ -680,6 +730,11 @@ sdhc_1: mmc@7824000 {
+>>>>  				 <&gcc GCC_SDCC1_APPS_CLK>,
+>>>>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>>>  			clock-names = "iface", "core", "xo";
+>>>> +
+>>>> +			pinctrl-0 = <&sdc1_on_state>;
+>>>> +			pinctrl-1 = <&sdc1_off_state>;
+>>>> +			pinctrl-names = "default", "sleep";
+>>> pinctrl-names usually goes before pinctrl-N
+>>
+>> I thought I had seen them _after_ nowadays, same for reg-names,
+>> phy-names, interrupt-names and clock-names.  What is it?
+>>
+>> Regardless, I'd rather keep this consistent across this file (sdc2 also
+>> has it after, same for other *-names)
+> 
+> Excuse me, I was looking at sm6125 DT while writing this, sdc2 for
+> msm8976 is introduced _and used by sdhc_2 in a followup patch.
+> 
+> The other points still stand though, everything has -names last.
+Hm, that's a good point, perhaps we should apply it to pinctrl-
+too then. I like this.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index cc3efed..d01ff45 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -162,45 +162,84 @@ static ssize_t dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
- 	return i;
- }
- 
--static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
-+static irqreturn_t dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
- {
--	if (isr & DP_INTR_AUX_I2C_DONE)
-+	irqreturn_t ret = IRQ_NONE;
-+
-+	if (isr & DP_INTR_AUX_I2C_DONE) {
- 		aux->aux_error_num = DP_AUX_ERR_NONE;
--	else if (isr & DP_INTR_WRONG_ADDR)
-+		ret = IRQ_HANDLED;
-+	} else if (isr & DP_INTR_WRONG_ADDR) {
- 		aux->aux_error_num = DP_AUX_ERR_ADDR;
--	else if (isr & DP_INTR_TIMEOUT)
-+		ret = IRQ_HANDLED;
-+	} else if (isr & DP_INTR_TIMEOUT) {
- 		aux->aux_error_num = DP_AUX_ERR_TOUT;
--	if (isr & DP_INTR_NACK_DEFER)
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (isr & DP_INTR_NACK_DEFER) {
- 		aux->aux_error_num = DP_AUX_ERR_NACK;
-+		ret = IRQ_HANDLED;
-+	}
-+
- 	if (isr & DP_INTR_AUX_ERROR) {
- 		aux->aux_error_num = DP_AUX_ERR_PHY;
- 		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
-+		ret = IRQ_HANDLED;
- 	}
-+
-+	if (ret == IRQ_HANDLED)
-+		complete(&aux->comp);
-+
-+	return ret;
- }
- 
--static void dp_aux_i2c_handler(struct dp_aux_private *aux, u32 isr)
-+static irqreturn_t dp_aux_i2c_handler(struct dp_aux_private *aux, u32 isr)
- {
-+	irqreturn_t ret = IRQ_NONE;
-+
- 	if (isr & DP_INTR_AUX_I2C_DONE) {
- 		if (isr & (DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER))
- 			aux->aux_error_num = DP_AUX_ERR_NACK;
- 		else
- 			aux->aux_error_num = DP_AUX_ERR_NONE;
--	} else {
--		if (isr & DP_INTR_WRONG_ADDR)
--			aux->aux_error_num = DP_AUX_ERR_ADDR;
--		else if (isr & DP_INTR_TIMEOUT)
--			aux->aux_error_num = DP_AUX_ERR_TOUT;
--		if (isr & DP_INTR_NACK_DEFER)
--			aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
--		if (isr & DP_INTR_I2C_NACK)
--			aux->aux_error_num = DP_AUX_ERR_NACK;
--		if (isr & DP_INTR_I2C_DEFER)
--			aux->aux_error_num = DP_AUX_ERR_DEFER;
--		if (isr & DP_INTR_AUX_ERROR) {
--			aux->aux_error_num = DP_AUX_ERR_PHY;
--			dp_catalog_aux_clear_hw_interrupts(aux->catalog);
--		}
-+
-+		return IRQ_HANDLED;
- 	}
-+
-+	if (isr & DP_INTR_WRONG_ADDR) {
-+		aux->aux_error_num = DP_AUX_ERR_ADDR;
-+		ret = IRQ_HANDLED;
-+	} else if (isr & DP_INTR_TIMEOUT) {
-+		aux->aux_error_num = DP_AUX_ERR_TOUT;
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (isr & DP_INTR_NACK_DEFER) {
-+		aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (isr & DP_INTR_I2C_NACK) {
-+		aux->aux_error_num = DP_AUX_ERR_NACK;
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (isr & DP_INTR_I2C_DEFER) {
-+		aux->aux_error_num = DP_AUX_ERR_DEFER;
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (isr & DP_INTR_AUX_ERROR) {
-+		aux->aux_error_num = DP_AUX_ERR_PHY;
-+		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	if (ret == IRQ_HANDLED)
-+		complete(&aux->comp);
-+
-+	return ret;
- }
- 
- static void dp_aux_update_offset_and_segment(struct dp_aux_private *aux,
-@@ -409,14 +448,14 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 	return ret;
- }
- 
--void dp_aux_isr(struct drm_dp_aux *dp_aux)
-+irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux)
- {
- 	u32 isr;
- 	struct dp_aux_private *aux;
- 
- 	if (!dp_aux) {
- 		DRM_ERROR("invalid input\n");
--		return;
-+		return IRQ_NONE;
- 	}
- 
- 	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-@@ -425,17 +464,15 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
- 
- 	/* no interrupts pending, return immediately */
- 	if (!isr)
--		return;
-+		return IRQ_NONE;
- 
- 	if (!aux->cmd_busy)
--		return;
-+		return IRQ_NONE;
- 
- 	if (aux->native)
--		dp_aux_native_handler(aux, isr);
-+		return dp_aux_native_handler(aux, isr);
- 	else
--		dp_aux_i2c_handler(aux, isr);
--
--	complete(&aux->comp);
-+		return dp_aux_i2c_handler(aux, isr);
- }
- 
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index e930974..511305d 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -11,7 +11,7 @@
- 
- int dp_aux_register(struct drm_dp_aux *dp_aux);
- void dp_aux_unregister(struct drm_dp_aux *dp_aux);
--void dp_aux_isr(struct drm_dp_aux *dp_aux);
-+irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux);
- void dp_aux_init(struct drm_dp_aux *dp_aux);
- void dp_aux_deinit(struct drm_dp_aux *dp_aux);
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 3854c9f..cb0acb1 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1982,27 +1982,35 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- 	return ret;
- }
- 
--void dp_ctrl_isr(struct dp_ctrl *dp_ctrl)
-+irqreturn_t dp_ctrl_isr(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	u32 isr;
-+	irqreturn_t ret = IRQ_NONE;
- 
- 	if (!dp_ctrl)
--		return;
-+		return IRQ_NONE;
- 
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 
- 	isr = dp_catalog_ctrl_get_interrupt(ctrl->catalog);
-+	/* no interrupts pending, return immediately */
-+	if (!isr)
-+		return IRQ_NONE;
- 
- 	if (isr & DP_CTRL_INTR_READY_FOR_VIDEO) {
- 		drm_dbg_dp(ctrl->drm_dev, "dp_video_ready\n");
- 		complete(&ctrl->video_comp);
-+		ret = IRQ_HANDLED;
- 	}
- 
- 	if (isr & DP_CTRL_INTR_IDLE_PATTERN_SENT) {
- 		drm_dbg_dp(ctrl->drm_dev, "idle_patterns_sent\n");
- 		complete(&ctrl->idle_comp);
-+		ret = IRQ_HANDLED;
- 	}
-+
-+	return ret;
- }
- 
- struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 9f29734..c3af06d 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -25,7 +25,7 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
--void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-+irqreturn_t dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl);
- struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
- 			struct dp_panel *panel,	struct drm_dp_aux *aux,
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index bfd0aef..d40bfbd 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1192,7 +1192,7 @@ static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
- static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- {
- 	struct dp_display_private *dp = dev_id;
--	irqreturn_t ret = IRQ_HANDLED;
-+	irqreturn_t ret = IRQ_NONE;
- 	u32 hpd_isr_status;
- 
- 	if (!dp) {
-@@ -1206,27 +1206,33 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- 		drm_dbg_dp(dp->drm_dev, "type=%d isr=0x%x\n",
- 			dp->dp_display.connector_type, hpd_isr_status);
- 		/* hpd related interrupts */
--		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK)
-+		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK) {
- 			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
-+			ret = IRQ_HANDLED;
-+		}
- 
- 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
- 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
-+			ret = IRQ_HANDLED;
- 		}
- 
- 		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
- 			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
- 			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 3);
-+			ret = IRQ_HANDLED;
- 		}
- 
--		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
-+		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK) {
- 			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-+			ret = IRQ_HANDLED;
-+		}
- 	}
- 
- 	/* DP controller isr */
--	dp_ctrl_isr(dp->ctrl);
-+	ret |= dp_ctrl_isr(dp->ctrl);
- 
- 	/* DP aux isr */
--	dp_aux_isr(dp->aux);
-+	ret |= dp_aux_isr(dp->aux);
- 
- 	return ret;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Konrad
+> 
+> - Marijn
+> 
+>> and correct it at once in a
+>> separate patch, if someone really cares.
+>>
+>> But really, we should have a checker/autoformatter for these "rules",
+>> instead of all this manual back-and-forth (is this order already set in
+>> stone under Documentation/ or something?).
+>>
+>> - Marijn
