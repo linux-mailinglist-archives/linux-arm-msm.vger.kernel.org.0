@@ -2,71 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EDEA64EA4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:24:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E932E64EA53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Dec 2022 12:25:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbiLPLYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 06:24:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32768 "EHLO
+        id S230470AbiLPLZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 06:25:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbiLPLYl (ORCPT
+        with ESMTP id S231136AbiLPLZw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 06:24:41 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28D211829
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:24:39 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j4so3097139lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:24:39 -0800 (PST)
+        Fri, 16 Dec 2022 06:25:52 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 642B5167E0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:25:50 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id c1so3007710lfi.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 03:25:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oadVGd57HGb0baAnuWVTlFJ21yCLcJ3hvQQLSSBFlZY=;
-        b=qFOIeVgvZhAug6UXK4OCScMRG19Sv03IHtsTXlrkH9oya91BU8zFEimG+l+ALLg5Tr
-         h/yui/y4AxOmwQ+MQty3BLwmTRbVdnNR/Af1EE6wuIUZr9iFF7iah3cG3B80ORIUWSaZ
-         vsiKu9e/PjgPrvCSn5dxUDZ5UH4lSs5JsM3zn1D7sQXQvVw9lDSjZW6KeJl9Yhw7S+nO
-         SePttbzbsZGxL4QLvq+enj28Qtt1EVrm2jX+CYYPyvNT97fn5qdzh7xHc6F4d8mzhgul
-         0YVweBTt2tT+XANvS0FU0rI2/KA0ySmDKkg2NErjMM+BiKQVirpA1hwzRFd2sX38pnD7
-         UdSA==
+        bh=Jq34xZSUT8QsMyztxfKEALtkriwch3PoCGhlEfPa3GQ=;
+        b=LkAyUjpNX35mihFXiQlkEnMc5deO2cakn0tU3MPYR6UVfWffBFoOVMIS4jj337q+BJ
+         mL17jgD7gMi9Eyqy+aoyL85bb6V2Y2vUsgWl+LG6D9+k7s6VigssHH1J0kkKHu/yB+Or
+         uzuaKVAx5CrGLggEo7ndLKznDfyUA87rPaMTPaekDXnZj0szgrdMyFz9Q44Q9/CnfZZ9
+         J8SnrsSphkexeZxxUfkBfIpsEpXrwocaNLN/74+hzhti7GfV34By+v4SkxhGBwWVN9P3
+         nvbVNEbhdwgGt/KuzMFJy8XuYeY2ISZn4eR4SWTgHmGkP4Bq6yhyqjuB31tj1MwR6UbH
+         neew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oadVGd57HGb0baAnuWVTlFJ21yCLcJ3hvQQLSSBFlZY=;
-        b=2kjV/hywBS22mQJ5/MW975g2PZUGyyT88C62fJY4yZqVaeWc5bbnYZ9ODs6/l7mbZT
-         IB4jfc7clJLO+TUqfxTD3tfht0zqPLDn5utYTgSK/ErpFAY0pqi2jgqyPLlg1OG0XXfa
-         KeoLdwenycAJ/+RqgMOsashxPwtO0/ieh+nuXcPkpMVU+rqnvYDBitH1nRVV6Kx1TdJN
-         xPkU+k3jDO0IAdIrPF9Lc+RpY51gfamvbQV73HMng8ok+N/A3Gv41Z3isDZUOh2yqxy7
-         BKiplae6ijqsuf9B0oxsg0Nwo2yry1DL33zQsx4g8JhtMo7SiNTtv+AivnSXjSimaVEQ
-         kdng==
-X-Gm-Message-State: ANoB5pkPd8taQaNgTynkFPhXVmsA4QcejLHG2QwPrsylPT/s7fXHxWNM
-        6fmlN2zPjpPNmO5EfJgcKKh+9/XMHtRIbgJA
-X-Google-Smtp-Source: AA0mqf7mP4Hf8z9YCDFV5CozdEkrHHPmhzrkwVqhfJ8cAVEQ0Zlv7Qbv+/z9hKDXL46ARbPNxmg1Bw==
-X-Received: by 2002:ac2:4a9d:0:b0:4b5:7338:e2c7 with SMTP id l29-20020ac24a9d000000b004b57338e2c7mr4630070lfp.53.1671189877995;
-        Fri, 16 Dec 2022 03:24:37 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id c14-20020a05651200ce00b004a4754c5db5sm193654lfp.244.2022.12.16.03.24.36
+        bh=Jq34xZSUT8QsMyztxfKEALtkriwch3PoCGhlEfPa3GQ=;
+        b=rHUIyWEsxkw2DYnq3QHHhSXTv4X0TJaWtPPtAMVs/EzyvWJmK7eyQUlAnNJqc2aoaf
+         x3QVIgSsIZ/JUMdgcIquwFuRF5rPvD65KGe2RIc9TSaDvh5AfohiLTBg4be9LOFgY0az
+         CkMWuNYWhD9WYldqOavxVoZ7IKyrEFlTYTDlHvwYYuWhyC4oLNhlyasYthtKvJlHjt/X
+         lgBEdwLpeyk31t1SLUvF3OHnpcScD97bT6IRKG7u/ZOthnoGfErMDdoc6+qfxXdJIfnp
+         N+YzkSgBR1/CC2dWFx1Ng8/ahpY3+MJHpaYoVeEx95Z2QvkcOzlhluAm0Q5dnQ1Gw7WM
+         4++w==
+X-Gm-Message-State: ANoB5pmy+QxcKFVsZfdd2yGGNr7fOwxvwdTrMK/VmLkpbq0mVCpHhHlO
+        yz357Zt392LrLZAiqILWvpnjBA==
+X-Google-Smtp-Source: AA0mqf6vfu4R9gsLSvdGIsOl2P+MeUnboQi0ZGy6b1tPRuGfMFVAhR0T9oajRy8PIo8lDi00UT7rQg==
+X-Received: by 2002:a05:6512:114e:b0:4b5:a4ef:fca3 with SMTP id m14-20020a056512114e00b004b5a4effca3mr10534762lfg.38.1671189948800;
+        Fri, 16 Dec 2022 03:25:48 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id s10-20020a056512214a00b004b52f4ea0d3sm192459lfr.192.2022.12.16.03.25.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Dec 2022 03:24:37 -0800 (PST)
-Message-ID: <e474f99d-2375-c8db-203c-632c918d8e4d@linaro.org>
-Date:   Fri, 16 Dec 2022 12:24:35 +0100
+        Fri, 16 Dec 2022 03:25:48 -0800 (PST)
+Message-ID: <2f31c3a0-572d-41c4-4724-85d64394aa66@linaro.org>
+Date:   Fri, 16 Dec 2022 12:25:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v4 1/4] dt-bindings: ufs: qcom: Add SM6125 compatible
+ string
+Content-Language: en-US
 To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221215190404.398788-1-they@mint.lgbt>
- <20221215190404.398788-2-they@mint.lgbt>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221215190404.398788-2-they@mint.lgbt>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221215190404.398788-1-they@mint.lgbt>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,107 +83,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 15.12.2022 20:04, Lux Aliaga wrote:
-> Adds a UFS host controller node and its corresponding PHY to
-> the sm6125 platform.
+On 15/12/2022 20:04, Lux Aliaga wrote:
+> Document the compatible for UFS found on the SM6125.
 > 
 > Signed-off-by: Lux Aliaga <they@mint.lgbt>
 > ---
-Please include a changelog, I don't know what you changed and
-what you didn't. Also, you sent 4 revisions in one day, not
-letting others review it.
 
+Three versions the same day? It's too much.
 
->  arch/arm64/boot/dts/qcom/sm6125.dtsi | 67 ++++++++++++++++++++++++++++
->  1 file changed, 67 insertions(+)
+Where is the changelog? What happened here?
+
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> index 7e25a4f85594..b64c5bc1452f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> @@ -508,6 +508,73 @@ sdhc_2: mmc@4784000 {
->  			status = "disabled";
->  		};
->  
-> +		ufs_mem_hc: ufs@4804000 {
-> +			compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
-> +			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
-> +			reg-names = "std", "ice";
-> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-> +			phys = <&ufs_mem_phy_lanes>;
-> +			phy-names = "ufsphy";
-> +			lanes-per-direction = <1>;
-> +			#reset-cells = <1>;
-> +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> +			reset-names = "rst";
-> +
-> +			clock-names = "core_clk",
-> +				      "bus_aggr_clk",
-> +				      "iface_clk",
-> +				      "core_clk_unipro",
-> +				      "ref_clk",
-> +				      "tx_lane0_sync_clk",
-> +				      "rx_lane0_sync_clk",
-> +				      "ice_core_clk";
-> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> +			freq-table-hz = <50000000 240000000>,
-> +					<0 0>,
-> +					<0 0>,
-> +					<37500000 150000000>,
-> +					<0 0>,
-> +					<0 0>,
-> +					<0 0>,
-> +					<75000000 300000000>;
-> +
-> +			non-removable;
-> +			status = "disabled";
-> +		};
-> +
-> +		ufs_mem_phy: phy@4807000 {
-> +			compatible = "qcom,sm6115-qmp-ufs-phy";
-Krzysztof asked you to add a SoC-specific compatible in v1.
 
+Best regards,
+Krzysztof
 
-> +			reg = <0x04807000 0x1c4>;
-> +
-> +			power-domains = <&gcc UFS_PHY_GDSC>;
-> +
-> +			clock-names = "ref", "ref_aux";
-> +			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-> +
-> +			resets = <&ufs_mem_hc 0>;
-> +			reset-names = "ufsphy";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			status = "disabled";
-> +
-> +			ufs_mem_phy_lanes: lanes@4807400 {
-> +				reg = <0x4807400 0x098>,
-> +				      <0x4807600 0x130>,
-> +				      <0x4807c00 0x16c>;
-> +				#phy-cells = <0>;
-> +			};
-I believe this is deprecated. See [1].
-
-
-Konrad
-
-[1] https://lore.kernel.org/linux-arm-msm/20221104092045.17410-1-johan+linaro@kernel.org/T/#m988f3fe3d83b76bac247aea2d9dac34f37728d65
-
-> +		};
-> +
->  		usb3: usb@4ef8800 {
->  			compatible = "qcom,sm6125-dwc3", "qcom,dwc3";
->  			reg = <0x04ef8800 0x400>;
