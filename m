@@ -2,103 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 952C464F8B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 11:35:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74F2764F941
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 15:22:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbiLQKfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Dec 2022 05:35:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34450 "EHLO
+        id S229627AbiLQOWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Dec 2022 09:22:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbiLQKft (ORCPT
+        with ESMTP id S229480AbiLQOWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Dec 2022 05:35:49 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920E7140B6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 02:35:48 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id h10so4540454ljk.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 02:35:48 -0800 (PST)
+        Sat, 17 Dec 2022 09:22:35 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E765FD13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:22:34 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id bf43so7627815lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:22:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=t6cxt7pOx+yjxHzIOKE7PvpAXZf8eYOMSoAnUrzpOMQ=;
-        b=QVghawtwgSpMfGtDoJXbg4K54IkutqOBAireTIcsWaEndSA5KZfMYzE1EvFXTPaOVD
-         elsXbMkXzVUei2RGqNXJvYoU6OyIX/T1tw5qcc43dcsvm3qzxLYMxeCHGi4rAAVcWY+0
-         UZD/QIkBCraE8YuaNUN0Zrn5hOOndOR2sQCcjiGo2Pa5062IQQkiDpzcy4izeE/8ntH0
-         ZrdyqXxQoyVsaF2AFnEp6WnKkQmdP4Va/t0pEcboRLzEpCK1xjnXsp/i4eSn8MQrxyes
-         XdyqSKccLFSPVl3Ubw1N15lZ/DHTkqlmCCfvAVF8EB1/MTqBMB6jmhFppiz/46WShddI
-         V7AA==
+        bh=kZ5cHVqgvVJe/N0LNOPokBoYzo9K73QgpXdouMkj7zk=;
+        b=VjvnmjLIx2zkaHhRBd1ERHGtVh0W/mMVfljst0WgMOtK2nRySeW2dA7k9bSBlCKYSL
+         llQXDhxKpXYdkQc/mMzKeDeti4aUjqT+54Uo62G35tUuYe55/cLg48CEKjcPXa1/AZUr
+         5GE9RwY/LyP+N2Vd9OZrbCLNGBRENX4yp3Dq5Lm39ugo9ALVXdwY06ozWrwfQuiMSizu
+         UhVpvObscCcDWV4aM4X66MH8lT0iPgqRH3MwNDk+x7ulPZ8Rr6EZFfAt0dog7LKBsZug
+         asbGSxCa8y1hYlDXC2sa3geARZWB+oOBPyHEM5D/ylpOvRAj/YPJnF6/iE8MMpo2Uj8k
+         9cZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t6cxt7pOx+yjxHzIOKE7PvpAXZf8eYOMSoAnUrzpOMQ=;
-        b=AfHN1OsSCjIxCUi2JpWLDNsUlaxLz7g/k3IR3dtx9I5cFF3nDV1NMfs64aDfgxz11L
-         pRkX28A37VXJBMdjoCwmF4+D0upd5qV7TkLvEr7tYyBob50Umn3FKCSHwWgiap4+7d3D
-         mAEfp6xAA7iGIGKYBiv6e/pvtp0Wvc8iJBF1tFC1cDwjjo6JUihdlaKB99Dvxi9Pm22o
-         3mCn38brvw1l+PZb20369SsCyomp6xEBUJtxtWkqytS8XMAIXVHVMCS9SguEDP86awg+
-         KDiqEnfj87nR9b6pa2QQ9HV95PxaPZRTHCCmPu+P7zAtSlR+BI0vHLExSmKZ/KN+adjc
-         9k4Q==
-X-Gm-Message-State: ANoB5pmAs33eaPWEL62ZRWA9YC4gxUcm08Hqnlk1lLKesIgv5RdEJIMI
-        ldSjwdeHAkmOtyhIxSFNgH9xpQ==
-X-Google-Smtp-Source: AA0mqf6uxVSOy/0yIlItmN5uwMQTq8ElvVOsqcpLuKp1rU11/Oj6kweZpcWkl7PH49csb1C+Vn6FWQ==
-X-Received: by 2002:a05:651c:1592:b0:277:8a76:90a4 with SMTP id h18-20020a05651c159200b002778a7690a4mr10873604ljq.0.1671273346754;
-        Sat, 17 Dec 2022 02:35:46 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id w12-20020a05651c118c00b00279e41de7e6sm302760ljo.3.2022.12.17.02.35.45
+        bh=kZ5cHVqgvVJe/N0LNOPokBoYzo9K73QgpXdouMkj7zk=;
+        b=Rr0MVsUdUOPds6kXhO2aW6NFZgmydhV5s1v9wvLzxKpAQbKvr0G/1LsRcLUyuwzWp8
+         b9rM2MFa7poXvKmiqBHIvfmzFeiiVp1Wdysom5s0r5IgJ9ia9zmgV7bHkYXU67ggiM+g
+         moC3myUio30kUfaQ19dRnMxu0/svn4Ghi9OljEUClTcgiLffc53ULWick+VAPFrUGuG0
+         5MIUZtol5esPSFV7ExkKPXJetMOBP9pyGx7q8f5dfC80QUL6mcU3c8e78Pd58fiO0wXM
+         SJpRK5PuTC0PK4PqWddXlP4zEM5pBrmJQOjDZjTlAkmKWhuz1Eg3vZuU9dO+95py8dS6
+         kHwg==
+X-Gm-Message-State: ANoB5pnnvAZhRKEnZbz4RU40giXSOTlqFw9jhlLwERXUfysl8hUQN1sQ
+        faZY3vEJvp6Fd2BIjChoeJqfOg==
+X-Google-Smtp-Source: AA0mqf4fD7u4aK9UvUQ6QAv1TPkAid7ix72nzfFyxbd9Mh63m2B4TewkspgqAxkOTuZo1hosYeQIxg==
+X-Received: by 2002:a05:6512:308a:b0:4b6:f51e:b8b6 with SMTP id z10-20020a056512308a00b004b6f51eb8b6mr6952120lfd.56.1671286952812;
+        Sat, 17 Dec 2022 06:22:32 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id a16-20020a19f810000000b004b54ca56cf9sm522157lff.303.2022.12.17.06.22.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Dec 2022 02:35:46 -0800 (PST)
-Message-ID: <9c56b7b0-b22b-b90c-a67a-5fa23825b166@linaro.org>
-Date:   Sat, 17 Dec 2022 11:35:44 +0100
+        Sat, 17 Dec 2022 06:22:32 -0800 (PST)
+Message-ID: <32bfd604-6fb6-51c6-5847-c87832ef1ebc@linaro.org>
+Date:   Sat, 17 Dec 2022 15:22:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v5] dt-bindings: firmware: scm: Add QDU1000/QRU1000
- compatible
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sa8295p-adp: use pm8450a dtsi
 Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Eric Chanudet <echanude@redhat.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20221216231312.22574-1-quic_molvera@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221216231312.22574-1-quic_molvera@quicinc.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Brian Masney <bmasney@redhat.com>
+References: <20221214210908.1788284-1-echanude@redhat.com>
+ <20221214210908.1788284-2-echanude@redhat.com>
+ <5ed623d6-3ca2-a1c4-9277-6768df5a63fe@linaro.org>
+ <20221216195632.2wu5h4opfr46n7s4@echanude>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221216195632.2wu5h4opfr46n7s4@echanude>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/12/2022 00:13, Melody Olvera wrote:
-> Add compatible for scm driver for QDU1000 and QRU1000 platforms. These
-> drivers only require the compatible field, so update the bindings
-> accordingly for these platforms.
+
+
+On 16.12.2022 20:56, Eric Chanudet wrote:
+> On Thu, Dec 15, 2022 at 02:01:09PM +0100, Konrad Dybcio wrote:
+>> On 14.12.2022 22:09, Eric Chanudet wrote:
+>>> Include the dtsi to use a single pmic descriptions.
+>>> Both sa8295p-adp and sa8540p-adp have the same spmi pmic apparently.
+>>>
+>>> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 79 +-----------------------
+>>>  1 file changed, 1 insertion(+), 78 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>>> index 84cb6f3eeb56..889259df3287 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>>> @@ -11,6 +11,7 @@
+>>>  #include <dt-bindings/spmi/spmi.h>
+>>>  
+>>>  #include "sa8540p.dtsi"
+>>> +#include "pm8450a.dtsi"
+>> I feel like naming it  sa8540p-pmics.dtsi (like sc8280xp-pmics.dtsi)
+>> would be more representative of what's really going on (unless it's
+>> a single chip providing 4 virtual PMICs on different SIDs).
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
-> This patch is separated out from [1] and includes
-> changes addressing comments from that patch set.
+> I can make a v3 renaming this. The initial commit from Parikshit
+> mentions it is to be re-used on sa8540 based boards.
 > 
+> Side note: A quick look also shows pm8450.dtsi[1] is not included by
+> any of its intended targets (sm8350 and sm8450 IIUC). Was this lost?
+sm8450 only. They were not included, as SPMI was not enabled on sm8450.
+They will be included in 6.3 once that's merged.
 
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Konrad
+> 
+> Thanks,
+> 
+> [1] https://lore.kernel.org/r/20220226205035.1826360-8-dmitry.baryshkov@linaro.org
+> 
