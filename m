@@ -2,79 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C7B264F95D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 15:30:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2491A64F968
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 15:35:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229740AbiLQOaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Dec 2022 09:30:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44662 "EHLO
+        id S229549AbiLQOf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Dec 2022 09:35:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbiLQO36 (ORCPT
+        with ESMTP id S229668AbiLQOfX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Dec 2022 09:29:58 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D700815A18
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:29:52 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bp15so7596137lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:29:52 -0800 (PST)
+        Sat, 17 Dec 2022 09:35:23 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5125612771
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:35:22 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id g14so4930076ljh.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:35:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yKzaM/h7vl6R759siCibHu6TxUrRFv6DmVbOkDTjDuw=;
-        b=YOPHMkPb/czTunzVGkCZOOu5lXuUDZNpdEpBOqW3bpkFbDPY4U3zCxIxnwHFZ6/8RQ
-         Iq4g8Qq8v8nkOUCZF+PaBw6KYVA/yX43eB4VoTz+pOADfRLEfh6e2S/vF0M9kTv4dqdX
-         q1vqd3E6vmasvjCE0RIJYwpOCPVdeSbakxvJLaAt0fThvMkWLl9u2gYAfXYHU/k1kxqF
-         iHXso5pcgd5e79OeGS5wxIDpWyxlTTaYHzqDsc23nXgAZmh//8NoBgWkDvaYo63GFdBo
-         1gR7SPnZ/9YlwBv7kVdLj1CC7Vu9xhCLMQ+HAf3fOzNw4FNx9Az/NgeFPqGi/DzAMiFG
-         6TAw==
+        bh=Q2NbXIefrhDpmJKbJe0p5pGtCPv/H1p/XKFgPNAP5e8=;
+        b=DGT+hxjwqBvNruxpVyh3pSYJl+25hKQPJfVlKBxisxPwf8p0k/KF1E1kDDfPNsyA6S
+         iuF9+ByLJceYuDXMNMiwAmWurFEOOXpKc2XarKoN+hizrQgwvWspH5lmeGscPF0D5yb+
+         mxg4RT54rgmaHIGVUB8ivp5TzlDpiUdV+1+5CjZPgOYo17T+FfB0Dn9BHjrp+S4OLgo8
+         DzceOp8NpjRKCWgXv55S8k8qxkWKErYo6oronSe1iZya6I+Zd+dKda9lFakQliY9V0qh
+         nR8UyzrxYilspb6Nil6O5Ov49K7W1usNcPtHLRZRacn7kbN12woR3zOGUMfE6DkrWmmV
+         oTfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yKzaM/h7vl6R759siCibHu6TxUrRFv6DmVbOkDTjDuw=;
-        b=0IK18tEHqdM9rNqQI60NgWFUVjyZ1y/BIwvSl7nZ73CsCzd6UU/Hc3lPqp65xln1zB
-         8R8Zi5U7pOWOj1frV3YqAEf4ND/5tkP4u5gKMJNWNotCCVSHTNaJVdzPbmRjm9/8rsBB
-         xURNW9atDaKLyu6Ks4ddrAsSoPyr/qnQGRDinwaKmwhgt/NG59xmLEVMm4ngaXd5P5as
-         Zd2pjXgdBCYbPHIYuCbucnojE6g5tpZAAvLQbc58Dx47dN/SAMQtNNf/m6zyG6/N+76W
-         oNcgQdBVoCBHwy3r3qmJZQxi+NXEEzWjo0dElei3w2SXmvE4dCEOhG3vGBU331nGtotd
-         moCw==
-X-Gm-Message-State: ANoB5pmvk1rGN8ab0x0z/K8BMUzUcO2NMb5B/mo/DGAdawNvpoa79vql
-        oeT3FncE21V0ZwyuGScpEuZ4wQ==
-X-Google-Smtp-Source: AA0mqf4oYJgZJsBoQnoL6WGJjw+60x3a4oac4NeDaCysJL8NEIM5xeQcDJjBdDjoferec0D10QO1wQ==
-X-Received: by 2002:a19:ca58:0:b0:4b5:8579:545d with SMTP id h24-20020a19ca58000000b004b58579545dmr9465392lfj.5.1671287391293;
-        Sat, 17 Dec 2022 06:29:51 -0800 (PST)
+        bh=Q2NbXIefrhDpmJKbJe0p5pGtCPv/H1p/XKFgPNAP5e8=;
+        b=NW70I8c9swE+Y0LGHjayMulW0Rvmimi3Q7WkWhZJ2B7UENGZIeV7R8z/YMd/jsNJj4
+         oqJ6fSdPGBIoY5PJMGd2IOm/YuQg+GwOqjlcpNVaqWGYW3w8D/0wImcAqdbWtcNaz4Ty
+         gSWWVoq6fIw9n65r12KEn4V7MwRAKo+UDJbeya23Q/1ZrAn493j6q/Z31YDXsZn+//Zf
+         1mAoEpv8h0tBJJe+nJ5NG4KdyXyuI6PeOr9sPytWPCXyqlsK0VDAhBFZUhHeVnYRUE6X
+         Trp+g2JGBPygdCmI+3FPooQN4phS8i+dplYo8xAp3IxfPbLUe6+3bpQoYt7jPvo4NUuJ
+         hHcQ==
+X-Gm-Message-State: ANoB5plUovq6PUrda6B4XgAcawbdmEhzAWS1Z2OZC4dlK5qQtqD2rACQ
+        VDVQEatGT1NIUEytt3xJ3PiNoQ==
+X-Google-Smtp-Source: AA0mqf4sAUxGPRGY1t+nFac9lB8vlD4k06aGikbGf39u4uxX/tEv2+gvhycZZ7fuQsKobeUHW+EwYA==
+X-Received: by 2002:a2e:b947:0:b0:279:edec:808b with SMTP id 7-20020a2eb947000000b00279edec808bmr9484632ljs.9.1671287720565;
+        Sat, 17 Dec 2022 06:35:20 -0800 (PST)
 Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id c19-20020a056512325300b004b577877286sm527095lfr.50.2022.12.17.06.29.49
+        by smtp.gmail.com with ESMTPSA id bd8-20020a05651c168800b00279e0b8bae7sm347057ljb.65.2022.12.17.06.35.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Dec 2022 06:29:50 -0800 (PST)
-Message-ID: <3ca81685-fb8f-fa31-3ae8-ef72f3aca7f2@linaro.org>
-Date:   Sat, 17 Dec 2022 15:29:49 +0100
+        Sat, 17 Dec 2022 06:35:20 -0800 (PST)
+Message-ID: <f5496b92-ac1f-5920-1b3f-2bf0e710623b@linaro.org>
+Date:   Sat, 17 Dec 2022 15:35:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v5] dt-bindings: soc: qcom,rpmh-rsc: Update to allow for
- generic nodes
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm6125: Add GPI DMA nodes
 Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20221216231349.22835-1-quic_molvera@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lux Aliaga <they@mint.lgbt>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221216231528.1268447-1-marijn.suijten@somainline.org>
+ <20221216231528.1268447-3-marijn.suijten@somainline.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221216231349.22835-1-quic_molvera@quicinc.com>
+In-Reply-To: <20221216231528.1268447-3-marijn.suijten@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,42 +91,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 17.12.2022 00:13, Melody Olvera wrote:
-> Update the bindings to allow for generic regulator nodes instead of
-> device-specific node names.
+On 17.12.2022 00:15, Marijn Suijten wrote:
+> From: Martin Botka <martin.botka@somainline.org>
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Add nodes for GPI DMA hosts on SM6125.
+> 
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> [Marijn: reorder properties, use sdm845 fallback compatible, disable by
+>  default, use 3 instead of 5 dma cells]
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi | 37 ++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
 > 
-> Changes from v4:
-> * updated regulator pattern to accommodate more regulators
-> 
-> This patch comes from discussions on [1] and is separated out. It also
-> has updated pattern matching to match the comments left from [1].
-> 
-> [1] https://lore.kernel.org/all/20221026200429.162212-2-quic_molvera@quicinc.com/
-> 
-> ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-> index b246500d3d5d..5bb624f62edc 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
-> @@ -112,8 +112,9 @@ properties:
->      $ref: /schemas/power/qcom,rpmpd.yaml#
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> index a205121ab4a7..abcd634c4f6d 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> @@ -5,6 +5,7 @@
 >  
->  patternProperties:
-> -  '-regulators$':
-> +  '^regulators(-[09])?$':
-Wouldn't this only allow regulators-0 and regulators-9?
+>  #include <dt-bindings/clock/qcom,gcc-sm6125.h>
+>  #include <dt-bindings/clock/qcom,rpmcc.h>
+> +#include <dt-bindings/dma/qcom-gpi.h>
+>  #include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+> @@ -510,6 +511,42 @@ sdhc_2: mmc@4784000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		gpi_dma0: dma-controller@4a00000 {
+> +			compatible = "qcom,sm6125-gpi-dma", "qcom,sdm845-gpi-dma";
+> +			reg = <0x04a00000 0x60000>;
+> +			interrupts = <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>;
+> +			dma-channels = <8>;
+> +			dma-channel-mask = <0x1f>;
+> +			iommus = <&apps_smmu 0x0136 0x0>;
+The stream id does not need the leading zero.
+You made the mask a decimal zero in the previous patchset, please
+decide on one convention. Masks are generally more useful as hex,
+but for zero values I suppose zero is less noise for the same thing..
+
+The DMA nodes however, look good otherwise.
 
 Konrad
->      $ref: /schemas/regulator/qcom,rpmh-regulator.yaml#
-> +    unevaluatedProperties: false
->  
->  required:
->    - compatible
-> 
-> base-commit: ca39c4daa6f7f770b1329ffb46f1e4a6bcc3f291
+> +			#dma-cells = <3>;
+> +			status = "disabled";
+> +		};
+> +
+> +		gpi_dma1: dma-controller@4c00000 {
+> +			compatible = "qcom,sm6125-gpi-dma", "qcom,sdm845-gpi-dma";
+> +			reg = <0x04c00000 0x60000>;
+> +			interrupts = <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>;
+> +			dma-channels = <8>;
+> +			dma-channel-mask = <0x0f>;
+> +			iommus = <&apps_smmu 0x0156 0x0>;
+> +			#dma-cells = <3>;
+> +			status = "disabled";
+> +		};
+> +
+>  		usb3: usb@4ef8800 {
+>  			compatible = "qcom,sm6125-dwc3", "qcom,dwc3";
+>  			reg = <0x04ef8800 0x400>;
