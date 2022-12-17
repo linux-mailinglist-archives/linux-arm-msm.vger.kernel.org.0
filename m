@@ -2,124 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7691864F545
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 00:42:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 315AA64F59A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 01:10:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbiLPXmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 18:42:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
+        id S230228AbiLQAKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 19:10:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbiLPXmQ (ORCPT
+        with ESMTP id S229851AbiLQAKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 18:42:16 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784E44D5C9;
-        Fri, 16 Dec 2022 15:42:15 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Fri, 16 Dec 2022 19:10:09 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F93973B29;
+        Fri, 16 Dec 2022 16:10:08 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5AB513F360;
-        Sat, 17 Dec 2022 00:42:13 +0100 (CET)
-Date:   Sat, 17 Dec 2022 00:42:12 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F0D9B621A1;
+        Sat, 17 Dec 2022 00:10:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DEDC433EF;
+        Sat, 17 Dec 2022 00:10:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671235807;
+        bh=F3IKvQb3dRbjUiVsFJJ7ZrKVxoZYc4KMN2m0fvwocZM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=qeW38RrqOM2KJ7vI8d/LKcjPErCe5R277VsXu3MD0bIgsDhoT/Ijcg135fh3e4Jol
+         xbI0TEJpZE5FWHn4K4N13p7o1i/0p75/1XQZLTPvfFqvYogyhrhISYAng9a9XZtxWW
+         Sy7Dey4xsfNFwYHowxTAu+pSh8+QpE1EjgCgs0A531FmzRtDZh0J6h4i/Y0LWG8K10
+         Dxm+YK5pztR+rK8tWUsoZmRYLCGXxiVqDHEv5u9cCY1+Pyr7y0EKuTrpEi/CcJ2Su8
+         Ai0lvZLIDZqx1zLfF25Lb2gsWKpKtp/TtFWNB7vCTD6MXZbQMHHW/vny4Wz+spzTCB
+         9g+/tn+3BDUOw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Robert Marko <robimarko@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] thermal: qcom-spmi-adc5: Suppress probe-deferral error
- message
-Message-ID: <20221216234212.5rm3uwzci2zjq67d@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Robert Marko <robimarko@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221216190945.902754-1-marijn.suijten@somainline.org>
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 7/9] arm64: dts: qcom: sm8450: disable SDHCI SDR104/SDR50 on all boards
+Date:   Fri, 16 Dec 2022 19:09:34 -0500
+Message-Id: <20221217000937.41115-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221217000937.41115-1-sashal@kernel.org>
+References: <20221217000937.41115-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221216190945.902754-1-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Whoops, that tile must of course have started with:
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-    iio: adc: qcom-spmi-adc5:
+[ Upstream commit 9d561dc4e5cc31e757f91eb7bb709d2e2a8c9ce0 ]
 
-instead of blindly copying the suffix from the thermal monitor patch
-(this driver is not a thermal monitor...).  I'll send a v2 if there are
-no other objections, unless this can be fixed up when the patch is
-applied.
+SDHCI on SM8450 HDK also has problems with SDR104/SDR50:
 
-On 2022-12-16 20:09:45, Marijn Suijten wrote:
-> Much like 807efb7102e8 ("thermal: qcom-spmi-adc-tm5: suppress
-> probe-deferral error message") the ADC5 driver also spams a similar
-> probe-deferral error on startup when a channel is not yet available:
-> 
->     [    0.343136] qcom-spmi-adc-tm5 1c40000.spmi:pmic@0:adc-tm@3500: get dt data failed: -517
-> 
-> Suppress it by using dev_err_probe instead, which also takes care of
-> storing the message as reason for deferring.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/iio/adc/qcom-spmi-adc5.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> index 821fee60a765..69cc36004b5a 100644
-> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> @@ -894,10 +894,8 @@ static int adc5_probe(struct platform_device *pdev)
->  	mutex_init(&adc->lock);
->  
->  	ret = adc5_get_fw_data(adc);
-> -	if (ret) {
-> -		dev_err(dev, "adc get dt data failed\n");
-> -		return ret;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "adc get dt data failed\n");
->  
->  	irq_eoc = platform_get_irq(pdev, 0);
->  	if (irq_eoc < 0) {
-> -- 
-> 2.39.0
-> 
+  mmc0: card never left busy state
+  mmc0: error -110 whilst initialising SD card
 
-Apologies for the clumsiness.
+so I think it is safe to assume this issue affects all SM8450 boards.
+Move the quirk disallowing these modes to the SoC DTSI, to spare people
+working on other boards the misery of debugging this issue.
 
-- Marijn
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221026200357.391635-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts | 2 --
+ arch/arm64/boot/dts/qcom/sm8450.dtsi                          | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+index d68765eb6d4f..6351050bc87f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
++++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
+@@ -556,8 +556,6 @@ &sdhc_2 {
+ 	pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_n>;
+ 	vmmc-supply = <&pm8350c_l9>;
+ 	vqmmc-supply = <&pm8350c_l6>;
+-	/* Forbid SDR104/SDR50 - broken hw! */
+-	sdhci-caps-mask = <0x3 0x0>;
+ 	no-sdio;
+ 	no-mmc;
+ 	status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index d32f08df743d..a91c40e4885f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -3192,6 +3192,9 @@ sdhc_2: sdhci@8804000 {
+ 			bus-width = <4>;
+ 			dma-coherent;
+ 
++			/* Forbid SDR104/SDR50 - broken hw! */
++			sdhci-caps-mask = <0x3 0x0>;
++
+ 			status = "disabled";
+ 
+ 			sdhc2_opp_table: opp-table {
+-- 
+2.35.1
+
