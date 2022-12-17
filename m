@@ -2,431 +2,1020 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79B9164FB71
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 18:56:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDDA864FB6E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 18:56:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbiLQR4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Dec 2022 12:56:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
+        id S229675AbiLQR4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Dec 2022 12:56:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbiLQR4m (ORCPT
+        with ESMTP id S229627AbiLQR4g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Dec 2022 12:56:42 -0500
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA05A12A98;
-        Sat, 17 Dec 2022 09:56:40 -0800 (PST)
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 4NZDDl6jLQzDqgj;
-        Sat, 17 Dec 2022 17:56:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1671299800; bh=rgVvW+QSVBgX3nDCbaWA1aBTc5DpyYA+GfFdLOSQ09g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Mpzm1QBZs+HUu9ApIbPJ/eyypTLRs2EsSt2rCwIkW5xpMlg3xtEQ/EajewdI6J15C
-         5fa+OMMcqSiFAzPEKLA725D75dP1LakbXrEc99ysupOxPXUg+AiwOpgfesnOddvhNX
-         TxBi/Xb0mfes+JGkq7+HdNjSgyfL7yw79F+H0dws=
-X-Riseup-User-ID: 31A5AF4E0E9AD3A9049DA48DA65AF0F5EEE9BABFC61F39D0B165D21C3D4BBF8D
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews1.riseup.net (Postfix) with ESMTPSA id 4NZDDh6KZhz5vbr;
-        Sat, 17 Dec 2022 17:56:36 +0000 (UTC)
-From:   Dang Huynh <danct12@riseup.net>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sat, 17 Dec 2022 12:56:36 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DDA63EE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 09:56:32 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id q6so8050585lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 09:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i5PzEOEFrn21mIlaHF+YorMjoBQ1X+gfj5AC/zxGfNM=;
+        b=itH2NoiNksA5WB8AaRvuVcblH/V4W19R5qTSBqyL+0dGHWlG/pF6S580pWuJRzZ7WV
+         8Y+PKAvEUiwDApAj8oAz2W6PoV2xQjsMwm+JGqZOW9xjRK/CCu9YHp6QAVw1phCe8tuu
+         /gDQcM3N9QuPsdVw+ZcsklEisbzET9bGLe3fwnbsThBc5lR2elyVUg8hmRuq5rm8lLDL
+         CKi4vWrw1rGFmGIo1VPgoj8XFt7mXRHa4+hCCdwYB0l7+TlRsrKpYqsY8ugLCFlsHRGH
+         xkIRK9Gau/YWyEkO1bEwl3xaSi0cVLI1fKbUESHOuC3+pC2H+dwCi8Nkr5Rvxk8TvTMK
+         Vcyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i5PzEOEFrn21mIlaHF+YorMjoBQ1X+gfj5AC/zxGfNM=;
+        b=QFq1zFJdltWEqUWE4Ng3EFnCDrAgDc8VQ3hhGEcDeXT5vJM2c+7CCjxWwFE2Hr4eCF
+         Wju0U5AZANL4kIEQZIVhpdqWtvFZhSBMwglRzoHqICoZj6M9iJkJXFQ5pASzcph6t1ot
+         MhXqvuJN9lbRWbxG2j9nZu8X6lsMb4FXTyIATYZpa1HWjxzZ2BVoW1UwlKBr90hTH89C
+         y/IMCk6juooM+Btgz+ugP9xDgzl/yQitkcCZUhgqeR0FhRpVTUVpwUQ4GDdKnUIVhYpF
+         Fhk9L1YtZlOaZVgXABsXC1mCu12UnDx+g7zCe/sfzAAjUW0RDu7nGCCqBmNmbEINFVO+
+         Pihw==
+X-Gm-Message-State: ANoB5pmXA/Yxf9u2leAW77Owds5bKLK//IA/3JjyHOzDVL10oqJNcLyT
+        GknIsEHDlefC61DYNhPoqBWtyg==
+X-Google-Smtp-Source: AA0mqf7HwjYX4LyxS8Kd+I/zFVBNhpDErFs83KGGp9hAc57sOxOOmUgIsQTpAY70Ph8IB/eDqWGLbw==
+X-Received: by 2002:ac2:4f07:0:b0:4a4:68b7:deab with SMTP id k7-20020ac24f07000000b004a468b7deabmr10399580lfr.7.1671299791108;
+        Sat, 17 Dec 2022 09:56:31 -0800 (PST)
+Received: from [127.0.0.1] (85-76-70-163-nat.elisa-mobile.fi. [85.76.70.163])
+        by smtp.gmail.com with ESMTPSA id i25-20020ac25239000000b004b0b2212315sm570184lfl.121.2022.12.17.09.56.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Dec 2022 09:56:30 -0800 (PST)
+Date:   Sat, 17 Dec 2022 19:56:30 +0200
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Iskren Chernev <me@iskren.info>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: Add Lenovo Tab P11 (J606F/XiaoXin Pad) dts
-Date:   Sun, 18 Dec 2022 00:56:25 +0700
-Message-ID: <6898596.lOV4Wx5bFT@melttower>
-In-Reply-To: <20221208201401.530555-5-konrad.dybcio@linaro.org>
-References: <20221208201401.530555-1-konrad.dybcio@linaro.org>
- <20221208201401.530555-5-konrad.dybcio@linaro.org>
+        Taniya Das <quic_tdas@quicinc.com>
+CC:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_10/15=5D_clk=3A_qcom=3A_gcc-qcs404=3A_u?= =?US-ASCII?Q?se_parent=5Fhws/=5Fdata_instead_of_parent=5Fnames?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <524350cf-fed4-6c59-6f35-9bd319947adc@linaro.org>
+References: <20221217001730.540502-1-dmitry.baryshkov@linaro.org> <20221217001730.540502-11-dmitry.baryshkov@linaro.org> <313ed5b8-41c5-df38-f97a-f17d282ee21d@linaro.org> <524350cf-fed4-6c59-6f35-9bd319947adc@linaro.org>
+Message-ID: <3EF28EAB-CEDD-4472-A4DA-FADC69E0A8DF@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Add an initial device tree for the Lenovo Tab P11. Currently it
-> enables:
-> 
-> - simplefb
-> - SD Card slot via SDHCI2
-> - gpio-keys & PON keys
-> - UFS
-> - RPM regulators
-> - USB2
-> 
-> This has been validated with a rev (62) device. You can check yours
-> next to the serial no. on the sticker in the lower portion of the
-> back side of your tablet.
-> 
-> To get a successful boot run:
-> 
-> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
-> sm6115p-lenovo-j606f.dtb > .Image.gz-dtb
-> 
-> ~/mkbootimg/mkbootimg.py \
-> --kernel .Image.gz-dtb \
-> --ramdisk some/initrd.img \
-> --pagesize 4096 \
-> --base 0x0 \
-> --kernel_offset 0x8000 \
-> --ramdisk_offset 0x1000000 \
-> --tags_offset 0x100 \
-> --cmdline 'SOME_CMDLINE' \
-> --dtb_offset 0x1f00000 \
-> --header_version 1 \
-> --os_version 11 \
-> --os_patch_level 2022-11 \
-> -o j606f.img
-> 
-> fastboot flash boot j606f.img
-> fastboot flash dtbo empty.img
-> fastboot flash recovery empty.img
-> fastboot reboot
-> 
-> Where empty.img is 2 zero-bytes.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    | 290 ++++++++++++++++++
->  2 files changed, 291 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile
-> b/arch/arm64/boot/dts/qcom/Makefile index 3e79496292e7..5d281436172d 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -156,6 +156,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts new file mode 100644
-> index 000000000000..102730dd49a7
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> @@ -0,0 +1,290 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-> +/*
-> + * Copyright (c) 2022 Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm6115.dtsi"
-> +#include "pm6125.dtsi"
-> +
-> +/ {
-> +	model = "Lenovo Tab P11";
-> +	compatible = "lenovo,j606f", "qcom,sm6115p", "qcom,sm6115";
-> +	chassis-type = "tablet";
-> +
-> +	/* required for bootloader to select correct board */
-> +	qcom,msm-id = <445 0x10000>, <420 0x10000>;
-> +	qcom,board-id = <34 3>;
-> +
-> +	aliases {
-> +		mmc0 = &sdhc_2;
-> +	};
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		framebuffer0: framebuffer@5c000000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x5c000000 0 (2000 * 1200 * 4)>;
-> +			width = <1200>;
-> +			height = <2000>;
-> +			stride = <(1200 * 4)>;
-> +			format = "a8r8g8b8";
-> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		label = "gpio-keys";
-Why is this needed? I had to make a patch to remove this label from many 
-device trees a few months ago and I haven't had any issue with it.
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&vol_up_n>;
-> +
-> +		key-volume-up {
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pm6125_gpio 5 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			gpio-key,wakeup;
-> +		};
-> +	};
-> +};
-> +
-> +&dispcc {
-> +	/* HACK: disable until a panel driver is ready to retain simplefb 
-*/
-> +	status = "disabled";
-> +};
-> +
-> +&pm6125_gpio {
-> +	vol_up_n: vol-up-n-state {
-> +		pins = "gpio5";
-> +		function = "normal";
-> +		power-source = <0>;
-> +		bias-pull-up;
-> +		input-enable;
-> +	};
-> +};
-> +
-> +&pon_pwrkey {
-> +	status = "okay";
-> +};
-> +
-> +&pon_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
-> +};
-> +
-> +&rpm_requests {
-> +	regulators-0 {
-> +		compatible = "qcom,rpm-pm6125-regulators";
-> +
-> +		pm6125_s6: s6 {
-> +			regulator-min-microvolt = <304000>;
-> +			regulator-max-microvolt = <1456000>;
-> +		};
-> +
-> +		pm6125_s7: s7 {
-> +			regulator-min-microvolt = <1280000>;
-> +			regulator-max-microvolt = <2080000>;
-> +		};
-> +
-> +		pm6125_s8: s8 {
-> +			regulator-min-microvolt = <1064000>;
-> +			regulator-max-microvolt = <1304000>;
-> +		};
-> +
-> +		pm6125_l1: l1 {
-> +			regulator-min-microvolt = <952000>;
-> +			regulator-max-microvolt = <1152000>;
-> +		};
-> +
-> +		pm6125_l4: l4 {
-> +			regulator-min-microvolt = <488000>;
-> +			regulator-max-microvolt = <1000000>;
-> +		};
-> +
-> +		pm6125_l5: l5 {
-> +			regulator-min-microvolt = <1648000>;
-> +			/* 3.056V capped to 2.96V for SDHCI */
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
-> +			/* Broken hw, this one can't be turned off or 
-SDHCI will break! */
-> +			regulator-always-on;
-> +		};
-> +
-> +		pm6125_l6: l6 {
-> +			regulator-min-microvolt = <576000>;
-> +			regulator-max-microvolt = <656000>;
-> +		};
-> +
-> +		pm6125_l7: l7 {
-> +			/* 1.2V-1.304V fixed at 1.256V for SDHCI bias 
-*/
-> +			regulator-min-microvolt = <1256000>;
-> +			regulator-max-microvolt = <1256000>;
-> +			/*
-> +			 * TODO: SDHCI seems to also work with this 
-one turned off, however
-> +			 * there exists a possibility that it may 
-not work with some very
-> +			 * specific SDCard types, perhaps validating 
-this against a wide
-> +			 * range of models could rule that out, 
-saving some power would
-> +			 * certainly be nice..
-> +			 */
-> +			regulator-always-on;
-> +		};
-> +
-> +		pm6125_l8: l8 {
-> +			regulator-min-microvolt = <400000>;
-> +			regulator-max-microvolt = <728000>;
-> +		};
-> +
-> +		pm6125_l9: l9 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2000000>;
-> +		};
-> +
-> +		pm6125_l10: l10 {
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <1904000>;
-> +		};
-> +
-> +		pm6125_l11: l11 {
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <1952000>;
-> +		};
-> +
-> +		pm6125_l12: l12 {
-> +			regulator-min-microvolt = <1624000>;
-> +			regulator-max-microvolt = <1984000>;
-> +		};
-> +
-> +		pm6125_l13: l13 {
-> +			regulator-min-microvolt = <1504000>;
-> +			regulator-max-microvolt = <1952000>;
-> +		};
-> +
-> +		pm6125_l14: l14 {
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <1904000>;
-> +		};
-> +
-> +		pm6125_l15: l15 {
-> +			regulator-min-microvolt = <2920000>;
-> +			regulator-max-microvolt = <3232000>;
-> +		};
-> +
-> +		pm6125_l16: l16 {
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <1904000>;
-> +		};
-> +
-> +		pm6125_l17: l17 {
-> +			regulator-min-microvolt = <1152000>;
-> +			regulator-max-microvolt = <1384000>;
-> +		};
-> +
-> +		pm6125_l18: l18 {
-> +			regulator-min-microvolt = <1104000>;
-> +			regulator-max-microvolt = <1312000>;
-> +		};
-> +
-> +		pm6125_l19: l19 {
-> +			regulator-min-microvolt = <1624000>;
-> +			regulator-max-microvolt = <3304000>;
-> +		};
-> +
-> +		pm6125_l20: l20 {
-> +			regulator-min-microvolt = <1624000>;
-> +			regulator-max-microvolt = <3304000>;
-> +		};
-> +
-> +		pm6125_l21: l21 {
-> +			regulator-min-microvolt = <2400000>;
-> +			regulator-max-microvolt = <3600000>;
-> +		};
-> +
-> +		pm6125_l22: l22 {
-> +			regulator-min-microvolt = <2952000>;
-> +			/* 3.304V capped to 2.96V for SDHCI */
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
-> +			/* Broken hw, this one can't be turned off or 
-SDHCI will break! */
-> +			regulator-always-on;
-> +		};
-> +
-> +		pm6125_l23: l23 {
-> +			regulator-min-microvolt = <3200000>;
-> +			regulator-max-microvolt = <3400000>;
-> +		};
-> +
-> +		pm6125_l24: l24 {
-> +			regulator-min-microvolt = <2704000>;
-> +			regulator-max-microvolt = <3600000>;
-> +		};
-> +	};
-> +};
-> +
-> +&sdhc_2 {
-> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_state_on &sdc2_gate_pin>;
-> +	pinctrl-1 = <&sdc2_state_off>;
-> +	vmmc-supply = <&pm6125_l22>;
-> +	vqmmc-supply = <&pm6125_l5>;
-> +	no-sdio;
-> +	no-mmc;
-> +	status = "okay";
-> +};
-> +
-> +&sleep_clk {
-> +	clock-frequency = <32764>;
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <14 4>;
-> +
-> +	/*
-> +	 * This is a wholly undocumented pin (other than a single vague
-> "pwr-gpios" reference) +	 * that needs to be toggled for the SD Card slot
-> to work properly.. +	 */
-> +	sdc2_gate_pin: sdc2-gate-state {
-> +		pins = "gpio45";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +		output-high;
-> +	};
-> +};
-> +
-> +&ufs_mem_hc {
-> +	vcc-supply = <&pm6125_l24>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-supply = <&pm6125_l11>;
-> +	vccq2-max-microamp = <600000>;
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&pm6125_l4>;
-> +	vdda-pll-supply = <&pm6125_l12>;
-> +	vddp-ref-clk-supply = <&pm6125_l18>;
-> +	status = "okay";
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	vdd-supply = <&pm6125_l4>;
-> +	vdda-pll-supply = <&pm6125_l12>;
-> +	vdda-phy-dpdm-supply = <&pm6125_l15>;
-> +	status = "okay";
-> +};
-> +
-> +&xo_board {
-> +	clock-frequency = <19200000>;
-> +};
+17 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3=2E 17:14:36 GMT+0=
+2:00, Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=
+=D1=82:
+>
+>
+>On 17=2E12=2E2022 16:13, Konrad Dybcio wrote:
+>>=20
+>>=20
+>> On 17=2E12=2E2022 01:17, Dmitry Baryshkov wrote:
+>>> Convert the clock driver to specify parent data rather than parent
+>>> names, to actually bind using 'clock-names' specified in the DTS rathe=
+r
+>>> than global clock names=2E Use parent_hws where possible to refer pare=
+nt
+>>> clocks directly, skipping the lookup=2E
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>>> ---
+>> Reviewed-by: Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg>
+>>=20
+>> Konrad
+>Actually, on a second thought - why not switch to =2Eindex
+>like on the newer clk drivers?
 
+I thought we should use clock-names with old drivers for the sake of keepi=
+ng compatibility with partial clocks specifications=2E In this case we do n=
+ot have one=2E Let me check if it we can live without =2Efw_name=2E
 
-
-
+>
+>Konrad
+>>>  drivers/clk/qcom/gcc-qcs404=2Ec | 515 ++++++++++++++++++-------------=
+---
+>>>  1 file changed, 266 insertions(+), 249 deletions(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/gcc-qcs404=2Ec b/drivers/clk/qcom/gcc-qc=
+s404=2Ec
+>>> index 5ae7a6b2a326=2E=2E3941175d73a5 100644
+>>> --- a/drivers/clk/qcom/gcc-qcs404=2Ec
+>>> +++ b/drivers/clk/qcom/gcc-qcs404=2Ec
+>>> @@ -42,7 +42,9 @@ static struct clk_fixed_factor cxo =3D {
+>>>  	=2Ediv =3D 1,
+>>>  	=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "cxo",
+>>> -		=2Eparent_names =3D (const char *[]){ "xo-board" },
+>>> +		=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +			=2Ename =3D "xo-board",
+>>> +		},
+>>>  		=2Enum_parents =3D 1,
+>>>  		=2Eops =3D &clk_fixed_factor_ops,
+>>>  	},
+>>> @@ -57,7 +59,9 @@ static struct clk_alpha_pll gpll0_sleep_clk_src =3D =
+{
+>>>  		=2Eenable_is_inverted =3D true,
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll0_sleep_clk_src",
+>>> -			=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eops =3D &clk_alpha_pll_ops,
+>>>  		},
+>>> @@ -73,8 +77,9 @@ static struct clk_alpha_pll gpll0_out_main =3D {
+>>>  		=2Eenable_mask =3D BIT(0),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll0_out_main",
+>>> -			=2Eparent_names =3D (const char *[])
+>>> -					{ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eops =3D &clk_alpha_pll_ops,
+>>>  		},
+>>> @@ -90,7 +95,9 @@ static struct clk_alpha_pll gpll0_ao_out_main =3D {
+>>>  		=2Eenable_mask =3D BIT(0),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll0_ao_out_main",
+>>> -			=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eflags =3D CLK_IS_CRITICAL,
+>>>  			=2Eops =3D &clk_alpha_pll_fixed_ops,
+>>> @@ -106,7 +113,9 @@ static struct clk_alpha_pll gpll1_out_main =3D {
+>>>  		=2Eenable_mask =3D BIT(1),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll1_out_main",
+>>> -			=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eops =3D &clk_alpha_pll_ops,
+>>>  		},
+>>> @@ -137,7 +146,9 @@ static struct clk_alpha_pll gpll3_out_main =3D {
+>>>  	=2Eclkr =3D {
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll3_out_main",
+>>> -			=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eops =3D &clk_alpha_pll_ops,
+>>>  		},
+>>> @@ -152,7 +163,9 @@ static struct clk_alpha_pll gpll4_out_main =3D {
+>>>  		=2Eenable_mask =3D BIT(5),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gpll4_out_main",
+>>> -			=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +			=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +				=2Ehw =3D &cxo=2Ehw,
+>>> +			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eops =3D &clk_alpha_pll_ops,
+>>>  		},
+>>> @@ -169,7 +182,9 @@ static struct clk_pll gpll6 =3D {
+>>>  	=2Estatus_bit =3D 17,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gpll6",
+>>> -		=2Eparent_names =3D (const char *[]){ "cxo" },
+>>> +		=2Eparent_data =3D &(const struct clk_parent_data) {
+>>> +			=2Ehw =3D &cxo=2Ehw,
+>>> +		},
+>>>  		=2Enum_parents =3D 1,
+>>>  		=2Eops =3D &clk_pll_ops,
+>>>  	},
+>>> @@ -180,7 +195,9 @@ static struct clk_regmap gpll6_out_aux =3D {
+>>>  	=2Eenable_mask =3D BIT(7),
+>>>  	=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gpll6_out_aux",
+>>> -		=2Eparent_names =3D (const char *[]){ "gpll6" },
+>>> +		=2Eparent_hws =3D (const struct clk_hw*[]) {
+>>> +			&gpll6=2Eclkr=2Ehw,
+>>> +		},
+>>>  		=2Enum_parents =3D 1,
+>>>  		=2Eops =3D &clk_pll_vote_ops,
+>>>  	},
+>>> @@ -191,22 +208,22 @@ static const struct parent_map gcc_parent_map_0[=
+] =3D {
+>>>  	{ P_GPLL0_OUT_MAIN, 1 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_0[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> +static const struct clk_parent_data gcc_parent_data_0[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_ao_0[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_ao_out_main",
+>>> +static const struct clk_parent_data gcc_parent_data_ao_0[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_ao_out_main=2Eclkr=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_1[] =3D {
+>>>  	{ P_XO, 0 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_1[] =3D {
+>>> -	"cxo",
+>>> +static const struct clk_parent_data gcc_parent_data_1[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_2[] =3D {
+>>> @@ -216,11 +233,11 @@ static const struct parent_map gcc_parent_map_2[=
+] =3D {
+>>>  	{ P_SLEEP_CLK, 6 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_2[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> -	"gpll6_out_aux",
+>>> -	"sleep_clk",
+>>> +static const struct clk_parent_data gcc_parent_data_2[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll6_out_aux=2Ehw },
+>>> +	{ =2Efw_name =3D "sleep_clk", =2Ename =3D "sleep_clk" },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_3[] =3D {
+>>> @@ -229,10 +246,10 @@ static const struct parent_map gcc_parent_map_3[=
+] =3D {
+>>>  	{ P_GPLL6_OUT_AUX, 2 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_3[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> -	"gpll6_out_aux",
+>>> +static const struct clk_parent_data gcc_parent_data_3[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll6_out_aux=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_4[] =3D {
+>>> @@ -240,9 +257,9 @@ static const struct parent_map gcc_parent_map_4[] =
+=3D {
+>>>  	{ P_GPLL1_OUT_MAIN, 1 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_4[] =3D {
+>>> -	"cxo",
+>>> -	"gpll1_out_main",
+>>> +static const struct clk_parent_data gcc_parent_data_4[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll1_out_main=2Eclkr=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_5[] =3D {
+>>> @@ -251,9 +268,9 @@ static const struct parent_map gcc_parent_map_5[] =
+=3D {
+>>>  	/* { P_GPLL0_OUT_AUX, 2 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_5[] =3D {
+>>> -	"cxo",
+>>> -	"dsi0pllbyte",
+>>> +static const struct clk_parent_data gcc_parent_data_5[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "dsi0pllbyte", =2Ename =3D "dsi0pllbyte" },
+>>>  	/* "gpll0_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -263,9 +280,9 @@ static const struct parent_map gcc_parent_map_6[] =
+=3D {
+>>>  	/* { P_GPLL0_OUT_AUX, 3 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_6[] =3D {
+>>> -	"cxo",
+>>> -	"dsi0pllbyte",
+>>> +static const struct clk_parent_data gcc_parent_data_6[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "dsi0pllbyte", =2Ename =3D "dsi0pllbyte" },
+>>>  	/* "gpll0_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -277,11 +294,11 @@ static const struct parent_map gcc_parent_map_7[=
+] =3D {
+>>>  	/* { P_GPLL4_OUT_AUX, 4 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_7[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> -	"gpll3_out_main",
+>>> -	"gpll6_out_aux",
+>>> +static const struct clk_parent_data gcc_parent_data_7[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll3_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll6_out_aux=2Ehw },
+>>>  	/* "gpll4_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -290,9 +307,9 @@ static const struct parent_map gcc_parent_map_8[] =
+=3D {
+>>>  	{ P_HDMI_PHY_PLL_CLK, 1 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_8[] =3D {
+>>> -	"cxo",
+>>> -	"hdmi_pll",
+>>> +static const struct clk_parent_data gcc_parent_data_8[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "hdmi_pll", =2Ename =3D "hdmi_pll" },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_9[] =3D {
+>>> @@ -302,11 +319,11 @@ static const struct parent_map gcc_parent_map_9[=
+] =3D {
+>>>  	{ P_GPLL6_OUT_AUX, 3 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_9[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> -	"dsi0pll",
+>>> -	"gpll6_out_aux",
+>>> +static const struct clk_parent_data gcc_parent_data_9[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Efw_name =3D "dsi0pll", =2Ename =3D "dsi0pll" },
+>>> +	{ =2Ehw =3D &gpll6_out_aux=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_10[] =3D {
+>>> @@ -314,9 +331,9 @@ static const struct parent_map gcc_parent_map_10[]=
+ =3D {
+>>>  	{ P_SLEEP_CLK, 1 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_10[] =3D {
+>>> -	"cxo",
+>>> -	"sleep_clk",
+>>> +static const struct clk_parent_data gcc_parent_data_10[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "sleep_clk", =2Ename =3D "sleep_clk" },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_11[] =3D {
+>>> @@ -324,9 +341,9 @@ static const struct parent_map gcc_parent_map_11[]=
+ =3D {
+>>>  	{ P_PCIE_0_PIPE_CLK, 1 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_11[] =3D {
+>>> -	"cxo",
+>>> -	"pcie_0_pipe_clk",
+>>> +static const struct clk_parent_data gcc_parent_data_11[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "pcie_0_pipe_clk", =2Ename =3D "pcie_0_pipe_clk" },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_12[] =3D {
+>>> @@ -335,9 +352,9 @@ static const struct parent_map gcc_parent_map_12[]=
+ =3D {
+>>>  	/* { P_GPLL0_OUT_AUX, 2 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_12[] =3D {
+>>> -	"cxo",
+>>> -	"dsi0pll",
+>>> +static const struct clk_parent_data gcc_parent_data_12[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Efw_name =3D "dsi0pll", =2Ename =3D "dsi0pll" },
+>>>  	/* "gpll0_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -348,11 +365,11 @@ static const struct parent_map gcc_parent_map_13=
+[] =3D {
+>>>  	{ P_GPLL6_OUT_AUX, 3 },
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_13[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> -	"gpll4_out_main",
+>>> -	"gpll6_out_aux",
+>>> +static const struct clk_parent_data gcc_parent_data_13[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll4_out_main=2Eclkr=2Ehw },
+>>> +	{ =2Ehw =3D &gpll6_out_aux=2Ehw },
+>>>  };
+>>> =20
+>>>  static const struct parent_map gcc_parent_map_14[] =3D {
+>>> @@ -361,9 +378,9 @@ static const struct parent_map gcc_parent_map_14[]=
+ =3D {
+>>>  	/* { P_GPLL4_OUT_AUX, 2 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_14[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> +static const struct clk_parent_data gcc_parent_data_14[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>>  	/* "gpll4_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -372,8 +389,8 @@ static const struct parent_map gcc_parent_map_15[]=
+ =3D {
+>>>  	/* { P_GPLL0_OUT_AUX, 2 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_15[] =3D {
+>>> -	"cxo",
+>>> +static const struct clk_parent_data gcc_parent_data_15[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>>  	/* "gpll0_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -383,9 +400,9 @@ static const struct parent_map gcc_parent_map_16[]=
+ =3D {
+>>>  	/* { P_GPLL0_OUT_AUX, 2 }, */
+>>>  };
+>>> =20
+>>> -static const char * const gcc_parent_names_16[] =3D {
+>>> -	"cxo",
+>>> -	"gpll0_out_main",
+>>> +static const struct clk_parent_data gcc_parent_data_16[] =3D {
+>>> +	{ =2Ehw =3D &cxo=2Ehw },
+>>> +	{ =2Ehw =3D &gpll0_out_main=2Eclkr=2Ehw },
+>>>  	/* "gpll0_out_aux", */
+>>>  };
+>>> =20
+>>> @@ -405,8 +422,8 @@ static struct clk_rcg2 apss_ahb_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_apss_ahb_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "apss_ahb_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_ao_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_ao_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_ao_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_ao_0),
+>>>  		=2Eflags =3D CLK_IS_CRITICAL,
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>> @@ -426,8 +443,8 @@ static struct clk_rcg2 blsp1_qup0_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup0_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -451,8 +468,8 @@ static struct clk_rcg2 blsp1_qup0_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup0_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -465,8 +482,8 @@ static struct clk_rcg2 blsp1_qup1_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup1_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -490,8 +507,8 @@ static struct clk_rcg2 blsp1_qup1_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup1_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup1_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -504,8 +521,8 @@ static struct clk_rcg2 blsp1_qup2_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup2_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -530,8 +547,8 @@ static struct clk_rcg2 blsp1_qup2_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup2_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup2_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -544,8 +561,8 @@ static struct clk_rcg2 blsp1_qup3_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup3_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -558,8 +575,8 @@ static struct clk_rcg2 blsp1_qup3_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup3_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -572,8 +589,8 @@ static struct clk_rcg2 blsp1_qup4_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup4_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -586,8 +603,8 @@ static struct clk_rcg2 blsp1_qup4_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_qup4_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -620,8 +637,8 @@ static struct clk_rcg2 blsp1_uart0_apps_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_uart0_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_uart0_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -634,8 +651,8 @@ static struct clk_rcg2 blsp1_uart1_apps_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_uart0_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_uart1_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -648,8 +665,8 @@ static struct clk_rcg2 blsp1_uart2_apps_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_uart0_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_uart2_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -663,8 +680,8 @@ static struct clk_rcg2 blsp1_uart3_apps_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_uart0_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp1_uart3_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -677,8 +694,8 @@ static struct clk_rcg2 blsp2_qup0_i2c_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_i2c_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp2_qup0_i2c_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -691,8 +708,8 @@ static struct clk_rcg2 blsp2_qup0_spi_apps_clk_src=
+ =3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_qup0_spi_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp2_qup0_spi_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -705,8 +722,8 @@ static struct clk_rcg2 blsp2_uart0_apps_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_blsp1_uart0_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "blsp2_uart0_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -718,8 +735,8 @@ static struct clk_rcg2 byte0_clk_src =3D {
+>>>  	=2Eparent_map =3D gcc_parent_map_5,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "byte0_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_5,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_5),
+>>> +		=2Eparent_data =3D gcc_parent_data_5,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_5),
+>>>  		=2Eflags =3D CLK_SET_RATE_PARENT,
+>>>  		=2Eops =3D &clk_byte2_ops,
+>>>  	},
+>>> @@ -741,8 +758,8 @@ static struct clk_rcg2 emac_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_emac_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "emac_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_4,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_4),
+>>> +		=2Eparent_data =3D gcc_parent_data_4,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_4),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -762,8 +779,8 @@ static struct clk_rcg2 emac_ptp_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_emac_ptp_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "emac_ptp_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_4,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_4),
+>>> +		=2Eparent_data =3D gcc_parent_data_4,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_4),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -781,8 +798,8 @@ static struct clk_rcg2 esc0_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "esc0_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_6,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_6),
+>>> +		=2Eparent_data =3D gcc_parent_data_6,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_6),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -815,8 +832,8 @@ static struct clk_rcg2 gfx3d_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_gfx3d_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gfx3d_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_7,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_7),
+>>> +		=2Eparent_data =3D gcc_parent_data_7,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_7),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -836,8 +853,8 @@ static struct clk_rcg2 gp1_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_gp1_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gp1_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_2,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_2),
+>>> +		=2Eparent_data =3D gcc_parent_data_2,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_2),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -850,8 +867,8 @@ static struct clk_rcg2 gp2_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_gp1_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gp2_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_2,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_2),
+>>> +		=2Eparent_data =3D gcc_parent_data_2,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_2),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -864,8 +881,8 @@ static struct clk_rcg2 gp3_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_gp1_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "gp3_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_2,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_2),
+>>> +		=2Eparent_data =3D gcc_parent_data_2,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_2),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -878,8 +895,8 @@ static struct clk_rcg2 hdmi_app_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "hdmi_app_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_1,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_1),
+>>> +		=2Eparent_data =3D gcc_parent_data_1,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_1),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -892,8 +909,8 @@ static struct clk_rcg2 hdmi_pclk_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "hdmi_pclk_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_8,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_8),
+>>> +		=2Eparent_data =3D gcc_parent_data_8,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_8),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -919,8 +936,8 @@ static struct clk_rcg2 mdp_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_mdp_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "mdp_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_9,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_9),
+>>> +		=2Eparent_data =3D gcc_parent_data_9,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_9),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -938,8 +955,8 @@ static struct clk_rcg2 pcie_0_aux_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_pcie_0_aux_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "pcie_0_aux_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_10,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_10),
+>>> +		=2Eparent_data =3D gcc_parent_data_10,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_10),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -959,8 +976,8 @@ static struct clk_rcg2 pcie_0_pipe_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_pcie_0_pipe_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "pcie_0_pipe_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_11,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_11),
+>>> +		=2Eparent_data =3D gcc_parent_data_11,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_11),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -972,8 +989,8 @@ static struct clk_rcg2 pclk0_clk_src =3D {
+>>>  	=2Eparent_map =3D gcc_parent_map_12,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "pclk0_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_12,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_12),
+>>> +		=2Eparent_data =3D gcc_parent_data_12,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_12),
+>>>  		=2Eflags =3D CLK_SET_RATE_PARENT,
+>>>  		=2Eops =3D &clk_pixel_ops,
+>>>  	},
+>>> @@ -993,8 +1010,8 @@ static struct clk_rcg2 pdm2_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_pdm2_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "pdm2_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1021,8 +1038,8 @@ static struct clk_rcg2 sdcc1_apps_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_sdcc1_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "sdcc1_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_13,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_13),
+>>> +		=2Eparent_data =3D gcc_parent_data_13,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_13),
+>>>  		=2Eops =3D &clk_rcg2_floor_ops,
+>>>  	},
+>>>  };
+>>> @@ -1041,8 +1058,8 @@ static struct clk_rcg2 sdcc1_ice_core_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_sdcc1_ice_core_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "sdcc1_ice_core_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_3,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_3),
+>>> +		=2Eparent_data =3D gcc_parent_data_3,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_3),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1067,8 +1084,8 @@ static struct clk_rcg2 sdcc2_apps_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_sdcc2_apps_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "sdcc2_apps_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_14,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_14),
+>>> +		=2Eparent_data =3D gcc_parent_data_14,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_14),
+>>>  		=2Eops =3D &clk_rcg2_floor_ops,
+>>>  	},
+>>>  };
+>>> @@ -1081,8 +1098,8 @@ static struct clk_rcg2 usb20_mock_utmi_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "usb20_mock_utmi_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_1,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_1),
+>>> +		=2Eparent_data =3D gcc_parent_data_1,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_1),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1103,8 +1120,8 @@ static struct clk_rcg2 usb30_master_clk_src =3D =
+{
+>>>  	=2Efreq_tbl =3D ftbl_usb30_master_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "usb30_master_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_0,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_0),
+>>> +		=2Eparent_data =3D gcc_parent_data_0,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1117,8 +1134,8 @@ static struct clk_rcg2 usb30_mock_utmi_clk_src =
+=3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "usb30_mock_utmi_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_1,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_1),
+>>> +		=2Eparent_data =3D gcc_parent_data_1,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_1),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1131,8 +1148,8 @@ static struct clk_rcg2 usb3_phy_aux_clk_src =3D =
+{
+>>>  	=2Efreq_tbl =3D ftbl_pcie_0_aux_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "usb3_phy_aux_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_1,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_1),
+>>> +		=2Eparent_data =3D gcc_parent_data_1,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_1),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1154,8 +1171,8 @@ static struct clk_rcg2 usb_hs_system_clk_src =3D=
+ {
+>>>  	=2Efreq_tbl =3D ftbl_usb_hs_system_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "usb_hs_system_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_3,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_3),
+>>> +		=2Eparent_data =3D gcc_parent_data_3,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_3),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1168,8 +1185,8 @@ static struct clk_rcg2 vsync_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_esc0_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  		=2Ename =3D "vsync_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_15,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_15),
+>>> +		=2Eparent_data =3D gcc_parent_data_15,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_15),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1190,8 +1207,8 @@ static struct clk_rcg2 cdsp_bimc_clk_src =3D {
+>>>  	=2Efreq_tbl =3D ftbl_cdsp_bimc_clk_src,
+>>>  	=2Eclkr=2Ehw=2Einit =3D &(struct clk_init_data) {
+>>>  		=2Ename =3D "cdsp_bimc_clk_src",
+>>> -		=2Eparent_names =3D gcc_parent_names_16,
+>>> -		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_names_16),
+>>> +		=2Eparent_data =3D gcc_parent_data_16,
+>>> +		=2Enum_parents =3D ARRAY_SIZE(gcc_parent_data_16),
+>>>  		=2Eops =3D &clk_rcg2_ops,
+>>>  	},
+>>>  };
+>>> @@ -1204,8 +1221,8 @@ static struct clk_branch gcc_apss_ahb_clk =3D {
+>>>  		=2Eenable_mask =3D BIT(14),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gcc_apss_ahb_clk",
+>>> -			=2Eparent_names =3D (const char *[]){
+>>> -				"apss_ahb_clk_src",
+>>> +			=2Eparent_hws =3D (const struct clk_hw*[]) {
+>>> +				&apss_ahb_clk_src=2Eclkr=2Ehw,
+>>>  			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eflags =3D CLK_SET_RATE_PARENT,
+>>> @@ -1236,8 +1253,8 @@ static struct clk_branch gcc_bimc_gfx_clk =3D {
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gcc_bimc_gfx_clk",
+>>>  			=2Eops =3D &clk_branch2_ops,
+>>> -			=2Eparent_names =3D (const char *[]){
+>>> -				"gcc_apss_tcu_clk",
+>>> +			=2Eparent_hws =3D (const struct clk_hw*[]) {
+>>> +				&gcc_apss_tcu_clk=2Eclkr=2Ehw,
+>>>  			},
+>>> =20
+>>>  		},
+>>> @@ -1265,8 +1282,8 @@ static struct clk_branch gcc_bimc_cdsp_clk =3D {
+>>>  		=2Eenable_mask =3D BIT(0),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data) {
+>>>  			=2Ename =3D "gcc_bimc_cdsp_clk",
+>>> -			=2Eparent_names =3D (const char *[]) {
+>>> -				"cdsp_bimc_clk_src",
+>>> +			=2Eparent_hws =3D (const struct clk_hw*[]) {
+>>> +				&cdsp_bimc_clk_src=2Eclkr=2Ehw
+>>>  			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eflags =3D CLK_SET_RATE_PARENT,
+>>> @@ -1335,8 +1352,8 @@ static struct clk_branch gcc_blsp1_qup0_i2c_apps=
+_clk =3D {
+>>>  		=2Eenable_mask =3D BIT(0),
+>>>  		=2Ehw=2Einit =3D &(struct clk_init_data){
+>>>  			=2Ename =3D "gcc_blsp1_qup0_i2c_apps_clk",
+>>> -			=2Eparent_names =3D (const char *[]){
+>>> -				"blsp1_qup0_i2c_apps_clk_src",
+>>> +			=2Eparent_hws =3D (const struct clk_hw*[]) {
+>>> +				&blsp1_qup0_i2c_apps_clk_src=2Eclkr=2Ehw,
+>>>  			},
+>>>  			=2Enum_parents =3D 1,
+>>>  			=2Eflags=20
