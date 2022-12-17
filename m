@@ -2,251 +2,431 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 331C664FB6B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 18:54:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B9164FB71
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 18:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbiLQRyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Dec 2022 12:54:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
+        id S229820AbiLQR4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Dec 2022 12:56:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiLQRyJ (ORCPT
+        with ESMTP id S229504AbiLQR4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Dec 2022 12:54:09 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4D212AFA
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 09:54:07 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id bp15so8035074lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 09:54:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=k0q2QQnxpm0TXHw29OgJug+FEx+jfuhjsMjmeqCML58=;
-        b=vG/kbDbx97Rr4/F+1VS/162sCuOv2r1Gd40apQN6ZhyYH/yd2V+PVtl+tvj7UwbQBF
-         iT1OXJSmwDX68VRMsx38PFCOTnOwCDzgOCX0ZYpxOOqx8aaq/7gFkusis5CGbgq3A6BV
-         rz/baOPLxS6tXKNpf2lF38CwxGIHn1iZcvaS2bxsRwn5Rkoz3OY0klXu1HVfE4yh1oHl
-         Fms9doOXI5BXm9qgepaPnhfd3yMK2t9djzS2h6qqYNNwzXqOOtdJsWzyCaIdY6byXVu+
-         udiC2OO1eVIY154oIJZFTJfAHLVZtl4kgPtLcNyHJOZ9HIUz/ReDcay3PpFp1qR98ipN
-         rRqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k0q2QQnxpm0TXHw29OgJug+FEx+jfuhjsMjmeqCML58=;
-        b=uMuwA9Wa8zq1VSzbvB8SDGr/84C4FTPjMy1NLLWSdnKTRst9bkt32rev6ykEPwvzr1
-         aVNEcX2F33W5oRZtXJGTQL0BbVJ9CeVnq7Gk/XTZ84hDtvqxYbmu3UWIxhUl+n1zY9L5
-         n5sWQwSdQBzZNDu52EtdJSC8I+Myrx8OJ7U7uA/J4VA+prSM4xikxfR2WJ6L0wn2C2zo
-         /XJEeS5KJMEwGru2aWoKqfKY0lBRVToYZFSzKl3y7oBo1bZYgYpfzuebM+xCvZV49ios
-         ltw1nWwRc0PlgQa8HFdlm4MQ49RB02mkLPWOF8uVcwO5fmTTyI8hufd/YL1QV8IIar3w
-         vQwQ==
-X-Gm-Message-State: ANoB5plYUouXxvQlr/s35s8qs6hvK1Jm7Y7pzbe7YKWd5nhInCmtJNLR
-        nJ7jvI1lVPagBjg9EmC5Qq1IpA==
-X-Google-Smtp-Source: AA0mqf6RVcv4KurZarM2rWUm4zkWv2t5a6Se+1gohlSaBG50fR0ukdGgBmHkqkOSOa9s28GBhpcqoA==
-X-Received: by 2002:a05:6512:25a4:b0:4b5:87da:8b35 with SMTP id bf36-20020a05651225a400b004b587da8b35mr11729690lfb.61.1671299646233;
-        Sat, 17 Dec 2022 09:54:06 -0800 (PST)
-Received: from [127.0.0.1] (85-76-70-163-nat.elisa-mobile.fi. [85.76.70.163])
-        by smtp.gmail.com with ESMTPSA id a5-20020a056512200500b00492b494c4e8sm571744lfb.298.2022.12.17.09.54.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Dec 2022 09:54:05 -0800 (PST)
-Date:   Sat, 17 Dec 2022 19:54:04 +0200
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Sat, 17 Dec 2022 12:56:42 -0500
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA05A12A98;
+        Sat, 17 Dec 2022 09:56:40 -0800 (PST)
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4NZDDl6jLQzDqgj;
+        Sat, 17 Dec 2022 17:56:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1671299800; bh=rgVvW+QSVBgX3nDCbaWA1aBTc5DpyYA+GfFdLOSQ09g=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Mpzm1QBZs+HUu9ApIbPJ/eyypTLRs2EsSt2rCwIkW5xpMlg3xtEQ/EajewdI6J15C
+         5fa+OMMcqSiFAzPEKLA725D75dP1LakbXrEc99ysupOxPXUg+AiwOpgfesnOddvhNX
+         TxBi/Xb0mfes+JGkq7+HdNjSgyfL7yw79F+H0dws=
+X-Riseup-User-ID: 31A5AF4E0E9AD3A9049DA48DA65AF0F5EEE9BABFC61F39D0B165D21C3D4BBF8D
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4NZDDh6KZhz5vbr;
+        Sat, 17 Dec 2022 17:56:36 +0000 (UTC)
+From:   Dang Huynh <danct12@riseup.net>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-CC:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_05/15=5D_clk=3A_qcom=3A_gcc-qcs?= =?US-ASCII?Q?404=3A_disable_gpll=5B04=5D=5Fout=5Faux_parents?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <744cdde3-f43f-6545-fb83-a4474a84b84c@linaro.org>
-References: <20221217001730.540502-1-dmitry.baryshkov@linaro.org> <20221217001730.540502-6-dmitry.baryshkov@linaro.org> <744cdde3-f43f-6545-fb83-a4474a84b84c@linaro.org>
-Message-ID: <65B5F4E4-5026-476A-B62F-1432497BDAF4@linaro.org>
+        Iskren Chernev <me@iskren.info>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: Add Lenovo Tab P11 (J606F/XiaoXin Pad) dts
+Date:   Sun, 18 Dec 2022 00:56:25 +0700
+Message-ID: <6898596.lOV4Wx5bFT@melttower>
+In-Reply-To: <20221208201401.530555-5-konrad.dybcio@linaro.org>
+References: <20221208201401.530555-1-konrad.dybcio@linaro.org>
+ <20221208201401.530555-5-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-17 =D0=B4=D0=B5=D0=BA=D0=B0=D0=B1=D1=80=D1=8F 2022 =D0=B3=2E 17:08:24 GMT+0=
-2:00, Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=
-=D1=82:
->
->
->On 17=2E12=2E2022 01:17, Dmitry Baryshkov wrote:
->> On the QCS404 platform the driver for the Global Clock Controller
->> doens't define gpll0_out_aux and gpll4_out_aux clocks, so it's not
->> possible to use them as parents=2E Comment out entries for these clocks=
-=2E
->>=20
->> Note: backporting this patch to earlier kernels would also require a
->> previous patch which switches the gcc driver to use ARRAY_SIZE for
->> parent data arrays=2E
->>=20
->> Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller drive=
-r for QCS404")
->> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
->> ---
->Perhaps one could just remove them then?
+> Add an initial device tree for the Lenovo Tab P11. Currently it
+> enables:
+> 
+> - simplefb
+> - SD Card slot via SDHCI2
+> - gpio-keys & PON keys
+> - UFS
+> - RPM regulators
+> - USB2
+> 
+> This has been validated with a rev (62) device. You can check yours
+> next to the serial no. on the sticker in the lower portion of the
+> back side of your tablet.
+> 
+> To get a successful boot run:
+> 
+> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
+> sm6115p-lenovo-j606f.dtb > .Image.gz-dtb
+> 
+> ~/mkbootimg/mkbootimg.py \
+> --kernel .Image.gz-dtb \
+> --ramdisk some/initrd.img \
+> --pagesize 4096 \
+> --base 0x0 \
+> --kernel_offset 0x8000 \
+> --ramdisk_offset 0x1000000 \
+> --tags_offset 0x100 \
+> --cmdline 'SOME_CMDLINE' \
+> --dtb_offset 0x1f00000 \
+> --header_version 1 \
+> --os_version 11 \
+> --os_patch_level 2022-11 \
+> -o j606f.img
+> 
+> fastboot flash boot j606f.img
+> fastboot flash dtbo empty.img
+> fastboot flash recovery empty.img
+> fastboot reboot
+> 
+> Where empty.img is 2 zero-bytes.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    | 290 ++++++++++++++++++
+>  2 files changed, 291 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile
+> b/arch/arm64/boot/dts/qcom/Makefile index 3e79496292e7..5d281436172d 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -156,6 +156,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts new file mode 100644
+> index 000000000000..102730dd49a7
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> @@ -0,0 +1,290 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> +/*
+> + * Copyright (c) 2022 Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm6115.dtsi"
+> +#include "pm6125.dtsi"
+> +
+> +/ {
+> +	model = "Lenovo Tab P11";
+> +	compatible = "lenovo,j606f", "qcom,sm6115p", "qcom,sm6115";
+> +	chassis-type = "tablet";
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <445 0x10000>, <420 0x10000>;
+> +	qcom,board-id = <34 3>;
+> +
+> +	aliases {
+> +		mmc0 = &sdhc_2;
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer0: framebuffer@5c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x5c000000 0 (2000 * 1200 * 4)>;
+> +			width = <1200>;
+> +			height = <2000>;
+> +			stride = <(1200 * 4)>;
+> +			format = "a8r8g8b8";
+> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +		label = "gpio-keys";
+Why is this needed? I had to make a patch to remove this label from many 
+device trees a few months ago and I haven't had any issue with it.
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&vol_up_n>;
+> +
+> +		key-volume-up {
+> +			label = "Volume Up";
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			gpios = <&pm6125_gpio 5 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +	};
+> +};
+> +
+> +&dispcc {
+> +	/* HACK: disable until a panel driver is ready to retain simplefb 
+*/
+> +	status = "disabled";
+> +};
+> +
+> +&pm6125_gpio {
+> +	vol_up_n: vol-up-n-state {
+> +		pins = "gpio5";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+> +&pon_pwrkey {
+> +	status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	regulators-0 {
+> +		compatible = "qcom,rpm-pm6125-regulators";
+> +
+> +		pm6125_s6: s6 {
+> +			regulator-min-microvolt = <304000>;
+> +			regulator-max-microvolt = <1456000>;
+> +		};
+> +
+> +		pm6125_s7: s7 {
+> +			regulator-min-microvolt = <1280000>;
+> +			regulator-max-microvolt = <2080000>;
+> +		};
+> +
+> +		pm6125_s8: s8 {
+> +			regulator-min-microvolt = <1064000>;
+> +			regulator-max-microvolt = <1304000>;
+> +		};
+> +
+> +		pm6125_l1: l1 {
+> +			regulator-min-microvolt = <952000>;
+> +			regulator-max-microvolt = <1152000>;
+> +		};
+> +
+> +		pm6125_l4: l4 {
+> +			regulator-min-microvolt = <488000>;
+> +			regulator-max-microvolt = <1000000>;
+> +		};
+> +
+> +		pm6125_l5: l5 {
+> +			regulator-min-microvolt = <1648000>;
+> +			/* 3.056V capped to 2.96V for SDHCI */
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-allow-set-load;
+> +			/* Broken hw, this one can't be turned off or 
+SDHCI will break! */
+> +			regulator-always-on;
+> +		};
+> +
+> +		pm6125_l6: l6 {
+> +			regulator-min-microvolt = <576000>;
+> +			regulator-max-microvolt = <656000>;
+> +		};
+> +
+> +		pm6125_l7: l7 {
+> +			/* 1.2V-1.304V fixed at 1.256V for SDHCI bias 
+*/
+> +			regulator-min-microvolt = <1256000>;
+> +			regulator-max-microvolt = <1256000>;
+> +			/*
+> +			 * TODO: SDHCI seems to also work with this 
+one turned off, however
+> +			 * there exists a possibility that it may 
+not work with some very
+> +			 * specific SDCard types, perhaps validating 
+this against a wide
+> +			 * range of models could rule that out, 
+saving some power would
+> +			 * certainly be nice..
+> +			 */
+> +			regulator-always-on;
+> +		};
+> +
+> +		pm6125_l8: l8 {
+> +			regulator-min-microvolt = <400000>;
+> +			regulator-max-microvolt = <728000>;
+> +		};
+> +
+> +		pm6125_l9: l9 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2000000>;
+> +		};
+> +
+> +		pm6125_l10: l10 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		pm6125_l11: l11 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1952000>;
+> +		};
+> +
+> +		pm6125_l12: l12 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <1984000>;
+> +		};
+> +
+> +		pm6125_l13: l13 {
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <1952000>;
+> +		};
+> +
+> +		pm6125_l14: l14 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		pm6125_l15: l15 {
+> +			regulator-min-microvolt = <2920000>;
+> +			regulator-max-microvolt = <3232000>;
+> +		};
+> +
+> +		pm6125_l16: l16 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		pm6125_l17: l17 {
+> +			regulator-min-microvolt = <1152000>;
+> +			regulator-max-microvolt = <1384000>;
+> +		};
+> +
+> +		pm6125_l18: l18 {
+> +			regulator-min-microvolt = <1104000>;
+> +			regulator-max-microvolt = <1312000>;
+> +		};
+> +
+> +		pm6125_l19: l19 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <3304000>;
+> +		};
+> +
+> +		pm6125_l20: l20 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <3304000>;
+> +		};
+> +
+> +		pm6125_l21: l21 {
+> +			regulator-min-microvolt = <2400000>;
+> +			regulator-max-microvolt = <3600000>;
+> +		};
+> +
+> +		pm6125_l22: l22 {
+> +			regulator-min-microvolt = <2952000>;
+> +			/* 3.304V capped to 2.96V for SDHCI */
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-allow-set-load;
+> +			/* Broken hw, this one can't be turned off or 
+SDHCI will break! */
+> +			regulator-always-on;
+> +		};
+> +
+> +		pm6125_l23: l23 {
+> +			regulator-min-microvolt = <3200000>;
+> +			regulator-max-microvolt = <3400000>;
+> +		};
+> +
+> +		pm6125_l24: l24 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <3600000>;
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_state_on &sdc2_gate_pin>;
+> +	pinctrl-1 = <&sdc2_state_off>;
+> +	vmmc-supply = <&pm6125_l22>;
+> +	vqmmc-supply = <&pm6125_l5>;
+> +	no-sdio;
+> +	no-mmc;
+> +	status = "okay";
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32764>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <14 4>;
+> +
+> +	/*
+> +	 * This is a wholly undocumented pin (other than a single vague
+> "pwr-gpios" reference) +	 * that needs to be toggled for the SD Card slot
+> to work properly.. +	 */
+> +	sdc2_gate_pin: sdc2-gate-state {
+> +		pins = "gpio45";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +		output-high;
+> +	};
+> +};
+> +
+> +&ufs_mem_hc {
+> +	vcc-supply = <&pm6125_l24>;
+> +	vcc-max-microamp = <600000>;
+> +	vccq2-supply = <&pm6125_l11>;
+> +	vccq2-max-microamp = <600000>;
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&pm6125_l4>;
+> +	vdda-pll-supply = <&pm6125_l12>;
+> +	vddp-ref-clk-supply = <&pm6125_l18>;
+> +	status = "okay";
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_hsphy {
+> +	vdd-supply = <&pm6125_l4>;
+> +	vdda-pll-supply = <&pm6125_l12>;
+> +	vdda-phy-dpdm-supply = <&pm6125_l15>;
+> +	status = "okay";
+> +};
+> +
+> +&xo_board {
+> +	clock-frequency = <19200000>;
+> +};
 
-I was not sure, so I preferred to keep them in place in case someone has t=
-o use them again (after defining corresponding clock, of course)=2E
 
 
->
->Konrad
->>  drivers/clk/qcom/gcc-qcs404=2Ec | 32 ++++++++++++++++----------------
->>  1 file changed, 16 insertions(+), 16 deletions(-)
->>=20
->> diff --git a/drivers/clk/qcom/gcc-qcs404=2Ec b/drivers/clk/qcom/gcc-qcs=
-404=2Ec
->> index f60a0ab42da1=2E=2Ec48326da1bb3 100644
->> --- a/drivers/clk/qcom/gcc-qcs404=2Ec
->> +++ b/drivers/clk/qcom/gcc-qcs404=2Ec
->> @@ -25,11 +25,11 @@ enum {
->>  	P_CORE_BI_PLL_TEST_SE,
->>  	P_DSI0_PHY_PLL_OUT_BYTECLK,
->>  	P_DSI0_PHY_PLL_OUT_DSICLK,
->> -	P_GPLL0_OUT_AUX,
->> +	/* P_GPLL0_OUT_AUX, */
->>  	P_GPLL0_OUT_MAIN,
->>  	P_GPLL1_OUT_MAIN,
->>  	P_GPLL3_OUT_MAIN,
->> -	P_GPLL4_OUT_AUX,
->> +	/* P_GPLL4_OUT_AUX, */
->>  	P_GPLL4_OUT_MAIN,
->>  	P_GPLL6_OUT_AUX,
->>  	P_HDMI_PHY_PLL_CLK,
->> @@ -109,28 +109,28 @@ static const char * const gcc_parent_names_4[] =
-=3D {
->>  static const struct parent_map gcc_parent_map_5[] =3D {
->>  	{ P_XO, 0 },
->>  	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 1 },
->> -	{ P_GPLL0_OUT_AUX, 2 },
->> +	/* { P_GPLL0_OUT_AUX, 2 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_5[] =3D {
->>  	"cxo",
->>  	"dsi0pll_byteclk_src",
->> -	"gpll0_out_aux",
->> +	/* "gpll0_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->>  static const struct parent_map gcc_parent_map_6[] =3D {
->>  	{ P_XO, 0 },
->>  	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 2 },
->> -	{ P_GPLL0_OUT_AUX, 3 },
->> +	/* { P_GPLL0_OUT_AUX, 3 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_6[] =3D {
->>  	"cxo",
->>  	"dsi0_phy_pll_out_byteclk",
->> -	"gpll0_out_aux",
->> +	/* "gpll0_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->> @@ -139,7 +139,7 @@ static const struct parent_map gcc_parent_map_7[] =
-=3D {
->>  	{ P_GPLL0_OUT_MAIN, 1 },
->>  	{ P_GPLL3_OUT_MAIN, 2 },
->>  	{ P_GPLL6_OUT_AUX, 3 },
->> -	{ P_GPLL4_OUT_AUX, 4 },
->> +	/* { P_GPLL4_OUT_AUX, 4 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->> @@ -148,7 +148,7 @@ static const char * const gcc_parent_names_7[] =3D =
-{
->>  	"gpll0_out_main",
->>  	"gpll3_out_main",
->>  	"gpll6_out_aux",
->> -	"gpll4_out_aux",
->> +	/* "gpll4_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->> @@ -207,14 +207,14 @@ static const char * const gcc_parent_names_11[] =
-=3D {
->>  static const struct parent_map gcc_parent_map_12[] =3D {
->>  	{ P_XO, 0 },
->>  	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
->> -	{ P_GPLL0_OUT_AUX, 2 },
->> +	/* { P_GPLL0_OUT_AUX, 2 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_12[] =3D {
->>  	"cxo",
->>  	"dsi0pll_pclk_src",
->> -	"gpll0_out_aux",
->> +	/* "gpll0_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->> @@ -237,40 +237,40 @@ static const char * const gcc_parent_names_13[] =
-=3D {
->>  static const struct parent_map gcc_parent_map_14[] =3D {
->>  	{ P_XO, 0 },
->>  	{ P_GPLL0_OUT_MAIN, 1 },
->> -	{ P_GPLL4_OUT_AUX, 2 },
->> +	/* { P_GPLL4_OUT_AUX, 2 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_14[] =3D {
->>  	"cxo",
->>  	"gpll0_out_main",
->> -	"gpll4_out_aux",
->> +	/* "gpll4_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->>  static const struct parent_map gcc_parent_map_15[] =3D {
->>  	{ P_XO, 0 },
->> -	{ P_GPLL0_OUT_AUX, 2 },
->> +	/* { P_GPLL0_OUT_AUX, 2 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_15[] =3D {
->>  	"cxo",
->> -	"gpll0_out_aux",
->> +	/* "gpll0_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
->>  static const struct parent_map gcc_parent_map_16[] =3D {
->>  	{ P_XO, 0 },
->>  	{ P_GPLL0_OUT_MAIN, 1 },
->> -	{ P_GPLL0_OUT_AUX, 2 },
->> +	/* { P_GPLL0_OUT_AUX, 2 }, */
->>  	{ P_CORE_BI_PLL_TEST_SE, 7 },
->>  };
->> =20
->>  static const char * const gcc_parent_names_16[] =3D {
->>  	"cxo",
->>  	"gpll0_out_main",
->> -	"gpll0_out_aux",
->> +	/* "gpll0_out_aux", */
->>  	"core_bi_pll_test_se",
->>  };
->> =20
 
