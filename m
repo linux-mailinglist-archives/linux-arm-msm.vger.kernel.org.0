@@ -2,88 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08E1964F63C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 01:24:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A943464F64D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 01:32:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230338AbiLQAYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Dec 2022 19:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56750 "EHLO
+        id S229548AbiLQAc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Dec 2022 19:32:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbiLQAXf (ORCPT
+        with ESMTP id S229469AbiLQAcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Dec 2022 19:23:35 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9699011811
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 16:18:31 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id q6so5858608lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Dec 2022 16:18:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+WGXs0Da5xeMKOv53CBT3wPoiNkhzYtfmvcyhjfkGc4=;
-        b=ZGcE9nGrqhguAbP9ZgQjtsV+NzS0BvGV7bPnxNiFd1T0kTHGUl8R+CxGT0/PwAmMWD
-         dgqMz6dZQPF930ADNTZC8iEiPdSgqnPiVwuICNj7bPD/UfB64nTjZjgau/G1f0Yz44hM
-         cyyvjuv+rd8qh0t2pAkwKtZn8cdhiIviJKCCV8/dNApRm7ElwcCU+sy8WmVI9XF/m343
-         mi8kbWQ0V8KbVRIfTQp/eLHUt/QAhweXPuJZjF9/cg7u2Qdoci1TM9SD9w7+Bt977K6d
-         3owduyFzU1ALkWg0Yo2CTv842Av5hXzOhLru504oT2g7USvijOhQeQMGYRj65e/MjkD4
-         nlFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+WGXs0Da5xeMKOv53CBT3wPoiNkhzYtfmvcyhjfkGc4=;
-        b=T9N+tgqWbS9IJqnluMzv1RxkMB2oqkR2IRlpsNYjngY3PPsegtLdYVtj9GRm5m7Tzo
-         +qye8+Ppc1fzXP629QSPLSscmqQ1rfHRSkOozqgfO8W1XPlNwSUh6aZypmkNhyS7jo9h
-         b66NuMTiJGIZ8agkkt4JT2iP3+fF3d3KeTT912ILF5nB7KtXfAUab8q0rrGy2hCs77E2
-         hXP1CDp8j2TXSagXM6FR21twnrFJbg1qQB3XVF70abRfvQL1nsIUwdWJ2C4EKqLkE350
-         GYBw6lnPOIA3rb2kenRBZQKO5eLE5SZa00nYLF2LDaaBbY8NxyxswrunN4APIEGo8ZZb
-         5YLQ==
-X-Gm-Message-State: ANoB5pnp1iRmsVjyf10ILcWFRy/eYDKl8T/3byERwv1GcP/WgOVqXVQv
-        UNOyiqawKIJgSwXYg8aMVliJVA==
-X-Google-Smtp-Source: AA0mqf7MHydzXOY/VaQ5lDdSAMyCitjKWYjlgMFw6WL8fMnLgyqqPOOakZk/Gy2ay0rOj2w/DaMHQg==
-X-Received: by 2002:a05:6512:2110:b0:4b5:649a:9105 with SMTP id q16-20020a056512211000b004b5649a9105mr8871720lfr.65.1671236309990;
-        Fri, 16 Dec 2022 16:18:29 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t28-20020a19dc1c000000b004b5821219fbsm350218lfg.60.2022.12.16.16.18.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Dec 2022 16:18:29 -0800 (PST)
-Message-ID: <f01f19c1-720e-a1dc-4cd1-2682b1202ffa@linaro.org>
-Date:   Sat, 17 Dec 2022 02:18:28 +0200
+        Fri, 16 Dec 2022 19:32:25 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3768E15FDF;
+        Fri, 16 Dec 2022 16:32:24 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BGNvgfc025586;
+        Sat, 17 Dec 2022 00:31:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=FafqiLihfvYH5H7Y7SIlIE8yTDE/hyI2tDCM/GdByH8=;
+ b=hTic8mXYodZ8Xrhu5RrCiezRSrJeg6os5cFO1ymuYJApKOxRW2adj0FaqubJoKa76ffh
+ JM1aPZGtc3QdMpnmMrGZY97aYr++qwYmfsf18W4iGqopYzYyhdBRuXHi+j3cf9Dtl+jv
+ iDVgcI5QYCZZhjl2TmioZP/ht9tMwTVHjKVqqXd+Rmqwj4MhK78nOi3LDa3nY9L2CyGn
+ G+hC4FD68Ni4jrU07CsEkPiWcva+/iLwqPaN1XU5wQDI3JRiO9tiQmKYJQIk9m3jUrJ5
+ LuDd6J1j12DB4pcnnlqVFwrs+vTEeTsQLhM6kefqxMl1oqZJ98+NwRBZzP7aPYDgbz0y +g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mg2vwdp4s-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 17 Dec 2022 00:31:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BH0VvwA007108
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 17 Dec 2022 00:31:57 GMT
+Received: from [10.110.127.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 16 Dec
+ 2022 16:31:55 -0800
+Message-ID: <642b0063-b3b1-fb01-b761-dfd30cea1c8c@quicinc.com>
+Date:   Fri, 16 Dec 2022 16:31:55 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH] thermal: qcom-spmi-adc5: Suppress probe-deferral error
- message
-Content-Language: en-GB
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [RFC PATCH 5/6] drm/msm/dsi: Flip greater-than check for
+ slice_count and slice_per_intf
+Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "Stephen Boyd" <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        "Jessica Zhang" <quic_jesszhan@quicinc.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Jani Nikula" <jani.nikula@intel.com>,
+        sunliming <sunliming@kylinos.cn>,
+        "Sam Ravnborg" <sam@ravnborg.org>,
+        Haowen Bai <baihaowen@meizu.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Robert Marko <robimarko@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        =?UTF-8?Q?Nuno_S=c3=a1?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221216190945.902754-1-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221216190945.902754-1-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Loic Poulain <loic.poulain@linaro.org>,
+        "Vinod Polimera" <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20221213232207.113607-1-marijn.suijten@somainline.org>
+ <20221213232207.113607-6-marijn.suijten@somainline.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221213232207.113607-6-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FK0lp_-c3vUi5LUMC6uEjQ8ZD6Xz6TkT
+X-Proofpoint-ORIG-GUID: FK0lp_-c3vUi5LUMC6uEjQ8ZD6Xz6TkT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-16_15,2022-12-15_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212170002
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,26 +105,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/12/2022 21:09, Marijn Suijten wrote:
-> Much like 807efb7102e8 ("thermal: qcom-spmi-adc-tm5: suppress
-> probe-deferral error message") the ADC5 driver also spams a similar
-> probe-deferral error on startup when a channel is not yet available:
+
+
+On 12/13/2022 3:22 PM, Marijn Suijten wrote:
+> According to downstream /and the comment copied from it/ this comparison
+> should be the other way around.  In other words, when the panel driver
+> requests to use more slices per packet than what could be sent over this
+> interface, it is bumped down to only use a single slice per packet (and
+> strangely not the number of slices that could fit on the interface).
 > 
->      [    0.343136] qcom-spmi-adc-tm5 1c40000.spmi:pmic@0:adc-tm@3500: get dt data failed: -517
-> 
-> Suppress it by using dev_err_probe instead, which also takes care of
-> storing the message as reason for deferring.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+
+Like others have said, with SOB,
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/iio/adc/qcom-spmi-adc5.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-
-With the prefix fixed:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 0686c35a6fd4..9bdfa0864cdf 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -855,11 +855,11 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+>   	 */
+>   	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+>   
+> -	/* If slice_per_pkt is greater than slice_per_intf
+> +	/* If slice_count is greater than slice_per_intf
+>   	 * then default to 1. This can happen during partial
+>   	 * update.
+>   	 */
+> -	if (slice_per_intf > dsc->slice_count)
+> +	if (dsc->slice_count > slice_per_intf)
+>   		dsc->slice_count = 1;
+>   
+>   	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
