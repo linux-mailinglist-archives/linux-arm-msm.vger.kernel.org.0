@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F22664F96E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 15:37:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 075DA64F97C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Dec 2022 15:47:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbiLQOhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Dec 2022 09:37:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47948 "EHLO
+        id S229718AbiLQOrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Dec 2022 09:47:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiLQOhb (ORCPT
+        with ESMTP id S229537AbiLQOrH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Dec 2022 09:37:31 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3190FCC2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:37:30 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id b3so7693773lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Dec 2022 06:37:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKefaLMdkxpxFImO9rSvSQrWqze70i5mmS09IwMImn8=;
-        b=PsKkXzVjFRhePV5DgBPkWs7gM0/LaJrzsH/TCOM4XTRj3C7Xm/jjPzmxn+eI3xTkyC
-         vTsLf5I+2by+mSt9ss9jlOjWY+rqgStuumT8sKu2g6aAptGX9p/Tn0R6tUX8CEvVIOQV
-         +tu2G4Ogq88UU0lMfhu23LAg3HRvR9Bd8mHnReybKAwQSouNAFJZDWT9kLPIztxRVwuc
-         Mw/rZgr1dHi4CtiyVatvCXs0IpHKZ9amhpYfaTjjkxMvqVOGsTmrWFck44vsU85slmZy
-         +ljPr1yuMnxz9SuUzYRQQT10ljmNzVvBUow6CaS8ZFuIdMK7cUzKn4D6L3AeT7VibaFL
-         EQng==
+        Sat, 17 Dec 2022 09:47:07 -0500
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6A812ABC;
+        Sat, 17 Dec 2022 06:47:06 -0800 (PST)
+Received: by mail-oi1-f169.google.com with SMTP id i127so3233424oif.8;
+        Sat, 17 Dec 2022 06:47:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKefaLMdkxpxFImO9rSvSQrWqze70i5mmS09IwMImn8=;
-        b=eWuK0P6LX5BHcEox2VCA0Sis/hSYXkJmuPSdJpFMkv3Vni8qDNPP7YyL1pndk8l3KQ
-         980UgQycs+qaRZz0ENj3Gz623TcYkISv1IR9xNkVFif+rizP0DRRpbioqXsJe3nl++Qo
-         S3B1rC2Vshoer6Zh4AewpQTlv4uY6o+TETgnyau4LXnXpHrYeA3gr/6dxs8w79fQwoDA
-         6YBDhfw88W/w1sjAU1unkTpMXKQcqV6nQPv+fm7jRkraXMfMKMn5k7r6OpCbMbk1lpD8
-         VexXrtHymz+8IoSsk1H40MhgwZmt8QpQlut2fVE7Y567ysk6Msgp8bvmEm5sR9NLEhOl
-         orog==
-X-Gm-Message-State: ANoB5pmdpqViNOo5kGqcY1GhRQNSAVgcHLRfKlQT5Bom9YEcc8Wxeem7
-        NkZWHjY2Tz9R81vHVNdhNZOXtQ==
-X-Google-Smtp-Source: AA0mqf4/IPa/JxsYHWVYQ1li28TYotjoRYvojuyW7IX0wiypQnqKzGvmwZadIE+nGYPzPpZIwYD8xg==
-X-Received: by 2002:a05:6512:32ce:b0:4af:b1de:3ae1 with SMTP id f14-20020a05651232ce00b004afb1de3ae1mr11129778lfg.58.1671287849122;
-        Sat, 17 Dec 2022 06:37:29 -0800 (PST)
-Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
-        by smtp.gmail.com with ESMTPSA id w23-20020a19c517000000b004b5701b5337sm526142lfe.104.2022.12.17.06.37.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Dec 2022 06:37:28 -0800 (PST)
-Message-ID: <b8a13c50-e509-3709-2c69-adc84a9644c5@linaro.org>
-Date:   Sat, 17 Dec 2022 15:37:27 +0100
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=H5syX+qSmHurj2XiBG1knkx8RD2uoui+as7dCzawJEg=;
+        b=IYpm8LPvbEYY36/+O7lWYBuM2Nfkbcz/wOtQV/GNoSlRjOf4UHPTw+lnY8CXrnNnB8
+         vAqr2cXYcA8EsJX4zd7KiYHVcC3zBhJEpTEorscnbfoSMI1oYO0lD/DIuOcrdSDtbAzp
+         r63msSYmtOSHZzWGSPVDaSOhNIZ87Enm5rfAcBUVEKZ1+UDxTtUgI3oVAvFY12yiZ+yR
+         fHQVzpI3529aAv+i0W0TyU7dWdek2idO+piYlVE9P8M0qxq6VL6xzpuM1t36FP0xnHxp
+         L6xkdpcJFKtXI/mc0Xr9JikmLSCxkP4FAiF5VSRlnkOd7ADagaPiGwSpLIEpJcysHrfB
+         G2Ww==
+X-Gm-Message-State: ANoB5pkLtssYSnDyMj7IeY+k+6v/GBqYlgXc9KCUWygZDbgquysBKCan
+        b5umxNVAq10GlS3q03ByTAKuAENS1w==
+X-Google-Smtp-Source: AA0mqf6LezE/1MlnqkahESlqzHzfohkqG8yMKqud0ueew2YZanl1DRlhpQjWaCSA8oCg2Voujzfjew==
+X-Received: by 2002:a05:6808:d5:b0:35e:b805:e34b with SMTP id t21-20020a05680800d500b0035eb805e34bmr6927835oic.15.1671288425769;
+        Sat, 17 Dec 2022 06:47:05 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id j9-20020aca1709000000b0035ec1384c9esm2102728oii.23.2022.12.17.06.47.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Dec 2022 06:47:05 -0800 (PST)
+Received: (nullmailer pid 1510847 invoked by uid 1000);
+        Sat, 17 Dec 2022 14:47:04 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sa8295p-adp: use sa8540p-pmics
-Content-Language: en-US
-To:     Eric Chanudet <echanude@redhat.com>,
-        Andy Gross <agross@kernel.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-clk@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>
-References: <20221216232606.2123341-1-echanude@redhat.com>
- <20221216232606.2123341-4-echanude@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221216232606.2123341-4-echanude@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221216230722.21404-2-quic_molvera@quicinc.com>
+References: <20221216230722.21404-1-quic_molvera@quicinc.com>
+ <20221216230722.21404-2-quic_molvera@quicinc.com>
+Message-Id: <167124498396.424274.14851039167580060223.robh@kernel.org>
+Subject: Re: [PATCH v5 1/2] dt-bindings: clock: Add QDU1000 and QRU1000 GCC clocks
+Date:   Sat, 17 Dec 2022 08:47:04 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,113 +71,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 17.12.2022 00:26, Eric Chanudet wrote:
-> Include the dtsi to use a single pmic descriptions.
-> Both sa8295p-adp and sa8540p-adp have the same spmi pmic apparently.
+On Fri, 16 Dec 2022 15:07:21 -0800, Melody Olvera wrote:
+> Add device tree bindings for global clock controller on QDU1000 and
+> QRU1000 SoCs.
 > 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 79 +-----------------------
->  1 file changed, 1 insertion(+), 78 deletions(-)
+>  .../bindings/clock/qcom,qdu1000-gcc.yaml      |  51 +++++
+>  include/dt-bindings/clock/qcom,qdu1000-gcc.h  | 175 ++++++++++++++++++
+>  2 files changed, 226 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,qdu1000-gcc.h
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index 84cb6f3eeb56..c8437efe8235 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/spmi/spmi.h>
->  
->  #include "sa8540p.dtsi"
-> +#include "sa8540p-pmics.dtsi"
->  
->  / {
->  	model = "Qualcomm SA8295P ADP";
-> @@ -260,84 +261,6 @@ &remoteproc_nsp1 {
->  	status = "okay";
->  };
->  
-> -&spmi_bus {
-> -	pm8450a: pmic@0 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x0 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		rtc@6000 {
-> -			compatible = "qcom,pm8941-rtc";
-> -			reg = <0x6000>;
-> -			reg-names = "rtc", "alarm";
-> -			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> -			wakeup-source;
-> -		};
-> -
-> -		pm8450a_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			gpio-ranges = <&pm8450a_gpios 0 0 10>;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450c: pmic@4 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x4 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450c_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			gpio-ranges = <&pm8450c_gpios 0 0 10>;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450e: pmic@8 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x8 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450e_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			gpio-ranges = <&pm8450e_gpios 0 0 10>;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450g: pmic@c {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0xc SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450g_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			gpio-ranges = <&pm8450g_gpios 0 0 10>;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -};
-> -
->  &ufs_mem_hc {
->  	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
->  
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.example.dtb: clock-controller@100000: '#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221216230722.21404-2-quic_molvera@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
