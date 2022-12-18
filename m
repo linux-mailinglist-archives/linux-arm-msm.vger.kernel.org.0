@@ -2,170 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB75764FF19
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 15:26:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E360B64FFFC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:08:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbiLRO0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 09:26:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46256 "EHLO
+        id S231545AbiLRQII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 11:08:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbiLRO0k (ORCPT
+        with ESMTP id S231405AbiLRQGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 09:26:40 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700E365A6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 06:26:36 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4NZlWs5NVkz1S5B2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 09:26:33 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:content-type:in-reply-to:from
-        :content-language:references:to:subject:user-agent:mime-version
-        :date:message-id; s=dkim; t=1671373591; x=1672237592; bh=NtwwfTJ
-        35XqFurSMfDIwOCOk77rKIDyhJoth9Mky+S8=; b=ltQRjmpcvNbDZFE2TVhAwCb
-        6MxmTx9rUiTKnwOt5Lc8YflJVVwo+NTpcS/jGn0Ld04kWiLOgTuIUwWb5J91VSpR
-        2kOfqFDkOERi38c8vaMy6BKxjosCFvZ/1Xwanf57t/z6fmv/krXdEFstyTZ0jifD
-        jWEgmWORyBpZ2hEe1B0+A7DW2ZlBXpVmBqX4JwmdWqPiRqQ12xjBAeXEs6FzCiBJ
-        sIv8mJ4+BZusLh2uw1jDMIuyQRPTm1+kmd/uaIBY9qY4tRfzxfOrnwEk1xlBIKgz
-        /pCKG3dRHFaG9e6q4WkcI+dNxKLTNAJ0Ctc94F6f+L/+Xkx/z8eqvrDw1NlJbeA=
-        =
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id BrHr42SiSisk for <linux-arm-msm@vger.kernel.org>;
-        Sun, 18 Dec 2022 09:26:31 -0500 (EST)
-Received: from [192.168.0.15] (pc-16-114-239-201.cm.vtr.net [201.239.114.16])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NZlWk4kNpz1S4t5;
-        Sun, 18 Dec 2022 09:26:25 -0500 (EST)
-Message-ID: <672d61c2-33a6-4b3b-fbb5-a12556d673a5@mint.lgbt>
-Date:   Sun, 18 Dec 2022 11:26:22 -0300
+        Sun, 18 Dec 2022 11:06:22 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A184CE0A;
+        Sun, 18 Dec 2022 08:04:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 10A2660DCA;
+        Sun, 18 Dec 2022 16:04:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A797CC433F1;
+        Sun, 18 Dec 2022 16:04:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671379458;
+        bh=I9Gx9m76r4Ac5f8DVvtK63xglKXDOM6E0OjZCYSrZJo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=WJXWUSLI+dwBtTc1XNqWDoTC3RpLWUmRFrv6kJFk/YQoG6B3mvAZ/Gdoebt0GgIce
+         CJCg/KCBigkibEMuIRaO5q2DFioTY7qBxcSJxh0ZESquUUIDkzjmGToITI5E0n0SHH
+         B/+0RM/xYGQ9C33w0YPwKusmTndHwfHECEITQSeGdbXMZWA0d/tlLjH3c3MF9QL5bm
+         SNse5iSJ+Mb+i0e8+QlPnAuZcFkGhWT3MDagcyp8PX75JMY6q5QfyfNHCMGao/DccH
+         pSJLSh0u8eAXtHV58hkTAYdo2lTuZmOBXVqOWysfzh+HjgPxzpgXbn/qZq+bwvW6Jk
+         FqD2b/AflJ2cw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Sasha Levin <sashal@kernel.org>, airlied@gmail.com,
+        daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
+        johan+linaro@kernel.org, quic_sbillaka@quicinc.com,
+        andersson@kernel.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.1 38/85] drm/msm: Use drm_mode_copy()
+Date:   Sun, 18 Dec 2022 11:00:55 -0500
+Message-Id: <20221218160142.925394-38-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221218160142.925394-1-sashal@kernel.org>
+References: <20221218160142.925394-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sm6125: Initial support for
- xiaomi-laurel-sprout
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20221215190404.398788-1-they@mint.lgbt>
- <20221215190404.398788-4-they@mint.lgbt>
- <afcb9378-f331-df8c-ced5-1c10999f5fb8@linaro.org>
- <d0157452-307b-37a5-890a-b479a880ab95@mint.lgbt>
- <07f2a180-8a93-6c54-6d97-208ac8426fa6@linaro.org>
-Content-Language: en-US
-From:   Lux Aliaga <they@mint.lgbt>
-In-Reply-To: <07f2a180-8a93-6c54-6d97-208ac8426fa6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-On 17/12/2022 11:23, Konrad Dybcio wrote:
-> On 16.12.2022 21:27, Lux Aliaga wrote:
->> On 16/12/2022 08:32, Konrad Dybcio wrote:
->>> On 15.12.2022 20:04, Lux Aliaga wrote:
->>>> Adds support for the Xiaomi Mi A3 (xiaomi-laurel-sprout). Here's a
->>>> summary on what's working.
->>>>
->>>> - dmesg output to bootloader preconfigured display
->>>> - USB
->>>> - UFS
->>>> - SMD RPM regulators
->>>>
->>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->>>> ---
->>>>  =C2=A0 arch/arm64/boot/dts/qcom/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
->>>>  =C2=A0 .../dts/qcom/sm6125-xiaomi-laurel-sprout.dts=C2=A0 | 254 +++=
-+++++++++++++++
->>>>  =C2=A0 2 files changed, 255 insertions(+)
->>>>  =C2=A0 create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-la=
-urel-sprout.dts
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts=
-/qcom/Makefile
->>>> index 3e79496292e7..2b2a0170db14 100644
->>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>> @@ -157,6 +157,7 @@ dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D s=
-dm850-lenovo-yoga-c630.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sdm850-samsun=
-g-w737.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm4250-oneplu=
-s-billie2.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6125-sony-x=
-peria-seine-pdx201.dtb
->>>> +dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6125-xiaomi-laurel=
--sprout.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6350-sony-x=
-peria-lena-pdx213.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6375-sony-x=
-peria-murray-pdx225.dtb
->>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm7225-fairph=
-one-fp4.dtb
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dt=
-s b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
->>>> new file mode 100644
->>>> index 000000000000..86e1ec47bf5e
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
->>>> @@ -0,0 +1,254 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
->>>> + */
->>>> +
->>>> +/dts-v1/;
->>>> +
->>>> +#include <dt-bindings/gpio/gpio.h>
->>>> +#include <dt-bindings/input/input.h>
->>>> +#include <dt-bindings/input/gpio-keys.h>
->>>> +#include "sm6125.dtsi"
->>>> +
->>>> +/ {
->>>> +=C2=A0=C2=A0=C2=A0 model =3D "Xiaomi Mi A3";
->>>> +=C2=A0=C2=A0=C2=A0 compatible =3D "xiaomi,laurel-sprout", "qcom,sm6=
-125";
->>>> +=C2=A0=C2=A0=C2=A0 chassis-type =3D "handset";
->>>> +
->>>> +=C2=A0=C2=A0=C2=A0 /* required for bootloader to select correct boa=
-rd */
->>>> +=C2=A0=C2=A0=C2=A0 qcom,msm-id =3D <394 0>; /* sm6125 v0 */
->>> Unless you have a prototype device, this is not correct.
->>>
->>> Please run `cat /sys/bus/soc/devices/soc0/revision` and confirm
->>> which revision is used on your phone.
->> This segment has already been cross-referenced from downstream, and th=
-e device boots up successfully when using this ID, unless you're referrin=
-g to the comment next to it, in which case I can recheck later, since cur=
-rently I'm away from my device.
-> The device boots fine, because the DTB selection works on a "best match=
-"
-> basis. If it can't find one for the exact version of the SoC, it may
-> try to boot the closest one.
->
-> Konrad
+[ Upstream commit b2a1c5ca50db22b3677676dd5bad5f6092429acf ]
 
-Confirmed it. It's an sm6125 v1. Will fix.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
---=20
-Lux Aliaga
-https://nixgoat.me/
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
+
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-5-ville.syrjala@linux.intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index a49f6dbbe888..c9d9b384ddd0 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -857,7 +857,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	dp->panel->dp_mode.drm_mode = mode->drm_mode;
++	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
+ 	dp->panel->dp_mode.bpp = mode->bpp;
+ 	dp->panel->dp_mode.capabilities = mode->capabilities;
+ 	dp_panel_init_panel_info(dp->panel);
+-- 
+2.35.1
 
