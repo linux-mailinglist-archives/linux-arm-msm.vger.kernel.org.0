@@ -2,157 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C6665028B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:48:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60ECF65046C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 19:57:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232764AbiLRQsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 11:48:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
+        id S230195AbiLRS5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 13:57:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232805AbiLRQrG (ORCPT
+        with ESMTP id S230159AbiLRS5q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 11:47:06 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DF2A10FFD;
-        Sun, 18 Dec 2022 08:17:23 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EB821B80BE6;
-        Sun, 18 Dec 2022 16:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE358C433F0;
-        Sun, 18 Dec 2022 16:17:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671380240;
-        bh=FX7HYEbBIhWrHLNd17fteXtIabssxjGxuMAlpWlubRM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EDihH7QAiCq7UtFfQPGuF9M4kJcyC4KmNi4FwbIBO+Fx+h0pjaBPE+FlBkj1r4CBj
-         BNO63Ei7xcTMfat2wa3l50i4VHspDJmEDDJw2IO1XxjJ9DDS55A/S9o5Glkak0hoO0
-         Hd4NHVUN5xTuw0f7E+/o/6rCcpCOROO1qaDdBfU2CMlZ/7iU8FMkUCH8MY5oDePgzW
-         dwE5RcxA5wHq+C8qBeSbQVZPqAmRs/IvxPTomLxwwvBkUWidR3FrL9Ft8Ck9M4anh+
-         RRxy45Q/3NVBYIWT10dQXOTTsvCJGPq4aEZKDTtTHipJS4vLa1OFjks6Qv5qZmKWyp
-         BBE0e/oW5SJVg==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Sasha Levin <sashal@kernel.org>, airlied@gmail.com,
-        daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
-        johan+linaro@kernel.org, quic_sbillaka@quicinc.com,
-        andersson@kernel.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.10 19/39] drm/msm: Use drm_mode_copy()
-Date:   Sun, 18 Dec 2022 11:15:39 -0500
-Message-Id: <20221218161559.932604-19-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221218161559.932604-1-sashal@kernel.org>
-References: <20221218161559.932604-1-sashal@kernel.org>
+        Sun, 18 Dec 2022 13:57:46 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264747660
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 10:57:44 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id m29so10584959lfo.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 10:57:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+wJaB6Ex81QFBi9bFVy4oOTpzpMwPB5fD6rd3Cemj3A=;
+        b=dDKc6zP5EpXqq5JKYIjuOt6gAPvOxuwXqxuAydNjBOYtyKTTp1QkN8RI6PHA6en+0C
+         0oXipdbyXTNOqZaSFk/8WSXEIEAYsXpZ59cjx43JlrZSEeKY/SJrGXuTv18nXrz/gK7P
+         cNM6e48tsZqYCHUStin1M1jb5qFyLXOjdj9u008D/w3RAZYULCE/8YAtc8T3eI5XRJjE
+         4W1KWvL80oXtXoqpWE9oF50ZVqLiSvHNvMs9oU5SvfgZC5VOA2Tj2lAZD7by8PM5bMyV
+         SFGJTVc/rS7q3uYWR66Iz0GQcxxcM8lmYQuWsU2kBpEhXWQjPEw2KPKsIqi4bNUj0Cm8
+         2zjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+wJaB6Ex81QFBi9bFVy4oOTpzpMwPB5fD6rd3Cemj3A=;
+        b=EdhVUYG8NwvP1VAb7HBht/RSO03UVfPB5QMBVy9Bo0E+W+w0urwApL/sqRs5Je1JMg
+         Jj5WAZTJwEkg6E7P8HwoWsUtsB+59MSl1zp3A+KBssdGjXhhrFbumnUIhSdA/EPet34j
+         UKxhcmvd9CIx4TzuF26/Jv1goZ1T8n8nqG0B4zpJug1FyJojc+pwSIJ6dRsOtIfJTTQq
+         jDKzZd76XginJgfv4HwMGnUVr/iMJ7Mg4th6tXd38t35SRmqAraVadsOKlURHFrKgG9V
+         62HO5G3l8ELGers3Pb4GfXYngJcBQjbO2NtHc3eATJC3A/QP8NcBTOFOH6H3VIXNNFeA
+         ytyA==
+X-Gm-Message-State: ANoB5pmldKZIR6QL5FR/0MvsmhFxTBJVwPcNwzdmvEPiDFqXY7Kb/TEc
+        9PUeYV/x+2zKwbWC+txgmCqwng==
+X-Google-Smtp-Source: AA0mqf7MFhWfbsVgo0WuZoGvDN+xSMA+fz2YO0RP/VMcD9ChTcKCvQ1Bh2BqeCMDY5W4v8gttTkgRg==
+X-Received: by 2002:a19:6405:0:b0:4b5:b268:dbc8 with SMTP id y5-20020a196405000000b004b5b268dbc8mr9446079lfb.45.1671389862539;
+        Sun, 18 Dec 2022 10:57:42 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a10-20020a056512200a00b004b515f9d117sm878787lfb.271.2022.12.18.10.57.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Dec 2022 10:57:42 -0800 (PST)
+Message-ID: <4e35dc75-10d8-3412-6570-a9927aed6ab6@linaro.org>
+Date:   Sun, 18 Dec 2022 19:57:40 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v5 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221216230852.21691-1-quic_molvera@quicinc.com>
+ <20221216230852.21691-2-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221216230852.21691-2-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+On 17/12/2022 00:08, Melody Olvera wrote:
+> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
 
-[ Upstream commit b2a1c5ca50db22b3677676dd5bad5f6092429acf ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
-
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
-
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-5-ville.syrjala@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 5a152d505dfb..1c3dcbc6cce8 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -848,7 +848,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
- 
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
--	dp->panel->dp_mode.drm_mode = mode->drm_mode;
-+	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
- 	dp->panel->dp_mode.bpp = mode->bpp;
- 	dp->panel->dp_mode.capabilities = mode->capabilities;
- 	dp_panel_init_panel_info(dp->panel);
--- 
-2.35.1
+Best regards,
+Krzysztof
 
