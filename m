@@ -2,97 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60ECF65046C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 19:57:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AA796504B9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 22:20:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbiLRS5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 13:57:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
+        id S230521AbiLRVU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 16:20:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230159AbiLRS5q (ORCPT
+        with ESMTP id S230421AbiLRVU0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 13:57:46 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264747660
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 10:57:44 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id m29so10584959lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 10:57:44 -0800 (PST)
+        Sun, 18 Dec 2022 16:20:26 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA02658C;
+        Sun, 18 Dec 2022 13:20:24 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id bf43so11095490lfb.6;
+        Sun, 18 Dec 2022 13:20:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+wJaB6Ex81QFBi9bFVy4oOTpzpMwPB5fD6rd3Cemj3A=;
-        b=dDKc6zP5EpXqq5JKYIjuOt6gAPvOxuwXqxuAydNjBOYtyKTTp1QkN8RI6PHA6en+0C
-         0oXipdbyXTNOqZaSFk/8WSXEIEAYsXpZ59cjx43JlrZSEeKY/SJrGXuTv18nXrz/gK7P
-         cNM6e48tsZqYCHUStin1M1jb5qFyLXOjdj9u008D/w3RAZYULCE/8YAtc8T3eI5XRJjE
-         4W1KWvL80oXtXoqpWE9oF50ZVqLiSvHNvMs9oU5SvfgZC5VOA2Tj2lAZD7by8PM5bMyV
-         SFGJTVc/rS7q3uYWR66Iz0GQcxxcM8lmYQuWsU2kBpEhXWQjPEw2KPKsIqi4bNUj0Cm8
-         2zjA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FiMFRphXpXu6yzsGT8LSwyasJh3aAqFkYcsSKQFk/tA=;
+        b=OHZUj7IVQC/KvuwDdKIL/1YK/0lRyKiGJumrfvliR4zkMYP0ctf4ATsHWT7TRg5Kdl
+         4yvCxs6RlqnrTobKlldc4m1Gd/hXxzV6+OT3QGkhHinQC7i33yntqRDAqni70cq0HU6O
+         3GMBzdhEeC5fnSFaT60QJyblotxY/VT+Yjp6y83nP6QrUoSek+0btbDFYLEL7LauvmpX
+         vmm420lEq2UrrWseIMsrjiMdRc9Mz2QC9JvY5TrIxXfaLobfLWYQ2WOdHknJIdEt8BQv
+         3dqKw4RF86YP6id93G8xFze9EjqW1lgF+UUFpdZUwdgW9xrR56LjeN+HAns8fsF5vIGW
+         aKYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+wJaB6Ex81QFBi9bFVy4oOTpzpMwPB5fD6rd3Cemj3A=;
-        b=EdhVUYG8NwvP1VAb7HBht/RSO03UVfPB5QMBVy9Bo0E+W+w0urwApL/sqRs5Je1JMg
-         Jj5WAZTJwEkg6E7P8HwoWsUtsB+59MSl1zp3A+KBssdGjXhhrFbumnUIhSdA/EPet34j
-         UKxhcmvd9CIx4TzuF26/Jv1goZ1T8n8nqG0B4zpJug1FyJojc+pwSIJ6dRsOtIfJTTQq
-         jDKzZd76XginJgfv4HwMGnUVr/iMJ7Mg4th6tXd38t35SRmqAraVadsOKlURHFrKgG9V
-         62HO5G3l8ELGers3Pb4GfXYngJcBQjbO2NtHc3eATJC3A/QP8NcBTOFOH6H3VIXNNFeA
-         ytyA==
-X-Gm-Message-State: ANoB5pmldKZIR6QL5FR/0MvsmhFxTBJVwPcNwzdmvEPiDFqXY7Kb/TEc
-        9PUeYV/x+2zKwbWC+txgmCqwng==
-X-Google-Smtp-Source: AA0mqf7MFhWfbsVgo0WuZoGvDN+xSMA+fz2YO0RP/VMcD9ChTcKCvQ1Bh2BqeCMDY5W4v8gttTkgRg==
-X-Received: by 2002:a19:6405:0:b0:4b5:b268:dbc8 with SMTP id y5-20020a196405000000b004b5b268dbc8mr9446079lfb.45.1671389862539;
-        Sun, 18 Dec 2022 10:57:42 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a10-20020a056512200a00b004b515f9d117sm878787lfb.271.2022.12.18.10.57.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Dec 2022 10:57:42 -0800 (PST)
-Message-ID: <4e35dc75-10d8-3412-6570-a9927aed6ab6@linaro.org>
-Date:   Sun, 18 Dec 2022 19:57:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v5 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
- QRU1000 pinctrl
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FiMFRphXpXu6yzsGT8LSwyasJh3aAqFkYcsSKQFk/tA=;
+        b=VPYSvykgVPecMEysgnePrfMyr8x/sF5Nr9w7OMgbkw7ftPxJhiafRhvV+RXG563ryx
+         fQparNscOO1gPJj4YncbT46dYQJSZqE5rr4YthjHfjF0LOu1Of63cST45tBExAnfVkAO
+         +i7g/IzOSsMuyjQLRPkJrzhmaWN8GkEH7yYP0oLB0vryoSUAbLpZDjeYp1weRMNNdvHa
+         CqB3ipQ078wu035EE5AqdCpJ7bsWXIciThwZYDxNYBNIqkqkmCNqN6DfCJhmnrQwonwz
+         KDElgM9+BSRdcBLo5SGaT97mbeEwTZILbWHF7oPNt2ZV4Z3iWeWBis4wuyhVhAi6cSiX
+         /sIA==
+X-Gm-Message-State: ANoB5plKA7wRMZ0zDscZddkOd+//OPEnizzgaUt+GFlmWTUXsrHD0p1T
+        0CS6Xp4P0zQtf4yj+Hy1OR3BHYLQRPjZGQ==
+X-Google-Smtp-Source: AA0mqf7UyuzCYgwxPfYLGNi7bpMbMKAkbEFE4j259nJQZiwT8rTc7zQuMbe/TrQoY6SKIcaVYyd6Tg==
+X-Received: by 2002:ac2:44a4:0:b0:4b5:8504:7072 with SMTP id c4-20020ac244a4000000b004b585047072mr10003575lfm.14.1671398422371;
+        Sun, 18 Dec 2022 13:20:22 -0800 (PST)
+Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
+        by smtp.gmail.com with ESMTPSA id c21-20020a056512325500b004b56d00b2d1sm916229lfr.285.2022.12.18.13.20.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Dec 2022 13:20:21 -0800 (PST)
+From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221216230852.21691-1-quic_molvera@quicinc.com>
- <20221216230852.21691-2-quic_molvera@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221216230852.21691-2-quic_molvera@quicinc.com>
+Subject: [PATCH v2] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable ADSP
+Date:   Sun, 18 Dec 2022 23:19:57 +0200
+Message-Id: <20221218211957.118473-1-matti.lehtimaki@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/12/2022 00:08, Melody Olvera wrote:
-> Add device tree bindings for QDU1000 and QRU1000 TLMM devices.
-> 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 134 ++++++++++++++++++
+Configure the reserved memory for ADSP and enable it.
+Delete nodes with reference to label.
 
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+---
+Changes in v2:
+  - Delete nodes with reference to label
+---
+ .../arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+index 1c52337af560..15b9590ba07b 100644
+--- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
++++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+@@ -9,6 +9,9 @@
+ #include "qcom-msm8226.dtsi"
+ #include "qcom-pm8226.dtsi"
+ 
++/delete-node/ &adsp_region;
++/delete-node/ &smem_region;
++
+ / {
+ 	model = "Samsung Galaxy Tab 4 10.1";
+ 	compatible = "samsung,matisse-wifi", "qcom,apq8026";
+@@ -133,7 +136,7 @@ wcnss@d200000 {
+ 			no-map;
+ 		};
+ 
+-		adsp@d900000 {
++		adsp_region: adsp@d900000 {
+ 			reg = <0x0d900000 0x1800000>;
+ 			no-map;
+ 		};
+@@ -143,7 +146,6 @@ venus@f100000 {
+ 			no-map;
+ 		};
+ 
+-		/delete-node/ smem@3000000;
+ 		smem_region: smem@fa00000 {
+ 			reg = <0x0fa00000 0x100000>;
+ 			no-map;
+@@ -169,6 +171,10 @@ rmtfs@fd80000 {
+ 	};
+ };
+ 
++&adsp {
++	status = "okay";
++};
++
+ &blsp1_i2c2 {
+ 	status = "okay";
+ 
+-- 
+2.34.1
 
