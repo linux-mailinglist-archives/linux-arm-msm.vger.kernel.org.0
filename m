@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC4D165020A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:41:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C6665028B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:48:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232355AbiLRQlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 11:41:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41560 "EHLO
+        id S232764AbiLRQsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 11:48:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232433AbiLRQkh (ORCPT
+        with ESMTP id S232805AbiLRQrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 11:40:37 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102808FED;
-        Sun, 18 Dec 2022 08:14:23 -0800 (PST)
+        Sun, 18 Dec 2022 11:47:06 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DF2A10FFD;
+        Sun, 18 Dec 2022 08:17:23 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A93E60DC8;
-        Sun, 18 Dec 2022 16:14:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083F4C433EF;
-        Sun, 18 Dec 2022 16:14:17 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EB821B80BE6;
+        Sun, 18 Dec 2022 16:17:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE358C433F0;
+        Sun, 18 Dec 2022 16:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671380059;
-        bh=3pFuYycp5XaySMSnYBC9uKdZny+VGlfNZ0G0lpWOGrM=;
+        s=k20201202; t=1671380240;
+        bh=FX7HYEbBIhWrHLNd17fteXtIabssxjGxuMAlpWlubRM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cDTHbTmgbBqZsrw1LlPmUiiE0xgFCDMDqDPh2oPEE3pdcYn4PEQUKjJtEqg8rQ1Ru
-         qRQKWpiUhy7b3FwEg5tW/TSajdDMc7YOJintgxLmIm1QbxOPnowTO2TgGYV+O6EO95
-         7K8Av9K4E6IWwAtwD2TmHHakMZ4E/VX+4MBlAo2iKWgqLaZmQxuV7ctACIp8eMvm2B
-         v7EY4Wyt3bSrpqsAFKcA5lDIsV9giZku1b9yO5NCa7h5LkE4Fg5/QLCj+uxn9C+ak1
-         Fk2QkQhk01s3I5EAmROCKihbAuls3Q92JW8ycyEKjcNPg/YkjyShwYENTdRDMDJv1x
-         7qIdTI1HIwmJw==
+        b=EDihH7QAiCq7UtFfQPGuF9M4kJcyC4KmNi4FwbIBO+Fx+h0pjaBPE+FlBkj1r4CBj
+         BNO63Ei7xcTMfat2wa3l50i4VHspDJmEDDJw2IO1XxjJ9DDS55A/S9o5Glkak0hoO0
+         Hd4NHVUN5xTuw0f7E+/o/6rCcpCOROO1qaDdBfU2CMlZ/7iU8FMkUCH8MY5oDePgzW
+         dwE5RcxA5wHq+C8qBeSbQVZPqAmRs/IvxPTomLxwwvBkUWidR3FrL9Ft8Ck9M4anh+
+         RRxy45Q/3NVBYIWT10dQXOTTsvCJGPq4aEZKDTtTHipJS4vLa1OFjks6Qv5qZmKWyp
+         BBE0e/oW5SJVg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
@@ -43,14 +43,14 @@ Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?=
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         Sasha Levin <sashal@kernel.org>, airlied@gmail.com,
         daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
-        quic_sbillaka@quicinc.com, johan+linaro@kernel.org,
+        johan+linaro@kernel.org, quic_sbillaka@quicinc.com,
         andersson@kernel.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.15 21/46] drm/msm: Use drm_mode_copy()
-Date:   Sun, 18 Dec 2022 11:12:19 -0500
-Message-Id: <20221218161244.930785-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 19/39] drm/msm: Use drm_mode_copy()
+Date:   Sun, 18 Dec 2022 11:15:39 -0500
+Message-Id: <20221218161559.932604-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221218161244.930785-1-sashal@kernel.org>
-References: <20221218161244.930785-1-sashal@kernel.org>
+In-Reply-To: <20221218161559.932604-1-sashal@kernel.org>
+References: <20221218161559.932604-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
@@ -141,10 +141,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d13fd39f05de..15e38ad7aefb 100644
+index 5a152d505dfb..1c3dcbc6cce8 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -840,7 +840,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
+@@ -848,7 +848,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
  
  	dp = container_of(dp_display, struct dp_display_private, dp_display);
  
