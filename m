@@ -2,56 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDFA664FE9A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 12:13:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB75764FF19
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 15:26:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbiLRLNd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 06:13:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46234 "EHLO
+        id S230421AbiLRO0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 09:26:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbiLRLNX (ORCPT
+        with ESMTP id S230124AbiLRO0k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 06:13:23 -0500
-X-Greylist: delayed 250 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 18 Dec 2022 03:13:22 PST
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF642716
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 03:13:21 -0800 (PST)
-Received: from [192.168.2.144] (adsl-d248.84-47-10.t-com.sk [84.47.10.248])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D0C773EE52;
-        Sun, 18 Dec 2022 12:13:18 +0100 (CET)
-Date:   Sun, 18 Dec 2022 12:13:13 +0100
-From:   Martin Botka <martin.botka@somainline.org>
-Subject: Re: [PATCH] thermal: qcom-spmi-adc5: Suppress probe-deferral error
- message
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
+        Sun, 18 Dec 2022 09:26:40 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700E365A6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 06:26:36 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NZlWs5NVkz1S5B2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 09:26:33 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:from
+        :content-language:references:to:subject:user-agent:mime-version
+        :date:message-id; s=dkim; t=1671373591; x=1672237592; bh=NtwwfTJ
+        35XqFurSMfDIwOCOk77rKIDyhJoth9Mky+S8=; b=ltQRjmpcvNbDZFE2TVhAwCb
+        6MxmTx9rUiTKnwOt5Lc8YflJVVwo+NTpcS/jGn0Ld04kWiLOgTuIUwWb5J91VSpR
+        2kOfqFDkOERi38c8vaMy6BKxjosCFvZ/1Xwanf57t/z6fmv/krXdEFstyTZ0jifD
+        jWEgmWORyBpZ2hEe1B0+A7DW2ZlBXpVmBqX4JwmdWqPiRqQ12xjBAeXEs6FzCiBJ
+        sIv8mJ4+BZusLh2uw1jDMIuyQRPTm1+kmd/uaIBY9qY4tRfzxfOrnwEk1xlBIKgz
+        /pCKG3dRHFaG9e6q4WkcI+dNxKLTNAJ0Ctc94F6f+L/+Xkx/z8eqvrDw1NlJbeA=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id BrHr42SiSisk for <linux-arm-msm@vger.kernel.org>;
+        Sun, 18 Dec 2022 09:26:31 -0500 (EST)
+Received: from [192.168.0.15] (pc-16-114-239-201.cm.vtr.net [201.239.114.16])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NZlWk4kNpz1S4t5;
+        Sun, 18 Dec 2022 09:26:25 -0500 (EST)
+Message-ID: <672d61c2-33a6-4b3b-fbb5-a12556d673a5@mint.lgbt>
+Date:   Sun, 18 Dec 2022 11:26:22 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: sm6125: Initial support for
+ xiaomi-laurel-sprout
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Robert Marko <robimarko@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nuno =?iso-8859-1?b?U+E=?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Message-Id: <1633NR.JIUCB2Y1JAXI3@somainline.org>
-In-Reply-To: <20221216190945.902754-1-marijn.suijten@somainline.org>
-References: <20221216190945.902754-1-marijn.suijten@somainline.org>
-X-Mailer: geary/40.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20221215190404.398788-1-they@mint.lgbt>
+ <20221215190404.398788-4-they@mint.lgbt>
+ <afcb9378-f331-df8c-ced5-1c10999f5fb8@linaro.org>
+ <d0157452-307b-37a5-890a-b479a880ab95@mint.lgbt>
+ <07f2a180-8a93-6c54-6d97-208ac8426fa6@linaro.org>
+Content-Language: en-US
+From:   Lux Aliaga <they@mint.lgbt>
+In-Reply-To: <07f2a180-8a93-6c54-6d97-208ac8426fa6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -59,48 +77,95 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 17/12/2022 11:23, Konrad Dybcio wrote:
+> On 16.12.2022 21:27, Lux Aliaga wrote:
+>> On 16/12/2022 08:32, Konrad Dybcio wrote:
+>>> On 15.12.2022 20:04, Lux Aliaga wrote:
+>>>> Adds support for the Xiaomi Mi A3 (xiaomi-laurel-sprout). Here's a
+>>>> summary on what's working.
+>>>>
+>>>> - dmesg output to bootloader preconfigured display
+>>>> - USB
+>>>> - UFS
+>>>> - SMD RPM regulators
+>>>>
+>>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>>>> ---
+>>>>  =C2=A0 arch/arm64/boot/dts/qcom/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
+>>>>  =C2=A0 .../dts/qcom/sm6125-xiaomi-laurel-sprout.dts=C2=A0 | 254 +++=
++++++++++++++++
+>>>>  =C2=A0 2 files changed, 255 insertions(+)
+>>>>  =C2=A0 create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-la=
+urel-sprout.dts
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts=
+/qcom/Makefile
+>>>> index 3e79496292e7..2b2a0170db14 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>>> @@ -157,6 +157,7 @@ dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D s=
+dm850-lenovo-yoga-c630.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sdm850-samsun=
+g-w737.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm4250-oneplu=
+s-billie2.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6125-sony-x=
+peria-seine-pdx201.dtb
+>>>> +dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6125-xiaomi-laurel=
+-sprout.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6350-sony-x=
+peria-lena-pdx213.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm6375-sony-x=
+peria-murray-pdx225.dtb
+>>>>  =C2=A0 dtb-$(CONFIG_ARCH_QCOM)=C2=A0=C2=A0=C2=A0 +=3D sm7225-fairph=
+one-fp4.dtb
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dt=
+s b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+>>>> new file mode 100644
+>>>> index 000000000000..86e1ec47bf5e
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+>>>> @@ -0,0 +1,254 @@
+>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>> +/*
+>>>> + * Copyright (c) 2022, Lux Aliaga <they@mint.lgbt>
+>>>> + */
+>>>> +
+>>>> +/dts-v1/;
+>>>> +
+>>>> +#include <dt-bindings/gpio/gpio.h>
+>>>> +#include <dt-bindings/input/input.h>
+>>>> +#include <dt-bindings/input/gpio-keys.h>
+>>>> +#include "sm6125.dtsi"
+>>>> +
+>>>> +/ {
+>>>> +=C2=A0=C2=A0=C2=A0 model =3D "Xiaomi Mi A3";
+>>>> +=C2=A0=C2=A0=C2=A0 compatible =3D "xiaomi,laurel-sprout", "qcom,sm6=
+125";
+>>>> +=C2=A0=C2=A0=C2=A0 chassis-type =3D "handset";
+>>>> +
+>>>> +=C2=A0=C2=A0=C2=A0 /* required for bootloader to select correct boa=
+rd */
+>>>> +=C2=A0=C2=A0=C2=A0 qcom,msm-id =3D <394 0>; /* sm6125 v0 */
+>>> Unless you have a prototype device, this is not correct.
+>>>
+>>> Please run `cat /sys/bus/soc/devices/soc0/revision` and confirm
+>>> which revision is used on your phone.
+>> This segment has already been cross-referenced from downstream, and th=
+e device boots up successfully when using this ID, unless you're referrin=
+g to the comment next to it, in which case I can recheck later, since cur=
+rently I'm away from my device.
+> The device boots fine, because the DTB selection works on a "best match=
+"
+> basis. If it can't find one for the exact version of the SoC, it may
+> try to boot the closest one.
+>
+> Konrad
 
-On Fri, Dec 16 2022 at 08:09:45 PM +01:00:00, Marijn Suijten 
-<marijn.suijten@somainline.org> wrote:
-> Much like 807efb7102e8 ("thermal: qcom-spmi-adc-tm5: suppress
-> probe-deferral error message") the ADC5 driver also spams a similar
-> probe-deferral error on startup when a channel is not yet available:
-> 
->     [    0.343136] qcom-spmi-adc-tm5 1c40000.spmi:pmic@0:adc-tm@3500: 
-> get dt data failed: -517
-> 
-> Suppress it by using dev_err_probe instead, which also takes care of
-> storing the message as reason for deferring.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/iio/adc/qcom-spmi-adc5.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c 
-> b/drivers/iio/adc/qcom-spmi-adc5.c
-> index 821fee60a765..69cc36004b5a 100644
-> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> @@ -894,10 +894,8 @@ static int adc5_probe(struct platform_device 
-> *pdev)
->  	mutex_init(&adc->lock);
-> 
->  	ret = adc5_get_fw_data(adc);
-> -	if (ret) {
-> -		dev_err(dev, "adc get dt data failed\n");
-> -		return ret;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "adc get dt data failed\n");
-> 
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
+Confirmed it. It's an sm6125 v1. Will fix.
 
--Martin
->  	irq_eoc = platform_get_irq(pdev, 0);
->  	if (irq_eoc < 0) {
-> --
-> 2.39.0
-> 
-
+--=20
+Lux Aliaga
+https://nixgoat.me/
 
