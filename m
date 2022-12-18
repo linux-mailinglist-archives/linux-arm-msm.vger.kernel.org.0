@@ -2,121 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7152064FE61
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 11:18:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5878F64FE6B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 11:23:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230328AbiLRKSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 05:18:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34424 "EHLO
+        id S230191AbiLRKXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 05:23:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230321AbiLRKSu (ORCPT
+        with ESMTP id S229537AbiLRKXl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 05:18:50 -0500
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72982DECB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 02:18:46 -0800 (PST)
+        Sun, 18 Dec 2022 05:23:41 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D222678
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Dec 2022 02:23:40 -0800 (PST)
 Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5BBB21F7B6;
-        Sun, 18 Dec 2022 11:18:43 +0100 (CET)
-Date:   Sun, 18 Dec 2022 11:18:41 +0100
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 17B551F7B6;
+        Sun, 18 Dec 2022 11:23:38 +0100 (CET)
+Date:   Sun, 18 Dec 2022 11:23:36 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm6125-seine: Clean up gpio-keys
- (volume down)
-Message-ID: <20221218101841.mjsmnwtfzbmazfys@SoMainline.org>
+        Lux Aliaga <they@mint.lgbt>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm6125: Add GPI DMA nodes
+Message-ID: <20221218102336.io5epil54gwlqqqh@SoMainline.org>
 Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221217100455.52593-1-marijn.suijten@somainline.org>
- <11174eb6-0a9d-7df1-6f06-da4010f76453@linaro.org>
+        Lux Aliaga <they@mint.lgbt>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221216231528.1268447-1-marijn.suijten@somainline.org>
+ <20221216231528.1268447-3-marijn.suijten@somainline.org>
+ <f5496b92-ac1f-5920-1b3f-2bf0e710623b@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <11174eb6-0a9d-7df1-6f06-da4010f76453@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <f5496b92-ac1f-5920-1b3f-2bf0e710623b@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-17 16:04:17, Konrad Dybcio wrote:
-> On 17.12.2022 11:04, Marijn Suijten wrote:
-> > [..]
-> > @@ -270,6 +270,16 @@ &sdhc_1 {
+On 2022-12-17 15:35:18, Konrad Dybcio wrote:
+> 
+> 
+> On 17.12.2022 00:15, Marijn Suijten wrote:
+> > From: Martin Botka <martin.botka@somainline.org>
+> > 
+> > Add nodes for GPI DMA hosts on SM6125.
+> > 
+> > Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> > [Marijn: reorder properties, use sdm845 fallback compatible, disable by
+> >  default, use 3 instead of 5 dma cells]
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm6125.dtsi | 37 ++++++++++++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > index a205121ab4a7..abcd634c4f6d 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > @@ -5,6 +5,7 @@
 > >  
-> >  &tlmm {
-> >  	gpio-reserved-ranges = <22 2>, <28 6>;
-> > +
-> > +	gpio_keys_state: gpio-keys-state {
-> > +		key-volume-down-pins {
-> I see no need for defining a wrapper node.
-> The other changes look good!
+> >  #include <dt-bindings/clock/qcom,gcc-sm6125.h>
+> >  #include <dt-bindings/clock/qcom,rpmcc.h>
+> > +#include <dt-bindings/dma/qcom-gpi.h>
+> >  #include <dt-bindings/gpio/gpio.h>
+> >  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> >  #include <dt-bindings/power/qcom-rpmpd.h>
+> > @@ -510,6 +511,42 @@ sdhc_2: mmc@4784000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		gpi_dma0: dma-controller@4a00000 {
+> > +			compatible = "qcom,sm6125-gpi-dma", "qcom,sdm845-gpi-dma";
+> > +			reg = <0x04a00000 0x60000>;
+> > +			interrupts = <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>;
+> > +			dma-channels = <8>;
+> > +			dma-channel-mask = <0x1f>;
+> > +			iommus = <&apps_smmu 0x0136 0x0>;
+> The stream id does not need the leading zero.
 
-I did the same for sm6350-lena, which we should flatten out then too.
+Good catch!  Will clean this up for V2.
 
-For these uses I'm not sure when it's clearer/better to use:
+> You made the mask a decimal zero in the previous patchset, please
+> decide on one convention. Masks are generally more useful as hex,
+> but for zero values I suppose zero is less noise for the same thing..
 
-    thing@x {
-        pinctrl-0 = <&thing_state>;
-        ...
-    };
+The _vast majority_ of qcom dts uses 0x0, I'll fix that in the previous
+patch series.  Looks like I did even clean that up when directly
+transplanting that patch ("Add apps_smmu with streamID to SDHCI 1/2
+nodes") to sm6350 even...
 
-    thing_state: thing-state {
-        specific-pin {
-            ...
-        };
+> The DMA nodes however, look good otherwise.
 
-        other-specific-pin ...
-        ...
-    };
-
-Or separate out the pins with their own state and instead use:
-
-    thing@x {
-        pinctrl-0 = <&specific_pin1_state &specific_pin2_state>;
-        ...
-    };
-
-If I had to guess the former groups related pins together (as we finally
-do now for SDC...) which should all be toggled at once.  In this
-specific gpio-keys case, irrespective of whether it has one or more
-keys, the pins aren't related apart from representing keys, and should
-thus better be individual pinctrl nodes and individually referenced in
-pinctrl-X.
-
-Did I sympathize that correctly?
-
-(side-note: the SDC pinctrl groups typically get extended with a
- card-detect pin in board DTS or in some likely-erroneous cases directly
- in SoC DTSI.  This may also count as unrelated pins being grouped
- together only because that is how the hardware/DTS node consumes them,
- but it is rather concise/readable/convenient though...)
+And they work great, too!
 
 - Marijn
