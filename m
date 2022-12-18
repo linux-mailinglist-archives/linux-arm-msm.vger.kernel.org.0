@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E360B64FFFC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:08:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36606650132
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Dec 2022 17:25:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231545AbiLRQII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Dec 2022 11:08:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
+        id S232051AbiLRQZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Dec 2022 11:25:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231405AbiLRQGW (ORCPT
+        with ESMTP id S231984AbiLRQYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Dec 2022 11:06:22 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A184CE0A;
-        Sun, 18 Dec 2022 08:04:19 -0800 (PST)
+        Sun, 18 Dec 2022 11:24:32 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60C9FDE84;
+        Sun, 18 Dec 2022 08:09:46 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 10A2660DCA;
-        Sun, 18 Dec 2022 16:04:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A797CC433F1;
-        Sun, 18 Dec 2022 16:04:16 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E8C9C60DCB;
+        Sun, 18 Dec 2022 16:09:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9772FC433D2;
+        Sun, 18 Dec 2022 16:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671379458;
+        s=k20201202; t=1671379785;
         bh=I9Gx9m76r4Ac5f8DVvtK63xglKXDOM6E0OjZCYSrZJo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WJXWUSLI+dwBtTc1XNqWDoTC3RpLWUmRFrv6kJFk/YQoG6B3mvAZ/Gdoebt0GgIce
-         CJCg/KCBigkibEMuIRaO5q2DFioTY7qBxcSJxh0ZESquUUIDkzjmGToITI5E0n0SHH
-         B/+0RM/xYGQ9C33w0YPwKusmTndHwfHECEITQSeGdbXMZWA0d/tlLjH3c3MF9QL5bm
-         SNse5iSJ+Mb+i0e8+QlPnAuZcFkGhWT3MDagcyp8PX75JMY6q5QfyfNHCMGao/DccH
-         pSJLSh0u8eAXtHV58hkTAYdo2lTuZmOBXVqOWysfzh+HjgPxzpgXbn/qZq+bwvW6Jk
-         FqD2b/AflJ2cw==
+        b=rqIb8w3cyTn9mZxuE0gWXseAQl+j97DRoAUltdx73lnSzTIN9yFxA4YlHlWDl80T1
+         /eOHmM6pC/9BfKJoVsK1qrboXRRwz0QZ9LvuVzgQOBGAOinRtcqyKPGFxzS5RYIgVs
+         DExiurm3ciVtva8Z5ISHJkoFYShY9ls3I7XWZCLo5n5bbByMeG5StU+76/ASnfaOZ5
+         OQPzMYPTrYPhahFC1X3HR6X2j91rhV/Lx+US3r5b6qMZB4FL5m7OMPe9sBaqjn9Q8G
+         j/6bUGe7/QwkuspmTCwzVM6K93/FCkKIKIavQDtmzyNuG4SL0tfTNopWPSiKyKio5R
+         M1sRjFcSRlcig==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
@@ -43,14 +43,14 @@ Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?=
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         Sasha Levin <sashal@kernel.org>, airlied@gmail.com,
         daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
-        johan+linaro@kernel.org, quic_sbillaka@quicinc.com,
+        quic_sbillaka@quicinc.com, johan+linaro@kernel.org,
         andersson@kernel.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.1 38/85] drm/msm: Use drm_mode_copy()
-Date:   Sun, 18 Dec 2022 11:00:55 -0500
-Message-Id: <20221218160142.925394-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.0 32/73] drm/msm: Use drm_mode_copy()
+Date:   Sun, 18 Dec 2022 11:07:00 -0500
+Message-Id: <20221218160741.927862-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221218160142.925394-1-sashal@kernel.org>
-References: <20221218160142.925394-1-sashal@kernel.org>
+In-Reply-To: <20221218160741.927862-1-sashal@kernel.org>
+References: <20221218160741.927862-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
