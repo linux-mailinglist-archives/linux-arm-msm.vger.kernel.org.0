@@ -2,200 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0898D651211
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 19:34:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C6B2651204
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 19:33:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232609AbiLSSeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 13:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45730 "EHLO
+        id S232597AbiLSSdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 13:33:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232554AbiLSSdo (ORCPT
+        with ESMTP id S232487AbiLSScR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 13:33:44 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5274214D18
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:53 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id d3so9843452plr.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:53 -0800 (PST)
+        Mon, 19 Dec 2022 13:32:17 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675EF13E21
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:30 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso14042508pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tAhD4QYewlPD8zViG7wcd+O4QOzC8E05GpctTZjGEWs=;
-        b=DQENHD3a54VmP805WbROmXJdgPwrUvjbNGaqG9P7zCIZ2AxPxNw1qsI9bmp7ZEiJWq
-         EyRFXmkbmGHIKu/2MklMP0Z0rrZXksYozWsPTzB4ve6WN56unZDfWdASgsodZ8lqp5Lc
-         lmTx6dUCYzbUWmyp2m5mmInCF9+9bvp+37ou7LvOgAnp+GY6KuGwgNN+BIEb19doaNQC
-         8SMI5Jy+5b80XpjGTVojROIyUE/KmVCeR9VajCVPaNZUhd4pPERbhgqdHW7ruuIkJIyW
-         8soZ9c9h13fJSt+kVck33CDGGG/sHcZuA9JsvCnsQ8XAQnZauxSrTZcvodT+uqDZADeh
-         IZBQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PVnQKP7oNdrUNmwohJQk3GAbsbyZ21YPYiaFQu000f4=;
+        b=G/+XUPGwLp4EY9GJTIJ8CZfZqL3jcqF3dfYYNADdbI/Z/D5n1AbUVw9Nz7xyfEbmsA
+         IqOJ+bb/z2uKeJ16gUU3414VtvaJO3ZPASd98YyaLF9eIj/6XibZ4B1BQ3qizle5qesU
+         HTCo7ZNPlcf0JhJlKxKiNJlEBixO+iICov0iPIwrjihQ+DLCr0mQUAiN8boV0Man8VCy
+         DoQek06wu84yf1HO/KyUNIJg0dVWVz/i9Mw+tCuB8utNIZ8FSmgZWEGIE/S2vnQT3LrS
+         7d+GWoLtvDz+zNOc83SauTASVmI7ZMILygCQMSwsQKyKq9UXD8sqKQ2Gv3Q5vx5xpEih
+         PoXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tAhD4QYewlPD8zViG7wcd+O4QOzC8E05GpctTZjGEWs=;
-        b=lZIfVJYQmkZ8PT7liYyXSj2VQOonxw7HMWCQVS3DPgdthiHamxQZJTsvKnuEzZW59S
-         n18jElrYdqOSiYXBO/ortPxh9beCi1CQL7Mp4sMLJdwsx1sttMOMpRs0xmBybfwl9VA3
-         gQJA2G/G7pCR45siIpgl0dghdups4wBdalyQEDrOLrfWjs97XEIYJF6NCQBJAYT/31i9
-         9hGJiE5g1vNSLSDw/79dlPK99cH3BNbr2SoJDOcaIoZ8ULNxVD8i6lA9oCy7KQTkUO9N
-         Wi339tLRcnNuOoQyRc9iogWfDZUellvboFfS+Z5qff8nuTttL1O3m/eZQfdUodH8DcQl
-         uCEw==
-X-Gm-Message-State: AFqh2kquGdn1hWOUBCmwX7yFJo0fk65RNg/sv61rXNj0n5b+783ltoOh
-        xdiIIBVq38wV5Q7pe1dku7TuBCHC5dIyr9Q=
-X-Google-Smtp-Source: AMrXdXsJ3fbsg8BfmB6PDsoehMnfBnm2358uyS0Atl35IannK5L2b3OWfsHA+zQkhglyOv6lMqZ3Cw==
-X-Received: by 2002:a17:903:48c:b0:189:6c9a:7d8b with SMTP id jj12-20020a170903048c00b001896c9a7d8bmr10162628plb.32.1671474712975;
-        Mon, 19 Dec 2022 10:31:52 -0800 (PST)
-Received: from localhost.localdomain ([220.158.159.17])
-        by smtp.gmail.com with ESMTPSA id d2-20020a170903230200b00186e34524e3sm7480979plh.136.2022.12.19.10.31.47
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PVnQKP7oNdrUNmwohJQk3GAbsbyZ21YPYiaFQu000f4=;
+        b=wvytPa5oK0z0b7J0pCsKUCMWvfvVspvR3Bt2v5/9ScRmIbaCPmShErvanZTHN51m+8
+         fssqzHzrXEcrb6ud8O1XGKTpqLMkISmEdzvQKInJsil3AD7Lu+phEv5eDJ01q5ebC7po
+         0DG63+KIzHmv8qKUne6/rX4y+l2EQu1vvadgn5OK+nFYHjqQTD720pwJQTH/61F4NO5R
+         11+QOcmNo4Ab+zki6OwFFIlnRy6sDnQEIL3pVLOIjaiFY+yoh2MTzyAwM2YKAsww+jbP
+         0j+0s7/1g1uom+45itJutV7OeMza4AaeAq1y6+7qQNx6TUgSPvni8KqJ2GpGQYfO8HLN
+         GTfQ==
+X-Gm-Message-State: ANoB5pnJCimqd+7OppNutFTRU+4JHPCUcTVPxYVeSaTTHQWd1myGgrtX
+        IK6Q63KWylJt8ybMT++AeWDw
+X-Google-Smtp-Source: AA0mqf7D0YYD7XtD4fAx0uFKGN9VoO5NrYy0CawXxr9ighchqco9whyjw2bwcxPCuhbiOVr5XK0fUQ==
+X-Received: by 2002:a17:90a:ea09:b0:219:8d8a:a608 with SMTP id w9-20020a17090aea0900b002198d8aa608mr45517417pjy.43.1671474690043;
+        Mon, 19 Dec 2022 10:31:30 -0800 (PST)
+Received: from thinkpad ([220.158.159.17])
+        by smtp.gmail.com with ESMTPSA id ds6-20020a17090b08c600b00218f9bd50c7sm6223719pjb.50.2022.12.19.10.31.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 10:31:52 -0800 (PST)
+        Mon, 19 Dec 2022 10:31:29 -0800 (PST)
+Date:   Tue, 20 Dec 2022 00:01:22 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com
-Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        luca.weiss@fairphone.com, ahalaney@redhat.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 15/15] qcom: llcc/edac: Support polling mode for ECC handling
-Date:   Mon, 19 Dec 2022 23:59:58 +0530
-Message-Id: <20221219182958.476231-16-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221219182958.476231-1-manivannan.sadhasivam@linaro.org>
-References: <20221219182958.476231-1-manivannan.sadhasivam@linaro.org>
+        tony.luck@intel.com, quic_saipraka@quicinc.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, james.morse@arm.com,
+        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
+        quic_ppareek@quicinc.com, luca.weiss@fairphone.com
+Subject: Re: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Message-ID: <20221219183122.GD126558@thinkpad>
+References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+ <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Not all Qcom platforms support IRQ mode for ECC handling. For those
-platforms, the current EDAC driver will not be probed due to missing ECC
-IRQ in devicetree.
+Hi Andrew,
 
-So add support for polling mode so that the EDAC driver can be used on all
-Qcom platforms supporting LLCC.
+On Mon, Dec 12, 2022 at 01:23:40PM -0600, Andrew Halaney wrote:
+> On Mon, Dec 12, 2022 at 06:02:58PM +0530, Manivannan Sadhasivam wrote:
+> > The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
+> > accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
+> > This offset only works for some SoCs like SDM845 for which driver support
+> > was initially added.
+> >
+> > But the later SoCs use different register stride that vary between the
+> > banks with holes in-between. So it is not possible to use a single register
+> > stride for accessing the CSRs of each bank. By doing so could result in a
+> > crash with the current drivers. So far this crash is not reported since
+> > EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
+> > driver extensively by triggering the EDAC IRQ (that's where each bank
+> > CSRs are accessed).
+> >
+> > For fixing this issue, let's obtain the base address of each LLCC bank from
+> > devicetree and get rid of the fixed stride.
+> >
+> > This series affects multiple platforms but I have only tested this on
+> > SM8250 and SM8450. Testing on other platforms is welcomed.
+> >
+> 
+> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+> 
 
-The polling delay of 5000ms is chosen based on Qcom downstream/vendor
-driver.
+I dropped your tested-by tag in v3 as some of the patch content have been
+changed. Please test v3 and share your feedback.
 
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/edac/qcom_edac.c     | 37 +++++++++++++++++++++++++-----------
- drivers/soc/qcom/llcc-qcom.c | 13 ++++++-------
- 2 files changed, 32 insertions(+), 18 deletions(-)
+Thanks,
+Mani
 
-diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-index f40bb49bccd4..672a09f3b4cb 100644
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -76,6 +76,8 @@
- #define DRP0_INTERRUPT_ENABLE           BIT(6)
- #define SB_DB_DRP_INTERRUPT_ENABLE      0x3
- 
-+#define ECC_POLL_MSEC			5000
-+
- enum {
- 	LLCC_DRAM_CE = 0,
- 	LLCC_DRAM_UE,
-@@ -283,8 +285,7 @@ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
- 	return ret;
- }
- 
--static irqreturn_t
--llcc_ecc_irq_handler(int irq, void *edev_ctl)
-+static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
- {
- 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
- 	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-@@ -328,6 +329,11 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
- 	return irq_rc;
- }
- 
-+static void llcc_ecc_check(struct edac_device_ctl_info *edev_ctl)
-+{
-+	llcc_ecc_irq_handler(0, edev_ctl);
-+}
-+
- static int qcom_llcc_edac_probe(struct platform_device *pdev)
- {
- 	struct llcc_drv_data *llcc_driv_data = pdev->dev.platform_data;
-@@ -356,22 +362,31 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
- 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
- 	edev_ctl->pvt_info = llcc_driv_data;
- 
-+	/* Check if LLCC driver has passed ECC IRQ */
-+	ecc_irq = llcc_driv_data->ecc_irq;
-+	if (ecc_irq > 0) {
-+		/* Use interrupt mode if IRQ is available */
-+		edac_op_state = EDAC_OPSTATE_INT;
-+	} else {
-+		/* Fall back to polling mode otherwise */
-+		edac_op_state = EDAC_OPSTATE_POLL;
-+		edev_ctl->poll_msec = ECC_POLL_MSEC;
-+		edev_ctl->edac_check = llcc_ecc_check;
-+	}
-+
- 	rc = edac_device_add_device(edev_ctl);
- 	if (rc)
- 		goto out_mem;
- 
- 	platform_set_drvdata(pdev, edev_ctl);
- 
--	/* Request for ecc irq */
--	ecc_irq = llcc_driv_data->ecc_irq;
--	if (ecc_irq < 0) {
--		rc = -ENODEV;
--		goto out_dev;
--	}
--	rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
-+	/* Request ECC IRQ if available */
-+	if (ecc_irq > 0) {
-+		rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
- 			      IRQF_TRIGGER_HIGH, "llcc_ecc", edev_ctl);
--	if (rc)
--		goto out_dev;
-+		if (rc)
-+			goto out_dev;
-+	}
- 
- 	return rc;
- 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 72f3f2a9aaa0..7b7c5a38bac6 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -1011,13 +1011,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 		goto err;
- 
- 	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
--	if (drv_data->ecc_irq >= 0) {
--		llcc_edac = platform_device_register_data(&pdev->dev,
--						"qcom_llcc_edac", -1, drv_data,
--						sizeof(*drv_data));
--		if (IS_ERR(llcc_edac))
--			dev_err(dev, "Failed to register llcc edac driver\n");
--	}
-+
-+	llcc_edac = platform_device_register_data(&pdev->dev,
-+					"qcom_llcc_edac", -1, drv_data,
-+					sizeof(*drv_data));
-+	if (IS_ERR(llcc_edac))
-+		dev_err(dev, "Failed to register llcc edac driver\n");
- 
- 	return 0;
- err:
+> I took this for a quick spin on the qdrive3 I've got access to without
+> any issue:
+> 
+>     [root@localhost ~]# modprobe qcom_edac
+>     [root@localhost ~]# dmesg | grep -i edac
+>     [    0.620723] EDAC MC: Ver: 3.0.0
+>     [    1.165417] ghes_edac: GHES probing device list is empty
+>     [  594.688103] EDAC DEVICE0: Giving out device to module qcom_llcc_edac controller llcc: DEV qcom_llcc_edac (INTERRUPT)
+>     [root@localhost ~]# cat /proc/interrupts | grep ecc
+>     174:          0          0          0          0          0          0          0          0     GICv3 614 Level     llcc_ecc
+>     [root@localhost ~]#
+> 
+> Potentially stupid question, but are users expected to manually load the
+> driver as I did? I don't see how it would be loaded automatically in the
+> current state, but thought it was funny that I needed to modprobe
+> myself.
+> 
+> Please let me know if you want me to do any more further testing!
+> 
+> Thanks,
+> Andrew
+> 
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
