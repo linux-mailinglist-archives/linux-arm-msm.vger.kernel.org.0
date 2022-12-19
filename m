@@ -2,125 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DD1C651293
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 20:16:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE19D6512A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 20:18:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232226AbiLSTQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 14:16:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40618 "EHLO
+        id S232288AbiLSTS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 14:18:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232504AbiLSTPR (ORCPT
+        with ESMTP id S232556AbiLSTSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 14:15:17 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB4613E89
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:14:50 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id u5so10066267pjy.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:14:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sAubOkJvINNojNKQySo7fdvunMLKmBVll3HExCwexwo=;
-        b=JuHzAjEtS3z3AoG0EOBAtJfVoGmuEoBwfuq6bv4gk+GZhn3641lIsz8c8HCAhPdSg9
-         FvbtOTJr/o5hDTHq05f6k7k1tYRrGOiH5LqagM9BEjUxIMLsIPqrGaudPeXxVSNvU/US
-         o0Lu7Cw8x8A95clipBqMSjq+zul51e/SovIxqFgsXYlkyVzvwZOK+RLDFRZ+y5ZHlPOj
-         FRmE5NGFNCoXlpeud0gPtFrAk2HU2zXev5LEZ7bSjZB54Gp5/V0qEy7q79flhleD7jc+
-         MyIJTSrLO7wvOSMuxeqkJZFutH3kX+th0e8ZtgxdV1K8+Jk45wGeM400D+1zesaoZXiN
-         tCYg==
+        Mon, 19 Dec 2022 14:18:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2507512D04
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:17:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1671477438;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=lw/Fj1Iw2Xi8gGiXlXcO2+qBIKUYLL1c1CqizXCd5bE=;
+        b=Hmpzuv5/QeSE6nPAJeG/nRQQerChfCcoE9h44NqUGej+jM8Jpb64JUh7Qr7l6xP4ClGM0o
+        SXQmLVCbHfM69usqpWVTIFW/jRhvBp5hL0ov8206VcPZnzjlibTYOI3W3ObDnrr9eRhDPO
+        Xory/bUfSKI9KCsKM44Sv/cj0ixU9B0=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-631-_xjqaUqlMUiJQRuEUybKKg-1; Mon, 19 Dec 2022 14:17:16 -0500
+X-MC-Unique: _xjqaUqlMUiJQRuEUybKKg-1
+Received: by mail-ua1-f69.google.com with SMTP id y10-20020ab0560a000000b003af33bfa8c4so4152553uaa.21
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:17:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sAubOkJvINNojNKQySo7fdvunMLKmBVll3HExCwexwo=;
-        b=GTc9KXejKFNLQJExexoTGl0NhT+TLb0AwoTH31yMTBOELtGCoJ/lCJhhUdOc8zl7ai
-         oglaVN5dtYW2v5DeAcwbhGHqi3HmyjHeQ4yVQh9afOn/1KArBhHkFLrQF78g4s9zZpu4
-         Ru2iGP8/ZmLm7bp/HNdfuZAiVeccp1AylRgQsDIb08O+pX4z1SAu7SHdR/9OA+VzdWd6
-         LFPr0URg+fJ+o2MvJlvR2U+JPppsX44BzoeKx2dbXYT55UBEDLLt5mjORUsVWXRKqCbS
-         nU2AC3EQa1KdU2gXMBfVXEroTvjbxrSX/OiX8a+OU07hVU1XRTI5pR0Px8/7qCh+Qf/j
-         rxGg==
-X-Gm-Message-State: ANoB5pkdVz2SlVFEnoICWAuybo0VUDKvu4xZ7KY9brdUadPDDfXL7gGP
-        oZQmXDVvWViisnDHblOcGqrk
-X-Google-Smtp-Source: AA0mqf7bcFYuSkhSlx4GdCaQjF/wzvulHntCyBcCywh+NNbwUHeolME6QXhdkW/x1vnDIOoLUlThdQ==
-X-Received: by 2002:a17:90b:378c:b0:21e:1282:af42 with SMTP id mz12-20020a17090b378c00b0021e1282af42mr41810543pjb.40.1671477289675;
-        Mon, 19 Dec 2022 11:14:49 -0800 (PST)
-Received: from localhost.localdomain ([220.158.159.17])
-        by smtp.gmail.com with ESMTPSA id z4-20020a17090a66c400b001f94d25bfabsm9485803pjl.28.2022.12.19.11.14.46
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lw/Fj1Iw2Xi8gGiXlXcO2+qBIKUYLL1c1CqizXCd5bE=;
+        b=ky0xNvzgpKLJ7jaGIAGqZ5ArxkUJxPue8PRbPz/6JNoARkNTFhVKdiUMmaOQFkGA6o
+         VgoAiFfPVreVuvAY9kb/f32mte2qvYUz5lkrbVa9Mxwfj/H0GHIppzu1F5S8Mtlb1/eO
+         ebGs9WOiNRTqIQ8p6exwM/3E2kNfiO32zqi5iIzbxNwzseYdjmGtmjkZSrwh0cngy3sV
+         T+uHOlFoP7hca4xX67RZVqnKE0Lt5nYRuulqeN9rCAudE0oj7lo3C5XO+87Z9W1IjXOd
+         Z7tZY4rKsC4Ljxdw6AHELi6sON/OtnSlpXu8g59F4JcAeamLI1FFoMqrumgLeZog4uqx
+         cLtg==
+X-Gm-Message-State: ANoB5pkr0gb9xYk3GlAGr7Gp4YxK2KaJ7N1ts830BQ1m6OFaqOUaQFPu
+        APkaVP40yPIbqA/7JQLYAYArmqevzpSVPOufb2xPW+CHc5ergaC8FLXzGDlKDnC+nw23jeCu5gY
+        4T0j6fLTZqEB+1RMKVsfhvJlSag==
+X-Received: by 2002:a05:6102:3083:b0:3b1:4937:2877 with SMTP id l3-20020a056102308300b003b149372877mr23080825vsb.21.1671477436389;
+        Mon, 19 Dec 2022 11:17:16 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf4iWPbVRwLj078zkvGVS/rMXaSWd3/HYmSgeJhJHRGIOBQ4Q1rAtNoBQr169ipCDx2TZD4nMw==
+X-Received: by 2002:a05:6102:3083:b0:3b1:4937:2877 with SMTP id l3-20020a056102308300b003b149372877mr23080807vsb.21.1671477436170;
+        Mon, 19 Dec 2022 11:17:16 -0800 (PST)
+Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
+        by smtp.gmail.com with ESMTPSA id bp43-20020a05620a45ab00b006fb7c42e73asm7668029qkb.21.2022.12.19.11.17.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 11:14:48 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bhelgaas@google.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8450: Use GIC-ITS for PCIe0 and PCIe1
-Date:   Tue, 20 Dec 2022 00:44:27 +0530
-Message-Id: <20221219191427.480085-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221219191427.480085-1-manivannan.sadhasivam@linaro.org>
-References: <20221219191427.480085-1-manivannan.sadhasivam@linaro.org>
+        Mon, 19 Dec 2022 11:17:15 -0800 (PST)
+Date:   Mon, 19 Dec 2022 14:17:15 -0500
+From:   Eric Chanudet <echanude@redhat.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Brian Masney <bmasney@redhat.com>
+Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: rename pm8450a dtsi to
+ sa8540p-pmics
+Message-ID: <20221219191715.7vhu2wtrs45zvmh4@echanude>
+References: <20221216232606.2123341-1-echanude@redhat.com>
+ <20221216232606.2123341-2-echanude@redhat.com>
+ <7b6e1c29-4e33-b66c-00c8-836a62a0941d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7b6e1c29-4e33-b66c-00c8-836a62a0941d@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Both PCIe0 and PCIe1 controllers are capable of receiving MSIs from
-endpoint devices using GIC-ITS MSI controller. Add support for it.
+On Sat, Dec 17, 2022 at 03:36:58PM +0100, Konrad Dybcio wrote:
+> On 17.12.2022 00:26, Eric Chanudet wrote:
+> > pm8450a.dtsi was introduced for the descriptions of sa8540p based boards.
+> > Rename the dtsi to make this relationship explicit.
+> > 
+> For the descriptions of PMICs used on SA8540p based boards, I suppose?
 
-Currently, BDF (0:0.0) and BDF (1:0.0) are enabled and with the
-msi-map-mask of 0xff00, all the 32 devices under these two busses can
-share the same Device ID.
+Absolutely, thanks! Amended in v4:
+https://lore.kernel.org/linux-arm-msm/20221219191000.2570545-1-echanude@redhat.com
 
-The GIC-ITS MSI implementation provides an advantage over internal MSI
-implementation using Locality-specific Peripheral Interrupts (LPI) that
-would allow MSIs to be targeted for each CPU core.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 570475040d95..276ceba4c247 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1733,9 +1733,9 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
--			#interrupt-cells = <1>;
-+			msi-map = <0x0 &gic_its 0x5980 0x1>,
-+				  <0x100 &gic_its 0x5981 0x1>;
-+			msi-map-mask = <0xff00>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
- 					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-@@ -1842,9 +1842,9 @@ pcie1: pci@1c08000 {
- 			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
- 
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
--			#interrupt-cells = <1>;
-+			msi-map = <0x0 &gic_its 0x5a01 0x1>,
-+				  <0x100 &gic_its 0x5a00 0x1>;
-+			msi-map-mask = <0xff00>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
- 					<0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
 -- 
-2.25.1
+Eric Chanudet
 
