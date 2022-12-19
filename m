@@ -2,62 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 281066510B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 17:50:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EE2C651138
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 18:31:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232271AbiLSQuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 11:50:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36646 "EHLO
+        id S232194AbiLSRbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 12:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232215AbiLSQtx (ORCPT
+        with ESMTP id S232009AbiLSRbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 11:49:53 -0500
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D5A12ABB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:49:50 -0800 (PST)
-Received: by mail-yb1-xb2a.google.com with SMTP id 203so5547184yby.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:49:50 -0800 (PST)
+        Mon, 19 Dec 2022 12:31:34 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D228D5FA1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 09:31:33 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id o8-20020a17090a9f8800b00223de0364beso1012662pjp.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 09:31:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3dexYhaJLyySOgzO9m48Qw/vO3VgX3BHvOpR8vVBWes=;
-        b=D8tSclNVxbCISqviSYEzS21MfzTjmpNSE1ZMOx8zrlQ1/KZljKXGooJL9gtVgiIbJ5
-         Yi9lHz4WI16IFe0yf2SZEORuhJ8BT95pVYGMMBBv0Yy99rTTRJnxVOpDpBeKm+VEVNlB
-         +3pBfPTexE8uL17VAP4hrxMOSdClpz3TnDggZGy4mXprCd1lHRqBq6O303LwBenPk813
-         G0161ohM/2xHc5mlYbHz0f4mijAc7J+188tIB8YWOSQHwD2SwBOoh4d8n18FcqAdKuxy
-         TNJuOiX9HtQrmravUtqURfMn6ujVK660Gs+Ja+3fsV4h2v9dobqEeYz9UxiVkVQR6C0h
-         Ua4Q==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=U/v5QF24UgCyhOviKN7va44J4qr79PiICT//51MxqP4=;
+        b=toAg9I22I2g3+DhNQ5Ur2KkfYka3FHWlkU4A1A3Pq7c+MK9K6yIFq/L3jHEhSgvE59
+         EbUX84zU6Wanns5WmTcEakG3gRsCjwzFvKltQEdLaBto14PyULhLCLLqTexlvKL590UI
+         xsY8qiyEwU397KxaUk2EVEU/dIYGU5VbvSIg5tUxA4JoGLBG0oRBIV7MPmotPqToCIHT
+         tNPTE4sPRLztaiMHCwYZKBRgJIamM/syazGjROD5GUO3rHdTnwOCGl+3HD30z1nfemRn
+         A9j/inI6B7ZqCzA6MYIEEi07mZLqpA5aAXO8H5GzeqN1qWZMYx6vAX+d8pOpmpdk+nTF
+         idvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3dexYhaJLyySOgzO9m48Qw/vO3VgX3BHvOpR8vVBWes=;
-        b=6kisdbcTmIT2lv3wQz+Ur7mCjQ7cB4IRb3utQYcRl2DYI94ROS9ZKKUjP6h2ViQV4O
-         JPsncIRBKdkWC9g50/Xczev51E3DAvM5G3n+bWvE6/x/HhhWmPtagZ4Gpbc+K6s++P5M
-         FXFmQ3ajzmoO/MR+udFfuoSmaPIzdtgByqYQOE4hwrOcWLCgpn993ubiEwsP9xu47kYO
-         uxQwxsKvfR7UL4pFJxP/omvROWekbnov+i3O2p5zAv0naoAuuKLGQEDW9fD1QTqtORtK
-         Onp8n+RL+OzWDY8oGgufUl3DkgkZ4z2B/lj9jYaw1sw/WAolI9F5+rHexRH+cRiN7Ncb
-         nJwQ==
-X-Gm-Message-State: ANoB5pnT1mQ9y5crZgdC2AqfRu25KrLrTb5bn702/n93MXw9H7TYcOM5
-        ZS1QcwGkUS1Hl6PtbSKgZ48pQAQXLlSxKQ2m4OOxeA==
-X-Google-Smtp-Source: AA0mqf4gHYmK8JkvwzZvAxfT6E1BXC6RfjcLbInwrxFtU8RIjc8fyTi+XuELpawTO115/OX9+gZcV+YpNCMAm876y3I=
-X-Received: by 2002:a25:8544:0:b0:723:5b57:cde9 with SMTP id
- f4-20020a258544000000b007235b57cde9mr4473256ybn.194.1671468590135; Mon, 19
- Dec 2022 08:49:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
- <20221212192340.evgtbpzmw7hcdolb@halaney-x13s> <20221213052802.GB4862@thinkpad>
- <ec64e3a0-085d-7830-fd4e-6969c1c9bbdf@linaro.org> <20221213175738.GI4862@thinkpad>
- <195a55f1-76e7-3f00-da1f-4ae84f7943c0@linaro.org> <20221219135046.GA126558@thinkpad>
- <1df13a83-1926-05b5-f7c7-388ef431a2fa@linaro.org> <20221219141643.GB126558@thinkpad>
-In-Reply-To: <20221219141643.GB126558@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 19 Dec 2022 18:49:39 +0200
-Message-ID: <CAA8EJppVGAQ_OLGbsor67c4MdL4kTVL-9O+geX8AcKEjL9s92w@mail.gmail.com>
-Subject: Re: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC banks
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U/v5QF24UgCyhOviKN7va44J4qr79PiICT//51MxqP4=;
+        b=Htuc2jTSIcZkdv/9hdXXzgNVKth6a4nsBvqSH4HrSLxgaHR9D+utggJ1LwX/H2MdaY
+         Glkt/I2IIslN6991+WcgvHgqFrV2UYSObLRXRCP8YMyYnLD8tqG31pa2u2un/EfZboGW
+         Kx1wozmkVcUkLTCtzimhGJfKDX/lvFvZAUEaMiaGXR1sDNPJm6gd+CApp/DcTeim9Pm4
+         mI0DNHDiIB/eZZZoO5zxV5xRz8/ZOL73mxmXT6Eb/9XzelDncd9P9M57i7VjvLKglmrY
+         DVCrnumAUF3PkHLOwQGIKdnlDL2m3YyD5Fj4HbLsaYdZOSFY2gw5eNpbrlIZMjvVhTv4
+         EAUA==
+X-Gm-Message-State: ANoB5pmjLviaJA1Ux8ptdlw+Uxqvup8iTMvuXZ7S6fVlp8XTLfwT+WtC
+        gFyNIYFR4t172B7V+YNLfvbHQgFFlzzZsTU=
+X-Google-Smtp-Source: AA0mqf7tuKt4rG5/6Y1OPFfgAYiSy4D3nhTzUsNwV1AxIzrxKQlFmQQL5Bzc7zFx+DwQeGOCH27DYg==
+X-Received: by 2002:a05:6a20:49a6:b0:ad:3ada:c712 with SMTP id fs38-20020a056a2049a600b000ad3adac712mr41417851pzb.14.1671471093326;
+        Mon, 19 Dec 2022 09:31:33 -0800 (PST)
+Received: from thinkpad ([220.158.159.17])
+        by smtp.gmail.com with ESMTPSA id s11-20020a65584b000000b004771bf66781sm6512726pgr.65.2022.12.19.09.31.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Dec 2022 09:31:32 -0800 (PST)
+Date:   Mon, 19 Dec 2022 23:01:25 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andrew Halaney <ahalaney@redhat.com>, andersson@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -66,50 +61,76 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-kernel@vger.kernel.org, james.morse@arm.com,
         mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
         quic_ppareek@quicinc.com, luca.weiss@fairphone.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 00/13] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Message-ID: <20221219173125.GC126558@thinkpad>
+References: <20221212123311.146261-1-manivannan.sadhasivam@linaro.org>
+ <20221212192340.evgtbpzmw7hcdolb@halaney-x13s>
+ <20221213052802.GB4862@thinkpad>
+ <ec64e3a0-085d-7830-fd4e-6969c1c9bbdf@linaro.org>
+ <20221213175738.GI4862@thinkpad>
+ <195a55f1-76e7-3f00-da1f-4ae84f7943c0@linaro.org>
+ <20221219135046.GA126558@thinkpad>
+ <1df13a83-1926-05b5-f7c7-388ef431a2fa@linaro.org>
+ <20221219141643.GB126558@thinkpad>
+ <CAA8EJppVGAQ_OLGbsor67c4MdL4kTVL-9O+geX8AcKEjL9s92w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJppVGAQ_OLGbsor67c4MdL4kTVL-9O+geX8AcKEjL9s92w@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 19 Dec 2022 at 16:17, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Mon, Dec 19, 2022 at 03:11:36PM +0100, Krzysztof Kozlowski wrote:
-> > On 19/12/2022 14:50, Manivannan Sadhasivam wrote:
-> > >
-> > >>> Also, the id table is
-> > >>> an overkill since there is only one driver that is making use of it. And
-> > >>> moreover, there is no definite ID to use.
-> > >>
-> > >> Every driver with a single device support has usually ID table and it's
-> > >> not a problem...
-> > >>
-> > >
-> > > Are you referring to OF/ACPI ID table? Or something else?
+On Mon, Dec 19, 2022 at 06:49:39PM +0200, Dmitry Baryshkov wrote:
+> On Mon, 19 Dec 2022 at 16:17, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
 > >
-> > No, I refer to the driver ID table (I2C, platform whatever the driver is).
+> > On Mon, Dec 19, 2022 at 03:11:36PM +0100, Krzysztof Kozlowski wrote:
+> > > On 19/12/2022 14:50, Manivannan Sadhasivam wrote:
+> > > >
+> > > >>> Also, the id table is
+> > > >>> an overkill since there is only one driver that is making use of it. And
+> > > >>> moreover, there is no definite ID to use.
+> > > >>
+> > > >> Every driver with a single device support has usually ID table and it's
+> > > >> not a problem...
+> > > >>
+> > > >
+> > > > Are you referring to OF/ACPI ID table? Or something else?
+> > >
+> > > No, I refer to the driver ID table (I2C, platform whatever the driver is).
+> > >
 > >
->
-> Yeah, that's what I wanted to avoid here. The ID table makes sense if you have
-> a bus like I2C or a separate subsystem but here LLCC is an individual driver.
-> So creating a separate ID table is an overkill IMO.
+> > Yeah, that's what I wanted to avoid here. The ID table makes sense if you have
+> > a bus like I2C or a separate subsystem but here LLCC is an individual driver.
+> > So creating a separate ID table is an overkill IMO.
+> 
+> Well, struct platform_device_id is used quite a lot together with the
+> MODULE_DEVICE_TABLE(platform, _ids);
+> 
+> On the other hand:
+> 
+> $ git grep MODULE_ALIAS.*platform: | wc -l
+> 1308
+> $ git grep MODULE_DEVICE_TABLE.*platform | wc -l
+> 236
+> 
 
-Well, struct platform_device_id is used quite a lot together with the
-MODULE_DEVICE_TABLE(platform, _ids);
+Hmm. I think I will just go with platform_device_id in the next version.
 
-On the other hand:
+Thanks,
+Mani
 
-$ git grep MODULE_ALIAS.*platform: | wc -l
-1308
-$ git grep MODULE_DEVICE_TABLE.*platform | wc -l
-236
+> -- 
+> With best wishes
+> Dmitry
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
