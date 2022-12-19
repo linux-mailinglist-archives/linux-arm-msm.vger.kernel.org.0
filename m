@@ -2,141 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76A4A651512
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 22:46:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11B5065156A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 23:13:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232653AbiLSVqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 16:46:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57022 "EHLO
+        id S232716AbiLSWNb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 17:13:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232619AbiLSVqM (ORCPT
+        with ESMTP id S232913AbiLSWNM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 16:46:12 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1D09A188
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 13:46:06 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id b13so15766158lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 13:46:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XB6cREulQAxqSm/nFa6k4wjD6bFB02amrV76mX+yCIs=;
-        b=XxoN9bRVvG18VXJeePFuxyk1L13yeJxtTlVRlH+RXOWKsZxCpJ2AAHvgl8VQ+UnsoC
-         1qhE0iFe0yCXrI++jKmPTPNLuJ+tjfnW0iIi4+rjTMjgEOEtm4IXF4zB7wSoFxAQd4Wc
-         Hp/IlT0TrSVrfecF4KnZZrzzQYI37AUQf9wQbS2Tr6CeIM9XxXt1agMGXbnY0i7YpK9T
-         grYk0E+YNwT9L043+5ME2Oo8Q6rJWz4tpFZ8I6cRp4PF0dX8alA5WqX/0fqqw8RqcuVP
-         uR0eDUunFyal/u53Y2zju3Swu2EDFsi69XnH/zhUK5zqZk9TvRgVWpZK1cRcu/onlyNN
-         GlOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XB6cREulQAxqSm/nFa6k4wjD6bFB02amrV76mX+yCIs=;
-        b=5aFZZIecC06uohW3oVfh6FKoXHQgdcs0MDtO9ssdNpL0oowHPOEzeDlANOQJagGTJL
-         vfDnUTR6mT4nQbnhxmaMVXPknwEEWwaKYZOZz4YlIBEgdAa7GUv7mLVy8QgVWgKNdfRr
-         RvISrmWmZRMlZ4eunYqtZO7u9XJ1QMVdYIRV5aA/EMc7DmurOG5e0NkRV88ZHVFt6FI4
-         xX6WXwV/oue5hQH46Dxh2LAAmOZy4FhK1I6KvHhXuAFIXC0DVABnj970cZ4aunD6Lw7R
-         zi8paBc1GG2pgk9R5cB9mAFQ44q552mArkTzbjG34Aqr6sj3vVcPC6n/rd3VyZd99nij
-         f9wQ==
-X-Gm-Message-State: ANoB5plfaTH7prDuVZgn0YQiGewLJMTf5sRbCb1SfmPxiRgCEeketHiW
-        SmNTKN0lPYW04iHgnyhjVFN5J2Ec1pecxqBUWj611g==
-X-Google-Smtp-Source: AA0mqf598/MCF/JjEFs4sytej/bZyytsruYpkdumZTQtJfjYvaqHK4GOJ3jxcNm12jWpnEvG729kiQ==
-X-Received: by 2002:a05:6512:304b:b0:4b5:892:3987 with SMTP id b11-20020a056512304b00b004b508923987mr24595255lfb.9.1671486365267;
-        Mon, 19 Dec 2022 13:46:05 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a12-20020a056512200c00b004b700ba3cf3sm1205396lfb.203.2022.12.19.13.46.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Dec 2022 13:46:04 -0800 (PST)
-Message-ID: <6a59addb-b1a0-8536-c909-25c4c4447e09@linaro.org>
-Date:   Mon, 19 Dec 2022 23:46:03 +0200
+        Mon, 19 Dec 2022 17:13:12 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E136242;
+        Mon, 19 Dec 2022 14:13:10 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BJLFlwm019232;
+        Mon, 19 Dec 2022 22:13:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+H2YFaIW8VPZQoVIgfO16YR3jNA40AYq2XTs4mSJrQA=;
+ b=M3v1t9U6ZuVhwK96dpdj27KR6KKYkEwOFTFvKYC96fH6UwG3pEdJziPP3I4W2qif+4Rm
+ NrqUO3La6bOgbdqB4amcWJEePYBROs5r9lgC44bQbs+OgSe1WCu4eJzEbCaeg1gm1i/I
+ nY5i3Fy+F65eRtkBV4rEPCkbBHiJTK0NMuFcSXvWdZz5YDqsiqGWE4aI238k7pspR9ix
+ 9tmbnsn294An2VHC11SrlpGnpoXAHmes2AetrBsda0Y4YDXGZ+micBSZzpV7xWySBf3a
+ 7i19cyPGZDyjSOpnC9iQLSesLA8UAUMI75tVLUdd6XycMv/hxWqsabB35XUHidriIoh2 qg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mh7havyeu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Dec 2022 22:13:06 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BJMD5ae017594
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Dec 2022 22:13:05 GMT
+Received: from [10.110.23.17] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 19 Dec
+ 2022 14:13:04 -0800
+Message-ID: <823ecc8c-80ad-0c8e-07c2-b43cb83ce63d@quicinc.com>
+Date:   Mon, 19 Dec 2022 16:13:03 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8450: Use GIC-ITS for PCIe0 and
- PCIe1
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bhelgaas@google.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221219191427.480085-1-manivannan.sadhasivam@linaro.org>
- <20221219191427.480085-4-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221219191427.480085-4-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v5 1/2] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
+ clocks
+To:     Rob Herring <robh@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221216230722.21404-1-quic_molvera@quicinc.com>
+ <20221216230722.21404-2-quic_molvera@quicinc.com>
+ <20221219150623.GA1381881-robh@kernel.org>
+Content-Language: en-US
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <20221219150623.GA1381881-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mUhVC1cgy7Sw1zqMdXiDZrp8depzVrJb
+X-Proofpoint-ORIG-GUID: mUhVC1cgy7Sw1zqMdXiDZrp8depzVrJb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-19_01,2022-12-15_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 spamscore=0 clxscore=1011 lowpriorityscore=0 suspectscore=0
+ mlxscore=0 adultscore=0 mlxlogscore=999 impostorscore=0 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212190195
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/12/2022 21:14, Manivannan Sadhasivam wrote:
-> Both PCIe0 and PCIe1 controllers are capable of receiving MSIs from
-> endpoint devices using GIC-ITS MSI controller. Add support for it.
-> 
-> Currently, BDF (0:0.0) and BDF (1:0.0) are enabled and with the
-> msi-map-mask of 0xff00, all the 32 devices under these two busses can
-> share the same Device ID.
-> 
-> The GIC-ITS MSI implementation provides an advantage over internal MSI
-> implementation using Locality-specific Peripheral Interrupts (LPI) that
-> would allow MSIs to be targeted for each CPU core.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 570475040d95..276ceba4c247 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1733,9 +1733,9 @@ pcie0: pci@1c00000 {
->   			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
->   				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
->   
-> -			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "msi";
-> -			#interrupt-cells = <1>;
-> +			msi-map = <0x0 &gic_its 0x5980 0x1>,
-> +				  <0x100 &gic_its 0x5981 0x1>;
 
-Does ITS support handling more than one MSI interrupt per device? 
-Otherwise it might be better to switch to multi-MSI scheme using SPI 
-interrupts.
 
-> +			msi-map-mask = <0xff00>;
->   			interrupt-map-mask = <0 0 0 0x7>;
->   			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->   					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-> @@ -1842,9 +1842,9 @@ pcie1: pci@1c08000 {
->   			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
->   				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
->   
-> -			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "msi";
-> -			#interrupt-cells = <1>;
-> +			msi-map = <0x0 &gic_its 0x5a01 0x1>,
-> +				  <0x100 &gic_its 0x5a00 0x1>;
+On 12/19/2022 9:06 AM, Rob Herring wrote:
+> On Fri, Dec 16, 2022 at 03:07:21PM -0800, Melody Olvera wrote:
+>> Add device tree bindings for global clock controller on QDU1000 and
+>> QRU1000 SoCs.
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  .../bindings/clock/qcom,qdu1000-gcc.yaml      |  51 +++++
+>>  include/dt-bindings/clock/qcom,qdu1000-gcc.h  | 175 ++++++++++++++++++
+>>  2 files changed, 226 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
+>>  create mode 100644 include/dt-bindings/clock/qcom,qdu1000-gcc.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
+>> new file mode 100644
+>> index 000000000000..fb51375b9be6
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
+>> @@ -0,0 +1,51 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,qdu1000-gcc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller for QDU1000 and QRU1000
+>> +
+>> +maintainers:
+>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module which supports the clocks, resets and
+>> +  power domains on QDU1000 and QRU1000
+>> +
+>> +  See also:: include/dt-bindings/clock/qcom,qdu1000-gcc.h
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,qdu1000-gcc
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: Sleep clock source
+>> +      - description: PCIE 0 Pipe clock source
+>> +      - description: PCIE 0 Phy Auxiliary clock source
+>> +      - description: USB3 Phy wrapper pipe clock source
+>> +
+>> +required:
+>> +  - compatible
+>> +  - clocks
+>> +
+>> +allOf:
+>> +  - $ref: qcom,gcc.yaml#
+>> +
+>> +additionalProperties: false
+> This should be 'unevaluatedProperties' instead to fix the errors.
 
-Are you sure that the order is correct here?
+Ah, ok that makes sense.
 
-> +			msi-map-mask = <0xff00>;
->   			interrupt-map-mask = <0 0 0 0x7>;
->   			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->   					<0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-
--- 
-With best wishes
-Dmitry
+Thanks,
+Melody
+>
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,rpmh.h>
+>> +    clock-controller@100000 {
+>> +      compatible = "qcom,qdu1000-gcc";
+>> +      reg = <0x00100000 0x001f4200>;
+>> +      clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>,
+>> +               <&pcie_0_pipe_clk>, <&pcie_0_phy_aux_clk>,
+>> +               <&usb3_phy_wrapper_pipe_clk>;
+>> +      #clock-cells = <1>;
+>> +      #reset-cells = <1>;
+>> +      #power-domain-cells = <1>;
+>> +    };
+>> diff --git a/include/dt-bindings/clock/qcom,qdu1000-gcc.h b/include/dt-bindings/clock/qcom,qdu1000-gcc.h
+>> new file mode 100644
+>> index 000000000000..ddbc6b825e80
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,qdu1000-gcc.h
+>> @@ -0,0 +1,175 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
+>> +/*
+>> + * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_QDU1000_H
+>> +#define _DT_BINDINGS_CLK_QCOM_GCC_QDU1000_H
+>> +
+>> +/* GCC clocks */
+>> +#define GCC_GPLL0					0
+>> +#define GCC_GPLL0_OUT_EVEN				1
+>> +#define GCC_GPLL1					2
+>> +#define GCC_GPLL2					3
+>> +#define GCC_GPLL2_OUT_EVEN				4
+>> +#define GCC_GPLL3					5
+>> +#define GCC_GPLL4					6
+>> +#define GCC_GPLL5					7
+>> +#define GCC_GPLL5_OUT_EVEN				8
+>> +#define GCC_GPLL6					9
+>> +#define GCC_GPLL7					10
+>> +#define GCC_GPLL8					11
+>> +#define GCC_AGGRE_NOC_ECPRI_DMA_CLK			12
+>> +#define GCC_AGGRE_NOC_ECPRI_DMA_CLK_SRC			13
+>> +#define GCC_AGGRE_NOC_ECPRI_GSI_CLK_SRC			14
+>> +#define GCC_BOOT_ROM_AHB_CLK				15
+>> +#define GCC_CFG_NOC_ECPRI_CC_AHB_CLK			16
+>> +#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK			17
+>> +#define GCC_DDRSS_ECPRI_DMA_CLK				18
+>> +#define GCC_ECPRI_AHB_CLK				19
+>> +#define GCC_ECPRI_CC_GPLL0_CLK_SRC			20
+>> +#define GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC			21
+>> +#define GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC			22
+>> +#define GCC_ECPRI_CC_GPLL3_CLK_SRC			23
+>> +#define GCC_ECPRI_CC_GPLL4_CLK_SRC			24
+>> +#define GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC			25
+>> +#define GCC_ECPRI_XO_CLK				26
+>> +#define GCC_ETH_DBG_SNOC_AXI_CLK			27
+>> +#define GCC_GEMNOC_PCIE_QX_CLK				28
+>> +#define GCC_GP1_CLK					29
+>> +#define GCC_GP1_CLK_SRC					30
+>> +#define GCC_GP2_CLK					31
+>> +#define GCC_GP2_CLK_SRC					32
+>> +#define GCC_GP3_CLK					33
+>> +#define GCC_GP3_CLK_SRC					34
+>> +#define GCC_PCIE_0_AUX_CLK				35
+>> +#define GCC_PCIE_0_AUX_CLK_SRC				36
+>> +#define GCC_PCIE_0_CFG_AHB_CLK				37
+>> +#define GCC_PCIE_0_CLKREF_EN				38
+>> +#define GCC_PCIE_0_MSTR_AXI_CLK				39
+>> +#define GCC_PCIE_0_PHY_AUX_CLK				40
+>> +#define GCC_PCIE_0_PHY_RCHNG_CLK			41
+>> +#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC			42
+>> +#define GCC_PCIE_0_PIPE_CLK				43
+>> +#define GCC_PCIE_0_SLV_AXI_CLK				44
+>> +#define GCC_PCIE_0_SLV_Q2A_AXI_CLK			45
+>> +#define GCC_PDM2_CLK					46
+>> +#define GCC_PDM2_CLK_SRC				47
+>> +#define GCC_PDM_AHB_CLK					48
+>> +#define GCC_PDM_XO4_CLK					49
+>> +#define GCC_QMIP_ANOC_PCIE_CLK				50
+>> +#define GCC_QMIP_ECPRI_DMA0_CLK				51
+>> +#define GCC_QMIP_ECPRI_DMA1_CLK				52
+>> +#define GCC_QMIP_ECPRI_GSI_CLK				53
+>> +#define GCC_QUPV3_WRAP0_CORE_2X_CLK			54
+>> +#define GCC_QUPV3_WRAP0_CORE_CLK			55
+>> +#define GCC_QUPV3_WRAP0_S0_CLK				56
+>> +#define GCC_QUPV3_WRAP0_S0_CLK_SRC			57
+>> +#define GCC_QUPV3_WRAP0_S1_CLK				58
+>> +#define GCC_QUPV3_WRAP0_S1_CLK_SRC			59
+>> +#define GCC_QUPV3_WRAP0_S2_CLK				60
+>> +#define GCC_QUPV3_WRAP0_S2_CLK_SRC			61
+>> +#define GCC_QUPV3_WRAP0_S3_CLK				62
+>> +#define GCC_QUPV3_WRAP0_S3_CLK_SRC			63
+>> +#define GCC_QUPV3_WRAP0_S4_CLK				64
+>> +#define GCC_QUPV3_WRAP0_S4_CLK_SRC			65
+>> +#define GCC_QUPV3_WRAP0_S5_CLK				66
+>> +#define GCC_QUPV3_WRAP0_S5_CLK_SRC			67
+>> +#define GCC_QUPV3_WRAP0_S6_CLK				68
+>> +#define GCC_QUPV3_WRAP0_S6_CLK_SRC			69
+>> +#define GCC_QUPV3_WRAP0_S7_CLK				70
+>> +#define GCC_QUPV3_WRAP0_S7_CLK_SRC			71
+>> +#define GCC_QUPV3_WRAP1_CORE_2X_CLK			72
+>> +#define GCC_QUPV3_WRAP1_CORE_CLK			73
+>> +#define GCC_QUPV3_WRAP1_S0_CLK				74
+>> +#define GCC_QUPV3_WRAP1_S0_CLK_SRC			75
+>> +#define GCC_QUPV3_WRAP1_S1_CLK				76
+>> +#define GCC_QUPV3_WRAP1_S1_CLK_SRC			77
+>> +#define GCC_QUPV3_WRAP1_S2_CLK				78
+>> +#define GCC_QUPV3_WRAP1_S2_CLK_SRC			79
+>> +#define GCC_QUPV3_WRAP1_S3_CLK				80
+>> +#define GCC_QUPV3_WRAP1_S3_CLK_SRC			81
+>> +#define GCC_QUPV3_WRAP1_S4_CLK				82
+>> +#define GCC_QUPV3_WRAP1_S4_CLK_SRC			83
+>> +#define GCC_QUPV3_WRAP1_S5_CLK				84
+>> +#define GCC_QUPV3_WRAP1_S5_CLK_SRC			85
+>> +#define GCC_QUPV3_WRAP1_S6_CLK				86
+>> +#define GCC_QUPV3_WRAP1_S6_CLK_SRC			87
+>> +#define GCC_QUPV3_WRAP1_S7_CLK				88
+>> +#define GCC_QUPV3_WRAP1_S7_CLK_SRC			89
+>> +#define GCC_QUPV3_WRAP_0_M_AHB_CLK			90
+>> +#define GCC_QUPV3_WRAP_0_S_AHB_CLK			91
+>> +#define GCC_QUPV3_WRAP_1_M_AHB_CLK			92
+>> +#define GCC_QUPV3_WRAP_1_S_AHB_CLK			93
+>> +#define GCC_SDCC5_AHB_CLK				94
+>> +#define GCC_SDCC5_APPS_CLK				95
+>> +#define GCC_SDCC5_APPS_CLK_SRC				96
+>> +#define GCC_SDCC5_ICE_CORE_CLK				97
+>> +#define GCC_SDCC5_ICE_CORE_CLK_SRC			98
+>> +#define GCC_SNOC_CNOC_GEMNOC_PCIE_QX_CLK		99
+>> +#define GCC_SNOC_CNOC_GEMNOC_PCIE_SOUTH_QX_CLK		100
+>> +#define GCC_SNOC_CNOC_PCIE_QX_CLK			101
+>> +#define GCC_SNOC_PCIE_SF_CENTER_QX_CLK			102
+>> +#define GCC_SNOC_PCIE_SF_SOUTH_QX_CLK			103
+>> +#define GCC_TSC_CFG_AHB_CLK				104
+>> +#define GCC_TSC_CLK_SRC					105
+>> +#define GCC_TSC_CNTR_CLK				106
+>> +#define GCC_TSC_ETU_CLK					107
+>> +#define GCC_USB2_CLKREF_EN				108
+>> +#define GCC_USB30_PRIM_MASTER_CLK			109
+>> +#define GCC_USB30_PRIM_MASTER_CLK_SRC			110
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK			111
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC		112
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC	113
+>> +#define GCC_USB30_PRIM_SLEEP_CLK			114
+>> +#define GCC_USB3_PRIM_PHY_AUX_CLK			115
+>> +#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC			116
+>> +#define GCC_USB3_PRIM_PHY_COM_AUX_CLK			117
+>> +#define GCC_USB3_PRIM_PHY_PIPE_CLK			118
+>> +#define GCC_SM_BUS_AHB_CLK				119
+>> +#define GCC_SM_BUS_XO_CLK				120
+>> +#define GCC_SM_BUS_XO_CLK_SRC				121
+>> +#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC			122
+>> +#define GCC_ETH_100G_C2C_HM_APB_CLK			123
+>> +#define GCC_ETH_100G_FH_HM_APB_0_CLK			124
+>> +#define GCC_ETH_100G_FH_HM_APB_1_CLK			125
+>> +#define GCC_ETH_100G_FH_HM_APB_2_CLK			126
+>> +#define GCC_ETH_DBG_C2C_HM_APB_CLK			127
+>> +#define GCC_AGGRE_NOC_ECPRI_GSI_CLK			128
+>> +#define GCC_PCIE_0_PIPE_CLK_SRC				129
+>> +#define GCC_PCIE_0_PHY_AUX_CLK_SRC			130
+>> +
+>> +/* GCC resets */
+>> +#define GCC_ECPRI_CC_BCR				0
+>> +#define GCC_ECPRI_SS_BCR				1
+>> +#define GCC_ETH_WRAPPER_BCR				2
+>> +#define GCC_PCIE_0_BCR					3
+>> +#define GCC_PCIE_0_LINK_DOWN_BCR			4
+>> +#define GCC_PCIE_0_NOCSR_COM_PHY_BCR			5
+>> +#define GCC_PCIE_0_PHY_BCR				6
+>> +#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR		7
+>> +#define GCC_PCIE_PHY_CFG_AHB_BCR			8
+>> +#define GCC_PCIE_PHY_COM_BCR				9
+>> +#define GCC_PDM_BCR					10
+>> +#define GCC_QUPV3_WRAPPER_0_BCR				11
+>> +#define GCC_QUPV3_WRAPPER_1_BCR				12
+>> +#define GCC_QUSB2PHY_PRIM_BCR				13
+>> +#define GCC_QUSB2PHY_SEC_BCR				14
+>> +#define GCC_SDCC5_BCR					15
+>> +#define GCC_TCSR_PCIE_BCR				16
+>> +#define GCC_TSC_BCR					17
+>> +#define GCC_USB30_PRIM_BCR				18
+>> +#define GCC_USB3_DP_PHY_PRIM_BCR			19
+>> +#define GCC_USB3_DP_PHY_SEC_BCR				20
+>> +#define GCC_USB3_PHY_PRIM_BCR				21
+>> +#define GCC_USB3_PHY_SEC_BCR				22
+>> +#define GCC_USB3PHY_PHY_PRIM_BCR			23
+>> +#define GCC_USB3PHY_PHY_SEC_BCR				24
+>> +#define GCC_USB_PHY_CFG_AHB2PHY_BCR			25
+>> +
+>> +/* GCC power domains */
+>> +#define PCIE_0_GDSC					0
+>> +#define PCIE_0_PHY_GDSC					1
+>> +#define USB30_PRIM_GDSC					2
+>> +
+>> +#endif
+>> -- 
+>> 2.38.1
+>>
+>>
 
