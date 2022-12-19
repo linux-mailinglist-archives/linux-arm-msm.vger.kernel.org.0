@@ -2,99 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE19D6512A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 20:18:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4016512F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 20:26:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbiLSTS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 14:18:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S232702AbiLST0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 14:26:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232556AbiLSTSJ (ORCPT
+        with ESMTP id S232709AbiLSTZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 14:18:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2507512D04
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:17:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1671477438;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=lw/Fj1Iw2Xi8gGiXlXcO2+qBIKUYLL1c1CqizXCd5bE=;
-        b=Hmpzuv5/QeSE6nPAJeG/nRQQerChfCcoE9h44NqUGej+jM8Jpb64JUh7Qr7l6xP4ClGM0o
-        SXQmLVCbHfM69usqpWVTIFW/jRhvBp5hL0ov8206VcPZnzjlibTYOI3W3ObDnrr9eRhDPO
-        Xory/bUfSKI9KCsKM44Sv/cj0ixU9B0=
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-631-_xjqaUqlMUiJQRuEUybKKg-1; Mon, 19 Dec 2022 14:17:16 -0500
-X-MC-Unique: _xjqaUqlMUiJQRuEUybKKg-1
-Received: by mail-ua1-f69.google.com with SMTP id y10-20020ab0560a000000b003af33bfa8c4so4152553uaa.21
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 11:17:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lw/Fj1Iw2Xi8gGiXlXcO2+qBIKUYLL1c1CqizXCd5bE=;
-        b=ky0xNvzgpKLJ7jaGIAGqZ5ArxkUJxPue8PRbPz/6JNoARkNTFhVKdiUMmaOQFkGA6o
-         VgoAiFfPVreVuvAY9kb/f32mte2qvYUz5lkrbVa9Mxwfj/H0GHIppzu1F5S8Mtlb1/eO
-         ebGs9WOiNRTqIQ8p6exwM/3E2kNfiO32zqi5iIzbxNwzseYdjmGtmjkZSrwh0cngy3sV
-         T+uHOlFoP7hca4xX67RZVqnKE0Lt5nYRuulqeN9rCAudE0oj7lo3C5XO+87Z9W1IjXOd
-         Z7tZY4rKsC4Ljxdw6AHELi6sON/OtnSlpXu8g59F4JcAeamLI1FFoMqrumgLeZog4uqx
-         cLtg==
-X-Gm-Message-State: ANoB5pkr0gb9xYk3GlAGr7Gp4YxK2KaJ7N1ts830BQ1m6OFaqOUaQFPu
-        APkaVP40yPIbqA/7JQLYAYArmqevzpSVPOufb2xPW+CHc5ergaC8FLXzGDlKDnC+nw23jeCu5gY
-        4T0j6fLTZqEB+1RMKVsfhvJlSag==
-X-Received: by 2002:a05:6102:3083:b0:3b1:4937:2877 with SMTP id l3-20020a056102308300b003b149372877mr23080825vsb.21.1671477436389;
-        Mon, 19 Dec 2022 11:17:16 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf4iWPbVRwLj078zkvGVS/rMXaSWd3/HYmSgeJhJHRGIOBQ4Q1rAtNoBQr169ipCDx2TZD4nMw==
-X-Received: by 2002:a05:6102:3083:b0:3b1:4937:2877 with SMTP id l3-20020a056102308300b003b149372877mr23080807vsb.21.1671477436170;
-        Mon, 19 Dec 2022 11:17:16 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id bp43-20020a05620a45ab00b006fb7c42e73asm7668029qkb.21.2022.12.19.11.17.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 11:17:15 -0800 (PST)
-Date:   Mon, 19 Dec 2022 14:17:15 -0500
-From:   Eric Chanudet <echanude@redhat.com>
+        Mon, 19 Dec 2022 14:25:18 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6609116;
+        Mon, 19 Dec 2022 11:25:08 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1FA681F8F3;
+        Mon, 19 Dec 2022 20:25:05 +0100 (CET)
+Date:   Mon, 19 Dec 2022 20:25:03 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: rename pm8450a dtsi to
- sa8540p-pmics
-Message-ID: <20221219191715.7vhu2wtrs45zvmh4@echanude>
-References: <20221216232606.2123341-1-echanude@redhat.com>
- <20221216232606.2123341-2-echanude@redhat.com>
- <7b6e1c29-4e33-b66c-00c8-836a62a0941d@linaro.org>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm6125-seine: Clean up gpio-keys
+ (volume down)
+Message-ID: <20221219192503.udmafo2vgprh3sxm@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221217100455.52593-1-marijn.suijten@somainline.org>
+ <11174eb6-0a9d-7df1-6f06-da4010f76453@linaro.org>
+ <20221218101841.mjsmnwtfzbmazfys@SoMainline.org>
+ <b26891a3-f784-a188-e7ef-422dda9ef771@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7b6e1c29-4e33-b66c-00c8-836a62a0941d@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <b26891a3-f784-a188-e7ef-422dda9ef771@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 17, 2022 at 03:36:58PM +0100, Konrad Dybcio wrote:
-> On 17.12.2022 00:26, Eric Chanudet wrote:
-> > pm8450a.dtsi was introduced for the descriptions of sa8540p based boards.
-> > Rename the dtsi to make this relationship explicit.
+On 2022-12-19 11:00:10, Konrad Dybcio wrote:
+> 
+> 
+> On 18.12.2022 11:18, Marijn Suijten wrote:
+> > On 2022-12-17 16:04:17, Konrad Dybcio wrote:
+> >> On 17.12.2022 11:04, Marijn Suijten wrote:
+> >>> [..]
+> >>> @@ -270,6 +270,16 @@ &sdhc_1 {
+> >>>  
+> >>>  &tlmm {
+> >>>  	gpio-reserved-ranges = <22 2>, <28 6>;
+> >>> +
+> >>> +	gpio_keys_state: gpio-keys-state {
+> >>> +		key-volume-down-pins {
+> >> I see no need for defining a wrapper node.
+> >> The other changes look good!
 > > 
-> For the descriptions of PMICs used on SA8540p based boards, I suppose?
+> > I did the same for sm6350-lena, which we should flatten out then too.
+> > 
+> > For these uses I'm not sure when it's clearer/better to use:
+> > 
+> >     thing@x {
+> >         pinctrl-0 = <&thing_state>;
+> >         ...
+> >     };
+> > 
+> >     thing_state: thing-state {
+> >         specific-pin {
+> >             ...
+> >         };
+> > 
+> >         other-specific-pin ...
+> >         ...
+> >     };
+> > 
+> > Or separate out the pins with their own state and instead use:
+> > 
+> >     thing@x {
+> >         pinctrl-0 = <&specific_pin1_state &specific_pin2_state>;
+> >         ...
+> >     };
+> > 
+> > If I had to guess the former groups related pins together (as we finally
+> > do now for SDC...) which should all be toggled at once.  In this
+> > specific gpio-keys case, irrespective of whether it has one or more
+> > keys, the pins aren't related apart from representing keys, and should
+> > thus better be individual pinctrl nodes and individually referenced in
+> > pinctrl-X.
+> > 
+> > Did I sympathize that correctly?
+> I think so.
 
-Absolutely, thanks! Amended in v4:
-https://lore.kernel.org/linux-arm-msm/20221219191000.2570545-1-echanude@redhat.com
+Ack, will respin like this for V2.
 
--- 
-Eric Chanudet
+> > (side-note: the SDC pinctrl groups typically get extended with a
+> >  card-detect pin in board DTS or in some likely-erroneous cases directly
+> >  in SoC DTSI.  This may also count as unrelated pins being grouped
+> >  together only because that is how the hardware/DTS node consumes them,
+> >  but it is rather concise/readable/convenient though...)
+> 8450 has:
+> 
+> pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
+> 
+> which seems like a sane application of what you described.
 
+Glad to hear we (I and sm8450 dts writer(s)) came to the same conclusion
+independently.  Not sure if it's worth retroactively cleaning up
+existing DTS, but feel free to.  There are still DT's out there that
+define all pins individually, too...
+
+- Marijn
