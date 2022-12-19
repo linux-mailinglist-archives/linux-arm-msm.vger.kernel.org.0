@@ -2,76 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDD0365093C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 10:17:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0ED76509B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 11:00:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231518AbiLSJQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 04:16:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44540 "EHLO
+        id S231540AbiLSKAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 05:00:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbiLSJQp (ORCPT
+        with ESMTP id S231465AbiLSKAR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 04:16:45 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21473117B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:16:44 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id g14so8393036ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:16:44 -0800 (PST)
+        Mon, 19 Dec 2022 05:00:17 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067F3631F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 02:00:16 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id b9so8533463ljr.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 02:00:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/FjB5JXmDES2VPNlWMj2mHFDZX6qCMhDUQfH/EbbPPA=;
-        b=pnzPivHrib8qRe9pF4RYmYlVy/o9HYSUt3Qs4A02PrAFl6LUdtxKWSEpr1T/x4H8ex
-         mQ8VqYnEy7gDzPiTL57Zp7JRrDi1WpIeS8p3P8cXcEBF/vLYo66tN5r4zAOBl8JzkfnJ
-         /IIaBXCjRJmFmRuCHUVB303+VBEQ3MdPNyWzMNCudsp3uqXAreEqvv7iDbC55oY47mmG
-         2ZAF4BRggfGDKhpU499EcyGf3P5/xpKxSECZVUr2xAksoYpQ4xAEe2C77fzleO5sDkdm
-         F/R7jVQkvvj4r6XSXX7VLDof3wz58L2Oz9JoGh06cFnpKw1TBhnDSS3zmB79Tk4ba16d
-         YvuA==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VvGsWNXd2sbIuCGTBAb8giI5M4ZbtzdhUaCHxPqguuA=;
+        b=vEOsjONH/HBa0Dvt8Wfo0C4jy+8ib/qc9mS3JZXNDkQ/MAV2mwGbr4rHbuNG47dNBR
+         CkzLsZSuGXtQjFPTUZi7KoueLzrOCrDJ5RIXmR4a7i0dsavJPLDjOu7AyddLkWF2PK0+
+         ORq0wMlmFaaCFyPfVYE0xJv2xbr3QLhtFuSCur8uXNtNH/JH8X7xxifnPybjkFqWD8LN
+         D7BIteCcFcn9C+jdjRYysvYACxLQ+mrIU341PMCYjffPabRpBwJrSMmyP/FoNQVDuv/q
+         8dV/HLiq+vaiU07PToiFtA2FcCE7TehhGhdzYVsyHkOEhl0K2KKljz8blOplIRzpFl5e
+         +E6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/FjB5JXmDES2VPNlWMj2mHFDZX6qCMhDUQfH/EbbPPA=;
-        b=NTQUqg+IBUXuTgdZnkf2FBMXO1UCZkUCQ9jrRF7trUg4Uy1yV4H7vgoT2nijcHJLe1
-         UXN8vBJAAalZ1eBuAdImnTBuNF0ZuPTHyD/yDbVUjXtaSOwRThGTkF0optbYjDCUTl4o
-         /Tm0JzbwuVPGUioEEqce0GuNvDsVsM908yvrD+oeo9GJdqUEzADXPQuQknyZDm791kdA
-         wlAfVLbi7V62oeuQiECY1q+E8ZjTWxX8sT72gxpV89ApMNBvg1MceX3mzrJoE63/gF60
-         pDyjQxc6kBE3l0+KjfIL6TDCOVL4XUDYCqhmcHxyxGJ7Zr18J1rmgakVoPTReoToBFUp
-         WfuA==
-X-Gm-Message-State: ANoB5pkIFbmCCgpZncj9Sd7aGsC6dlTpE9VBFmRZqP+LWSpk3Nj4sRSK
-        MkVXxgsmuh5hxnQdJN423B1eww==
-X-Google-Smtp-Source: AA0mqf6h/VU+p+DL8VHfXCZIjRHPaxM8oXFoXjCDtucWvcsCeGsGI3Gl1lT7SWhaDTSn2zOhVsb8fQ==
-X-Received: by 2002:a2e:7d11:0:b0:279:cdff:4a2c with SMTP id y17-20020a2e7d11000000b00279cdff4a2cmr10854297ljc.19.1671441402506;
-        Mon, 19 Dec 2022 01:16:42 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id b3-20020a2eb903000000b0027c8bc7d6fcsm657434ljb.136.2022.12.19.01.16.41
+        bh=VvGsWNXd2sbIuCGTBAb8giI5M4ZbtzdhUaCHxPqguuA=;
+        b=1t2FBs8rfVxP+LAHGvCTt7AzjVbZDoPo15j+mBTYpVfp9Qe/40jOa6OqkjLbBNvuay
+         QhU2a4/xkFOKZYmtw+hDxtBTUnZyxBi7vdtsUnX6QTwJRVp1ab2QtBR2ZH+JSsSlEsTL
+         OUDiRP3UrFqYA5Q8cS5p1nQX6NlRp1NKMvnfdqWIBx97N8G5UEWhMfyl2WgYkdldlCFq
+         Av8Z2cEjH4SEZzt57VdYVRVH7Y/d9i/FrM7f+v7ylZgZX2+vTQVH/58cTlzCnlkXl8Od
+         7CJlYupUjlHn9bExgktn4nhU9/o2VzRV9WNZY4EjZ5b76P4TLjrWppsWRqIQR8aAfsY+
+         dxdQ==
+X-Gm-Message-State: ANoB5pl7hckdjeTDNYErjqUUsPClHVQ0gSvtbchbiIpLjsQTWDCdOEAA
+        4DdC4G3a7Y4lNyPhPpxb5Ha9Sg==
+X-Google-Smtp-Source: AA0mqf40876iPiH31zJn1csjPZ1HWwhK43qAq2eFad2xN1UNE8nyxTJuhE9H1T/IabGOMvEKVGKG/A==
+X-Received: by 2002:a2e:a90c:0:b0:26f:db35:2e93 with SMTP id j12-20020a2ea90c000000b0026fdb352e93mr16749818ljq.5.1671444014308;
+        Mon, 19 Dec 2022 02:00:14 -0800 (PST)
+Received: from [192.168.1.101] (abxh44.neoplus.adsl.tpnet.pl. [83.9.1.44])
+        by smtp.gmail.com with ESMTPSA id b16-20020a05651c033000b0026dced9840dsm700690ljp.61.2022.12.19.02.00.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Dec 2022 01:16:42 -0800 (PST)
-Message-ID: <da81c0f0-8ad5-cf2d-a62b-0bbb1d98795f@linaro.org>
-Date:   Mon, 19 Dec 2022 10:16:40 +0100
+        Mon, 19 Dec 2022 02:00:13 -0800 (PST)
+Message-ID: <b26891a3-f784-a188-e7ef-422dda9ef771@linaro.org>
+Date:   Mon, 19 Dec 2022 11:00:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,pcie2-phy: convert to YAML
- format
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: sm6125-seine: Clean up gpio-keys
+ (volume down)
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-References: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221217100455.52593-1-marijn.suijten@somainline.org>
+ <11174eb6-0a9d-7df1-6f06-da4010f76453@linaro.org>
+ <20221218101841.mjsmnwtfzbmazfys@SoMainline.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221218101841.mjsmnwtfzbmazfys@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,103 +87,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/12/2022 00:40, Dmitry Baryshkov wrote:
-> Convert the bindings for the Qualcomm PCIe2 PHY into the YAML format
-> from the text description.
+
+
+On 18.12.2022 11:18, Marijn Suijten wrote:
+> On 2022-12-17 16:04:17, Konrad Dybcio wrote:
+>> On 17.12.2022 11:04, Marijn Suijten wrote:
+>>> [..]
+>>> @@ -270,6 +270,16 @@ &sdhc_1 {
+>>>  
+>>>  &tlmm {
+>>>  	gpio-reserved-ranges = <22 2>, <28 6>;
+>>> +
+>>> +	gpio_keys_state: gpio-keys-state {
+>>> +		key-volume-down-pins {
+>> I see no need for defining a wrapper node.
+>> The other changes look good!
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/phy/qcom,pcie2-phy.yaml          | 87 +++++++++++++++++++
->  .../bindings/phy/qcom-pcie2-phy.txt           | 42 ---------
->  2 files changed, 87 insertions(+), 42 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
->  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
+> I did the same for sm6350-lena, which we should flatten out then too.
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
-> new file mode 100644
-> index 000000000000..497850a5b428
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
-> @@ -0,0 +1,87 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/qcom,pcie2-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm PCIe2 PHY controller
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description:
-> +  The Qualcomm PCIe2 PHY is a Synopsys based phy found in a number of Qualcomm
-> +  platforms.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,qcs404-pcie2-phy
-> +      - const: qcom,pcie2-phy
-> +
-> +  reg:
-> +    items:
-> +      - description: PHY register set
-> +
-> +  clocks:
-> +    items:
-> +      - description: a clock-specifier pair for the "pipe" clock
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +  vdda-vp-supply:
-> +    description: phandle to low voltage regulator
+> For these uses I'm not sure when it's clearer/better to use:
+> 
+>     thing@x {
+>         pinctrl-0 = <&thing_state>;
+>         ...
+>     };
+> 
+>     thing_state: thing-state {
+>         specific-pin {
+>             ...
+>         };
+> 
+>         other-specific-pin ...
+>         ...
+>     };
+> 
+> Or separate out the pins with their own state and instead use:
+> 
+>     thing@x {
+>         pinctrl-0 = <&specific_pin1_state &specific_pin2_state>;
+>         ...
+>     };
+> 
+> If I had to guess the former groups related pins together (as we finally
+> do now for SDC...) which should all be toggled at once.  In this
+> specific gpio-keys case, irrespective of whether it has one or more
+> keys, the pins aren't related apart from representing keys, and should
+> thus better be individual pinctrl nodes and individually referenced in
+> pinctrl-X.
+> 
+> Did I sympathize that correctly?
+I think so.
 
-Drop "phandle to"
+> 
+> (side-note: the SDC pinctrl groups typically get extended with a
+>  card-detect pin in board DTS or in some likely-erroneous cases directly
+>  in SoC DTSI.  This may also count as unrelated pins being grouped
+>  together only because that is how the hardware/DTS node consumes them,
+>  but it is rather concise/readable/convenient though...)
+8450 has:
 
-> +
-> +  vdda-vph-supply:
-> +    description: phandle to high voltage regulator
+pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
 
-Drop "phandle to"
+which seems like a sane application of what you described.
 
-
-> +
-> +  resets:
-> +    maxItems: 2
-> +
-> +  reset-names:
-> +    items:
-> +      - const: phy
-> +      - const: pipe
-
-Blank line
-
-> +  "#clock-cells":
-> +    const: 0
-> +
-> +  clock-output-names:
-> +    maxItems: 1
-
-Maybe keep both next to "clocks"? And same order in "required:".
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#phy-cells"
-> +  - clocks
-> +  - vdda-vp-supply
-> +  - vdda-vph-supply
-> +  - resets
-> +  - reset-names
-> +  - clock-output-names
-> +  - "#clock-cells"
-> +
-
-
-Best regards,
-Krzysztof
-
+Konrad
+> 
+> - Marijn
