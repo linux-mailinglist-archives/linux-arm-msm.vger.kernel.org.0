@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2856A65092E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 10:14:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A515650937
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 10:15:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbiLSJOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 04:14:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40496 "EHLO
+        id S231637AbiLSJPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 04:15:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbiLSJN4 (ORCPT
+        with ESMTP id S231689AbiLSJOv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 04:13:56 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61955E13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:13:55 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id o6so7838069lfi.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:13:55 -0800 (PST)
+        Mon, 19 Dec 2022 04:14:51 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE5C2BE0B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:14:43 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id z26so12693914lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 01:14:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LUx5MYCfnj/1H50qfkuVhePLMPUMVD211tZ96Ux4Qkk=;
-        b=DofmNMWGgHsV98OYuQkE+JUWgwRoAIXoeP52WsseD0nBLTqXRTQjn1VYoAkcLzL/Y4
-         6R7vqOqCyqtUEHNU8CM2jJ0yMYPbNsI2wCAq170/0rtiDOrl24hfv0+D4m2GYJ5soB0X
-         jE1lr79kHyFcszGiB1iFNF7Yo0x/WiQ7o9t+PaBd9mTv4zSRsYpSPmKJfG2MHMKJWgQb
-         qMP1kLAMJs1X8FaGhFysiZ6XRHJ4lrV5GxJgjI/TyTNnYE3PMKUcVctEpngq/FAFQ7fC
-         eM1cuN2qBR/KC6zaCp3OZw8sJyeWpeNj7Y7jQGckggi/SgORSpW5CQ3JgvSd2R7CPykR
-         SVsQ==
+        bh=P5wH9eG9rO1TDcm0Jhm27dvot1WZaz9XZs3TRsVSirI=;
+        b=FlYykcQMSg70ePR8VX7PHwZ/2xsRYrXaDig2o5LcXKWdHbT01KfFQ8Xrmn0/C2Hg2s
+         LZh4A+EFP7zn4921OKRVkUnSeE+onUkXGB4GoN6UQrNw1Eo71i4X51/faANAAbBH+5b0
+         OfwV2T27AWcOftrnmrPoFuO+wXcsFXKd/fSNIaLduaewf8sY+ixgleDnd35WvWRAMdwV
+         JaoJSINGwRsXQ1NaHBMnb6HLlo8NXFl9fsxLIPXkH4IeOYI9GwPdZczaXayWCDfgScqT
+         RhhF34FGdhy3EiarnwC+z5Nc+S//zJoxboiMfWunUnHgYTmQS0MCfodOzHIAL/fR7yRk
+         Iahw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LUx5MYCfnj/1H50qfkuVhePLMPUMVD211tZ96Ux4Qkk=;
-        b=RSpLg8PDqj7TTB8fTvPQZyHLEP/DcfJsDH9PMJPfQQkuaOqbcoaLCZtiOjcQs0vSXi
-         nAh6hnQPu+ajNtCQ4m26YoaGyC4yKLgaJtBgZIGnD6sL7q18yUDmad5oeiI+ViyDVrsi
-         32XEV77I8mVaTCtErxZE4y/ikODWMCD4LL3RwFuEzouoyAgHpnWFhHNKP+cc2nMipVzA
-         4zf7ERNZj5uahN5u1Xmfey33c2XFI6jcqXtuoBrpz84IZFb9NyEzu++2QMtOBeMOt6HB
-         KpUSTFdxPH+jWwFVS57dAveoepIdtgN5CHqKXCa4/0vSAV5Jw7ve3p8//Z8sex3FbhIP
-         5IZQ==
-X-Gm-Message-State: ANoB5pmjJJVN/vm87VRt4JWjzLZdNy6oCjgZvbH8NSCN/uczXWkLSUSs
-        pOOQqTlLj2j5qUlKUoOsHXn5TQ==
-X-Google-Smtp-Source: AA0mqf5TYBkDMS+bjG24i/C65vIRXR7GqJJINJdikUEPOM+mTn+Z97RYzXcjrWzLcUo2K1yNlfpLpg==
-X-Received: by 2002:a05:6512:2527:b0:4b6:edce:a192 with SMTP id be39-20020a056512252700b004b6edcea192mr9283232lfb.4.1671441233793;
-        Mon, 19 Dec 2022 01:13:53 -0800 (PST)
+        bh=P5wH9eG9rO1TDcm0Jhm27dvot1WZaz9XZs3TRsVSirI=;
+        b=UnKKT9ScGwfre38m7BBmWiFKG5Ln5+Gow0uqQjwAKssm+MgpH9vzh1JPk5PNQEdkFH
+         oAhBBE4cqpImbmK205Y8lPCCpr6DMadcNDoa2BP12cMBFjAE5y1NGI9+++Q00wd4+pO2
+         GD9IXD1uoV81zA6QMF51N8b4pZw3nj4CUsiGueO+hvhBN3g843sgxtCUUMaxoy4II/oB
+         u+uyk8UtkiAYb2F78II5Vpo98sb2wpfLwHNuB7svMeOLSdMT5IPbRAoWkAGPNqN0Gws6
+         nf4/3NXkoJ2TT1bl84EKzjKHVVoLFyFBN7tZpGqfxAsmgNw9NTZ+lHZmN3vmxPR99ptj
+         TS3w==
+X-Gm-Message-State: ANoB5pkaqatKF7eyptJETG7Zd5Ec/jffdyVLGywdYszY4+MBZV+i8I+z
+        3Sefq25cS2ot71GzochSQ+vuVw==
+X-Google-Smtp-Source: AA0mqf5NhRHJ05tUTEn0/n4WNIQ3B73/BMcIu7iqAbVk34VQoUvVAluKIUQuE3TYFSGOBHVoHsVN+Q==
+X-Received: by 2002:a05:6512:32cd:b0:4b1:862b:5e71 with SMTP id f13-20020a05651232cd00b004b1862b5e71mr13273752lfg.33.1671441282368;
+        Mon, 19 Dec 2022 01:14:42 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m18-20020a056512359200b004b523766c23sm1051457lfr.202.2022.12.19.01.13.52
+        by smtp.gmail.com with ESMTPSA id 8-20020ac25f48000000b004b590c768edsm1057012lfz.1.2022.12.19.01.14.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Dec 2022 01:13:53 -0800 (PST)
-Message-ID: <eb1fb1a2-d31d-2a1f-39e3-0c329cbcae7b@linaro.org>
-Date:   Mon, 19 Dec 2022 10:13:52 +0100
+        Mon, 19 Dec 2022 01:14:41 -0800 (PST)
+Message-ID: <411d85a3-86d1-b7fb-9cd0-00c79026d8d5@linaro.org>
+Date:   Mon, 19 Dec 2022 10:14:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 02/15] dt-bindings: clock: qcom: gcc-qcs404: switch to
- gcc.yaml
+Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom: gcc-qcs404: define
+ clocks/clock-names for QCS404
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,14 +70,15 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20221217001730.540502-1-dmitry.baryshkov@linaro.org>
- <20221217001730.540502-3-dmitry.baryshkov@linaro.org>
+ <20221217001730.540502-4-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221217001730.540502-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221217001730.540502-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,15 +86,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17/12/2022 01:17, Dmitry Baryshkov wrote:
-> Now as the gcc-qcs404 gained support for GDSC and requires using
-> the #power-domain-cells property, switch the qcom,gcc-qcs404.yaml schema
-> to use common gcc.yaml.
+> Define clock/clock-names properties of the GCC device node to be used
+> on QCS404 platform.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
