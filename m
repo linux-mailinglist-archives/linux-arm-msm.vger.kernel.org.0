@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E730E650FFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 17:12:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FE8265101C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 17:16:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231305AbiLSQMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 11:12:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48476 "EHLO
+        id S232069AbiLSQQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 11:16:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231136AbiLSQMG (ORCPT
+        with ESMTP id S232122AbiLSQQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 11:12:06 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC08BA1BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:12:03 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-144b21f5e5fso12017900fac.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:12:03 -0800 (PST)
+        Mon, 19 Dec 2022 11:16:28 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D0A313D01
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:16:07 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id e205so8203730oif.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 08:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=opNyEy4Hga2S+HSZGwYoo4n70oAUrhY/I95QJwBLXGw=;
-        b=GLXF0a9hN4NDrxSiyquzet3CYHgBek4M8xB9NgCoRur+3SiWUQ7U0TpQ80vS2Ey3yF
-         7Z9I/KAw6ATX613YDJ3PomP8p4XMs41nnalAMwU6+QkQFUhMm8vvsM/K4MpnHj4V1b0x
-         +YaWd5cjgjBFDIyenlffSYdjzvSma6xkeJIJvjxWrd9sI8mBIlSsddTfnkbhYVUCIDzB
-         Lw7vc0hRHHp2zRSkxqQG/nmlTh1KEbHJdzruUiUK2ggEdHmzJdhNBQQ55yhkimSIbzcJ
-         ORq78PFUdH2Oq9tfhYAjIghbEMkSxUcC+jVPPGxbu/HWGDnWbImG5UrI6v8+r37GhsdB
-         tXKg==
+        bh=t1fQ3HMUMjTYp4HukGDzZcKzvdvCdzA+hW6xmFvbLbk=;
+        b=mawyphQIqE/IdbX4iuJqDAYHDp5dpI18h3M1s3GRCCdPuxswNYEyIw5fHZQFOnfCY6
+         FpWMaNjIDZm3APc6kJC+1BW7xR4j+GQjkB8yxswZCpxJYY9aMDZ8fTW/T1TCpcB9691x
+         9iH+FqFzci8DHbP8Y0LJFA5xRdCCEs3Jnt8zRjEpzhHV66DyJdoFEjhIbrPVQoK+bdLk
+         xP3lRf0tc3U1nCc2OHxbNEuzy87zfwvbcHUjE0bXNpmVPmb4b2ELg37PtmFIpmVqFt3B
+         mpCA9xzo6u+DN+X60gwbKU77Uu8NYE/Lj9yBO1y7pJU/p/8pcIzmGy8G0XmYhUbbvAII
+         plFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=opNyEy4Hga2S+HSZGwYoo4n70oAUrhY/I95QJwBLXGw=;
-        b=rT5M+sYleec7rlyKfgtFmblSnOlUy7htdTGHgH9ZPVtRYMaJUmVbFmjqAVrnAuz8RB
-         v6HRPzp1Gufg9udRU7RuCwPe/VqJ/oTlbYtrIox8j5N0OigTTPH+1XL4f1X+zhnPXxFY
-         lNQyI8R377W3EaJjmGMl3uIQWG/Wpvc/aXmuT4fDd2NS+R3uAqpSVvVY5u73nLNVjLq5
-         jNYXyPkpyH5K6rHVRg/ysu1fF1XmtKGQsfCCwm4q+xAKPLRaRCsViKOy46cNpNWC4jxL
-         CYVfUXRyhBxBh+xpWbJnUvprr3xn+6XrHTGZ2Ur8ONxkOTRH+tEQbNAm+V8MKx7DU4yJ
-         4GzQ==
-X-Gm-Message-State: AFqh2kqm6hswdxmQO/O63a3smyM1B7qVl/vEaDdnRz5aW9eY09nc8HOR
-        zFtom+75X0uVL7RrnSgOeHGHSIxOWTNEy0pKc6dJGg==
-X-Google-Smtp-Source: AA0mqf55kS80V69FV3FbQLl+xTi2OHqecJQT7VNkb/GHotEghsH04avx+8ln6J+VXS2w3SXe+3JAgEmw1jbdGZgvIyg=
-X-Received: by 2002:a05:6870:9e4c:b0:13c:33d0:22e2 with SMTP id
- pt12-20020a0568709e4c00b0013c33d022e2mr1717322oab.14.1671466323100; Mon, 19
- Dec 2022 08:12:03 -0800 (PST)
+        bh=t1fQ3HMUMjTYp4HukGDzZcKzvdvCdzA+hW6xmFvbLbk=;
+        b=6VOYujXVG9N52zkQA40pxRka9bC8E1T+1gN+N+12PNz+qU15FkKeXYjHztYM3PmKw/
+         fZ0HtnmMbYLcJFxx/viToMVEK1Pz7AeRge3Y1Va470+yVX45sLdmWaclsKXwbg+hTzvi
+         a9Plfh2OYhx2OkIF7YemLJdrPnmCdloby18h1vi1SmX63KE6XsGI66e8D/Af9NB3I0XK
+         fkwYuDGC6n0+ItWMLVBiU1zU4pNmhoBCaLWMCvzPZI4T7wC0O+d4zbR143TEhVb85cv9
+         qnmzCceSNnO82xUZgE46H6NRdqKlYLXSGLv69rEH5uuqPnGAkNsBq8/y0v2LsTKrR1KZ
+         IEYQ==
+X-Gm-Message-State: ANoB5plh3B3y5Y64Euy7tldG65oBOfCLcv8mOpbzjEjTY5HkXYvZ33Qs
+        jm8WoJYdNwXfP82R1AmgF8Mxp8AGNRBGhUfRD40rlg==
+X-Google-Smtp-Source: AA0mqf4S6tnPPRCOQWCsOq5kuksb7+u/7cQmv2C9BJe4b2BQ//W8JNd2zSsEQvuXeFLOKtkDMW4ei0zslW/NQI2W9RI=
+X-Received: by 2002:aca:1c07:0:b0:359:ef86:2f4f with SMTP id
+ c7-20020aca1c07000000b00359ef862f4fmr1016768oic.14.1671466566962; Mon, 19 Dec
+ 2022 08:16:06 -0800 (PST)
 MIME-Version: 1.0
 References: <20221205163754.221139-1-robert.foss@linaro.org>
- <20221205163754.221139-11-robert.foss@linaro.org> <853d49f9-cd97-e8a0-53fd-9f673c2720a1@linaro.org>
-In-Reply-To: <853d49f9-cd97-e8a0-53fd-9f673c2720a1@linaro.org>
+ <20221205163754.221139-9-robert.foss@linaro.org> <60884c0e-7533-788b-2f93-c128cf7d27fd@kernel.org>
+In-Reply-To: <60884c0e-7533-788b-2f93-c128cf7d27fd@kernel.org>
 From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 19 Dec 2022 17:11:52 +0100
-Message-ID: <CAG3jFysRXykUgOqRiPVYSRtjQ5Rfj+DQQqPzhzA8j9B9LToj5g@mail.gmail.com>
-Subject: Re: [PATCH v3 10/11] arm64: dts: qcom: sm8350-hdk: Enable display &
- dsi nodes
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+Date:   Mon, 19 Dec 2022 17:15:56 +0100
+Message-ID: <CAG3jFyuoXekXN48jAgXxLMy8yGAzK9oJH_1HHYAuRLBCzyordQ@mail.gmail.com>
+Subject: Re: [PATCH v3 08/11] arm64: dts: qcom: sm8350: Use 2 interconnect cells
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
         bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
         quic_kalyant@quicinc.com, angelogioacchino.delregno@somainline.org,
@@ -67,76 +67,106 @@ Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
         vinod.koul@linaro.org, quic_jesszhan@quicinc.com,
-        andersson@kernel.org
+        andersson@kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 5 Dec 2022 at 17:44, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Mon, 5 Dec 2022 at 20:19, Georgi Djakov <djakov@kernel.org> wrote:
 >
-> On 05/12/2022 18:37, Robert Foss wrote:
-> > Enable the display subsystem and the dsi0 output for
-> > the sm8350-hdk board.
+> Hi Robert,
+>
+> On 5.12.22 18:37, Robert Foss wrote:
+> > Use two interconnect cells in order to optionally
+> > support a path tag.
 > >
 > > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > > ---
-> >   arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 22 ++++++++++++++++++++++
-> >   1 file changed, 22 insertions(+)
+> >   arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 ++++++++++++++--------------
+> >   1 file changed, 14 insertions(+), 14 deletions(-)
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > index e6deb08c6da0..39462c659c58 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > @@ -213,10 +213,32 @@ &cdsp {
-> >       firmware-name = "qcom/sm8350/cdsp.mbn";
-> >   };
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > index 805d53d91952..434f8e8b12c1 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > @@ -1543,56 +1543,56 @@ apps_smmu: iommu@15000000 {
+> >               config_noc: interconnect@1500000 {
+> >                       compatible = "qcom,sm8350-config-noc";
+> >                       reg = <0 0x01500000 0 0xa580>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
 > >
-> > +&dispcc {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&dsi0 {
+> >               mc_virt: interconnect@1580000 {
+> >                       compatible = "qcom,sm8350-mc-virt";
+> >                       reg = <0 0x01580000 0 0x1000>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> [..]
+> > @@ -1620,8 +1620,8 @@ ipa: ipa@1e40000 {
+> >                       clocks = <&rpmhcc RPMH_IPA_CLK>;
+> >                       clock-names = "core";
+> >
+> > -                     interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
+> > -                                     <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
+> > +                     interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
+> > +                                     <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
+> >                       interconnect-names = "memory",
+> >                                            "config";
+> >
+> > @@ -1661,7 +1661,7 @@ mpss: remoteproc@4080000 {
+> >                                       <&rpmhpd SM8350_MSS>;
+> >                       power-domain-names = "cx", "mss";
+> >
+> > -                     interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
+> > +                     interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1 0>;
 >
-> Bjorn suggested using mdss_dsi0 / mdss_dsi0_phy labels for DSI host and
-> PHY, as it allows us to group them nicely. WDYT?
+> The second cell for the first endpoint is missing, so this should be:
+>         interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
 
-Sounds quite reasonable, fixing it in dts/dtsi/binding.
+Nice catch, thanks!
 
 >
-> > +     vdda-supply = <&vreg_l6b_1p2>;
-> > +     status = "okay";
-> > +};
-> > +
-> > +&dsi0_phy  {
-> > +     vdds-supply = <&vreg_l5b_0p88>;
-> > +     status = "okay";
-> > +};
-> > +
-> >   &gpi_dma1 {
-> >       status = "okay";
-> >   };
-> >
-> > +&mdss {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&mdss_mdp {
-> > +     status = "okay";
-> > +};
-> > +
-> >   &mpss {
-> >       status = "okay";
-> >       firmware-name = "qcom/sm8350/modem.mbn";
+> Thanks,
+> Georgi
 >
-> --
-> With best wishes
-> Dmitry
+> >
+> >                       memory-region = <&pil_modem_mem>;
+> >
+> > @@ -2239,7 +2239,7 @@ cdsp: remoteproc@98900000 {
+> >                                       <&rpmhpd SM8350_MXC>;
+> >                       power-domain-names = "cx", "mxc";
+> >
+> > -                     interconnects = <&compute_noc MASTER_CDSP_PROC &mc_virt SLAVE_EBI1>;
+> > +                     interconnects = <&compute_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
+> >
+> >                       memory-region = <&pil_cdsp_mem>;
+> >
+> > @@ -2421,14 +2421,14 @@ usb_2_ssphy: phy@88ebe00 {
+> >               dc_noc: interconnect@90c0000 {
+> >                       compatible = "qcom,sm8350-dc-noc";
+> >                       reg = <0 0x090c0000 0 0x4200>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               gem_noc: interconnect@9100000 {
+> >                       compatible = "qcom,sm8350-gem-noc";
+> >                       reg = <0 0x09100000 0 0xb4000>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
 >
