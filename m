@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 020CC6511FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 19:32:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B3E16511FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Dec 2022 19:32:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbiLSSc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Dec 2022 13:32:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45692 "EHLO
+        id S232438AbiLSScx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Dec 2022 13:32:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232520AbiLSSbs (ORCPT
+        with ESMTP id S232441AbiLSScJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Dec 2022 13:31:48 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EF514025
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:17 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso14041630pjt.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:17 -0800 (PST)
+        Mon, 19 Dec 2022 13:32:09 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 398D96453
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:23 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id m4so9876364pls.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Dec 2022 10:31:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sMev9I+ZdryrTBjzJ8tiTgJp1UwzDLK7UbgCFoQvzyA=;
-        b=ISZcvgYc9T6FYAb2s2G8VhkcsIW+gZf6wwrWxwJTuadTmL8/UwfEsuKZXpfLjT+5aS
-         9pJQGDzTUqhpIvbASUxiNlkCL7gmxXL5k4xgdrMABF84r2Bs2xV5ZimoEX4bU+faWkqv
-         lbilaaI22QvcUgKQDFzzDaZXiUYDpcbVQ7nIILI7SHaIxA/p1RenEKqVDDxJNNQ8KQTR
-         YzZI/R1dEsYcNqM2tMTwUSFyWGt/b7PSNDnS4FCEaOOShqQ13SDxbPNPolH73sjkhUSj
-         B/CN9eEZejSIprUHRBfYV+b6o7gCKfcJ+xd2zea0dUmHnvjz5JjQ4jW0BtTd8OQPuDEo
-         2OSw==
+        bh=u6zR8ugZMMSbsUYzZxGLGG2mvpL7z7iHt3BZjr/IYFc=;
+        b=LXYA/o0rsUg+vniZbRgR5ToqfadsQ0+SCYz6AzzwsaP86nSrdcNVXG3of0kTsD9kgz
+         KUDlOO8GcUTFdztbIAGOaGIiTmRJsKyzS9RyQiCLaZwJ59/9OI+DqUNRnFUVNru5N2Gk
+         q/h7Y8yg+Yi12/Ky1QVZcDI9dFjS49LiJF9wt2yOHNqW+2v7XtPicZAbHLTkM2PtnuwQ
+         lA7fwwrbhv6rxo4yJi0pGmGJUFdWNTjkpTjx4LDPgGG4IDtM/x0c5okgiH4gVihsitLT
+         wPvEUJuH9p2yK025Yc3VdYJGGugFJDkJLrTOEmkmOHRh/vLqw2WCfus7n1z35TSw2Msu
+         UyyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sMev9I+ZdryrTBjzJ8tiTgJp1UwzDLK7UbgCFoQvzyA=;
-        b=kK0kQQe/JB8V9v63v81q0K3RU3Rv8e0bgdJy+LaKyM9SVqObo+IgYV6lS57BMpqrUB
-         R/QxwhECnnIKdjoowhgY/0IIFeMuCzOB+p4+UB+wGXV1klRXbDAECMFVKKIpSnPdUHm2
-         s/KqYWQNyKl+dX0qWlpt/PSGOmhJObjkXTl2dcyjtQDPhQW8qh1tVnEey3eJMhGBuSj4
-         WTEO1RukLCJxHGQMzsuU1qctklbRxCUO0GbqQBeHy711vPsMbfol43zomGJiN+YUEpen
-         VwMp4GScNfXYBc6VOaGnoX4hi0k3f/WR0mfLFw/tC75Fe6IfTcrVUKhaEfMtYhRzKLu9
-         GgoQ==
-X-Gm-Message-State: ANoB5pn/m6Swa5pnRp4LhzisWYHfMYSXdoifzqk2KKN9yBMyC//9BFA4
-        Le4Z4GYDNSiy0yWT49eXfTq/
-X-Google-Smtp-Source: AA0mqf7OeNd+vaSQ7kwiTMRnGFUztWZu465KTvzxOsKQ7TuZ4d9JATNY/D5bXSxfHat8beCw82gKFA==
-X-Received: by 2002:a17:902:c206:b0:18f:6b2b:e88d with SMTP id 6-20020a170902c20600b0018f6b2be88dmr37998172pll.36.1671474676773;
-        Mon, 19 Dec 2022 10:31:16 -0800 (PST)
+        bh=u6zR8ugZMMSbsUYzZxGLGG2mvpL7z7iHt3BZjr/IYFc=;
+        b=HCZMF3CW8tQghICg3KTAlUMLFf1tcncOrkfCtRnxMXyTwhprE3HK8v5mqrA0osf+gX
+         eWo/FU/EMCqbbtf8iqO2AduTYDHj0ECVtaoUqP6mT6ho0Yqrnmp4HrkvAJbvNg59LlZ8
+         Z+d0HorHPHOnYCG13IK7UVaH99tBIcFct7yXcsx3IX+NIvf0v5YBUjoImKKA9dPciF6a
+         FjRuGF2iNEIIhJevF7EXNhLMsEpGZJQNheG9PnRtksNRKTc43q+hdGpwAJbLbWbWPgM2
+         MSgowu17FCuK9R94c5gixeam606i++X/PyJKsCo37nMDHBASHQ2gC0g/lCvAVskZ5R3T
+         Blmw==
+X-Gm-Message-State: AFqh2kpAjGZcFimkDO4S+6TMoxywbq8t/8jaB51BEtPr/GraajoZVUjv
+        PKAJAxfhl4YnGfSh6u+3z9r7
+X-Google-Smtp-Source: AMrXdXsq68iRq1AJ4pJ1/A/WhCkhwXRxCkZRc3XhJHrLuf95YiOH0btnO3KPBZpAO41hx01UikeGmQ==
+X-Received: by 2002:a17:902:f689:b0:191:13f2:173a with SMTP id l9-20020a170902f68900b0019113f2173amr10729999plg.36.1671474682712;
+        Mon, 19 Dec 2022 10:31:22 -0800 (PST)
 Received: from localhost.localdomain ([220.158.159.17])
-        by smtp.gmail.com with ESMTPSA id d2-20020a170903230200b00186e34524e3sm7480979plh.136.2022.12.19.10.31.10
+        by smtp.gmail.com with ESMTPSA id d2-20020a170903230200b00186e34524e3sm7480979plh.136.2022.12.19.10.31.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 10:31:15 -0800 (PST)
+        Mon, 19 Dec 2022 10:31:21 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
@@ -60,9 +60,9 @@ Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
         linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
         luca.weiss@fairphone.com, ahalaney@redhat.com,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 09/15] arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
-Date:   Mon, 19 Dec 2022 23:59:52 +0530
-Message-Id: <20221219182958.476231-10-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 10/15] arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
+Date:   Mon, 19 Dec 2022 23:59:53 +0530
+Message-Id: <20221219182958.476231-11-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221219182958.476231-1-manivannan.sadhasivam@linaro.org>
 References: <20221219182958.476231-1-manivannan.sadhasivam@linaro.org>
@@ -86,27 +86,27 @@ address needs to be specified in devicetree with the exact size.
 Reported-by: Parikshit Pareek <quic_ppareek@quicinc.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 +++++--
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 7 +++++--
  1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 245dce24ec59..836732d16635 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -2513,8 +2513,11 @@ gem_noc: interconnect@9100000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 570475040d95..12549a2912c6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -3640,8 +3640,11 @@ gem_noc: interconnect@19100000 {
  
- 		system-cache-controller@9200000 {
- 			compatible = "qcom,sm8350-llcc";
--			reg = <0 0x09200000 0 0x1d0000>, <0 0x09600000 0 0x50000>;
+ 		system-cache-controller@19200000 {
+ 			compatible = "qcom,sm8450-llcc";
+-			reg = <0 0x19200000 0 0x580000>, <0 0x19a00000 0 0x80000>;
 -			reg-names = "llcc_base", "llcc_broadcast_base";
-+			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
-+			      <0 0x09300000 0 0x58000>, <0 0x09380000 0 0x58000>,
-+			      <0 0x09600000 0 0x58000>;
++			reg = <0 0x19200000 0 0x80000>, <0 0x19600000 0 0x80000>,
++			      <0 0x19300000 0 0x80000>, <0 0x19700000 0 0x80000>,
++			      <0 0x19a00000 0 0x80000>;
 +			reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
 +				    "llcc3_base", "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
  		};
  
- 		usb_1: usb@a6f8800 {
 -- 
 2.25.1
 
