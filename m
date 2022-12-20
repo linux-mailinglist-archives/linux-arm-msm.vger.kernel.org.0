@@ -2,276 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A97F651EF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:38:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92DF9651EFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:39:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbiLTKie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 05:38:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51430 "EHLO
+        id S230179AbiLTKjj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 05:39:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbiLTKid (ORCPT
+        with ESMTP id S232575AbiLTKji (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 05:38:33 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C73117062
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:38:32 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id b13so17970500lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:38:32 -0800 (PST)
+        Tue, 20 Dec 2022 05:39:38 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E1217419
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:39:36 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id v11so11961315ljk.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:39:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X8lDT0GSqNcF7W4SzBZYBZGzP5QDgZ4E5/OYyv9cH/U=;
-        b=Mi80BOv0JCeXWskhDI4ePQoB1zQ/LXMFtkuzPF1RtsaPanJqxsjLP4UcHA7LrRN3Ek
-         i7ouFXM7PwOx5rpkCbE3ffPNXDVlLvyimIX6jfsw95l2X8TN8P7HEJsS/lwjfE1gOklm
-         uJOxwGtEfDxZXBYTdjDS/8a04IVMpvSP8v8pCdAVCezoKWQR3wcjRCBhpbpUwHvsUXNb
-         ccmAwSju34jSl5y1cxN8lnEjSoWWGe3/jgOWagoADfrJNy32g+hGztzxC50YAQweJioE
-         kS7EvpHzpSx+xekqBhwgg/XfLbTYNyIC02ptIl3Y3XpneWhnSIz9vkq9Z2UHL9iRTzES
-         N5bQ==
+        bh=5xL1Bysm8EdLY3X347DVoCCUWGezEo4u07eX/6KRS+0=;
+        b=r0j7NBbCigCqOvX0i3nuzeMOFHbu4cQgsSB4nJ1CdFN9Op5debTrXa93Uj5OCMbcrF
+         d4RqAh58M1fHBrndOl0Ku8LUjC7h6Y2j/K5/V3tdECkz0EvfQMUhodZhK+iqQ6NmUYtt
+         FliRlNnTkWb+0MfLDluGWWpeg3ZGjfjMJ0wsVMlLHuqDHkZ003Vf+2Rz4gXCv5TTcZbd
+         0+/oORDaNWSx1vAyCyksSoIHdZUh4KWjVe8XuxvzxHPbPMHkWbClPIjMkipwvMuMbs/4
+         ysGb878pdOuQyWsDqWRylFeLBVfVmHfaPrp0L+Y4nb8h/1unmJ6MItOrTIaowEeePPbs
+         w3cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X8lDT0GSqNcF7W4SzBZYBZGzP5QDgZ4E5/OYyv9cH/U=;
-        b=jWZs6VweML2H8NLpF0X2+5+Guwom1cxpoC2kHw3B1jQAzIA0nlvUm493lhgQeQ2qIi
-         cBUi8bnFw8U/o1u5uwHhBqQRM6LGIGWbxO4S0omIAjrVeKa8VAwmfetaU15Jh7I5OTwq
-         xgEG5EErEOODJD9aU+tj9JGcKZ8cHFJZDmUTOrRajaSWXc5Ofa5WvCR/7nP0Xv6FpBd+
-         I0VhgBUuSFg8Ff/JO7ZfBax7FMS5qnxwTHY/k6htWqM/EMWQYPWYxRHh9rYBH78zsIB5
-         F8B9eBad04p3QKZZEHqhaSDzLSWlUf8FSPhvl0cVbA5rJMtbDunxzopqCl/kQuL9wfB9
-         fs8g==
-X-Gm-Message-State: ANoB5pngT0F1M1Vr0XzoEIl2WmdSMmRynnfWxihUJ004eFVy08h4f54u
-        CycD7m1MODgxDHbCClJwHX50yA==
-X-Google-Smtp-Source: AA0mqf4B7EI4V7HkAz6of7L557MHtJvPBs4lluW4o6l2ocAM3HbyAK+oLId2oIe34SIFuL3BpZZ2nw==
-X-Received: by 2002:a19:771d:0:b0:4b6:ebbc:3d3a with SMTP id s29-20020a19771d000000b004b6ebbc3d3amr9620212lfc.53.1671532710432;
-        Tue, 20 Dec 2022 02:38:30 -0800 (PST)
-Received: from [192.168.1.101] (abxh212.neoplus.adsl.tpnet.pl. [83.9.1.212])
-        by smtp.gmail.com with ESMTPSA id v24-20020ac258f8000000b004947984b385sm1400681lfo.87.2022.12.20.02.38.29
+        bh=5xL1Bysm8EdLY3X347DVoCCUWGezEo4u07eX/6KRS+0=;
+        b=EfWGuyNi9bcd5Xbq/2KN9aUB4ZwXTFHh+pqm/AFY7bDoWHR1ez9g0EuUX9ARhsJmE+
+         z4HkFTNNVJ9OrKuAT0IOMC2jAdYAXoOFYG7zJxBi1zKk6RSz/fR+792/pAQaYj6MPYsc
+         Pd0M0sK7nX7a3BCAY6Nx1DPeUh2/U5G46NSQryrJhqzOmzIzTYt1yfWoZXSLBcyXfMBU
+         MBA0M+soFUPJz40r96tr6q8iiLajIs4W4stGYiqWe6w8mhtngBTlxbiSyaMVW7N4+4It
+         Cmif/gH85JqucvbEN+agm690K9OKVGgbbOfUMtTCepl5FdyBmII2i+O0VCIADPS8ZEVl
+         vfWA==
+X-Gm-Message-State: AFqh2krYFeLJlJ1ak2FK0ZsFUhHpiis9hzlu6lLf8QabXcQTN8v3oy/E
+        r0KtlfQR3eF6Dj/fFKjLYDmGpg==
+X-Google-Smtp-Source: AMrXdXsCGgnZNUm23ctiLSG/KLowQsfg2pLh0sWGz0XMMOZAfjTYl4yj+PHQSVLg1GBAZlRLv+lHeQ==
+X-Received: by 2002:a2e:be1b:0:b0:27f:8546:80bd with SMTP id z27-20020a2ebe1b000000b0027f854680bdmr3251448ljq.26.1671532774407;
+        Tue, 20 Dec 2022 02:39:34 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id t5-20020a2e8e65000000b002770fb5722fsm969782ljk.123.2022.12.20.02.39.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 02:38:29 -0800 (PST)
-Message-ID: <5c59c651-2275-0159-7de2-ce496ce749af@linaro.org>
-Date:   Tue, 20 Dec 2022 11:38:28 +0100
+        Tue, 20 Dec 2022 02:39:34 -0800 (PST)
+Message-ID: <434e45f3-96f9-b93b-1967-d30df11ae32e@linaro.org>
+Date:   Tue, 20 Dec 2022 11:39:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v3 11/15] thermal/drivers/tsens: Support using nvmem cells
- for msm8974 calibration
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcs404: register PCIe PHY as a
+ clock provider
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-12-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221220024721.947147-12-dmitry.baryshkov@linaro.org>
+References: <20221216234027.539917-1-dmitry.baryshkov@linaro.org>
+ <20221216234027.539917-3-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221216234027.539917-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 20.12.2022 03:47, Dmitry Baryshkov wrote:
-> MSM8974 has two sets of calibration data: main one and backup. Add
-> support for parsing both sets of calibration data from nvmem cells.
+On 17/12/2022 00:40, Dmitry Baryshkov wrote:
+> Add #clock-cells to the pcie_phy node. It provides a PCIe PIPE clock.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
 
-Konrad
->  drivers/thermal/qcom/tsens-v0_1.c | 50 +++++++++++++++++++++++++++++++
->  drivers/thermal/qcom/tsens.c      | 39 +++++++++++++++++++-----
->  drivers/thermal/qcom/tsens.h      |  1 +
->  3 files changed, 82 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index caffcf9905b9..6a11b8b196b9 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2015, The Linux Foundation. All rights reserved.
->   */
->  
-> +#include <linux/nvmem-consumer.h>
->  #include <linux/platform_device.h>
->  #include "tsens.h"
->  
-> @@ -194,6 +195,50 @@ static int calibrate_8916(struct tsens_priv *priv)
->  	return 0;
->  }
->  
-> +static int calibrate_8974_nvmem(struct tsens_priv *priv)
-> +{
-> +	int i, ret, mode;
-> +	u32 p1[11], p2[11];
-> +	u32 backup;
-> +
-> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, "use_backup", &backup);
-> +	if (ret == -ENOENT)
-> +		dev_warn(priv->dev, "Please migrate to separate nvmem cells for calibration data\n");
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	mode = tsens_read_calibration(priv, 2, p1, p2, backup == BKP_SEL);
-> +	if (mode < 0)
-> +		return mode;
-> +
-> +	if (mode == NO_PT_CALIB) {
-> +		p1[0] += 2;
-> +		p1[1] += 9;
-> +		p1[2] += 3;
-> +		p1[3] += 9;
-> +		p1[4] += 5;
-> +		p1[5] += 9;
-> +		p1[6] += 7;
-> +		p1[7] += 10;
-> +		p1[8] += 8;
-> +		p1[9] += 9;
-> +		p1[10] += 8;
-> +	} else {
-> +		for (i = 0; i < priv->num_sensors; i++) {
-> +			/*
-> +			 * ONE_PT_CALIB requires using addition here instead of
-> +			 * using OR operation.
-> +			 */
-> +			p1[i] += BIT_APPEND;
-> +			p2[i] += BIT_APPEND;
-> +		}
-> +	}
-> +
-> +	compute_intercept_slope(priv, p1, p2, mode);
-> +
-> +	return 0;
-> +}
-> +
->  static int calibrate_8974(struct tsens_priv *priv)
->  {
->  	int base1 = 0, base2 = 0, i;
-> @@ -201,6 +246,11 @@ static int calibrate_8974(struct tsens_priv *priv)
->  	int mode = 0;
->  	u32 *calib, *bkp;
->  	u32 calib_redun_sel;
-> +	int ret;
-> +
-> +	ret = calibrate_8974_nvmem(priv);
-> +	if (ret == 0)
-> +		return 0;
->  
->  	calib = (u32 *)qfprom_read(priv->dev, "calib");
->  	if (IS_ERR(calib))
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 68aef0ed6182..83bf60fa9008 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -70,18 +70,21 @@ char *qfprom_read(struct device *dev, const char *cname)
->  	return ret;
->  }
->  
-> -int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
-> +int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2, bool backup)
->  {
->  	u32 mode;
->  	u32 base1, base2;
-> -	u32 p1[MAX_SENSORS], p2[MAX_SENSORS];
-> -	char name[] = "sXX_pY"; /* s10_p1 */
-> +	char name[] = "sXX_pY_backup"; /* s10_p1_backup */
->  	int i, ret;
->  
->  	if (priv->num_sensors > MAX_SENSORS)
->  		return -EINVAL;
->  
-> -	ret = nvmem_cell_read_variable_le_u32(priv->dev, "mode", &mode);
-> +	ret = snprintf(name, sizeof(name), "mode%s", backup ? "_backup" : "");
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &mode);
->  	if (ret == -ENOENT)
->  		dev_warn(priv->dev, "Please migrate to separate nvmem cells for calibration data\n");
->  	if (ret < 0)
-> @@ -89,16 +92,24 @@ int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
->  
->  	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
->  
-> -	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base1", &base1);
-> +	ret = snprintf(name, sizeof(name), "base1%s", backup ? "_backup" : "");
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &base1);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = snprintf(name, sizeof(name), "base2%s", backup ? "_backup" : "");
->  	if (ret < 0)
->  		return ret;
->  
-> -	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base2", &base2);
-> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &base2);
->  	if (ret < 0)
->  		return ret;
->  
->  	for (i = 0; i < priv->num_sensors; i++) {
-> -		ret = snprintf(name, sizeof(name), "s%d_p1", i);
-> +		ret = snprintf(name, sizeof(name), "s%d_p1%s", i, backup ? "_backup" : "");
->  		if (ret < 0)
->  			return ret;
->  
-> @@ -106,7 +117,7 @@ int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
->  		if (ret)
->  			return ret;
->  
-> -		ret = snprintf(name, sizeof(name), "s%d_p2", i);
-> +		ret = snprintf(name, sizeof(name), "s%d_p2%s", i, backup ? "_backup" : "");
->  		if (ret < 0)
->  			return ret;
->  
-> @@ -136,6 +147,18 @@ int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
->  		}
->  	}
->  
-> +	return mode;
-> +}
-> +
-> +int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
-> +{
-> +	u32 p1[MAX_SENSORS], p2[MAX_SENSORS];
-> +	int mode;
-> +
-> +	mode = tsens_read_calibration(priv, shift, p1, p2, false);
-> +	if (mode < 0)
-> +		return mode;
-> +
->  	compute_intercept_slope(priv, p1, p2, mode);
->  
->  	return 0;
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index 645ae02438fa..a9ae8df9f810 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -585,6 +585,7 @@ struct tsens_priv {
->  };
->  
->  char *qfprom_read(struct device *dev, const char *cname);
-> +int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2, bool backup);
->  int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift);
->  int tsens_calibrate_common(struct tsens_priv *priv);
->  void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mode);
+Something to fix:
+
+Applying: arm64: dts: qcom: qcs404: register PCIe PHY as a clock provider
+git/rebase-apply/patch:100: new blank line at EOF.
++
+warning: 1 line adds whitespace errors.
+
+
+Best regards,
+Krzysztof
+
