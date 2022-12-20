@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FF7C651E6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:08:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0EAF651E76
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:10:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233331AbiLTKIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 05:08:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37172 "EHLO
+        id S233194AbiLTKKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 05:10:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233179AbiLTKIp (ORCPT
+        with ESMTP id S233632AbiLTKKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 05:08:45 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CED2195
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:08:44 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id m29so17610178lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:08:44 -0800 (PST)
+        Tue, 20 Dec 2022 05:10:01 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2918CF56
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:09:57 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bf43so17834319lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PF3WhBZPrqZkUx2iR7sKjx/b40NNBklcPphMLo49bpo=;
-        b=yjpQzFChoYrSc2LQOa2hogExuJ5IpT/jF2Wug1kMYJObcrEl5C4+Tr8aleZMO7bHof
-         DG21vU6tHoMlFUiRbIc0HtZQjuih3Vh5HsLhpyUhHxQgAmXvDkETnggzZgoZVR8GLtHR
-         cXnS/zCMqP8nXl9kO4IcAr20/qPdUEXspL135JbhFLw/3EaEP+ELDtg8fqeFVAafRqFf
-         hQ9bZpEtbHuM+MI79Ymizk+KfLARzS4c2bl52vTs9pDfUz4+mI52v+ah+KesRDHgQSeE
-         sAhZFhEuAbVRoq7eW+2d+y7YPMSlTurEO1unFAMLNw1pUNJDUKMwBmQShR1kaYxjMMh6
-         nnDg==
+        bh=Yab3EUiSANSBkdQp95lM7FntTvkCHT0RSbYeGxIgxbA=;
+        b=MbJ6Z1kwvEZYSxX5LfkaVHtNVoLLKcGSM87z6B6YAVRe6qqCJuNgdaIT80XNlI4M/z
+         JGDcF43UB+ONsY2Nv/xuU5HhndAq9exyNy3xyqcHSAFiLnzBnkjn/hhL5N9tI1m4Dd89
+         Czq1LnXR3Bf5D+YxXZwcOpco7Ic3hAk146Vj/d9Rk5w4ZSKgAKtZ/yqX5FgpIPRDHtFD
+         lwUq0vSSZKaypWtSmwbqz4oXiq1zB4knb6aG+6GBjfxJpAy0AKc73T6+ZDSfG4l2BNDC
+         HfX+kt8ZYSBr2KugNw5yrmaU3gw2AyDutuL6LIWNksRfmt6US7O3ZC/gtpJdwOcEXPrC
+         QFGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PF3WhBZPrqZkUx2iR7sKjx/b40NNBklcPphMLo49bpo=;
-        b=XC05GQtrMyejtQ8g4L+Ye+1ZAgtas6xaqvBpExReqIl9P7uRcljtDxT5f8ePZCEbBn
-         c2M/pYb5bGzoHI1e6FIDRkB3oObYoBkXtrfLdUZMpLliK6xix+4ySa63l+PyONSg4KgS
-         dCorCSbHagvCdM0D/TJH8V3l9tMMACkDWrXfGKGvQ4wt9C3rT5ZcuBjXhWMUxJnThYl8
-         +5ftqjH60UsJ3LXJCeG2lZarSWhJz7LJJJ6HTYkrQI3fvedX73Eo1TjZsr+jl2AfM3cj
-         WVj+rS9oyUFjYg4THAU7/Zyd70rRpldgWDZHsmWM4dqNaGeut67S6Osnvj4mXf2WcO0Q
-         Gf/Q==
-X-Gm-Message-State: AFqh2kqJ/a58b6UX/YiX9Lg0E7B9bwL9kRYd7fKk4+sQLnlf6j/zL48t
-        3/yg8avMxfSDTVgHb3PgN8jq3Q==
-X-Google-Smtp-Source: AMrXdXtVstP+G6cxSsiGdo33znLYjHjgAgv6sotEnb9igOCNhUrEH6f6P4Wok+NwgOBQCbN+kVndlw==
-X-Received: by 2002:a05:6512:251f:b0:4a4:68b7:dec0 with SMTP id be31-20020a056512251f00b004a468b7dec0mr609718lfb.28.1671530922782;
-        Tue, 20 Dec 2022 02:08:42 -0800 (PST)
+        bh=Yab3EUiSANSBkdQp95lM7FntTvkCHT0RSbYeGxIgxbA=;
+        b=4xUfO20PaHTgq/nKcmKzhhPvRmDYZCIfSvRDOkBajUyvTPdFd2V7EwK4KcqGEaGLNr
+         WRjo9ifZhJI3lHOHdtEnrlgqgihTQOERrUdJBQLNNwvXhM1gi5WTu9epimiGYlYJfLHx
+         6wgM/pbpKwzgPcJI9eSthfz2NYE0JzUqOdohqUaVJ0UBjID/jgaEdItsCG2QuVyTc4n8
+         9u0ehdnOKWRT/krFdPB1AXroO7QiVwDmZXXVecwwafvXej7FXdy7989w1sLOJUYZDCR4
+         ctTMNqB2f3g0U1NAuwCJh9Hlp/eI5UZcvyJU7ZqBz9VeFS46XX0ADiKGo7WUl+zqfx88
+         t9lg==
+X-Gm-Message-State: ANoB5pnks4NnchRvOJ94BIyQwnX8KgPWH4oBcFmKuxyCP7yANIZ/rfBB
+        1UG7N3/XqDZnMamRx7W98FVmxQ==
+X-Google-Smtp-Source: AA0mqf7f4dFVpaSo8Y1VDRsU1EorZWyzkf8cPRiqBE1CpZ/rM5JKj35Z9fh0v+aTkSDehpai0hI+1Q==
+X-Received: by 2002:ac2:4f0a:0:b0:4ac:ec52:e063 with SMTP id k10-20020ac24f0a000000b004acec52e063mr12588091lfr.29.1671530995464;
+        Tue, 20 Dec 2022 02:09:55 -0800 (PST)
 Received: from [192.168.1.101] (abxh212.neoplus.adsl.tpnet.pl. [83.9.1.212])
-        by smtp.gmail.com with ESMTPSA id s16-20020a056512215000b004ca0ea7af24sm245720lfr.174.2022.12.20.02.08.41
+        by smtp.gmail.com with ESMTPSA id b16-20020a05651c033000b0026dced9840dsm949074ljp.61.2022.12.20.02.09.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 02:08:42 -0800 (PST)
-Message-ID: <f42002a1-a08b-e371-6ccd-3acafd446bb6@linaro.org>
-Date:   Tue, 20 Dec 2022 11:08:40 +0100
+        Tue, 20 Dec 2022 02:09:55 -0800 (PST)
+Message-ID: <688059f8-64f6-cb56-0443-f0e992e01baa@linaro.org>
+Date:   Tue, 20 Dec 2022 11:09:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v3 05/15] thermal/drivers/tsens: Drop msm8976-specific
- defines
+Subject: Re: [PATCH v3 06/15] thermal/drivers/tsens: Sort out msm8976 vs
+ msm8956 data
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -73,14 +73,15 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
 References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-6-dmitry.baryshkov@linaro.org>
+ <20221220024721.947147-7-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221220024721.947147-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221220024721.947147-7-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,42 +91,146 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 20.12.2022 03:47, Dmitry Baryshkov wrote:
-> Drop msm8976-specific defines, which duplicate generic ones.
+> Tsens driver mentions that msm8976 data should be used for both msm8976
+> and msm8956 SoCs. This is not quite correct, as according to the
+> vendor kernels, msm8976 should use standard slope values (3200), while
+> msm8956 really uses the slope values found in the driver.
+> 
+> Add separate compatibility string for msm8956, move slope value
+> overrides to the corresponding init function and use the standard
+> compute_intercept_slope() function for both platforms.
 > 
 > Fixes: 0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/thermal/qcom/tsens-v1.c | 9 ++-------
->  1 file changed, 2 insertions(+), 7 deletions(-)
+>  drivers/thermal/qcom/tsens-v1.c | 56 ++++++++++++++++++---------------
+>  drivers/thermal/qcom/tsens.c    |  3 ++
+>  drivers/thermal/qcom/tsens.h    |  2 +-
+>  3 files changed, 34 insertions(+), 27 deletions(-)
 > 
 > diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 96ef12d47bff..a7f53966156b 100644
+> index a7f53966156b..83c2853546d0 100644
 > --- a/drivers/thermal/qcom/tsens-v1.c
 > +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -78,11 +78,6 @@
+> @@ -137,30 +137,6 @@
+>  #define CAL_SEL_MASK	7
+>  #define CAL_SEL_SHIFT	0
 >  
->  #define MSM8976_CAL_SEL_MASK	0x3
->  
-> -#define MSM8976_CAL_DEGC_PT1	30
-> -#define MSM8976_CAL_DEGC_PT2	120
-> -#define MSM8976_SLOPE_FACTOR	1000
-> -#define MSM8976_SLOPE_DEFAULT	3200
+> -static void compute_intercept_slope_8976(struct tsens_priv *priv,
+> -			      u32 *p1, u32 *p2, u32 mode)
+> -{
+> -	int i;
 > -
->  /* eeprom layout data for qcs404/405 (v1) */
->  #define BASE0_MASK	0x000007f8
->  #define BASE1_MASK	0x0007f800
-> @@ -160,8 +155,8 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
->  	priv->sensor[10].slope = 3286;
->  
->  	for (i = 0; i < priv->num_sensors; i++) {
-> -		priv->sensor[i].offset = (p1[i] * MSM8976_SLOPE_FACTOR) -
-> -				(MSM8976_CAL_DEGC_PT1 *
-> +		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
-> +				(CAL_DEGC_PT1 *
->  				priv->sensor[i].slope);
+> -	priv->sensor[0].slope = 3313;
+> -	priv->sensor[1].slope = 3275;
+> -	priv->sensor[2].slope = 3320;
+> -	priv->sensor[3].slope = 3246;
+> -	priv->sensor[4].slope = 3279;
+> -	priv->sensor[5].slope = 3257;
+> -	priv->sensor[6].slope = 3234;
+> -	priv->sensor[7].slope = 3269;
+> -	priv->sensor[8].slope = 3255;
+> -	priv->sensor[9].slope = 3239;
+> -	priv->sensor[10].slope = 3286;
+> -
+> -	for (i = 0; i < priv->num_sensors; i++) {
+> -		priv->sensor[i].offset = (p1[i] * SLOPE_FACTOR) -
+> -				(CAL_DEGC_PT1 *
+> -				priv->sensor[i].slope);
+> -	}
+> -}
+> -
+>  static int calibrate_v1(struct tsens_priv *priv)
+>  {
+>  	u32 base0 = 0, base1 = 0;
+> @@ -286,7 +262,7 @@ static int calibrate_8976(struct tsens_priv *priv)
+>  		break;
 >  	}
->  }
+>  
+> -	compute_intercept_slope_8976(priv, p1, p2, mode);
+> +	compute_intercept_slope(priv, p1, p2, mode);
+>  	kfree(qfprom_cdata);
+>  
+>  	return 0;
+> @@ -360,6 +336,22 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+>  	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+>  };
+>  
+> +static int __init init_8956(struct tsens_priv *priv) {
+> +	priv->sensor[0].slope = 3313;
+> +	priv->sensor[1].slope = 3275;
+> +	priv->sensor[2].slope = 3320;
+> +	priv->sensor[3].slope = 3246;
+> +	priv->sensor[4].slope = 3279;
+> +	priv->sensor[5].slope = 3257;
+> +	priv->sensor[6].slope = 3234;
+> +	priv->sensor[7].slope = 3269;
+> +	priv->sensor[8].slope = 3255;
+> +	priv->sensor[9].slope = 3239;
+> +	priv->sensor[10].slope = 3286;
+> +
+> +	return init_common(priv);
+> +}
+> +
+>  static const struct tsens_ops ops_generic_v1 = {
+>  	.init		= init_common,
+>  	.calibrate	= calibrate_v1,
+> @@ -372,13 +364,25 @@ struct tsens_plat_data data_tsens_v1 = {
+>  	.fields	= tsens_v1_regfields,
+>  };
+>  
+> +static const struct tsens_ops ops_8956 = {
+> +	.init		= init_8956,
+> +	.calibrate	= calibrate_8976,
+> +	.get_temp	= get_temp_tsens_valid,
+> +};
+> +
+> +struct tsens_plat_data data_8956 = {
+> +	.num_sensors	= 11,
+> +	.ops		= &ops_8956,
+> +	.feat		= &tsens_v1_feat,
+> +	.fields		= tsens_v1_regfields,
+> +};
+> +
+>  static const struct tsens_ops ops_8976 = {
+>  	.init		= init_common,
+>  	.calibrate	= calibrate_8976,
+>  	.get_temp	= get_temp_tsens_valid,
+>  };
+>  
+> -/* Valid for both MSM8956 and MSM8976. */
+>  struct tsens_plat_data data_8976 = {
+>  	.num_sensors	= 11,
+>  	.ops		= &ops_8976,
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index b5b136ff323f..b191e19df93d 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -983,6 +983,9 @@ static const struct of_device_id tsens_table[] = {
+>  	}, {
+>  		.compatible = "qcom,msm8939-tsens",
+>  		.data = &data_8939,
+> +	}, {
+> +		.compatible = "qcom,msm8956-tsens",
+> +		.data = &data_8956,
+>  	}, {
+>  		.compatible = "qcom,msm8960-tsens",
+>  		.data = &data_8960,
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 899af128855f..7dd5fc246894 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -594,7 +594,7 @@ extern struct tsens_plat_data data_8960;
+>  extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+>  
+>  /* TSENS v1 targets */
+> -extern struct tsens_plat_data data_tsens_v1, data_8976;
+> +extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
+>  
+>  /* TSENS v2 targets */
+>  extern struct tsens_plat_data data_8996, data_ipq8074, data_tsens_v2;
