@@ -2,83 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0E976521E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 15:02:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2D7465229A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 15:31:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233335AbiLTOCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 09:02:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+        id S233941AbiLTObc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 09:31:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230085AbiLTOCg (ORCPT
+        with ESMTP id S233849AbiLTOa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 09:02:36 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E83351B1D2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 06:02:34 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so11213364wma.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 06:02:34 -0800 (PST)
+        Tue, 20 Dec 2022 09:30:58 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43DEB192A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 06:30:36 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id i83so6411332ioa.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 06:30:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ggrQrvtjD4raQxhDVum7ur/FE1FzwO0y0Jf1jzOu9qE=;
-        b=ao3/jNrlSI9MJgP/gV24Sjzpa0tWEjQEHhKqQ3v++DTIMLxyxjDF00c7eBczezvoRN
-         7H0AsAXinpogCQvwUje0DTq5eNKB90P4TjqJhjkMUZAR6XKRFbory9G0ES2uxBsDI0HC
-         jubA/U/+D1Bhr4xPuRYL4HBMS0rhZFE2B06q7nYRsxHYUIQHNgo/LwBHKiVtco4Cs5tK
-         Ux5Ct/kXj4g7SgrghrnLAmmUPmYdItAmhQVFlir9GUEnNIa+FFl9JVRCCseCnkkBMo9t
-         1xG/GXjxf41qpwzmMwNkQLDwQIKm/LBMKLCe/ubws6P2GNXfEzKfo0SdIDzA9oX4Mypo
-         GwqQ==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mn7sVzPcgdMtzLOq4vuJ+0xkJax5BCUfAE5eepAbBEo=;
+        b=QPsipMOOopx2GONZiUQtWxQg/Jg0tRDThFJPijUtEr4SKnq687xxGOvxAq50y4p6fw
+         kYAdW9HPSo8sXoII6vFLCejSKzMu3p2zdw2zvaaunVRFFed3LuJ78FYkbOvyDVfNdhJl
+         ZFXLzx2Iv19k0oJhsJBdkePZTaZbStb3ZdLhw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ggrQrvtjD4raQxhDVum7ur/FE1FzwO0y0Jf1jzOu9qE=;
-        b=kgR9Ez9+RiPafyXjtHL/LkyFTg9v3fdsJB1Zjx4Hz5Fg8LHVkDd3qDIL7awBbK/q2D
-         zNuOQaKPVlfv9MXZWQ7vHXMti2eYrhFMD3qBNtqeVqZ4uLD5DTRiMZgaMZXbZ88Hp7G+
-         T+X5AQvcE1/4iTto4naoqNpPAMxnERk1ufxwd2BxeSskWkESKATuUAAJFraEg9T3fDpp
-         HbB5va2G4MdqCpYEggq0zyppbj/QpGx/pmwK3l/EF0qGEGqa2HCBil+dqyZPdwarfXKh
-         ctkyeOqeNJNmDdGzW3GbRsLyMD2Tse/od/BjJ0PwpvNHX+0jxDC5YSrIKJIrTiIk946t
-         EdmA==
-X-Gm-Message-State: ANoB5pkBeNpooJ8y9BoK/7/AUrcpAGCAL0nUd5DwfbU7KClsPmJirRi/
-        acUYLoti4rK4shqQoDExVohavw==
-X-Google-Smtp-Source: AA0mqf40nv+LdZQlx9TLtX8UvfivjBfsddq/oB/PTH870xyRUEZ+HJNbOGjsdmRfLMyG7/pPkyyh0g==
-X-Received: by 2002:a1c:cc1a:0:b0:3cf:5583:8b3f with SMTP id h26-20020a1ccc1a000000b003cf55838b3fmr36080790wmb.20.1671544953482;
-        Tue, 20 Dec 2022 06:02:33 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id p16-20020a1c5450000000b003d07de1698asm22686656wmi.46.2022.12.20.06.02.32
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mn7sVzPcgdMtzLOq4vuJ+0xkJax5BCUfAE5eepAbBEo=;
+        b=naqMGBTpxkEay/Ack4HaEnvydMekhGOgL/flcxwjaQ00iiQ3gOxpo6Lu/mCkadN+4P
+         t+lh3aCKtf08/6Eb+ccOR089HsNXKQWPZHOzQBZsoFVpr8H8weXRZrToRB7Eu9BpCIXk
+         URFyIc/S4mAYbYwSnJUCigxstShFgfvzyyTesE5Gt39uXGVNb3fd5xxlkH4T0i+QskDf
+         eZYy0OeLC2g39d07wtUjcq+Zjr7t6IXWJ4eM8iElcKmbWV5wr9fJSXujUWLIkSNA+JTc
+         p9WKAqx9/zfY+ZJ99pM6i6FEkFrB1gTMuKlARVbg0Rja4/wTyVAEcbjaPeRpDVxsfpuA
+         9EeQ==
+X-Gm-Message-State: AFqh2koCyIUmDVGZ+GLk/C+B72CIMf+bXuBL0YGCXHuycCX4tYvTuJkF
+        ihqNvVcr/bei+NQMz7QMFHxQNw==
+X-Google-Smtp-Source: AMrXdXv2B6wK1zfP9XrFvBptCHTpM0mZkQfZ/aItYDrw0Ir5H/V/D68iIgSfOoE5jNU+NceAhCGuSA==
+X-Received: by 2002:a6b:7a46:0:b0:6e0:139e:a241 with SMTP id k6-20020a6b7a46000000b006e0139ea241mr9047514iop.12.1671546635633;
+        Tue, 20 Dec 2022 06:30:35 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id l18-20020a0566022dd200b006e2d21ab686sm5396449iow.38.2022.12.20.06.30.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 06:02:33 -0800 (PST)
-Message-ID: <5f8bfaa4-945e-21d9-a951-221b9c9b6ac8@linaro.org>
-Date:   Tue, 20 Dec 2022 14:02:32 +0000
+        Tue, 20 Dec 2022 06:30:35 -0800 (PST)
+Date:   Tue, 20 Dec 2022 14:30:34 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Document the sc7280 CRD
+ Pro boards
+Message-ID: <Y6HHCrl0q5BhrHOY@google.com>
+References: <20221216112918.1243-1-quic_rjendra@quicinc.com>
+ <Y5x+WEwTtpoV0gaR@google.com>
+ <fd23e295-fea0-1b0a-752c-3cce26b57346@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 08/15] thermal/drivers/tsens: Drop single-cell code for
- msm8939
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-9-dmitry.baryshkov@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20221220024721.947147-9-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fd23e295-fea0-1b0a-752c-3cce26b57346@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,19 +73,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/12/2022 02:47, Dmitry Baryshkov wrote:
-> There is no dtsi file for msm8939 in the kernel sources. Drop the
-> compatibility with unofficial dtsi and remove support for handling the
-> single-cell calibration data on msm8939.
+On Tue, Dec 20, 2022 at 10:30:32AM +0530, Rajendra Nayak wrote:
 > 
-> Cc: Shawn Guo <shawn.guo@linaro.org>
-> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> On 12/16/2022 7:49 PM, Matthias Kaehlcke wrote:
+> > On Fri, Dec 16, 2022 at 04:59:17PM +0530, Rajendra Nayak wrote:
+> > > Add compatibles for the Pro SKU of the sc7280 CRD boards
+> > > which come with a Pro variant of the qcard.
+> > > The Pro qcard variant has smps9 from pm8350c ganged up with
+> > > smps7 and smps8.
+> > > 
+> > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> > > ---
+> > > v4 changes:
+> > > Added the zoglin-sku1536 compatible along with hoglin-sku1536.
+> > > Zoglin is same as the Hoglin variant, with the SPI Flash reduced
+> > > from 64MB to 8MB
+> > > 
+> > >   Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+> > >   1 file changed, 6 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > index 1b5ac6b02bc5..07771d4c91bd 100644
+> > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > @@ -558,6 +558,12 @@ properties:
+> > >             - const: google,hoglin
+> > >             - const: qcom,sc7280
+> > > +      - description: Qualcomm Technologies, Inc. sc7280 CRD Pro platform (newest rev)
+> > > +        items:
+> > > +          - const: google,zoglin-sku1536
+> > > +          - const: google,hoglin-sku1536
+> > 
+> > Is there actually such a thing as a 'hoglin-sku1536', i.e. the Pro qcard
+> > with 64MB of SPI flash, or do they all have 8MB of flash?
+> 
+> The SPI flash is on the CRD mother-board and not on the qcards, so if you replace
+> the qcards on the CRDs with 64MB flash you would need the hoglin-sku1536 to
+> boot on those.
 
-Happy to take an off-list or follow on patch from Dmitry to re-enable on 
-8939.
-
-I will drop the relevant node on v2 of the 8939 patches in the interregnum.
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+With such a configuration how does the bootloader know it should pass the kernel
+the device tree for 'hoglin-sku1536' (pro) and not the non-pro variant? IIUC the
+device tree is selected based on pin strappings on the mother-board, not the
+qcard.
