@@ -2,95 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FFDE6524F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 17:50:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A81B65255C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 18:13:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233980AbiLTQt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 11:49:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44344 "EHLO
+        id S234100AbiLTRN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 12:13:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233927AbiLTQtr (ORCPT
+        with ESMTP id S233862AbiLTRM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 11:49:47 -0500
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE4018394;
-        Tue, 20 Dec 2022 08:49:46 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id e205so11026001oif.11;
-        Tue, 20 Dec 2022 08:49:46 -0800 (PST)
+        Tue, 20 Dec 2022 12:12:57 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3831C1ADB2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 09:12:00 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id y25so19555089lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 09:12:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bHMQ7o8eMU9c/W6JAUVkthhn92ri9PS9bvR89gJhYW0=;
+        b=oqXE3WMw5xmjv7O4/bkwH7QptqCYI/kWwy4E8Uoov9yyhZF6ClwmSnOJXNFSQjawjx
+         M/ob29kZY2axdVVcDcBebhLFaGi/gltBvA4W8mv583HTF21KYsMZ76bCyaD8IxKC2Gv+
+         dP/AT/wWYyp/5V6wsIzRITynJZwpl7hc3nZy9X0h83FYbAEgtMdPePy0zLNkqrtr9Pr0
+         xBXDCK0fq6Yhkd1lneTqu5Qde1+YM5fgI1EBS9W2lOJLfdu60R0J8xN+p+rbGH306mRJ
+         0pO5vEuggrwQpcDPRCeivBnCR0wBIat9K1NUNR9Uu/dDqj1rjhPGjttQ/Ukx5Qidyx0e
+         Kjsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wpjiiMMEKUx7aLu2jmHLYDP5YyYL+OfcLX43RIXmyx8=;
-        b=6181fak1LfSuntuymU13zXw1HjfSAvTj+9CNdgDcUvLDn31+oO2WMXHa2ivyFhcyKf
-         aKam/6MiW/A0tVaq4YLi2Q0wgB8pQk4DPbwsajGxvuwGvwqVAvZWpM5x1V1F3/l39MNO
-         V/0DA2WpTkLekZyrYxN8jURE1x7QYaTn1yl+bYxV378GI0tXhnEZxdV9bxON6BpeI8Pa
-         i1v522ZbMAwuR9vaYkWMiZ4vZoYtnz3D9PkdRiHKosYC6HCGwC1wexI4HcYN6zY5YuGp
-         khDPxVOkaN6ZVs4A76vP1kUK7Y5/kBv+7SEVe340DmPq726uw16nEA8fz6nHvi6boOQe
-         +lRw==
-X-Gm-Message-State: AFqh2koRtRkLf0tyRxVc3H6zQ874GU0naQAjDRs3o3IwwUAm7HNMDcjI
-        81J2ZPYXDTKGlqcb5Ij9LA==
-X-Google-Smtp-Source: AMrXdXucVzUYs3Qv4dUgwQz43Bm+id6hoba4q8xaAN5FGBFUMAmXiZFy27bVsiKNTFbzkSXCaWXFtw==
-X-Received: by 2002:a05:6808:1525:b0:35c:3e8e:de6e with SMTP id u37-20020a056808152500b0035c3e8ede6emr8244033oiw.22.1671554986222;
-        Tue, 20 Dec 2022 08:49:46 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l19-20020a544513000000b0035b7002af8csm5688297oil.56.2022.12.20.08.49.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 08:49:45 -0800 (PST)
-Received: (nullmailer pid 726623 invoked by uid 1000);
-        Tue, 20 Dec 2022 16:49:44 -0000
-Date:   Tue, 20 Dec 2022 10:49:44 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, airlied@gmail.com,
-        dri-devel@lists.freedesktop.org, dianders@chromium.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, daniel@ffwll.ch,
-        swboyd@chromium.org, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org, sean@poorly.run,
-        dmitry.baryshkov@linaro.org, agross@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, quic_abhinavk@quicinc.com,
-        konrad.dybcio@somainline.org, robdclark@gmail.com,
-        freedreno@lists.freedesktop.org, david@ixit.cz
-Subject: Re: [PATCH v5 06/21] dt-bindings: msm: dsi-controller-main: Document
- clocks on a per compatible basis
-Message-ID: <167155489243.724404.14934163321956490554.robh@kernel.org>
-References: <20221220123634.382970-1-bryan.odonoghue@linaro.org>
- <20221220123634.382970-7-bryan.odonoghue@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bHMQ7o8eMU9c/W6JAUVkthhn92ri9PS9bvR89gJhYW0=;
+        b=rwxiSE7KDv4zpxayASraSPR2jcoOQoTscXZ7WtkD20HMeFdcr8jQeQuTkx37jXU8RN
+         2dn5mMtUYsTBiHmSwId66Wg4HvC/xp2WAo1AdSavNSHRDUZsEVXiW00S0xEHOQgpiw9g
+         bdOWhyPzKJyyrB54NHAFsp84VeQguDueAoSf6LmUbCGkeNL75V2I2LBlMPZOWYvHfUOP
+         riCgsivC3hSUzgebEdZYRWrdJ7lvK5dthhS4J+PiKvZzyfQ+WZw/LJP18UfIf1j/up/s
+         iMgu0f5c6GYKmqLt3+m7RYfBijlBDXx5VyjmMK616D7nzgiqDE4vup6RYO36BcXnC90Y
+         9NQw==
+X-Gm-Message-State: AFqh2kpjgAnESjgsONN4rIk7b19AKqEmHQoOF3iqfxGxB8xpGGhDO6+W
+        MJF4qvhCXJQWdyjLMYqcSH6tOg==
+X-Google-Smtp-Source: AMrXdXu4rLo9oESCQEthwo+rk34sDJyHbF21HZEqdrTtDTXhrPTSeeK6MZxsKNQDA8S/E9+JOtWvDw==
+X-Received: by 2002:a05:6512:2805:b0:4b5:f925:52a7 with SMTP id cf5-20020a056512280500b004b5f92552a7mr1113308lfb.27.1671556318573;
+        Tue, 20 Dec 2022 09:11:58 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id c2-20020a056512074200b0048aee825e2esm1522120lfs.282.2022.12.20.09.11.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Dec 2022 09:11:58 -0800 (PST)
+Message-ID: <bbc3c257-0a49-4c80-4586-c179c8997b50@linaro.org>
+Date:   Tue, 20 Dec 2022 19:11:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221220123634.382970-7-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Document the sc7280 CRD
+ Pro boards
+Content-Language: en-GB
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org
+References: <20221216112918.1243-1-quic_rjendra@quicinc.com>
+ <Y5x+WEwTtpoV0gaR@google.com>
+ <fd23e295-fea0-1b0a-752c-3cce26b57346@quicinc.com>
+ <Y6HHCrl0q5BhrHOY@google.com>
+ <e269300d-539e-9eb8-8b3c-d309f3abca1b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <e269300d-539e-9eb8-8b3c-d309f3abca1b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 20 Dec 2022 12:36:19 +0000, Bryan O'Donoghue wrote:
-> Each compatible has a different set of clocks which are associated with it.
-> Add in the list of clocks for each compatible.
+On 20/12/2022 18:20, Rajendra Nayak wrote:
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../display/msm/dsi-controller-main.yaml      | 189 +++++++++++++++++-
->  1 file changed, 179 insertions(+), 10 deletions(-)
 > 
+> On 12/20/2022 8:00 PM, Matthias Kaehlcke wrote:
+>> On Tue, Dec 20, 2022 at 10:30:32AM +0530, Rajendra Nayak wrote:
+>>>
+>>> On 12/16/2022 7:49 PM, Matthias Kaehlcke wrote:
+>>>> On Fri, Dec 16, 2022 at 04:59:17PM +0530, Rajendra Nayak wrote:
+>>>>> Add compatibles for the Pro SKU of the sc7280 CRD boards
+>>>>> which come with a Pro variant of the qcard.
+>>>>> The Pro qcard variant has smps9 from pm8350c ganged up with
+>>>>> smps7 and smps8.
+>>>>>
+>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>>>>> ---
+>>>>> v4 changes:
+>>>>> Added the zoglin-sku1536 compatible along with hoglin-sku1536.
+>>>>> Zoglin is same as the Hoglin variant, with the SPI Flash reduced
+>>>>> from 64MB to 8MB
+>>>>>
+>>>>>    Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>>>>>    1 file changed, 6 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml 
+>>>>> b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> index 1b5ac6b02bc5..07771d4c91bd 100644
+>>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>> @@ -558,6 +558,12 @@ properties:
+>>>>>              - const: google,hoglin
+>>>>>              - const: qcom,sc7280
+>>>>> +      - description: Qualcomm Technologies, Inc. sc7280 CRD Pro 
+>>>>> platform (newest rev)
+>>>>> +        items:
+>>>>> +          - const: google,zoglin-sku1536
+>>>>> +          - const: google,hoglin-sku1536
+>>>>
+>>>> Is there actually such a thing as a 'hoglin-sku1536', i.e. the Pro 
+>>>> qcard
+>>>> with 64MB of SPI flash, or do they all have 8MB of flash?
+>>>
+>>> The SPI flash is on the CRD mother-board and not on the qcards, so if 
+>>> you replace
+>>> the qcards on the CRDs with 64MB flash you would need the 
+>>> hoglin-sku1536 to
+>>> boot on those.
+>>
+>> With such a configuration how does the bootloader know it should pass 
+>> the kernel
+>> the device tree for 'hoglin-sku1536' (pro) and not the non-pro 
+>> variant? IIUC the
+>> device tree is selected based on pin strappings on the mother-board, 
+>> not the
+>> qcard.
+> 
+> The device tree is selected based on the pin strappings _and_ additional 
+> logic
+> to dynamically identify modem/non-modem(wifi) as well as pro/non-pro 
+> SKUs which
+> was added in the bootloaders.
 
+Just to clarify things, when you mention pro SKU, is it a separate SoC 
+revision (like sc7280-pro vs bare sc7280), or is it a CRD revision (CRD 
+Pro vs bare CRD)?
 
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
-
-If a tag was not added on purpose, please state why and what changed.
-
-Missing tags:
-
-Acked-by: Rob Herring <robh@kernel.org>
-
+-- 
+With best wishes
+Dmitry
 
