@@ -2,246 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D3E0651F5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:58:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A444E651FCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 12:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233589AbiLTK56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 05:57:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33820 "EHLO
+        id S232093AbiLTLg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 06:36:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233577AbiLTK55 (ORCPT
+        with ESMTP id S231371AbiLTLg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 05:57:57 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C82B5D92
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:57:55 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id g13so1324118lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:57:55 -0800 (PST)
+        Tue, 20 Dec 2022 06:36:28 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC4C2AC6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 03:36:27 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id m4so11986279pls.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 03:36:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aDnb9BEb78Sw9ueFN+k+iEYK3Ju9Xb5eo9NuWoultAU=;
-        b=xbU91zwKo+VD7aaL/6EB9HslZ70gQoqX9CCAy2CtkJxcwIptobDbFgqbfbEcy0DdLH
-         WErCp+YMa8XbSget8F9JsxZ0O98vfQiRh3vtnLsSV4wa1Kt39WmhfDDVlD6glDG9kkmL
-         e5DvqwdtNx/R/V+BKJN1OxkRKR02EEpk5f0YVDTfypDQVi8KEcY9wpKdmFXixcsVCFyg
-         WTAn9f7mMaRc5xclMnCZkkVkoCrZGDcqOHe7lSCeXXCWFc57LZfWBukAflv4yf261HAN
-         h4psbmz5LGoqTlkaC73XPZWj0VXj5pGFqo6ivavJWbCOMzvVXlU2gQOfjIHMW4FpYxO8
-         CN4w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=huPxZPVrtYAVsJ7rw0Hki2j64FcdxEjWj9SNeXSzqOo=;
+        b=ryhiP/QKYwum0vMOPDx3DBCfrT0z+eenok3UsR4qSLWNXs2yVHPv9ZBrMqlxN3NQx5
+         UVGtqXMqAJdbYMXRZV8TtkvCgO2nPnJR0nrG073Gl9hk1vXDHOYAVloKOf7xZfWSFTKJ
+         LlxIO8ruht2HspcqOJ8C/WAeZzK4oZ3TYmthan6NlhXwfc079Skw1ZgUa/9DxEfY8l0S
+         LN3kfCMB7V2Y0/4CDXtlkIYCFpRoFZGt+5BfkMkzh9IT+UceoY1vDEr30tntSo0PEdmj
+         mwqu6mw77z6fWppCX6KALWptNAn+Mkpx4iwPAiImORvGcyHZSxEqQaVOIIdrCS8LyiQL
+         go9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aDnb9BEb78Sw9ueFN+k+iEYK3Ju9Xb5eo9NuWoultAU=;
-        b=VsyhGhltZVbtF1Sa5VQKLA/vDrlUPNzuydN42LWM2pvTx67kBC4+Ue8DvRrYQL+btb
-         lWoGv7djaNRYkjr1I6ckA2JjQMiFLbA0D5SSrDKjKxpRqNmOXNvvqFofSzmoA4N5xr8D
-         iR2q103VszQVNncI+BXeyLqsE/uWfHUpdRyFu1y2gx1tkNGHS6mUSC1TK56JrhJp6P5n
-         ivZkFI0WJCrq9MUxz1VnAEZG9PRyLUQcMc4ZObY24712CnOr9hX+dxtpYAiJV8+Cnr1l
-         f5CtubEDKudHAdin/pFZEQgDm+shW5+zTBnfKa8i6J3KdSYyjEk6NlCmNsNxVmD77pni
-         yvMA==
-X-Gm-Message-State: ANoB5pkBYiLvDPKugSvegU+5iJf3BBUWFhbEy+74SGykTVhTwVznF/0V
-        1E7pGN3CGu8zyA4hLJUnM3AtWA==
-X-Google-Smtp-Source: AA0mqf7gv6QofA9h2Lp7gBTUPYcabAUKpteb6Il/1mbVPtD3k/b3GjKlI2oWVASXtWLjlsaoyBdcGA==
-X-Received: by 2002:ac2:5f6a:0:b0:4b5:61e8:8934 with SMTP id c10-20020ac25f6a000000b004b561e88934mr11009274lfc.64.1671533874218;
-        Tue, 20 Dec 2022 02:57:54 -0800 (PST)
-Received: from [192.168.1.101] (abxh212.neoplus.adsl.tpnet.pl. [83.9.1.212])
-        by smtp.gmail.com with ESMTPSA id p2-20020ac24ec2000000b00499b27a329esm1416602lfr.300.2022.12.20.02.57.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 02:57:53 -0800 (PST)
-Message-ID: <9e2e936e-3da2-4d04-f21e-335830c11dfb@linaro.org>
-Date:   Tue, 20 Dec 2022 11:57:52 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=huPxZPVrtYAVsJ7rw0Hki2j64FcdxEjWj9SNeXSzqOo=;
+        b=rvihCp2bWMMgyooN79xf4OzZb72vBD+FXBnl8QOBnhZJUGRL64AD5Z6SlMKs3JWUO9
+         hvG0ftGqleWNSaCia70uYyoEvI3B8JtOnpelGLagpeHyKTud/VR+acNdFBv9pqi9eOBZ
+         HKo8gKWX69mPivNPFAi6sjjJqC913QuDxR5V4/pDYYU4m4q9ibGNABeqYemgbi12MHJD
+         tYJLjoUgLPGpJj06wKrYviVMgUEC6WzciAnW8cDt5JeKf28VHRXy1sN6ijRO0KhxMyKm
+         2j4hJ3UN+lHBQDU8wtPgZCxUMKbqJJp8w2pLd4o59VQdlANs9LQOxuyxjCuUDbT6LPYp
+         0UHA==
+X-Gm-Message-State: AFqh2krA6CY0tRq6Q7I+3RWo6uviEHqaodAGtLgXTEqpGrcD3tToz0a5
+        LrZoQyHDP4ynsuvgEBrLGdcasLXsQj8xG3+X2nk=
+X-Google-Smtp-Source: AMrXdXtxZPoLn10Q2MIhLkM9EuiVTQt+xbat4vnQj41VAHzNDpfGIt9VoZAmewDpBacNIKvwoWTqwA==
+X-Received: by 2002:a05:6a21:e30d:b0:af:dbe9:4466 with SMTP id cb13-20020a056a21e30d00b000afdbe94466mr21194232pzc.31.1671536185989;
+        Tue, 20 Dec 2022 03:36:25 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c5f:178a:c141:ef5d:9a2d:26ec])
+        by smtp.gmail.com with ESMTPSA id q20-20020a631f54000000b00476c2180dbcsm7903139pgm.29.2022.12.20.03.36.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 03:36:25 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, agross@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
+        andersson@kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6115: Move SDHC node(s)'s 'pinctrl' properties to dts
+Date:   Tue, 20 Dec 2022 17:06:16 +0530
+Message-Id: <20221220113616.1556097-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 13/15] arm64: dts: qcom: qcs404: specify per-sensor
- calibration cells
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-14-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221220024721.947147-14-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Normally the 'pinctrl' properties of a SDHC controller and the
+chip detect pin settings are dependent on the type of the slots
+(for e.g uSD card slot), regulators and GPIO(s) available on the
+board(s).
 
+So, move the same from the sm6115 dtsi file to the respective
+board file(s).
 
-On 20.12.2022 03:47, Dmitry Baryshkov wrote:
-> Specify pre-parsed per-sensor calibration nvmem cells in the tsens
-> device node rather than parsing the whole data blob in the driver.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs404.dtsi | 121 +++++++++++++++++++++++++--
->  1 file changed, 116 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index a5324eecb50a..362764347006 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -366,13 +366,102 @@ qfprom: qfprom@a4000 {
->  			reg = <0x000a4000 0x1000>;
->  			#address-cells = <1>;
->  			#size-cells = <1>;
-> -			tsens_caldata: caldata@d0 {
-> -				reg = <0x1f8 0x14>;
-> -			};
->  			cpr_efuse_speedbin: speedbin@13c {
->  				reg = <0x13c 0x4>;
->  				bits = <2 3>;
->  			};
-Oh wow, this list is even longer.. can you pinky-promise it's
-correct? :P In any case, please add newlines between each
-subnode and rename the nodes so that there aren't underscores
-in the node names.
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 10 +++++++++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 22 -------------------
+ 2 files changed, 10 insertions(+), 22 deletions(-)
 
-Konrad
-> +			tsens_s0_p1: s0_p1@1f8 {
-> +				reg = <0x1f8 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s0_p2: s0_p2@1f8 {
-> +				reg = <0x1f8 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_s1_p1: s1_p1@1f9 {
-> +				reg = <0x1f9 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +			tsens_s1_p2: s1_p2@1fa {
-> +				reg = <0x1fa 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +			tsens_s2_p1: s2_p1@1fb {
-> +				reg = <0x1fb 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s2_p2: s2_p2@1fb {
-> +				reg = <0x1fb 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_s3_p1: s3_p1@1fc {
-> +				reg = <0x1fc 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +			tsens_s3_p2: s3_p2@1fd {
-> +				reg = <0x1fd 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +			tsens_s4_p1: s4_p1@1fe {
-> +				reg = <0x1fe 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s4_p2: s4_p2@1fe {
-> +				reg = <0x1fe 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_s5_p1: s5_p1@200 {
-> +				reg = <0x200 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s5_p2: s5_p2@200 {
-> +				reg = <0x200 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_s6_p1: s6_p1@201 {
-> +				reg = <0x201 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +			tsens_s6_p2: s6_p2@202 {
-> +				reg = <0x202 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +			tsens_s7_p1: s7_p1@203 {
-> +				reg = <0x203 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s7_p2: s7_p2@203 {
-> +				reg = <0x203 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_s8_p1: s8_p1@204 {
-> +				reg = <0x204 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +			tsens_s8_p2: s8_p2@205 {
-> +				reg = <0x205 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +			tsens_s9_p1: s9_p1@206 {
-> +				reg = <0x206 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +			tsens_s9_p2: s9_p2@206 {
-> +				reg = <0x206 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +			tsens_mode: mode@208 {
-> +				reg = <0x208 1>;
-> +				bits = <0 3>;
-> +			};
-> +			tsens_base1: base1@208 {
-> +				reg = <0x208 2>;
-> +				bits = <3 8>;
-> +			};
-> +			tsens_base2: base2@208 {
-> +				reg = <0x209 2>;
-> +				bits = <3 8>;
-> +			};
->  			cpr_efuse_quot_offset1: qoffset1@231 {
->  				reg = <0x231 0x4>;
->  				bits = <4 7>;
-> @@ -447,8 +536,30 @@ tsens: thermal-sensor@4a9000 {
->  			compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
->  			reg = <0x004a9000 0x1000>, /* TM */
->  			      <0x004a8000 0x1000>; /* SROT */
-> -			nvmem-cells = <&tsens_caldata>;
-> -			nvmem-cell-names = "calib";
-> +			nvmem-cells = <&tsens_mode>,
-> +				      <&tsens_base1>, <&tsens_base2>,
-> +				      <&tsens_s0_p1>, <&tsens_s0_p2>,
-> +				      <&tsens_s1_p1>, <&tsens_s1_p2>,
-> +				      <&tsens_s2_p1>, <&tsens_s2_p2>,
-> +				      <&tsens_s3_p1>, <&tsens_s3_p2>,
-> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
-> +				      <&tsens_s5_p1>, <&tsens_s5_p2>,
-> +				      <&tsens_s6_p1>, <&tsens_s6_p2>,
-> +				      <&tsens_s7_p1>, <&tsens_s7_p2>,
-> +				      <&tsens_s8_p1>, <&tsens_s8_p2>,
-> +				      <&tsens_s9_p1>, <&tsens_s9_p2>;
-> +			nvmem-cell-names = "mode",
-> +					   "base1", "base2",
-> +					   "s0_p1", "s0_p2",
-> +					   "s1_p1", "s1_p2",
-> +					   "s2_p1", "s2_p2",
-> +					   "s3_p1", "s3_p2",
-> +					   "s4_p1", "s4_p2",
-> +					   "s5_p1", "s5_p2",
-> +					   "s6_p1", "s6_p2",
-> +					   "s7_p1", "s7_p2",
-> +					   "s8_p1", "s8_p2",
-> +					   "s9_p1", "s9_p2";
->  			#qcom,sensors = <10>;
->  			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "uplow";
+diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+index a3f1c7c41fd73..329eb496bbc5f 100644
+--- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
++++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+@@ -202,12 +202,22 @@ &sdhc_2 {
+ 	vqmmc-supply = <&vreg_l5a>;
+ 
+ 	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&sdc2_state_on &sdc2_card_det_n>;
++	pinctrl-1 = <&sdc2_state_off &sdc2_card_det_n>;
+ 
+ 	status = "okay";
+ };
+ 
+ &tlmm {
+ 	gpio-reserved-ranges = <14 4>;
++
++	sdc2_card_det_n: sd-card-det-n-state {
++		pins = "gpio88";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
+ };
+ 
+ &ufs_mem_hc {
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 572bf04adf906..6be763d39870d 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -518,13 +518,6 @@ data-pins {
+ 					bias-pull-up;
+ 					drive-strength = <10>;
+ 				};
+-
+-				sd-cd-pins {
+-					pins = "gpio88";
+-					function = "gpio";
+-					bias-pull-up;
+-					drive-strength = <2>;
+-				};
+ 			};
+ 
+ 			sdc2_state_off: sdc2-off-state {
+@@ -545,13 +538,6 @@ data-pins {
+ 					bias-pull-up;
+ 					drive-strength = <2>;
+ 				};
+-
+-				sd-cd-pins {
+-					pins = "gpio88";
+-					function = "gpio";
+-					bias-disable;
+-					drive-strength = <2>;
+-				};
+ 			};
+ 		};
+ 
+@@ -652,10 +638,6 @@ sdhc_1: mmc@4744000 {
+ 				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
+ 			clock-names = "iface", "core", "xo", "ice";
+ 
+-			pinctrl-0 = <&sdc1_state_on>;
+-			pinctrl-1 = <&sdc1_state_off>;
+-			pinctrl-names = "default", "sleep";
+-
+ 			bus-width = <8>;
+ 			status = "disabled";
+ 		};
+@@ -672,10 +654,6 @@ sdhc_2: mmc@4784000 {
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>, <&gcc GCC_SDCC2_APPS_CLK>, <&xo_board>;
+ 			clock-names = "iface", "core", "xo";
+ 
+-			pinctrl-0 = <&sdc2_state_on>;
+-			pinctrl-1 = <&sdc2_state_off>;
+-			pinctrl-names = "default", "sleep";
+-
+ 			power-domains = <&rpmpd SM6115_VDDCX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 			iommus = <&apps_smmu 0x00a0 0x0>;
+-- 
+2.38.1
+
