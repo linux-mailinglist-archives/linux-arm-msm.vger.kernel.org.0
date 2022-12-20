@@ -2,195 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E65E36527EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 21:33:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38364652902
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 23:29:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234096AbiLTUde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 15:33:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33144 "EHLO
+        id S229572AbiLTW10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 17:27:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234336AbiLTUdC (ORCPT
+        with ESMTP id S230059AbiLTW1X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 15:33:02 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDAF2DE6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 12:32:57 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id f34so5166754lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 12:32:57 -0800 (PST)
+        Tue, 20 Dec 2022 17:27:23 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA8DFF1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 14:27:21 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id m19so19564851edj.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 14:27:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=i1rCPEjDDB4aTaz1z66evVwngn0CcNCDZ7iQ3I9uTtA=;
-        b=SiZ7G0lOmd3LM+BkyU6zFbx1cmhPFz8r9B84QnM/EyJC3pRZnnAH1gEmvr5RW9JLnl
-         jLVKPWgCYnVq0xVbJgVMW4MnubN2URImjjHEGICs+ANuk3eAIkqHD91B7wCaSV1nmGWY
-         ehs1+81om8j98YzZFB7Dg8v+TxXw93b0/Le0PHYvnZPzuk68bxY78y8bTlNotVzLgPEw
-         uIDaXrgqEGHZu2IhNQ82FbHGB1S1dDN3ZPuNm4E7VSkRSaVx3uyNG8AF+QHVwH8WVOdx
-         7JJzsJCE5gQP7YrnevEGf0igMPGjGvN6I7rOuHqjA2p5LHx0kmOB/1xZkSlMQv4zocDQ
-         pH2w==
+        bh=vDN/5v5x3AD8aunYp6Yw+XZt6VK6NcKKWKn7atc35rQ=;
+        b=hU83RSV9Vh0OlsC1VfiC3slmpdenrSL3zgNGmjJMSnkdfHdlGR1siYMFX3L1d7HkeJ
+         cDbQ3svzofPMbLnjrRJFTstudiEuav80Yn5/3Hp6wCn45r37QvTMqZiJBJ6r8Du7IsvM
+         76iVjt5ib665gPgLruBPzByzfHhwyM0ADXMWY5NrK7O2FfkfvMLT/6wcaSRRHoG1cv71
+         eryFUR/OLlY/C4n7wZ9OtSb1er9TCGeo3LXQWjMhQRAd+Uwuz2rDwa+Va3m3Q9fF6n08
+         1PprID5zblHKtoMdHb8bl8SMe8UxP62i3vKtH9K4ncQ983lh91FwEsFMtnnOOsG5uvi6
+         S8dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i1rCPEjDDB4aTaz1z66evVwngn0CcNCDZ7iQ3I9uTtA=;
-        b=uSCoivZCcwbHLWaInJ0TXCkUvaqlpBIuDyzGHUImN1rm4Pu9nRSctKQ3T3dnekho+v
-         vzWSSwDrCJwN8TuLXbbnsU8BN0e3sINEGgBPhI5mzQ+5i+3MkAfbnKvKStFX7e8G72wp
-         IFr8QDreEwk5qExklo8qt5E+ZmFlTKWjfqeuxnwzLCkenYNUmiEMiRw5CjfYDh6NMDs4
-         NqjtvbAdJuVIyfNrXc6Cg/Gyi7LKiFgd61v5NqjHcYxeFlHqKZIdeh1d37Dq1GUvIw3q
-         +QLENU2uyI5OXBIOt/bLUPXhaDX6ri3wbX9EZpL975N1WjAH5p7B1R/IAlm/u3eyJNFh
-         H3mQ==
-X-Gm-Message-State: AFqh2kpuot0HTAN4I/e+45p5Ud7vTthYeM/nI8QDG6bVNesIb4UsmpUM
-        L8/IGCfjuAfaJIqCF+krcwNB0Q==
-X-Google-Smtp-Source: AMrXdXvVICNdQgl7zMMbAM9Ga7nB0iu59zrYProEc4CLdp+1dPMe4Je+hA8dnAdXT8DrmDazBtR5Ww==
-X-Received: by 2002:a19:e01b:0:b0:4a6:7271:e314 with SMTP id x27-20020a19e01b000000b004a67271e314mr1034718lfg.62.1671568376163;
-        Tue, 20 Dec 2022 12:32:56 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v21-20020a056512349500b004a44ffb1050sm1568398lfr.171.2022.12.20.12.32.55
+        bh=vDN/5v5x3AD8aunYp6Yw+XZt6VK6NcKKWKn7atc35rQ=;
+        b=byIfnGLSkGTAE81O0kebueZRye7S2e2q7VrXr4fFuOoG6QI9MHQcO2Ki3/bIMbikUr
+         5wa/BSj3AIvJDTJeHwgadmrYSeFe2XBLYzkKvHx/SVamqUqk7X2bxqn3P7iR5kuC3GVx
+         nEgx6gdiEoMAUX5PpPMYwlEVmXHfq7RiKufd/J8VroPx5pWlxOYVy+waJ6aiFS3oBjf2
+         w0A95r7SQJVHRYefxX5qH2cq1TByrHYKpSaY/Vun8/rYmnv0vUEaYMLYNjVb52FTZdeU
+         KazZIGt7jAD5S3hUZUoPkGgLQxf8NXX42mygZB2dcNSbV9niQPjT7Ex6mpLYe3/HDl6J
+         zS6w==
+X-Gm-Message-State: ANoB5pkBJv5Xv5fnncc2pc64TUqYVvOQJABMUWbAwEyyX4LOXL5yT/ZB
+        NYWCuyHWgWYuj1rpZolwNBMljA==
+X-Google-Smtp-Source: AA0mqf7SLZvw2edI/x/p/oBKjSA6C0c+O6TQ6txc3QQJmXfuXeQ6PyPEU3ctG4om5l/tkc4VbK0qag==
+X-Received: by 2002:aa7:d403:0:b0:470:31fb:cdcc with SMTP id z3-20020aa7d403000000b0047031fbcdccmr28813524edq.6.1671575240162;
+        Tue, 20 Dec 2022 14:27:20 -0800 (PST)
+Received: from [192.168.1.115] ([185.126.107.38])
+        by smtp.gmail.com with ESMTPSA id t21-20020a056402021500b00463bc1ddc76sm6206860edv.28.2022.12.20.14.27.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 12:32:55 -0800 (PST)
-Message-ID: <d6fe27d0-729a-1730-9b57-6bdb2a76e6d0@linaro.org>
-Date:   Tue, 20 Dec 2022 22:32:54 +0200
+        Tue, 20 Dec 2022 14:27:19 -0800 (PST)
+Message-ID: <7549c8a8-bad0-7f7b-b07a-4a80d44d1ec3@linaro.org>
+Date:   Tue, 20 Dec 2022 23:27:17 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221215190404.398788-1-they@mint.lgbt>
- <20221215190404.398788-2-they@mint.lgbt>
- <e474f99d-2375-c8db-203c-632c918d8e4d@linaro.org>
- <9c185e36-4342-0f8e-1816-494303ebd072@mint.lgbt>
- <66140726-0771-a28b-4916-cc3aef569cab@linaro.org>
- <CAA8EJprw+314QagdqmvZ7_6SR-TH5NSmndL66DQqc2=zeaT6AA@mail.gmail.com>
-In-Reply-To: <CAA8EJprw+314QagdqmvZ7_6SR-TH5NSmndL66DQqc2=zeaT6AA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.0
+Subject: Re: [PATCH v3 1/2] remoteproc: elf_loader: Update resource table name
+ check
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org,
+        krzysztof.kozlowski@linaro.org, mathieu.poirier@linaro.org,
+        corbet@lwn.net
+References: <1671523269-21154-1-git-send-email-quic_srivasam@quicinc.com>
+ <1671523269-21154-2-git-send-email-quic_srivasam@quicinc.com>
+ <0d683526-5707-d5b4-e96d-b2d982d4b5da@quicinc.com>
+From:   =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+In-Reply-To: <0d683526-5707-d5b4-e96d-b2d982d4b5da@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/12/2022 22:30, Dmitry Baryshkov wrote:
-> On Tue, 20 Dec 2022 at 21:33, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 20.12.2022 19:57, Lux Aliaga wrote:
->>> On 16/12/2022 08:24, Konrad Dybcio wrote:
->>>
->>>>
->>>> On 15.12.2022 20:04, Lux Aliaga wrote:
->>>>> Adds a UFS host controller node and its corresponding PHY to
->>>>> the sm6125 platform.
->>>>>
->>>>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->>>>> ---
->>>> Please include a changelog, I don't know what you changed and
->>>> what you didn't. Also, you sent 4 revisions in one day, not
->>>> letting others review it.
->>>>
->>>>
->>>>>    arch/arm64/boot/dts/qcom/sm6125.dtsi | 67 ++++++++++++++++++++++++++++
->>>>>    1 file changed, 67 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>>> index 7e25a4f85594..b64c5bc1452f 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>>> @@ -508,6 +508,73 @@ sdhc_2: mmc@4784000 {
->>>>>                status = "disabled";
->>>>>            };
->>>>>    +        ufs_mem_hc: ufs@4804000 {
->>>>> +            compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->>>>> +            reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
->>>>> +            reg-names = "std", "ice";
->>>>> +            interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
->>>>> +            phys = <&ufs_mem_phy_lanes>;
->>>>> +            phy-names = "ufsphy";
->>>>> +            lanes-per-direction = <1>;
->>>>> +            #reset-cells = <1>;
->>>>> +            resets = <&gcc GCC_UFS_PHY_BCR>;
->>>>> +            reset-names = "rst";
->>>>> +
->>>>> +            clock-names = "core_clk",
->>>>> +                      "bus_aggr_clk",
->>>>> +                      "iface_clk",
->>>>> +                      "core_clk_unipro",
->>>>> +                      "ref_clk",
->>>>> +                      "tx_lane0_sync_clk",
->>>>> +                      "rx_lane0_sync_clk",
->>>>> +                      "ice_core_clk";
->>>>> +            clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->>>>> +                 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
->>>>> +                 <&gcc GCC_UFS_PHY_AHB_CLK>,
->>>>> +                 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->>>>> +                 <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>>>> +                 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->>>>> +                 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->>>>> +                 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->>>>> +            freq-table-hz = <50000000 240000000>,
->>>>> +                    <0 0>,
->>>>> +                    <0 0>,
->>>>> +                    <37500000 150000000>,
->>>>> +                    <0 0>,
->>>>> +                    <0 0>,
->>>>> +                    <0 0>,
->>>>> +                    <75000000 300000000>;
->>>>> +
->>>>> +            non-removable;
->>>>> +            status = "disabled";
->>>>> +        };
->>>>> +
->>>>> +        ufs_mem_phy: phy@4807000 {
->>>>> +            compatible = "qcom,sm6115-qmp-ufs-phy";
->>>> Krzysztof asked you to add a SoC-specific compatible in v1.
->>> I'm working on adding a new compatible for sm6125's UFS PHY. Should I copy sm6115's tables or just reference them in the sm6125's config in drivers/phy/qualcomm/phy-qcom-qmp-ufs.c?
->> If they're identical, you can just do something like this:
->>
->> compatible = "qcom,sm6125-qmp-ufs-phy", "qcom,sm6115-qmp-ufs-phy";
+On 20/12/22 13:50, Mukesh Ojha wrote:
+> Hi,
 > 
-> Ugh. I'd prefer to see either of the compatible strings here, but not
-> both of them.
+> On 12/20/2022 1:31 PM, Srinivasa Rao Mandadapu wrote:
+>> Update the way of checking resource table name with prefix
+>> substring search instead of complete string search.
+>> In general Qualcomm DSP binary is prepared by combining different ELFs',
+>> hence section header name (e.g. .resource_table), appended with ELF name
+>> to differentiate with same section(e.g. resource_table.ac_bin_process) of
+>> different ELFs'.
+>> Example readelf output of DSP binary:
+>>      [60] .start.ac_bin_process PROGBITS
+>>      [61] .resource_table.ac_bin_process PROGBITS
+>>      [62] .comment.ac_bin_process PROGBITS
+>>
+> 
+> Could we rephrase above like below ?
 
-I hit send too quick, so the justification didn't get in.
+FWIW I agree :) I assumed Srinivasa was using a broken email client
+that strips newlines and packs everything.
 
-Currently we list a single compatibility string for all QMP PHYs. Having 
-just a single exception stands out, so I'd advise against doing that 
-(despite Konrad's suggestion being technically correct).
-
+> It could be also taken why applying 
+> the patch.
 > 
+> Update the way of checking resource table name with prefix substring 
+> search instead of complete string search.
+> 
+> In general, Qualcomm DSP binary is prepared by combining different 
+> ELF's. Hence, section header name (e.g. .resource_table), appended
+> with ELF name to differentiate with same section(e.g. 
+> resource_table.ac_bin_process) of different ELFs'.
+> 
+> Example readelf output of DSP binary:
+>        [60] .start.ac_bin_process PROGBITS
+>        [61] .resource_table.ac_bin_process PROGBITS
+>        [62] .comment.ac_bin_process PROGBITS
+> 
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> 
+> Otherwise, LGTM.
+> Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> 
+> -Mukesh
+>> ---
+>>   drivers/remoteproc/remoteproc_elf_loader.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> And ensure your newly added compatible is documented in bindings.
->> This way, the driver will fall back to the 6115 compatible that's
->> defined in .c, but if we ever need to adjust something specific
->> for 6125, we will just use the define that we added here. That's
->> important, as we're supposed to stay backwards-compatible with
->> old device trees.
->>
->> Also, wrap your emails at around 80 chars or so, some people
->> are grumpy about that :P
->>
->> Konrad
->>>
-> 
-> 
-> 
-
--- 
-With best wishes
-Dmitry
+>> diff --git a/drivers/remoteproc/remoteproc_elf_loader.c 
+>> b/drivers/remoteproc/remoteproc_elf_loader.c
+>> index 5a412d7..77330d6 100644
+>> --- a/drivers/remoteproc/remoteproc_elf_loader.c
+>> +++ b/drivers/remoteproc/remoteproc_elf_loader.c
+>> @@ -272,7 +272,7 @@ find_table(struct device *dev, const struct 
+>> firmware *fw)
+>>           u64 offset = elf_shdr_get_sh_offset(class, shdr);
+>>           u32 name = elf_shdr_get_sh_name(class, shdr);
+>> -        if (strcmp(name_table + name, ".resource_table"))
+>> +        if (!strstarts(name_table + name, ".resource_table"))
+>>               continue;
+>>           table = (struct resource_table *)(elf_data + offset);
 
