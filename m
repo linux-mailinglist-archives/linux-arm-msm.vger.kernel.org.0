@@ -2,111 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EEE5651EC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:26:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8FDF651ED1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbiLTK03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 05:26:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46860 "EHLO
+        id S229714AbiLTK3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 05:29:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbiLTK0R (ORCPT
+        with ESMTP id S231648AbiLTK3H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 05:26:17 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3721ED69
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:26:16 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso8389384wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:26:16 -0800 (PST)
+        Tue, 20 Dec 2022 05:29:07 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE831002
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:29:04 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id j4so17992913lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4RYuujFw7tzeiIajfN4hmE1N1EVgTyDYADTMYOS2Fnk=;
-        b=zHRwPfp63Mv3Lj1JRru1xRcyYpOCXpr2kHVGGCQAxPRhhwwNTbi0SRvenEzrDu7EZD
-         /oS6LebKjWRSsGL6TBYPf+AlXslUsHVwIs9X3AoEKYYprQ0KoLj2EYtfEjzhPaKMhQSk
-         nnPM00vKhNQsP/QNffZcKppKz0JWwq0iTsd88knfGR7PWAlYYQS1wmqncI7tFvuvSDxe
-         ORam5WV+GSm86TvD6p740jc2zFn89W4H29VSIdeiY9l1iI00KM1Yvwa7Ljs9kMQY/Hjf
-         RC7aVHrOn08GD25EMDlZWrYnUPmq/hDJ/MwrEBMMoL76dvhm3tyxoCq47/cWFx2FMhp5
-         ILlw==
+        bh=7ydZyRIw+gbw3s3ZZRZA72xvAQO6P+Q4roI+F5gT9UA=;
+        b=wYNN5qex0BsQtkbHRrHRAdPUbH4rl2x+fw3y4EZ0jrzWGueboTKWpyLFwU8LuNKlXP
+         E+LW5AKrXKf3T5Rlja4zp+rda3keUg9MksjhSa5+G1a3+KsOdAvjGZ+XvZy8A6XZOCsk
+         WOdg1040Disj86cuVGVMgk0sLjKw8wgxAbnWM4PTIjoCpm070kskfxe9FhvDAlp1hMru
+         dTTgoXpAuOKKbrV2g8ewiYEBigg68FziITN08TbDhAa+M0KTZozgoHzkjg3ASrdUqy99
+         Mhe8I77tlTpkWxd9YlVGur2Xrg6z5i8gm4hr8riO+IVkANOjj5ztcMEVgOb6oec5GWwp
+         I9Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4RYuujFw7tzeiIajfN4hmE1N1EVgTyDYADTMYOS2Fnk=;
-        b=t2Pk0T3idA9gWfMDq8xEJCHmBtR2gdI0jkQ3HlM93ibHejs+q5n6C2YjD+ebhW32C9
-         UlT9mOiQcwsRbrw4hy0WrSHbmnbiXVoeH+qnkeRAla2Oq7N5tAu00GLevHooU9dGsb6D
-         b8+ZxDtMbYS3d10F8i11KnNDSy9zkorbj5F8qh6DRXTyzDs/vAkRN8Mwo+8G3dXifF8S
-         o8je/knVMg2+HJeNZdozDk0xlfqsrXgn/Z7wdwC1E8vlIhYC6tDpOQio3qYQtPlHm5n9
-         g1BQmRePBDarjVPKMciuHXBvHMk97gns8c19tcX18fzu98XVxzJ7EpizqTurwwpeRORe
-         w2rQ==
-X-Gm-Message-State: AFqh2kr30XTkcQJvSAoTs92hE4clSSexq5MfUWKExBjwdhILuDK/akFt
-        N+67KkNBm/PrFo8Thm/HVbWOmA==
-X-Google-Smtp-Source: AMrXdXs4AlYscxSxHGeG8BqlrM0dGf2Is9M2vpRO/z9t21AhKhASITL8X0N2UIRkNtiqNaCOobTrcg==
-X-Received: by 2002:a7b:cc85:0:b0:3d3:3c93:af5e with SMTP id p5-20020a7bcc85000000b003d33c93af5emr13284088wma.35.1671531974819;
-        Tue, 20 Dec 2022 02:26:14 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q14-20020a1cf30e000000b003cf6a55d8e8sm14882608wmq.7.2022.12.20.02.26.13
+        bh=7ydZyRIw+gbw3s3ZZRZA72xvAQO6P+Q4roI+F5gT9UA=;
+        b=v44t4/mGnmJUwqHJP0rEkadBgGMQnxwG7w/4epcd83OJZr1uj2B6sNyV/ak53h9gim
+         IO/Qgkvgndndy/UqX6w4IlpF+5Awkl6uemcNqeUTyp2vZbtoJnDsLnBIxWICDWL6/nJw
+         yAq7Lf/+KMKlL3940hLa0Uve2wlB1GfoQPh+PMIJdxVjtwlvqKcnQMHHjxeiine1tmL6
+         DamBEIRk4UafUIOITrxD7qwPEvgEFCoWrwBLqJMPpTV2kojuPbexaFGUK1uZYCWP7Gsl
+         5IWLGdUXPFPWlvMdkWNUoTIssheLr96oZZuT1xm3OVcL6M9/kXgX9rcKBu9ZgMNqwAEA
+         ZLSA==
+X-Gm-Message-State: AFqh2kqwmUuVdb7EhBBIEv0V5ZMJKMzvbgID7E7gIWkjY8emTNdiRw3I
+        pZr89ASAxurPizRCEXNtRRKGLg==
+X-Google-Smtp-Source: AMrXdXseYHTPE//qxrEh1Phx1J0z+h8J366WPR39QnMQvkCBso8AfZsQ67rNJksjHyDhd23aKIOB7Q==
+X-Received: by 2002:a05:6512:2a90:b0:4ac:b7bf:697a with SMTP id dt16-20020a0565122a9000b004acb7bf697amr599270lfb.4.1671532142550;
+        Tue, 20 Dec 2022 02:29:02 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id b15-20020a056512070f00b004c325f34043sm1118867lfs.100.2022.12.20.02.29.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 02:26:14 -0800 (PST)
-Message-ID: <5bd2c0cd-741c-8865-5f35-25baf6787480@nexus-software.ie>
-Date:   Tue, 20 Dec 2022 10:26:13 +0000
+        Tue, 20 Dec 2022 02:29:02 -0800 (PST)
+Message-ID: <426723e7-bb5d-d409-2ad8-a8f4a286e9e1@linaro.org>
+Date:   Tue, 20 Dec 2022 11:29:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 08/15] thermal/drivers/tsens: Drop single-cell code for
- msm8939
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 2/3] dt-bindings: PCI: qcom: Document msi-map and
+ msi-map-mask properties
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-9-dmitry.baryshkov@linaro.org>
- <78fd7174-9aa4-f067-72ca-514c8fb09ee5@linaro.org>
- <d0a6b9cb-f321-7d5b-5767-acd12cfd78f1@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <d0a6b9cb-f321-7d5b-5767-acd12cfd78f1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     bhelgaas@google.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221219191427.480085-1-manivannan.sadhasivam@linaro.org>
+ <20221219191427.480085-3-manivannan.sadhasivam@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221219191427.480085-3-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/12/2022 10:21, Konrad Dybcio wrote:
-> The point of this patchset is to remove logic like this, as it's
-> very repetetive and all it does is read fuses with a ton of magic
-> offsets. Dmitry pushes that to DT with the generic nvmem API, so
-> that instead of these magic &s and <<s, one is simply supposed to
-> define QFPROM fuses at the correct offset and with a matching bits=<>
-> property. This does not remove any functionality, it just changes
-> how the fuses are accessed and makes the code more generic.
+On 19/12/2022 20:14, Manivannan Sadhasivam wrote:
+> The Qcom PCIe controller is capable of using either internal MSI controller
+> or the external GIC-ITS for receiving the MSIs from endpoint devices.
+> Currently, the binding only documents the internal MSI implementation.
 > 
-> Konrad
+> Let's document the GIC-ITS imeplementation by making use of msi-map and
+> msi-map-mask properties.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml       | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 02450fb26bb9..24c3e7ef14eb 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -100,18 +100,28 @@ properties:
+>      description: GPIO controlled connection to WAKE# signal
+>      maxItems: 1
+>  
+> +  msi-map: true
+> +
+> +  msi-map-mask: true
 
-Hmm but then there's extra work to get this working again on 8939 right?
+You should not need these. Just like interrup-map-mask, it is coming
+from pci-bus.yaml.
 
-Seems very dogmatic to drop working code for want of sending a dtsi out.
 
-Certainly my preference is to keep exiting working code and just 
-complete landing the relevant dtsi, rather than eject working code and 
-have to do the same work all over again.
+Best regards,
+Krzysztof
 
----
-bod
