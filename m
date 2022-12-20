@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A9E651EB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:24:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C69AE651EBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 11:24:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233296AbiLTKYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 05:24:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45774 "EHLO
+        id S233708AbiLTKY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 05:24:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233710AbiLTKYV (ORCPT
+        with ESMTP id S233678AbiLTKY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 05:24:21 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 075CCA192
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:24:19 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id q2so2694936ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:24:18 -0800 (PST)
+        Tue, 20 Dec 2022 05:24:26 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A46D106
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:24:25 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id p36so17853105lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 02:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2nWWYHSGV4/CK/gZwuFr3aoUab3hRgM8eOATcF9saOQ=;
-        b=ZUvVIReECB03oLuPcI8hmKz24g5x74fKb3wW6gaJS+V6tm4eY3REJdbiK1sLNzojpI
-         33xKUSmkFO3SMkWjwjlqb4cBmKh/rwCnni2JmsSVTnTAdOWP8WMj+kUjICDlE33aaKxn
-         5o7lWteG8X4Xny8ctrFftoeR9pTEQv6VpJuxplnzsin5j8YlWvayhbEUUPnhu3mnTEE4
-         tLC6KD7CeE8h4UYDVtL4mdzibftgsDlh3RnEZ59ydKYUrCY9dAhk8pagDMaFqwoz/0jD
-         zU0nLwOQeNAfCbX4Ttx513SFpuOIFBt0YqFoMu8xBnMS2lAWnK2X2PT6p7t5GTXksaKj
-         foSw==
+        bh=6AyEVG/P5nSoRfbYs4O0LF6hVQK/yIYZW8GprMFhulM=;
+        b=DE0eQoJ7ELLT8LEacgTlFtKqS9382+ykke9M7VDtII9e+XqXp4vcG9+XeqPxBo2SH+
+         EC6BH1QQ11k5zkXqZWMZ8Ghenhje4M78HjX+FbuVyogCGdVsTapPkN3wkOrpVJvlSIW/
+         N68tp8U8/NBl+vo2BkzDipOQRyfZOUgV7VOuZBO3ubwv6VjsFF0r2WUP+a2OhI3PgtyA
+         eq90g/i6lOh0qk+84KPVQ/KrxMe1qisUv0rEDCXZ2nPEw+Fmyots2ozIkBMCYS2aKwj6
+         lJP32lm/bqvO3/R4dbir5v6EG7Ij++7ENuPuk3wU6dcUrIbkvJO2NTPUL05q6aXusAQL
+         eHCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nWWYHSGV4/CK/gZwuFr3aoUab3hRgM8eOATcF9saOQ=;
-        b=ZSos8DYNsqzo/EYktL2kkbKN+8YICcY4jDDT/ysJipzrzru546G12dQq8feRgD/afd
-         ScFwn2ybIMuplpZIulmpNcp1U7h1GMOqUywsUTJ2CYqk83XnBm0uri+AaOxVMzSxjQwG
-         Gn4FRSKQ0x6ET/MpzY99JJSsCXsbCLR6gzMpg2TDEtbG4W6TGzgIUdojNOBAbCwunRt2
-         rn+710WRboAsdK2XBl3EqXG666J/LsNlzSw3nNT8YSOvEbVHLWJjHUKYFfHbDH4AOT1w
-         j0MHD8PiUKQqWsfuHXrWsKi31gs5ah38eXhukCRSuU96CofLfOAZV3KwjGMUOmG0lrki
-         uljg==
-X-Gm-Message-State: ANoB5plezqy5NED250OX6LS7Ycjs0Wp0PS92Lh4r5x5PqYq++OpCcDOC
-        YjnCMCl7d6i6gKhTzYUygZGQfQ==
-X-Google-Smtp-Source: AA0mqf6ouq14u4Q/aFuCYrqlFcYyotNruJNqQ/B9ddJ9kCLEEHBV0FCIl7wm5DZxEfMRfS3d0QfL6w==
-X-Received: by 2002:a2e:880a:0:b0:27b:4a90:2b01 with SMTP id x10-20020a2e880a000000b0027b4a902b01mr9115666ljh.19.1671531857379;
-        Tue, 20 Dec 2022 02:24:17 -0800 (PST)
-Received: from [192.168.1.101] (abxh212.neoplus.adsl.tpnet.pl. [83.9.1.212])
-        by smtp.gmail.com with ESMTPSA id y20-20020a05651c107400b002770a7e320esm977981ljm.81.2022.12.20.02.24.15
+        bh=6AyEVG/P5nSoRfbYs4O0LF6hVQK/yIYZW8GprMFhulM=;
+        b=syBPQxvAQhMlZo3h2+wXrNRGOkWL4zxyrvVni4VU1kax/7bXSUt/kVVC7wf74qGPSE
+         eR3wfNhucElFiyBGI8G75ILOBBbMaU7aKxQPFmSHqdrqk6iOP0UZMeW45uLFkLBq/I60
+         +LzuzQjOGjjnzo0dU1oiK3JFTKPMQyFgiYdxOlpdEfYkFcqcFErIZKEzKwrpImSvx0/X
+         hEkJyH3JX6VQ8UXxxQgEhL/gIhJq93mnRAOuwektIiiFDJkAXmY/xbAIoJJfON7Uu3EI
+         wkirc4W6Eo5WVjK8bY/yCw//wF5Lfth9ZyLjYeqgTKETx+2qyMWN/6ZSm+v5PUgZxl8P
+         L3Ww==
+X-Gm-Message-State: AFqh2kpXNlEumy4YuMMRZI12fCuL5V4tvS0zetNGWjFgOwNJPWoLmL0o
+        GcS20MFjSTTuvMkNQCmGRdDbkw==
+X-Google-Smtp-Source: AMrXdXslDBTiA36fc5Dis/BQkmDERjTO+2h+WiQGJwpuxHA8cCzVONlNCAEVf5N+zBuqL9xBy81I0w==
+X-Received: by 2002:ac2:48a2:0:b0:4b5:a65d:9b7c with SMTP id u2-20020ac248a2000000b004b5a65d9b7cmr508386lfg.21.1671531863586;
+        Tue, 20 Dec 2022 02:24:23 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id o22-20020ac25e36000000b004ab52b0bcf9sm1403854lfg.207.2022.12.20.02.24.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 02:24:16 -0800 (PST)
-Message-ID: <78a29328-a53b-7a09-c228-b7c373683ca4@linaro.org>
-Date:   Tue, 20 Dec 2022 11:24:15 +0100
+        Tue, 20 Dec 2022 02:24:23 -0800 (PST)
+Message-ID: <6de40fac-3903-665c-2014-07d3c90ba639@linaro.org>
+Date:   Tue, 20 Dec 2022 11:24:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v3 10/15] thermal/drivers/tsens: Drop single-cell code for
- msm8976/msm8956
+Subject: Re: [PATCH 1/3] dt-bindings: PCI: qcom: Update maintainers
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-11-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221220024721.947147-11-dmitry.baryshkov@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     bhelgaas@google.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221219191427.480085-1-manivannan.sadhasivam@linaro.org>
+ <20221219191427.480085-2-manivannan.sadhasivam@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221219191427.480085-2-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,186 +79,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 20.12.2022 03:47, Dmitry Baryshkov wrote:
-> There is no dtsi file for msm8976 in the kernel sources.
-This is not true :/
-
-But it has just been merged, if we get there fast, we can get
-this patch going *and* convert the node to use fuses..
-Unless breaking a platform that's only in linux-next would be
-an issue.. Maybe we could prettyplease ask Bjorn to send a
--fixes pull with a "remove tsens node from 8976" commit?
-Not sure if it's too late or not...
-
-
-Konrad
-Drop the
-> compatibility with unofficial dtsi and remove support for handling the
-> single-cell calibration data on msm8976.
+On 19/12/2022 20:14, Manivannan Sadhasivam wrote:
+> Stanimir has left mm-sol and already expressed his wish to not continue
+> maintaining the PCIe RC driver. So his entry can be removed.
 > 
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/thermal/qcom/tsens-v1.c | 126 +-------------------------------
->  1 file changed, 2 insertions(+), 124 deletions(-)
+> Adding myself as the co-maintainer since I took over the PCIe RC driver
+> maintainership from Stanimir.
 > 
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 89955522041d..9151c1043a11 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -21,63 +21,6 @@
->  #define TM_HIGH_LOW_INT_STATUS_OFF		0x0088
->  #define TM_HIGH_LOW_Sn_INT_THRESHOLD_OFF	0x0090
->  
-> -/* eeprom layout data for msm8956/76 (v1) */
-> -#define MSM8976_BASE0_MASK	0xff
-> -#define MSM8976_BASE1_MASK	0xff
-> -#define MSM8976_BASE1_SHIFT	8
-> -
-> -#define MSM8976_S0_P1_MASK	0x3f00
-> -#define MSM8976_S1_P1_MASK	0x3f00000
-> -#define MSM8976_S2_P1_MASK	0x3f
-> -#define MSM8976_S3_P1_MASK	0x3f000
-> -#define MSM8976_S4_P1_MASK	0x3f00
-> -#define MSM8976_S5_P1_MASK	0x3f00000
-> -#define MSM8976_S6_P1_MASK	0x3f
-> -#define MSM8976_S7_P1_MASK	0x3f000
-> -#define MSM8976_S8_P1_MASK	0x1f8
-> -#define MSM8976_S9_P1_MASK	0x1f8000
-> -#define MSM8976_S10_P1_MASK	0xf8000000
-> -#define MSM8976_S10_P1_MASK_1	0x1
-> -
-> -#define MSM8976_S0_P2_MASK	0xfc000
-> -#define MSM8976_S1_P2_MASK	0xfc000000
-> -#define MSM8976_S2_P2_MASK	0xfc0
-> -#define MSM8976_S3_P2_MASK	0xfc0000
-> -#define MSM8976_S4_P2_MASK	0xfc000
-> -#define MSM8976_S5_P2_MASK	0xfc000000
-> -#define MSM8976_S6_P2_MASK	0xfc0
-> -#define MSM8976_S7_P2_MASK	0xfc0000
-> -#define MSM8976_S8_P2_MASK	0x7e00
-> -#define MSM8976_S9_P2_MASK	0x7e00000
-> -#define MSM8976_S10_P2_MASK	0x7e
-> -
-> -#define MSM8976_S0_P1_SHIFT	8
-> -#define MSM8976_S1_P1_SHIFT	20
-> -#define MSM8976_S2_P1_SHIFT	0
-> -#define MSM8976_S3_P1_SHIFT	12
-> -#define MSM8976_S4_P1_SHIFT	8
-> -#define MSM8976_S5_P1_SHIFT	20
-> -#define MSM8976_S6_P1_SHIFT	0
-> -#define MSM8976_S7_P1_SHIFT	12
-> -#define MSM8976_S8_P1_SHIFT	3
-> -#define MSM8976_S9_P1_SHIFT	15
-> -#define MSM8976_S10_P1_SHIFT	27
-> -#define MSM8976_S10_P1_SHIFT_1	0
-> -
-> -#define MSM8976_S0_P2_SHIFT	14
-> -#define MSM8976_S1_P2_SHIFT	26
-> -#define MSM8976_S2_P2_SHIFT	6
-> -#define MSM8976_S3_P2_SHIFT	18
-> -#define MSM8976_S4_P2_SHIFT	14
-> -#define MSM8976_S5_P2_SHIFT	26
-> -#define MSM8976_S6_P2_SHIFT	6
-> -#define MSM8976_S7_P2_SHIFT	18
-> -#define MSM8976_S8_P2_SHIFT	9
-> -#define MSM8976_S9_P2_SHIFT	21
-> -#define MSM8976_S10_P2_SHIFT	1
-> -
-> -#define MSM8976_CAL_SEL_MASK	0x3
-> -
->  /* eeprom layout data for qcs404/405 (v1) */
->  #define BASE0_MASK	0x000007f8
->  #define BASE1_MASK	0x0007f800
-> @@ -207,71 +150,6 @@ static int calibrate_v1(struct tsens_priv *priv)
->  	return 0;
->  }
->  
-> -static int calibrate_8976(struct tsens_priv *priv)
-> -{
-> -	int base0 = 0, base1 = 0, i;
-> -	u32 p1[11], p2[11];
-> -	int mode = 0, tmp = 0;
-> -	u32 *qfprom_cdata;
-> -
-> -	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> -	if (IS_ERR(qfprom_cdata))
-> -		return PTR_ERR(qfprom_cdata);
-> -
-> -	mode = (qfprom_cdata[4] & MSM8976_CAL_SEL_MASK);
-> -	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> -
-> -	switch (mode) {
-> -	case TWO_PT_CALIB:
-> -		base1 = (qfprom_cdata[2] & MSM8976_BASE1_MASK) >> MSM8976_BASE1_SHIFT;
-> -		p2[0] = (qfprom_cdata[0] & MSM8976_S0_P2_MASK) >> MSM8976_S0_P2_SHIFT;
-> -		p2[1] = (qfprom_cdata[0] & MSM8976_S1_P2_MASK) >> MSM8976_S1_P2_SHIFT;
-> -		p2[2] = (qfprom_cdata[1] & MSM8976_S2_P2_MASK) >> MSM8976_S2_P2_SHIFT;
-> -		p2[3] = (qfprom_cdata[1] & MSM8976_S3_P2_MASK) >> MSM8976_S3_P2_SHIFT;
-> -		p2[4] = (qfprom_cdata[2] & MSM8976_S4_P2_MASK) >> MSM8976_S4_P2_SHIFT;
-> -		p2[5] = (qfprom_cdata[2] & MSM8976_S5_P2_MASK) >> MSM8976_S5_P2_SHIFT;
-> -		p2[6] = (qfprom_cdata[3] & MSM8976_S6_P2_MASK) >> MSM8976_S6_P2_SHIFT;
-> -		p2[7] = (qfprom_cdata[3] & MSM8976_S7_P2_MASK) >> MSM8976_S7_P2_SHIFT;
-> -		p2[8] = (qfprom_cdata[4] & MSM8976_S8_P2_MASK) >> MSM8976_S8_P2_SHIFT;
-> -		p2[9] = (qfprom_cdata[4] & MSM8976_S9_P2_MASK) >> MSM8976_S9_P2_SHIFT;
-> -		p2[10] = (qfprom_cdata[5] & MSM8976_S10_P2_MASK) >> MSM8976_S10_P2_SHIFT;
-> -
-> -		for (i = 0; i < priv->num_sensors; i++)
-> -			p2[i] = ((base1 + p2[i]) << 2);
-> -		fallthrough;
-> -	case ONE_PT_CALIB2:
-> -		base0 = qfprom_cdata[0] & MSM8976_BASE0_MASK;
-> -		p1[0] = (qfprom_cdata[0] & MSM8976_S0_P1_MASK) >> MSM8976_S0_P1_SHIFT;
-> -		p1[1] = (qfprom_cdata[0] & MSM8976_S1_P1_MASK) >> MSM8976_S1_P1_SHIFT;
-> -		p1[2] = (qfprom_cdata[1] & MSM8976_S2_P1_MASK) >> MSM8976_S2_P1_SHIFT;
-> -		p1[3] = (qfprom_cdata[1] & MSM8976_S3_P1_MASK) >> MSM8976_S3_P1_SHIFT;
-> -		p1[4] = (qfprom_cdata[2] & MSM8976_S4_P1_MASK) >> MSM8976_S4_P1_SHIFT;
-> -		p1[5] = (qfprom_cdata[2] & MSM8976_S5_P1_MASK) >> MSM8976_S5_P1_SHIFT;
-> -		p1[6] = (qfprom_cdata[3] & MSM8976_S6_P1_MASK) >> MSM8976_S6_P1_SHIFT;
-> -		p1[7] = (qfprom_cdata[3] & MSM8976_S7_P1_MASK) >> MSM8976_S7_P1_SHIFT;
-> -		p1[8] = (qfprom_cdata[4] & MSM8976_S8_P1_MASK) >> MSM8976_S8_P1_SHIFT;
-> -		p1[9] = (qfprom_cdata[4] & MSM8976_S9_P1_MASK) >> MSM8976_S9_P1_SHIFT;
-> -		p1[10] = (qfprom_cdata[4] & MSM8976_S10_P1_MASK) >> MSM8976_S10_P1_SHIFT;
-> -		tmp = (qfprom_cdata[5] & MSM8976_S10_P1_MASK_1) << MSM8976_S10_P1_SHIFT_1;
-> -		p1[10] |= tmp;
-> -
-> -		for (i = 0; i < priv->num_sensors; i++)
-> -			p1[i] = (((base0) + p1[i]) << 2);
-> -		break;
-> -	default:
-> -		for (i = 0; i < priv->num_sensors; i++) {
-> -			p1[i] = 500;
-> -			p2[i] = 780;
-> -		}
-> -		break;
-> -	}
-> -
-> -	compute_intercept_slope(priv, p1, p2, mode);
-> -	kfree(qfprom_cdata);
-> -
-> -	return 0;
-> -}
-> -
->  /* v1.x: msm8956,8976,qcs404,405 */
->  
->  static struct tsens_features tsens_v1_feat = {
-> @@ -370,7 +248,7 @@ struct tsens_plat_data data_tsens_v1 = {
->  
->  static const struct tsens_ops ops_8956 = {
->  	.init		= init_8956,
-> -	.calibrate	= calibrate_8976,
-> +	.calibrate	= tsens_calibrate_common,
->  	.get_temp	= get_temp_tsens_valid,
->  };
->  
-> @@ -383,7 +261,7 @@ struct tsens_plat_data data_8956 = {
->  
->  static const struct tsens_ops ops_8976 = {
->  	.init		= init_common,
-> -	.calibrate	= calibrate_8976,
-> +	.calibrate	= tsens_calibrate_common,
->  	.get_temp	= get_temp_tsens_valid,
->  };
->  
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
