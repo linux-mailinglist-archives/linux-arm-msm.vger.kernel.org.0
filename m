@@ -2,148 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38364652902
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 23:29:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49FEF652914
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 23:32:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiLTW10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 17:27:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
+        id S234083AbiLTWcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 17:32:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbiLTW1X (ORCPT
+        with ESMTP id S233959AbiLTWcM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 17:27:23 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA8DFF1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 14:27:21 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id m19so19564851edj.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 14:27:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vDN/5v5x3AD8aunYp6Yw+XZt6VK6NcKKWKn7atc35rQ=;
-        b=hU83RSV9Vh0OlsC1VfiC3slmpdenrSL3zgNGmjJMSnkdfHdlGR1siYMFX3L1d7HkeJ
-         cDbQ3svzofPMbLnjrRJFTstudiEuav80Yn5/3Hp6wCn45r37QvTMqZiJBJ6r8Du7IsvM
-         76iVjt5ib665gPgLruBPzByzfHhwyM0ADXMWY5NrK7O2FfkfvMLT/6wcaSRRHoG1cv71
-         eryFUR/OLlY/C4n7wZ9OtSb1er9TCGeo3LXQWjMhQRAd+Uwuz2rDwa+Va3m3Q9fF6n08
-         1PprID5zblHKtoMdHb8bl8SMe8UxP62i3vKtH9K4ncQ983lh91FwEsFMtnnOOsG5uvi6
-         S8dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vDN/5v5x3AD8aunYp6Yw+XZt6VK6NcKKWKn7atc35rQ=;
-        b=byIfnGLSkGTAE81O0kebueZRye7S2e2q7VrXr4fFuOoG6QI9MHQcO2Ki3/bIMbikUr
-         5wa/BSj3AIvJDTJeHwgadmrYSeFe2XBLYzkKvHx/SVamqUqk7X2bxqn3P7iR5kuC3GVx
-         nEgx6gdiEoMAUX5PpPMYwlEVmXHfq7RiKufd/J8VroPx5pWlxOYVy+waJ6aiFS3oBjf2
-         w0A95r7SQJVHRYefxX5qH2cq1TByrHYKpSaY/Vun8/rYmnv0vUEaYMLYNjVb52FTZdeU
-         KazZIGt7jAD5S3hUZUoPkGgLQxf8NXX42mygZB2dcNSbV9niQPjT7Ex6mpLYe3/HDl6J
-         zS6w==
-X-Gm-Message-State: ANoB5pkBJv5Xv5fnncc2pc64TUqYVvOQJABMUWbAwEyyX4LOXL5yT/ZB
-        NYWCuyHWgWYuj1rpZolwNBMljA==
-X-Google-Smtp-Source: AA0mqf7SLZvw2edI/x/p/oBKjSA6C0c+O6TQ6txc3QQJmXfuXeQ6PyPEU3ctG4om5l/tkc4VbK0qag==
-X-Received: by 2002:aa7:d403:0:b0:470:31fb:cdcc with SMTP id z3-20020aa7d403000000b0047031fbcdccmr28813524edq.6.1671575240162;
-        Tue, 20 Dec 2022 14:27:20 -0800 (PST)
-Received: from [192.168.1.115] ([185.126.107.38])
-        by smtp.gmail.com with ESMTPSA id t21-20020a056402021500b00463bc1ddc76sm6206860edv.28.2022.12.20.14.27.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 14:27:19 -0800 (PST)
-Message-ID: <7549c8a8-bad0-7f7b-b07a-4a80d44d1ec3@linaro.org>
-Date:   Tue, 20 Dec 2022 23:27:17 +0100
+        Tue, 20 Dec 2022 17:32:12 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B90FB1D668;
+        Tue, 20 Dec 2022 14:32:10 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 477B2201D6;
+        Tue, 20 Dec 2022 23:32:06 +0100 (CET)
+Date:   Tue, 20 Dec 2022 23:32:04 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        sunliming <sunliming@kylinos.cn>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 3/6] drm/msm/dpu1: Wire up DSC mask for active CTL
+ configuration
+Message-ID: <20221220223204.i3tfa2biq7bgkg5o@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        sunliming <sunliming@kylinos.cn>, Sam Ravnborg <sam@ravnborg.org>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221213232207.113607-1-marijn.suijten@somainline.org>
+ <20221213232207.113607-4-marijn.suijten@somainline.org>
+ <184d22f1-7ed1-4a67-1c25-9fafeb94db83@linaro.org>
+ <20221214193026.dv2fuubysctcvlkg@SoMainline.org>
+ <658da2cf-1e1a-af27-b085-edf0887b8dae@linaro.org>
+ <8f33c1d0-a2ca-dc49-1884-01541ad83d49@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.0
-Subject: Re: [PATCH v3 1/2] remoteproc: elf_loader: Update resource table name
- check
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, mathieu.poirier@linaro.org,
-        corbet@lwn.net
-References: <1671523269-21154-1-git-send-email-quic_srivasam@quicinc.com>
- <1671523269-21154-2-git-send-email-quic_srivasam@quicinc.com>
- <0d683526-5707-d5b4-e96d-b2d982d4b5da@quicinc.com>
-From:   =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-In-Reply-To: <0d683526-5707-d5b4-e96d-b2d982d4b5da@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <8f33c1d0-a2ca-dc49-1884-01541ad83d49@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/12/22 13:50, Mukesh Ojha wrote:
-> Hi,
+On 2022-12-16 14:20:52, Abhinav Kumar wrote:
 > 
-> On 12/20/2022 1:31 PM, Srinivasa Rao Mandadapu wrote:
->> Update the way of checking resource table name with prefix
->> substring search instead of complete string search.
->> In general Qualcomm DSP binary is prepared by combining different ELFs',
->> hence section header name (e.g. .resource_table), appended with ELF name
->> to differentiate with same section(e.g. resource_table.ac_bin_process) of
->> different ELFs'.
->> Example readelf output of DSP binary:
->>      [60] .start.ac_bin_process PROGBITS
->>      [61] .resource_table.ac_bin_process PROGBITS
->>      [62] .comment.ac_bin_process PROGBITS
->>
 > 
-> Could we rephrase above like below ?
+> On 12/14/2022 5:08 PM, Dmitry Baryshkov wrote:
+> > On 14/12/2022 21:30, Marijn Suijten wrote:
+> >> On 2022-12-14 20:43:29, Dmitry Baryshkov wrote:
+> >>> On 14/12/2022 01:22, Marijn Suijten wrote:
+> >>>> [..]
+> >>> We usually don't have DSC with the writeback, don't we?
+> >>
+> >> I am unsure so ended up adding them in writeback regardless.� Downstream
+> >> uses a separate callback to process intf_cfg.dsc instead of going
+> >> through setup_intf_cfg().
+> >>
+> >> To prevent these from being missed again (in the case of copy&paste),
+> >> how about instead having some function that sets up intf_cfg with these
+> >> default values from a phys_enc?� That way most of this remains oblivious
+> >> to the caller.
+> > 
+> > I'm not sure this is possible. E.g. intf_cfg.dsc should not be set for 
+> > the WB.
+> > 
+> 
+> Although this change is harmless because 
+> dpu_encoder_helper_get_dsc(phys_enc) will not return a valid DSC mask 
+> for the WB encoder, hence the setup_intf_cfg will just skip the DSC 
+> programming, I also agree that we can skip setting the intf_cfg.dsc for 
+> the writeback encoder in this patch.
 
-FWIW I agree :) I assumed Srinivasa was using a broken email client
-that strips newlines and packs everything.
+Since both of you agree that it is useless I'll drop this in V2.  Have
+to confess that I know nothing about the writeback interface and haven't
+even read the code; does it run in parallel to a "physical" (e.g.
+DP/DSI) interface to capture screenshots (or even video) of what is
+currently being shown on the screen?  By that logic the WB may have
+needed to know what is going on in the HW, but it wouldn't have made any
+sense regardless if the presented planes first pass through DSC before
+being captured.  Something for me to read up on :)
 
-> It could be also taken why applying 
-> the patch.
-> 
-> Update the way of checking resource table name with prefix substring 
-> search instead of complete string search.
-> 
-> In general, Qualcomm DSP binary is prepared by combining different 
-> ELF's. Hence, section header name (e.g. .resource_table), appended
-> with ELF name to differentiate with same section(e.g. 
-> resource_table.ac_bin_process) of different ELFs'.
-> 
-> Example readelf output of DSP binary:
->        [60] .start.ac_bin_process PROGBITS
->        [61] .resource_table.ac_bin_process PROGBITS
->        [62] .comment.ac_bin_process PROGBITS
-> 
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> 
-> Otherwise, LGTM.
-> Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> 
-> -Mukesh
->> ---
->>   drivers/remoteproc/remoteproc_elf_loader.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/remoteproc/remoteproc_elf_loader.c 
->> b/drivers/remoteproc/remoteproc_elf_loader.c
->> index 5a412d7..77330d6 100644
->> --- a/drivers/remoteproc/remoteproc_elf_loader.c
->> +++ b/drivers/remoteproc/remoteproc_elf_loader.c
->> @@ -272,7 +272,7 @@ find_table(struct device *dev, const struct 
->> firmware *fw)
->>           u64 offset = elf_shdr_get_sh_offset(class, shdr);
->>           u32 name = elf_shdr_get_sh_name(class, shdr);
->> -        if (strcmp(name_table + name, ".resource_table"))
->> +        if (!strstarts(name_table + name, ".resource_table"))
->>               continue;
->>           table = (struct resource_table *)(elf_data + offset);
-
+- Marijn
