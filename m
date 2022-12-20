@@ -2,268 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA92F65219B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 14:35:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E36565219D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Dec 2022 14:39:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233551AbiLTNfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 08:35:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53952 "EHLO
+        id S233527AbiLTNjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 08:39:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233556AbiLTNfF (ORCPT
+        with ESMTP id S231678AbiLTNjR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 08:35:05 -0500
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40D918E10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 05:35:02 -0800 (PST)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-3cbdd6c00adso168767997b3.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 05:35:02 -0800 (PST)
+        Tue, 20 Dec 2022 08:39:17 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339CC18E33
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 05:39:16 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id f34so3426413lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 05:39:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CVRvy3Zwd4BHRC6erjG/yd9oXmYCOUUBiEqJLMzBd4k=;
-        b=u+eL2eSz4Bv5CA81UcA9onoJs2UyrheC7TFg/EQMmrB5+GDUgDY6CxuQS25L2RK8M7
-         TclTpg4H+piUauq31FzZtF5j02ZjuhzkioEJfOtuvKEWHJW0jvYxBGfNOtasOb9saZsN
-         MlekkM0NqdpKtZw+gVEYu6Am858C7cquyJ/bGFDS4TSQHw8qmeFQO9ZfrcvMxYfnLh/y
-         soby5bno42RVEzpAd/UlcPGjiw6EpNE3zQYzkjBZJ7RevpGav9fX2rQbZ1TMX2J9q6mY
-         5e2spt+3NASccNxl3AaxpmUK73XBls38Tx/gpaOmLn4jha0YeCAMW4s4aWCeGOYh9MMv
-         BkGQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=h6oBJ8oYk8FnE07HmU5+cXGtoQDlc1shnr4HQgSbs3o=;
+        b=jsXIn/7Uc90TtAjjxgq5IrlXD5uqjcpOE34sf8m8RTXf3q25kmaKM5I6tdzm9VxWsT
+         kpN0Bg+TSAfciPUs0JnXNMBaIDDv+cot4qoQFe721pyYMX3DqPu99EUR3z73gd+eOaik
+         1XtnfYyWMGx8ZVVsP777CfngIs2if5hRsShdy9tFVMGE1L7glvwht/BkGW+BqIBVJ6bf
+         ThCQmCOHtKi2WIh6R+a1OQejYzXI6NLeIgyCC31WD0To3a1MdQocVEmU9pb+3QUDDg7N
+         6pIXuDsFBA643xyeklbPeVhGxa0BAVdz7FDI1ABzHvhBS31x/u2rTbmgTYRGPTLf6BWZ
+         OtLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CVRvy3Zwd4BHRC6erjG/yd9oXmYCOUUBiEqJLMzBd4k=;
-        b=uaDsdsyrvD/7veYsN7wDrjVRmcogYwsBwKhmKxP/osDFuUSk0JrR93itfCmojA/hOT
-         hqhfKXqzkfVCHEJ33u3hDg5OgPl+6GunTgMYB9A9V9d23v0BzcY4fq7Z0iVDabxZMC1V
-         Wysu9YFPMiTrVOXtJ2e/CZ/WckulUfQbCOp9eLRFOZZiO30Wz4yFHfRoSRvIqq9moW03
-         SAKZnGZ1UfRgjEbZR3f+aSl/MUg3H9u1P+9+0NqTVML+tT+ePQB+5KUZZHFL1Do3gJ1U
-         CodS0DSErywwhPalK6bvmTQa/suVYxrjRpX5+xG8j2Q4oU+ZdMQUmhZU8RJZKMly8Bpb
-         nF1A==
-X-Gm-Message-State: AFqh2kr9EgT6BX2obh69fqJtUeGfJLK9L2quwEqmPWGpYMP2TkVhq2+M
-        /aTxy/7Yrxls+B9j0e56bMmjYNSst2wd+CECXmCQbw==
-X-Google-Smtp-Source: AMrXdXtbbN+GFvcN2ctLBAsYtbrL/dd2+KyKV9S2iXx4H4AEc1uFmw89+imboCoSKXx57WJj4s8ByfXY3XP4T/8ade0=
-X-Received: by 2002:a0d:d643:0:b0:370:4c23:eacc with SMTP id
- y64-20020a0dd643000000b003704c23eaccmr1115777ywd.127.1671543301820; Tue, 20
- Dec 2022 05:35:01 -0800 (PST)
-MIME-Version: 1.0
-References: <20221220024721.947147-1-dmitry.baryshkov@linaro.org>
- <20221220024721.947147-11-dmitry.baryshkov@linaro.org> <78a29328-a53b-7a09-c228-b7c373683ca4@linaro.org>
-In-Reply-To: <78a29328-a53b-7a09-c228-b7c373683ca4@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 20 Dec 2022 15:34:50 +0200
-Message-ID: <CAA8EJprN-oppse9Ktoxyk6MUhu7vk4pJ84tv5XyviyG+ODa0=A@mail.gmail.com>
-Subject: Re: [PATCH v3 10/15] thermal/drivers/tsens: Drop single-cell code for msm8976/msm8956
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        bh=h6oBJ8oYk8FnE07HmU5+cXGtoQDlc1shnr4HQgSbs3o=;
+        b=8Km3c0lVmV2nM/Wdyka0m6I8oW8YF5n1EWxxE4s6ER6ZX2ShgSz1huSr+MVOVdKap1
+         ojK+w/zRsSUY8NELUopDooNKOBFIWmtv9J71yVKgPqwdvIcO9kgkBsqYgdwePyumv9El
+         /7oZsxF1bTknyWShPS9lv1fSLmEX+Ht8+2/bn2d3TbAwZoYWwNfOnVFalbrepsZ83ryJ
+         EdzxNWnP44Y9NbGZYnaPd6LWv4fPlqwINpqk1v9PR4OjZZnXwxWiELgXy8+Y6XAzf+jo
+         NTYvrZLJL7uOI6MllDSMr1usgWl4IA+/5EFcWfapG3PTB+7YhVJsBd8lVNUpD9woArRu
+         IRlw==
+X-Gm-Message-State: AFqh2kpDhFr1J3Le9uUzdeEGMTHuyjhmOEQu89wYfQ4lh0vO1gn57u91
+        O3dHSl/GlXP0UqyEm+6gIjenB+ziwBDU9TdI
+X-Google-Smtp-Source: AMrXdXvwNmIP02ze+f4f9HZ2sX8ad4oa9BLha0iWuj7HGsqN9P/WtFT4aHXxwtstFYPoSoNChTx72w==
+X-Received: by 2002:a05:6512:252c:b0:4c0:4387:e3c2 with SMTP id be44-20020a056512252c00b004c04387e3c2mr5736195lfb.11.1671543554280;
+        Tue, 20 Dec 2022 05:39:14 -0800 (PST)
+Received: from localhost.localdomain (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
+        by smtp.gmail.com with ESMTPSA id u23-20020a196a17000000b004b5774726dcsm1456000lfu.236.2022.12.20.05.39.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 05:39:13 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] cpufreq: qcom-hw: Fix reading "reg" with address/size-cells != 2
+Date:   Tue, 20 Dec 2022 14:39:10 +0100
+Message-Id: <20221220133910.240389-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Dec 2022 at 12:24, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 20.12.2022 03:47, Dmitry Baryshkov wrote:
-> > There is no dtsi file for msm8976 in the kernel sources.
-> This is not true :/
->
-> But it has just been merged, if we get there fast, we can get
-> this patch going *and* convert the node to use fuses..
-> Unless breaking a platform that's only in linux-next would be
-> an issue.. Maybe we could prettyplease ask Bjorn to send a
-> -fixes pull with a "remove tsens node from 8976" commit?
-> Not sure if it's too late or not...
+Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during
+probe") assumed that every reg variable is 4*u32 wide (as most new qcom
+SoCs set #address- and #size-cells to <2>. That is not the case for all of
+them though. Check the cells values dynamically to ensure the proper
+region of the DTB is being read.
 
-Ugh. It's a pity that I missed the dtsi. Bjorn, Angelo, Marijn, any thoughts?
+Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- remove the comment about 'i' reuse
+- call of_node_put() on exit
 
-> Konrad
-> Drop the
-> > compatibility with unofficial dtsi and remove support for handling the
-> > single-cell calibration data on msm8976.
-> >
-> > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/thermal/qcom/tsens-v1.c | 126 +-------------------------------
-> >  1 file changed, 2 insertions(+), 124 deletions(-)
-> >
-> > diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> > index 89955522041d..9151c1043a11 100644
-> > --- a/drivers/thermal/qcom/tsens-v1.c
-> > +++ b/drivers/thermal/qcom/tsens-v1.c
-> > @@ -21,63 +21,6 @@
-> >  #define TM_HIGH_LOW_INT_STATUS_OFF           0x0088
-> >  #define TM_HIGH_LOW_Sn_INT_THRESHOLD_OFF     0x0090
-> >
-> > -/* eeprom layout data for msm8956/76 (v1) */
-> > -#define MSM8976_BASE0_MASK   0xff
-> > -#define MSM8976_BASE1_MASK   0xff
-> > -#define MSM8976_BASE1_SHIFT  8
-> > -
-> > -#define MSM8976_S0_P1_MASK   0x3f00
-> > -#define MSM8976_S1_P1_MASK   0x3f00000
-> > -#define MSM8976_S2_P1_MASK   0x3f
-> > -#define MSM8976_S3_P1_MASK   0x3f000
-> > -#define MSM8976_S4_P1_MASK   0x3f00
-> > -#define MSM8976_S5_P1_MASK   0x3f00000
-> > -#define MSM8976_S6_P1_MASK   0x3f
-> > -#define MSM8976_S7_P1_MASK   0x3f000
-> > -#define MSM8976_S8_P1_MASK   0x1f8
-> > -#define MSM8976_S9_P1_MASK   0x1f8000
-> > -#define MSM8976_S10_P1_MASK  0xf8000000
-> > -#define MSM8976_S10_P1_MASK_1        0x1
-> > -
-> > -#define MSM8976_S0_P2_MASK   0xfc000
-> > -#define MSM8976_S1_P2_MASK   0xfc000000
-> > -#define MSM8976_S2_P2_MASK   0xfc0
-> > -#define MSM8976_S3_P2_MASK   0xfc0000
-> > -#define MSM8976_S4_P2_MASK   0xfc000
-> > -#define MSM8976_S5_P2_MASK   0xfc000000
-> > -#define MSM8976_S6_P2_MASK   0xfc0
-> > -#define MSM8976_S7_P2_MASK   0xfc0000
-> > -#define MSM8976_S8_P2_MASK   0x7e00
-> > -#define MSM8976_S9_P2_MASK   0x7e00000
-> > -#define MSM8976_S10_P2_MASK  0x7e
-> > -
-> > -#define MSM8976_S0_P1_SHIFT  8
-> > -#define MSM8976_S1_P1_SHIFT  20
-> > -#define MSM8976_S2_P1_SHIFT  0
-> > -#define MSM8976_S3_P1_SHIFT  12
-> > -#define MSM8976_S4_P1_SHIFT  8
-> > -#define MSM8976_S5_P1_SHIFT  20
-> > -#define MSM8976_S6_P1_SHIFT  0
-> > -#define MSM8976_S7_P1_SHIFT  12
-> > -#define MSM8976_S8_P1_SHIFT  3
-> > -#define MSM8976_S9_P1_SHIFT  15
-> > -#define MSM8976_S10_P1_SHIFT 27
-> > -#define MSM8976_S10_P1_SHIFT_1       0
-> > -
-> > -#define MSM8976_S0_P2_SHIFT  14
-> > -#define MSM8976_S1_P2_SHIFT  26
-> > -#define MSM8976_S2_P2_SHIFT  6
-> > -#define MSM8976_S3_P2_SHIFT  18
-> > -#define MSM8976_S4_P2_SHIFT  14
-> > -#define MSM8976_S5_P2_SHIFT  26
-> > -#define MSM8976_S6_P2_SHIFT  6
-> > -#define MSM8976_S7_P2_SHIFT  18
-> > -#define MSM8976_S8_P2_SHIFT  9
-> > -#define MSM8976_S9_P2_SHIFT  21
-> > -#define MSM8976_S10_P2_SHIFT 1
-> > -
-> > -#define MSM8976_CAL_SEL_MASK 0x3
-> > -
-> >  /* eeprom layout data for qcs404/405 (v1) */
-> >  #define BASE0_MASK   0x000007f8
-> >  #define BASE1_MASK   0x0007f800
-> > @@ -207,71 +150,6 @@ static int calibrate_v1(struct tsens_priv *priv)
-> >       return 0;
-> >  }
-> >
-> > -static int calibrate_8976(struct tsens_priv *priv)
-> > -{
-> > -     int base0 = 0, base1 = 0, i;
-> > -     u32 p1[11], p2[11];
-> > -     int mode = 0, tmp = 0;
-> > -     u32 *qfprom_cdata;
-> > -
-> > -     qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> > -     if (IS_ERR(qfprom_cdata))
-> > -             return PTR_ERR(qfprom_cdata);
-> > -
-> > -     mode = (qfprom_cdata[4] & MSM8976_CAL_SEL_MASK);
-> > -     dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> > -
-> > -     switch (mode) {
-> > -     case TWO_PT_CALIB:
-> > -             base1 = (qfprom_cdata[2] & MSM8976_BASE1_MASK) >> MSM8976_BASE1_SHIFT;
-> > -             p2[0] = (qfprom_cdata[0] & MSM8976_S0_P2_MASK) >> MSM8976_S0_P2_SHIFT;
-> > -             p2[1] = (qfprom_cdata[0] & MSM8976_S1_P2_MASK) >> MSM8976_S1_P2_SHIFT;
-> > -             p2[2] = (qfprom_cdata[1] & MSM8976_S2_P2_MASK) >> MSM8976_S2_P2_SHIFT;
-> > -             p2[3] = (qfprom_cdata[1] & MSM8976_S3_P2_MASK) >> MSM8976_S3_P2_SHIFT;
-> > -             p2[4] = (qfprom_cdata[2] & MSM8976_S4_P2_MASK) >> MSM8976_S4_P2_SHIFT;
-> > -             p2[5] = (qfprom_cdata[2] & MSM8976_S5_P2_MASK) >> MSM8976_S5_P2_SHIFT;
-> > -             p2[6] = (qfprom_cdata[3] & MSM8976_S6_P2_MASK) >> MSM8976_S6_P2_SHIFT;
-> > -             p2[7] = (qfprom_cdata[3] & MSM8976_S7_P2_MASK) >> MSM8976_S7_P2_SHIFT;
-> > -             p2[8] = (qfprom_cdata[4] & MSM8976_S8_P2_MASK) >> MSM8976_S8_P2_SHIFT;
-> > -             p2[9] = (qfprom_cdata[4] & MSM8976_S9_P2_MASK) >> MSM8976_S9_P2_SHIFT;
-> > -             p2[10] = (qfprom_cdata[5] & MSM8976_S10_P2_MASK) >> MSM8976_S10_P2_SHIFT;
-> > -
-> > -             for (i = 0; i < priv->num_sensors; i++)
-> > -                     p2[i] = ((base1 + p2[i]) << 2);
-> > -             fallthrough;
-> > -     case ONE_PT_CALIB2:
-> > -             base0 = qfprom_cdata[0] & MSM8976_BASE0_MASK;
-> > -             p1[0] = (qfprom_cdata[0] & MSM8976_S0_P1_MASK) >> MSM8976_S0_P1_SHIFT;
-> > -             p1[1] = (qfprom_cdata[0] & MSM8976_S1_P1_MASK) >> MSM8976_S1_P1_SHIFT;
-> > -             p1[2] = (qfprom_cdata[1] & MSM8976_S2_P1_MASK) >> MSM8976_S2_P1_SHIFT;
-> > -             p1[3] = (qfprom_cdata[1] & MSM8976_S3_P1_MASK) >> MSM8976_S3_P1_SHIFT;
-> > -             p1[4] = (qfprom_cdata[2] & MSM8976_S4_P1_MASK) >> MSM8976_S4_P1_SHIFT;
-> > -             p1[5] = (qfprom_cdata[2] & MSM8976_S5_P1_MASK) >> MSM8976_S5_P1_SHIFT;
-> > -             p1[6] = (qfprom_cdata[3] & MSM8976_S6_P1_MASK) >> MSM8976_S6_P1_SHIFT;
-> > -             p1[7] = (qfprom_cdata[3] & MSM8976_S7_P1_MASK) >> MSM8976_S7_P1_SHIFT;
-> > -             p1[8] = (qfprom_cdata[4] & MSM8976_S8_P1_MASK) >> MSM8976_S8_P1_SHIFT;
-> > -             p1[9] = (qfprom_cdata[4] & MSM8976_S9_P1_MASK) >> MSM8976_S9_P1_SHIFT;
-> > -             p1[10] = (qfprom_cdata[4] & MSM8976_S10_P1_MASK) >> MSM8976_S10_P1_SHIFT;
-> > -             tmp = (qfprom_cdata[5] & MSM8976_S10_P1_MASK_1) << MSM8976_S10_P1_SHIFT_1;
-> > -             p1[10] |= tmp;
-> > -
-> > -             for (i = 0; i < priv->num_sensors; i++)
-> > -                     p1[i] = (((base0) + p1[i]) << 2);
-> > -             break;
-> > -     default:
-> > -             for (i = 0; i < priv->num_sensors; i++) {
-> > -                     p1[i] = 500;
-> > -                     p2[i] = 780;
-> > -             }
-> > -             break;
-> > -     }
-> > -
-> > -     compute_intercept_slope(priv, p1, p2, mode);
-> > -     kfree(qfprom_cdata);
-> > -
-> > -     return 0;
-> > -}
-> > -
-> >  /* v1.x: msm8956,8976,qcs404,405 */
-> >
-> >  static struct tsens_features tsens_v1_feat = {
-> > @@ -370,7 +248,7 @@ struct tsens_plat_data data_tsens_v1 = {
-> >
-> >  static const struct tsens_ops ops_8956 = {
-> >       .init           = init_8956,
-> > -     .calibrate      = calibrate_8976,
-> > +     .calibrate      = tsens_calibrate_common,
-> >       .get_temp       = get_temp_tsens_valid,
-> >  };
-> >
-> > @@ -383,7 +261,7 @@ struct tsens_plat_data data_8956 = {
-> >
-> >  static const struct tsens_ops ops_8976 = {
-> >       .init           = init_common,
-> > -     .calibrate      = calibrate_8976,
-> > +     .calibrate      = tsens_calibrate_common,
-> >       .get_temp       = get_temp_tsens_valid,
-> >  };
-> >
+ drivers/cpufreq/qcom-cpufreq-hw.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-
-
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 340fed35e45d..9505a812d6a1 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -649,9 +649,10 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ {
+ 	struct clk_hw_onecell_data *clk_data;
+ 	struct device *dev = &pdev->dev;
++	struct device_node *soc_node;
+ 	struct device *cpu_dev;
+ 	struct clk *clk;
+-	int ret, i, num_domains;
++	int ret, i, num_domains, reg_sz;
+ 
+ 	clk = clk_get(dev, "xo");
+ 	if (IS_ERR(clk))
+@@ -679,7 +680,21 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 		return ret;
+ 
+ 	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
+-	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * 4);
++	soc_node = of_get_parent(dev->of_node);
++	if (!soc_node)
++		return -EINVAL;
++
++	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
++	if (ret)
++		goto of_exit;
++
++	ret = of_property_read_u32(soc_node, "#size-cells", &i);
++	if (ret)
++		goto of_exit;
++
++	reg_sz += i;
++
++	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
+ 	if (num_domains <= 0)
+ 		return num_domains;
+ 
+@@ -743,6 +758,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	else
+ 		dev_dbg(dev, "QCOM CPUFreq HW driver initialized\n");
+ 
++of_exit:
++	of_node_put(soc_node);
++
+ 	return ret;
+ }
+ 
 -- 
-With best wishes
-Dmitry
+2.39.0
+
