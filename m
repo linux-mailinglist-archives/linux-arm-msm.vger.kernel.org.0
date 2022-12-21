@@ -2,187 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AFBB653431
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 17:40:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E066534E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 18:16:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234467AbiLUQka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 11:40:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37146 "EHLO
+        id S234871AbiLURP6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 12:15:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234415AbiLUQk3 (ORCPT
+        with ESMTP id S234799AbiLURP1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 11:40:29 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F9822B3B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 08:40:28 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id f16so16161364ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 08:40:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jeLzGgpWvlXIHM7/m1+VkREz/loKw56kOMYwg3dbCR8=;
-        b=A1IZ8NXd4JXsD4fefE0ROucxsbJwAlJc7/L72mU3MDoFLX4summ4UIsA2viSJDN46N
-         r89qzqe/2ZudNnaLcHyMHlhbH0xLE9Y2KZ9flgx0Sfmwu/5vxO7Q8lkPzk+a729vDeG8
-         jtGDVissye9KuoLBi3fZDGBu+dmTHgMBPq8VHKJNqTvd6QM3/8uLF2gWUYm28zJjGqRK
-         9l/xmgATZYg6R1BwoT/z9lIMDmUhX08zlvpXnqhcZoWbhfD1oy6Lx0n/YnXNyBIADd6S
-         Ph4q6RFGaFxooLclz0oJaXoZo+Yv+sm4nzjfRyBd18TM/+5smAQ3laX8esMqHP83Zrrd
-         FzCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jeLzGgpWvlXIHM7/m1+VkREz/loKw56kOMYwg3dbCR8=;
-        b=TyuABEHttEoaRmdTBvFuZ4enSurvnv9SKo74xlcNuAXLra6lswWK2CyklbuS5Dc7/O
-         +6DoCM/28BmSwMCMuTBH1cMe9cJ9eimEvUwCgETieZ0byh9MsaHMf188bTuiJqhshQ9D
-         AxR932DdQpFuVf9BYOu35nCuZKNY+mU1ECGMcO8UEtRFQ+XtJGuKrLLM4QuFbcmLZ3KH
-         G/Nvhr9KZNY10dvX4UDy6hAuzMzA9wIhYE5IGb/6zLMNGifUqSf4FbR2FOnx7nad4ycy
-         IcZsHycYqnXHTGA3MwhwEt4oRgY5cvb7Lmpuy1KD+xOwSU2bEzCzSMd6BTU+Ij4kTZfS
-         zafg==
-X-Gm-Message-State: AFqh2koMUPQ8mTUm4CPH7awLy4uRMCH93mkZ2Ha1JVYaSwwaaYwg1NSM
-        zuy7wBKgmYIDPN9hYkIjt8NZRA==
-X-Google-Smtp-Source: AMrXdXt2wEecReCzFYK/J31HkhHQ45SMF3TideuLewjMN4HF1mZRjGH+Sk2yxdcLllbBUj7t4agYBg==
-X-Received: by 2002:a2e:b5c4:0:b0:277:81a3:f6e0 with SMTP id g4-20020a2eb5c4000000b0027781a3f6e0mr748087ljn.19.1671640826498;
-        Wed, 21 Dec 2022 08:40:26 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p5-20020a2eb985000000b0027a00aab48fsm1331889ljp.66.2022.12.21.08.40.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Dec 2022 08:40:26 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 21 Dec 2022 12:15:27 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1D87DAE;
+        Wed, 21 Dec 2022 09:14:56 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BLDqBvK018901;
+        Wed, 21 Dec 2022 17:14:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=gBhHKx02h6Axdy+iRKzp80j+cKaack/GA8r6SHvEQjg=;
+ b=Hcq/uMmEZDfqTcvh88boF5kjeDCqSG+DcwHnt/fnoOnlJG3QDe4SgGBF2t/67L3e2FPU
+ ZNrRm6kYOVdHoHfHgDhYRoNYnZ81ttlsTjafzlTkB+w0+l8uTTd1DbfhjkMy5UN2WmPq
+ UGJjSMekoOuPsQLpVl/iBIZumje8tw6gkmTKB+1M9hGojm9CB49dcag7M/qmX3QzUzeP
+ g7LCK8T5jpf2ODJ0qUqInUiDyNgQUZ+zMooGK8NEnq6yul0+qGGUqPd5ta1jJz+/u8Tt
+ F30lPx84kDXdpbxRZfcAXNYWLMkgenaqLqny1tsSi3Sza5/uWFWOI1SigfFXoxL7AySC AA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mm2brrjcb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 17:14:26 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BLHEOd0024082
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 17:14:24 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 21 Dec 2022 09:14:16 -0800
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Chia-I Wu <olvaffe@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Douglas Anderson" <dianders@chromium.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        stable@vger.kernel.org
-Subject: [PATCH v2] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on RX FIFO buffer
-Date:   Wed, 21 Dec 2022 17:40:22 +0100
-Message-Id: <20221221164022.1087814-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Guenter Roeck <linux@roeck-us.net>,
+        Kevin Hilman <khilman@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Len Brown" <len.brown@intel.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Sean Paul" <sean@poorly.run>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: [PATCH v4 0/5] Improve GPU reset sequence for Adreno GPU
+Date:   Wed, 21 Dec 2022 22:43:58 +0530
+Message-ID: <1671642843-5244-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: A7scqoT25a38Jvcnb90YnPX4YI2t75XX
+X-Proofpoint-GUID: A7scqoT25a38Jvcnb90YnPX4YI2t75XX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_09,2022-12-21_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212210143
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
-default RX FIFO depth, e.g. 16.  Later during serial startup the
-qcom_geni_serial_port_setup() updates the RX FIFO depth
-(port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
 
-The RX UART handle code will read "port->rx_fifo_depth" number of words
-into "port->rx_fifo" buffer, thus exceeding the bounds.  This can be
-observed in certain configurations with Qualcomm Bluetooth HCI UART
-device and KASAN:
+This is a rework of [1] using genpd instead of 'reset' framework.
 
-  Bluetooth: hci0: QCA Product ID   :0x00000010
-  Bluetooth: hci0: QCA SOC Version  :0x400a0200
-  Bluetooth: hci0: QCA ROM Version  :0x00000200
-  Bluetooth: hci0: QCA Patch Version:0x00000d2b
-  Bluetooth: hci0: QCA controller version 0x02000200
-  Bluetooth: hci0: QCA Downloading qca/htbtfw20.tlv
-  bluetooth hci0: Direct firmware load for qca/htbtfw20.tlv failed with error -2
-  Bluetooth: hci0: QCA Failed to request file: qca/htbtfw20.tlv (-2)
-  Bluetooth: hci0: QCA Failed to download patch (-2)
-  ==================================================================
-  BUG: KASAN: slab-out-of-bounds in handle_rx_uart+0xa8/0x18c
-  Write of size 4 at addr ffff279347d578c0 by task swapper/0/0
+As per the recommended reset sequence of Adreno gpu, we should ensure that
+gpucc-cx-gdsc has collapsed at hardware to reset gpu's internal hardware states.
+Because this gdsc is implemented as 'votable', gdsc driver doesn't poll and
+wait until its hw status says OFF.
 
-  CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.0-rt5-00350-gb2450b7e00be-dirty #26
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   dump_backtrace.part.0+0xe0/0xf0
-   show_stack+0x18/0x40
-   dump_stack_lvl+0x8c/0xb8
-   print_report+0x188/0x488
-   kasan_report+0xb4/0x100
-   __asan_store4+0x80/0xa4
-   handle_rx_uart+0xa8/0x18c
-   qcom_geni_serial_handle_rx+0x84/0x9c
-   qcom_geni_serial_isr+0x24c/0x760
-   __handle_irq_event_percpu+0x108/0x500
-   handle_irq_event+0x6c/0x110
-   handle_fasteoi_irq+0x138/0x2cc
-   generic_handle_domain_irq+0x48/0x64
+So use the newly introduced genpd api (dev_pm_genpd_synced_poweroff()) to
+provide a hint to the gdsc driver to poll for the hw status and use genpd
+notifier to wait from adreno gpu driver until gdsc is turned OFF.
 
-If the RX FIFO depth changes after probe, be sure to resize the buffer.
+This series is rebased on top of linux-next (20221215) since the changes span
+multiple drivers.
 
-Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+[1] https://patchwork.freedesktop.org/series/107507/
 
----
+Changes in v4:
+- Update genpd function documentation (Ulf)
 
-Changes since v1:
-1. Rename the function (Jiri)
----
- drivers/tty/serial/qcom_geni_serial.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+Changes in v3:
+- Rename the var 'force_sync' to 'wait (Stephen)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index b487823f0e61..49b9ffeae676 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -864,9 +864,10 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
- 	return IRQ_HANDLED;
- }
- 
--static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
-+static int setup_fifos(struct qcom_geni_serial_port *port)
- {
- 	struct uart_port *uport;
-+	u32 old_rx_fifo_depth = port->rx_fifo_depth;
- 
- 	uport = &port->uport;
- 	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
-@@ -874,6 +875,16 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
- 	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
- 	uport->fifosize =
- 		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
-+
-+	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
-+		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
-+					      port->rx_fifo_depth * sizeof(u32),
-+					      GFP_KERNEL);
-+		if (!port->rx_fifo)
-+			return -ENOMEM;
-+	}
-+
-+	return 0;
- }
- 
- 
-@@ -888,6 +899,7 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
- 	u32 rxstale = DEFAULT_BITS_PER_CHAR * STALE_TIMEOUT;
- 	u32 proto;
- 	u32 pin_swap;
-+	int ret;
- 
- 	proto = geni_se_read_proto(&port->se);
- 	if (proto != GENI_SE_UART) {
-@@ -897,7 +909,9 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
- 
- 	qcom_geni_serial_stop_rx(uport);
- 
--	get_tx_fifo_size(port);
-+	ret = setup_fifos(port);
-+	if (ret)
-+		return ret;
- 
- 	writel(rxstale, uport->membase + SE_UART_RX_STALE_CNT);
- 
+Changes in v2:
+- Minor formatting fix
+- Select PM_GENERIC_DOMAINS from Kconfig
+
+Akhil P Oommen (4):
+  clk: qcom: gdsc: Support 'synced_poweroff' genpd flag
+  drm/msm/a6xx: Vote for cx gdsc from gpu driver
+  drm/msm/a6xx: Remove cx gdsc polling using 'reset'
+  drm/msm/a6xx: Use genpd notifier to ensure cx-gdsc collapse
+
+Ulf Hansson (1):
+  PM: domains: Allow a genpd consumer to require a synced power off
+
+ drivers/base/power/domain.c           | 26 ++++++++++++++++++++
+ drivers/clk/qcom/gdsc.c               | 11 +++++----
+ drivers/gpu/drm/msm/Kconfig           |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 46 ++++++++++++++++++++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  7 ++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 13 +++++++---
+ drivers/gpu/drm/msm/msm_gpu.c         |  4 ---
+ drivers/gpu/drm/msm/msm_gpu.h         |  4 ---
+ include/linux/pm_domain.h             |  5 ++++
+ 9 files changed, 97 insertions(+), 20 deletions(-)
+
 -- 
-2.34.1
+2.7.4
 
