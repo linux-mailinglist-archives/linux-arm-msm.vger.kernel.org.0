@@ -2,143 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1472F652D70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 08:49:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE3C8652D8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 08:59:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234017AbiLUHt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 02:49:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37150 "EHLO
+        id S234390AbiLUH67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 02:58:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232646AbiLUHt0 (ORCPT
+        with ESMTP id S229713AbiLUH66 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 02:49:26 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92B220BF2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:49:22 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id q2so5522628ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:49:22 -0800 (PST)
+        Wed, 21 Dec 2022 02:58:58 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 154FB300
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:58:57 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id y25so22260195lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:58:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=W4dufR/uux43jl3M8hYAD4DGGD+INaD7xhuItQ1sxqM=;
-        b=jyKvA4SA0BID+x3dPHPHetTx8uuU2Ufv5v0ipUrni4s75mswft8Zvab98BtnldYOry
-         KN9IADGNThpeJYPKUhhXrVL4uhfYxknL3ZKnjQxxV3zvbXUGGKirQ2zIRTrNbOReyhqy
-         q2VltiJkqRFnrwPuMj8hUJ3DcCi1xzQ1HL5fd8unnMhgGWCxEtht5Z6c+riMiiX+jVuC
-         Oc7+OtNVFhU4v5zH84NH33TEVCLFhdhywNZwVQMZxDffUB6Ur/+VzKR1Oln3tqRoWd2C
-         RogMQ7nrujwdFH4duJWEBflzR8bkd0nwUQShcVVrRiSI7w57XmauDfKG4OCS267QFPsr
-         pRkw==
+        bh=e8GCz1b2VF0mWtOR9yf+Rv0xFFyTsr8iL68eBnffHjs=;
+        b=apfpV+nJVVyEcEi53k7XYGHX6obMy/OGRT/sqx9uDTR8RjttQLEYj2EWlyGwjiiQPr
+         TvjT0T8ilKqeJHJ6NZdMa9c6feO6j+yj6X5b+iDMN/okmU+RTsu+iI7hRPcqkJoC537D
+         aQhCkqWNyUuhzNTZJ9SlwBKlqTf26FxfuCgThbKJm66orwKWVgkpHoHKtteJoAAJsvxU
+         HrJ2IDOq2C1G3FsNOqt/SUyZxYJUaZJFuu7G54XWpfbwbVdcEwFUQfxskbrfAUp/D8oN
+         lkzMzy2WJnTEN17WsbItT02ABlv6jo1shl274PHCYADQivqTUUnM5nI+SWYqC20+pC4l
+         +MsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W4dufR/uux43jl3M8hYAD4DGGD+INaD7xhuItQ1sxqM=;
-        b=1yvdDMlu5hnvokisAN6a6JFNgTARekiDiV6k4QQ7OKMY716YMR+/pv9xbjKrDz+49u
-         Fzn7wWd5rrUnuXVhjwsCcm2u9xul+oqhqqxkh08CQpUhuof6jOPDtWsB9UhmwA8GsUja
-         YGrYSiW8llhCpZFVu5ECIyMGYyCxl2ChsAnXKHOAam4ImFtpilZ0PaM8qwt/4YH55G7y
-         Xj5C8eBtQsQfpmwIx56LVdxz7fR+Jlfa06dmg+i4yOvAsWYS/sqAhFw06IWpqqhXf3P+
-         ptR/e/xaw/POjVkZNYyKiG97cgqLYUdFDwoCyI/wKRX9x3kWpWI0IK+rfSxaTZsNDys1
-         NhUw==
-X-Gm-Message-State: AFqh2kpQvdw1doyTbwOn6i2ubktG0Bi5j+TZRotAX4j+KfyDtxFJD8BR
-        kub6M9jayffjcJ7Urbzey16knw==
-X-Google-Smtp-Source: AMrXdXuL8CIiSpj3KjFKlORDGshD2jdfuqOiS5wOIen9p5A4YK/CKXwv+XuGmNs1gZhtcEvzmJqFzQ==
-X-Received: by 2002:a2e:8503:0:b0:279:cd84:1f26 with SMTP id j3-20020a2e8503000000b00279cd841f26mr1325536lji.13.1671608961015;
-        Tue, 20 Dec 2022 23:49:21 -0800 (PST)
+        bh=e8GCz1b2VF0mWtOR9yf+Rv0xFFyTsr8iL68eBnffHjs=;
+        b=IITTgGoJJwGpWY4nEqsJfSSCF2vdS06lkSvIWQxWp/GdWvlgFgiHftb8Ogn/6rvPGi
+         +SPiXMlX7KuF0dRaaGY+3GlKW9460JnlgvO1Jt+p5/70oQjEpcGXGfltXyQzB6EJgA5r
+         f7JKdGXn1+Brbh/VjzttLPbroRl2bjbpIBqKPVMKTjV+mtDOZR/FiL2MEdGna2NjP3Kw
+         iBzteCvE5Pda8YiKlwJy7lgGihZ6IrUgf44qoCyfQ6I6tA/a7dQ9+9IhJwKuVOh0pHAZ
+         2SGUhR+7lQeB+2/No501qaYilJj7HO+Rz/CE5VYiZFAaSf2nHfTixWZExquJmqfGjLJ/
+         NEIQ==
+X-Gm-Message-State: AFqh2kp0UjQg1fzJCVFsGBQmq2YUSHn0otPNM1wm/xk41VpVb/tMnZb2
+        oTq7Fqg7roOjycS7ABDFp0g0cw==
+X-Google-Smtp-Source: AMrXdXurygVZlWFJZ4zMTAx9l7uSZkERAfz5c7Tp/Hu16TGbWU2otQiv8T2qGY77GmvohtJgNW+aPQ==
+X-Received: by 2002:a05:6512:2508:b0:4b5:9b8f:cc82 with SMTP id be8-20020a056512250800b004b59b8fcc82mr391385lfb.0.1671609535445;
+        Tue, 20 Dec 2022 23:58:55 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m8-20020ac24288000000b004a2c3fd32edsm1762548lfh.144.2022.12.20.23.49.19
+        by smtp.gmail.com with ESMTPSA id f9-20020ac251a9000000b004b587e37265sm1767256lfk.58.2022.12.20.23.58.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 23:49:20 -0800 (PST)
-Message-ID: <bdddd72f-a118-ff43-c53f-5ffd724fbd55@linaro.org>
-Date:   Wed, 21 Dec 2022 08:49:19 +0100
+        Tue, 20 Dec 2022 23:58:54 -0800 (PST)
+Message-ID: <86592f50-b1d9-b633-4ec8-904a7fd97806@linaro.org>
+Date:   Wed, 21 Dec 2022 08:58:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on
- RX FIFO buffer
-To:     Jiri Slaby <jirislaby@kernel.org>, Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v5 1/2] dt-bindings: interconnect: Add QDU1000/QRU1000
+ devices
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-References: <20221220161530.2098299-1-krzysztof.kozlowski@linaro.org>
- <b21a17c7-df9c-ce20-f986-8f093a33278c@kernel.org>
-Content-Language: en-US
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221216230914.21771-1-quic_molvera@quicinc.com>
+ <20221216230914.21771-2-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b21a17c7-df9c-ce20-f986-8f093a33278c@kernel.org>
+In-Reply-To: <20221216230914.21771-2-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/12/2022 07:43, Jiri Slaby wrote:
-> On 20. 12. 22, 17:15, Krzysztof Kozlowski wrote:
->> Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
->> default RX FIFO depth, e.g. 16.  Later during serial startup the
->> qcom_geni_serial_port_setup() updates the RX FIFO depth
->> (port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
-> ...
->> If the RX FIFO depth changes after probe, be sure to resize the buffer.
->>
->> Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
->> Cc: <stable@vger.kernel.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 17/12/2022 00:09, Melody Olvera wrote:
+> Add separate schema for QDU1000 and QRU1000 interconnect devices
+> to document the different NoCs on these platforms.
 > 
-> Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  .../interconnect/qcom,qdu1000-rpmh.yaml       | 70 +++++++++++++
+>  .../interconnect/qcom,qdu1000-rpmh.h          | 98 +++++++++++++++++++
+>  2 files changed, 168 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qdu1000-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,qdu1000-rpmh.h
 > 
-> This patch LGTM, I only wonder:
-> 
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -864,9 +864,10 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
->>   	return IRQ_HANDLED;
->>   }
->>   
->> -static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
->> +static int get_tx_fifo_size(struct qcom_geni_serial_port *port)
-> 
-> ... why is this function dubbed get_tx_fifo_size(), provided it handles 
-> rx fifo too? And it does not "get" the tx fifo size. In fact, the 
-> function sets that :).
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qdu1000-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qdu1000-rpmh.yaml
+> new file mode 100644
+> index 000000000000..dad93b8e4895
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qdu1000-rpmh.yaml
+> @@ -0,0 +1,70 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,qdu1000-rpmh.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm RPMh Network-On-Chip Interconnect on QDU1000
+> +
+> +maintainers:
+> +  - Georgi Djakov <djakov@kernel.org>
+> +  - Odelu Kukatla <quic_okukatla@quicinc.com>
+> +
+> +description: |
+> +   RPMh interconnect providers support system bandwidth requirements through
+> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
+> +   able to communicate with the BCM through the Resource State Coordinator (RSC)
+> +   associated with each execution environment. Provider nodes must point to at
+> +   least one RPMh device child node pertaining to their RSC and each provider
+> +   can map to multiple RPMh resources.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qdu1000-clk-virt
+> +      - qcom,qdu1000-gem-noc
+> +      - qcom,qdu1000-mc-virt
+> +      - qcom,qdu1000-system-noc
+> +
+> +  '#interconnect-cells': true
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +allOf:
+> +  - $ref: qcom,rpmh-common.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,qdu1000-clk-virt
+> +              - qcom,qdu1000-mc-virt
+> +    then:
+> +      properties:
+> +        reg: false
+> +    else:
+> +      required:
+> +        - reg
+> +
+> +required:
+> +  - compatible
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +      #include <dt-bindings/interconnect/qcom,qdu1000-rpmh.h>
+> +
+> +      system_noc: interconnect@1640000 {
+> +             compatible = "qcom,qdu1000-system-noc";
 
-I reads the FIFO sizes from the device registers, so I guess that was
-behind the naming.
-
-> 
->>   {
->>   	struct uart_port *uport;
->> +	u32 old_rx_fifo_depth = port->rx_fifo_depth;
->>   
->>   	uport = &port->uport;
->>   	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
->> @@ -874,6 +875,16 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
->>   	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
->>   	uport->fifosize =
->>   		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
->> +
->> +	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
->> +		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
->> +					      port->rx_fifo_depth * sizeof(u32),
->> +					      GFP_KERNEL);
-> 
-> And now it even allocates memory.
-> 
-> So more appropriate name should be setup_fifos() or similar.
-
-Sure, I'll rename it and keep your Rb tag.
-
-> 
+Messed indentation.
 
 Best regards,
 Krzysztof
