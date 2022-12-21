@@ -2,125 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3072F65339D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 16:45:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7308E6533D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 17:12:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiLUPpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 10:45:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44816 "EHLO
+        id S229926AbiLUQMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 11:12:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbiLUPpn (ORCPT
+        with ESMTP id S229491AbiLUQMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 10:45:43 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186E81099
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 07:45:40 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso1854333wme.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 07:45:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KGbeBQRjTmGtaWEzjEWMVtiqNlsW5lW0CoNY9zIiLc4=;
-        b=k81vhdDhN4j7y0R2uh1f2NxwYOxgXJp7lobsFLPPvq/M6F8hB3TFqsN9lZCSAyYnEd
-         w8o1nWeu7EELY58lSlSwPPEf7OHtsaeK5VqI5NdERLRgDlkuD8VoffEoiseBO4Me6Xwa
-         ifuxfqerftFrPqfHxkggSkp/dgjNFkopcT3j7tY3CoHu1j/tr6DqJjhfL2jhzkknG2rW
-         IWHIdkiqSdq/Pns8ulArC0uAW88dF2pnfmWI7AL3zmnA+w8GrN/9mTN8E/U3g+CIdDvs
-         Oo5yH1AG6gEDamjIdU0nuUxw+S7xyIawnU/iFCFr8jrFNF/KdSPBc+13/EGs2AsfNPYz
-         dHQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KGbeBQRjTmGtaWEzjEWMVtiqNlsW5lW0CoNY9zIiLc4=;
-        b=zXCiKu3e064zUnXpEDccoyS9kHU353Egiz9C3YUNL+2Q4sIumMSNGuPTVpTDdrw6un
-         ljNukUoMtKdazJKGmMWWAxn21wpXkwov0GEIvnaf7aOwHfXRNsiM2xOu0/tzCd8w94iO
-         7sNh4YXkOGfapvBpXDhkRLv3ZPUpyTx/a8Xop+YM8Zud6FhUqaX7p4AbL9KFQL/L0pbv
-         /A4ZG/UCMnOCn26zGfkELj84zk9VoqbNYLQj4C+cSSFg+Mm7zIt8TMh1OYsULrbcGHcj
-         68lP3pOET8ei8o2kmGc7Bkdqi/8KfhHZD7pyDUEivyRlELjRSOd6QLdo7TA/r+Tofrrd
-         YUEg==
-X-Gm-Message-State: AFqh2kpgT8Ziarjw5OUG0+m1bBi032wUsF7I0pdJMwQ7CtBPOz6gKgEV
-        3rgpUpPKuaBFvvi54ZbkJ+NNRQ==
-X-Google-Smtp-Source: AMrXdXsMuyF2s0KfLk6G49bLBkUwiohwuGsdWlz+hiiVccvbYcehjbTwlBshzkeCA5pNWrZvwQufJQ==
-X-Received: by 2002:a05:600c:a51:b0:3d2:3376:6f38 with SMTP id c17-20020a05600c0a5100b003d233766f38mr2020662wmq.20.1671637538618;
-        Wed, 21 Dec 2022 07:45:38 -0800 (PST)
-Received: from [192.168.175.23] (pur13-1-78-242-214-186.fbx.proxad.net. [78.242.214.186])
-        by smtp.googlemail.com with ESMTPSA id v192-20020a1cacc9000000b003cfd4e6400csm2531518wme.19.2022.12.21.07.45.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Dec 2022 07:45:37 -0800 (PST)
-Message-ID: <ed4aafb9-c33e-6f24-1e9c-7c7efa0e58ae@linaro.org>
-Date:   Wed, 21 Dec 2022 16:45:34 +0100
+        Wed, 21 Dec 2022 11:12:49 -0500
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D0C7220CE;
+        Wed, 21 Dec 2022 08:12:47 -0800 (PST)
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BLDfa2x026028;
+        Wed, 21 Dec 2022 17:12:31 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=2A2tAKvy9GQzqXbZsSHur6UK/zxVtWe4DXFResJLMYk=;
+ b=GRQS9PaT3+2E9Wb8iorc8gCzaElYyJ2JBOk2ChRo7hNfR73pIlNZMQaVuaJrPuatPdcC
+ eDFky9ABYCCLuZTiy96V55sWnp9ZEv2fJPEc7nqJCZXU7daLJy+ucgBqF+PYSylx7KO4
+ RnwZPFo6dcLvljDc7XhfnuQC9VOMAmpMsEnkf/gIt+B/SCdeNSWhHwhue84SyqBS1HT0
+ icdRbKUuIhNv50L3Dg4vnHJkEoNBQNzOZbxDHTwdyPP+45Sr2IqZxE8IZ8RnttaHXyyB
+ HG+UeLxr/cDO06sC8JcO+t+V4xuD0+XZU+WGyXLZvoblyzET08NbBJpmdmmvigfw7LCh eg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3mh605qrnb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 17:12:30 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 045AA10002A;
+        Wed, 21 Dec 2022 17:12:25 +0100 (CET)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id F1EE32291B5;
+        Wed, 21 Dec 2022 17:12:24 +0100 (CET)
+Received: from [10.201.20.73] (10.201.20.73) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.13; Wed, 21 Dec
+ 2022 17:12:23 +0100
+Message-ID: <6ba10328-bc48-c953-49e7-29e079fb6406@foss.st.com>
+Date:   Wed, 21 Dec 2022 17:12:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v4 07/20] thermal/drivers/tsens: limit num_sensors to 9
+Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
- <20221221020520.1326964-8-dmitry.baryshkov@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20221221020520.1326964-8-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Sarannya S <quic_sarannya@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+References: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
+ <1670418258-11502-2-git-send-email-quic_sarannya@quicinc.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <1670418258-11502-2-git-send-email-quic_sarannya@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.201.20.73]
+X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_08,2022-12-21_01,2022-06-22_01
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/12/2022 03:05, Dmitry Baryshkov wrote:
-> According to the vendor kernels (msm-3.10, 3.14 and 3.18), msm8939
-> supports only 9 sensors. Remove the rogue sensor's hw_id.
+Hello,
+
+On 12/7/22 14:04, Sarannya S wrote:
+> Some transports like Glink support the state notifications between
+> clients using flow control signals similar to serial protocol signals.
+> Local glink client drivers can send and receive flow control status
+> to glink clients running on remote processors.
 > 
-> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for MSM8939")
-> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add APIs to support sending and receiving of flow control status by
+> rpmsg clients.
+> 
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
 > ---
->   drivers/thermal/qcom/tsens-v0_1.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+>  include/linux/rpmsg.h          | 15 +++++++++++++++
+>  3 files changed, 38 insertions(+)
 > 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 0bc4e5cec184..57ac23f9d9b7 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -605,9 +605,9 @@ static const struct tsens_ops ops_8939 = {
->   };
->   
->   struct tsens_plat_data data_8939 = {
-> -	.num_sensors	= 10,
-> +	.num_sensors	= 9,
->   	.ops		= &ops_8939,
-> -	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 },
-> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9 },
+> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> index d6dde00e..77aeba0 100644
+> --- a/drivers/rpmsg/rpmsg_core.c
+> +++ b/drivers/rpmsg/rpmsg_core.c
+> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>  
+>  /**
+> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+> + * @ept:	the rpmsg endpoint
+> + * @enable:	enable or disable serial flow control
 
-Does not patch 4 says we can drop those hw_ids ?
+What does it mean "enable and disable serial flow control"?
+Do you speak about the flow control feature or the data flow itself?
 
->   
->   	.feat		= &tsens_v0_1_feat,
->   	.fields	= tsens_v0_1_regfields,
+I guess it is the activation/deactivation of the data stream
+regarding Bjorn's comment in V1:
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+"I therefore asked Deepak to change it so the rpmsg api would contain a
+single "pause incoming data"/"resume incoming data" - given that this is
+a wish that we've seen in a number of discussions."
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+For me this is the software flow control:
+https://en.wikipedia.org/wiki/Software_flow_control
 
+I would suggest not limiting the control only to activation/deactivation but to
+offer more flexibility in terms of services. replace the boolean by a bitmap
+would allow to extend it later.
+
+For instance by introducing 2 definitions:
+
+/* RPMSG pause transmission request:
+ * sent to the remote endpoint to request to suspend its transmission */
+ */
+#define RPMSG_FC_PT_REQ  (1 << 0)
+
+/* RPMSG resume transmission request
+ * sent to the remote endpoint to allow to resume its transmission
+ */
+#define RPMSG_FC_RT_REQ  (1 << 1)
+
+Then we could add (in a next step) some other flow controls such as
+/* RPMSG pause transmission information
+ * Sent to the remote endpoint to inform that no more data will be sent
+ * until the reception of RPMSG_FC_RT_INFO
+ */
+#define RPMSG_FC_PT_INFO  (1 << 16)
+#define RPMSG_FC_RT_INFO  (1 << 16)
+
+> + * @dst:	destination address of the endpoint
+
+Thanks to have integrated this in your patch!
+
+Regards,
+Arnaud
+
+> + *
+> + * Return: 0 on success and an appropriate error value on failure.
+> + */
+> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
+> +{
+> +	if (WARN_ON(!ept))
+> +		return -EINVAL;
+> +	if (!ept->ops->set_flow_control)
+> +		return -ENXIO;
+> +
+> +	return ept->ops->set_flow_control(ept, enable, dst);
+> +}
+> +EXPORT_SYMBOL(rpmsg_set_flow_control);
+> +
+> +/**
+>   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+>   * @ept: the rpmsg endpoint
+>   *
+> @@ -539,6 +558,8 @@ static int rpmsg_dev_probe(struct device *dev)
+>  
+>  		rpdev->ept = ept;
+>  		rpdev->src = ept->addr;
+> +
+> +		ept->flow_cb = rpdrv->flowcontrol;
+>  	}
+>  
+>  	err = rpdrv->probe(rpdev);
+> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> index 39b646d..b6efd3e 100644
+> --- a/drivers/rpmsg/rpmsg_internal.h
+> +++ b/drivers/rpmsg/rpmsg_internal.h
+> @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
+>   * @trysendto:		see @rpmsg_trysendto(), optional
+>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
+>   * @poll:		see @rpmsg_poll(), optional
+> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
+>   * @get_mtu:		see @rpmsg_get_mtu(), optional
+>   *
+>   * Indirection table for the operations that a rpmsg backend should implement.
+> @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
+>  			     void *data, int len);
+>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+>  			     poll_table *wait);
+> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable, u32 dst);
+>  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+>  };
+>  
+> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+> index 523c98b..a0e9d38 100644
+> --- a/include/linux/rpmsg.h
+> +++ b/include/linux/rpmsg.h
+> @@ -64,12 +64,14 @@ struct rpmsg_device {
+>  };
+>  
+>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
+> +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
+>  
+>  /**
+>   * struct rpmsg_endpoint - binds a local rpmsg address to its user
+>   * @rpdev: rpmsg channel device
+>   * @refcount: when this drops to zero, the ept is deallocated
+>   * @cb: rx callback handler
+> + * @flow_cb: remote flow control callback handler
+>   * @cb_lock: must be taken before accessing/changing @cb
+>   * @addr: local rpmsg address
+>   * @priv: private data for the driver's use
+> @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
+>  	struct rpmsg_device *rpdev;
+>  	struct kref refcount;
+>  	rpmsg_rx_cb_t cb;
+> +	rpmsg_flowcontrol_cb_t flow_cb;
+>  	struct mutex cb_lock;
+>  	u32 addr;
+>  	void *priv;
+> @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
+>   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
+>   * @remove: invoked when the rpmsg channel is removed
+>   * @callback: invoked when an inbound message is received on the channel
+> + * @flowcontrol: invoked when remote side flow control status is received
+>   */
+>  struct rpmsg_driver {
+>  	struct device_driver drv;
+> @@ -113,6 +117,7 @@ struct rpmsg_driver {
+>  	int (*probe)(struct rpmsg_device *dev);
+>  	void (*remove)(struct rpmsg_device *dev);
+>  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
+> +	int (*flowcontrol)(struct rpmsg_device *, void *, bool);
+>  };
+>  
+>  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
+> @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>  
+>  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>  
+> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst);
+> +
+>  #else
+>  
+>  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+> @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>  	return -ENXIO;
+>  }
+>  
+> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
+> +{
+> +	/* This shouldn't be possible */
+> +	WARN_ON(1);
+> +
+> +	return -ENXIO;
+> +}
+> +
+>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+>  
+>  /* use a macro to avoid include chaining to get THIS_MODULE */
