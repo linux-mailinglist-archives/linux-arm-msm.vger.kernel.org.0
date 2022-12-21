@@ -2,126 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A9C0652D31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 08:17:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1472F652D70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 08:49:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231712AbiLUHRo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 02:17:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55404 "EHLO
+        id S234017AbiLUHt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 02:49:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiLUHRn (ORCPT
+        with ESMTP id S232646AbiLUHt0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 02:17:43 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA5AC2DA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:17:41 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id x3so515968pjv.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:17:41 -0800 (PST)
+        Wed, 21 Dec 2022 02:49:26 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92B220BF2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:49:22 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id q2so5522628ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 23:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ipcTfQuvJXJtZzjg5HEFRy455uYCxwrL5LhsX06QbCs=;
-        b=HjzgYbE302j8IJKIV8jpFotxChaSSuyWKlm08ccT2awBmPgN0agV+gDzFkBvyDCEEG
-         avs3VtPA0gtH9xS/GzIVvSMymrPRZs6R22Z2n3EqI8TPRDqelIrjuwwaVYlMvv4s8L4R
-         SCbU2WIzvxRCLuCB59Bjdi1acwb00KcPZlxes=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W4dufR/uux43jl3M8hYAD4DGGD+INaD7xhuItQ1sxqM=;
+        b=jyKvA4SA0BID+x3dPHPHetTx8uuU2Ufv5v0ipUrni4s75mswft8Zvab98BtnldYOry
+         KN9IADGNThpeJYPKUhhXrVL4uhfYxknL3ZKnjQxxV3zvbXUGGKirQ2zIRTrNbOReyhqy
+         q2VltiJkqRFnrwPuMj8hUJ3DcCi1xzQ1HL5fd8unnMhgGWCxEtht5Z6c+riMiiX+jVuC
+         Oc7+OtNVFhU4v5zH84NH33TEVCLFhdhywNZwVQMZxDffUB6Ur/+VzKR1Oln3tqRoWd2C
+         RogMQ7nrujwdFH4duJWEBflzR8bkd0nwUQShcVVrRiSI7w57XmauDfKG4OCS267QFPsr
+         pRkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ipcTfQuvJXJtZzjg5HEFRy455uYCxwrL5LhsX06QbCs=;
-        b=K/3VFhkYK/9x0da2lgYqGxryDMlqMubNhz1X6acNJ32ZirumijGyFAdsph2Y7jdGn1
-         ZFthnoEq4+zNgwEGwd80y3tuRZAm17xvYoR4B3IIcW/WMVrztiTsO3fPTyLrskxHcNdP
-         h2E/LZVre9FmbKOXCDuRdV++FI40YUNZqlsHo0aY7nvo2gmh9RATShe421syNUFaDZDo
-         E31P9uJER5kgrdwoszLBhflxEJBeAn750DUGdO1OWhCgPONi8RU7tUq2RBJSWJpnHit7
-         gU1HsrIF+Wu5UDcvwjZ43YUXuKQtkaLqlzHl6Qvh83sjLY9Xf/3zlIfViPXAJm9w04+x
-         Mbsw==
-X-Gm-Message-State: AFqh2kojlXm2y8aHghK2tHj09Kek+mPBKTy9NkAKzG9gx4IEXLfhrJuz
-        MgA60rzw59tYeDXeClgI8FWOmw==
-X-Google-Smtp-Source: AMrXdXsgGVsBTCFNfUcp1pMwbR8YFko6/N5owHwbPkj4GpYFcjLkKkivaUkKNL0p3JZXLKM1M9yXeQ==
-X-Received: by 2002:a05:6a20:7b28:b0:ac:184:d297 with SMTP id s40-20020a056a207b2800b000ac0184d297mr1165642pzh.38.1671607061354;
-        Tue, 20 Dec 2022 23:17:41 -0800 (PST)
-Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
-        by smtp.gmail.com with ESMTPSA id y33-20020a634b21000000b0048f10379b46sm2754243pga.68.2022.12.20.23.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 23:17:40 -0800 (PST)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W4dufR/uux43jl3M8hYAD4DGGD+INaD7xhuItQ1sxqM=;
+        b=1yvdDMlu5hnvokisAN6a6JFNgTARekiDiV6k4QQ7OKMY716YMR+/pv9xbjKrDz+49u
+         Fzn7wWd5rrUnuXVhjwsCcm2u9xul+oqhqqxkh08CQpUhuof6jOPDtWsB9UhmwA8GsUja
+         YGrYSiW8llhCpZFVu5ECIyMGYyCxl2ChsAnXKHOAam4ImFtpilZ0PaM8qwt/4YH55G7y
+         Xj5C8eBtQsQfpmwIx56LVdxz7fR+Jlfa06dmg+i4yOvAsWYS/sqAhFw06IWpqqhXf3P+
+         ptR/e/xaw/POjVkZNYyKiG97cgqLYUdFDwoCyI/wKRX9x3kWpWI0IK+rfSxaTZsNDys1
+         NhUw==
+X-Gm-Message-State: AFqh2kpQvdw1doyTbwOn6i2ubktG0Bi5j+TZRotAX4j+KfyDtxFJD8BR
+        kub6M9jayffjcJ7Urbzey16knw==
+X-Google-Smtp-Source: AMrXdXuL8CIiSpj3KjFKlORDGshD2jdfuqOiS5wOIen9p5A4YK/CKXwv+XuGmNs1gZhtcEvzmJqFzQ==
+X-Received: by 2002:a2e:8503:0:b0:279:cd84:1f26 with SMTP id j3-20020a2e8503000000b00279cd841f26mr1325536lji.13.1671608961015;
+        Tue, 20 Dec 2022 23:49:21 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id m8-20020ac24288000000b004a2c3fd32edsm1762548lfh.144.2022.12.20.23.49.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Dec 2022 23:49:20 -0800 (PST)
+Message-ID: <bdddd72f-a118-ff43-c53f-5ffd724fbd55@linaro.org>
+Date:   Wed, 21 Dec 2022 08:49:19 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on
+ RX FIFO buffer
+To:     Jiri Slaby <jirislaby@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sc7280: add display port audio
-Date:   Wed, 21 Dec 2022 07:17:34 +0000
-Message-Id: <20221221071734.2887901-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org
+References: <20221220161530.2098299-1-krzysztof.kozlowski@linaro.org>
+ <b21a17c7-df9c-ce20-f986-8f093a33278c@kernel.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b21a17c7-df9c-ce20-f986-8f093a33278c@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DisplayPort sound node and lpass_cpu node
-in sc7280-herobrine-audio-rt5682.dtsi.
+On 21/12/2022 07:43, Jiri Slaby wrote:
+> On 20. 12. 22, 17:15, Krzysztof Kozlowski wrote:
+>> Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
+>> default RX FIFO depth, e.g. 16.  Later during serial startup the
+>> qcom_geni_serial_port_setup() updates the RX FIFO depth
+>> (port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
+> ...
+>> If the RX FIFO depth changes after probe, be sure to resize the buffer.
+>>
+>> Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
+>> Cc: <stable@vger.kernel.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+> 
+> This patch LGTM, I only wonder:
+> 
+>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>> @@ -864,9 +864,10 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
+>>   	return IRQ_HANDLED;
+>>   }
+>>   
+>> -static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
+>> +static int get_tx_fifo_size(struct qcom_geni_serial_port *port)
+> 
+> ... why is this function dubbed get_tx_fifo_size(), provided it handles 
+> rx fifo too? And it does not "get" the tx fifo size. In fact, the 
+> function sets that :).
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+I reads the FIFO sizes from the device registers, so I guess that was
+behind the naming.
 
---
----
+> 
+>>   {
+>>   	struct uart_port *uport;
+>> +	u32 old_rx_fifo_depth = port->rx_fifo_depth;
+>>   
+>>   	uport = &port->uport;
+>>   	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
+>> @@ -874,6 +875,16 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
+>>   	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
+>>   	uport->fifosize =
+>>   		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
+>> +
+>> +	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
+>> +		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
+>> +					      port->rx_fifo_depth * sizeof(u32),
+>> +					      GFP_KERNEL);
+> 
+> And now it even allocates memory.
+> 
+> So more appropriate name should be setup_fifos() or similar.
 
- .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+Sure, I'll rename it and keep your Rb tag.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-index af685bc35e10..69e7aa7b2f6c 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-@@ -33,9 +33,22 @@ codec {
- 		};
- 
- 		dai-link@1 {
--			link-name = "ALC5682";
-+			link-name = "DisplayPort";
- 			reg = <1>;
- 
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "ALC5682";
-+			reg = <2>;
-+
- 			cpu {
- 				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
- 			};
-@@ -92,6 +105,10 @@ dai-link@1 {
- 		reg = <MI2S_SECONDARY>;
- 		qcom,playback-sd-lines = <0>;
- 	};
-+
-+	dai-link@5 {
-+		reg = <LPASS_DP_RX>;
-+	};
- };
- 
- /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
--- 
-2.39.0.314.g84b9a713c41-goog
+> 
+
+Best regards,
+Krzysztof
 
