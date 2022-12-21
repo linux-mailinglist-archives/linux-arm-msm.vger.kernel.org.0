@@ -2,131 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EF8D652CFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 07:43:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E58D652D2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 08:12:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiLUGnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 01:43:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
+        id S233685AbiLUHMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 02:12:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiLUGnD (ORCPT
+        with ESMTP id S229448AbiLUHMP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 01:43:03 -0500
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2521EC71;
-        Tue, 20 Dec 2022 22:43:03 -0800 (PST)
-Received: by mail-ej1-f47.google.com with SMTP id t17so34601198eju.1;
-        Tue, 20 Dec 2022 22:43:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yjzr2jj1F2kUgdqS5ZAf0La7bwTeae6U6bnTXat2Gng=;
-        b=NrXVXGDNE3SrlrP5cbAS+yTpW0xynF5pw6/Ye1r2o0McIxx0/iuwN0yxKZ+EwPQuug
-         FgxpXM4QnpwMyem1qL7tvfKCBrf54X6GvOj330uO7zouhKHqobhKhOT/PPVnV4Dnhyb9
-         KQs1PsxWIuNlCSBDDbWDFtNUcYTzpH//9wST1hXD61thL09xFftBJdTUZ4MH+XVzgbzl
-         RzQDuNJ0/hPaUQJjaVHgKcKrC6sv8vwEnavQDmRj7aaN0ywpnXimD+P76C4CgF6k3rRv
-         pjHIAYsjaZaNTXYgE+2FZDj/eeYMFF4TSRb1lZZhnAB9NW0708KEdRUUsoN5x9c6mfCe
-         Bwqg==
-X-Gm-Message-State: AFqh2krj27jttpRJ/En2kdVNAIdjlIZFhYNKPA/5zpa7cbNay8R8dtNb
-        cBXAphchFloDxuLiCRp0rCc=
-X-Google-Smtp-Source: AMrXdXsKosegsCsvCaudEEkSExyo6mbVSIR4td0ECmmc5bBEC8JdVNAhi4M4j17w0VEGOomIjpwoBA==
-X-Received: by 2002:a17:907:d302:b0:7c1:3472:5e75 with SMTP id vg2-20020a170907d30200b007c134725e75mr483043ejc.29.1671604981642;
-        Tue, 20 Dec 2022 22:43:01 -0800 (PST)
-Received: from [192.168.1.49] (185-219-167-24-static.vivo.cz. [185.219.167.24])
-        by smtp.gmail.com with ESMTPSA id e27-20020a170906315b00b007c10d47e748sm6591266eje.36.2022.12.20.22.43.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 22:43:01 -0800 (PST)
-Message-ID: <b21a17c7-df9c-ce20-f986-8f093a33278c@kernel.org>
-Date:   Wed, 21 Dec 2022 07:43:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Wed, 21 Dec 2022 02:12:15 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F6C205CF;
+        Tue, 20 Dec 2022 23:12:14 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 38AFFB819B4;
+        Wed, 21 Dec 2022 07:12:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF365C433EF;
+        Wed, 21 Dec 2022 07:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671606731;
+        bh=wB5ZvGobvITOzarRwRMummvTj0QNOaf/TUyKeEQS7eM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EJeX7s39E/jGa0z69sFBURv09t0RcsFo6fmF5jnurO1QMjMR3inwl3WsCKdB/Ippv
+         hNs8L0Af8f7zoZZmSu2Gta3B8urQPl1PyWCGYUfwh80fdJzYCs7TtHifJiZhw3w+rV
+         PLJWWMN9m66UOWj0ApluhfFUa0cr7wOx7fjUi8Zz9QZXC8ljutWOPkIhzYyfTCFZtX
+         cKHDAoPX4ml5p+GydmOzZ9xp/YcyYbwWrRUZgy2svvriUhzYXLXiK37ofcAsAGOoz+
+         bMWFZdmzDjzOd1YQn8RN5lPVu4DX50pdSZQxOk/K16NDvOoiFBjeahMzc4PUrti4fl
+         ixZB7lAeDo05w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p7tHe-0003Kq-Cd; Wed, 21 Dec 2022 08:12:59 +0100
+Date:   Wed, 21 Dec 2022 08:12:58 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Lux Aliaga <they@mint.lgbt>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-References: <20221220161530.2098299-1-krzysztof.kozlowski@linaro.org>
-From:   Jiri Slaby <jirislaby@kernel.org>
-Subject: Re: [PATCH] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on
- RX FIFO buffer
-In-Reply-To: <20221220161530.2098299-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+Message-ID: <Y6Kx+iq9c5izbYRH@hovoldconsulting.com>
+References: <20221215190404.398788-1-they@mint.lgbt>
+ <20221215190404.398788-2-they@mint.lgbt>
+ <e474f99d-2375-c8db-203c-632c918d8e4d@linaro.org>
+ <6ddf93eb-aadb-a9b8-d91a-0c56ed54418f@mint.lgbt>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6ddf93eb-aadb-a9b8-d91a-0c56ed54418f@mint.lgbt>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20. 12. 22, 17:15, Krzysztof Kozlowski wrote:
-> Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
-> default RX FIFO depth, e.g. 16.  Later during serial startup the
-> qcom_geni_serial_port_setup() updates the RX FIFO depth
-> (port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
-...
-> If the RX FIFO depth changes after probe, be sure to resize the buffer.
+On Wed, Dec 21, 2022 at 12:34:46AM -0300, Lux Aliaga wrote:
 > 
-> Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> On 16/12/2022 08:24, Konrad Dybcio wrote:
+> >
+> > On 15.12.2022 20:04, Lux Aliaga wrote:
+> >> Adds a UFS host controller node and its corresponding PHY to
+> >> the sm6125 platform.
 
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+> >> +			reg = <0x04807000 0x1c4>;
+> >> +
+> >> +			power-domains = <&gcc UFS_PHY_GDSC>;
+> >> +
+> >> +			clock-names = "ref", "ref_aux";
+> >> +			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> >> +
+> >> +			resets = <&ufs_mem_hc 0>;
+> >> +			reset-names = "ufsphy";
+> >> +
+> >> +			#address-cells = <1>;
+> >> +			#size-cells = <1>;
+> >> +			ranges;
+> >> +
+> >> +			status = "disabled";
+> >> +
+> >> +			ufs_mem_phy_lanes: lanes@4807400 {
+> >> +				reg = <0x4807400 0x098>,
+> >> +				      <0x4807600 0x130>,
+> >> +				      <0x4807c00 0x16c>;
+> >> +				#phy-cells = <0>;
+> >> +			};
+> > I believe this is deprecated. See [1].
 
-This patch LGTM, I only wonder:
+> > [1] https://lore.kernel.org/linux-arm-msm/20221104092045.17410-1-johan+linaro@kernel.org/T/#m988f3fe3d83b76bac247aea2d9dac34f37728d65
 
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -864,9 +864,10 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
->   	return IRQ_HANDLED;
->   }
->   
-> -static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
-> +static int get_tx_fifo_size(struct qcom_geni_serial_port *port)
+> I've looked into the documentation and this is only for the sc8280xp. 
+> This PHY is defined as it is for the msm8996 and derivatives.
 
-... why is this function dubbed get_tx_fifo_size(), provided it handles 
-rx fifo too? And it does not "get" the tx fifo size. In fact, the 
-function sets that :).
+No, it's not just for sc8280xp. It's intended for all new bindings (i.e.
+do not add more platforms to the msm8996 schema file).
 
->   {
->   	struct uart_port *uport;
-> +	u32 old_rx_fifo_depth = port->rx_fifo_depth;
->   
->   	uport = &port->uport;
->   	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
-> @@ -874,6 +875,16 @@ static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
->   	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
->   	uport->fifosize =
->   		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
-> +
-> +	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
-> +		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
-> +					      port->rx_fifo_depth * sizeof(u32),
-> +					      GFP_KERNEL);
-
-And now it even allocates memory.
-
-So more appropriate name should be setup_fifos() or similar.
-
-> +		if (!port->rx_fifo)
-> +			return -ENOMEM;
-> +	}
-> +
-> +	return 0;
-
-
--- 
-js
-suse labs
-
+Johan
