@@ -2,94 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37C2C652C31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 06:00:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1CFB652C6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 06:38:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229450AbiLUFAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 00:00:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41250 "EHLO
+        id S229597AbiLUFh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 00:37:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiLUFAG (ORCPT
+        with ESMTP id S229569AbiLUFh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 00:00:06 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592557662
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 21:00:02 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id w20so7840232ply.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 21:00:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kwfLQJbKmNJPm9ldJpkY347kvrmmfpxylI1je6aEUEE=;
-        b=U63Cxfw9d3z2W/3ihXqmhM9V+87+GXttdUvAVF0LHbfI++qllMC2tmxrtbFbxg3Xl9
-         FN4ne2Ood0xEzOSTDjhRvOhbidnft2xw3jJ6Ll2Ti3UYgOyu4pYsWbJ//6YdLwdiAKQ5
-         T7MjUOHhoNRXnm7CTvTGbGzg/NydRJv5/F0JADLzINuZ3Ls+4CD7Pk4+jTWcLUL9Du0L
-         DJtpdKHSxGt6ainp1GlsrndS9wjhbF0WeN9YxIGqD2XOOyUHCbdGVS5RG6e9xnzoaXd+
-         i5INdRphOupZ6kMc2Ek4mDrRzqsawl/i4q0FsQY+hxLDqDfPh+XkdOqZEIQaHOIeuHjk
-         W70Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kwfLQJbKmNJPm9ldJpkY347kvrmmfpxylI1je6aEUEE=;
-        b=Vq4CPBWSrREWbEgN6eoF6fNO9WVRTfzcdPXZLLlKPuG3HOpdBw6f/1Hnl2oqQc8Bcy
-         +lwKLv9wQuw1nnlqQhunXJrOA5UXZJKUQsNTBvSNiiZzL6BUzP6mDmi7JZ5WNNBBeO7y
-         rADWBtf4eEd2KAFcKNz1NmRCVxa6dagtTHiD5b4bY4kicXxfyWj6h+fCJsgGNs6n8mDr
-         Imyv9qv0Tfzp66/06WoSsFSjwRofqc1a+GkNtW1ds5oI7bf7DziMg///bLyfaxxqOcZ+
-         eCx5NIJ7vFV7PhhFAgAPdcisaLjJ8XvsaUPSDEXHCI/hEbqTX93W+BNmjg9N8esy+cUc
-         Jf8Q==
-X-Gm-Message-State: AFqh2ko0y2QRIOIOHGAsalPMgXnlzNOC+g32jriB7PlycxICPhPb2NrF
-        IG7ob1J5Xoid+29iw5UxJbbJoavpr+98RJuK
-X-Google-Smtp-Source: AMrXdXuPMj4jYDtGtz6CTbYb/wf3GWo+PSpopRGEDxjngcztcxAIh7SEKJyKIlot/v0Z1taLINyqrQ==
-X-Received: by 2002:a05:6a20:7d95:b0:b0:1051:30a0 with SMTP id v21-20020a056a207d9500b000b0105130a0mr1318183pzj.51.1671598801857;
-        Tue, 20 Dec 2022 21:00:01 -0800 (PST)
-Received: from localhost ([122.172.82.107])
-        by smtp.gmail.com with ESMTPSA id fv17-20020a17090b0e9100b002086ac07041sm400674pjb.44.2022.12.20.21.00.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 21:00:01 -0800 (PST)
-Date:   Wed, 21 Dec 2022 10:29:58 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        marijn.suijten@somainline.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] cpufreq: qcom-hw: Fix reading "reg" with
- address/size-cells != 2
-Message-ID: <20221221045958.3iqvuprfpemximfa@vireshk-i7>
-References: <20221220133910.240389-1-konrad.dybcio@linaro.org>
+        Wed, 21 Dec 2022 00:37:58 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 506151D33A;
+        Tue, 20 Dec 2022 21:37:56 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BL59XOf015301;
+        Wed, 21 Dec 2022 05:37:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=iuuCsVMes5uuYN5lfuNxmp9Zc6Nb3HtNYUdhownHy0U=;
+ b=Kn4gEh4QtNZ9WeWNKAkW74Q1RKUniNUdgDFn9L+1XGhXr7a9S82STXa/V6zKJrjhcGpg
+ 37jj7uJPwHsvhUD9sZfoKM3c4rI6WLaEmr20n+C0KFPYIcr/CI6+rXCt5bjPYTAL5g6e
+ ao4k3fubo9IXraL3IKnnpQ1S8aGvgGnX8a6zSAHPYWRUgQ04JeP2zs/wQsqvJJYAI5r0
+ dLzn3zsS43xz5d631Wtrq1iHUOKTj/ym+wDkaHEPidAucNxhv/nCUidGQ4YUjNndjkWK
+ w+kuM6D1lY0TQ3ZBdQSB0zTR/MIAgAp1t90Oc0XP7Fj7QMWOAfTo+913NqqUGFDGtkhx bg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mk195k81n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 05:37:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BL5bp9H004136
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 05:37:51 GMT
+Received: from jprakash-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 20 Dec 2022 21:37:47 -0800
+From:   Jishnu Prakash <quic_jprakash@quicinc.com>
+To:     <gregkh@linuxfoundation.org>, <sboyd@kernel.org>,
+        <agross@kernel.org>, <devicetree@vger.kernel.org>,
+        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
+        <quic_kamalw@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>
+Subject: [PATCH] Add a check for remove callback in spmi driver removal API
+Date:   Wed, 21 Dec 2022 11:07:11 +0530
+Message-ID: <1671601032-18397-1-git-send-email-quic_jprakash@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221220133910.240389-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: H2MqB-7DbaoUmH9KXmg_xrHfvRJjD1I8
+X-Proofpoint-ORIG-GUID: H2MqB-7DbaoUmH9KXmg_xrHfvRJjD1I8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_01,2022-12-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ priorityscore=1501 mlxlogscore=244 mlxscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212210038
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-12-22, 14:39, Konrad Dybcio wrote:
-> Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during
-> probe") assumed that every reg variable is 4*u32 wide (as most new qcom
-> SoCs set #address- and #size-cells to <2>. That is not the case for all of
-> them though. Check the cells values dynamically to ensure the proper
-> region of the DTB is being read.
-> 
-> Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v2:
-> - remove the comment about 'i' reuse
-> - call of_node_put() on exit
+When removing a SPMI driver, there can be a crash due to NULL pointer
+dereference if it does not have a remove callback defined, as the remove
+callback gets called directly in spmi_drv_remove(). This is one such call
+trace observed when removing the QCOM SPMI PMIC driver:
 
-Applied. Thanks.
+ dump_backtrace.cfi_jt+0x0/0x8
+ dump_stack_lvl+0xd8/0x16c
+ panic+0x188/0x498
+ __cfi_slowpath+0x0/0x214
+ __cfi_slowpath+0x1dc/0x214
+ spmi_drv_remove+0x16c/0x1e0
+ device_release_driver_internal+0x468/0x79c
+ driver_detach+0x11c/0x1a0
+ bus_remove_driver+0xc4/0x124
+ driver_unregister+0x58/0x84
+ cleanup_module+0x1c/0xc24 [qcom_spmi_pmic]
+ __do_sys_delete_module+0x3ec/0x53c
+ __arm64_sys_delete_module+0x18/0x28
+ el0_svc_common+0xdc/0x294
+ el0_svc+0x38/0x9c
+ el0_sync_handler+0x8c/0xf0
+ el0_sync+0x1b4/0x1c0
+
+If a driver has all its resources allocated through devm_() APIs and
+does not need any other explicit cleanup, it would not require a
+remove callback to be defined. The SPMI framework also does not enforce
+the presence of a remove callback when a client driver registers with it.
+Hence, add a check for remove callback presence before calling it
+when removing a SPMI driver.
+
+Jishnu Prakash (1):
+  spmi: Add a check for remove callback when removing a SPMI driver
+
+ drivers/spmi/spmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 -- 
-viresh
+2.7.4
+
