@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA65A6539B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 00:20:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F0D96539B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 00:20:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235081AbiLUXUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 18:20:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32816 "EHLO
+        id S235002AbiLUXUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 18:20:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234731AbiLUXUF (ORCPT
+        with ESMTP id S234988AbiLUXUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 18:20:05 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA0224F1C;
-        Wed, 21 Dec 2022 15:20:03 -0800 (PST)
+        Wed, 21 Dec 2022 18:20:11 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DFD24BE8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 15:20:05 -0800 (PST)
 Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 74115203C9;
-        Thu, 22 Dec 2022 00:20:01 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8ACD82038C;
+        Thu, 22 Dec 2022 00:20:03 +0100 (CET)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -51,62 +51,60 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Douglas Anderson <dianders@chromium.org>,
         Vladimir Lypak <vladimir.lypak@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Drew Davenport <ddavenport@chromium.org>
-Subject: [PATCH v2 4/8] drm/msm/dpu: Disallow unallocated resources to be returned
-Date:   Thu, 22 Dec 2022 00:19:39 +0100
-Message-Id: <20221221231943.1961117-5-marijn.suijten@somainline.org>
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 5/8] drm/msm/dpu: Reject topologies for which no DSC blocks are available
+Date:   Thu, 22 Dec 2022 00:19:40 +0100
+Message-Id: <20221221231943.1961117-6-marijn.suijten@somainline.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221221231943.1961117-1-marijn.suijten@somainline.org>
 References: <20221221231943.1961117-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the event that the topology requests resources that have not been
-created by the system (because they are typically not represented in
-dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
-blocks) remain NULL but will still be returned out of
-dpu_rm_get_assigned_resources, where the caller expects to get an array
-containing num_blks valid pointers (but instead gets these NULLs).
+Resource allocation of DSC blocks should behave more like LMs and CTLs
+where NULL resources (based on initial hw_blk creation via definitions
+in the catalog) are skipped ^1.  The current hardcoded mapping of DSC
+blocks however means that resource allocation shouldn't succeed at all
+when the DSC block on the corresponding index doesn't exist, rather than
+searching for the next free block.
 
-To prevent this from happening, where null-pointer dereferences
-typically result in a hard-to-debug platform lockup, num_blks shouldn't
-increase past NULL blocks and will print an error and break instead.
-After all, max_blks represents the static size of the maximum number of
-blocks whereas the actual amount varies per platform.
+This hardcoded mapping should be loosened separately as DPU 5.0.0
+introduced a crossbar where DSC blocks can be "somewhat" freely bound to
+any PP and CTL (in proper pairs).
 
-^1: which can happen after a git rebase ended up moving additions to
-_dpu_cfg to a different struct which has the same patch context.
+^1: which, on hardware that supports DSC, can happen after a git rebase
+ended up moving additions to _dpu_cfg to a different struct which has
+the same patch context.
 
-Fixes: bb00a452d6f7 ("drm/msm/dpu: Refactor resource manager")
+Fixes: f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in RM")
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 73b3442e7467..8471d04bff50 100644
+index 8471d04bff50..dcbf03d2940a 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -660,6 +660,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
- 				  blks_size, enc_id);
- 			break;
- 		}
-+		if (!hw_blks[i]) {
-+			DPU_ERROR("No more resource %d available to assign to enc %d\n",
-+				  type, enc_id);
-+			break;
-+		}
- 		blks[num_blks++] = hw_blks[i];
- 	}
+@@ -496,6 +496,11 @@ static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
  
+ 	/* check if DSC required are allocated or not */
+ 	for (i = 0; i < num_dsc; i++) {
++		if (!rm->dsc_blks[i]) {
++			DPU_ERROR("DSC %d does not exist\n", i);
++			return -EIO;
++		}
++
+ 		if (global_state->dsc_to_enc_id[i]) {
+ 			DPU_ERROR("DSC %d is already allocated\n", i);
+ 			return -EIO;
 -- 
 2.39.0
 
