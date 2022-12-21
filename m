@@ -2,190 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E4F1653292
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 15:43:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F1726532C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 15:59:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiLUOnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 09:43:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36820 "EHLO
+        id S232380AbiLUO7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 09:59:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbiLUOnk (ORCPT
+        with ESMTP id S229825AbiLUO7p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 09:43:40 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB62E20363
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:43:38 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id b2so3033040pld.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:43:38 -0800 (PST)
+        Wed, 21 Dec 2022 09:59:45 -0500
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985671BB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:59:44 -0800 (PST)
+Received: by mail-io1-xd33.google.com with SMTP id h6so8114578iof.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:59:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IyW++2grHjl8J45d/2q3DxB6TJXLGyoaKqQ8S90iPAw=;
-        b=JwcBi8Mk+n+BRfCLl7cSqbrJjPeQAMpIMzuzVVbz7UEk9bGfgDNKY8nXyg0CyOyIt/
-         ubbg606HpZ/6sJlH/0CZitVijUPDKFXn69O+XpmGg6+dLyrQysjwKEpLZM+HMcSFFeqU
-         T3IRNg6mZ4F/aqnC/4beIRjC33YQwVSPSixMeE23GyB3wSywM1HVdTOaD8dktnTVMMrK
-         dl7QplP1kP60YXb5UK1GvRUH5B+Zj/cyt/XD4X2nH4arqpOqBJJD44ljqlSbMP2xXsLW
-         zS+NvuqhG8MTh1LmpSe/CVuOy1AMoHw+vHzsEtnHD/7qTFy45Auw9eJZTJQTLts8KxhS
-         jkvQ==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VSTSYuF2IGWHhVL1H4R/UBsYbY3GgJPyleeG4rMWVfE=;
+        b=EbRH3h1/sjS6Kos+PZMzeKjbriG50DkBaoLywTVgC7IYaW0bF8rQjVcYd5sHTC2IRF
+         istKKDdWOplUTKrD73Z7umq9PSxGHv7WVLy/jkyJgrXxEoL4WsUofTL964FUD6dRzvc2
+         OEBFSWplL5+ztuzB7aIMv643KEt3ZtY2tStkc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IyW++2grHjl8J45d/2q3DxB6TJXLGyoaKqQ8S90iPAw=;
-        b=QG6HaD4cBts5oCSLHORaGJEv/6NAh6/b4RTMdeRyPlLljAmUJQ5u5F+GFOD8gaeXQ/
-         o5BOxvKM/y4qsMb+k+DC8jU8HlTX84YL8aff2PreDeONH/du7Ukd15OZAZJPPmyPMwv/
-         ycULt0rg2mOYOfqNNTzq47whnvWuPNSyg8hZpsmTfqCr3V/gSlSVRQ+GW/egTEaxTIrr
-         OkGbeeG75mZMuT8EXtjoVawz24ohN8F32cLK+L1tbjRDjoOgpB/c3ESkHKL5vfCHqSMi
-         gYfIJL0g4RQ3FU2YFYDjT23nVcE+J36JLf/gJgNdEAYzM9H8Ybkz3p4MaDhY1EpeK/Gl
-         yKBA==
-X-Gm-Message-State: AFqh2koexaL+LjVabokQ+1lJr3fw11Zvw0xg8/ERkh8lr2elKd/hC8/R
-        CRQ0sIiEe3ieyRnhZg7PE4F0vRboD+IkEmV9WRz+Yw==
-X-Google-Smtp-Source: AMrXdXvCHGKgNiRJjAKvBrn8TFRX9lSKbtiwl6JC1JfpRNHfJRtETCwT+Zv/FXciPqBeqqKNLPL9r+PBfxqx5PpG9q0=
-X-Received: by 2002:a17:90a:be0c:b0:219:ef02:a5eb with SMTP id
- a12-20020a17090abe0c00b00219ef02a5ebmr226260pjs.84.1671633818076; Wed, 21 Dec
- 2022 06:43:38 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VSTSYuF2IGWHhVL1H4R/UBsYbY3GgJPyleeG4rMWVfE=;
+        b=PvBBMp6/jzBzbeccOsZJS+JkgYbYVggVaac1MzXJ2q5lo0PmJbTupIT8yQv3AP8WxC
+         a9FMPQt+Q0J9x2O917gqzVYA2RjS/czMPM4IHbhk7SHo33D6a+9fiTJErSUDhAWvJLQf
+         dQ4ui8uupHV+UUqOBIvq0+3C0hypjh63uwsIDyWtjCd06EZhy1KZOgcemRrsmqokvow8
+         oBxmlLWOG0d5hyJSHsDPjjNzwlh9lM8BHvJONqkZylVZTiRhXr/z7z1nu9Y2Nj8e0xeU
+         dE3KCH0Gd/dspnRQ3k1Z+vy7PdkVJZoVpRO5wOKbuhYAmDcujTe3JOZ9i+uxIlq4KKkW
+         DNmQ==
+X-Gm-Message-State: AFqh2kob2rZJDAAJiND9iFG3zDbYcyE2Gr0JjopCISCwDJewfWzwVzca
+        WJMBPRrY3L97ZDYtxqmetlGVdg==
+X-Google-Smtp-Source: AMrXdXs6kcBBuwh3xgUFBvquqCWpgvIdrC1wD2pI6lE+JKWx5qb+rt5psMSJfoUy1s/8t4OUaAZqvg==
+X-Received: by 2002:a6b:c747:0:b0:6e0:380b:b900 with SMTP id x68-20020a6bc747000000b006e0380bb900mr1397553iof.12.1671634783929;
+        Wed, 21 Dec 2022 06:59:43 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id c59-20020a029641000000b0039c8a9d4a82sm2768283jai.108.2022.12.21.06.59.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Dec 2022 06:59:43 -0800 (PST)
+Date:   Wed, 21 Dec 2022 14:59:42 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>
+Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
+ max latencies
+Message-ID: <Y6MfXltck34gSwU9@google.com>
+References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
+ <20221205112500.GB4514@thinkpad>
+ <Y441/Icd2wSgVnNU@google.com>
+ <20221221054953.GA2922@thinkpad>
 MIME-Version: 1.0
-References: <1671522257-38778-1-git-send-email-quic_akhilpo@quicinc.com> <20221220131255.v3.1.I3e6b1f078ad0f1ca9358c573daa7b70ec132cdbe@changeid>
-In-Reply-To: <20221220131255.v3.1.I3e6b1f078ad0f1ca9358c573daa7b70ec132cdbe@changeid>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 21 Dec 2022 15:43:01 +0100
-Message-ID: <CAPDyKFr6Hf5gbJ9T9scYqDrg9tmKmVAm=h1J7r3GZzcogk5HpQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] PM: domains: Allow a genpd consumer to require a
- synced power off
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221221054953.GA2922@thinkpad>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Dec 2022 at 08:44, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> From: Ulf Hansson <ulf.hansson@linaro.org>
->
-> Some genpd providers doesn't ensure that it has turned off at hardware.
-> This is fine until the consumer really requires during some special
-> scenarios that the power domain collapse at hardware before it is
-> turned ON again.
->
-> An example is the reset sequence of Adreno GPU which requires that the
-> 'gpucc cx gdsc' power domain should move to OFF state in hardware at
-> least once before turning in ON again to clear the internal state.
->
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
->
-> (no changes since v2)
->
-> Changes in v2:
-> - Minor formatting fix
->
->  drivers/base/power/domain.c | 23 +++++++++++++++++++++++
->  include/linux/pm_domain.h   |  5 +++++
->  2 files changed, 28 insertions(+)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 967bcf9d415e..53524a102321 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -519,6 +519,28 @@ ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_get_next_hrtimer);
->
-> +/*
-> + * dev_pm_genpd_synced_poweroff - Next power off should be synchronous
-> + *
-> + * @dev: A device that is attached to the genpd.
-> + *
-> + * Allows a consumer of the genpd to notify the provider that the next power off
-> + * should be synchronous.
+On Wed, Dec 21, 2022 at 11:19:53AM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Dec 05, 2022 at 06:18:36PM +0000, Matthias Kaehlcke wrote:
+> > On Mon, Dec 05, 2022 at 04:55:00PM +0530, Manivannan Sadhasivam wrote:
+> > > On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
+> > > > In ASPM driver, LTR threshold scale and value are updated based on
+> > > > tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
+> > > > LTR threshold scale and value are greater values than max snoop/non-snoop
+> > > > value.
+> > > > 
+> > > > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
+> > > > reported snoop/no-snoop values is greater than or equal to
+> > > > LTR_L1.2_THRESHOLD value.
+> > > > 
+> > > > Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
+> > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > 
+> > > I take my Ack back... Sorry that I did not look into this patch closer.
+> > > 
+> > > > ---
+> > > > 
+> > > > I am taking this patch forward as prasad is no more working with our org.
+> > > > changes since v6:
+> > > > 	- Rebasing with pci/next.
+> > > > changes since v5:
+> > > > 	- no changes, just reposting as standalone patch instead of reply to
+> > > > 	  previous patch.
+> > > > Changes since v4:
+> > > > 	- Replaced conditional statements with min and max.
+> > > > changes since v3:
+> > > > 	- Changed the logic to include this condition "snoop/nosnoop
+> > > > 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
+> > > > Changes since v2:
+> > > > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
+> > > > Changes since v1:
+> > > > 	- Added missing variable declaration in v1 patch
+> > > > ---
+> > > >  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
+> > > >  1 file changed, 30 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > > > index 928bf64..2bb8470 100644
+> > > > --- a/drivers/pci/pcie/aspm.c
+> > > > +++ b/drivers/pci/pcie/aspm.c
+> > > > @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> > > >  {
+> > > >  	struct pci_dev *child = link->downstream, *parent = link->pdev;
+> > > >  	u32 val1, val2, scale1, scale2;
+> > > > +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
+> > > >  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+> > > >  	u32 ctl1 = 0, ctl2 = 0;
+> > > >  	u32 pctl1, pctl2, cctl1, cctl2;
+> > > > +	u16 ltr;
+> > > > +	u16 max_snoop_lat, max_nosnoop_lat;
+> > > >  
+> > > >  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
+> > > >  		return;
+> > > >  
+> > > > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
+> > > > +	if (!ltr)
+> > > > +		return;
+> > > > +
+> > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
+> > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
+> > > > +
+> > > > +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> > > > +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
+> > > > +
+> > > > +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
+> > > > +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
+> > > > +
+> > > > +	/* choose the greater max scale value between snoop and no snoop value*/
+> > > > +	max_scale = max(max_snp_scale, max_nsnp_scale);
+> > > > +
+> > > > +	/* choose the greater max value between snoop and no snoop scales */
+> > > > +	max_val = max(max_snp_val, max_nsnp_val);
+> > > > +
+> > > >  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
+> > > >  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> > > >  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
+> > > > @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+> > > >  	 */
+> > > >  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> > > >  	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> > > > +
+> > > > +	/*
+> > > > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
+> > > > +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
+> > > 
+> > > Apart from the bug in calculating the LTR_Threshold as reported by Matthias
+> > > and Bjorn, I'm wondering if we are covering up for the device firmware issue.
+> > 
+> > Yes, I think the patch is doing exactly that.
+> > 
+> > > As per section 6.18, if the device reports snoop/no-snoop scale/value as 0, then
+> > > it implies that the device won't tolerate any additional delays from the host.
+> > >
+> > > In that case, how can we allow the link to go into L1.2 since that would incur
+> > > high delay compared to L1.1?
+> > 
+> > I had the same doubt, a value of 0 doesn't make sense, if it literally means
+> > 'max delay of 0ns'. I did some debugging around this issue. One thing I found
+> > is that there are NVMe models that don't have issues with entering L1.2 with
+> > max (no-)snoop latencies of 0. From that I infer that a value of 0 does not
+> > literally mean a max delay of 0ns.
+> > 
+> 
+> This is interesting.
+> 
+> > The PCIe spec doesn't say specifically what a value of 0 in those registers
+> > means, but chapter "6.18 Latency Tolerance Reporting (LTR) Mechanism" of the
+> > PCIe 4.0 base spec says something about the latency requirements in LTR
+> > messages:
+> > 
+> >   Setting the value and scale fields to all 0’s indicates that the device will
+> >   be impacted by any delay and that the best possible service is requested.
+> > 
+> > With that and the fact that several NVMe's don't have issues with all 0 values
+> > I deduce that all 0's means 'best possible service' and not 'max latency of
+> > 0ns'. It seems the Kioxia firmware has a bug which interprets all 0 values as
+> > a max latency of 0ns.
+> > 
+> > Another finding is that the Kioxia NVMe can enter L1.2 if the max latencies
+> > are set to values >= the LTR threshold. Unfortunately that isn't a viable
+> > fix for existing devices in the field, devices under development could possibly
+> > adjust the latencies in the BIOS (coreboot code [1] suggests that this is done
+> > at least in some cases).
+> > 
+> 
+> I fully agree that it is a firmware issue. And yes, we should refrain to fixes
+> in the bootloader if possible.
+> 
+> Another option would be to add a quirk for specific devices in the ASPM code.
+> But in that case, I'm not sure what would be the optimal snoop/no-snoop value
+> that could be used.
 
-Nitpick; similar to other dev_pm_genpd_* function-descriptions, I
-think it's important to add the below information.
+I had/have the same doubt.
 
-"It is assumed that the users guarantee that the genpd wouldn't be
-detached while this routine is getting called."
+> There is another issue where if we have some other device on the same bus
+> that explicitly requires 0ns latency.
 
-Can you please add that?
-
-> + */
-> +void dev_pm_genpd_synced_poweroff(struct device *dev)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return;
-> +
-> +       genpd_lock(genpd);
-> +       genpd->synced_poweroff = true;
-> +       genpd_unlock(genpd);
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_synced_poweroff);
-> +
->  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->  {
->         unsigned int state_idx = genpd->state_idx;
-> @@ -562,6 +584,7 @@ static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->
->  out:
->         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_ON, NULL);
-> +       genpd->synced_poweroff = false;
->         return 0;
->  err:
->         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_OFF,
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 1cd41bdf73cf..f776fb93eaa0 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -136,6 +136,7 @@ struct generic_pm_domain {
->         unsigned int prepared_count;    /* Suspend counter of prepared devices */
->         unsigned int performance_state; /* Aggregated max performance state */
->         cpumask_var_t cpus;             /* A cpumask of the attached CPUs */
-> +       bool synced_poweroff;           /* A consumer needs a synced poweroff */
->         int (*power_off)(struct generic_pm_domain *domain);
->         int (*power_on)(struct generic_pm_domain *domain);
->         struct raw_notifier_head power_notifiers; /* Power on/off notifiers */
-> @@ -235,6 +236,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
->  void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
->  ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev);
-> +void dev_pm_genpd_synced_poweroff(struct device *dev);
->
->  extern struct dev_power_governor simple_qos_governor;
->  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -300,6 +302,9 @@ static inline ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
->  {
->         return KTIME_MAX;
->  }
-> +static inline void dev_pm_genpd_synced_poweroff(struct device *dev)
-> +{ }
-> +
->  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->  #endif
-> --
-> 2.7.4
->
-
-Kind regards
-Uffe
+Would that be reasonable requirement, i.e. can 0ns latency ever be achieved?
