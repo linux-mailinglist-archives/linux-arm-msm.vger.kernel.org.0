@@ -2,227 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1726532C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 15:59:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE6CF6532EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 16:10:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232380AbiLUO7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 09:59:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44174 "EHLO
+        id S229601AbiLUPKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 10:10:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbiLUO7p (ORCPT
+        with ESMTP id S229596AbiLUPKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 09:59:45 -0500
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985671BB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:59:44 -0800 (PST)
-Received: by mail-io1-xd33.google.com with SMTP id h6so8114578iof.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 06:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VSTSYuF2IGWHhVL1H4R/UBsYbY3GgJPyleeG4rMWVfE=;
-        b=EbRH3h1/sjS6Kos+PZMzeKjbriG50DkBaoLywTVgC7IYaW0bF8rQjVcYd5sHTC2IRF
-         istKKDdWOplUTKrD73Z7umq9PSxGHv7WVLy/jkyJgrXxEoL4WsUofTL964FUD6dRzvc2
-         OEBFSWplL5+ztuzB7aIMv643KEt3ZtY2tStkc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VSTSYuF2IGWHhVL1H4R/UBsYbY3GgJPyleeG4rMWVfE=;
-        b=PvBBMp6/jzBzbeccOsZJS+JkgYbYVggVaac1MzXJ2q5lo0PmJbTupIT8yQv3AP8WxC
-         a9FMPQt+Q0J9x2O917gqzVYA2RjS/czMPM4IHbhk7SHo33D6a+9fiTJErSUDhAWvJLQf
-         dQ4ui8uupHV+UUqOBIvq0+3C0hypjh63uwsIDyWtjCd06EZhy1KZOgcemRrsmqokvow8
-         oBxmlLWOG0d5hyJSHsDPjjNzwlh9lM8BHvJONqkZylVZTiRhXr/z7z1nu9Y2Nj8e0xeU
-         dE3KCH0Gd/dspnRQ3k1Z+vy7PdkVJZoVpRO5wOKbuhYAmDcujTe3JOZ9i+uxIlq4KKkW
-         DNmQ==
-X-Gm-Message-State: AFqh2kob2rZJDAAJiND9iFG3zDbYcyE2Gr0JjopCISCwDJewfWzwVzca
-        WJMBPRrY3L97ZDYtxqmetlGVdg==
-X-Google-Smtp-Source: AMrXdXs6kcBBuwh3xgUFBvquqCWpgvIdrC1wD2pI6lE+JKWx5qb+rt5psMSJfoUy1s/8t4OUaAZqvg==
-X-Received: by 2002:a6b:c747:0:b0:6e0:380b:b900 with SMTP id x68-20020a6bc747000000b006e0380bb900mr1397553iof.12.1671634783929;
-        Wed, 21 Dec 2022 06:59:43 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id c59-20020a029641000000b0039c8a9d4a82sm2768283jai.108.2022.12.21.06.59.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Dec 2022 06:59:43 -0800 (PST)
-Date:   Wed, 21 Dec 2022 14:59:42 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Kai-Heng Feng <kai.heng.feng@canonical.com>
-Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
- max latencies
-Message-ID: <Y6MfXltck34gSwU9@google.com>
-References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
- <20221205112500.GB4514@thinkpad>
- <Y441/Icd2wSgVnNU@google.com>
- <20221221054953.GA2922@thinkpad>
+        Wed, 21 Dec 2022 10:10:21 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F5222B00;
+        Wed, 21 Dec 2022 07:10:21 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BLDonRx012598;
+        Wed, 21 Dec 2022 15:10:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=s/n7LfhKNXMJO7cKF05rI7a8p2Cj1T1UqOe64kYAbq4=;
+ b=d2jnJcU6KjXbGyOLhl1xxvIWSrOapQzvy4aVfZ3UL+MzubDAuiVJwKoN1PvADJRs4n9d
+ 2vd6KDxcdeWXf/4ipeA/IylslYA4uPOq2Ec6/OrQ65JuKH4af0qdBK6/oQArUdlFxz9P
+ DTD665E+uYBkSxd5gffEhP3AvDLm8AqCVeeR6WoleGRVeoFZ7ou4vJ9doXIOQVaagx96
+ e/fvKRTwYVqjpwBKczYfNVFGDNmC72k6t1WoOwmvAVBFyt1oP9WWeWHsmcKakXwOYr+R
+ P37ilpp/wWSEd446K+MMLEdi8CyFmrhNof5bXgMNbi+zH70UUfniFON745BM4b/OTCPF rw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mkcxvb3sn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 15:10:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BLFAEq9001881
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 15:10:14 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 21 Dec 2022 07:10:09 -0800
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>
+CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Emma Anholt <emma@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 1/4] drm/msm/adreno: Fix null ptr access in adreno_gpu_cleanup()
+Date:   Wed, 21 Dec 2022 20:39:56 +0530
+Message-ID: <20221221203925.v2.1.Ib978de92c4bd000b515486aad72e96c2481f84d0@changeid>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221221054953.GA2922@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: lCwHDYWW87FrXWVrycegm73ushsI0UHO
+X-Proofpoint-ORIG-GUID: lCwHDYWW87FrXWVrycegm73ushsI0UHO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_08,2022-12-21_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 impostorscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212210126
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 21, 2022 at 11:19:53AM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Dec 05, 2022 at 06:18:36PM +0000, Matthias Kaehlcke wrote:
-> > On Mon, Dec 05, 2022 at 04:55:00PM +0530, Manivannan Sadhasivam wrote:
-> > > On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
-> > > > In ASPM driver, LTR threshold scale and value are updated based on
-> > > > tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
-> > > > LTR threshold scale and value are greater values than max snoop/non-snoop
-> > > > value.
-> > > > 
-> > > > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-> > > > reported snoop/no-snoop values is greater than or equal to
-> > > > LTR_L1.2_THRESHOLD value.
-> > > > 
-> > > > Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-> > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > 
-> > > I take my Ack back... Sorry that I did not look into this patch closer.
-> > > 
-> > > > ---
-> > > > 
-> > > > I am taking this patch forward as prasad is no more working with our org.
-> > > > changes since v6:
-> > > > 	- Rebasing with pci/next.
-> > > > changes since v5:
-> > > > 	- no changes, just reposting as standalone patch instead of reply to
-> > > > 	  previous patch.
-> > > > Changes since v4:
-> > > > 	- Replaced conditional statements with min and max.
-> > > > changes since v3:
-> > > > 	- Changed the logic to include this condition "snoop/nosnoop
-> > > > 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-> > > > Changes since v2:
-> > > > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-> > > > Changes since v1:
-> > > > 	- Added missing variable declaration in v1 patch
-> > > > ---
-> > > >  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
-> > > >  1 file changed, 30 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > > > index 928bf64..2bb8470 100644
-> > > > --- a/drivers/pci/pcie/aspm.c
-> > > > +++ b/drivers/pci/pcie/aspm.c
-> > > > @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> > > >  {
-> > > >  	struct pci_dev *child = link->downstream, *parent = link->pdev;
-> > > >  	u32 val1, val2, scale1, scale2;
-> > > > +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
-> > > >  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
-> > > >  	u32 ctl1 = 0, ctl2 = 0;
-> > > >  	u32 pctl1, pctl2, cctl1, cctl2;
-> > > > +	u16 ltr;
-> > > > +	u16 max_snoop_lat, max_nosnoop_lat;
-> > > >  
-> > > >  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
-> > > >  		return;
-> > > >  
-> > > > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-> > > > +	if (!ltr)
-> > > > +		return;
-> > > > +
-> > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-> > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-> > > > +
-> > > > +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > > > +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
-> > > > +
-> > > > +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > > > +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
-> > > > +
-> > > > +	/* choose the greater max scale value between snoop and no snoop value*/
-> > > > +	max_scale = max(max_snp_scale, max_nsnp_scale);
-> > > > +
-> > > > +	/* choose the greater max value between snoop and no snoop scales */
-> > > > +	max_val = max(max_snp_val, max_nsnp_val);
-> > > > +
-> > > >  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
-> > > >  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > > >  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > > > @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> > > >  	 */
-> > > >  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
-> > > >  	encode_l12_threshold(l1_2_threshold, &scale, &value);
-> > > > +
-> > > > +	/*
-> > > > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-> > > > +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
-> > > 
-> > > Apart from the bug in calculating the LTR_Threshold as reported by Matthias
-> > > and Bjorn, I'm wondering if we are covering up for the device firmware issue.
-> > 
-> > Yes, I think the patch is doing exactly that.
-> > 
-> > > As per section 6.18, if the device reports snoop/no-snoop scale/value as 0, then
-> > > it implies that the device won't tolerate any additional delays from the host.
-> > >
-> > > In that case, how can we allow the link to go into L1.2 since that would incur
-> > > high delay compared to L1.1?
-> > 
-> > I had the same doubt, a value of 0 doesn't make sense, if it literally means
-> > 'max delay of 0ns'. I did some debugging around this issue. One thing I found
-> > is that there are NVMe models that don't have issues with entering L1.2 with
-> > max (no-)snoop latencies of 0. From that I infer that a value of 0 does not
-> > literally mean a max delay of 0ns.
-> > 
-> 
-> This is interesting.
-> 
-> > The PCIe spec doesn't say specifically what a value of 0 in those registers
-> > means, but chapter "6.18 Latency Tolerance Reporting (LTR) Mechanism" of the
-> > PCIe 4.0 base spec says something about the latency requirements in LTR
-> > messages:
-> > 
-> >   Setting the value and scale fields to all 0’s indicates that the device will
-> >   be impacted by any delay and that the best possible service is requested.
-> > 
-> > With that and the fact that several NVMe's don't have issues with all 0 values
-> > I deduce that all 0's means 'best possible service' and not 'max latency of
-> > 0ns'. It seems the Kioxia firmware has a bug which interprets all 0 values as
-> > a max latency of 0ns.
-> > 
-> > Another finding is that the Kioxia NVMe can enter L1.2 if the max latencies
-> > are set to values >= the LTR threshold. Unfortunately that isn't a viable
-> > fix for existing devices in the field, devices under development could possibly
-> > adjust the latencies in the BIOS (coreboot code [1] suggests that this is done
-> > at least in some cases).
-> > 
-> 
-> I fully agree that it is a firmware issue. And yes, we should refrain to fixes
-> in the bootloader if possible.
-> 
-> Another option would be to add a quirk for specific devices in the ASPM code.
-> But in that case, I'm not sure what would be the optimal snoop/no-snoop value
-> that could be used.
+Fix the below kernel panic due to null pointer access:
+[   18.504431] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000048
+[   18.513464] Mem abort info:
+[   18.516346]   ESR = 0x0000000096000005
+[   18.520204]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   18.525706]   SET = 0, FnV = 0
+[   18.528878]   EA = 0, S1PTW = 0
+[   18.532117]   FSC = 0x05: level 1 translation fault
+[   18.537138] Data abort info:
+[   18.540110]   ISV = 0, ISS = 0x00000005
+[   18.544060]   CM = 0, WnR = 0
+[   18.547109] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000112826000
+[   18.553738] [0000000000000048] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
+[   18.562690] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+**Snip**
+[   18.696758] Call trace:
+[   18.699278]  adreno_gpu_cleanup+0x30/0x88
+[   18.703396]  a6xx_destroy+0xc0/0x130
+[   18.707066]  a6xx_gpu_init+0x308/0x424
+[   18.710921]  adreno_bind+0x178/0x288
+[   18.714590]  component_bind_all+0xe0/0x214
+[   18.718797]  msm_drm_bind+0x1d4/0x614
+[   18.722566]  try_to_bring_up_aggregate_device+0x16c/0x1b8
+[   18.728105]  __component_add+0xa0/0x158
+[   18.732048]  component_add+0x20/0x2c
+[   18.735719]  adreno_probe+0x40/0xc0
+[   18.739300]  platform_probe+0xb4/0xd4
+[   18.743068]  really_probe+0xfc/0x284
+[   18.746738]  __driver_probe_device+0xc0/0xec
+[   18.751129]  driver_probe_device+0x48/0x110
+[   18.755421]  __device_attach_driver+0xa8/0xd0
+[   18.759900]  bus_for_each_drv+0x90/0xdc
+[   18.763843]  __device_attach+0xfc/0x174
+[   18.767786]  device_initial_probe+0x20/0x2c
+[   18.772090]  bus_probe_device+0x40/0xa0
+[   18.776032]  deferred_probe_work_func+0x94/0xd0
+[   18.780686]  process_one_work+0x190/0x3d0
+[   18.784805]  worker_thread+0x280/0x3d4
+[   18.788659]  kthread+0x104/0x1c0
+[   18.791981]  ret_from_fork+0x10/0x20
+[   18.795654] Code: f9400408 aa0003f3 aa1f03f4 91142015 (f9402516)
+[   18.801913] ---[ end trace 0000000000000000 ]---
+[   18.809039] Kernel panic - not syncing: Oops: Fatal exception
 
-I had/have the same doubt.
+Fixes: 17e822f7591f ("drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init, cleanup}")
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+---
 
-> There is another issue where if we have some other device on the same bus
-> that explicitly requires 0ns latency.
+Changes in v2:
+- Added 'Fixes' tag (Dan Carpenter)
 
-Would that be reasonable requirement, i.e. can 0ns latency ever be achieved?
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 382fb7f9e497..118d07e5c66c 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1073,13 +1073,13 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+ {
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
+-	struct msm_drm_private *priv = gpu->dev->dev_private;
++	struct msm_drm_private *priv = gpu->dev ? gpu->dev->dev_private : NULL;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
+ 		release_firmware(adreno_gpu->fw[i]);
+ 
+-	if (pm_runtime_enabled(&priv->gpu_pdev->dev))
++	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
+ 		pm_runtime_disable(&priv->gpu_pdev->dev);
+ 
+ 	msm_gpu_cleanup(&adreno_gpu->base);
+-- 
+2.7.4
+
