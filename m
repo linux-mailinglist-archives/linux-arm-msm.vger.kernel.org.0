@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6BA065376F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 21:15:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4903C6537BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 21:44:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234797AbiLUUPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 15:15:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53834 "EHLO
+        id S231657AbiLUUoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 15:44:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234775AbiLUUPq (ORCPT
+        with ESMTP id S229578AbiLUUoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 15:15:46 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEDEBF7A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 12:15:43 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 1so25165479lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 12:15:43 -0800 (PST)
+        Wed, 21 Dec 2022 15:44:10 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF50B7D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 12:44:09 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id bf43so25248749lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 12:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5uPDBdA258VfD8mP2kKZPpc2Fq03i1qJ2ZV+ViKy9ns=;
-        b=zt4R3Hy3rD78ZLlfQZwJiT1radcuRRNas5D/sK9pDZpw2C5S3uOtyjEBEn+tuSZaHA
-         MKRobbXPb/ze0T8HSyAeImwEa7LTFmnHxTIFm914YH85u7TDUEOXl9asgVlzp40eSign
-         7EqMDf8Yj2uG/Y6FpogtUMmuTaBeh3eaNZvGoQ0+Fmacvn55NTdpoXsSJzEjnwDw4c4v
-         kA2KQLaYvm5hGKaVa56BfSoj3HcXKptGljN4Q91vvMrkwUKkGVe1P+Irm5704rlpjFus
-         BCqPh1zxWgQtlXRx8WmbVh39Ne8Ij4vxg2vR1XtgLmDv0EtPFSu7bO0DnRF/Mx5plcZ4
-         IyFg==
+        bh=7yLX8oZ5v9e3fdvXtrp7X+EzXpLY8er8QpFf1kEgzpc=;
+        b=BqGLUDayO13yDqIEzYpBIr57NeK6RZ33pNBNujzjDiFHb8f4Umc4iMYqPuI3VWV5/F
+         Yy+V1JUsXssqj8YQcYeaxLGSjH/mEnZwJHZGQ+cRo4ca+mp8qijUg/Lt+pAnjiGn6At1
+         qHltNmPCQXxzAgFL2e9ic5Y52tNe6aO1WpyTFwZZ0zpu5qOnB+P5qGanDX3cb6U7IIhX
+         mVHtphs0umQkgLAFktgJpSO5D6wIqhzYehClv3rewXe2CMv2UkDf8bsV+GKfCtP5Th06
+         T1PKkUpRDfP+IcNec1UQyFK013ertchqkFbK5jVmcM+UsEd/t958KUvZH1Jdd7AaH3hm
+         MFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5uPDBdA258VfD8mP2kKZPpc2Fq03i1qJ2ZV+ViKy9ns=;
-        b=ZtRuIeF2SPQWScSc132wB8IvrOkfKnxwBf+62tGenl5tYEVwPaRoFHIUQvwpO7zv5q
-         LsylzKFMkZfr0kiGE00FcGetSbc7/5klQ/3gF/shcUMltreU/9t51eD7z50rszgUgKpz
-         qna3WKURlO0pfsSTKouWJM8Zai56n3VYwm3QpE9yYhmedZCuB/o01YsCtsS4qxvVTkoT
-         EPnCOLj/95grR0H8+w/fi8Fued4mwo7NER1VaPKkB4vSyYmBOqaQI2Lk6WeDz+bgv+78
-         p+3fnNQ3zmka1u4wPcOqd7IoF3V/EofnJzNYa75bdrhgaqKoK5z3ThmDQiX3cfDfnGBa
-         iV9A==
-X-Gm-Message-State: AFqh2kpX9wJGoqdVsH/W1331hhlMuBHerZ5rhjQxRfNniH0uTUGVBAsL
-        9DMKx1FpaIHirLyPlfz/EfxkXw==
-X-Google-Smtp-Source: AMrXdXuCOxWJ/4k111kwHkeFhQtaBoFOuE5KKUIJ9K8W1vDComgz3wpE6y5axiujCbXJFq6b0HwSjg==
-X-Received: by 2002:a05:6512:2308:b0:4b5:6b87:a5ce with SMTP id o8-20020a056512230800b004b56b87a5cemr1104572lfu.46.1671653742282;
-        Wed, 21 Dec 2022 12:15:42 -0800 (PST)
+        bh=7yLX8oZ5v9e3fdvXtrp7X+EzXpLY8er8QpFf1kEgzpc=;
+        b=1mfZoAwYH/VmNaDLWGr746fEM1xIWsCIYkUyMvWVTdukott/KJHJqJ/dzyq651bt+m
+         /jcLzmqXqKlQBMYZQkEARRloxU0LshaIaK/Btvwfa2ZH4z6ry/gO/7OlrAH1fhcTF8Ty
+         NqhNyc0NTSgj2BnsB9VBKUJ21llfjMrHKTy4gFggrMhWXCWgJbTMafGvMzKvnWmllitP
+         LTu7fdR9z90FGXXiDSiTWfq7/D04gF6+UYkufIJnPtLJ4L9I3qSfmM/KwT5JnjKcWcQu
+         wDpxWGVjIDbGDeg5JNMBQcH/9qYwtn2sLq9l59XltTqwOniiNTYTgJRCj3D6G4zwSvr1
+         g4Yg==
+X-Gm-Message-State: AFqh2kq/pRMm2gHxdjVmk7GldI6L7WPpbOpVFQ7m9DtuaMohAaVy95l2
+        iVuLXEh3lMDLBCoM/sLJt43Bng==
+X-Google-Smtp-Source: AMrXdXu+8hyQRCnnntWOqqsS5p3qnKyy+begbAFYjuPYuS4VdwRfeRyE9mSsfVWotWQj1/l82YIAow==
+X-Received: by 2002:ac2:59c4:0:b0:4b6:fae9:c9bc with SMTP id x4-20020ac259c4000000b004b6fae9c9bcmr932187lfn.4.1671655447821;
+        Wed, 21 Dec 2022 12:44:07 -0800 (PST)
 Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id v24-20020ac258f8000000b004947984b385sm1932743lfo.87.2022.12.21.12.15.40
+        by smtp.gmail.com with ESMTPSA id a8-20020a056512200800b004a2c447598fsm1951904lfb.159.2022.12.21.12.44.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Dec 2022 12:15:41 -0800 (PST)
-Message-ID: <03f31bb8-2152-e309-8c6a-f66731be0fca@linaro.org>
-Date:   Wed, 21 Dec 2022 21:15:39 +0100
+        Wed, 21 Dec 2022 12:44:07 -0800 (PST)
+Message-ID: <c7c6df69-1441-26c0-5316-0dd464adb02a@linaro.org>
+Date:   Wed, 21 Dec 2022 21:44:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v4 15/20] arm64: dts: qcom: msm8956: use SoC-specific
- compat for tsens
+Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: sc8280xp: add rng device tree
+ node
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
- <20221221020520.1326964-16-dmitry.baryshkov@linaro.org>
+To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_shazhuss@quicinc.com, robh+dt@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ahalaney@redhat.com, echanude@redhat.com
+References: <20221220192854.521647-1-bmasney@redhat.com>
+ <20221220192854.521647-8-bmasney@redhat.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221221020520.1326964-16-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221220192854.521647-8-bmasney@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,31 +82,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 21.12.2022 03:05, Dmitry Baryshkov wrote:
-> The slope values used during tsens calibration differ between msm8976
-> and msm8956 SoCs. Use SoC-specific compat value for the msm8956 SoC.
+On 20.12.2022 20:28, Brian Masney wrote:
+> Add the necessary device tree node for qcom,prng-ee so we can use the
+> hardware random number generator. This functionality was tested on a
+> SA8540p automotive development board using kcapi-rng from libkcapi.
 > 
-> Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/msm8956.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
+> Changes from v2 to v3:
+> - Correctly sort node by MMIO address
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8956.dtsi b/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> index e432512d8716..668e05185c21 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8956.dtsi
-> @@ -12,6 +12,10 @@ &pmu {
->  	interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(6) | IRQ_TYPE_LEVEL_HIGH)>;
->  };
+> Patch introduced in v2
+> 
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 4591d411f5fb..6c2cae83dac6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -1602,6 +1602,13 @@ spi15: spi@a9c000 {
+>  			};
+>  		};
 >  
-> +&tsens {
-> +	compatible = "qcom,msm8956-tsens", "qcom,tsens-v1";
-> +};
+> +		rng: rng@10d3000 {
+> +			compatible = "qcom,prng-ee";
+> +			reg = <0 0x010d3000 0 0x1000>;
+> +			clocks = <&rpmhcc RPMH_HWKM_CLK>;
+> +			clock-names = "core";
+> +		};
 > +
->  /*
->   * You might be wondering.. why is it so empty out there?
->   * Well, the SoCs are almost identical.
+>  		pcie4: pcie@1c00000 {
+>  			device_type = "pci";
+>  			compatible = "qcom,pcie-sc8280xp";
