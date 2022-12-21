@@ -2,119 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6424652C91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 06:55:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F5C6652CB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 07:11:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234429AbiLUFzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 00:55:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56804 "EHLO
+        id S234272AbiLUGLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 01:11:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234410AbiLUFzm (ORCPT
+        with ESMTP id S229448AbiLUGLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 00:55:42 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4EF1DDF9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 21:55:38 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id b12so9739422pgj.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 21:55:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TaGVUxRUg0LoszCXjRP27hhaB8J+I3ZvWI15G+yWA+I=;
-        b=Q4X+/Nj5MG5IJNmLNnYZO/3PjdSmzZnvtqzOIF7vVgzizc31le+nFsOp0ozBrnntm0
-         dlQd+fC4HdT0xQyQB3PUk5lUIIjuLwXRpVfYP5GsDg2NqXyQexDmnGV/BbatjAW+e3yI
-         S7Pg//+r1sNLRKqJJiohIA1CFqjf6q2eFZ501XnRW/m0TrBmd3T6t7pULd+pOOoBrPab
-         3CrD/pYazWJZ3m4lOMZg8iS1AD2xGqB487XWqu2C4g42Yy9MNDEwIT0XcfdYL0zbl86W
-         jGmW8Qf9f5o8SjSXRRLtphSYh6rfcU07tG6DAfh4xwQh2uZLUJDYGfCJ23rMUSU9W5rW
-         w2Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TaGVUxRUg0LoszCXjRP27hhaB8J+I3ZvWI15G+yWA+I=;
-        b=5NTjXU7LHuHRG226eUOCDCGf84aob6zR3TY/KMi2Ni0vnrzuiXWayAgYncEuptuE8p
-         LRtviEqdWWv7ZPFW3WVrTwqrZuiybtr6jS8+h6JXX0hcPARQmK/LF4ECyFqdj8ObVhHA
-         u3Oebkg33l4Pnjj42ZbZOPgjK7JMLqMQuN4eQuZ7CKn1sNFFFF5XnvZc4iLbQ1oFmiCj
-         qR4Yxw27V/ZKgP16tsvZir2zGbBDTD0QSDEcnXuaADUJ8nrRlc3UNjD/g2zXecO7ITFp
-         J9NVoB8YSExUwtWJAyMiK9O2nRm9bj7tN3FZHnDhMOe7IlYCtSeG8gVbVxF8ekmygygB
-         A8Ig==
-X-Gm-Message-State: AFqh2koNICxfNrtzoykCP+qgI4Vf0W5ChlqFL2WgqzU04ZIugpsuDz/H
-        +nmoOuUnqXuuwDRTeiTsdyXe
-X-Google-Smtp-Source: AMrXdXtp5/WrpKvsBrj1r58d1R59LMAQOzJMUCEth4YEP8J7CqflCHtNTidWpMyzqLMFNwkCbCZ0kQ==
-X-Received: by 2002:a62:644b:0:b0:577:51b1:375e with SMTP id y72-20020a62644b000000b0057751b1375emr1211143pfb.26.1671602137937;
-        Tue, 20 Dec 2022 21:55:37 -0800 (PST)
-Received: from thinkpad ([117.217.177.7])
-        by smtp.gmail.com with ESMTPSA id o198-20020a62cdcf000000b00575d90636dcsm9616173pfg.6.2022.12.20.21.55.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 21:55:36 -0800 (PST)
-Date:   Wed, 21 Dec 2022 11:25:26 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Borislav Petkov <bp@alien8.de>
-Cc:     Steev Klimaszewski <steev@kali.org>, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v3 06/15] arm64: dts: qcom: sc8280xp: Fix the base
- addresses of LLCC banks
-Message-ID: <20221221055526.GB2922@thinkpad>
-References: <20221219182958.476231-1-manivannan.sadhasivam@linaro.org>
- <20221219182958.476231-7-manivannan.sadhasivam@linaro.org>
- <CAKXuJqgL5GsyjaNpkeMf4=72sjw+6ytFUm+yt1WjLyoFLrgm3g@mail.gmail.com>
- <20221220095207.GA38609@thinkpad>
- <Y6JLV4XG/6xDFrN/@zn.tnic>
+        Wed, 21 Dec 2022 01:11:17 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22656D2FA;
+        Tue, 20 Dec 2022 22:11:17 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BL3UcOT024632;
+        Wed, 21 Dec 2022 06:11:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Awi+JIG1pgsi1bJiA8m0s/QrQlUryW7+5yjBnK5ibNk=;
+ b=KWl6I3uBtKEkRfdSHtOL8OC/fsfAkHN9pJA8RSLBFzxqMXzXmO8fLEq685nMhT9/Iesc
+ QsBX1Wf0Uko6Y/g6DowGfD+3QLIFeDDnXNlmNnpoRqyxoy7pccF+ZLo2yr/hFQf9KFcr
+ 4E4I+IwwdRomT53lHYtVDAC/QsRO2qtDnDqqPmZ/9m8pn1Gf+m8StLZjtBqpiwDyIStG
+ DU1G9rue9gi/VbNbW41lYZhoaTXwVZKQ3t3uLi2cCkwohYo11EDC/3W0yBoUfJw9gtzB
+ KC2vJN5ZmdM2RutdTisDnSOuwer+s2yonnNKc2UFrxMt42PckPgzSvFmbFhgDFUZlOmR iw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mk83xthtv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 06:11:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BL6Av42012734
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 06:10:57 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 20 Dec 2022 22:10:51 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
+        <krzysztof.kozlowski@linaro.org>, <mathieu.poirier@linaro.org>,
+        <corbet@lwn.net>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v4 0/2] Update section header name check
+Date:   Wed, 21 Dec 2022 11:40:31 +0530
+Message-ID: <1671603033-4359-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y6JLV4XG/6xDFrN/@zn.tnic>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wnQbb8YFzfHRJhdq2FtgzfgnG6hmzdiP
+X-Proofpoint-GUID: wnQbb8YFzfHRJhdq2FtgzfgnG6hmzdiP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_02,2022-12-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=930
+ clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2212210044
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 21, 2022 at 12:55:03AM +0100, Borislav Petkov wrote:
-> On Tue, Dec 20, 2022 at 03:22:07PM +0530, Manivannan Sadhasivam wrote:
-> > This is a genuine use-after-free bug that happens because the edac core frees
-> > the memory assigned to "llcc_driv_data" pointer that gets passed as "pvt_info".
-> > 
-> > Here, the LLCC driver is one creating the "qcom_llcc_edac" platform device and
-> > also allocating memory for "llcc_driv_data". But since during qcom_edac driver
-> > removal, we are just unregistering the driver and the platform device still
-> > stays around, the edac driver is not supposed to free any memory associated
-> > with the platform device.
-> 
-> If you mean
-> 
-> __edac_device_free_ctl_info()
-> 
-> it is very well supposed to free it as it allocates it in
-> edac_device_alloc_ctl_info().
-> 
-> If qcom_llcc_edac_probe() simply goes and assigns something of its own
-> to edev_ctl->pvt_info, then that driver gets to keep the pieces ofc.
-> 
+Update section header name check and corresponding documentation.
+Changes since v3:
+    -- Rephrase commit message.
+Changes since v2:
+    -- Update the commit message with example.
+    -- Update the documentation text appropriately.
+Changes since v1:
+    -- Update the commit message.
+    -- Use strstarts instead of strstr.
+    -- Update documentation file.
 
-Right. It is the issue of the qcom driver from the start.
+Srinivasa Rao Mandadapu (2):
+  remoteproc: elf_loader: Update resource table name check
+  docs: remoteproc: Update section header name requirement
 
-Thanks,
-Mani
-
-> -- 
-> Regards/Gruss,
->     Boris.
-> 
-> https://people.kernel.org/tglx/notes-about-netiquette
+ Documentation/staging/remoteproc.rst       | 5 ++++-
+ drivers/remoteproc/remoteproc_elf_loader.c | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
