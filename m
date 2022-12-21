@@ -2,426 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28FBB652B62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 03:06:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B43F652BD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 04:35:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbiLUCGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 21:06:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53892 "EHLO
+        id S234036AbiLUDfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 22:35:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbiLUCFq (ORCPT
+        with ESMTP id S229451AbiLUDe7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 21:05:46 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C9C1FCF4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:39 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 1so21377676lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7fIPjG0JLihPGF1s7aLrBhimoRFEVanheHVt3gPpbo4=;
-        b=YeIeI04gFG6eE4uW+/2LhjphJnuj9JwG5Nm4XSzwlUQxHF9ELiYWTTtOY8mq4Wcc5v
-         2BLf9F3bHqcymtQN6FXRdqQTeNTxYlyGM7HBRLO9JRMlgb2TLf5VDssQREdYJyKK+Zhg
-         DgkE/P78hoFHJbOaJymkFILYCHcMOYEkZ8QjGOofIDaW/OavoMlYjESr8CO3h14M5yrg
-         qN6GNX31ce4ZHMEUVVrXON7SB68WRUQ7KzV49xfnzrnOIHLN25bJ8xjkRerH3PiyGAzH
-         U4+G7PF6mhcyFhpQm3f4EdiPgFQRuUmpduMl2Gbj+xo1ofgTzwc0qXR79tsmDSkrHj9u
-         S07g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7fIPjG0JLihPGF1s7aLrBhimoRFEVanheHVt3gPpbo4=;
-        b=7EInqB+7jmMkmTklFkwP9NIwbmWTvNzVlhk7gNKY1D0FdObm6wfZiqskRL5BymJKSn
-         L6V2ITgA3DgD4s/xVvIkZRi833Gv99Gj37M/WAZbXhaALw0Zgw4yjyrr3zOuG5lwxYVk
-         cOvCLwlJT+NnEiw5qRgoPXbWAsN9XQhFQkd/63ZmpOg1tAtpmEB483w/aJVdjxQmGvvT
-         csgQmYVLHG8M4My3tcXJ2nmgQx4eZLR7/4/fQ5GgSK00cTOq4nKEMubIj7XgvysXwgJp
-         06Ich4TUILpCmkKM8t26guvDQs6/RpJE/T6qWv0NRiY+AskNZQlpmni+vP4yQxEi86UE
-         VfYA==
-X-Gm-Message-State: AFqh2ko1o9Y7n27TwiLZbX5p6YLsj6R4OURCUom0dfdq01O1p1Ia1aXq
-        /2JZFFD9XK245gP0LN1gl5pcSg==
-X-Google-Smtp-Source: AMrXdXuCVu2t/aQofojKa3maQaYbzL+8bEzCIP3R6j/wsrW8Rk+OSrVKzZhy44x4t7816KugdLDq3Q==
-X-Received: by 2002:a05:6512:e86:b0:4b5:b87a:3262 with SMTP id bi6-20020a0565120e8600b004b5b87a3262mr68314lfb.28.1671588338595;
-        Tue, 20 Dec 2022 18:05:38 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id q18-20020a056512211200b004b257fef958sm1673048lfr.94.2022.12.20.18.05.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 18:05:37 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v4 20/20] ARM: dts: qcom-apq8084: specify per-sensor calibration cells
-Date:   Wed, 21 Dec 2022 04:05:20 +0200
-Message-Id: <20221221020520.1326964-21-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
-References: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
+        Tue, 20 Dec 2022 22:34:59 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEB61DA6A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 19:34:58 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4NcJwc4LL8z1S5D7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 22:34:56 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:content-type:in-reply-to:from
+        :content-language:references:to:subject:user-agent:mime-version
+        :date:message-id; s=dkim; t=1671593694; x=1672457695; bh=8wZ4YKT
+        CytkuIFBkbMa3NcbV9kCYcRqdWGCXssFE4q4=; b=uMgEfqJeFHxFShtNn2zY9k+
+        QOI+qyToBMKNDCNfQIMTmYneh1D9685OX6BCMNG+LkI7qyY0FFNifQt1RvtzSDm3
+        bbt5Hck24ACs9OG9ujxGG9iFWq/ylCmJvg9ZovgzSngPxhgjAhH43M85mDo5igRj
+        6+ZvqkopsWmKx5C86TrFdUjrmIC3UUYizkO7VH40vso+zQS1m83EXiz8Rc3XtWX0
+        xPEWIjd1ka3QOkRmR1PqvY6sL+x5kkjv95z3fZ40XaVA3WtgziXYA/h8fjKDB6Ff
+        YCyaqlh92H7ioQiY2EsZgs4Iup9DTQS+VTDeCqPvHMKbwd/N3ymldr4MEJhifLg=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 815Vb0V09SfT for <linux-arm-msm@vger.kernel.org>;
+        Tue, 20 Dec 2022 22:34:54 -0500 (EST)
+Received: from [192.168.4.25] (unknown [190.196.92.66])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4NcJwW00JZz1S5Bv;
+        Tue, 20 Dec 2022 22:34:50 -0500 (EST)
+Message-ID: <6ddf93eb-aadb-a9b8-d91a-0c56ed54418f@mint.lgbt>
+Date:   Wed, 21 Dec 2022 00:34:46 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sm6125: Add UFS nodes
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221215190404.398788-1-they@mint.lgbt>
+ <20221215190404.398788-2-they@mint.lgbt>
+ <e474f99d-2375-c8db-203c-632c918d8e4d@linaro.org>
+Content-Language: en-US
+From:   Lux Aliaga <they@mint.lgbt>
+In-Reply-To: <e474f99d-2375-c8db-203c-632c918d8e4d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify pre-parsed per-sensor calibration nvmem cells in the tsens
-device node rather than parsing the whole data blob in the driver.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8084.dtsi | 313 +++++++++++++++++++++++++++-
- 1 file changed, 307 insertions(+), 6 deletions(-)
+On 16/12/2022 08:24, Konrad Dybcio wrote:
+>
+> On 15.12.2022 20:04, Lux Aliaga wrote:
+>> Adds a UFS host controller node and its corresponding PHY to
+>> the sm6125 platform.
+>>
+>> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+>> ---
+> Please include a changelog, I don't know what you changed and
+> what you didn't. Also, you sent 4 revisions in one day, not
+> letting others review it.
+>
+>
+>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 67 ++++++++++++++++++++++++++++
+>>   1 file changed, 67 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> index 7e25a4f85594..b64c5bc1452f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>> @@ -508,6 +508,73 @@ sdhc_2: mmc@4784000 {
+>>   			status = "disabled";
+>>   		};
+>>   
+>> +		ufs_mem_hc: ufs@4804000 {
+>> +			compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+>> +			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
+>> +			reg-names = "std", "ice";
+>> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+>> +			phys = <&ufs_mem_phy_lanes>;
+>> +			phy-names = "ufsphy";
+>> +			lanes-per-direction = <1>;
+>> +			#reset-cells = <1>;
+>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+>> +			reset-names = "rst";
+>> +
+>> +			clock-names = "core_clk",
+>> +				      "bus_aggr_clk",
+>> +				      "iface_clk",
+>> +				      "core_clk_unipro",
+>> +				      "ref_clk",
+>> +				      "tx_lane0_sync_clk",
+>> +				      "rx_lane0_sync_clk",
+>> +				      "ice_core_clk";
+>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+>> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+>> +			freq-table-hz = <50000000 240000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<37500000 150000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<75000000 300000000>;
+>> +
+>> +			non-removable;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		ufs_mem_phy: phy@4807000 {
+>> +			compatible = "qcom,sm6115-qmp-ufs-phy";
+> Krzysztof asked you to add a SoC-specific compatible in v1.
+>
+>
+>> +			reg = <0x04807000 0x1c4>;
+>> +
+>> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>> +
+>> +			clock-names = "ref", "ref_aux";
+>> +			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+>> +
+>> +			resets = <&ufs_mem_hc 0>;
+>> +			reset-names = "ufsphy";
+>> +
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +			ranges;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			ufs_mem_phy_lanes: lanes@4807400 {
+>> +				reg = <0x4807400 0x098>,
+>> +				      <0x4807600 0x130>,
+>> +				      <0x4807c00 0x16c>;
+>> +				#phy-cells = <0>;
+>> +			};
+> I believe this is deprecated. See [1].
+>
+>
+> Konrad
+>
+> [1] https://lore.kernel.org/linux-arm-msm/20221104092045.17410-1-johan+linaro@kernel.org/T/#m988f3fe3d83b76bac247aea2d9dac34f37728d65
+I've looked into the documentation and this is only for the sc8280xp. 
+This PHY is defined as it is for the msm8996 and derivatives.
 
-diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-index fe30abfff90a..22e56ee82a20 100644
---- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-@@ -249,11 +249,260 @@ qfprom: qfprom@fc4bc000 {
- 			reg = <0xfc4bc000 0x1000>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
--			tsens_calib: calib@d0 {
--				reg = <0xd0 0x18>;
-+
-+			tsens_base1: base1@d0 {
-+				reg = <0xd0 0x1>;
-+				bits = <0 8>;
-+			};
-+
-+			tsens_s0_p1: s0-p1@d1 {
-+				reg = <0xd1 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s1_p1: s1-p1@d2 {
-+				reg = <0xd1 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s2_p1: s2-p1@d2 {
-+				reg = <0xd2 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s3_p1: s3-p1@d3 {
-+				reg = <0xd3 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s4_p1: s4-p1@d4 {
-+				reg = <0xd4 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s5_p1: s5-p1@d4 {
-+				reg = <0xd4 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s6_p1: s6-p1@d5 {
-+				reg = <0xd5 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s7_p1: s7-p1@d6 {
-+				reg = <0xd6 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s8_p1: s8-p1@d7 {
-+				reg = <0xd7 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_mode: mode@d7 {
-+				reg = <0xd7 0x1>;
-+				bits = <6 2>;
-+			};
-+
-+			tsens_s9_p1: s9-p1@d8 {
-+				reg = <0xd8 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s10_p1: s10_p1@d8 {
-+				reg = <0xd8 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_base2: base2@d9 {
-+				reg = <0xd9 0x2>;
-+				bits = <4 8>;
-+			};
-+
-+			tsens_s0_p2: s0-p2@da {
-+				reg = <0xda 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s1_p2: s1-p2@db {
-+				reg = <0xdb 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s2_p2: s2-p2@dc {
-+				reg = <0xdc 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s3_p2: s3-p2@dc {
-+				reg = <0xdc 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s4_p2: s4-p2@dd {
-+				reg = <0xdd 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s5_p2: s5-p2@de {
-+				reg = <0xde 0x2>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s6_p2: s6-p2@df {
-+				reg = <0xdf 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s7_p2: s7-p2@e0 {
-+				reg = <0xe0 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s8_p2: s8-p2@e0 {
-+				reg = <0xe0 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s9_p2: s9-p2@e1 {
-+				reg = <0xe1 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s10_p2: s10_p2@e2 {
-+				reg = <0xe2 0x2>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s5_p2_backup: s5-p2_backup@e3 {
-+				reg = <0xe3 0x2>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_mode_backup: mode_backup@e3 {
-+				reg = <0xe3 0x1>;
-+				bits = <6 2>;
-+			};
-+
-+			tsens_s6_p2_backup: s6-p2_backup@e4 {
-+				reg = <0xe4 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s7_p2_backup: s7-p2_backup@e4 {
-+				reg = <0xe4 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s8_p2_backup: s8-p2_backup@e5 {
-+				reg = <0xe5 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s9_p2_backup: s9-p2_backup@e6 {
-+				reg = <0xe6 0x2>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s10_p2_backup: s10_p2_backup@e7 {
-+				reg = <0xe7 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_base1_backup: base1_backup@440 {
-+				reg = <0x440 0x1>;
-+				bits = <0 8>;
-+			};
-+
-+			tsens_s0_p1_backup: s0-p1_backup@441 {
-+				reg = <0x441 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s1_p1_backup: s1-p1_backup@442 {
-+				reg = <0x441 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s2_p1_backup: s2-p1_backup@442 {
-+				reg = <0x442 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s3_p1_backup: s3-p1_backup@443 {
-+				reg = <0x443 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s4_p1_backup: s4-p1_backup@444 {
-+				reg = <0x444 0x1>;
-+				bits = <0 6>;
- 			};
--			tsens_backup: backup@440 {
--				reg = <0x440 0x10>;
-+
-+			tsens_s5_p1_backup: s5-p1_backup@444 {
-+				reg = <0x444 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s6_p1_backup: s6-p1_backup@445 {
-+				reg = <0x445 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s7_p1_backup: s7-p1_backup@446 {
-+				reg = <0x446 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_use_backup: use_backup@447 {
-+				reg = <0x447 0x1>;
-+				bits = <5 3>;
-+			};
-+
-+			tsens_s8_p1_backup: s8-p1_backup@448 {
-+				reg = <0x448 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s9_p1_backup: s9-p1_backup@448 {
-+				reg = <0x448 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s10_p1_backup: s10_p1_backup@449 {
-+				reg = <0x449 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_base2_backup: base2_backup@44a {
-+				reg = <0x44a 0x2>;
-+				bits = <2 8>;
-+			};
-+
-+			tsens_s0_p2_backup: s0-p2_backup@44b {
-+				reg = <0x44b 0x3>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s1_p2_backup: s1-p2_backup@44c {
-+				reg = <0x44c 0x1>;
-+				bits = <0 6>;
-+			};
-+
-+			tsens_s2_p2_backup: s2-p2_backup@44c {
-+				reg = <0x44c 0x2>;
-+				bits = <6 6>;
-+			};
-+
-+			tsens_s3_p2_backup: s3-p2_backup@44d {
-+				reg = <0x44d 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s4_p2_backup: s4-p2_backup@44e {
-+				reg = <0x44e 0x1>;
-+				bits = <2 6>;
- 			};
- 		};
- 
-@@ -261,8 +510,60 @@ tsens: thermal-sensor@fc4a8000 {
- 			compatible = "qcom,msm8974-tsens", "qcom,tsens-v0_1";
- 			reg = <0xfc4a9000 0x1000>, /* TM */
- 			      <0xfc4a8000 0x1000>; /* SROT */
--			nvmem-cells = <&tsens_calib>, <&tsens_backup>;
--			nvmem-cell-names = "calib", "calib_backup";
-+			nvmem-cells = <&tsens_mode>,
-+				      <&tsens_base1>, <&tsens_base2>,
-+				      <&tsens_s0_p1>, <&tsens_s0_p2>,
-+				      <&tsens_s1_p1>, <&tsens_s1_p2>,
-+				      <&tsens_s2_p1>, <&tsens_s2_p2>,
-+				      <&tsens_s3_p1>, <&tsens_s3_p2>,
-+				      <&tsens_s4_p1>, <&tsens_s4_p2>,
-+				      <&tsens_s5_p1>, <&tsens_s5_p2>,
-+				      <&tsens_s6_p1>, <&tsens_s6_p2>,
-+				      <&tsens_s7_p1>, <&tsens_s7_p2>,
-+				      <&tsens_s8_p1>, <&tsens_s8_p2>,
-+				      <&tsens_s9_p1>, <&tsens_s9_p2>,
-+				      <&tsens_s10_p1>, <&tsens_s10_p2>,
-+				      <&tsens_use_backup>,
-+				      <&tsens_mode_backup>,
-+				      <&tsens_base1_backup>, <&tsens_base2_backup>,
-+				      <&tsens_s0_p1_backup>, <&tsens_s0_p2_backup>,
-+				      <&tsens_s1_p1_backup>, <&tsens_s1_p2_backup>,
-+				      <&tsens_s2_p1_backup>, <&tsens_s2_p2_backup>,
-+				      <&tsens_s3_p1_backup>, <&tsens_s3_p2_backup>,
-+				      <&tsens_s4_p1_backup>, <&tsens_s4_p2_backup>,
-+				      <&tsens_s5_p1_backup>, <&tsens_s5_p2_backup>,
-+				      <&tsens_s6_p1_backup>, <&tsens_s6_p2_backup>,
-+				      <&tsens_s7_p1_backup>, <&tsens_s7_p2_backup>,
-+				      <&tsens_s8_p1_backup>, <&tsens_s8_p2_backup>,
-+				      <&tsens_s9_p1_backup>, <&tsens_s9_p2_backup>,
-+				      <&tsens_s10_p1_backup>, <&tsens_s10_p2_backup>;
-+			nvmem-cell-names = "mode",
-+					   "base1", "base2",
-+					   "s0_p1", "s0_p2",
-+					   "s1_p1", "s1_p2",
-+					   "s2_p1", "s2_p2",
-+					   "s3_p1", "s3_p2",
-+					   "s4_p1", "s4_p2",
-+					   "s5_p1", "s5_p2",
-+					   "s6_p1", "s6_p2",
-+					   "s7_p1", "s7_p2",
-+					   "s8_p1", "s8_p2",
-+					   "s9_p1", "s9_p2",
-+					   "s10_p1", "s10_p2",
-+					   "use_backup",
-+					   "mode_backup",
-+					   "base1_backup", "base2_backup",
-+					   "s0_p1_backup", "s0_p2_backup",
-+					   "s1_p1_backup", "s1_p2_backup",
-+					   "s2_p1_backup", "s2_p2_backup",
-+					   "s3_p1_backup", "s3_p2_backup",
-+					   "s4_p1_backup", "s4_p2_backup",
-+					   "s5_p1_backup", "s5_p2_backup",
-+					   "s6_p1_backup", "s6_p2_backup",
-+					   "s7_p1_backup", "s7_p2_backup",
-+					   "s8_p1_backup", "s8_p2_backup",
-+					   "s9_p1_backup", "s9_p2_backup",
-+					   "s10_p1_backup", "s10_p2_backup";
- 			#qcom,sensors = <11>;
- 			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "uplow";
 -- 
-2.35.1
+Lux Aliaga
+https://nixgoat.me/
 
