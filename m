@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93407652B36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 03:05:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 190D1652B40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 03:05:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234020AbiLUCFc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Dec 2022 21:05:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53240 "EHLO
+        id S234274AbiLUCFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Dec 2022 21:05:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234340AbiLUCF2 (ORCPT
+        with ESMTP id S234295AbiLUCFb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Dec 2022 21:05:28 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6781F9F9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:27 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id b3so21417435lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:27 -0800 (PST)
+        Tue, 20 Dec 2022 21:05:31 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B04431FCF4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:29 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id b3so21417474lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Dec 2022 18:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qZek+cmKT72PotxlG162B0Fo+N5e/bOkBXqljLtoqNM=;
-        b=W0h6DI06KL77Kdu1IcQr4IzcOEzdjihvlgBWMLDOYjFQijlRQbZ8F717typEu34V6f
-         WaEc0wUXHOZttJmiLH3KWGGz6llOPFKYtWn+XdtDjgB68y7XmBIwcFAXh1sCnmwjcZy0
-         RLPGaPat8Q0K+JU2e4XdLYaLDw3Pk3hj/NRL1Ngz1nN+CAF26zHLqaoC+WHGr/uwTa1K
-         WxJZGWUggLpU39d42u0ZIa9+4PsnTXYF9W47X3CmiK67gPvHhBvroJVM/1ZhyYtqjpwo
-         br6Ibkz9mEJt5oRtKwp8GHu1+fN94Zt5I2xIyt/R458k3spKmkSKRI3/2FQaes6cfPPw
-         QgoA==
+        bh=x8V/Buc6oo2svqQs4bKfvvLZCMHlCzEmULQ8sDxAW8g=;
+        b=WBrsrnQGNMU70Bch/jsQeIvUfBeODew72Zw+gWa5YHlNg86oslkeBj2FOGFSmvo7Yj
+         Rkb86rD+qWIU1gOSQzE93nihA6kF/RLW3l+rbV9zNPbm58j6/md+3i99fOeVscVLaBNY
+         m+3slxRk8yQKpl5T7OeQ0dFOyQDuB4UsyTpY45amHkNNBeZdNdWtR2yf5r7RnNLrEiCt
+         Wb2RWJ+LgYFYBtQ4TS3LaMfQXMv5WbqwB81Ngi98AmZNGhXZFjSLj9PtKk4BFJ7G/Q3p
+         QDIdeqxF0IMos8HhF1NjGmP2oskcgZWQfVKlYV4qUUl3pD+IpZ1akBwBKZOuNGxgUAd0
+         Tm9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qZek+cmKT72PotxlG162B0Fo+N5e/bOkBXqljLtoqNM=;
-        b=GJRhh1acJ709FUZ2W9w/krU59gXjqAgYbIXvo9e/kHjFfmTk/cBiBNu2RKRo0z8EhO
-         769p98DoBSohe0/k4DeBfcSqQIIi4Hi/xJVRx4PKqqoJXkp32qqJvu5LJVBzgZHzDJHL
-         I32cdwQw5DSh+/VztUkm2eKuPccI26ZY+tR3BvTwypeizEt0MeOtPazeiRyYtHYX/cfc
-         c49zvPuPZmj5pIZqPWAOl0W7JL+9b3R0gqVIpQCeE56oVUX0npjPgEXvAqGHC75VEHQz
-         fXt2KqyN/9dQSeUD/Ze5/gXta0XUmW49jHzw+ibCyKYAAo4mvcFRinXEmDTtkLH6qdnu
-         6FGQ==
-X-Gm-Message-State: AFqh2kr60G8+cc1BcZm/skKRvLwmBjcUYaS7Pb6NZoJIp3oq6Xr9zy//
-        QU8d+wTImlMBinktctsIVPr0VQ==
-X-Google-Smtp-Source: AMrXdXuVKM2B2ZQgWwoGmLnfUwek3coIt28DU5PNXajDfiNhKK+x7OHdxHx5oQPAig3RatbqRdQWUg==
-X-Received: by 2002:a05:6512:3e10:b0:4b5:c489:8cf8 with SMTP id i16-20020a0565123e1000b004b5c4898cf8mr68002lfv.61.1671588327317;
-        Tue, 20 Dec 2022 18:05:27 -0800 (PST)
+        bh=x8V/Buc6oo2svqQs4bKfvvLZCMHlCzEmULQ8sDxAW8g=;
+        b=TLSbfJZ5+geHj8BLJUjrEnJsCpot146SbNm2HBNvSJnzRu2htGja8GzCyp+wvi1hgp
+         8cpf1Z45SykLp/pNI6MnFNbB/fdDi2aG37n8ay8HpqbgbTPW6/ePCd0Jcplj3Ypi1fn1
+         6ewqhh1h3Sz1WCNk0etx97t467y7VJwCBzspLb59vK0AQcvzh21mjZA3r9bR5+lRn37j
+         tWgdESA3LLB6wY+Z77JhxqajYQvT59vQvO/11XRWN3Z4i8Lec//4cqL7tsiEXKp6gRoU
+         bBTXcEIIH5xZZCmI4pBk9Un6mnKEpv25/TsOcwvS/GTl69lCEekAdau8bMmDOnErFLaH
+         q+Xw==
+X-Gm-Message-State: AFqh2kogmP5HjoW6uqsc7ofe05k77IuKywevSDMTFV4DvOK/8knA/FGz
+        8rdsFdVJ9uyplYscrC7hxppXew==
+X-Google-Smtp-Source: AMrXdXvEUY39j5qaHX11vhY3UPeRstTWDj7AelJ2YuHu1KWVWuWHIs+HF9FQyfrSNTFCDAFjowgxlw==
+X-Received: by 2002:ac2:4c8e:0:b0:4b6:ee97:36d2 with SMTP id d14-20020ac24c8e000000b004b6ee9736d2mr1138468lfl.40.1671588328108;
+        Tue, 20 Dec 2022 18:05:28 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id q18-20020a056512211200b004b257fef958sm1673048lfr.94.2022.12.20.18.05.26
+        by smtp.gmail.com with ESMTPSA id q18-20020a056512211200b004b257fef958sm1673048lfr.94.2022.12.20.18.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 18:05:26 -0800 (PST)
+        Tue, 20 Dec 2022 18:05:27 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v4 07/20] thermal/drivers/tsens: limit num_sensors to 9
-Date:   Wed, 21 Dec 2022 04:05:07 +0200
-Message-Id: <20221221020520.1326964-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 08/20] thermal/drivers/tsens: fix slope values for msm8939
+Date:   Wed, 21 Dec 2022 04:05:08 +0200
+Message-Id: <20221221020520.1326964-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
 References: <20221221020520.1326964-1-dmitry.baryshkov@linaro.org>
@@ -74,7 +74,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,31 +83,50 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 According to the vendor kernels (msm-3.10, 3.14 and 3.18), msm8939
-supports only 9 sensors. Remove the rogue sensor's hw_id.
+uses non-standard slope values for calibrating the sensors. Fill them
+accordingly.
 
 Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for MSM8939")
 Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/thermal/qcom/tsens-v0_1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/qcom/tsens-v0_1.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-index 0bc4e5cec184..57ac23f9d9b7 100644
+index 57ac23f9d9b7..be173220a939 100644
 --- a/drivers/thermal/qcom/tsens-v0_1.c
 +++ b/drivers/thermal/qcom/tsens-v0_1.c
-@@ -605,9 +605,9 @@ static const struct tsens_ops ops_8939 = {
+@@ -534,6 +534,20 @@ static int calibrate_9607(struct tsens_priv *priv)
+ 	return 0;
+ }
+ 
++static int __init init_8939(struct tsens_priv *priv) {
++	priv->sensor[0].slope = 2911;
++	priv->sensor[1].slope = 2789;
++	priv->sensor[2].slope = 2906;
++	priv->sensor[3].slope = 2763;
++	priv->sensor[4].slope = 2922;
++	priv->sensor[5].slope = 2867;
++	priv->sensor[6].slope = 2833;
++	priv->sensor[7].slope = 2838;
++	priv->sensor[8].slope = 2840;
++
++	return init_common(priv);
++}
++
+ /* v0.1: 8916, 8939, 8974, 9607 */
+ 
+ static struct tsens_features tsens_v0_1_feat = {
+@@ -599,7 +613,7 @@ struct tsens_plat_data data_8916 = {
  };
  
- struct tsens_plat_data data_8939 = {
--	.num_sensors	= 10,
-+	.num_sensors	= 9,
- 	.ops		= &ops_8939,
--	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 },
-+	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9 },
- 
- 	.feat		= &tsens_v0_1_feat,
- 	.fields	= tsens_v0_1_regfields,
+ static const struct tsens_ops ops_8939 = {
+-	.init		= init_common,
++	.init		= init_8939,
+ 	.calibrate	= calibrate_8939,
+ 	.get_temp	= get_temp_common,
+ };
 -- 
 2.35.1
 
