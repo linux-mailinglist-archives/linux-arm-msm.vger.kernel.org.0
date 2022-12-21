@@ -2,118 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 277C26530BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 13:25:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80E2A6530C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Dec 2022 13:28:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231263AbiLUMZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Dec 2022 07:25:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
+        id S229558AbiLUM2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Dec 2022 07:28:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbiLUMY5 (ORCPT
+        with ESMTP id S230264AbiLUM2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Dec 2022 07:24:57 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D139523303
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 04:24:54 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id q2so6179442ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Dec 2022 04:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7e57CVStI07OWBg/LHZpcyGd4gQwHot2GvYOQMHNZvs=;
-        b=t5k3PBtNvxj5VZWpsUzBPvbnTQobaNdQkW6t3KqGCvX8KIX1e+nM7dF9Qklgd5ihO8
-         xNxINYwrAxLUk+gnhZ6SWrCxQ87rcuWevR7AbMWMvzrNmSUFm6ZX3saqmfsPN/CFa9wc
-         pFIUqx0M78X+Y+OXKEuCWu/cKCII2NfnvzVXqVigWkdT+BUAyzhY+J07wmtwCiw1r/a0
-         oIW+7rYdKxGrOYejr2tapwscmZxaOc8JnXd2AOphoXPYh7Pew5MbaIc9aE0HRsm4BrTo
-         /CVSNS1HXRUTLBvGNN7jOLYT4+TSa/vW60aEANq4o/peH6/Hj+OCdZCX/HNavIzSIks9
-         gXHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7e57CVStI07OWBg/LHZpcyGd4gQwHot2GvYOQMHNZvs=;
-        b=5ob3j8JtE78XRyBXzphN1IanVIKtyw1NbxKY1SEn6pGq7xfSlW3lTNRw4t4BiCBvmF
-         K0M3JPWoTpkAXpPVMhn8STfZWRdPmqzXe6vZ3ENK3AjXmmoYVerAxJS/SIm8ziK2BxPA
-         Mbo6OQh1BG+qdckFPzFurD/HM9fD28Tw61bp9PrVo6Y4yJSdIaGfn5+jqdn11er4fIi0
-         AKYoCdST+mdUP6ORGtFE2f5nIP2HG3zniZsYL9fkPxNum8cUepzMkPrLUyYPCjsVjG1/
-         qoUuV/GStDJviZqgmy6hJeSCT1GK9U0BouigfXF0lm21lWWXwv1QARssetRdR0o6XO9D
-         rk8w==
-X-Gm-Message-State: AFqh2kpL3AeUKA3fL6V96Zwrk++en12SV0Jxe3DrhUzrxnJTyJuXLg5p
-        Y0HfPYFa/bqfKkFNhvkUo1XfGw==
-X-Google-Smtp-Source: AMrXdXt3lqXaZuqf0Hd+ULV+pfNBUMGFEuaf2x4rRw9R9xPvFYQqPwp5tmkGATgLbfnS8bLjxfOmnQ==
-X-Received: by 2002:a2e:8802:0:b0:26f:db35:7e40 with SMTP id x2-20020a2e8802000000b0026fdb357e40mr509832ljh.15.1671625493110;
-        Wed, 21 Dec 2022 04:24:53 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id w12-20020a05651c118c00b00279e41de7e6sm1302652ljo.3.2022.12.21.04.24.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Dec 2022 04:24:52 -0800 (PST)
-Message-ID: <5ff6e569-ad9f-f884-ea0e-41114afcaf7d@linaro.org>
-Date:   Wed, 21 Dec 2022 13:24:51 +0100
+        Wed, 21 Dec 2022 07:28:10 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BCBD23150;
+        Wed, 21 Dec 2022 04:28:08 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BLBtJ9U014578;
+        Wed, 21 Dec 2022 12:28:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=MzegHwyungJP8at2Tw5NExRsmohwgdnjXBTsPH0lPJ8=;
+ b=Rrn7MJqk99AYVmVtXHUdL1/3NBbdYht1SPEu61HlpqOHfRCqf68wupHkzr3O5nAVDPRE
+ /XThY789TqcYF93WEmFpuyXgfGpNnNLdyiuETAkSVoOBbGRtjBsP2lbQtBt2da5yC5TB
+ hF/7EhzQIyM0CF4DknGFsHDGcDmswJHHOaDlhoBtO42AM0IrGM6rcDjrfb0IditRLnWP
+ Dg/r0s1ZSDhW75WRVL3Zt1Aaz12fcai2gXvImZKFHqQSIqNs86UBLL99SLTsy+Rybvgp
+ ATigkt22K1pBJ7Ad3HtNVGMcZGeTJpwSj/8qMWr0WOeIYHXe8oBrn8HfTdDxdu8E32vP jA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mm0wfg4qb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 12:28:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BLCS09v001063
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Dec 2022 12:28:00 GMT
+Received: from [10.216.2.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 21 Dec
+ 2022 04:27:55 -0800
+Message-ID: <ce8c2208-b4a2-70ea-bf87-a2baba292a28@quicinc.com>
+Date:   Wed, 21 Dec 2022 17:57:52 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
 Subject: Re: [PATCH 1/2] dt-bindings: clock: SC7280: Add resets for LPASS
  audio clock controller
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
 References: <1671618061-6329-1-git-send-email-quic_srivasam@quicinc.com>
  <1671618061-6329-2-git-send-email-quic_srivasam@quicinc.com>
  <f138f9de-4ecf-3126-97bd-668c96612913@linaro.org>
  <b6172e20-114a-b7e2-2200-0932f803cb20@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b6172e20-114a-b7e2-2200-0932f803cb20@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ <5ff6e569-ad9f-f884-ea0e-41114afcaf7d@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <5ff6e569-ad9f-f884-ea0e-41114afcaf7d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _348LdYM0GSeg0L3Pt4OozUmDzVlGM2b
+X-Proofpoint-GUID: _348LdYM0GSeg0L3Pt4OozUmDzVlGM2b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-21_05,2022-12-21_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
+ spamscore=0 suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2212210101
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/12/2022 13:22, Srinivasa Rao Mandadapu wrote:
-> 
-> On 12/21/2022 4:12 PM, Krzysztof Kozlowski wrote:
-> Thanks for your time Krzyszto!!!
->> On 21/12/2022 11:21, Srinivasa Rao Mandadapu wrote:
->>> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
->>> for audioreach based SC7280 platforms.
->> Use subject prefixes matching the subsystem (git log --oneline -- ...).
->> The final prefix should be "qcom,sc7280-lpasscc" and then the actual
 
-                                ^^^^^^^ it's written here
-
->> subject should drop redundant pieces.
-> 
-> Sorry. I didn't understand much from your statement.
-> 
-> Do you mean subject should something like below?
-> 
->   dt-bindings: clock: qcom: sc7280-lpasscc: Add resets for audio clock 
-> controller
-
-1. The last prefix should be "qcom,sc7280-lpasscc:".
-2. And then drop "audio clock controller" because it is obvious, isn't it?
-
-> 
+On 12/21/2022 5:54 PM, Krzysztof Kozlowski wrote:
+> On 21/12/2022 13:22, Srinivasa Rao Mandadapu wrote:
+>> On 12/21/2022 4:12 PM, Krzysztof Kozlowski wrote:
+>> Thanks for your time Krzyszto!!!
+>>> On 21/12/2022 11:21, Srinivasa Rao Mandadapu wrote:
+>>>> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
+>>>> for audioreach based SC7280 platforms.
+>>> Use subject prefixes matching the subsystem (git log --oneline -- ...).
+>>> The final prefix should be "qcom,sc7280-lpasscc" and then the actual
+>                                  ^^^^^^^ it's written here
+>
+>>> subject should drop redundant pieces.
+>> Sorry. I didn't understand much from your statement.
 >>
->>>   ...
->> Best regards,
->> Krzysztof
+>> Do you mean subject should something like below?
 >>
-
-Best regards,
-Krzysztof
-
+>>    dt-bindings: clock: qcom: sc7280-lpasscc: Add resets for audio clock
+>> controller
+> 1. The last prefix should be "qcom,sc7280-lpasscc:".
+> 2. And then drop "audio clock controller" because it is obvious, isn't it?
+Okay!. Thanks for clarifying. I will change accordingly. Actually I 
+followed previous similar commits.
+>
+>>>>    ...
+>>> Best regards,
+>>> Krzysztof
+>>>
+> Best regards,
+> Krzysztof
+>
