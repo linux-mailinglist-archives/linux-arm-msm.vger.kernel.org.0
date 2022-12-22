@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D38BF654086
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 12:59:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE62C6540A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 13:02:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235791AbiLVL75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 06:59:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35372 "EHLO
+        id S235630AbiLVMCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 07:02:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235746AbiLVL7b (ORCPT
+        with ESMTP id S235879AbiLVMCC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 06:59:31 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 503EB31ECD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:52:07 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 1so2379659lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:52:07 -0800 (PST)
+        Thu, 22 Dec 2022 07:02:02 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6CC34D29
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:54:25 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id bp15so2337234lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:54:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=M30y/3TxbO371CJNFGIt6ImCkcVESnuhbBT4xUOz+H4=;
-        b=BZvKlfrnICVEkblXCG720FtFMEMhogYR+lUIo7UKozU5kskYXNCjGqbDX2DQduc9bJ
-         3SJFqtwcKgerB0HCmvjxF3RufKGCqcp1U1zfB6qHZ8ucxb8tAM/EwqKQ7ye2G/4ZLngr
-         Jfe+gdK1CTW0QUCi9QHwEI1hkrxc9tBZnpAu+lCmwndjpQWzrxLjKEgrzSVzDPPZbdya
-         bxEs3iflfgI13yP0t6dmTaoihJSVYTWUV2wnjQflNJatJRzMvT9LtU0RJeCDv1UBYYQK
-         QphUcLMtjoSNYiYUhV5q5XGKbSoBJvKxYyYoeCEeK+NmtfVu1pZoeaMRCmGZRIF6XGTF
-         vRJQ==
+        bh=X9EoBcFcr53BTbI8NLGBFcA7SGUwn8mmf9pGDxbWrjw=;
+        b=ltUUyIxFmAaCCU3K8fji72mezO1sOZfzxlQy1hicVdGCCFEpK1YliunaefhbfBcWdJ
+         4+ihkXYqnYePmqVq5a5O4BJKutu1jqz2+zGv2jI4t6LoT4nLPvUNiOU0rz0B5i99WkkK
+         bygT4FMTn1zt5VmzT26PbjddUvF6jVOKRmFh/KSPbto9V/jYeOPfO68U/MXO3Jq0wBq7
+         oFo7kW96M4XGvpeusRqjKGwHThoFk8tUuhsXRK61mqJH3iAo3ttp1vQJ+DescoK4u1xN
+         WFWuTYzoDlLxyMj24g9fM0eUzj8iX0EkpTM/BND8fb5hz4UCgSg4HS9001LVZoob0HqB
+         CHWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M30y/3TxbO371CJNFGIt6ImCkcVESnuhbBT4xUOz+H4=;
-        b=p+vmYrEbTNKe5JcOgY4mVcjihZkr5xJMarcB6hmkKLXRvEKmfSDojt+bztGrPSXFV4
-         1SV8go1Ep0EM1OWLk/gLjTC9hOZgaEceX4ibyVTD24lw+JMBVFez7fiIP6qCCK+6ARFw
-         Ca4GP/vFNIhzbBYY5PB18zcd3ppPf/fsOdumhyVs9vt3JG9d/2pabm/X1A+z+TqRPplB
-         /wiwUaa2f1cnTavm/bpNgCaF0CUhVC01ARVzGT2O4Q5myscltY8ZtQGpSzRg76EGbwFF
-         g4i8R3jiBoG8zkaqSqBEXkTw3UDlhZhyfMe4qboOFHfF8JjY+LPI1wY3YWXUhNRLtT0s
-         CbSA==
-X-Gm-Message-State: AFqh2kqGc8aTj1V0CkReJyy/t43qP/FfxeSiwtTKPDcU+99fiDq/CoL0
-        a6/ed1kKz1GO2wpUDTItTov21A==
-X-Google-Smtp-Source: AMrXdXsDYcBW3ugj0qOFlwHwHKZiQ1w0s1KXbyUzMNViPONGJA9/7MRgcCx6WVU4EGLf4Zlr/CYoZQ==
-X-Received: by 2002:a05:6512:3d2a:b0:4b4:b8fc:4aba with SMTP id d42-20020a0565123d2a00b004b4b8fc4abamr2100655lfv.25.1671709925720;
-        Thu, 22 Dec 2022 03:52:05 -0800 (PST)
+        bh=X9EoBcFcr53BTbI8NLGBFcA7SGUwn8mmf9pGDxbWrjw=;
+        b=B2RYeFAc/i0e6yU2pCIoHXTvrozJF36tVJ8wSATAGyTceMUW3n4wdJ1qmG5D+u4YdP
+         LlwNuutK3dnWAKPyDznqMKMbT26+4itVsNCMC/ju/OjyzKexVcKheUg9Pz1KQkOPe5by
+         H3bUUpwMZRoG7/Z/C6AsNUFxC9IEvVf2etbGt6kcpQGUCSiT6oPghpJCzPp5QR3rwhvx
+         hAanWoh8YlPHzFp5VooiMHhmAuAJBF8Ur3xEOWtZxW4PkfB0ykKXSDW4tsZWg9lLCk++
+         yqsqCSGq+DHnS1g2Zx0kW7FDTjcfqQ2GYBz6fH2Nl0FnDtMNGKJLzF+fKxre9rByhqgk
+         jdtQ==
+X-Gm-Message-State: AFqh2krNznMFDYuclbe9Jqu31GqJ9MAVBgEwnJqU8oitY3NVNML4SziM
+        pD6DU8HsfM9nsgBJtJMCHG7DkA==
+X-Google-Smtp-Source: AMrXdXuMEMS4ZAdZYRoxvWSmL5geV2FFazuPdHHRVejnluBwFSosVnViUal3BytGSYAMPvyirJ7lXw==
+X-Received: by 2002:ac2:5e6a:0:b0:4b0:f376:225a with SMTP id a10-20020ac25e6a000000b004b0f376225amr1559959lfr.63.1671710063624;
+        Thu, 22 Dec 2022 03:54:23 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id z14-20020ac24f8e000000b004b55cebdbd7sm47193lfs.120.2022.12.22.03.52.04
+        by smtp.gmail.com with ESMTPSA id bq25-20020a056512151900b004b592043413sm50426lfb.12.2022.12.22.03.54.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Dec 2022 03:52:05 -0800 (PST)
-Message-ID: <42eec0d7-9c6d-108a-cb91-8cc069fc97e1@linaro.org>
-Date:   Thu, 22 Dec 2022 12:52:03 +0100
+        Thu, 22 Dec 2022 03:54:23 -0800 (PST)
+Message-ID: <d4962a5c-7fa3-e5d7-51a8-7ae8fc54e053@linaro.org>
+Date:   Thu, 22 Dec 2022 12:54:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v5 06/21] dt-bindings: msm: dsi-controller-main: Document
- clocks on a per compatible basis
+Subject: Re: [PATCH v5 07/21] dt-bindings: msm: dsi-controller-main: Fix clock
+ declarations
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -69,9 +69,9 @@ Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
         agross@kernel.org, andersson@kernel.org,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20221220123634.382970-1-bryan.odonoghue@linaro.org>
- <20221220123634.382970-7-bryan.odonoghue@linaro.org>
+ <20221220123634.382970-8-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221220123634.382970-7-bryan.odonoghue@linaro.org>
+In-Reply-To: <20221220123634.382970-8-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,57 +85,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 20/12/2022 13:36, Bryan O'Donoghue wrote:
-> Each compatible has a different set of clocks which are associated with it.
-> Add in the list of clocks for each compatible.
+> When converting from .txt to .yaml dt-binding descriptions we appear to
+> have missed some of the previous detail on the number and names of
+> permissible clocks.
 > 
+> Fix this by listing the clock descriptions against the clock names at a
+> high level.
+> 
+> Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  .../display/msm/dsi-controller-main.yaml      | 189 +++++++++++++++++-
->  1 file changed, 179 insertions(+), 10 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index 98d54a7ee28d4..ce103e3ec4db3 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -9,9 +9,6 @@ title: Qualcomm Display DSI controller
->  maintainers:
->    - Krishna Manikandan <quic_mkrishn@quicinc.com>
->  
-> -allOf:
-> -  - $ref: "../dsi-controller.yaml#"
-> -
->  properties:
->    compatible:
->      oneOf:
-> @@ -55,13 +52,8 @@ properties:
->        - description: Display AXI clock
->  
->    clock-names:
-> -    items:
-> -      - const: byte
-> -      - const: byte_intf
-> -      - const: pixel
-> -      - const: core
-> -      - const: iface
-> -      - const: bus
-> +    minItems: 3
-> +    maxItems: 9
->  
->    phys:
->      maxItems: 1
-> @@ -157,6 +149,183 @@ required:
->    - assigned-clock-parents
->    - ports
->  
-> +allOf:
-> +  - $ref: "../dsi-controller.yaml#"
 
-Drop the quotes.
-
-Add missing Ack.
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I don't think this can be on its own. Clocks and clock-names go together
+and your previous patch already changed from 6 to 3-9 entries. Splitting
+these make them non-bisectable and confusing.
 
 Best regards,
 Krzysztof
