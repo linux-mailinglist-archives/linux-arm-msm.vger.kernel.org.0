@@ -2,121 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3789B654236
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 14:57:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1533565425D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 15:10:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235007AbiLVN5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 08:57:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S235340AbiLVOKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 09:10:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiLVN5m (ORCPT
+        with ESMTP id S229817AbiLVOKP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 08:57:42 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2952913EA3;
-        Thu, 22 Dec 2022 05:57:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D6538B81DA5;
-        Thu, 22 Dec 2022 13:57:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762F8C433D2;
-        Thu, 22 Dec 2022 13:57:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671717458;
-        bh=m4BhhoLs0SHSKY2sSWcAGIJSCilLlLfjaBNVjEGhwrk=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=H0HmuXkswh4X+/si5WMZLDgC3liPMt970G+q2tQfnquI1pj+PPHnfQnODoFI7O6BU
-         vCqid/QYSGzhb5O4oBz/AQveVeGK9eksEAtP5VacivcbqkBq1c+pG5JpGGI9ANkqyO
-         Y/IVN9xYYunIt4P3S762X4yYZWCSoSCp5zOG9gXJAOBryZFrijM1ko6OTgSZEvZ0IK
-         lXc4OorgtqD2fpkZaL15nj2mJXViNFK15QfrDiEUkO5IBN/MWhtoyd4NxoUw9ZRrFM
-         OtqSElmmHoJ+oMFQVvATKrv0ym1/OI9G/C8TVgxE8bTAJWRmUYwVOGmdxpBlxWqeSc
-         jvSalIjQT65Cw==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        gregkh@linuxfoundation.org, elder@linaro.org,
-        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
-        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, ansuelsmth@gmail.com
-Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
-References: <20221105194943.826847-1-robimarko@gmail.com>
-        <20221105194943.826847-2-robimarko@gmail.com>
-        <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
-        <877czn8c2n.fsf@kernel.org>
-        <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
-Date:   Thu, 22 Dec 2022 15:57:32 +0200
-In-Reply-To: <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
-        (Robert Marko's message of "Wed, 14 Dec 2022 13:02:42 +0100")
-Message-ID: <87k02jzgkz.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 22 Dec 2022 09:10:15 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1892A27A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:10:14 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id o31-20020a17090a0a2200b00223fedffb30so1968075pjo.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:10:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=maKazkqxDXKNlbDmatrsJr0yRFC5v9vVzKjjcP/hqRY=;
+        b=AABuUZlxOnwe7CqeZepSq1GN/aiZtuPS0RScE5ISqZpaE4eO0AzrRnghARB1/opFOZ
+         99f03JZBJ3vnV1InjXwuwVX9kQMp9bYfoquYv9yPKgo3yBP3rhluCA6xn+7gPKHy9Gut
+         5JNDL7oL4Df40SKYlFOPEtYi397zLzjv3t7wSfkLik38CZE7lOn85gQLL/WjKYppeRRJ
+         AYiMX8q6m3skqJ6KngLXeMdceoqj8OZYj1pANHsYo33QmzYpwRKVbtzLnUYSym29UBGJ
+         rl1rB2/Ka+htTkwGvU03F5fM4ocHG4FhfBadmcZRbGjvZ1vbeCpkjZGqEFXrpPVICmWn
+         OnrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=maKazkqxDXKNlbDmatrsJr0yRFC5v9vVzKjjcP/hqRY=;
+        b=kyUc/vN+TDthGoDVSODUOtzdxvcqLNEpQ3oFAiAoSQlG/G4y9zrKtp7SDryFst+Y0B
+         mIc9Z++vvkXCqsaYqqn1YJAo9wzNSAoVRYxRqffIyT/LT/F7SSx5QB6eGR7g/CZgJMPh
+         Sto7jmzcGAH3r4OG5RMKWshRoC3lq6uc14HZArIanqs4HnXbBp343qr2c77FCXk0p9Og
+         z6fDjEkfnfFMNOhsoXwN1gnIrAflC2xjl/3ng/Rm45s8tNLmaaCoo2jsh35b/18K6M2o
+         D77c9jup5kItM7/lsF0wnGrjz7pYKAw1srIdKhMvRV4rmLGhStCO6n0gRoJbNMcewCCA
+         1W0g==
+X-Gm-Message-State: AFqh2kqYOPvLlJldE8U66Xkby7OMZig1ZzKvWPjydm4xY41ddl9nJAVK
+        66CExeFLnfzeqzGKwgQ8RJ6bgUfeh6DlNtE=
+X-Google-Smtp-Source: AMrXdXuF2JibIiTYzAmjvFYio+hNi+Z0b/bVtuZcp4sFJ3r90Z/OtlV9hB18rGs1wY4afwTgE4YybA==
+X-Received: by 2002:a05:6a21:3284:b0:ad:4a3e:a6e1 with SMTP id yt4-20020a056a21328400b000ad4a3ea6e1mr9736629pzb.11.1671718213733;
+        Thu, 22 Dec 2022 06:10:13 -0800 (PST)
+Received: from localhost.localdomain ([117.217.177.177])
+        by smtp.gmail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm832031pgu.31.2022.12.22.06.10.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Dec 2022 06:10:12 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org
+Cc:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
+        abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 00/23] ufs: qcom: Add HS-G4 support
+Date:   Thu, 22 Dec 2022 19:39:38 +0530
+Message-Id: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Robert Marko <robert.marko@sartura.hr> writes:
+Hello,
 
-> On Tue, Nov 22, 2022 at 12:26 PM Kalle Valo <kvalo@kernel.org> wrote:
->
->>
->> Kalle Valo <kvalo@kernel.org> writes:
->>
->> > Manivannan Sadhasivam <mani@kernel.org> writes:
->> >
->> >> On Sat, Nov 05, 2022 at 08:49:43PM +0100, Robert Marko wrote:
->> >>> Currently, trying to use AHB + PCI/MHI cards or multiple PCI/MHI cards
->> >>> will cause a clash in the QRTR instance node ID and prevent the driver
->> >>> from talking via QMI to the card and thus initializing it with:
->> >>> [    9.836329] ath11k c000000.wifi: host capability request failed: 1 90
->> >>> [    9.842047] ath11k c000000.wifi: failed to send qmi host cap: -22
->> >>>
->> >>
->> >> There is still an outstanding issue where you cannot connect two WLAN modules
->> >> with same node id.
->> >>
->> >>> So, in order to allow for this combination of cards, especially AHB + PCI
->> >>> cards like IPQ8074 + QCN9074 (Used by me and tested on) set the desired
->> >>> QRTR instance ID offset by calculating a unique one based on PCI domain
->> >>> and bus ID-s and writing it to bits 7-0 of BHI_ERRDBG2 MHI register by
->> >>> using the SBL state callback that is added as part of the series.
->> >>> We also have to make sure that new QRTR offset is added on top of the
->> >>> default QRTR instance ID-s that are currently used in the driver.
->> >>>
->> >>
->> >> Register BHI_ERRDBG2 is listed as Read only from Host as per the BHI spec.
->> >> So I'm not sure if this solution is going to work on all ath11k supported
->> >> chipsets.
->> >>
->> >> Kalle, can you confirm?
->> >
->> > I can't look at this in detail right now, but hopefully in few days.
->> > I'll get back to you.
->>
->> The solution we have been thinking internally would not use
->> MHI_CB_EE_SBL_MODE at all, it's not clear for me yet why the mode was
->> not needed in our solution. Maybe there are firmware modifications? I
->> think it's best that we submit our proposal as well, then we can then
->> compare implementations and see what is the best course of action.
->
-> Kalle, any ETA when you will post your idea? I am constantly hitting
-> this crazy limitation and my idea does not work on cards like QCA6390
-> so it's not a viable workaround at all.
+This series adds HS-G4 support to the Qcom UFS driver and PHY driver.
+The newer Qcom platforms support configuring the UFS controller and PHY
+in dual gears (i.e., controller/PHY can be configured to run in two gear
+speeds). This is accomplished by adding two different PHY init sequences
+to the PHY driver and the UFS driver requesting the one that's required
+based on the platform configuration.
 
-Really sorry, I just didn't manage to get this finalised due to other
-stuff and now I'm leaving for a two week vacation :(
+Initially the ufs-qcom driver will use the default gear G2 for enumerating
+the UFS device. Afer enumeration, the max gear supported by both the
+controller and device would be found out and that will be used thereafter.
+But for using the max gear after enumeration, the ufs-qcom driver requires
+the UFS device to be reinitialized. For this purpose, a separate quirk has
+been introduced in the UFS core along with a callback and those will be used
+by the ufs-qcom driver.
+
+This series has been tested on following platforms:
+
+* Qcom RB5 development platform powered by SM8250 SoC
+* SM8450 based dev board
+* Qdrive3/sa8540p-ride board based on SC8280XP (derivative)
+
+Merging Strategy:
+-----------------
+
+The PHY patches are expected to go through PHY tree and UFS, MAINTAINERS
+patches are expected to go through SCSI tree.
+
+NOTE: Since this series targets multiple SoCs (base like SM8350) and
+(derivative like SC8280XP), testing on all of these platforms is really
+appreciated. Although, if the series works for base SoC, then for derivatives
+also it should work.
+
+Thanks,
+Mani
+
+Changes in v5:
+
+* Collected Review and tested-by tags
+* Reworded patch 18/23 (Bart) and also the comment for reinit_notify
+
+Changes in v4:
+
+* Dropped HS G3 specific setting from SM8350 default init sequence
+* Added G4 support to SM8350 and SC8280XP
+* Covered all qcom files under drivers/ufs/host in MAINTAINERS file
+* Added missing Suggested-by tags for Can Guo
+* Rebased on top of linux-next 20221201
+
+Changes in v3:
+
+* Dropped the "device-max-gear" DT property and switched to reinitialization (Krzysztof)
+* Added HS-G4 support to all compatible SoCs (SM8150, SM8250 and SM8450). This will also
+  benefit the derivative SoCs of these platforms like SC8180x, SC8280x etc...
+* Splitted the qmp_phy_init_tbl changes into separate patches (Vinod)
+* Collected reviews from Andrew H
+
+Changes in v2:
+
+* Collected reviews from Dmitry
+* Renamed "max-gear" property to "max-device-gear"
+* Used min() for deciding which gear to use instead of open comparision
+* Added comment about the old register name
+
+Manivannan Sadhasivam (23):
+  phy: qcom-qmp-ufs: Remove _tbl suffix from qmp_phy_init_tbl
+    definitions
+  phy: qcom-qmp-ufs: Rename MSM8996 PHY definitions
+  phy: qcom-qmp-ufs: Move register settings to qmp_phy_cfg_tbls struct
+  phy: qcom-qmp-ufs: Add support for configuring PHY in HS Series B mode
+  phy: qcom-qmp-ufs: Add support for configuring PHY in HS G4 mode
+  phy: qcom-qmp-ufs: Move HS Rate B register setting to tbls_hs_b
+  phy: qcom-qmp-ufs: Add HS G4 mode support to SM8150 SoC
+  phy: qcom-qmp-ufs: Add HS G4 mode support to SM8250 SoC
+  phy: qcom-qmp-ufs: Avoid setting HS G3 specific registers
+  phy: qcom-qmp-ufs: Add HS G4 mode support to SM8350 SoC
+  phy: qcom-qmp-ufs: Add HS G4 mode support to SM8450 SoC
+  phy: qcom-qmp-ufs: Add HS G4 mode support to SC8280XP SoC
+  scsi: ufs: ufs-qcom: Remove un-necessary goto statements
+  scsi: ufs: ufs-qcom: Remove un-necessary WARN_ON()
+  scsi: ufs: ufs-qcom: Use bitfields where appropriate
+  scsi: ufs: ufs-qcom: Use dev_err_probe() for printing probe error
+  scsi: ufs: ufs-qcom: Fix the Qcom register name for offset 0xD0
+  scsi: ufs: core: Add reinit_notify() callback
+  scsi: ufs: core: Add support for reinitializing the UFS device
+  scsi: ufs: ufs-qcom: Factor out the logic finding the HS Gear
+  scsi: ufs: ufs-qcom: Add support for reinitializing the UFS device
+  scsi: ufs: ufs-qcom: Add support for finding max gear on new platforms
+  MAINTAINERS: Add myself as the maintainer for Qcom UFS drivers
+
+ MAINTAINERS                                   |   8 +
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h    |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 454 +++++++++++++-----
+ drivers/ufs/core/ufshcd-priv.h                |   6 +
+ drivers/ufs/core/ufshcd.c                     |  63 ++-
+ drivers/ufs/host/ufs-qcom.c                   | 170 +++----
+ drivers/ufs/host/ufs-qcom.h                   |  70 +--
+ include/ufs/ufshcd.h                          |   8 +
+ 8 files changed, 532 insertions(+), 248 deletions(-)
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+2.25.1
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
