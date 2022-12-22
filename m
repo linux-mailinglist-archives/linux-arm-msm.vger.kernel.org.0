@@ -2,138 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B414F653E89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 11:48:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98C80653F3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 12:47:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235325AbiLVKsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 05:48:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49714 "EHLO
+        id S235535AbiLVLr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 06:47:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235331AbiLVKsi (ORCPT
+        with ESMTP id S235472AbiLVLr1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 05:48:38 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD86286E6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:48:36 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id f34so2124589lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:48:36 -0800 (PST)
+        Thu, 22 Dec 2022 06:47:27 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B73972228B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:47:26 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id z26so2345358lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 03:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ia8KJdyr/weiXXqDeFy3RTipajicAjUGTpWBPLkZVJ0=;
-        b=MzAOSxLWjD0lC/pnVpkUG4qU7fFfbpeMEKTypsZlFhqZWKl2Q6t+wZieDQLuJDcdSY
-         rQL0ddVlYCruoBG9VqMAmT5nGxkx0dKT5rLygLRsR3Vs2WyiABzv7VeU2l5ptt9Zkvbv
-         kSDxSFKUsQicfk+teRXS5v2RbSgqCvWSy+fJ8Q22G618W8YmR/seO+/JEi5nNw4rADos
-         v1uAq0AKukd3y0ouieyOeiH+AUal0vIRa6f6rU2wGtt/9e4Pusbk8/NnsG6XgfFP6UCB
-         gfgMRNJpyjk3qvFjWdM8ZViqIvTzA4JYqohRIyKqvuLHIlgIXHo35nrcibFKk52py7db
-         XbEw==
+        bh=0EHYXR6sSgB5vdGVmrtOtKLZP6yhiJpLufZUquvuMTM=;
+        b=pn1uImfgSjqommdSMhzsURLzDugGu0FTd7vckLh0eIppD+Hkw6yti7KierhwC+ebZK
+         YF138uC/8YhdSSV20XcVnzKKwga9gEKb1OcBV+e08oHnK+JtwEPEbB735yPazKU/no34
+         XDTspm8RPAH0vFr4eyWfXAmb8lnd2u+PpHJBrEeIE8NyCKdi4D61hKBafoBeLdnKj14V
+         mMeoiV/ttwezyotlUUS5QQqu0dXsDHglxuBhKe49Qn9dWEmYTIa7TYC8tFmAugoJS5/B
+         r0XnifxQkvH4tQF90cwlwL7BOj8N0wx2F/WMw04riTFamr+FzXbqRhlobs1jLiN4TepR
+         ny4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ia8KJdyr/weiXXqDeFy3RTipajicAjUGTpWBPLkZVJ0=;
-        b=l1P29JAqVYp5mLbnThvdD8oHiqdeu2OAIM0hDwL+iAUrCJM0BDQW4fVT5gogBpvG4b
-         8PavKBzJAJgVBZCzI5KV1Wxr8fQSisZUPs/NQGK1lVKjTxguMbmQCjBCPr+nrpxEolGs
-         TabJ9Js/bAlQ1EnKFxDf5AInhn6bN8P5GiVbvAlqrcdC5+Azg17d0IokCyAqMj0kKjS/
-         g6p6FELxvO7enBbMhkBylaQoVv0Qh8g0lZrpNiVeqFmC8QCIWHkEw6iuotSvZa2QumyD
-         rYS5dyV6gCdgR6aE0DT8PUTTfKe6Lxef+RIqdrLcugYfprDg4P2aa81xhNzjIVjR7V7r
-         e9tw==
-X-Gm-Message-State: AFqh2krKtoHXSAe2OALd6nKvmnQFnlGMJA+2e8odoN3PhhE7ZxlYRRBg
-        KtnXeOcEQIbTOm3hnJrY8EdDtw==
-X-Google-Smtp-Source: AMrXdXsDo+FPzvd6zDJCEeGLBfA4RrWUpce4uDKCGO5owSQeUsOnswwVLMSAN96lC8QBw7TJDLei/Q==
-X-Received: by 2002:a05:6512:4014:b0:4b6:f22c:8001 with SMTP id br20-20020a056512401400b004b6f22c8001mr2181830lfb.56.1671706115054;
-        Thu, 22 Dec 2022 02:48:35 -0800 (PST)
+        bh=0EHYXR6sSgB5vdGVmrtOtKLZP6yhiJpLufZUquvuMTM=;
+        b=njlxkdqB7LfBEg4MN2B/ufuUUB6jY2Aa0/H5W5XPVFoiGAUvjkKUh/Q9yqVGIBm7aO
+         fANRaNZIn9rWx4emg9jiH0u+yVb8DPG/6bDlwHUNcnRY919n3F2+OgWo16Ksk0jFSSaW
+         WyXkYyQ7bd2t6nsRPjrXmSlEtHhPt9m23+5b64sYMBfpmSz7Lm4WXsbTCs/xNYYP1ik/
+         wc/EHT5h2vyrgpjiWCckMTy56ujkemBh1AATyZ6+N+KpZ/bT1WIfzwhmbRN/jQSqY+Qg
+         gim635Br1/Elax7HZIJkyQS7+RACchy4Jn8tcPExi09fX+Z3j321hapmbCFSJmOPTgrJ
+         QfWQ==
+X-Gm-Message-State: AFqh2koj7YXdb1o1qynNN6X5a1cQ6MBFZu50wMaB3jZT0PRtyvVkssCj
+        MUnIn8/51aU2WMEA9ByqvqWJlw==
+X-Google-Smtp-Source: AMrXdXvejv9SNAwlLbnZmw6FcDQmaKFCvnGJeIOT1kCLtjTtnwqqgUvY/tTwCYifiYAFep31jdzGkA==
+X-Received: by 2002:a05:6512:1582:b0:4b6:e494:a98d with SMTP id bp2-20020a056512158200b004b6e494a98dmr2133911lfb.44.1671709645143;
+        Thu, 22 Dec 2022 03:47:25 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m12-20020a19710c000000b004b700ba3cf3sm29773lfc.203.2022.12.22.02.48.33
+        by smtp.gmail.com with ESMTPSA id r12-20020ac25a4c000000b00492d064e8f8sm42937lfn.263.2022.12.22.03.47.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Dec 2022 02:48:34 -0800 (PST)
-Message-ID: <a9cf2812-bf12-0127-d156-1cbdc133f6b5@linaro.org>
-Date:   Thu, 22 Dec 2022 11:48:33 +0100
+        Thu, 22 Dec 2022 03:47:24 -0800 (PST)
+Message-ID: <51770a1c-45f6-9f5a-871d-022cd78a0d4b@linaro.org>
+Date:   Thu, 22 Dec 2022 12:47:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v15 1/5] arm64: dts: qcom: add data-lanes and
- link-freuencies into dp_out endpoint
+Subject: Re: [PATCH v5 04/21] dt-bindings: msm: dsi-controller-main: Add
+ compatible strings for every current SoC
 Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, agross@kernel.org,
-        dmitry.baryshkov@linaro.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        airlied@gmail.com
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1671227102-21717-1-git-send-email-quic_khsieh@quicinc.com>
- <1671227102-21717-2-git-send-email-quic_khsieh@quicinc.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
+        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
+        swboyd@chromium.org, konrad.dybcio@somainline.org,
+        agross@kernel.org, andersson@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221220123634.382970-1-bryan.odonoghue@linaro.org>
+ <20221220123634.382970-5-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1671227102-21717-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <20221220123634.382970-5-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/12/2022 22:44, Kuogee Hsieh wrote:
-> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
-> add link-frequencies property into dp_out endpoint as well. The last
-> frequency specified at link-frequencies will be the max link rate
-> supported by DP.
+On 20/12/2022 13:36, Bryan O'Donoghue wrote:
+> Currently we do not differentiate between the various users of the
+> qcom,mdss-dsi-ctrl. The driver is flexible enough to operate from one
+> compatible string but, the hardware does have some significant differences
+> in the number of clocks.
 > 
-> Changes in v5:
-> -- revert changes at sc7180.dtsi and sc7280.dtsi
-> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
+> To facilitate documenting the clocks add the following compatible strings
 > 
-> Changes in v6:
-> -- add data-lanes and link-frequencies to yaml
+> - qcom,apq8064-dsi-ctrl
+> - qcom,msm8916-dsi-ctrl
+> - qcom,msm8953-dsi-ctrl
+> - qcom,msm8974-dsi-ctrl
+> - qcom,msm8996-dsi-ctrl
+> - qcom,msm8998-dsi-ctrl
+> - qcom,sc7180-dsi-ctrl
+> - qcom,sc7280-dsi-ctrl
+> - qcom,sdm660-dsi-ctrl
+> - qcom,sdm845-dsi-ctrl
+> - qcom,sm8250-dsi-ctrl
 > 
-> Changes in v7:
-> -- change 160000000 to 1620000000
-> -- separate yaml to different patch
+> Each SoC dtsi should declare "qcom,socname-dsi-ctrl", "qcom,mdss-dsi-ctrl";
 > 
-> Changes in v8:
-> -- correct Bjorn mail address to kernel.org
-> 
-> Changes in v9:
-> -- use symbol rate (hz) for link-frequencies at dp_out at sc7180_trogdor.dtsi
-> 
-> Changes in v13:
-> -- delete an extra space at data-lanes
-> 
-> Changes in v15:
-> -- replace space with tab at sc7180-trogdor.dtsi
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 4 ++++
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++++
->  2 files changed, 8 insertions(+)
+>  .../display/msm/dsi-controller-main.yaml      | 20 +++++++++++++++----
+>  1 file changed, 16 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index eae22e6..ad98a87 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -814,7 +814,11 @@ hp_i2c: &i2c9 {
->  	status = "okay";
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&dp_hot_plug_det>;
-> +};
-> +
-> +&dp_out {
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> index 6e2fd6e9fa7f0..01afa9e9c4b3c 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -14,9 +14,21 @@ allOf:
+>  
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,mdss-dsi-ctrl
+> -      - qcom,dsi-ctrl-6g-qcm2290
+> +    items:
+> +      - enum:
+> +          - qcom,apq8064-dsi-ctrl
+> +          - qcom,msm8916-dsi-ctrl
+> +          - qcom,msm8953-dsi-ctrl
+> +          - qcom,msm8974-dsi-ctrl
+> +          - qcom,msm8996-dsi-ctrl
+> +          - qcom,msm8998-dsi-ctrl
+> +          - qcom,dsi-ctrl-6g-qcm2290
+> +          - qcom,sc7180-dsi-ctrl
+> +          - qcom,sc7280-dsi-ctrl
+> +          - qcom,sdm660-dsi-ctrl
+> +          - qcom,sdm845-dsi-ctrl
+> +          - qcom,sm8250-dsi-ctrl
 
-Still wrong order, I think.
-
+Usual comment: can we keep the list sorted?
 
 Best regards,
 Krzysztof
