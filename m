@@ -2,241 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F173654206
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 14:39:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3789B654236
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 14:57:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbiLVNjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 08:39:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32778 "EHLO
+        id S235007AbiLVN5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 08:57:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235039AbiLVNjl (ORCPT
+        with ESMTP id S229630AbiLVN5m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 08:39:41 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA8E13D20
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 05:39:38 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so1876434pjj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 05:39:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XkH6OCe/x7JQpec0bculCGFtQ6ZNz0wh9corwULkI6E=;
-        b=FHVUziAoXjTfQ8658Fz9bwN0Axo0vLmOhfG4Ls9YhXfuE0H267tuhjHuesk9fD2K4W
-         YPQXKDwl5aopv6vRGezEP4B9N9zw4a3u7G6Bz4yO3DD67p7mZTqlSa4PnAR5MEiyW9bJ
-         dsGwTXvS3xKr2R1D9Ycerfrn21+Eul85nUP/XU6zE3v7jtoOAPPeTp8r3gvIqljBqNbY
-         n58FCmLREKEpE5OW6kCAMEiBrj6vzqI71CBF2zAopovLxV9Qqn1C4KpVlGvv7LDupbaO
-         hD5Xc176rzoQVE5I+chEqQDievaykAMcXpuLKEEZ/Ctqq7yXoTO1TgE17UMhm3MANEOP
-         fL7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XkH6OCe/x7JQpec0bculCGFtQ6ZNz0wh9corwULkI6E=;
-        b=ySGNi208SNXP/1R+R6kImHahRIbRnfKoL8Whn47DKAofuH4T/pQmmK0HITn3ZGeWQe
-         +ltkaGeqglJhSggwF/EfbhsFJAFQ4JKJX1rUexoAOSeepvTRRt5zsXw95HCGSUQtrhrk
-         oSKe23sISnZlmOfLps6TuNL2VJHsS1vT7ts0aQGrfVMKLTuiMQArHaqtfIWpjmlBZdXg
-         UicSY6M6xABp/7MhDHDiM43/cnDHYAntjVe1OXDy9EqsX4eSx6ssCsLWfqRGAi0fsV6T
-         CVIiJBJ/oDwkm7X5IMXShAMFPSwDJwWyryXNvgOEVMTK/ZiyMqluyVw/MZkALGIw/WpH
-         LIHg==
-X-Gm-Message-State: AFqh2kqi6C5OUaAqWZnlIl4f03kQ5xoGXIEzVsv73bbdINATpch2lbzY
-        cHZ4+zLlEd/curclvkughVBG
-X-Google-Smtp-Source: AMrXdXv2M1IfxFj/4CiOC19ST6aljTgL/aYpmm8XATNS5YYQkHSGGLRZiUWulnL1zLa8NWat1LI+4g==
-X-Received: by 2002:a05:6a21:3393:b0:ab:fb31:be13 with SMTP id yy19-20020a056a21339300b000abfb31be13mr31582570pzb.37.1671716378114;
-        Thu, 22 Dec 2022 05:39:38 -0800 (PST)
-Received: from thinkpad ([117.217.177.99])
-        by smtp.gmail.com with ESMTPSA id 37-20020a631765000000b0046b2ebb0a52sm756040pgx.17.2022.12.22.05.39.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 05:39:36 -0800 (PST)
-Date:   Thu, 22 Dec 2022 19:09:26 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Kai-Heng Feng <kai.heng.feng@canonical.com>
-Subject: Re: [PATCH v7] PCI/ASPM: Update LTR threshold based upon reported
- max latencies
-Message-ID: <20221222133926.GA50976@thinkpad>
-References: <1663315719-21563-1-git-send-email-quic_krichai@quicinc.com>
- <20221205112500.GB4514@thinkpad>
- <Y441/Icd2wSgVnNU@google.com>
- <20221221054953.GA2922@thinkpad>
- <Y6MfXltck34gSwU9@google.com>
+        Thu, 22 Dec 2022 08:57:42 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2952913EA3;
+        Thu, 22 Dec 2022 05:57:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D6538B81DA5;
+        Thu, 22 Dec 2022 13:57:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762F8C433D2;
+        Thu, 22 Dec 2022 13:57:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671717458;
+        bh=m4BhhoLs0SHSKY2sSWcAGIJSCilLlLfjaBNVjEGhwrk=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=H0HmuXkswh4X+/si5WMZLDgC3liPMt970G+q2tQfnquI1pj+PPHnfQnODoFI7O6BU
+         vCqid/QYSGzhb5O4oBz/AQveVeGK9eksEAtP5VacivcbqkBq1c+pG5JpGGI9ANkqyO
+         Y/IVN9xYYunIt4P3S762X4yYZWCSoSCp5zOG9gXJAOBryZFrijM1ko6OTgSZEvZ0IK
+         lXc4OorgtqD2fpkZaL15nj2mJXViNFK15QfrDiEUkO5IBN/MWhtoyd4NxoUw9ZRrFM
+         OtqSElmmHoJ+oMFQVvATKrv0ym1/OI9G/C8TVgxE8bTAJWRmUYwVOGmdxpBlxWqeSc
+         jvSalIjQT65Cw==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        gregkh@linuxfoundation.org, elder@linaro.org,
+        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
+        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, ansuelsmth@gmail.com
+Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
+References: <20221105194943.826847-1-robimarko@gmail.com>
+        <20221105194943.826847-2-robimarko@gmail.com>
+        <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
+        <877czn8c2n.fsf@kernel.org>
+        <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
+Date:   Thu, 22 Dec 2022 15:57:32 +0200
+In-Reply-To: <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
+        (Robert Marko's message of "Wed, 14 Dec 2022 13:02:42 +0100")
+Message-ID: <87k02jzgkz.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y6MfXltck34gSwU9@google.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 21, 2022 at 02:59:42PM +0000, Matthias Kaehlcke wrote:
-> On Wed, Dec 21, 2022 at 11:19:53AM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Dec 05, 2022 at 06:18:36PM +0000, Matthias Kaehlcke wrote:
-> > > On Mon, Dec 05, 2022 at 04:55:00PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Fri, Sep 16, 2022 at 01:38:37PM +0530, Krishna chaitanya chundru wrote:
-> > > > > In ASPM driver, LTR threshold scale and value are updated based on
-> > > > > tcommon_mode and t_poweron values. In Kioxia NVMe L1.2 is failing due to
-> > > > > LTR threshold scale and value are greater values than max snoop/non-snoop
-> > > > > value.
-> > > > > 
-> > > > > Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-> > > > > reported snoop/no-snoop values is greater than or equal to
-> > > > > LTR_L1.2_THRESHOLD value.
-> > > > > 
-> > > > > Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-> > > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > 
-> > > > I take my Ack back... Sorry that I did not look into this patch closer.
-> > > > 
-> > > > > ---
-> > > > > 
-> > > > > I am taking this patch forward as prasad is no more working with our org.
-> > > > > changes since v6:
-> > > > > 	- Rebasing with pci/next.
-> > > > > changes since v5:
-> > > > > 	- no changes, just reposting as standalone patch instead of reply to
-> > > > > 	  previous patch.
-> > > > > Changes since v4:
-> > > > > 	- Replaced conditional statements with min and max.
-> > > > > changes since v3:
-> > > > > 	- Changed the logic to include this condition "snoop/nosnoop
-> > > > > 	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-> > > > > Changes since v2:
-> > > > > 	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-> > > > > Changes since v1:
-> > > > > 	- Added missing variable declaration in v1 patch
-> > > > > ---
-> > > > >  drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
-> > > > >  1 file changed, 30 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> > > > > index 928bf64..2bb8470 100644
-> > > > > --- a/drivers/pci/pcie/aspm.c
-> > > > > +++ b/drivers/pci/pcie/aspm.c
-> > > > > @@ -486,13 +486,35 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> > > > >  {
-> > > > >  	struct pci_dev *child = link->downstream, *parent = link->pdev;
-> > > > >  	u32 val1, val2, scale1, scale2;
-> > > > > +	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
-> > > > >  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
-> > > > >  	u32 ctl1 = 0, ctl2 = 0;
-> > > > >  	u32 pctl1, pctl2, cctl1, cctl2;
-> > > > > +	u16 ltr;
-> > > > > +	u16 max_snoop_lat, max_nosnoop_lat;
-> > > > >  
-> > > > >  	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
-> > > > >  		return;
-> > > > >  
-> > > > > +	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-> > > > > +	if (!ltr)
-> > > > > +		return;
-> > > > > +
-> > > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-> > > > > +	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-> > > > > +
-> > > > > +	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > > > > +	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
-> > > > > +
-> > > > > +	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-> > > > > +	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
-> > > > > +
-> > > > > +	/* choose the greater max scale value between snoop and no snoop value*/
-> > > > > +	max_scale = max(max_snp_scale, max_nsnp_scale);
-> > > > > +
-> > > > > +	/* choose the greater max value between snoop and no snoop scales */
-> > > > > +	max_val = max(max_snp_val, max_nsnp_val);
-> > > > > +
-> > > > >  	/* Choose the greater of the two Port Common_Mode_Restore_Times */
-> > > > >  	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > > > >  	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-> > > > > @@ -525,6 +547,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
-> > > > >  	 */
-> > > > >  	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
-> > > > >  	encode_l12_threshold(l1_2_threshold, &scale, &value);
-> > > > > +
-> > > > > +	/*
-> > > > > +	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-> > > > > +	 * snoop/no-snoop values are greater than or equal to LTR_L1.2_THRESHOLD value.
-> > > > 
-> > > > Apart from the bug in calculating the LTR_Threshold as reported by Matthias
-> > > > and Bjorn, I'm wondering if we are covering up for the device firmware issue.
-> > > 
-> > > Yes, I think the patch is doing exactly that.
-> > > 
-> > > > As per section 6.18, if the device reports snoop/no-snoop scale/value as 0, then
-> > > > it implies that the device won't tolerate any additional delays from the host.
-> > > >
-> > > > In that case, how can we allow the link to go into L1.2 since that would incur
-> > > > high delay compared to L1.1?
-> > > 
-> > > I had the same doubt, a value of 0 doesn't make sense, if it literally means
-> > > 'max delay of 0ns'. I did some debugging around this issue. One thing I found
-> > > is that there are NVMe models that don't have issues with entering L1.2 with
-> > > max (no-)snoop latencies of 0. From that I infer that a value of 0 does not
-> > > literally mean a max delay of 0ns.
-> > > 
-> > 
-> > This is interesting.
-> > 
-> > > The PCIe spec doesn't say specifically what a value of 0 in those registers
-> > > means, but chapter "6.18 Latency Tolerance Reporting (LTR) Mechanism" of the
-> > > PCIe 4.0 base spec says something about the latency requirements in LTR
-> > > messages:
-> > > 
-> > >   Setting the value and scale fields to all 0’s indicates that the device will
-> > >   be impacted by any delay and that the best possible service is requested.
-> > > 
-> > > With that and the fact that several NVMe's don't have issues with all 0 values
-> > > I deduce that all 0's means 'best possible service' and not 'max latency of
-> > > 0ns'. It seems the Kioxia firmware has a bug which interprets all 0 values as
-> > > a max latency of 0ns.
-> > > 
-> > > Another finding is that the Kioxia NVMe can enter L1.2 if the max latencies
-> > > are set to values >= the LTR threshold. Unfortunately that isn't a viable
-> > > fix for existing devices in the field, devices under development could possibly
-> > > adjust the latencies in the BIOS (coreboot code [1] suggests that this is done
-> > > at least in some cases).
-> > > 
-> > 
-> > I fully agree that it is a firmware issue. And yes, we should refrain to fixes
-> > in the bootloader if possible.
-> > 
-> > Another option would be to add a quirk for specific devices in the ASPM code.
-> > But in that case, I'm not sure what would be the optimal snoop/no-snoop value
-> > that could be used.
-> 
-> I had/have the same doubt.
-> 
-> > There is another issue where if we have some other device on the same bus
-> > that explicitly requires 0ns latency.
-> 
-> Would that be reasonable requirement, i.e. can 0ns latency ever be achieved?
+Robert Marko <robert.marko@sartura.hr> writes:
 
-Well, not in an ideal world. But the device vendors do not fail to surprise us ;)
+> On Tue, Nov 22, 2022 at 12:26 PM Kalle Valo <kvalo@kernel.org> wrote:
+>
+>>
+>> Kalle Valo <kvalo@kernel.org> writes:
+>>
+>> > Manivannan Sadhasivam <mani@kernel.org> writes:
+>> >
+>> >> On Sat, Nov 05, 2022 at 08:49:43PM +0100, Robert Marko wrote:
+>> >>> Currently, trying to use AHB + PCI/MHI cards or multiple PCI/MHI cards
+>> >>> will cause a clash in the QRTR instance node ID and prevent the driver
+>> >>> from talking via QMI to the card and thus initializing it with:
+>> >>> [    9.836329] ath11k c000000.wifi: host capability request failed: 1 90
+>> >>> [    9.842047] ath11k c000000.wifi: failed to send qmi host cap: -22
+>> >>>
+>> >>
+>> >> There is still an outstanding issue where you cannot connect two WLAN modules
+>> >> with same node id.
+>> >>
+>> >>> So, in order to allow for this combination of cards, especially AHB + PCI
+>> >>> cards like IPQ8074 + QCN9074 (Used by me and tested on) set the desired
+>> >>> QRTR instance ID offset by calculating a unique one based on PCI domain
+>> >>> and bus ID-s and writing it to bits 7-0 of BHI_ERRDBG2 MHI register by
+>> >>> using the SBL state callback that is added as part of the series.
+>> >>> We also have to make sure that new QRTR offset is added on top of the
+>> >>> default QRTR instance ID-s that are currently used in the driver.
+>> >>>
+>> >>
+>> >> Register BHI_ERRDBG2 is listed as Read only from Host as per the BHI spec.
+>> >> So I'm not sure if this solution is going to work on all ath11k supported
+>> >> chipsets.
+>> >>
+>> >> Kalle, can you confirm?
+>> >
+>> > I can't look at this in detail right now, but hopefully in few days.
+>> > I'll get back to you.
+>>
+>> The solution we have been thinking internally would not use
+>> MHI_CB_EE_SBL_MODE at all, it's not clear for me yet why the mode was
+>> not needed in our solution. Maybe there are firmware modifications? I
+>> think it's best that we submit our proposal as well, then we can then
+>> compare implementations and see what is the best course of action.
+>
+> Kalle, any ETA when you will post your idea? I am constantly hitting
+> this crazy limitation and my idea does not work on cards like QCA6390
+> so it's not a viable workaround at all.
 
-Thanks,
-Mani
+Really sorry, I just didn't manage to get this finalised due to other
+stuff and now I'm leaving for a two week vacation :(
 
 -- 
-மணிவண்ணன் சதாசிவம்
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
