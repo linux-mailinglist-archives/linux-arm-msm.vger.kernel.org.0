@@ -2,70 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 259F36544E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 17:10:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98B1F6544ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 17:11:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiLVQKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 11:10:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
+        id S235456AbiLVQKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 11:10:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235285AbiLVQKA (ORCPT
+        with ESMTP id S234727AbiLVQK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 11:10:00 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1DFF3579B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:09:08 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id bp15so3355228lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:09:08 -0800 (PST)
+        Thu, 22 Dec 2022 11:10:29 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 516571DF2F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:10:28 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id g1so1546746pfk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=k1dtaKDDkGKVAiwWp9WScF8JO/ojvra0YFJui4t3mI4=;
-        b=PIxL4o4ah0KW1M8l0ifhZo3XsYoFPA9lCxiKj/xQeV/Ne7kGDZo3qgkBgujZh6koqu
-         Jd9zaU7WT8GVw2tCMfPC5X1cEL0yYu1g9V//u9TrXHH8B5jUUeiSdyZedtLGr3bVMUB1
-         AYkPxroPTIz2z2/KDFhAgF251XN3a8XO1/bebhX6pluvS67jGlMWaHfaLSarouVoUk1B
-         fGLByTV3cTvb55LzWRnu7NWdEyKGOkR/r4SK05a27zqjhBcgBh/Q/fThgbMsLxIUfjIc
-         hd9/Etg9V0oCDzqV8ajXmwM2wVJBsyo1Hrg5Q56t3vdX4y/gqXyvJKuvPcSeH8wQVU9a
-         WQ4w==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5LbHWQm/nCfihTHW8c/djSdKPRylgW1zq/mA/hxAzNU=;
+        b=faSTzKUXYjlhyqwbeSVyJWqAK7VjdTNPOelw5Sg8T5Ojs6uhhI73zCRE5vapbz+uhQ
+         tomGemoBo/ndRpkOr81fq0fBk1iM4mAaFh14Ru1Nt9P/Z+boBe+zYtkvk0ExAo6v1IiI
+         3QHMofV0UzIlVflXoGFIc3iVzCxAh7J/zCWI+SXJ3Jt53oOKOIuTpyadKR2YEx17Twct
+         qJpgr171j/bF9jfogd7hr13n95BxGyPVeaGLhH2kaGXYtKt9CZ9ZFfSpQlAickXUyZiZ
+         ttl4TIQle4SdU1l7pAt9me8nTrnlwbaMIAPq356HpNOGpKCAEsrBnWGgaojbL14fhDSS
+         knkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=k1dtaKDDkGKVAiwWp9WScF8JO/ojvra0YFJui4t3mI4=;
-        b=QUDvVICdG7obI6/dPzlKUGrMoHUzOEvctt6GaeCJ+W54cPzvHbX61WxqZB5TRYyx3y
-         40aSyv+omOQvaXiTFjveFSqbZVOjGGRJmaz+J5HIwuYgV/YEFeqDZqR9YrlO2/WjU+Ch
-         ifO5CnBsikF6+H3ZcIuQr/Zu+GasFVvsV1I5Isy3mYkd9zrinToyp6WVC18esT465nvA
-         RUKzJiYj3xRVKNPncfCJvrG/fRTaXMSFdcmvHWSjRm+TIZzeOGNlKcKzKx5SGdWuPKO3
-         hufqOWZ6vs8JFR3JdTgEBwSWsVosedgAJMp7dkPD8EoeUFjK7kumPP2fVmK5MibbT6KX
-         7EnQ==
-X-Gm-Message-State: AFqh2krK/6joX1DDDlcCTFkKg3FiHfpNvvkl/O2J4L1zzf8FjVhlN82k
-        jbbkNZ1wsiJAeMFN322tHJNllA==
-X-Google-Smtp-Source: AMrXdXt7Mb0y1Q3l/cK+o2snE4jU4rov7Lm5jm9cZGQbaz/sUhl0qDXM/THBF7oxd4ELZD1S3xHTNw==
-X-Received: by 2002:a05:6512:2987:b0:4ca:877d:a546 with SMTP id du7-20020a056512298700b004ca877da546mr3120025lfb.12.1671725347156;
-        Thu, 22 Dec 2022 08:09:07 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p7-20020a056512138700b00494643db68fsm114661lfa.81.2022.12.22.08.09.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 08:09:06 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom,sm8450-lpass-lpi: add bias-bus-hold
-Date:   Thu, 22 Dec 2022 17:09:04 +0100
-Message-Id: <20221222160904.172070-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=5LbHWQm/nCfihTHW8c/djSdKPRylgW1zq/mA/hxAzNU=;
+        b=WS+BJywv7y/ZCsq900ZPP07z5xbnnHDSR9XhUJOx7AFuevnTQXYnyM9m6+is9EFpHD
+         eBMZ92nzD9sXueN/LuWKWn+H1gjNNowKzVfXB4rrSWhllAjB9Z/pmW2VPmEzARjzUIO0
+         QpgM1mkIi+0fL36WC4DPoIhJOz2cGu8aypp9EHTFarZ+6rhSoDArxhx6OKvnXjcpO6dW
+         5mylYIKRLf7LSdpwPRBaZPdz9XbObfcfD+WOVLJXJ9zqOSt3BpsNWvYq1Usey/qt0TDt
+         rwXV99hYFjSfID9ASmAvzbAxW1yXIe8zWiSnQJ5fU+4Zmtsgy4HnGFMs3Cch51v7bm3a
+         I2ew==
+X-Gm-Message-State: AFqh2kp2mBnIb4AkQm++YdXRaWH+IgY5H5+bnrAloni7RWtU9b6l+W3O
+        w98/hfIvgHEVG0I92pRr9d607aUmL55950JzJs/2nw==
+X-Google-Smtp-Source: AMrXdXt4MWTAT4avILmrBPNnvEVTV9+/DvSwBqeCnt+KkZos6X5NyTCN5Ad7ZtQz21CLieDITrVE70FplYJZIEgH+zU=
+X-Received: by 2002:a62:ed04:0:b0:577:3e5e:7a4 with SMTP id
+ u4-20020a62ed04000000b005773e5e07a4mr448901pfh.57.1671725427726; Thu, 22 Dec
+ 2022 08:10:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1671642843-5244-1-git-send-email-quic_akhilpo@quicinc.com> <20221221224338.v4.3.I7f545d8494dcdbe6e96a15fbe8aaf5bb0c003d50@changeid>
+In-Reply-To: <20221221224338.v4.3.I7f545d8494dcdbe6e96a15fbe8aaf5bb0c003d50@changeid>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 22 Dec 2022 17:09:51 +0100
+Message-ID: <CAPDyKFqFrf5qVpsQs-cwYnazBBjG-QkKxFL1szNmz+x3hq27gg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/5] drm/msm/a6xx: Vote for cx gdsc from gpu driver
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -75,41 +79,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow bias-bus-hold and input-enable properties (already used in SM8450):
+On Wed, 21 Dec 2022 at 18:14, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> When a device has multiple power domains, dev->power_domain is left
+> empty during probe. That didn't cause any issue so far because we are
+> freeloading on smmu driver's vote on cx gdsc. Instead of that, create
+> a device_link between cx genpd device and gmu device to keep a vote from
+> gpu driver.
+>
+> Before this patch:
+> localhost ~ # cat /sys/kernel/debug/pm_genpd/pm_genpd_summary
+> gx_gdsc         on              0
+>     /devices/genpd:1:3d6a000.gmu                active          0
+> cx_gdsc         on              0
+>     /devices/platform/soc@0/3da0000.iommu       active          0
+>
+> After this patch:
+> localhost ~ # cat /sys/kernel/debug/pm_genpd/pm_genpd_summary
+> gx_gdsc         on              0
+>     /devices/genpd:1:3d6a000.gmu                active          0
+> cx_gdsc         on              0
+>     /devices/platform/soc@0/3da0000.iommu       active          0
+>     /devices/genpd:0:3d6a000.gmu                active          0
+>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-  sm8450-qrd.dtb: pinctrl@3440000: dmic02-default-state: 'oneOf' conditional failed, one must be fixed:
-    'pins' is a required property
-    'function' is a required property
-    'clk-pins', 'data-pins' do not match any of the regexes: 'pinctrl-[0-9]+'
-    'input-enable' does not match any of the regexes: 'pinctrl-[0-9]+'
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-Compact the properties which are just set to true for readability.
+Kind regards
+Uffe
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml      | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-index 01a0a4a40ba5..4fbe8c506cda 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-@@ -96,14 +96,11 @@ $defs:
-           2: Lower Slew rate (slower edges)
-           3: Reserved (No adjustments)
- 
-+      bias-bus-hold: true
-       bias-pull-down: true
--
-       bias-pull-up: true
--
-       bias-disable: true
--
-       output-high: true
--
-       output-low: true
- 
-     required:
--- 
-2.34.1
-
+> ---
+>
+> (no changes since v1)
+>
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 31 +++++++++++++++++++++++++++----
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
+>  2 files changed, 28 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 6484b97c5344..1580d0090f35 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -1479,6 +1479,12 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+>
+>         pm_runtime_force_suspend(gmu->dev);
+>
+> +       /*
+> +        * Since cxpd is a virt device, the devlink with gmu-dev will be removed
+> +        * automatically when we do detach
+> +        */
+> +       dev_pm_domain_detach(gmu->cxpd, false);
+> +
+>         if (!IS_ERR_OR_NULL(gmu->gxpd)) {
+>                 pm_runtime_disable(gmu->gxpd);
+>                 dev_pm_domain_detach(gmu->gxpd, false);
+> @@ -1605,8 +1611,10 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>
+>         if (adreno_is_a650_family(adreno_gpu)) {
+>                 gmu->rscc = a6xx_gmu_get_mmio(pdev, "rscc");
+> -               if (IS_ERR(gmu->rscc))
+> +               if (IS_ERR(gmu->rscc)) {
+> +                       ret = -ENODEV;
+>                         goto err_mmio;
+> +               }
+>         } else {
+>                 gmu->rscc = gmu->mmio + 0x23000;
+>         }
+> @@ -1615,8 +1623,22 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>         gmu->hfi_irq = a6xx_gmu_get_irq(gmu, pdev, "hfi", a6xx_hfi_irq);
+>         gmu->gmu_irq = a6xx_gmu_get_irq(gmu, pdev, "gmu", a6xx_gmu_irq);
+>
+> -       if (gmu->hfi_irq < 0 || gmu->gmu_irq < 0)
+> +       if (gmu->hfi_irq < 0 || gmu->gmu_irq < 0) {
+> +               ret = -ENODEV;
+> +               goto err_mmio;
+> +       }
+> +
+> +       gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
+> +       if (IS_ERR(gmu->cxpd)) {
+> +               ret = PTR_ERR(gmu->cxpd);
+>                 goto err_mmio;
+> +       }
+> +
+> +       if (!device_link_add(gmu->dev, gmu->cxpd,
+> +                                       DL_FLAG_PM_RUNTIME)) {
+> +               ret = -ENODEV;
+> +               goto detach_cxpd;
+> +       }
+>
+>         /*
+>          * Get a link to the GX power domain to reset the GPU in case of GMU
+> @@ -1634,6 +1656,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>
+>         return 0;
+>
+> +detach_cxpd:
+> +       dev_pm_domain_detach(gmu->cxpd, false);
+> +
+>  err_mmio:
+>         iounmap(gmu->mmio);
+>         if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
+> @@ -1641,8 +1666,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>         free_irq(gmu->gmu_irq, gmu);
+>         free_irq(gmu->hfi_irq, gmu);
+>
+> -       ret = -ENODEV;
+> -
+>  err_memory:
+>         a6xx_gmu_memory_free(gmu);
+>  err_put_device:
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index e034935b3986..5a42dd4dd31f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -56,6 +56,7 @@ struct a6xx_gmu {
+>         int gmu_irq;
+>
+>         struct device *gxpd;
+> +       struct device *cxpd;
+>
+>         int idle_level;
+>
+> --
+> 2.7.4
+>
