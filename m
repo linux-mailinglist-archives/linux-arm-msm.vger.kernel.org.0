@@ -2,235 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E18A6544B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 16:58:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC20B6544C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 17:06:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230371AbiLVP6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 10:58:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58718 "EHLO
+        id S229552AbiLVQGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 11:06:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230439AbiLVP6N (ORCPT
+        with ESMTP id S229704AbiLVQGA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 10:58:13 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A4D1208E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 07:58:11 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id 1so3357385lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 07:58:11 -0800 (PST)
+        Thu, 22 Dec 2022 11:06:00 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB6915F12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:05:58 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id 78so1602115pgb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 08:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BMjFvAc355kr48zmdBVbKSbyLovJA0hSlBO5w8VD+S8=;
-        b=HG5eqalLgDkaCc0fZtvWDUddmZ+nLVCqcAJXmlbrMBigRLuhIM6tYSE8sTXqCAVNI1
-         YTylL3DWllE94OxUCkJlPBpxnMewKIKMt2JC2eiMyKrWUi3u4mQkOYYfsfHLS7ha49yL
-         r5GeLQxwD6wT9Dq6dDOs9ikwX3BVp21KHbjH+tcdK/+C0BqWnJUPCwQAZ8ujd8v9YabX
-         Fd1P07YhGGLIBrz96jADsvN3061KF46vloyr+KyI3h9AEUbEPgyvgkJUOjnxLJVV7rlE
-         VvxBcIPWHvReq6iuDYY5wV4rVCJ8UOLfkDoHsiq5p1pT557lW6ilvqndNxkFBF9k+0gM
-         sOgg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yNYj2+faAjMFDKAvbNk2y84zda8I1j/yCB/6Jq35uqw=;
+        b=yuaLOWS/FYiY3xwvYVkTZMNK3ghRu+trYkX1lJftsL9e/mHyQwKa6ntkfygZmqBGMj
+         H3qCTyo8k46QpqYgbgBC8rftntKZGhaYYbfIx5xLOjMAi4hrlK4aLEmfdYVYPDVjIQpz
+         gH4hFznFXTq9L2ENLd5JNb9vBhtuHunRlvOTqkQt1qTUEVtod+3fHRv3GLf+u0ziKNfL
+         yO9phnIdzuNhFmlWwuz1UQBBtyOruhm+NI2878FOD85MBskflZHTWXY3OJowCVRRRPUI
+         t9I8KjmAhuUD9WlHJJ2fPYaRUYCjUs+h3bQuIrsK+2tZ8t8Q7AFA+N8DN8aPKOHL/b3d
+         a7Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BMjFvAc355kr48zmdBVbKSbyLovJA0hSlBO5w8VD+S8=;
-        b=vXv1QFy/pphFZokRfJr4ft/4trBGbnCWIzHwQe1IelJJ7Pq9MlPWuXwEL2Ut4N787k
-         5PhEDEhFdRtohoGvaserj9TOObiCOia1pob60JKgcb3GZN2agoODzIebOXQAe969qEqW
-         WC0U96OKaxU98JRQBQETw3ADMpcOQiWP9qaPE6JNYNwrZDb8pyw6dcTjPn0KIZ54QQTG
-         ilQMmusD/0/AKpTd79qTcaMFDJTgJ9VdXdnU0ws9HLFLRVenztgm+Ww+yOuIWCBjsSP6
-         KrXjyPu5LP5HO6plby7Dp/AFZlb3ZTyhv7qWF+VXSOSI+8MUfBriazaDXDK8zTtUL2Pz
-         5Ttw==
-X-Gm-Message-State: AFqh2krRaTYxhSrx+HfVTT456frNCyjRKG7/uW1vQTa1fY7opDp9gkKj
-        v19VddGCKD2nKm9K0Wc2r8OMvA==
-X-Google-Smtp-Source: AMrXdXsKWoi5bmee8dep2HkIc4gTHnKVltaqGKZSUEav8C4bDfZ8MSgNavKWZnRcR82HGcwi1tlk0A==
-X-Received: by 2002:a05:6512:3410:b0:4a4:68b8:f4db with SMTP id i16-20020a056512341000b004a468b8f4dbmr1840355lfr.33.1671724689795;
-        Thu, 22 Dec 2022 07:58:09 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512390e00b004b5872a7003sm111390lfu.98.2022.12.22.07.58.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 07:58:09 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Peng Fan <peng.fan@oss.nxp.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: phy: qcom,usb-hsic-phy: convert to DT schema
-Date:   Thu, 22 Dec 2022 16:58:05 +0100
-Message-Id: <20221222155805.139284-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=yNYj2+faAjMFDKAvbNk2y84zda8I1j/yCB/6Jq35uqw=;
+        b=Fomjfo448GlneOVlk/aPs/vGj6dW3WTYYUp75QW2uGQ7GTyrvggsKth6t/gw3kxfvW
+         XvrWou2EhTOltuLNTVsxVB6tH/E0ks7deGDuZt5cp730gtalquu+IAnDRO86h1yBQV9m
+         5seYeJgYI6/bJWX2bRDu3O+PSH9EjF1qrei/XYPH0JwpTJ0TpdnVML5P54hP91qsLVBb
+         U/X4D4fD+jdNtbOVKzBHll81v5/Ayr2K4OH3WsQm+UXWRpoXwAJBMZchh1xYbrQ6KxU0
+         UvCwb1JlpiYPYQcsUBNmLiGvBBP2W7i8wzez3W/3A1TJJ+hoG8iF3wjLYgac6Mhy89/7
+         YHnw==
+X-Gm-Message-State: AFqh2krD+05Mvnddxlu6TmHu4fzkb2iWvu8zbS0yRE+tnCcSByc2/0Vs
+        9a5PcMTO2uuKJQKef2DW+HZQ92s8mllkIjqnitDPfw==
+X-Google-Smtp-Source: AMrXdXuucHOLti3ekPdYE6Bj1QKKm3rrotVU76QOg85NDX4pWDEjtUAZ1t5qIqPwXfgwa7ckwK0/p6ZVEpkdSq1dQes=
+X-Received: by 2002:a63:e4f:0:b0:493:d903:6616 with SMTP id
+ 15-20020a630e4f000000b00493d9036616mr259913pgo.541.1671725158143; Thu, 22 Dec
+ 2022 08:05:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1671642843-5244-1-git-send-email-quic_akhilpo@quicinc.com> <20221221224338.v4.2.Ic128c1df50b7fc9a6b919932a3b41a799b5ed5e8@changeid>
+In-Reply-To: <20221221224338.v4.2.Ic128c1df50b7fc9a6b919932a3b41a799b5ed5e8@changeid>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 22 Dec 2022 17:05:21 +0100
+Message-ID: <CAPDyKFrKV4aHxTosQHkkbBHS3MOx=-i+sW=jQY=sYE4XnaQHmA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] clk: qcom: gdsc: Support 'synced_poweroff' genpd flag
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm USB HSIC PHY bindings to DT schema.
+On Wed, 21 Dec 2022 at 18:14, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> Add support for the newly added 'synced_poweroff' genpd flag. This allows
+> some clients (like adreno gpu driver) to request gdsc driver to ensure
+> a votable gdsc (like gpucc cx gdsc) has collapsed at hardware.
+>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/phy/qcom,usb-hsic-phy.txt        | 65 ------------------
- .../bindings/phy/qcom,usb-hsic-phy.yaml       | 67 +++++++++++++++++++
- 2 files changed, 67 insertions(+), 65 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.txt
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.yaml
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.txt b/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.txt
-deleted file mode 100644
-index 3c7cb2be4b12..000000000000
---- a/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.txt
-+++ /dev/null
-@@ -1,65 +0,0 @@
--Qualcomm's USB HSIC PHY
--
--PROPERTIES
--
--- compatible:
--    Usage: required
--    Value type: <string>
--    Definition: Should contain "qcom,usb-hsic-phy" and more specifically one of the
--		following:
--
--			"qcom,usb-hsic-phy-mdm9615"
--			"qcom,usb-hsic-phy-msm8974"
--
--- #phy-cells:
--    Usage: required
--    Value type: <u32>
--    Definition: Should contain 0
--
--- clocks:
--    Usage: required
--    Value type: <prop-encoded-array>
--    Definition: Should contain clock specifier for phy, calibration and
--                a calibration sleep clock
--
--- clock-names:
--    Usage: required
--    Value type: <stringlist>
--    Definition: Should contain "phy, "cal" and "cal_sleep"
--
--- pinctrl-names:
--    Usage: required
--    Value type: <stringlist>
--    Definition: Should contain "init" and "default" in that order
--
--- pinctrl-0:
--    Usage: required
--    Value type: <prop-encoded-array>
--    Definition: List of pinctrl settings to apply to keep HSIC pins in a glitch
--                free state
--
--- pinctrl-1:
--    Usage: required
--    Value type: <prop-encoded-array>
--    Definition: List of pinctrl settings to apply to mux out the HSIC pins
--
--EXAMPLE
--
--usb-controller {
--	ulpi {
--		phy {
--			compatible = "qcom,usb-hsic-phy-msm8974",
--				     "qcom,usb-hsic-phy";
--			#phy-cells = <0>;
--			pinctrl-names = "init", "default";
--			pinctrl-0 = <&hsic_sleep>;
--			pinctrl-1 = <&hsic_default>;
--			clocks = <&gcc GCC_USB_HSIC_CLK>,
--				 <&gcc GCC_USB_HSIC_IO_CAL_CLK>,
--				 <&gcc GCC_USB_HSIC_IO_CAL_SLEEP_CLK>;
--			clock-names = "phy", "cal", "cal_sleep";
--			assigned-clocks = <&gcc GCC_USB_HSIC_IO_CAL_CLK>;
--			assigned-clock-rates = <960000>;
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.yaml
-new file mode 100644
-index 000000000000..077e13a94448
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,usb-hsic-phy.yaml
-@@ -0,0 +1,67 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,usb-hsic-phy.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm USB HSIC PHY Controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Vinod Koul <vkoul@kernel.org>
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,usb-hsic-phy-mdm9615
-+          - qcom,usb-hsic-phy-msm8974
-+      - const: qcom,usb-hsic-phy
-+
-+  clocks:
-+    maxItems: 3
-+
-+  clock-names:
-+    items:
-+      - const: phy
-+      - const: cal
-+      - const: cal_sleep
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  pinctrl-0: true
-+  pinctrl-1: true
-+
-+  pinctrl-names:
-+    items:
-+      - const: init
-+      - const: default
-+
-+required:
-+  - compatible
-+  - clocks
-+  - clock-names
-+  - "#phy-cells"
-+  - pinctrl-0
-+  - pinctrl-1
-+  - pinctrl-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
-+
-+    phy {
-+        compatible = "qcom,usb-hsic-phy-msm8974",
-+                     "qcom,usb-hsic-phy";
-+        clocks = <&gcc GCC_USB_HSIC_CLK>,
-+                 <&gcc GCC_USB_HSIC_IO_CAL_CLK>,
-+                 <&gcc GCC_USB_HSIC_IO_CAL_SLEEP_CLK>;
-+        clock-names = "phy", "cal", "cal_sleep";
-+        #phy-cells = <0>;
-+        pinctrl-names = "init", "default";
-+        pinctrl-0 = <&hsic_sleep>;
-+        pinctrl-1 = <&hsic_default>;
-+    };
--- 
-2.34.1
+Kind regards
+Uffe
 
+> ---
+>
+> (no changes since v3)
+>
+> Changes in v3:
+> - Rename the var 'force_sync' to 'wait (Stephen)
+>
+>  drivers/clk/qcom/gdsc.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 9e4d6ce891aa..5358e28122ab 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -136,7 +136,8 @@ static int gdsc_update_collapse_bit(struct gdsc *sc, bool val)
+>         return 0;
+>  }
+>
+> -static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+> +static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status,
+> +               bool wait)
+>  {
+>         int ret;
+>
+> @@ -149,7 +150,7 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+>         ret = gdsc_update_collapse_bit(sc, status == GDSC_OFF);
+>
+>         /* If disabling votable gdscs, don't poll on status */
+> -       if ((sc->flags & VOTABLE) && status == GDSC_OFF) {
+> +       if ((sc->flags & VOTABLE) && status == GDSC_OFF && !wait) {
+>                 /*
+>                  * Add a short delay here to ensure that an enable
+>                  * right after it was disabled does not put it in an
+> @@ -275,7 +276,7 @@ static int gdsc_enable(struct generic_pm_domain *domain)
+>                 gdsc_deassert_clamp_io(sc);
+>         }
+>
+> -       ret = gdsc_toggle_logic(sc, GDSC_ON);
+> +       ret = gdsc_toggle_logic(sc, GDSC_ON, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -352,7 +353,7 @@ static int gdsc_disable(struct generic_pm_domain *domain)
+>         if (sc->pwrsts == PWRSTS_RET_ON)
+>                 return 0;
+>
+> -       ret = gdsc_toggle_logic(sc, GDSC_OFF);
+> +       ret = gdsc_toggle_logic(sc, GDSC_OFF, domain->synced_poweroff);
+>         if (ret)
+>                 return ret;
+>
+> @@ -392,7 +393,7 @@ static int gdsc_init(struct gdsc *sc)
+>
+>         /* Force gdsc ON if only ON state is supported */
+>         if (sc->pwrsts == PWRSTS_ON) {
+> -               ret = gdsc_toggle_logic(sc, GDSC_ON);
+> +               ret = gdsc_toggle_logic(sc, GDSC_ON, false);
+>                 if (ret)
+>                         return ret;
+>         }
+> --
+> 2.7.4
+>
