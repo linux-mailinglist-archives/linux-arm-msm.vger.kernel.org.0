@@ -2,150 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA77A653E61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 11:37:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA954653E76
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 11:44:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235095AbiLVKhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 05:37:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44348 "EHLO
+        id S235060AbiLVKoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 05:44:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235196AbiLVKgz (ORCPT
+        with ESMTP id S230014AbiLVKoS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 05:36:55 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DEB8286DC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:36:53 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id p36so2075174lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:36:53 -0800 (PST)
+        Thu, 22 Dec 2022 05:44:18 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 304BF13D7C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:44:17 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id g13so2127969lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 02:44:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9FtXCraXeF1bNJWdq+qVeCXME0uFG8Ztiufy+tT/Ak=;
-        b=F49hpEpDvjixKw9Z3bdbgWi8NQQ3gWhE9qDeNcBGNCTnhdkBBzlbgtBQefuftVTnKt
-         q1uNjUbh8nTK/9mKc+Sb8VjzEC5Utoxm/kXSZRAX/qppkPsCAAQCYKO4joO8bUxTdEhK
-         FU1bBLFcvhz8OETmUj21d0/8/dmF/OWVbdYnP3Dq0nHng4b//sKKgZLqVmpJnT3zNrXN
-         xBszfcaRtSp+d/iVr/cdJmxqG7Bp5Nj5SQiqs+Rxv7AGTJkXrX98yC6zATuVI575uz74
-         FIDsazYuVfObNctM+sknwG8RsnnltH3NEMO5vFtq5RFfDhkCGYm8zQe3eh+V0QkLNdqK
-         qabg==
+        bh=CKoTdtVMqmk/FQkPYk1zIuQnbeZQZJIlbUEh2ppiwm4=;
+        b=f/0ikqnITIxET4ZhVCuSY4rImkWCueaT68Nbvcs22Ksldw+sDH1sd9PKpstscMvmTt
+         hYBSqtGX0Vtw6e+iDenk/RuM82vIMi8DrHpkGMFTJZopxurJ/8xmUS6ztLusQcuTlrPf
+         zS4Da3EHGNLRmOO0kSo+QAsd/bmva5PdSf9+FmF4RLjIhpHdhR8bsp0sl/TheDXvWw0C
+         34CF75KSbylZ4AeyIIzZ5qzsontMRXiw6MRyoWhSThFoVDcl71ZuIfJTXeGWCWEzb9dz
+         BYqvScyiR+eAmb9CLMLPfZfGZzrYJQUHxSFE54GPcZRupcvGFDkFeWmLOHMacmH26qbA
+         l1kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9FtXCraXeF1bNJWdq+qVeCXME0uFG8Ztiufy+tT/Ak=;
-        b=PMMDDfdo+6U0pXYzW6fojX2n3vac2m10D9K38fcEv9S3iOqN05Fs73V2dvsL6ZnaZf
-         e5Hv1AwRqFHcMihbxU38P/6SvfmrsDKODnBDwm7To4daXGeoD9pwKfMlgtiP4KIiRfPX
-         a8w02fUHsUHdF/I/0NWcapM6GZkbZiWAVNUmcn85fgmLaVQJjubpn4V7k40Rih40obUG
-         L8OZlw8PK1ez2ApAV3+iNeX77aLYDRtibTaV6EB0wVfnOA6YmZYQJ+9GXUVqVlP3/Nib
-         iDYVFohmWhZjNWAXVRtA2SN37TmoMQVRoCKDQO5tiX0evWOQSCuuXL2GaU/Y5g6InXOF
-         iEbQ==
-X-Gm-Message-State: AFqh2kplIV0VcVsFt6+XXkG+G83PcdWEa6zOoIKbx+kioP0/Hr/nbVkW
-        6hQcQyhvFOCSrQRVaVPSHRz7Ww==
-X-Google-Smtp-Source: AMrXdXvu1EoX1irEwWg7GOK/BhvjZeB+FZsY9+ZwXfr7eosom0HjDQRzGk0P6ZYQtqF+PJQIGetZYw==
-X-Received: by 2002:a05:6512:3c89:b0:4b6:fddc:1fcd with SMTP id h9-20020a0565123c8900b004b6fddc1fcdmr3402492lfv.23.1671705411525;
-        Thu, 22 Dec 2022 02:36:51 -0800 (PST)
+        bh=CKoTdtVMqmk/FQkPYk1zIuQnbeZQZJIlbUEh2ppiwm4=;
+        b=NGGyXvZC/5sEKw7ZSkFJzbgc7W6c01AU/oAzmHeZPGKvlzoMzaI/JgVAUWmsDSocpY
+         85bI/uDHAQkYeKDt2R+pWd5quMCh39lsQQ2R3Mc8p9C0gg8dFvSLjMiuLiTg4mGdRdTl
+         QB9ngyH6p7PJehIyd7Lb3dCkfJvWRsTk3anb+DdOqBfOqqjKVOLieFvqkMU+L1LWURim
+         mEcDvYOzz5SGUOYL2ad4TpZEvzlU6LKiszhsjmzjj3We26SoQKS9/hItqivPpi3umOT/
+         nZOR2FFKFbAsA4ItUdeO9CGns8POnTU1E11HFPyYtYmKE0wQgSFMIl8m15WbTXsntCl9
+         nuEg==
+X-Gm-Message-State: AFqh2kqr6jyTwNoXNRPqEOZbhqSfY32/B3803BRaZhwqWoHPfHXk+YoX
+        X/x+JMLa/lv/tojD3ruP4HPH6Q==
+X-Google-Smtp-Source: AMrXdXvYLzQffCt7nO5knfenTpVWX2ktxwfEZ3fuXtQ2OLFluSuTbS75oEGRtcHNzUguIzb7Bcc+CA==
+X-Received: by 2002:ac2:455c:0:b0:4b0:1b30:34a1 with SMTP id j28-20020ac2455c000000b004b01b3034a1mr1719394lfm.29.1671705855590;
+        Thu, 22 Dec 2022 02:44:15 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v26-20020a05651203ba00b004b593fd84ccsm26971lfp.221.2022.12.22.02.36.49
+        by smtp.gmail.com with ESMTPSA id c13-20020a19654d000000b004bc1dd05351sm28872lfj.206.2022.12.22.02.44.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Dec 2022 02:36:51 -0800 (PST)
-Message-ID: <7d45c125-e4f5-b03f-45d6-3ecf87b2f09d@linaro.org>
-Date:   Thu, 22 Dec 2022 11:36:49 +0100
+        Thu, 22 Dec 2022 02:44:15 -0800 (PST)
+Message-ID: <60e388df-cd03-3e88-e9c5-460ebdde29c5@linaro.org>
+Date:   Thu, 22 Dec 2022 11:44:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v4 1/4] dt-bindings: arm-smmu: Document smmu-500 binding
- for SM6125
+Subject: Re: [PATCH 2/2] clk: qcom: lpasscc: Add resets for SC7280 audioreach
+ clock controller
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Will Deacon <will@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20221216215819.1164973-1-marijn.suijten@somainline.org>
- <20221216215819.1164973-2-marijn.suijten@somainline.org>
- <306709f8-7d45-9b76-f95b-1b3088d37a78@linaro.org>
- <6d263321-782d-9d9c-4fdf-8bcf5b280779@linaro.org>
- <20221219192839.6oqialqqw5xw5fxa@SoMainline.org>
- <b4186ec6-a3f2-4dfb-a83e-25cf6d460a39@linaro.org>
- <20221222082353.lhdw7h3pdqyyvsxy@SoMainline.org>
- <a251f29d-58b7-5ccb-2661-a397e41fba80@linaro.org>
- <20221222101012.ptrrugxj3ksiyitn@SoMainline.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
+References: <1671618061-6329-1-git-send-email-quic_srivasam@quicinc.com>
+ <1671618061-6329-3-git-send-email-quic_srivasam@quicinc.com>
+ <efde6373-f788-5c0c-4712-7b9caf7ad3d4@linaro.org>
+ <e7edd629-986f-3e64-f9db-5ee68cf4e6f3@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221222101012.ptrrugxj3ksiyitn@SoMainline.org>
+In-Reply-To: <e7edd629-986f-3e64-f9db-5ee68cf4e6f3@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/12/2022 11:10, Marijn Suijten wrote:
-> On 2022-12-22 10:29:40, Krzysztof Kozlowski wrote:
->> On 22/12/2022 09:23, Marijn Suijten wrote:
->>> On 2022-12-20 10:52:49, Krzysztof Kozlowski wrote:
->>>> On 19/12/2022 20:28, Marijn Suijten wrote:
->>>>> On 2022-12-19 10:09:03, Krzysztof Kozlowski wrote:
->>>>>> On 19/12/2022 10:07, Krzysztof Kozlowski wrote:
->>>>>>> On 16/12/2022 22:58, Marijn Suijten wrote:
->>>>>>>> From: Martin Botka <martin.botka@somainline.org>
->>>>>>>>
->>>>>>>> Document smmu-500 compatibility with the SM6125 SoC.
->>>>>>>>
->>>>>>>
->>>>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>>
->>>>>> Wait, not entirely... no constraints for clocks and regs?
->>>>>
->>>>> Quite odd that there is no warning for my DT patch as it clearly
->>>>> requires at least one clock...
+On 21/12/2022 14:18, Srinivasa Rao Mandadapu wrote:
+> 
+> On 12/21/2022 4:09 PM, Krzysztof Kozlowski wrote:
+> Thanks for your time Krzysztof!!!
+>> On 21/12/2022 11:21, Srinivasa Rao Mandadapu wrote:
+>>> The clock gating control for TX/RX/WSA core bus clocks would be required
+>>> to be reset(moved from hardware control) from audio core driver. Thus
+>>> add the support for the reset clocks in audioreach based clock driver.
 >>>
->>> Again, any idea why there's no warning for this DT mismatching minItems:
->>> 1 for clocks, clock-names and power-domains?
->>
->> I don't know what do you have in DT and what is mismatched. Why there
->> should be a warning?
+>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>> ---
+>>>   drivers/clk/qcom/lpasscc-sc7280.c | 18 ++++++++++++++++++
+>>>   1 file changed, 18 insertions(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+>>> index 5c1e17b..d81d81b 100644
+>>> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+>>> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+>>> @@ -12,10 +12,12 @@
+>>>   #include <linux/regmap.h>
+>>>   
+>>>   #include <dt-bindings/clock/qcom,lpass-sc7280.h>
+>>> +#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+>> These are bindings for different device.
 > 
-> There is:
+> They are not exactly for different device. It's for same device with 
+> ADSP enabled platforms.
 > 
->   clock-names:
->     minItems: 1
->     maxItems: 7
+> Basically lpassaudiocc-sc7280.c and lpasscorecc-sc7280.c are for legacy 
+> path.
 > 
->   clocks:
->     minItems: 1
->     maxItems: 7
-> 
-> But I did not provide _any_ (see patch 2 of this series).  Shouldn't
-> that trigger a warning?
+> lpasscc-sc7280.c is for ADSP based AudioReach Solution.
 
-No. Are these required properties?
+I see two different devices:
+lpasscc@3000000
+clock-controller@3300000
+
+clock inputs and outputs are different, so it does not look like for
+same device.
 
 Best regards,
 Krzysztof
