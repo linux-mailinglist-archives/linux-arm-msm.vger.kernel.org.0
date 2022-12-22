@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7D466542AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 15:16:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89B486542B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 15:16:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235405AbiLVOQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 09:16:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
+        id S234727AbiLVOQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 09:16:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235709AbiLVOO6 (ORCPT
+        with ESMTP id S235395AbiLVOPb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 09:14:58 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AA312A88
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:55 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id t2so2142417ply.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:54 -0800 (PST)
+        Thu, 22 Dec 2022 09:15:31 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A650F286CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:13:02 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id w20so2095930ply.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:13:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8r6KWtBC24mvcKhKbi7oMsl/OBPp4xpGlki0s+jabEY=;
-        b=P4YYRDE7eLMbshCu/AHFfq4yO9XLNrx8vkP9s9ulv6mT6xjsgejmF7rZxI3q6MWsSr
-         UcJ/yJdcKMahNPOMOwprplmiNGv11pKw3UvQEFcQzE30vtdW0VhOzTrWNV/1uvEvvluk
-         OKfjfmw9AXCkybIh1bWJ/Q1J7cd6cPuLRqolxmcXGTN08h/p+BEieKI61QV1pHZ9ZKkR
-         BgbFvnOWEgC8craFOZ56y8EqPp3zuw3fmmdf0tkDj+35Ic9zylbaBTXttoxUCBZw8lM7
-         bSMJXQuRCBYHyGvemSAbZYbbI/xLN0tzsFHPyKRd1xShBmwCEfCM526PNiNxrlL5msmL
-         ukbw==
+        bh=+9vMWr+QReiCFTMChXS+VaiIVai5hcXHpa8PnZ2xGs0=;
+        b=CdISaZLIaDAiejs3ebXWfckHizcdGNVuYMECOILk4yH8xwZVwxG4rqfNknKiQ9bMxv
+         K6t7qbFpxglLraOezwuKyzjqE8CILTiYQ8fqC9spqWBaWJemqGlFl9HcxUr/IKp4GiVs
+         lmvYjvo5Xsua2Dr3Hikt0B9Qgo+BR+9rdhHGiGch3nEldEUjjhkJEPBqpNEJNmNBWlR7
+         afSp0RPecbEl4ZEjX8yxe7ItSy8y0659l6Vht++AZTi1zjiu/7I/OJvwdg/hfknwmO05
+         fKeR62Njz+K0Ku39QJtMu4hAR3KOVexrkaHShOcxUgXcwsBT/pNtnOm1BuGm8aBWvH1H
+         26Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8r6KWtBC24mvcKhKbi7oMsl/OBPp4xpGlki0s+jabEY=;
-        b=iuNqylElJXWBOLMERCs9Qbm1yS/AmqEakBTsV18bXbIu+zSqlN8Emc5ll4lLWtXFJg
-         6AJVnrfhRgpV1MbcalZewJv9zL9t9GhCEPUz7xHkeLr7/XvXFTG0T3qGp/mkoTCbi3HB
-         uQNVfzGq1MIwgjgSQJxGnz30PNqsPpf1HeFmXg4nVqvoLjSgfmW5JTqDx0FqLgFF+M/9
-         NB49hcmmFVyi0MNJgDmH/ZhBr4VkJfOEIZsMEL+ZDCtfli2ooT6a7dTTCyqIxNEnKISF
-         ov2aoayYJ2zzWGZPxL7xDqN6SvOx9xyKbtL2HiLJsq00Mw4S1TJIPVAgeWgrNdsJWi49
-         AFGA==
-X-Gm-Message-State: AFqh2kqthWS9svfZ2sw64A9l8wF8CWTc2ylIYEZMcHgQnz5N/Zy+Qkj1
-        9cx1YtAgkOjCX9/zHthZn95V
-X-Google-Smtp-Source: AMrXdXt39otDg2GPiuR+A8WWlXVq1iDlfUJ6rH6SVRvyktfugDgqkZ6oq6hotpPIIqAIrKuhLnlHxQ==
-X-Received: by 2002:a05:6a20:3ca5:b0:af:ae01:54df with SMTP id b37-20020a056a203ca500b000afae0154dfmr9321720pzj.11.1671718374656;
-        Thu, 22 Dec 2022 06:12:54 -0800 (PST)
+        bh=+9vMWr+QReiCFTMChXS+VaiIVai5hcXHpa8PnZ2xGs0=;
+        b=CfMUQpUWv1/AD9NPl1PIeLPJ0w+uE5MGxD5/kuTW5DBQzrKJiJcJ4bTqHRWEJLiM1B
+         6XEBTpltHN07zBTveKy0Re0EYKHGRSrU9yfG2yhm/0OCRW0ul5rj5WNzRNQ0sVV6f8fB
+         xtco/pRDWJh3AIh6xBQ0ho7/6m/jvVgR9kfsjZCbsWJ1mWSNC6wHpuZdPLro9ypWmnEu
+         ubHnmosqjrx2TIgnPtmzZICgGxFfjT4GFB3M4J6Sa8PL/GB0YeOeR9cBvKVv1mHUHK/V
+         93GvviVLOTtlir9bP+Ikh/PAil9CufMsv51gOrnZM3JpIGo3H7kBHivDXSFxQ1IZg71V
+         oDhQ==
+X-Gm-Message-State: AFqh2koQ1zwF8iFq3zT1zghqzkJi8yKe5DlwdTBJNB8C02gvItiUGkKZ
+        mldfFtMTTI6I1HbDavA4552v
+X-Google-Smtp-Source: AMrXdXsteySjBHCQNu+U2EA0Z9ki5BDJhCG3tehQDYHTLHrsEX/9rNG3ICW7RmKBQP2Yjf+3ELN7ag==
+X-Received: by 2002:a17:90b:3712:b0:223:ceed:ef6f with SMTP id mg18-20020a17090b371200b00223ceedef6fmr6803083pjb.10.1671718382131;
+        Thu, 22 Dec 2022 06:13:02 -0800 (PST)
 Received: from localhost.localdomain ([117.217.177.177])
-        by smtp.gmail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm832031pgu.31.2022.12.22.06.12.47
+        by smtp.gmail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm832031pgu.31.2022.12.22.06.12.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 06:12:53 -0800 (PST)
+        Thu, 22 Dec 2022 06:13:01 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         andersson@kernel.org, vkoul@kernel.org
@@ -60,9 +60,9 @@ Cc:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
         abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
         bvanassche@acm.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v5 22/23] scsi: ufs: ufs-qcom: Add support for finding max gear on new platforms
-Date:   Thu, 22 Dec 2022 19:40:00 +0530
-Message-Id: <20221222141001.54849-23-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 23/23] MAINTAINERS: Add myself as the maintainer for Qcom UFS drivers
+Date:   Thu, 22 Dec 2022 19:40:01 +0530
+Message-Id: <20221222141001.54849-24-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
 References: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
@@ -70,53 +70,42 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Starting from Qcom UFS version 4.0, vendor specific REG_UFS_PARAM0 register
-can be used to determine the maximum gear supported by the controller.
+Qcom UFS drivers are left un-maintained till now. I'd like to step up to
+maintain the drivers and the binding.
 
-Suggested-by: Can Guo <quic_cang@quicinc.com>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # Qdrive3/sa8540p-ride
+Acked-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 2 ++
- drivers/ufs/host/ufs-qcom.h | 4 ++++
- 2 files changed, 6 insertions(+)
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 3efef2f36e69..607fddb7b4c3 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -291,6 +291,8 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
- 		 * Hence downgrade the maximum supported gear to HS-G2.
- 		 */
- 		return UFS_HS_G2;
-+	} else if (host->hw_ver.major >= 0x4) {
-+		return UFS_QCOM_MAX_GEAR(ufshcd_readl(hba, REG_UFS_PARAM0));
- 	}
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7729a30b9609..7638c749a63f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21411,6 +21411,14 @@ L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
+ S:	Maintained
+ F:	drivers/ufs/host/ufs-mediatek*
  
- 	/* Default is HS-G3 */
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 4b00c67e9d7f..dd3abd23ec22 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -94,6 +94,10 @@ enum {
- #define TMRLUT_HW_CGC_EN	BIT(6)
- #define OCSC_HW_CGC_EN		BIT(7)
- 
-+/* bit definitions for REG_UFS_PARAM0 */
-+#define MAX_HS_GEAR_MASK	GENMASK(6, 4)
-+#define UFS_QCOM_MAX_GEAR(x)	FIELD_GET(MAX_HS_GEAR_MASK, (x))
++UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER QUALCOMM HOOKS
++M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
++L:	linux-arm-msm@vger.kernel.org
++L:	linux-scsi@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++F:	drivers/ufs/host/ufs-qcom*
 +
- /* bit definition for UFS_UFS_TEST_BUS_CTRL_n */
- #define TEST_BUS_SUB_SEL_MASK	GENMASK(4, 0)  /* All XXX_SEL fields are 5 bits wide */
- 
+ UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER RENESAS HOOKS
+ M:	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+ L:	linux-renesas-soc@vger.kernel.org
 -- 
 2.25.1
 
