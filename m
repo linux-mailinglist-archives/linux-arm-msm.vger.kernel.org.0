@@ -2,96 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74769654763
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 21:40:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78F3965479E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 22:01:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235701AbiLVUk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 15:40:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54372 "EHLO
+        id S235580AbiLVVBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 16:01:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235227AbiLVUj5 (ORCPT
+        with ESMTP id S229973AbiLVVBy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 15:39:57 -0500
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDF024977;
-        Thu, 22 Dec 2022 12:39:34 -0800 (PST)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-1322d768ba7so3828031fac.5;
-        Thu, 22 Dec 2022 12:39:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vpT8R1Rv+Nm5XIJthL+2JjEda6upkRaZYMhbehQvjd8=;
-        b=CZ46ljM1ZFaE0Dk6EFsq0LucUk3sYTbkAKu562F+EkqLG6XAqKUeywq2dR2hUH6QCt
-         Gi1V66oNHfhKJJ5qJi8Dcb+GVBB0yWIVu+wKTg1e3Ew0Yo+hr1bfdDVI0/wnIJMidQ3S
-         px40RHlDdgCUyVc9uI/q1ZtoFVTlKMdQ4s1DEgdXerK+eHDhyPNHgT06220/1UOXD/Cz
-         u3JEg3zutRR/qSVc39uHJJD86eb76upEXry//lCbesU5wc/s6nVjgzIFjl6zlCiCNaY2
-         fJ5ams87cSxKkok70WCn4FfCuew4Dgyn/toUrH6dqVf3t1yz4etmFRqZt1J/6AS0REDn
-         6lpg==
-X-Gm-Message-State: AFqh2kqHE7uElL3YMhij393vIrbOHu2v9qd0eQA8SXZ0VxYY1dQo/1X2
-        lI5Gtnzd4PgIS7Ilcq82hw==
-X-Google-Smtp-Source: AMrXdXuxMOhZ9CB4M20W0IRTPaF1HVPtXYoHPVef1+Ha2t5/a0xpc0Vt0pNC5vAIaFdy1xWar3bFNw==
-X-Received: by 2002:a05:6870:815:b0:143:be53:bc15 with SMTP id fw21-20020a056870081500b00143be53bc15mr3452785oab.17.1671741573613;
-        Thu, 22 Dec 2022 12:39:33 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r42-20020a05687108aa00b0013669485016sm708870oaq.37.2022.12.22.12.39.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 12:39:33 -0800 (PST)
-Received: (nullmailer pid 2080731 invoked by uid 1000);
-        Thu, 22 Dec 2022 20:39:32 -0000
-Date:   Thu, 22 Dec 2022 14:39:32 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thu, 22 Dec 2022 16:01:54 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8841FE00F;
+        Thu, 22 Dec 2022 13:01:52 -0800 (PST)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2F6DC3F34C;
+        Thu, 22 Dec 2022 22:01:50 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,sm8450-lpass-lpi: add
- input-enable and bias-bus-hold
-Message-ID: <167174157218.2080693.3036143873208701568.robh@kernel.org>
-References: <20221222161420.172824-1-krzysztof.kozlowski@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: dispcc-sm6125: Fix compatible string to match bindings
+Date:   Thu, 22 Dec 2022 22:01:40 +0100
+Message-Id: <20221222210140.278077-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221222161420.172824-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+According to generic rules the SoC name should be first:
 
-On Thu, 22 Dec 2022 17:14:20 +0100, Krzysztof Kozlowski wrote:
-> Allow bias-bus-hold and input-enable properties (already used in SM8450):
-> 
->   sm8450-qrd.dtb: pinctrl@3440000: dmic02-default-state: 'oneOf' conditional failed, one must be fixed:
->     'pins' is a required property
->     'function' is a required property
->     'clk-pins', 'data-pins' do not match any of the regexes: 'pinctrl-[0-9]+'
->     'input-enable' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Compact the properties which are just set to true for readability.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v1:
-> 1. Add input-enable.
-> ---
->  .../bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml     | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
+        arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: clock-controller@5f00000: compatible: 'oneOf' conditional failed, one must be fixed:
+                'qcom,dispcc-sm6125' does not match '^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
 
-Acked-by: Rob Herring <robh@kernel.org>
+And this is already reflected by the bindings submitted prior to the
+addition of this driver.  Any DTS following these rules will end up with
+a non-probing driver because of this mismatch.
+
+Fixes: 6e87c8f07407 ("clk: qcom: Add display clock controller driver for SM6125")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ drivers/clk/qcom/dispcc-sm6125.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/dispcc-sm6125.c b/drivers/clk/qcom/dispcc-sm6125.c
+index b921456a2e0d..87b27053ddb6 100644
+--- a/drivers/clk/qcom/dispcc-sm6125.c
++++ b/drivers/clk/qcom/dispcc-sm6125.c
+@@ -667,7 +667,7 @@ static const struct qcom_cc_desc disp_cc_sm6125_desc = {
+ };
+ 
+ static const struct of_device_id disp_cc_sm6125_match_table[] = {
+-	{ .compatible = "qcom,dispcc-sm6125" },
++	{ .compatible = "qcom,sm6125-dispcc" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, disp_cc_sm6125_match_table);
+-- 
+2.39.0
+
