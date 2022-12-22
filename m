@@ -2,29 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8436E6546B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 20:33:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 828546546D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 20:46:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235836AbiLVTdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 14:33:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57466 "EHLO
+        id S235821AbiLVTqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 14:46:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235754AbiLVTdn (ORCPT
+        with ESMTP id S235706AbiLVTqM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 14:33:43 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C58A1A80F;
-        Thu, 22 Dec 2022 11:33:29 -0800 (PST)
+        Thu, 22 Dec 2022 14:46:12 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486B91834F;
+        Thu, 22 Dec 2022 11:46:11 -0800 (PST)
 Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 47C382021E;
-        Thu, 22 Dec 2022 20:33:27 +0100 (CET)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1EDE72021C;
+        Thu, 22 Dec 2022 20:46:09 +0100 (CET)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Will Deacon <will@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Bjorn Andersson <andersson@kernel.org>
+To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
@@ -33,28 +35,20 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Jami Kettunen <jami.kettunen@somainline.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Lux Aliaga <they@mint.lgbt>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Luca Weiss <luca.weiss@fairphone.com>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v5 4/4] arm64: dts: qcom: sm6125: Add IOMMU context to DWC3
-Date:   Thu, 22 Dec 2022 20:32:54 +0100
-Message-Id: <20221222193254.126925-5-marijn.suijten@somainline.org>
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/2] arm64: dts: qcom: sm6125: Enable GPI DMA
+Date:   Thu, 22 Dec 2022 20:45:58 +0100
+Message-Id: <20221222194600.139854-1-marijn.suijten@somainline.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221222193254.126925-1-marijn.suijten@somainline.org>
-References: <20221222193254.126925-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,31 +57,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Enable GPI DMA on SM6125 by using the new sdm845 compatible with
+ee_offset 0.
 
-Add an IOMMU context to the USB DWC3 controller, required to get USB
-functionality upon enablement of apps_smmu.
+Changes since v2:
+- Remove leading zero from iommu stream ID.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
----
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+v2: https://lore.kernel.org/linux-arm-msm/20221216231528.1268447-1-marijn.suijten@somainline.org/T/#u
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 32dd172ea104..7c326368e30d 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -542,6 +542,7 @@ usb3_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x04e00000 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
-+				iommus = <&apps_smmu 0x100 0x0>;
- 				phys = <&hsusb_phy1>;
- 				phy-names = "usb2-phy";
- 				snps,dis_u2_susphy_quirk;
--- 
+Changes since v1:
+- Drop driver patch in favour of using generic qcom,sdm845-gpi-dma
+  compatible [1];
+- Replace status = "okay" with "disabled";
+- Use 3 instead of 5 dma cells;
+- Reorder properties;
+- Explicitly depend on APPS SMMU series to have apps_smmu label available.
+
+v1: https://lore.kernel.org/all/20221001185526.494095-1-martin.botka@somainline.org/T/#u
+
+Depends on:
+- SM6125 APPS SMMU: https://lore.kernel.org/linux-arm-msm/20221222193254.126925-1-marijn.suijten@somainline.org/T/#u
+
+[1]: https://lore.kernel.org/all/20220927014846.32892-2-mailingradian@gmail.com/
+
+Martin Botka (2):
+  dt-bindings: dma: gpi: Document SM6125 compatible
+  arm64: dts: qcom: sm6125: Add GPI DMA nodes
+
+ .../devicetree/bindings/dma/qcom,gpi.yaml     |  1 +
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          | 37 +++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+
+--
 2.39.0
 
