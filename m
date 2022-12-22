@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 421526542AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 15:15:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7D466542AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Dec 2022 15:16:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235635AbiLVOPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 09:15:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
+        id S235405AbiLVOQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 09:16:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235609AbiLVOOt (ORCPT
+        with ESMTP id S235709AbiLVOO6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 09:14:49 -0500
+        Thu, 22 Dec 2022 09:14:58 -0500
 Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F7423E80
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:47 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id t2so2142073ply.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:47 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AA312A88
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:55 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id t2so2142417ply.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 06:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aBn3zEFmIV6MhSJTCqVfJoKippEJn3UVUNP6V0+D++w=;
-        b=wUEp+NmpgcRSpWDAl5gCZLjGhtZOUkb6nH0n9cqBjo1QjAmnGSD7tz6SDlueRbPqU7
-         Pg58jvzpbEa5o9H4QDHwvb+xubArD7c4VsVqyoewLiLlPIu9zYu8umlPz6bY+qbSBIKB
-         GDEDwBvoMAWXMY87a8AS3OemBzeDMf+zwDx1Ez9qW5ya4vxTB4+8ImILjJyoOxImdKaX
-         BjK//SJQUjz4knoV54gc8pC3pwQlKYSVM6w0uFkWeHnXlNNpRiMIK/JH68QdlKIiUcfp
-         Z1YOqDt8BL4jrYcv6CQNRYAs+VPHtZS4ff9BvD50/froZGoTp+7WhIjv5+U38QLMGbqn
-         1AkQ==
+        bh=8r6KWtBC24mvcKhKbi7oMsl/OBPp4xpGlki0s+jabEY=;
+        b=P4YYRDE7eLMbshCu/AHFfq4yO9XLNrx8vkP9s9ulv6mT6xjsgejmF7rZxI3q6MWsSr
+         UcJ/yJdcKMahNPOMOwprplmiNGv11pKw3UvQEFcQzE30vtdW0VhOzTrWNV/1uvEvvluk
+         OKfjfmw9AXCkybIh1bWJ/Q1J7cd6cPuLRqolxmcXGTN08h/p+BEieKI61QV1pHZ9ZKkR
+         BgbFvnOWEgC8craFOZ56y8EqPp3zuw3fmmdf0tkDj+35Ic9zylbaBTXttoxUCBZw8lM7
+         bSMJXQuRCBYHyGvemSAbZYbbI/xLN0tzsFHPyKRd1xShBmwCEfCM526PNiNxrlL5msmL
+         ukbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aBn3zEFmIV6MhSJTCqVfJoKippEJn3UVUNP6V0+D++w=;
-        b=mEPZfkJ8HuoHZUCfEyRNkRWTfpKXf6+vj60V6tcez23YMAAm0ALUrUK4iVqhe7nvh0
-         JpCGueA1m2zT+wN6PDwCvA4s8zErpDt4kRl9vP/qWS2EHFF+ZVPTCxh9Zm3U73vMWxbr
-         wJMRg8659Gm8O+r97muMNrA6GqFTVjUFBWy2SLqd9ZsJ3qkKDkEYkaf2q6BzWAD+HKoE
-         7StnmKj60dr1IvxbeXnlolOZOLdWxT9pZIC2DjrBOFZ4UZejxh5+c7JMcfefBLMl7r6M
-         SLcL1nM2jRpL6Xm1KyRNNjycgG83HXNsUbqQECyAHssN3XJMFQxhEkZX1zqym+jJJZx7
-         4wdA==
-X-Gm-Message-State: AFqh2kqJRhWGoGd3qTBqRH/rPGiyfEJCGNXNlbtt/KTyI1n9Vl0qFx6I
-        RGUPdafbXctMk0f4gQC2mKzr
-X-Google-Smtp-Source: AMrXdXtmutM2RQ/lU4e/I/kqUw5HOoB1HQclleoi8/H3D+yG44Gbrwy7yofMNVMYL9R5pI1N2pY2Nw==
-X-Received: by 2002:a05:6a20:c112:b0:ad:e904:f247 with SMTP id bh18-20020a056a20c11200b000ade904f247mr6784083pzb.29.1671718367062;
-        Thu, 22 Dec 2022 06:12:47 -0800 (PST)
+        bh=8r6KWtBC24mvcKhKbi7oMsl/OBPp4xpGlki0s+jabEY=;
+        b=iuNqylElJXWBOLMERCs9Qbm1yS/AmqEakBTsV18bXbIu+zSqlN8Emc5ll4lLWtXFJg
+         6AJVnrfhRgpV1MbcalZewJv9zL9t9GhCEPUz7xHkeLr7/XvXFTG0T3qGp/mkoTCbi3HB
+         uQNVfzGq1MIwgjgSQJxGnz30PNqsPpf1HeFmXg4nVqvoLjSgfmW5JTqDx0FqLgFF+M/9
+         NB49hcmmFVyi0MNJgDmH/ZhBr4VkJfOEIZsMEL+ZDCtfli2ooT6a7dTTCyqIxNEnKISF
+         ov2aoayYJ2zzWGZPxL7xDqN6SvOx9xyKbtL2HiLJsq00Mw4S1TJIPVAgeWgrNdsJWi49
+         AFGA==
+X-Gm-Message-State: AFqh2kqthWS9svfZ2sw64A9l8wF8CWTc2ylIYEZMcHgQnz5N/Zy+Qkj1
+        9cx1YtAgkOjCX9/zHthZn95V
+X-Google-Smtp-Source: AMrXdXt39otDg2GPiuR+A8WWlXVq1iDlfUJ6rH6SVRvyktfugDgqkZ6oq6hotpPIIqAIrKuhLnlHxQ==
+X-Received: by 2002:a05:6a20:3ca5:b0:af:ae01:54df with SMTP id b37-20020a056a203ca500b000afae0154dfmr9321720pzj.11.1671718374656;
+        Thu, 22 Dec 2022 06:12:54 -0800 (PST)
 Received: from localhost.localdomain ([117.217.177.177])
-        by smtp.gmail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm832031pgu.31.2022.12.22.06.12.39
+        by smtp.gmail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm832031pgu.31.2022.12.22.06.12.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 06:12:46 -0800 (PST)
+        Thu, 22 Dec 2022 06:12:53 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         andersson@kernel.org, vkoul@kernel.org
@@ -60,9 +60,9 @@ Cc:     quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
         abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
         bvanassche@acm.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v5 21/23] scsi: ufs: ufs-qcom: Add support for reinitializing the UFS device
-Date:   Thu, 22 Dec 2022 19:39:59 +0530
-Message-Id: <20221222141001.54849-22-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 22/23] scsi: ufs: ufs-qcom: Add support for finding max gear on new platforms
+Date:   Thu, 22 Dec 2022 19:40:00 +0530
+Message-Id: <20221222141001.54849-23-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
 References: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
@@ -70,127 +70,53 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Starting from Qualcomm UFS version 4, the UFS device needs to be
-reinitialized after switching to maximum gear by the UFS core. Hence, add
-support for it by enabling the UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH
-quirk, implementing reinit_notify() callback and using the agreed gear
-speed for setting the PHY mode.
+Starting from Qcom UFS version 4.0, vendor specific REG_UFS_PARAM0 register
+can be used to determine the maximum gear supported by the controller.
 
 Suggested-by: Can Guo <quic_cang@quicinc.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 Tested-by: Andrew Halaney <ahalaney@redhat.com> # Qdrive3/sa8540p-ride
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 26 ++++++++++++++++++++++----
- drivers/ufs/host/ufs-qcom.h |  2 ++
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 2 ++
+ drivers/ufs/host/ufs-qcom.h | 4 ++++
+ 2 files changed, 6 insertions(+)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 919b6eae439d..3efef2f36e69 100644
+index 3efef2f36e69..607fddb7b4c3 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -302,7 +302,6 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	struct phy *phy = host->generic_phy;
- 	int ret;
--	bool is_rate_B = UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B;
- 
- 	/* Reset UFS Host Controller and PHY */
- 	ret = ufs_qcom_host_reset(hba);
-@@ -310,9 +309,6 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		dev_warn(hba->dev, "%s: host reset returned %d\n",
- 				  __func__, ret);
- 
--	if (is_rate_B)
--		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
--
- 	/* phy initialization - calibrate the phy */
- 	ret = phy_init(phy);
- 	if (ret) {
-@@ -321,6 +317,8 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		return ret;
+@@ -291,6 +291,8 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+ 		 * Hence downgrade the maximum supported gear to HS-G2.
+ 		 */
+ 		return UFS_HS_G2;
++	} else if (host->hw_ver.major >= 0x4) {
++		return UFS_QCOM_MAX_GEAR(ufshcd_readl(hba, REG_UFS_PARAM0));
  	}
  
-+	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->hs_gear);
-+
- 	/* power on phy - start serdes and phy's power and clocks */
- 	ret = phy_power_on(phy);
- 	if (ret) {
-@@ -723,6 +721,9 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
- 			return ret;
- 		}
- 
-+		/* Use the agreed gear */
-+		host->hs_gear = dev_req_params->gear_tx;
-+
- 		/* enable the device ref clock before changing to HS mode */
- 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
- 			ufshcd_is_hs_mode(dev_req_params))
-@@ -836,6 +837,9 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
- 				| UFSHCD_QUIRK_DME_PEER_ACCESS_AUTO_MODE
- 				| UFSHCD_QUIRK_BROKEN_PA_RXHSUNTERMCAP);
- 	}
-+
-+	if (host->hw_ver.major > 0x3)
-+		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
- }
- 
- static void ufs_qcom_set_caps(struct ufs_hba *hba)
-@@ -1044,6 +1048,12 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
- 				__func__, err);
- 
-+	/*
-+	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
-+	 * Switching to max gear will be performed during reinit if supported.
-+	 */
-+	host->hs_gear = UFS_HS_G2;
-+
- 	return 0;
- 
- out_variant_clear:
-@@ -1410,6 +1420,13 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
- }
- #endif
- 
-+static void ufs_qcom_reinit_notify(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	phy_power_off(host->generic_phy);
-+}
-+
- /*
-  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
-  *
-@@ -1433,6 +1450,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
- 	.device_reset		= ufs_qcom_device_reset,
- 	.config_scaling_param = ufs_qcom_config_scaling_param,
- 	.program_key		= ufs_qcom_ice_program_key,
-+	.reinit_notify		= ufs_qcom_reinit_notify,
- };
- 
- /**
+ 	/* Default is HS-G3 */
 diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 7fe928b82753..4b00c67e9d7f 100644
+index 4b00c67e9d7f..dd3abd23ec22 100644
 --- a/drivers/ufs/host/ufs-qcom.h
 +++ b/drivers/ufs/host/ufs-qcom.h
-@@ -217,6 +217,8 @@ struct ufs_qcom_host {
- 	struct reset_controller_dev rcdev;
+@@ -94,6 +94,10 @@ enum {
+ #define TMRLUT_HW_CGC_EN	BIT(6)
+ #define OCSC_HW_CGC_EN		BIT(7)
  
- 	struct gpio_desc *device_reset;
++/* bit definitions for REG_UFS_PARAM0 */
++#define MAX_HS_GEAR_MASK	GENMASK(6, 4)
++#define UFS_QCOM_MAX_GEAR(x)	FIELD_GET(MAX_HS_GEAR_MASK, (x))
 +
-+	u32 hs_gear;
- };
+ /* bit definition for UFS_UFS_TEST_BUS_CTRL_n */
+ #define TEST_BUS_SUB_SEL_MASK	GENMASK(4, 0)  /* All XXX_SEL fields are 5 bits wide */
  
- static inline u32
 -- 
 2.25.1
 
