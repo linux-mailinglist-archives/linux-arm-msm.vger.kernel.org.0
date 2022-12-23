@@ -2,130 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5DF36551C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 16:01:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F19EE65524F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 16:41:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236441AbiLWPBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 10:01:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42808 "EHLO
+        id S236552AbiLWPlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 10:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236294AbiLWPBE (ORCPT
+        with ESMTP id S236576AbiLWPlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 10:01:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0E61A049;
-        Fri, 23 Dec 2022 07:01:04 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A487D61222;
-        Fri, 23 Dec 2022 15:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C20C433EF;
-        Fri, 23 Dec 2022 15:00:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671807663;
-        bh=+cPN06iR+FJEMfv2mTx0XNV6VXZ5Qctv1M+WFipu4ls=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=J1Urkm7VFGHh57uzsAiORHYw/nQoa4a9HyjNghQnl602IRm7tgvYwc9noSBHbnLTm
-         fvrXxCzvU16lxLxwVJuhyScoij4llqO9OOfTnOkW5apiEqNNnykWueC3gepY0rO3u/
-         dYnBQ3uAPKxQT305ylkk0AJOZK/6dRG+btz3yJWyyC5YjylAOawK2PwMwzQ5VxxrIZ
-         9PusdRD915P8Zn26OlXjou974bA8gT3W+yaWSbScwPfRNYxDn7J7Ewfm4+OEaEICYd
-         9mus6WXsKIUK3ghnTOt8sdAnha+aHA3R79rxcYEoGRjmruhqhT9Mru5iKtRnhwXfkk
-         gXivql7ux66Hw==
-Date:   Fri, 23 Dec 2022 15:14:10 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 23 Dec 2022 10:41:02 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 210A55FEF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 07:40:45 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso9172709pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 07:40:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TgS3ytl4duwPJh+l9SPs/9xSZEQfIRjDKEzXHGXrmO4=;
+        b=aJt3e/wRncUWgpZs0aJab6n6L6Dnpmp6P0aQu+01sHnitIflM5+fteGzfwx0w0mYIU
+         +JeLX5AGIBjzf3k9G/WcVvjaiDwFLmfUhuueHmgc7MAtyNbGA5WceSDO/V2vdK8VvW2e
+         RpMDASfwuPbNtPJG26rdMHAgPwrCGZshTJE5q5srH24qw0YMlLVULsUzlpKo6PZg4ajN
+         d/+IMFuohtHbjSygasbfXgaRh34yrrE1aSH+95wK1gRdmTB2j/BGDMSwxgTzCtvPdBej
+         AjCm+MC34e7JEHqufNrK3YlNryiddek+z4ApYmCnhIr4yiGjqkS/n4hjtyBkxDa6Bcht
+         QiwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TgS3ytl4duwPJh+l9SPs/9xSZEQfIRjDKEzXHGXrmO4=;
+        b=wGU0y+ulH4vmkeLTEOxG86t8OHM0CMlDVy4xqz0Nz7zXqAby1HhzULClAYaWtXypEr
+         bKVrO24oc4pW3mhyWemaFanoNWZMYdkQpZXegygRUK5rCeYV5jv1kU9N0hlC40c1PbKT
+         1zUCLglO6TEyt9AeN2DbxVR9+vgiVCvK6snkq71kJGif3J2EJiKBanuNDc6uMREIdjVU
+         4AW97Lx76gdZAf/5+mP4eDRgnSQylfeswSqLy53IJqcIZ60eF/mt6dhJlkXMLZf+rg8J
+         2drYbz0cCdMAfgSCxBPYR7+pWMgDAsmzV1lmWchARq562jhjyRn/uKHraB9K4AXbKzs4
+         0zUQ==
+X-Gm-Message-State: AFqh2ko/moKKuIAw8UGNJYr2sLDZFvkAQVhFcVxfaxOljDDPyODNdvde
+        iV6LxxV1FzARKhiiyy87cBRe
+X-Google-Smtp-Source: AMrXdXtROyDfUhC2bN1MXp3s7dZRYm30atXYr8THHwHLYFxwVEMiWLh9wyjdiTyBx47tIs+1F6tZrw==
+X-Received: by 2002:a17:902:7793:b0:189:86f0:70a2 with SMTP id o19-20020a170902779300b0018986f070a2mr10122206pll.43.1671810045394;
+        Fri, 23 Dec 2022 07:40:45 -0800 (PST)
+Received: from thinkpad ([27.111.75.82])
+        by smtp.gmail.com with ESMTPSA id j7-20020a170902da8700b0017f756563bcsm2579918plx.47.2022.12.23.07.40.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Dec 2022 07:40:44 -0800 (PST)
+Date:   Fri, 23 Dec 2022 21:10:39 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Robert Marko <robimarko@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] thermal: qcom-spmi-adc5: Suppress probe-deferral error
- message
-Message-ID: <20221223151410.630113f8@jic23-huawei>
-In-Reply-To: <20221216234212.5rm3uwzci2zjq67d@SoMainline.org>
-References: <20221216190945.902754-1-marijn.suijten@somainline.org>
-        <20221216234212.5rm3uwzci2zjq67d@SoMainline.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.35; x86_64-pc-linux-gnu)
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Uladzislau Rezki <urezki@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+        iommu@lists.linux.dev
+Subject: Re: [PATCH 1/2] Revert "remoteproc: qcom_q6v5_mss: map/unmap
+ metadata region before/after use"
+Message-ID: <20221223154039.GD4587@thinkpad>
+References: <20221223092703.61927-1-hch@lst.de>
+ <20221223092703.61927-2-hch@lst.de>
+ <20221223144731.GA4587@thinkpad>
+ <20221223145722.GA29401@lst.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221223145722.GA29401@lst.de>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 17 Dec 2022 00:42:12 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
-
-> Whoops, that tile must of course have started with:
+On Fri, Dec 23, 2022 at 03:57:22PM +0100, Christoph Hellwig wrote:
+> On Fri, Dec 23, 2022 at 08:17:31PM +0530, Manivannan Sadhasivam wrote:
+> > Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
->     iio: adc: qcom-spmi-adc5:
-> 
-> instead of blindly copying the suffix from the thermal monitor patch
-> (this driver is not a thermal monitor...).  I'll send a v2 if there are
-> no other objections, unless this can be fixed up when the patch is
-> applied.
-Fixed up whilst applying.
+> Btw, if the hardware really does not like a kernel mapping, the
+> right way is to just keep using the normal dma allocator, but make
+> sure that there shared-dma-pool with the no-map property for the
+> device.
 
-Applied to the togreg branch of iio.git, but only pushed out as testing for
-now as I want to rebase the branch on rc1 once available.
+Sibi posted a series that uses a separate no-map carveout for this usecase:
+https://lore.kernel.org/lkml/20221213140724.8612-1-quic_sibis@quicinc.com/
 
-Jonathan
+But that doesn't use dma allocator with shared-dma-pool.
 
-> 
-> On 2022-12-16 20:09:45, Marijn Suijten wrote:
-> > Much like 807efb7102e8 ("thermal: qcom-spmi-adc-tm5: suppress
-> > probe-deferral error message") the ADC5 driver also spams a similar
-> > probe-deferral error on startup when a channel is not yet available:
-> > 
-> >     [    0.343136] qcom-spmi-adc-tm5 1c40000.spmi:pmic@0:adc-tm@3500: get dt data failed: -517
-> > 
-> > Suppress it by using dev_err_probe instead, which also takes care of
-> > storing the message as reason for deferring.
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >  drivers/iio/adc/qcom-spmi-adc5.c | 6 ++----
-> >  1 file changed, 2 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> > index 821fee60a765..69cc36004b5a 100644
-> > --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> > +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> > @@ -894,10 +894,8 @@ static int adc5_probe(struct platform_device *pdev)
-> >  	mutex_init(&adc->lock);
-> >  
-> >  	ret = adc5_get_fw_data(adc);
-> > -	if (ret) {
-> > -		dev_err(dev, "adc get dt data failed\n");
-> > -		return ret;
-> > -	}
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "adc get dt data failed\n");
-> >  
-> >  	irq_eoc = platform_get_irq(pdev, 0);
-> >  	if (irq_eoc < 0) {
-> > -- 
-> > 2.39.0
-> >   
-> 
-> Apologies for the clumsiness.
-> 
-> - Marijn
+Thanks,
+Mani
 
+-- 
+மணிவண்ணன் சதாசிவம்
