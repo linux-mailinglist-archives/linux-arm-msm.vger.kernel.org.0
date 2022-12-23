@@ -2,139 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC1A5654A5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 02:11:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D831E654AAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 03:10:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236010AbiLWBLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 20:11:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41938 "EHLO
+        id S235678AbiLWCKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Dec 2022 21:10:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231233AbiLWBK3 (ORCPT
+        with ESMTP id S230303AbiLWCKc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 20:10:29 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2095BAE59
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 17:06:41 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id 1so5145126lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 17:06:41 -0800 (PST)
+        Thu, 22 Dec 2022 21:10:32 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F1E20BFA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 18:10:30 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id y8so3362792wrl.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 18:10:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XWNSN9gdeqB9vLjwyWwlgXwLAi8tUlsqoJc0gqDD7Kk=;
-        b=WGQq2CzvRYhovMC41n2FY6Zui8oQFiC4cfoMs8nd5tsPGpkerNex/yXV4kz/HF0p+i
-         Gz9SV5MODPw8waTc/H5MeGJKmQTTFrHFRgRR05gExy0sB+SXehYRB0GJ4AYx88ANUXg1
-         8wt2BjHdpzscrQgZwWJpeFA+M9NDuHz308U0Yvt3ptax6pXL8iL1wBIx2MekC4LF4sPP
-         O/qK30vgMNrKmKI6RQBC8MXOEsVwyKnDU59kYc6uBTyyo1PA8dYYUnA7L1pEWihuwAZ8
-         p0m65LWqX1V+le3rGxtFC6pRxnOPn88g4b6lLOK1YhPwJAkBt8f/c5VcbPp3gfwS5K0H
-         8SOg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=V61v7o2qMnueojIDHZPqsNgrVDte2LSI7QH2SkLkZNo=;
+        b=iSkKnGD11cub4SDAg2GZe0WUULRc3g0u1XlENGOVVCwXebdReZVkHL1WLa6m4/otJA
+         w9JNwaVAovzNI0loDgLycfSkFCQ64rDkV0hG6gxxpg4RJLojaG/wQdAh0vs82G54DJS9
+         tTaxj0WirSFjEhx2fUepXewVtEwugtgojdo3Eo/Fm7a6f6TQ6z5c9q269Ds9APxKbdiA
+         LGwZ+Ubor/WIzM9FLExydbBg/GTK6vV+CfFeFbB/tA4CKpnOGSjlLpSjhZBUpEAVM2xI
+         epScqBw9fsgNkTFE+GHOLhp5k1ukiqjan+q107Wi0ip0Qc11hQL0CemSbpsCIc+67FsJ
+         fpoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XWNSN9gdeqB9vLjwyWwlgXwLAi8tUlsqoJc0gqDD7Kk=;
-        b=PJd356ykkES/bSa0jK4EYdfLQLwdo+HLTwr5ouQ4HyekvnVRKhJ+c3fzyfoQLVFKdi
-         Abe2Uq0ias7ZYfNj07Mtd1QHqtol9dIZCY6Voti+Jw2ehFzH2G1jVSgMfZHqs1ePc6hZ
-         Zgj9kpkfSz5bOWAXmWH/bi9XzXXP2B/OQZ5Z0SxTVkvOa/EAfywYTQGdA1zl6YLZe55n
-         rUd6ovYUEihXvyys7gclFh9uNRAR90dCPNsuQI1l6DfSe14oEWlzpem+3NRjeZWa1fwx
-         5rgOdKrbNrzZ46w4/H2Y2rNAabIsoVaXOF+ObqgwF7b8p3ZAT9XsxZ/vUZh+WOTB+eew
-         7ftw==
-X-Gm-Message-State: AFqh2kqUfZZqO6QqABc1ldogB90+n/lSCcGQE6oA2qU7Wmk8zMF7Es5G
-        BIYDg8Mpm9oLawqc8TxvBJUmQw==
-X-Google-Smtp-Source: AMrXdXvSlWMGCBzIRsY3qbzGd/ghlBMl7PlJMauArxugr7RDVD86TCHGJdy525cV/G5qjZf3Ji8HFQ==
-X-Received: by 2002:a05:6512:21c6:b0:4af:e55a:dc69 with SMTP id d6-20020a05651221c600b004afe55adc69mr2651591lft.4.1671757599473;
-        Thu, 22 Dec 2022 17:06:39 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id l28-20020ac24a9c000000b004b50b4f63b7sm277180lfp.170.2022.12.22.17.06.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Dec 2022 17:06:38 -0800 (PST)
-Message-ID: <830f39a0-6a7c-52a4-2640-ba8564f072a9@linaro.org>
-Date:   Fri, 23 Dec 2022 03:06:38 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V61v7o2qMnueojIDHZPqsNgrVDte2LSI7QH2SkLkZNo=;
+        b=kbvRjn4J4QlKiiSo1WyKlkUebtfqfP/xUFuUQWWSh1dYyYnc9SoF1VFaB+xlV16iVZ
+         p95w8UwHGy7UYuvRa+jprLA2phICPsCg5loYFCDSu2pKrdaWtytjXQA67hcCJOHjz+2g
+         gwtIqKA5aJdujI5slj2YY81sgEkYFceI1KNFdgbZW3kn+dSXrjzDEZgAktmCYfGgPXRR
+         qlq6k1MdKiMO5EiTqxXGpHx3GuOzS000kZ7Nqrt480aT6AlPuS1rIGOSWky6bV8U25L2
+         qnZnPVYTu9UsfpT1kKCCgJHrI3xlpue735vm9rYpbjl5F/el5n/1n/oU+SG7MX/Mxa0m
+         FpqQ==
+X-Gm-Message-State: AFqh2kpheKarU2yIrdm/uaq7SamIoYICdmd7dYVrkuVg7zXaom9VfbPf
+        zGAeQl5ky9/fivaUSwEWQIn7/RDVYDDkB1Ukrgo=
+X-Google-Smtp-Source: AMrXdXsOmXW4NSyHwF5rO4+P2Il6blqj62PbuO24b/0DefcbmCMMhsQqCKUbAo7i8e/oXYA2gIfYOg==
+X-Received: by 2002:a05:6000:16c4:b0:242:5083:abea with SMTP id h4-20020a05600016c400b002425083abeamr6224322wrf.69.1671761428736;
+        Thu, 22 Dec 2022 18:10:28 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id j11-20020a5d452b000000b0022cc0a2cbecsm1849725wra.15.2022.12.22.18.10.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Dec 2022 18:10:28 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
+        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
+        swboyd@chromium.org, konrad.dybcio@somainline.org,
+        agross@kernel.org, andersson@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v6 00/18] mdss-dsi-ctrl binding and dts fixes
+Date:   Fri, 23 Dec 2022 02:10:07 +0000
+Message-Id: <20221223021025.1646636-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 0/5] MSM8996 eMMC boot fix
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org
-References: <20221210200353.418391-1-konrad.dybcio@linaro.org>
- <96c5212d-ddf8-48ba-27ca-234f6c9128b9@linaro.org>
- <0682e14a-2b15-2672-45e1-c05cb75ba22c@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <0682e14a-2b15-2672-45e1-c05cb75ba22c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/12/2022 02:54, Konrad Dybcio wrote:
-> 
-> 
-> On 23.12.2022 01:19, Dmitry Baryshkov wrote:
->> On 10/12/2022 22:03, Konrad Dybcio wrote:
->>> In a very unfortunate turn of events, enabling interconnect on non-UFS
->>> devices (or more precisely devices-with-UFS-clocks-disabled-from-
->>> bootloader) crashes the device, as a memory read to an unlocked peripheral
->>> is attempted. This series tries to fix that with the least amount of
->>> casualties..
->>
->> Just to note. I had occasional boot issues with UFS on msm8996 even after these patches being applied. It seems I was able to fix them by enabling interconnect support in the UFS-qcom driver.
->>
-> To be fair, we may be missing some more things (I have no concrete
-> evidence, maybe things go south just because my ports of icc drivers
-> all turn out to be garbage..):
-> 
-> - icc is not aware of what hardware is on from the bootloader
-> and if we don't add interconnects= *everywhere*, *including* where
-> downstream made (in their case) educated assumptions, things start
-> falling apart real quick, as random bits of hw may stop working if
-> they get a zero vote
+V6:
+- Squashes a number of patches per Krzysztof's comments on bisectability
+- Adds in Acked-by Rob and Krzysztof 
 
-I think most if not all drivers unvote their resources without picking 
-up bootloader configuration. This includes icc, clocks, power-domains, etc.
+V5:
+- Adds compat strings to bindings/display/msm/qcom,SoC-mdss.yaml - Dmitry
+- Re-orders simple fixes to the start of the series to allow backports - Dmitry 
+- VDDA and drop of node-names - Krzysztof
+- Deprecates qcom,dsi-ctrl-6g-qcm2290 - Krzysztof, Dmitry
+- Expands set of updated files to include new msm8953 - bod
+- Converts to agreed compat string qcom,SoC-dsi-ctrl hence
+  -              - qcom,mdss-dsi-ctrl-msm8996
+  +              - qcom,msm8996-dsi-ctrl
+- Adds RB where indicated for the compat strings.
+V4:
+- Moves the update of the example from patch #5 to patch #4
 
->    - on other platforms, this is even a bigger mess, because
->      some hardware *"unvotes"* on reset, such as MDSS or PCIe..
-> 
-> - if some but not all connections are described, requested bus
-> rate may be lower than expected, with effects ranging from subpar
-> performance to things simply not working because of too much traffic
-> 
-> - it's really hard to test smd rpm icc drivers other than dumping
-> reg writes and comparing them with downstream, sometimes things
-> "work" by luck, other times it breaks booting..
+V3:
+- Moves declaration of mdss-dsi-ctrl into compat string declaration
+  patch - Krzysztof, Dmitry
+- Renames qcm-2290 compat string to agreed compat "qcom,socname-dsi-ctrl"
+  Dmirty, Krzysztof
+- Adds empty line after if clause in yaml control flow section - Dmirty
+- Adds Rb/Ack - Krzysztof, Dmitry, Doug, David
+- vdd*
+  Looking into this some more, I don't believe vdd, vdda, vddio ought to be
+  required properties. Its up to the PCB manufacturer and the panel in-use
+  how that panel is powered. Powering the panel is not something that
+  even necessarily needs to be done from the dsi-ctrl driver.
+  Originally marking vdd* as required in the .txt was an error, its not a
+  SoC level dtsi requirement.
+- clock-names
+  Rather than replicate the clock-name in each if block I listed them with
+  a specific description from a similar reference in usb/qcom,dwc3.yaml.
+ 
+https://lore.kernel.org/linux-arm-msm/eb80681f-2e0b-605f-0444-ec65562f74b8@linaro.org/
 
-Yeah, I have been debugging 8996 boot issue for quite some time...
+V2:
+https://www.spinics.net/lists/linux-arm-msm/msg116326.html
 
-> 
-> Konrad
->>>
->>> Konrad Dybcio (5):
->>>     dt-bindings: interconnect: Add UFS clocks to MSM8996 A2NoC
->>>     interconnect: qcom: msm8996: Provide UFS clocks to A2NoC
->>>     interconnect: qcom: msm8996: Fix regmap max_register values
->>>     interconnect: qcom: rpm: Use _optional func for provider clocks
->>>     arm64: dts: qcom: msm8996: Add additional A2NoC clocks
->>>
->>>    .../bindings/interconnect/qcom,rpm.yaml       | 24 ++++++++++++++++++-
->>>    arch/arm64/boot/dts/qcom/msm8996.dtsi         |  6 +++--
->>>    drivers/interconnect/qcom/icc-rpm.c           |  2 +-
->>>    drivers/interconnect/qcom/msm8996.c           | 19 +++++++++++----
->>>    4 files changed, 42 insertions(+), 9 deletions(-)
->>>
->>
+- Moves the DSI PHY changes to a different later series.
+  There are enough dsi-controller-main changes to justify its own
+  standalone series.
+
+- The original phy-name binding change given discussion with Rob and
+  Krzysztof became its own standalone series that has since been merged.
+  https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg403214.html
+
+- Retains the drop of power-domain from yaml as a required property.
+  I dug into the available dtsi. The apq8064 doesn't appear to have any
+  GDSC which can be attached as a power-domain, which means the
+  power-domain requirement is not universal across the various silicon
+  versions.
+
+- Adds Dmitry's RB to power-domain drop
+
+- For the clock declarations I've
+  * I noticed that the simple change I had worked for msm8939 but
+    subsquently broke other dtsi which drove a bigger change to document
+    the clocks on a per compatible basis.
+  * Added compat strings in yaml.
+  * Moved the allOf down later in the file to acomodate the if/then.
+  * Number of clocks validated on a per compatible basis
+  * The driver code which doesn't care about the number of clocks
+    can still operate on the mdss-dsi-ctrl compat but the dts checks will
+    validate against the compat string and yaml.
+
+- vdd descriptions
+  Took the previous text I missed from the .txt file - Krzysztof, Dmitry
+  Adds vdd, vdda and vddio to the required list. This exposes warnings in
+  existing dtsi but the previous .txt declared these regulators as
+  required. - Krzysztof
+ 
+V1:
+This series fixes up a number of dtbs checks which are being flagged adding
+in the msm8939 dtsi.
+
+
+When converting from .txt to .yaml a number of the parameters for the older
+msm8916 silicon were not transmitted into the yaml.
+
+Adding in the msm8939 which is a near 1:1 copy of the msm8916 in terms of
+dtsi triggers a rake of dtbs checks as a result.
+
+https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg403211.html
+
+Bryan O'Donoghue (18):
+  dt-bindings: msm: dsi-controller-main: Fix operating-points-v2
+    constraint
+  dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
+  dt-bindings: msm: dsi-controller-main: Fix description of core clock
+  dt-bindings: msm: dsi-controller-main: Add compatible strings for
+    every current SoC
+  dt-bindings: msm: dsi-controller-main: Document clocks on a per
+    compatible basis
+  dt-bindings: msm: dsi-controller-main: Add vdd* descriptions back in
+  dt-bindings: display/msm: Add list of mdss-dsi-ctrl compats
+  ARM: dts: qcom: apq8064: add compat qcom,apq8064-dsi-ctrl
+  ARM: dts: qcom: msm8974: Add compat qcom,msm8974-dsi-ctrl
+  arm64: dts: qcom: msm8916: Add compat qcom,msm8916-dsi-ctrl
+  arm64: dts: qcom: msm8953: Add compat qcom,msm8953-dsi-ctrl
+  arm64: dts: qcom: msm8996: Add compat qcom,msm8996-dsi-ctrl
+  arm64: dts: qcom: sc7180: Add compat qcom,sc7180-dsi-ctrl
+  arm64: dts: qcom: sc7280: Add compat qcom,sc7280-dsi-ctrl
+  arm64: dts: qcom: sdm630: Add compat qcom,sdm660-dsi-ctrl
+  arm64: dts: qcom: sdm660: Add compat qcom,sdm660-dsi-ctrl
+  arm64: dts: qcom: sdm845: Add compat qcom,sdm845-dsi-ctrl
+  arm64: dts: qcom: sm8250: Add compat qcom,sm8250-dsi-ctrl
+
+ .../display/msm/dsi-controller-main.yaml      | 249 ++++++++++++++++--
+ .../bindings/display/msm/qcom,mdss.yaml       |  16 +-
+ .../display/msm/qcom,msm8998-mdss.yaml        |   8 +-
+ .../display/msm/qcom,sc7180-mdss.yaml         |   6 +-
+ .../display/msm/qcom,sc7280-mdss.yaml         |   6 +-
+ .../display/msm/qcom,sdm845-mdss.yaml         |   8 +-
+ .../display/msm/qcom,sm8250-mdss.yaml         |   8 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   3 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |   3 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   3 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |   4 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |   3 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   6 +-
+ 18 files changed, 292 insertions(+), 52 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.38.1
 
