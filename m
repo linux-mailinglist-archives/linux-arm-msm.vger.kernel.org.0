@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E9F654E5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:27:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1064C654E6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:31:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236183AbiLWJ1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 04:27:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53086 "EHLO
+        id S229820AbiLWJbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 04:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236197AbiLWJ1U (ORCPT
+        with ESMTP id S229483AbiLWJbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 04:27:20 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D301E3720E;
-        Fri, 23 Dec 2022 01:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender
-        :Reply-To:Content-Type:Content-ID:Content-Description;
-        bh=uj5J1LKb/4UIpagExHs49WqhLRVbYSUrTZ0b+D0WTrE=; b=nIi94Z7xg6PPdFGLsL4tc1cRkg
-        fk8vpDY3Qb3un4xD1x2lRvrSE26lm0N2VFu2vOaxEEGO0wHPAN1Yxwhvxql+tye9eIB5BRKK8X8XV
-        qanYlBggDmH2iPfyygKTQw+sRmJFClDwKQ2kuS5u26BxfEccIXUncjf++Bd5jYUx+wbGGQKfYdk4c
-        7/mdYbO9Mwpwbfp/CjA+1UI4MNSaFjOBU4i6+PdCtDeRCOcmkq8GcN830iPnmFv/pc+vl/vmUZblo
-        TDK7c8vj1Clg2JWlevxJIVFeIehSHNSv5VExgK9skZq/Qyl4aoiTv6ZetYah0ZlvZ0ESd3tYFwVPO
-        Judum79A==;
-Received: from [2001:4bb8:199:7829:8d88:c8b3:6416:2f03] (helo=localhost)
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1p8eKe-005hTn-Jv; Fri, 23 Dec 2022 09:27:13 +0000
-From:   Christoph Hellwig <hch@lst.de>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Uladzislau Rezki <urezki@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        iommu@lists.linux.dev
-Subject: [PATCH 2/2] vmalloc: reject vmap with VM_FLUSH_RESET_PERMS
-Date:   Fri, 23 Dec 2022 10:27:03 +0100
-Message-Id: <20221223092703.61927-3-hch@lst.de>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221223092703.61927-1-hch@lst.de>
-References: <20221223092703.61927-1-hch@lst.de>
+        Fri, 23 Dec 2022 04:31:10 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8989337216;
+        Fri, 23 Dec 2022 01:31:08 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 80F85B81F7B;
+        Fri, 23 Dec 2022 09:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1B6C433EF;
+        Fri, 23 Dec 2022 09:31:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1671787865;
+        bh=xA1Tx7JkHcV8FOp/jol19NqCgZItuHMSfahylt7MBpA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KXvNY8W9UJfHIpPUdhbgE5uE+7r/+oC/3ofod6sMT7hKY/GYPOKu1g+rBPaTOiFt7
+         EEJLpKlwXYm3JIjYUBRy2GDfuCk1bcJUG/UUZBKuueZCGkbWjaiJXq0+dPwG6mpAWV
+         G9TwODol66irgmG7oNYtM9mYi44D1W3MB86kerjbB1acFRbmGEA2lAay6ejRQxVeBx
+         aGfoKktprtLjR8ZwaWUga5O8RAB+NVY1TLMTciZfMpcgnLRWztk6BBAUKHGYaFdpun
+         /pkvWZ27ogCkddt+LigjRHU3jT4IaPxRmxzy4cOb8bp584PEj7yjqtpb6RShbdfNnm
+         Uity8hvPhGoBg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1p8ePF-0002hr-Hb; Fri, 23 Dec 2022 10:31:58 +0100
+Date:   Fri, 23 Dec 2022 10:31:57 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        quic_shazhuss@quicinc.com, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com
+Subject: Re: [PATCH v3 1/7] arm64: dts: qcom: sc8280xp: rename qup2_uart17 to
+ uart17
+Message-ID: <Y6V1jfP6wBe8RCWi@hovoldconsulting.com>
+References: <20221220192854.521647-1-bmasney@redhat.com>
+ <20221220192854.521647-2-bmasney@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221220192854.521647-2-bmasney@redhat.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-VM_FLUSH_RESET_PERMS is just for use with vmalloc as it is tied to freeing
-the underlying pages.
+On Tue, Dec 20, 2022 at 02:28:48PM -0500, Brian Masney wrote:
+> In preparation for adding the missing SPI and I2C nodes to
+> sc8280xp.dtsi, it was decided to rename all of the existing qupX_
+> uart, spi, and i2c nodes to drop the qupX_ prefix. Let's go ahead
+> and rename qup2_uart17 to uart17. Note that some nodes are moved in the
+> file by this patch to preserve the expected sort order in the file.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Link: https://lore.kernel.org/lkml/20221212182314.1902632-1-bmasney@redhat.com/
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- mm/vmalloc.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index 9e30f0b3920325..88a644cde9fb12 100644
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -2849,6 +2849,9 @@ void *vmap(struct page **pages, unsigned int count,
- 
- 	might_sleep();
- 
-+	if (WARN_ON_ONCE(flags & VM_FLUSH_RESET_PERMS))
-+		return NULL;
-+
- 	/*
- 	 * Your top guard is someone else's bottom guard. Not having a top
- 	 * guard compromises someone else's mappings too.
--- 
-2.35.1
-
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
