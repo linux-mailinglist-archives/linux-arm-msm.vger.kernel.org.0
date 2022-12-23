@@ -2,109 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4C5654DEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 09:58:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95CC0654E0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:05:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235899AbiLWI6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 03:58:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40670 "EHLO
+        id S235854AbiLWJFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 04:05:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235477AbiLWI6M (ORCPT
+        with ESMTP id S235895AbiLWJFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 03:58:12 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D01236C49
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 00:58:11 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id l8so4330493ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 00:58:11 -0800 (PST)
+        Fri, 23 Dec 2022 04:05:13 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BDB636C55
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:05:11 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id 1so6333098lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:05:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NYQbSy434GAtK9sinOrrD+9gAo0TIsgULlkeRWIvxP4=;
-        b=mpwA1LnjDZ+XRh7LtQGy9eLdArCW/uRQgV6ZV4/6bds+azwgylg7bUgS3qQS7tiMa0
-         +laAQenqIH6Wp/fiezhn5ttYhocg2vvsxOP+Qd0qjjE4yLaPWu1zZIAlJ9iLVF6GDRDy
-         LdqnJFuhXg7mcwQb8khTjjWcswUoW7KJJynaqS3gcwN6QQsiuh5ayMdZBmVcnZgBFgUG
-         nMiqZnxRT71J7CXs3ZJE7+YnOVE33s3EDrpaA72M8Iu8GtMWB9y3BGR2mksyy6J4xIMo
-         Hxtz8xfiaGtdR5p7T3krazNgKjpW6OJFdsKJtS2C9EkjofBPRJXRQ309jHBpCrCzDRUn
-         bpOw==
+        bh=UgkyZLlR8dmps7bIqgtuU0p5kKZJ22gyr0j4DXf+Tuc=;
+        b=Go1z1WOZVAeyBHYx43G2o1a8Yqwp73M6XDVnsyel0fTSrZE7lFmvXu6jECQRR07gBz
+         99nbMAP/RhkSJr3F/TaU4QfxJ2YnyRThXR9yAzmSeI2YISl5G+/wja0nBz5lfp26ARpA
+         NXwz3/M0U6g2ijul298JVbhc/ZkbMUfBhHPhgKTaOgPSjCOdoAt+UTm8+jfqJGY5kVPa
+         lT8546ZP2UjeEalietwdiWWN23EUjBOLEKV2s6xaxlg64Xb+h9CeOCSmY5jtJu3Bmg2A
+         KFDHcbBOt2ZnGYe93EUJ9L157dTvP6V6tl1Sg1g+k4QSh3WfY4ScVsdrlH0IY71yXBwU
+         BhZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYQbSy434GAtK9sinOrrD+9gAo0TIsgULlkeRWIvxP4=;
-        b=u3LWlQodmazMafXcoS/aXISKn8xEXZLwi7QiKskgUNmaHB06qaj62Ay+YCWCkzpkxM
-         pQMkf2TwvvfyCzVOXGioPTohxmvGwMDzY52cjJ9u166YLtGCg49e8gFS6ywMLN937kJZ
-         hImO6ATHhehsbC1YfBMx/WQG9aaINpo9MgzYmfyc/Cqy2oa4J2A3sDNgMzKRBJGalc9H
-         FnOHvMxuWFbdRiRD4e4F3JhrDNC4eXOYZaC/3rLzyBUQoFmugrgKB5WBTkkfyuFKeSN8
-         DCLZfPydWQOKJnsU1Nq30o3+FGXSqHi9SAg5R1pVecK+Dzz3JJdJnRqq6UaF8BYTwyW7
-         xDlw==
-X-Gm-Message-State: AFqh2kpIfotVz8Kkj36d88SOzOZHxgoTFJK5wt9kkKrP4w5DkYA0qyKK
-        KCloGF865JnJC0T7mlk+XsTbEQ==
-X-Google-Smtp-Source: AMrXdXtTZ6B9iVWOB1ws3xnA4ZJTh8QIKy6MXXmF599iZ5583Wa27y3w81pyo4ZumBwV3U2CmWfHVw==
-X-Received: by 2002:a2e:391e:0:b0:277:8f65:a3ae with SMTP id g30-20020a2e391e000000b002778f65a3aemr2337836lja.27.1671785889565;
-        Fri, 23 Dec 2022 00:58:09 -0800 (PST)
+        bh=UgkyZLlR8dmps7bIqgtuU0p5kKZJ22gyr0j4DXf+Tuc=;
+        b=He/EJJSLMq0cLLjQXZsydbBkHUBo8zGu0lOopsdsmB5gPwD4k/E9ryHImwPJDgUUN1
+         IS0hMzkdlF4nSJ/EkmsOAvjdqaLNv/Sh8ThRkjjSeixI5vdW+mcbMHHV+2irQIQl0WKX
+         BIYn2ak6Veiq/CL0X4xC5+TywoKjQFo85A8uG2D8hG5BM/vkHCYtsFaZdmQrnMpCLqhM
+         Xz9BnalRekUBGrMLhTHUrYMqnksASJfv8+WlgBW+vZLFqFoNIijKeVCgkVdkMMvLJaxl
+         gTqIWEMCeCVuD73+xAZSgNxrYJNEhMhgvt/06HcOwbhs/3oDAV4cqetLEWFHN0ZjsSRB
+         n+bg==
+X-Gm-Message-State: AFqh2krOkDMQBRrexd+/wB7lZHQ9dYF3JUPsuBGeDe/4RrvCEl/DRJa2
+        Ab0T+D29qn4pK5nm8vAbxSgDRw==
+X-Google-Smtp-Source: AMrXdXu07H/DBU/l0axgXYiPZK261IL8apRQ5mpgRPTJSTtf+JWCe6x+AyhRvRw1adFfKChiMlIlNQ==
+X-Received: by 2002:a05:6512:20d0:b0:4b5:88e4:2ba4 with SMTP id u16-20020a05651220d000b004b588e42ba4mr2175863lfr.15.1671786309930;
+        Fri, 23 Dec 2022 01:05:09 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id be35-20020a05651c172300b0027fafca7addsm144294ljb.112.2022.12.23.00.58.08
+        by smtp.gmail.com with ESMTPSA id z12-20020ac2418c000000b004b58ebf0399sm443827lfh.132.2022.12.23.01.05.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Dec 2022 00:58:09 -0800 (PST)
-Message-ID: <8a1389f8-ec20-ae85-97b9-599f0c10b8b4@linaro.org>
-Date:   Fri, 23 Dec 2022 09:58:07 +0100
+        Fri, 23 Dec 2022 01:05:09 -0800 (PST)
+Message-ID: <e079efba-2cd7-6e1d-3ce2-7f0371962252@linaro.org>
+Date:   Fri, 23 Dec 2022 10:05:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v4 02/16] dt-bindings: arm: msm: Fix register regions used
- for LLCC banks
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: sc7280: Extract audio nodes from
+ common idp dtsi file
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com
-Cc:     quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        luca.weiss@fairphone.com, ahalaney@redhat.com, steev@kali.org
-References: <20221222131656.49584-1-manivannan.sadhasivam@linaro.org>
- <20221222131656.49584-3-manivannan.sadhasivam@linaro.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        konrad.dybcio@linaro.org
+References: <1671702170-24781-1-git-send-email-quic_srivasam@quicinc.com>
+ <1671702170-24781-2-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221222131656.49584-3-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <1671702170-24781-2-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/12/2022 14:16, Manivannan Sadhasivam wrote:
-> Register regions of the LLCC banks are located at different addresses.
-> Currently, the binding just lists the LLCC0 base address and tries to
-> cover all the banks using a single size. This is entirely wrong as there
-> are other register regions that happen to lie inside the size covered by
-> the binding such as the memory controller and holes.
+On 22/12/2022 10:42, Srinivasa Rao Mandadapu wrote:
+> Split common idp dtsi file into audio specific dtsi and common
+> idp dtsi file.
 > 
-> So this needs to be fixed by specifying the base address of individual
-> LLCC banks. This approach will break the existing users of this binding
-> as the register regions are splitted and the drivers now cannot use
-> LLCC0 register region for accessing rest of the banks (which is wrong
-> anyway).
+> It is required to isolate idp and crd-rev3 platform device tree nodes
+> and convert crd-rev3 platform device tree nodes into audioreach specific
+> device tree nodes.
 > 
-> But considering the fact that the binding was wrong from the day one and
-> also the device drivers going wrong by the binding, this breakage is
-> acceptable.
-> 
-> Reported-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
+>  arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi | 242 +++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |   1 +
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 230 -----------------------
+>  arch/arm64/boot/dts/qcom/sc7280-idp2.dts       |   1 +
+>  4 files changed, 244 insertions(+), 230 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+> new file mode 100644
+> index 0000000..8c9e667
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+> @@ -0,0 +1,242 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * sc7280 Audio IDP board device tree source (common between SKU1 and SKU2)
+> + *
+> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+> + */
+> +
 
+Mising includes. Each file is responsible for its own includes and must
+not rely on others to include something.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +/{
+> +   /* BOARD-SPECIFIC TOP LEVEL NODES */
+
+Wrong indentation.
+
+> +	sound: sound {
+> +		compatible = "google,sc7280-herobrine";
+> +		model = "sc7280-wcd938x-max98360a-1mic";
+> +
+> +		audio-routing =
+> +			   "IN1_HPHL", "HPHL_OUT",
+> +			   "IN2_HPHR", "HPHR_OUT",
+> +			   "AMIC1", "MIC BIAS1",
+> +			   "AMIC2", "MIC BIAS2",
+> +			   "VA DMIC0", "MIC BIAS3",
+> +			   "VA DMIC1", "MIC BIAS3",
+> +			   "VA DMIC2", "MIC BIAS1",
+> +			   "VA DMIC3", "MIC BIAS1",
+> +			   "TX SWR_ADC0", "ADC1_OUTPUT",
+> +			   "TX SWR_ADC1", "ADC2_OUTPUT",
+> +			   "TX SWR_ADC2", "ADC3_OUTPUT",
+> +			   "TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +			   "TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +			   "TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +			   "TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +			   "TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +			   "TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +			   "TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +			   "TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +
+> +		qcom,msm-mbhc-hphl-swh = <1>;
+> +		qcom,msm-mbhc-gnd-swh = <1>;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		#sound-dai-cells = <0>;
+> +
+> +		dai-link@0 {
+> +			link-name = "MAX98360A";
+> +			reg = <0>;
+> +
+> +			cpu {
+> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
+> +			};
+> +
+> +			codec {
+> +			   sound-dai = <&max98360a>;
+
+I have no clue what happened here. This was correct code before, now it
+is not. It turns out it was not just a move of code. If you just
+cut+paste, would be fine, but you changed it during moving and now we
+have to review it. Reviewing such diffs is difficult if not impossible,
+so we have no way to validate, maybe except comparing de-compiled dtbs
+(dtx_diff, fdtdump). Did you do it?
+
+Otherwise I do not see a way how can we be sure this code is correct if
+you do not cut+paste but change the code in the meantime.
 
 Best regards,
 Krzysztof
