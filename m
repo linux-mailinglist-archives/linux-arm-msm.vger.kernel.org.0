@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95CC0654E0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:05:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5FD5654E1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:08:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235854AbiLWJFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 04:05:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43204 "EHLO
+        id S236160AbiLWJIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 04:08:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235895AbiLWJFN (ORCPT
+        with ESMTP id S236158AbiLWJIq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 04:05:13 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BDB636C55
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:05:11 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id 1so6333098lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:05:11 -0800 (PST)
+        Fri, 23 Dec 2022 04:08:46 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CCFE0CC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:08:43 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id b13so6355537lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UgkyZLlR8dmps7bIqgtuU0p5kKZJ22gyr0j4DXf+Tuc=;
-        b=Go1z1WOZVAeyBHYx43G2o1a8Yqwp73M6XDVnsyel0fTSrZE7lFmvXu6jECQRR07gBz
-         99nbMAP/RhkSJr3F/TaU4QfxJ2YnyRThXR9yAzmSeI2YISl5G+/wja0nBz5lfp26ARpA
-         NXwz3/M0U6g2ijul298JVbhc/ZkbMUfBhHPhgKTaOgPSjCOdoAt+UTm8+jfqJGY5kVPa
-         lT8546ZP2UjeEalietwdiWWN23EUjBOLEKV2s6xaxlg64Xb+h9CeOCSmY5jtJu3Bmg2A
-         KFDHcbBOt2ZnGYe93EUJ9L157dTvP6V6tl1Sg1g+k4QSh3WfY4ScVsdrlH0IY71yXBwU
-         BhZQ==
+        bh=U7cF5JUH51zVHVlPOLsK2nJvYEtOSVvrKIi1yyd2e7E=;
+        b=lbMRs9m4Hdtm7MzHQLvmKZFnUxvOsyYy1rz1k5k62x8Hkf6beO/SqwvrvIl3Mw13ii
+         ZHbAGpVoMCAFyPJqj1NlNuRkxJsoIHy6mnNCSp1BiinSZSxD5jTHClzNOw7PqWW7zq4h
+         eiCHC9572q/rnR7ONlW9zV1uhit8x9ErZU/AUB12TrNHodcF105zEU4S9R3puGxmDfzP
+         6V0F01oX49DjzVAoDkPReTqkCm/+je8QX7w6zbjcA4SElBS24H2tsG8jML4MpAKZs4aA
+         zpnRgLvxJrbb5AiHuxug318Tf49pu6MfAOP3G3EtI+FGIkW87o7L630JpI7R35GpW6kE
+         EAHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UgkyZLlR8dmps7bIqgtuU0p5kKZJ22gyr0j4DXf+Tuc=;
-        b=He/EJJSLMq0cLLjQXZsydbBkHUBo8zGu0lOopsdsmB5gPwD4k/E9ryHImwPJDgUUN1
-         IS0hMzkdlF4nSJ/EkmsOAvjdqaLNv/Sh8ThRkjjSeixI5vdW+mcbMHHV+2irQIQl0WKX
-         BIYn2ak6Veiq/CL0X4xC5+TywoKjQFo85A8uG2D8hG5BM/vkHCYtsFaZdmQrnMpCLqhM
-         Xz9BnalRekUBGrMLhTHUrYMqnksASJfv8+WlgBW+vZLFqFoNIijKeVCgkVdkMMvLJaxl
-         gTqIWEMCeCVuD73+xAZSgNxrYJNEhMhgvt/06HcOwbhs/3oDAV4cqetLEWFHN0ZjsSRB
-         n+bg==
-X-Gm-Message-State: AFqh2krOkDMQBRrexd+/wB7lZHQ9dYF3JUPsuBGeDe/4RrvCEl/DRJa2
-        Ab0T+D29qn4pK5nm8vAbxSgDRw==
-X-Google-Smtp-Source: AMrXdXu07H/DBU/l0axgXYiPZK261IL8apRQ5mpgRPTJSTtf+JWCe6x+AyhRvRw1adFfKChiMlIlNQ==
-X-Received: by 2002:a05:6512:20d0:b0:4b5:88e4:2ba4 with SMTP id u16-20020a05651220d000b004b588e42ba4mr2175863lfr.15.1671786309930;
-        Fri, 23 Dec 2022 01:05:09 -0800 (PST)
+        bh=U7cF5JUH51zVHVlPOLsK2nJvYEtOSVvrKIi1yyd2e7E=;
+        b=NTPOkbK73JVAZHjn/OTEnNjxrv9ALysJdS9RsdRasgAY3o9sR4Bc1M9CqkfDEK6HSg
+         /abq2Aw8tLBUpZLL4oqy+KspDMnLjY2WIIv26S7MJ8AX78E8GWyP3214378EOboNhjfW
+         zw5u/VEVD5sF93iDUdWfSXeLAlAwX6gih22Cv7yirF9SOenwNu8J6xzpAr4Nfrq2PUfe
+         0RaBWsC2yHv6nuZvnK98EEOvGq7pYZ/b4ujLNgBlg+/yGAFd0TwUdO1lrKd1Ra+Njq3K
+         sICgV022zw/WH4RBT+s5nhg5zW7IPh1N3KROIe2nmIl4HGyBqSw1m+3C46eg08QFOHpK
+         PzBA==
+X-Gm-Message-State: AFqh2kqiZZueM6fX+bYroRhRzkd49pjCp2g2LnTdmuMkEez+I9b8stlD
+        XkLTVE6WYkwxu1GxEpT3axB98g==
+X-Google-Smtp-Source: AMrXdXshjK45LD383xnMyQqPQ7Mw0nzMDgiMAe1dQJfsUE1wXTsvHdcfXdDTbYCXlllamDDSpbEx3g==
+X-Received: by 2002:a05:6512:3b20:b0:4b5:178f:a14c with SMTP id f32-20020a0565123b2000b004b5178fa14cmr3092978lfv.16.1671786522290;
+        Fri, 23 Dec 2022 01:08:42 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id z12-20020ac2418c000000b004b58ebf0399sm443827lfh.132.2022.12.23.01.05.08
+        by smtp.gmail.com with ESMTPSA id l18-20020ac24312000000b00485caa0f5dfsm449101lfh.44.2022.12.23.01.08.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Dec 2022 01:05:09 -0800 (PST)
-Message-ID: <e079efba-2cd7-6e1d-3ce2-7f0371962252@linaro.org>
-Date:   Fri, 23 Dec 2022 10:05:08 +0100
+        Fri, 23 Dec 2022 01:08:41 -0800 (PST)
+Message-ID: <df7dd4aa-1a6c-51a6-d7e5-b313d986c64a@linaro.org>
+Date:   Fri, 23 Dec 2022 10:08:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: sc7280: Extract audio nodes from
- common idp dtsi file
+Subject: Re: [PATCH 2/7] arm64: dts: qcom: sc7280: audioreach: Add sound node
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
@@ -66,9 +65,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
         konrad.dybcio@linaro.org
 References: <1671702170-24781-1-git-send-email-quic_srivasam@quicinc.com>
- <1671702170-24781-2-git-send-email-quic_srivasam@quicinc.com>
+ <1671702170-24781-3-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1671702170-24781-2-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1671702170-24781-3-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,69 +81,108 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 22/12/2022 10:42, Srinivasa Rao Mandadapu wrote:
-> Split common idp dtsi file into audio specific dtsi and common
-> idp dtsi file.
+> Add sound node for sc7280 based audioreach platforms.
 > 
-> It is required to isolate idp and crd-rev3 platform device tree nodes
-> and convert crd-rev3 platform device tree nodes into audioreach specific
-> device tree nodes.
+> Include audioreach dtsi into crd-rev3 platform specific dts file.
+> Also remove phandle to sound node, as audio routing is same as
+> audioreach specific dtsi file.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi | 242 +++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |   1 +
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 230 -----------------------
->  arch/arm64/boot/dts/qcom/sc7280-idp2.dts       |   1 +
->  4 files changed, 244 insertions(+), 230 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts         |  25 +----
+>  .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  | 112 +++++++++++++++++++++
+>  2 files changed, 113 insertions(+), 24 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> index b024626..aea8cbd 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> @@ -8,7 +8,7 @@
+>  /dts-v1/;
+>  
+>  #include "sc7280-idp.dtsi"
+> -#include "sc7280-audio-idp.dtsi"
+> +#include "sc7280-herobrine-audioreach-wcd9385.dtsi"
+>  #include "sc7280-idp-ec-h1.dtsi"
+>  
+>  / {
+> @@ -88,29 +88,6 @@ ap_ts_pen_1v8: &i2c13 {
+>  	pins = "gpio51";
+>  };
+>  
+> -&sound {
+> -	audio-routing =
+> -		"IN1_HPHL", "HPHL_OUT",
+> -		"IN2_HPHR", "HPHR_OUT",
+> -		"AMIC1", "MIC BIAS1",
+> -		"AMIC2", "MIC BIAS2",
+> -		"VA DMIC0", "MIC BIAS1",
+> -		"VA DMIC1", "MIC BIAS1",
+> -		"VA DMIC2", "MIC BIAS3",
+> -		"VA DMIC3", "MIC BIAS3",
+> -		"TX SWR_ADC0", "ADC1_OUTPUT",
+> -		"TX SWR_ADC1", "ADC2_OUTPUT",
+> -		"TX SWR_ADC2", "ADC3_OUTPUT",
+> -		"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> -		"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> -		"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> -		"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> -		"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> -		"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> -		"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> -		"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> -};
+> -
+>  &wcd9385 {
+>  	pinctrl-names = "default", "sleep";
+>  	pinctrl-0 = <&wcd_reset_n>, <&us_euro_hs_sel>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
 > new file mode 100644
-> index 0000000..8c9e667
+> index 0000000..1eac94e1
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
-> @@ -0,0 +1,242 @@
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+> @@ -0,0 +1,112 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
-> + * sc7280 Audio IDP board device tree source (common between SKU1 and SKU2)
+> + * sc7280 device tree source for boards using Max98360 and wcd9385 codec
+> + * along with ADSP
 > + *
 > + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
 > + */
 > +
-
-Mising includes. Each file is responsible for its own includes and must
-not rely on others to include something.
-
+> +#include <dt-bindings/sound/qcom,q6afe.h>
+> +#include <dt-bindings/soc/qcom,gpr.h>
+> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
+> +
 > +/{
-> +   /* BOARD-SPECIFIC TOP LEVEL NODES */
-
-Wrong indentation.
-
+> +	/* BOARD-SPECIFIC TOP LEVEL NODES */
 > +	sound: sound {
 > +		compatible = "google,sc7280-herobrine";
-> +		model = "sc7280-wcd938x-max98360a-1mic";
-> +
+> +		model = "SC7280-AUDIOREACH";
+> +		status = "okay";
+> +		adsp-mode;
 > +		audio-routing =
-> +			   "IN1_HPHL", "HPHL_OUT",
-> +			   "IN2_HPHR", "HPHR_OUT",
-> +			   "AMIC1", "MIC BIAS1",
-> +			   "AMIC2", "MIC BIAS2",
-> +			   "VA DMIC0", "MIC BIAS3",
-> +			   "VA DMIC1", "MIC BIAS3",
-> +			   "VA DMIC2", "MIC BIAS1",
-> +			   "VA DMIC3", "MIC BIAS1",
-> +			   "TX SWR_ADC0", "ADC1_OUTPUT",
-> +			   "TX SWR_ADC1", "ADC2_OUTPUT",
-> +			   "TX SWR_ADC2", "ADC3_OUTPUT",
-> +			   "TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +			   "TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +			   "TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +			   "TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +			   "TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +			   "TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +			   "TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +			   "TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +		   "IN1_HPHL", "HPHL_OUT",
+> +		   "IN2_HPHR", "HPHR_OUT",
+> +		   "AMIC1", "MIC BIAS1",
+> +		   "AMIC2", "MIC BIAS2",
+> +		   "VA DMIC0", "MIC BIAS1",
+> +		   "VA DMIC1", "MIC BIAS1",
+> +		   "VA DMIC2", "MIC BIAS3",
+> +		   "VA DMIC3", "MIC BIAS3",
+> +		   "TX SWR_ADC0", "ADC1_OUTPUT",
+> +		   "TX SWR_ADC1", "ADC2_OUTPUT",
+> +		   "TX SWR_ADC2", "ADC3_OUTPUT",
+> +		   "TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +		   "TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +		   "TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +		   "TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +		   "TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +		   "TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +		   "TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +		   "TX SWR_DMIC7", "DMIC8_OUTPUT";
 > +
 > +		qcom,msm-mbhc-hphl-swh = <1>;
 > +		qcom,msm-mbhc-gnd-swh = <1>;
@@ -154,25 +192,80 @@ Wrong indentation.
 > +		#sound-dai-cells = <0>;
 > +
 > +		dai-link@0 {
-> +			link-name = "MAX98360A";
+> +			link-name = "WCD9385 Playback";
 > +			reg = <0>;
 > +
 > +			cpu {
-> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
+> +				sound-dai = <&q6apmbedai  RX_CODEC_DMA_RX_0>;
+
+Just one space.
+
+> +			};
+> +			codec {
+> +				sound-dai = <&wcd9385 0>, <&swr0 0>, <&lpass_rx_macro 0>;
+> +			};
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		dai-link@1 {
+> +			link-name = "WCD9385 Capture";
+> +			reg = <1>;
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai  TX_CODEC_DMA_TX_3>;
+> +			};
+> +			codec {
+> +				sound-dai = <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
+> +			};
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		dai-link@2 {
+> +			link-name = "MAX98360A";
+
+Amplifier playback?
+
+> +			reg = <3>;
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai SECONDARY_MI2S_RX>;
 > +			};
 > +
 > +			codec {
-> +			   sound-dai = <&max98360a>;
+> +				sound-dai =	 <&max98360a>;
 
-I have no clue what happened here. This was correct code before, now it
-is not. It turns out it was not just a move of code. If you just
-cut+paste, would be fine, but you changed it during moving and now we
-have to review it. Reviewing such diffs is difficult if not impossible,
-so we have no way to validate, maybe except comparing de-compiled dtbs
-(dtx_diff, fdtdump). Did you do it?
+No redundant whitespaces around =.
 
-Otherwise I do not see a way how can we be sure this code is correct if
-you do not cut+paste but change the code in the meantime.
+
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		dai-link@3 {
+> +			link-name = "DMIC";
+> +			reg = <4>;
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&lpass_va_macro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +	};
+> +};
 
 Best regards,
 Krzysztof
