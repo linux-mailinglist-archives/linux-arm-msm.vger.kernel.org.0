@@ -2,169 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A09F4654BCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 04:44:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F118654CDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 08:34:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiLWDoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Dec 2022 22:44:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39700 "EHLO
+        id S229587AbiLWHe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 02:34:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiLWDoM (ORCPT
+        with ESMTP id S229483AbiLWHeZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Dec 2022 22:44:12 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5F01571E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 19:44:10 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id fc4so9299471ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 19:44:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uAg6QpfCdmOZD5L0y+vWW8hKAJS00JYx7WNIEcHc+PY=;
-        b=Dyg6sM/QmgCRrzAtbGvnuW3URd404Wl3Ro4iY4FwJmjGLli6VWBYnDG6PJouC3sW07
-         WOMzUpxv0aYzjVlWsIhMPSia2JP1cL2GTD7nHKLAw02nWbpYBxdBWS3UWT3Vvxg+Jm/6
-         nnK3hWltjobeiiYJ3BFq7/Z0m9dl1BcUM4z4PTAtkCGuG9RAxtg6FlMuSjTQf4xFaC5d
-         NzdLbjU0ZdOczYTjt3WWJB6wlVanaOK6w2KpyUM9WLezNPkOlhVCXStUq84qM7vuJSTc
-         wrueSZ2THb+ELMXM19Iqi3WNpicYSPoIglXB2qhCbCb14rahgwNS1fXwsuoTwscnvocC
-         FxxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uAg6QpfCdmOZD5L0y+vWW8hKAJS00JYx7WNIEcHc+PY=;
-        b=r1CEyKEkz8HzZwaVQ9bN+zmxY32FzuVjoyAfFrKN3do36MmMXX8cgQwmwKThulF8hX
-         6/h+icVLc3RgNUWADA0LXZfbejmrW8Hnu+MxWfXa7g137XQVpXDxkgRAyqKsip8V6nKJ
-         CrBzFc8OCnKUSJcGqOuiSFt68WcX9sPn9+yHsfuYvJ9yJfYuZBtj61GznxTR9A5LJZ5m
-         LZNUueW8T3injSHh4sPFBlJha+B2JPoPoWo56JpR4TBxh2wfhZzr5VvY6kYIaYk1oFfG
-         Svl4arEZD/YVDPeMeqHs5YUy3Cpf8ZVVZNh8YlAPSlBFIr9QIIaI2FNxMzdjWF7W+jdU
-         BhQA==
-X-Gm-Message-State: AFqh2krvA70frl+DNooYdbHvvoRXAL6FSrO/LeRgSR6zKcA5GekBkDdw
-        EaQLqQRroRU+cXuJIxjrvZdM7RMcTQHvQeu2QVa1mQ==
-X-Google-Smtp-Source: AMrXdXvntEaGKeDSTmqq/y3JP0S4uqO72IQDMc9WdFud8sVI7E1Ioo2fH6CR8vpWVzYnmTZbb73lFREbUgG6idVlOrQ=
-X-Received: by 2002:a17:906:4ad3:b0:7c0:f459:a0e4 with SMTP id
- u19-20020a1709064ad300b007c0f459a0e4mr458802ejt.155.1671767049441; Thu, 22
- Dec 2022 19:44:09 -0800 (PST)
+        Fri, 23 Dec 2022 02:34:25 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8588316488;
+        Thu, 22 Dec 2022 23:34:24 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BN5NcG5025206;
+        Fri, 23 Dec 2022 07:34:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=U4eZB36qW05d1rIds4PBq70CCXyE6zlxu1m79zPhVo4=;
+ b=R9L0LmXJ/km1WcUTKFTq/sTi8QC94Xh/sLYHqqiqnXvvw7o+4NEDvrMiDOgPLkHqp8ht
+ pLAOXNxReTAsTl0SAnyg6IH7zSE+XKd3IZqh+5ud2z8a8k7pJ7MVtC/uH1VTGpXX1KNO
+ dUH2qpoxrSHVUqGMsNHOcs4qjbM+ojxKQFz8lzoiJsYEEP6lJmK+99EE9+wLlSsTsv+d
+ DXA5HYnEFNIuhw/gRiZiKD7yTbCXF07x2rdG2Nyz29r31gA17MXl4nb1Y0aBSxVhZ+IX
+ WJ+GI+merdz8hOICxa7uRDaMrk06UVuj/HOuvV7rvPyeJidYQgTi+L2p8GSGxbYvbMm8 0Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mm2brvm2b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Dec 2022 07:34:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BN7YGfA017271
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Dec 2022 07:34:16 GMT
+Received: from youghand-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 22 Dec 2022 23:34:12 -0800
+From:   Youghandhar Chintala <quic_youghand@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <quic_mpubbise@quicinc.com>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Youghandhar Chintala" <quic_youghand@quicinc.com>
+Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add wifi alias for SC7280-idp
+Date:   Fri, 23 Dec 2022 13:03:53 +0530
+Message-ID: <20221223073353.20612-1-quic_youghand@quicinc.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-References: <20221222131656.49584-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20221222131656.49584-1-manivannan.sadhasivam@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Thu, 22 Dec 2022 21:43:58 -0600
-Message-ID: <CAKXuJqg=fi2r5yiWUhtEj5-Kz-N6ejNiE1HbjtZ3ZtJ5fObVtA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/16] Qcom: LLCC/EDAC: Fix base address used for LLCC banks
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
-        ahalaney@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UVBOUgLjFo7fZsVpsedK-VHJn178dYKc
+X-Proofpoint-GUID: UVBOUgLjFo7fZsVpsedK-VHJn178dYKc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-23_02,2022-12-22_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=838 adultscore=0
+ priorityscore=1501 clxscore=1011 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212230064
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 22, 2022 at 7:17 AM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> The Qualcomm LLCC/EDAC drivers were using a fixed register stride for
-> accessing the (Control and Status Regsiters) CSRs of each LLCC bank.
-> This offset only works for some SoCs like SDM845 for which driver support
-> was initially added.
->
-> But the later SoCs use different register stride that vary between the
-> banks with holes in-between. So it is not possible to use a single register
-> stride for accessing the CSRs of each bank. By doing so could result in a
-> crash with the current drivers. So far this crash is not reported since
-> EDAC_QCOM driver is not enabled in ARM64 defconfig and no one tested the
-> driver extensively by triggering the EDAC IRQ (that's where each bank
-> CSRs are accessed).
->
-> For fixing this issue, let's obtain the base address of each LLCC bank from
-> devicetree and get rid of the fixed stride.
->
-> This series affects multiple platforms but I have only tested this on
-> SM8250, SM8450, and SM6350. Testing on other platforms is welcomed.
->
-> Thanks,
-> Mani
->
-> Changes in v4:
->
-> * Added a patch that fixes the use-after-free bug in qcom_edac driver
->
-> Changes in v3:
->
-> * Brought back reg-names property for compatibility (Krzysztof)
-> * Removed Fixes tag and stable list as backporting the drivers/binding/dts
->   patches alone would break (Krzysztof)
-> * Fixed the uninitialized variable issue (Kbot)
-> * Added a patch to make use of driver supplied polling interval (Luca)
-> * Added a patch for module autoloading (Andrew)
-> * Didn't collect Review tags from Sai as the dts patches were changed.
->
-> Changes in v2:
->
-> * Removed reg-names property and used index of reg property to parse LLCC
->   bank base address (Bjorn)
-> * Collected Ack from Sai for binding
-> * Added a new patch for polling mode (Luca)
-> * Renamed subject of patches targeting SC7180 and SM6350
->
-> Manivannan Sadhasivam (16):
->   dt-bindings: arm: msm: Update the maintainers for LLCC
->   dt-bindings: arm: msm: Fix register regions used for LLCC banks
->   arm64: dts: qcom: sdm845: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc7180: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc7280: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sc8280xp: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8150: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8250: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8350: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm8450: Fix the base addresses of LLCC banks
->   arm64: dts: qcom: sm6350: Fix the base addresses of LLCC banks
->   EDAC/device: Make use of poll_msec value in edac_device_ctl_info
->     struct
->   EDAC/qcom: Add platform_device_id table for module autoloading
->   EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_info's
->     pvt_info
->   qcom: llcc/edac: Fix the base address used for accessing LLCC banks
->   qcom: llcc/edac: Support polling mode for ECC handling
->
->  .../bindings/arm/msm/qcom,llcc.yaml           | 128 ++++++++++++++++--
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   5 +-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  10 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm6350.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   7 +-
->  arch/arm64/boot/dts/qcom/sm8450.dtsi          |   7 +-
->  drivers/edac/edac_device.c                    |   2 +-
->  drivers/edac/qcom_edac.c                      |  63 +++++----
->  drivers/soc/qcom/llcc-qcom.c                  |  85 ++++++------
->  include/linux/soc/qcom/llcc-qcom.h            |   6 +-
->  14 files changed, 243 insertions(+), 95 deletions(-)
->
-> --
-> 2.25.1
->
+Currently, the boot loader code used in the SC7280 SoC accesses
+the WiFi node using node names (wifi@<addr>). Since the bootloader
+is a common code that is used in SoCs having different WiFi chipsets,
+it is better if the bootloader code accesses the WiFi node using
+a WiFi alias. The advantage of this method is that the boot loader
+code need not be changed for every new WiFi chip.
+Therefore, add wifi alias entry for SC7280-idp device tree
 
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
+---
+V2:
+ -Added purpose of this in the commit message
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Like Andrew, tested starting, restarting, and stopping the edac
-service multiple times.
-edac-ctl --mainboard reports "edac-ctl: mainboard: LENOVO 21BX0015US"
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index cd432a2856a7..c4f88d7b3758 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -18,6 +18,7 @@ / {
+ 	aliases {
+ 		bluetooth0 = &bluetooth;
+ 		serial1 = &uart7;
++		wifi0 = &wifi;
+ 	};
+ 
+ 	max98360a: audio-codec-0 {
+-- 
+2.38.0
 
-Thanks Mani!
--- steev
