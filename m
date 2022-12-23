@@ -2,82 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1A966553F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 20:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F20966555EF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Dec 2022 00:16:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232894AbiLWTlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 14:41:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
+        id S231153AbiLWXQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 18:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232753AbiLWTlx (ORCPT
+        with ESMTP id S230394AbiLWXQn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 14:41:53 -0500
-X-Greylist: delayed 414 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 23 Dec 2022 11:41:52 PST
-Received: from out-232.mta0.migadu.com (out-232.mta0.migadu.com [91.218.175.232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F3220BF0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 11:41:51 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1671824095;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Cuo2mCxNwzlaaPMVGjwAgwxjj9yvcLc2q0fziXRbFVU=;
-        b=NeIx+4APL6Bbg5KKboUjBG2eMNXJamoYBXirkOAWVHWdr5z58oL0yA1l2v/nNg/Vn43YVS
-        VcEuaxYCoir6rAKF9EQk1ZNgSTPYJzQVmgHffQICsaZh/P1+KAxDQ5hDBWALfLdtUGUHxV
-        K2WaUZukdiczgakdeTuyhv3d2vXkkwE=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] ARM: dts: qcom: pm8226: add IADC node
-Date:   Fri, 23 Dec 2022 19:34:03 +0000
-Message-Id: <20221223193403.781355-4-rayyan@ansari.sh>
-In-Reply-To: <20221223193403.781355-1-rayyan@ansari.sh>
-References: <20221223193403.781355-1-rayyan@ansari.sh>
+        Fri, 23 Dec 2022 18:16:43 -0500
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B77411808
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 15:16:41 -0800 (PST)
+Received: by mail-il1-x129.google.com with SMTP id j28so3104232ila.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 15:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wo8+qziymdofRv3UJT9Vr9QEs/JxpV0VfpNVZ4a+DD4=;
+        b=YAOggKjqGks5q6E6bbeBGXMAkHu90HOkHroiwF6ex86LsVjJ/0yQzaIbd5QI5R5jZ0
+         siRkbHK2ZocCTF21MTjD5Fuf+SIgjz6+OjwtTOi0UEMuxuj9G6nfIO5fpOeY9Bi55Ewk
+         aFdwufpJTV0hoxzNQ4Xos9zykeGJrsb7i4/as=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wo8+qziymdofRv3UJT9Vr9QEs/JxpV0VfpNVZ4a+DD4=;
+        b=zZ1bqTR6R8mAlrbSROP1zmNDlWwVV/+IVQykHiX7i7K73079hVBduDFYA4BcjhjxDh
+         QC5DsmsY3dNsWLfw7+ion+g9eG+7gH1pC/GD2hRb4K21XIf9K/evcxz5lEL/Hh7tIpik
+         yzIOD6xNc/+JovuEBtUsb2TtotdbMpr2MG9AVbSz3wvuQUBLWluMhS28L6pRpEY9C6+f
+         axDuVsZ76qS5snFf4dWT+VGRf8VGwONmdGdjjo+86P8KEpNFoK5tkxKEyEhRdnx+DRkZ
+         pPkr7xLsKjUMzXsZgcI0VyMJtXGfxH3zt+ck45sz9LR9T3AF6j9eo3GI2TNgctSWfV9O
+         kDUg==
+X-Gm-Message-State: AFqh2krHfSaiD77dTZkcdJAmdKHQQlZ1hN0LZq+d7xLiSlzx7VzGQQ5T
+        FziM7OI79j33DjJeeYQwRX2sSn938lmfyOqR
+X-Google-Smtp-Source: AMrXdXtBCjEBL3y0Ms4Y0lvLazdMaD09uL52cX3vuS/Jzd+aLpCpsyh+6V4TXnGydLIPvhXO6sNOUg==
+X-Received: by 2002:a92:6403:0:b0:303:18a7:815 with SMTP id y3-20020a926403000000b0030318a70815mr7324272ilb.17.1671837400889;
+        Fri, 23 Dec 2022 15:16:40 -0800 (PST)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id z9-20020a056638214900b0038a57c147dbsm1346255jaj.122.2022.12.23.15.16.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Dec 2022 15:16:40 -0800 (PST)
+Message-ID: <207bdc58-c0f6-8a95-70bb-fee7d4749bd6@ieee.org>
+Date:   Fri, 23 Dec 2022 17:16:38 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: enable IPA in
+ sc7280-herobrine-lte-sku.dtsi
+To:     Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, agross@kernel.org,
+        quic_sibis@quicinc.com, elder@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221215224552.1232449-1-elder@linaro.org>
+ <Y5vDXm4oo2cn3etX@google.com>
+ <CAD=FV=XsUXCzjKbLvOd7M-CPQi13pf9dvpvLwLQnsoL0m-5xCQ@mail.gmail.com>
+Content-Language: en-US
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <CAD=FV=XsUXCzjKbLvOd7M-CPQi13pf9dvpvLwLQnsoL0m-5xCQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a node for the current ADC (IADC) found in PM8226.
+On 12/22/22 4:39 PM, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Dec 15, 2022 at 5:01 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>>
+>> On Thu, Dec 15, 2022 at 04:45:52PM -0600, Alex Elder wrote:
+>>
+>>> Subject: arm64: dts: qcom: sc7280: enable IPA in sc7280-herobrine-lte-sku.dtsi
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
----
- arch/arm/boot/dts/qcom-pm8226.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+I'll post an update with your suggested subject line.
 
-diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
-index 403324a35cf5..82470549f240 100644
---- a/arch/arm/boot/dts/qcom-pm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
-@@ -88,6 +88,12 @@ adc-chan@f {
- 			};
- 		};
- 
-+		pm8226_iadc: iadc@3600 {
-+			compatible = "qcom,spmi-iadc";
-+			reg = <0x3600>;
-+			interrupts = <0x0 0x36 0x0 IRQ_TYPE_EDGE_RISING>;
-+		};
-+
- 		rtc@6000 {
- 			compatible = "qcom,pm8941-rtc";
- 			reg = <0x6000>, <0x6100>;
--- 
-2.39.0
+Thanks!
+
+					-Alex
+
+>>
+>> nit: that sounds as if IPA wasn't enabled previously. It would be
+>> clearer to say something like: "sc7280: only enable IPA for boards
+>> with a modem".
+>>
+>>> IPA is only needed on a platform if it includes a modem, and not all
+>>> SC7280 SoC variants do.  The file "sc7280-herobrine-lte-sku.dtsi" is
+>>> used to encapsulate definitions related to Chrome OS SC7280 devices
+>>> where a modem is present, and that's the proper place for the IPA
+>>> node to be enabled.
+>>>
+>>> Currently IPA is enabled in "sc7280-idp.dtsi", which is included by
+>>> DTS files for Qualcomm reference platforms (all of which include the
+>>> modem).  That also includes "sc7280-herobrine-lte-sku.dtsi", so
+>>> enabling IPA there would make it unnecessary for "sc7280-idp.dtsi"
+>>> to enable it.
+>>>
+>>> The only other place IPA is enabled is "sc7280-qcard.dtsi".
+>>> That file is included only by "sc7280-herobrine.dtsi", which
+>>> is (eventually) included only by these top-level DTS files:
+>>>    sc7280-herobrine-crd.dts
+>>>    sc7280-herobrine-herobrine-r1.dts
+>>>    sc7280-herobrine-evoker.dts
+>>>    sc7280-herobrine-evoker-lte.dts
+>>>    sc7280-herobrine-villager-r0.dts
+>>>    sc7280-herobrine-villager-r1.dts
+>>>    sc7280-herobrine-villager-r1-lte.dts
+>>> All of but two of these include "sc7280-herobrine-lte-sku.dtsi", and
+>>> for those cases, enabling IPA there means there is no need for it to
+>>> be enabled in "sc7280-qcard.dtsi".
+>>>
+>>> The two remaining cases will no longer enable IPA as a result of
+>>> this change:
+>>>    sc7280-herobrine-evoker.dts
+>>>    sc7280-herobrine-villager-r1.dts
+>>> Both of these have "lte" counterparts, and are meant to represent
+>>> board variants that do *not* have a modem.
+>>>
+>>> This is exactly the desired configuration.
+>>>
+>>> Signed-off-by: Alex Elder <elder@linaro.org>
+>>> Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>> Tested-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> 
+> I'd agree that the subject like proposed by Matthias sounds better. In any case:
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
