@@ -2,152 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB58F654F4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 11:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86506654F96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 12:18:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235926AbiLWKuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 05:50:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60818 "EHLO
+        id S230368AbiLWLSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 06:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiLWKuG (ORCPT
+        with ESMTP id S229959AbiLWLSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 05:50:06 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5542EFA0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:50:05 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id g13so6629892lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:50:05 -0800 (PST)
+        Fri, 23 Dec 2022 06:18:43 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D4A612A9E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 03:18:41 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id v11so4661427ljk.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 03:18:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WtagtrjVyMLvccSqt3I+WkfzIk+UO6YPIaRsEP+rBLY=;
-        b=tSt927mP1h9N5fflQwy+3M1COdivv/3rLlaRfJr0FQ9I3BisLoiYywvm/95jk4Fssk
-         6E0GkdulnQMr5wV4k04uyjWQM1CgC7q6bymUdvKO8IYj1//m9BkCxf5XQRS0IMvn0enj
-         tFACx7Da24rDGaqCjOxxHDhPekEOOagUh34s3yyRiEIzMNxJY7+08+xWfVGRIWRJ/XBC
-         E9gdHf6bJBFAlG6Ng/praFU1adVu82inVAdiSoV9i9Rno3lQoOoNF6dpDoz1/0PRIzm7
-         0oUsBuKai7k6FcdiT60O+BF4PcqvxPPGVFlK3aR7FVubLSTjAVKR608jCWVJZrWu4oQP
-         qrxg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BN78cS6rE9Yp4B3TRTbxmbnWU/S5h0cAk1EFG+5tItQ=;
+        b=uUe6o9Cmm9zvEzHBBsQSg3P4exeeOEsHNZBzcvpO+Nf+oFHMrAJE1KJkbjKlBGj6Vm
+         Bb2rK2s4t81FW6t2SWizTZNrH4BZVxG0Zc4U4PVO5ZMaHf7AfovVTAovpMQ/+t0L7/qM
+         /GvpVlACV3K6MltxN+RNcoAI398QVpDcBqylhrJINlYM23f6Wpf4GkEVYoNel9ZXvD3W
+         lnBuYhrklSFfC9h0X+5gZGwd+d28CNa4GBofaNqQXyhSZttpBVr58VnFYB7jFPRZIwpy
+         Cf/XkF5iBvRCK8jdllUr0AYvC58UrmoAT5Lxfl2GUE0JVDLc1rs+b8cKMoOoXBsjEyqb
+         dVPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WtagtrjVyMLvccSqt3I+WkfzIk+UO6YPIaRsEP+rBLY=;
-        b=l/AaM2MOg53voPXtXJLK1MHqngtAB0EOQJpR6x9z4YLf2dmpBMzzdqm0rMxkIOSHCb
-         QiG2HIZa45eYZr7+l6tSyZ/ti/ZuW76dillBKgWB9fhmPRB29LMmHuqsGLPLeSW6joZx
-         4/W7fw0tLWm19sxNwW0xJdulq6yKncvQYh6z53xPrfyu1hDrgQeXscQMMIeZlwM+/KiM
-         aJ7RHkUwGnzCCjuaxBfn2eXUVaYf2xLcXUSEpGm2WsgJvRttZjB1430lqfiMF6Um9IkR
-         8lz9nnhennf01c67WgIVy3jXKKTypplOSpq8kVG4HY0Ld9CcYXqZ3x3LDSrb5GRziaQa
-         blKg==
-X-Gm-Message-State: AFqh2koSdlqZICkIu6BQNwuhzwcxM+iLg4kIGMRhp3c+ko5B5zYGU8Np
-        yh7W3UfxfwpZMXqGopn1FrHG/A==
-X-Google-Smtp-Source: AMrXdXtUV6jVBYU35M5fl+1l/dWPFQQjjpmybPBcN29GIflG/xU5nRArG+ztoYILdH0vx8K2RCdBdw==
-X-Received: by 2002:ac2:4317:0:b0:4b5:834b:9f82 with SMTP id l23-20020ac24317000000b004b5834b9f82mr3518276lfh.58.1671792603447;
-        Fri, 23 Dec 2022 02:50:03 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u18-20020ac258d2000000b004c89b9fb1fdsm479107lfo.68.2022.12.23.02.50.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Dec 2022 02:50:03 -0800 (PST)
-Message-ID: <4d00cf12-917b-32ba-5293-2337c21f1a0f@linaro.org>
-Date:   Fri, 23 Dec 2022 12:50:02 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BN78cS6rE9Yp4B3TRTbxmbnWU/S5h0cAk1EFG+5tItQ=;
+        b=aszDhPM5vh+5En3ncW+BR8t/uW3FHf6PIyovhru1hcn6sLaEUMMvmg3Dk0dSNcWiQl
+         YTE3zZSxK0SKD1Metq9hhUcYyGSJMVQtwpHV9WZP6QgM0gua0+K2bbSkjVo6axpt2nzj
+         +umApyPCAaCWgk/0W9J2xWmd8GwBVuR+AQP0lOnySiein0G1FfZ7uvA8hmAB7oifdyoO
+         U25YfDekyR1Sk77PsiaqUZDW/H3Egx9CaljD7+qwR6PPRbFkYqvib7ca/lmGGakLYDID
+         tpXc1UTfVtgm7J9d0eytbPCP0s6ZXw8TIqMs0wnn02LKExSFKTqX/cYCkQeZYp+nwMg8
+         94zQ==
+X-Gm-Message-State: AFqh2kohaNd8iiTRLCUTbFUL4EOOq619WJHh2cKzwDFJwzz2spIg0AkM
+        tZny1cIP0vMX1SStMb6gFySbcw==
+X-Google-Smtp-Source: AMrXdXvUGRb5NIIujgOVvZRAbSbFSTLCDIcNtu4d6J9ydxgw8Bi+S2NGSfpVFQYVlEhTe0voPcEhMw==
+X-Received: by 2002:a2e:8945:0:b0:27f:958a:9279 with SMTP id b5-20020a2e8945000000b0027f958a9279mr2475446ljk.1.1671794319703;
+        Fri, 23 Dec 2022 03:18:39 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id q13-20020a056512210d00b004b5732080d1sm483280lfr.150.2022.12.23.03.18.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Dec 2022 03:18:39 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: clock: qcom,spmi-clkdiv: convert to DT schema
+Date:   Fri, 23 Dec 2022 12:18:35 +0100
+Message-Id: <20221223111835.37610-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v14 1/5] arm64: dts: qcom: add data-lanes and
- link-freuencies into dp_out endpoint
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        devicetree@vger.kernel.org, airlied@gmail.com
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1671217893-17496-1-git-send-email-quic_khsieh@quicinc.com>
- <1671217893-17496-2-git-send-email-quic_khsieh@quicinc.com>
- <1a5cc3d3-ac2d-52c8-79f4-b13252a4bb86@linaro.org>
- <54bd8b85-8b68-4b28-ec68-28edf9a8a097@quicinc.com>
- <f8ed0927-a97e-9395-1297-addb57ecd855@linaro.org>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <f8ed0927-a97e-9395-1297-addb57ecd855@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/12/2022 09:57, Krzysztof Kozlowski wrote:
-> On 22/12/2022 17:22, Kuogee Hsieh wrote:
->>
->> On 12/22/2022 2:47 AM, Krzysztof Kozlowski wrote:
->>> On 16/12/2022 20:11, Kuogee Hsieh wrote:
->>>> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
->>>> add link-frequencies property into dp_out endpoint as well. The last
->>>> frequency specified at link-frequencies will be the max link rate
->>>> supported by DP.
->>>>
->>>> Changes in v5:
->>>> -- revert changes at sc7180.dtsi and sc7280.dtsi
->>>> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
->>>>
->>>> Changes in v6:
->>>> -- add data-lanes and link-frequencies to yaml
->>>>
->>>> Changes in v7:
->>>> -- change 160000000 to 1620000000
->>>> -- separate yaml to different patch
->>>>
->>>> Changes in v8:
->>>> -- correct Bjorn mail address to kernel.org
->>>>
->>>> Changes in v9:
->>>> -- use symbol rate (hz) for link-frequencies at dp_out at sc7180_trogdor.dtsi
->>>>
->>>> Changes in v13:
->>>> -- delete an extra space at data-lanes
->>>>
->>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 6 +++++-
->>>>    arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++++
->>>>    2 files changed, 9 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->>>> index eae22e6..e2783dd 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
->>>> @@ -814,7 +814,11 @@ hp_i2c: &i2c9 {
->>>>    	status = "okay";
->>>>    	pinctrl-names = "default";
->>>>    	pinctrl-0 = <&dp_hot_plug_det>;
->>>> -	data-lanes = <0 1>;
->>>> +};
->>>> +
->>>> +&dp_out {
->>>> +    data-lanes = <0 1>;
->>>> +    link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
->>> Messed order of nodes.
->>
->> can you please give me more details and how should i fixed it?
-> 
-> Node overrides/extends are more or less ordered by name. dp should not
-> be around mdp, but for example dsi.
+Convert Qualcomm SPMI PMIC clock divider bindings to DT schema.
 
-I think it would be better to also rename dp_out to mdss_dp_out. To keep 
-all mdss entries nearby.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/clock/qcom,spmi-clkdiv.txt       | 59 ---------------
+ .../bindings/clock/qcom,spmi-clkdiv.yaml      | 71 +++++++++++++++++++
+ 2 files changed, 71 insertions(+), 59 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.yaml
 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.txt b/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.txt
+deleted file mode 100644
+index 7474aba36607..000000000000
+--- a/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.txt
++++ /dev/null
+@@ -1,59 +0,0 @@
+-Qualcomm Technologies, Inc. SPMI PMIC clock divider (clkdiv)
+-
+-clkdiv configures the clock frequency of a set of outputs on the PMIC.
+-These clocks are typically wired through alternate functions on
+-gpio pins.
+-
+-=======================
+-Properties
+-=======================
+-
+-- compatible
+-	Usage:      required
+-	Value type: <string>
+-	Definition: must be "qcom,spmi-clkdiv".
+-
+-- reg
+-	Usage:      required
+-	Value type: <prop-encoded-array>
+-	Definition: base address of CLKDIV peripherals.
+-
+-- qcom,num-clkdivs
+-	Usage:      required
+-	Value type: <u32>
+-	Definition: number of CLKDIV peripherals.
+-
+-- clocks:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: reference to the xo clock.
+-
+-- clock-names:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be "xo".
+-
+-- #clock-cells:
+-	Usage: required
+-	Value type: <u32>
+-	Definition: shall contain 1.
+-
+-=======
+-Example
+-=======
+-
+-pm8998_clk_divs: clock-controller@5b00 {
+-	compatible = "qcom,spmi-clkdiv";
+-	reg = <0x5b00>;
+-	#clock-cells = <1>;
+-	qcom,num-clkdivs = <3>;
+-	clocks = <&xo_board>;
+-	clock-names = "xo";
+-
+-	assigned-clocks = <&pm8998_clk_divs 1>,
+-			  <&pm8998_clk_divs 2>,
+-			  <&pm8998_clk_divs 3>;
+-	assigned-clock-rates = <9600000>,
+-			       <9600000>,
+-			       <9600000>;
+-};
+diff --git a/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.yaml b/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.yaml
+new file mode 100644
+index 000000000000..16c95ad6c9d1
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,spmi-clkdiv.yaml
+@@ -0,0 +1,71 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,spmi-clkdiv.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SPMI PMIC clock divider
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Stephen Boyd <sboyd@kernel.org>
++
++description: |
++  Qualcomm SPMI PMIC clock divider configures the clock frequency of a set of
++  outputs on the PMIC.  These clocks are typically wired through alternate
++  functions on GPIO pins.
++
++properties:
++  compatible:
++    const: qcom,spmi-clkdiv
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Board XO source
++
++  clock-names:
++    items:
++      - const: xo
++
++  "#clock-cells":
++    const: 1
++
++  qcom,num-clkdivs:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Number of CLKDIV peripherals.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - "#clock-cells"
++  - qcom,num-clkdivs
++
++additionalProperties: false
++
++examples:
++  - |
++    pmic {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        clock-controller@5b00 {
++            compatible = "qcom,spmi-clkdiv";
++            reg = <0x5b00>;
++            clocks = <&xo_board>;
++            clock-names = "xo";
++            #clock-cells = <1>;
++            qcom,num-clkdivs = <3>;
++
++            assigned-clocks = <&pm8998_clk_divs 1>,
++                              <&pm8998_clk_divs 2>,
++                              <&pm8998_clk_divs 3>;
++            assigned-clock-rates = <9600000>,
++                                   <9600000>,
++                                   <9600000>;
++        };
++    };
 -- 
-With best wishes
-Dmitry
+2.34.1
 
