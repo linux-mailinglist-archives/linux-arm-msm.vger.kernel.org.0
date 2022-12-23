@@ -2,118 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D30A654E39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:16:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E15654E53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 10:27:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbiLWJQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 04:16:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49350 "EHLO
+        id S235990AbiLWJ1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 04:27:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232343AbiLWJQr (ORCPT
+        with ESMTP id S229783AbiLWJ1C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 04:16:47 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6667436D4F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:16:45 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id u12so704299ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 01:16:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KXbHYBuDIV5lUJXXUP4LnYOsl7UwVCFUCALdZR+OXAQ=;
-        b=H3sQ+jHe5Z3JtG1119HvnXeyk4Uw8Lsg3yjKTnebZyKM07wWg615yTsYGsoDHvt/hS
-         q+BOq/kz9Or1/12S54jhHQep6IWHXUv2p9fNSkXIAZkXAPpZu9TjrfkbKXVVWACDaoeS
-         +gpv7EgNF4e6n62wBvkO1K8HWtRoyAJANObhEfq3ac9Bq59rJMlDADrKgyoth7MenPFS
-         5XJOqgmQ4yzmVJJo+E5h118PT9bxtVSSUyjJn8q8YY29nRli/QBnZ3IlE6bk5VFH34fk
-         Fk2sFanEBI5IdpMn8og1EV72kqIWs/UQOPaO/FMxwN+zcEh/g7L65KUTTAo8bECil4/K
-         cMOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KXbHYBuDIV5lUJXXUP4LnYOsl7UwVCFUCALdZR+OXAQ=;
-        b=1Eek0CVni8rNitKGYE1g6eFtUnb4Pn77VjigYvSAvVRIllRyh+2JYdwn4W48RJ4cyz
-         H2zQYe119e0EUInWk/eTqziaaeQmo6y8zNZ+2AVWW2VTug3lD6AGFcoKCQi7fi15J5Xt
-         6rqi1ZtH0uaCxmesCIA7Vs1fe8GA3WjFWG8qAqWXRjiQjsS8mUcGAFEYSfVaU/V0VEjC
-         PnSknq2vXKD6IQoKmXjzv8/Xiah0X6pTEa7IPmF02okNKDyvLlN99cB74VRBFms4+Sym
-         ZXhGgGzFdaz5O9Ivj/OlJo1R/e9BZUMOxIwM2qAI3EAL4mfWzbGQ4cTrWVkLscKc39eT
-         sX9Q==
-X-Gm-Message-State: AFqh2kogiRMSpdIcCE1O8IadPCavRM7XXhrox7wE0TQZqhvcCpE9k6C0
-        fzWNCa0RVIzDcB6QcKCEM4jZtw==
-X-Google-Smtp-Source: AMrXdXtez93izZq8YZ+fN8elJ6VvJ8bOrAVeqQGSPUhyuGBteGzly12p5jek1guTd9KaU+PX5xivVw==
-X-Received: by 2002:a2e:2286:0:b0:27f:836a:229f with SMTP id i128-20020a2e2286000000b0027f836a229fmr2313634lji.41.1671787003659;
-        Fri, 23 Dec 2022 01:16:43 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id y8-20020a05651c106800b002790e941539sm327679ljm.119.2022.12.23.01.16.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Dec 2022 01:16:43 -0800 (PST)
-Message-ID: <4ea89880-d876-4ad8-e2c7-55a985acb53e@linaro.org>
-Date:   Fri, 23 Dec 2022 10:16:42 +0100
+        Fri, 23 Dec 2022 04:27:02 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2020836D7C;
+        Fri, 23 Dec 2022 01:27:01 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 1EF056602CE0;
+        Fri, 23 Dec 2022 09:26:59 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1671787619;
+        bh=E1AtAP8t04wkzu6WeHM2BkXITsnCjN59DnHyrF0N5Ds=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=McUWUJBisrjCwKxmZRsTq9xcBctF1QsYnXNByR7B8uWzC3QbX+m3Iya3/Dbt/jL51
+         Z6QFqTPENgjP58lr1GVMBZIEKKxbQTVvaiDEbLcnc9YMiDV//LMhy2LiI1bJEjZPbz
+         p/05n77Sbl2cp1O7O1pNGeY+n2Asby+5jszV+OpT6GrTiXGELYjTK9/icWaIUoDmgI
+         3+TjR3pVv9CmYITcGoEExsu5cnTIifm1s850t1LCkdSVu84fI1LE5DHAHOsJQqCQ0V
+         FOBvcxHgUfGyHa8ujsm4Zfg5qxWUMCDaRvnT0lrWeL4LZC9aosmDwOARngBxLAOLwH
+         rMmG39lsrwmRg==
+Message-ID: <c4b75af0-76d7-7eb7-f0e5-53c7edd13304@collabora.com>
+Date:   Fri, 23 Dec 2022 10:26:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sc7280: audioreach: Disable legacy
- path clock nodes
+Subject: Re: [PATCH] clk: qcom: dispcc-sm6125: Fix compatible string to match
+ bindings
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        konrad.dybcio@linaro.org
-References: <1671702170-24781-1-git-send-email-quic_srivasam@quicinc.com>
- <1671702170-24781-8-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1671702170-24781-8-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221222210140.278077-1-marijn.suijten@somainline.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20221222210140.278077-1-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/12/2022 10:42, Srinivasa Rao Mandadapu wrote:
-> Disable legacy path clock nodes to avoid conflicts with audioreach
-> clock node.
+Il 22/12/22 22:01, Marijn Suijten ha scritto:
+> According to generic rules the SoC name should be first:
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> ---
->  .../boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi   | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>          arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dtb: clock-controller@5f00000: compatible: 'oneOf' conditional failed, one must be fixed:
+>                  'qcom,dispcc-sm6125' does not match '^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> index a0061ef..dce0114 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> @@ -162,6 +162,18 @@
->  	status = "okay";
->  };
->  
-> +&lpass_core {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_aon {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_audiocc {
-> +	status = "disabled";
-> +};
+> And this is already reflected by the bindings submitted prior to the
+> addition of this driver.  Any DTS following these rules will end up with
+> a non-probing driver because of this mismatch.
+> 
+> Fixes: 6e87c8f07407 ("clk: qcom: Add display clock controller driver for SM6125")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Keep nodes sorted.
+Since there's no devicetree that is currently using the wrong compatible, you
+are *not* breaking anything - hence fixing that issue without any regression.
 
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-Best regards,
-Krzysztof
 
