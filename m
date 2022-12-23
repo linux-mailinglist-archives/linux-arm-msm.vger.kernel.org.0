@@ -2,122 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA3B654F18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 11:18:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96ED5654F28
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 11:24:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235405AbiLWKRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 05:17:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49262 "EHLO
+        id S235840AbiLWKYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 05:24:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235429AbiLWKRh (ORCPT
+        with ESMTP id S229734AbiLWKY2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 05:17:37 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1761CB0D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:17:35 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id b13so6564367lfo.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:17:35 -0800 (PST)
+        Fri, 23 Dec 2022 05:24:28 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E729C1FFB9;
+        Fri, 23 Dec 2022 02:24:27 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso5844559wme.5;
+        Fri, 23 Dec 2022 02:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4yeWUow2E5pd2PmOCYDGqEvn8SqI6E1/L8N2s/4ZDIE=;
-        b=Ve7gil8jUZYofM9V8JzFF/GvDmfNW8+AOx08yqR8aW50OA1NwjrDf+3dJ3z3Rrd2op
-         6Hj6L6E2vnKBFbSpvFob6758PyXPL0SJchZeovU9FVdp+wFh9qz4o/SJ6jCfGHzVhW2k
-         0671EN84JGD3ob0BsnsZjSkc5M7tfq+ZtoVEELCd2uFlHdISfjTRH5L1xQhF+NEpb/OP
-         kKcpubaxqdIrqbxEbW4KCxhOSVxoTXB87xXjP+Aj9eHDmp9s3/rya2YMF+l3UZ1BboVU
-         9L6fZkA7G8cLtjLpZWVsnk13GqX5LblVDTka24aFN9QreuE++buGBu+ae/5wGkkwRWo5
-         s5Ww==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CRuUJZVOpUtgPvjJSw65Ev7JgBrVcaaYMlRw59e9HHo=;
+        b=aKDfNpRXZ27jsLjGo3FBvyZVLAnFXagcPNocTyT8aZNnWT5jO3bG9yr+ZtkR3R+XQB
+         rwB35v6+Oo4WigU65Z+wI/bekDZ2yxSCox341aiSxK5S6iyTfgCNGuvFX3H2ulB58IM/
+         qppT5/mM4+jUO4B/15KM8irHnM7SVwf7dl9mKm15Q/1feN1QPZIPDE+Ex352sLWYnDNr
+         zvwE+jGsjnHqrQ/87Yxost4XxnWU+8r38zNrapRMJzx18Mm1WzWR+/xJ/h8dJ+6TmmhU
+         ZhwZyzKC4DSyj8R45zXrbkHiKoA7ebU7eopWFpiIi/AcQw+nJbEwctHFfQAzQ4oB81+M
+         2cQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4yeWUow2E5pd2PmOCYDGqEvn8SqI6E1/L8N2s/4ZDIE=;
-        b=LmA6c3iJ2EYJt+Url8QtCzaOcrTub0eW/1YAUojzwZRDt0ZCGx7a+xZsW6QbfQtPPb
-         F+db+uTfvYyrqfzey+pi5wQzWeBRnXoCItTpARpr0RJpUXlrWV/HXJb51KOcF3zjrL0R
-         Bxi8ire7t24x8zF3k2rSnl7/ZWo7AYZpgqoesT7nOYwQNhPvGn6YW6CwY1n7w4xBMjPz
-         d/qLfp7oAzpzcS4YjvpCieRi6xWzkPaWPZsXNsDu7An4SYR1wO42aq2m8rjwmpCY5DFm
-         PoP9cgWOAe+YlEF1w6NtvIlliTPu6BlkRCPeWK4xQcioecnSLzepNCeL0NtH8cZvfcEV
-         6cOg==
-X-Gm-Message-State: AFqh2ko/g/0NN25RRqSO2lHsA6RZMj+yJOVTqYjZmPB/6mAIxZzCYdDN
-        ZqmmV2EvmEkBKiC7SuYDtAAyOw==
-X-Google-Smtp-Source: AMrXdXv1uMaEYM2D/w228oNwbo6Ir5UbrfEO2/Odx4oJ4msCRYOs55faL+1VZkr95dIxzDdUWKfPPw==
-X-Received: by 2002:ac2:4834:0:b0:4b5:7f15:aa21 with SMTP id 20-20020ac24834000000b004b57f15aa21mr2963858lft.52.1671790653881;
-        Fri, 23 Dec 2022 02:17:33 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id s16-20020a056512315000b0049876c1bb24sm463280lfi.225.2022.12.23.02.17.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Dec 2022 02:17:33 -0800 (PST)
-Message-ID: <8756ed6b-6ac5-af0b-2f20-236f59f3f80d@linaro.org>
-Date:   Fri, 23 Dec 2022 11:17:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v5 4/5] ARM: dts: qcom: fix various wrong definition for
- kpss-gcc node
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CRuUJZVOpUtgPvjJSw65Ev7JgBrVcaaYMlRw59e9HHo=;
+        b=q/iKd1ZjM3NfwhwiudLvs1HjGnF2FdNJfLmhHXN5svL65Hu4vubwZKsY+z4zQd8o+j
+         H2MmwJNSnuGQTf5SkgA1ia/XISr6HGCddRAG+U6yyjAerTxnxlQ7yXIhMqYpZYkBqOfp
+         DWBqclL8o7n/2rf3b82I/xnOEUd0VHlM5p0RXvXlfLFHF780dQoTnZqkWsF68zKQf2hu
+         gyder/DnDiewt16/j786CXWZsETLkD6ytbm0XNaJCoEAkJQ3nhSfOgalLG/SFCSogBfk
+         e2FPv+/3QZ1RaCwD1OeKRroskxOxL1akx8cVbpcPNhGnzNwO/5+vTbPd0ELP+qVaMHDl
+         7D+Q==
+X-Gm-Message-State: AFqh2kqV/tyHr2SuzCltuK647OtP5l9dp44Dd97I49V5BuVbzU6kpz3d
+        TcXREF3MTL0IDYNXJD7WUVw=
+X-Google-Smtp-Source: AMrXdXuqkbabnF7DzHU0Ej1s4hVLvQJ+bsyuWTyXaxsjS1VNZXTjdjD4EiZQnf6FSm8KN1A3U8ddKQ==
+X-Received: by 2002:a05:600c:a4f:b0:3d3:5c35:8919 with SMTP id c15-20020a05600c0a4f00b003d35c358919mr6783088wmq.30.1671791066352;
+        Fri, 23 Dec 2022 02:24:26 -0800 (PST)
+Received: from localhost ([2a00:23c5:dc8c:8701:1663:9a35:5a7b:1d76])
+        by smtp.gmail.com with ESMTPSA id f1-20020a5d5681000000b002714b3d2348sm2880136wrv.25.2022.12.23.02.24.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Dec 2022 02:24:25 -0800 (PST)
+Date:   Fri, 23 Dec 2022 10:24:25 +0000
+From:   Lorenzo Stoakes <lstoakes@gmail.com>
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Alexey Dobriyan <adobriyan@gmail.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Christian Brauner <brauner@kernel.org>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Marc Herbert <marc.herbert@intel.com>,
-        James Smart <jsmart2021@gmail.com>,
-        Justin Tee <justin.tee@broadcom.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220914142256.28775-1-ansuelsmth@gmail.com>
- <20220914142256.28775-5-ansuelsmth@gmail.com>
- <1f2901e3-c527-5528-9103-c722e56d046a@linaro.org>
-In-Reply-To: <1f2901e3-c527-5528-9103-c722e56d046a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Uladzislau Rezki <urezki@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+        iommu@lists.linux.dev
+Subject: Re: [PATCH 2/2] vmalloc: reject vmap with VM_FLUSH_RESET_PERMS
+Message-ID: <Y6WB2ZGoL7FaFK+f@lucifer>
+References: <20221223092703.61927-1-hch@lst.de>
+ <20221223092703.61927-3-hch@lst.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221223092703.61927-3-hch@lst.de>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/12/2022 11:17, Krzysztof Kozlowski wrote:
-> On 14/09/2022 16:22, Christian Marangi wrote:
->> Fix dtbs_check warning now that we have a correct kpss-gcc yaml
->> schema. Add additional qcom,kpss-gcc compatible to differentiate
->> devices where kpss-gcc should provide a clk and where kpss-gcc should
->> just provide the registers and the syscon phandle.
->> Add missing #clock-cells and remove useless clock-output-names for
->> ipq806x.
->> Add missing bindings for msm8960 and apq8064 kpss-gcc node.
->>
->> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
->> ---
->>  arch/arm/boot/dts/qcom-apq8064.dtsi | 5 ++++-
->>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
->>  arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
->>  arch/arm/boot/dts/qcom-msm8660.dtsi | 2 +-
->>  arch/arm/boot/dts/qcom-msm8960.dtsi | 7 +++++--
->>  5 files changed, 13 insertions(+), 7 deletions(-)
-> 
-> 
-> warning: 1 line adds whitespace errors.
+On Fri, Dec 23, 2022 at 10:27:03AM +0100, Christoph Hellwig wrote:
+> VM_FLUSH_RESET_PERMS is just for use with vmalloc as it is tied to freeing
+> the underlying pages.
+>
+> Signed-off-by: Christoph Hellwig <hch@lst.de>
+> ---
+>  mm/vmalloc.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+> index 9e30f0b3920325..88a644cde9fb12 100644
+> --- a/mm/vmalloc.c
+> +++ b/mm/vmalloc.c
+> @@ -2849,6 +2849,9 @@ void *vmap(struct page **pages, unsigned int count,
+>
+>  	might_sleep();
+>
+> +	if (WARN_ON_ONCE(flags & VM_FLUSH_RESET_PERMS))
+> +		return NULL;
+> +
 
-Only this is relevant (rest of non-applying is not important)
+Might it be worth adding a specific vmap mask that explicitly indicates what
+flags are permissible on vmap()? Then this could become e.g.:-
 
-Best regards,
-Krzysztof
+	if (WARN_ON_ONCE(flags & ~VM_VMAP_PERMITTED_MASK))
+		return NULL;
 
+And would be self-documenting as to why we are disallowing flags (i.e. they are
+not part of the permitted vmap mask).
