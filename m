@@ -2,58 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A9C2654F3E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 11:39:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB58F654F4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 11:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbiLWKjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 05:39:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57142 "EHLO
+        id S235926AbiLWKuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 05:50:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbiLWKjF (ORCPT
+        with ESMTP id S229613AbiLWKuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 05:39:05 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E5A64F2;
-        Fri, 23 Dec 2022 02:39:05 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D896261F0D;
-        Fri, 23 Dec 2022 10:39:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3911DC433D2;
-        Fri, 23 Dec 2022 10:39:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1671791944;
-        bh=s6qRPXwQzEgfyS6IxjcUK5ThQGqqJZl9J/0fvlAQn4I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HclwobKldECH8GnXaXBwYwVA9BZMh8Jjbh0SOGfUPIkLcSZioevrBsUZp8y6n5Lv7
-         nwpvD4GTppWuNTlvkaZ9J3WnUkygRQUxZONxiFk79hF5oVs4IAZbG5XQ48vXeJnFTk
-         2IUT0aIvm2Y3FHhWJGZtQQqzjhg8wq7pGeJz5CYtdejMRWwxj5UoRqTfHvbAmUEqpZ
-         8HtGwzKonttFDQjokKmXiMxrVRm3qTCXaWgInQg9n1vyphI8E9vyTkPOgb9p9Ufndx
-         EpIesrggkQ/1x4svge6Fq8HAwYT5IZiJuQIFTSu9iltzabftkMtoRFyly62CsmCPiq
-         tBQHP4/6SyOYA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1p8fT3-0004Zy-H0; Fri, 23 Dec 2022 11:39:57 +0100
-Date:   Fri, 23 Dec 2022 11:39:57 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        quic_shazhuss@quicinc.com, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com
-Subject: Re: [PATCH v3 5/7] arm64: dts: qcom: sc8280xp: add missing spi nodes
-Message-ID: <Y6WFfSedn7hvEeAA@hovoldconsulting.com>
-References: <20221220192854.521647-1-bmasney@redhat.com>
- <20221220192854.521647-6-bmasney@redhat.com>
+        Fri, 23 Dec 2022 05:50:06 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5542EFA0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:50:05 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id g13so6629892lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 02:50:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WtagtrjVyMLvccSqt3I+WkfzIk+UO6YPIaRsEP+rBLY=;
+        b=tSt927mP1h9N5fflQwy+3M1COdivv/3rLlaRfJr0FQ9I3BisLoiYywvm/95jk4Fssk
+         6E0GkdulnQMr5wV4k04uyjWQM1CgC7q6bymUdvKO8IYj1//m9BkCxf5XQRS0IMvn0enj
+         tFACx7Da24rDGaqCjOxxHDhPekEOOagUh34s3yyRiEIzMNxJY7+08+xWfVGRIWRJ/XBC
+         E9gdHf6bJBFAlG6Ng/praFU1adVu82inVAdiSoV9i9Rno3lQoOoNF6dpDoz1/0PRIzm7
+         0oUsBuKai7k6FcdiT60O+BF4PcqvxPPGVFlK3aR7FVubLSTjAVKR608jCWVJZrWu4oQP
+         qrxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WtagtrjVyMLvccSqt3I+WkfzIk+UO6YPIaRsEP+rBLY=;
+        b=l/AaM2MOg53voPXtXJLK1MHqngtAB0EOQJpR6x9z4YLf2dmpBMzzdqm0rMxkIOSHCb
+         QiG2HIZa45eYZr7+l6tSyZ/ti/ZuW76dillBKgWB9fhmPRB29LMmHuqsGLPLeSW6joZx
+         4/W7fw0tLWm19sxNwW0xJdulq6yKncvQYh6z53xPrfyu1hDrgQeXscQMMIeZlwM+/KiM
+         aJ7RHkUwGnzCCjuaxBfn2eXUVaYf2xLcXUSEpGm2WsgJvRttZjB1430lqfiMF6Um9IkR
+         8lz9nnhennf01c67WgIVy3jXKKTypplOSpq8kVG4HY0Ld9CcYXqZ3x3LDSrb5GRziaQa
+         blKg==
+X-Gm-Message-State: AFqh2koSdlqZICkIu6BQNwuhzwcxM+iLg4kIGMRhp3c+ko5B5zYGU8Np
+        yh7W3UfxfwpZMXqGopn1FrHG/A==
+X-Google-Smtp-Source: AMrXdXtUV6jVBYU35M5fl+1l/dWPFQQjjpmybPBcN29GIflG/xU5nRArG+ztoYILdH0vx8K2RCdBdw==
+X-Received: by 2002:ac2:4317:0:b0:4b5:834b:9f82 with SMTP id l23-20020ac24317000000b004b5834b9f82mr3518276lfh.58.1671792603447;
+        Fri, 23 Dec 2022 02:50:03 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id u18-20020ac258d2000000b004c89b9fb1fdsm479107lfo.68.2022.12.23.02.50.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Dec 2022 02:50:03 -0800 (PST)
+Message-ID: <4d00cf12-917b-32ba-5293-2337c21f1a0f@linaro.org>
+Date:   Fri, 23 Dec 2022 12:50:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221220192854.521647-6-bmasney@redhat.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v14 1/5] arm64: dts: qcom: add data-lanes and
+ link-freuencies into dp_out endpoint
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        devicetree@vger.kernel.org, airlied@gmail.com
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1671217893-17496-1-git-send-email-quic_khsieh@quicinc.com>
+ <1671217893-17496-2-git-send-email-quic_khsieh@quicinc.com>
+ <1a5cc3d3-ac2d-52c8-79f4-b13252a4bb86@linaro.org>
+ <54bd8b85-8b68-4b28-ec68-28edf9a8a097@quicinc.com>
+ <f8ed0927-a97e-9395-1297-addb57ecd855@linaro.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f8ed0927-a97e-9395-1297-addb57ecd855@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,52 +87,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 20, 2022 at 02:28:52PM -0500, Brian Masney wrote:
-> Add the missing nodes for the spi buses that's present on this SoC.
+On 23/12/2022 09:57, Krzysztof Kozlowski wrote:
+> On 22/12/2022 17:22, Kuogee Hsieh wrote:
+>>
+>> On 12/22/2022 2:47 AM, Krzysztof Kozlowski wrote:
+>>> On 16/12/2022 20:11, Kuogee Hsieh wrote:
+>>>> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
+>>>> add link-frequencies property into dp_out endpoint as well. The last
+>>>> frequency specified at link-frequencies will be the max link rate
+>>>> supported by DP.
+>>>>
+>>>> Changes in v5:
+>>>> -- revert changes at sc7180.dtsi and sc7280.dtsi
+>>>> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
+>>>>
+>>>> Changes in v6:
+>>>> -- add data-lanes and link-frequencies to yaml
+>>>>
+>>>> Changes in v7:
+>>>> -- change 160000000 to 1620000000
+>>>> -- separate yaml to different patch
+>>>>
+>>>> Changes in v8:
+>>>> -- correct Bjorn mail address to kernel.org
+>>>>
+>>>> Changes in v9:
+>>>> -- use symbol rate (hz) for link-frequencies at dp_out at sc7180_trogdor.dtsi
+>>>>
+>>>> Changes in v13:
+>>>> -- delete an extra space at data-lanes
+>>>>
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 6 +++++-
+>>>>    arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++++
+>>>>    2 files changed, 9 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>>> index eae22e6..e2783dd 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>>>> @@ -814,7 +814,11 @@ hp_i2c: &i2c9 {
+>>>>    	status = "okay";
+>>>>    	pinctrl-names = "default";
+>>>>    	pinctrl-0 = <&dp_hot_plug_det>;
+>>>> -	data-lanes = <0 1>;
+>>>> +};
+>>>> +
+>>>> +&dp_out {
+>>>> +    data-lanes = <0 1>;
+>>>> +    link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
+>>> Messed order of nodes.
+>>
+>> can you please give me more details and how should i fixed it?
 > 
-> This work was derived from various patches that Qualcomm delivered
-> to Red Hat in a downstream kernel.
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> ---
-> Changes from v2 to v3
-> - None
-> 
-> Changes from v1 to v2
-> - Dropped qupX_ prefix from labels. (Johan)
-> - Dropped spi-max-frequency property from spi nodes. (Shazad)
-> 
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 360 +++++++++++++++++++++++++
->  1 file changed, 360 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index a502d4e19d98..4591d411f5fb 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -829,6 +829,21 @@ i2c16: i2c@880000 {
->  				status = "disabled";
->  			};
->  
-> +			spi16: spi@880000 {
-> +				compatible = "qcom,geni-spi";
-> +				reg = <0 0x00880000 0 0x4000>;
-> +				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
-> +				clock-names = "se";
-> +				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
+> Node overrides/extends are more or less ordered by name. dp should not
+> be around mdp, but for example dsi.
 
-So please move this two after 'reg' as well.
+I think it would be better to also rename dp_out to mdss_dp_out. To keep 
+all mdss entries nearby.
 
-> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 0 &clk_virt SLAVE_QUP_CORE_2 0>,
-> +				                <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_2 0>,
-> +				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
+-- 
+With best wishes
+Dmitry
 
-Shouldn't the spi version of these nodes also have a power-domain
-property?
-
-> +				status = "disabled";
-> +			};
-
-Johan
