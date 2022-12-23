@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 865196552A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 17:18:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE0256552A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 17:18:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231195AbiLWQSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 11:18:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S231338AbiLWQSv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 11:18:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbiLWQSq (ORCPT
+        with ESMTP id S231295AbiLWQSr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 11:18:46 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086B21C410
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 08:18:45 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id o6so7632947lfi.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 08:18:44 -0800 (PST)
+        Fri, 23 Dec 2022 11:18:47 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409441A214
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 08:18:46 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id bp15so7587555lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 08:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GdfFWcY+yQYlh0eS7hJEt/L6xzUJsk3MolFNlo9O/TE=;
-        b=RSAiBTBKcepcbgnlkhqoFng1MUZlwTUzS6PLXgohGapWJ4tLZZZAC1xOaYDBspIOCs
-         enJLBRP1A+Pr1zGpIgC48D3JU+FbaNh+P8k9gH29JtWfiOnisbIJmy5yOuNwzDDHDp7h
-         Ln1oIhyBw4T4tmoWIZkgbI+Av5Zu4zWjZu2tBf0avbyQocFXS+L8EQCBJOMGJUxuecq0
-         zbboOWyvU8MvInUo5wDbJDCxbApucVCyrQb0hqiZ2ofPCDdNerBRoOI8TU9OYV+FRS56
-         p0RJy+UQro/pScUvlaOQBAXHj3r2EmuFKrIVS0mm7B3JBpRdnYikEolAVdYD1QPnVbLl
-         s6Nw==
+        bh=q2dybpJartoWoPXcU0Wb+VV41JBJbl5xyHqkJgWwAug=;
+        b=jq/Fbk3Fh5QkfX73iAPuw7M33yxBkGSIycgvMjDtqmwLCqJZdEr9Zzb1L9q7aJOgBM
+         9wm0et0Yjx/OcH4JzGuFB5F9lTb6um1kcnB4wVJZjYgopZLEpasKs2pebECvOY4reD5f
+         HZm5gsooFlCds26tH/9Efo2R9KyIMHmcyGZ1fneZm7ReIsInx5Ivn3atTAo3RSC9XUXH
+         89Hi6ftSCv2cxhKIVJEgb+dUGwJRWNjlDrLnP0CGOH4z1pgcHWvgN9MKoWj08/nKAF/e
+         AoYNz4dX/6ttanwryZal/TD3l679tf1H61SL61Dh4IZ7iv2ilhF7J1PpbZmmptzzM9Vz
+         UU2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GdfFWcY+yQYlh0eS7hJEt/L6xzUJsk3MolFNlo9O/TE=;
-        b=V6C9R7sbtStBTnW3FhdDVN0Zth4/LaAaV76AQzHE9T8DA9B5i0nuzctFvaJhCd8+Ve
-         PGf/s7BdqVm6Cbg+Z1solHBVqKa8uWCOudG5BL3bCsFgVGlKNUsOC8BlF3Zt7HdnH30l
-         lULqVReEFnnw96+uGL8Q1DdwDIuWi3dEB1tJGsRXCXDc/SLZcxWT8rmXlThRdhfkpMCI
-         HHnRpQvbmIKVc0NtgH5wrCAWPmnk8SYlY72iFjekxVfG8FF2jkQGbUc/bXAoXmZ61g0g
-         e8GbO4vxPrca5UmRY528Ppg/PJqQ/+WixcZJXwG4BwK5ZlUiZRWWV/Mi0PygweTIfBGt
-         ZflA==
-X-Gm-Message-State: AFqh2koBG9+vrfGdB6HUlTHE9bULtqwNSrzDGkWc2po663nu76T2gOaY
-        Ox5/wJQ3ldme6E7Wl2yDLZ60ig==
-X-Google-Smtp-Source: AMrXdXtBfXtxh246hKlPoh31B/GUNxN1je2pQ+6h33637hdWUCDLRTiWPmRwsILupKeWsZqoQzYA5w==
-X-Received: by 2002:ac2:5e2f:0:b0:4b5:5a15:8050 with SMTP id o15-20020ac25e2f000000b004b55a158050mr2441393lfg.32.1671812323443;
-        Fri, 23 Dec 2022 08:18:43 -0800 (PST)
+        bh=q2dybpJartoWoPXcU0Wb+VV41JBJbl5xyHqkJgWwAug=;
+        b=J83+G667nzHDmp4F05BHOWvpxFCewBtcY3KqzeCPoKbdlUL8wpHu2BvzXsRaEAbgrF
+         dxZG/2at7i09EZsI9GcKBhwSKFvkXM/3o1FTiTyKiMNhDENiGBgQRqa7YqrJAOQSsD6F
+         +vbD0BzDiwCSYn8wDzXPixNGN3xVVQ11eBoovR1nDYe0ko0VLWc2jZrLjLvNx0IvOuvg
+         cidP40Ktt+lxdJgICYGXCvCFd9ugHrUaGWSGWekhgko1uNYIZmeigzKUdOnqTwhbXKhp
+         SjdFqE6uiWH4OByTtL2l/aXf1/Avq3hRpGan5yYBf89uKhkT0MIYS/H8F3D2fjK4Dw/6
+         yrWQ==
+X-Gm-Message-State: AFqh2koGnMawcZjwBqTjCg1sCD+L3+9XP83BrmAHIgfrUjKcFkhscLC/
+        3FWWcKHJoYHf7NvTRZCgHY35BQ==
+X-Google-Smtp-Source: AMrXdXtHDJxI5zFf+FFwfsqeCuYnfESSR9XcvRGr/j1oz2zabffurZifOQB3vInoBJ9xLLgCLAVqBA==
+X-Received: by 2002:a19:6508:0:b0:4bc:8c94:82f7 with SMTP id z8-20020a196508000000b004bc8c9482f7mr2621466lfb.13.1671812324547;
+        Fri, 23 Dec 2022 08:18:44 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id n18-20020a05651203f200b004b4f2a30e6csm581360lfq.0.2022.12.23.08.18.42
+        by smtp.gmail.com with ESMTPSA id n18-20020a05651203f200b004b4f2a30e6csm581360lfq.0.2022.12.23.08.18.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Dec 2022 08:18:43 -0800 (PST)
+        Fri, 23 Dec 2022 08:18:44 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/4] ARM: dts: qcom: sdx65: add specific compatible for USB HS PHY
-Date:   Fri, 23 Dec 2022 17:18:34 +0100
-Message-Id: <20221223161835.112079-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: sm8350: align MMC node names with DT schema
+Date:   Fri, 23 Dec 2022 17:18:35 +0100
+Message-Id: <20221223161835.112079-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
 References: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
@@ -80,28 +80,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SoC-specific compatible to the USB HS PHY to match other devices and
-bindings.
+The bindings expect "mmc" for MMC/SDHCI nodes:
+
+  sm8350-sony-xperia-sagami-pdx214.dtb: sdhci@8804000: $nodename:0: 'sdhci@8804000' does not match '^mmc(@.*)?$'
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx65.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index b073e0c63df4..d3c661d7650d 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -219,7 +219,8 @@ blsp1_uart3: serial@831000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 245dce24ec59..18aa4bd073f3 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -2369,7 +2369,7 @@ compute-cb@8 {
+ 			};
  		};
  
- 		usb_hsphy: phy@ff4000 {
--			compatible = "qcom,usb-snps-hs-7nm-phy";
-+			compatible = "qcom,sdx65-usb-hs-phy",
-+				     "qcom,usb-snps-hs-7nm-phy";
- 			reg = <0xff4000 0x120>;
- 			#phy-cells = <0>;
- 			status = "disabled";
+-		sdhc_2: sdhci@8804000 {
++		sdhc_2: mmc@8804000 {
+ 			compatible = "qcom,sm8350-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0 0x08804000 0 0x1000>;
+ 
 -- 
 2.34.1
 
