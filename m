@@ -2,71 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DF69654D1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 08:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 549AC654D5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Dec 2022 09:21:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiLWH7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Dec 2022 02:59:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44458 "EHLO
+        id S235981AbiLWIVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Dec 2022 03:21:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbiLWH7k (ORCPT
+        with ESMTP id S235950AbiLWIVX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Dec 2022 02:59:40 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D59583137A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 23:59:39 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id y25so6102011lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Dec 2022 23:59:39 -0800 (PST)
+        Fri, 23 Dec 2022 03:21:23 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A29034D1A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 00:21:22 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id p36so6154002lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Dec 2022 00:21:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=viOrbf0lksHmeNui5UjSPJobEOSpD+pjXXVPV5boCAQ=;
-        b=tQLQF7M5nCUMF9MOzlhAWlMSaNfDW0bTYJERXXzPRo8N1VaVL6bQK3ohsbYs2GWFWt
-         UYCKWvAKU9TSVeSrLSs8lh7vRgGU6tLb7XAH2kv7/LsOzrZabrQgPzF23zZuG1ZjwPjI
-         31lzhgElPhcZQNFQPrEWqo7qKzRdiVXkJGIZ2akcMa+s/S2/xS6Kz3u17HzonzoPZC5b
-         P1oaQBNbBrTVnrPhtu7fTdw3y2pRbLQmMBLEuY52/3u+LOSOZBsIqJ7fmhQoqLCJubs0
-         I8a9b2ICMlc34z0F3drCqty21nUMWxVLxTlpfkRX0sUJZdDCUueB3PE/4/zz19wZ1vHN
-         Is4w==
+        bh=Y+a3E/WsPht2OzFwjCL5xU/bureLMTsu06UItSpCOeI=;
+        b=gYlcHa7/P3MqkCaku/u5VWO4JjTkTe9UtThg5QFuKr2GukWCj2kAhaiMiOvCBBBd6f
+         GLaOq8uYxKuBRsK4y925kG6ZXRH1fKjLbYikSenfrZgpm9owLK3V037Px1tfarNcoGkr
+         HORH/xHQGZe4Lpyjq0q5YBthSvhm4p9Wz4OAK3wdmSqWJ8/xpW6UIHeF/M7AFt8gTyf6
+         oRpuXKBSmcGvzK7Bbts5PfVWG5b1WRXCWu3QhvSmxA4K3mbkbtTq3O2tqmaTVgmK5v7T
+         mWJITwgEKNx/rBpJzAGHr/v+Of+QoWGwjcJWbAUw+SWcsJvfUZzubfIxdeib+j/sRCFV
+         6dng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=viOrbf0lksHmeNui5UjSPJobEOSpD+pjXXVPV5boCAQ=;
-        b=L5YnGMfYoeUQXly98hxr/jrUFl/josObX6+JNl58LAjEj1cDawrM2Ooj/CFC4T6XlE
-         tNruwJfP81KoVL0RsU4uigwlZ8GBImJNQMljwSBo+0mSiidUXzc47uPoKNASgzQFCBv0
-         fB9538an0mL99DIju25DZF6oOXqj27GavYuWsSdKcgSo1D8xNpq5QWg53Qg4Q8DVJxiK
-         qz7UN/C1ymGXQ9ecZl2eEhd2xKdZgkkvmnvaop6fU8sp3FK+AjxOEzXZ6dHbkugHkp0M
-         EzTQZc1fLiFYuCc5aesUUaxVtlri52ARZeTBuzsiCP8jXJwbZHi4drfQYwIBupseVV24
-         tK8Q==
-X-Gm-Message-State: AFqh2kpTOifdQqwHeW2h6bGvbQ7ja2BGq5Q8Uk5ZvePjacrwN/f+fAsN
-        +GoiYmTMgAfKd6ydjbnlPqpnpQ==
-X-Google-Smtp-Source: AMrXdXv+Q2LBKY+o6Z2CycHSIFaw3tgNY5FOtMuUAMC1pv1zdlGhTga1GoZ5eSsZ9PNMvwYj3q2IJQ==
-X-Received: by 2002:a05:6512:1054:b0:4bb:70b2:6f50 with SMTP id c20-20020a056512105400b004bb70b26f50mr2944636lfb.52.1671782378254;
-        Thu, 22 Dec 2022 23:59:38 -0800 (PST)
+        bh=Y+a3E/WsPht2OzFwjCL5xU/bureLMTsu06UItSpCOeI=;
+        b=GDLbM4lbJcfeq2xtwrtAFVWAr9mJT8j1oJijciEWTsMu2BOJv8td6zybBXsxFKNrHR
+         zHR7jxGMVcj1F3GFjcFp6onUIo05pfszs29ebf9vl//sERmnWZOBQ3Kie9KvqOn9uiry
+         FeN8gM5mZ0GCYbOxysrTHC/8Jocr6GocA4Y6iljLdN/SLsYvtVHvFN3J/17mxam+gcxk
+         XanpyXplwkRAEGWECfgJSUMnQMFVnrxmjp2Rx+l2FlvEPjhmXOTB3zXlMFO6qnXUIrHC
+         R8AWRfPig3DvRnNyQnAtVU+Gg1nT5VXnMgNDZAmeAK+i9ljhE1BLFaTaREgSYvYoxTTX
+         Q/tA==
+X-Gm-Message-State: AFqh2kppxPUarSfl1ZMx24Djw7BXS9kAI7IPEaSyZR/ULaL4/tFXrx2e
+        dt0We2pS3t4VAnlV1PwYGAeYWA==
+X-Google-Smtp-Source: AMrXdXvwJCJKbgnY/TzJ7r09IRwavsCP0pYsBXAK2+HyDem66Dnw9GndXvejtz8/3+6YZjtrTmyKsQ==
+X-Received: by 2002:ac2:59da:0:b0:4b6:ea42:de0d with SMTP id x26-20020ac259da000000b004b6ea42de0dmr1948549lfn.39.1671783680552;
+        Fri, 23 Dec 2022 00:21:20 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id r21-20020ac25f95000000b004b5a4cf69dfsm413023lfe.261.2022.12.22.23.59.37
+        by smtp.gmail.com with ESMTPSA id e29-20020a19675d000000b004b5812207dbsm426219lfj.201.2022.12.23.00.21.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Dec 2022 23:59:37 -0800 (PST)
-Message-ID: <8f9ddaeb-5481-85e2-314e-8c2a99bd48c0@linaro.org>
-Date:   Fri, 23 Dec 2022 08:59:36 +0100
+        Fri, 23 Dec 2022 00:21:19 -0800 (PST)
+Message-ID: <089247cb-9723-6834-bc6c-cd795ada87c6@linaro.org>
+Date:   Fri, 23 Dec 2022 09:21:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add wifi alias for
- SC7280-idp
+Subject: Re: [PATCH v5 1/4] dt-bindings: arm-smmu: Document smmu-500 binding
+ for SM6125
 Content-Language: en-US
-To:     Youghandhar Chintala <quic_youghand@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, quic_mpubbise@quicinc.com,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221223073353.20612-1-quic_youghand@quicinc.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lux Aliaga <they@mint.lgbt>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thierry Reding <treding@nvidia.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20221222193254.126925-1-marijn.suijten@somainline.org>
+ <20221222193254.126925-2-marijn.suijten@somainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221223073353.20612-1-quic_youghand@quicinc.com>
+In-Reply-To: <20221222193254.126925-2-marijn.suijten@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,16 +98,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/12/2022 08:33, Youghandhar Chintala wrote:
-> Currently, the boot loader code used in the SC7280 SoC accesses
-> the WiFi node using node names (wifi@<addr>). Since the bootloader
-> is a common code that is used in SoCs having different WiFi chipsets,
-> it is better if the bootloader code accesses the WiFi node using
-> a WiFi alias. The advantage of this method is that the boot loader
-> code need not be changed for every new WiFi chip.
-> Therefore, add wifi alias entry for SC7280-idp device tree
+On 22/12/2022 20:32, Marijn Suijten wrote:
+> From: Martin Botka <martin.botka@somainline.org>
+> 
+> Document smmu-500 compatibility with the SM6125 SoC.
+> 
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> [Marijn: Move compatible to the new, generic, qcom,smmu-500 list]
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Sounds good but which bootloader.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
