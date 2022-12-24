@@ -2,186 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 547C86559E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Dec 2022 12:13:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 955DD655A34
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Dec 2022 14:13:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230461AbiLXLN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Dec 2022 06:13:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58806 "EHLO
+        id S229688AbiLXNNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Dec 2022 08:13:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbiLXLNZ (ORCPT
+        with ESMTP id S229507AbiLXNND (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Dec 2022 06:13:25 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4334EE39
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 03:13:22 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id o127so7597187yba.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 03:13:22 -0800 (PST)
+        Sat, 24 Dec 2022 08:13:03 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9E83BCA1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 05:13:02 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id g14so7647292ljh.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 05:13:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+T3Wi0FxR+aQY00oUGjtUElYaHTEjFLNV0YO6IaCnFM=;
-        b=h9NJv1kP89kJ0GRcE9rjnc9YCWp4VMHvr8ipvZd7g47/fBlTBStvfj/laeLc8/ZWsD
-         V6IcD9VA8qRhL8mwoqQFlpnQhyQOCp9+Ws/f3jdZ7EBR5d9sgBPouZdU2KD3q21J+0Ae
-         6HlcYgtwZ2/C6xwPx0oxIwZBOEpIzx/BoHBHi4gGWiBHsrTZNCPFZX0CVmHLdjni4zOv
-         9S6Yo1COwWNOdWNDzkk2x7pzyhodJw3hQ16bGBrlDncDmJTzpU0C8cVxWqR7Jylxy2Aw
-         MkQL35cKpcdk3hkQUBrQafmtADcPfeiUWQFqYOFB2We6o9Ip3h8DaryqoqP075yi1+AZ
-         f+nA==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vKooxm9xL5ScTSLAkqGgl8XoM29nVfbKpvwZn93/+/E=;
+        b=ER0D0mgudmmoxY65pvs0+g60xHKjYJxJL6AsTSOXHitngVaXr2n2aiA9ATcm8E2hTD
+         24MtS8S1xYWjCZrV4O9mlkVR1mtL+4so04j+uBKQLzHQTKoF5RKicNV/7FG9UVFbNvv7
+         77CpJq5ypBZl4R9xE7NiJjzoK2AoQ0SY92vqcLvXg/h6BOdb830DGE66WPuMkxy04YYW
+         NNaETJScrvH4XF/gAGHScKGTrnurfmFYjsFOjxaIa1ccx8zw/cbAHwaGsD/iBDsrCVQt
+         V5r4r3FdNX82c9RlcM+VJc6H1aKfMWv1Gt52NV+vVPeMb6AsZOAuTP3ffGQ436mCXLbn
+         sGqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+T3Wi0FxR+aQY00oUGjtUElYaHTEjFLNV0YO6IaCnFM=;
-        b=jAGibwrb/HcciMNpDHWSc4BeulUAZc9r9+NFzmNdRIBsrox/HNt+imkO+zaph0mnaZ
-         rJF1qyPvhlapeRYUWyZ3rPJHh5ODK9Pb9Hd26wPg8nomipPygWQfC8rLhkxgEiqVc83I
-         vdIqNsEO1FJB+iATMrC7HTTwi8H0iuTPFqDVRcFv2cWEADIMs1+LVJ9rYfyA91m2FMLM
-         nOGkxOxp1Jh8+ASNq2mQxP9NiNVwV/i8MpaayCMFVE8fiwlXrMow6cWVXHK7kDZpxdHL
-         /ErFzMf/yqiR31BOYhbxQWlAmr6r7yIKK4A26DYuiHsVSE81hoe78dIJ5oq3fXZgKkG9
-         8iUg==
-X-Gm-Message-State: AFqh2koSFv/rFjXxXO/MrUnohBhGhTucIk2QKTdeOz6m/J0cWlx66Tb7
-        KkPHW9zaJfqg5n+YyGGsPaiJnb3QtE4lsPB8iWXRxw==
-X-Google-Smtp-Source: AMrXdXsdBrBzp3zIBNfzByhXKd6O3hYee5f3EPjHDp6AKPkLSeGQkpzTN0Cw8ffKmOR7kJb9uytDzpFHXF6QEkIqiDA=
-X-Received: by 2002:a25:aa0d:0:b0:76d:bea0:8a05 with SMTP id
- s13-20020a25aa0d000000b0076dbea08a05mr391174ybi.153.1671880401925; Sat, 24
- Dec 2022 03:13:21 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vKooxm9xL5ScTSLAkqGgl8XoM29nVfbKpvwZn93/+/E=;
+        b=McL9UQ+uxmHNM1tewoe7B8KmfQM78HJKjI7OXl4eFeFziJSkrPcJAGn38wQAPzmyh/
+         GjukgmZX9MXEAcGmTRvZb1slwQlIgvly85NpL0LnbZSAx/hDyTw0gtGYEdQriX28U0Uh
+         LL4jGK27hJ+aCJ6mjRGEUCzatLaGRVJp+TcLv3wjTd1gT08DRV0GdURP0xnwFb3LeIaW
+         BitCqK4k9VCwffxmxNQqXqmGxIDArJteOwENxmYb4/da5sBZIDohVCnNsrMoAOgw02lG
+         g931IJ5jZ9bH4qV7CHDOAFJCClXq7VvN8YZ7SzXdvQ7qbj4TS51SBW7iKq7fegEpPjzh
+         wm0Q==
+X-Gm-Message-State: AFqh2krYYFmAjdATKvXmPUHfWeRT72Zco9MM9mt/GjIpIKNoQgK2gCG6
+        2Cg0ztj0qBqapsSY+1tkdelbvA==
+X-Google-Smtp-Source: AMrXdXv4wJOqvXuk4jlsUaRGiCmgix1povzrzFh6Fq2qkhg4zUzx2nNeLPIO9bUZ0hWlNgmRyFtgoA==
+X-Received: by 2002:a2e:b177:0:b0:27d:3c1e:42de with SMTP id a23-20020a2eb177000000b0027d3c1e42demr3383154ljm.27.1671887581289;
+        Sat, 24 Dec 2022 05:13:01 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id bj40-20020a2eaaa8000000b0027fb76a4b44sm289495ljb.97.2022.12.24.05.13.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Dec 2022 05:13:00 -0800 (PST)
+Message-ID: <6a9506a5-caf0-0977-af75-0a4e4c0e3a0f@linaro.org>
+Date:   Sat, 24 Dec 2022 14:12:59 +0100
 MIME-Version: 1.0
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com> <20221223233200.26089-9-quic_wcheng@quicinc.com>
-In-Reply-To: <20221223233200.26089-9-quic_wcheng@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 24 Dec 2022 13:13:11 +0200
-Message-ID: <CAA8EJppsK=L69AaBgj=MzWp-ess3NSn=gPYf8-3QtJVqEVqGzw@mail.gmail.com>
-Subject: Re: [RFC PATCH 08/14] usb: dwc3: Add DT parameter to specify maximum
- number of interrupters
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        quic_jackp@quicinc.com, quic_plai@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 3/4] ARM: dts: qcom: sdx65: add specific compatible for
+ USB HS PHY
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
+ <20221223161835.112079-3-krzysztof.kozlowski@linaro.org>
+ <d6fcecda-2f78-bd75-579b-672f6db779a2@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d6fcecda-2f78-bd75-579b-672f6db779a2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 24 Dec 2022 at 01:33, Wesley Cheng <quic_wcheng@quicinc.com> wrote:
->
-> Allow for the DWC3 host driver to pass along a XHCI property that defines
-> how many interrupters to allocate.  This is in relation for the number of
-> event rings that can be potentially used by other processors within the
-> system.
->
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  drivers/usb/dwc3/core.c | 12 ++++++++++++
->  drivers/usb/dwc3/core.h |  2 ++
->  drivers/usb/dwc3/host.c |  5 ++++-
->  3 files changed, 18 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index 476b63618511..67d6f0ae81d2 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -1446,6 +1446,7 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->         u8                      tx_thr_num_pkt_prd = 0;
->         u8                      tx_max_burst_prd = 0;
->         u8                      tx_fifo_resize_max_num;
-> +       u8                      num_hc_interrupters;
->         const char              *usb_psy_name;
->         int                     ret;
->
-> @@ -1468,6 +1469,9 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->          */
->         tx_fifo_resize_max_num = 6;
->
-> +       /* default to a single XHCI interrupter */
-> +       num_hc_interrupters = 1;
-> +
->         dwc->maximum_speed = usb_get_maximum_speed(dev);
->         dwc->max_ssp_rate = usb_get_maximum_ssp_rate(dev);
->         dwc->dr_mode = usb_get_dr_mode(dev);
-> @@ -1511,6 +1515,12 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->                                 &tx_thr_num_pkt_prd);
->         device_property_read_u8(dev, "snps,tx-max-burst-prd",
->                                 &tx_max_burst_prd);
-> +       device_property_read_u8(dev, "snps,num-hc-interrupters",
-> +                               &num_hc_interrupters);
+On 23/12/2022 17:20, Konrad Dybcio wrote:
+> 
+> 
+> On 23.12.2022 17:18, Krzysztof Kozlowski wrote:
+>> Add SoC-specific compatible to the USB HS PHY to match other devices and
+>> bindings.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm/boot/dts/qcom-sdx65.dtsi | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> index b073e0c63df4..d3c661d7650d 100644
+>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> @@ -219,7 +219,8 @@ blsp1_uart3: serial@831000 {
+>>  		};
+>>  
+>>  		usb_hsphy: phy@ff4000 {
+>> -			compatible = "qcom,usb-snps-hs-7nm-phy";
+>> +			compatible = "qcom,sdx65-usb-hs-phy",
+>> +				     "qcom,usb-snps-hs-7nm-phy";
+> Not sure if the newline is necessary, but still:
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-bindings change?
+It is over 80 - up to 90 - and we still keep 80-limit in coding style.
 
-> +       /* DWC3 core allowed to have a max of 8 interrupters */
-> +       if (num_hc_interrupters > 8)
-> +               num_hc_interrupters = 8;
-> +
->         dwc->do_fifo_resize = device_property_read_bool(dev,
->                                                         "tx-fifo-resize");
->         if (dwc->do_fifo_resize)
-> @@ -1589,6 +1599,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->         dwc->imod_interval = 0;
->
->         dwc->tx_fifo_resize_max_num = tx_fifo_resize_max_num;
-> +
-> +       dwc->num_hc_interrupters = num_hc_interrupters;
->  }
->
->  /* check whether the core supports IMOD */
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 8f9959ba9fd4..09037299da53 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -1050,6 +1050,7 @@ struct dwc3_scratchpad_array {
->   * @tx_max_burst_prd: max periodic ESS transmit burst size
->   * @tx_fifo_resize_max_num: max number of fifos allocated during txfifo resize
->   * @clear_stall_protocol: endpoint number that requires a delayed status phase
-> + * @num_hc_interrupters: number of host controller interrupters
->   * @hsphy_interface: "utmi" or "ulpi"
->   * @connected: true when we're connected to a host, false otherwise
->   * @softconnect: true when gadget connect is called, false when disconnect runs
-> @@ -1275,6 +1276,7 @@ struct dwc3 {
->         u8                      tx_max_burst_prd;
->         u8                      tx_fifo_resize_max_num;
->         u8                      clear_stall_protocol;
-> +       u8                      num_hc_interrupters;
->
->         const char              *hsphy_interface;
->
-> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> index f6f13e7f1ba1..52a284fdd704 100644
-> --- a/drivers/usb/dwc3/host.c
-> +++ b/drivers/usb/dwc3/host.c
-> @@ -66,7 +66,7 @@ static int dwc3_host_get_irq(struct dwc3 *dwc)
->
->  int dwc3_host_init(struct dwc3 *dwc)
->  {
-> -       struct property_entry   props[4];
-> +       struct property_entry   props[5];
->         struct platform_device  *xhci;
->         int                     ret, irq;
->         int                     prop_idx = 0;
-> @@ -112,6 +112,9 @@ int dwc3_host_init(struct dwc3 *dwc)
->         if (DWC3_VER_IS_WITHIN(DWC3, ANY, 300A))
->                 props[prop_idx++] = PROPERTY_ENTRY_BOOL("quirk-broken-port-ped");
->
-> +       props[prop_idx++] = PROPERTY_ENTRY_U8("num-hc-interrupters",
-> +                                                               dwc->num_hc_interrupters);
-> +
->         if (prop_idx) {
->                 ret = device_create_managed_software_node(&xhci->dev, props, NULL);
->                 if (ret) {
+Best regards,
+Krzysztof
 
-
-
--- 
-With best wishes
-Dmitry
