@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4649655D01
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83177655D03
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbiLYL6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231150AbiLYL6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 25 Dec 2022 06:58:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49528 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231150AbiLYL6w (ORCPT
+        with ESMTP id S231131AbiLYL6x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 06:58:52 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8DD2BD0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:51 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id g13so12869478lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:51 -0800 (PST)
+        Sun, 25 Dec 2022 06:58:53 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CDB272A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:52 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id f34so12859845lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dNdtkpZEOdXfGy9MVfRgRPj0usqVhiDHi+woWZD1xjo=;
-        b=m/iai6Vlbz0GJG5ZHbVyp1ybwn46NRWNLDSc797akIT3T/41+w19KNVkoFhKpwdOqM
-         +WNycOcfo5oSla8yrZPsMqIF0QxISzrHNyBTgSsHTigaQ/5sqOrXflKzrjDaspQwL6tH
-         9haa9TVw4sYHQeRyzC4j266VEQuoPRZAdVv1XkCJ5BOym1nL7NG7i1NqHvAdu828ho7e
-         0DubTFOOVloVaxnAWuAyvy9iI/NyCogGGpmcSuSnM3ZwpqnbRM1rjSztm8rDmIUBhnNL
-         +hiG32Yw7zJSsAy2KtaJvQUtfpGT5szkrISIAUu9KwHv9vVNyllG2pvjYQCmxFA/gEcD
-         qGOg==
+        bh=j7AC94VQgQoxhQZz7ucxTtLY+de0f9ECtnoEPYUnvao=;
+        b=LeB4KI+DzfuH+OCQmBRFiP0IthvFrX11t34yBSgZSKj6SsY6KKvZYlotoJlWkmsPDb
+         PlUSX90b5W5XFwqDQUcWcWkepZRy6DZVnFDPUw9PAZ3/z3x+x2ujIQ7wI2VtH3jMrcBa
+         LO67rdkr97MrHTKINCwkGK1Zf+RMVq7cjd8Odn+ui1EqHBsijrg4S7mnF0P7ADP4Sb4C
+         F8UxDbXTzSZH5WsIidwklfNTAx3dVHJEixxRCv/pua5hhkYyaU7N86MRTYv1V5xFQJ89
+         aceV33cscmLVHmaQ8mTs3BqXVOFL2mE+wYM5XyNKMx39hlL1q09hSLYI3WMgUc8JwA98
+         pMzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dNdtkpZEOdXfGy9MVfRgRPj0usqVhiDHi+woWZD1xjo=;
-        b=u07Efjjz8M9EfcAE27Ga9g+wOX19n+hgEaCklYsSwHJe/5qToK7mr0SlszS4cp358z
-         npwxsuwC4NFcAeu0xWsTvG28pOueSm9/InnzkbT+EhDYLgBjdlGYGcMMQMv5xYswZklu
-         jza5zEK7yB3FeqlyMxGtvSBzxWnqNQqLGflGipaXHwIiBYmbKGZSkbwDUyNFdq/4Rq0u
-         TlaS6jjGK/dkB9r7NzlbO/NyIDv+ELNdeUfDAo1TjZzHQeq1HhpUOah5DRNfP48FwqT+
-         AB6zQmBsgUUIn6fAkDkL39OtgLX5fdti+VVeraWjdwg+CyGwniO2APQWNfaU7zktusAF
-         BjGg==
-X-Gm-Message-State: AFqh2krrnExeBixX84iiBaEIAnK4E35cUlnCl/1f7sk0Qo3QLhNcSr2J
-        lMqbyyN9WpM8RGs8yrauWg4TTw==
-X-Google-Smtp-Source: AMrXdXtoJlGkmUulr0XOrAtaQZh6wOEnqmTJV9ZA/AGFnxp2Z/9/oCAmLMmfsWHWY2acc7kv3TYvTw==
-X-Received: by 2002:a05:6512:1288:b0:4cb:63a:54e2 with SMTP id u8-20020a056512128800b004cb063a54e2mr238699lfs.41.1671969529640;
-        Sun, 25 Dec 2022 03:58:49 -0800 (PST)
+        bh=j7AC94VQgQoxhQZz7ucxTtLY+de0f9ECtnoEPYUnvao=;
+        b=Islyt/RCrsSzFd8wrDeaU3/jJ4rxv3MSGNkO5tx+/t+BcRVSlSzo0RNQjfdFFfUyVg
+         8ey0b6RVcoHkH/QLsa7W9yynxMvEA9zCRguXEIyv14Veta9d2BlL+6n5t0bdMW7+943p
+         i1JfZLysSeL460XFcfjMVHH8m/tLrETJDVh7ilY3LxuNWe2utJgKVz/H/dJ4CBXiPJZn
+         Yy4cP7xyqjmqn+P7IyP5pzS2oH8LKdOsb8Lk7MugodQTlTFlPMPNjwveT6N/9darezL7
+         bR75+0H7EyOmS126zaDMnc/ZIPeW64UJ2HT0SIidhQT0MgQIKELt2wQsVjPQE2Ic0iOl
+         /fEg==
+X-Gm-Message-State: AFqh2krWsSKrXDumUeCPHANe97dQN1MNiMreoZZok0zvePobBD2xvGXf
+        QMeM+P9qBz9qnPNwfUmnemGNyg==
+X-Google-Smtp-Source: AMrXdXtiuFUjd+pLdr9EJXHaqoUgrI8X4mE8u7Ett0S+pQz0zW4GUj+p2U+yiARdqbxibRzfADzwiA==
+X-Received: by 2002:a05:6512:39cc:b0:4b5:580f:2497 with SMTP id k12-20020a05651239cc00b004b5580f2497mr4627027lfu.17.1671969530513;
+        Sun, 25 Dec 2022 03:58:50 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.48
+        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:58:49 -0800 (PST)
+        Sun, 25 Dec 2022 03:58:50 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/4] arm64: dts: qcom: sm8250: drop unused clock-frequency from wsa-macro
-Date:   Sun, 25 Dec 2022 12:58:43 +0100
-Message-Id: <20221225115844.55126-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: sm8250: drop unused properties from tx-macro
+Date:   Sun, 25 Dec 2022 12:58:44 +0100
+Message-Id: <20221225115844.55126-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
 References: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
@@ -77,27 +77,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Neither qcom,sm8250-lpass-wsa-macro bindings nor the driver use
-"clock-frequency" property.
+Neither qcom,sm8250-lpass-tx-macro bindings nor the driver use
+"clock-frequency" and address/size cells properties.
 
-  sm8250-hdk.dtb: codec@3240000: Unevaluated properties are not allowed ('clock-frequency' was unexpected)
+  sm8250-mtp.dtb: txmacro@3220000: Unevaluated properties are not allowed ('clock-frequency', '#address-cells', '#size-cells' were unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 434e2c4cce79..a58f51083715 100644
+index a58f51083715..ddd750591e8c 100644
 --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2215,7 +2215,6 @@ wsamacro: codec@3240000 {
- 			clock-names = "mclk", "npl", "macro", "dcodec", "va", "fsgen";
+@@ -2329,10 +2329,7 @@ txmacro: txmacro@3220000 {
+ 			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
  
  			#clock-cells = <0>;
 -			clock-frequency = <9600000>;
  			clock-output-names = "mclk";
+-			#address-cells = <2>;
+-			#size-cells = <2>;
  			#sound-dai-cells = <1>;
+ 		};
  
 -- 
 2.34.1
