@@ -2,75 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49B6B655D16
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 13:01:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A2A8655D1C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 13:01:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231387AbiLYMBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 07:01:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
+        id S231488AbiLYMBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 07:01:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbiLYMAO (ORCPT
+        with ESMTP id S231414AbiLYMAl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 07:00:14 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8EA6452
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:59:30 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id m6so2483900lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:59:30 -0800 (PST)
+        Sun, 25 Dec 2022 07:00:41 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99CED646D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:59:48 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id p36so12842418lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DpO2mOjemVEh3PAsRoqwlQ/H7YfF7zaImpMPnEr2kkE=;
-        b=WQ9gIrxIlkm1Bi3dBa3sXbnKWg3Q6+9M7yX1DJuLWzwUXDr6C9w9JgzsBHC5tLnwdK
-         VVWiwAxxEYutZypfXYJlwWnW8Kw/LXGV60gOlJT69vJsPjgSZpRlVB7YuuR7eCz1Jq5t
-         g0urP0hgZMtbFQN9kg7S8FUuMLk4ZjSwpD0SRNiMjbpVHe67g4qlHnvgEmL7P4ZLJNYF
-         omP7CeTpAL7RRSgyZ+LQDW2qHeYj1VFCiG1IlcIvSko5qiI6FoP6p3Dtwo/8Y4HUUVZt
-         c/q76xmPAe0jKlu0AksRHVjkwPflv9XBTs7Zfd7x3IlFWV3nPmTF/W+3ytbV8mtqSnFL
-         UVZA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ExVoiUpX6U97IwTnko2fEfj7v9D1prV4olDEP5D5io=;
+        b=mj/BnUSLmbbHa0rGlrkk358XG2VGf0Z29EEwI1IbHMM+uP8kiNxH2zkAMFTE7cHDdg
+         xTvmXlEYsZhcnY/DltcrjplkB2l5+E999eUQ0exHvZNCtvrojJIRBb/hfRYxrQDOJ5zH
+         IL7EGweWf6TfN8A7QG0uQ6kulpLHov+jrfFWHYj3yCMeEaO4SUo+jci5uAnMamGFSwpU
+         yWEzhJwI+6OgRQiUsw+sExYUQ5VN+pESPqV2jrjGwIMozJ70P13YMhwKV8IuCHF6GDu0
+         Ll7bc7a2yyowP3FLnOZXJlG+ToLQ/bhY/ag9ntDIslgwxND+MY4gYps3/CT0x8PPRqC1
+         J6Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DpO2mOjemVEh3PAsRoqwlQ/H7YfF7zaImpMPnEr2kkE=;
-        b=YfQOKrlxbdAvm6qf15IvxSJJA+1fzSJx0TXoM0TaWTKOkYd0l7KGGIN8mU8rIKF6HU
-         GIi7qkZ4ByZ8BbVfHYhjjUh76QQj1wAKc/BsXdlQV4bZAyX/dbhxKZjXs7X7EGNZ20cG
-         AthxQ/0ZAO3LbseVi00bxBu1UMgfrUBbXFWqbsfVk6szjrWYSTweH6AIGV5zDPXwQy2N
-         Do5PhdKeG/w1Tx6ZRhHMziTu/hzITg1CMZ1Zxz7ARa5hzpHkQ4cHv7uRU/FVyaVZLgJk
-         0ANSQ7VTGxNhcXtiJzyA1OhP/Hjb3ou0yIIQU+MSWceCK9Ckn42d5mhSJzYCLaoYnvFZ
-         JpNA==
-X-Gm-Message-State: AFqh2koDBG1IxNl4K+xN/Giz5x7VRywPsiWd4HkjbsNhmu1Norg9Hv5U
-        oDLnE/6GXKMMlBRUFsyaH/of6g==
-X-Google-Smtp-Source: AMrXdXuKBP7b/Q0FfTlpsV5HqeYYSwCA0PmQAWCBg3FaLBiMZtQ03yvUXAxoTp6x8h1hfEoWYwZD4A==
-X-Received: by 2002:a05:6512:1111:b0:4b5:43ef:a552 with SMTP id l17-20020a056512111100b004b543efa552mr4951726lfg.16.1671969569066;
-        Sun, 25 Dec 2022 03:59:29 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+ExVoiUpX6U97IwTnko2fEfj7v9D1prV4olDEP5D5io=;
+        b=UtPcQZmJgTVb7H717TghVVLmJZVs/Y23dVJMVULaAqQmfdf5ZIKj8PFAxuX8iDW1kX
+         HukZgTFl64uHjJ7aBHrzbogGT+PvbFvPxzAK/F95F4whdhoEqrMrgXdVOvlJ/GR4gaxe
+         bqS4oHd264SHkEuni81MgPsORklc2KPq/bN9BE4472kQxd8OMiEg5XGiYs6pBuSFaGer
+         I0FR5B45ks1AgejH3jDIFmusXMpcMBoJqYf6kbNZtN97ldoLfdQAglKWSzP1rYugWVg/
+         Kti5l4wLXOrFkT5sUUuGwyR9YYyCmafwZlodyl7nlifJwpJ2+5AwUE7SGscgqmVfV3U1
+         kEiQ==
+X-Gm-Message-State: AFqh2kr9MmfhIujrbCwmZGfTKBEJTmLgY+G3Kryfjj2cC+V8nFIUE4Vx
+        3Icre4SsQWPQKppDDlX0friRew==
+X-Google-Smtp-Source: AMrXdXvRoHODcVE1Z/m7I9inLxGRn9KGvmQR6hYnkIUmcPWQwFWh03XIBatwnpiar+kQVD3SCsa+Zg==
+X-Received: by 2002:a05:6512:3d9e:b0:4c0:2b07:e6e7 with SMTP id k30-20020a0565123d9e00b004c02b07e6e7mr5379114lfv.58.1671969586994;
+        Sun, 25 Dec 2022 03:59:46 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id r4-20020ac252a4000000b004a25bb4494fsm1336911lfm.178.2022.12.25.03.59.28
+        by smtp.gmail.com with ESMTPSA id v10-20020ac258ea000000b004b501497b6fsm1338615lfo.148.2022.12.25.03.59.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:59:28 -0800 (PST)
+        Sun, 25 Dec 2022 03:59:46 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: display: msm: drop unneeded list for single compatible
-Date:   Sun, 25 Dec 2022 12:59:25 +0100
-Message-Id: <20221225115925.55337-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: correct SC7280 compatibles
+Date:   Sun, 25 Dec 2022 12:59:43 +0100
+Message-Id: <20221225115944.55425-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221225115925.55337-1-krzysztof.kozlowski@linaro.org>
-References: <20221225115925.55337-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,177 +77,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With only one compatible, there is no need to define it as list (items).
+USB3 DP PHY on SC7280 is used with SM8250 fallback:
+
+  sc7280-herobrine-evoker.dtb: phy-wrapper@88e9000: compatible: ['qcom,sc7280-qmp-usb3-dp-phy', 'qcom,sm8250-qmp-usb3-dp-phy'] is too long
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/display/msm/qcom,msm8998-dpu.yaml      | 3 +--
- .../devicetree/bindings/display/msm/qcom,msm8998-mdss.yaml     | 3 +--
- .../devicetree/bindings/display/msm/qcom,qcm2290-dpu.yaml      | 3 +--
- .../devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml     | 3 +--
- .../devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml       | 3 +--
- .../devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml      | 3 +--
- .../devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml       | 3 +--
- .../devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml      | 3 +--
- .../devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml       | 3 +--
- .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml      | 3 +--
- .../devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml      | 3 +--
- 11 files changed, 11 insertions(+), 22 deletions(-)
+ .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml        | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,msm8998-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,msm8998-dpu.yaml
-index 727a20c4375c..943b6f017f7c 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,msm8998-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,msm8998-dpu.yaml
-@@ -13,8 +13,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+index d9d0ab90edb1..97d94c685d7b 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+@@ -19,12 +19,17 @@ maintainers:
  
  properties:
    compatible:
--    items:
--      - const: qcom,msm8998-dpu
-+    const: qcom,msm8998-dpu
- 
+-    enum:
+-      - qcom,sc7180-qmp-usb3-dp-phy
+-      - qcom,sc7280-qmp-usb3-dp-phy
+-      - qcom,sc8180x-qmp-usb3-dp-phy
+-      - qcom,sdm845-qmp-usb3-dp-phy
+-      - qcom,sm8250-qmp-usb3-dp-phy
++    oneOf:
++      - enum:
++          - qcom,sc7180-qmp-usb3-dp-phy
++          - qcom,sc8180x-qmp-usb3-dp-phy
++          - qcom,sdm845-qmp-usb3-dp-phy
++          - qcom,sm8250-qmp-usb3-dp-phy
++      - items:
++          - enum:
++              - qcom,sc7280-qmp-usb3-dp-phy
++          - const: qcom,sm8250-qmp-usb3-dp-phy
++
    reg:
      items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,msm8998-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,msm8998-mdss.yaml
-index cf52ff77a41a..f67632a7e8fa 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,msm8998-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,msm8998-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,msm8998-mdss
-+    const: qcom,msm8998-mdss
- 
-   clocks:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-dpu.yaml
-index a2fd9f8e456c..6c234b3b2765 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-dpu.yaml
-@@ -13,8 +13,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,qcm2290-dpu
-+    const: qcom,qcm2290-dpu
- 
-   reg:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-index 4795e13c7b59..f5b24f81f382 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,qcm2290-mdss
-+    const: qcom,qcm2290-mdss
- 
-   clocks:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-index 2ade94a216a8..86cfa3ddce62 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-@@ -13,8 +13,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sc7180-dpu
-+    const: qcom,sc7180-dpu
- 
-   reg:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml
-index 13e396d61a51..2a1d4510db6d 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sc7180-mdss
-+    const: qcom,sc7180-mdss
- 
-   clocks:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml
-index a2f305b04ee1..5cabb899977d 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml
-@@ -13,8 +13,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sdm845-dpu
-+    const: qcom,sdm845-dpu
- 
-   reg:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
-index 31ca6f99fc22..289d61debc38 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sdm845-mdss
-+    const: qcom,sdm845-mdss
- 
-   clocks:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml
-index 6ad828a20332..bf62c2f5325a 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-dpu.yaml
-@@ -13,8 +13,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sm6115-dpu
-+    const: qcom,sm6115-dpu
- 
-   reg:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-index 886858ef6700..2491cb100b33 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sm6115-mdss
-+    const: qcom,sm6115-mdss
- 
-   clocks:
-     items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml
-index 0d3be5386b3f..753bc99c868a 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8250-mdss.yaml
-@@ -18,8 +18,7 @@ $ref: /schemas/display/msm/mdss-common.yaml#
- 
- properties:
-   compatible:
--    items:
--      - const: qcom,sm8250-mdss
-+    const: qcom,sm8250-mdss
- 
-   clocks:
-     items:
+       - description: Address and length of PHY's USB serdes block.
 -- 
 2.34.1
 
