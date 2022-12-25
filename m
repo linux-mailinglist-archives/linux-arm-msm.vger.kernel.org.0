@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52FE5655CFD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4649655D01
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbiLYL6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 06:58:53 -0500
+        id S231140AbiLYL6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 06:58:55 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231137AbiLYL6v (ORCPT
+        with ESMTP id S231150AbiLYL6w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 06:58:51 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CA32AEE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:50 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j17so3367644lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:50 -0800 (PST)
+        Sun, 25 Dec 2022 06:58:52 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8DD2BD0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:51 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id g13so12869478lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2an1bgCCtYcqIGsotfvE1Sv5rmH79gSLi6R/WkJuKIg=;
-        b=gvHSX3ucvanfV4Kp0KtGHb8KWQFxn/4MyXE5fe3Rgxiz8BzP7U/oitC3Zrki89zu10
-         i7RqLSdeM64YqR8yazPsTp6Gbzfzj4zmbHRvw5ftJ3CGOKSrsosc+c1VTTzVhgInk3ab
-         NN1AXAQCAk/oixxDEjI3at7NSKNFCUCl7ahiA1xTlCIxO1f5PihFQ9jmiDHFgOQWTL+C
-         B4GmhRGKYzo9G8vLv71Za1RCMX0bl+i9b41dpZTbMqM5cCs/OzpOwpJLAOvN18TJ/M6N
-         BrQZj9etorVVF01NELwMZXrnKCPD0Dv0PjCeUsJl0WiY6vb+AzHzL6RIa88IDhfMono8
-         6+5A==
+        bh=dNdtkpZEOdXfGy9MVfRgRPj0usqVhiDHi+woWZD1xjo=;
+        b=m/iai6Vlbz0GJG5ZHbVyp1ybwn46NRWNLDSc797akIT3T/41+w19KNVkoFhKpwdOqM
+         +WNycOcfo5oSla8yrZPsMqIF0QxISzrHNyBTgSsHTigaQ/5sqOrXflKzrjDaspQwL6tH
+         9haa9TVw4sYHQeRyzC4j266VEQuoPRZAdVv1XkCJ5BOym1nL7NG7i1NqHvAdu828ho7e
+         0DubTFOOVloVaxnAWuAyvy9iI/NyCogGGpmcSuSnM3ZwpqnbRM1rjSztm8rDmIUBhnNL
+         +hiG32Yw7zJSsAy2KtaJvQUtfpGT5szkrISIAUu9KwHv9vVNyllG2pvjYQCmxFA/gEcD
+         qGOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2an1bgCCtYcqIGsotfvE1Sv5rmH79gSLi6R/WkJuKIg=;
-        b=7jyVmzklBpWQ1J57yFOTQsKNT93Eu2ivTSTQ/ehhsfgTJ4dAL5SYuy9EmxBxs7YABk
-         zg5AXuMCq+G2ka6NsaOiKP+pNV91meqIxwdQF5lZWyUpMl0f68CYJMdpK4g0HJ/9nSM4
-         Equjp8hrnvvn53TX9ic2Ou9BwlX9BHK537eRmPf9Xm/hmfEvhlHHVUdGGT1XjH0zdKFH
-         0loXh8neOOd+NtuEfYxX7bYoMWpFYsG5plbtsRFy5HtcAiPFk2Y0D/tirU8xEPSk4rML
-         ROLbTkKulCxR9Sh/H4bVwG8djEGfeZaqg4tRlp+LwGpHub3Zawxm/G33gv+jRF6mKI1z
-         NYTA==
-X-Gm-Message-State: AFqh2kq7GNo9uJgD5/IAqAB+NAb6bFgDnyTjf19+ydL8/QX6QIFYzxlj
-        YsAjiJh+2d8H8wbtzRKgQmSfUA==
-X-Google-Smtp-Source: AMrXdXtqk3GW7WeNQEZvOZ2gvsyKN2SV9KQ5bceewmw1vESVqYOWDb2B4MclzNv2BVKj94V1fjGmBg==
-X-Received: by 2002:ac2:5327:0:b0:4b6:e64c:aec1 with SMTP id f7-20020ac25327000000b004b6e64caec1mr3757278lfh.53.1671969528647;
-        Sun, 25 Dec 2022 03:58:48 -0800 (PST)
+        bh=dNdtkpZEOdXfGy9MVfRgRPj0usqVhiDHi+woWZD1xjo=;
+        b=u07Efjjz8M9EfcAE27Ga9g+wOX19n+hgEaCklYsSwHJe/5qToK7mr0SlszS4cp358z
+         npwxsuwC4NFcAeu0xWsTvG28pOueSm9/InnzkbT+EhDYLgBjdlGYGcMMQMv5xYswZklu
+         jza5zEK7yB3FeqlyMxGtvSBzxWnqNQqLGflGipaXHwIiBYmbKGZSkbwDUyNFdq/4Rq0u
+         TlaS6jjGK/dkB9r7NzlbO/NyIDv+ELNdeUfDAo1TjZzHQeq1HhpUOah5DRNfP48FwqT+
+         AB6zQmBsgUUIn6fAkDkL39OtgLX5fdti+VVeraWjdwg+CyGwniO2APQWNfaU7zktusAF
+         BjGg==
+X-Gm-Message-State: AFqh2krrnExeBixX84iiBaEIAnK4E35cUlnCl/1f7sk0Qo3QLhNcSr2J
+        lMqbyyN9WpM8RGs8yrauWg4TTw==
+X-Google-Smtp-Source: AMrXdXtoJlGkmUulr0XOrAtaQZh6wOEnqmTJV9ZA/AGFnxp2Z/9/oCAmLMmfsWHWY2acc7kv3TYvTw==
+X-Received: by 2002:a05:6512:1288:b0:4cb:63a:54e2 with SMTP id u8-20020a056512128800b004cb063a54e2mr238699lfs.41.1671969529640;
+        Sun, 25 Dec 2022 03:58:49 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.47
+        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:58:48 -0800 (PST)
+        Sun, 25 Dec 2022 03:58:49 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/4] arm64: dts: qcom: align OPP table node name with DT schema
-Date:   Sun, 25 Dec 2022 12:58:42 +0100
-Message-Id: <20221225115844.55126-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/4] arm64: dts: qcom: sm8250: drop unused clock-frequency from wsa-macro
+Date:   Sun, 25 Dec 2022 12:58:43 +0100
+Message-Id: <20221225115844.55126-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
 References: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
@@ -77,95 +77,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bindings expect OPP tables to start with "opp-table".
+Neither qcom,sm8250-lpass-wsa-macro bindings nor the driver use
+"clock-frequency" property.
+
+  sm8250-hdk.dtb: codec@3240000: Unevaluated properties are not allowed ('clock-frequency' was unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sa8540p.dtsi      | 4 ++--
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi     | 6 +++---
- arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-index 5728583af41e..929bdcd45d02 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-@@ -19,7 +19,7 @@ / {
-   * features get enabled upstream.
-   */
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 434e2c4cce79..a58f51083715 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2215,7 +2215,6 @@ wsamacro: codec@3240000 {
+ 			clock-names = "mclk", "npl", "macro", "dcodec", "va", "fsgen";
  
--gpu_opp_table_3_0: gpu-opp-table-30 {
-+gpu_opp_table_3_0: opp-table-gpu30 {
- 	compatible = "operating-points-v2";
+ 			#clock-cells = <0>;
+-			clock-frequency = <9600000>;
+ 			clock-output-names = "mclk";
+ 			#sound-dai-cells = <1>;
  
- 	opp-624000000 {
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-index a88452c20d05..4a990fda8fc3 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-@@ -10,7 +10,7 @@
- /delete-node/ &cpu4_opp_table;
- 
- / {
--	cpu0_opp_table: cpu0-opp-table {
-+	cpu0_opp_table: opp-table-cpu0 {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-@@ -92,7 +92,7 @@ opp-2246400000 {
- 		};
- 	};
- 
--	cpu4_opp_table: cpu4-opp-table {
-+	cpu4_opp_table: opp-table-cpu4 {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 109c9d2b684d..89004cb657e0 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -33,7 +33,7 @@ sleep_clk: sleep-clk {
- 		};
- 	};
- 
--	cpu0_opp_table: cpu0-opp-table {
-+	cpu0_opp_table: opp-table-cpu0 {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-@@ -123,7 +123,7 @@ opp-2438400000 {
- 		};
- 	};
- 
--	cpu4_opp_table: cpu4-opp-table {
-+	cpu4_opp_table: opp-table-cpu4 {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-@@ -591,7 +591,7 @@ CLUSTER_PD: cpu-cluster0 {
- 		};
- 	};
- 
--	qup_opp_table_100mhz: qup-100mhz-opp-table {
-+	qup_opp_table_100mhz: opp-table-qup100mhz {
- 		compatible = "operating-points-v2";
- 
- 		opp-75000000 {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 65032b94b46d..ba48adc01170 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4619,7 +4619,7 @@ port@1 {
- 					};
- 				};
- 
--				dp_opp_table: dp-opp-table {
-+				dp_opp_table: opp-table {
- 					compatible = "operating-points-v2";
- 
- 					opp-162000000 {
 -- 
 2.34.1
 
