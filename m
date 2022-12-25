@@ -2,108 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35D31655D78
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 16:22:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A2C4655DCF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 17:47:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231171AbiLYPWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 10:22:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41916 "EHLO
+        id S231302AbiLYQrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 11:47:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiLYPWb (ORCPT
+        with ESMTP id S229942AbiLYQrP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 10:22:31 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A4351CB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 07:22:30 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id 186so9797137ybe.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 07:22:30 -0800 (PST)
+        Sun, 25 Dec 2022 11:47:15 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D9510E3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 08:47:12 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id bg10so6519431wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 08:47:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8WmDuyEin4ScYnmC+lNB1owHSAbWHBebERHlafOd3xc=;
-        b=yBq+7CPxfDo2NtI3KWiXL4qcbBBT7Ov9ctnWG1nX+G8awtDuUrGDgsH8k2mdlDGBU3
-         +V0jrU6KU1TNJPeI9/pXqy1Y//RTRtfm2jRr6c7VnjqEj/3kNpC6PFpRhyG0PEtFveW5
-         FCUPYKE2bkaJ/1nbINvVtu2DkiJnx9UmGCwb/jKZmDkTo3WlKqYRcTQhh5AarMS2OAdF
-         o757v0BHWx7bmgT37YGloaCbLqh/Q5HzE2b3Kmtig/dk4DhbSKgUnYcOBzG72kJPgljV
-         xX20xU1Nj3UsKHFrJzAdDTKdVS0z6nP3vujfpyoh7omzfHYu3E9YuXT90s6QphNFZBQw
-         l6JA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bJSRHwGgSQsIgnd1ziT5DVB7secN8//21s4cglbkjsI=;
+        b=OwYNmML6Qi1WxRgnDi95+Q6UGEOFHsX0RzzURE1yyZ1VPvRebZxXn1yOAMERCq23cV
+         Qvd/8FPjAtm5qkvNlgpzPewQSsUVbBQYiiKu9/bBmYUYYjFPPhGXwciXRqpTaCXppOjg
+         P0ekRQWHncfmm+WVyTA8fOU4LanckORvwC57AbsBjkC0h5vq7XeULjmx5csbCPZlrBF8
+         RDjFVz9H4k66mru2ZWUXlNE52wuRuyviaI6vEVaswdhV2TZQhoJZFuRlsWbEur+M/K2a
+         WEaLlP/wmsHd3mje0gHE9Zb7lN2L/zh7ZgC730yudztHp0zR/EwQKJp+ZimIFXvA+RpX
+         FDUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8WmDuyEin4ScYnmC+lNB1owHSAbWHBebERHlafOd3xc=;
-        b=MvlcnesVibrvMQF5vByFcRtUl0WoGRdqOrQArceEGZ7+eHjBEdo3jEMuiLWnonxHhT
-         wccrM2yQ1BQjAUesRKvZTuoKt7WezFc8NXYWP8uAMG5Utc5KJHZjBZWxyMf1BsRHZ6dU
-         qa6XF95BFJAZxbNAjgGpSzfAHu/dYbm678hfuLOnDEVErmxtANJKNmzp2jX0TG3njjLF
-         E6gWN7ioV3crUXn8ysmrEOQ9MYwxN+d/qohyivreRHqpawxcgtgFC9FFqGqQaPYkSD79
-         kP/fA0KuCXSvwju0Ze9divoM/FlagRAGZaG/UXbdsOjIw5FxOxrP34NNEnWROCSXhu9r
-         P7eg==
-X-Gm-Message-State: AFqh2kpCbe+g93Wh5LGDh7GakWRYEpRbio3zrW9ePL/3W3fgABHD8D1i
-        vZ+iFTZFaWGqVMxdpqa07OjZUzWElWQKo4Qye0nHW6LF5K6VDzH/
-X-Google-Smtp-Source: AMrXdXvQfc2UCtoj2Y57s+xggmdVLu/spxAmnSAHgcPCsIoMPW01vEb0Wxbtnd3Y8srrNDrARaOF5EWjyRxxl5/OaIA=
-X-Received: by 2002:a25:c404:0:b0:757:591e:cee3 with SMTP id
- u4-20020a25c404000000b00757591ecee3mr1779065ybf.15.1671981749308; Sun, 25 Dec
- 2022 07:22:29 -0800 (PST)
-MIME-Version: 1.0
-References: <20221225040821.8395-1-steev@kali.org>
-In-Reply-To: <20221225040821.8395-1-steev@kali.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 25 Dec 2022 17:22:18 +0200
-Message-ID: <CAA8EJpqD6pvZjXa4_cQ=02o_Ns94LAJ3n-S2Q8LjfqOySgHHfA@mail.gmail.com>
-Subject: Re: [PATCH 26/26] arm64: dts: qcom: c630: set venus firmware name
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=bJSRHwGgSQsIgnd1ziT5DVB7secN8//21s4cglbkjsI=;
+        b=OJG09pLXoGeZ95GwFz7leqKf02JVs1j56gB7r+2V4YzUrdwAp3eGlSN06HUK1c2SVJ
+         Ay7hY7CH8sAz9ljCrPX2jpZXX9KWnVjdIcgSTDq4Vv6l0D4Q0oUyeV9thxWhaLzg9Wuq
+         zWKUcLuDiZJsANMao/H22XN8oS+tepwvXpdBDdDKBdYdzMubkg75/+4q7ZxmCA/9K+o6
+         Na+x1wCNDCrwvio3Df5/O9My8I6InxXcXNQTb7FL5jTRG7K0oH67C5jCPQsdLMp/ByeR
+         bLgk+u0xveNZYkEYfldCc0H3cFLXHt2/r3wPtTYEnUExcPA6B3T6Q1zLVCOUDhB7t2SI
+         rmBA==
+X-Gm-Message-State: AFqh2koe9eRLjg1Xvuv+IIqmxEpd5RtmasCRmcUjk0sM7/9P6hfPx02Z
+        e78peW7f4MeXL7eOh8UPZBE69w==
+X-Google-Smtp-Source: AMrXdXtVexBf8lzbMFmlaHdKrIcnaqWySkpsYWR2qMQfpHVq1jFB4O1fHaaAyCXzTghTiDuaAdJpVw==
+X-Received: by 2002:a05:600c:21c1:b0:3d3:45c6:b641 with SMTP id x1-20020a05600c21c100b003d345c6b641mr11547895wmj.22.1671986830532;
+        Sun, 25 Dec 2022 08:47:10 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id d9-20020a05600c3ac900b003d973d4fb28sm5507545wms.4.2022.12.25.08.47.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Dec 2022 08:47:10 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/2] clk: Add generic sync_state callback for disabling unused clocks
+Date:   Sun, 25 Dec 2022 18:47:04 +0200
+Message-Id: <20221225164705.437944-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 25 Dec 2022 at 06:08, Steev Klimaszewski <steev@kali.org> wrote:
->
-> The Lenovo Yoga C630 can't use the generic venus firmware that is in the
-> linux-firmware repository, and needs a signed one.  This file is
-> qcvss850.mbn from the Windows partition and needs to be copied manually.
->
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index 7e80e2950f8d..78a14f899df9 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -801,6 +801,7 @@ &usb_2_qmpphy {
->  };
->
->  &venus {
-> +       firmware-name = "qcom/venus-5.2/qcvss850.mbn";
+There are unused clocks that need to remain untouched by clk_disable_unused,
+and most likely could be disabled later on sync_state. So provide a generic
+sync_state callback for the clock providers that register such clocks.
+Then, use the same mechanism as clk_disable_unused from that generic
+callback, but pass the device to make sure only the clocks belonging to
+the current clock provider get disabled, if unused. Also, during the
+default clk_disable_unused, if the driver that registered the clock has
+the generic clk_sync_state_disable_unused callback set for sync_state,
+skip disabling its clocks.
 
-Please follow the established convention (see e.g. the x13s laptop firmware).
-It should be "qcom/sdm850/LENOVO/81JL/qcvss850.mbn" (or
-qcom/sdm845/LENOVO/....).
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
->         status = "okay";
->  };
->
-> --
-> 2.35.1
->
+Changes since v1:
+ * Dropped the 0 returned by __clk_disable_unused when clk_ignore_unused
+   is set.
+ * Dropped __initdata for clk_ignore_unused
 
+ drivers/clk/clk.c            | 59 +++++++++++++++++++++++++++++-------
+ include/linux/clk-provider.h |  1 +
+ 2 files changed, 49 insertions(+), 11 deletions(-)
 
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index e62552a75f08..5185b857fc65 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -1302,14 +1302,27 @@ static void clk_core_disable_unprepare(struct clk_core *core)
+ 	clk_core_unprepare_lock(core);
+ }
+ 
+-static void __init clk_unprepare_unused_subtree(struct clk_core *core)
++static void clk_unprepare_unused_subtree(struct clk_core *core,
++						struct device *dev)
+ {
++	bool from_sync_state = !!dev;
+ 	struct clk_core *child;
+ 
+ 	lockdep_assert_held(&prepare_lock);
+ 
+ 	hlist_for_each_entry(child, &core->children, child_node)
+-		clk_unprepare_unused_subtree(child);
++		clk_unprepare_unused_subtree(child, dev);
++
++	if (from_sync_state && core->dev != dev)
++		return;
++
++	/*
++	 * clock will be unprepared on sync_state,
++	 * so leave as is for now
++	 */
++	if (!from_sync_state && dev_has_sync_state(core->dev) &&
++		core->dev->driver->sync_state == clk_sync_state_disable_unused)
++		return;
+ 
+ 	if (core->prepare_count)
+ 		return;
+@@ -1332,15 +1345,28 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+ 	clk_pm_runtime_put(core);
+ }
+ 
+-static void __init clk_disable_unused_subtree(struct clk_core *core)
++static void clk_disable_unused_subtree(struct clk_core *core,
++					struct device *dev)
+ {
++	bool from_sync_state = !!dev;
+ 	struct clk_core *child;
+ 	unsigned long flags;
+ 
+ 	lockdep_assert_held(&prepare_lock);
+ 
+ 	hlist_for_each_entry(child, &core->children, child_node)
+-		clk_disable_unused_subtree(child);
++		clk_disable_unused_subtree(child, dev);
++
++	if (from_sync_state && core->dev != dev)
++		return;
++
++	/*
++	 * clock will be disabled on sync_state,
++	 * so leave as is for now
++	 */
++	if (!from_sync_state &&
++		core->dev->driver->sync_state == clk_sync_state_disable_unused)
++		return;
+ 
+ 	if (core->flags & CLK_OPS_PARENT_ENABLE)
+ 		clk_core_prepare_enable(core->parent);
+@@ -1378,7 +1404,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+ 		clk_core_disable_unprepare(core->parent);
+ }
+ 
+-static bool clk_ignore_unused __initdata;
++static bool clk_ignore_unused;
+ static int __init clk_ignore_unused_setup(char *__unused)
+ {
+ 	clk_ignore_unused = true;
+@@ -1386,35 +1412,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
+ }
+ __setup("clk_ignore_unused", clk_ignore_unused_setup);
+ 
+-static int __init clk_disable_unused(void)
++static void __clk_disable_unused(struct device *dev)
+ {
+ 	struct clk_core *core;
+ 
+ 	if (clk_ignore_unused) {
+ 		pr_warn("clk: Not disabling unused clocks\n");
+-		return 0;
++		return;
+ 	}
+ 
+ 	clk_prepare_lock();
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
+-		clk_disable_unused_subtree(core);
++		clk_disable_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+-		clk_disable_unused_subtree(core);
++		clk_disable_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
+-		clk_unprepare_unused_subtree(core);
++		clk_unprepare_unused_subtree(core, dev);
+ 
+ 	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+-		clk_unprepare_unused_subtree(core);
++		clk_unprepare_unused_subtree(core, dev);
+ 
+ 	clk_prepare_unlock();
++}
++
++static int __init clk_disable_unused(void)
++{
++	__clk_disable_unused(NULL);
+ 
+ 	return 0;
+ }
+ late_initcall_sync(clk_disable_unused);
+ 
++void clk_sync_state_disable_unused(struct device *dev)
++{
++	__clk_disable_unused(dev);
++}
++EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
++
+ static int clk_core_determine_round_nolock(struct clk_core *core,
+ 					   struct clk_rate_request *req)
+ {
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 842e72a5348f..cf1adfeaf257 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
+ 		void __iomem *reg, u8 shift, u8 width,
+ 		u8 clk_divider_flags, const struct clk_div_table *table,
+ 		spinlock_t *lock);
++void clk_sync_state_disable_unused(struct device *dev);
+ /**
+  * clk_register_divider - register a divider clock with the clock framework
+  * @dev: device registering this clock
 -- 
-With best wishes
-Dmitry
+2.34.1
+
