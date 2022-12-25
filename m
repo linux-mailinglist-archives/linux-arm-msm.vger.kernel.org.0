@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06D4B655CFC
+	by mail.lfdr.de (Postfix) with ESMTP id 52FE5655CFD
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231152AbiLYL6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 06:58:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49496 "EHLO
+        id S231178AbiLYL6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 06:58:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbiLYL6u (ORCPT
+        with ESMTP id S231137AbiLYL6v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 06:58:50 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7EA272A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:49 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id z26so12876654lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:49 -0800 (PST)
+        Sun, 25 Dec 2022 06:58:51 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CA32AEE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:50 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id j17so3367644lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yC00rd5T02wIJphR43PoEyeNsBoek3d63T6Rp4jCNKc=;
-        b=toFKYB79ijRWHbuF1t13TgEAxY03wX6AYgM7h7YkAd1p5xp9278Po+xKWJDMVMFLZ5
-         tRc8upmWrhpJn/CEI9SjuGf1P8Yno/XC5VXQ/qFp+F9XW/qFXcRyJ13Yf3Fg6qQnLQtY
-         NCFajW0ctQ1SN54x7635+NnT9SSQBdbfzByiFMOBBDhp6gft5E0/BB1bm0NPFae2fS1d
-         EL+B1les0HQRYiXDMHRLgD8uMMw1w64G6Q9c9gfgtBN+Rwb2fNjSUX9VLqor5kCeV6y+
-         atflFPlJ2tcRH87YVE1sKr5+X6fT59Aj+WWiiaaajcRd1rBXk8f6PzjJZ8fnjNHQRlrp
-         2chQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2an1bgCCtYcqIGsotfvE1Sv5rmH79gSLi6R/WkJuKIg=;
+        b=gvHSX3ucvanfV4Kp0KtGHb8KWQFxn/4MyXE5fe3Rgxiz8BzP7U/oitC3Zrki89zu10
+         i7RqLSdeM64YqR8yazPsTp6Gbzfzj4zmbHRvw5ftJ3CGOKSrsosc+c1VTTzVhgInk3ab
+         NN1AXAQCAk/oixxDEjI3at7NSKNFCUCl7ahiA1xTlCIxO1f5PihFQ9jmiDHFgOQWTL+C
+         B4GmhRGKYzo9G8vLv71Za1RCMX0bl+i9b41dpZTbMqM5cCs/OzpOwpJLAOvN18TJ/M6N
+         BrQZj9etorVVF01NELwMZXrnKCPD0Dv0PjCeUsJl0WiY6vb+AzHzL6RIa88IDhfMono8
+         6+5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yC00rd5T02wIJphR43PoEyeNsBoek3d63T6Rp4jCNKc=;
-        b=N+etSD1ZmGeRBaXwfyxsxeI7Kn+AC0LFZpaBMi4SgcmiwOPRtQrksNKtfSBG6L5HOS
-         YaXwf5ns8hA89CzNq0SfGdZ0tjlCAEOrlkhsC9UMdFowLEPtz5FgP4Ey7/0qzgRqQzW5
-         g8B/bMIlgScC2s131YEqlN7neKr7pfkokD8bvIemdMwWvpThWivKY0OiOqYn729SzpkC
-         lrUtBy23z9miojonsm0fz+VtNOMDw8N/9kWMan7FQGD0w1pbrYzVfEX75XrX0yV4ZHGr
-         HGKdYmXU+McPjKaHZ+WYSgrSTjo9203MM/Eg0EDkWoNWk9TIh7HJhHuD/wfcuWIAAUwv
-         0CMg==
-X-Gm-Message-State: AFqh2kqkuXJh6CR5eW2z1zCb+05hnV1GJIZU/hBNuSY67qu6nsunKDwk
-        cw8uGYwguLuns3619jCdkS+qkA==
-X-Google-Smtp-Source: AMrXdXv9YS3mr7UwwKAyhljjzSi64Kc3pVInM8cgvLBbg4QbXq8ffeKk7QodSOso3WwjODgWXhwWqw==
-X-Received: by 2002:a05:6512:3c89:b0:4b6:fddc:1fcd with SMTP id h9-20020a0565123c8900b004b6fddc1fcdmr6385022lfv.23.1671969527736;
-        Sun, 25 Dec 2022 03:58:47 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2an1bgCCtYcqIGsotfvE1Sv5rmH79gSLi6R/WkJuKIg=;
+        b=7jyVmzklBpWQ1J57yFOTQsKNT93Eu2ivTSTQ/ehhsfgTJ4dAL5SYuy9EmxBxs7YABk
+         zg5AXuMCq+G2ka6NsaOiKP+pNV91meqIxwdQF5lZWyUpMl0f68CYJMdpK4g0HJ/9nSM4
+         Equjp8hrnvvn53TX9ic2Ou9BwlX9BHK537eRmPf9Xm/hmfEvhlHHVUdGGT1XjH0zdKFH
+         0loXh8neOOd+NtuEfYxX7bYoMWpFYsG5plbtsRFy5HtcAiPFk2Y0D/tirU8xEPSk4rML
+         ROLbTkKulCxR9Sh/H4bVwG8djEGfeZaqg4tRlp+LwGpHub3Zawxm/G33gv+jRF6mKI1z
+         NYTA==
+X-Gm-Message-State: AFqh2kq7GNo9uJgD5/IAqAB+NAb6bFgDnyTjf19+ydL8/QX6QIFYzxlj
+        YsAjiJh+2d8H8wbtzRKgQmSfUA==
+X-Google-Smtp-Source: AMrXdXtqk3GW7WeNQEZvOZ2gvsyKN2SV9KQ5bceewmw1vESVqYOWDb2B4MclzNv2BVKj94V1fjGmBg==
+X-Received: by 2002:ac2:5327:0:b0:4b6:e64c:aec1 with SMTP id f7-20020ac25327000000b004b6e64caec1mr3757278lfh.53.1671969528647;
+        Sun, 25 Dec 2022 03:58:48 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.46
+        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:58:47 -0800 (PST)
+        Sun, 25 Dec 2022 03:58:48 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,15 +59,18 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/4] ARM: dts: qcom: align OPP table node name with DT schema
-Date:   Sun, 25 Dec 2022 12:58:41 +0100
-Message-Id: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/4] arm64: dts: qcom: align OPP table node name with DT schema
+Date:   Sun, 25 Dec 2022 12:58:42 +0100
+Message-Id: <20221225115844.55126-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
+References: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -77,36 +81,91 @@ Bindings expect OPP tables to start with "opp-table".
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 2 +-
- arch/arm/boot/dts/qcom-sdx65.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sa8540p.dtsi      | 4 ++--
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi     | 6 +++---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 5408ff715fbf..c64088c12c89 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -62,7 +62,7 @@ cpu0: cpu@0 {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
+index 5728583af41e..929bdcd45d02 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
+@@ -19,7 +19,7 @@ / {
+   * features get enabled upstream.
+   */
  
--	cpu_opp_table: cpu-opp-table {
-+	cpu_opp_table: opp-table-cpu {
+-gpu_opp_table_3_0: gpu-opp-table-30 {
++gpu_opp_table_3_0: opp-table-gpu30 {
+ 	compatible = "operating-points-v2";
+ 
+ 	opp-624000000 {
+diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+index a88452c20d05..4a990fda8fc3 100644
+--- a/arch/arm64/boot/dts/qcom/sa8540p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+@@ -10,7 +10,7 @@
+ /delete-node/ &cpu4_opp_table;
+ 
+ / {
+-	cpu0_opp_table: cpu0-opp-table {
++	cpu0_opp_table: opp-table-cpu0 {
  		compatible = "operating-points-v2";
  		opp-shared;
  
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index d3c661d7650d..aa6439d8763a 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -61,7 +61,7 @@ cpu0: cpu@0 {
+@@ -92,7 +92,7 @@ opp-2246400000 {
  		};
  	};
  
--	cpu_opp_table: cpu-opp-table {
-+	cpu_opp_table: opp-table-cpu {
+-	cpu4_opp_table: cpu4-opp-table {
++	cpu4_opp_table: opp-table-cpu4 {
  		compatible = "operating-points-v2";
  		opp-shared;
  
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 109c9d2b684d..89004cb657e0 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -33,7 +33,7 @@ sleep_clk: sleep-clk {
+ 		};
+ 	};
+ 
+-	cpu0_opp_table: cpu0-opp-table {
++	cpu0_opp_table: opp-table-cpu0 {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+ 
+@@ -123,7 +123,7 @@ opp-2438400000 {
+ 		};
+ 	};
+ 
+-	cpu4_opp_table: cpu4-opp-table {
++	cpu4_opp_table: opp-table-cpu4 {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+ 
+@@ -591,7 +591,7 @@ CLUSTER_PD: cpu-cluster0 {
+ 		};
+ 	};
+ 
+-	qup_opp_table_100mhz: qup-100mhz-opp-table {
++	qup_opp_table_100mhz: opp-table-qup100mhz {
+ 		compatible = "operating-points-v2";
+ 
+ 		opp-75000000 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 65032b94b46d..ba48adc01170 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4619,7 +4619,7 @@ port@1 {
+ 					};
+ 				};
+ 
+-				dp_opp_table: dp-opp-table {
++				dp_opp_table: opp-table {
+ 					compatible = "operating-points-v2";
+ 
+ 					opp-162000000 {
 -- 
 2.34.1
 
