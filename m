@@ -2,99 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 872A3655C52
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 05:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06D4B655CFC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 12:58:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229445AbiLYEIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Dec 2022 23:08:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34366 "EHLO
+        id S231152AbiLYL6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 06:58:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbiLYEIa (ORCPT
+        with ESMTP id S231131AbiLYL6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Dec 2022 23:08:30 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCBD064EB
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 20:08:28 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id q18-20020a056830441200b006704633f258so5054448otv.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 20:08:28 -0800 (PST)
+        Sun, 25 Dec 2022 06:58:50 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7EA272A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:49 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id z26so12876654lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 03:58:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9p5wCl2OafBHhf+KW3AP6d7Rq+hvbB/t0P57O7S1WYk=;
-        b=jLHM1pMNEn8rx8qlW94YiAEoNoD4/4wmZEMXjCb+gIzwsvVxrsTF8ikP+s8YjiQgWf
-         AZ5LDZ8JL4KIBZ4Cesx6WPf1IrykVZG4uFHl1IKfSBU1uu0W0qjAyp8b/UdMK+lF825O
-         aZKRQenIBom1uDyKAqD9+RaTwTRYP1azW4qNn+CEOKavMb0YgL+QnI18MX1sRgBX4ZhH
-         u6S42aLdzuRzAvZ0lCUnLVZpC9HemE83DXpmjkW45mUbIN8QQyhbitq3UNPDE4pWpl7P
-         kpAALPV8RVFhxEq2tTS9F7DqYRZN1rgDHEw0zfTvOGaLrMu8ZmAZHmrl3vGhehi4RLuB
-         Hebw==
+        bh=yC00rd5T02wIJphR43PoEyeNsBoek3d63T6Rp4jCNKc=;
+        b=toFKYB79ijRWHbuF1t13TgEAxY03wX6AYgM7h7YkAd1p5xp9278Po+xKWJDMVMFLZ5
+         tRc8upmWrhpJn/CEI9SjuGf1P8Yno/XC5VXQ/qFp+F9XW/qFXcRyJ13Yf3Fg6qQnLQtY
+         NCFajW0ctQ1SN54x7635+NnT9SSQBdbfzByiFMOBBDhp6gft5E0/BB1bm0NPFae2fS1d
+         EL+B1les0HQRYiXDMHRLgD8uMMw1w64G6Q9c9gfgtBN+Rwb2fNjSUX9VLqor5kCeV6y+
+         atflFPlJ2tcRH87YVE1sKr5+X6fT59Aj+WWiiaaajcRd1rBXk8f6PzjJZ8fnjNHQRlrp
+         2chQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9p5wCl2OafBHhf+KW3AP6d7Rq+hvbB/t0P57O7S1WYk=;
-        b=EUSibdBfoXSdQA4OdzDG5cM/7oE1MQ0GgnxbtIqq4+53c6KJzMo7GY0E9sRwxzsE1+
-         OPGlbacgzz0sN0TPdsrufxJHt7SoHFSHoArVaxb5qBbZ9VrcvBIlcoan0G85HkMnxyYT
-         PzmOytgOQM3apYElfhBE+qv2XOfyvn2KBv+iNECCZe3hLDVSsVzaE4RoteHoTGxjyfXP
-         FGtT6xalOXHSp2wVwZiBbBMTPt2hcnAYuDPUjTGobLkytKZi4S5oHjfmP6Hj24CZHzcu
-         /cRKLoN1oX+LaLS+RNJK6HcHEFqNWBV7MqNu7C7PGbKKkOnT0fuFocz/++YEnCHndziZ
-         +kZg==
-X-Gm-Message-State: AFqh2kqyY6bvyIl5Rf6vvoXZTrulmhYOIXV0vtTeitgoyhdPe0QFJCH4
-        IyoYNnk/OQCc4qjBrTGipPF8mpM1xWST7PEP
-X-Google-Smtp-Source: AMrXdXuJNs/cEbQyiCD658cj9FBLhZY5wdFir1v5mJUf8/gDyAUEQrtPGs8VuAVqaQv+XyWl/8Z4Jw==
-X-Received: by 2002:a05:6830:6486:b0:678:2963:3832 with SMTP id ck6-20020a056830648600b0067829633832mr8942033otb.20.1671941308082;
-        Sat, 24 Dec 2022 20:08:28 -0800 (PST)
-Received: from localhost (2603-8081-5300-41db-0000-0000-0000-127b.res6.spectrum.com. [2603:8081:5300:41db::127b])
-        by smtp.gmail.com with ESMTPSA id f19-20020a056830265300b00667d9a866b0sm3658306otu.59.2022.12.24.20.08.27
+        bh=yC00rd5T02wIJphR43PoEyeNsBoek3d63T6Rp4jCNKc=;
+        b=N+etSD1ZmGeRBaXwfyxsxeI7Kn+AC0LFZpaBMi4SgcmiwOPRtQrksNKtfSBG6L5HOS
+         YaXwf5ns8hA89CzNq0SfGdZ0tjlCAEOrlkhsC9UMdFowLEPtz5FgP4Ey7/0qzgRqQzW5
+         g8B/bMIlgScC2s131YEqlN7neKr7pfkokD8bvIemdMwWvpThWivKY0OiOqYn729SzpkC
+         lrUtBy23z9miojonsm0fz+VtNOMDw8N/9kWMan7FQGD0w1pbrYzVfEX75XrX0yV4ZHGr
+         HGKdYmXU+McPjKaHZ+WYSgrSTjo9203MM/Eg0EDkWoNWk9TIh7HJhHuD/wfcuWIAAUwv
+         0CMg==
+X-Gm-Message-State: AFqh2kqkuXJh6CR5eW2z1zCb+05hnV1GJIZU/hBNuSY67qu6nsunKDwk
+        cw8uGYwguLuns3619jCdkS+qkA==
+X-Google-Smtp-Source: AMrXdXv9YS3mr7UwwKAyhljjzSi64Kc3pVInM8cgvLBbg4QbXq8ffeKk7QodSOso3WwjODgWXhwWqw==
+X-Received: by 2002:a05:6512:3c89:b0:4b6:fddc:1fcd with SMTP id h9-20020a0565123c8900b004b6fddc1fcdmr6385022lfv.23.1671969527736;
+        Sun, 25 Dec 2022 03:58:47 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id c1-20020ac25301000000b004b5901b8011sm1318141lfh.105.2022.12.25.03.58.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Dec 2022 20:08:27 -0800 (PST)
-From:   Steev Klimaszewski <steev@kali.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sun, 25 Dec 2022 03:58:47 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 26/26] arm64: dts: qcom: c630: set venus firmware name
-Date:   Sat, 24 Dec 2022 22:08:20 -0600
-Message-Id: <20221225040821.8395-1-steev@kali.org>
-X-Mailer: git-send-email 2.35.1
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/4] ARM: dts: qcom: align OPP table node name with DT schema
+Date:   Sun, 25 Dec 2022 12:58:41 +0100
+Message-Id: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Lenovo Yoga C630 can't use the generic venus firmware that is in the
-linux-firmware repository, and needs a signed one.  This file is
-qcvss850.mbn from the Windows partition and needs to be copied manually.
+Bindings expect OPP tables to start with "opp-table".
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 2 +-
+ arch/arm/boot/dts/qcom-sdx65.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 7e80e2950f8d..78a14f899df9 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -801,6 +801,7 @@ &usb_2_qmpphy {
- };
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 5408ff715fbf..c64088c12c89 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -62,7 +62,7 @@ cpu0: cpu@0 {
+ 		};
+ 	};
  
- &venus {
-+	firmware-name = "qcom/venus-5.2/qcvss850.mbn";
- 	status = "okay";
- };
+-	cpu_opp_table: cpu-opp-table {
++	cpu_opp_table: opp-table-cpu {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+ 
+diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+index d3c661d7650d..aa6439d8763a 100644
+--- a/arch/arm/boot/dts/qcom-sdx65.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+@@ -61,7 +61,7 @@ cpu0: cpu@0 {
+ 		};
+ 	};
+ 
+-	cpu_opp_table: cpu-opp-table {
++	cpu_opp_table: opp-table-cpu {
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
  
 -- 
-2.35.1
+2.34.1
 
