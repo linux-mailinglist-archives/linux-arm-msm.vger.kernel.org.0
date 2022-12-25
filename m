@@ -2,69 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97425655B5E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Dec 2022 22:44:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 872A3655C52
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Dec 2022 05:08:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbiLXVoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Dec 2022 16:44:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56942 "EHLO
+        id S229445AbiLYEIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Dec 2022 23:08:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230453AbiLXVoJ (ORCPT
+        with ESMTP id S229461AbiLYEIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Dec 2022 16:44:09 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D96BC18
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 13:44:08 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id m6so1056584lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 13:44:08 -0800 (PST)
+        Sat, 24 Dec 2022 23:08:30 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCBD064EB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 20:08:28 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id q18-20020a056830441200b006704633f258so5054448otv.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Dec 2022 20:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=kali.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6YG72yT6P2Xf4EVWM2/oNdMhJIz+PxjF3DxMSN/2MY=;
-        b=L6W+ILV89UzVX4p54i0Aiyfx2Tj/2KmrlTtXJVEpnFUvSw3ZjBtUuLoZQqzAx4Vqkr
-         PJBuaxG9/LCh4jNEFDEbr66CKzjdOcQn3v6IRjWzyu8LX/6UQvshUDAUsaMlkEhZJ6jg
-         EE/3aRAt6A5+FxIpP2y49WOc7zmUXaf2vfQ+1eacxJQWkrot30TygoNd6aW8hIRWBrTV
-         GWCgGZRPCJu/BdvW/+4wdSXmCYAYnY643YYxWQ5pqYdH83Z6xfv1voRe0VPym09rAKqw
-         8aZwS/Zu+D6SyDB2+cGTI4EjKJ+MnbnFATjF3nF7oyCMj7IvY4+BEc9IVQsHk60Q+Ffn
-         b0tA==
+        bh=9p5wCl2OafBHhf+KW3AP6d7Rq+hvbB/t0P57O7S1WYk=;
+        b=jLHM1pMNEn8rx8qlW94YiAEoNoD4/4wmZEMXjCb+gIzwsvVxrsTF8ikP+s8YjiQgWf
+         AZ5LDZ8JL4KIBZ4Cesx6WPf1IrykVZG4uFHl1IKfSBU1uu0W0qjAyp8b/UdMK+lF825O
+         aZKRQenIBom1uDyKAqD9+RaTwTRYP1azW4qNn+CEOKavMb0YgL+QnI18MX1sRgBX4ZhH
+         u6S42aLdzuRzAvZ0lCUnLVZpC9HemE83DXpmjkW45mUbIN8QQyhbitq3UNPDE4pWpl7P
+         kpAALPV8RVFhxEq2tTS9F7DqYRZN1rgDHEw0zfTvOGaLrMu8ZmAZHmrl3vGhehi4RLuB
+         Hebw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E6YG72yT6P2Xf4EVWM2/oNdMhJIz+PxjF3DxMSN/2MY=;
-        b=AFTtBgmiviH4eByNxRpIj9m7yUhmZvqhBDvBKl36HhwhJVg6kyhewOMRfUsW57NlgU
-         cOqlVbAEoJ75aw8bRk8iukmF9mHjlDEDOAMKyY49T58HG0ppA8w93MH8nd40l3BBfoJe
-         OtD+tMTr74So54gQc+nG+NfadujKdraswbzOFXvQv4oj2D+TnB+dsd0iXF2bCvutvLbV
-         YLNIL1x9iU3tR3H3JyRImey+mpHvAzsOxZXWn4ekwqeGgmJt8vR3IjfaCB2XXCsLXIuK
-         gfn+JAJhqO8WNpwSdM45bazJuwN5+HGrOt8QrTi2Bi5kVj134Y2dTZ7INug+hi9lfHF/
-         HEvQ==
-X-Gm-Message-State: AFqh2kp0EcV5oXQLZHKq4RMQZiEYqvFdvbXSgEIlKTA4HpiFhx/l20Vv
-        UkQKG90vSQX5MNKs56/hPVvQuw==
-X-Google-Smtp-Source: AMrXdXtLymnfGtKqLGeilvw3UM7v35kiK5lgoSFpB1glWTmqhP7U2DQerc3OoHluZnDBc5HE0oSiCQ==
-X-Received: by 2002:a05:6512:168d:b0:4ca:fd5f:ce82 with SMTP id bu13-20020a056512168d00b004cafd5fce82mr794946lfb.49.1671918246547;
-        Sat, 24 Dec 2022 13:44:06 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id o4-20020ac25b84000000b004aa3d587c84sm1110903lfn.200.2022.12.24.13.44.05
+        bh=9p5wCl2OafBHhf+KW3AP6d7Rq+hvbB/t0P57O7S1WYk=;
+        b=EUSibdBfoXSdQA4OdzDG5cM/7oE1MQ0GgnxbtIqq4+53c6KJzMo7GY0E9sRwxzsE1+
+         OPGlbacgzz0sN0TPdsrufxJHt7SoHFSHoArVaxb5qBbZ9VrcvBIlcoan0G85HkMnxyYT
+         PzmOytgOQM3apYElfhBE+qv2XOfyvn2KBv+iNECCZe3hLDVSsVzaE4RoteHoTGxjyfXP
+         FGtT6xalOXHSp2wVwZiBbBMTPt2hcnAYuDPUjTGobLkytKZi4S5oHjfmP6Hj24CZHzcu
+         /cRKLoN1oX+LaLS+RNJK6HcHEFqNWBV7MqNu7C7PGbKKkOnT0fuFocz/++YEnCHndziZ
+         +kZg==
+X-Gm-Message-State: AFqh2kqyY6bvyIl5Rf6vvoXZTrulmhYOIXV0vtTeitgoyhdPe0QFJCH4
+        IyoYNnk/OQCc4qjBrTGipPF8mpM1xWST7PEP
+X-Google-Smtp-Source: AMrXdXuJNs/cEbQyiCD658cj9FBLhZY5wdFir1v5mJUf8/gDyAUEQrtPGs8VuAVqaQv+XyWl/8Z4Jw==
+X-Received: by 2002:a05:6830:6486:b0:678:2963:3832 with SMTP id ck6-20020a056830648600b0067829633832mr8942033otb.20.1671941308082;
+        Sat, 24 Dec 2022 20:08:28 -0800 (PST)
+Received: from localhost (2603-8081-5300-41db-0000-0000-0000-127b.res6.spectrum.com. [2603:8081:5300:41db::127b])
+        by smtp.gmail.com with ESMTPSA id f19-20020a056830265300b00667d9a866b0sm3658306otu.59.2022.12.24.20.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Dec 2022 13:44:06 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 24 Dec 2022 20:08:27 -0800 (PST)
+From:   Steev Klimaszewski <steev@kali.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: clock: qcom,camcc-sm8250: extend clocks and power domains
-Date:   Sat, 24 Dec 2022 22:44:04 +0100
-Message-Id: <20221224214404.18280-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 26/26] arm64: dts: qcom: c630: set venus firmware name
+Date:   Sat, 24 Dec 2022 22:08:20 -0600
+Message-Id: <20221225040821.8395-1-steev@kali.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,81 +69,32 @@ X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add clocks and properties (power-domains, required-opps) already used in
-SM8250 DTS:
+The Lenovo Yoga C630 can't use the generic venus firmware that is in the
+linux-firmware repository, and needs a signed one.  This file is
+qcvss850.mbn from the Windows partition and needs to be copied manually.
 
-  sm8250-hdk.dtb: clock-controller@ad00000: clocks: [[46, 10], [44, 0], [44, 1], [45]] is too long
-  sm8250-hdk.dtb: clock-controller@ad00000: clock-names:0: 'bi_tcxo' was expected
-  sm8250-hdk.dtb: clock-controller@ad00000: 'power-domains', 'required-opps' do not match any of the regexes: 'pinctrl-[0-9]+'
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Steev Klimaszewski <steev@kali.org>
 ---
- .../bindings/clock/qcom,camcc-sm8250.yaml     | 20 +++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,camcc-sm8250.yaml b/Documentation/devicetree/bindings/clock/qcom,camcc-sm8250.yaml
-index 93ec1f598e6e..426335a2841c 100644
---- a/Documentation/devicetree/bindings/clock/qcom,camcc-sm8250.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,camcc-sm8250.yaml
-@@ -21,12 +21,16 @@ properties:
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 7e80e2950f8d..78a14f899df9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -801,6 +801,7 @@ &usb_2_qmpphy {
+ };
  
-   clocks:
-     items:
-+      - description: AHB
-       - description: Board XO source
-+      - description: Board active XO source
-       - description: Sleep clock source
+ &venus {
++	firmware-name = "qcom/venus-5.2/qcvss850.mbn";
+ 	status = "okay";
+ };
  
-   clock-names:
-     items:
-+      - const: iface
-       - const: bi_tcxo
-+      - const: bi_tcxo_ao
-       - const: sleep_clk
- 
-   '#clock-cells':
-@@ -38,9 +42,18 @@ properties:
-   '#power-domain-cells':
-     const: 1
- 
-+  power-domains:
-+    items:
-+      - description: MMCX power domain
-+
-   reg:
-     maxItems: 1
- 
-+  required-opps:
-+    maxItems: 1
-+    description:
-+      OPP node describing required MMCX performance point.
-+
- required:
-   - compatible
-   - reg
-@@ -54,13 +67,16 @@ additionalProperties: false
- 
- examples:
-   - |
-+    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-     #include <dt-bindings/clock/qcom,rpmh.h>
-     clock-controller@ad00000 {
-       compatible = "qcom,sm8250-camcc";
-       reg = <0x0ad00000 0x10000>;
--      clocks = <&rpmhcc RPMH_CXO_CLK>,
-+      clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+               <&rpmhcc RPMH_CXO_CLK>,
-+               <&rpmhcc RPMH_CXO_CLK_A>,
-                <&sleep_clk>;
--      clock-names = "bi_tcxo", "sleep_clk";
-+      clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-       #clock-cells = <1>;
-       #reset-cells = <1>;
-       #power-domain-cells = <1>;
 -- 
-2.34.1
+2.35.1
 
