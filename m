@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C467C655EE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 01:47:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96AF4655EE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 01:54:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbiLZArl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 19:47:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52578 "EHLO
+        id S230189AbiLZAyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 19:54:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbiLZArk (ORCPT
+        with ESMTP id S229975AbiLZAyh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 19:47:40 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D10C2DE8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 16:47:35 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id x44-20020a05683040ac00b006707c74330eso5930228ott.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 16:47:35 -0800 (PST)
+        Sun, 25 Dec 2022 19:54:37 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33152DE9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 16:54:34 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id c124so10507190ybb.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 16:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=akxcV2cbB4tJ7g7nvmljID4qtmKpDankQRHava68ybw=;
-        b=Znm9ABhYhs0gBpho7oHw1+ctmxtk10iMkj87Ow+SPaUuSDo+y9wbLzv+dEmN3ikApL
-         0PdUfcxA7474J0/hToT5bYV1Oc/4or+WKS9CjK5XcUu1ao6a6lwprRHhg9xGU2thoWMs
-         D5As1Wq0VR9zwBgTFk3Dozet0rR6nRGke9tIyp97gehT2N67j2M8WTzKMWHAwVJ7kap5
-         de6S7VWIyaItgavgHO8RvE2fMD+RXtF3B6MXvb/QXhMbCZ/i+J75opQcDJANlwewfu/H
-         IcKpyjxp1S9ngABTZbQIIROIVr9YIhdorvwg9Qw2PnVo0zI71hlNCbV8NV7QN6Wsgd8h
-         1tkA==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EySMm2yHyan1KtzkpjHPhtjwc1DPUZ8nt91Q3dCNhcU=;
+        b=LKOMKPU36QHeSUEzwm0YnSwrR/M/z7XkhBb/M89D8iZEkfAq5La/EeWAh8tCQrsIlc
+         863aMtRg6szyzyK2b3GsO2KFxUYkBlyRKkHEPXjHR8kW0+cYANuwW64sLtfIUmUeIqB0
+         xOVUXGNF+hN3T5QVSEGBSGFsxUBWEhCfKVUuUGPRETunXA6uTzlHhkzWCZcBirWWwLnG
+         WOx+h1mD4Vtf1QrYxIPTCJKioSSZOgmpEcObJrMczToe30WAFcbRMHbRLpVfUR2fJHh4
+         8lqvAX3gxpCPCxxYEkbxx2Cd16cgLZF6bp9ovobsZsUpbvPBEhWRy42cY7wmCDVvQl9c
+         O8VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=akxcV2cbB4tJ7g7nvmljID4qtmKpDankQRHava68ybw=;
-        b=v6jJaVdrX1G1CZ+uFSnf0Leugi1XSBe9PTDHutpumZP2/7GD0trGekTwtKUSI54qlR
-         yntRv1ro7FhkDVgp1vQINabkN3m5PdPR8TI2r3X6WXuDL9FYX7PQspNcGwK0Yiw3WEg3
-         DIIe0nWFv0Xl5bYLXj5/3y5OjqxC1csqEjKkr/E6yj0rPcS3acRrIsMSiYxShg9bzHv0
-         CjAqeMETPoy47gNjeBIZF4FOOcqvolHSaUPVrMsWMod3hWs1VviB+VdeDmRKkd58NesI
-         CFK1+FgJugfSzlLPhE/Vrj9MWR9HJA/G45GPjuX9R9yhBCfn14dw3XTXl1Y3A47CMBRG
-         F7Aw==
-X-Gm-Message-State: AFqh2koaer80PcDOdGcE+gaM/PuMCOCESc8Hv2Uf7L8oFsqWdAE4zbxw
-        STScQlf1Q/M6TKaAdvIIyD0MLA==
-X-Google-Smtp-Source: AMrXdXt6uI087vVxk6tkdMl+VzVrPk3bILzywaRz3jcyNP1gHjlYlMxWUnheK0pTJHZbOSzkDMLU9Q==
-X-Received: by 2002:a9d:6d0e:0:b0:678:2963:3831 with SMTP id o14-20020a9d6d0e000000b0067829633831mr8661258otp.22.1672015654496;
-        Sun, 25 Dec 2022 16:47:34 -0800 (PST)
-Received: from localhost (2603-8081-5300-41db-0000-0000-0000-127b.res6.spectrum.com. [2603:8081:5300:41db::127b])
-        by smtp.gmail.com with ESMTPSA id r9-20020a056830418900b006706e4f6863sm4698161otu.75.2022.12.25.16.47.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 16:47:33 -0800 (PST)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     steev@kali.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org
-Subject: [PATCH] arm64: dts: qcom: c630: Fix firmware paths
-Date:   Sun, 25 Dec 2022 18:47:27 -0600
-Message-Id: <20221226004727.204986-1-steev@kali.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221225040821.8395-1-steev@kali.org>
-References: <20221225040821.8395-1-steev@kali.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EySMm2yHyan1KtzkpjHPhtjwc1DPUZ8nt91Q3dCNhcU=;
+        b=c7XV1p0fCIHw/aPcBUHDe+RhDS6e++1fKdRAuYpI67p/A3G0I3XolZv+jmtmO4Y8Wq
+         Vn3ut33f0JuSHYxowarh9tkxOwSFpTjYnq4P1Ji6dnSf1mfeCPt27NHlxAFt8fc+sjCo
+         XR5yZxxRpqTqf0xR8MrB7/dUzlRj1SNaxydd/oB2drt+tA9bUmM9CQud4J+0L1sCsQ6h
+         yloOFve4DgtP35wMqePSGfUJcPd9M8BtSMcnqjOxNBb9lZbh1TXjJCIfoaTjUKtUP3Ay
+         878dVQhOzAVIItYPxfRI5CKpqMl/MWvPqBOaU3We5orW64XtY4kgWLkh1BkyappqwFKg
+         Ahxw==
+X-Gm-Message-State: AFqh2kprzOWm1b4BHdpNgPyD0APXFFuakzmcR0ddkgMYxK+MqNGX2bzW
+        nodiqp9G/bg2jkIS1dtjkypN1BQF+uNbrugksZY4gA==
+X-Google-Smtp-Source: AMrXdXuaDdBwTwlYJ8bWHJ/ndwWneh+8NrkzyAvRsXYaOwNMwNB3Cy8b2+moM9/DiAoCBn5/yeLFWtZCR0G+y5pRg08=
+X-Received: by 2002:a25:aa0d:0:b0:76d:bea0:8a05 with SMTP id
+ s13-20020a25aa0d000000b0076dbea08a05mr856251ybi.153.1672016073586; Sun, 25
+ Dec 2022 16:54:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221225164705.437944-1-abel.vesa@linaro.org>
+In-Reply-To: <20221225164705.437944-1-abel.vesa@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 26 Dec 2022 02:54:22 +0200
+Message-ID: <CAA8EJpq0Ea_CEyRXwzoNmyoj7R3nzCpr0nVADB-koo6BTTLuiQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] clk: Add generic sync_state callback for disabling
+ unused clocks
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -74,63 +74,180 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The firmware paths were pointing to qcom/manufacturer whereas other
-devices have them under qcom/chipset/manufacturer, so fix this up on the
-c630, so we follow the same standard setup.
+On Sun, 25 Dec 2022 at 18:47, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> There are unused clocks that need to remain untouched by clk_disable_unused,
+> and most likely could be disabled later on sync_state. So provide a generic
+> sync_state callback for the clock providers that register such clocks.
+> Then, use the same mechanism as clk_disable_unused from that generic
+> callback, but pass the device to make sure only the clocks belonging to
+> the current clock provider get disabled, if unused. Also, during the
+> default clk_disable_unused, if the driver that registered the clock has
+> the generic clk_sync_state_disable_unused callback set for sync_state,
+> skip disabling its clocks.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>
+> Changes since v1:
+>  * Dropped the 0 returned by __clk_disable_unused when clk_ignore_unused
+>    is set.
+>  * Dropped __initdata for clk_ignore_unused
+>
+>  drivers/clk/clk.c            | 59 +++++++++++++++++++++++++++++-------
+>  include/linux/clk-provider.h |  1 +
+>  2 files changed, 49 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> index e62552a75f08..5185b857fc65 100644
+> --- a/drivers/clk/clk.c
+> +++ b/drivers/clk/clk.c
+> @@ -1302,14 +1302,27 @@ static void clk_core_disable_unprepare(struct clk_core *core)
+>         clk_core_unprepare_lock(core);
+>  }
+>
+> -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+> +static void clk_unprepare_unused_subtree(struct clk_core *core,
+> +                                               struct device *dev)
+>  {
+> +       bool from_sync_state = !!dev;
+>         struct clk_core *child;
+>
+>         lockdep_assert_held(&prepare_lock);
+>
+>         hlist_for_each_entry(child, &core->children, child_node)
+> -               clk_unprepare_unused_subtree(child);
+> +               clk_unprepare_unused_subtree(child, dev);
+> +
+> +       if (from_sync_state && core->dev != dev)
+> +               return;
+> +
+> +       /*
+> +        * clock will be unprepared on sync_state,
+> +        * so leave as is for now
+> +        */
+> +       if (!from_sync_state && dev_has_sync_state(core->dev) &&
+> +               core->dev->driver->sync_state == clk_sync_state_disable_unused)
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+I link the overall approach, but I don't think we should check the
+sync_state function.
+Such a check would disallow a driver to wrap the
+clk_sync_state_disable_unused() into some driver-specific code.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 7e80e2950f8d..b04cb563496c 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -94,7 +94,7 @@ backlight: backlight {
- };
- 
- &adsp_pas {
--	firmware-name = "qcom/LENOVO/81JL/qcadsp850.mbn";
-+	firmware-name = "qcom/sdm850/LENOVO/81JL/qcadsp850.mbn";
- 	status = "okay";
- };
- 
-@@ -306,7 +306,7 @@ vreg_lvs2a_1p8: lvs2 {
- };
- 
- &cdsp_pas {
--	firmware-name = "qcom/LENOVO/81JL/qccdsp850.mbn";
-+	firmware-name = "qcom/sdm850/LENOVO/81JL/qccdsp850.mbn";
- 	status = "okay";
- };
- 
-@@ -345,7 +345,7 @@ &gpu {
- 	status = "okay";
- 	zap-shader {
- 		memory-region = <&gpu_mem>;
--		firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn";
-+		firmware-name = "qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn";
- 	};
- };
- 
-@@ -502,7 +502,7 @@ &mdss {
- 
- &mss_pil {
- 	status = "okay";
--	firmware-name = "qcom/LENOVO/81JL/qcdsp1v2850.mbn", "qcom/LENOVO/81JL/qcdsp2850.mbn";
-+	firmware-name = "qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn", "qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn";
- };
- 
- &qup_i2c10_default {
-@@ -801,6 +801,7 @@ &usb_2_qmpphy {
- };
- 
- &venus {
-+	firmware-name = "qcom/sdm850/LENOVO/81JL/qcvss850.mbn";
- 	status = "okay";
- };
- 
+> +               return;
+>
+>         if (core->prepare_count)
+>                 return;
+> @@ -1332,15 +1345,28 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+>         clk_pm_runtime_put(core);
+>  }
+>
+> -static void __init clk_disable_unused_subtree(struct clk_core *core)
+> +static void clk_disable_unused_subtree(struct clk_core *core,
+> +                                       struct device *dev)
+>  {
+> +       bool from_sync_state = !!dev;
+>         struct clk_core *child;
+>         unsigned long flags;
+>
+>         lockdep_assert_held(&prepare_lock);
+>
+>         hlist_for_each_entry(child, &core->children, child_node)
+> -               clk_disable_unused_subtree(child);
+> +               clk_disable_unused_subtree(child, dev);
+> +
+> +       if (from_sync_state && core->dev != dev)
+> +               return;
+> +
+> +       /*
+> +        * clock will be disabled on sync_state,
+> +        * so leave as is for now
+> +        */
+> +       if (!from_sync_state &&
+> +               core->dev->driver->sync_state == clk_sync_state_disable_unused)
+> +               return;
+>
+>         if (core->flags & CLK_OPS_PARENT_ENABLE)
+>                 clk_core_prepare_enable(core->parent);
+> @@ -1378,7 +1404,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+>                 clk_core_disable_unprepare(core->parent);
+>  }
+>
+> -static bool clk_ignore_unused __initdata;
+> +static bool clk_ignore_unused;
+>  static int __init clk_ignore_unused_setup(char *__unused)
+>  {
+>         clk_ignore_unused = true;
+> @@ -1386,35 +1412,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
+>  }
+>  __setup("clk_ignore_unused", clk_ignore_unused_setup);
+>
+> -static int __init clk_disable_unused(void)
+> +static void __clk_disable_unused(struct device *dev)
+>  {
+>         struct clk_core *core;
+>
+>         if (clk_ignore_unused) {
+>                 pr_warn("clk: Not disabling unused clocks\n");
+> -               return 0;
+> +               return;
+>         }
+>
+>         clk_prepare_lock();
+>
+>         hlist_for_each_entry(core, &clk_root_list, child_node)
+> -               clk_disable_unused_subtree(core);
+> +               clk_disable_unused_subtree(core, dev);
+>
+>         hlist_for_each_entry(core, &clk_orphan_list, child_node)
+> -               clk_disable_unused_subtree(core);
+> +               clk_disable_unused_subtree(core, dev);
+>
+>         hlist_for_each_entry(core, &clk_root_list, child_node)
+> -               clk_unprepare_unused_subtree(core);
+> +               clk_unprepare_unused_subtree(core, dev);
+>
+>         hlist_for_each_entry(core, &clk_orphan_list, child_node)
+> -               clk_unprepare_unused_subtree(core);
+> +               clk_unprepare_unused_subtree(core, dev);
+>
+>         clk_prepare_unlock();
+> +}
+> +
+> +static int __init clk_disable_unused(void)
+> +{
+> +       __clk_disable_unused(NULL);
+>
+>         return 0;
+>  }
+>  late_initcall_sync(clk_disable_unused);
+>
+> +void clk_sync_state_disable_unused(struct device *dev)
+> +{
+> +       __clk_disable_unused(dev);
+> +}
+> +EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
+> +
+>  static int clk_core_determine_round_nolock(struct clk_core *core,
+>                                            struct clk_rate_request *req)
+>  {
+> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+> index 842e72a5348f..cf1adfeaf257 100644
+> --- a/include/linux/clk-provider.h
+> +++ b/include/linux/clk-provider.h
+> @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
+>                 void __iomem *reg, u8 shift, u8 width,
+>                 u8 clk_divider_flags, const struct clk_div_table *table,
+>                 spinlock_t *lock);
+> +void clk_sync_state_disable_unused(struct device *dev);
+>  /**
+>   * clk_register_divider - register a divider clock with the clock framework
+>   * @dev: device registering this clock
+> --
+> 2.34.1
+>
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
