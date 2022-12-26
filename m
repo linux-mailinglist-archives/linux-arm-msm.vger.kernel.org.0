@@ -2,91 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD186656264
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 13:04:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5377B65626C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 13:09:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232034AbiLZMEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Dec 2022 07:04:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39072 "EHLO
+        id S231593AbiLZMI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Dec 2022 07:08:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232041AbiLZMEE (ORCPT
+        with ESMTP id S229448AbiLZMI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Dec 2022 07:04:04 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED7B6302
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Dec 2022 04:04:03 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id z26so15713703lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Dec 2022 04:04:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gr+Wz6MNSievNoL0z+ewpQl2PEfJ+HKst7CTvFBKGd4=;
-        b=tRxPiX0RYv1PndPekSZ4YwbOky5WJ9uY5zj5ASkuQXEJB4UPVF0igxZW2WbXmK89dZ
-         fqvXicSnYzMFoHt6gaFmNyrF5wqQuP7jTt8Lyw8g6tVCm3ADyeN8Oj9bH0jCir8r+vqi
-         MtcGuW37nuKdOPpQFUh8TMlIE7Dtl0qUrZwIYF9vZtf3gNoOyYsX6lFDYIV3B/rtCvmL
-         Cc9LB/gjhSf+c+qqI331Xod8gO2bcL9pPDrdeqopL2VVvxOGZJgZpdmBA5MysRz5NAe+
-         8eCmlBJmJMXWJ1jOvmDDNe14wfhjPRohqVyFH+ASGbqq+vx9SYb4CQX4YH67nCaLKW+g
-         IyOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gr+Wz6MNSievNoL0z+ewpQl2PEfJ+HKst7CTvFBKGd4=;
-        b=vFmj62Yu/NMBvrJyXsrPHr4czXLwimLmJBDaiYW7siVh+q8uvaUhqtalv7mlBkKRUf
-         11M734plJVVk8JAsM1RJrD/YSKX1TpobdAAtvXHp7Fm6NKy+I4HIUQ7Enk8ZmUa05kFC
-         BPLipwa0eN0dbB75S0ix/gOcRSF4Jincf5eUo3Xw+CbbrIFWd7F/NJK4bhSLTBeuZt9X
-         Pdjvkd+gPLSJGocuaJyIksB/XuxNsQTnBVYuRm6bodsrYWAhXl+0ep9PS3ZBPU/vxxrm
-         PLjddEWrNprxpCLKWCmzG0cufo6gFh5ZG8F4i7/T+Kps9mw0UQ+LYDWztAjceswUCrd/
-         wXvQ==
-X-Gm-Message-State: AFqh2kry+OQOEfBxAT89210BxmQpldLHGhLGS4wHgVfHfORcakmOQKnX
-        5wPc0LdqNJAUCtgtc20t955p5g==
-X-Google-Smtp-Source: AMrXdXuARa9158QFDdJLsbBht8F5Sat1Th1PCWmofCg9jnSEMW2PlZaKrqIJcljcihL4Z1E5Ohp0vA==
-X-Received: by 2002:a05:6512:507:b0:4a4:68b7:e719 with SMTP id o7-20020a056512050700b004a468b7e719mr4783811lfb.3.1672056241490;
-        Mon, 26 Dec 2022 04:04:01 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id j10-20020ac2454a000000b004caf2118ecasm1715565lfm.208.2022.12.26.04.04.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Dec 2022 04:04:01 -0800 (PST)
-Message-ID: <ee597e4b-2656-3852-4daa-f3db7abe6db0@linaro.org>
-Date:   Mon, 26 Dec 2022 13:04:00 +0100
+        Mon, 26 Dec 2022 07:08:56 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785622ACC;
+        Mon, 26 Dec 2022 04:08:55 -0800 (PST)
+Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 4D273CA744;
+        Mon, 26 Dec 2022 12:08:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1672056533; bh=EdE0K1C4NRk7q6tfNodedMaUhUanKrhdHp5SURYtjGs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=pNsQu10x/8rB6Lu/iJerSu2Vav+ua0dacjVWKK8+AhMxgh2aggDJXozlEHQ21h4Hz
+         v6YU0CYkCciETXyKmWnvCZct2FplYzHh+goB/kLFEW0SxH8zKLOXyVxbiRPCciq2U4
+         xZIDMULRA+sSfc1yyaIqFkyFpFEzRV1ZYvxLiilc=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Rayyan Ansari <rayyan@ansari.sh>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rayyan Ansari <rayyan@ansari.sh>
+Subject: Re: [PATCH 1/3] ARM: dts: qcom: pm8226: sort includes alphabetically and
+ nodes by address
+Date:   Mon, 26 Dec 2022 13:08:52 +0100
+Message-ID: <2659686.mvXUDI8C0e@g550jk>
+In-Reply-To: <20221223193403.781355-2-rayyan@ansari.sh>
+References: <20221223193403.781355-1-rayyan@ansari.sh>
+ <20221223193403.781355-2-rayyan@ansari.sh>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] arm64: dts: qcom: c630: Fix firmware paths
-Content-Language: en-US
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org
-References: <20221225040821.8395-1-steev@kali.org>
- <20221226004727.204986-1-steev@kali.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221226004727.204986-1-steev@kali.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
+        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/12/2022 01:47, Steev Klimaszewski wrote:
-> The firmware paths were pointing to qcom/manufacturer whereas other
-> devices have them under qcom/chipset/manufacturer, so fix this up on the
-> c630, so we follow the same standard setup.
+On Freitag, 23. Dezember 2022 20:34:01 CET Rayyan Ansari wrote:
+> Sort the includes and nodes for consistency.
 > 
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 
-Do not attach your patches to some other threads. It messes with reading
-and applying.
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
 
-Best regards,
-Krzysztof
+> ---
+>  arch/arm/boot/dts/qcom-pm8226.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> b/arch/arm/boot/dts/qcom-pm8226.dtsi index 9b7d9d04ded6..d99532ea70b2
+> 100644
+> --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
+> @@ -1,7 +1,7 @@
+>  // SPDX-License-Identifier: BSD-3-Clause
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+>  #include <dt-bindings/interrupt-controller/irq.h>
+>  #include <dt-bindings/spmi/spmi.h>
+> -#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> 
+>  &spmi_bus {
+>  	pm8226_0: pm8226@0 {
+> @@ -41,13 +41,6 @@ smbb: charger@1000 {
+>  			chg_otg: otg-vbus { };
+>  		};
+> 
+> -		rtc@6000 {
+> -			compatible = "qcom,pm8941-rtc";
+> -			reg = <0x6000>, <0x6100>;
+> -			reg-names = "rtc", "alarm";
+> -			interrupts = <0x0 0x61 0x1 
+IRQ_TYPE_EDGE_RISING>;
+> -		};
+> -
+>  		pm8226_vadc: adc@3100 {
+>  			compatible = "qcom,spmi-vadc";
+>  			reg = <0x3100>;
+> @@ -81,6 +74,13 @@ adc-chan@f {
+>  			};
+>  		};
+> 
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 
+IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+>  		pm8226_mpps: mpps@a000 {
+>  			compatible = "qcom,pm8226-mpp", "qcom,spmi-
+mpp";
+>  			reg = <0xa000>;
+
+
+
 
