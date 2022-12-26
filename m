@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 073BE655F7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 04:32:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D2B0655F90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 04:41:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231487AbiLZDcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 22:32:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45410 "EHLO
+        id S231543AbiLZDlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 22:41:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbiLZDcd (ORCPT
+        with ESMTP id S231516AbiLZDlf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 22:32:33 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928972DC1;
-        Sun, 25 Dec 2022 19:32:32 -0800 (PST)
+        Sun, 25 Dec 2022 22:41:35 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F936DE6;
+        Sun, 25 Dec 2022 19:41:33 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 262BEB80BE8;
-        Mon, 26 Dec 2022 03:32:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9F386C433F2;
-        Mon, 26 Dec 2022 03:32:29 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B0107B80BA0;
+        Mon, 26 Dec 2022 03:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 72628C433F1;
+        Mon, 26 Dec 2022 03:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672025549;
-        bh=s3Txn3CCYMAINuVdaMFj5eS3c7GT6CDWa/bWGWX49pc=;
+        s=k20201202; t=1672026091;
+        bh=zmtqhXQv7hiPZDJGmROKlujPmTGm2oRNxnDcUz2K1XA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ZXx064i5rzq++NFOg11/wWaYl1fWBWbUUVMfNobuX1gR6W+hSC5ZaIT6xMvUkTbzq
-         uKsKmPlP0Osoqt3ugX6Jfs12ItSnAT2NYH7dk2L+o+0+q2TEXpuxPP+n517ttUD3B5
-         qERgwZvw07+bg0wqawChHt9pmtSu0jNWxxTY4ZiIJYITZEI0pf/eE3E2hOO32H/1pi
-         kRFc6KGtABB/2V9Bn76V1EKJYHbpXbJgtJ4cicnkkjfmrqdOYoYYZdUWhIIjno3hJF
-         AKMqe2WqeZ/Z/UT0sDmee/HfVbq9AKYnEqjtJVTpIEQ4+UAzbfm79swmY7Zbv+nhP1
-         /yZj5hZlsSzMg==
+        b=aFP63n6aR/0rsvyekq2AImCT+Ltsl9Jl7dPzbNYHhoyZYHDH6lK2bZrhlcgunmhld
+         RgMVPID00zacoRWh6/2WcYeqqfuXii7bfwtJk5lxNcH9sYhs6uYZ65sHxjCjvHVJGC
+         jU2sooTMKGRe+SFmEQSyRrM2Z5Ebr4Jv8ipoN7FtPVN5x7rUbCF4ahlzEUcQHuzwgS
+         dPZnfjIrxijvQKXa4OnPsL5xX8faKU1LhwAeeoNrFyIvTCF3+ednhZDVur/h1/X3jD
+         E41cCnOUXtPEk1kFVfqyh2f9D9ufm9IlqPIid1pjLmSc0vc0NcK4CEzAwGC3ktCoTG
+         JD3TuvTuDV3ew==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 69A72E5250A;
-        Mon, 26 Dec 2022 03:32:29 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4CBF2E50D66;
+        Mon, 26 Dec 2022 03:41:31 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Subject: Re: [PATCH 1/3] ASoC: dt-bindings: Extend name-prefix.yaml into common
  DAI properties
 From:   patchwork-bot+chrome-platform@kernel.org
-Message-Id: <167202554942.9518.4179971549708682531.git-patchwork-notify@kernel.org>
-Date:   Mon, 26 Dec 2022 03:32:29 +0000
+Message-Id: <167202609130.9518.10337988666912704066.git-patchwork-notify@kernel.org>
+Date:   Mon, 26 Dec 2022 03:41:31 +0000
 References: <20221203160442.69594-1-krzysztof.kozlowski@linaro.org>
 In-Reply-To: <20221203160442.69594-1-krzysztof.kozlowski@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
@@ -96,7 +96,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to chrome-platform/linux.git (for-kernelci)
+This series was applied to chrome-platform/linux.git (for-next)
 by Mark Brown <broonie@kernel.org>:
 
 On Sat,  3 Dec 2022 17:04:40 +0100 you wrote:
