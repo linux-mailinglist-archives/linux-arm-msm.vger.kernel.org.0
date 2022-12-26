@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC19655FD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 05:22:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF49A655FD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Dec 2022 05:22:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231588AbiLZEWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Dec 2022 23:22:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55396 "EHLO
+        id S231631AbiLZEWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Dec 2022 23:22:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231590AbiLZEWH (ORCPT
+        with ESMTP id S231640AbiLZEWJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Dec 2022 23:22:07 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC97B2DD4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 20:22:04 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bp15so14652207lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 20:22:04 -0800 (PST)
+        Sun, 25 Dec 2022 23:22:09 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A9392DEE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 20:22:05 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id z26so14684735lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Dec 2022 20:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iIx7HE1YspqQa0r7eyhFqYmEA7OT5Q00tyYl8HNz71o=;
-        b=P769JKfcvOl1osNUabAk5YEWH+3F1uiHZd2AeXE6GDTZkzdTAapQG73SkPZkMcEAgh
-         dcLZ12Er8hF8fH/D6VnnUgQIUVwPxHcSU8WHQq+A4QpETbancey5P4WskWDNqJxin9Yb
-         mZrTU8ANnnHHANzbE2T6Bn6MI/rpKYEk8eorc9vi19lSKbn4cMYM/Ua51fi4cVtkI6z/
-         VOOtA1Qg/UisRVHN9Id1pzc6K1wpi7uKwSPqpjXzFz2V53Kt8GekjiyLlsswGA82JA3h
-         UCVB7xKy08sdYKa1MRCjNZS1jJI3nndM3DM36QXTNFvX3jYokIJ89yzOlEmFkKlueWIV
-         y/ug==
+        bh=83ljR628GMOo2KYTso3qbZ9GKZWBVlBN2pNQ+FKekz8=;
+        b=Tf4EO1USYGxBH0DQXO/BBddmsourIV604KoNr8sA+KU6ddOtNCZnb5aUI6gvgF9Dwt
+         Xg0luC2V/FnqGheWyW6fciPo7oc8muEajoGAZwry6F+8wKHhG+tHJBRSAQjO9ZRW79El
+         ixJxLO8XvyD+vL9rz1jQaerKESD1VSCJOKQWPv4dOrgq7EffChZsyd81ughN+buN3JE8
+         aBHWNMaqqXO84Uiap1pG/Drh0VoGuV6OAOcdLFUwRB0K+9IMSxcetP4H6zxc7yN++/Cs
+         NaLk4ZNlsevPSWSnPGw5IEQAgUVpKWcX3pe9wEC9Z8+LbV3jNScaAaIe8YyZbOA0FliK
+         k/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iIx7HE1YspqQa0r7eyhFqYmEA7OT5Q00tyYl8HNz71o=;
-        b=Q4byjekB09dJ/ShziuFypcWvONjn5honfkUzd8e5L9/YBdyQ1Lx23Xv7/+a6f4NZaC
-         lG3TCSRIuRNoWvUGAe+7NwhMoo5sdli5LdPcCKnFprGJn9HoTTTBkepBeFR9gz4KN0wA
-         mccc96wQrmI0iD7kx/Ql+s0/IoCmgygNeP2gK4sI2kgcI/KE19RiJELKcMogCDLAl+T9
-         RbS38+qrJYC3XdNXGI9Ch/FPAKCJ1JtNuEBRbzzpWwS7nOHJzi0e5at0tWkQIDls/n9m
-         S9f6XCEp6oRQ/I0wsCBl3mo5TmG0oVTh8XdS1B8LzN4CY5Y/dtY+bN79/u95jQELksY2
-         5uEw==
-X-Gm-Message-State: AFqh2krjOXkaEGXro7sa3lQfYjWO8jrXXhfuWnyDHuKaXLjMp/8gBgrU
-        ys4ytD8urz6YXiVBY438a/D/eg==
-X-Google-Smtp-Source: AMrXdXvM8Xjb4IO/VgqQFticH+n2U5q4Oo7gwg1mGjiILkj/vwLcssm8UygiVxipnL42LtlWIQu7GA==
-X-Received: by 2002:a05:6512:3601:b0:4b5:9bfa:801a with SMTP id f1-20020a056512360100b004b59bfa801amr4287240lfs.46.1672028523110;
+        bh=83ljR628GMOo2KYTso3qbZ9GKZWBVlBN2pNQ+FKekz8=;
+        b=qs7rR3T524si5hvvK42HXrAmg/4spM7Qx1Wr+ydh/WqqDipvFBGdvEyLJKNOTwqG6x
+         NOqIpG/1rnWA5ntAGMCB28AUOMeaeUxHvKvCclMyhnd90tT4/cpfotry4Y+TnGLfrE42
+         vggOhJL4kdrUgOiLHYYVZ3VsJ0GN84p76ev+ulPo80xsD/yH823ZtiM3G4prtT7WvsgF
+         CDLdGLvIDEcxcA8cfAjXQdrWFlkhimAyAMvvxiXbfGu3TnrZR5SPsFrVM2a7SHR/M0ww
+         nf/qoD6RbEsShf4L3lHZP+k/EQCXsxBJfM+kMkerxBnKyBCmNsnkRDnsgRGOM4R62ajk
+         aT1Q==
+X-Gm-Message-State: AFqh2kpsojfygFQhjMMvcZatVs/AeJ5XWE95S3JDgOPHJw79My3fDmq1
+        vS2i55NoUrZDxgyx/7VcxGND1Q==
+X-Google-Smtp-Source: AMrXdXtxDYdagGxb5aSzdZcXz5UTYghzUvUWF9muCvcRAyVZKzak2F6b6EtRCqpIo5gyUAKE1cKXeA==
+X-Received: by 2002:ac2:431a:0:b0:4c8:ae6b:ea8d with SMTP id l26-20020ac2431a000000b004c8ae6bea8dmr4350823lfh.8.1672028523746;
         Sun, 25 Dec 2022 20:22:03 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id o9-20020ac25e29000000b004b4b5da5f80sm1641129lfg.219.2022.12.25.20.22.02
+        by smtp.gmail.com with ESMTPSA id o9-20020ac25e29000000b004b4b5da5f80sm1641129lfg.219.2022.12.25.20.22.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 20:22:02 -0800 (PST)
+        Sun, 25 Dec 2022 20:22:03 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v2 11/16] clk: qcom: gcc-qcs404: sort out the cxo clock
-Date:   Mon, 26 Dec 2022 06:21:49 +0200
-Message-Id: <20221226042154.2666748-12-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 12/16] clk: qcom: gcc-qcs404: add support for GDSCs
+Date:   Mon, 26 Dec 2022 06:21:50 +0200
+Message-Id: <20221226042154.2666748-13-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221226042154.2666748-1-dmitry.baryshkov@linaro.org>
 References: <20221226042154.2666748-1-dmitry.baryshkov@linaro.org>
@@ -79,297 +79,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GCC driver registers the cxo clock as a thin wrapper around board's
-xo_board clock. Nowadays we can use the xo_board directly in all the
-clocks that use it. Use the fw_name "cxo" for this clock.
+Add support for two GDSCs provided by this clock controller.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/gcc-qcs404.c | 97 +++++++++++++++--------------------
- 1 file changed, 41 insertions(+), 56 deletions(-)
+ drivers/clk/qcom/gcc-qcs404.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/drivers/clk/qcom/gcc-qcs404.c b/drivers/clk/qcom/gcc-qcs404.c
-index 2726a48f2d5c..fa2adf242648 100644
+index fa2adf242648..5f58dd82d3fe 100644
 --- a/drivers/clk/qcom/gcc-qcs404.c
 +++ b/drivers/clk/qcom/gcc-qcs404.c
-@@ -44,14 +44,21 @@ enum {
- 	P_XO,
+@@ -19,6 +19,7 @@
+ #include "clk-rcg.h"
+ #include "clk-regmap.h"
+ #include "common.h"
++#include "gdsc.h"
+ #include "reset.h"
+ 
+ enum {
+@@ -2591,6 +2592,22 @@ static struct clk_branch gcc_wdsp_q6ss_axim_clk = {
+ 	},
  };
  
-+static const struct parent_map gcc_parent_map_1[] = {
-+	{ P_XO, 0 },
++static struct gdsc mdss_gdsc = {
++	.gdscr = 0x4d078,
++	.pd = {
++		.name = "mdss",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
 +};
 +
-+static const struct clk_parent_data gcc_parent_data_1[] = {
-+	{ .index = DT_XO, .name = "xo-board" },
++static struct gdsc oxili_gdsc = {
++	.gdscr = 0x5901c,
++	.pd = {
++		.name = "oxili",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
 +};
 +
- static struct clk_fixed_factor cxo = {
- 	.mult = 1,
- 	.div = 1,
- 	.hw.init = &(struct clk_init_data){
- 		.name = "cxo",
--		.parent_data = &(const struct clk_parent_data) {
--			.name = "xo-board",
--		},
-+		.parent_data = gcc_parent_data_1,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 		.num_parents = 1,
- 		.ops = &clk_fixed_factor_ops,
- 	},
-@@ -66,10 +73,8 @@ static struct clk_alpha_pll gpll0_sleep_clk_src = {
- 		.enable_is_inverted = true,
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll0_sleep_clk_src",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.ops = &clk_alpha_pll_ops,
- 		},
- 	},
-@@ -84,10 +89,8 @@ static struct clk_alpha_pll gpll0_out_main = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll0_out_main",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.ops = &clk_alpha_pll_ops,
- 		},
- 	},
-@@ -102,10 +105,8 @@ static struct clk_alpha_pll gpll0_ao_out_main = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll0_ao_out_main",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_alpha_pll_fixed_ops,
- 		},
-@@ -120,10 +121,8 @@ static struct clk_alpha_pll gpll1_out_main = {
- 		.enable_mask = BIT(1),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll1_out_main",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.ops = &clk_alpha_pll_ops,
- 		},
- 	},
-@@ -153,10 +152,8 @@ static struct clk_alpha_pll gpll3_out_main = {
- 	.clkr = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll3_out_main",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.ops = &clk_alpha_pll_ops,
- 		},
- 	},
-@@ -170,10 +167,8 @@ static struct clk_alpha_pll gpll4_out_main = {
- 		.enable_mask = BIT(5),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll4_out_main",
--			.parent_data = &(const struct clk_parent_data) {
--				.hw = &cxo.hw,
--			},
--			.num_parents = 1,
-+			.parent_data = gcc_parent_data_1,
-+			.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 			.ops = &clk_alpha_pll_ops,
- 		},
- 	},
-@@ -189,10 +184,8 @@ static struct clk_pll gpll6 = {
- 	.status_bit = 17,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "gpll6",
--		.parent_data = &(const struct clk_parent_data) {
--			.hw = &cxo.hw,
--		},
--		.num_parents = 1,
-+		.parent_data = gcc_parent_data_1,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
- 		.ops = &clk_pll_ops,
- 	},
+ static struct clk_hw *gcc_qcs404_hws[] = {
+ 	&cxo.hw,
  };
-@@ -216,23 +209,15 @@ static const struct parent_map gcc_parent_map_0[] = {
+@@ -2741,6 +2758,11 @@ static struct clk_regmap *gcc_qcs404_clocks[] = {
+ 
  };
  
- static const struct clk_parent_data gcc_parent_data_0[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
++static struct gdsc *gcc_qcs404_gdscs[] = {
++	[MDSS_GDSC] = &mdss_gdsc,
++	[OXILI_GDSC] = &oxili_gdsc,
++};
++
+ static const struct qcom_reset_map gcc_qcs404_resets[] = {
+ 	[GCC_GENI_IR_BCR] = { 0x0F000 },
+ 	[GCC_CDSP_RESTART] = { 0x18000 },
+@@ -2783,6 +2805,8 @@ static const struct qcom_cc_desc gcc_qcs404_desc = {
+ 	.num_resets = ARRAY_SIZE(gcc_qcs404_resets),
+ 	.clk_hws = gcc_qcs404_hws,
+ 	.num_clk_hws = ARRAY_SIZE(gcc_qcs404_hws),
++	.gdscs = gcc_qcs404_gdscs,
++	.num_gdscs = ARRAY_SIZE(gcc_qcs404_gdscs),
  };
  
- static const struct clk_parent_data gcc_parent_data_ao_0[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_ao_out_main.clkr.hw },
- };
- 
--static const struct parent_map gcc_parent_map_1[] = {
--	{ P_XO, 0 },
--};
--
--static const struct clk_parent_data gcc_parent_data_1[] = {
--	{ .hw = &cxo.hw },
--};
--
- static const struct parent_map gcc_parent_map_2[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
-@@ -241,7 +226,7 @@ static const struct parent_map gcc_parent_map_2[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_2[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- 	{ .hw = &gpll6_out_aux.hw },
- 	{ .index = DT_SLEEP_CLK, .name = "sleep_clk" },
-@@ -254,7 +239,7 @@ static const struct parent_map gcc_parent_map_3[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_3[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- 	{ .hw = &gpll6_out_aux.hw },
- };
-@@ -265,7 +250,7 @@ static const struct parent_map gcc_parent_map_4[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_4[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll1_out_main.clkr.hw },
- };
- 
-@@ -275,7 +260,7 @@ static const struct parent_map gcc_parent_map_5[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_5[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .index = DT_DSI0_PHY_PLL_OUT_BYTECLK, .name = "dsi0pllbyte" },
- };
- 
-@@ -285,7 +270,7 @@ static const struct parent_map gcc_parent_map_6[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_6[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .index = DT_DSI0_PHY_PLL_OUT_BYTECLK, .name = "dsi0pllbyte" },
- };
- 
-@@ -297,7 +282,7 @@ static const struct parent_map gcc_parent_map_7[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_7[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- 	{ .hw = &gpll3_out_main.clkr.hw },
- 	{ .hw = &gpll6_out_aux.hw },
-@@ -309,7 +294,7 @@ static const struct parent_map gcc_parent_map_8[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_8[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .index = DT_HDMI_PHY_PLL_CLK, .name = "hdmi_pll" },
- };
- 
-@@ -321,7 +306,7 @@ static const struct parent_map gcc_parent_map_9[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_9[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- 	{ .index = DT_DSI0_PHY_PLL_OUT_DSICLK, .name = "dsi0pll" },
- 	{ .hw = &gpll6_out_aux.hw },
-@@ -333,7 +318,7 @@ static const struct parent_map gcc_parent_map_10[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_10[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .index = DT_SLEEP_CLK, .name = "sleep_clk" },
- };
- 
-@@ -343,7 +328,7 @@ static const struct parent_map gcc_parent_map_11[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_11[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .fw_name = "pcie_0_pipe_clk", .name = "pcie_0_pipe_clk" },
- };
- 
-@@ -353,7 +338,7 @@ static const struct parent_map gcc_parent_map_12[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_12[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .index = DT_DSI0_PHY_PLL_OUT_DSICLK, .name = "dsi0pll" },
- };
- 
-@@ -365,7 +350,7 @@ static const struct parent_map gcc_parent_map_13[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_13[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- 	{ .hw = &gpll4_out_main.clkr.hw },
- 	{ .hw = &gpll6_out_aux.hw },
-@@ -377,7 +362,7 @@ static const struct parent_map gcc_parent_map_14[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_14[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- };
- 
-@@ -386,7 +371,7 @@ static const struct parent_map gcc_parent_map_15[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_15[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- };
- 
- static const struct parent_map gcc_parent_map_16[] = {
-@@ -395,7 +380,7 @@ static const struct parent_map gcc_parent_map_16[] = {
- };
- 
- static const struct clk_parent_data gcc_parent_data_16[] = {
--	{ .hw = &cxo.hw },
-+	{ .index = DT_XO, .name = "xo-board" },
- 	{ .hw = &gpll0_out_main.clkr.hw },
- };
- 
+ static const struct of_device_id gcc_qcs404_match_table[] = {
 -- 
 2.35.1
 
