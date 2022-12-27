@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F018656C05
+	by mail.lfdr.de (Postfix) with ESMTP id CD90D656C07
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 15:41:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231976AbiL0OlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 09:41:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51928 "EHLO
+        id S230092AbiL0OlP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 09:41:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231969AbiL0OlK (ORCPT
+        with ESMTP id S232001AbiL0OlM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 09:41:10 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75F10BA2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:07 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id p36so19836108lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:07 -0800 (PST)
+        Tue, 27 Dec 2022 09:41:12 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1A8D76
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:08 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id u12so10222508ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W3vcm1M+NcXvyFcZkFdiUGmAOLs8+rtdAtOeFBnbW7o=;
-        b=cF+sQ3B0m6jccMI+7c4gucx1GVwqX0k3emWVIkTu348JPsLe3IZwEMaeaDZN4Oo54L
-         H0gt7SL5DFlTSn7dx5I0gnp+mAxtrqV4+MZdBr9Ng03e56OxNySaJLJIP7nta/89jKh8
-         JX3Zi3sKXzj2E9+H2dKln33DBBZ0x6EGs9fMP38QV4xIm41cCUMyxsoHfplju8X4m1Qc
-         zOLSCmyiDI6L0iqYpkWSSF+yqhRDED/EESEu9LpMlC1YtVmBaSFuL1Nbq9+01dsXXsI7
-         LOnLZ7GcoDK9Y45bDeT71Um+saTYUAEiOcWEjBbX/gXMY1Zq4EbUVZDIxtrw1wMzVAcs
-         sYBA==
+        bh=iH3nDOs4cybUjXuednNp+VWmm1qC64KB4HBglBEawlw=;
+        b=udW3OU2GQBVCJk1uKmktXQEHOgBE4x1fkj92d8q2ZBJJwz3S0ney0ZPLps5Z6+wEy+
+         O+oioiuEDCYEry4DZqxlbJHg7C/Emo/9qgGezGZH52CXPVy49N16xK84qq8h2b319xug
+         7KZMYHFqSFcQL31m470+BdvJPOAbgyHx2WIbd+OlaZIl8rHWZ47ZkvLCp8Fb5MFSz25u
+         DOooDotFsTe+yM+r/A4Vrh6dQHWow9lagjouFJ7kO87sU2s25C3GS7cU0Qep4utNJkxK
+         1wWnaiVnFlbCnuroTEidOtifG65kJBqmniShNay925TJ8UUbgFpAXj3EkgauK1PkZhPD
+         ItPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W3vcm1M+NcXvyFcZkFdiUGmAOLs8+rtdAtOeFBnbW7o=;
-        b=gv+lqO1myFQ1G2JJqnhsbnG94GU2nzDr+ipeApGWe4CJKjk+9vDwS3K4lioJG2qu10
-         HXYqoOdh0FHH2+Ye7TUW3MtXd+0T577ImTkWHhnsfVh0sERNn1PCDXFTLQxrXVRcn+lb
-         y14FINUqV/C3WwfILUmzNDIUUjkHKqqR4dvATq2vLEbBftSHgbTbRVpoFSZrgB1EVfT6
-         QApexFnwIYmK1vFOjPGZpnCn7WILOl7CzAQ3lijor9igHIKTIp6nyQvBc1GcUf26cgHG
-         2PcY6wbElytPZWuQjD3cuPRiGx6Y7WW3cwzwfuUN9eSI2Hl7LL1YR3JtGy12JeTPcbcN
-         0Qqg==
-X-Gm-Message-State: AFqh2kpQRQMVhzLik9bjbqoja0W+o8xErZYmwCPrYcUzzgSFuXOXFw/8
-        4ZVfIFNlDEomKbK/8z8o0YsPhA==
-X-Google-Smtp-Source: AMrXdXu9KYzPEbEhTWJjizEMQzbaWLxFIiGUUIP6LhuXUeRSRg7HZjYNn6mwn/ykp11Z/bC4h3IuzA==
-X-Received: by 2002:a05:6512:261a:b0:4ca:f432:3e45 with SMTP id bt26-20020a056512261a00b004caf4323e45mr5274462lfb.33.1672152065813;
-        Tue, 27 Dec 2022 06:41:05 -0800 (PST)
+        bh=iH3nDOs4cybUjXuednNp+VWmm1qC64KB4HBglBEawlw=;
+        b=YZfAH/VvMvJxUQJeTPM+itHzj11+0/agKx+4hp2EGJTewc+GzauGgc9lXbp5LIisLP
+         2UP+tOzBVGibv+2t6X8XNDMEubr0BUvNsOVNDLURXmPwL1U6o3noAA0d4uMdz2q8zF1G
+         w2eJZ59ArEhtOtkLBOuQH8ppAkbg4qDLVDhNlHrpKahKHYPOLzvwEe91LhMBdm/JIulU
+         SUZjJyhiHcx2AI9F2XE6z9lvp0PolAStEYhn1wwK4DSk/q2aWhuJnnbKZNBemcOlo0bh
+         1NfMptTjTVDOCC13R77Rlwo/IQju/uz06ll/U4Jrfp8FLszHudGHYRfEZ1t/wDb98Bxh
+         biXw==
+X-Gm-Message-State: AFqh2kosnIEcj6LljdHcY4Nm3ImgWMtZz3r9XXJmTn/AWOZ5/Ma6yZ4Q
+        YWckxNUq3HfGJSDgiTKRUuO44w==
+X-Google-Smtp-Source: AMrXdXtfFDymns2lbGkMzG6rSIvw0Gm9+FBKf5Mx4n7I9teL0WBPSJmkrFnolHsHPHXTEnWxWov2EQ==
+X-Received: by 2002:a05:651c:90:b0:27f:b833:c50a with SMTP id 16-20020a05651c009000b0027fb833c50amr3093495ljq.14.1672152066981;
+        Tue, 27 Dec 2022 06:41:06 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id s1-20020a056512214100b004b5853f0fc6sm2261126lfr.246.2022.12.27.06.41.04
+        by smtp.gmail.com with ESMTPSA id s1-20020a056512214100b004b5853f0fc6sm2261126lfr.246.2022.12.27.06.41.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 06:41:05 -0800 (PST)
+        Tue, 27 Dec 2022 06:41:06 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,9 +63,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/8] media: dt-bindings: qcom,venus: split common properties
-Date:   Tue, 27 Dec 2022 15:40:56 +0100
-Message-Id: <20221227144102.79391-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/8] media: dt-bindings: qcom,msm8996-venus: document interconnects
+Date:   Tue, 27 Dec 2022 15:40:57 +0100
+Message-Id: <20221227144102.79391-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
 References: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
@@ -81,661 +81,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All Qualcomm SoC Venus bindings share a lot of properties, so split
-common part to re-usable schema to reduce the duplication and promote
-unified style.
+Venus on Qualcomm MSM8996 defines interconnects:
+
+  apq8096-db820c.dtb: video-codec@c00000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../bindings/media/qcom,msm8916-venus.yaml    | 35 ++--------
- .../bindings/media/qcom,msm8996-venus.yaml    | 35 ++--------
- .../bindings/media/qcom,sc7180-venus.yaml     | 32 ++-------
- .../bindings/media/qcom,sc7280-venus.yaml     | 35 ++--------
- .../bindings/media/qcom,sdm660-venus.yaml     | 35 ++--------
- .../bindings/media/qcom,sdm845-venus-v2.yaml  | 35 ++--------
- .../bindings/media/qcom,sdm845-venus.yaml     | 35 ++--------
- .../bindings/media/qcom,sm8250-venus.yaml     | 35 ++--------
- .../bindings/media/qcom,venus-common.yaml     | 70 +++++++++++++++++++
- 9 files changed, 102 insertions(+), 245 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/media/qcom,venus-common.yaml
+ .../devicetree/bindings/media/qcom,msm8996-venus.yaml     | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-index 5c639e4232b3..2350bf4b370e 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,msm8916-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     maxItems: 1
- 
-@@ -38,9 +35,6 @@ properties:
-   iommus:
-     maxItems: 1
- 
--  memory-region:
--    maxItems: 1
--
-   video-decoder:
-     type: object
- 
-@@ -65,34 +59,13 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
 diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
-index 9254bfb90f5d..4a68f924ad9e 100644
+index 4a68f924ad9e..3a4d817e544e 100644
 --- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
 +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
+@@ -33,6 +33,14 @@ properties:
+       - const: bus
+       - const: mbus
  
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
++  interconnects:
++    maxItems: 2
 +
- properties:
-   compatible:
-     const: qcom,msm8996-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     maxItems: 1
- 
-@@ -39,9 +36,6 @@ properties:
++  interconnect-names:
++    items:
++      - const: video-mem
++      - const: cpu-cfg
++
    iommus:
      maxItems: 20
  
--  memory-region:
--    maxItems: 1
--
-   video-decoder:
-     type: object
- 
-@@ -92,34 +86,13 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-index 460e9048a034..acdb54d5c69e 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sc7180-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     minItems: 2
-     maxItems: 3
-@@ -83,35 +80,14 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
-   - power-domain-names
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-index 0055bd2a3379..f14bf07e115b 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus Iris2 IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sc7280-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     minItems: 2
-     maxItems: 3
-@@ -48,9 +45,6 @@ properties:
-   iommus:
-     maxItems: 2
- 
--  memory-region:
--    maxItems: 1
--
-   interconnects:
-     maxItems: 2
- 
-@@ -83,35 +77,14 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
-   - power-domain-names
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-index 0ebe4341d41f..a51835b22045 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-@@ -14,13 +14,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sdm660-venus
- 
--  reg:
--    maxItems: 1
--
-   clocks:
-     maxItems: 4
- 
-@@ -39,15 +39,9 @@ properties:
-       - const: cpu-cfg
-       - const: video-mem
- 
--  interrupts:
--    maxItems: 1
--
-   iommus:
-     maxItems: 20
- 
--  memory-region:
--    maxItems: 1
--
-   power-domains:
-     maxItems: 1
- 
-@@ -101,34 +95,13 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - clocks
--  - clock-names
--  - interrupts
-   - iommus
--  - memory-region
--  - power-domains
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-index 639837724d01..0840ad0f642b 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sdm845-venus-v2
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     minItems: 3
-     maxItems: 4
-@@ -51,9 +48,6 @@ properties:
-   iommus:
-     maxItems: 2
- 
--  memory-region:
--    maxItems: 1
--
-   video-core0:
-     type: object
- 
-@@ -78,35 +72,14 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
-   - power-domain-names
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-core0
-   - video-core1
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-index 5f73eb76b02e..eabc0957b241 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sdm845-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     maxItems: 1
- 
-@@ -38,9 +35,6 @@ properties:
-   iommus:
-     maxItems: 2
- 
--  memory-region:
--    maxItems: 1
--
-   video-core0:
-     type: object
- 
-@@ -93,34 +87,13 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
--  - clocks
--  - clock-names
-   - iommus
--  - memory-region
-   - video-core0
-   - video-core1
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-index cc68b2a263d4..1cfeb136a5ca 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-@@ -13,16 +13,13 @@ description: |
-   The Venus IP is a video encode and decode accelerator present
-   on Qualcomm platforms
- 
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
- properties:
-   compatible:
-     const: qcom,sm8250-venus
- 
--  reg:
--    maxItems: 1
--
--  interrupts:
--    maxItems: 1
--
-   power-domains:
-     minItems: 2
-     maxItems: 3
-@@ -46,9 +43,6 @@ properties:
-   iommus:
-     maxItems: 1
- 
--  memory-region:
--    maxItems: 1
--
-   interconnects:
-     maxItems: 2
- 
-@@ -89,39 +83,18 @@ properties:
- 
-     additionalProperties: false
- 
--  video-firmware:
--    type: object
--    additionalProperties: false
--
--    description: |
--      Firmware subnode is needed when the platform does not
--      have TrustZone.
--
--    properties:
--      iommus:
--        maxItems: 1
--
--    required:
--      - iommus
--
- required:
-   - compatible
--  - reg
--  - interrupts
--  - power-domains
-   - power-domain-names
--  - clocks
--  - clock-names
-   - interconnects
-   - interconnect-names
-   - iommus
--  - memory-region
-   - resets
-   - reset-names
-   - video-decoder
-   - video-encoder
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-new file mode 100644
-index 000000000000..4a5c1d55c202
---- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-@@ -0,0 +1,70 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/media/qcom,venus-common.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SoC Venus Video Encode and Decode Accelerators Common Properties
-+
-+maintainers:
-+  - Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-+  - Vikash Garodia <quic_vgarodia@quicinc.com>
-+
-+description: |
-+  The Venus IP is a video encode and decode accelerator present
-+  on Qualcomm platforms
-+
-+properties:
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 3
-+    maxItems: 7
-+
-+  clock-names:
-+    minItems: 3
-+    maxItems: 7
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  iommus:
-+    minItems: 1
-+    maxItems: 20
-+
-+  memory-region:
-+    maxItems: 1
-+
-+  power-domains:
-+    minItems: 1
-+    maxItems: 4
-+
-+  power-domain-names:
-+    minItems: 1
-+    maxItems: 4
-+
-+  video-firmware:
-+    type: object
-+    additionalProperties: false
-+
-+    description: |
-+      Firmware subnode is needed when the platform does not
-+      have TrustZone.
-+
-+    properties:
-+      iommus:
-+        maxItems: 1
-+
-+    required:
-+      - iommus
-+
-+required:
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+  - memory-region
-+  - power-domains
-+
-+additionalProperties: true
 -- 
 2.34.1
 
