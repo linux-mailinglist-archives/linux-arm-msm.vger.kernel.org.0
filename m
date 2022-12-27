@@ -2,50 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF7A656D87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 18:42:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A73B656D8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 18:43:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232067AbiL0RmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 12:42:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
+        id S229692AbiL0Rnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 12:43:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232042AbiL0RmY (ORCPT
+        with ESMTP id S232206AbiL0RnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 12:42:24 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97818FC9;
-        Tue, 27 Dec 2022 09:42:23 -0800 (PST)
+        Tue, 27 Dec 2022 12:43:25 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BBFCC741;
+        Tue, 27 Dec 2022 09:43:24 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 598BDB80E8B;
-        Tue, 27 Dec 2022 17:42:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30586C43392;
-        Tue, 27 Dec 2022 17:42:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 28D6E611E0;
+        Tue, 27 Dec 2022 17:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91D1C433D2;
+        Tue, 27 Dec 2022 17:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672162941;
-        bh=RWFdEDGiVVH5Zrk9szcOUJD4PkhACqIEThY3u6Slsos=;
+        s=k20201202; t=1672163003;
+        bh=wC4VLe06gE2LY53KCWyVczISN3pEQ0xS9kuOl+zqvsE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZqoM6Ci/QsebDnsYLKHiYtFJfAV+Lyhxfb6CGAj65ecPlZFBAP9egD+IkTsv++pUM
-         7wnEiYCUtAZVQlmy8h4klVteFpVoIRgbufJMnZGXzaEH6AaNhDv9NU3B+8X0Mo4gxM
-         YV72o1P3IJSvig/M8oNUFrHVPs+PBRYvy17GjopReIrM/0TCoShVjPJsC+7czakgV1
-         6zPaa27RCJN1Cow35yhLY+X2SPo9dc7vrosdKFc4ccdIgIz7vFMIUCrf2cswDg0awD
-         pjODdhJStFUUqQ7BX2zr49u7miHpKeAZ7rJHADcla03ps4mY/TZ9e7uw+8uZoZIKlX
-         ovPsRS6EFzhsg==
+        b=QCdp/vPPAgMUMlLWsG4C5V+cLjebNU5MYpL6cEr29s149KTmu7o/Eu9lNfkktc4Zk
+         LxKBs5DkFEJOaCYx5blmB5bbhfGYdS0Q+ykkP/AMpCNNjc3luBakUlasCh2GMvNr1v
+         TqIWFA/AcXw2ZgeDNm3K0F9nJPiIqr6X2xCtCACJt7XhSclSNr+yIkfte9oe1C3G4+
+         x8oZtk9+GKKRMdqDi93rhWx1QGinHx8h03lig2mzPZ2z620npn1g1DoJowRhSbjwRv
+         ViqAp6DtXJBBfwIwJHmLwLrqklfMyt4Fdi5KCyXakOe0q5qI5Wgia/U/viDyUjNdQm
+         MZUOKst9h3j/w==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     stephan.gerhold@kernkonzept.com
-Cc:     krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        stephan@gerhold.net, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, mathieu.poirier@linaro.org,
-        devicetree@vger.kernel.org, luca@z3ntu.xyz,
-        sireeshkodali1@gmail.com
-Subject: Re: (subset) [PATCH v4 0/7] remoteproc: qcom_q6v5_mss: Add MSM8909 and MSM8953
-Date:   Tue, 27 Dec 2022 11:42:17 -0600
-Message-Id: <167216232800.738877.17567287056128563074.b4-ty@kernel.org>
+To:     vkoul@kernel.org, johan+linaro@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, dmitry.baryshkov@linaro.org,
+        kishon@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: (subset) [PATCH v3 00/15] phy: qcom-qmp-combo: fix sc8280xp binding (set 3/3)
+Date:   Tue, 27 Dec 2022 11:43:21 -0600
+Message-Id: <167216295787.739944.14627174630343077236.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220908182433.466908-1-stephan.gerhold@kernkonzept.com>
-References: <20220908182433.466908-1-stephan.gerhold@kernkonzept.com>
+In-Reply-To: <20221121085058.31213-1-johan+linaro@kernel.org>
+References: <20221121085058.31213-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -58,31 +57,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 8 Sep 2022 20:24:26 +0200, Stephan Gerhold wrote:
-> Convert parts of the qcom,q6v5.txt binding documentation to a DT schema
-> (together with some DT fixes) in preparation of adding new compatibles
-> for MSM8909 and MSM8953. The schema can be easily shared between
-> MSM8916, MSM8974, MSM8909 and MSM8953 because they have almost the same
-> requirements. The other SoCs are quite different and are likely more
-> clearly described in separate DT schema(s) to avoid a lot of complicated
-> if statements.
+On Mon, 21 Nov 2022 09:50:43 +0100, Johan Hovold wrote:
+> This series fixes the USB-DP PHY devicetree binding for SC8280XP and
+> adds support for the new updated binding to the driver.
+> 
+> As the full series including the preparatory parts is over forty patches
+> and I've been posting this in three parts of which this is the last one.
+> In an effort to get all of these into 6.2, I've also submitted all three
+> series before waiting for the previous ones to be applied. Parts one and
+> two can be found here:
 > 
 > [...]
 
 Applied, thanks!
 
-[2/7] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916 to schema
-      commit: b9880532d0cdf54dc6cc0e028afe47d829873b20
-[3/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8974
-      commit: ac686cbc6f8bb7810058955e3bb5b5635ca9331a
-[4/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8909
-      commit: f8fb0b3d453e8a0a3b94c18001ce8f1e86d95036
-[5/7] remoteproc: qcom: q6v5-mss: Add support for MSM8909
-      commit: ed71c47f0000ec17b4ce167bce0d44dff8e144e1
-[6/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8953
-      commit: 43baa1a2215998ecb2ba64bb6d435d07541c7184
-[7/7] remoteproc: qcom: q6v5-mss: Add modem support on MSM8953
-      commit: 0201f759594b1248635185a92a5e39f47441ad6a
+[14/15] arm64: dts: qcom: sc8280xp: fix primary USB-DP PHY reset
+        commit: ee4e530bdde29a69c58656a919545251a782674e
+[15/15] arm64: dts: qcom: sc8280xp: fix USB-DP PHY nodes
+        commit: 721c0d68c0f882b6358102b52961ff6eb601839c
 
 Best regards,
 -- 
