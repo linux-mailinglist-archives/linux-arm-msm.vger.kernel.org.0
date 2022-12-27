@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEF90656B4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 14:22:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1735656B52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 14:25:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbiL0NWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 08:22:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55436 "EHLO
+        id S231521AbiL0NZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 08:25:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbiL0NWY (ORCPT
+        with ESMTP id S231318AbiL0NZb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 08:22:24 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E94AB1D5;
-        Tue, 27 Dec 2022 05:22:22 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BRCQWqW029614;
-        Tue, 27 Dec 2022 13:22:19 GMT
+        Tue, 27 Dec 2022 08:25:31 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C8EBB1D6;
+        Tue, 27 Dec 2022 05:25:29 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BRCbqgE032386;
+        Tue, 27 Dec 2022 13:25:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=FEkD/7L2yqfIqCP6f0tA+4AwwCo2FoWeZcYtHNDZaHk=;
- b=Uh2byEhV323wMlr5kuSG9wXhEC98n18qCTGrTOmiPGjrYeYhQ2AMz6Qaw6+0EQECNPC9
- ih1u8ijWOSXStEqSog5SMh+VN+/CzKM3PH/DbOmkvxCIgjzPGxuslUHao7BE/NSDPCcc
- OQecDpS6XRmrERItASppVIozhnxB4HuKoW6dz+EVDYmrYz+pFxWj2SRKNGnir4SeVJ9s
- FiHInf/f65SqNEYVn0gimc0MCQhaimwVCbWFPjqvjZ6RFeNINquj+4BNWGySGVB2O88W
- ZkHNddDefhAx/sBayOZxamIZFhrEyQIOdZIaA+s8/BQxHbvuu10sTj1vfS5PXAiVtU9T xw== 
+ bh=95FM7FHFwKiJgD7l3pR9vYK9hIu/R6kdv7GENAYjluw=;
+ b=APFXUwLUKLJPVLjTYAKpGOc9ShvX8bcNLY06cYT/r3C2KqJlMAaAWvyD4X/81wPigya9
+ SPvnOKpT5Wo6jHgiJTvu2E4Lx46YEZl6LtNd71wLQWAQvYhd7721YyD6jxVZavO7YeSh
+ cssqmEhDzTZF5b3QB9myz7fiVVugYi/8vZ0aT0Sg1iIB8+d9EK+bgqncN3V2ll1BAp42
+ 5zWDIrg4fiyvfhrzGInLH26RWOnmVeRwe7jENJ2MTgJK4n6+X69nJHsFyOq6lWz0M46k
+ nuT+Z5O3iD0JsN6aEYhspwzwEyHYQdklJJngrWW0itJEwj6Y9PElhCoAgxtjASxJd2WO 2Q== 
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnpsvnatv-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mntkvckxu-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 13:22:18 +0000
+        Tue, 27 Dec 2022 13:25:25 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BRDMH7Y031915
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BRDPPMB001728
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 13:22:17 GMT
+        Tue, 27 Dec 2022 13:25:25 GMT
 Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 27 Dec 2022 05:22:14 -0800
+ 15.2.986.36; Tue, 27 Dec 2022 05:25:21 -0800
 From:   Kathiravan T <quic_kathirav@quicinc.com>
 To:     <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
@@ -46,9 +46,9 @@ To:     <agross@kernel.org>, <andersson@kernel.org>,
 CC:     Varadarajan Narayanan <quic_varada@quicinc.com>,
         Sricharan R <quic_srichara@quicinc.com>,
         Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH] clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
-Date:   Tue, 27 Dec 2022 18:51:55 +0530
-Message-ID: <20221227132155.1386-1-quic_kathirav@quicinc.com>
+Subject: [PATCH V4] clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
+Date:   Tue, 27 Dec 2022 18:55:07 +0530
+Message-ID: <20221227132507.2506-1-quic_kathirav@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -57,19 +57,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8QF3W2glX1RTMzU0_3CRGKOtr_lcO3yj
-X-Proofpoint-ORIG-GUID: 8QF3W2glX1RTMzU0_3CRGKOtr_lcO3yj
+X-Proofpoint-GUID: YzVwiNH6I6RUjdNmm9-iI3OS5ysqghjH
+X-Proofpoint-ORIG-GUID: YzVwiNH6I6RUjdNmm9-iI3OS5ysqghjH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-27_09,2022-12-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1011 bulkscore=0 adultscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212270110
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2022-12-27_10,2022-12-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2212270110
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,6 +86,9 @@ Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
 Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
 ---
+Changes since V3:
+	- Updated the title with correct patch version
+
 Changes since V2:
 	- splitted this patch from IPQ5018 series[1]
 	- Rebased on linux-6.2-rc1
