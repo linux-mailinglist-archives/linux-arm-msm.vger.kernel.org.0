@@ -2,71 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3E126569EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 12:29:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC8086569F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 12:30:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbiL0L3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 06:29:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
+        id S231263AbiL0LaH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 06:30:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231305AbiL0L3N (ORCPT
+        with ESMTP id S229632AbiL0LaF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 06:29:13 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A4B6568
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:29:12 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id s25so13493635lji.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:29:12 -0800 (PST)
+        Tue, 27 Dec 2022 06:30:05 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977146568
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:30:03 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bf43so19242578lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:30:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Wa3h2Qetrih6UoBE+cWeSohx9msqd5VAoUPVIqKDWUA=;
-        b=GQxLRK+mIEdSPHTqvHwuBKOZCCVd7pDhEja+W1S/+IoDDwiyHbB6XKAiqEmeHWaKxl
-         u56kddpHsXEovK0JkeZF+q5rclnayaHHbcVpWYjXJZQaE7UelbodffWHye7+rLJ52T3j
-         3D3OqllrjTbaZvl5CMDLlXT5u+YHwUwF508UUQSfIDiFPb0HwizuPq4PooKvMp6B+HBV
-         7Ah6l+mnFIFSJ82zUZUOyyLy5SQXdGlIzAwOSqhEsdv7OYAuwkGq5adcb1gWOhhQA6Ti
-         FhFSunyg3jrR9AclKxnRpqQNRPOgvw8mudPJqR2Yf/ae3/Rjc9hMlyWYtO/s3cpixQ7e
-         vgkg==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=aN3V6trDzvXSYtL26lx3FV7PuCk2Xl5LGxwnUm2VEh4=;
+        b=D6oARKb10jppciRnCilQ32Dej7uYF6DSTuvY/IP+oORmU/pLbrptAk5OvgLB7b/LGz
+         oV7OFaGBSJvYCcJ3rAVE0CPVtzVzFcW2cR8kTME64K70KdZ/lptsknSNE/p30R/f21LA
+         3lM1SXOztnLyMbdSVbrcivQ2061TJzTVnxqf7On/F8qq0kRkjnkZa18PgdDC9Hv+ignV
+         W7vIpGaICcqC0D2lGZKXk+fsw5IaD7DBbJ086Nzn4G0d7mVLzFf87cZ9EIvcFel5+6gU
+         NvZHoLsyoB/h+VSobCXAqiX1fM8XhxpwhGTqkRsnQVH1lmhvjuujtsXH4pA3l/sDDVQo
+         wYHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wa3h2Qetrih6UoBE+cWeSohx9msqd5VAoUPVIqKDWUA=;
-        b=BIrXDf4Y9CC/sAx9d9Zft6MXTL2tuR/59X4hDrN3XDYIkcN6cdB9ZmLJCUSbg9lVhS
-         ltVsORfCdwL91/a9HoII8EI2t79LgtbvFNaBpK2tFAodDCxVcq+elYX/rA9V3NxeM5AB
-         SjXmqG0DhxWsJVKKJuUV6XycnK0KrdLfv4/heHJd0u/8cjF/czO93iNIpBMVKppOxdGU
-         Ez70Lk+dXLgBg7STvclZgKg+o2fa2P1asMNHkxDL0E4nmytlUYbbbugaDWYJ/bBnbEle
-         +aNG409xLA+Bq6Ofs11O1iFBzEBUWhgX8IhieYTNqxxpkyq2LdCOJlsbgDVisi+zS3Qh
-         i0UQ==
-X-Gm-Message-State: AFqh2krjqMRRaHJwDbG6NAvo9r1Pd/CFg+OaQ58cAe7WzLucAVGw4Ecu
-        a4hgGZLZFDbn6PdPM0Y7dYhP8g==
-X-Google-Smtp-Source: AMrXdXv1wDsMtEfJWaSqXFYKwABcvaHK8Xz1eDF1xeiPUsHWSiapTtU0tm6MRtexfJkYOp4hklCzvA==
-X-Received: by 2002:a2e:2419:0:b0:277:63f7:48fb with SMTP id k25-20020a2e2419000000b0027763f748fbmr5264956ljk.18.1672140550547;
-        Tue, 27 Dec 2022 03:29:10 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id r22-20020a2eb616000000b0027fbfaa26dbsm609598ljn.14.2022.12.27.03.29.09
+        bh=aN3V6trDzvXSYtL26lx3FV7PuCk2Xl5LGxwnUm2VEh4=;
+        b=S/dSTNKjdK8oyKc6w+1wny3oC5Z4IhSd4sk512Y9DdNp4Wc+5kfPre54uqYO2Nnukr
+         YjUG8XAoDkpWGiPWclOuwfR6SWRqZvhm3pZ3+cWHQ5DhZlBjabR/Ckn/nyYQMOHDFihj
+         pFsSrBFFYU9PdlV+KsDBc1xML5RVh7Au+ax7LAHZQCQwkVcGxCFJ97EODG48Y9CK1HkC
+         mV7lX2NqX+/ToNkiNEIzHjTTA3EB/NwFeUPKD2q6GBqSrV9M3ooxOk+s+uobVwusElWJ
+         3gAc9oJb9/R2OzEjbFeBrzhLpL7tsARyUqZqVjiS27uxCHRlAJiRa2ydMUPEyrUhxbNL
+         XaTg==
+X-Gm-Message-State: AFqh2kpR+84/es3Ez99uDl0VIKlq5WJuvF+CWvQEw1F/MdzyuFIYHsl9
+        03XTZWUCMoUNRRYgjnQf77eqGCdIdPSVuZIN
+X-Google-Smtp-Source: AMrXdXuQCFF6EAuPGhKVlnd9xb+jRbrMxibY4uYGpnnSUw158af9QxPKYTxPgBMtBgUBq5JAQ+Szdg==
+X-Received: by 2002:a05:6512:6cb:b0:4a4:68b7:e71a with SMTP id u11-20020a05651206cb00b004a468b7e71amr6566622lff.4.1672140601477;
+        Tue, 27 Dec 2022 03:30:01 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id k2-20020ac24562000000b004b4ea0f4e7fsm2192712lfm.299.2022.12.27.03.30.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Dec 2022 03:29:10 -0800 (PST)
-Message-ID: <75d3e997-cd89-78c7-703a-f8f020065e8f@linaro.org>
-Date:   Tue, 27 Dec 2022 12:29:09 +0100
+        Tue, 27 Dec 2022 03:30:01 -0800 (PST)
+Message-ID: <e1725365-2751-ea09-7699-012f4ee3cd1b@linaro.org>
+Date:   Tue, 27 Dec 2022 12:29:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 3/3] [RFC] arm64: dts: qcom: msm8992-bullhead: Fix
- smem_region, mpss_mem
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 3/4] ARM: dts: qcom: sdx65: add specific compatible for
+ USB HS PHY
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
+ <20221223161835.112079-3-krzysztof.kozlowski@linaro.org>
+ <d6fcecda-2f78-bd75-579b-672f6db779a2@linaro.org>
+ <6a9506a5-caf0-0977-af75-0a4e4c0e3a0f@linaro.org>
+ <542a4f6f-931a-3e0a-bd5d-1344339651ea@linaro.org>
 Content-Language: en-US
-To:     Petr Vorel <pevik@seznam.cz>, linux-arm-msm@vger.kernel.org
-Cc:     Petr Vorel <petr.vorel@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        devicetree@vger.kernel.org
-References: <20221226185440.440968-1-pevik@seznam.cz>
- <20221226185440.440968-4-pevik@seznam.cz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221226185440.440968-4-pevik@seznam.cz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <542a4f6f-931a-3e0a-bd5d-1344339651ea@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,111 +86,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27/12/2022 12:14, Konrad Dybcio wrote:
+> 
+> 
+> On 24.12.2022 14:12, Krzysztof Kozlowski wrote:
+>> On 23/12/2022 17:20, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 23.12.2022 17:18, Krzysztof Kozlowski wrote:
+>>>> Add SoC-specific compatible to the USB HS PHY to match other devices and
+>>>> bindings.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>>  arch/arm/boot/dts/qcom-sdx65.dtsi | 3 ++-
+>>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> index b073e0c63df4..d3c661d7650d 100644
+>>>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>>> @@ -219,7 +219,8 @@ blsp1_uart3: serial@831000 {
+>>>>  		};
+>>>>  
+>>>>  		usb_hsphy: phy@ff4000 {
+>>>> -			compatible = "qcom,usb-snps-hs-7nm-phy";
+>>>> +			compatible = "qcom,sdx65-usb-hs-phy",
+>>>> +				     "qcom,usb-snps-hs-7nm-phy";
+>>> Not sure if the newline is necessary, but still:
+>>>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> It is over 80 - up to 90 - and we still keep 80-limit in coding style.
+> Torvalds said 100 is fine a year a go or so.
+
+Yes - when it increases the readability. When it does not, the limit by
+coding style is still 80. Otherwise the coding style would be updated,
+which did not happen:
+
+https://lore.kernel.org/all/20220119160642.140e84c6@gandalf.local.home/
 
 
-On 26.12.2022 19:54, Petr Vorel wrote:
-> From: Petr Vorel <petr.vorel@gmail.com>
-> 
-> smem_region has a different region on downstream than on msm8994, it's
-> defined as 150 MiB [1]:
-> 
-> [    0.000000] Linux version 3.10.73-g65a266a (buildkite-agent@lineageos-buildkite) (gcc version 4.9.x 20150123 (prerelease) (GCC) ) #1 SMP PREEMPT Mon Feb 24 10:43:08 UTC 2020
-> [    0.000000] CPU: AArch64 Processor [410fd033] revision 3
-> [    0.000000] Machine: LGE MSM8992 BULLHEAD rev-1.01
-> [    0.000000] cma: Found secure_region@0, memory base 0x0000000000000000, size 150 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found qsecom_region@0, memory base 0x0000000000000000, size 4 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found audio_region@0, memory base 0x0000000000000000, size 4 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found removed_regions@0, memory base 0x0000000000000000, size 34 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found cont_splash_mem@0, memory base 0x0000000000000000, size 12 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found peripheral_region@0, memory base 0x0000000000000000, size 28 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found modem_region@0, memory base 0x0000000000000000, size 100 MiB, limit 0x0000000000000000
-> [    0.000000] cma: Found ramoops_region@1ff00000, memory base 0x0000000000000000, size 0 MiB, limit 0x0000000000000000
-> [    0.000000] cma: CMA: reserved 152 MiB at 0x0000000000000000 for secure_mem
-> [    0.000000] cma: CMA: reserved 4 MiB at 0x0000000000000000 for qseecom_mem
-> [    0.000000] cma: CMA: reserved 4 MiB at 0x0000000000000000 for audio_mem
-> [    0.000000] cma: CMA: reserved 34 MiB at 0x0000000000000000 for memory_hole
-> [    0.000000] cma: CMA: reserved 12 MiB at 0x0000000000000000 for cont_splash_mem
-> [    0.000000] cma: CMA: reserved 28 MiB at 0x0000000000000000 for peripheral_mem
-> [    0.000000] cma: CMA: reserved 100 MiB at 0x0000000000000000 for modem_mem
-> [    0.000000] cma: CMA: reserved 0 MiB at 0x0000000000000000 for ramoops_mem
-> [    0.000000] cma: CMA: reserved 16 MiB at 0x0000000000000000 for default region
-> [    0.000000] PERCPU: Embedded 15 pages/cpu @0000000000000000 s38912 r0 d22528 u61440
-> 
-> But that conflicts with cont_splash_mem and cont_splash_mem:
-> 
-> [    0.000000] Linux version 6.1.1 (pevik@dell5510) (aarch64-linux-gnu-gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for De2
-> [    0.000000] Machine model: LG Nexus 5X rev 1.01
-> ...
-> [    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'smem_region@0': base 0x0000000000000000, size 150 MiB
-> [    0.000000] OF: reserved mem: OVERLAP DETECTED!
-> [    0.000000] smem_region@0 (0x0000000000000000--0x0000000009600000) overlaps with memory@3400000 (0x0000000003400000--0x000000000400000)
-> [    0.000000] OF: reserved mem: OVERLAP DETECTED!
-> [    0.000000] reserved@5000000 (0x0000000005000000--0x0000000007200000) overlaps with memory@7000000 (0x0000000007000000--0x000000000ca0)
-> 
-> 1) Obviously there are more memory to be fixed, e.g. modem_mem, but
-> fundamental is to find out whether such a big mapping should be really
-> used. If yes, what is the trick downstream uses, that it allows
-> overlapped memory? Or memory is not really overlapping and I cannot
-> trust the reported value? What base and size should I define then?
-> 
-> Angler downstream defines crazy values for secure_mem as well [2]:
-> [    0.000000] cma: Found secure_region@0, memory base 0x0000000000000000, size 300 MiB, limit 0xffffffffffffffff
-> 
-> But then in mainline is defined just 2 MiB at 106 MiB:
-> 
->     smem_mem: smem_region@6a00000 {
-> 	    reg = <0 0x06a00000 0 0x200000>;
-> 	    no-map;
->     };
-> 
-> => should I use just 2 MiB region? But at what base?
-> 
-> 2) Is mpss_mem equivalent of downstream modem_mem [3]?
-> 
-> Kind regards,
-> Petr
-> 
-> [1] https://android.googlesource.com/kernel/msm.git/+/refs/tags/android-7.0.0_r0.17/arch/arm/boot/dts/qcom/msm8992.dtsi#278
-> [2] https://android.googlesource.com/kernel/msm.git/+/refs/tags/android-7.0.0_r0.17/arch/arm/boot/dts/qcom/msm8994.dtsi#272
-> [3] https://android.googlesource.com/kernel/msm.git/+/android-7.0.0_r0.17/arch/arm64/boot/dts/lge/msm8992-bullhead.dtsi#148
-> 
-> Not-Yet-Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> ---
-smem is not device-specific. secure_mem is a bunch of PIL+maybe
-TZAPP memory regions, it's really a mess downstream..
 
-Look here:
-https://android.googlesource.com/kernel/msm/+/43154bfee910f2efd0ff0d60e6b1c25192367ab9/arch/arm/boot/dts/qcom/msm8992.dtsi#2173
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> index 4bceb362a5c0..fb4879b4acbe 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> @@ -12,8 +12,9 @@
->  #include "pm8994.dtsi"
->  #include "pmi8994.dtsi"
->  
-> -/* cont_splash_mem has different memory mapping */
-> +/* different memory mapping */
->  /delete-node/ &cont_splash_mem;
-> +/delete-node/ &smem_mem;
->  
->  /* disabled on downstream, conflicts with cont_splash_mem */
->  /delete-node/ &dfps_data_mem;
-> @@ -60,6 +61,11 @@ removed_region: reserved@5000000 {
->  			reg = <0 0x05000000 0 0x2200000>;
->  			no-map;
->  		};
-> +
-> +		smem_mem: smem_region@0 {
-> +			reg = <0 0 0 0x9600000>;
-> +			no-map;
-> +		};
->  	};
->  };
->  
+Best regards,
+Krzysztof
+
