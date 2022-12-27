@@ -2,126 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D963E65697D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 11:37:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7025D6569C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 12:14:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbiL0KhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 05:37:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46208 "EHLO
+        id S229686AbiL0LOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 06:14:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbiL0KhE (ORCPT
+        with ESMTP id S229445AbiL0LOg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 05:37:04 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 176B0DC;
-        Tue, 27 Dec 2022 02:36:59 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BRAXDwP023528;
-        Tue, 27 Dec 2022 10:36:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=5dDK27AmB6IzropSzGtrdgFwCslHcsvmyoks4GeiwcQ=;
- b=JAzPwqvLm0ftvWq518OfsRYKUERuLRUy1ZzubfMJ8lq/6iiPone+wu+uzY6lTASZhA8R
- 8L/hjoSuv9ag1FvwRzwEzHe9B8i4ACjvoJM0gyqyzHH9gQ0MCWntBTk/sl9qiOjEmFon
- Ud6ZfkadtoEWXhwgoSzCRbXKkbw2/8eEAhXUHgMLp2kZoUxut21sQb3s9QeZqIqCBnPa
- xMNIrZ3nujWE0HtqtCFPINKKevi1TCws0DW1sAlssueJAp6YJDUIbfxFwZ6KXLW2b5k3
- cm6wFG0KhIc3QSHhyBjBsSwAmqyE6JkU0JjibpvkbNC5ymG6f253fsrIl0sssC6sEDcQ Ng== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnrrrvyfq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 10:36:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BRAaiIc004774
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 10:36:44 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 27 Dec 2022 02:36:41 -0800
-Date:   Tue, 27 Dec 2022 16:06:38 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Yogesh Lal <quic_ylal@quicinc.com>
-CC:     <tglx@linutronix.de>, <maz@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] irqchip: gic-v3: Handle failure case of CPU enters low
- power state
-Message-ID: <20221227103638.GA3974604@hu-pkondeti-hyd.qualcomm.com>
-References: <1671734140-15935-1-git-send-email-quic_ylal@quicinc.com>
+        Tue, 27 Dec 2022 06:14:36 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D2EDAB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:14:34 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id cf42so19207266lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 03:14:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=q91h+qmG72Eyypqxw89XsMvqCu6zqsw6i6tKexOSIMk=;
+        b=CVtxK3hRsKFd4mXM4EZaHOPtc6hX8rz5lFXti/X8zL4Sx6eSIoVJFcyaf1xO6/vLKY
+         s+EyL5EjUvacFnVzeR5B/Jzu0IoIiS/jaGXF7DFgxXSN04QufLb/20o8s+b+LotQ9iSC
+         0ksqfnDiMMEPmWy4qxA2PubG7Gbb+YriR9dQebLbZ/mQPu5DohcPuy7fKXaNHwkKvp9u
+         Gya8hQaKEn4oUnU8Z7FdyAI9BJWXf/64KOrzrDjCCb1yRGvIVoDmt+IK0skrceKHbx+R
+         tSI8qyoD3h7OX+9lqB2YJu+2aZbAEqqpFS72Gx47lncuz7P8HH5gi68FcwWuJChZgKjt
+         6eXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q91h+qmG72Eyypqxw89XsMvqCu6zqsw6i6tKexOSIMk=;
+        b=TigZ42Unve31mGApxi5bZ2n4DR8T+uB2JmrzFBxDyXi26GN68inTM8vxyh4+aGWxwk
+         3Hqz+ydgRegxPWlkhiIMdde2FbhoZTp2w39AGoX0FwaUQ/TlREOtENkAO1kqfzsEOSxw
+         +yUDei81NWCf/7n4eipIf0k8sCAe1Khv3ysJcszKuTf/rUPbFjrzO4ls2ZjfYwtSBnag
+         7pVEpdgIVUZ2sWcAy5S3rM4WXmQQ1BkI1cG9HLLsm/khcvieW4OPTiuIlJoYQ4cXSvW1
+         KZTstm2LsvzKhPh5eppZMFGyFt5noWsiE5EG1KdjI7ffxFk3vSB0BpYgs64O9cpawlTA
+         glsg==
+X-Gm-Message-State: AFqh2ko/DGdL5UD6yHpqfyx4rmzWkx31yc/Z+QKY/Ov+f8CvsF3xXHU/
+        LJzbZ11mGrZY+Pz/B8z4HwRxjA==
+X-Google-Smtp-Source: AMrXdXtBNHz+BrTIliM1MB0RostvYMij6h6w+EmNqEFxkV0c0vDc0zls+MdTHE+2Hp+BApv8F4WUFg==
+X-Received: by 2002:ac2:5dce:0:b0:4b5:b988:b409 with SMTP id x14-20020ac25dce000000b004b5b988b409mr6117596lfq.21.1672139672953;
+        Tue, 27 Dec 2022 03:14:32 -0800 (PST)
+Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
+        by smtp.gmail.com with ESMTPSA id k2-20020a05651239c200b004ab2cb8deb5sm2197371lfu.18.2022.12.27.03.14.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Dec 2022 03:14:32 -0800 (PST)
+Message-ID: <542a4f6f-931a-3e0a-bd5d-1344339651ea@linaro.org>
+Date:   Tue, 27 Dec 2022 12:14:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1671734140-15935-1-git-send-email-quic_ylal@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YT9Tol4BIV2PNhWDo7QZk1ZgtRt7_3c_
-X-Proofpoint-ORIG-GUID: YT9Tol4BIV2PNhWDo7QZk1ZgtRt7_3c_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-27_06,2022-12-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=544 adultscore=0 mlxscore=0 malwarescore=0 spamscore=0
- phishscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212270087
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 3/4] ARM: dts: qcom: sdx65: add specific compatible for
+ USB HS PHY
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
+ <20221223161835.112079-3-krzysztof.kozlowski@linaro.org>
+ <d6fcecda-2f78-bd75-579b-672f6db779a2@linaro.org>
+ <6a9506a5-caf0-0977-af75-0a4e4c0e3a0f@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <6a9506a5-caf0-0977-af75-0a4e4c0e3a0f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Yogesh,
 
-On Fri, Dec 23, 2022 at 12:05:40AM +0530, Yogesh Lal wrote:
-> When CPU enter in low power mode it disable the redistributor and
-> Group1 interrupts. And re-initialise the system registers on wakeup.
+
+On 24.12.2022 14:12, Krzysztof Kozlowski wrote:
+> On 23/12/2022 17:20, Konrad Dybcio wrote:
+>>
+>>
+>> On 23.12.2022 17:18, Krzysztof Kozlowski wrote:
+>>> Add SoC-specific compatible to the USB HS PHY to match other devices and
+>>> bindings.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>  arch/arm/boot/dts/qcom-sdx65.dtsi | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>> index b073e0c63df4..d3c661d7650d 100644
+>>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>>> @@ -219,7 +219,8 @@ blsp1_uart3: serial@831000 {
+>>>  		};
+>>>  
+>>>  		usb_hsphy: phy@ff4000 {
+>>> -			compatible = "qcom,usb-snps-hs-7nm-phy";
+>>> +			compatible = "qcom,sdx65-usb-hs-phy",
+>>> +				     "qcom,usb-snps-hs-7nm-phy";
+>> Not sure if the newline is necessary, but still:
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> But in case of failure to enter low power mode need to enable
-> the redistributor and Group1 interrupts.
+> It is over 80 - up to 90 - and we still keep 80-limit in coding style.
+Torvalds said 100 is fine a year a go or so.
+
+Konrad
 > 
-> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
-> ---
->  drivers/irqchip/irq-gic-v3.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Best regards,
+> Krzysztof
 > 
-> diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-> index 997104d..4904f00 100644
-> --- a/drivers/irqchip/irq-gic-v3.c
-> +++ b/drivers/irqchip/irq-gic-v3.c
-> @@ -1376,7 +1376,7 @@ static int gic_retrigger(struct irq_data *data)
->  static int gic_cpu_pm_notifier(struct notifier_block *self,
->  			       unsigned long cmd, void *v)
->  {
-> -	if (cmd == CPU_PM_EXIT) {
-> +	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
->  		if (gic_dist_security_disabled())
->  			gic_enable_redist(true);
->  		gic_cpu_sys_reg_init();
-
-static int gic_cpu_pm_notifier(struct notifier_block *self,
-			       unsigned long cmd, void *v)
-{
-	if (cmd == CPU_PM_EXIT) {
-		if (gic_dist_security_disabled())
-			gic_enable_redist(true);
-		gic_cpu_sys_reg_init();
-	} else if (cmd == CPU_PM_ENTER && gic_dist_security_disabled()) {
-		gic_write_grpen1(0);
-		gic_enable_redist(false);
-	}
-	return NOTIFY_OK;
-}
-
-During CPU_PM_ENTER notification, we are not doing anything for the
-!gic_dist_security_disabled() case. Since CPU_PM_ENTER_FAILED notification
-arrive when CPU fails to power down, do we need to reinitialize the
-system registers? IOW, should we do different handling for CPU_PM_ENTER_FAILED
-based on gic_dist_security_disabled()?
-
-Thanks,
-Pavan
