@@ -2,287 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63639656CE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 17:31:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F151656CE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 17:32:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230215AbiL0Qbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 11:31:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54652 "EHLO
+        id S231305AbiL0QcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 11:32:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbiL0Qbn (ORCPT
+        with ESMTP id S232049AbiL0QcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 11:31:43 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA7CB7EA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:31:42 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id p36so20238435lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:31:42 -0800 (PST)
+        Tue, 27 Dec 2022 11:32:09 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452AAB85A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:32:03 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id bp15so20237254lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=72cmjE0V7BUxC28t/DNBJowrN2/6PZnCNzCr8N7zUBI=;
-        b=NbHvojsrG4KTDx9OBuOv4eb0KqhmLcbXkFP/iqhlN3OVTGkCaq0cWQ4jMpkhcK63Zp
-         PmZkTs8M36h3rKdR7cK8P69gAiI0hXs4lj9IA4LsAJHoyeD65U35aJ1Ffv9H7CHlZOVh
-         Gld9v2SH9QS+6kO7lwGFcDpO9nNfulZWMwZAJt90TNOY8BVHTIrjkN+igQKO/cFLtvwp
-         +n2PaWEUVwv4hBmiw9ncVsD4bJnJLy94IJsjLhz3S9EHpUAUHQiDe+z+hoUhvMUH3D+o
-         1ZB7JqL7yARj2SwLMSuthMBQwTsqGmH2YdyYUgQKEAEny+LPMlmku6gPPU3nn8jJHqft
-         /HXQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=frC0CMdSQBqRvRfV0Ly2ms9MOr7jMien4e0QpzgS4Y0=;
+        b=ioGOQbrwpxf9zbZNpX07DCYteltcLFONw7PZ/AdAZS1rp3VVGTaokfcHJaASR3on9l
+         7d/p7tQ2TGINwm1/LuAo44wxzkXHWiKzesovAjOXHfqXhnpIDiJbNFeZfo5QxYRRCuix
+         g7ZtFwQNY9ViDfTjGt1DcqOpl++KxkIIKLR0P/u8R/j3daZwrkXKqKvnChpggvTAne8X
+         YuvQjz3RzFqvfrd7KdK+/HmbiYEN1Ft5DiyYYWNZc/QQObjTGCxfL8UbJIZXm8a1U0vV
+         bfHHUKZA80s7xz0ZW2fVF8EBFSRd5AZqas7Hbm6p/ypMNh2zDWCshKmWg46bMuOyC+CE
+         pJ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=72cmjE0V7BUxC28t/DNBJowrN2/6PZnCNzCr8N7zUBI=;
-        b=W9CDQPZLhA7OGkIy21lgNL7sSzT3A2snJNS57+lyP+hjQ4wcAU6hQMILdeIQfQNo/1
-         nVGdkAyvGbC2FaTJL46KjJMxrY3ws6sXL8ccypXDVMkbmV2d30Sx+9HpJdx6mk5gfW3G
-         ODVYFibZ2VI4C+uB9YblRy5TIriEHHdNOOJBHykOnfgqxiuV5g6sLdNO6xc4KKiYLCng
-         vuofGKRe6QXEEGe104Pj8Lpysd6LSzxeSrnbfTLW/ygdAcrj4/fRd+CyGl1laSZEISLI
-         UBCHVUP74WSkFKGyC7ZdnDXaRdNRMsjd56MwgwK8xPdG0A6VedTsXUJsqeRVfRj/54Vg
-         YRrg==
-X-Gm-Message-State: AFqh2kqQUuD+STcs8/s+hMrlYR25p3yAia0vxKuwqKhj0LNbE+UzDpCK
-        AobRRDhpb+vXCOBPvOeX0NEaKdAks0lWxubD
-X-Google-Smtp-Source: AMrXdXurCVsOysDqPyuiNeCz8zEeNtL+8/Od7Vrp0R3PwtkTV5Cby6lOIAcerYnQcAMYUDfSKqgvPw==
-X-Received: by 2002:a05:6512:2316:b0:4b0:6023:6f6f with SMTP id o22-20020a056512231600b004b060236f6fmr7739080lfu.57.1672158700907;
-        Tue, 27 Dec 2022 08:31:40 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=frC0CMdSQBqRvRfV0Ly2ms9MOr7jMien4e0QpzgS4Y0=;
+        b=J+T6m51THuDiCtnEET7Dy5Go8Z1iRI94OFsKk9KmrMzdBkR4kcEn0j07tNJK8aYE7g
+         JdW6k/zNCu19467qk4JhAGktVtYAirjwAmItApGjNd6/oXmvVpjKmeIz/lrXklPCMuRF
+         0t7b0w8YMJwBeTKt+kIlKry+qzJm1q+cI9cyiVq1sVapX6Qu57mcDkllWYAYrbH32q67
+         hkf3BVEiw/mJaqulmyiXdYxvQa7RGSWwEN9aw7HsonkcTTj+7p89WOtlkMqkenvh3ooa
+         RWhdDHCrmDS0++s2bObhFaN6ZBWXXCO1V9Hyl1/fbSaBMW5cYtZqszScqCcqu28Yiv34
+         BZOw==
+X-Gm-Message-State: AFqh2krDSwsz8MkenN12zQK9rWGKBVoHMkEe8CZhUOAQfXeUf1m/eFpv
+        YJKUmWYaMk4iPvhNlMpppCv6XA==
+X-Google-Smtp-Source: AMrXdXt9Cz0ZmNvQ1RK+Z+vtmF660kCSUOPgVi3EWU0VmRLB9+L7Hxqajr5QuGPf+oYMgeyvVZ8CGw==
+X-Received: by 2002:a05:6512:ba5:b0:4a4:68b9:19f9 with SMTP id b37-20020a0565120ba500b004a468b919f9mr6635267lfv.33.1672158721634;
+        Tue, 27 Dec 2022 08:32:01 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id v9-20020a056512348900b004a46a9cebe2sm2318019lfr.289.2022.12.27.08.31.39
+        by smtp.gmail.com with ESMTPSA id q8-20020ac25108000000b004aac23e0dd6sm2319853lfb.29.2022.12.27.08.32.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 08:31:40 -0800 (PST)
+        Tue, 27 Dec 2022 08:32:01 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] ASoC: dt-bindings: qcom,lpass-cpu: Correct and constrain clocks, interrupts, reg
-Date:   Tue, 27 Dec 2022 17:31:35 +0100
-Message-Id: <20221227163135.102559-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8350: drop unused dispcc power-domain-names
+Date:   Tue, 27 Dec 2022 17:31:57 +0100
+Message-Id: <20221227163158.102737-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
-References: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The binding allowed multiple variations and number of
-reg/interrupts/clocks properties for SC7180 and SC7280.  Maybe this was
-done for different use-cases of LPASS CPU audio node, but DTS is
-supposed to be a complete picture of the hardware.  The upstreamed
-SC7180 and SC7280 DTSes contain the widest set of these
-reg/interrupts/clocks, sometimes being even sum of these different
-variations.
+Display clock controller bindings do not allow power-domain-names:
 
-Correct and narrow the reg, interrupts and clocks to match existing DTS:
-
-  sc7280-herobrine-evoker-lte.dtb: audio@3987000: clock-names: 'oneOf' conditional failed, one must be fixed:
-    ['aon_cc_audio_hm_h', 'audio_cc_ext_mclk0', 'core_cc_sysnoc_mport_core', 'core_cc_ext_if0_ibit', 'core_cc_ext_if1_ibit',
-     'audio_cc_codec_mem', 'audio_cc_codec_mem0', 'audio_cc_codec_mem1', 'audio_cc_codec_mem2', 'aon_cc_va_mem0'] is too long
-    'core_cc_sysnoc_mport_core' was expected
-    'audio_cc_codec_mem' was expected
-    'audio_cc_codec_mem0' was expected
-    'audio_cc_codec_mem1' was expected
-    'audio_cc_codec_mem2' was expected
-    'aon_cc_va_mem0' was expected
+  sm8350-hdk.dtb: clock-controller@af00000: 'power-domain-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../bindings/sound/qcom,lpass-cpu.yaml        | 131 +++++++++---------
- 1 file changed, 62 insertions(+), 69 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-index 16248629f659..6cc8f86c7531 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-@@ -35,7 +35,7 @@ properties:
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 0726930c9e28..d473194c968d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -2637,7 +2637,6 @@ dispcc: clock-controller@af00000 {
+ 			#power-domain-cells = <1>;
  
-   clocks:
-     minItems: 3
--    maxItems: 7
-+    maxItems: 10
+ 			power-domains = <&rpmhpd SM8350_MMCX>;
+-			power-domain-names = "mmcx";
+ 		};
  
-   clock-names:
-     minItems: 1
-@@ -124,6 +124,8 @@ allOf:
- 
-     then:
-       properties:
-+        clocks:
-+          maxItems: 3
-         clock-names:
-           items:
-             - const: ahbix-clk
-@@ -138,6 +140,9 @@ allOf:
- 
-     then:
-       properties:
-+        clocks:
-+          minItems: 7
-+          maxItems: 7
-         clock-names:
-           items:
-             - const: ahbix-clk
-@@ -156,33 +161,31 @@ allOf:
- 
-     then:
-       properties:
-+        clocks:
-+          minItems: 6
-+          maxItems: 6
-         clock-names:
--          oneOf:
--            - items:   #for I2S
--                - const: pcnoc-sway-clk
--                - const: audio-core
--                - const: mclk0
--                - const: pcnoc-mport-clk
--                - const: mi2s-bit-clk0
--                - const: mi2s-bit-clk1
--            - items:   #for HDMI
--                - const: pcnoc-sway-clk
--                - const: audio-core
--                - const: pcnoc-mport-clk
-+          items:
-+            - const: pcnoc-sway-clk
-+            - const: audio-core
-+            - const: mclk0
-+            - const: pcnoc-mport-clk
-+            - const: mi2s-bit-clk0
-+            - const: mi2s-bit-clk1
-+        reg:
-+          minItems: 2
-+          maxItems: 2
-         reg-names:
--          anyOf:
--            - items:   #for I2S
--                - const: lpass-lpaif
--            - items:   #for I2S and HDMI
--                - const: lpass-hdmiif
--                - const: lpass-lpaif
-+          items:
-+            - const: lpass-hdmiif
-+            - const: lpass-lpaif
-+        interrupts:
-+          minItems: 2
-+          maxItems: 2
-         interrupt-names:
--          anyOf:
--            - items:   #for I2S
--                - const: lpass-irq-lpaif
--            - items:   #for I2S and HDMI
--                - const: lpass-irq-lpaif
--                - const: lpass-irq-hdmi
-+          items:
-+            - const: lpass-irq-lpaif
-+            - const: lpass-irq-hdmi
-       required:
-         - iommus
-         - power-domains
-@@ -195,54 +198,44 @@ allOf:
- 
-     then:
-       properties:
-+        clocks:
-+          minItems: 10
-+          maxItems: 10
-         clock-names:
--          oneOf:
--            - items:   #for I2S
--                - const: aon_cc_audio_hm_h
--                - const: audio_cc_ext_mclk0
--                - const: core_cc_sysnoc_mport_core
--                - const: core_cc_ext_if0_ibit
--                - const: core_cc_ext_if1_ibit
--            - items:   #for Soundwire
--                - const: aon_cc_audio_hm_h
--                - const: audio_cc_codec_mem
--                - const: audio_cc_codec_mem0
--                - const: audio_cc_codec_mem1
--                - const: audio_cc_codec_mem2
--                - const: aon_cc_va_mem0
--            - items:   #for HDMI
--                - const: core_cc_sysnoc_mport_core
--
-+          items:
-+            - const: aon_cc_audio_hm_h
-+            - const: audio_cc_ext_mclk0
-+            - const: core_cc_sysnoc_mport_core
-+            - const: core_cc_ext_if0_ibit
-+            - const: core_cc_ext_if1_ibit
-+            - const: audio_cc_codec_mem
-+            - const: audio_cc_codec_mem0
-+            - const: audio_cc_codec_mem1
-+            - const: audio_cc_codec_mem2
-+            - const: aon_cc_va_mem0
-+        reg:
-+          minItems: 6
-+          maxItems: 6
-         reg-names:
--          anyOf:
--            - items:   #for I2S
--                - const: lpass-lpaif
--            - items:   #for I2S and HDMI
--                - const: lpass-hdmiif
--                - const: lpass-lpaif
--            - items:   #for I2S, soundwire and HDMI
--                - const: lpass-hdmiif
--                - const: lpass-lpaif
--                - const: lpass-rxtx-cdc-dma-lpm
--                - const: lpass-rxtx-lpaif
--                - const: lpass-va-lpaif
--                - const: lpass-va-cdc-dma-lpm
-+          items:
-+            - const: lpass-hdmiif
-+            - const: lpass-lpaif
-+            - const: lpass-rxtx-cdc-dma-lpm
-+            - const: lpass-rxtx-lpaif
-+            - const: lpass-va-lpaif
-+            - const: lpass-va-cdc-dma-lpm
-+        interrupts:
-+          minItems: 4
-+          maxItems: 4
-         interrupt-names:
--          anyOf:
--            - items:   #for I2S
--                - const: lpass-irq-lpaif
--            - items:   #for I2S and HDMI
--                - const: lpass-irq-lpaif
--                - const: lpass-irq-hdmi
--            - items:   #for I2S, soundwire and HDMI
--                - const: lpass-irq-lpaif
--                - const: lpass-irq-hdmi
--                - const: lpass-irq-vaif
--                - const: lpass-irq-rxtxif
-+          items:
-+            - const: lpass-irq-lpaif
-+            - const: lpass-irq-hdmi
-+            - const: lpass-irq-vaif
-+            - const: lpass-irq-rxtxif
-         power-domain-names:
--          allOf:
--            - items:
--                - const: lcx
-+          items:
-+            - const: lcx
- 
-       required:
-         - iommus
+ 		adsp: remoteproc@17300000 {
 -- 
 2.34.1
 
