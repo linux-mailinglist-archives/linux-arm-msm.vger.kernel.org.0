@@ -2,47 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36912656C78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 16:25:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4995656C83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 16:27:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231394AbiL0PY5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 10:24:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36860 "EHLO
+        id S231924AbiL0P1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 10:27:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231395AbiL0PYZ (ORCPT
+        with ESMTP id S231515AbiL0P05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 10:24:25 -0500
+        Tue, 27 Dec 2022 10:26:57 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6538BC3C;
-        Tue, 27 Dec 2022 07:24:16 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BRFHn3f022207;
-        Tue, 27 Dec 2022 15:24:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bTHb/iTIJ515U9ZD/ZdvnV3tGnX4kfcrHGl79HkwpXw=;
- b=mGHfvV0Ql1ibjzkW7LRfUpM/oiyoGESqVWwo//mravQQGsdxeFSCo9P631Qmhgkr3hG1
- 29Jr1HMburYmgN5h5tKoUx6CkQ17vuT2zRB1IsYNY2bPIuapa4d4io+Q/DaAeMxhA14C
- 1zj7/GOY747qrHqMJW009jy2qjuY7CF5qUme3xZLSUmPfL3rRhFn5rLCMEFl5xrEEAAV
- Xxu2logdc2x7CvZGI+EMr/JqhMGDGISvZ0NxWy4js2WtjBaAz9TaOcLhtfyFLCstyx4Q
- KUsrAm8IOi/vN0+6+1CHPydGln6WBw5GDYYA1hn5sKEQSP/4TAdw9WXq85yI1Jiy9hj/ uw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnreg5ewg-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCB2BE29;
+        Tue, 27 Dec 2022 07:26:15 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BRFHU7i008363;
+        Tue, 27 Dec 2022 15:26:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cQuov8Lsh/tXQZFD39e9xtjcqLKxIfKQlLX3E4n7Biw=;
+ b=XXGFz2Q/iZ2aKDdAXYwp9BAWjCdh8+kDJLQj5v1DhXuURLtcD1V+abkFYmVNhXcT+cZc
+ +SbmfvEHCU1vp9bdbXBnczc0EmxC3UmsgaMZEqi9hgeY5R5Oe2fw1T28tm7qVVD6BFFY
+ TreRgCL7xAul4+u1ZNCv56RwR8RAIf1Penv7k3etzXqVqxd0UfqUYwsQdVB+xlb3W/QD
+ w+jaZy7nOqS/guaAGsoWnBKy/OCt5x9PgHGhaZ+ICZnjdN2YTxgX5myTsVn8kaU4kGxq
+ hP0qSAYD0VBaPK14JDanCktEciYf4WjtpktYKPaUsITUbwV5GA0sYkoA55QbuGvkhxL+ Aw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnrrrwesj-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 15:24:07 +0000
+        Tue, 27 Dec 2022 15:26:03 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BRFO6YH032142
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BRFQ26Q016618
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Dec 2022 15:24:06 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 27 Dec 2022 07:24:01 -0800
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 27 Dec 2022 15:26:02 GMT
+Received: from [10.50.35.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 27 Dec
+ 2022 07:25:56 -0800
+Message-ID: <18bf4ed9-bb12-aed8-4746-e7c7549769d3@quicinc.com>
+Date:   Tue, 27 Dec 2022 20:55:38 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V20 1/7] dt-bindings: Added the yaml bindings for DCC
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
 CC:     <linux-arm-kernel@lists.infradead.org>,
@@ -50,65 +57,120 @@ CC:     <linux-arm-kernel@lists.infradead.org>,
         <devicetree@vger.kernel.org>,
         "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
         Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
-        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
-Subject: [PATCH V21 7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
-Date:   Tue, 27 Dec 2022 20:52:51 +0530
-Message-ID: <4b4289063e1b3baf98b653274060f35a5c888609.1672148732.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1672148732.git.quic_schowdhu@quicinc.com>
-References: <cover.1672148732.git.quic_schowdhu@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>
+References: <cover.1672068481.git.quic_schowdhu@quicinc.com>
+ <fd3b99b07bd40612a76313429635026471d273ef.1672068481.git.quic_schowdhu@quicinc.com>
+ <38352fbb-663f-71f7-b7ef-d539b98fc423@linaro.org>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <38352fbb-663f-71f7-b7ef-d539b98fc423@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: izPErIw2AsELScZ8TZH6eHPqr6moMQBh
-X-Proofpoint-ORIG-GUID: izPErIw2AsELScZ8TZH6eHPqr6moMQBh
+X-Proofpoint-GUID: hT04q8f8EPGySm3XWtJeXpOC9gCuiou7
+X-Proofpoint-ORIG-GUID: hT04q8f8EPGySm3XWtJeXpOC9gCuiou7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-12-27_11,2022-12-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=918 spamscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212270125
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 mlxscore=0 malwarescore=0 spamscore=0
+ phishscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212270126
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DCC(Data Capture and Compare) device tree node entry along with
-the address of the register region.
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index d761da4..7d476b2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2137,6 +2137,12 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		dma@10a2000 {
-+			compatible = "qcom,sdm845-dcc", "qcom,dcc";
-+			reg = <0x0 0x010a2000 0x0 0x1000>,
-+			      <0x0 0x010ae000 0x0 0x2000>;
-+		};
-+
- 		pmu@114a000 {
- 			compatible = "qcom,sdm845-llcc-bwmon";
- 			reg = <0 0x0114a000 0 0x1000>;
--- 
-2.7.4
+On 12/27/2022 1:51 PM, Krzysztof Kozlowski wrote:
+> On 26/12/2022 17:52, Souradeep Chowdhury wrote:
+>> Documentation for Data Capture and Compare(DCC) device tree bindings
+>> in yaml format.
+> 
+> Use subject prefixes matching the subsystem (which you can get for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching).
+> 
+> Subject: drop second, redundant "bindings". Drop "yaml" (also unrelated).
+> 
+> Use proper imperative mode.
+> https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
 
+Ack
+
+> 
+>>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     | 44 ++++++++++++++++++++++
+>>   1 file changed, 44 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+>> new file mode 100644
+>> index 0000000..ac3b51b
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+>> @@ -0,0 +1,44 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/soc/qcom/qcom,dcc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Data Capture and Compare
+>> +
+>> +maintainers:
+>> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> +
+>> +description: |
+>> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
+>> +    configuration data or system memory contents during catastrophic failure
+>> +    or SW trigger. DCC is used to capture and store data for debugging purpose
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - qcom,sm8150-dcc
+>> +          - qcom,sc7280-dcc
+>> +          - qcom,sc7180-dcc
+>> +          - qcom,sdm845-dcc
+>> +      - const: qcom,dcc
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: DCC base
+>> +      - description: DCC RAM base
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    dma@10a2000{
+>> +        compatible = "qcom,sm8150-dcc","qcom,dcc";
+> 
+> Missing space between compatibles.
+
+Ack
+
+> 
+> Best regards,
+> Krzysztof
+> 
