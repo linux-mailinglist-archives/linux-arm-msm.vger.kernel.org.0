@@ -2,37 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AACFD656B68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 14:45:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05C38656B7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 15:02:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231641AbiL0NpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 08:45:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60698 "EHLO
+        id S229762AbiL0OCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 09:02:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231448AbiL0NpS (ORCPT
+        with ESMTP id S229521AbiL0OCf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 08:45:18 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353F7DC7;
-        Tue, 27 Dec 2022 05:45:17 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 27 Dec 2022 09:02:35 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44AB92719;
+        Tue, 27 Dec 2022 06:02:34 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BCD616115E;
-        Tue, 27 Dec 2022 13:45:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECE7C433D2;
-        Tue, 27 Dec 2022 13:45:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1672148716;
-        bh=rz3uMAjXUtgjTO4lgVlXOKO3ue1KZ7jGfnmeuq3J5Js=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XapDBzzd/bZ8Mr9cF8NgX64eOKDfmSw6Y7ERRkuEXsBO/tp7dvnoLIqb9N/2kPSJc
-         qT9nqMH3v+uDUffDXLsLvnW/Pz48nhnGeHVXohon9StxTJS5DYKaU719Vo61VE7/Hr
-         bAyImdXoGvBG3/HEw82VNV5VHPD0AYBixeNBMbbY=
-Date:   Tue, 27 Dec 2022 14:45:13 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 624DA21A14;
+        Tue, 27 Dec 2022 14:02:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1672149752; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0KLiBDtIA7sN+ETgDOxVP3hBKlixZxiuD/45RsLx3hE=;
+        b=vUr3dlNES5rrO/KcZ06D38wB0Lk2NfSAB9F0/HFo4qT1AngDH194kUNc/FFdC+nBz2shYu
+        at9RsZ8jXUf+UOyvOuI0IJtC8qWdRmBH1jHIZqYqNuxVDDMltj8jwVNPhhlq2YtoVW/0YT
+        GLB5Yqvw2YQu7TvMFzDL1ZOPbl79tMA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1672149752;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0KLiBDtIA7sN+ETgDOxVP3hBKlixZxiuD/45RsLx3hE=;
+        b=Ih06188sb6XgugJG7XDgDd4abpGli3pOSvNztn0TlNE+g7qC7rlc4fjenD08gjlhDre0u4
+        ZWte3co7ov6SIaAw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DC02613913;
+        Tue, 27 Dec 2022 14:02:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id hC/nNPf6qmOLZwAAMHmgww
+        (envelope-from <tiwai@suse.de>); Tue, 27 Dec 2022 14:02:31 +0000
+Date:   Tue, 27 Dec 2022 15:02:31 +0100
+Message-ID: <87r0wl0wso.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
         srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
         perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
@@ -42,71 +62,53 @@ Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
         devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
         quic_jackp@quicinc.com, quic_plai@quicinc.com
 Subject: Re: [RFC PATCH 03/14] ASoC: qcom: Add USB backend ASoC driver for Q6
-Message-ID: <Y6r26VfIfpE8zpPY@kroah.com>
+In-Reply-To: <Y6r26VfIfpE8zpPY@kroah.com>
 References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-4-quic_wcheng@quicinc.com>
- <Y6bAQ8hDLkvrvjQQ@kroah.com>
- <Y6rtdy4NPfi/KOqd@sirena.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y6rtdy4NPfi/KOqd@sirena.org.uk>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        <20221223233200.26089-4-quic_wcheng@quicinc.com>
+        <Y6bAQ8hDLkvrvjQQ@kroah.com>
+        <Y6rtdy4NPfi/KOqd@sirena.org.uk>
+        <Y6r26VfIfpE8zpPY@kroah.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 27, 2022 at 01:04:55PM +0000, Mark Brown wrote:
-> On Sat, Dec 24, 2022 at 10:02:59AM +0100, Greg KH wrote:
-> > On Fri, Dec 23, 2022 at 03:31:49PM -0800, Wesley Cheng wrote:
+On Tue, 27 Dec 2022 14:45:13 +0100,
+Greg KH wrote:
 > 
-> > > + * struct q6usb_offload
-> > > + * @dev - dev handle to usb be
+> On Tue, Dec 27, 2022 at 01:04:55PM +0000, Mark Brown wrote:
+> > On Sat, Dec 24, 2022 at 10:02:59AM +0100, Greg KH wrote:
+> > > On Fri, Dec 23, 2022 at 03:31:49PM -0800, Wesley Cheng wrote:
+> > 
+> > > > + * struct q6usb_offload
+> > > > + * @dev - dev handle to usb be
+> > 
+> > > "be"?  What is that?
+> > 
+> > Back end.  This is a concept in DPCM which should be reasonably
+> > discoverable to people working on the audio portions of this code.
 > 
-> > "be"?  What is that?
-> 
-> Back end.  This is a concept in DPCM which should be reasonably
-> discoverable to people working on the audio portions of this code.
+> Ok, then how is the reference counting logic handled here?  USB devices
+> can be removed from the system at any point in time...
 
-Ok, then how is the reference counting logic handled here?  USB devices
-can be removed from the system at any point in time...
+The whole picture is fairly complex, and this patch is a part
+belonging to the ASoC machine driver -- that is, it's bound to the
+Qualcomm host, and there can be only one on a system.  
 
-> > > +// SPDX-License-Identifier: GPL-2.0
-> > > +/*
-> > > + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> 
-> > All of the code in this patch series is older than 2022 as I know it has
-> > been in shipping devices for many years.  Please use the proper
-> > copyright year to make your lawyers happy...
-> 
-> Are you *positive* about this.  Based on some preparatory discussions
-> the Qualcomm people had with Takashi and I it seemed like this was a new
-> version of existing concepts.  I'm sure they had something already but
-> it's not obvious to me that they're just posting the same code.
+OTOH, USB audio devices are still managed by the existing USB audio
+driver as is, and they can be multiple and any devices.  The basic
+idea here is a hijack of the USB data processing in USB audio driver
+with the offloading mechanism by this ASoC driver (only if the
+condition met).
 
-I thought that this same code has been shipping in devices for a few
-years now in the last few Samsung phone models.  Is this not the same
-code that is in those devices?
-
-If not, why not, what happened to that codebase that makes it not worthy
-of being submitted upstream?
-
-> > > +static const struct snd_soc_dapm_route q6usb_dapm_routes[] = {
-> > > +	{"USB Playback", NULL, "USB_RX_BE"},
-> > > +};
-> 
-> > No terminating entry?  How does this not break?  Why do you need to
-> > specify the size of the array, that feels like a design bug somewhere.
-> 
-> It's how the interface works, the number of entries is passed in when
-> adding routes.
-
-Ah, you all might want to change that to make it simpler :)
 
 thanks,
 
-greg k-h
+Takashi
