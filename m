@@ -2,48 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FF8F656D7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 18:42:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DF7A656D87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 18:42:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230475AbiL0RmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 12:42:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46712 "EHLO
+        id S232067AbiL0RmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 12:42:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229809AbiL0RmV (ORCPT
+        with ESMTP id S232042AbiL0RmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 12:42:21 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F998FC9;
-        Tue, 27 Dec 2022 09:42:21 -0800 (PST)
+        Tue, 27 Dec 2022 12:42:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97818FC9;
+        Tue, 27 Dec 2022 09:42:23 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9AE15611D3;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 598BDB80E8B;
+        Tue, 27 Dec 2022 17:42:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30586C43392;
         Tue, 27 Dec 2022 17:42:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C1FC433F1;
-        Tue, 27 Dec 2022 17:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672162940;
-        bh=RShwuHHpsBtt7mCC2Et+ETDHzvgpHJ7vtYGpZZ8EnLs=;
+        s=k20201202; t=1672162941;
+        bh=RWFdEDGiVVH5Zrk9szcOUJD4PkhACqIEThY3u6Slsos=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mtMTcI+9hvDKIEmqvtx4Q4vKZXm+qL07qdge+YyDL+rDaIqIlddiiMprcGXK9JuKz
-         UjBJ+PVRyYDior8shbqRkz5xJceudLN4ujkoy1ZoK3b//L+CJrIY6Y4KRd7C7gOAB3
-         qNO3A/FbX7Peef/65oiLB/z3O0xpZvcN1u2oVUxPzi2tMqzCG/gVLN/ZkC1hhtFo7h
-         ajAxXOcpjWJNcTo4y/OgXDEVUAbqbJ1wyDPzTIUqL0EDtkKMQ1BB4rSNn30/u0fMDY
-         Qivw4bo+77tUYK7OBe47zWzvSv+4OzBokQ3r3PWBzRKLNNzXF5rPwlMAyL/iRnKL0I
-         Y7nRj5jkFLgww==
+        b=ZqoM6Ci/QsebDnsYLKHiYtFJfAV+Lyhxfb6CGAj65ecPlZFBAP9egD+IkTsv++pUM
+         7wnEiYCUtAZVQlmy8h4klVteFpVoIRgbufJMnZGXzaEH6AaNhDv9NU3B+8X0Mo4gxM
+         YV72o1P3IJSvig/M8oNUFrHVPs+PBRYvy17GjopReIrM/0TCoShVjPJsC+7czakgV1
+         6zPaa27RCJN1Cow35yhLY+X2SPo9dc7vrosdKFc4ccdIgIz7vFMIUCrf2cswDg0awD
+         pjODdhJStFUUqQ7BX2zr49u7miHpKeAZ7rJHADcla03ps4mY/TZ9e7uw+8uZoZIKlX
+         ovPsRS6EFzhsg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sireeshkodali1@gmail.com
-Cc:     krzysztof.kozlowski+dt@linaro.org
-Subject: Re: [PATCH v6 0/5] remoteproc: qcom: Add support for pronto-v3
-Date:   Tue, 27 Dec 2022 11:42:16 -0600
-Message-Id: <167216232801.738877.15895916910585144737.b4-ty@kernel.org>
+To:     stephan.gerhold@kernkonzept.com
+Cc:     krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        stephan@gerhold.net, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, mathieu.poirier@linaro.org,
+        devicetree@vger.kernel.org, luca@z3ntu.xyz,
+        sireeshkodali1@gmail.com
+Subject: Re: (subset) [PATCH v4 0/7] remoteproc: qcom_q6v5_mss: Add MSM8909 and MSM8953
+Date:   Tue, 27 Dec 2022 11:42:17 -0600
+Message-Id: <167216232800.738877.17567287056128563074.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221001031345.31293-1-sireeshkodali1@gmail.com>
-References: <20221001031345.31293-1-sireeshkodali1@gmail.com>
+In-Reply-To: <20220908182433.466908-1-stephan.gerhold@kernkonzept.com>
+References: <20220908182433.466908-1-stephan.gerhold@kernkonzept.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,28 +58,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Oct 2022 08:43:39 +0530, Sireesh Kodali wrote:
-> This patch series adds support for the pronto-v3 remoteproc found on the
-> MSM8953 platform. It also converts the documentation for wcnss to YAML.
-> 
-> Changes since v5:
->  * Fixed memory corruption in driver patch
->  * Slightly improved driver patch's commit message
+On Thu, 8 Sep 2022 20:24:26 +0200, Stephan Gerhold wrote:
+> Convert parts of the qcom,q6v5.txt binding documentation to a DT schema
+> (together with some DT fixes) in preparation of adding new compatibles
+> for MSM8909 and MSM8953. The schema can be easily shared between
+> MSM8916, MSM8974, MSM8909 and MSM8953 because they have almost the same
+> requirements. The other SoCs are quite different and are likely more
+> clearly described in separate DT schema(s) to avoid a lot of complicated
+> if statements.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] remoteproc: qcom: qcom_wcnss: Add support for pronto-v3
-      commit: 4c707cf5c7ddd43c6d574281a5591f71ed8d310c
-[2/5] dt-bindings: remoteproc: qcom: Convert wcnss documentation to YAML
-      commit: 9a660c7fd69ae9fff3f941140db25339937f8eee
-[3/5] dt-bindings: remoteproc: qcom: wcnss: Add qcom,pronto compatible
-      commit: 409db7b777c81ef249688cddba882d16dbb064e0
-[4/5] dt-bindings: remoteproc: qcom: wcnss: Add compatible for pronto v3
-      commit: a890eebe42ad2c0cfe44a34a4f9e7d1a735a55d8
-[5/5] dt-bindings: remoteproc: wcnss-pil: Make supplies optionally required
-      commit: a4421a22bfd966852349e5c38278e9a6eaefb456
+[2/7] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916 to schema
+      commit: b9880532d0cdf54dc6cc0e028afe47d829873b20
+[3/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8974
+      commit: ac686cbc6f8bb7810058955e3bb5b5635ca9331a
+[4/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8909
+      commit: f8fb0b3d453e8a0a3b94c18001ce8f1e86d95036
+[5/7] remoteproc: qcom: q6v5-mss: Add support for MSM8909
+      commit: ed71c47f0000ec17b4ce167bce0d44dff8e144e1
+[6/7] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8953
+      commit: 43baa1a2215998ecb2ba64bb6d435d07541c7184
+[7/7] remoteproc: qcom: q6v5-mss: Add modem support on MSM8953
+      commit: 0201f759594b1248635185a92a5e39f47441ad6a
 
 Best regards,
 -- 
