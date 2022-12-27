@@ -2,109 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3F65656C1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 15:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43094656C49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 16:09:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232167AbiL0Olg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 09:41:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52018 "EHLO
+        id S229542AbiL0PJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 10:09:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232064AbiL0OlP (ORCPT
+        with ESMTP id S229510AbiL0PJZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 09:41:15 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D24CDE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:13 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id m6so9477728lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 06:41:13 -0800 (PST)
+        Tue, 27 Dec 2022 10:09:25 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C11DB9;
+        Tue, 27 Dec 2022 07:09:25 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id k7-20020a056830168700b0067832816190so8350994otr.1;
+        Tue, 27 Dec 2022 07:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KjyjRmy5puUpAtPf+wBK5e8kuBWUmUhZYIEd38wFUkg=;
-        b=iqt9Q+ASROGcthdWWwR1bPD+878wxS0YbGiLwBal2Sjg64M9Sbj6ymHdk5IVGimNbq
-         cnerpYMtnDFuMhGVZL85sWlplz8cOKfUUyTDpSSCr9FE1/TD8KjEtIi545iauQlBYXi3
-         o49/0L4/4F8TcuHw/T1se3pSlJ0AIqzS+KwRb7RTFIrd062EFAlocDWEZ27VaKwdix5V
-         l/SYtZO7cjdPzt2FKsbCpfEpKBP0BjrQHQ/1QKT3kzPv5Jzf6QhaQ9kboLgyDsU6HV49
-         i6cS9xYYP5Jl4OUhkdF2eTzruTQL1O7fyDkGad8FQ/N4iWCwm7npxkjwqu1Q0GPeHXir
-         bxrg==
+        bh=mxrzV/iOu2I4ctne6i2SxOd69YjJ9MLkAy6iEbH6YCs=;
+        b=Xgv7aHpYuRzukrZlbUxMmTh9NLmpbYlrlqSUvc4Hm3uTnYkLAZHdJCf8OfOA+bi+bq
+         7gsUPDKhg24cO493BKoJyz/W0yXfTgw341gS21kNfnF+SR+3aw08W254vq7k6XSEysOW
+         MZxzQqbONIHMZUnKOgDOCexGeWQlqPNzaXSJ6qtVYToauM666uTvVQ1AnOLmrDEg9fgr
+         NEt00NHPE4RHmrCVMGbzLymkgMxceJlFb1IBGXLH2OgGjmobbJPZC5EizE44BQWpsmOx
+         xEkT0prJE21SWaU9VXiRdVqKvzVwdBoRyTrZRSfoBL7jMNqzhotsPV4hU20f66vonoHO
+         V7sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KjyjRmy5puUpAtPf+wBK5e8kuBWUmUhZYIEd38wFUkg=;
-        b=RQhiYlhD7iZNyDqcyuXPqLLeUkG54wCo26M7xq59vSlPqMRegkO5/VWM1C6gKu02BY
-         Efbv/aPDo9OUuT/5dMshaXhD93J7HK3DzPPj6h87u7SOAnDxcRA7l8SH6BnYq7z7SbN0
-         HDpUi7Ipt7bKH5s16ViE/Vy051laq8e2OhbPUMnYRIHGERniYALOTfezfGJGJtMlG55N
-         H3eMe/jaRAC5+viOWPs5ZhEHNBV6fmz4JhdCAE8MQyx/N6r8G7uRQjs0hWCfSp0raf6G
-         uHDULoH5vETMzPfHFxwKKkf0Ao1QrH/nCn5aeI5T6i60V0EdKJwSjKA6Quvjsp0mtbUx
-         KsHw==
-X-Gm-Message-State: AFqh2kre1c4Yac320yuUk1sPEh0js3EWPxN6fHck8F1wIHXAEPdFDBgR
-        z4YMcOfVITYaGl4pID0EkyHlwQ==
-X-Google-Smtp-Source: AMrXdXsN7VYeo+NLz+OBGeJ/ih1X9X3rq66Kh6o9M+PbOedlYzXTZHk713zzkBLV6AwEia2Mpi60RQ==
-X-Received: by 2002:a05:6512:159b:b0:4b5:9138:145b with SMTP id bp27-20020a056512159b00b004b59138145bmr6909852lfb.14.1672152073208;
-        Tue, 27 Dec 2022 06:41:13 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id s1-20020a056512214100b004b5853f0fc6sm2261126lfr.246.2022.12.27.06.41.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 06:41:12 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        bh=mxrzV/iOu2I4ctne6i2SxOd69YjJ9MLkAy6iEbH6YCs=;
+        b=svuDAUN/EPKq4RjtDz7sJ5gszZy34uz1MMtsIIaWf5KlMj1hX1m0i97+hBqhvdxEv1
+         rCyqnsfIiLOse0yGDvEM3U23Fkg8KGJ7ZMoJDUa4xkQ/wzPseBulF0Oybyt2GwSpy5o1
+         KPoAHait6UAPI2Y8QL1f7+cQocvX4THT3V4ncCVHLuDx4JpCq2SCBps0XC1wtXqcjPaC
+         Q6st3kShCfksokdaVdUzy2LLOoJaGQl+elq3e2KcnwvtXBuMLEuXY2bjilCU7xZ79HpB
+         0J2WrIcDUcTKuPs9PExOEhwUmYj1lVEvV4lPzN2SujRgjMQM9b5L+2n88Z/JWgwNJYMg
+         VNIw==
+X-Gm-Message-State: AFqh2kpTx1wdVJbUA7SviX+Mdq6nDu5T1HWHZRiAPYTXi9XAgo2esQuD
+        akwuQJ2K6Tgix1BftliQyMo+Tjqzzo8Qwoz+K8U=
+X-Google-Smtp-Source: AMrXdXssBAl7zYN2GKFSy6s7Gg9yKSoQuGKkrUORp607Ls/hI3MHC/x6i1XoMTK+WO25pquU/tod3lo0axhE1BKhpaY=
+X-Received: by 2002:a05:6830:109:b0:66c:68e5:84c5 with SMTP id
+ i9-20020a056830010900b0066c68e584c5mr1426123otp.321.1672153764454; Tue, 27
+ Dec 2022 07:09:24 -0800 (PST)
+MIME-Version: 1.0
+References: <20221112203300.536010-1-dsankouski@gmail.com> <20221112203300.536010-3-dsankouski@gmail.com>
+ <20221222115922.jlachctn4lxopp7a@SoMainline.org>
+In-Reply-To: <20221222115922.jlachctn4lxopp7a@SoMainline.org>
+From:   Dzmitry Sankouski <dsankouski@gmail.com>
+Date:   Tue, 27 Dec 2022 18:09:13 +0300
+Message-ID: <CABTCjFBrGPW07AOnGgL0FD9KhHZAhRoj=n6QmttfDEobisgCqA@mail.gmail.com>
+Subject: Re: [PATCH v12 2/2] arm64: dts: qcom: sagit: add initial device tree
+ for sagit
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Del Regno <angelogioacchino.delregno@collabora.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 8/8] media: dt-bindings: qcom,venus: document firmware-name
-Date:   Tue, 27 Dec 2022 15:41:02 +0100
-Message-Id: <20221227144102.79391-8-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
-References: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Venus Linux driver loads firmware based on firmware-name property and
-some DTS already have it:
+Thanks for the note, I'll send the fix.
 
-  msm8996-oneplus3.dtb: video-codec@c00000: Unevaluated properties are not allowed ('firmware-name', 'interconnect-names', 'interconnects' were unexpected)
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/media/qcom,venus-common.yaml | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-index 4a5c1d55c202..3153d91f9d18 100644
---- a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-@@ -26,6 +26,9 @@ properties:
-     minItems: 3
-     maxItems: 7
- 
-+  firmware-name:
-+    maxItems: 1
-+
-   interrupts:
-     maxItems: 1
- 
--- 
-2.34.1
-
+=D1=87=D1=82, 22 =D0=B4=D0=B5=D0=BA. 2022 =D0=B3. =D0=B2 14:59, Marijn Suij=
+ten <marijn.suijten@somainline.org>:
+>
+> On 2022-11-12 23:33:00, Dzmitry Sankouski wrote:
+> > New device support - Xiaomi Mi6 phone
+>
+> <snip>
+>
+> > diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts=
+/qcom/pm8998.dtsi
+> > index 6a0e14382be8..6a5854333b2b 100644
+> > --- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
+> > @@ -52,6 +52,14 @@ pm8998_pwrkey: pwrkey {
+> >                               bias-pull-up;
+> >                               linux,code =3D <KEY_POWER>;
+> >                       };
+> > +
+> > +                     pm8998_resin: resin {
+> > +                             compatible =3D "qcom,pm8941-resin";
+> > +                             interrupts =3D <GIC_SPI 0x8 1 IRQ_TYPE_ED=
+GE_BOTH>;
+> > +                             debounce =3D <15625>;
+> > +                             bias-pull-up;
+> > +                             status =3D "disabled";
+> > +                     };
+>
+> This should have been a separate patch, one that deduplicated
+> overlapping nodes with existing msm8998 / sdm845 boards which all add
+> this node individually to &pm8998_pon.
+>
+> What's more, their override has the same node name and will be merged
+> with this one without setting status =3D "okay", leading to all those
+> boards suddenly having a broken resin key because they inherit your
+> status=3D"disabled".
+>
+> Can you send a fix to address that, with proper Fixes: tag?
+>
+> - Marijn
+>
+> >               };
+> >
+> >               pm8998_temp: temp-alarm@2400 {
+> > --
+> > 2.30.2
+> >
