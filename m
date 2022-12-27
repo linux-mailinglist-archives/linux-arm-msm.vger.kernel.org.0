@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 713E865685E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 09:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35006656895
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 09:56:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbiL0IV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 03:21:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33640 "EHLO
+        id S230228AbiL0I4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 03:56:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbiL0IVx (ORCPT
+        with ESMTP id S229496AbiL0I4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 03:21:53 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85881111F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 00:21:52 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id j17so9181212lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 00:21:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uoVHCl3unE9x2Jn5slc8bNEN4YZ+jWXSChdKV0ixQj0=;
-        b=ZI8OJfIc905Yn+MWE5wMmwIpiFn7IeAP2mnnBjX5uBdSCQsNf/fqewspwLYOryhbDl
-         Rx8hVU2uLTw+roEmTbtM5IvP0zkd3xYp/nFfJF9D+wUGLrAZhY9ibXDU1AH786SCePjK
-         vzFJUaU/CBsdDTseBDk/DPoCWku5A7m3c0iZEnOrloUYWAn2ARmjNZK+etc7FAH9QdeQ
-         /+Miv5mF4RRus/5ljCuPRH8hYWjxlhegGB2OXEBl8PzUpr0svVf7/ExEXdZMqI3exMiC
-         ENyx1Y7MxMPFV5Ho+VfOsHcYXE0pi9omLVggP4wPkGhssQBb2m9djEeqed+XMxnxx33q
-         E+4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uoVHCl3unE9x2Jn5slc8bNEN4YZ+jWXSChdKV0ixQj0=;
-        b=naZJLILbkqRb8fn2tCUAnw3DnpxjHIxlXMmtnfGrDemfpS8rPd0H/05pEuZLOJRIaI
-         12aYhxuQ8sFRK9LkFksav7zT+naTrgboMyxnHAHqB9p57JZGPm+lR1VMDZFlq9KdtgBE
-         Gk9woFLy8O8D1ArRZugBJXwWQ8bL89uHTu0UJ/+3PKrSLZLTe/P6SBCUfX+f/rsrrk5x
-         RNCYTaPW1TBGMUlHox5q3mFjKAgdM5EG/3aHdAeYcqTgVcv9cu7zy/ZTsf4Cketc+mAx
-         oVFn7EugoryTlLxzi2yRwBhDXE8S2arE87/iK69upbMBGWpjcdKMZ/1AsxVVknMAJFEE
-         3MEQ==
-X-Gm-Message-State: AFqh2kqkVtGZBHvtFu+baOnUV1SZyqdoT1OSZMfjlT78mRsZDoDFj/G2
-        Xj56X8v2L7f8X3652+0XSBOT7g==
-X-Google-Smtp-Source: AMrXdXtoddcMkOLR+6nt/68Thn2viOa1im3IPX1dUrStspBW0W9iMq1f1LNYBvUNgMruK3SG2/zyMA==
-X-Received: by 2002:a05:6512:539:b0:4c5:64ed:df06 with SMTP id o25-20020a056512053900b004c564eddf06mr5883556lfc.27.1672129310889;
-        Tue, 27 Dec 2022 00:21:50 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c19-20020a056512075300b004cafa01ebbfsm1697985lfs.101.2022.12.27.00.21.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Dec 2022 00:21:50 -0800 (PST)
-Message-ID: <38352fbb-663f-71f7-b7ef-d539b98fc423@linaro.org>
-Date:   Tue, 27 Dec 2022 09:21:49 +0100
+        Tue, 27 Dec 2022 03:56:23 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB9D64CC;
+        Tue, 27 Dec 2022 00:56:21 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BR5sFMq012005;
+        Tue, 27 Dec 2022 08:56:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=vOJfLNIhfso9l2s3VZeawR3CLuvnu+SogGq4Uicjcag=;
+ b=U964bRlJFv92pzZRLFdOMMSExnSFf35wnhzzqmH8NuG0tIkto7weM8CDKCk1d/JzJWHl
+ tqMHvEfAdXLCeBCeSRMwTqlym8ZIn4cEDB+wQicAvqcVnR9UMmCj1VNJqrdsu/ca0MAr
+ waOu5MgTkjlMXaPlxW8DaosFOFdfT+bruvI/jcxJfvw23mOOM0CMbzoNxTzq1K0KWlnh
+ 9MQY5FdlILxm+mXHkvQI4HAOuUVlkIcaXHS7PCopbIsmmoqguKfenST1ptuG05Nncsdl
+ j8l9U9Y6phcBJxFjR2lamQP+CgqvL3ysCxP/zIfgsPch7nY0DSMbb3twTHJXU62hD6+A oQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnt6s45dx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Dec 2022 08:56:18 +0000
+Received: from nasanex01c.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BR8uIwi001095
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Dec 2022 08:56:18 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 27 Dec
+ 2022 00:56:15 -0800
+Message-ID: <ead97313-c147-ae8b-dda6-c872475a9dd5@quicinc.com>
+Date:   Tue, 27 Dec 2022 14:26:12 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH V20 1/7] dt-bindings: Added the yaml bindings for DCC
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] remoteproc: qcom: pas: Fix subdevice add order
 Content-Language: en-US
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
-References: <cover.1672068481.git.quic_schowdhu@quicinc.com>
- <fd3b99b07bd40612a76313429635026471d273ef.1672068481.git.quic_schowdhu@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <fd3b99b07bd40612a76313429635026471d273ef.1672068481.git.quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1671024983-22634-1-git-send-email-quic_mojha@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <1671024983-22634-1-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9_NDah0Y1Q47XFfSeo2XgP2KeocUJtWN
+X-Proofpoint-ORIG-GUID: 9_NDah0Y1Q47XFfSeo2XgP2KeocUJtWN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-27_05,2022-12-23_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0 spamscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212270073
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,79 +79,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/12/2022 17:52, Souradeep Chowdhury wrote:
-> Documentation for Data Capture and Compare(DCC) device tree bindings
-> in yaml format.
+Hi,
 
-Use subject prefixes matching the subsystem (which you can get for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching).
+Friendly reminder for review.
 
-Subject: drop second, redundant "bindings". Drop "yaml" (also unrelated).
+-Mukesh
 
-Use proper imperative mode.
-https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
-
+On 12/14/2022 7:06 PM, Mukesh Ojha wrote:
+> Currently, the notification like QCOM_SSR_BEFORE_SHUTDOWN is not exactly
+> sent before starting shutdown activity on remote subsystem but it is
+> getting sent after sysmon shutdown request to remote.
 > 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> On getting QCOM_SSR_BEFORE_SHUTDOWN, some client want remote subsystem
+> to be alive to communicate but as sysmon shutdown request is getting
+> sent to remote before QCOM_SSR_BEFORE_SHUTDOWN notification sent to
+> kernel client due to which remote is not in a condition to communicate
+> with kernel clients.
+> 
+> Fixing the subdevice ordering will fix this as ssr subdevice will be
+> first one to get triggered in shutdown/stop path.
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->  .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     | 44 ++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+>   drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
-> new file mode 100644
-> index 0000000..ac3b51b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
-> @@ -0,0 +1,44 @@
-> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,dcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Data Capture and Compare
-> +
-> +maintainers:
-> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> +
-> +description: |
-> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
-> +    configuration data or system memory contents during catastrophic failure
-> +    or SW trigger. DCC is used to capture and store data for debugging purpose
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,sm8150-dcc
-> +          - qcom,sc7280-dcc
-> +          - qcom,sc7180-dcc
-> +          - qcom,sdm845-dcc
-> +      - const: qcom,dcc
-> +
-> +  reg:
-> +    items:
-> +      - description: DCC base
-> +      - description: DCC RAM base
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    dma@10a2000{
-> +        compatible = "qcom,sm8150-dcc","qcom,dcc";
-
-Missing space between compatibles.
-
-Best regards,
-Krzysztof
-
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 6afd094..5e34d59 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -538,7 +538,6 @@ static int adsp_probe(struct platform_device *pdev)
+>   
+>   	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
+>   	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
+> -	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
+>   	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
+>   					      desc->sysmon_name,
+>   					      desc->ssctl_id);
+> @@ -547,6 +546,7 @@ static int adsp_probe(struct platform_device *pdev)
+>   		goto detach_proxy_pds;
+>   	}
+>   
+> +	qcom_add_ssr_subdev(rproc, &adsp->ssr_subdev, desc->ssr_name);
+>   	ret = rproc_add(rproc);
+>   	if (ret)
+>   		goto detach_proxy_pds;
