@@ -2,249 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08DEC656CAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 16:56:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AAFC656CDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 17:31:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231394AbiL0P4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 10:56:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44504 "EHLO
+        id S230009AbiL0Qbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 11:31:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbiL0P4q (ORCPT
+        with ESMTP id S229602AbiL0Qbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 10:56:46 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC5F25FD2;
-        Tue, 27 Dec 2022 07:56:45 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 242FE6112E;
-        Tue, 27 Dec 2022 15:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AE0C433D2;
-        Tue, 27 Dec 2022 15:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672156604;
-        bh=wqjY19wRr/xNUIMp85k8D04KIz0alYuTXsWEsXk96tU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fJ4QYJN/OlQlIGU36gpeEXHV2TN+aGlJNrpo3JcqcfiWgc+pSS7l6GF7jE2Txc2He
-         E6V822P+Ec8G2GWzPgnAdtFORv2QICedTy+d1OQng2SnHmU7xOX9wql5eH19bUH5Vm
-         ZHQI0mBkNWOm/91iLHVaz+xYCzAngeb5QjYIKMVEM6gpyjxXMjd8l8hn0pX/gu31X9
-         HIZNvGbjqBmmRf62bHdhkkflJh1k3cb/JkR1ZZYG3szA+DMvY6lSYBR406aTQivlbL
-         ksCDp5SkumahAgVDqC6WlJlSEqJ8rXhQarAm7Cgexu3Y5RSRKLTtEW9tzbgfNqKVIP
-         XqJcndiWvt4Mw==
-Date:   Tue, 27 Dec 2022 09:56:41 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-Subject: Re: [PATCH V4 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-Message-ID: <20221227155641.xlkel7uhk7jr4qru@builder.lan>
-References: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
- <1670418258-11502-4-git-send-email-quic_sarannya@quicinc.com>
- <12f53ff1-a358-7129-c9ed-9b9fd7dad7e7@foss.st.com>
+        Tue, 27 Dec 2022 11:31:41 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DF5064CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:31:40 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id y25so20262946lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:31:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lyoX12mwMevw/GvkSfOGH+b2RZglwpZdjU1H0BRrPvA=;
+        b=lYv3qXlJQd5TErBapx2gr0arJ30auBkHwnrHBURc6jJJIAQfMKbJgpUxgD4xW4BDeD
+         fEiX4AYxUcrt8Za5ln7eSERt1vuERBBGSqGik6HErKD2YF4jqdy1kZIHKt/qnrW0lWEi
+         j1qdbpRdTppHfuefBO1jh4y/3OO6Z78d+UCoWf3loFcPPDZYePKlRB4lXnZBPd2ww6va
+         vpbNSqH6EARnKq4bzQn/2tEHwkvRU9FAf3JcxSZS1IjdqFrIltBypydS7/YDJEuF5+RK
+         bI2/yJXCU+Pa3VRoOZuftDuC3yTw989ISotswVm5aEMlOlPD+GiZ8pztYYNcpJLNZ2KN
+         XGZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lyoX12mwMevw/GvkSfOGH+b2RZglwpZdjU1H0BRrPvA=;
+        b=nCjPr+ZU+yYRsSgN6j8nO0HXaM50DPiP7sqa3YqPyEqpx2ac7VE3X05DPkecMGjJJu
+         saKyg4SFIU1fRAoSGaZffK2verIvo0gPO9xGSVO9D6mIgZ7hg0tBooO4Xub5IPCcMqkV
+         r+lRbs8qafrj/dUGjsC8yW2fsYbEq66Hl9wy8zsXwQ50Oal57+yidYm0KExMMZuW0Bef
+         UwFzLEXfaPLHDO62yzw34D8QsrZ+oRR27eoaSUE07J542MZNjU6X0Ha/OMkUd9z3uzfs
+         IJzlcRZtSxvRt8JcXjYNVmu8es2txieGvn5MunheRdqf3oHDpGouvc8+ed2ofSOo0eyc
+         wscQ==
+X-Gm-Message-State: AFqh2krNYLShCybrkXgJTfhsI2UnlMxPs0kyN4o5DP/5SqNmqbbsyNmw
+        3zw/8RMBLfdGeM2b2FzNYCzMSw==
+X-Google-Smtp-Source: AMrXdXsoXisr+b5apbAKUCZViYp6vaNIxWI+lRrZbA7Gh0SVf4k14JHySm36TYX+GLwajUW2DSNaPw==
+X-Received: by 2002:a05:6512:2821:b0:4b0:1305:6e02 with SMTP id cf33-20020a056512282100b004b013056e02mr7010836lfb.8.1672158698492;
+        Tue, 27 Dec 2022 08:31:38 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id v9-20020a056512348900b004a46a9cebe2sm2318019lfr.289.2022.12.27.08.31.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Dec 2022 08:31:37 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] ASoC: dt-bindings: qcom,lpass-cpu: Document required-opps
+Date:   Tue, 27 Dec 2022 17:31:33 +0100
+Message-Id: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <12f53ff1-a358-7129-c9ed-9b9fd7dad7e7@foss.st.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 21, 2022 at 05:28:16PM +0100, Arnaud POULIQUEN wrote:
-> 
-> 
-> On 12/7/22 14:04, Sarannya S wrote:
-> > Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
-> > to get/set the low level transport signals.
-> > 
-> > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-> > Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> > Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
-> > ---
-> >  drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
-> >  1 file changed, 52 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-> > index 3e0b8f3..8109d18 100644
-> > --- a/drivers/rpmsg/rpmsg_char.c
-> > +++ b/drivers/rpmsg/rpmsg_char.c
-> > @@ -23,6 +23,7 @@
-> >  #include <linux/rpmsg.h>
-> >  #include <linux/skbuff.h>
-> >  #include <linux/slab.h>
-> > +#include <linux/termios.h>
-> >  #include <linux/uaccess.h>
-> >  #include <uapi/linux/rpmsg.h>
-> >  
-> > @@ -68,6 +69,8 @@ struct rpmsg_eptdev {
-> >  	struct sk_buff_head queue;
-> >  	wait_queue_head_t readq;
-> >  
-> > +	u32 remote_signals;
-> > +	bool signals_pending;
-> 
-> Could you detail the need/use of signals_pending, in your implementation?
-> This is not obvious (at least for me)...
-> 
+SC7280 LPASS CPU device node comes with required-opps:
 
-I agree. With the move to use the concept of flow control in the rpmsg
-API, there's no longer any "signals" in this client driver.
+  sc7280-herobrine-crd.dtb: audio@3987000: Unevaluated properties are not allowed ('required-opps' was unexpected)
 
-> >  };
-> >  
-> >  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-> > @@ -109,7 +112,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
-> >  	skb_queue_tail(&eptdev->queue, skb);
-> >  	spin_unlock(&eptdev->queue_lock);
-> >  
-> > -	/* wake up any blocking processes, waiting for new data */
-> > +	wake_up_interruptible(&eptdev->readq);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-> > +{
-> > +	struct rpmsg_eptdev *eptdev = priv;
-> > +
-> > +	if (enable)
-> > +		eptdev->remote_signals = TIOCM_DSR | TIOCM_CTS;
-> > +	else
-> > +		eptdev->remote_signals = 0;
-> > +
-> > +	eptdev->signals_pending = true;
-> > +
-> >  	wake_up_interruptible(&eptdev->readq);
-> >  
-> >  	return 0;
-> > @@ -146,6 +164,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
-> >  		return -EINVAL;
-> >  	}
-> >  
-> > +	ept->flow_cb = rpmsg_ept_flow_cb;
-> >  	eptdev->ept = ept;
-> >  	filp->private_data = eptdev;
-> >  	mutex_unlock(&eptdev->ept_lock);
-> > @@ -166,6 +185,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
-> >  		eptdev->ept = NULL;
-> >  	}
-> >  	mutex_unlock(&eptdev->ept_lock);
-> > +	eptdev->signals_pending = false;
-> >  
-> >  	/* Discard all SKBs */
-> >  	skb_queue_purge(&eptdev->queue);
-> > @@ -279,6 +299,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
-> >  	if (!skb_queue_empty(&eptdev->queue))
-> >  		mask |= EPOLLIN | EPOLLRDNORM;
-> >  
-> > +	if (eptdev->signals_pending)
-> > +		mask |= EPOLLPRI;
-> > +
-> >  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
-> >  
-> >  	return mask;
-> > @@ -289,14 +312,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
-> >  {
-> >  	struct rpmsg_eptdev *eptdev = fp->private_data;
-> >  
-> > -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
-> > -		return -EINVAL;
-> > -
-> > -	/* Don't allow to destroy a default endpoint. */
-> > -	if (eptdev->default_ept)
-> > -		return -EINVAL;
-> > +	bool set;
-> > +	u32 val;
-> > +	int ret;
-> > +	
-> > +	switch (cmd) {
-> > +	case TIOCMGET:
-> > +		eptdev->signals_pending = false;
-> > +		ret = put_user(eptdev->remote_signals, (int __user *)arg);
-> > +		break;
-> > +	case TIOCMSET:
-> > +		ret = get_user(val, (int __user *)arg);
-> > +		if (ret)
-> > +			break;
-> > +		set = (val & (TIOCM_DTR | TIOCM_RTS)) ? true : false;
-> > +		ret = rpmsg_set_flow_control(eptdev->ept, set, 0);
-> > +		break;
-> 
-> I still wonder if it makes sense to implement serial IOCTRL in rpmsg_char.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-I've thinking about this since v1 as well...
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+index bb42220916b3..f00fc1051d4d 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+@@ -65,6 +65,9 @@ properties:
+   power-domain-names:
+     maxItems: 1
+ 
++  required-opps:
++    maxItems: 1
++
+   '#sound-dai-cells':
+     const: 1
+ 
+-- 
+2.34.1
 
-> I think it is quite dangerous to have such kind of mixed interface.
-> User application would want to use the serial interface should use the tty
-> interface.
-> 
-
-Can you please elaborate on this statement, because I have a hard time
-to state why the user space application must use the tty interface
-instead of rpmsg_char.
-
-And in particular, I don't think this is a question for the "user
-application", but rather for the system configuration.
-
-In order to move an application that works with rpmsg_char to the tty
-driver ("because it's the right thing to do..."?) means that the system
-needs to be reconfigured, such that the given rpmsg channel is exposed
-through the tty driver instead.
-
-This in turn either implies that the firmware needs to be changed to
-expose these channels with the name "rpmsg-tty" - and the application
-taught how to figure out which ttyRPMSGn to open - or the rpmsg_ctrl
-interface needs to be extended to allow the Linux side to request a
-particular channel to be exposed as rpmsg_char vs rpmsg-tty...
-
-> For the rpmsg char, I would be in favor of creating a specific RPMSG IOCTRLs
-> to avoid confusion.
-> 
-> For instance:
-> 
->  - RPMSG_GET_SIGN_IOCTRL
->  - RPMSG_SET_SIGN_IOCTRL
-> 
-
-Again, we're talking "flow control" at this level. So either we follow
-the standard IOCTL and make it easy for existing applications to use
-rpmsg_char, or we provide a _good_ explanation why they must use the
-tty interface instead (and if so solve above mentioned problems).
-
-Regards,
-Bjorn
-
-> With associated parameter corresponding to the bitmap proposed in my comment of
-> your patch 1/4.
-> 
-> Of course, this is only a suggestion, I let Bjorn and Mathieu comment.
-> 
-> Regards,
-> Arnaud
-> 
-> 
-> > +	case RPMSG_DESTROY_EPT_IOCTL:
-> > +		/* Don't allow to destroy a default endpoint. */
-> > +		if (eptdev->default_ept) {
-> > +			ret = -EINVAL;
-> > +			break;
-> > +		}
-> > +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> > +		break;
-> > +	default:
-> > +		ret = -EINVAL;
-> > +	}
-> >  
-> > -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> > +	return ret;
-> >  }
-> >  
-> >  static const struct file_operations rpmsg_eptdev_fops = {
