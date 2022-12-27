@@ -2,129 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3264C656815
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 08:59:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8914656845
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 09:16:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbiL0H7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 02:59:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55022 "EHLO
+        id S229496AbiL0IQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 03:16:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbiL0H7g (ORCPT
+        with ESMTP id S229445AbiL0IQK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 02:59:36 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DED5B04
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Dec 2022 23:59:35 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id x11so13032505ljh.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Dec 2022 23:59:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jNkfjEICeM7PbhM37J2f+PuUg/PwpxFMIPMIoac4to8=;
-        b=eLOiqNg1HnXzDAAU4zFmnkTbsq02Ukr/RajUs7jEv+R0R/o7xQtUrwqODLJBtwtu1N
-         uqN0XfOUAH48mNcdQGQlChkJjreCLLc1oFAeexzfYCHA6zfEHHGWYDrRGK1gjOJFoAwg
-         d8dVROH+78lWrPfZUQhmKda9p4gDcYhg7qNmTizgcYGy4WbHuoQif7WIHvzNbegiRx8X
-         GoeLJ0ir9UnzcgUzxGg5QiB/YVPXxISSwpOpcR7wkpF9OfF0NGyjpxrdwkm226HEdgxp
-         1cLPYo4Wx9QM6JPfaHiKHP660AoIiU10eWD6S0RfzBmMufNVPw3NR04hWW4PUujDn6mD
-         O0OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jNkfjEICeM7PbhM37J2f+PuUg/PwpxFMIPMIoac4to8=;
-        b=hq3qkR+hpVXIKbzR02FZzJCLADlY5pNDrJeY7tVsOEGeVcUfdn6PEpQm6TsSByqzHu
-         ElRhfo7+2zzMz+be/e7/xJSFOybzVLDLPa3T1gwV4+ni13U+wWsOdBBsYZO0vgAqQIte
-         B/wFU8aUWi0yzXnJK35ifPTb4//b9AAvT+AvUbSjWm8S4DTPordvXsJD7HfRTL3T6+nr
-         NC78dVRd5Ro0I/n4oOWn04gFb4EBMXyBSi4S+qzXBez6vxSak4oQOt6yoyJvntoqdFTZ
-         p+9woAz/yiGV9c0qq1P0mBRa0WnF0IYo43CgRKV3VEgY4TXwz+I/dOQegl+JvfA78ER8
-         OMGg==
-X-Gm-Message-State: AFqh2ko1ho9qUYnkMrJ0dd2CkuFZPDRVbwWColc3XFN7CTX3Vi7JjiUq
-        Xy4CzDMJWmS9BVdwtpdJpNsl0g==
-X-Google-Smtp-Source: AMrXdXvRSwMGnIBHRfxosdlVq8JTa7MkayGC6tu+7KVrj+jnN+lEDMSZ2lV/DFNMQ3n+isMk1ojfZw==
-X-Received: by 2002:a2e:9186:0:b0:27a:3afd:de6d with SMTP id f6-20020a2e9186000000b0027a3afdde6dmr6549276ljg.48.1672127973845;
-        Mon, 26 Dec 2022 23:59:33 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id k21-20020a2e8895000000b00277025ddc9esm1540641lji.54.2022.12.26.23.59.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Dec 2022 23:59:33 -0800 (PST)
-Message-ID: <7fd3c28c-993b-bd90-738d-17793dcfe96f@linaro.org>
-Date:   Tue, 27 Dec 2022 08:59:31 +0100
+        Tue, 27 Dec 2022 03:16:10 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3DB2602;
+        Tue, 27 Dec 2022 00:16:09 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BR6R39d012211;
+        Tue, 27 Dec 2022 08:16:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=glbJFwxELcZxlNzcfMHFFIDJ7+hBaZVgwuD7n2eEr6U=;
+ b=GZy9YWkXoZwHL/Dd0ZoJgRsvItYgcWqDQJTVASn6044Cd3jim0CPsYcxLRJ72pctxAC7
+ 7/mxm68zOk05b4nsrFcSBELh4u7akvsG/9JS7Kh6GEaiB2H82WRN167di/65g9xiIFmo
+ qUeO1elRkYvYVnxx0xo2CdWOP9WT9/tKyLhyU8MIr2rW6NM7OJnQAHI79s+Hs7oS2zzl
+ Oiw2wXF3fhBSWrSTUb42xDZCCsoiBBzcPema/PT1RzjyphrLTV04LeexoUCUYGYB/kQm
+ DdiWvL6OR4Kq1daCYbPRMggNCgBSTVmKzCxKkA4fPZkgUdhfnvRsva2tPYpZhdtMNaFN hw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mnrd1c62a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Dec 2022 08:16:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BR8G3KY002474
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Dec 2022 08:16:03 GMT
+Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 27 Dec 2022 00:16:01 -0800
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <pavel@ucw.cz>, <krzysztof.kozlowski@linaro.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_fenglinw@quicinc.com>
+Subject: [RESEND PATCH v5 0/2] Add LED driver for flash module in QCOM PMICs
+Date:   Tue, 27 Dec 2022 16:15:21 +0800
+Message-ID: <20221227081523.2277797-1-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 1/4] dt-bindings: interconnect: add sdm670 interconnects
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Luca Weiss <luca@z3ntu.xyz>
-References: <20221226224944.37242-1-mailingradian@gmail.com>
- <20221226224944.37242-2-mailingradian@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221226224944.37242-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MimFBRweEFd1nqkYwTftrjy7D3z4sluk
+X-Proofpoint-GUID: MimFBRweEFd1nqkYwTftrjy7D3z4sluk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-27_04,2022-12-23_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=703
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2212270067
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/12/2022 23:49, Richard Acayan wrote:
-> There are controllable interconnects on Snapdragon 670. Add the
-> compatible strings to the documentation and interconnect ID definitions.
-> 
-> The device tree header was generated by
-> linux-interconnect-driver-generator and the copyright year was changed.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../bindings/interconnect/qcom,rpmh.yaml      |   8 ++
->  .../dt-bindings/interconnect/qcom,sdm670.h    | 136 ++++++++++++++++++
->  2 files changed, 144 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,sdm670.h
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> index a429a1ed1006..db1e93583554 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> @@ -75,6 +75,14 @@ properties:
->        - qcom,sc8280xp-nspa-noc
->        - qcom,sc8280xp-nspb-noc
->        - qcom,sc8280xp-system-noc
-> +      - qcom,sdm670-aggre1-noc
-> +      - qcom,sdm670-aggre2-noc
-> +      - qcom,sdm670-config-noc
-> +      - qcom,sdm670-dc-noc
-> +      - qcom,sdm670-gladiator-noc
-> +      - qcom,sdm670-mem-noc
-> +      - qcom,sdm670-mmss-noc
-> +      - qcom,sdm670-system-noc
->        - qcom,sdm845-aggre1-noc
->        - qcom,sdm845-aggre2-noc
->        - qcom,sdm845-config-noc
-> diff --git a/include/dt-bindings/interconnect/qcom,sdm670.h b/include/dt-bindings/interconnect/qcom,sdm670.h
-> new file mode 100644
-> index 000000000000..d26dedb9deb7
-> --- /dev/null
-> +++ b/include/dt-bindings/interconnect/qcom,sdm670.h
+Initial driver and binding document changes for supporting flash LED
+module in Qualcomm Technologies, Inc. PMICs.
 
-Let's follow new convention, so: qcom,sdm670-rpmh.h
+Changes in V5:
+  1. Add MODULE_DEVICE_TABLE for auto-loading.
 
+Changes in V4:
+  1. Added Tested-By tag.
+  2. Addressed review comments in the binding change and added
+     Reviewed-by tag.
 
-Best regards,
-Krzysztof
+Changes in V3:
+  1. Updated the driver to use regmap_field for register access.
+  2. Adressed the review comments in binding document change.
+
+Changes in V2:
+  1. Addressed review comments in binding change, thanks Krzysztof!
+  2. Updated driver to address the compilation issue reported by
+     kernel test robot.
+
+Fenglin Wu (2):
+  leds: flash: add driver to support flash LED module in QCOM PMICs
+  dt-bindings: leds: add QCOM flash LED controller
+
+ .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 +++
+ drivers/leds/flash/Kconfig                    |  15 +
+ drivers/leds/flash/Makefile                   |   1 +
+ drivers/leds/flash/leds-qcom-flash.c          | 701 ++++++++++++++++++
+ 4 files changed, 833 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+ create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+
+-- 
+2.25.1
 
