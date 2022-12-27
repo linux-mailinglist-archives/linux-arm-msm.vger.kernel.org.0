@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF8F7656DD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 19:04:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2E17656DD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 19:08:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiL0SEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 13:04:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54380 "EHLO
+        id S229736AbiL0SIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 13:08:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbiL0SEL (ORCPT
+        with ESMTP id S230178AbiL0SIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 13:04:11 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2681162;
-        Tue, 27 Dec 2022 10:04:09 -0800 (PST)
+        Tue, 27 Dec 2022 13:08:30 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5A6F22;
+        Tue, 27 Dec 2022 10:08:29 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8F79EB81134;
-        Tue, 27 Dec 2022 18:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81420C433F1;
-        Tue, 27 Dec 2022 18:04:06 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 96888B8117A;
+        Tue, 27 Dec 2022 18:08:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692BEC433EF;
+        Tue, 27 Dec 2022 18:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672164247;
-        bh=Sk+eRGqbQxY+FkYS/vPbI7730UoTKfjHoqFEEZ/bhcY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LRF9zjWsiFmhlsp2NvnRSHpuMWFDFW4OIUBf6FUs/2pGw12TW7AeYRINA+L+nO7Rj
-         dNmi/u1ZrxgtjLy0zfvYZpH2kRzIsu+mpw3fujrZtOfqx9HCEyJmUMK4KYU7Nq96GM
-         nc0zqaSVSywHZFyKhzgO7zrS4AeV7zstvaepnLnbs8EzgjqSMnmdG/GToDoPGgH0rf
-         7RgrH8zLU4F4F4b5C2zCFEqIPAw9x/lQuFlQ68KXNSYQQbFgGXpF9GCmcYu4a8aySw
-         +spmdIcKEweX7wO+XvnBGooeOX8MRRtvfGShGorjDywKqUbCDxb1SHVkC4hql9zSwj
-         tDp7M0eagvhnA==
+        s=k20201202; t=1672164507;
+        bh=Dk53CrhfhfmbIX1qYUefjJ5yOfddXAGZ6MMYK4h0Pl0=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=A5d28eAKT2f1nkoZZh4cBix3FJwqkMpFyoyiC396ciF+D/iiGcLERFQRjY/Fpz4dd
+         ruTysSEEjHCdd+RAUsfnSVcUpWOGoU5fd7o8CkvmiuD48QWeP6/2PwfbI5POME4iM2
+         uwNt/Zytos5Kel4NDu4NP3YFXKM/Z9f9XkyPjsvBwR0CVSIlaXT5p2OXaDnIVf30Vn
+         Oc4QMD2nOIlm9vbfTtKxnBk6/Mb5co/BW+NaqD2tuzFBwoNpgrGsE9UAK/nlBnlTbW
+         eywu0qHvroThNMbm+osyVL0MlAexqbYEfTTanr57gT37ufeMRsrqmSAwetj7v8dbhL
+         lju8nxJk1ZHGA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     dmitry.baryshkov@linaro.org, robh+dt@kernel.org, kishon@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        p.zabel@pengutronix.de, linux-phy@lists.infradead.org
-Subject: Re: (subset) [PATCH v2 0/3] phy: qualcomm: pcie2: register as clock provider
-Date:   Tue, 27 Dec 2022 12:04:02 -0600
-Message-Id: <167216423712.744668.9651166253347600955.b4-ty@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        mani@kernel.org, devicetree@vger.kernel.org,
+        konrad.dybcio@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, mathieu.poirier@linaro.org
+Subject: Re: (subset) [PATCH v3 00/15] dt-bindings: remoteproc: qcom: split and reorganize PAS/PIL
+Date:   Tue, 27 Dec 2022 12:08:25 -0600
+Message-Id: <167216450118.745591.6304578385014026556.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221226031059.2563165-1-dmitry.baryshkov@linaro.org>
-References: <20221226031059.2563165-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
+References: <20221124184333.133911-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,23 +56,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 26 Dec 2022 05:10:56 +0200, Dmitry Baryshkov wrote:
-> On Qualcomm QCS404 platform the PCIe2 PHY provides PIPE clock to the gcc
-> (Global Clock Controller). Register the PHY as clock provider.
-> 
-> Changes since v1:
-> - Dropped 'phandle to' from supply descriptions in schema (Krzysztof),
-> - Reordered clock-related property definitions in schema as suggested by
->   Krzysztof,
-> - Dropped extra empty line at the end of the schema (reported by
->   Krzysztof).
+On Thu, 24 Nov 2022 19:43:18 +0100, Krzysztof Kozlowski wrote:
+> Changes since v2
+> ================
+> 1. Allow only one or two clocks, after dropping clocks related to PIL binding.
+> 2. Drop if:then: for the clock and put it directly under properties
+> 3. Merge two if:then: clauses for setting interrupts.
+> 4. New patches: DTS fixes, qcom,adsp: drop resets and qcom,halt-regs,
+>    qcom,qcs404-pas, qcom,sc7180-pas and last msm8996-slpi-pil fix.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: qcs404: register PCIe PHY as a clock provider
-      commit: 977e9262c3542e87b513d4dad4c57b2c85e16c8c
+[05/15] dt-bindings: remoteproc: qcom,adsp: drop resets and qcom,halt-regs
+        commit: c97c4b480fcba2e6ebfacb3990d8b9092916d986
+[06/15] dt-bindings: remoteproc: qcom,adsp: split common part
+        commit: ea5a10ae295425c9f52577d91b2e45290291d242
+[07/15] dt-bindings: remoteproc: qcom,sm8350-pas: split into separate file
+        commit: 4e8b39a4d38ebb192ebff977d8a961fd97e7ce5f
+[08/15] dt-bindings: remoteproc: qcom,sm8150-pas: split into separate file
+        commit: db292776589f1fcbcf2fc6eaebe40a3a2abb4521
+[09/15] dt-bindings: remoteproc: qcom,sm6350-pas: split into separate file
+        commit: 41729b772c13105ee126ee6fe1bf2cd93c7bd258
+[10/15] dt-bindings: remoteproc: qcom,sc8280xp-pas: split into separate file
+        commit: 397c619cad8109f5904466ee76d5a1533d2f1590
+[11/15] dt-bindings: remoteproc: qcom,sc8180x-pas: split into separate file
+        commit: 4b4157518f1ab1276cd08dfab0e51b1409c22e40
+[12/15] dt-bindings: remoteproc: qcom,sdx55-pas: split into separate file
+        commit: b6f8410eab9270000b8b13b88bc038e9f27c2c45
+[13/15] dt-bindings: remoteproc: qcom,qcs404-pas: split into separate file
+        commit: 255d7a9581ed4506dddf993aad9dc27bff8296d1
+[14/15] dt-bindings: remoteproc: qcom,sc7180-pas: split into separate file
+        commit: 8bb92d6fd0b3788b4270eff547cb42cb64db1bff
+[15/15] dt-bindings: remoteproc: qcom,adsp: correct msm8996-slpi-pil clocks
+        commit: 569d3a7580bcbc463920b0d84ca5caf23e808f90
 
 Best regards,
 -- 
