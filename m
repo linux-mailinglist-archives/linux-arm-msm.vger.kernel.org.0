@@ -2,257 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A88A8656D10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 17:44:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F01A9656D25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 18:02:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbiL0Qo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 11:44:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
+        id S229742AbiL0RCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 12:02:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbiL0QoX (ORCPT
+        with ESMTP id S229679AbiL0RCO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 11:44:23 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F87B207
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:44:21 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id bf43so20312650lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 08:44:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iSSmBFbM1dUp8BQXcBkFZc09Iec6Jot4VF8P/JAzjNs=;
-        b=My3fVk4mBdxNFOiuo6lKunblDZWH+qJb/tKHAYhhKW3tseNnkKmhK8NxZh7SdJZpBh
-         ROpHhKnTIa4sD9yqzdBzUu6Kkyc/3sjLpVg1RSMF1c1pkBKjKnzKw0uShxW2vbYUHrPL
-         Ft07vQU8wMndlMTZK4K3jLJbRQG6duiloSIVjBGN/XBLRm27Wu+Gtj8gTCJQOUBR+mUc
-         mIex0oeTXjHw2fCq1nqKO42xdoWmDKOgcVSzGewCh8GpSm3urvZWJYNIsLJM7ajn/0fE
-         FOsFVBs2opRlXB3KzRZnu3w62Vx1kWVBgpo8ves3fEHKAjjMJkRWzAcyPKHug/LqrsmY
-         K7VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iSSmBFbM1dUp8BQXcBkFZc09Iec6Jot4VF8P/JAzjNs=;
-        b=5D1C1b1FSM0YlwWNqx+IhGj1LbCGackRHT/xjQOLB4qjt3jkobvIBAh/zNSotNg5A6
-         X4QeqnRzvl4LJDvkP9mpFoFKsyBuoL95hcqnVpEYF4YSHGPVrWuIWGyKIhfYCjCb+ATf
-         By+Ec4lLDFhWkiNeMaWn2HuoeoO/oN77GiVTjIM9EpFWx0gy8T3767IUmnViPR7hniHm
-         IyA5hcXj3BfI+o6ptrS7/uiCSe+dFEF/pBXEVp5veHQtQkipHfCetOyD3tR269bewV2y
-         6cUlFT0T2o2eMDsJcjIY1HFuBUw2iDyshFI54EusCvCrL4F/6JINc1vuCmjUBiLkRXRQ
-         7Dkw==
-X-Gm-Message-State: AFqh2kp/hvZ7Mx3wKm1yKtLQPvLKciQ/zQ5NhpIEvUdWPZitBCTrU+0u
-        4NVLI34sfQDWuCqK/kXLOiCo8Q==
-X-Google-Smtp-Source: AMrXdXuP51u9ToggXenQtHR/wOO1q9WzWFUCfyKdDqoxRMrdeEj6807Innx1WbYqV4AwDQ0yBbx2mg==
-X-Received: by 2002:a05:6512:1594:b0:4b5:6a20:ca90 with SMTP id bp20-20020a056512159400b004b56a20ca90mr7490685lfb.10.1672159459723;
-        Tue, 27 Dec 2022 08:44:19 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac25ec9000000b00492ce573726sm2340358lfq.47.2022.12.27.08.44.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Dec 2022 08:44:19 -0800 (PST)
-Message-ID: <dd119bf8-7477-4da7-dadf-d5d89397a01b@linaro.org>
-Date:   Tue, 27 Dec 2022 17:44:16 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] arm64: dts: qcom: fix resin node duplication
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
+        Tue, 27 Dec 2022 12:02:14 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DE364CC;
+        Tue, 27 Dec 2022 09:02:13 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 04720B80E8B;
+        Tue, 27 Dec 2022 17:02:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B077DC433EF;
+        Tue, 27 Dec 2022 17:02:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672160530;
+        bh=HSrkH2QP+5Wq6R0Soayg1cGRPH7lpTtG6x6slsvI3Uo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IxvyLdrwllY4JjEY4zHHDSIjrEq8f9oAmsCvGu47k3nhNjSD8VH9IJzVR/yX2omzo
+         5fXy8o/d2Mu3nFM6eAtPN7I+WESB5a5VNTAVi6qXKiZXIQ0JkmgTiVdUuxtH2MS/D2
+         3mr8sOEQpPS6yyI/PXuIJix1maE/XcMNaSkZnCf2aE+ESp9d2hCXsYjwAleKbxvOln
+         9AHiJedmwx6qfSwFykfCPA+Aq7HLw84mZ6P4SqQ6M8zmrhPJBiuHhvSaFu/W59ODWV
+         bBldgwfDvODIw/zUzR5v/vS6avcJ529St1OUX6hdVr5+RxBYo3k91pfGwzVXlLptg8
+         wLcNEJKO9lRbg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pADL9-0005cs-4L; Tue, 27 Dec 2022 18:02:11 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221227163810.71121-1-dsankouski@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221227163810.71121-1-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: move 'thermal-zones' node
+Date:   Tue, 27 Dec 2022 18:02:02 +0100
+Message-Id: <20221227170202.21618-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.4
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Move the 'thermal-zones' node after the regulator nodes to restore the
+root-node sort order (alphabetically by node name).
 
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 92 +++++++++----------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-On 27.12.2022 17:38, Dzmitry Sankouski wrote:
-> resin node was moved to pm8998.dtsi file, and introduced duplication
-> with other dts files, defining resin node.
-> 
-> Fixes: f86ae6f23a9e ("arm64: dts: qcom: sagit: add initial device tree for sagit")
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 568c6be1ceaa..fce2d9d6e2bc 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -31,52 +31,6 @@ backlight {
+ 		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+ 	};
+ 
+-	thermal-zones {
+-		skin-temp-thermal {
+-			polling-delay-passive = <250>;
+-			polling-delay = <0>;
+-			thermal-sensors = <&pmk8280_adc_tm 5>;
+-
+-			trips {
+-				skin_temp_alert0: trip-point0 {
+-					temperature = <55000>;
+-					hysteresis = <1000>;
+-					type = "passive";
+-				};
+-
+-				skin_temp_alert1: trip-point1 {
+-					temperature = <58000>;
+-					hysteresis = <1000>;
+-					type = "passive";
+-				};
+-
+-				skin-temp-crit {
+-					temperature = <73000>;
+-					hysteresis = <1000>;
+-					type = "critical";
+-				};
+-			};
+-
+-			cooling-maps {
+-				map0 {
+-					trip = <&skin_temp_alert0>;
+-					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+-				};
+-
+-				map1 {
+-					trip = <&skin_temp_alert1>;
+-					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+-							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+-				};
+-			};
+-		};
+-	};
+-
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+@@ -172,6 +126,52 @@ vreg_wwan: regulator-wwan {
+ 
+ 		regulator-boot-on;
+ 	};
++
++	thermal-zones {
++		skin-temp-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <0>;
++			thermal-sensors = <&pmk8280_adc_tm 5>;
++
++			trips {
++				skin_temp_alert0: trip-point0 {
++					temperature = <55000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				skin_temp_alert1: trip-point1 {
++					temperature = <58000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				skin-temp-crit {
++					temperature = <73000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++
++			cooling-maps {
++				map0 {
++					trip = <&skin_temp_alert0>;
++					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++
++				map1 {
++					trip = <&skin_temp_alert1>;
++					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++		};
++	};
+ };
+ 
+ &apps_rsc {
+-- 
+2.37.4
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts       | 11 +++--------
->  .../boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi    | 11 +++--------
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts            | 11 +++--------
->  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi        | 11 +++--------
->  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts     | 11 +++--------
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 11 +++--------
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts    | 11 +++--------
->  7 files changed, 21 insertions(+), 56 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> index 310f7a2df1e8..510d12c8c512 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> @@ -364,14 +364,9 @@ cam_snapshot_pin_a: cam-snapshot-btn-active-state {
->  	};
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <GIC_SPI 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		bias-pull-up;
-> -		debounce = <15625>;
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &qusb2phy {
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> index 5da87baa2b23..3bbd5df196bf 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> @@ -357,14 +357,9 @@ vib_default: vib-en-state {
->  	};
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <GIC_SPI 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -		linux,code = <KEY_VOLUMEUP>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEUP>;
-> +	status = "okay";
->  };
->  
->  &qusb2phy {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index f41c6d600ea8..878801f540c5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -615,14 +615,9 @@ vol_up_pin_a: vol-up-active-state {
->  	};
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &pmi8998_lpg {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> index 1eb423e4be24..943287804e1a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> @@ -482,14 +482,9 @@ &mss_pil {
->  	status = "okay";
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &sdhc_2 {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> index bb77ccfdc68c..e6191602c70a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> @@ -522,14 +522,9 @@ pinconf {
->  	};
->  };
->  
-> -&pm8998_pon {
-> -	volume_down_resin: resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &pmi8998_lpg {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index eb6b2b676eca..1b12b1a4dcbc 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -325,14 +325,9 @@ &pmi8998_wled {
->  	qcom,cabc;
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		compatible = "qcom,pm8941-resin";
-> -		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &pmi8998_rradc {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> index 38ba809a95cd..fba229d0bd10 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> @@ -530,14 +530,9 @@ pinconf {
->  	};
->  };
->  
-> -&pm8998_pon {
-> -	resin {
-> -		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> -		compatible = "qcom,pm8941-resin";
-> -		linux,code = <KEY_VOLUMEDOWN>;
-> -		debounce = <15625>;
-> -		bias-pull-up;
-> -	};
-> +&pm8998_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
->  };
->  
->  &q6afedai {
