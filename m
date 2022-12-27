@@ -2,330 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDC44656DED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 19:24:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB70E656E2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Dec 2022 20:16:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230129AbiL0SYN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 13:24:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58392 "EHLO
+        id S229809AbiL0TQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 14:16:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230004AbiL0SYM (ORCPT
+        with ESMTP id S229788AbiL0TQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 13:24:12 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 157C4A479;
-        Tue, 27 Dec 2022 10:24:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 889E56121A;
-        Tue, 27 Dec 2022 18:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D89C433EF;
-        Tue, 27 Dec 2022 18:24:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672165449;
-        bh=yzMvkPAqxdusKl9xYuuAi3V546af7+0/KXBM42rxFuY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=P2yoNRP4koWoCwNypFv/1o2Bdp7B4SOYPjgWOHQGsDsM4oTzwB4gV4GHD/cOHuPIx
-         85qre0sf+DyInyr6fpLETiqFXljUlFhynaZQV2OdTC97/dBzwrXlBPJq1tsxhO/bCU
-         PeQYrenA0jVO/cjVCh4THlJmpVUV7T459zLXSZSufXomYyj9OBnEBGlgkouW+GgKIY
-         t55Tg78/e1Nh7pvsqNmLncQW55KP/tePCx+7ZFUoLzLR/jM4AfZk98o84SYNZovBYe
-         KntyLxB6OryNE2SYA9EO5FS7eByJcv8WMd2TnmqkGPczjoXRWn+pkHpaO97BwAHWfi
-         rNNQqqfK2aY5w==
-Date:   Tue, 27 Dec 2022 12:24:06 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Douglas Anderson <dianders@chromium.org>,
-        krzysztof.kozlowski@linaro.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tue, 27 Dec 2022 14:16:45 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0196DDED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 11:16:42 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id l26so8346616wme.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 11:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dHHYbF8blZApfLt2s5oK0ienPE3LfV9SI3YQCg0fjFc=;
+        b=MV3RSSZ7d21P50o6EhCPIHZBKPvMdWC+6QLgxA9vcvpiLQWYO/A4pAaG4prJvdvIrF
+         NynBGDAD9F3HBv1OKyqd8uiCnbq61ORomCqwLnH5vFmfyyk6YlzK0w6Wr7bRhb7nJMR1
+         Oorf20wt2iLd0I+cD+iB57mpLiIwXeyvDOs4EIO/E+YBxA8KFdR9kbDkyWdgCxYuEOgY
+         9GYdA6pZR6Xei0FtxQ8B1HMACZpedptvZh30oKIMJ35FG8bCtd63pmYeCDZceCTmui3+
+         lSerD0zEWzzYMCKACJ5nxtKzx4gvVfJFf8AqCbX78GVpGZpUlQlfXBSfKRsSfsHN7lfO
+         PcVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dHHYbF8blZApfLt2s5oK0ienPE3LfV9SI3YQCg0fjFc=;
+        b=HhB1NBMmvOUE5/XhesQOrvil6F6p3Z4zKLTJQvBhXx86oi6O1aY30aw5TfGcf4qoiE
+         JsMkixFknzGw9nYzNLSTPjui83UvtCHqBZ8jCy1VS2cI4rUjy1KJk+Xt9G8txJ7ErAb6
+         ECp0H4iUldLsKSN2B1Q8OPjb9IW1P1jZwUAHvoRGXZ7BtHP/U0eYj49zvXhivLTO++TO
+         8MZNlc5U2iHj4ZxNj4qPfE22RP76T8R55TYWMzbdWKKcLVemTcJ2sjOzV2MHppdT5Puc
+         7VUZ+nFmDA867v9HT2XtChM0qgb3rTQtIDdZTLoGrgp3f6Cdq1Ux+teYwyjOzdRX5ZPh
+         gYGg==
+X-Gm-Message-State: AFqh2kpUr/zwC+AkSZ8lp7pP1H8fjSoF0qvwZG+Z8uipBjqd5w3drxZ0
+        uG8eTOQm4kpt9AucCorNBfnlvg==
+X-Google-Smtp-Source: AMrXdXtO1lV7/QQ0LfTBYOaeR46HZiiKlkeog7cuHWpdZwfdG+uYUPASn1BOE3cXW0aEkZq/9mWoOw==
+X-Received: by 2002:a05:600c:41c2:b0:3d3:5565:3617 with SMTP id t2-20020a05600c41c200b003d355653617mr19140428wmh.24.1672168600282;
+        Tue, 27 Dec 2022 11:16:40 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id n7-20020a1c7207000000b003cf6a55d8e8sm17856559wmc.7.2022.12.27.11.16.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Dec 2022 11:16:39 -0800 (PST)
+Date:   Tue, 27 Dec 2022 21:16:38 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 0/6] clk/qcom: Support gdsc collapse polling using
- 'reset' interface
-Message-ID: <20221227182406.oott4qnxjel25pmf@builder.lan>
-References: <1664960824-20951-1-git-send-email-quic_akhilpo@quicinc.com>
- <20221201225705.46r2m35ketvzipox@builder.lan>
- <CAPDyKFofsqcoFbYt-9BcisbPdreLGqAAMWorqHi0_D1kwCdYhg@mail.gmail.com>
- <20221207165457.kwdwwiycbwjpogxl@builder.lan>
- <CAPDyKFpYgYkDdJ79xxkwr-Mqnj5CoBrV+ZZe6Xz4hGLNR4zUVw@mail.gmail.com>
- <20221208210622.x656vbf7rum5hrl7@builder.lan>
- <CAPDyKFpSXjcJZ=H491s74BChAV89pQ1Wm8PSdU0nVRfroK1=4A@mail.gmail.com>
- <CAPDyKFrTY8exxFCxXG_ptnRvECYggBBrC2q=MewuEkSj+mxwug@mail.gmail.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] clk: Add generic sync_state callback for
+ disabling unused clocks
+Message-ID: <Y6tElj1qVq2jXAxu@linaro.org>
+References: <20221225164705.437944-1-abel.vesa@linaro.org>
+ <CAA8EJpq0Ea_CEyRXwzoNmyoj7R3nzCpr0nVADB-koo6BTTLuiQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFrTY8exxFCxXG_ptnRvECYggBBrC2q=MewuEkSj+mxwug@mail.gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <CAA8EJpq0Ea_CEyRXwzoNmyoj7R3nzCpr0nVADB-koo6BTTLuiQ@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 12, 2022 at 04:39:09PM +0100, Ulf Hansson wrote:
-> On Fri, 9 Dec 2022 at 18:36, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+On 22-12-26 02:54:22, Dmitry Baryshkov wrote:
+> On Sun, 25 Dec 2022 at 18:47, Abel Vesa <abel.vesa@linaro.org> wrote:
 > >
-> > On Thu, 8 Dec 2022 at 22:06, Bjorn Andersson <andersson@kernel.org> wrote:
-> > >
-> > > On Thu, Dec 08, 2022 at 02:40:55PM +0100, Ulf Hansson wrote:
-> > > > On Wed, 7 Dec 2022 at 17:55, Bjorn Andersson <andersson@kernel.org> wrote:
-> > > > >
-> > > > > On Wed, Dec 07, 2022 at 05:00:51PM +0100, Ulf Hansson wrote:
-> > > > > > On Thu, 1 Dec 2022 at 23:57, Bjorn Andersson <andersson@kernel.org> wrote:
-> > > > > > >
-> > > > > > > On Wed, Oct 05, 2022 at 02:36:58PM +0530, Akhil P Oommen wrote:
-> > > > > > > >
-> > > > > > >
-> > > > > > > @Ulf, Akhil has a power-domain for a piece of hardware which may be
-> > > > > > > voted active by multiple different subsystems (co-processors/execution
-> > > > > > > contexts) in the system.
-> > > > > > >
-> > > > > > > As such, during the powering down sequence we don't wait for the
-> > > > > > > power-domain to turn off. But in the event of an error, the recovery
-> > > > > > > mechanism relies on waiting for the hardware to settle in a powered off
-> > > > > > > state.
-> > > > > > >
-> > > > > > > The proposal here is to use the reset framework to wait for this state
-> > > > > > > to be reached, before continuing with the recovery mechanism in the
-> > > > > > > client driver.
-> > > > > >
-> > > > > > I tried to review the series (see my other replies), but I am not sure
-> > > > > > I fully understand the consumer part.
-> > > > > >
-> > > > > > More exactly, when and who is going to pull the reset and at what point?
-> > > > > >
-> > > > > > >
-> > > > > > > Given our other discussions on quirky behavior, do you have any
-> > > > > > > input/suggestions on this?
-> > > > > > >
-> > > > > > > > Some clients like adreno gpu driver would like to ensure that its gdsc
-> > > > > > > > is collapsed at hardware during a gpu reset sequence. This is because it
-> > > > > > > > has a votable gdsc which could be ON due to a vote from another subsystem
-> > > > > > > > like tz, hyp etc or due to an internal hardware signal. To allow
-> > > > > > > > this, gpucc driver can expose an interface to the client driver using
-> > > > > > > > reset framework. Using this the client driver can trigger a polling within
-> > > > > > > > the gdsc driver.
-> > > > > > >
-> > > > > > > @Akhil, this description is fairly generic. As we've reached the state
-> > > > > > > where the hardware has settled and we return to the client, what
-> > > > > > > prevents it from being powered up again?
-> > > > > > >
-> > > > > > > Or is it simply a question of it hitting the powered-off state, not
-> > > > > > > necessarily staying there?
-> > > > > >
-> > > > > > Okay, so it's indeed the GPU driver that is going to assert/de-assert
-> > > > > > the reset at some point. Right?
-> > > > > >
-> > > > > > That seems like a reasonable approach to me, even if it's a bit
-> > > > > > unclear under what conditions that could happen.
-> > > > > >
-> > > > >
-> > > > > Generally the disable-path of the power-domain does not check that the
-> > > > > power-domain is actually turned off, because the status might indicate
-> > > > > that the hardware is voting for the power-domain to be on.
-> > > >
-> > > > Is there a good reason why the HW needs to vote too, when the GPU
-> > > > driver is already in control?
-> > > >
-> > > > Or perhaps that depends on the running use case?
-> > > >
-> > > > >
-> > > > > As part of the recovery of the GPU after some fatal fault, the GPU
-> > > > > driver does something which will cause the hardware votes for the
-> > > > > power-domain to be let go, and then the driver does pm_runtime_put().
-> > > >
-> > > > Okay. That "something", sounds like a device specific setting for the
-> > > > corresponding gdsc, right?
-> > > >
-> > > > So somehow the GPU driver needs to manage that setting, right?
-> > > >
-> > > > >
-> > > > > But in this case the GPU driver wants to ensure that the power-domain is
-> > > > > actually powered down, before it does pm_runtime_get() again. To ensure
-> > > > > that the hardware lost its state...
-> > > >
-> > > > I see.
-> > > >
-> > > > >
-> > > > > The proposal here is to use a reset to reach into the power-domain
-> > > > > provider and wait for the hardware to be turned off, before the GPU
-> > > > > driver attempts turning the power-domain on again.
-> > > > >
-> > > > >
-> > > > > In other words, there is no reset. This is a hack to make a normally
-> > > > > asynchronous pd.power_off() to be synchronous in this particular case.
-> > > >
-> > > > Alright, assuming I understood your clarifications above correctly
-> > > > (thanks!), I think I have got a much better picture now.
-> > > >
-> > > > Rather than abusing the reset interface, I think we should manage this
-> > > > through the genpd's power on/off notifiers (GENPD_NOTIFY_OFF). The GPU
-> > > > driver should register its corresponding device for them
-> > > > (dev_pm_genpd_add_notifier()).
-> > > >
-> > > > The trick however, is to make the behaviour of the power-domain for
-> > > > the gdsc (the genpd->power_off() callback) conditional on whether the
-> > > > HW is configured to vote or not. If the HW can vote, it should not
-> > > > poll for the state - and vice versa when the HW can't vote.
-> > > >
-> > >
-> > > Per Akhil's description I misunderstood who the other voters are; but
-> > > either way it's not the same "HW configured" mechanism as the one we're
-> > > already discussing.
+> > There are unused clocks that need to remain untouched by clk_disable_unused,
+> > and most likely could be disabled later on sync_state. So provide a generic
+> > sync_state callback for the clock providers that register such clocks.
+> > Then, use the same mechanism as clk_disable_unused from that generic
+> > callback, but pass the device to make sure only the clocks belonging to
+> > the current clock provider get disabled, if unused. Also, during the
+> > default clk_disable_unused, if the driver that registered the clock has
+> > the generic clk_sync_state_disable_unused callback set for sync_state,
+> > skip disabling its clocks.
 > >
-> > Okay, so this is another thing then.
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
 > >
-> > >
-> > >
-> > > But if we based on similar means could control if the power_off() ops
-> > > should be blocking, waiting for the status indication to show that the
-> > > hardware is indeed powered down, I think this would meet the needs.
+> > Changes since v1:
+> >  * Dropped the 0 returned by __clk_disable_unused when clk_ignore_unused
+> >    is set.
+> >  * Dropped __initdata for clk_ignore_unused
 > >
-> > Right.
+> >  drivers/clk/clk.c            | 59 +++++++++++++++++++++++++++++-------
+> >  include/linux/clk-provider.h |  1 +
+> >  2 files changed, 49 insertions(+), 11 deletions(-)
 > >
-> > >
-> > > And GENPD_NOTIFY_OFF seems to provide the notification that it was
-> > > successful (i.e. happened within the timeout etc).
-> > >
-> > > > Would this work?
-> > > >
-> > >
-> > > If we can control the behavior of the genpd, I think it would.
+> > diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> > index e62552a75f08..5185b857fc65 100644
+> > --- a/drivers/clk/clk.c
+> > +++ b/drivers/clk/clk.c
+> > @@ -1302,14 +1302,27 @@ static void clk_core_disable_unprepare(struct clk_core *core)
+> >         clk_core_unprepare_lock(core);
+> >  }
 > >
-> > Okay, it seems like we need a new dev_pm_genpd_* interface that
-> > consumers can call to instruct the genpd provider, that its
-> > ->power_off() callback needs to temporarily switch to become
-> > synchronous.
+> > -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+> > +static void clk_unprepare_unused_subtree(struct clk_core *core,
+> > +                                               struct device *dev)
+> >  {
+> > +       bool from_sync_state = !!dev;
+> >         struct clk_core *child;
 > >
-> > I guess this could be useful for other similar cases too, where the
-> > corresponding PM domain isn't actually being powered off, but rather
-> > just voted for to become powered off, thus relying on the HW to do the
-> > aggregation.
+> >         lockdep_assert_held(&prepare_lock);
 > >
-> > In any case, I am still a bit skeptical of the reset approach, as is
-> > being suggested in the $subject series. Even if it's rather nice and
-> > clean (but somewhat abusing the interface), it looks like there will
-> > be synchronization problems between the calls to the
-> > pm_runtime_put_sync() and reset_control_reset() in the GPU driver. The
-> > "reset" may actually already have happened when the call to
-> > reset_control_reset() is done, so we may fail to detect the power
-> > collapse, right!?
-> >
-> > Let me cook a patch for the new genpd interface that I have in mind,
-> > then we can see how that plays out together with the other parts. I
-> > will post it on Monday!
+> >         hlist_for_each_entry(child, &core->children, child_node)
+> > -               clk_unprepare_unused_subtree(child);
+> > +               clk_unprepare_unused_subtree(child, dev);
+> > +
+> > +       if (from_sync_state && core->dev != dev)
+> > +               return;
+> > +
+> > +       /*
+> > +        * clock will be unprepared on sync_state,
+> > +        * so leave as is for now
+> > +        */
+> > +       if (!from_sync_state && dev_has_sync_state(core->dev) &&
+> > +               core->dev->driver->sync_state == clk_sync_state_disable_unused)
 > 
-> Below is the genpd patch that I had in mind.
-> 
-> As I stated above, the GPU driver would need to register for genpd's
-> power on/off notificers (GENPD_NOTIFY_OFF). Then it should call the
-> new dev_pm_genpd_synced_poweroff() and finally pm_runtime_put().
-> Moreover, when the GPU driver receives the GENPD_NOTIFY_OFF
-> notification, it should probably just kick a completion variable,
-> allowing the path that calls pm_runtime_put() to wait for the
-> notification to arrive.
-> 
-> On the genpd provider side, the ->power_off() callback should be
-> updated to check the new genpd->synced_poweroff variable, to indicate
-> whether it should poll for power collapse or not.
-> 
-> I think this should work, but if you still prefer to use the "reset"
-> approach, that's entirely up to you to decide.
-> 
+> I link the overall approach, but I don't think we should check the
+> sync_state function.
+> Such a check would disallow a driver to wrap the
+> clk_sync_state_disable_unused() into some driver-specific code.
 
-I find this to be conceptually much cleaner. Thanks for the proposal!
+OK, will drop it and resend.
 
-Regards,
-Bjorn
-
-> Kind regards
-> Uffe
 > 
-> -----
+> > +               return;
+> >
+> >         if (core->prepare_count)
+> >                 return;
+> > @@ -1332,15 +1345,28 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+> >         clk_pm_runtime_put(core);
+> >  }
+> >
+> > -static void __init clk_disable_unused_subtree(struct clk_core *core)
+> > +static void clk_disable_unused_subtree(struct clk_core *core,
+> > +                                       struct device *dev)
+> >  {
+> > +       bool from_sync_state = !!dev;
+> >         struct clk_core *child;
+> >         unsigned long flags;
+> >
+> >         lockdep_assert_held(&prepare_lock);
+> >
+> >         hlist_for_each_entry(child, &core->children, child_node)
+> > -               clk_disable_unused_subtree(child);
+> > +               clk_disable_unused_subtree(child, dev);
+> > +
+> > +       if (from_sync_state && core->dev != dev)
+> > +               return;
+> > +
+> > +       /*
+> > +        * clock will be disabled on sync_state,
+> > +        * so leave as is for now
+> > +        */
+> > +       if (!from_sync_state &&
+> > +               core->dev->driver->sync_state == clk_sync_state_disable_unused)
+> > +               return;
+> >
+> >         if (core->flags & CLK_OPS_PARENT_ENABLE)
+> >                 clk_core_prepare_enable(core->parent);
+> > @@ -1378,7 +1404,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+> >                 clk_core_disable_unprepare(core->parent);
+> >  }
+> >
+> > -static bool clk_ignore_unused __initdata;
+> > +static bool clk_ignore_unused;
+> >  static int __init clk_ignore_unused_setup(char *__unused)
+> >  {
+> >         clk_ignore_unused = true;
+> > @@ -1386,35 +1412,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
+> >  }
+> >  __setup("clk_ignore_unused", clk_ignore_unused_setup);
+> >
+> > -static int __init clk_disable_unused(void)
+> > +static void __clk_disable_unused(struct device *dev)
+> >  {
+> >         struct clk_core *core;
+> >
+> >         if (clk_ignore_unused) {
+> >                 pr_warn("clk: Not disabling unused clocks\n");
+> > -               return 0;
+> > +               return;
+> >         }
+> >
+> >         clk_prepare_lock();
+> >
+> >         hlist_for_each_entry(core, &clk_root_list, child_node)
+> > -               clk_disable_unused_subtree(core);
+> > +               clk_disable_unused_subtree(core, dev);
+> >
+> >         hlist_for_each_entry(core, &clk_orphan_list, child_node)
+> > -               clk_disable_unused_subtree(core);
+> > +               clk_disable_unused_subtree(core, dev);
+> >
+> >         hlist_for_each_entry(core, &clk_root_list, child_node)
+> > -               clk_unprepare_unused_subtree(core);
+> > +               clk_unprepare_unused_subtree(core, dev);
+> >
+> >         hlist_for_each_entry(core, &clk_orphan_list, child_node)
+> > -               clk_unprepare_unused_subtree(core);
+> > +               clk_unprepare_unused_subtree(core, dev);
+> >
+> >         clk_prepare_unlock();
+> > +}
+> > +
+> > +static int __init clk_disable_unused(void)
+> > +{
+> > +       __clk_disable_unused(NULL);
+> >
+> >         return 0;
+> >  }
+> >  late_initcall_sync(clk_disable_unused);
+> >
+> > +void clk_sync_state_disable_unused(struct device *dev)
+> > +{
+> > +       __clk_disable_unused(dev);
+> > +}
+> > +EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
+> > +
+> >  static int clk_core_determine_round_nolock(struct clk_core *core,
+> >                                            struct clk_rate_request *req)
+> >  {
+> > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+> > index 842e72a5348f..cf1adfeaf257 100644
+> > --- a/include/linux/clk-provider.h
+> > +++ b/include/linux/clk-provider.h
+> > @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
+> >                 void __iomem *reg, u8 shift, u8 width,
+> >                 u8 clk_divider_flags, const struct clk_div_table *table,
+> >                 spinlock_t *lock);
+> > +void clk_sync_state_disable_unused(struct device *dev);
+> >  /**
+> >   * clk_register_divider - register a divider clock with the clock framework
+> >   * @dev: device registering this clock
+> > --
+> > 2.34.1
+> >
 > 
-> From: Ulf Hansson <ulf.hansson@linaro.org>
-> Date: Mon, 12 Dec 2022 16:08:05 +0100
-> Subject: [PATCH] PM: domains: Allow a genpd consumer to require a synced power
->  off
 > 
-> TODO: Write commit message
-> 
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> ---
->  drivers/base/power/domain.c | 22 ++++++++++++++++++++++
->  include/linux/pm_domain.h   |  1 +
->  2 files changed, 23 insertions(+)
-> 
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index b46aa490b4cd..3402b2ea7f61 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -494,6 +494,27 @@ void dev_pm_genpd_set_next_wakeup(struct device
-> *dev, ktime_t next)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
-> 
-> +/**
-> + * dev_pm_genpd_synced_poweroff - Next power off should be synchronous
-> + *
-> + * @dev: Device to handle
-> + *
-> + * TODO: Add description
-> + */
-> +void dev_pm_genpd_synced_poweroff(struct device *dev)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return;
-> +
-> +       genpd_lock(genpd);
-> +               genpd->synced_poweroff = true;
-> +       genpd_unlock(genpd);
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_synced_poweroff);
-> +
->  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->  {
->         unsigned int state_idx = genpd->state_idx;
-> @@ -588,6 +609,7 @@ static int _genpd_power_off(struct
-> generic_pm_domain *genpd, bool timed)
->  out:
->         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_OFF,
->                                 NULL);
-> +       genpd->synced_poweroff = false;
->         return 0;
->  busy:
->         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_ON, NULL);
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index ebc351698090..09c6c67a4896 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -134,6 +134,7 @@ struct generic_pm_domain {
->         unsigned int prepared_count;    /* Suspend counter of prepared
-> devices */
->         unsigned int performance_state; /* Aggregated max performance state */
->         cpumask_var_t cpus;             /* A cpumask of the attached CPUs */
-> +       bool synced_poweroff;           /* A consumer needs a synced poweroff */
->         int (*power_off)(struct generic_pm_domain *domain);
->         int (*power_on)(struct generic_pm_domain *domain);
->         struct raw_notifier_head power_notifiers; /* Power on/off notifiers */
 > -- 
-> 2.34.1
+> With best wishes
+> Dmitry
