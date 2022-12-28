@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B984B65870D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 22:30:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C41F0658718
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 22:34:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230464AbiL1Vay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 16:30:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41310 "EHLO
+        id S230464AbiL1Vej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 16:34:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbiL1Vaw (ORCPT
+        with ESMTP id S229835AbiL1Vei (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 16:30:52 -0500
+        Wed, 28 Dec 2022 16:34:38 -0500
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB93C140BC;
-        Wed, 28 Dec 2022 13:30:50 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A07F140C8;
+        Wed, 28 Dec 2022 13:34:37 -0800 (PST)
 Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 8ACF1CB42D;
-        Wed, 28 Dec 2022 21:30:48 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 964ABCB428;
+        Wed, 28 Dec 2022 21:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1672263049; bh=R5soxCa2nbRONnnIoOyx6lQyz71J9M+o4tRpsv7zD70=;
+        t=1672263276; bh=P7Zg/b7zNWRtK1YhRoeKSV0ZncuTX3zqOfvkP8ZocvM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=kDJwpTiEItwDlltv01z04XOJQnmOabmI9wvG/eEMAN0HjL3svfwbEBXbgJWEhFCKx
-         wbCU0NO8S3i8xoDJX9Ysf6WQ3E0hVvHs1Jr1E4XCC5TaAGgvkDYxQML0n/avhcQ/U+
-         UADXhM+hVuGOMiBiFYZCDPJWC71khov49SiLfN4I=
+        b=jlfuRHrKhhHdomTKJzvJoOzwZIG6RMbL6HUGhCGxDsDDdlR5wRQrfYCFM9Z+YskjO
+         ByxnoQytPVdCSl/1CrWpsMa7sy4qNwBJgmTImQ4bKW4PTttgH9IWkFCIRgsBSoQMpx
+         SiPr/BsvcbwvfgVxYsflVk2rZ8WRCdtkJFzuSsNo=
 From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        afd@ti.com, Andy Gross <agross@kernel.org>,
+To:     Will Deacon <will@kernel.org>
+Cc:     iommu@lists.linux.dev, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] regulator: dt-bindings: qcom,usb-vbus-regulator: change
- node name
-Date:   Wed, 28 Dec 2022 22:30:47 +0100
-Message-ID: <12119366.O9o76ZdvQC@g550jk>
-In-Reply-To: <20221031173933.936147-2-luca@z3ntu.xyz>
-References: <20221031173933.936147-1-luca@z3ntu.xyz>
- <20221031173933.936147-2-luca@z3ntu.xyz>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
+Date:   Wed, 28 Dec 2022 22:34:35 +0100
+Message-ID: <4793103.31r3eYUQgx@g550jk>
+In-Reply-To: <20221114134458.GD30263@willie-the-truck>
+References: <20221105142016.93406-1-luca@z3ntu.xyz>
+ <20221114134458.GD30263@willie-the-truck>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -55,38 +55,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 31. Oktober 2022 18:39:32 CET Luca Weiss wrote:
-> usb-vbus-regulator is a better generic node name than dcdc to change the
-> example to match.
+On Montag, 14. November 2022 14:44:59 CET Will Deacon wrote:
+> On Sat, Nov 05, 2022 at 03:20:17PM +0100, Luca Weiss wrote:
+> > Document the compatible used for IOMMU on the msm8953 SoC.
+> > 
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+> > Changes in v5:
+> > * Change subject so it hopefully gets noticed by iommu maintainers
+> > 
+> >   (thanks Krzysztof, maybe this helps..)
+> >  
+> >  Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt index
+> > 059139abce35..e6cecfd360eb 100644
+> > --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > @@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
+> > 
+> >  - compatible       : Should be one of:
+> >                          "qcom,msm8916-iommu"
+> > 
+> > +                        "qcom,msm8953-iommu"
+> > 
+> >                       Followed by "qcom,msm-iommu-v1".
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> I'd expect the MSM maintainers (i.e Andy and Bjorn) to pick this up.
 
-Bump? Can this patch be picked up please?
+Bjorn, could you pick this up for v6.3 please?
 
-> ---
-> Changes in v2:
-> * New patch
 > 
->  .../devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml  | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git
-> a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-> b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-> index dbe78cd4adba..b1cff3adb21b 100644
-> ---
-> a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-> +++
-> b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-> @@ -33,7 +33,7 @@ examples:
->       pm8150b {
->          #address-cells = <1>;
->          #size-cells = <0>;
-> -        pm8150b_vbus: dcdc@1100 {
-> +        pm8150b_vbus: usb-vbus-regulator@1100 {
->              compatible = "qcom,pm8150b-vbus-reg";
->              reg = <0x1100>;
->          };
+> Will
 
 
 
