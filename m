@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96F8A658607
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:53:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4290865860B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:53:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233385AbiL1SxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 13:53:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36758 "EHLO
+        id S233433AbiL1SxH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 13:53:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233469AbiL1Swy (ORCPT
+        with ESMTP id S233506AbiL1Swz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:52:54 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E53167F0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:52 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id n1so17302484ljg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:52 -0800 (PST)
+        Wed, 28 Dec 2022 13:52:55 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13EB115F29
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:53 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id q2so17293920ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oIBNc8xLgI3Amr1jbIBMHXVwPDchMfs+28Qj/CExQlQ=;
-        b=g2i58dkd6kkZRakwlA/mKuDa3vBv0TQpuKciq562Cm97H7MMfcsg23jS2N4dJuDpPm
-         5snEfXH/krBq7b/3Rj0O9gG/A3fNiRHWVtRzR2L7SgJ+ghuVkE+KZcXTDjisX/aAK2rX
-         8dr5BwgsLogv2zoireOuw+CZvLKb68ZZvawFi1gl7nsDtXT1Sz5b1mJubcvhT7Pjpf5u
-         WwZjhjN5lNCn3o5AaxyUGgabe+Vtk6vYQhmrFHZwIhsF5fugWh+7PNvCjCEV1ADZ2UPO
-         ddakXAm2AH+P3mZjz3MsQgIAF0TzoaJ8Krwjz2ytL4Uq8m01jtuCdeb/3l83IHjl8loT
-         8qBA==
+        bh=AJ6aBIfAch55lprCsNaNAYzyypRLet5QxQZNo1yihAE=;
+        b=lIILyKohaMFRk16A8ND1ZKW+lwrvIH2rVrpMmvdBLtakb/OU+jQNbUXJUTYAy0qkzg
+         VpK3U4UrT2QLhS6FEvNxd5KeRQBhJ2SVG/YV52vYsyd/h8Psjv3Sg+ArD5TGjVtdmOwI
+         FDFa31qRftmTTYn6aDuNlXEcmp0mLwuS0a++Di42GRPpH0jns89A8yU9ZCw9pAuoT1XL
+         e1nN5SU698/pa93+Bti0ZhBZ4HEPUsw8kBLWdiVF7z+nj5waS5Rup9WdFHUQBEJijj2D
+         kSk5Mst2eOJp/K0hEEjFD/2hbHOYCy7h9tCG9KqhTe9XiEuMjthcUQqtrdGVchf6Hcfs
+         U43g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oIBNc8xLgI3Amr1jbIBMHXVwPDchMfs+28Qj/CExQlQ=;
-        b=YWwYdANkmyLLZwVjRcOVzqlI2yxeZ4DLSJoUUBrp/l/DQ8XxBRt98XGuB5LY31WMd5
-         oBKNKL4sav81oNIdtLZP0EZR8y5wyd8hZY5EOmy7NStQN2nEUZ/IFmwPLwqElUgXoJ8M
-         GVNc7jUP+NcSkBG9r+9WtA5WSs73J7PV4YGpQEB3CJKvpc/qCR72v9qf96NAXgdPn+j1
-         VbJFhtMnGn3mPaSECe1y7US0EqWGF8vgtDc5G5r7pZxv2bWI6KgzDhFsoQ0CJPnUZ3Ff
-         h7N7ilWsi34LadNLVE0wmF6a5h6oWsLO3/XP94dsjgSOpFn/DHCjrj67oQ/g5+Q+V2tn
-         apvw==
-X-Gm-Message-State: AFqh2koyXdcVdOAadyGzHr/rB88n9EaW7SzSBe0c09w/Z8kTCKpUspf9
-        n7wBUrw2/hRKDrlfo2vywNPbWg==
-X-Google-Smtp-Source: AMrXdXsyQq5T53v8A0zTCKfZhGdSlqjK2kkvvlG16bRiON2b6RtwVK0fp08FUuXe0psv5zNhrSCKsQ==
-X-Received: by 2002:a2e:93c6:0:b0:27f:958a:9277 with SMTP id p6-20020a2e93c6000000b0027f958a9277mr9723337ljh.12.1672253571951;
-        Wed, 28 Dec 2022 10:52:51 -0800 (PST)
+        bh=AJ6aBIfAch55lprCsNaNAYzyypRLet5QxQZNo1yihAE=;
+        b=lcUN1hW2al2CUX4dG94DPmqTFN2KXSmfa/66WlPD2RZ78S9IeWeeXj6hWtusgne9Rj
+         UGwhuhKeVsOXv4uZdoJYri6n4INq4ozJXl7CTupSQceXg+J8wztOQka876KIe+8SAJdZ
+         Rw7dkNYhdr/I7W20RN1FP7aoSDkn9Cm5dp8KW/nrpZhFEixN7agRT8gvYHqRpJOvZx3C
+         82CK7vkeO87/UETWuPIPdVjm/JSYcM3WcaZmYoKU63GoEUMB68anenY15SKZnuTOZf7X
+         FKU1eOtLp7xWC6rZM9Jx7EyGetKOp6E/JzqAVoRaDebd4DTFzo/hIaWxkbTXhPcCL0lL
+         ojMA==
+X-Gm-Message-State: AFqh2kqY5xrkBIT3OAgCI+XcesOh5UsUIrm++iNjz+46cXdkyQZdtoKG
+        cvKXa6DSf/e8xrSa+dlktUtYQw==
+X-Google-Smtp-Source: AMrXdXvz2sKLvxWF/ZKg+vshp1B8r9TRcgf9zsNuNy+6gP5bBWa6BWv7iDCaOKYsZGXGyVEs8w3SFQ==
+X-Received: by 2002:a2e:a543:0:b0:27f:c94a:1b07 with SMTP id e3-20020a2ea543000000b0027fc94a1b07mr2212737ljn.48.1672253573168;
+        Wed, 28 Dec 2022 10:52:53 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s7-20020a2e83c7000000b00279d206a43bsm2031893ljh.34.2022.12.28.10.52.50
+        by smtp.gmail.com with ESMTPSA id s7-20020a2e83c7000000b00279d206a43bsm2031893ljh.34.2022.12.28.10.52.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:52:50 -0800 (PST)
+        Wed, 28 Dec 2022 10:52:52 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v2 13/16] clk: qcom: gcc-sm8150: get rid of test clock
-Date:   Wed, 28 Dec 2022 20:52:34 +0200
-Message-Id: <20221228185237.3111988-14-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 14/16] clk: qcom: gcc-sm8350: get rid of test clock
+Date:   Wed, 28 Dec 2022 20:52:35 +0200
+Message-Id: <20221228185237.3111988-15-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org>
 References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org>
@@ -83,48 +83,48 @@ The test clock apparently it's not used by anyone upstream. Remove it.
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ drivers/clk/qcom/gcc-sm8350.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 09cf827addab..70b067f3618c 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -26,7 +26,6 @@
+diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
+index c3731f96c8e6..af4a1ea28421 100644
+--- a/drivers/clk/qcom/gcc-sm8350.c
++++ b/drivers/clk/qcom/gcc-sm8350.c
+@@ -22,7 +22,6 @@
+ 
  enum {
  	P_BI_TCXO,
- 	P_AUD_REF_CLK,
 -	P_CORE_BI_PLL_TEST_SE,
- 	P_GPLL0_OUT_EVEN,
- 	P_GPLL0_OUT_MAIN,
- 	P_GPLL7_OUT_MAIN,
-@@ -117,14 +116,12 @@ static const struct parent_map gcc_parent_map_0[] = {
+ 	P_GCC_GPLL0_OUT_EVEN,
+ 	P_GCC_GPLL0_OUT_MAIN,
+ 	P_GCC_GPLL4_OUT_MAIN,
+@@ -119,14 +118,12 @@ static const struct parent_map gcc_parent_map_0[] = {
  	{ P_BI_TCXO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+ 	{ P_GCC_GPLL0_OUT_EVEN, 6 },
 -	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
  
- static const struct clk_parent_data gcc_parents_0[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .hw = &gpll0_out_even.clkr.hw },
+ static const struct clk_parent_data gcc_parent_data_0[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &gcc_gpll0.clkr.hw },
+ 	{ .hw = &gcc_gpll0_out_even.clkr.hw },
 -	{ .fw_name = "core_bi_pll_test_se" },
  };
  
  static const struct parent_map gcc_parent_map_1[] = {
-@@ -132,7 +129,6 @@ static const struct parent_map gcc_parent_map_1[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -134,7 +131,6 @@ static const struct parent_map gcc_parent_map_1[] = {
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
  	{ P_SLEEP_CLK, 5 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
+ 	{ P_GCC_GPLL0_OUT_EVEN, 6 },
 -	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
  
- static const struct clk_parent_data gcc_parents_1[] = {
-@@ -140,41 +136,34 @@ static const struct clk_parent_data gcc_parents_1[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
- 	{ .hw = &gpll0_out_even.clkr.hw },
+ static const struct clk_parent_data gcc_parent_data_1[] = {
+@@ -142,29 +138,24 @@ static const struct clk_parent_data gcc_parent_data_1[] = {
+ 	{ .hw = &gcc_gpll0.clkr.hw },
+ 	{ .fw_name = "sleep_clk" },
+ 	{ .hw = &gcc_gpll0_out_even.clkr.hw },
 -	{ .fw_name = "core_bi_pll_test_se" },
  };
  
@@ -134,83 +134,65 @@ index 09cf827addab..70b067f3618c 100644
 -	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
  
- static const struct clk_parent_data gcc_parents_2[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
+ static const struct clk_parent_data gcc_parent_data_2[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .fw_name = "sleep_clk" },
 -	{ .fw_name = "core_bi_pll_test_se" },
  };
  
  static const struct parent_map gcc_parent_map_3[] = {
  	{ P_BI_TCXO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
 -	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
  
- static const struct clk_parent_data gcc_parents_3[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .hw = &gpll0.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se"},
+ static const struct clk_parent_data gcc_parent_data_3[] = {
+ 	{ .fw_name = "bi_tcxo" },
+-	{ .fw_name = "core_bi_pll_test_se" },
  };
  
  static const struct parent_map gcc_parent_map_4[] = {
- 	{ P_BI_TCXO, 0 },
+@@ -193,7 +184,6 @@ static const struct parent_map gcc_parent_map_6[] = {
+ 	{ P_GCC_GPLL9_OUT_MAIN, 2 },
+ 	{ P_GCC_GPLL4_OUT_MAIN, 5 },
+ 	{ P_GCC_GPLL0_OUT_EVEN, 6 },
 -	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
  
- static const struct clk_parent_data gcc_parents_4[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
--	{ .fw_name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_5[] = {
-@@ -182,7 +171,6 @@ static const struct parent_map gcc_parent_map_5[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL7_OUT_MAIN, 3 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parents_5[] = {
-@@ -190,7 +178,6 @@ static const struct clk_parent_data gcc_parents_5[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .hw = &gpll7.clkr.hw },
- 	{ .hw = &gpll0_out_even.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_6[] = {
-@@ -198,7 +185,6 @@ static const struct parent_map gcc_parent_map_6[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL9_OUT_MAIN, 2 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parents_6[] = {
-@@ -206,7 +192,6 @@ static const struct clk_parent_data gcc_parents_6[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .hw = &gpll9.clkr.hw },
- 	{ .hw = &gpll0_out_even.clkr.hw },
+ static const struct clk_parent_data gcc_parent_data_6[] = {
+@@ -202,7 +192,6 @@ static const struct clk_parent_data gcc_parent_data_6[] = {
+ 	{ .hw = &gcc_gpll9.clkr.hw },
+ 	{ .hw = &gcc_gpll4.clkr.hw },
+ 	{ .hw = &gcc_gpll0_out_even.clkr.hw },
 -	{ .fw_name = "core_bi_pll_test_se" },
  };
  
  static const struct parent_map gcc_parent_map_7[] = {
-@@ -214,7 +199,6 @@ static const struct parent_map gcc_parent_map_7[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_AUD_REF_CLK, 2 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
+@@ -267,25 +256,21 @@ static const struct clk_parent_data gcc_parent_data_12[] = {
+ 
+ static const struct parent_map gcc_parent_map_13[] = {
+ 	{ P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK, 0 },
+-	{ P_CORE_BI_PLL_TEST_SE, 1 },
+ 	{ P_BI_TCXO, 2 },
  };
  
- static const struct clk_parent_data gcc_parents_7[] = {
-@@ -222,7 +206,6 @@ static const struct clk_parent_data gcc_parents_7[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .fw_name = "aud_ref_clk", .name = "aud_ref_clk" },
- 	{ .hw = &gpll0_out_even.clkr.hw },
+ static const struct clk_parent_data gcc_parent_data_13[] = {
+ 	{ .fw_name = "usb3_phy_wrapper_gcc_usb30_pipe_clk" },
 -	{ .fw_name = "core_bi_pll_test_se" },
+ 	{ .fw_name = "bi_tcxo" },
  };
  
- static const struct freq_tbl ftbl_gcc_cpuss_ahb_clk_src[] = {
+ static const struct parent_map gcc_parent_map_14[] = {
+ 	{ P_USB3_UNI_PHY_SEC_GCC_USB30_PIPE_CLK, 0 },
+-	{ P_CORE_BI_PLL_TEST_SE, 1 },
+ 	{ P_BI_TCXO, 2 },
+ };
+ 
+ static const struct clk_parent_data gcc_parent_data_14[] = {
+ 	{ .fw_name = "usb3_uni_phy_sec_gcc_usb30_pipe_clk" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ 	{ .fw_name = "bi_tcxo" },
+ };
+ 
 -- 
 2.39.0
 
