@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8541A657753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 14:39:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D91D1657754
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 14:40:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbiL1Nji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 08:39:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46670 "EHLO
+        id S232939AbiL1Nju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 08:39:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233000AbiL1NjL (ORCPT
+        with ESMTP id S230464AbiL1Njt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 08:39:11 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C85F11836
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:39:10 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id g14so16542575ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:39:10 -0800 (PST)
+        Wed, 28 Dec 2022 08:39:49 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F16CDFCF4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:39:47 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bf43so23663097lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:39:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dcKen0J7JLXc8AJssAYDPcyCoxuXJNE686k3Qe7FeVM=;
-        b=slQkbgGGpcjdGUEeMWBdjPKKWnNHoUqsdo0/qAqeQtPiHRaOykPcudohMddes3KwAS
-         aJ0rc0b+NtyFN4wxnpfF239wMlC2S9Sg+i900cbwdtoQl1FE7DwiAefpX3YW4/ff8O3F
-         VnZ/QHsRxLhZ0z+xWb2YaGsIqrC4Cdw/bm7tzIolDT6sSnVaa4tdxqOGzrrETv4/8YFd
-         WH0AIYQrgDzoQNVcXJbND/93dgbBD2ku5hP/NI668hMqeKf5lipkuU0NOW7LZ0StLDi5
-         J6fsmSsehkaedFuy7NqIV9Au0+T0o+rOWzZjZlTzn3nRVdjRqkxyfICkQWGvk+O1yqUH
-         C4LQ==
+        bh=eivbSK/iggE609kMctsDa0t3SvfhXTo/TwRgMrcMZFg=;
+        b=Oks7pXiC6qUVeemn/v839Rt/lL5d0+dpW7V5//V9fTgHM0F+TQk8VhMY/RPv2P39Lb
+         R0eO5V2rw+d7TK8xJLau8DchNPeGTLolBqgbafOygs2YtBpCbp1ThuAmiqIQ80EqVdol
+         Vga3XhjoJDwGjxpgNzwDbiuWmS0OqRTi896coKzyjiUv05XxbHIsjCYlpTaRjCDWmyIF
+         znxoAUjsu+EWPgEiSEp7B+w/RFPaB4ti6ebz51P9vH+Huckps0gFv4cMaVEWfVFt5JGD
+         s2+6WlzPDTNG3ZHDmPkKeyy7RTwBgw2/TmRxRXvUBi0MbBzK/18Nv3ZrsKBEOMVIHGbV
+         5wFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dcKen0J7JLXc8AJssAYDPcyCoxuXJNE686k3Qe7FeVM=;
-        b=tcuYGsOUzp1tkS5ymsT+gQYQufn/MW1C2XejBJdwEmoMlYnpHYnR3lVvI3BsopIVNv
-         z04EX27ZxT0veKJWcue/30Gflh7I5z1ztg69JrV8BiD6rQPbP+214kMkp92sdHvzGdxM
-         AW6GLWdkyc7rTDLI4rAAiC3mIJCat4HzvudmFJ6tIUkYxV/8sEt7M+wtpWCrS8igzG2M
-         z6reJLMLveqW8h/QFWNxlZuE0KJXZ84lv0feavKUPXaD7ugWqKtxFlGjJtjjpsG/BtjF
-         dGdzdU4WRqP2wJ/hR20KbgcaIEfY6sZq6izFcqjfvGRs01Hg0C6/KQNmw5S/yDTOX7Kq
-         Oinw==
-X-Gm-Message-State: AFqh2kqTSiGuaT6DbCuK4fVp2dwfsERIlh9IIZil22+Dk5o/SUJHs+PA
-        PcdW8G06/sMxkd+V+R3U+hKYpg==
-X-Google-Smtp-Source: AMrXdXu5eH1aTciuLX4InQBydZvwF7QKqLvdZ5VmOc5AbW085q0to0JxhXzlQ7xFwMlPPTnURu1/1g==
-X-Received: by 2002:a2e:a583:0:b0:27f:b941:53ba with SMTP id m3-20020a2ea583000000b0027fb94153bamr4969680ljp.23.1672234748870;
-        Wed, 28 Dec 2022 05:39:08 -0800 (PST)
+        bh=eivbSK/iggE609kMctsDa0t3SvfhXTo/TwRgMrcMZFg=;
+        b=0pzkflzIcWDP4gnBYGZ64QhCF7MB+Q7EK8XG6cmnyKz9TzeN0SjplNpTNV6I+379W6
+         EEJbiieFlenEJV8T1n1bJNqotOjuNndCe0NQlGGo6GSZKRQXaa5S17COgMcr5XMh9wBK
+         2ErBBIRbPrEP7a+UdWRvG9WpnJErz1GuzKz8SiRrYq9OYIVTVKNkLKwnPhoGP0swkhXq
+         mmSLUpuNgVpbWVQaEw5VnTlImKEQR0xjGlCV+1vVwJcjgpPZ3MJmOFSwtU2HlkzIhv4u
+         Cvb3h00SLtQwKczeCAWPGtqbjTLhrEnDGH/43nXgJ6JjK1Y4K1B/yz0FSnrqZ2sojvBJ
+         BDBQ==
+X-Gm-Message-State: AFqh2krl+KUcDAXkTtQoongTiPXNf86qxxPq21wCNHvjG2I6PBlgoUN9
+        oXy/72ANQT0iff/L6+NvPDjG//31+kdAzga2
+X-Google-Smtp-Source: AMrXdXvfhxQizm2dgNBqqEymbFkmBWtNN8ZdGdsPnNC7WrUaeLCdhGb3DFY0xYgMOfCjt2LITR/RmQ==
+X-Received: by 2002:a05:6512:ac4:b0:4ca:5013:b0e7 with SMTP id n4-20020a0565120ac400b004ca5013b0e7mr10964106lfu.59.1672234786292;
+        Wed, 28 Dec 2022 05:39:46 -0800 (PST)
 Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id bd8-20020a05651c168800b0027781448499sm1976368ljb.85.2022.12.28.05.39.07
+        by smtp.gmail.com with ESMTPSA id b3-20020ac25623000000b004b4bae1a05asm2625055lff.293.2022.12.28.05.39.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Dec 2022 05:39:08 -0800 (PST)
-Message-ID: <d61e8bc5-89a6-a8b1-167a-aff865b88172@linaro.org>
-Date:   Wed, 28 Dec 2022 14:39:07 +0100
+        Wed, 28 Dec 2022 05:39:45 -0800 (PST)
+Message-ID: <aa0fba87-5ab6-4f0c-13a1-cf6d7b453758@linaro.org>
+Date:   Wed, 28 Dec 2022 14:39:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 10/16] clk: qcom: gcc-sc7180: get rid of test clock
+Subject: Re: [PATCH 11/16] clk: qcom: gcc-sdx55: use ARRAY_SIZE instead of
+ specifying num_parents
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,9 +69,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org>
- <20221228133243.3052132-11-dmitry.baryshkov@linaro.org>
+ <20221228133243.3052132-12-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221228133243.3052132-11-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221228133243.3052132-12-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,137 +86,252 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 28.12.2022 14:32, Dmitry Baryshkov wrote:
-> The test clock apparently it's not used by anyone upstream. Remove it.
+> Use ARRAY_SIZE() instead of manually specifying num_parents. This makes
+> adding/removing entries to/from parent_data/names/hws easy and errorproof.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/clk/qcom/gcc-sc7180.c | 16 ----------------
->  1 file changed, 16 deletions(-)
+>  drivers/clk/qcom/gcc-sdx55.c | 52 ++++++++++++++++++------------------
+>  1 file changed, 26 insertions(+), 26 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index 2d3980251e78..105c4762ca84 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -23,7 +23,6 @@
->  
->  enum {
->  	P_BI_TCXO,
-> -	P_CORE_BI_PLL_TEST_SE,
->  	P_GPLL0_OUT_EVEN,
->  	P_GPLL0_OUT_MAIN,
->  	P_GPLL1_OUT_MAIN,
-> @@ -162,21 +161,18 @@ static const struct parent_map gcc_parent_map_0[] = {
->  	{ P_BI_TCXO, 0 },
->  	{ P_GPLL0_OUT_MAIN, 1 },
->  	{ P_GPLL0_OUT_EVEN, 6 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> diff --git a/drivers/clk/qcom/gcc-sdx55.c b/drivers/clk/qcom/gcc-sdx55.c
+> index 4fca19006a77..758b295e1bfa 100644
+> --- a/drivers/clk/qcom/gcc-sdx55.c
+> +++ b/drivers/clk/qcom/gcc-sdx55.c
+> @@ -232,7 +232,7 @@ static struct clk_rcg2 gcc_blsp1_qup1_i2c_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup1_i2c_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_0[] = {
->  	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -258,7 +258,7 @@ static struct clk_rcg2 gcc_blsp1_qup1_spi_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup1_spi_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_0_ao[] = {
->  	{ .fw_name = "bi_tcxo_ao", .name = "bi_tcxo_ao" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -272,7 +272,7 @@ static struct clk_rcg2 gcc_blsp1_qup2_i2c_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup2_i2c_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_1[] = {
-> @@ -184,7 +180,6 @@ static const struct parent_map gcc_parent_map_1[] = {
->  	{ P_GPLL0_OUT_MAIN, 1 },
->  	{ P_GPLL6_OUT_MAIN, 2 },
->  	{ P_GPLL0_OUT_EVEN, 6 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -286,7 +286,7 @@ static struct clk_rcg2 gcc_blsp1_qup2_spi_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup2_spi_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_1[] = {
-> @@ -192,7 +187,6 @@ static const struct clk_parent_data gcc_parent_data_1[] = {
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll6.clkr.hw },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -300,7 +300,7 @@ static struct clk_rcg2 gcc_blsp1_qup3_i2c_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup3_i2c_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_2[] = {
-> @@ -201,7 +195,6 @@ static const struct parent_map gcc_parent_map_2[] = {
->  	{ P_GPLL1_OUT_MAIN, 4 },
->  	{ P_GPLL4_OUT_MAIN, 5 },
->  	{ P_GPLL0_OUT_EVEN, 6 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -314,7 +314,7 @@ static struct clk_rcg2 gcc_blsp1_qup3_spi_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup3_spi_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_2[] = {
-> @@ -210,19 +203,16 @@ static const struct clk_parent_data gcc_parent_data_2[] = {
->  	{ .hw = &gpll1.clkr.hw },
->  	{ .hw = &gpll4.clkr.hw },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -328,7 +328,7 @@ static struct clk_rcg2 gcc_blsp1_qup4_i2c_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup4_i2c_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_3[] = {
->  	{ P_BI_TCXO, 0 },
->  	{ P_GPLL0_OUT_MAIN, 1 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -342,7 +342,7 @@ static struct clk_rcg2 gcc_blsp1_qup4_spi_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_qup4_spi_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_3[] = {
->  	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
->  	{ .hw = &gpll0.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -386,7 +386,7 @@ static struct clk_rcg2 gcc_blsp1_uart1_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_uart1_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_4[] = {
-> @@ -230,7 +220,6 @@ static const struct parent_map gcc_parent_map_4[] = {
->  	{ P_GPLL0_OUT_MAIN, 1 },
->  	{ P_SLEEP_CLK, 5 },
->  	{ P_GPLL0_OUT_EVEN, 6 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -400,7 +400,7 @@ static struct clk_rcg2 gcc_blsp1_uart2_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_uart2_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_4[] = {
-> @@ -238,7 +227,6 @@ static const struct clk_parent_data gcc_parent_data_4[] = {
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -414,7 +414,7 @@ static struct clk_rcg2 gcc_blsp1_uart3_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_uart3_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_5[] = {
-> @@ -246,7 +234,6 @@ static const struct parent_map gcc_parent_map_5[] = {
->  	{ P_GPLL0_OUT_MAIN, 1 },
->  	{ P_GPLL7_OUT_MAIN, 3 },
->  	{ P_GPLL0_OUT_EVEN, 6 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -428,7 +428,7 @@ static struct clk_rcg2 gcc_blsp1_uart4_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_blsp1_uart4_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_5[] = {
-> @@ -254,21 +241,18 @@ static const struct clk_parent_data gcc_parent_data_5[] = {
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll7.clkr.hw },
->  	{ .hw = &gpll0_out_even.clkr.hw },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -450,7 +450,7 @@ static struct clk_rcg2 gcc_cpuss_ahb_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_cpuss_ahb_clk_src",
+>  		.parent_data = gcc_parents_0_ao,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0_ao),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct parent_map gcc_parent_map_6[] = {
->  	{ P_BI_TCXO, 0 },
->  	{ P_GPLL0_OUT_MAIN, 1 },
->  	{ P_SLEEP_CLK, 5 },
-> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+> @@ -469,7 +469,7 @@ static struct clk_rcg2 gcc_cpuss_rbcpr_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_cpuss_rbcpr_clk_src",
+>  		.parent_data = gcc_parents_0_ao,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0_ao),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct clk_parent_data gcc_parent_data_6[] = {
->  	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+> @@ -493,7 +493,7 @@ static struct clk_rcg2 gcc_emac_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_emac_clk_src",
+>  		.parent_data = gcc_parents_5,
+> -		.num_parents = 5,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_5),
+>  		.ops = &clk_rcg2_ops,
+>  	},
 >  };
->  
->  static const struct freq_tbl ftbl_gcc_cpuss_ahb_clk_src[] = {
+> @@ -514,7 +514,7 @@ static struct clk_rcg2 gcc_emac_ptp_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_emac_ptp_clk_src",
+>  		.parent_data = gcc_parents_2,
+> -		.num_parents = 6,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_2),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -537,7 +537,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_gp1_clk_src",
+>  		.parent_data = gcc_parents_3,
+> -		.num_parents = 5,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_gp2_clk_src",
+>  		.parent_data = gcc_parents_3,
+> -		.num_parents = 5,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -565,7 +565,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_gp3_clk_src",
+>  		.parent_data = gcc_parents_3,
+> -		.num_parents = 5,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -579,7 +579,7 @@ static struct clk_rcg2 gcc_pcie_aux_phy_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_pcie_aux_phy_clk_src",
+>  		.parent_data = gcc_parents_4,
+> -		.num_parents = 3,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_4),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -598,7 +598,7 @@ static struct clk_rcg2 gcc_pcie_rchng_phy_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_pcie_rchng_phy_clk_src",
+>  		.parent_data = gcc_parents_3,
+> -		.num_parents = 5,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -619,7 +619,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_pdm2_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -633,7 +633,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_sdcc1_apps_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -652,7 +652,7 @@ static struct clk_rcg2 gcc_usb30_master_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_usb30_master_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_usb30_mock_utmi_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_usb30_mock_utmi_clk_src",
+>  		.parent_data = gcc_parents_0,
+> -		.num_parents = 4,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_0),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
+> @@ -691,7 +691,7 @@ static struct clk_rcg2 gcc_usb3_phy_aux_clk_src = {
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gcc_usb3_phy_aux_clk_src",
+>  		.parent_data = gcc_parents_4,
+> -		.num_parents = 3,
+> +		.num_parents = ARRAY_SIZE(gcc_parents_4),
+>  		.ops = &clk_rcg2_ops,
+>  	},
+>  };
