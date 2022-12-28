@@ -2,118 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65BE9657DB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 16:46:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F88658064
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 17:17:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234022AbiL1PqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 10:46:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34632 "EHLO
+        id S234467AbiL1QRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 11:17:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234015AbiL1PqP (ORCPT
+        with ESMTP id S234689AbiL1QRO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 10:46:15 -0500
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8947614D27;
-        Wed, 28 Dec 2022 07:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1672242373; x=1703778373;
-  h=message-id:date:mime-version:to:cc:references:from:
-   subject:in-reply-to:content-transfer-encoding;
-  bh=SB1x38s3dv6Gdzi7eiwaN7LwRGEtLuEFsZIEzhZwdls=;
-  b=UBGqbU5V0c0n6bGCc03FYH4wSOXmVytfP7hOBWhgEvMoeakXOeHgXye/
-   1UVzWNvVQX4SjM/i7kVfGDDo60mc2NIN3/yb2y2U93Wd2flct+JbcPz7y
-   In508AxydbVsy1R5WG7xulsQo0GythLWrg3omyiPmbcInouCAZRe8UFgg
-   SOCj2FMdzP6medUMzDI/MQxthO9LM25JBt/4opvIYB0ciIzXA73Q5y+3A
-   ABkj6j3WY/FLy58jn6m8NzzqulbNu63Us+AsOGEcyyRA0kKr5zbngx3QJ
-   ZVEm2ebkJyzuz40afva9gx7DJZgtQr/CLVKXPGPpu4xcgchJKsi83MypU
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10574"; a="304388687"
-X-IronPort-AV: E=Sophos;i="5.96,281,1665471600"; 
-   d="scan'208";a="304388687"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2022 07:46:12 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10574"; a="982118992"
-X-IronPort-AV: E=Sophos;i="5.96,281,1665471600"; 
-   d="scan'208";a="982118992"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by fmsmga005.fm.intel.com with ESMTP; 28 Dec 2022 07:46:07 -0800
-Message-ID: <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
-Date:   Wed, 28 Dec 2022 17:47:24 +0200
+        Wed, 28 Dec 2022 11:17:14 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 598F81A808
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 08:15:22 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id e13so14367674ljn.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 08:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yDZvkBvSrq1P74c4ojvaQa9MsowatpZHUMPzWldA71g=;
+        b=PvScfYgvO3aKt+TMrMAphrHdT1QPEOwJ934NeEOIEm/AIH7IDlhU+biY4NyGOaTmHJ
+         RJ/7qRlSvn9OVXYjsO3PIkSSoU3MAY46ACg3CyyymURWTyKvuypz8YTPvsIll6C5lQO/
+         btXjEww9oaYKWMoiPJeYYwU8aKc3h+m6bdf3RrElHoOgH+0Udzhs+x6AwVoxm2B1WmaS
+         B7iXQdJ/S95Pfy3i2Qlsl9LNuGKspn+SS2w3OlYqXFD/aImEb2HQPaSz+jzwpVPw4hNP
+         2hCSMAYwi6dNaFHyKQp/2X001ibstnXadYYNFHTMMF2lVQWf8mtIOWWJiSisxlkqIyvE
+         jB8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yDZvkBvSrq1P74c4ojvaQa9MsowatpZHUMPzWldA71g=;
+        b=fK9k1g9nH+WVnGbfVEaQNEk20eWuEzOHec4TRZ9lMMrA7WhaoyH3VZyKrAShwK/gV3
+         q5ut0xGd9/kSIuzxoEpWMfLqIkU5AfiTdNnvQJzaLaSyepKHV6lIoUoohKuM8PgovSCc
+         3mI/VA/B1wqasnYrNmr0oAYwm43amMnoNbEPelxeS4aYrlEEsHcQIJppZVd3TWkANNsf
+         FB1or6j/t0Mmigv3NJ8iTax1IRjLbvI7ZFX3IAhnOt6rR0kzPk0NQQGcbJaNyMjLHJE0
+         hYCUVWDq8LazhlHDdSajgAaRi6FnrTicD3Z3edbofvjOibngIZDeqGe+UxLPQXhhgav2
+         eagw==
+X-Gm-Message-State: AFqh2ko6j16E2m3VftcxazG2F+msFGbETeNwry4685oIQ5zOzRLRw+46
+        gNXtH24R+ebAqoIxnASG2c7b5Q==
+X-Google-Smtp-Source: AMrXdXsbQOkbDqKHCQD2ADOuTnn+8YWAjm92yxG1SkLaJfYWlVgau/fn51IQ0uv+YLr0mjQ81EAHdA==
+X-Received: by 2002:a2e:8e2e:0:b0:27f:bcad:a770 with SMTP id r14-20020a2e8e2e000000b0027fbcada770mr3379097ljk.52.1672244120567;
+        Wed, 28 Dec 2022 08:15:20 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id r18-20020a2e8e32000000b0027cf0ecab3fsm1995465ljk.138.2022.12.28.08.15.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Dec 2022 08:15:19 -0800 (PST)
+Message-ID: <7a145132-181b-cf52-18f4-4fd1b8a565d8@linaro.org>
+Date:   Wed, 28 Dec 2022 18:15:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.4.2
-To:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-8-quic_wcheng@quicinc.com>
-Content-Language: en-US
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [RFC PATCH 07/14] usb: host: xhci: Add XHCI secondary interrupter
- support
-In-Reply-To: <20221223233200.26089-8-quic_wcheng@quicinc.com>
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v7 1/1] dma: qcom: bam_dma: Add support to initialize
+ interconnect path
+Content-Language: en-GB
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     dmaengine@vger.kernel.org, agross@kernel.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, Rob Herring <robh@kernel.org>
+References: <20220921030649.1436434-1-bhupesh.sharma@linaro.org>
+ <20220921030649.1436434-2-bhupesh.sharma@linaro.org>
+ <YyvKlWgaPVV3su8f@matsya>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YyvKlWgaPVV3su8f@matsya>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.12.2022 1.31, Wesley Cheng wrote:
-> Implement the XHCI operations for allocating and requesting for a secondary
-> interrupter.  The secondary interrupter can allow for events for a
-> particular endpoint to be routed to a separate event ring.  The event
-> routing is defined when submitting a transfer descriptor to the USB HW.
-> There is a specific field which denotes which interrupter ring to route the
-> event to when the transfer is completed.
+On 22/09/2022 05:38, Vinod Koul wrote:
+> On 21-09-22, 08:36, Bhupesh Sharma wrote:
+>> From: Thara Gopinath <thara.gopinath@gmail.com>
+>>
+>> BAM dma engine associated with certain hardware blocks could require
+>> relevant interconnect pieces be initialized prior to the dma engine
+>> initialization. For e.g. crypto bam dma engine on sm8250. Such requirement
+>> is passed on to the bam dma driver from dt via the "interconnects"
+>> property. Add support in bam_dma driver to check whether the interconnect
+>> path is accessible/enabled prior to attempting driver intializations.
+>>
+>> If interconnects are not yet setup, defer the BAM DMA driver probe().
+>>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> [Bhupesh: Make header file inclusion alphabetical and use 'devm_of_icc_get()']
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index 2ff787df513e..a5b0cf28ffb7 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -26,6 +26,7 @@
+>>   #include <linux/kernel.h>
+>>   #include <linux/io.h>
+>>   #include <linux/init.h>
+>> +#include <linux/interconnect.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/module.h>
+>>   #include <linux/interrupt.h>
+>> @@ -394,6 +395,7 @@ struct bam_device {
+>>   	const struct reg_offset_data *layout;
+>>   
+>>   	struct clk *bamclk;
+>> +	struct icc_path *mem_path;
+>>   	int irq;
+>>   
+>>   	/* dma start transaction tasklet */
+>> @@ -1294,6 +1296,14 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>   	if (IS_ERR(bdev->bamclk))
+>>   		return PTR_ERR(bdev->bamclk);
+>>   
+>> +	/* Ensure that interconnects are initialized */
+>> +	bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
+>> +	if (IS_ERR(bdev->mem_path)) {
+>> +		ret = dev_err_probe(bdev->dev, PTR_ERR(bdev->mem_path),
+>> +				    "failed to acquire icc path\n");
+>> +		return ret;
+>> +	}
 > 
-> An example use case, such as audio packet offloading can utilize a separate
-> event ring, so that these events can be routed to a different processor
-> within the system.  The processor would be able to independently submit
-> transfers and handle its completions without intervention from the main
-> processor.
+> So this makes us fail on older DT where icc path may not be present.
+> Should this not be an optional thing?
+
+If "interconnects" property is not present, of_icc_get() returns NULL. 
+So the driver will not err out (correct). All ICC functions will treat 
+NULL path correctly (by doing nothing). So this patch is correct.
+
+However we'd need v8 anyway, there needs to be a bindings update.
+
+Bhupesh, this has been lingering for some time. We need this for several 
+platforms. Any chance for the v8?
+
+> 
+>> +
+>>   	ret = clk_prepare_enable(bdev->bamclk);
+>>   	if (ret) {
+>>   		dev_err(bdev->dev, "failed to prepare/enable clock\n");
+>> -- 
+>> 2.37.1
 > 
 
-Adding support for more xHCI interrupters than just the primary one make sense for
-both the offloading and virtualization cases.
-
-xHCI support for several interrupters was probably added to support virtualization,
-to hand over usb devices to virtual machines and give them their own event ring and
-MSI/MSI-X vector.
-
-In this offloading case you probably want to avoid xHC interrupts from this device
-completely, making sure it doesn't wake up the main CPU unnecessarily.
-
-So is the idea here to let xhci driver set up the new interrupter, its event ring,
-and the endpoint transfer rings. Then pass the address of the endpoint transfer rings
-and the new event ring to the separate processor.
-
-This separate processor then both polls the event ring for new events, sets its dequeue
-pointer, clears EHB bit, and queues new TRBs on the transfer ring.
-
-so xhci driver does not handle any events for the audio part, and no audio data URBs
-are sent to usb core?
-
-How about the control part?
-Is the control endpoint for this device still handled normally by usb core/xhci?
-
-For the xhci parts I think we should start start by adding generic support for several
-interrupters, then add parts needed for offloading.
-
-Thanks
-Mathias
+-- 
+With best wishes
+Dmitry
 
