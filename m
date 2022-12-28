@@ -2,47 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12D416572C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 05:37:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4182F6572D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 05:39:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230243AbiL1Ehv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 23:37:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
+        id S232777AbiL1EjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 23:39:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232412AbiL1Eh3 (ORCPT
+        with ESMTP id S232587AbiL1Ehu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 23:37:29 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0E7E034;
-        Tue, 27 Dec 2022 20:37:18 -0800 (PST)
+        Tue, 27 Dec 2022 23:37:50 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E04EE21;
+        Tue, 27 Dec 2022 20:37:21 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1632761238;
-        Wed, 28 Dec 2022 04:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51D7C43398;
-        Wed, 28 Dec 2022 04:37:16 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 21109B81253;
+        Wed, 28 Dec 2022 04:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09A1C433F0;
+        Wed, 28 Dec 2022 04:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672202237;
-        bh=oIEqNrfwRib/AkTpqJ7BlRqXrp7abJUUNS1xQMGrKD8=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=YJfJPlF/eTaD0ks7EJB5jBOonMWQpnDQbVIAgFaygNQ7WiWoWveT9Dnz/kZUQyL5T
-         iBBDUFJVlMGdRNP/DAg3FQsaGJfTcI5pGqSfbeIoDgbZVfCoe1YYrdpK6baQMWuNC0
-         Y28RlkE4uwxAnFSTL6FLOhsQzn6bdV12Xj4Yo0YHpLg23D8NP4JplkATpDSk6Ux1/J
-         cNF5OxH/lCo8v2SpCEKzg2FpcwylPK4YI2aWhNSL8GEihUch5YDonxxkxKF0N7Q08Q
-         gMqbfsiLbz/c36rttb0RJJfYR+Od6jY6OYsiS+eG259H9Hn4PtQSQJB619atSNkUuK
-         2ngP5QZHXgRfA==
+        s=k20201202; t=1672202238;
+        bh=zK4KG+wi5Wa08lcLF0tB8OlbmsQ5n/OSo7cZ9RjgR+M=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ST04L/w8jEMQGWrWMKn5gS66mPGnrtLU/YZNVL8/aDtqBLRm0jIecoRvXRp+v5Yus
+         NaK0hIdSce74g02Ipnlb2tmnxo49YizZBnyQ2tWO2H3iWzbG3OL+JdeipARdyXrzP5
+         +Fueq/1WIqtjGh80Z/p+xrg6Nj1vAX004iScYUYfLxpXqIY+F5KrCMQs/8ChOFUO/8
+         6ax7jRoIIMKEyo5V/j2IrqU7xpl2GWmv6qNyxoO0FhIyCMGc3k2yrcaHFD8VJAwVgE
+         neOPJKHOzJkyKbVWr3bMW/NV289g2dBboDbeKZflRTO2jCWn/4dilxfR5RLrXFhdeS
+         MNQbQlmocytvw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     srinivas.kandagatla@linaro.org, mailingradian@gmail.com,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     konrad.dybcio@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, luca@z3ntu.xyz,
+        Martin Botka <martin.botka@somainline.org>,
         krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH 1/3] dt-bindings: nvmem: qfprom: add sdm670 compatible
-Date:   Tue, 27 Dec 2022 22:36:52 -0600
-Message-Id: <167220221222.833009.16118082855825958568.b4-ty@kernel.org>
+        linux-kernel@vger.kernel.org, jami.kettunen@somainline.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, kholk11@gmail.com
+Subject: Re: [PATCH] arm64: dts: qcom: pmi8950: Correct rev_1250v channel label to mv
+Date:   Tue, 27 Dec 2022 22:36:53 -0600
+Message-Id: <167220221232.833009.2894100544345630055.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221206231729.164453-1-mailingradian@gmail.com>
-References: <20221206231729.164453-1-mailingradian@gmail.com>
+In-Reply-To: <20221209215437.1783067-1-marijn.suijten@somainline.org>
+References: <20221209215437.1783067-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -55,18 +62,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 6 Dec 2022 18:17:28 -0500, Richard Acayan wrote:
-> There is some configuration in SDM670's QFPROM. Add the compatible for
-> it.
+On Fri, 9 Dec 2022 22:54:37 +0100, Marijn Suijten wrote:
+> This was pointed out in review but never followed up on thanks to
+> sidetracked discussions about labels vs node names.
 > 
 > 
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: sdm670: add qfprom node
-      commit: 7bff6f4351bf82c0b9279fc711b730d2d28b8b8c
-[3/3] arm64: dts: qcom: sdm670: add missing usb hstx nvmem cell
-      commit: cb98187a6883c498b0702cedc1f59247e7857bea
+[1/1] arm64: dts: qcom: pmi8950: Correct rev_1250v channel label to mv
+      commit: 3c3d2cb221b8647d1c547b4c44d2d6060cc742a9
 
 Best regards,
 -- 
