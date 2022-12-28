@@ -2,49 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A025657293
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 05:37:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC2F165729D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 05:37:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230409AbiL1EhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 23:37:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        id S231785AbiL1EhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Dec 2022 23:37:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbiL1EhE (ORCPT
+        with ESMTP id S229745AbiL1EhE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 27 Dec 2022 23:37:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F4B2D2D2;
-        Tue, 27 Dec 2022 20:37:00 -0800 (PST)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4917ADF8A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Dec 2022 20:37:02 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6AAE561236;
-        Wed, 28 Dec 2022 04:37:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B924C43392;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9A485B81230
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 04:37:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05102C4339B;
         Wed, 28 Dec 2022 04:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672202219;
-        bh=lZLSCCCJMNcQo8O0RU24sjGYh8FnhtI6CLWwO6/DqkA=;
+        s=k20201202; t=1672202220;
+        bh=2QsBZONAZdMcMPHAGz7g7QvtPNvzVcdvrGcv466VfaM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TB2X4xwqA/fpNDW5snNyGxfdIQk59vcjjHV926qZtCMY1HpP+tP97Fm9KPjeAo/mT
-         cDTHplT2NBIP/mY2bararEUoto+ge9xk7J/V4PO2XFZpDYOnj/Y65D5zC1kSHPzVJ0
-         C6aAT9MbZXUJqmmrs8jvuxg5yUGfJZpknzYTOMSczecHCK3l7TuVf4OwCy2NcpvLzP
-         lISfe8aNnTk88FLhoUG91awxX2VzxRZIMA9PTLcosN6//dyD97YxCwk4m5sfwpDq42
-         v8QKqXrPxCf5mk0VBW4bFB7jaDAbVjOwA2Ipl2v/CWu+MNZMMqtUNyE7eFV9akNsmJ
-         /LFN0szEPIx9A==
+        b=QZLnF0OeKjkxIh0GF4LffwvJEi4q94z7QI5kO0aeSrJeXhHwFQ+/ZXa4C0NAZ8c0D
+         0KLJoFh4iwlGoX0gWY3cudFnGFKwxK3OXc6P5296W171Wtz49dGCqYcx9IaJO0Pgag
+         Xjl7yu7R0BfMTgkVJC27HEbbYHnWdO93tzD5MQtrX5LvFMelvJ/yB/YiquWcfRpvoK
+         QPf/PZw8mfiMjR2tXU3kmsm/17Dm8DtvFB7QO1R6Ypiob7Wk5yQRZBU+wtYu3DKRV4
+         jT8QFxrcyk/m2zwZhf+Grcozdcz91KhDZl/tVeYs6vmL1OyB1lgQ0CvJXpP9auiY8X
+         UmFF0JCn8NsTw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     johan+linaro@kernel.org
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: move 'thermal-zones' node
-Date:   Tue, 27 Dec 2022 22:36:33 -0600
-Message-Id: <167220221239.833009.15082877460224492874.b4-ty@kernel.org>
+To:     krzysztof.kozlowski@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
+Cc:     marijn.suijten@somainline.org
+Subject: Re: (subset) [PATCH 0/5] MSM8996 eMMC boot fix
+Date:   Tue, 27 Dec 2022 22:36:34 -0600
+Message-Id: <167220221235.833009.5921577222984374915.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221227170202.21618-1-johan+linaro@kernel.org>
-References: <20221227170202.21618-1-johan+linaro@kernel.org>
+In-Reply-To: <20221210200353.418391-1-konrad.dybcio@linaro.org>
+References: <20221210200353.418391-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,16 +54,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Dec 2022 18:02:02 +0100, Johan Hovold wrote:
-> Move the 'thermal-zones' node after the regulator nodes to restore the
-> root-node sort order (alphabetically by node name).
+On Sat, 10 Dec 2022 21:03:48 +0100, Konrad Dybcio wrote:
+> In a very unfortunate turn of events, enabling interconnect on non-UFS
+> devices (or more precisely devices-with-UFS-clocks-disabled-from-
+> bootloader) crashes the device, as a memory read to an unlocked peripheral
+> is attempted. This series tries to fix that with the least amount of
+> casualties..
 > 
+> Konrad Dybcio (5):
+>   dt-bindings: interconnect: Add UFS clocks to MSM8996 A2NoC
+>   interconnect: qcom: msm8996: Provide UFS clocks to A2NoC
+>   interconnect: qcom: msm8996: Fix regmap max_register values
+>   interconnect: qcom: rpm: Use _optional func for provider clocks
+>   arm64: dts: qcom: msm8996: Add additional A2NoC clocks
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp-x13s: move 'thermal-zones' node
-      commit: 5e4cab734c26ec46fd847bedd31a0df83d853b04
+[5/5] arm64: dts: qcom: msm8996: Add additional A2NoC clocks
+      commit: 67fb53745e0b38275fa0b422b6a3c6c1c028c9a2
 
 Best regards,
 -- 
