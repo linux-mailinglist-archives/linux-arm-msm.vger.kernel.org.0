@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFD6D6576F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 14:32:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4BF76576F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 14:32:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230230AbiL1Ncy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 08:32:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41884 "EHLO
+        id S232788AbiL1Ncz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 08:32:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232892AbiL1Ncs (ORCPT
+        with ESMTP id S232918AbiL1Ncs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 28 Dec 2022 08:32:48 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC6AFF5B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:32:46 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 1so23631282lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:32:46 -0800 (PST)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A36BDF5A0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:32:47 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id m6so13249143lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:32:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=itN5bwO5Ir9y7J4fPd6OFJRoaPf8WMBNLHJ7fPCeJbg=;
-        b=UI2Gjry+8gVU82+rNtPptlsA9YGmI5XYNX3j6Bx83pc+ESQOsG7gCz8/JUb5BVETgY
-         gsi1iRds+Fqns8AnzuYodlmg2twb3vsivF0/dvwwMyAtN52sUzy8H16RcjDfNljxl7HK
-         v20psxLh6AhKdEnp3fpcTskEzhw2gkU2cMsnE+8oU2+lCPwEkkK4eCsYghkUqdT7vGRN
-         rC4uaB7yZ7ZPITsKckN5UAnjN9+evlqAg2G2SMbZY5R2aKmgUON8Kz25UagptflBOBdR
-         CxrVoQ71kO9082O4SGNc5yb2U/oBk0qlGiR3DiTtFUKjMD9XizVZpZej8d8nVdWO/gSY
-         okTA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ptwbzrH/mwy7A+21HlgWY+l3mHpSh6bnpDwYSONm/BE=;
+        b=oUr2S0xtFZwVtqGzid+T/6zozCl/6aU0c0tHwjV4K/UH/29O27tPUeI68yHGAvDeqT
+         ruyTtDwo0DBDNcgt1PFnWey7pfNxwMjoo6ZBavhCQQVernIXfSb3uOiv7M7PBjTLh4EZ
+         BmV7+l0/9CzvxTNZpLJGnl4lICL3+frv0ai6qzgNAQLUkuSKKgflQ6L2H7tj9PiWu7IQ
+         5Xot4sCOpAyCXrGA6T6XaGD+AEdcNIMfkPJPBmZ/zBmIHiugo+ycapW8UprLFlzfN+Xe
+         dqMgp5CnSN1R5fGBA2H9wQJv32JutqiFOwrfs1J9g6gq9BBCT+taid09tw4Hy+WUOE99
+         MU0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=itN5bwO5Ir9y7J4fPd6OFJRoaPf8WMBNLHJ7fPCeJbg=;
-        b=CvqGpMoGbSbmSlQuifpNgJcBtynRXmgMqSph5QNbQ/lRmBpyHjq1tmJ+PrZjtRwjk2
-         PbotVc8qybMH7AVsJlEud7MV5QXul+wTdlZmuAoAXc8YuPGbl+SeUPf1Sy7B3bRheskJ
-         v1uePr5AmrJtPwsSggwVTVimJ46q21sB4tIddkz7dpa4tc1ZXRjoQZQBOm3XyqSYJhyP
-         NNGIQn+yfo/hIAB3SXkxiAjCTvY4sFnDksEyYBdTwfPApvp+QXbC2mjJuondnvXcV4lW
-         KF4txeRJ+hc7gkbmBPaZoND/bgS/GeCukOfUBordbWK2yj7KN8VGCJfn+ar5L4Dika78
-         Qluw==
-X-Gm-Message-State: AFqh2koC2xopX+FSnh3cU2qVPNGrhjOlLEBnjyrmBGQeiY6ESQ1bLxpR
-        EWZS05Wv+tKhBecl+nu5x/Obtw==
-X-Google-Smtp-Source: AMrXdXv0+7/Af63H+JidZqM0DYQgU6IsYrfBrCJ2HKXfkihgvW0Ys0QCxp0li3MEs0XiJtJxpGkKmg==
-X-Received: by 2002:a05:6512:2513:b0:4b5:7433:cfe6 with SMTP id be19-20020a056512251300b004b57433cfe6mr7144963lfb.45.1672234365168;
-        Wed, 28 Dec 2022 05:32:45 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ptwbzrH/mwy7A+21HlgWY+l3mHpSh6bnpDwYSONm/BE=;
+        b=QNd8qXNxaXFC7HKD4s6irA9IVtTA2ocXHfKHukNXT3/wd+dc8Yg3Y85V5D5m4qzJWn
+         T3sWPq6cP2/lJr8JvfGUODn90AQGQv86NEPazwqdUm7oJvIKgxmS1uLE58YdOx88jWWM
+         K+zjXy6fGw0ljXHpHhTV1/E8ruU5Jk1hHBqE5HrCcwRtE+GQbQyo1yURr+XimCLaZJzX
+         pl9HjRasfwMlR742AjtBEWYrkJ6zoT5fUk2K38fVlYmp+txPm0dhZjI/P44UwQFbMDt+
+         zJQzWhgplHHg0crVJBdOY+d92ZN6JkTBtkMRwir+gRA18tFsgwB8tiPKKIVGzK9gcy15
+         dxEg==
+X-Gm-Message-State: AFqh2kq9L0hPyNa8kBFfpCOnM2IWhH18rFZhyeGSdu3UUaMsDQp8wtN+
+        cwV9UtONEinJCiD2z4ijHbwUpQ==
+X-Google-Smtp-Source: AMrXdXsWqyinV9P7CjZOcND/sTJyeoYdBO53LGZl0vUAeUo/m2D4VaB63QJZyUXBn68GpNc8PQivKw==
+X-Received: by 2002:a05:6512:31d1:b0:4b5:7925:8707 with SMTP id j17-20020a05651231d100b004b579258707mr8653750lfe.26.1672234366060;
+        Wed, 28 Dec 2022 05:32:46 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d7-20020ac241c7000000b004a47e7b91c4sm2613876lfi.195.2022.12.28.05.32.44
+        by smtp.gmail.com with ESMTPSA id d7-20020ac241c7000000b004a47e7b91c4sm2613876lfi.195.2022.12.28.05.32.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 05:32:44 -0800 (PST)
+        Wed, 28 Dec 2022 05:32:45 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,10 +61,12 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 00/16] clk: qcom: get rid of core_bi_pll_test_se
-Date:   Wed, 28 Dec 2022 15:32:27 +0200
-Message-Id: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 01/16] dt-bindings: clock: qcom,gcc-msm8998: drop core_bi_pll_test_se
+Date:   Wed, 28 Dec 2022 15:32:28 +0200
+Message-Id: <20221228133243.3052132-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org>
+References: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,44 +78,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop core_bi_pll_test_se from all Qualcomm clock controller's bindings
-and drivers. The clock is not used by anyone.
+The test clock apparently it's not used by anyone upstream. Remove it.
 
-Dmitry Baryshkov (16):
-  dt-bindings: clock: qcom,gcc-msm8998: drop core_bi_pll_test_se
-  dt-bindings: clock: qcom,gcc-sdx55: drop core_bi_pll_test_se
-  dt-bindings: clock: qcom,gcc-sdx65: drop core_bi_pll_test_se
-  dt-bindings: clock: qcom,gcc-sm8350: drop core_bi_pll_test_se
-  dt-bindings: clock: qcom,mmcc-msm8998: drop core_bi_pll_test_se
-  dt-bindings: clock: qcom: gcc-sm8350: drop test clock
-  dt-bindings: clock: qcom: gcc-sm8450: drop test clock
-  clk: qcom: dispcc-qcm2290: get rid of test clock
-  clk: qcom: gcc-msm8998: get rid of test clock
-  clk: qcom: gcc-sc7180: get rid of test clock
-  clk: qcom: gcc-sdx55: use ARRAY_SIZE instead of specifying num_parents
-  clk: qcom: gcc-sdx55: get rid of test clock
-  clk: qcom: gcc-sm8150: get rid of test clock
-  clk: qcom: gcc-sm8350: get rid of test clock
-  clk: qcom: mmcc-msm8998: get rid of test clock
-  arm64: dts: qcom: msm8998: get rid of test clock
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml | 4 ----
+ 1 file changed, 4 deletions(-)
 
- .../bindings/clock/qcom,gcc-msm8998.yaml      |  4 --
- .../bindings/clock/qcom,gcc-sdx55.yaml        |  9 +--
- .../bindings/clock/qcom,gcc-sdx65.yaml        |  8 +--
- .../bindings/clock/qcom,gcc-sm8350.yaml       |  2 -
- .../devicetree/bindings/clock/qcom,mmcc.yaml  |  2 -
- arch/arm64/boot/dts/qcom/msm8998.dtsi         |  4 +-
- drivers/clk/qcom/dispcc-qcm2290.c             |  6 --
- drivers/clk/qcom/gcc-msm8998.c                | 13 ----
- drivers/clk/qcom/gcc-sc7180.c                 | 16 -----
- drivers/clk/qcom/gcc-sdx55.c                  | 64 ++++++++-----------
- drivers/clk/qcom/gcc-sm8150.c                 | 17 -----
- drivers/clk/qcom/gcc-sm8350.c                 | 15 -----
- drivers/clk/qcom/mmcc-msm8998.c               | 25 --------
- include/dt-bindings/clock/qcom,gcc-sm8350.h   |  1 -
- include/dt-bindings/clock/qcom,gcc-sm8450.h   |  1 -
- 15 files changed, 32 insertions(+), 155 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
+index 2d5355cf9def..10a8ce6640a8 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
+@@ -25,7 +25,6 @@ properties:
+       - description: Board XO source
+       - description: Sleep clock source
+       - description: Audio reference clock (Optional clock)
+-      - description: PLL test clock source (Optional clock)
+     minItems: 2
+ 
+   clock-names:
+@@ -33,7 +32,6 @@ properties:
+       - const: xo
+       - const: sleep_clk
+       - const: aud_ref_clk # Optional clock
+-      - const: core_bi_pll_test_se # Optional clock
+     minItems: 2
+ 
+ required:
+@@ -57,11 +55,9 @@ examples:
+       reg = <0x00100000 0xb0000>;
+       clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+                <&sleep>,
+-               <0>,
+                <0>;
+       clock-names = "xo",
+                     "sleep_clk",
+                     "aud_ref_clk",
+-                    "core_bi_pll_test_se";
+     };
+ ...
 -- 
 2.35.1
 
