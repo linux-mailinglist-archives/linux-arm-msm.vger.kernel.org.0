@@ -2,114 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACCE86576A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 13:50:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 246B86576CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 14:11:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232646AbiL1Muf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 07:50:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59390 "EHLO
+        id S230508AbiL1NLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 08:11:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232618AbiL1Mud (ORCPT
+        with ESMTP id S229745AbiL1NLP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 07:50:33 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D231C100F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 04:50:32 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id p2so860305ljn.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 04:50:32 -0800 (PST)
+        Wed, 28 Dec 2022 08:11:15 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396C511811
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:11:14 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id b88so15501910edf.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 05:11:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F8/YpCQ3OCyoXapLzBfKYsO+glpD+PxcQRfK5fsu1GI=;
-        b=BbGSIBDlIWjIPzIpI3IS8aDjGCShQ4Bu4EaZZLSteCB334CyeQ2zI99HK430n63BZv
-         VvW5PwkZvppnArmmmr9MBtM4JKjjbwArgtn31D7q92AGhpioi1jW7sRwXta/hJhtaVCw
-         CDYK2FY2DwxH3UPzeL70VcgpwA4G/7mvUdulhiLMR4ECKQrf/RJOLdb6MLpm/dSoxH04
-         Y0GS3HXH1F3F/p2Vr9vApS9jAOmJN3u+qsBaAprFlbOl454Sr4G4lhXkU08SAVBza48g
-         dpBL6ht8pBHgI1OvLfJur13p1X50NjzD2Bl6KqgHRLnFWgriKUTYZhKUo2GBhebKNYaU
-         q/wg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F6wwrS7RcdUciPublS8eDzKLlrNTuJCUJ8yWm395dEU=;
+        b=HQID7UlXuGYljA8lWzj1CBVUHd9+8294st7MpCGh2yB+noGxikCM/UEtjIr+GXSLlI
+         UMh4Puq91qpnhMLj9Ota6dO4XoHI0ASsotTZ2vxxSGiZ5wXZR8ruJXKeIheSjJwAWFOj
+         j5MPzCX4xL6NTi/ZnZmTLOzDA4yJ9Pnw+mCF/92PFZ27HdnNmxHWWdhe3yXvIWYpZfDD
+         EGnQ4Uvd8jHsLMGSR7LI1ZxSW7/eOHH3+wst5JG1N2q4p32Abi+NHg/2/v0/rg0TyyEn
+         JAhYV4rSq/7p125wk5oMCOLhTZKPALdn02lg53eCe1+8vHS3APpdKDZQYAO0t4N3la1f
+         F1pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F8/YpCQ3OCyoXapLzBfKYsO+glpD+PxcQRfK5fsu1GI=;
-        b=IR7P7kBEMflM9yeF4PnzFpZB2VXkoGcAW3Y2zNf5CWoNqMhR+3fmzU2gSK/pSWrQi8
-         eMuBTmDAltKX0SLc0uwdvxVIEESiZavEHV6AM7jTkBVmg9KX9r37WpYVpHAinP7e+rdK
-         0pbzlXo3DCvZWUotYGkrbLI6VgDcqiXlLhJuHi80i7Ki2RzvWB/3CHT51/jdw5FaLWu9
-         J7aeMHxd9EaCrh8gL7wnl0R+rsmdS1BysjCHDSVAl6lOXV5ob6em59ZE50pER/88Jrrs
-         a0IwNMpL8xVWSUn/4lGgWY+L191g2A44rRbDBOB8Nq9Sq94K7TtQslrJ48QPYgIlKqKd
-         HRdw==
-X-Gm-Message-State: AFqh2krrZDzA3DazKMAMR11ooLUiUuFwdIufuSQA9scHlM04sKa5TkzB
-        6tdtCGuTakDmb2kRTxf4J3r/4b1V6oparIcgZmw=
-X-Google-Smtp-Source: AMrXdXvRNE45JeWBAUysh9AkxSKTXg9GFLWAFCY6ZvmLFOEstMdgfpxXKelwMIq271rDCe9QBrN5cA==
-X-Received: by 2002:a05:651c:8f:b0:27f:b083:e328 with SMTP id 15-20020a05651c008f00b0027fb083e328mr4823175ljq.8.1672231831200;
-        Wed, 28 Dec 2022 04:50:31 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s4-20020a05651c048400b0027fbc576464sm1061755ljc.137.2022.12.28.04.50.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Dec 2022 04:50:30 -0800 (PST)
-Message-ID: <97a27c10-411e-8823-507c-ebb3f71a48ed@linaro.org>
-Date:   Wed, 28 Dec 2022 14:50:29 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F6wwrS7RcdUciPublS8eDzKLlrNTuJCUJ8yWm395dEU=;
+        b=d7TAEshEY6QpJ4AAoK6mS3l8HIu/Z+SClXbfc1Wq44m7giwWkcVqQlpi8oiNEm1v7S
+         mUPYOzbhW4AnmyPPjMti2DzwxH8dakKS8omTCi/uS8Gdda1wY52q8pRikLTw20sm7vkR
+         eqHak7ODpNDyOhuG0o+sv5+wo0jxEKUVg7e8aKff/DgjvAh/TvM/tIjOdgEV8Aj/3l0M
+         5ukAj5Pf5vkgkYadQhnQUJ/uJw+DQOC0VcXwDmMO7UpLWfWqx4z3EOkl6fAusXDmWUvp
+         trmp4b2jcIxhVIgPjyiQTrqWBAFHbh/Kum2PRVwzldjlQDOpcdu5Hn093j+sRrtmtJwG
+         H8kw==
+X-Gm-Message-State: AFqh2koiV+rnayvaNHGMGxs7yd6yFAWUzRpqbIC66HdWck6izqrCB110
+        et6yXFIcrXWB50Qlf0l9y98y+w==
+X-Google-Smtp-Source: AMrXdXvCEIaQ/+rAZCjHFzbt62dc75UuPXrtdkwyrRSmtxO55O1twdfpHfhj6AE0hBMtXuZXr06Y7g==
+X-Received: by 2002:a05:6402:528e:b0:481:420e:206d with SMTP id en14-20020a056402528e00b00481420e206dmr15879206edb.42.1672233072828;
+        Wed, 28 Dec 2022 05:11:12 -0800 (PST)
+Received: from planet9.chello.ie (2001-1c06-2302-5600-85f6-04b5-1651-3b6c.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:85f6:4b5:1651:3b6c])
+        by smtp.gmail.com with ESMTPSA id g11-20020a056402180b00b0046bb7503d9asm7099545edy.24.2022.12.28.05.11.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Dec 2022 05:11:12 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_mkrishn@quicinc.com, andersson@kernel.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/1] Fixup documentation for dsi-phy-28nm
+Date:   Wed, 28 Dec 2022 13:11:09 +0000
+Message-Id: <20221228131110.213116-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8350: add missing
- core_bi_pll_test_se GCC clock
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221228112456.31348-1-krzysztof.kozlowski@linaro.org>
- <d2e303d9-3ac4-f574-680f-4f5ccbf5ed13@linaro.org>
- <5001001a-203f-e832-f916-ce483b2d8ea1@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5001001a-203f-e832-f916-ce483b2d8ea1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 13:55, Krzysztof Kozlowski wrote:
-> On 28/12/2022 12:37, Konrad Dybcio wrote:
->>
->>
->> On 28.12.2022 12:24, Krzysztof Kozlowski wrote:
->>> The GCC bindings expect core_bi_pll_test_se clock input, even if it is
->>> optional:
->>>
->>>    sm8350-mtp.dtb: clock-controller@100000: clock-names:2: 'core_bi_pll_test_se' was expected
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->> Is it even going to be used by anybody, or should we just drop
->> it on the driver side as per usual?
-> 
-> It's mentioned as possible parent, so there might be users somewhere...
-> Or you want to say that other binding and DTS users cannot use that clock?
+This is the one remaining patch I had from a previous series for
+mdss-dsi-ctrl and the dsi-phy. The mdss-dsi-ctrl set became a bigger so I
+split out the 28nm phy fixes.
 
-Yes. In the past few months we have been removing the core_bi_pll_test 
-from the old clock drivers (and new clock drivers mostly lack them). 
-Let's remove it from the rest of clock drivers.
+I'm resubmitting with Dmitry's RB as a standalone.
 
-> 
-> Best regards,
-> Krzysztof
-> 
+Old: https://lore.kernel.org/all/20220630120845.3356144-1-bryan.odonoghue@linaro.org/
+
+Bryan O'Donoghue (1):
+  dt-bindings: msm: dsi-phy-28nm: Add missing
+    qcom,dsi-phy-regulator-ldo-mode
+
+ .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml         | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.34.1
 
