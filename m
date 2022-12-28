@@ -2,75 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7E8365860F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:53:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D22C658615
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:53:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232770AbiL1SxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 13:53:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
+        id S233455AbiL1SxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 13:53:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233513AbiL1Sw5 (ORCPT
+        with ESMTP id S233071AbiL1SxA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:52:57 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 665B816583
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:55 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id n1so17302591ljg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 10:52:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I1+stahcJCfSV1AXaN0HNbKO8b+y7N9zk//F0UFBH8U=;
-        b=uZKtg1KEF/EMXmqLbuL5EMEtt141kKHrf2h/AgVtJo5KArvSQZB8VuBHLX7uFr6v2R
-         ko/HPrbB61HdtmhTichoRdFpRHfvAuZWW1+3xyenT/m07aMHk+kV7JkfenB7Py20IIh7
-         8oajSY6qWgR8oGFFKUlBJhirzBuFlX22idIptMw/eyN28UJ0W1Px3dcFgS6rO+vcX06+
-         j51shyGs+Wk5FssENv4KNhwryWknb3b4kz1dUyQxJ/vso0uBXAd9A/G6Bbo3dyosi/4V
-         9fWtDni+GCuHG6rH/M1p/PolHB4vAsu/pAXHLC+cCrHc2pPne+bo5/hyy4BqqOI9mI74
-         WI9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I1+stahcJCfSV1AXaN0HNbKO8b+y7N9zk//F0UFBH8U=;
-        b=QoG/myHkS3q1RKh+Doy8bXfqI0xb1tXgtkpWfVcOTYc1MRv/ha7csODT88Xf+xSZIz
-         l8Q7HMQ1HCAj2jqysx9aRQeqomo8a3HIi0RjB8BQwC68C2LOmw4VGD3fmw0wbQwHsSEj
-         SrMOqblHpybo+OZZuSyLTRtSsVJe/7W7D8C3qEr2NQwl2BZX8S8i/QmRQutK0FOo3SGW
-         qngx/nGDxRvbPC8ne1z4tCZda99VQZ2jHgPSN4rYYJtlUPw0hpNc7KdOq6CirRGXLiSw
-         LXsJDizNHeKa5FqnKbByNLauc9VJtj23bWvs0+oz5NvdowVHSK/IS16TjkwiTanIwOhR
-         LfAg==
-X-Gm-Message-State: AFqh2kp1GrivxeJz0qKCkHvMpXtM8z82ytMLWfkjv36WT3BeiRoAD++e
-        x77d51t0GwCNnwqZu21w6PaDYw==
-X-Google-Smtp-Source: AMrXdXsaF1HBi9+2JeS39vDiNci+fs1hnY4V+u6EJ9WURqnULPQUxqbzJVYuKBjKk9wVgWLAwf77zQ==
-X-Received: by 2002:a05:651c:2006:b0:27f:836a:2299 with SMTP id s6-20020a05651c200600b0027f836a2299mr6904143ljo.12.1672253574992;
-        Wed, 28 Dec 2022 10:52:54 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s7-20020a2e83c7000000b00279d206a43bsm2031893ljh.34.2022.12.28.10.52.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:52:54 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 28 Dec 2022 13:53:00 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6DB164A4;
+        Wed, 28 Dec 2022 10:52:58 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E94CE615C1;
+        Wed, 28 Dec 2022 18:52:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E59C43443;
+        Wed, 28 Dec 2022 18:52:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672253577;
+        bh=GggqvW56hqP5giaXMF1PFdcPUhB/iNitytWm50VhHhE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UMVmFTzF5iHby6jilsOdb26LClsue1AbtokgRV7uo7josPXc9Ll3tMa3/ZmtSXLyJ
+         s5rPlu1V2K1TYyw8+QHgZIwLpzFso4Ke03xNdsVvLmPu97GujYVO8LdyKPg85RQbUK
+         2AaVDdgb2Zw1Y8JHZuNUgUTO5z33y2HFBq4QeXU+kFRKnzOmkeemGq/6NqGi7POi2T
+         EgIgMC1f8zeVeEUrT0OABD8/Jctelaxut3MgGyARxrcs6LjqT6o5XKeB3KCZw6u5xk
+         eVzg8o7Z/x3TAw81s4eln5G7k9RNwOR4AQgZsXu/HAq+WkpEui/y6hY1HUmWEF7vHv
+         zhlqAZQlLn64g==
+Date:   Wed, 28 Dec 2022 12:52:54 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2 16/16] arm64: dts: qcom: msm8998: get rid of test clock
-Date:   Wed, 28 Dec 2022 20:52:37 +0200
-Message-Id: <20221228185237.3111988-17-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org>
-References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH v6 4/5] clk: qcom: rpmh: Add support for SM8550 rpmh
+ clocks
+Message-ID: <20221228185254.4acnjchbyq4krblb@builder.lan>
+References: <20221206224515.1495457-1-abel.vesa@linaro.org>
+ <20221206224515.1495457-5-abel.vesa@linaro.org>
+ <6fc64fae-e616-2038-0424-34ce0cb7e16d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6fc64fae-e616-2038-0424-34ce0cb7e16d@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,36 +64,180 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The test clock apparently it's not used by anyone upstream. Remove it.
+On Wed, Dec 14, 2022 at 06:25:01PM +0200, Dmitry Baryshkov wrote:
+> On 07/12/2022 00:45, Abel Vesa wrote:
+> > Adds the RPMH clocks present in SM8550 SoC.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >   drivers/clk/qcom/clk-rpmh.c | 110 +++++++++++++++++++++++++++++-------
+> >   1 file changed, 90 insertions(+), 20 deletions(-)
+> > 
+> > diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> > index 2c2ef4b6d130..ce81c76ed0fd 100644
+> > --- a/drivers/clk/qcom/clk-rpmh.c
+> > +++ b/drivers/clk/qcom/clk-rpmh.c
+> > @@ -130,6 +130,34 @@ static DEFINE_MUTEX(rpmh_clk_lock);
+> >   		},							\
+> >   	}
+> > +#define DEFINE_CLK_FIXED_FACTOR(_name, _parent_name, _div)		\
+> > +	static struct clk_fixed_factor clk_fixed_factor##_##_name = {	\
+> > +		.mult = 1,						\
+> > +		.div = _div,						\
+> > +		.hw.init = &(struct clk_init_data){			\
+> > +			.ops = &clk_fixed_factor_ops,			\
+> > +			.name = #_name,					\
+> > +			.parent_data =  &(const struct clk_parent_data){ \
+> > +				.fw_name = #_parent_name,		\
+> > +				.name = #_parent_name,			\
+> > +			},						\
+> > +			.num_parents = 1,				\
+> > +		},							\
+> > +	};								\
+> > +	static struct clk_fixed_factor clk_fixed_factor##_##_name##_ao = { \
+> > +		.mult = 1,						\
+> > +		.div = _div,						\
+> > +		.hw.init = &(struct clk_init_data){			\
+> > +			.ops = &clk_fixed_factor_ops,			\
+> > +			.name = #_name "_ao",				\
+> > +			.parent_data =  &(const struct clk_parent_data){ \
+> > +				.fw_name = #_parent_name "_ao",		\
+> > +				.name = #_parent_name "_ao",		\
+> > +			},						\
+> > +			.num_parents = 1,				\
+> > +		},							\
+> > +	}
+> > +
+> >   static inline struct clk_rpmh *to_clk_rpmh(struct clk_hw *_hw)
+> >   {
+> >   	return container_of(_hw, struct clk_rpmh, hw);
+> > @@ -345,6 +373,8 @@ DEFINE_CLK_RPMH_ARC(bi_tcxo, "xo.lvl", 0x3, 2);
+> >   DEFINE_CLK_RPMH_ARC(bi_tcxo, "xo.lvl", 0x3, 4);
+> >   DEFINE_CLK_RPMH_ARC(qlink, "qphy.lvl", 0x1, 4);
+> > +DEFINE_CLK_FIXED_FACTOR(bi_tcxo_div2, bi_tcxo, 2);
+> > +
+> >   DEFINE_CLK_RPMH_VRM(ln_bb_clk1, _a2, "lnbclka1", 2);
+> >   DEFINE_CLK_RPMH_VRM(ln_bb_clk2, _a2, "lnbclka2", 2);
+> >   DEFINE_CLK_RPMH_VRM(ln_bb_clk3, _a2, "lnbclka3", 2);
+> > @@ -366,6 +396,16 @@ DEFINE_CLK_RPMH_VRM(rf_clk2, _d, "rfclkd2", 1);
+> >   DEFINE_CLK_RPMH_VRM(rf_clk3, _d, "rfclkd3", 1);
+> >   DEFINE_CLK_RPMH_VRM(rf_clk4, _d, "rfclkd4", 1);
+> > +DEFINE_CLK_RPMH_VRM(clk1, _a1, "clka1", 1);
+> > +DEFINE_CLK_RPMH_VRM(clk2, _a1, "clka2", 1);
+> > +DEFINE_CLK_RPMH_VRM(clk3, _a1, "clka3", 1);
+> > +DEFINE_CLK_RPMH_VRM(clk4, _a1, "clka4", 1);
+> > +DEFINE_CLK_RPMH_VRM(clk5, _a1, "clka5", 1);
+> > +
+> > +DEFINE_CLK_RPMH_VRM(clk6, _a2, "clka6", 2);
+> > +DEFINE_CLK_RPMH_VRM(clk7, _a2, "clka7", 2);
+> > +DEFINE_CLK_RPMH_VRM(clk8, _a2, "clka8", 2);
+> > +
+> >   DEFINE_CLK_RPMH_VRM(div_clk1, _div2, "divclka1", 2);
+> >   DEFINE_CLK_RPMH_BCM(ce, "CE0");
+> > @@ -576,6 +616,33 @@ static const struct clk_rpmh_desc clk_rpmh_sm8450 = {
+> >   	.num_clks = ARRAY_SIZE(sm8450_rpmh_clocks),
+> >   };
+> > +static struct clk_hw *sm8550_rpmh_clocks[] = {
+> > +	[RPMH_CXO_PAD_CLK]      = &clk_rpmh_bi_tcxo_div2.hw,
+> > +	[RPMH_CXO_PAD_CLK_A]    = &clk_rpmh_bi_tcxo_div2_ao.hw,
+> > +	[RPMH_CXO_CLK]		= &clk_fixed_factor_bi_tcxo_div2.hw,
+> > +	[RPMH_CXO_CLK_A]	= &clk_fixed_factor_bi_tcxo_div2_ao.hw,
+> > +	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
+> > +	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
+> > +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2.hw,
+> > +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_ao.hw,
+> > +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
+> > +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
+> > +	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1.hw,
+> > +	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_ao.hw,
+> > +	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1.hw,
+> > +	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_ao.hw,
+> > +	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a1.hw,
+> > +	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a1_ao.hw,
+> > +	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a1.hw,
+> > +	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_ao.hw,
+> > +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+> > +};
+> > +
+> > +static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
+> > +	.clks = sm8550_rpmh_clocks,
+> > +	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
+> > +};
+> > +
+> >   static struct clk_hw *sc7280_rpmh_clocks[] = {
+> >   	[RPMH_CXO_CLK]      = &clk_rpmh_bi_tcxo_div4.hw,
+> >   	[RPMH_CXO_CLK_A]    = &clk_rpmh_bi_tcxo_div4_ao.hw,
+> > @@ -683,29 +750,31 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+> >   		name = hw_clks[i]->init->name;
+> > -		rpmh_clk = to_clk_rpmh(hw_clks[i]);
+> > -		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
+> > -		if (!res_addr) {
+> > -			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
+> > -				rpmh_clk->res_name);
+> > -			return -ENODEV;
+> > -		}
+> > +		if (hw_clks[i]->init->ops != &clk_fixed_factor_ops) {
+> 
+> We discussed this separately, the fixed factor clocks will be moved to the
+> child nodes, leaving rpmhcc with only cmd-db based clocks.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Are you saying that you will represent bi_tcxo as a fixed-factor-clock
+under /clocks with RPMH_CXO_PAD_CLK as parent and a clock-div = <2>; ?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 18cc149b6be4..6d69dce14dba 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2398,8 +2398,7 @@ mmcc: clock-controller@c8c0000 {
- 				      "dsi1byte",
- 				      "hdmipll",
- 				      "dplink",
--				      "dpvco",
--				      "core_bi_pll_test_se";
-+				      "dpvco";
- 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_MMSS_GPLL0_CLK>,
- 				 <0>,
-@@ -2408,7 +2407,6 @@ mmcc: clock-controller@c8c0000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>,
- 				 <0>;
- 		};
- 
--- 
-2.39.0
+If so that sounds reasonable to me, but adding Mike for his
+input/information.
 
+Regards,
+Bjorn
+
+> > +			rpmh_clk = to_clk_rpmh(hw_clks[i]);
+> > +			res_addr = cmd_db_read_addr(rpmh_clk->res_name);
+> > +			if (!res_addr) {
+> > +				dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
+> > +					rpmh_clk->res_name);
+> > +				return -ENODEV;
+> > +			}
+> > -		data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
+> > -		if (IS_ERR(data)) {
+> > -			ret = PTR_ERR(data);
+> > -			dev_err(&pdev->dev,
+> > -				"error reading RPMh aux data for %s (%d)\n",
+> > -				rpmh_clk->res_name, ret);
+> > -			return ret;
+> > -		}
+> > +			data = cmd_db_read_aux_data(rpmh_clk->res_name, &aux_data_len);
+> > +			if (IS_ERR(data)) {
+> > +				ret = PTR_ERR(data);
+> > +				dev_err(&pdev->dev,
+> > +					"error reading RPMh aux data for %s (%d)\n",
+> > +					rpmh_clk->res_name, ret);
+> > +				return ret;
+> > +			}
+> > -		/* Convert unit from Khz to Hz */
+> > -		if (aux_data_len == sizeof(*data))
+> > -			rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
+> > +			/* Convert unit from Khz to Hz */
+> > +			if (aux_data_len == sizeof(*data))
+> > +				rpmh_clk->unit = le32_to_cpu(data->unit) * 1000ULL;
+> > -		rpmh_clk->res_addr += res_addr;
+> > -		rpmh_clk->dev = &pdev->dev;
+> > +			rpmh_clk->res_addr += res_addr;
+> > +			rpmh_clk->dev = &pdev->dev;
+> > +		}
+> >   		ret = devm_clk_hw_register(&pdev->dev, hw_clks[i]);
+> >   		if (ret) {
+> > @@ -741,6 +810,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
+> >   	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
+> >   	{ .compatible = "qcom,sm8350-rpmh-clk", .data = &clk_rpmh_sm8350},
+> >   	{ .compatible = "qcom,sm8450-rpmh-clk", .data = &clk_rpmh_sm8450},
+> > +	{ .compatible = "qcom,sm8550-rpmh-clk", .data = &clk_rpmh_sm8550},
+> >   	{ .compatible = "qcom,sc7280-rpmh-clk", .data = &clk_rpmh_sc7280},
+> >   	{ }
+> >   };
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
