@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55DDC6587C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 00:05:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 670B96587CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 00:11:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230225AbiL1XFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 18:05:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60046 "EHLO
+        id S231169AbiL1XLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 18:11:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231460AbiL1XE7 (ORCPT
+        with ESMTP id S229822AbiL1XK7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 18:04:59 -0500
-Received: from out-165.mta0.migadu.com (out-165.mta0.migadu.com [IPv6:2001:41d0:1004:224b::a5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B36FB483;
-        Wed, 28 Dec 2022 15:04:57 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1672268696;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=zX12PPrpVaQ0okjZ3v8ED+SmTV830cTNmWMddh4n+Lo=;
-        b=QLNE5vt8ljE1dRTI8h1E118N/nN3feZym7Ma+9Qih+dnAkHUHutHetU7TXhbZ9vXAl7nri
-        EcsMhLnqM01hsu78E7088xdWo1OkpVIjxZMCMlWPDCFORhB14u+DNtj7cSCVsFPEFjouI7
-        31+FaDg68lOhNdqEgHpmjhcYfgE3+88=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        Wed, 28 Dec 2022 18:10:59 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5699160E1;
+        Wed, 28 Dec 2022 15:10:57 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D1053200C9;
+        Thu, 29 Dec 2022 00:10:54 +0100 (CET)
+Date:   Thu, 29 Dec 2022 00:10:53 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-iio@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] dt-bindings: iio/adc: qcom,spmi-iadc: document PM8226 compatible
-Date:   Wed, 28 Dec 2022 23:04:19 +0000
-Message-Id: <20221228230421.56250-5-rayyan@ansari.sh>
-In-Reply-To: <20221228230421.56250-1-rayyan@ansari.sh>
-References: <20221228230421.56250-1-rayyan@ansari.sh>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: Add DISPCC node
+Message-ID: <20221228231053.46fclmazl5qrjbmo@SoMainline.org>
+References: <20221212093315.11390-1-konrad.dybcio@linaro.org>
+ <20221212093315.11390-2-konrad.dybcio@linaro.org>
+ <20221228041658.hpmlspnhm2ssinai@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221228041658.hpmlspnhm2ssinai@builder.lan>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for the IADC used on PM8226.
+On 2022-12-27 22:16:58, Bjorn Andersson wrote:
+> On Mon, Dec 12, 2022 at 10:33:13AM +0100, Konrad Dybcio wrote:
+> > [..]
+> > +			power-domains = <&rpmhpd SM8150_MMCX>;
+> > +			/* TODO: Maybe rpmhpd_opp_min_svs could work as well? */
+> 
+> The power-domain being not disabled should be sufficient for us to
+> access the dispcc. Beyond that votes would be needed for particular
+> frequencies, and that goes in the client nodes/opp-tables.
+> 
+> So you should be able to drop this comment and the required-opps.
+> 
+> Regards,
+> Bjorn
+> 
+> > +			required-opps = <&rpmhpd_opp_low_svs>;
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
----
- Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Tested the removal of this on Xperia 5, no regressions.
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
-index fa855baa368c..18aaf6df179d 100644
---- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
-@@ -20,6 +20,7 @@ properties:
-   compatible:
-     items:
-       - enum:
-+          - qcom,pm8226-iadc
-           - qcom,pm8941-iadc
-       - const: qcom,spmi-iadc
- 
--- 
-2.39.0
-
+- Marijn
