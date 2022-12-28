@@ -2,49 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F148D658582
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:13:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2521A658583
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:13:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbiL1SNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 13:13:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51580 "EHLO
+        id S233471AbiL1SN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 13:13:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232778AbiL1SNx (ORCPT
+        with ESMTP id S233270AbiL1SNy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:13:53 -0500
+        Wed, 28 Dec 2022 13:13:54 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76EF417078;
-        Wed, 28 Dec 2022 10:13:52 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14BD71707B;
+        Wed, 28 Dec 2022 10:13:53 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0DF9DB818B9;
+        by ams.source.kernel.org (Postfix) with ESMTPS id BBF25B818B6;
         Wed, 28 Dec 2022 18:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E081FC43392;
-        Wed, 28 Dec 2022 18:13:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD0DC433F0;
+        Wed, 28 Dec 2022 18:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672251229;
-        bh=XSlxKgFnM+rkJnSuzByNSUGQriIVV3inYNbPunGEF3U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eSm5sHNr/1NhZBHmTwggnnuuR7pd1aTogYO+yoNjiZ5nErc700+E5fHgJeiPT1Ky2
-         wLDQWGcUEckWLDsZ4L7I7+D4HR0rHODgofpZl6puN8ldih4BWlB9uR6nuL4UP9TheY
-         r9GNJ039/nqpSlTdIYS1CuF7c1hk2n4fGgcknaJ9Fn6YmZru5/8YipRwc18DmlJR8O
-         hU0XjORPdaVzRvOMazf3aJZ+GKguGjsKaQFjYxw2aBRZGWRMJpFLJMeYRieL5N/u7T
-         K25lmS1Re/PTOdcVRRySo5ET4VmPgxL9Ui5wV+sfTzycdxRikdxURjSPEShDbeByVI
-         W1hV7AuDs+kKA==
+        s=k20201202; t=1672251230;
+        bh=cgi1jbpfNjvn/SivMLG1eJl833/bfJr1z4dM7x4OlBQ=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=j2UFhjkGEILqfiOpT5kfRbre83XjbNhB3tsJNlET7L6MLrmZbeBBDFQjSN0Cg1Vpc
+         Do+mfIjlwyryQbs2cXWXApfF1YlpCHnZB2I3odXZ3EQF388wLNXVeMBAbbUQK0Fj+i
+         oNNvyEjqEE1KPRF809TqZDVFTlnjLzKU6b0eaq8GEbhTYd/euDkpES2zy5+xwUgQSL
+         /LzDRwmm+g73Rgg8TobHq6GRMyxvRizCmDzV8mdUxzRpCzylRQMgreBWc788vO6zAm
+         +1XUUKPTmQ/U9kL/TFPNfPlhBql6SLyXk4omW1d4+NhptpVoh3wTKYzStAcEWhSkMY
+         tP2P57WSYOzsQ==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
-        bhupesh.sharma@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+To:     robh+dt@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, mailingradian@gmail.com,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         agross@kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: apq8084-ifc6540: fix overriding SDHCI
-Date:   Wed, 28 Dec 2022 12:13:43 -0600
-Message-Id: <167225121526.949655.13443428227538668523.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm670-google-sargo: keep pm660 ldo8 on
+Date:   Wed, 28 Dec 2022 12:13:44 -0600
+Message-Id: <167225121526.949655.10512627918015321328.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221204084614.12193-1-krzysztof.kozlowski@linaro.org>
-References: <20221204084614.12193-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221205225237.200564-1-mailingradian@gmail.com>
+References: <20221205225237.200564-1-mailingradian@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,16 +55,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 4 Dec 2022 09:46:14 +0100, Krzysztof Kozlowski wrote:
-> While changing node names of APQ8084 SDHCI, the ones in IFC6540 board
-> were not updated leading to disabled and misconfigured SDHCI.
+On Mon, 5 Dec 2022 17:52:37 -0500, Richard Acayan wrote:
+> According to the downstream device tree, the regulator that powers the
+> I/O for eMMC should not be turned off. Keep it always on just in case
+> the eMMC driver fails and doesn't enable it, or unloads and disables it.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: apq8084-ifc6540: fix overriding SDHCI
-      commit: 0154252a3b87f77db1e44516d1ed2e82e2d29c30
+[1/1] arm64: dts: qcom: sdm670-google-sargo: keep pm660 ldo8 on
+      commit: 861b67fbdccd62a9319d7350b1924d95f597db09
 
 Best regards,
 -- 
