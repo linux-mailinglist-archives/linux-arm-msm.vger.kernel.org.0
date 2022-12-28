@@ -2,115 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C5A96583DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 17:53:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1681965853C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 18:17:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232002AbiL1QxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 11:53:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
+        id S230464AbiL1RQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 12:16:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231183AbiL1Qwn (ORCPT
+        with ESMTP id S234855AbiL1RQv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 11:52:43 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC92E1DDF0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 08:47:24 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id d7so16498207pll.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 08:47:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=20heIbwArwzJZx617fL3Bywm94hV8d0YJO2Vs/U/I44=;
-        b=FZsMOHQJQn/nyu2ewUl+t3Z16WbE4SFe8elYLjjLQUYE3T3MO+x6Y34R1OpxRptkOW
-         23GPjz3fyivGHaZjAkNThOZcrpYnKCZtxow802YIyreKKne+/YzzQEdoNEXaOPvNfC53
-         3WbnHBE3UO+WpeXILK1gyhIM4ONIw5yVksc1ANfya95Bw6Hisuugcv5T/sX7YU0yYzBG
-         JK65qajqiW1yXt5g85RwfQx8qSBzXfXmmwM7wobyb+lvUEpTZkXVnQ2F3CuGxRGyMf5e
-         LUHMvP5nWZfT37zPRGChdfSq5pyvY1MdNhCJwU8SY+2PRYwS0TxJLL7aNGKfjL6bkWsf
-         uEsA==
+        Wed, 28 Dec 2022 12:16:51 -0500
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 459DCB87E;
+        Wed, 28 Dec 2022 09:16:50 -0800 (PST)
+Received: by mail-io1-f43.google.com with SMTP id n63so8543948iod.7;
+        Wed, 28 Dec 2022 09:16:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=20heIbwArwzJZx617fL3Bywm94hV8d0YJO2Vs/U/I44=;
-        b=Cg1KFLiEWLJ/GHdhprrws/TAodeclW8SHPmzGIiLasoMsIM/ghSNq+GrdICB7J12T2
-         P2zLfjb6AqsdTafQEjWPYUNheLH2IRd+l8GWBD0AzVJ0+3GfNYf+P8Ht5za2nKJLIbCp
-         yZHzQGHHhwVvScqH9QQffv8BffOaTo19llM7Z+G8r7X+Ozse3OQ4HkxzauWtOPUcFG1M
-         zTHZcGLvfwLNYdD5iWgMp8Yx89msps0BUwqzn22suO7RDCzUFbklOLdhamnLPvXDjDxN
-         9zKmpa/z5ipv3mCRAEnulTFgBg0uB2BIMQroLZmz1XpeNqJVqM3Ek50GJcR2wPdJ5En5
-         o3rQ==
-X-Gm-Message-State: AFqh2kqB+jadwfQ6GhO1bAHMjNRI8GhRMZ3R6rPYPQkfpwIJqx3//idy
-        VLcIqHARf28uw1tGZM4YSCW/GosR/IlF1+8=
-X-Google-Smtp-Source: AMrXdXtFKZAfe8GZaSjUc16vjEtsrMue4bvQYgI7FCpW2FFQe2IDhQPxlL7lS/FSgLrjpptRy+vvSg==
-X-Received: by 2002:a17:902:ed0b:b0:192:7b0b:9c06 with SMTP id b11-20020a170902ed0b00b001927b0b9c06mr9754198pld.8.1672246044274;
-        Wed, 28 Dec 2022 08:47:24 -0800 (PST)
-Received: from thinkpad ([117.217.178.100])
-        by smtp.gmail.com with ESMTPSA id s6-20020a170902ea0600b001913c5fc051sm11283591plg.274.2022.12.28.08.47.17
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Kws3uwMtrY+FuMqLAlK4QwrZhceDZCqUsibK8/wgUTM=;
+        b=wFCwi63MzHQp192uxhIB8AMFRsIGy9ipOHJ6vJ/UUibimRSGSC+AQem9eqPrlQ9Cgc
+         eGOeuqLAbh2UqmUaW26gvRlLCZG7q45h3/0XjAE0PJIbg6hatmyV5YY413q6FEhTfzp5
+         Pnt7S+6q1A2k2jG+ijaYuMi4MbxkqK0XSzPtlI2sgvqEKaf8TlfWO3MeoxYefLjxFHYN
+         iL+Tx1aiw6j1WsFYKKTN8AE+mUUeNipW4wzsdOtMkkwSRpLPYTRxeRBaefif9Gmgxiqs
+         pb1srL13Th+iBGrtQrHunzzJGVATy1D7mSlBgrEsznVo6/2QVMNUOE/zc8lvWo/4NP3r
+         CAUw==
+X-Gm-Message-State: AFqh2kpBEj4RyLg0xJHQT4THeU/9LK1jVLWOUY3WIMUZ4/RmJzjJJUyQ
+        mzIFmsIeBa9c0tOMnr8c+sw4bj+o/Q==
+X-Google-Smtp-Source: AMrXdXsxtfXIdRf6NFPgIYsJl+SBmJxdpwxCgbwPWzfTt0i1r4DbvWN9npBTHgWET7TqkG0cH9wIkw==
+X-Received: by 2002:a5e:db4d:0:b0:6df:427:1ecd with SMTP id r13-20020a5edb4d000000b006df04271ecdmr26901601iop.8.1672247809362;
+        Wed, 28 Dec 2022 09:16:49 -0800 (PST)
+Received: from robh_at_kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id b10-20020a056638388a00b00374fbd37c72sm5350795jav.147.2022.12.28.09.16.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 08:47:23 -0800 (PST)
-Date:   Wed, 28 Dec 2022 22:17:11 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Borislav Petkov <bp@alien8.de>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, tony.luck@intel.com,
-        quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        luca.weiss@fairphone.com, ahalaney@redhat.com, steev@kali.org
-Subject: Re: [PATCH v5 00/17] Qcom: LLCC/EDAC: Fix base address used for LLCC
- banks
-Message-ID: <20221228164711.GB256211@thinkpad>
-References: <20221228084028.46528-1-manivannan.sadhasivam@linaro.org>
- <Y6wcFjqpBUoxAkdk@zn.tnic>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Wed, 28 Dec 2022 09:16:48 -0800 (PST)
+Received: (nullmailer pid 1928463 invoked by uid 1000);
+        Wed, 28 Dec 2022 17:16:44 -0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y6wcFjqpBUoxAkdk@zn.tnic>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <20221228133243.3052132-2-dmitry.baryshkov@linaro.org>
+References: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org>
+ <20221228133243.3052132-2-dmitry.baryshkov@linaro.org>
+Message-Id: <167224753985.1921575.2829498629927482782.robh@kernel.org>
+Subject: Re: [PATCH 01/16] dt-bindings: clock: qcom,gcc-msm8998: drop
+ core_bi_pll_test_se
+Date:   Wed, 28 Dec 2022 11:16:44 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 28, 2022 at 11:36:06AM +0100, Borislav Petkov wrote:
-> On Wed, Dec 28, 2022 at 02:10:11PM +0530, Manivannan Sadhasivam wrote:
-> > Patches 1/17, 2/17 and 3/17 can be merged independently to EDAC tree. Rest of
-> > the patches should be merged to qcom tree due to LLCC dependency.
+
+On Wed, 28 Dec 2022 15:32:28 +0200, Dmitry Baryshkov wrote:
+> The test clock apparently it's not used by anyone upstream. Remove it.
 > 
-> Why make it more complicated than it has to be?
-> 
-> How about I review the EDAC bits and once they look ok, whoever takes
-> care of the qcom tree can pick them up too and route the whole pile
-> through there?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml | 4 ----
+>  1 file changed, 4 deletions(-)
 > 
 
-Well, some maintainers prefer to pick the independent patches through their
-tree. That's why I moved those patches to the start of the series.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> This way there's no needless dependency between trees...
-> 
+yamllint warnings/errors:
 
-If you are fine with all patches going through qcom tree, I do not have any
-issue :)
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.example.dts:31.9-10 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:434: Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1508: dt_binding_check] Error 2
 
-Thanks,
-Mani
+doc reference errors (make refcheckdocs):
 
-> Hmm.
-> 
-> -- 
-> Regards/Gruss,
->     Boris.
-> 
-> https://people.kernel.org/tglx/notes-about-netiquette
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221228133243.3052132-2-dmitry.baryshkov@linaro.org
 
--- 
-மணிவண்ணன் சதாசிவம்
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
