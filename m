@@ -2,42 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A0365778F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 15:11:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DE0365779A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 15:17:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbiL1OLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 09:11:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54438 "EHLO
+        id S229835AbiL1ORE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 09:17:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiL1OLL (ORCPT
+        with ESMTP id S229627AbiL1ORE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 09:11:11 -0500
+        Wed, 28 Dec 2022 09:17:04 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7F5266F;
-        Wed, 28 Dec 2022 06:11:10 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AAC6C25;
+        Wed, 28 Dec 2022 06:17:03 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 389386152E;
-        Wed, 28 Dec 2022 14:11:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4DDC433D2;
-        Wed, 28 Dec 2022 14:11:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 047AD61536;
+        Wed, 28 Dec 2022 14:17:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E73FC433D2;
+        Wed, 28 Dec 2022 14:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672236669;
-        bh=S4hSHwHwmJDmSHhHc7z9HBcvuAIbgQgS0N6Ym6s8J6Q=;
+        s=k20201202; t=1672237022;
+        bh=jetUe5o6E2bZJoxDNdnLEI87GRr2yz9dfQZ9tMDQo7s=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YzU/UVWrYu6uk12cMxFwSK7e5jqqROuN16iZ8qUnXeTbAUreXmAMVDQ5gqe97xxHQ
-         qd4d8d1L9mJJd/F/+I+vXQIfoZkVlSw4Sehql4882MvKUyIy1mCx7MNoDlWaKK6dN1
-         WbJ9Pu4NKPGlXqTldr6m3Xmb84/GxcW6s8gTGWlAOQBSXou06x8ohX8FYjOaMq5nus
-         5ySooP895+rsiCq+GYOKpd9rS8dgcTkg8JAkQaYcxmetcFjgqqtZ+3YoAM5c81gwlo
-         IoUzghZVDmOzA6YDRbCczq1/cHID6MoFrz9JdPu1ZJp40lEgs8QZC40nLTMPv0aNlk
-         cexwei4Bh1q9A==
+        b=vLWk+sw3qFsUadD64ALdOHFoUeo6bOLesXOwCQ4bMO6HzH8WsSBh6d1f5IE+FwqQH
+         CAL7NFMxHysoNeo2XxNOvWtXlZQn6QhLHG+NjOMsCbLlwMGqKggtJZuTnLgHXp+5TQ
+         RrmqN74IywI0vbpQvt+hKvplE6D9r+e9U7/snlWXC8Di+u6dbk3IQbdi+bfiJLkKTf
+         14FxSRBZKgDJHW9BJTHwuSWUeblAq2znhUCQ3Q3aUYol8o3VngBv9lulp5gzWzhsTI
+         B/ZLzfpB5ZCc7EbWHgn+G9ESMhzHEeC1oTvl38r4j6GCOSZ6BYQRI2i9Y1CsENFCH1
+         26LguL78Olvmg==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pAX9D-0006MF-EZ; Wed, 28 Dec 2022 15:11:12 +0100
-Date:   Wed, 28 Dec 2022 15:11:11 +0100
+        id 1pAXEv-0006RH-3C; Wed, 28 Dec 2022 15:17:05 +0100
+Date:   Wed, 28 Dec 2022 15:17:05 +0100
 From:   Johan Hovold <johan@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
@@ -45,18 +46,15 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add sm6350
- compatible
-Message-ID: <Y6xOf4xCEGihO0yB@hovoldconsulting.com>
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
+Message-ID: <Y6xP4YRAp68TfxFi@hovoldconsulting.com>
 References: <20221130081430.67831-1-luca.weiss@fairphone.com>
+ <20221130081430.67831-2-luca.weiss@fairphone.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221130081430.67831-1-luca.weiss@fairphone.com>
+In-Reply-To: <20221130081430.67831-2-luca.weiss@fairphone.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -66,28 +64,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 30, 2022 at 09:14:27AM +0100, Luca Weiss wrote:
-> Add the compatible describing the combo phy found on SM6350.
+Luca, Vinod,
+
+On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
+> Add the tables and config for the combo phy found on SM6350.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
 > Changes since v2:
-> * Drop misc schema changes again since same schema applies to sm6350
+> * Drop dp_txa/dp_txb changes, not required
+> * Fix dp_dp_phy offset
 > 
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml   | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 ++++++++++++++++++++++
+>  1 file changed, 126 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> index 6f31693d9868..0764cd977e76 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-> @@ -17,6 +17,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,sc8280xp-qmp-usb43dp-phy
-> +      - qcom,sm6350-qmp-usb3-dp-phy
->  
->    reg:
->      maxItems: 1
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 77052c66cf70..6ac0c68269dc 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_reset_l[] = {
+>  	"phy",
+>  };
+>  
+> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 = {
+> +	.com		= 0x0000,
+> +	.txa		= 0x1200,
+> +	.rxa		= 0x1400,
+> +	.txb		= 0x1600,
+> +	.rxb		= 0x1800,
+> +	.usb3_serdes	= 0x1000,
+> +	.usb3_pcs_misc	= 0x1a00,
+> +	.usb3_pcs	= 0x1c00,
+> +	.dp_serdes	= 0x1000,
+
+I would have expected this to be 0x2000 as that's what the older
+platforms have been using for the dp serdes table so far. Without access
+to any documentation it's hard to tell whether everyone's just been
+cargo-culting all along or if there's actually something there at offset
+0x2000.
+
+Vinod, could you shed some light on this as presumably you have access
+to some documentation?
+
+> +	.dp_dp_phy	= 0x2a00,
+> +};
+
+Johan
