@@ -2,82 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB18F657628
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 12:59:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71D82657644
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 13:03:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232997AbiL1L6k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 06:58:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40148 "EHLO
+        id S229989AbiL1MDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 07:03:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232979AbiL1L6g (ORCPT
+        with ESMTP id S230145AbiL1MCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 06:58:36 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0B61144F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 03:58:33 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id m6so12933935lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 03:58:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WnXYH4qLynXgTdL39MoHqXN5EMW38TQiUZiVR1DxEeQ=;
-        b=JJVU3PTcvSE3KUUGIfvJBRh97Si8pN9Fapb4MGpR2amkOIBxz5I+yTHUpNOH0RpIgR
-         6q8PQ5nwQOCVfGdeY3kZcX9NdSciVOjRc/iCixqoHqERLuNAeu2xCF4CXSiZEIXNU6AQ
-         S78hOnlQKQGlpZ4LDmtPmh05YO34NuncA1fB4OHXsFSWmYcKISoOYEQ6kRVzF+ZkZRSG
-         AswvNzlIZViD+b7bWrk+ps9a3jD6/MkeJDKR7hIeI7rkJ3yVmioOP3xlSW4rRdJdNIYn
-         JA6h2U4GrJBAvpaFbRSYAplAcPsPDcW40+Pk4PsnXiyWYs5zEHiVAZjXwa4GwwgaD0wU
-         YC8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WnXYH4qLynXgTdL39MoHqXN5EMW38TQiUZiVR1DxEeQ=;
-        b=ulRPUaqZB7R4AScWLFuz+xKIPsIYr0mLjWmK8PYhAJZ6+iocPA1+M0x8BtZuMUBt1v
-         DcSY243QKUuR560ZmrITI1dJjDOSE7kTbv/AgJErjD3AVQrimrX38Xi/zOWM1h7wT43P
-         jlgQWFnVwtFIQcuxmr3YWrQhYBP6wxGSTzIq8kNVdQuRIaTkM7oZL++lxnvUim6XosDd
-         ES833TBtvgoqXF/hPqZCfZv5FvZRyZpdJfOdOOaEgqWvt4l9Io7wgiaRZ6LbLvCvz3cx
-         dxtHxgSbHKxGj2Bz77MhN3dN5x1OWaFxbwaBweQsVjTJJX993kZ0Q+UXIvM7EsaBnPEF
-         WwLg==
-X-Gm-Message-State: AFqh2kpAliSoDGv0/g0XEaVzD+Hubj2Cfcg7XgP79aINNwLR9wJjG36+
-        SMzTSLATCYqz0xq6tZRMRtagTw==
-X-Google-Smtp-Source: AMrXdXt4PV8yq8guZTESHWBuI7Pgb3yXXbymZcLJRNWE/tWew9Yf+0+pOCQKIAX0t7/max5UYbBgZQ==
-X-Received: by 2002:ac2:46f8:0:b0:4b5:9ec5:dbed with SMTP id q24-20020ac246f8000000b004b59ec5dbedmr8003412lfo.40.1672228711451;
-        Wed, 28 Dec 2022 03:58:31 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d21-20020ac24c95000000b0049465afdd38sm2637727lfl.108.2022.12.28.03.58.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Dec 2022 03:58:30 -0800 (PST)
-Message-ID: <5391e6e5-3773-a012-c396-b59b1f54ea51@linaro.org>
-Date:   Wed, 28 Dec 2022 12:58:29 +0100
+        Wed, 28 Dec 2022 07:02:40 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB0D1173;
+        Wed, 28 Dec 2022 04:01:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CD9316136E;
+        Wed, 28 Dec 2022 12:01:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D00DC433EF;
+        Wed, 28 Dec 2022 12:01:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672228912;
+        bh=mSKLstnN8UErpGX3SpV286l5MB64KVuBWn9aENVo6uU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uP6BKCG4B92YvGOjiIMg5muVDxbIR1nd7iCwR6y3ZECXLYn+jcOv8+WyvpBhqZNnc
+         sTSfBsb28qm0npZCoSC+Ow42cHqn1uriOaWiOG36j28ZmFr9UCd0lmuJ7l5Cu3AMEA
+         4ps62l4Z4L9rOAXMbMFQGQyX02Kl8JMfKORoAO2HDAyWP2Wf524O8rrCwZYzEHDDv2
+         Vz0or3eSbDVwbGKPxDP5roUMd2giRm10t0Q4BjyxS80sNTRoxc/GukOJM3tO3mOGq2
+         d10+o4uPHaRw5V0PGiZheyYtxcEMFum6DQC74tuSoZd0Gw/0thdZAmwoEEdNmCcGtL
+         GaP3Odh+clihg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pAV86-0004WX-St; Wed, 28 Dec 2022 13:01:54 +0100
+Date:   Wed, 28 Dec 2022 13:01:54 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     agross@kernel.org, srinivas.kandagatla@linaro.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 0/3] arm64: dts: qcom: sc8280xp: add audio support
+Message-ID: <Y6wwMo8KLulNAoiU@hovoldconsulting.com>
+References: <20221123104342.26140-1-srinivas.kandagatla@linaro.org>
+ <167220221217.833009.5730063788271218487.b4-ty@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
- <c4109766-22f1-7227-47bb-9273a027bb0c@linaro.org>
- <CPDFHXBPSP76.5CWNQK4N1KGI@otso>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CPDFHXBPSP76.5CWNQK4N1KGI@otso>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <167220221217.833009.5730063788271218487.b4-ty@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,41 +59,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 12:53, Luca Weiss wrote:
-> Hi Krzysztof,
+On Tue, Dec 27, 2022 at 10:36:56PM -0600, Bjorn Andersson wrote:
+> On Wed, 23 Nov 2022 10:43:39 +0000, Srinivas Kandagatla wrote:
+> > This patchset adds audio support for sc8280xp Lenovo x13s.
+> > Support for Headset Playback/Capture, Speaker Playback and DMIC is
+> > tested.
+> > 
+> > A prebuit ASoC topology file available at
+> > https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin
+> > 
+> > [...]
 > 
-> On Wed Dec 28, 2022 at 12:50 PM CET, Krzysztof Kozlowski wrote:
->> On 09/12/2022 15:29, Luca Weiss wrote:
->>> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
->>> in the bindings so the existing dts can validate successfully.
->>>
->>> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
->>> sm8450: add Inline Crypto Engine registers and clock") so move the
->>> compatible to the correct if.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> (no cover subject)
->>>
->>> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
->>> and sa8540p-ride.dtb:
->>>
->>
->> Any plans on fixing the patch (after testing it) and resending?
+> Applied, thanks!
 > 
-> I wasn't quite sure how to fix the comments, but re-reading them this
-> comment from you is how you expect it to be in v2?
+> [1/3] arm64: dts: qcom: sc8280xp: add gpr node
+>       commit: e73defb2deee74f3f4988196bf0c21782dffa415
+> [2/3] arm64: dts: qcom: sc8280xp: add SoundWire and LPASS
+>       commit: c18773d162a63f65024e80ae355e3fbc923e7255
+> [3/3] arm64: dts: qcom: sc8280xp-x13s: Add soundcard support
+>       commit: f29077d8665221ba2802a29ee7bd9fcef66cde81
 
-The patch fails testing, so I meant this.
+Perhaps merging this was a bit premature. I just gave it a spin, but
+this is apparently not even expected to work without various changes
+that are still work in progress. For example, the codecs fails to probe
+with:
 
-> 
->> Just add it to top-level with minItems: 1 and per variant customize:
->> 1. maxItems: 1
->> 2. minItems: 2 + required
-> 
+[   11.077727] qcom-prm gprsvc:service:2:2: DSP returned error[100100f] 1
+[   11.077926] rx_macro: probe of 3200000.rxmacro failed with error -22
 
-Yes.
+and you need an out-of-tree hack to get around that:
 
-Best regards,
-Krzysztof
+	https://git.linaro.org/people/srinivas.kandagatla/linux.git/commit/?h=lenovo-x13s-6.1.0-rc7-audio&id=0bffb619bf7929c56b7458af3a583fa9ce87fc26
 
+I learned that the hard way after a debugging session.
+
+Even with those hacks in place, I see:
+
+[   14.466733] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+[   14.522324] qcom-soundwire 3330000.soundwire-controller: swrm_wait_for_frame_gen_enabled: link status not disconnected
+[   14.522372] qcom-soundwire 3330000.soundwire-controller: link failed to connect
+
+so this does not look like it was ready to be merged. I'm still not sure
+what else is needed, but there are a bunch of other work-in-progress
+changes in the above branch.
+
+Srini, next time can you please document such dependencies in the cover
+letter to avoid having people debug things that are not even supposed to
+work yet and so that we can hold-off on merging the dts changes until
+driver support in place.
+
+Johan
