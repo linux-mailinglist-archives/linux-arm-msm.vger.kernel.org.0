@@ -2,43 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D49826574B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 10:37:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94D1C6574BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 10:38:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiL1JhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 04:37:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
+        id S232499AbiL1Jid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 04:38:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbiL1JhA (ORCPT
+        with ESMTP id S229632AbiL1Jic (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 04:37:00 -0500
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 955E0D2D2;
-        Wed, 28 Dec 2022 01:36:59 -0800 (PST)
-Received: from dggpemm500007.china.huawei.com (unknown [172.30.72.54])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NhmXd2DVNz9t28;
-        Wed, 28 Dec 2022 17:33:05 +0800 (CST)
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 28 Dec
- 2022 17:36:57 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-i2c@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <neil.armstrong@linaro.org>,
-        <wsa@kernel.org>, <yangyingliang@huawei.com>
-Subject: [PATCH -next] i2c: qcom-geni: change i2c_master_hub to static
-Date:   Wed, 28 Dec 2022 17:34:02 +0800
-Message-ID: <20221228093403.3165722-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 28 Dec 2022 04:38:32 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC7BBDB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 01:38:31 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bf43so22906928lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 01:38:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gYtnsrsBFcQTG1av2UWtN0kx27fKyWTq2Zrc2a2wfxM=;
+        b=sacrvLygAj1iHwqkRipFn4nMm1FzsvAz9KNrIfMSZ9MjIpXtDAB+M2GtYDI+7/+msD
+         XSiqgSfBt15RbckykdF+O84tXQf2G3Sg5Wn22cZ3Pgl8//AhpP5hjXj3QjXN6gH/sbaW
+         EVxNvDpmAKGk+jvBkksZMLFUZTWOWW3Dp+vLNpqRh/FX6ZdR0AORLGXqNxj+yXLxXpir
+         NJ6qMMyaNw2Obh6GlsdDqhPt2U/7L/wmbT26+EpySXU8oUx89ermqjaZ4nHfqazSugZ+
+         D6nriAUICLmQ+TPzs6npcutnq9MqVT4ub9v3qdwk91W4xuB3PC/r15QkQ/n5Roed9U4A
+         /s/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gYtnsrsBFcQTG1av2UWtN0kx27fKyWTq2Zrc2a2wfxM=;
+        b=Iphz3fjZfw/Rzd/iGbXIXxh96EJ1YTx52OY64NHyf8i332rlNjaivEBORWNUfq5Tnj
+         n7FCVGwP9nl4UHTd6JeUxbo4QsqdDlfxEw8ByIIi0fh0uCC+uN0bZWH4Rpbt2oj/2hwn
+         e4dk+yNrpsptAqt+TXWryt4+kjR4S5Qf2A0aeKemCqIwwIVmkApT/0m37jxXyI6SPkzX
+         zHP/LVT+5UNEVNJH8g7A/KVDRbC3hu2B1cAlqfSI0YbSL6R6luPUFAlAUWoux3ahbBPj
+         0eELpbXI9pVyRLmLTTzbOu4mgEd1UsU2WTawyXG2dWqNDmS/I1om33m+Ssky0JujZQgg
+         aRNw==
+X-Gm-Message-State: AFqh2kpYh6FuDStDb8Bd7LMVkiFsR+ckMJ/jdvQh9VBRuMwB4QLIkr1s
+        OZjAyJr3xTLNO0yHuHqC5nZj+A==
+X-Google-Smtp-Source: AMrXdXvXtfgms35hvbxnTMlL2x6vX9WQvhB7vGtTELGY8uA2FGUrxGYGG9l/PNJZQecbWUWbkD5EbA==
+X-Received: by 2002:a05:6512:3b07:b0:4a4:68b9:60b4 with SMTP id f7-20020a0565123b0700b004a468b960b4mr7211308lfv.63.1672220309826;
+        Wed, 28 Dec 2022 01:38:29 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id bi7-20020a0565120e8700b004b590c768edsm2582611lfb.1.2022.12.28.01.38.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Dec 2022 01:38:28 -0800 (PST)
+Message-ID: <c0142eb6-aa46-a157-6a9a-9134c7e06ca2@linaro.org>
+Date:   Wed, 28 Dec 2022 10:38:27 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: align OPP table node name with DT
+ schema
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221225115844.55126-1-krzysztof.kozlowski@linaro.org>
+ <20221225115844.55126-2-krzysztof.kozlowski@linaro.org>
+ <Y6somGn+V0CAxVA5@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y6somGn+V0CAxVA5@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -46,28 +82,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-i2c_master_hub is only used in i2c-qcom-geni.c now,
-change it to static.
+On 27/12/2022 18:17, Johan Hovold wrote:
+> On Sun, Dec 25, 2022 at 12:58:42PM +0100, Krzysztof Kozlowski wrote:
+>> Bindings expect OPP tables to start with "opp-table".
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi | 2 +-
+>>  arch/arm64/boot/dts/qcom/sa8540p.dtsi      | 4 ++--
+>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi     | 6 +++---
+>>  arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
+>>  4 files changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
+>> index 5728583af41e..929bdcd45d02 100644
+>  
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index 109c9d2b684d..89004cb657e0 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -33,7 +33,7 @@ sleep_clk: sleep-clk {
+>>  		};
+>>  	};
+>>  
+>> -	cpu0_opp_table: cpu0-opp-table {
+>> +	cpu0_opp_table: opp-table-cpu0 {
+>>  		compatible = "operating-points-v2";
+>>  		opp-shared;
+>>  
+>> @@ -123,7 +123,7 @@ opp-2438400000 {
+>>  		};
+>>  	};
+>>  
+>> -	cpu4_opp_table: cpu4-opp-table {
+>> +	cpu4_opp_table: opp-table-cpu4 {
+>>  		compatible = "operating-points-v2";
+>>  		opp-shared;
+>>  
+>> @@ -591,7 +591,7 @@ CLUSTER_PD: cpu-cluster0 {
+>>  		};
+>>  	};
+>>  
+>> -	qup_opp_table_100mhz: qup-100mhz-opp-table {
+>> +	qup_opp_table_100mhz: opp-table-qup100mhz {
+>>  		compatible = "operating-points-v2";
+>>  
+>>  		opp-75000000 {
+> 
+> Please also move these nodes after the 'memory' node so that they remain
+> sorted by name.
 
-Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+OK
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index f292e4dab98f..fd22fcb07da2 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -1029,7 +1029,7 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
- 									NULL)
- };
- 
--const struct geni_i2c_desc i2c_master_hub = {
-+static const struct geni_i2c_desc i2c_master_hub = {
- 	.has_core_clk = true,
- 	.icc_ddr = NULL,
- 	.no_dma_support = true,
--- 
-2.25.1
+Best regards,
+Krzysztof
 
