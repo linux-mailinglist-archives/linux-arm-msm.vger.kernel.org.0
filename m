@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6D5E6577BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 15:25:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E6A6577D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 15:35:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230182AbiL1OZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 09:25:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58642 "EHLO
+        id S232147AbiL1OfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 09:35:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbiL1OZr (ORCPT
+        with ESMTP id S229822AbiL1OfE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 09:25:47 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4A2B40
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 06:25:45 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id g13so23803901lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 06:25:45 -0800 (PST)
+        Wed, 28 Dec 2022 09:35:04 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319FD11801
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 06:34:59 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id f34so23827343lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 06:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ygg4rZrJblpZ6eqkZAtejmvUQwK/bibHGkf2D9EMGIM=;
-        b=BUMDGfKKV22rQbn8SNIQb9RAQHxfELwgw6NrxPFq85ffLnigQXv8yyBybUZy+gr96m
-         egezrCwLm9bGn/lfSkiSHPlWlsex7MOZfydyP3oPP957mabM2vGvVi0sm5Io6jZo2e1T
-         4u0E+g8FhPCQOI6rq3aOpGvQZ+gnioj1AtGsHBmAFZshKidyhJwxcaW7gccjYtc1eImc
-         d/GJKDhLL24i360XSC+yGicc3zMCZmCC9jS0M5L+mz7ybihnCmr3SIl8WbMfeC0K67wK
-         5ST63pLx21PNCL3MOUbC4cRrgb6ktRJnSa+Q+6xGuNH0sG2UNGDvOeYfiurS5ZvZSpuw
-         Ubeg==
+        bh=W09qrZAS/ID+UsTvkuyxxc8lA+fggw9LXlkJ+801LXU=;
+        b=iysEDXGdU7jReCgeyeqkyJYoV7Td45kPUW4zqBzDu6XdPGgpuVjRc3j5jlVf3tnce/
+         VUNV3ICiZiC5NZ39Sp5OnXnE9b0DFz22oLeIMpUWrTFDxVbq5cku3DzW1Yc+K5wDbjdk
+         Y8RMTqumyb13sfQl2m3DNqqf6RjJaLFsVk5pvTRwP6snX2/YA7p1mhNcTAPdwhyKWN1F
+         +sJN+SZwc5dUhZoBxtbmN5lN5Ct/nqw5sT8F4JBAYq9exU7wLj3WBGFvcfgNpM+t1yJ5
+         2JQKPfQ7rdpr5xq1fnigUn8cITgVvWCGVKikuDuCi63ZRqjoHdUxbMJCattD9PC4bzH4
+         IvrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ygg4rZrJblpZ6eqkZAtejmvUQwK/bibHGkf2D9EMGIM=;
-        b=g7gJIM1XN8aiwUtnGEWU53kNTybAugqTbtbCnE3zeixuxyNN2amJLuI3b1Lk1OBWyC
-         arGhmxr9Mh/vJgHuaNHXutWoL8GC6IcD/+OvSmEm4fEXevMHjzlk+lEYfyGxKtP7vFW8
-         jjTEz7491d4ZvI0bAZMMa/uPuAQdLgr8NhT2zxzE6zZmY/LBiDMnYf3gUFQiZMZuw0ZM
-         fil7XP9BAAoa7OxXJ3MVt7yBpjiJ5o5mZMpzG7prvHmT6XulSEmpUKWCvVQBj8Xkt7KH
-         +hk6NfJQT5CmecffXy8MxoSMLmekrzot4tehXQTo6gH6nIIzjm5+Yqtez0YXUmLp8/4r
-         6MZA==
-X-Gm-Message-State: AFqh2koKM1LgvDBvSilYi/DfkKQukcfYrZU9EqOOknohpl6T8ByFgfTi
-        v2KDVIc7qG2o8pqkd71HhtzsDA==
-X-Google-Smtp-Source: AMrXdXvtfDNkf8QO95Rlz6ZYLer9mXJSPCN1r/5ISLAJ2smSsYjdzD+58fKhGTVqtYGOIJVyQVBEEg==
-X-Received: by 2002:a19:7110:0:b0:4b5:5a25:f2d0 with SMTP id m16-20020a197110000000b004b55a25f2d0mr7778543lfc.44.1672237543647;
-        Wed, 28 Dec 2022 06:25:43 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p1-20020a2e9a81000000b0027fcb748a32sm451291lji.52.2022.12.28.06.25.42
+        bh=W09qrZAS/ID+UsTvkuyxxc8lA+fggw9LXlkJ+801LXU=;
+        b=mSr4lh2BgrTVrxHKBJFLV4BJIJhqVtDQAqzMyrDj/Lr+2cY8PzVLvXToGOWT0Cwvau
+         VP1XHs5kHRGfkiHeHiT73dV9dIZgXogUCIP1vj3vR3a8enegnE4ZI0L7Jn6mtW4mNoGJ
+         w6Lgz0TrbmimN4i3WYK2VPKsn3GDt1rhNUg+SkG8tS+av8sTiIF2G8UUIpsPiPX9kIKA
+         LxU3qbIscolMd9d0R8XyJKbNVYKlylGE4Jl6An8SFyX9NfqyO4CWQop18fH0Qkp4KSMX
+         YdYbVVHHMO1OPruOJi4V8Gm0BhOkA5kRUogAetfU5/snOnnlBefiJi/y7mmWRv+JTikO
+         OWmQ==
+X-Gm-Message-State: AFqh2krKUMyMKjqWUFOyCAoZSb/uOMmIESnKXcLF6LKcs0Ao1GlaTGDF
+        yxci5izaLvmdB4UJRDmjBgyz3Q==
+X-Google-Smtp-Source: AMrXdXuaPKgphx1nky7u++/3z48lKqRU2Zj5P+7jKAgcP3VWCF+usscJL0HLX5B8epTdQjBTSZNAnA==
+X-Received: by 2002:ac2:47e2:0:b0:4b5:7282:868c with SMTP id b2-20020ac247e2000000b004b57282868cmr6949839lfp.55.1672238097574;
+        Wed, 28 Dec 2022 06:34:57 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id c9-20020a056512074900b004caf6f0b08csm2428551lfs.107.2022.12.28.06.34.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Dec 2022 06:25:43 -0800 (PST)
-Message-ID: <279dc76c-9e60-dd93-e2d2-c2dad241620f@linaro.org>
-Date:   Wed, 28 Dec 2022 15:25:42 +0100
+        Wed, 28 Dec 2022 06:34:57 -0800 (PST)
+Message-ID: <47bb59f1-c696-5be3-cc6e-f82f5ee0998e@linaro.org>
+Date:   Wed, 28 Dec 2022 16:34:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
+ Thunderbird/102.6.0
 Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8350: add missing
  core_bi_pll_test_se GCC clock
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -70,9 +70,10 @@ References: <20221228112456.31348-1-krzysztof.kozlowski@linaro.org>
  <d2e303d9-3ac4-f574-680f-4f5ccbf5ed13@linaro.org>
  <5001001a-203f-e832-f916-ce483b2d8ea1@linaro.org>
  <97a27c10-411e-8823-507c-ebb3f71a48ed@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <97a27c10-411e-8823-507c-ebb3f71a48ed@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+ <279dc76c-9e60-dd93-e2d2-c2dad241620f@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <279dc76c-9e60-dd93-e2d2-c2dad241620f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,32 +84,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 13:50, Dmitry Baryshkov wrote:
-> On 28/12/2022 13:55, Krzysztof Kozlowski wrote:
->> On 28/12/2022 12:37, Konrad Dybcio wrote:
->>>
->>>
->>> On 28.12.2022 12:24, Krzysztof Kozlowski wrote:
->>>> The GCC bindings expect core_bi_pll_test_se clock input, even if it is
->>>> optional:
+On 28/12/2022 16:25, Krzysztof Kozlowski wrote:
+> On 28/12/2022 13:50, Dmitry Baryshkov wrote:
+>> On 28/12/2022 13:55, Krzysztof Kozlowski wrote:
+>>> On 28/12/2022 12:37, Konrad Dybcio wrote:
 >>>>
->>>>    sm8350-mtp.dtb: clock-controller@100000: clock-names:2: 'core_bi_pll_test_se' was expected
 >>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>> Is it even going to be used by anybody, or should we just drop
->>> it on the driver side as per usual?
+>>>> On 28.12.2022 12:24, Krzysztof Kozlowski wrote:
+>>>>> The GCC bindings expect core_bi_pll_test_se clock input, even if it is
+>>>>> optional:
+>>>>>
+>>>>>     sm8350-mtp.dtb: clock-controller@100000: clock-names:2: 'core_bi_pll_test_se' was expected
+>>>>>
+>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>> ---
+>>>> Is it even going to be used by anybody, or should we just drop
+>>>> it on the driver side as per usual?
+>>>
+>>> It's mentioned as possible parent, so there might be users somewhere...
+>>> Or you want to say that other binding and DTS users cannot use that clock?
 >>
->> It's mentioned as possible parent, so there might be users somewhere...
->> Or you want to say that other binding and DTS users cannot use that clock?
+>> Yes. In the past few months we have been removing the core_bi_pll_test
+>> from the old clock drivers (and new clock drivers mostly lack them).
+>> Let's remove it from the rest of clock drivers.
 > 
-> Yes. In the past few months we have been removing the core_bi_pll_test 
-> from the old clock drivers (and new clock drivers mostly lack them). 
-> Let's remove it from the rest of clock drivers.
+> If you are going to start doing the same work, please at least share it
+> upfront.
 
-If you are going to start doing the same work, please at least share it
-upfront.
+Excuse me.
 
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
