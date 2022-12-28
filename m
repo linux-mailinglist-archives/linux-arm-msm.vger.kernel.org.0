@@ -2,47 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2521A658583
+	by mail.lfdr.de (Postfix) with ESMTP id C8AC3658585
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:13:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233471AbiL1SN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 13:13:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
+        id S233736AbiL1SN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 13:13:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233270AbiL1SNy (ORCPT
+        with ESMTP id S233444AbiL1SNz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:13:54 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14BD71707B;
-        Wed, 28 Dec 2022 10:13:53 -0800 (PST)
+        Wed, 28 Dec 2022 13:13:55 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E62617065;
+        Wed, 28 Dec 2022 10:13:54 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BBF25B818B6;
-        Wed, 28 Dec 2022 18:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD0DC433F0;
-        Wed, 28 Dec 2022 18:13:49 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0AC01B818BC;
+        Wed, 28 Dec 2022 18:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69BFC43398;
+        Wed, 28 Dec 2022 18:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672251230;
-        bh=cgi1jbpfNjvn/SivMLG1eJl833/bfJr1z4dM7x4OlBQ=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=j2UFhjkGEILqfiOpT5kfRbre83XjbNhB3tsJNlET7L6MLrmZbeBBDFQjSN0Cg1Vpc
-         Do+mfIjlwyryQbs2cXWXApfF1YlpCHnZB2I3odXZ3EQF388wLNXVeMBAbbUQK0Fj+i
-         oNNvyEjqEE1KPRF809TqZDVFTlnjLzKU6b0eaq8GEbhTYd/euDkpES2zy5+xwUgQSL
-         /LzDRwmm+g73Rgg8TobHq6GRMyxvRizCmDzV8mdUxzRpCzylRQMgreBWc788vO6zAm
-         +1XUUKPTmQ/U9kL/TFPNfPlhBql6SLyXk4omW1d4+NhptpVoh3wTKYzStAcEWhSkMY
-         tP2P57WSYOzsQ==
+        s=k20201202; t=1672251231;
+        bh=BJcqRAuz8/wtDVPS6fJ39cVWXnokQlN399XKWYKe7hw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=dEf3tsWksMEVhCFIZJ9tfIUomuke+qsRQxhcfrxQNMtafp9TN9Tk8eebmW3iOIZQd
+         6ohHvbCN8Fhf0n0YIbISm67GuZ9vfXJu3YFAlR7sTxq9qI93543KCdeYk8rM6iQg/o
+         RtHWN874X7iijenJrSOAI/OYQ5j5TBQMq1Q2aujaFndaoDYHUjQ7+Lhh+MnWjVvNiH
+         ssprsjU6IzyeyvG8ObLynEDoeQYqDjLqr4Rjq+eNK382WNgDMyThOmar9+10pq+WaQ
+         R2wEK7u9OKyBGuF+Igc8Ew/Ozd/m2ck1P+SznWTOIQBia5MtwoYUcX1kQNf6pV88p7
+         o8bZ2rDQQePpg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     robh+dt@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, mailingradian@gmail.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm670-google-sargo: keep pm660 ldo8 on
-Date:   Wed, 28 Dec 2022 12:13:44 -0600
-Message-Id: <167225121526.949655.10512627918015321328.b4-ty@kernel.org>
+To:     quic_schowdhu@quicinc.com, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        elder@ieee.org, agross@kernel.org
+Cc:     quic_rjendra@quicinc.com, quic_sibis@quicinc.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_saipraka@quicinc.com,
+        linux-arm-msm@vger.kernel.org, vkoul@kernel.org
+Subject: Re: (subset) [PATCH V21 0/7] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Wed, 28 Dec 2022 12:13:45 -0600
+Message-Id: <167225121532.949655.12016348712803700368.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221205225237.200564-1-mailingradian@gmail.com>
-References: <20221205225237.200564-1-mailingradian@gmail.com>
+In-Reply-To: <cover.1672148732.git.quic_schowdhu@quicinc.com>
+References: <cover.1672148732.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -55,17 +58,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 5 Dec 2022 17:52:37 -0500, Richard Acayan wrote:
-> According to the downstream device tree, the regulator that powers the
-> I/O for eMMC should not be turned off. Keep it always on just in case
-> the eMMC driver fails and doesn't enable it, or unloads and disables it.
+On Tue, 27 Dec 2022 20:52:44 +0530, Souradeep Chowdhury wrote:
+> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+> In case of a system crash or manual software triggers by the user the DCC hardware
+> stores the value at the register addresses which can be used for debugging purposes.
+> The DCC driver provides the user with debugfs interface to configure the register
+> addresses. The options that the DCC hardware provides include reading from registers,
+> writing to registers, first reading and then writing to registers and looping
+> through the values of the same register.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sdm670-google-sargo: keep pm660 ldo8 on
-      commit: 861b67fbdccd62a9319d7350b1924d95f597db09
+[4/7] arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support node
+      commit: d4b94c8244919742417c3a165ef73081de37ef3b
+[5/7] arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support node
+      commit: 029d6586dc2d1d10e9df3962633e29e145d764ec
+[6/7] arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support node
+      commit: add74cad7c9d1bf59d41b229852f3ebe0be4a84f
+[7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
+      commit: 91269c425649baad9758dbe269e7069ad7fa05fc
 
 Best regards,
 -- 
