@@ -2,50 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8AC3658585
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:13:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CB956585A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 19:18:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233736AbiL1SN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 13:13:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51604 "EHLO
+        id S232696AbiL1SSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 13:18:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233444AbiL1SNz (ORCPT
+        with ESMTP id S233363AbiL1SSi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:13:55 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E62617065;
-        Wed, 28 Dec 2022 10:13:54 -0800 (PST)
+        Wed, 28 Dec 2022 13:18:38 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B21C175B4;
+        Wed, 28 Dec 2022 10:18:38 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0AC01B818BC;
-        Wed, 28 Dec 2022 18:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69BFC43398;
-        Wed, 28 Dec 2022 18:13:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DDF4261582;
+        Wed, 28 Dec 2022 18:18:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FA2C433EF;
+        Wed, 28 Dec 2022 18:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672251231;
-        bh=BJcqRAuz8/wtDVPS6fJ39cVWXnokQlN399XKWYKe7hw=;
+        s=k20201202; t=1672251517;
+        bh=uUVGWuZiaQOKU09yyOgoE6OKa2WCSHqNWbzCAny96FU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dEf3tsWksMEVhCFIZJ9tfIUomuke+qsRQxhcfrxQNMtafp9TN9Tk8eebmW3iOIZQd
-         6ohHvbCN8Fhf0n0YIbISm67GuZ9vfXJu3YFAlR7sTxq9qI93543KCdeYk8rM6iQg/o
-         RtHWN874X7iijenJrSOAI/OYQ5j5TBQMq1Q2aujaFndaoDYHUjQ7+Lhh+MnWjVvNiH
-         ssprsjU6IzyeyvG8ObLynEDoeQYqDjLqr4Rjq+eNK382WNgDMyThOmar9+10pq+WaQ
-         R2wEK7u9OKyBGuF+Igc8Ew/Ozd/m2ck1P+SznWTOIQBia5MtwoYUcX1kQNf6pV88p7
-         o8bZ2rDQQePpg==
+        b=p86R2ZSD8gJHyYiWUkR96BFMTCWeYAL7LgstvOr1L8f40CZx+RrFt5buA9gtUs+NH
+         +iXsFYz+pJ2EOR73lj3wUX+y5FVal7ILJpYcboLDc+tdfIoVWT4A3u2a7dKH48WP4O
+         FQlxFi2noCMZQsotrOi6BNQUGFevhaGDxgiqWreHMbeLJ6m7K9U2i8dnuePfl+7uP9
+         WM2ybNEdVIvFxgTxXLfRzuj9CRGV0/oPk76LThe0SFwkmpJOD4gi2Kel89oIgAlibj
+         mn3d3RKulM4AXIW4wT8KhXkzQV5R37NG1RZ+ZgXe97mXjnfTwOWKrlRjYsyLOO78SE
+         aEtnlfgJe6Xug==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     quic_schowdhu@quicinc.com, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        elder@ieee.org, agross@kernel.org
-Cc:     quic_rjendra@quicinc.com, quic_sibis@quicinc.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_saipraka@quicinc.com,
-        linux-arm-msm@vger.kernel.org, vkoul@kernel.org
-Subject: Re: (subset) [PATCH V21 0/7] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
-Date:   Wed, 28 Dec 2022 12:13:45 -0600
-Message-Id: <167225121532.949655.12016348712803700368.b4-ty@kernel.org>
+To:     mathieu.poirier@linaro.org, abel.vesa@linaro.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        konrad.dybcio@somainline.org, agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2] remoteproc: qcom: q6v5: Use _clk_get_optional for aggre2_clk
+Date:   Wed, 28 Dec 2022 12:18:26 -0600
+Message-Id: <167225151223.950465.14429804095591076576.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <cover.1672148732.git.quic_schowdhu@quicinc.com>
-References: <cover.1672148732.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <20220718121514.2451590-1-abel.vesa@linaro.org>
+References: <20220718121514.2451590-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -58,27 +56,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Dec 2022 20:52:44 +0530, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
-> In case of a system crash or manual software triggers by the user the DCC hardware
-> stores the value at the register addresses which can be used for debugging purposes.
-> The DCC driver provides the user with debugfs interface to configure the register
-> addresses. The options that the DCC hardware provides include reading from registers,
-> writing to registers, first reading and then writing to registers and looping
-> through the values of the same register.
+On Mon, 18 Jul 2022 15:15:14 +0300, Abel Vesa wrote:
+> Only msm8996 and msm8998 SLPIs need the RPM_SMD_AGGR2_NOC_CLK
+> (as aggre2 clock). None of the other platforms do. Back when the support
+> for the mentioned platforms was added to the q6v5 pass driver, the
+> devm_clk_get_optional was not available, so the has_aggre2_clk was
+> necessary in order to differentiate between plaforms that need this
+> clock and those which do not. Now that devm_clk_get_optional is available,
+> we can drop the has_aggre2_clk. This makes the adsp_data more cleaner
+> and removes the check within adsp_init_clocks.
 > 
 > [...]
 
 Applied, thanks!
 
-[4/7] arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support node
-      commit: d4b94c8244919742417c3a165ef73081de37ef3b
-[5/7] arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support node
-      commit: 029d6586dc2d1d10e9df3962633e29e145d764ec
-[6/7] arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support node
-      commit: add74cad7c9d1bf59d41b229852f3ebe0be4a84f
-[7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
-      commit: 91269c425649baad9758dbe269e7069ad7fa05fc
+[1/1] remoteproc: qcom: q6v5: Use _clk_get_optional for aggre2_clk
+      commit: 6d967a5a49e8d08d8e4430aadba8d3c903b794a5
 
 Best regards,
 -- 
