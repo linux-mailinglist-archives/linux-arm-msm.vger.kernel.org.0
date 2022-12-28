@@ -2,137 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABCFE6586AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 21:24:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4562E6586BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 21:32:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbiL1UYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 15:24:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58412 "EHLO
+        id S231228AbiL1UcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 15:32:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbiL1UYS (ORCPT
+        with ESMTP id S229668AbiL1UcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 15:24:18 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1600D1573C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 12:24:18 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id g14so17476069ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 12:24:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=snr2mEVbtvt9/YULF8dU82exFUSnK9OhTwPmhp5otFw=;
-        b=Vj/327wSacVZUKPPkf/g75nxhiAVAYMinU5wAxHVRxeBLQ6mC4TAGIAq1onOZZIg0G
-         O9oV5YvhTLazpPDOTyRSv/LUhA4rY3MFMBjpBXtbSuFs2G0uotAm+M1mGqCuMZzMeggf
-         HSvBhrEZtnHDTHEwlW6lau0/+/2hDl2BoDfjMrrLnyqzeTzF0trNDSJNKStT57q/pSg0
-         LMGibMV/OkR2bTrrP5fEG1oJjNXrxiex9t+8IJpqlFD9MtbvLY4DUHe3ID/kqu7ML5QI
-         VIjlQ2Ao/V/0ugR9+8MWMKR0OU9OQ3Qppo2SgdgN3cva1ndQ5v/7kOH7b5rzkYsorVaT
-         2FDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=snr2mEVbtvt9/YULF8dU82exFUSnK9OhTwPmhp5otFw=;
-        b=GfBI2miUoHH8rZUfUXbBvAglUgUgPyMl+BflX/Huw6sB459XcvwldcM30wmd04Ty09
-         kkyIhFOkGVC8yIV7n4i1gdCFvqt+5bWYYT12T3RoWixkT4KyqGhZ6ItgY4H2p2lmj+vt
-         9jD5JyIHIJwSy4KIy/TJyREGLkzxhd1yzso1auQgzbgb4dkwPszBp4bzzAjs4axeVwwX
-         +sYbi934+wegFpBHWuRdMj6Hjmr8ZeUHsA/A7SkY4iDnzLnqZII5OsrFUARxUk3RZvNu
-         i90kNLgebLSqaybmY80DlXHorxBArc1/Rr2BKZBcEYnYvsIpqQVRV7sgz6QTfzaWbizT
-         zAMQ==
-X-Gm-Message-State: AFqh2kpYUMbU8EwiUsySpr/Prmxwa4PvtQnQ33W5v0DIRNP3EJ9o0WUH
-        kmaOfsfc8vE3YW0DYJ+UEEu11A==
-X-Google-Smtp-Source: AMrXdXsgypinOeUbWGNon9W9+A8ZTrvB/pcXkb076Fan+JLA73XOIvGKp4+ftj0F8J22NgrYtqVUOw==
-X-Received: by 2002:a2e:a311:0:b0:27f:b68e:9d99 with SMTP id l17-20020a2ea311000000b0027fb68e9d99mr4118205lje.32.1672259056362;
-        Wed, 28 Dec 2022 12:24:16 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v11-20020ac258eb000000b004aa0870b5e5sm2791917lfo.147.2022.12.28.12.24.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Dec 2022 12:24:15 -0800 (PST)
-Message-ID: <4b1c7bcd-b8e0-9405-c758-cc2294871b37@linaro.org>
-Date:   Wed, 28 Dec 2022 22:24:15 +0200
+        Wed, 28 Dec 2022 15:32:22 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B4F13D44;
+        Wed, 28 Dec 2022 12:32:21 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BSKQ4vf001927;
+        Wed, 28 Dec 2022 20:31:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hPQ+xZA2/zQFK/5r/OYDYGZHuiZAzHLvGCCkk6+8BqU=;
+ b=Tblo4UVL5I9f+H4Vyb9GQIhGdgvdzrX8xmD9rzwsOcptx1dRfxj8xn43qJDGkELahOxA
+ ui+jjqhoYNbmY1Dib2K72bHWVcORa6sZPJGoJda+mU9u0hS7YUdBHwTMRloDuE5pJwsJ
+ +7AjRwL27uIo+ZzlC4cB3KDT2hKKiLNfW92jn39zhlTJZ4gtulxpE5uWCSVXVSe6ZF20
+ Oa6uRAlRx9EGhESeEnKsQjZmIB7PTXM+1M72RA2bDxBpZi9AduV6m3NFT5MBJ8Ew2oLh
+ /nmGXCwxXYVw1VaGZU5Wr98CHXxA+uATZibweArUWPSVKm17R5LHuWybafGr8ri0efl0 7Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mrp0yrt3p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Dec 2022 20:31:19 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BSKVI3P031506
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Dec 2022 20:31:18 GMT
+Received: from [10.110.31.102] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 28 Dec
+ 2022 12:31:17 -0800
+Message-ID: <559030ff-112b-e0a8-b278-72f909724496@quicinc.com>
+Date:   Wed, 28 Dec 2022 12:31:16 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [RFC PATCH 03/12] dt-bindings: clock: qcom,mmcc: define
- clocks/clock-names for APQ8084
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221227013225.2847382-1-dmitry.baryshkov@linaro.org>
- <20221227013225.2847382-4-dmitry.baryshkov@linaro.org>
- <dfc193df-a3ca-e03e-9fcf-b9d3f9fe76f6@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <dfc193df-a3ca-e03e-9fcf-b9d3f9fe76f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RFC PATCH 06/14] usb: core: hcd: Introduce USB HCD APIs for
+ interrupter management
+Content-Language: en-US
+To:     Alan Stern <stern@rowland.harvard.edu>,
+        Oliver Neukum <oneukum@suse.com>
+CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-7-quic_wcheng@quicinc.com>
+ <Y6ca8IKLK9g497Qv@rowland.harvard.edu>
+ <e1203849-01b4-b196-36f3-76d58dd7c724@quicinc.com>
+ <bf1011a8-c746-c465-f161-f0293409d922@suse.com>
+ <Y6xd1c3s2XPpOqfi@rowland.harvard.edu>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <Y6xd1c3s2XPpOqfi@rowland.harvard.edu>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pNo8f1lNCunriSs5wwMKfDcH_pIE4amA
+X-Proofpoint-ORIG-GUID: pNo8f1lNCunriSs5wwMKfDcH_pIE4amA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-28_15,2022-12-28_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=346 phishscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 bulkscore=0 mlxscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2212280176
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 12:31, Krzysztof Kozlowski wrote:
-> On 27/12/2022 02:32, Dmitry Baryshkov wrote:
->> Define clock/clock-names properties of the MMCC device node to be used
->> on APQ8084 platform.
+Hi Alan,
+
+On 12/28/2022 7:16 AM, Alan Stern wrote:
+> On Wed, Dec 28, 2022 at 09:59:03AM +0100, Oliver Neukum wrote:
 >>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../devicetree/bindings/clock/qcom,mmcc.yaml  | 40 +++++++++++++++++++
->>   1 file changed, 40 insertions(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
->> index e6d17426e903..fd926df80c64 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
->> @@ -137,6 +137,46 @@ allOf:
->>               - const: edp_link_clk
->>               - const: edp_vco_div
->>   
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,mmcc-apq8084
->> +    then:
->> +      properties:
->> +        clocks:
->> +          items:
->> +            - description: Board XO source
->> +            - description: Board sleep source
->> +            - description: MMSS GPLL0 voted clock
->> +            - description: GPLL0 clock
->> +            - description: GPLL0 voted clock
->> +            - description: GPLL1 clock
->> +            - description: DSI phy instance 0 dsi clock
->> +            - description: DSI phy instance 0 byte clock
->> +            - description: DSI phy instance 1 dsi clock
->> +            - description: DSI phy instance 1 byte clock
->> +            - description: HDMI phy PLL clock
->> +            - description: eDP phy PLL link clock
->> +            - description: eDP phy PLL vco clock
+>> On 27.12.22 22:07, Wesley Cheng wrote:
+>>
+>>>
+>>> Hmmm...maybe I should change the name of the API then to avoid the confusion.  Yes, usb_hcd_flush_endpoint() does ensure that URBs submitted to the EP are stopped.  However, with this offloading concept, we aren't actually submitting URBs from the main processor, so the ep->urb_list will be empty.
+>>>
+>>> This means the usb_hcd_flush_endpoint() API won't actually do anything.  What we need is to ensure that we send a XHCI stop ep command to the controller.
+>>
+>> That is a concept specific to XHCI, yet you are adding a generic
+>> API. The namin should reflect that. usb_quiesce_endpoint() ?
 > 
-> This looks like exceeding constraints set in top-level (max 10).
+> Or even xhci_send_stop_ep_cmd(), which is what the routine is intended
+> to do.
+> 
 
-Ack, I'll expand it for v2.
+Just to clarify, you're talking about renaming the API that was added in 
+the XHCI driver, correct?
 
--- 
-With best wishes
-Dmitry
+Thanks
+Wesley Cheng
 
