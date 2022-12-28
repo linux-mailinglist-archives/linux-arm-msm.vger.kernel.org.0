@@ -2,50 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E0E46572D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 05:39:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5893B657319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Dec 2022 07:21:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232830AbiL1Ejh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Dec 2022 23:39:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
+        id S229745AbiL1GU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 01:20:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbiL1EiJ (ORCPT
+        with ESMTP id S229526AbiL1GU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Dec 2022 23:38:09 -0500
+        Wed, 28 Dec 2022 01:20:56 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14717F005;
-        Tue, 27 Dec 2022 20:37:24 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09FAAE6B;
+        Tue, 27 Dec 2022 22:20:55 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7F2ABB8125D;
-        Wed, 28 Dec 2022 04:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF2BC433F1;
-        Wed, 28 Dec 2022 04:37:21 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A3E6FB81211;
+        Wed, 28 Dec 2022 06:20:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA9AC433EF;
+        Wed, 28 Dec 2022 06:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672202242;
-        bh=qmTIPcc5k/0rl87F3qFtbj0b4DMAy7wPQEMd2iI2M9g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gxP8HBOwOocWQECHkCZG7SwhMMgf4AEA6w3uXzWd1uLUeksbdJg6/wQta8rBkNev1
-         IhXvW5o7l63mIWpH4thHVifiDwwoY5NIs51n541MEGQWNslu/FIFHP5VbXgCFzO2qR
-         gZ7h82vA6tl8w/973LaoXFlPsQYSILMye0KoA3FiTkHJIoz+t3OCs5+qL+gxwkT4XG
-         W3DocCb39ETJtSN7k3pO8qul3vnKh8fFbBMLzKl+TTMWocjgS9Ms/Uvco69/Jky1sZ
-         rHk6GOccubuc58PGygXscGanT372eaFDaeBq06wtj5Xvv7CqFvTcdp27oXdGXp/Lnt
-         Zo88UrE2/Ww6w==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, srinivas.kandagatla@linaro.org
-Cc:     konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 0/3] arm64: dts: qcom: sc8280xp: add audio support
-Date:   Tue, 27 Dec 2022 22:36:56 -0600
-Message-Id: <167220221217.833009.5730063788271218487.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221123104342.26140-1-srinivas.kandagatla@linaro.org>
-References: <20221123104342.26140-1-srinivas.kandagatla@linaro.org>
+        s=k20201202; t=1672208453;
+        bh=JCjNKHa2L/LD6O1qZ2+Vv4QD9BCcPkQfGN1EKNkqtCo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LTo6kqLzqSYEaviGJawhdGSxa5wSYZpih/7wBfXFYohgAd7uQ2Qmy/D3UrH8fn/YJ
+         wtsQImjvN4cXg8dA1VyXfKbcbx9RkzQTTE94Y9xCncEhrk/QmKgPgYD1QS5u4lZl5i
+         LJjg+5YqvvUX6cM1ckyvvi4clfGy0kYj7Kbr9/f4ZrRbPwLEdGpnNfPMFRHV+DKkCd
+         SqIajj8zXlcnton5ypUqQWG0dVCAjc65gJSlczPOFia1aTfSasRtbzs/66jBHHudB8
+         2Fz5o0kj8/Qxr4ThCWlAD13R62zuns9cgDYh8hh1CXi9WhtlTdAikzfNbf3dooSpjz
+         b5vJ/6pVsv8Dw==
+Date:   Wed, 28 Dec 2022 11:50:49 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lux Aliaga <they@mint.lgbt>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: dma: gpi: Document SM6125 compatible
+Message-ID: <Y6vgQZLyGV0wPPDs@matsya>
+References: <20221222194600.139854-1-marijn.suijten@somainline.org>
+ <20221222194600.139854-2-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221222194600.139854-2-marijn.suijten@somainline.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,25 +71,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Nov 2022 10:43:39 +0000, Srinivas Kandagatla wrote:
-> This patchset adds audio support for sc8280xp Lenovo x13s.
-> Support for Headset Playback/Capture, Speaker Playback and DMIC is
-> tested.
+On 22-12-22, 20:45, Marijn Suijten wrote:
+> From: Martin Botka <martin.botka@somainline.org>
 > 
-> A prebuit ASoC topology file available at
-> https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin
-> 
-> [...]
+> Document compatibility for this GPI DMA controller on SM6125.
 
-Applied, thanks!
+Applied, thanks
 
-[1/3] arm64: dts: qcom: sc8280xp: add gpr node
-      commit: e73defb2deee74f3f4988196bf0c21782dffa415
-[2/3] arm64: dts: qcom: sc8280xp: add SoundWire and LPASS
-      commit: c18773d162a63f65024e80ae355e3fbc923e7255
-[3/3] arm64: dts: qcom: sc8280xp-x13s: Add soundcard support
-      commit: f29077d8665221ba2802a29ee7bd9fcef66cde81
-
-Best regards,
 -- 
-Bjorn Andersson <andersson@kernel.org>
+~Vinod
