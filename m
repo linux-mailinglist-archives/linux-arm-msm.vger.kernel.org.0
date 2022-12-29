@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 947F16588D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 04:01:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40ADB6588D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 04:01:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233000AbiL2DBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 22:01:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57492 "EHLO
+        id S233022AbiL2DBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 22:01:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233075AbiL2DBO (ORCPT
+        with ESMTP id S233080AbiL2DBO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 28 Dec 2022 22:01:14 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A0D21275D
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14F421274F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:11 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bq39so18123452lfb.0
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:10 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bt23so9256404lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TXCQltnJB15hT96I0u7uf01iijzutH3MEcPaoII8eTE=;
-        b=B0t/ABUpg4aPD4l3uD/tKdcJHsdtWr6qTTrgvJzwxEWzX0Tj6RF4JhxLEQzV3zAdUa
-         PeDe4WQ5Gb1q9i7S+5mURVLaxjkZyJCb3WAysnn6hpB/DKuVdXrE9sb+Ox/r37Nrf6rb
-         mrgi24w0axd7xNDD/dOVqxf0GUsP+RcoQcCtnTjs9MpVvk5dKdfhkrb1Xs2oTmXB7G8l
-         IzmukR1veKX9ST+jcXdcYCTJYAvaFYl6Kbf+zc9G1CqQCFUfhU1ceeAi+EhZrl/eAeZ2
-         fJuN3j220ewD3RkjRYIgxKYrCjcosHVKFxUxxqx7CFkIk9li+AnoElNA00LhnwEgun0w
-         Vc7A==
+        bh=dQC77o1FQ6x+sO5i53MSeUlSerRJ/SnuijWB6BEfiO4=;
+        b=O4kAzByERa1OqR2Q0xmjHCgMPp+eb8F5mJDTq4E6YnAYFR1Tg1rwjtWiO+yN7IaSXH
+         6C87t6weOE/K0CN/S4MaCYT9ZFnn1neDGZjnEngL+T5qtUKe2xR4+W7a3+toSXXVwfYe
+         sXG/Ss4VLma6910CvTNwK1E9F2rHHAzsCYHUPYxOB3eL9WfHh51ecQ/aMuCQ8p/mOCN3
+         +oF41J+q7VpQlLD3tHvegwREzMTPHCWS3gNE6kw+1UWZ7oUGXQyrrnYNeB4tqQm8QuxR
+         Kiv8TH+zWRCRAT4x2ToD2oSuEWuhWJNDl9Wd+CDWE7TfiOWLswogGiUJlYHadBoVf1g1
+         65Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TXCQltnJB15hT96I0u7uf01iijzutH3MEcPaoII8eTE=;
-        b=gqVcdfnF1u0WrERlXg+Eoe8Hoi8XLz4U95D/ndIj43PEaHj4M3eCggugizCjAV03Cd
-         y/aTb4bn9wf6ciiWqSu7Auxhwu3RX50hdkSem4EQ/F2QJLVWaKnxgcNT/SbQcoUy7GsS
-         kXqdsfaUGaXYmFc6qIeHLNdYIW3gJVoT3CJWzkoV1Ea8K8ZMpwnq67ISNkP58Vpv8Xnc
-         f+PV9630WqisDx73JhOs6zwy2dbYg8t2m2x4EwGop2WbJqvhLQWHEVZ9CAeaxdQIn/7Q
-         zpqmpy7lEasV6oBtvZXeFwL1a+uc06+Q7GGEvS2r4ZrEHviPb/VXxv9YepwMqBWDdPEL
-         fX8A==
-X-Gm-Message-State: AFqh2kpobKQWMsvFW0A0AOhU0Kh5bvJeEwFxPA+Lk095uj0MpxPJIcNC
-        uDW+L56UM+suOp5S8jZaQPReEQ==
-X-Google-Smtp-Source: AMrXdXuvuVl9P6M4dvkUd4ynzY7US27FKEYHNUKxxFjMlZXY+i3qOoQTt6dcI9DuazbqrvWm95fKEA==
-X-Received: by 2002:a19:760a:0:b0:4cb:96:57d2 with SMTP id c10-20020a19760a000000b004cb009657d2mr5257961lff.36.1672282868392;
-        Wed, 28 Dec 2022 19:01:08 -0800 (PST)
+        bh=dQC77o1FQ6x+sO5i53MSeUlSerRJ/SnuijWB6BEfiO4=;
+        b=QCz4N77bTg0MaFe5upKtVMaxZXfVaARZzGlfDqdYkeq05nxGQcj2KVc5z349ZIijSw
+         w8A9cLcmKaH4i2f2RJnZtQkkSNSBg3UtH05UHNi+AbpDbwFyNs0MFHUw7KMmW+lcqgje
+         kSgg9kf4nUALWybWWuBMdQ6eeN+8lNUIV6lGv0x0DC9T85/Ivf5SnMSJeIYOVJdcNZ2s
+         3LGK4z5nyCWcxlLxHFEes8U1GolZbK9+11s+FPYi+xcSZNd9u+TkOYexREWVW1O20ht0
+         fSP9qsqM5jPEPy/dW93ltWyc+BcxcqQD6lbPFIgb7kTtVrLNQWO9Bczmszc1JrJW5m0N
+         W4kg==
+X-Gm-Message-State: AFqh2kpmIAqXkyWbYoC3UwKrsncmEpatMzcsN4qAXXnacfz5kDW/zsTu
+        g/r4SyX0K5QpyKv5bVelQzqrTg==
+X-Google-Smtp-Source: AMrXdXtrUrIMpv6pzh7a6gjmuGJFEyKjFSyrIofk4EQv0sGYW35xSE3OCcjNy6i16nSO8fXBxYVC3Q==
+X-Received: by 2002:ac2:5f49:0:b0:4b6:ebbc:3d3a with SMTP id 9-20020ac25f49000000b004b6ebbc3d3amr7074162lfz.53.1672282869294;
+        Wed, 28 Dec 2022 19:01:09 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b11-20020a056512024b00b004b57277474esm2883070lfo.106.2022.12.28.19.01.07
+        by smtp.gmail.com with ESMTPSA id b11-20020a056512024b00b004b57277474esm2883070lfo.106.2022.12.28.19.01.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 19:01:07 -0800 (PST)
+        Wed, 28 Dec 2022 19:01:08 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,11 +64,10 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
         Shawn Guo <shawn.guo@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v5 01/20] dt-bindings: thermal: tsens: add msm8956 compat
-Date:   Thu, 29 Dec 2022 05:00:47 +0200
-Message-Id: <20221229030106.3303205-2-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH v5 02/20] dt-bindings: thermal: tsens: support per-sensor calibration cells
+Date:   Thu, 29 Dec 2022 05:00:48 +0200
+Message-Id: <20221229030106.3303205-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
 References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
@@ -76,39 +75,140 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When adding support for msm8976 it was thought that msm8956 would reuse
-the same compat. However checking the vendor kernel revealed that these
-two platforms use different slope values for calculating the calibration
-data.
+Allow specifying the exact calibration mode and calibration data as nvmem
+cells, rather than specifying just a single calibration data blob.
 
-Add new compatible for the tsens on msm8956 SoC.
+Note, unlike the vendor kernel the calibration data uses hw_ids rather
+than software sensor indices (to match actual tsens usage in
+thermal zones).
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ .../bindings/thermal/qcom-tsens.yaml          | 95 +++++++++++++++++--
+ 1 file changed, 85 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 0231f187b097..f3660af0b3bf 100644
+index f3660af0b3bf..4bb689f4602d 100644
 --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
 +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -37,6 +37,7 @@ properties:
-       - description: v1 of TSENS
-         items:
-           - enum:
-+              - qcom,msm8956-tsens
-               - qcom,msm8976-tsens
-               - qcom,qcs404-tsens
-           - const: qcom,tsens-v1
+@@ -81,18 +81,63 @@ properties:
+     maxItems: 2
+ 
+   nvmem-cells:
+-    minItems: 1
+-    maxItems: 2
+-    description:
+-      Reference to an nvmem node for the calibration data
++    oneOf:
++      - minItems: 1
++        maxItems: 2
++        description:
++          Reference to an nvmem node for the calibration data
++      - minItems: 5
++        maxItems: 35
++        description: |
++          Reference to nvmem cells for the calibration mode, two calibration
++          bases and two cells per each sensor
+ 
+   nvmem-cell-names:
+-    minItems: 1
+-    items:
+-      - const: calib
+-      - enum:
+-          - calib_backup
+-          - calib_sel
++    oneOf:
++      - minItems: 1
++        items:
++          - const: calib
++          - enum:
++              - calib_backup
++              - calib_sel
++      - minItems: 5
++        items:
++          enum:
++            - mode
++            - base1
++            - base2
++            - s0_p1
++            - s0_p2
++            - s1_p1
++            - s1_p2
++            - s2_p1
++            - s2_p2
++            - s3_p1
++            - s3_p2
++            - s4_p1
++            - s4_p2
++            - s5_p1
++            - s5_p2
++            - s6_p1
++            - s6_p2
++            - s7_p1
++            - s7_p2
++            - s8_p1
++            - s8_p2
++            - s9_p1
++            - s9_p2
++            - s10_p1
++            - s10_p2
++            - s11_p1
++            - s11_p2
++            - s12_p1
++            - s12_p2
++            - s13_p1
++            - s13_p2
++            - s14_p1
++            - s14_p2
++            - s15_p1
++            - s15_p2
+ 
+   "#qcom,sensors":
+     description:
+@@ -221,6 +266,36 @@ examples:
+           };
+     };
+ 
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    // Example 1 (new calbiration data: for pre v1 IP):
++    thermal-sensor@900000 {
++        compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";
++        reg = <0x4a9000 0x1000>, /* TM */
++              <0x4a8000 0x1000>; /* SROT */
++
++        nvmem-cells = <&tsens_mode>,
++                      <&tsens_base1>, <&tsens_base2>,
++                      <&tsens_s0_p1>, <&tsens_s0_p2>,
++                      <&tsens_s1_p1>, <&tsens_s1_p2>,
++                      <&tsens_s2_p1>, <&tsens_s2_p2>,
++                      <&tsens_s4_p1>, <&tsens_s4_p2>,
++                      <&tsens_s5_p1>, <&tsens_s5_p2>;
++        nvmem-cell-names = "mode",
++                           "base1", "base2",
++                           "s0_p1", "s0_p2",
++                           "s1_p1", "s1_p2",
++                           "s2_p1", "s2_p2",
++                           "s4_p1", "s4_p2",
++                           "s5_p1", "s5_p2";
++
++        interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-names = "uplow";
++
++        #qcom,sensors = <5>;
++        #thermal-sensor-cells = <1>;
++    };
++
+   - |
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
+     // Example 1 (legacy: for pre v1 IP):
 -- 
 2.39.0
 
