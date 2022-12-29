@@ -2,102 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27D1E658DD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 15:20:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8B27658E45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:21:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233187AbiL2OUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 09:20:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44624 "EHLO
+        id S231229AbiL2PVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 10:21:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiL2OUP (ORCPT
+        with ESMTP id S229503AbiL2PVA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 09:20:15 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1EC41A2;
-        Thu, 29 Dec 2022 06:20:12 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id A1A7F21C16;
-        Thu, 29 Dec 2022 14:20:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1672323611; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=6S/5dUuk93/quxJDXW8zPtubkuqAP+2SRjZ0dzR6/K0=;
-        b=IagYAO9Ke7u0hhsyuKd6Fx8s/lHiA1HQlem/YX675oLgpHOuzvlVF7DzdZs/xvamON9oxP
-        HiR1VrukdpjKTgvJb/bpl/sHvZr3n5QP6gjt20fp28a7oZZ7T+qX3FoShMf9I38nzfGdW5
-        stIlnOsK61/J+STImJeRxnLobuJoWTg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1672323611;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=6S/5dUuk93/quxJDXW8zPtubkuqAP+2SRjZ0dzR6/K0=;
-        b=h9m3zYuQenkof35tDdAvbDSA9frScOvdOw/6TJSrwTvQmMkK6oB8ZT3vboUDe7lR5jKv1+
-        PCFmsbNvlNRNQ7DA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4174313913;
-        Thu, 29 Dec 2022 14:20:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id IroEDxuirWNXOQAAMHmgww
-        (envelope-from <tiwai@suse.de>); Thu, 29 Dec 2022 14:20:11 +0000
-Date:   Thu, 29 Dec 2022 15:20:10 +0100
-Message-ID: <87lemqxpet.wl-tiwai@suse.de>
-From:   Takashi Iwai <tiwai@suse.de>
-To:     Oliver Neukum <oneukum@suse.com>
-Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
+        Thu, 29 Dec 2022 10:21:00 -0500
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74F5C11C15;
+        Thu, 29 Dec 2022 07:20:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672327076;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=NhDVal3cY5RtflAGfuXYwWRxbBcys6vmGS1S3kTpu58=;
+    b=f41wZQ8Qo2p5DjOKrnomUd4pigBHedDdR1p0/2XTzWfZ1eN+Jv6m88JRbmhLr394lB
+    +DkT755r4yFoZKar1SZiIJlNkuph+GF1ElZxCsDIG16zFth/CYTcgrBjJNQSsUJfIaS9
+    0n4Er9YU8VyNiJrfFb33N34jC5aO5nl4mZZaTp7E/yNJOlz/h3GNsJIfs0uscyRAr7RI
+    ZzxMcFTo/t1C4/SGbRungnLfsVBPpJBDVCvSvRGLbidWHN5dACyAsoN51b2nxDqgmiWQ
+    ukINmxETOvAOhAXNYLbj5JfecGucA9VikUDNX4NbbLmZiGIaxExUtk1hMdmQDV90HR7h
+    yEFw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIRvweF+KLA=="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
+    with ESMTPSA id Yce349yBTFHtXT2
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 29 Dec 2022 16:17:55 +0100 (CET)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        quic_jackp@quicinc.com, quic_plai@quicinc.com
-Subject: Re: [RFC PATCH 04/14] sound: usb: card: Introduce USB SND vendor op callbacks
-In-Reply-To: <80f92635-6d14-8ff3-17ac-de2e5b977947@suse.com>
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
-        <20221223233200.26089-5-quic_wcheng@quicinc.com>
-        <80f92635-6d14-8ff3-17ac-de2e5b977947@suse.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/2] Fix APR audio regression on 6.2-rc1
+Date:   Thu, 29 Dec 2022 16:16:46 +0100
+Message-Id: <20221229151648.19839-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 29 Dec 2022 14:49:21 +0100,
-Oliver Neukum wrote:
-> 
-> 
-> 
-> On 24.12.22 00:31, Wesley Cheng wrote:
-> > Allow for different vendors to be notified on USB SND connect/disconnect
-> > seqeunces.  This allows for vendor USB SND modules to properly initialize
-> > and populate internal structures with references to the USB SND chip
-> > device.
-> 
-> Hi,
-> 
-> this raises a design question. If the system is suspending or, worse,
-> hibernating, how do you make sure the offloader and the device are
-> suspended in the correct order?
-> And what happens if you need to go into reset_resume() when resuming?
+These two patches fix regressions in the Qualcomm APR driver that 
+prevent audio from working on MSM8916 (and likely MSM8996). In previous 
+kernel releases the "qcom,protection-domain" property was optional, in 
+6.2-rc1 it is now required. It should remain optional because the 
+protection domain functionality is only supported starting with MSM8998
+and is not present on older SoCs [1].
 
-I guess we'd need to establish a device link when the binding from the
-offload driver is done.  Then the PM order will be assured.
+These patches should go as fixes into 6.2 to fix the regression.
 
+[1]: https://lore.kernel.org/all/20200312120842.21991-1-sibis@codeaurora.org/
 
-Takashi
+Stephan Gerhold (2):
+  dt-bindings: soc: qcom: apr: Make qcom,protection-domain optional
+    again
+  soc: qcom: apr: Make qcom,protection-domain optional again
+
+ .../devicetree/bindings/soc/qcom/qcom,apr-services.yaml      | 5 ++---
+ drivers/soc/qcom/apr.c                                       | 3 ++-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+-- 
+2.39.0
+
