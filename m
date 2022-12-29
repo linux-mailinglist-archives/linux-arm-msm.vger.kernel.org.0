@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E717E658E47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:21:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 369A3658E40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:18:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232081AbiL2PVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 10:21:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35142 "EHLO
+        id S231138AbiL2PSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 10:18:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230284AbiL2PVB (ORCPT
+        with ESMTP id S229503AbiL2PSI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 10:21:01 -0500
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E9F11C22;
-        Thu, 29 Dec 2022 07:21:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672327076;
+        Thu, 29 Dec 2022 10:18:08 -0500
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E095643C;
+        Thu, 29 Dec 2022 07:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672327077;
     s=strato-dkim-0002; d=gerhold.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=ufovkPO+jNddBOfj2hrolKoU/q+utp3DmWQhPWZpjlQ=;
-    b=TK3tY/pO+q0ZpT65UHNC57hTiYfKr8aSV72LkddUx+WAMKp00yFCrdI5UdTaLi/tAc
-    wdkwhxzV+w6vbmrSfFe7FnOjSwjpx6gBQtmBqI6Io6dLA78GYWySeKpGH9WVbTl+o8ou
-    gNS36WuTk2u9vqB+1NFUxEXtWxgTAEdth08vdOQugMszLaeVzthUIIaVea2XqyAM+gw3
-    eeNMUnxbioNbSw+N8fVsdASOjAquH7oQdMIYwjVbwZSV9mxjTw6/uh6Z/19asfozwJYY
-    xj5UgMzP8stU0WrIy6LpQI5IM3weXuXEfazBmbUxP/oK6QHYZZGFi5Zrhhs5yKre3VAO
-    IPkw==
+    bh=o9yw6kwnyVHqftafsTZRSK4tSSkPBL8db2BOCD1EwNk=;
+    b=F+eYRHNUH3aMOrCmUY+iyyqyw39IdWu3vV7TBGa1gKcA8oju/dl4M/JQe/+WCDO2vF
+    tQbOoK3dpIu8Jc+fuvrOoujcRCyKFZwjAYGgb38phMO20rIYTx0ybF7F46A9Ot1rvTN9
+    9D4RLvkXonYr8UsLxN/9tmhFoCxbb03NBXT2EDzBWasSeqgoJ7fP4BakGJRb5yeomxYl
+    v1DW9CNRQSDsAf1qFK0P0dfxdzRwrTtn9hUejHgW6hP39fDHuEKh6DV9CiuFOqHkqTWZ
+    nAe7PKuu8MY/Yo7PMLNEUsBP6KcfVSuSforI1Koh7syclJHmSiu8iK0Ij6M5U4FbE+Xw
+    vhRQ==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIRvweF+KLA=="
-X-RZG-CLASS-ID: mo01
+X-RZG-CLASS-ID: mo02
 Received: from droid..
     by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
-    with ESMTPSA id Yce349yBTFHuXT3
+    with ESMTPSA id Yce349yBTFHuXT4
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
     Thu, 29 Dec 2022 16:17:56 +0100 (CET)
@@ -49,9 +49,9 @@ Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 1/2] dt-bindings: soc: qcom: apr: Make qcom,protection-domain optional again
-Date:   Thu, 29 Dec 2022 16:16:47 +0100
-Message-Id: <20221229151648.19839-2-stephan@gerhold.net>
+Subject: [PATCH 2/2] soc: qcom: apr: Make qcom,protection-domain optional again
+Date:   Thu, 29 Dec 2022 16:16:48 +0100
+Message-Id: <20221229151648.19839-3-stephan@gerhold.net>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229151648.19839-1-stephan@gerhold.net>
 References: <20221229151648.19839-1-stephan@gerhold.net>
@@ -59,56 +59,47 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The protection domain functionality exists only in SoCs starting from
-MSM8998 [1], while the APR bindings are also used on older platforms.
+APR should not fail if the service device tree node does not have
+the qcom,protection-domain property, since this functionality does
+not exist on older platforms such as MSM8916 and MSM8996.
 
-Commit 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to
-shared schema") made the "qcom,protection-domain" required but it
-should remain optional to avoid dtbs_check warnings on older platforms,
-e.g.:
+Ignore -EINVAL (returned when the property does not exist) to fix
+a regression on 6.2-rc1 that prevents audio from working:
 
-arch/arm64/boot/dts/qcom/apq8096-db820c.dtb:
-  apr: service@3: 'qcom,protection-domain' is a required property
-  From schema: Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
+    Failed to read second value of qcom,protection-domain
+  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
+    Failed to add apr 3 svc
 
-[1]: https://lore.kernel.org/all/20200312120842.21991-1-sibis@codeaurora.org/
-
-Fixes: 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to shared schema")
+Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- .../devicetree/bindings/soc/qcom/qcom,apr-services.yaml      | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/apr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-index 290555426c39..bdf482db32aa 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-@@ -39,8 +39,8 @@ properties:
-   qcom,protection-domain:
-     $ref: /schemas/types.yaml#/definitions/string-array
-     description: |
--      Protection domain service name and path for APR service
--      possible values are::
-+      Protection domain service name and path for APR service (if supported).
-+      Possible values are::
-       "avs/audio", "msm/adsp/audio_pd".
-       "kernel/elf_loader", "msm/modem/wlan_pd".
-       "tms/servreg", "msm/adsp/audio_pd".
-@@ -49,6 +49,5 @@ properties:
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index cd44f17dad3d..d51abb462ae5 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -461,9 +461,10 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 		goto out;
+ 	}
  
- required:
-   - reg
--  - qcom,protection-domain
- 
- additionalProperties: true
++	/* Protection domain is optional, it does not exist on older platforms */
+ 	ret = of_property_read_string_index(np, "qcom,protection-domain",
+ 					    1, &adev->service_path);
+-	if (ret < 0) {
++	if (ret < 0 && ret != -EINVAL) {
+ 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
+ 		goto out;
+ 	}
 -- 
 2.39.0
 
