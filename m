@@ -2,71 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3899E658BA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:24:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB00E658BAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:27:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233162AbiL2KYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 05:24:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51680 "EHLO
+        id S230320AbiL2K1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 05:27:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233160AbiL2KXc (ORCPT
+        with ESMTP id S230287AbiL2K1T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 05:23:32 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6211D17893
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:18:51 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id m6so16543164lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:18:51 -0800 (PST)
+        Thu, 29 Dec 2022 05:27:19 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0809226
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:27:17 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id bf43so26953109lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ucgqquCovQOcSuajKJPtQVfMmU0XBO42PG2kCTctk5M=;
-        b=TbZugUpEkLxAfOyP5+EeaNu0hxlMrj25oKmLbJ8aucvMgIrR4dj5LnZivExVcEeuOy
-         fby8y3gGuhWyWH1GxaoLiY8DTC3QNTISKwiQz86VKG92WBNk6vcOGAjGy9xW3CbpkIyI
-         6e91hXgdqLRQifyK2O7Ut1IlRGPm0HFnpJL7QCrBM3kOXFTHJEPZIoEZYS8zraePEMuN
-         3G/H3JkHmBXlA1uqqzycNTCRyUmTZsCFIiaJbTuO9vAJAQwRqlmWrScx0mXYSSaT+nff
-         UaJ8ge6FtF59eROruuVDvugw0py6+PTnUBUGv0P+yv5wzWc2gFGdwuaztFgR0RqaM4vB
-         h2mQ==
+        bh=ft7gGGKwhqy6onxKMBZrC3Z+780qIINlP0uOCJFvFlc=;
+        b=BUXFyO9S9rpPnApfWejJZqSDcBv0h0435eJWDScbk4Z4pvN8iIQGRQy9Ow/alISZhv
+         PzROq82Klz9gs8abq7ikGqttVZD8aBscpDMStUPcJmDZs/haNf3v+8xbYtp+pkwHUobS
+         Vem7UgxP+YVUJVojU42F7lY1FWk62Qxnl0oUqRmnalRbcvXtYr1A41NGmQFybTd3MXzk
+         Jag5nDdoT3FyXKOdIAYK1r1iaOvbIWXcX9UVy5/fJMVMhgYW/R0R7oc1UDtboQh/nqWs
+         1oPTbnYl2R7tktw0O2V/gd7O3KXNhwwm1uT8eNjSkAKOYT0LmBvYE0QFzqXlvzOWkiB/
+         2gQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ucgqquCovQOcSuajKJPtQVfMmU0XBO42PG2kCTctk5M=;
-        b=GuFIeSJf5RFhCw9b+f/axC1+GjxMOR9644goekBSg6wCUv5anXjfhZsCCCbk77kniB
-         c/5iJhVDNlOoMVdh0fQ852d0Tg13ibIu4/ubAi5aJj7fiiF/CNuPgNs9pnHdlFFKAmat
-         oSEA0ri/dFqWn8kVZukbf9iJ1C1+AQaj9k/YBCEHgafZx8yDmVbPAvFd4GfIz2CMqSS7
-         9xKJhYrRMQloIpPvCaEj+tlHcHA1MOVb1ATSsVuW4fLSBmYUmgBapxZrB67lbnjg8nXL
-         W1uVB115ptbrldlHZY6Rmqwx1TL143iDvB1FPCN8Y43JRo+S2f+UH6lUvwyql+tLf+9T
-         4QxA==
-X-Gm-Message-State: AFqh2kpiS0+8uDPYsgxPnisOb1OuVrAplKNWQ1sYFjrIgi+nDqgpVRrP
-        87qOCGElHmwclrELtaX0aGzG1qKLfRHtgBvU
-X-Google-Smtp-Source: AMrXdXsLyx6ZbcjsygWtSNi8M6/Y+8+EahJS3C0JFdhbUJ0XUuGJE7bRXOQagTHU/MybUoJNsQ9ppw==
-X-Received: by 2002:ac2:43cf:0:b0:4b5:8298:5867 with SMTP id u15-20020ac243cf000000b004b582985867mr9082838lfl.66.1672309129698;
-        Thu, 29 Dec 2022 02:18:49 -0800 (PST)
+        bh=ft7gGGKwhqy6onxKMBZrC3Z+780qIINlP0uOCJFvFlc=;
+        b=5SBENyI6eGKv+0OjKpPlB2+E2AgKE2MCozzCpv491xI/QPcMCKJGTrc61iLbQ+sOrz
+         BwB/nPreWYw7a8XcqgjzgYUegwD0Gbta/nPNjfZqCFOMvJoI8TnURIGbmVPsHufunjJ8
+         xtaTv4C8NQ/CMrhrl6VSCes2D4MefXh1TEMkOVlXW1xR41Hq6PGGAjIRi4VLIv29QgL5
+         9xcVzwq0XNNOe5IL3v52h5qK8V9/w8j0wdKafVrjTGkJs6XhprVvmK2cIYO3S0vTwZL1
+         Qwf7QBzCZ1MkvXgAR+X61n7zql13iRuAFhnZKTnJGXiQonqdHFHMPiL4H05ypHx/YBnT
+         89tw==
+X-Gm-Message-State: AFqh2kqpDp7SXk4VL9iwOVlW3clQ42vp5yZ7amNY2dxzemeairyyBsJY
+        QPv+fk00yTux52aOi6xxZmdPbEI5HoSSyWOb
+X-Google-Smtp-Source: AMrXdXtamGDUxEsU769t/Ai4KlYzcdY9lVEKhscj/2izanZMSV7WrhEQFXkwbnF909DQnYOtIDcQ9w==
+X-Received: by 2002:ac2:538a:0:b0:4cb:17d0:f05e with SMTP id g10-20020ac2538a000000b004cb17d0f05emr1429586lfh.47.1672309635994;
+        Thu, 29 Dec 2022 02:27:15 -0800 (PST)
 Received: from localhost.localdomain (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id j18-20020a056512109200b00498f67cbfa9sm3028632lfg.22.2022.12.29.02.18.48
+        by smtp.gmail.com with ESMTPSA id f18-20020a056512361200b004cafd1af647sm2416403lfs.129.2022.12.29.02.27.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 02:18:49 -0800 (PST)
+        Thu, 29 Dec 2022 02:27:15 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Emma Anholt <emma@anholt.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/adreno: Make adreno quirks not overwrite each other
-Date:   Thu, 29 Dec 2022 11:18:45 +0100
-Message-Id: <20221229101846.981223-1-konrad.dybcio@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3] arm64: dts: qcom: sm8350-sagami: Rectify GPIO keys
+Date:   Thu, 29 Dec 2022 11:27:12 +0100
+Message-Id: <20221229102712.983306-1-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -80,47 +73,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-So far the adreno quirks have all been assigned with an OR operator,
-which is problematic, because they were assigned consecutive integer
-values, which makes checking them with an AND operator kind of no bueno..
+With enough pins set properly, the hardware buttons now also work
+like a charm.
 
-Switch to using BIT(n) so that only the quirks that the programmer chose
-are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
-
-Fixes: b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
+Fixes: c2721b0c23d9 ("arm64: dts: qcom: Add support for Xperia 1 III / 5 III")
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Xperia 1 III and Xperia 5 III
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+v2 -> v3:
+- Update tags
+- gpio-key,wakeup -> wakeup-source
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index c85857c0a228..5eb254c9832a 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -29,11 +29,9 @@ enum {
- 	ADRENO_FW_MAX,
+ .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 66 ++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+index 41c4101ec8f0..8df6ccbedfae 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+@@ -49,7 +49,35 @@ framebuffer: framebuffer@e1000000 {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+-		/* For reasons still unknown, GAssist key and Camera Focus/Shutter don't work.. */
++		pinctrl-names = "default";
++		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
++
++		key-camera-focus {
++			label = "Camera Focus";
++			linux,code = <KEY_CAMERA_FOCUS>;
++			gpios = <&pm8350b_gpios 8 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
++		};
++
++		key-camera-snapshot {
++			label = "Camera Snapshot";
++			linux,code = <KEY_CAMERA>;
++			gpios = <&pm8350b_gpios 5 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
++		};
++
++		key-google-assist {
++			label = "Google Assistant Key";
++			gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_LEFTMETA>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
++		};
+ 
+ 		key-vol-down {
+ 			label = "Volume Down";
+@@ -57,7 +85,7 @@ key-vol-down {
+ 			gpios = <&pmk8350_gpios 3 GPIO_ACTIVE_LOW>;
+ 			debounce-interval = <15>;
+ 			linux,can-disable;
+-			gpio-key,wakeup;
++			wakeup-source;
+ 		};
+ 	};
+ 
+@@ -545,6 +573,32 @@ &pm8350_gpios {
+ 			  "NC",
+ 			  "G_ASSIST_N",
+ 			  "PM8350_OPTION"; /* GPIO_10 */
++
++	g_assist_n: g-assist-n-state {
++		pins = "gpio9";
++		function = "normal";
++		power-source = <1>;
++		bias-pull-up;
++		input-enable;
++	};
++};
++
++&pm8350b_gpios {
++	snapshot_n: snapshot-n-state {
++		pins = "gpio5";
++		function = "normal";
++		power-source = <0>;
++		bias-pull-up;
++		input-enable;
++	};
++
++	focus_n: focus-n-state {
++		pins = "gpio8";
++		function = "normal";
++		power-source = <0>;
++		input-enable;
++		bias-pull-up;
++	};
  };
  
--enum adreno_quirks {
--	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
--	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
--	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
--};
-+#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
-+#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
-+#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+ &pmk8350_gpios {
+@@ -552,6 +606,14 @@ &pmk8350_gpios {
+ 			  "NC",
+ 			  "VOL_DOWN_N",
+ 			  "PMK8350_OPTION";
++
++	vol_down_n: vol-down-n-state {
++		pins = "gpio3";
++		function = "normal";
++		power-source = <0>;
++		bias-pull-up;
++		input-enable;
++	};
+ };
  
- struct adreno_rev {
- 	uint8_t  core;
-@@ -65,7 +63,7 @@ struct adreno_info {
- 	const char *name;
- 	const char *fw[ADRENO_FW_MAX];
- 	uint32_t gmem;
--	enum adreno_quirks quirks;
-+	u64 quirks;
- 	struct msm_gpu *(*init)(struct drm_device *dev);
- 	const char *zapfw;
- 	u32 inactive_period;
+ &pmk8350_rtc {
 -- 
 2.39.0
 
