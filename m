@@ -2,117 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38E87658A9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:42:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44A98658AA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:45:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233226AbiL2ImH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 03:42:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49028 "EHLO
+        id S233170AbiL2Ipj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 03:45:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiL2ImF (ORCPT
+        with ESMTP id S232179AbiL2Ipi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 03:42:05 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15911004D;
-        Thu, 29 Dec 2022 00:42:04 -0800 (PST)
-Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B7620CC38B;
-        Thu, 29 Dec 2022 08:42:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1672303323; bh=z74Wvw2dl/J6TN1vPrye61RN3quWMD3vkV0739va1Mk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=ppugLIFkeEkZ3D4fy3r7n+6r6SIVDcfslAWLHs8RwdKwYzwjUFMkefDrC78v4nBbN
-         D6pEU6RrZTh9eUHAJeqnUp2lpF0GtcmMsc/RKjyHXuqCJSVm8U1ICR5A+Wc2dEyxk6
-         WGADAKl7S02wwi6laqsDQ8cc1Z0DwKAR+JbjkqJs=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+        Thu, 29 Dec 2022 03:45:38 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C34F81007E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:45:37 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id u12so15090292ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:45:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WhhThnTcIHOOnU4TldxJQBEXkc0+gKJ8zUJ0NnzGF8w=;
+        b=iACwngYUW2NO/QI//cidNjkSY6IR2L6BvEIVEAFyQl0zymVU79PvIQBgWY/D0yoIUe
+         YHYOZTLiJ7al8Uhw/p2hy2ex26ZQnXD1iiHLEMEy/hmj2+NQkBlLigPtVAD5NOdvtBNG
+         VB9oL/XGZGiX6MdxU6BF4B/vso6HnrBhOFK0LTJ2IU4eG1qzFOnPxH0CnEgkjSk25GWY
+         erPOj9vqGBiDKUC3d6OSvczpyfB50aIKlVfZsPIS+3aacZswA4WH+wmEjE6LLUzGK0sU
+         gNVQqSd9DluhlXf1dt1jNqWOSgx8UvUegBW+Ws2oTxsEANYuMcCmMHAL7erVaeoRj7th
+         KLLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WhhThnTcIHOOnU4TldxJQBEXkc0+gKJ8zUJ0NnzGF8w=;
+        b=JazV74wznofuX5YgdBJvFO71SY2hu/zHalGhX3E4Jj+Wz1Bj9US9PyKDugKK6iDr35
+         IZJ59RdaBHxLNgQ+5boLEXYmlKtcuLQX9/1l5iI33uyVwj+q07UDkag6oF1dtkxRnji9
+         K7yjQQwVy4cwsW5+TOAlE4PUSo8M/RPhTK4oGHvT4xWv/JKlQXXqPGxgA1l0wEzgJwYf
+         rSba/Mf0Ha4AP7Rf3ltyzrZCeMq/wHZgisYaUOtVz8G82Di3Z+59XPmV+9/zP8YIdXLv
+         qZekIfZ+Us3aSMxGKuT4i3jaGC0AC5ce7UfkGtoGMuSeMFcQpC4pbizyt2bV9Qh5Av4E
+         woPw==
+X-Gm-Message-State: AFqh2krM0aR3K/pWUKMlyFv0t8oG4sGW9Zb8Cv+BYbWjv7Kjlz6IHU2m
+        Id4Bp4zEqB/EQNNTgEY+5aoang==
+X-Google-Smtp-Source: AMrXdXutjgkEHkED1oh840UWFw8WlnqcYr1SfxtSQLUXyecp3Hg4fP6tMrLui8h4uuPLKErhi1FUEw==
+X-Received: by 2002:a2e:92c3:0:b0:27a:1860:eb86 with SMTP id k3-20020a2e92c3000000b0027a1860eb86mr7218840ljh.31.1672303536156;
+        Thu, 29 Dec 2022 00:45:36 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id p7-20020a2ea4c7000000b0027fc5d5dbb5sm1018709ljm.77.2022.12.29.00.45.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 00:45:35 -0800 (PST)
+Message-ID: <da10e351-1f22-9583-5f0a-ae7db060cf0b@linaro.org>
+Date:   Thu, 29 Dec 2022 09:45:34 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,pcie2-phy: convert to YAML
+ format
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable ADSP
-Date:   Thu, 29 Dec 2022 09:42:02 +0100
-Message-ID: <2660205.mvXUDI8C0e@g550jk>
-In-Reply-To: <20221218211957.118473-1-matti.lehtimaki@gmail.com>
-References: <20221218211957.118473-1-matti.lehtimaki@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+References: <20221226031059.2563165-1-dmitry.baryshkov@linaro.org>
+ <20221226031059.2563165-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221226031059.2563165-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matti,
-
-On Sonntag, 18. Dezember 2022 22:19:57 CET Matti Lehtim=E4ki wrote:
-> Configure the reserved memory for ADSP and enable it.
-> Delete nodes with reference to label.
->=20
-> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
-
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
-
+On 26/12/2022 04:10, Dmitry Baryshkov wrote:
+> Convert the bindings for the Qualcomm PCIe2 PHY into the YAML format
+> from the text description.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> Changes in v2:
->   - Delete nodes with reference to label
-> ---
->  .../arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->=20
-> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts index
-> 1c52337af560..15b9590ba07b 100644
-> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> @@ -9,6 +9,9 @@
->  #include "qcom-msm8226.dtsi"
->  #include "qcom-pm8226.dtsi"
->=20
-> +/delete-node/ &adsp_region;
-> +/delete-node/ &smem_region;
+>  .../bindings/phy/qcom,pcie2-phy.yaml          | 87 +++++++++++++++++++
+>  .../bindings/phy/qcom-pcie2-phy.txt           | 42 ---------
+>  2 files changed, 87 insertions(+), 42 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
+> new file mode 100644
+> index 000000000000..672035199c19
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
+> @@ -0,0 +1,87 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 > +
->  / {
->  	model =3D "Samsung Galaxy Tab 4 10.1";
->  	compatible =3D "samsung,matisse-wifi", "qcom,apq8026";
-> @@ -133,7 +136,7 @@ wcnss@d200000 {
->  			no-map;
->  		};
->=20
-> -		adsp@d900000 {
-> +		adsp_region: adsp@d900000 {
->  			reg =3D <0x0d900000 0x1800000>;
->  			no-map;
->  		};
-> @@ -143,7 +146,6 @@ venus@f100000 {
->  			no-map;
->  		};
->=20
-> -		/delete-node/ smem@3000000;
->  		smem_region: smem@fa00000 {
->  			reg =3D <0x0fa00000 0x100000>;
->  			no-map;
-> @@ -169,6 +171,10 @@ rmtfs@fd80000 {
->  	};
->  };
->=20
-> +&adsp {
-> +	status =3D "okay";
-> +};
-> +
->  &blsp1_i2c2 {
->  	status =3D "okay";
 
+Drop the blank line.
 
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,pcie2-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 
+Best regards,
+Krzysztof
 
