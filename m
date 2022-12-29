@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1B06590E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23476590EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234004AbiL2TTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 14:19:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38682 "EHLO
+        id S234000AbiL2TTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 14:19:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233760AbiL2TTN (ORCPT
+        with ESMTP id S234008AbiL2TTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 14:19:13 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C100D1409F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:12 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 1so28744083lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:12 -0800 (PST)
+        Thu, 29 Dec 2022 14:19:16 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9A51409F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:15 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id p36so28726825lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2HZvAhIcCvTuY1772qgTfDmlfw3PveCe2fLJ0nn71tE=;
-        b=PSd+ik6NLa/0+70GkPEfL3ZceykxEx9i+s6QpWxeG73sn1Ls8hHObhvLKiqGNCJR5O
-         X7pdk76/98rASjRgDSDn7YKqT1l5BSIQ0Z1sbF/J3ewDG6kASOcXVAVsfxmU8hKxBfq7
-         P27YnCx/3z4qkyExERlZpNzXjp1Ztxlua77uF8cod4FdYH8YqMeQte79MfTz+vuTYK2L
-         OZJaWOIHK+EHuJ/QCt1QYQusF81zCNcJ87H00QgtaPz/KtsWGJ8Zm3qIpTnDNWqGxSlL
-         9k3qMrFOWLwl9BIyzvdKfw450Bi68rsEP8NsdTqNMQSJsvEWKP366y27laF06zLm0Nl+
-         hJjQ==
+        bh=PdZLMkPyoLeNxJVHJbrTVSigCSp0P0cAJW4bpHwfM+c=;
+        b=vuchaLraHeOEvUwjDb0Z/SpXaCZMRGlVs2s90u+tR0DjnqJi3w4bFH9tI9WdZ4UHbG
+         CgydYf898ckjU2IJmfT6fGXdcuAQYtzgH1AeW5htzYXog//qRvRxe9iCNU+5ZTWVsA6Y
+         hi/Rq09Gg+x1LNtYNJFDZG4RxuhqLV7Nlbl6v97unXFkKPFXV2JDy4m9kcqwVOJLDQwD
+         xAuBZ7lsccmBaMELtL8elp8y0soyVpPaU8zp6KpYiUTqc6RnLQBG+IACHLKwkt+CtTl/
+         s4ORhITqsDtdATD4k0XHlq7ftu43kTjc4cRn4zjxJY9PXJT6iEIK9ZChEJggCydvHOwg
+         MNIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2HZvAhIcCvTuY1772qgTfDmlfw3PveCe2fLJ0nn71tE=;
-        b=bn6DdglM86f+CGYLVHlEWREUH5vUCcGHN00KOs+j8XNNGTMYWd1GXLVzA39v2Iwbcq
-         mxr+vhIDOipzrQA2AnpiGWd6t536AGKWnuGO6HBipSEpg7UyDg9hjN8lbUNUx7RUFnWI
-         tUkxbcT4cjNxjzR9anJQT5DMrN9hSKdW+MmJuQWOmvR8FEsN3JNSA9M1EEx0dP3AgWBN
-         QtQuZT6yQfebRsM4jXakF9k25rn1/Q3K2xFH7CYnouJLJcm/xl8ctMigrX7xv0+37fzR
-         w3CPZdL75dN/OlXjZGzR05wFY0jWuZsuel8KrnvE/nDM7RwyxAcwj4ACZi6eVrPVQuWd
-         k5rQ==
-X-Gm-Message-State: AFqh2kr9nwWAcXFvFqEOB8N29rOZWVPkQ3r3fIkbYH+jP5Gb2ppfViv/
-        jPuv7feqmuLJeASR71d5bhBhtA==
-X-Google-Smtp-Source: AMrXdXuxSJIBJfGd95s/40x4VOAGFVnKBueWyZP/daYzQJPUOVpCLFq/S/bda9FwxCnxH5s2L5dcIg==
-X-Received: by 2002:a05:6512:3b87:b0:4a4:68b7:d623 with SMTP id g7-20020a0565123b8700b004a468b7d623mr9549025lfv.10.1672341552388;
-        Thu, 29 Dec 2022 11:19:12 -0800 (PST)
+        bh=PdZLMkPyoLeNxJVHJbrTVSigCSp0P0cAJW4bpHwfM+c=;
+        b=7udNWw03EZYM34w76AJRwWD6wwor0TsdaaGIk57pF1sh8wjhBzd4ueZs4OM6rk8QVr
+         f0+gK4rUr6sndP42VFkjW1WO1102brBwzZCgJkPIyJEXWg/0GE8IIfMD/H7kOvW4by2a
+         Pm5WIc1hCKllKfcmU8ekZpjFKnQjrstzUKgpnY6Fhed0+wtcyFcv6AQ3k/HIZuzCoA2q
+         PoZ+cP4Z5xxQwOSCUzPmzjtDOHi3TSsMxMWZvIbD4bnLOl2vC8imb48Z5L//IsqEzkuK
+         4t/C2Sy+9Cfqlfn7TUwe4oTJK49OfWQvB0ukpSRFnIdybwfVKH+jS6qyNcazZybf9UWB
+         vJXA==
+X-Gm-Message-State: AFqh2kqtcRaDpZ1EdZkgPdsie28UnGLJ9yftj7r3EJG/ubCW4zVuR2RD
+        TofM/Wvu8EhPkSW8ACnDYQyCWA==
+X-Google-Smtp-Source: AMrXdXvq0sBBiKzgjiPzS0bfiMEjm555fTwkVs7ryeWQDMpUvJ3E17ujQXEE+rg4PJgKP/UvEAlBBg==
+X-Received: by 2002:ac2:53a3:0:b0:4bc:4ad0:4142 with SMTP id j3-20020ac253a3000000b004bc4ad04142mr9733202lfh.58.1672341553471;
+        Thu, 29 Dec 2022 11:19:13 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.11
+        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 11:19:11 -0800 (PST)
+        Thu, 29 Dec 2022 11:19:12 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 14/27] drm/msm/dpu: don't use unsupported blend stages
-Date:   Thu, 29 Dec 2022 21:18:43 +0200
-Message-Id: <20221229191856.3508092-15-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 15/27] drm/msm/dpu: move the rest of plane checks to dpu_plane_atomic_check()
+Date:   Thu, 29 Dec 2022 21:18:44 +0200
+Message-Id: <20221229191856.3508092-16-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
 References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
@@ -76,61 +76,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dpu_crtc_atomic_check() compares blending stage with DPU_STAGE_MAX
-(maximum amount of blending stages supported by the driver), however we
-should compare it against .max_mixer_blendstages, the maximum blend
-stage supported by the mixer.
+Move plane state updates from dpu_crtc_atomic_check() to the function
+where they belong: to dpu_plane_atomic_check().
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 18 +-----------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 18 ++++++++++--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  6 ------
+ 3 files changed, 11 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index cdaf48a849bc..cf7be1427298 100644
+index cf7be1427298..3c33bb4dfaf9 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1126,6 +1126,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+@@ -1126,7 +1126,6 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
  									  crtc);
  	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
  	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state);
-+	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
+-	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
  
  	const struct drm_plane_state *pstate;
  	struct drm_plane *plane;
-@@ -1161,7 +1162,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+@@ -1158,11 +1157,10 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 	crtc_rect.x2 = mode->hdisplay;
+ 	crtc_rect.y2 = mode->vdisplay;
+ 
+-	 /* get plane state for all drm planes associated with crtc state */
++	/* FIXME: move this to dpu_plane_atomic_check? */
  	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
  		struct dpu_plane_state *dpu_pstate = to_dpu_plane_state(pstate);
  		struct drm_rect dst, clip = crtc_rect;
--		int z_pos;
-+		int stage;
+-		int stage;
  
  		if (IS_ERR_OR_NULL(pstate)) {
  			rc = PTR_ERR(pstate);
-@@ -1186,17 +1187,16 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+@@ -1176,8 +1174,6 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 
+ 		dpu_pstate->needs_dirtyfb = needs_dirtyfb;
+ 
+-		dpu_plane_clear_multirect(pstate);
+-
+ 		dst = drm_plane_state_dest(pstate);
+ 		if (!drm_rect_intersect(&clip, &dst)) {
+ 			DPU_ERROR("invalid vertical/horizontal destination\n");
+@@ -1186,18 +1182,6 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 				  DRM_RECT_ARG(&dst));
  			return -E2BIG;
  		}
- 
--		z_pos = pstate->normalized_zpos;
 -
--		/* verify z_pos setting before using it */
--		if (z_pos >= DPU_STAGE_MAX - DPU_STAGE_0) {
-+		/* verify stage setting before using it */
-+		stage = DPU_STAGE_0 + pstate->normalized_zpos;
-+		if (stage >= dpu_kms->catalog->caps->max_mixer_blendstages) {
- 			DPU_ERROR("> %d plane stages assigned\n",
--					DPU_STAGE_MAX - DPU_STAGE_0);
-+					dpu_kms->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
- 			return -EINVAL;
- 		}
- 
--		to_dpu_plane_state(pstate)->stage = z_pos + DPU_STAGE_0;
--		DRM_DEBUG_ATOMIC("%s: zpos %d\n", dpu_crtc->name, z_pos);
-+		to_dpu_plane_state(pstate)->stage = stage;
-+		DRM_DEBUG_ATOMIC("%s: stage %d\n", dpu_crtc->name, stage);
- 
+-		/* verify stage setting before using it */
+-		stage = DPU_STAGE_0 + pstate->normalized_zpos;
+-		if (stage >= dpu_kms->catalog->caps->max_mixer_blendstages) {
+-			DPU_ERROR("> %d plane stages assigned\n",
+-					dpu_kms->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
+-			return -EINVAL;
+-		}
+-
+-		to_dpu_plane_state(pstate)->stage = stage;
+-		DRM_DEBUG_ATOMIC("%s: stage %d\n", dpu_crtc->name, stage);
+-
  	}
  
+ 	atomic_inc(&_dpu_crtc_get_kms(crtc)->bandwidth_ref);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 0d2a7170e0ab..50ce4653bbba 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -733,14 +733,6 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+ 	return 0;
+ }
+ 
+-void dpu_plane_clear_multirect(const struct drm_plane_state *drm_state)
+-{
+-	struct dpu_plane_state *pstate = to_dpu_plane_state(drm_state);
+-
+-	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
+-	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+-}
+-
+ int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
+ {
+ 	struct dpu_plane_state *pstate[R_MAX];
+@@ -994,6 +986,16 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	if (!new_plane_state->visible)
+ 		return 0;
+ 
++	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
++	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
++
++	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
++	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
++		DPU_ERROR("> %d plane stages assigned\n",
++				pdpu->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
++		return -EINVAL;
++	}
++
+ 	src.x1 = new_plane_state->src_x >> 16;
+ 	src.y1 = new_plane_state->src_y >> 16;
+ 	src.x2 = src.x1 + (new_plane_state->src_w >> 16);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index 55ea221e8488..36a82c06ab7a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -88,12 +88,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+  */
+ int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane);
+ 
+-/**
+- * dpu_plane_clear_multirect - clear multirect bits for the given pipe
+- * @drm_state: Pointer to DRM plane state
+- */
+-void dpu_plane_clear_multirect(const struct drm_plane_state *drm_state);
+-
+ /**
+  * dpu_plane_color_fill - enables color fill on plane
+  * @plane:  Pointer to DRM plane object
 -- 
 2.39.0
 
