@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E6646590DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFD3C6590E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233994AbiL2TTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 14:19:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38652 "EHLO
+        id S234006AbiL2TTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 14:19:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233760AbiL2TTJ (ORCPT
+        with ESMTP id S234000AbiL2TTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 14:19:09 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA4C140A1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:08 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id cf42so28761308lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:08 -0800 (PST)
+        Thu, 29 Dec 2022 14:19:11 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C227C14D14
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:09 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id j17so19247215lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JT8JMnQG+MQncGRlo8pARWxuBMUoYN7MHqcFl2riZB8=;
-        b=e6xCtEnZTSQ4o57iZnFOtmbbt4UsUFZo1o6atDqRWpE34zyBe2R9i29CSiPFZCQf8z
-         mCN/jUN2lUMkaRpphPGhgB49pn/ixwM5tTHEmNSQ17Yd+JFvsVnBXEj+lrSSEaH0h0wT
-         kCc2SoA9c08m1Ig0ZJOnUFj6QWOFIQ3b4xLl4w5bKUX84gsK9y5JTyYAb38D+/7zhX40
-         GQASqquqQNVojCMXmB99s5+ouS4XVSGMVkDdDjKW5DM+q7ACEM/oSrPmpi7rj1QE2WV8
-         nZwUPPmVUssu8vM7K4GxABU3E65eTJvSX+qxy/Qh9UEg9rm89/6P2NjkISNIX8cUOXaF
-         0Kdg==
+        bh=GMiP8PD2nWe1G+w4vukccKI0JwgbAyrWhreDSfe4gTk=;
+        b=FKuOHcmmvrw5QCvusJIc/6OANgmSDXsusU3NhlXZDEFDQm1yxyTNVy0YOIbkNsUwCy
+         6qyWLGHeYAFL3r47OVEoX9lGaTT0HV/8VxJne78xt0mQboxEdjHQR+EbtInqvh1Lxi7P
+         2vsFHyBhiULPAqw5SIfUwyMajXL0Nyu7LBToVobhXCsGfjOCvw6huKX2UQRzE5nqMSqv
+         VSwoMzXa4omtGiePVupViibd2BEwsaZhRyK+hZzOc+RRStvdBiIi1OFu+WtOCDZTgVDp
+         BXtZafm6060dcRS+bD0kIhkEH5hmOTAxEG3VyT4FHUzi07Y2z8Mrf4Q/EcuelCJDRSa4
+         nnnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JT8JMnQG+MQncGRlo8pARWxuBMUoYN7MHqcFl2riZB8=;
-        b=q6+JWfMQL2ctCxTLgYAXZRKpzglaT9lmSPx9cE2+atQigoG0vcWtoCXzBymTGQhe9h
-         MPlTBUKJtabMf1rE5qIgrqu1okbz5czSC9M9mRIwKU0L8Ejeoy+n7c1QGuLMqsfa5KKi
-         AFylFsZBk3NCv8FsIFNn9+9dIGaW5WF/pMvNN3kpCZzycB6l/wYyxWelwZ27uDnvonX9
-         gTOaglhJ7WoaLBn6Hmm45nmtOkEyYlIf8W90kwQdXjk3IN7JQWkbdXloSIv2i4jlBvmL
-         om3ku6SoRGfNbJ/mzBTACdVpkWfBS0CmeSKc0aYUo+mYNuPUXDgVk7x0N9bxMkRJi6wH
-         IUMw==
-X-Gm-Message-State: AFqh2koXfRZqYIZZwP2nX0CIlkdJkCsYIKQ0XtqdjMqkSZUmyNG85zoP
-        tdWEJWHfJHnOVnqgX+nWxMWHlA==
-X-Google-Smtp-Source: AMrXdXseUVddZG53/Beww3FaEBvQxb8f5Fp2DupheFfI+wmPhpg/35bBhL5NZyi6HsQeTx4wGjLBPA==
-X-Received: by 2002:a05:6512:3a91:b0:4c0:2c1e:1d5b with SMTP id q17-20020a0565123a9100b004c02c1e1d5bmr8991229lfu.63.1672341548466;
-        Thu, 29 Dec 2022 11:19:08 -0800 (PST)
+        bh=GMiP8PD2nWe1G+w4vukccKI0JwgbAyrWhreDSfe4gTk=;
+        b=au7svmfERqXs4QGsUX0geffcek/OC0A3VeV2JEjtrWWuGRe3NQ8EtMGjZBDc6sR0yl
+         UfQvjD3gSiwEHNY1QoNGYiMGncRdYFtMeU0NhkVCVX9lt0Ty4aAM6Wan9egJRpdz8tsm
+         0nlduVuaUI9ePdXr5hRIIAU1Th1LHwCNhB3OXIJ2rSFehlx0dkVO4IZ7dTfbQm9QeZOl
+         8IlrzyxgeEFoBcv7ygSACozUf8P5Ymtq0G1eaeigKzj2X3lqsg7y3c+J/GNBn+/xZozZ
+         xW3Dwgq42EHIf8ia4UPSkIKtJ6AlMTCp0FceJMmY3hAnNoZJoLkRHe3X9LDKdXSXgoyt
+         yjcg==
+X-Gm-Message-State: AFqh2kr92lCFv2aUP1SDKq/A1Xe4/2Gvk0t5ntPOxcW4m0PJGD74WS6t
+        6k6vStVzdTc7RWd9mKeA2d6oIg==
+X-Google-Smtp-Source: AMrXdXveDeRlXB9gjh7yaT+XrgZkDY6d8zSL+u8vTgJ7IPBmiokk36SLGD+X/KE1FIhHBU4wgIsMfQ==
+X-Received: by 2002:a19:7117:0:b0:4b6:e726:45b9 with SMTP id m23-20020a197117000000b004b6e72645b9mr8679165lfc.37.1672341549376;
+        Thu, 29 Dec 2022 11:19:09 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.07
+        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 11:19:07 -0800 (PST)
+        Thu, 29 Dec 2022 11:19:08 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 10/27] drm/msm/dpu: pass dpu_format to _dpu_hw_sspp_setup_scaler3()
-Date:   Thu, 29 Dec 2022 21:18:39 +0200
-Message-Id: <20221229191856.3508092-11-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 11/27] drm/msm/dpu: move stride programming to dpu_hw_sspp_setup_sourceaddress
+Date:   Thu, 29 Dec 2022 21:18:40 +0200
+Message-Id: <20221229191856.3508092-12-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
 References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
@@ -76,80 +76,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to pass full dpu_hw_pipe_cfg instance to
-_dpu_hw_sspp_setup_scaler3, pass just struct dpu_format pointer.
+Move stride programming to dpu_hw_sspp_setup_sourceaddress(), so that
+dpu_hw_sspp_setup_rects() programs only source and destination
+rectangles.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 9 ++++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 7 +++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 4 ++--
- 3 files changed, 9 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 57 +++++++++++----------
+ 1 file changed, 29 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index f7f81ab08fa2..176cd6dc9a69 100644
+index 176cd6dc9a69..2bd39c13d54d 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -415,19 +415,18 @@ static void dpu_hw_sspp_setup_pe_config(struct dpu_hw_sspp *ctx,
- }
- 
- static void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_sspp *ctx,
--		struct dpu_hw_pipe_cfg *sspp,
--		void *scaler_cfg)
-+		struct dpu_hw_scaler3_cfg *scaler3_cfg,
-+		const struct dpu_format *format)
+@@ -447,7 +447,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
  {
+ 	struct dpu_hw_sspp *ctx = pipe->sspp;
+ 	struct dpu_hw_blk_reg_map *c;
+-	u32 src_size, src_xy, dst_size, dst_xy, ystride0, ystride1;
++	u32 src_size, src_xy, dst_size, dst_xy;
+ 	u32 src_size_off, src_xy_off, out_size_off, out_xy_off;
  	u32 idx;
--	struct dpu_hw_scaler3_cfg *scaler3_cfg = scaler_cfg;
  
--	if (_sspp_subblk_offset(ctx, DPU_SSPP_SCALER_QSEED3, &idx) || !sspp
-+	if (_sspp_subblk_offset(ctx, DPU_SSPP_SCALER_QSEED3, &idx)
- 		|| !scaler3_cfg)
- 		return;
+@@ -478,44 +478,18 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
+ 	dst_size = (drm_rect_height(&cfg->dst_rect) << 16) |
+ 		drm_rect_width(&cfg->dst_rect);
  
- 	dpu_hw_setup_scaler3(&ctx->hw, scaler3_cfg, idx,
- 			ctx->cap->sblk->scaler_blk.version,
--			sspp->layout.format);
-+			format);
+-	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
+-		ystride0 = (cfg->layout.plane_pitch[0]) |
+-			(cfg->layout.plane_pitch[1] << 16);
+-		ystride1 = (cfg->layout.plane_pitch[2]) |
+-			(cfg->layout.plane_pitch[3] << 16);
+-	} else {
+-		ystride0 = DPU_REG_READ(c, SSPP_SRC_YSTRIDE0 + idx);
+-		ystride1 = DPU_REG_READ(c, SSPP_SRC_YSTRIDE1 + idx);
+-
+-		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
+-			ystride0 = (ystride0 & 0xFFFF0000) |
+-				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
+-			ystride1 = (ystride1 & 0xFFFF0000)|
+-				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
+-		} else {
+-			ystride0 = (ystride0 & 0x0000FFFF) |
+-				((cfg->layout.plane_pitch[0] << 16) &
+-				 0xFFFF0000);
+-			ystride1 = (ystride1 & 0x0000FFFF) |
+-				((cfg->layout.plane_pitch[2] << 16) &
+-				 0xFFFF0000);
+-		}
+-	}
+-
+ 	/* rectangle register programming */
+ 	DPU_REG_WRITE(c, src_size_off + idx, src_size);
+ 	DPU_REG_WRITE(c, src_xy_off + idx, src_xy);
+ 	DPU_REG_WRITE(c, out_size_off + idx, dst_size);
+ 	DPU_REG_WRITE(c, out_xy_off + idx, dst_xy);
+-
+-	DPU_REG_WRITE(c, SSPP_SRC_YSTRIDE0 + idx, ystride0);
+-	DPU_REG_WRITE(c, SSPP_SRC_YSTRIDE1 + idx, ystride1);
  }
  
- static u32 _dpu_hw_sspp_get_scaler3_ver(struct dpu_hw_sspp *ctx)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index f5aae563741a..c713343378aa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -317,13 +317,12 @@ struct dpu_hw_sspp_ops {
+ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+ 		struct dpu_hw_pipe_cfg *cfg)
+ {
+ 	struct dpu_hw_sspp *ctx = pipe->sspp;
++	u32 ystride0, ystride1;
+ 	int i;
+ 	u32 idx;
  
- 	/**
- 	 * setup_scaler - setup scaler
--	 * @ctx: Pointer to pipe context
--	 * @pipe_cfg: Pointer to pipe configuration
- 	 * @scaler_cfg: Pointer to scaler configuration
-+	 * @format: pixel format parameters
- 	 */
- 	void (*setup_scaler)(struct dpu_hw_sspp *ctx,
--		struct dpu_hw_pipe_cfg *pipe_cfg,
--		void *scaler_cfg);
-+		struct dpu_hw_scaler3_cfg *scaler3_cfg,
-+		const struct dpu_format *format);
- 
- 	/**
- 	 * get_scaler_ver - get scaler h/w version
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 172a2c012917..cbff4dea8662 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -677,8 +677,8 @@ static void _dpu_plane_setup_scaler(struct dpu_sw_pipe *pipe,
- 	if (pipe_hw->ops.setup_scaler &&
- 			pipe->multirect_index != DPU_SSPP_RECT_1)
- 		pipe_hw->ops.setup_scaler(pipe_hw,
--				pipe_cfg,
--				&scaler3_cfg);
-+				&scaler3_cfg,
-+				fmt);
+@@ -537,6 +511,33 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+ 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
+ 				cfg->layout.plane_addr[2]);
+ 	}
++
++	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
++		ystride0 = (cfg->layout.plane_pitch[0]) |
++			(cfg->layout.plane_pitch[1] << 16);
++		ystride1 = (cfg->layout.plane_pitch[2]) |
++			(cfg->layout.plane_pitch[3] << 16);
++	} else {
++		ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
++		ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
++
++		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
++			ystride0 = (ystride0 & 0xFFFF0000) |
++				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
++			ystride1 = (ystride1 & 0xFFFF0000)|
++				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
++		} else {
++			ystride0 = (ystride0 & 0x0000FFFF) |
++				((cfg->layout.plane_pitch[0] << 16) &
++				 0xFFFF0000);
++			ystride1 = (ystride1 & 0x0000FFFF) |
++				((cfg->layout.plane_pitch[2] << 16) &
++				 0xFFFF0000);
++		}
++	}
++
++	DPU_REG_WRITE(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx, ystride0);
++	DPU_REG_WRITE(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx, ystride1);
  }
  
- /**
+ static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
 -- 
 2.39.0
 
