@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFD3C6590E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 334226590E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234006AbiL2TTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 14:19:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38666 "EHLO
+        id S234007AbiL2TTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 14:19:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234000AbiL2TTL (ORCPT
+        with ESMTP id S234004AbiL2TTN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 14:19:11 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C227C14D14
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:09 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id j17so19247215lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:09 -0800 (PST)
+        Thu, 29 Dec 2022 14:19:13 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE198FD4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:12 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id m6so18362885lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GMiP8PD2nWe1G+w4vukccKI0JwgbAyrWhreDSfe4gTk=;
-        b=FKuOHcmmvrw5QCvusJIc/6OANgmSDXsusU3NhlXZDEFDQm1yxyTNVy0YOIbkNsUwCy
-         6qyWLGHeYAFL3r47OVEoX9lGaTT0HV/8VxJne78xt0mQboxEdjHQR+EbtInqvh1Lxi7P
-         2vsFHyBhiULPAqw5SIfUwyMajXL0Nyu7LBToVobhXCsGfjOCvw6huKX2UQRzE5nqMSqv
-         VSwoMzXa4omtGiePVupViibd2BEwsaZhRyK+hZzOc+RRStvdBiIi1OFu+WtOCDZTgVDp
-         BXtZafm6060dcRS+bD0kIhkEH5hmOTAxEG3VyT4FHUzi07Y2z8Mrf4Q/EcuelCJDRSa4
-         nnnw==
+        bh=5yv4eazfIgkFdcgWBYv+db+OZMkZzHRLgqWycPhqdKw=;
+        b=q3hjoGtMzWC1SyOOFoYdUWUyPUzO3SxCRLjtmP3U2Tt1HCt6P79r7rCNnhG2Q4U9vm
+         reKZnsfc8UL69SM67KwjsGi2BKUyVl6gmxPHZqeKHTHE3cqRLi2NqrcS/IpCrC4yvUeN
+         lmrb5ADADpaulxe38+PFsvWCM/EXoFhe0m3Tza9XwRV/0gcV7sltwyFbd43Nrqm+s8fq
+         cV9Qhqox/0CByFvLsM94I6SgwR0x65XS0Plnj6klo4JKYO6pLx0gyHVD9UDC5u9tOg76
+         fXvdEtF3e4VILRkaqNUU19KQQXXK+aR5gukuG7GYAU9Z1U+wJkDzQsvacsmJMpPh2dFO
+         NwyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GMiP8PD2nWe1G+w4vukccKI0JwgbAyrWhreDSfe4gTk=;
-        b=au7svmfERqXs4QGsUX0geffcek/OC0A3VeV2JEjtrWWuGRe3NQ8EtMGjZBDc6sR0yl
-         UfQvjD3gSiwEHNY1QoNGYiMGncRdYFtMeU0NhkVCVX9lt0Ty4aAM6Wan9egJRpdz8tsm
-         0nlduVuaUI9ePdXr5hRIIAU1Th1LHwCNhB3OXIJ2rSFehlx0dkVO4IZ7dTfbQm9QeZOl
-         8IlrzyxgeEFoBcv7ygSACozUf8P5Ymtq0G1eaeigKzj2X3lqsg7y3c+J/GNBn+/xZozZ
-         xW3Dwgq42EHIf8ia4UPSkIKtJ6AlMTCp0FceJMmY3hAnNoZJoLkRHe3X9LDKdXSXgoyt
-         yjcg==
-X-Gm-Message-State: AFqh2kr92lCFv2aUP1SDKq/A1Xe4/2Gvk0t5ntPOxcW4m0PJGD74WS6t
-        6k6vStVzdTc7RWd9mKeA2d6oIg==
-X-Google-Smtp-Source: AMrXdXveDeRlXB9gjh7yaT+XrgZkDY6d8zSL+u8vTgJ7IPBmiokk36SLGD+X/KE1FIhHBU4wgIsMfQ==
-X-Received: by 2002:a19:7117:0:b0:4b6:e726:45b9 with SMTP id m23-20020a197117000000b004b6e72645b9mr8679165lfc.37.1672341549376;
-        Thu, 29 Dec 2022 11:19:09 -0800 (PST)
+        bh=5yv4eazfIgkFdcgWBYv+db+OZMkZzHRLgqWycPhqdKw=;
+        b=a/C59TobOcShWy6Kluv07elvHZMHd5pmq3wCK0bR2X07rnZkRdsR1unS6XbkNRLrXh
+         6toDFhX7Hqg95tE2usx977+acXgO13pT0L/kCKtGycmwS+mW3IY+OzC8HR9HgP7eVtH7
+         QLF/Y61kfKVo/IYixL644MI2c7e0EQuqMkkgl5T8hikI3WR3fSPUlhZ3vQxrvNRBkHz4
+         iyhaDCk8q17ZNZqkhBpOFhQ2/dVJy2/QmzjElzbV4PB0/Ws50HxjS+e9rBH//icqHd8A
+         e0m5bow04EYgdlyWpuKb6N7hKcrmE9PcdHtpAnhwXZXE9aXQckvC8Z6+EfMMkK1KefQ2
+         GSbA==
+X-Gm-Message-State: AFqh2kpKGGpa1dPzZyf5nN4JHyQHvuYoLb8IYFpuXyV8t2Hmgra4Phax
+        oQxaajL2PM0Pr3ADFL+wlbaEFA==
+X-Google-Smtp-Source: AMrXdXtMKOJUK6g0AlaFd1JKuCN0nnMM4k2uqvnpnkjFMCHQFxKp+BIeLtIfpArxiGAL1B+l5v58Ag==
+X-Received: by 2002:a05:6512:6d6:b0:4a4:68b9:609b with SMTP id u22-20020a05651206d600b004a468b9609bmr9556323lff.38.1672341550485;
+        Thu, 29 Dec 2022 11:19:10 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.08
+        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 11:19:08 -0800 (PST)
+        Thu, 29 Dec 2022 11:19:09 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 11/27] drm/msm/dpu: move stride programming to dpu_hw_sspp_setup_sourceaddress
-Date:   Thu, 29 Dec 2022 21:18:40 +0200
-Message-Id: <20221229191856.3508092-12-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 12/27] drm/msm/dpu: remove dpu_hw_fmt_layout from struct dpu_hw_pipe_cfg
+Date:   Thu, 29 Dec 2022 21:18:41 +0200
+Message-Id: <20221229191856.3508092-13-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
 References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
@@ -76,108 +76,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move stride programming to dpu_hw_sspp_setup_sourceaddress(), so that
-dpu_hw_sspp_setup_rects() programs only source and destination
-rectangles.
+Remove dpu_hw_fmt_layout instance from struct dpu_hw_pipe_cfg, leaving
+only src_rect and dst_rect. This way right and left pipes will have
+separate dpu_hw_pipe_cfg isntances, while the layout is common to both
+of them.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 57 +++++++++++----------
- 1 file changed, 29 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 30 ++++++++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++----
+ 3 files changed, 22 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 176cd6dc9a69..2bd39c13d54d 100644
+index 2bd39c13d54d..400d043f37fa 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -447,7 +447,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
+@@ -486,7 +486,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
+ }
+ 
+ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+-		struct dpu_hw_pipe_cfg *cfg)
++		struct dpu_hw_fmt_layout *layout)
  {
  	struct dpu_hw_sspp *ctx = pipe->sspp;
- 	struct dpu_hw_blk_reg_map *c;
--	u32 src_size, src_xy, dst_size, dst_xy, ystride0, ystride1;
-+	u32 src_size, src_xy, dst_size, dst_xy;
- 	u32 src_size_off, src_xy_off, out_size_off, out_xy_off;
- 	u32 idx;
+ 	u32 ystride0, ystride1;
+@@ -497,41 +497,41 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+ 		return;
  
-@@ -478,44 +478,18 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
- 	dst_size = (drm_rect_height(&cfg->dst_rect) << 16) |
- 		drm_rect_width(&cfg->dst_rect);
+ 	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
+-		for (i = 0; i < ARRAY_SIZE(cfg->layout.plane_addr); i++)
++		for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
+ 			DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx + i * 0x4,
+-					cfg->layout.plane_addr[i]);
++					layout->plane_addr[i]);
+ 	} else if (pipe->multirect_index == DPU_SSPP_RECT_0) {
+ 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx,
+-				cfg->layout.plane_addr[0]);
++				layout->plane_addr[0]);
+ 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC2_ADDR + idx,
+-				cfg->layout.plane_addr[2]);
++				layout->plane_addr[2]);
+ 	} else {
+ 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC1_ADDR + idx,
+-				cfg->layout.plane_addr[0]);
++				layout->plane_addr[0]);
+ 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
+-				cfg->layout.plane_addr[2]);
++				layout->plane_addr[2]);
+ 	}
  
--	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
+ 	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
 -		ystride0 = (cfg->layout.plane_pitch[0]) |
 -			(cfg->layout.plane_pitch[1] << 16);
 -		ystride1 = (cfg->layout.plane_pitch[2]) |
 -			(cfg->layout.plane_pitch[3] << 16);
--	} else {
--		ystride0 = DPU_REG_READ(c, SSPP_SRC_YSTRIDE0 + idx);
--		ystride1 = DPU_REG_READ(c, SSPP_SRC_YSTRIDE1 + idx);
--
--		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
--			ystride0 = (ystride0 & 0xFFFF0000) |
++		ystride0 = (layout->plane_pitch[0]) |
++			(layout->plane_pitch[1] << 16);
++		ystride1 = (layout->plane_pitch[2]) |
++			(layout->plane_pitch[3] << 16);
+ 	} else {
+ 		ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
+ 		ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
+ 
+ 		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
+ 			ystride0 = (ystride0 & 0xFFFF0000) |
 -				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
--			ystride1 = (ystride1 & 0xFFFF0000)|
++				(layout->plane_pitch[0] & 0x0000FFFF);
+ 			ystride1 = (ystride1 & 0xFFFF0000)|
 -				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
--		} else {
--			ystride0 = (ystride0 & 0x0000FFFF) |
++				(layout->plane_pitch[2] & 0x0000FFFF);
+ 		} else {
+ 			ystride0 = (ystride0 & 0x0000FFFF) |
 -				((cfg->layout.plane_pitch[0] << 16) &
--				 0xFFFF0000);
--			ystride1 = (ystride1 & 0x0000FFFF) |
++				((layout->plane_pitch[0] << 16) &
+ 				 0xFFFF0000);
+ 			ystride1 = (ystride1 & 0x0000FFFF) |
 -				((cfg->layout.plane_pitch[2] << 16) &
--				 0xFFFF0000);
--		}
--	}
--
- 	/* rectangle register programming */
- 	DPU_REG_WRITE(c, src_size_off + idx, src_size);
- 	DPU_REG_WRITE(c, src_xy_off + idx, src_xy);
- 	DPU_REG_WRITE(c, out_size_off + idx, dst_size);
- 	DPU_REG_WRITE(c, out_xy_off + idx, dst_xy);
--
--	DPU_REG_WRITE(c, SSPP_SRC_YSTRIDE0 + idx, ystride0);
--	DPU_REG_WRITE(c, SSPP_SRC_YSTRIDE1 + idx, ystride1);
- }
- 
- static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
- 		struct dpu_hw_pipe_cfg *cfg)
- {
- 	struct dpu_hw_sspp *ctx = pipe->sspp;
-+	u32 ystride0, ystride1;
- 	int i;
- 	u32 idx;
- 
-@@ -537,6 +511,33 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
- 		DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
- 				cfg->layout.plane_addr[2]);
++				((layout->plane_pitch[2] << 16) &
+ 				 0xFFFF0000);
+ 		}
  	}
-+
-+	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
-+		ystride0 = (cfg->layout.plane_pitch[0]) |
-+			(cfg->layout.plane_pitch[1] << 16);
-+		ystride1 = (cfg->layout.plane_pitch[2]) |
-+			(cfg->layout.plane_pitch[3] << 16);
-+	} else {
-+		ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
-+		ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
-+
-+		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
-+			ystride0 = (ystride0 & 0xFFFF0000) |
-+				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
-+			ystride1 = (ystride1 & 0xFFFF0000)|
-+				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
-+		} else {
-+			ystride0 = (ystride0 & 0x0000FFFF) |
-+				((cfg->layout.plane_pitch[0] << 16) &
-+				 0xFFFF0000);
-+			ystride1 = (ystride1 & 0x0000FFFF) |
-+				((cfg->layout.plane_pitch[2] << 16) &
-+				 0xFFFF0000);
-+		}
-+	}
-+
-+	DPU_REG_WRITE(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx, ystride0);
-+	DPU_REG_WRITE(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx, ystride1);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index c713343378aa..8dad52eb2a90 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -154,13 +154,11 @@ struct dpu_hw_pixel_ext {
+ 
+ /**
+  * struct dpu_hw_pipe_cfg : Pipe description
+- * @layout:    format layout information for programming buffer to hardware
+  * @src_rect:  src ROI, caller takes into account the different operations
+  *             such as decimation, flip etc to program this field
+  * @dest_rect: destination ROI.
+  */
+ struct dpu_hw_pipe_cfg {
+-	struct dpu_hw_fmt_layout layout;
+ 	struct drm_rect src_rect;
+ 	struct drm_rect dst_rect;
+ };
+@@ -243,10 +241,10 @@ struct dpu_hw_sspp_ops {
+ 	/**
+ 	 * setup_sourceaddress - setup pipe source addresses
+ 	 * @pipe: Pointer to software pipe context
+-	 * @cfg: Pointer to pipe config structure
++	 * @layout: format layout information for programming buffer to hardware
+ 	 */
+ 	void (*setup_sourceaddress)(struct dpu_sw_pipe *ctx,
+-				    struct dpu_hw_pipe_cfg *cfg);
++				    struct dpu_hw_fmt_layout *layout);
+ 
+ 	/**
+ 	 * setup_csc - setup color space coversion
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index cbff4dea8662..0d2a7170e0ab 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -471,21 +471,21 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
+ 
+ static void _dpu_plane_set_scanout(struct drm_plane *plane,
+ 		struct dpu_plane_state *pstate,
+-		struct dpu_hw_pipe_cfg *pipe_cfg,
+ 		struct drm_framebuffer *fb)
+ {
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
+ 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+ 	struct msm_gem_address_space *aspace = kms->base.aspace;
++	struct dpu_hw_fmt_layout layout;
+ 	int ret;
+ 
+-	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
++	ret = dpu_format_populate_layout(aspace, fb, &layout);
+ 	if (ret)
+ 		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+ 	else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
+ 		trace_dpu_plane_set_scanout(&pstate->pipe,
+-					    &pipe_cfg->layout);
+-		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
++					    &layout);
++		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
+ 	}
  }
  
- static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
+@@ -1134,7 +1134,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 
+ 	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
+ 
+-	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
++	_dpu_plane_set_scanout(plane, pstate, fb);
+ 
+ 	pstate->pending = true;
+ 
 -- 
 2.39.0
 
