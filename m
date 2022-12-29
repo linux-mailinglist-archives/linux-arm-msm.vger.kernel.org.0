@@ -2,82 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13C15658C29
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 12:27:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDFD2658C2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 12:31:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbiL2L1h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 06:27:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
+        id S230173AbiL2Lbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 06:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230382AbiL2L1f (ORCPT
+        with ESMTP id S229721AbiL2Lbf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 06:27:35 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5270F13DCE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 03:27:34 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id bt23so10472554lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 03:27:34 -0800 (PST)
+        Thu, 29 Dec 2022 06:31:35 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CCC13DF0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 03:31:33 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id bp15so27115897lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 03:31:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=n6cYkADYaTEQWo01yc2kQCg0VkSDlJKWqZ/VQrXh2xc=;
-        b=DmWyc1xr4IO7Mkcpw0v2O7eJo30YKYPi4KMBi/FEtoB7/vqmjxtKzazVnWrHKcBCkK
-         LaoGJpH47+S827vyzNsmt2t5zMObZsPBIiBTrQEphQfDQS0YFvqtLWE+MT7lU2D0qLcO
-         5yXQIlNzfLfT8J2m7MTxRbd6AYMSUeslhAs9p50Nrb1ymvjS4NkFhwp99pJ64QkVOxn/
-         vlUSnYqlPZkans/JMb111NgRI3byS+JGaYAv7AxIa9aEXDcjF0UVA+ZQ7ilbrJm7CcIo
-         V8NdvREjoP6IinwFUZzHoBLAi/pPe3xyuczMjROSqupSV7Q05Yy0lfysw1kIeMjwB5e1
-         hHrA==
+        bh=QQDxoBS/o/39TrH1qe45eXS30LOpQBp1BK407ABXLfk=;
+        b=tNpYVaVAsbbviDjADfCQME8VsRaT2ukWQpzL3RsY3j51GVwQvkH70JlekgOwUDKpza
+         9f8IoTlMG4hRrs2mva6Hce+gRg4WNq0T+wfK0ctsg8l5OChH5A/CQfhfKxktRnJhAaJn
+         U5BNbEXbZSIWQ3aVTf4RPhoVQI8DNwiyUp+4OI5d0rkVMqa9oj33QD4WyazsDA919SV2
+         Yv0x2/ZA4G/PBj4kfzL7IyQSRcqT4eysH5sLfI+co64jKP7YTELhRMq+yEffj2rxYNZd
+         adgxe1SwLP9RBBS+XHb5z8ZMpOnDEu4pQvLbmyhWcvhEIWQboDLk5iVjQjQ8KnQyOLJp
+         B2lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n6cYkADYaTEQWo01yc2kQCg0VkSDlJKWqZ/VQrXh2xc=;
-        b=XFlVz0hCqTJbKIQ08kER6dnLGQD1+YKLa+2gW1K7Flrmfr2ZYw/BlD5m6SZVPE5vMD
-         SVooPjwCPEFoZH5CuYouMeqEwEmC2E/kU8mlKDYpuUbyFp9wG8wlW4UFViKuTQFiphH4
-         ZekozRmfm0keAI+xpJXQgkm2JXo+RnDUuqbdvtIcCAVnvWlNba5hvIu4FJcMo1PEj8Gg
-         43+wQxdoCxDxA/zZvYbDXaBIHciH7ztCL3U9S8O8GFqAbSxF6NHDQ92vjAMqCLXUdzFa
-         8I46oW79OE79Xd5B1w4mAlLuUPj+f8RT0RsGppNdLhr6tGpOVPANC7xtUT7WEyILfwli
-         pv/w==
-X-Gm-Message-State: AFqh2kp/KStqHQTwAhdnTyAlVDWhLmj/vNw0ENfa6n7nfjrqptQ8P3aY
-        m/DNCb6pIppFsw76Yk3I3EI6mA==
-X-Google-Smtp-Source: AMrXdXu9IGyWcY9fCbLX60r0Ul/05e6XBEfNfIqaeUSf3sa7dyWXd3eS0rWayB/S9cqRFqznY0CAKg==
-X-Received: by 2002:a05:6512:70b:b0:4b4:8bc3:21f9 with SMTP id b11-20020a056512070b00b004b48bc321f9mr8904892lfs.36.1672313252700;
-        Thu, 29 Dec 2022 03:27:32 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id i20-20020a0565123e1400b004a91df49508sm3016911lfv.177.2022.12.29.03.27.31
+        bh=QQDxoBS/o/39TrH1qe45eXS30LOpQBp1BK407ABXLfk=;
+        b=aissJ5m6Zi0x4HljpXhss+N/oUu+v6NmlGEax7rZcjzQ//FBlI/4re5tKDqGFQdHuh
+         IdEPW+b7pJTz8bSWRaumPRPZwiFFnNUBWaYyuPIQz8G+HvmAJM4hxS/Ov9RQI4GLMvwd
+         VubsJVK7PcYQJ9LvlM3ci1Nuj8/VfSAfiHrCRgDNDYdxdYR7sN9BK7Q9dUnkLKJSeBN6
+         Ii+ZxSyy0fC9sNPL5Y0UXRZLnFwdU/JQg5L6Ggrmz0pYBvUrijpgy2wfwb4/7YajG77e
+         cfHp58wHg1W0pX5EtIKeO7LtLnOAHlzGvHUhMJLJPTq0kzQmzJGAVOdcouTg/X8H7qyY
+         YtoA==
+X-Gm-Message-State: AFqh2kpyVKi69YxLc2qRSK9crDH7iNzpDwC7Q5aGTYvs1IDQARew7VOX
+        w0T32cIIQVZpKLFsbCI0n97+qw==
+X-Google-Smtp-Source: AMrXdXv8NQZRUm/WQTClSW9gKM7555QdSJfE3CZZ3i1we7CBGcg/d4BOuq888+1ZGIdoYqvDzNKbdw==
+X-Received: by 2002:a05:6512:3c97:b0:4a5:42ba:d827 with SMTP id h23-20020a0565123c9700b004a542bad827mr8766477lfv.14.1672313491952;
+        Thu, 29 Dec 2022 03:31:31 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a14-20020a056512390e00b004b5872a7003sm3046435lfu.98.2022.12.29.03.31.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 03:27:32 -0800 (PST)
-Message-ID: <c787e25f-dddb-2b17-4bad-0c5a87e30c42@linaro.org>
-Date:   Thu, 29 Dec 2022 12:27:30 +0100
+        Thu, 29 Dec 2022 03:31:31 -0800 (PST)
+Message-ID: <24837866-9da2-9c9d-4094-d604db19cebd@linaro.org>
+Date:   Thu, 29 Dec 2022 12:31:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v5 14/20] thermal/drivers/tsens: Drop single-cell code for
- msm8976/msm8956
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/7] arm64: dts: qcom: sm8450: add spmi node
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
- <20221229030106.3303205-15-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221229030106.3303205-15-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221229103212.984324-1-konrad.dybcio@linaro.org>
+ <7b32e414-96a9-7265-efee-f872badb32b2@linaro.org>
+ <71d7a162-569d-1443-9e53-3ba374d06ccd@linaro.org>
+ <ee24809b-cf9b-c555-9c30-956949be25a4@linaro.org>
+ <c4cc7365-df3e-f591-58b8-b844d5bf1737@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <c4cc7365-df3e-f591-58b8-b844d5bf1737@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,73 +84,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29.12.2022 04:01, Dmitry Baryshkov wrote:
-> There is no dtsi file for msm8976 in the kernel sources. Drop the
-> compatibility with unofficial dtsi and remove support for handling the
-> single-cell calibration data on msm8976.
+On 29/12/2022 12:04, Konrad Dybcio wrote:
 > 
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  drivers/thermal/qcom/tsens-v1.c | 29 ++---------------------------
->  1 file changed, 2 insertions(+), 27 deletions(-)
 > 
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 6d1ea430f90b..b822a426066d 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -88,31 +88,6 @@ static int calibrate_v1(struct tsens_priv *priv)
->  	return 0;
->  }
->  
-> -static int calibrate_8976(struct tsens_priv *priv)
-> -{
-> -	u32 p1[11], p2[11];
-> -	u32 *qfprom_cdata;
-> -	int mode, ret;
-> -
-> -	ret = tsens_calibrate_common(priv);
-> -	if (!ret)
-> -		return 0;
-> -
-> -	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> -	if (IS_ERR(qfprom_cdata))
-> -		return PTR_ERR(qfprom_cdata);
-> -
-> -	mode = tsens_read_calibration_legacy(priv, &tsens_8976_nvmem,
-> -					     p1, p2,
-> -					     qfprom_cdata, NULL);
-> -
-> -
-> -	compute_intercept_slope(priv, p1, p2, mode);
-> -	kfree(qfprom_cdata);
-> -
-> -	return 0;
-> -}
-> -
->  /* v1.x: msm8956,8976,qcs404,405 */
->  
->  static struct tsens_features tsens_v1_feat = {
-> @@ -211,7 +186,7 @@ struct tsens_plat_data data_tsens_v1 = {
->  
->  static const struct tsens_ops ops_8956 = {
->  	.init		= init_8956,
-> -	.calibrate	= calibrate_8976,
-> +	.calibrate	= tsens_calibrate_common,
->  	.get_temp	= get_temp_tsens_valid,
->  };
->  
-> @@ -224,7 +199,7 @@ struct tsens_plat_data data_8956 = {
->  
->  static const struct tsens_ops ops_8976 = {
->  	.init		= init_common,
-> -	.calibrate	= calibrate_8976,
-> +	.calibrate	= tsens_calibrate_common,
->  	.get_temp	= get_temp_tsens_valid,
->  };
->  
+> On 29.12.2022 11:57, Krzysztof Kozlowski wrote:
+>> On 29/12/2022 11:45, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 29.12.2022 11:42, Krzysztof Kozlowski wrote:
+>>>> On 29/12/2022 11:32, Konrad Dybcio wrote:
+>>>>> From: Vinod Koul <vkoul@kernel.org>
+>>>>>
+>>>>> Add the spmi bus as found in the SM8450 SoC
+>>>>>
+>>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>>> [Konrad: 0x0 -> 0, move #cells down, make reg-names a vertical list]
+>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> ---
+>>>>> v1 -> v2:
+>>>>> No changes
+>>>>>
+>>>>>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
+>>>>>  1 file changed, 22 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> index 570475040d95..b9b59c5223eb 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> @@ -2715,6 +2715,28 @@ aoss_qmp: power-controller@c300000 {
+>>>>>  			#clock-cells = <0>;
+>>>>>  		};
+>>>>>  
+>>>>> +		spmi_bus: spmi@c42d000 {
+>>>>
+>>>> Hmm looks different than reg.
+>>>>
+>>>>> +			compatible = "qcom,spmi-pmic-arb";
+>>>>> +			reg = <0 0x0c400000 0 0x00003000>,
+>>>>> +			      <0 0x0c500000 0 0x00400000>,
+>>>>> +			      <0 0x0c440000 0 0x00080000>,
+>>>>> +			      <0 0x0c4c0000 0 0x00010000>,
+>>>>> +			      <0 0x0c42d000 0 0x00010000>;
+>>>> x
+>>> Hm, my guess would be that Vinod chose to put the "cnfg" reg
+>>> instead of "core" in the unit address, as 8450 has 2 SPMI bus
+>>> hosts and they both share the core reg, so it would have been
+>>> impossible to have two spmi@core nodes..
+>>
+>> Eh? SM8450 has 2 SPMI hosts both using 0x0c400000? How does that work?
+>> Usually address can be mapped only once.
+> No idea either!
+> 
+>>
+>> Where is the second SPMI? I cannot find it in linux-next.
+> It's only there on downstream and I'm not sure how useful it is
+> really, only some debug subdevice is attached to it.. Perhaps
+> we could ignore its existence for now and I could use the core
+> reg in unit address for spmi0?
+
+I see it indeed in downstream. core, chnls and obsrvr IO are the same.
+There is quite of debug devices attached.
+
+There is a comment in PMIC arbiter code to use a IO mapping allowing
+simultaneous mappings, so this is actually valid.
+
+Anyway, DT expects unit address to match first reg, so if we want to
+have second PMIC, we need to change the order of reg entries.
+
+We can ignore this problem till we add second PMIC...
+
+Best regards,
+Krzysztof
+
