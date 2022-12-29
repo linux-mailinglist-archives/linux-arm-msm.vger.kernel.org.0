@@ -2,60 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C15D3659061
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 19:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FBB0659070
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 19:35:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbiL2Sa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 13:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50954 "EHLO
+        id S234032AbiL2Sel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 13:34:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233943AbiL2SaD (ORCPT
+        with ESMTP id S233555AbiL2SeP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 13:30:03 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671C398;
-        Thu, 29 Dec 2022 10:29:24 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9F882CE16C5;
-        Thu, 29 Dec 2022 18:29:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37D6C433D2;
-        Thu, 29 Dec 2022 18:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672338560;
-        bh=zpSbcCNK25rUjje8uqqFcgexRmkYeOWXvSLNq8K+unk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lCbmrJSG+11bT6Xk4w5ANPk6tJ9lXJCg/jnPVRQI6Iz5cqMi3EOu6GzdMdJKptvtK
-         Fzg/3KfQKl1ncyFvBTFf7lZjxtFrvrQggVe9TKVLyq3Q1PPbrFWMreKzfMMx2IfopG
-         kbBcYl4vKRR0ktb+qXv+TIsOr6tEySd+3Q0Ivukg641GnUdsFOp9ZAArZc5wd1FzYK
-         KlBjW8+U4EPZCk4B2UiNa7bMHJFzoZo+oZmtbTGNvGNl/P0jqjiIuzP5tca3MNob0Y
-         So24ukmCHqhqKNizbasfC9PX+ZZG0j59ygUBo+0WV5O/+VSEPMyXy8EGj3/8IG5p+G
-         y9lBkTRhszorg==
-Date:   Thu, 29 Dec 2022 12:29:17 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: apr: Make
- qcom,protection-domain optional again
-Message-ID: <20221229182917.j6wrerqufom3hfx7@builder.lan>
-References: <20221229151648.19839-1-stephan@gerhold.net>
- <20221229151648.19839-2-stephan@gerhold.net>
+        Thu, 29 Dec 2022 13:34:15 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FDEDD124
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 10:34:14 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id gh17so46880717ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 10:34:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=no1oGPAMfu3UahXnB9UWch8Dq0drmE2MoF9HYiX8qdk=;
+        b=UOKiv/x5GxHnqKLebOv1jT3ZNQxPq6pUKmOVI7sLyGpIfUuysrgzPwgQmg0Bn+aebi
+         nsISs40nbm/jyVM/05Ja2AjJsZ61e5cYzAHTcWA2GnHdpVv5JM/gBoA+LEV3mIt6vLLZ
+         oSu5/g1R68M/tKev9P921yTq40WDmaezcHLfM7qTGC85CjJ3OOwIQxRFoF+qvZNRSAl3
+         oZ/qdjT+gT+W2+M2BhnUEtlSwGlnL4N8wmqLuCgymEZyO+Vs/BBFQqW7++Dp/PeCHYxR
+         ZlX90yqUztobRNLeUbNuG4jcD9BciS5+YxLIjs2LUa7eSY4CxAqEqvWDNAvcwCA8FrOP
+         dhyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=no1oGPAMfu3UahXnB9UWch8Dq0drmE2MoF9HYiX8qdk=;
+        b=Sq9loVslPVy8EBHdT8zobzBkhqrIhoDmlIHEamDl9h19U9za+ZZinSL9JZkcjDtEgr
+         OU2ij5dILxqHUJZWR3TzQTvcErX4C64s3RmSW4Qz7KiRUUo5UeEE2hpVtV+YZ6VAx5EC
+         1ylNEUACR8xtf7zXZ4QE4d7N/pjpklN8q+ondM1+EIwbZhdwch8uOnVOqTDWbyK4h1vi
+         V3tKhqjMFZcQ3+cRX0oluC/jCckn402OajyJtwfAn3wLavMp/XO37JMLNzXWpbmqcekj
+         p+ziuwVlSLPYGpwdXcLdZf/Uwa+5I1DOMOhWi1keHyZWfBwkZ9YvPDW1Ect1ZvY7DtST
+         /9ww==
+X-Gm-Message-State: AFqh2koXKQWNoify+v/AQkhf7oPr1aJLSBH+rpG/yDpjMqDMO0raRE5f
+        t/VO1cLjK5dmRRCcpQtBue9M5CmDOqioGV2JpqU=
+X-Google-Smtp-Source: AMrXdXuYnpHFOzlOs0ES03vrrItmdl43Pa8Zm5EPbxnp1GEMInsgQcyjSZj5ETUig0M6DAHHggbxaw==
+X-Received: by 2002:a17:906:a14c:b0:7c0:b4bb:919 with SMTP id bu12-20020a170906a14c00b007c0b4bb0919mr29432888ejb.10.1672338852751;
+        Thu, 29 Dec 2022 10:34:12 -0800 (PST)
+Received: from planet9.chello.ie (2001-1c06-2302-5600-12a8-8cf4-e3f6-f90f.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f])
+        by smtp.gmail.com with ESMTPSA id g22-20020a1709064e5600b007c0688a68cbsm9013936ejw.176.2022.12.29.10.34.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 10:34:12 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/2] qcom: Add a method to manually toggle the DP pullup on HS USB PHY
+Date:   Thu, 29 Dec 2022 18:34:08 +0000
+Message-Id: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229151648.19839-2-stephan@gerhold.net>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,55 +72,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 04:16:47PM +0100, Stephan Gerhold wrote:
-> The protection domain functionality exists only in SoCs starting from
-> MSM8998 [1], while the APR bindings are also used on older platforms.
-> 
-> Commit 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to
-> shared schema") made the "qcom,protection-domain" required but it
-> should remain optional to avoid dtbs_check warnings on older platforms,
-> e.g.:
-> 
-> arch/arm64/boot/dts/qcom/apq8096-db820c.dtb:
->   apr: service@3: 'qcom,protection-domain' is a required property
->   From schema: Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> 
-> [1]: https://lore.kernel.org/all/20200312120842.21991-1-sibis@codeaurora.org/
-> 
-> Fixes: 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to shared schema")
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+V2:
+I'm clearing out old patches in my tree and opted to rework the naming of
+the relevant flag to align with the downstream name. Also the original set
+was sent against a .txt description which has now moved onto .yaml.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+I haven't retained Rob's Acked-by since its +18 months and the
+Documentation patch applies to .yaml now not .txt
 
-Regards,
-Bjorn
+https://lore.kernel.org/all/20200528223458.GA804610@bogus/T/#mb20456db4a3d1cf608bb6335a1b6fa9dda8cb0cb
+https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/drivers/usb/phy/phy-msm-usb.c#2736
 
-> ---
->  .../devicetree/bindings/soc/qcom/qcom,apr-services.yaml      | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> index 290555426c39..bdf482db32aa 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> @@ -39,8 +39,8 @@ properties:
->    qcom,protection-domain:
->      $ref: /schemas/types.yaml#/definitions/string-array
->      description: |
-> -      Protection domain service name and path for APR service
-> -      possible values are::
-> +      Protection domain service name and path for APR service (if supported).
-> +      Possible values are::
->        "avs/audio", "msm/adsp/audio_pd".
->        "kernel/elf_loader", "msm/modem/wlan_pd".
->        "tms/servreg", "msm/adsp/audio_pd".
-> @@ -49,6 +49,5 @@ properties:
->  
->  required:
->    - reg
-> -  - qcom,protection-domain
->  
->  additionalProperties: true
-> -- 
-> 2.39.0
-> 
+V1:
+On an MSM8939 we have a system behind both a type-c controller and a USB
+Hub. VBUS is not connected to the PHY and no GPIO is available to signal
+VBUS state to the USB controller and PHY.
+
+In this case we've used USB role-switching to transition between
+host and device mode.
+
+The current code in qcom-usb-hs only touches the VBUS pullup control bits
+if we have an extcon but, setting those bits is still required on the
+example I gave of the MSM8939.
+
+This series takes the downstream concept of a DT driven flag for the VBUS
+pullup bits and applies it to upstream in the poweron/poweroff path of the
+PHY.
+
+I've opted to unset the bits on PHY poweroff though in downstream the bits
+are only ever switched on if the flag is present, downstream never switches
+the bits off again. I think though, setting the bits off on PHY power-off
+is the right thing to do, so I've done it.
+
+Bryan O'Donoghue (2):
+  dt-bindings: phy: Add qcom,dp-manual-pullup description
+  phy: qcom-usb-hs: Add qcom,dp-manual-pullup logic
+
+ .../bindings/phy/qcom,usb-hs-phy.yaml         |  7 ++++
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c        | 36 +++++++++++++++++++
+ 2 files changed, 43 insertions(+)
+
+-- 
+2.34.1
+
