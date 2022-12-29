@@ -2,110 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9EF658B97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:18:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3899E658BA1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:24:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232753AbiL2KSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 05:18:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45874 "EHLO
+        id S233162AbiL2KYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 05:24:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231229AbiL2KSD (ORCPT
+        with ESMTP id S233160AbiL2KXc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 05:18:03 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECEB713F96
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:15:33 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id n1so18983651ljg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:15:33 -0800 (PST)
+        Thu, 29 Dec 2022 05:23:32 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6211D17893
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:18:51 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id m6so16543164lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:18:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lNN2sBvX/0Zx4BfvDXrMZKSh4hziHTKILA1D5f6MaPw=;
-        b=tVPQ4VgqeMti8VBB8bvb2w9OZUPkBxxFagYHmnqInLlC+PTsL1t127Ak2nZWAh67rn
-         y72I0scdngySfHSrYhPCSC+7BfYeKmzHAxUypIAhhnnSfy72Mo27o6dU9hejfJXtmtkI
-         ylwNVIU59+Cw6HD0/u4YeZOzlODHiXNPTNswEd7G36zuXyRUI/k1c3nM9E4NZ9dTTw8n
-         E8I5sSByxJpQ/GxfhQLBEg/dbEf637F03YJOOXGJSHx8j8FEmhArryWuKCpU6HR71ppo
-         9q0gOTbYNzDpuDKF+OQTJUR+0zLOTJSz5j5td1sY16EDmv6MF8tJ9Aee/FAyu/L8oLyd
-         roog==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ucgqquCovQOcSuajKJPtQVfMmU0XBO42PG2kCTctk5M=;
+        b=TbZugUpEkLxAfOyP5+EeaNu0hxlMrj25oKmLbJ8aucvMgIrR4dj5LnZivExVcEeuOy
+         fby8y3gGuhWyWH1GxaoLiY8DTC3QNTISKwiQz86VKG92WBNk6vcOGAjGy9xW3CbpkIyI
+         6e91hXgdqLRQifyK2O7Ut1IlRGPm0HFnpJL7QCrBM3kOXFTHJEPZIoEZYS8zraePEMuN
+         3G/H3JkHmBXlA1uqqzycNTCRyUmTZsCFIiaJbTuO9vAJAQwRqlmWrScx0mXYSSaT+nff
+         UaJ8ge6FtF59eROruuVDvugw0py6+PTnUBUGv0P+yv5wzWc2gFGdwuaztFgR0RqaM4vB
+         h2mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lNN2sBvX/0Zx4BfvDXrMZKSh4hziHTKILA1D5f6MaPw=;
-        b=uils+OIxOwY5GB6azNNnpeHw2W+pkvmjjE56Rl5oDVHeEipUNDl2Isil4qbNYsuWUz
-         cITnQDn4DIsSm+l/jg+VmiFBVIV1glRo35AdxL5Mln9F4iX9oFxtQWjFmxGntyQCGTn4
-         6tSB5IVZjNxUNTV+DVfNyPhPNcdrZY83VngwhLmrbN27+SLjT/dX+g8l/6wPH1ATgMAs
-         8ouxA3S+3jew4inbTuqZtibVCCwYytc1a6p7mx8JT28Fdyl/vaxMQO3NOX0ZEUPH6ZiJ
-         R8j6ZqHx60xvTdoHKeVL1HcF8UPeLshejd9TP8HSfLqsp01vI6+uTWtd3oJLSAHM6h6p
-         5JsQ==
-X-Gm-Message-State: AFqh2kq/B10PqjMm6Pw/ySRrS45qG8LY6sTI7yuNZ/zxzFb72WQITRq8
-        Cqgd7PajlS2FFLSawpsyl/+Vaw==
-X-Google-Smtp-Source: AMrXdXvDet+IpOqiT9isaqBYpbvgjZNIHoQKKIX1RAUCcnec3JO7Zm/Y6kghsRTtnKwuA/tiOfIpEw==
-X-Received: by 2002:a05:651c:233:b0:27f:79ff:6d8d with SMTP id z19-20020a05651c023300b0027f79ff6d8dmr7887501ljn.11.1672308932189;
-        Thu, 29 Dec 2022 02:15:32 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id b14-20020a0565120b8e00b004ac980a1ba1sm3040839lfv.24.2022.12.29.02.15.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 02:15:31 -0800 (PST)
-Message-ID: <87839ded-9fa5-beb0-429d-7be233b3d20e@linaro.org>
-Date:   Thu, 29 Dec 2022 11:15:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 3/4] ARM: dts: qcom: pm8226: add IADC node
-Content-Language: en-US
-To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221228230421.56250-1-rayyan@ansari.sh>
- <20221228230421.56250-4-rayyan@ansari.sh>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ucgqquCovQOcSuajKJPtQVfMmU0XBO42PG2kCTctk5M=;
+        b=GuFIeSJf5RFhCw9b+f/axC1+GjxMOR9644goekBSg6wCUv5anXjfhZsCCCbk77kniB
+         c/5iJhVDNlOoMVdh0fQ852d0Tg13ibIu4/ubAi5aJj7fiiF/CNuPgNs9pnHdlFFKAmat
+         oSEA0ri/dFqWn8kVZukbf9iJ1C1+AQaj9k/YBCEHgafZx8yDmVbPAvFd4GfIz2CMqSS7
+         9xKJhYrRMQloIpPvCaEj+tlHcHA1MOVb1ATSsVuW4fLSBmYUmgBapxZrB67lbnjg8nXL
+         W1uVB115ptbrldlHZY6Rmqwx1TL143iDvB1FPCN8Y43JRo+S2f+UH6lUvwyql+tLf+9T
+         4QxA==
+X-Gm-Message-State: AFqh2kpiS0+8uDPYsgxPnisOb1OuVrAplKNWQ1sYFjrIgi+nDqgpVRrP
+        87qOCGElHmwclrELtaX0aGzG1qKLfRHtgBvU
+X-Google-Smtp-Source: AMrXdXsLyx6ZbcjsygWtSNi8M6/Y+8+EahJS3C0JFdhbUJ0XUuGJE7bRXOQagTHU/MybUoJNsQ9ppw==
+X-Received: by 2002:ac2:43cf:0:b0:4b5:8298:5867 with SMTP id u15-20020ac243cf000000b004b582985867mr9082838lfl.66.1672309129698;
+        Thu, 29 Dec 2022 02:18:49 -0800 (PST)
+Received: from localhost.localdomain (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
+        by smtp.gmail.com with ESMTPSA id j18-20020a056512109200b00498f67cbfa9sm3028632lfg.22.2022.12.29.02.18.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 02:18:49 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221228230421.56250-4-rayyan@ansari.sh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Emma Anholt <emma@anholt.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/adreno: Make adreno quirks not overwrite each other
+Date:   Thu, 29 Dec 2022 11:18:45 +0100
+Message-Id: <20221229101846.981223-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+So far the adreno quirks have all been assigned with an OR operator,
+which is problematic, because they were assigned consecutive integer
+values, which makes checking them with an AND operator kind of no bueno..
 
+Switch to using BIT(n) so that only the quirks that the programmer chose
+are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
 
-On 29.12.2022 00:04, Rayyan Ansari wrote:
-> Add a node for the current ADC (IADC) found in PM8226.
-> 
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
-> ---
->  arch/arm/boot/dts/qcom-pm8226.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
-> index 6af259218f63..46ba84f86c9f 100644
-> --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
-> @@ -88,6 +88,12 @@ adc-chan@f {
->  			};
->  		};
->  
-> +		pm8226_iadc: adc@3600 {
-> +			compatible = "qcom,pm8226-iadc", "qcom,spmi-iadc";
-This needs a bindings update (unless it was merged beforehand somehow).
+Fixes: b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-Konrad
-> +			reg = <0x3600>;
-> +			interrupts = <0x0 0x36 0x0 IRQ_TYPE_EDGE_RISING>;
-> +		};
-> +
->  		rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
->  			reg = <0x6000>, <0x6100>;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index c85857c0a228..5eb254c9832a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -29,11 +29,9 @@ enum {
+ 	ADRENO_FW_MAX,
+ };
+ 
+-enum adreno_quirks {
+-	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
+-	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
+-	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
+-};
++#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
++#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
++#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+ 
+ struct adreno_rev {
+ 	uint8_t  core;
+@@ -65,7 +63,7 @@ struct adreno_info {
+ 	const char *name;
+ 	const char *fw[ADRENO_FW_MAX];
+ 	uint32_t gmem;
+-	enum adreno_quirks quirks;
++	u64 quirks;
+ 	struct msm_gpu *(*init)(struct drm_device *dev);
+ 	const char *zapfw;
+ 	u32 inactive_period;
+-- 
+2.39.0
+
