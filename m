@@ -2,58 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E06659005
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:54:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B6CD659009
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233290AbiL2Rx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 12:53:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36990 "EHLO
+        id S233845AbiL2R4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 12:56:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiL2Rx6 (ORCPT
+        with ESMTP id S229615AbiL2R4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 12:53:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FAF1112;
-        Thu, 29 Dec 2022 09:53:57 -0800 (PST)
+        Thu, 29 Dec 2022 12:56:42 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08E77CEB;
+        Thu, 29 Dec 2022 09:56:42 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 011FE618C5;
-        Thu, 29 Dec 2022 17:53:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63366C433EF;
-        Thu, 29 Dec 2022 17:53:55 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 559C1CE16D5;
+        Thu, 29 Dec 2022 17:56:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06057C433D2;
+        Thu, 29 Dec 2022 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672336436;
-        bh=ayTVFPv8VuZpGvaOQ0MSBEsIvGgD+9LIYrBq/0NdOEk=;
+        s=k20201202; t=1672336598;
+        bh=cf85jt1MlWRXvIqrhsyuTU+3cFRvZgDuk1IwYnTf4yg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=prqWLcRXvjhWOh7PDzmUDxoTHWjnSs/RS1IuLrM2gmGLX70CJBxW4th4R6zt9XlQS
-         6r9aUq5eAbzjbpaiTRXC2WOqTpS2e1Gmg7lUKNK6zFIChHpuQf3tDPb33sJBB0imU2
-         5A2T3jYJmYUTE4YHR0V5SNb28GTDFRmbnCr2iCYERrEV12fuSQqM2GADT8SX2a717/
-         e90HfOHqLJX8O8GULtXlNFtOHl89PosM0oWpWnnA4gh/uKtSFv7D/MbiTTYl36hSNr
-         2Kl/dKp8c2Ji8wHBLZ91Y3/hMvjyXzLymY31VPEspn69UzddojPBlfKBjxTX613kQI
-         uPgF+3u7341Mw==
-Date:   Thu, 29 Dec 2022 11:53:53 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        b=gEb2/VGQ95sIxP5HswTIL1iIzkA5QbXkOaGdUxKzd8Ayn0NvuWlHYioPqxl7azStm
+         RKBkLARtgwFdw7B61j+Dcy+QH2REIyrfOhik2DnYwQ61CUvoUeIUH6niv6bc1W9wOm
+         Ta79/siSK1+Ccp4C6+bbaJqotjM6YqtFuxQxjUq9JetAJd0EXa6V2bCdLg5afrIB0i
+         j2VPCuWArS1VMY2hMWkFxgT0TGlXylyQCGj050JarDvwwt6Ucd7b4qYNTt52j7n88w
+         C+xRbmJuIOxxTmtTXtCejq/nMISV4yR+xFu0l23stY0CzwN9J6VQHLvPfrN7eliCsv
+         8nCHVbfUJgmdQ==
+Date:   Thu, 29 Dec 2022 17:57:15 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        afd@ti.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 2/2] soc: qcom: apr: Make qcom,protection-domain optional
- again
-Message-ID: <20221229175353.msas6w2eaunv4gt4@builder.lan>
-References: <20221229151648.19839-1-stephan@gerhold.net>
- <20221229151648.19839-3-stephan@gerhold.net>
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] regulator: dt-bindings: qcom,usb-vbus-regulator:
+ change node name
+Message-ID: <Y63U+7LnWhixrW6g@sirena.org.uk>
+References: <20221031173933.936147-1-luca@z3ntu.xyz>
+ <20221031173933.936147-2-luca@z3ntu.xyz>
+ <12119366.O9o76ZdvQC@g550jk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Q6KRw7sgVNE8Q5bt"
 Content-Disposition: inline
-In-Reply-To: <20221229151648.19839-3-stephan@gerhold.net>
+In-Reply-To: <12119366.O9o76ZdvQC@g550jk>
+X-Cookie: Ego sum ens omnipotens.
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,50 +66,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 04:16:48PM +0100, Stephan Gerhold wrote:
-> APR should not fail if the service device tree node does not have
-> the qcom,protection-domain property, since this functionality does
-> not exist on older platforms such as MSM8916 and MSM8996.
-> 
 
-Forgot that when I reviewed 6d7860f5750d, but you're right. Sorry about
-that.
+--Q6KRw7sgVNE8Q5bt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+On Wed, Dec 28, 2022 at 10:30:47PM +0100, Luca Weiss wrote:
+> On Montag, 31. Oktober 2022 18:39:32 CET Luca Weiss wrote:
+> > usb-vbus-regulator is a better generic node name than dcdc to change the
+> > example to match.
+> >=20
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>=20
+> Bump? Can this patch be picked up please?
 
-Regards,
-Bjorn
+Please don't send content free pings and please allow a reasonable time
+for review.  People get busy, go on holiday, attend conferences and so=20
+on so unless there is some reason for urgency (like critical bug fixes)
+please allow at least a couple of weeks for review.  If there have been
+review comments then people may be waiting for those to be addressed.
 
-> Ignore -EINVAL (returned when the property does not exist) to fix
-> a regression on 6.2-rc1 that prevents audio from working:
-> 
->   qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
->     Failed to read second value of qcom,protection-domain
->   qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
->     Failed to add apr 3 svc
-> 
-> Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->  drivers/soc/qcom/apr.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-> index cd44f17dad3d..d51abb462ae5 100644
-> --- a/drivers/soc/qcom/apr.c
-> +++ b/drivers/soc/qcom/apr.c
-> @@ -461,9 +461,10 @@ static int apr_add_device(struct device *dev, struct device_node *np,
->  		goto out;
->  	}
->  
-> +	/* Protection domain is optional, it does not exist on older platforms */
->  	ret = of_property_read_string_index(np, "qcom,protection-domain",
->  					    1, &adev->service_path);
-> -	if (ret < 0) {
-> +	if (ret < 0 && ret != -EINVAL) {
->  		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
->  		goto out;
->  	}
-> -- 
-> 2.39.0
-> 
+Sending content free pings adds to the mail volume (if they are seen at
+all) which is often the problem and since they can't be reviewed
+directly if something has gone wrong you'll have to resend the patches
+anyway, so sending again is generally a better approach though there are
+some other maintainers who like them - if in doubt look at how patches
+for the subsystem are normally handled.
+
+--Q6KRw7sgVNE8Q5bt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmOt1PcACgkQJNaLcl1U
+h9BtCwf9GJfJ37h2GiHuJXTeZLNauW+2DX4XjqQFrMBDtxOXwa86JVe3KUfxbk0F
+4rv4isDXmrrrCvkR0Rxi0b1WR5udDAvONSyKZFoDYM41dedmpymvPKS8aBnVZ8PH
+aV4U0HBMFYUu/VOk/r0709cgGJlrnjN8n3pwENWbrhwg2IQaU8yeVlNAk5rM9nb7
+hGPLcLc9opFGtj45cjbNqPOMXTtZp8a7PUV5Vc/IJWrTx6LQpV3p10qfXBGSArJS
+IjbGyGyouItG8HmBq/RCavk//QgIB8Qvoqoc8z05YQIP59xPrWfYtHmG6U1EpCIM
+HNARDZ98LjE8sIjshb6OBSF2cLhEIA==
+=CuZC
+-----END PGP SIGNATURE-----
+
+--Q6KRw7sgVNE8Q5bt--
