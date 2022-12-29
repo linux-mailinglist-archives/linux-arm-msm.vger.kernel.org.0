@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 002966590D2
+	by mail.lfdr.de (Postfix) with ESMTP id 9713E6590D1
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231352AbiL2TTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233604AbiL2TTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 29 Dec 2022 14:19:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233335AbiL2TTB (ORCPT
+        with ESMTP id S231352AbiL2TTB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 29 Dec 2022 14:19:01 -0500
 Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD8578FD4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:18:59 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 1so28743038lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:18:59 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863971409F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:00 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id bp15so28726212lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LfRSiUU7kUVFfBn/yyitjedlmqXmIZK52okMfhN2BfA=;
-        b=gT3lhM3Bifi9riXVEu3gooBn7WCtYn8k9KbVM/T0J7jp3KGU0DOR4AOiRdjCuHeXCU
-         pHGZSgWNeTxwK/4GXvNT664HF4TrC9XcVPq14oW7p4D85lHY1jF4zP+zwWeLANweS8Bk
-         WtFNbglASnv29sRMRa9wJDYBbpNXdtdmH46AXoYo95SU6/YxsZGmYMPErzWntI51Eejm
-         EB/sPma7uQEkg3LOjIUwJMxLI6OXchbgpNGEZdIFA/C9VZsLp4XF8Jp+5CEYS70d+zNB
-         UnjXcUdhivoNjnX39KUekI1ktK1IyQebKrFjP7M/EywQeaTd0PvWvXMVKSQ1feSzdMBL
-         PLWQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PTAInIvOAbbQQEzaGtCCnYtXybYWotRzUFBIe3E5mu8=;
+        b=Wl0gHR0h2njFhaXvf3T8NiQ2duN1rXjFAZ+XDwJCPQ/D9l7wUvbutzvT79eIhwIhjD
+         A3nVKQPubuBQzQvuTmQIi9s+a0cmfDNj6EORvMH4stTYPhj4lQMOmm4PkQl11xojrpDz
+         LZkTSnZ/lvZmf3L6+jyemoj2EHY92ectOG3WlcZiI0o5azkhBmwnIVJZJpr2wBXksC4/
+         u9SFzPemM6gEElFLy4g58Pl6wI799nZ7xukyCBdyCqg3tyrNlzL4Hq2+q50zLZ52zePG
+         woL7TNjKdGvTbofs1GOGcpV8GW43r+v6Po+gFRPCz7neKE9zEQTwMm+ZIkwHJFlfxHgw
+         OouA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LfRSiUU7kUVFfBn/yyitjedlmqXmIZK52okMfhN2BfA=;
-        b=M29NsSGkKRoZtugXoFSV1TGSlhSG/HiyM1lTb8BzQE1Y6+aHEr8Dyxpt3F6p+syyG3
-         afXEP06Hu4cIKFiCk9Q5+M9yOyR04YZqTyaAvvK5i7iH2+6O+Sn9LU3zRnpbwXjj2f7Z
-         YkQss0Kf+POZlvnTjRPnW3fbib5928N2bkkfWbGh9xqSGs8cgH9Ihbvcr3fF+EKm38B7
-         +HGTEBmZ3cCAPZQigflL7s2h9fiQS70sVEVGJog2g1/YqSgRvt/H25LN74GGthCk+ola
-         R5621uqAQL5akOMuga+LvII7raas4gy5b5Ru8d+WD71H+SFAntz4VfVHgkkVmEBlA6rI
-         Gjjg==
-X-Gm-Message-State: AFqh2krrKZw4Dg+6115oSMrtMYOO9qKIczXQUxmpM7XmJ1afCNs0vE/q
-        YHLSYhf/hjV5Igysib+vYlBT+g==
-X-Google-Smtp-Source: AMrXdXuFpQZs/jqCwM1uA9TwqxOCSHCJeyd7H1H3TzDgTmB5TUUlm/iJ2NhqHBFltsUEFwhJhqGz+w==
-X-Received: by 2002:a05:6512:1515:b0:4a4:8a04:4b37 with SMTP id bq21-20020a056512151500b004a48a044b37mr9700717lfb.32.1672341538090;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PTAInIvOAbbQQEzaGtCCnYtXybYWotRzUFBIe3E5mu8=;
+        b=4dAvb6ky8b794JwIv8COz/Hi4fha3+1LxWf/qbfGAxAZCr8vhQBzBz6bUXobfM0Yz5
+         01rUrDjQHmH0elLZuO87902MV/83ZWJ2HpW8122IOknjfNW+dwJ/lNW7/XAwtd/85GM+
+         hN0x33jdFhAxHjI6A6aDVocT+lHfhQ2ln9AMjjnnS6w3vikBM1tjWaIo9w/ntNODWnOM
+         3wIT6qZPTBZPax2ZVkMLGniCf4YekqZS21ol9s7XErfxEkslW2SfuBDjoo+K5ZMAqOS4
+         lR8jzhhXGOlJAR6k00VEaHxI0yZNCB1qIfc5wAp8Iu//4dVpGYwh4vAQ1tpEPeNfBqBy
+         NfAw==
+X-Gm-Message-State: AFqh2kptzIiMxOols/+RJV1033B/4Zz79Gha/Dz7TyXpfNZTePD4Hatr
+        SoU5v5wAl1lHe0ffhOMlvB54xA==
+X-Google-Smtp-Source: AMrXdXukD56Y3nlQtZstb6C4KzzVKe69hpDGwHFyItiyS5e5cNXjS1wLq1ijanFAxMMxeGuv5vFmmA==
+X-Received: by 2002:a05:6512:708:b0:4ca:f992:6a1d with SMTP id b8-20020a056512070800b004caf9926a1dmr8979025lfs.69.1672341538984;
         Thu, 29 Dec 2022 11:18:58 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.18.57
+        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.18.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 11:18:57 -0800 (PST)
+        Thu, 29 Dec 2022 11:18:58 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -58,10 +59,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 00/27] drm/msm/dpu: wide planes support
-Date:   Thu, 29 Dec 2022 21:18:29 +0200
-Message-Id: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 01/27] drm/msm/dpu: set pdpu->is_rt_pipe early in dpu_plane_sspp_atomic_update()
+Date:   Thu, 29 Dec 2022 21:18:30 +0200
+Message-Id: <20221229191856.3508092-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,70 +76,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It took me a way longer to finish than I expected. And more patches that
-I previously hoped (despite having several patches already being merged
-from v1).
+The function dpu_plane_sspp_atomic_update() updates pdpu->is_rt_pipe
+flag, but after the commit 854f6f1c653b ("drm/msm/dpu: update the qos
+remap only if the client type changes") it sets the flag late, after all
+the qos functions have updated QoS programming. Move the flag update
+back to the place where it happended before the mentioned commit to let
+the pipe be programmed according to its current RT/non-RT state.
 
-This patchset brings in multirect usage to support using two SSPP
-rectangles for a single plane. Full virtual planes support is omitted
-from this pull request, it will come later.
+Fixes: 854f6f1c653b ("drm/msm/dpu: update the qos remap only if the client type changes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-Abhinav, could you please pick up patch 1 for the -fixes? Otherwise QoS
-is not programmed correcly.
-
-Changes since v1 (which was ages ago):
-- Rebased on top of 6.2-rc1
-- Dropped the controversial _dpu_crtc_blend_setup() split patch
-- Renamed dpu_hw_pipe to dpu_hw_sspp
-- Other misc changes
-
-Dmitry Baryshkov (27):
-  drm/msm/dpu: set pdpu->is_rt_pipe early in
-    dpu_plane_sspp_atomic_update()
-  drm/msm/dpu: rename struct dpu_hw_pipe to dpu_hw_sspp
-  drm/msm/dpu: move SSPP allocation to the RM
-  drm/msm/dpu: move SSPP debugfs creation to dpu_kms.c
-  drm/msm/dpu: drop EAGAIN check from dpu_format_populate_layout
-  drm/msm/dpu: move pipe_hw to dpu_plane_state
-  drm/msm/dpu: drop dpu_plane_pipe function
-  drm/msm/dpu: introduce struct dpu_sw_pipe
-  drm/msm/dpu: use dpu_sw_pipe for dpu_hw_sspp callbacks
-  drm/msm/dpu: pass dpu_format to _dpu_hw_sspp_setup_scaler3()
-  drm/msm/dpu: move stride programming to
-    dpu_hw_sspp_setup_sourceaddress
-  drm/msm/dpu: remove dpu_hw_fmt_layout from struct dpu_hw_pipe_cfg
-  drm/msm/dpu: drop src_split and multirect check from
-    dpu_crtc_atomic_check
-  drm/msm/dpu: don't use unsupported blend stages
-  drm/msm/dpu: move the rest of plane checks to dpu_plane_atomic_check()
-  drm/msm/dpu: drop redundant plane dst check from
-    dpu_crtc_atomic_check()
-  drm/msm/dpu: add dpu_hw_pipe_cfg to dpu_plane_state
-  drm/msm/dpu: simplify dpu_plane_validate_src()
-  drm/msm/dpu: rewrite plane's QoS-related functions to take dpu_sw_pipe
-    and dpu_format
-  drm/msm/dpu: populate SmartDMA features in hw catalog
-  drm/msm/dpu: make _dpu_plane_calc_clk accept mode directly
-  drm/msm/dpu: rework dpu_plane_sspp_atomic_update()
-  drm/msm/dpu: rework dpu_plane_atomic_check()
-  drm/msm/dpu: rework plane CSC setting
-  drm/msm/dpu: rework static color fill code
-  drm/msm/dpu: split pipe handling from _dpu_crtc_blend_setup_mixer
-  drm/msm/dpu: add support for wide planes
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 283 ++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |  10 +-
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  10 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 163 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   | 104 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  18 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 735 ++++++++++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |  20 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  22 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  12 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     |  25 +-
- 11 files changed, 685 insertions(+), 717 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 86719020afe2..bfd5be89e8b8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1126,7 +1126,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
+ 	struct drm_crtc *crtc = state->crtc;
+ 	struct drm_framebuffer *fb = state->fb;
+-	bool is_rt_pipe, update_qos_remap;
++	bool is_rt_pipe;
+ 	const struct dpu_format *fmt =
+ 		to_dpu_format(msm_framebuffer_format(fb));
+ 	struct dpu_hw_pipe_cfg pipe_cfg;
+@@ -1138,6 +1138,9 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 	pstate->pending = true;
+ 
+ 	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
++	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
++	pdpu->is_rt_pipe = is_rt_pipe;
++
+ 	_dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
+ 
+ 	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+@@ -1219,14 +1222,8 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 		_dpu_plane_set_ot_limit(plane, crtc, &pipe_cfg);
+ 	}
+ 
+-	update_qos_remap = (is_rt_pipe != pdpu->is_rt_pipe) ||
+-			pstate->needs_qos_remap;
+-
+-	if (update_qos_remap) {
+-		if (is_rt_pipe != pdpu->is_rt_pipe)
+-			pdpu->is_rt_pipe = is_rt_pipe;
+-		else if (pstate->needs_qos_remap)
+-			pstate->needs_qos_remap = false;
++	if (pstate->needs_qos_remap) {
++		pstate->needs_qos_remap = false;
+ 		_dpu_plane_set_qos_remap(plane);
+ 	}
+ 
 -- 
 2.39.0
 
