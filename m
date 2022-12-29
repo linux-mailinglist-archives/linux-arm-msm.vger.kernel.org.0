@@ -2,81 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27E5A65885F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 02:35:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72C1B65886D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 02:42:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbiL2Bfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 20:35:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35542 "EHLO
+        id S232644AbiL2BmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 20:42:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbiL2Bff (ORCPT
+        with ESMTP id S232846AbiL2Bl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 20:35:35 -0500
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7020FCFD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 17:35:34 -0800 (PST)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-1447c7aa004so20322162fac.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 17:35:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GSGVEBKAIlZ/VnnDwbHEfeqaFj6W4dYVfJZG8J1vDEo=;
-        b=gsovTz3yzb1pKKs0dp289XjkaJot2Z40OSbWPF2alhZHXfW++J5gfpK/oO9oqRSEwq
-         gy+ZHb0kLlJeq3lwip/JbZW51xKV6WHIqFcRMLCTJBLOWg0AcMH8pua1smaY5X/auMKw
-         4tda35LCLWxbv6U7m2HJY7+Y142RGe7W3bdRbqpTdmoLIWMORkj3hATr7Z1DZpWqeijc
-         7rgK/OJue/1jwA2047Xf4/YXLAFey+WkMLdWqO/slCMnjQehHux8uTbKNkSCEkVOJpYE
-         /MVLjWkYYfJqMNmZ+Wp/c7DDMtmi42RoH0brk40ndz37MzngbuKkeytx/ybor/xqWFcz
-         absQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GSGVEBKAIlZ/VnnDwbHEfeqaFj6W4dYVfJZG8J1vDEo=;
-        b=p1cmOkr83tasvBP8+W0rUHoW+MkH7DL7N1tmZdhvZ4W8r86ki/IsDUM9PzE21XnTxm
-         BX4yhY6KLyHQTHjFnvhwgJhr1BXwbhG4eEwQAxo3NCkzUpSQGSmetQkxFuTl+FvO9IGx
-         LBLtO73GAVig6okvgxKpnbV1cHCkdCwDV0V/Q5DqXMkkZQh0YfuNjOol8edKWJmQjJHD
-         uyMsucosKf8Id5uamFSvOXHD71+PhC5XWd/8czWViDefyhrhv2NNXzJUZnEE9zsrIcf9
-         X4zD1mcLKyq5BBMi4c6jbie2v4zwktFbIovo1rta1IKzqM2vACrD9ecIuwXKXl0yCY4f
-         hQyg==
-X-Gm-Message-State: AFqh2kqT7Qr5K522Y0O8PNzGjpS+dXXazqbh5TzP6w+OMX+/GZIRgbRJ
-        cyAXC2qqTt0fUYF7EWWbKAXTNcom8Gl8UttU9UaPyEDiQrkOjjSY
-X-Google-Smtp-Source: AMrXdXvMwXPYtYQv54THgA1W7w60L7MLGAdEz2x/u+WyEhE+Cwj1ntLWJ1S9Qxazr8++Wnd8vJezQiZLoOp7G5hQ4Uw=
-X-Received: by 2002:a05:6870:6c0b:b0:13b:96fc:18c1 with SMTP id
- na11-20020a0568706c0b00b0013b96fc18c1mr1778248oab.291.1672277733910; Wed, 28
- Dec 2022 17:35:33 -0800 (PST)
+        Wed, 28 Dec 2022 20:41:58 -0500
+Received: from netrider.rowland.org (netrider.rowland.org [192.131.102.5])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 9E71E12A85
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 17:41:57 -0800 (PST)
+Received: (qmail 291561 invoked by uid 1000); 28 Dec 2022 20:41:56 -0500
+Date:   Wed, 28 Dec 2022 20:41:56 -0500
+From:   Alan Stern <stern@rowland.harvard.edu>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     Oliver Neukum <oneukum@suse.com>, srinivas.kandagatla@linaro.org,
+        mathias.nyman@intel.com, perex@perex.cz, broonie@kernel.org,
+        lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+        robh+dt@kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+Subject: Re: [RFC PATCH 06/14] usb: core: hcd: Introduce USB HCD APIs for
+ interrupter management
+Message-ID: <Y6zwZOquZOTZfnvP@rowland.harvard.edu>
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-7-quic_wcheng@quicinc.com>
+ <Y6ca8IKLK9g497Qv@rowland.harvard.edu>
+ <e1203849-01b4-b196-36f3-76d58dd7c724@quicinc.com>
+ <bf1011a8-c746-c465-f161-f0293409d922@suse.com>
+ <Y6xd1c3s2XPpOqfi@rowland.harvard.edu>
+ <559030ff-112b-e0a8-b278-72f909724496@quicinc.com>
 MIME-Version: 1.0
-References: <20221216230852.21691-1-quic_molvera@quicinc.com>
-In-Reply-To: <20221216230852.21691-1-quic_molvera@quicinc.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 29 Dec 2022 02:37:28 +0100
-Message-ID: <CACRpkdbbFetp0rmOx3k4kaQvFZJWNQGeW+VC_ry3pRcEiDSOfg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] Add pinctrl support for QDU1000/QRU1000 SoCs
-To:     Melody Olvera <quic_molvera@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <559030ff-112b-e0a8-b278-72f909724496@quicinc.com>
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_PASS,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 17, 2022 at 12:09 AM Melody Olvera <quic_molvera@quicinc.com> wrote:
+On Wed, Dec 28, 2022 at 12:31:16PM -0800, Wesley Cheng wrote:
+> Hi Alan,
+> 
+> On 12/28/2022 7:16 AM, Alan Stern wrote:
+> > On Wed, Dec 28, 2022 at 09:59:03AM +0100, Oliver Neukum wrote:
+> > > 
+> > > 
+> > > On 27.12.22 22:07, Wesley Cheng wrote:
+> > > 
+> > > > 
+> > > > Hmmm...maybe I should change the name of the API then to avoid the confusion.  Yes, usb_hcd_flush_endpoint() does ensure that URBs submitted to the EP are stopped.  However, with this offloading concept, we aren't actually submitting URBs from the main processor, so the ep->urb_list will be empty.
+> > > > 
+> > > > This means the usb_hcd_flush_endpoint() API won't actually do anything.  What we need is to ensure that we send a XHCI stop ep command to the controller.
+> > > 
+> > > That is a concept specific to XHCI, yet you are adding a generic
+> > > API. The namin should reflect that. usb_quiesce_endpoint() ?
+> > 
+> > Or even xhci_send_stop_ep_cmd(), which is what the routine is intended
+> > to do.
+> > 
+> 
+> Just to clarify, you're talking about renaming the API that was added in the
+> XHCI driver, correct?
 
-> This patchset adds pinctrl support for the Qualcomm QDU1000 and QRU1000
-> SoCs.
+To be precise, we're talking about renaming your usb_hcd_stop_endpoint() 
+function, although similar arguments probably apply to your 
+usb_free_interrupter(), usb_set_interrupter(), and 
+usb_hcd_get_transfer_resource() routines.
 
-Patches applied!
+You wrote earlier:
 
-Yours,
-Linus Walleij
+	The XHCI driver is the one that maintains the list of 
+	interrupters that are available, so the locking was placed in 
+	the XHCI driver versus adding it in the core hcd layer.
+
+The "stop ep" functionality and other interrupter management things you 
+want to add seem a lot like this locking stuff.  Since you decided to 
+put the locking in the xhci-hcd driver instead of the core HCD layer, it 
+would be logical to do the same with the "stop ep" and other routines.  
+Which means there shouldn't be any need to make changes to hcd.c or 
+include/linux/usb/hcd.h.
+
+Alan Stern
