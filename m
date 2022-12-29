@@ -2,390 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A26E06590FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:19:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 076FA65913A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:45:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231158AbiL2TT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 14:19:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
+        id S233746AbiL2TpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 14:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233881AbiL2TT1 (ORCPT
+        with ESMTP id S229613AbiL2TpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 14:19:27 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C458FD4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:25 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id bt23so12092620lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 11:19:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9Nv4NkHtWv9oa5xn5IkLWqd4Ds0dsJnx10z8NotSWeg=;
-        b=N1AK5qIZU7L3K/kxx3QHZKJLDMtFZfYhU49Fue77X52ZHfU2iCJ189KsHRenCOes+c
-         +yclShKLzXGMrKH6TZ4P4csTGoZ/aIKAqmfdrUko9/FcXiAmwFqP/AoXAU5NNewP+bn2
-         xKDFAhHpTJv2HPeUpvSuyhe4nex8qNR5N5UwgkutJb4nRWLpJA4VnLEoThzr7g8rObN5
-         CjRY9yZkKFOj6WkJ0FECY+j2FMxvuurHgh+IyZRn+8kKQM2Pp7vdUJVdDuHlCPmf8mTA
-         CQDXQu8vBdm18bXCGFqxhL47Tv8OpzuFd1AllnQ57taPgIbUnHoDvZU8mUeX0YF43nj3
-         Z5bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9Nv4NkHtWv9oa5xn5IkLWqd4Ds0dsJnx10z8NotSWeg=;
-        b=tyfvvK5buhVp/K/1AaASFL/A9je+o532lnZkOfnHkDLH3/hfNocI0S5srfKqDd/zPr
-         skubSYUESH5LZpOETlNE6uS0Xx+C4NmX6Sb1IoVLk1ZmIGtvajA01g/URHCNF2Tix1G/
-         VyVQ6U1w3Z5HuZpec1QenvrYwK0qZvTFY4jsINlHF8/1bodUbQEXgiAL+SmVvssehINE
-         QeUUrDKOm/VRjCP9v9139RKoUNo+KJDUvxZ9xlMYpe2M8r7tg7BvpgohIDONloUUB1iF
-         fzJTbh3XjlF+FnellGBim8lY8hJqYpCG+4eCeX+4vLCet8FbibCktQg6XzRYyXx9coZs
-         jiKg==
-X-Gm-Message-State: AFqh2kph+fVopfCI9h9yDkddrB6j8NNct916YRznNHYh1H9VO68hSvjj
-        ixfc2SX1nS79BVBzWFzZvz80FomYnbe8ZkoX
-X-Google-Smtp-Source: AMrXdXsd4rpvgl0adKyDIazh+xJ1MK6ZxKj7HijI5NLFS2tRlgtPySaeRKJTgXYAfvpxQQhX6bQ2GQ==
-X-Received: by 2002:a05:6512:b27:b0:4b6:eaed:f18f with SMTP id w39-20020a0565120b2700b004b6eaedf18fmr9018311lfu.38.1672341564086;
-        Thu, 29 Dec 2022 11:19:24 -0800 (PST)
-Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t13-20020ac24c0d000000b004cb10c151fasm1162295lfq.88.2022.12.29.11.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 11:19:23 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 27/27] drm/msm/dpu: add support for wide planes
-Date:   Thu, 29 Dec 2022 21:18:56 +0200
-Message-Id: <20221229191856.3508092-28-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+        Thu, 29 Dec 2022 14:45:24 -0500
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.82])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355391658A;
+        Thu, 29 Dec 2022 11:45:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672343115;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=XJILgGi4xeHtUxcRU/ADCLqTTzwi+IW/Z/vrPjHewv4=;
+    b=B9ebXYJ7m/b44oyVE+23R8yR3oW+x/C2LwkSgdjK+MW9iYL8nD9qSGRcSaRnu9+yKT
+    zmru2FHhWnYXgDxa+Y1OkHvW7FXo4spRZvB33l1HH7hLV0bQgTyYnUOcRAUsa16WXfB1
+    YmIesRZfL81vqpHVIqmrUepYW6k3ccYHyaawFWyKZ43Mcv6mwmIsaSySSp2IwDkuN25Y
+    wdlqiOUpDu0xyWVSmvMHXBEFS24bcz6HB64AM4/BZZ4W3KwpSVD74IP2s8fFiLZnljly
+    1nPs9WozQy5TJ1LK7TzssuL/gQtjfY4cN1RBKD15byGvJ9XFd0PL3nAmrwGgtlzRKndP
+    4DQg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWyvDI"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
+    with ESMTPSA id Yce349yBTJjFXmD
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 29 Dec 2022 20:45:15 +0100 (CET)
+Date:   Thu, 29 Dec 2022 20:45:14 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] phy: qcom-usb-hs: Add qcom,dp-manual-pullup logic
+Message-ID: <Y63uSgMdP4m6nvhL@gerhold.net>
+References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
+ <20221229183410.683584-3-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221229183410.683584-3-bryan.odonoghue@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Typically SSPP can support rectangle with width up to 2560. However it's
-possible to use multirect feature and split source to use the SSPP to
-output two consecutive rectangles. This commit brings in this capability
-to support wider screen resolutions.
+On Thu, Dec 29, 2022 at 06:34:10PM +0000, Bryan O'Donoghue wrote:
+> Downstream has a flag called qcom,dp-manual-pullup which informs the
+> downstream driver if it should toggle ULPI_MISC_A_VBUSVLDEXTSEL and
+> ULPI_MISC_A_VBUSVLDEXT.
+> 
+> Downstream states:
+> 
+> "qcom,dp-manual-pullup: If present, vbus is not routed to USB
+>         controller/phy and controller driver therefore enables pull-up
+>         explicitly before starting controller using usbcmd run/stop bit."
+> 
+> Working with a system that has both an external Type-C port controller and
+> an internal USB Hub results in a situation where VBUS is not connected to
+> the SoC.
+> 
+> In this case we still need to set the DP pullup.
+> 
+> This patch enables and disables the DP pullup on PHY power_on and power_off
+> respectively if the DT has declared the bool "qcom,enable-vbus-pullup"
+> effectively replicating the downstream logic to the same effect.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |   8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 120 +++++++++++++++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   2 +
- 3 files changed, 114 insertions(+), 16 deletions(-)
+I think ideally you would add an extcon device (or equivalent, e.g.
+power supply) somewhere in your Type-C setup so that the VBUS state is
+set correctly and does not need to be forced permanently. The chipidea
+USB driver will also benefit from this because AFAICT it uses that
+information to power down the USB PHY and controller entirely when
+in device mode and there is no USB cable connected.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index d0d1cb355062..7f0f467dbabd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -415,7 +415,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
- 	enum dpu_sspp sspp_idx;
- 	struct drm_plane_state *state;
- 
--	if (pipe->sspp)
-+	if (!pipe->sspp)
- 		return;
- 
- 	sspp_idx = pipe->sspp->idx;
-@@ -485,6 +485,12 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
- 					   fetch_active,
- 					   &pstate->pipe);
- 
-+		_dpu_crtc_blend_setup_pipe(crtc, plane,
-+					   mixer, cstate->num_mixers,
-+					   stage_cfg, pstate->stage, 1,
-+					   fetch_active,
-+					   &pstate->r_pipe);
-+
- 		/* blend config update */
- 		for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++) {
- 			_dpu_crtc_setup_blend_cfg(mixer + lm_idx, pstate, format);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 2851f40cb915..786b656cc45d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -365,6 +365,9 @@ static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
- 	struct dpu_plane *pdpu = to_dpu_plane(plane);
- 	struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
- 
-+	if (!pipe->sspp)
-+		return;
-+
- 	memset(&pipe_qos_cfg, 0, sizeof(pipe_qos_cfg));
- 
- 	if (flags & DPU_PLANE_QOS_VBLANK_CTRL) {
-@@ -647,6 +650,9 @@ static int _dpu_plane_color_fill_pipe(struct dpu_plane_state *pstate,
- {
- 	struct dpu_hw_pipe_cfg pipe_cfg;
- 
-+	if (!pipe->sspp)
-+		return 0;
-+
- 	/* update sspp */
- 	if (!pipe->sspp->ops.setup_solidfill)
- 		return 0;
-@@ -701,6 +707,8 @@ static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 
- 	/* update sspp */
- 	_dpu_plane_color_fill_pipe(pstate, &pstate->pipe, &pstate->pipe_cfg, fill_color, fmt);
-+
-+	_dpu_plane_color_fill_pipe(pstate, &pstate->r_pipe, &pstate->r_pipe_cfg, fill_color, fmt);
- }
- 
- int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
-@@ -907,11 +915,13 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
- static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		struct dpu_sw_pipe *pipe,
- 		struct dpu_hw_pipe_cfg *pipe_cfg,
--		uint32_t max_linewidth,
- 		const struct dpu_format *fmt)
- {
- 	uint32_t min_src_size;
- 
-+	if (!pipe->sspp)
-+		return 0;
-+
- 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
- 
- 	if (DPU_FORMAT_IS_YUV(fmt) &&
-@@ -942,12 +952,6 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
- 				DRM_RECT_ARG(&pipe_cfg->dst_rect));
- 		return -EINVAL;
--
--	/* check decimated source width */
--	} else if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
--		DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
--				DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
--		return -E2BIG;
- 	}
- 
- 	return 0;
-@@ -961,9 +965,12 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 	int ret = 0, min_scale;
- 	struct dpu_plane *pdpu = to_dpu_plane(plane);
- 	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
-+	struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
- 	const struct drm_crtc_state *crtc_state = NULL;
- 	const struct dpu_format *fmt;
- 	struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-+	struct dpu_hw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
- 	struct drm_rect fb_rect = { 0 };
- 	uint32_t max_linewidth;
- 	unsigned int rotation;
-@@ -987,8 +994,11 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 	if (!new_plane_state->visible)
- 		return 0;
- 
--	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
--	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-+	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-+	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+	r_pipe->sspp = NULL;
- 
- 	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
- 	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
-@@ -1022,7 +1032,49 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 
- 	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
- 
--	ret = dpu_plane_atomic_check_pipe(pdpu, &pstate->pipe, pipe_cfg, max_linewidth, fmt);
-+	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-+		/* struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state); */
-+
-+		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-+			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-+					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-+			return -E2BIG;
-+			/*
-+			 * FIXME: it's not possible to check if sourcesplit is supported,
-+			 * LMs is not assigned yet. It happens in dpu_encoder_virt_mode_set
-+			 */
-+		} else if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
-+			   drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
-+			   (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
-+			    !test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features)) ||
-+			   /* cstate->num_mixers < 2 ||
-+			   !test_bit(DPU_MIXER_SOURCESPLIT, &cstate->mixers[0].hw_lm->cap->features) || */
-+			   DPU_FORMAT_IS_YUV(fmt)) {
-+			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
-+					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-+			return -E2BIG;
-+		}
-+
-+		/* Use multirect for wide plane. We do not support dynamic assignment of SSPPs, so we know the configuration. */
-+		pipe->multirect_index = DPU_SSPP_RECT_0;
-+		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-+
-+		r_pipe->sspp = pipe->sspp;
-+		r_pipe->multirect_index = DPU_SSPP_RECT_1;
-+		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-+
-+		*r_pipe_cfg = *pipe_cfg;
-+		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-+		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-+		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-+		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-+	}
-+
-+	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
-+	if (ret)
-+		return ret;
-+
-+	ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
- 	if (ret)
- 		return ret;
- 
-@@ -1091,8 +1143,10 @@ void dpu_plane_flush(struct drm_plane *plane)
- 	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
- 		/* force 100% alpha */
- 		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
--	else
-+	else {
- 		dpu_plane_flush_csc(pdpu, &pstate->pipe);
-+		dpu_plane_flush_csc(pdpu, &pstate->r_pipe);
-+	}
- 
- 	/* flag h/w flush complete */
- 	if (plane->state)
-@@ -1127,6 +1181,9 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
- 	struct drm_plane_state *state = plane->state;
- 	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
- 
-+	if (!pipe->sspp)
-+		return;
-+
- 	if (layout && pipe->sspp->ops.setup_sourceaddress) {
- 		trace_dpu_plane_set_scanout(pipe, layout);
- 		pipe->sspp->ops.setup_sourceaddress(pipe, layout);
-@@ -1204,13 +1261,14 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	struct drm_plane_state *state = plane->state;
- 	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
- 	struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
- 	struct drm_crtc *crtc = state->crtc;
- 	struct drm_framebuffer *fb = state->fb;
- 	bool is_rt_pipe;
- 	const struct dpu_format *fmt =
- 		to_dpu_format(msm_framebuffer_format(fb));
- 	struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
--
-+	struct dpu_hw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
- 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
- 	struct msm_gem_address_space *aspace = kms->base.aspace;
- 	struct dpu_hw_fmt_layout layout;
-@@ -1238,12 +1296,22 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 				   drm_mode_vrefresh(&crtc->mode),
- 				   layout_valid ? &layout: NULL);
- 
-+	dpu_plane_sspp_update_pipe(plane, r_pipe, r_pipe_cfg, fmt,
-+				   drm_mode_vrefresh(&crtc->mode),
-+				   layout_valid ? &layout: NULL);
-+
- 	if (pstate->needs_qos_remap)
- 		pstate->needs_qos_remap = false;
- 
- 	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, pipe_cfg);
- 
- 	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, pipe_cfg);
-+
-+	if (r_pipe->sspp) {
-+		pstate->plane_fetch_bw += _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, r_pipe_cfg);
-+
-+		pstate->plane_clk = max(pstate->plane_clk, _dpu_plane_calc_clk(&crtc->mode, r_pipe_cfg));
-+	}
- }
- 
- static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-@@ -1286,6 +1354,8 @@ static void dpu_plane_destroy(struct drm_plane *plane)
- 		pstate = to_dpu_plane_state(plane->state);
- 		_dpu_plane_set_qos_ctrl(plane, &pstate->pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
- 
-+		_dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
-+
- 		mutex_destroy(&pdpu->lock);
- 
- 		/* this will destroy the states as well */
-@@ -1366,11 +1436,26 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
- 		const struct drm_plane_state *state)
- {
- 	const struct dpu_plane_state *pstate = to_dpu_plane_state(state);
-+	const struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	const struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-+	const struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-+	const struct dpu_hw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
- 
- 	drm_printf(p, "\tstage=%d\n", pstate->stage);
--	drm_printf(p, "\tsspp=%s\n", pstate->pipe.sspp->cap->name);
--	drm_printf(p, "\tmultirect_mode=%s\n", dpu_get_multirect_mode(pstate->pipe.multirect_mode));
--	drm_printf(p, "\tmultirect_index=%s\n", dpu_get_multirect_index(pstate->pipe.multirect_index));
-+
-+	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
-+	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
-+	drm_printf(p, "\tmultirect_index[0]=%s\n", dpu_get_multirect_index(pipe->multirect_index));
-+	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
-+	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
-+
-+	if (r_pipe->sspp) {
-+		drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
-+		drm_printf(p, "\tmultirect_mode[1]=%s\n", dpu_get_multirect_mode(r_pipe->multirect_mode));
-+		drm_printf(p, "\tmultirect_index[1]=%s\n", dpu_get_multirect_index(r_pipe->multirect_index));
-+		drm_printf(p, "\tsrc[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&r_pipe_cfg->src_rect));
-+		drm_printf(p, "\tdst[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&r_pipe_cfg->dst_rect));
-+	}
- }
- 
- static void dpu_plane_reset(struct drm_plane *plane)
-@@ -1400,6 +1485,10 @@ static void dpu_plane_reset(struct drm_plane *plane)
- 	}
- 
- 	pstate->pipe.sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
-+	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
-+	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+
-+	pstate->r_pipe.sspp = NULL;
- 
- 	__drm_atomic_helper_plane_reset(plane, &pstate->base);
- }
-@@ -1416,6 +1505,7 @@ void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
- 
- 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
- 	_dpu_plane_set_qos_ctrl(plane, &pstate->pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
-+	_dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
- #endif
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index 95031e8b00f8..a0b98f29a3bb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -36,7 +36,9 @@ struct dpu_plane_state {
- 	bool pending;
- 
- 	struct dpu_sw_pipe pipe;
-+	struct dpu_sw_pipe r_pipe;
- 	struct dpu_hw_pipe_cfg pipe_cfg;
-+	struct dpu_hw_pipe_cfg r_pipe_cfg;
- 
- 	u64 plane_fetch_bw;
- 	u64 plane_clk;
--- 
-2.39.0
+But I agree that setting up a proper extcon device can be difficult,
+especially during early bring-up where you just want USB to work and
+don't care much about power saving. So I still think that making USB
+work without extcon (like your patch does) is a useful change.
 
+For the implementation, I think this flag should effectively emulate the
+logic that is currently used if you assign an extcon, except that the
+VBUS state is permanently forced active. Right now your
+qcom_usb_hs_phy_enable_dp_pullup() function kind of duplicates logic
+that already exists in the driver, which already has code to set
+VBUSVLDEXTSEL and VBUSVLDEXT.
+
+qcom_usb_hs_phy_set_mode() should be modified to use the else branch (as
+if vbus_edev was set), which will set VBUSVLDEXTSEL for you. Without
+extcon you currently use the if (!uphy->vbus_edev) branch, which will
+enable the internal VBUS detection in the PHY (the ULPI_INT_SESS_VALID
+code). This does not make any sense IMO if VBUS is not connected to the
+SoC.
+
+And then you basically just need to call qcom_usb_hs_phy_vbus_notifier()
+to set the VBUSVLDEXT forcefully (rather than relying on the extcon
+detection).
+
+An alternative that I've occasionally used for early bring-up is to
+simply use a dummy extcon driver [1] that permanently reports active
+VBUS. The end result is the same. While it's clearly a hack perhaps this
+makes it a bit more clear that ideally you really should try to assign
+an extcon device, to avoid keeping the USB controller and PHY on
+permanently.
+
+Thanks,
+Stephan
+
+[1]: https://github.com/msm8916-mainline/linux/commit/3d029e6d4303e125aa013c501308d2d98e3cdc89
+
+> ---
+>  drivers/phy/qualcomm/phy-qcom-usb-hs.c | 36 ++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+> index 53e46c220a3aa..45c94f6722c66 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+> @@ -37,6 +37,7 @@ struct qcom_usb_hs_phy {
+>  	struct ulpi_seq *init_seq;
+>  	struct extcon_dev *vbus_edev;
+>  	struct notifier_block vbus_notify;
+> +	u8 enable_dp_pullup:1;
+>  };
+>  
+>  static int qcom_usb_hs_phy_set_mode(struct phy *phy,
+> @@ -105,6 +106,23 @@ qcom_usb_hs_phy_vbus_notifier(struct notifier_block *nb, unsigned long event,
+>  	return ulpi_write(uphy->ulpi, addr, ULPI_MISC_A_VBUSVLDEXT);
+>  }
+>  
+> +static int qcom_usb_hs_phy_enable_dp_pullup(struct ulpi *ulpi, bool enable)
+> +{
+> +	u8 addr;
+> +	int ret;
+> +
+> +	if (enable)
+> +		addr = ULPI_SET(ULPI_MISC_A);
+> +	else
+> +		addr = ULPI_CLR(ULPI_MISC_A);
+> +
+> +	ret = ulpi_write(ulpi, addr, ULPI_MISC_A_VBUSVLDEXTSEL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return ulpi_write(ulpi, addr, ULPI_MISC_A_VBUSVLDEXT);
+> +}
+> +
+>  static int qcom_usb_hs_phy_power_on(struct phy *phy)
+>  {
+>  	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
+> @@ -154,6 +172,12 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+>  			goto err_ulpi;
+>  	}
+>  
+> +	if (uphy->enable_dp_pullup) {
+> +		ret = qcom_usb_hs_phy_enable_dp_pullup(ulpi, true);
+> +		if (ret)
+> +			goto err_ulpi;
+> +	}
+> +
+>  	if (uphy->vbus_edev) {
+>  		state = extcon_get_state(uphy->vbus_edev, EXTCON_USB);
+>  		/* setup initial state */
+> @@ -180,10 +204,19 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+>  static int qcom_usb_hs_phy_power_off(struct phy *phy)
+>  {
+>  	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
+> +	struct ulpi *ulpi = uphy->ulpi;
+> +	int ret;
+>  
+>  	if (uphy->vbus_edev)
+>  		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
+>  					   &uphy->vbus_notify);
+> +
+> +	if (uphy->enable_dp_pullup) {
+> +		ret = qcom_usb_hs_phy_enable_dp_pullup(ulpi, false);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	regulator_disable(uphy->v3p3);
+>  	regulator_disable(uphy->v1p8);
+>  	clk_disable_unprepare(uphy->sleep_clk);
+> @@ -229,6 +262,9 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
+>  	/* NUL terminate */
+>  	uphy->init_seq[size / 2].addr = uphy->init_seq[size / 2].val = 0;
+>  
+> +	if (of_property_read_bool(ulpi->dev.of_node, "qcom,dp-manual-pullup"))
+> +		uphy->enable_dp_pullup = 1;
+> +
+>  	uphy->ref_clk = clk = devm_clk_get(&ulpi->dev, "ref");
+>  	if (IS_ERR(clk))
+>  		return PTR_ERR(clk);
+> -- 
+> 2.34.1
+> 
