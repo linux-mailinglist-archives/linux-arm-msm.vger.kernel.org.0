@@ -2,98 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65D7E658CB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 13:27:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85370658CC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 13:44:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbiL2M1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 07:27:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59956 "EHLO
+        id S229919AbiL2Mo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 07:44:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbiL2M1k (ORCPT
+        with ESMTP id S229773AbiL2Mox (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 07:27:40 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E57B263D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 04:27:39 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so18787923pjj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 04:27:39 -0800 (PST)
+        Thu, 29 Dec 2022 07:44:53 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7507C1260F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 04:44:51 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id fc4so44654849ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 04:44:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s+hGkOUg+wK/FXNAA9vMwR3FDtng1n8avMahOBdivI0=;
-        b=fk+T0PaTmOXzRK9XYWY2hSjeh9ewA/AnPRGtJtA5sdXcNX1Qg736psLrNk1Dx/S37c
-         Ln+BtxvfFb9Czi39b/rLMQp3elaTp9dxJ9rzFIjB7tTstXgcwMpY9g/ZCfEanptuicpU
-         kJQIfwnvjcD0Ececa70O9GR9U+s2Tz5HJ4w5/wfO1ec3uNLdjkkl6W6AhgWa3es/1Gi9
-         2EmyXC0c3Q407PU2ZBeJ5unmA0pxRVc2dIH87MVikPRp/ddxhDF+JrlYZtPgN/g/C7bh
-         G2SwpkEc0AH8Q6xpvx9GznKSJloIq4gKeHXkZWOFvcc2CYLkXKc6amplmvxHaGaySNiO
-         vk6g==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0TFFrUt4LQqfMqFPZcUCojOx9RB3FN3rW7wfQoSwSrA=;
+        b=TeL5UAmg/6zgmU3Ix28zmrwTqBsHNJFuE74+7sO8tbSEZvyyync000drkXXuU7p7Qu
+         uWs8ItZm1xA60PyUHCQ4vjfgR1btDJlWhhOXEICIjjAByseTXkqiBDiLXuzM0xSHEAPG
+         PscC83Wj4yyfgO8RPMXih7sZs+cuK3LU30TzeHlUxLr8PcFcr89x4uzUpAtNHidk4j/4
+         X3x7y8dy69BrnH2ecBlszIw+3IZjK6mHfeppnulHSfG9PnIdZjrWDvS6aNAvRNOJXV++
+         3yFKJs46Mj3QS6GIEamPrFslAvLRuROgSJs+z7geztMtCTPcDD5mcWCA/PbzaiHl6c3O
+         r9pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s+hGkOUg+wK/FXNAA9vMwR3FDtng1n8avMahOBdivI0=;
-        b=0k9YnsQ9ozfGpstMqfugDsK74lc4YytMmTqmX/fkpVCgYRIsoIjvlWeGsdd4FV7PE9
-         iaUW+KfSF0vjXvkwFwOdbNX6DA5A6RWT0U5sw1XMN8Uza8SYKxDrl+Y3VQdGSrisSUFF
-         elAcssMy6xia52uOkMs9hdT+UFwF56CWmKBeVWNCVUUfOIcVSwoN7c1QRoQ9GYahFrRC
-         B8CrOXlykqtpj8jvo/OjhaOb+9qBYkcF+8DWYrVktQAH/Xi9YacX3IxYkya0imfMu110
-         SIrUyunEn4pYvXUcfQxrR8dLz6xn3XW3JOBwdaghp1ajjxDNtFTpRF2M39soV6JjbZvd
-         HxcQ==
-X-Gm-Message-State: AFqh2krb7EdXIWTn2ccaYh5wWoq13gLXBJZBuOJChX+S35AQQNIvQkHu
-        ZeHgUCq+RPz7xGzKxoC5+nlF4Q==
-X-Google-Smtp-Source: AMrXdXtYfiTQbHvumGeWgluI8gh376S9KCxYj0ngtAa2Ugsj1FXEFBVx0jmUS1ZbGaNFN9gwtiRQWw==
-X-Received: by 2002:a17:902:dad0:b0:191:3ec0:9166 with SMTP id q16-20020a170902dad000b001913ec09166mr46091427plx.6.1672316858863;
-        Thu, 29 Dec 2022 04:27:38 -0800 (PST)
-Received: from T480 (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id g21-20020a170902d1d500b0019262dfa3ecsm11328878plb.112.2022.12.29.04.27.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Dec 2022 04:27:38 -0800 (PST)
-Date:   Thu, 29 Dec 2022 20:27:30 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 13/20] thermal/drivers/tsens: Drop single-cell code
- for msm8939
-Message-ID: <20221229122729.GC18875@T480>
-References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
- <20221229030106.3303205-14-dmitry.baryshkov@linaro.org>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0TFFrUt4LQqfMqFPZcUCojOx9RB3FN3rW7wfQoSwSrA=;
+        b=6BMiBLiaDyW0hn6kd6XO4BNyKiCxGezcVjBws54GOFFpCxDmWxYR23b96QJIRdh6hz
+         pnaf7xAcuY218YvLCZzq1qomyVNlWITmpnAp/Pi3jVTRIhQzifH3dmv5bzPwH+BTRTrt
+         SKevkm2oTcVh2/ReR1WsGND4x4n5+0X9ay73mP/HO1wzgg+frkVUFiuz7ilAMxmyxkZo
+         AgY2pKMSY+6bZLHG/LYVKDbejcAJG7PQ54Gj4jKcpDQOp4npZ2c+CMgFs5Oet1YoBZAo
+         N8UnRLljBrluU6zlacTUMz9kFXt9P4EHHMYJiBLJOXsJuhoFLwqSZ02GNfaKdvQKY7zU
+         jR4w==
+X-Gm-Message-State: AFqh2kqLw30yRiAQPjEpS/07E+8TbH1zAtwf5gLn3sQlKot25pBfBCVp
+        CrBmX3CRlnDV553GOZIAaYxoxw==
+X-Google-Smtp-Source: AMrXdXssBXJ2oUDdvTt+u35WNx5VyF+QRRodDl/adWaxq1LEm/yYsY4FbIIzuvo6lICBCR3ElLA3BA==
+X-Received: by 2002:a17:906:18e2:b0:7c1:4bb:b157 with SMTP id e2-20020a17090618e200b007c104bbb157mr30451069ejf.4.1672317889933;
+        Thu, 29 Dec 2022 04:44:49 -0800 (PST)
+Received: from planet9.chello.ie (2001-1c06-2302-5600-12a8-8cf4-e3f6-f90f.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f])
+        by smtp.gmail.com with ESMTPSA id 15-20020a170906318f00b0078db5bddd9csm8483461ejy.22.2022.12.29.04.44.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 04:44:49 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_mkrishn@quicinc.com, andersson@kernel.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/1] Fixup documentation for dsi-phy-28nm
+Date:   Thu, 29 Dec 2022 12:44:37 +0000
+Message-Id: <20221229124438.504770-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229030106.3303205-14-dmitry.baryshkov@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 05:00:59AM +0200, Dmitry Baryshkov wrote:
-> There is no dtsi file for msm8939 in the kernel sources. Drop the
-> compatibility with unofficial dtsi and remove support for handling the
-> single-cell calibration data on msm8939.
-> 
-> Cc: Shawn Guo <shawn.guo@linaro.org>
+V3:
+Moves change to last item in list so as not to break-up grouping of reg/reg-names
 
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
+V2:
+This is the one remaining patch I had from a previous series for
+mdss-dsi-ctrl and the dsi-phy. The mdss-dsi-ctrl set became a bigger so I
+split out the 28nm phy fixes.
 
-> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I'm resubmitting with Dmitry's RB as a standalone.
+
+Old: https://lore.kernel.org/all/20220630120845.3356144-1-bryan.odonoghue@linaro.org/
+
+Bryan O'Donoghue (1):
+  dt-bindings: msm: dsi-phy-28nm: Add missing
+    qcom,dsi-phy-regulator-ldo-mode
+
+ .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml         | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+-- 
+2.34.1
+
