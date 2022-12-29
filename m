@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C511C6588FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 04:01:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2FDA658901
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 04:01:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233061AbiL2DBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 22:01:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57766 "EHLO
+        id S231183AbiL2DBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Dec 2022 22:01:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233073AbiL2DBY (ORCPT
+        with ESMTP id S232996AbiL2DB2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 22:01:24 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C671262D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:22 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id g13so25903159lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:22 -0800 (PST)
+        Wed, 28 Dec 2022 22:01:28 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64ED12A96
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:23 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id 1so25909091lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Dec 2022 19:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fFMgmMV7FQ7qxfSHjmq0dTPxGyh/y9BAB4HqOoms1Wg=;
-        b=VRY1xuXuHYNyebH+Cy7s6oKjNB3iktCSlqVK/Q+twBBnW5c/crxmM/XDcRQoROHPle
-         ImEx00lxnOMeQnMkPlXowmQlQqHRX66WWbePtrysvfDmpbE4EKBg6vuaJK5SUsy0BQe2
-         3IrsyJ5Od7SXAkVrRYUqoJQgvFFAwMc7dIouFSUucd4dXXgYZpy18n4EqvGUn0XST3IR
-         nAl66axobm4+zUmMIIy7jFW5H9QzmqRkk5bkCjgV9dlMMILNnl4Qj+kdc7G9syhcOlC2
-         sKVKWxIYKpi9albW2IP7OyT4bS97Ex13ZQMqNwhvGxsR6EWOV7/hcH8XQ3A1ItddoO0x
-         vklg==
+        bh=GH0PwA5vfkofJztQV4SK2pw+e40R1Lbej9mCPr9ocw8=;
+        b=lyEOC4HY/deWOSwatwc5N/UVgKsdd8KYq8lJR1ZUPcytt/8DHhtiNWbhdWOZLK2RNS
+         tvFWxIn0yhw0hCRHl51+VfIBZY3lAcF6Kr6VHbxKCdatTPAIJyK/GMbGLway5ZZZd1+b
+         DkVFP+vz9Gst8FjplMarDT7NqKaSgZnGXMFHzmIDOg8qlVsNvPp+d5L2BtL8CYQ60Pt8
+         6HzXVUPWQz8ySnDSvtmJSZmyuN69KOYVYJOWzBvB0fl8m38xqNa+cUL/SGaLD5ztcgFC
+         ooAhmkAfRB1VFdIm4NvUS04IwTf+PhPnVOxx278rXyRWy9FUsQpOb0G5GWzEQd2HQKHE
+         xZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fFMgmMV7FQ7qxfSHjmq0dTPxGyh/y9BAB4HqOoms1Wg=;
-        b=NuaJ13tN7J/meuX0PWYDuUJzVjTNRBVI+DsXq2EzCKa/ZO2iF/Pem08RqcPIPmE54j
-         VHYmfzPEf320Yf3HO3NUQcmxDf+k5rT1+R2wMAHGA051X7+lK0YZOhkRWna4YUjc3Sl/
-         BeAVBOpQLdYNendr64xhrgscn4KctUko8K+HpP9yNUC8D4a95lIhSqjbFbdD9pLZDS5V
-         DbCnnR25pUPoS3gVFq4Xe/YrZknoJK9wK1GYDdJXZBPnnpZYsqYlxiwIisfGuQlWnVp6
-         tRd1lToEB0qY225HANk0UeCClCjWFvsuKcb/C9j8juxDNU4gNr6gbRz5ylefa1CIZEHi
-         AMgg==
-X-Gm-Message-State: AFqh2kpKmZYj5jliG+5GiOM7YSyFYkCfwk1n4afvE0e3E9NNPhxvPbcC
-        /1mgaLclQ8lLWZeMqyOGRcx9LA==
-X-Google-Smtp-Source: AMrXdXtWoDD2M20lYUtrixcqsweDKpEaGMcX/IkpCNfgZ45AA13oiUVm8iSsrGIZf6Fc+5lBMJtBFQ==
-X-Received: by 2002:a19:7411:0:b0:4a4:68b9:19f6 with SMTP id v17-20020a197411000000b004a468b919f6mr7077804lfe.30.1672282882173;
-        Wed, 28 Dec 2022 19:01:22 -0800 (PST)
+        bh=GH0PwA5vfkofJztQV4SK2pw+e40R1Lbej9mCPr9ocw8=;
+        b=MsuGa8BSn0BBfUuxk02YDP7hZfUp4pl/lqcSuD3eXb/IUU/IdErrSEDOpyS3a7aG7p
+         FVeDTw7TQlZZDBAZAZrKIXnFh1M26rqbhC8IcoNs9o2ZZRoD/3hNax5bF3ci5IXcFEFb
+         IS7DnO4SXmp1BPFQDb5w1c9KdLm+gADAC19IrGnzUJq9N5xGt3MXj09mWr/lKg/Ok/lx
+         HD19bjYlbnUXWmvqt/OQC3p3ohH4y5AVcfD5f8C+s0syzXF7iJNcEchqk2EfHWtImR0s
+         YPW9s88S35VS+R74G2CUtdA2H+XtReUmVzOWChzJn+T1n+ImhglarC6wuM4E3JJ1ek6A
+         sjWQ==
+X-Gm-Message-State: AFqh2kqrzBLyiDivGSSipNm2ZkK4NCYJHyHrxhWXvAQD95o88J8rrebp
+        mGx1LC+d/aP//h59EQKNK0SXZA==
+X-Google-Smtp-Source: AMrXdXuDVI21Ex1K34nUMUJweMXilQp7x3eikZxQVLLD8djbaH7Hix6pnea8dp4Ib7QUvBE1J+Clhg==
+X-Received: by 2002:ac2:414b:0:b0:4b5:3505:d7f9 with SMTP id c11-20020ac2414b000000b004b53505d7f9mr7045077lfi.35.1672282883089;
+        Wed, 28 Dec 2022 19:01:23 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b11-20020a056512024b00b004b57277474esm2883070lfo.106.2022.12.28.19.01.21
+        by smtp.gmail.com with ESMTPSA id b11-20020a056512024b00b004b57277474esm2883070lfo.106.2022.12.28.19.01.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 19:01:21 -0800 (PST)
+        Wed, 28 Dec 2022 19:01:22 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -65,9 +65,9 @@ Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
         Shawn Guo <shawn.guo@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v5 17/20] arm64: dts: qcom: msm8976: specify per-sensor calibration cells
-Date:   Thu, 29 Dec 2022 05:01:03 +0200
-Message-Id: <20221229030106.3303205-18-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 18/20] arm64: dts: qcom: qcs404: specify per-sensor calibration cells
+Date:   Thu, 29 Dec 2022 05:01:04 +0200
+Message-Id: <20221229030106.3303205-19-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
 References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
@@ -75,8 +75,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,149 +87,147 @@ device node rather than parsing the whole data blob in the driver.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 153 +++++++++++++++++++++++++-
- 1 file changed, 149 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 145 ++++++++++++++++++++++++++-
+ 1 file changed, 140 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index 05dcb30b0779..2d360d05aa5e 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -481,8 +481,129 @@ qfprom: qfprom@a4000 {
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index a5324eecb50a..84ff9df2b904 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -366,13 +366,126 @@ qfprom: qfprom@a4000 {
+ 			reg = <0x000a4000 0x1000>;
  			#address-cells = <1>;
  			#size-cells = <1>;
- 
--			tsens_caldata: caldata@218 {
--				reg = <0x218 0x18>;
-+			tsens_base1: base1@218 {
-+				reg = <0x218 1>;
-+				bits = <0 8>;
-+			};
+-			tsens_caldata: caldata@d0 {
+-				reg = <0x1f8 0x14>;
+-			};
+ 			cpr_efuse_speedbin: speedbin@13c {
+ 				reg = <0x13c 0x4>;
+ 				bits = <2 3>;
+ 			};
 +
-+			tsens_s0_p1: s0-p1@219 {
-+				reg = <0x219 0x1>;
++			tsens_s0_p1: s0-p1@1f8 {
++				reg = <0x1f8 0x1>;
 +				bits = <0 6>;
 +			};
 +
-+			tsens_s0_p2: s0-p2@219 {
-+				reg = <0x219 0x2>;
++			tsens_s0_p2: s0-p2@1f8 {
++				reg = <0x1f8 0x2>;
 +				bits = <6 6>;
 +			};
 +
-+			tsens_s1_p1: s1-p1@21a {
-+				reg = <0x21a 0x2>;
++			tsens_s1_p1: s1-p1@1f9 {
++				reg = <0x1f9 0x2>;
 +				bits = <4 6>;
 +			};
 +
-+			tsens_s1_p2: s1-p2@21b {
-+				reg = <0x21b 0x1>;
++			tsens_s1_p2: s1-p2@1fa {
++				reg = <0x1fa 0x1>;
 +				bits = <2 6>;
 +			};
 +
-+			tsens_s2_p1: s2-p1@21c {
-+				reg = <0x21c 0x1>;
++			tsens_s2_p1: s2-p1@1fb {
++				reg = <0x1fb 0x1>;
 +				bits = <0 6>;
 +			};
 +
-+			tsens_s2_p2: s2-p2@21c {
-+				reg = <0x21c 0x2>;
++			tsens_s2_p2: s2-p2@1fb {
++				reg = <0x1fb 0x2>;
 +				bits = <6 6>;
 +			};
 +
-+			tsens_s3_p1: s3-p1@21d {
-+				reg = <0x21d 0x2>;
++			tsens_s3_p1: s3-p1@1fc {
++				reg = <0x1fc 0x2>;
 +				bits = <4 6>;
 +			};
 +
-+			tsens_s3_p2: s3-p2@21e {
-+				reg = <0x21e 0x1>;
++			tsens_s3_p2: s3-p2@1fd {
++				reg = <0x1fd 0x1>;
 +				bits = <2 6>;
 +			};
 +
-+			tsens_base2: base2@220 {
-+				reg = <0x220 1>;
-+				bits = <0 8>;
-+			};
-+
-+			tsens_s4_p1: s4-p1@221 {
-+				reg = <0x221 0x1>;
++			tsens_s4_p1: s4-p1@1fe {
++				reg = <0x1fe 0x1>;
 +				bits = <0 6>;
 +			};
 +
-+			tsens_s4_p2: s4-p2@221 {
-+				reg = <0x221 0x2>;
++			tsens_s4_p2: s4-p2@1fe {
++				reg = <0x1fe 0x2>;
 +				bits = <6 6>;
 +			};
 +
-+			tsens_s5_p1: s5-p1@222 {
-+				reg = <0x222 0x2>;
-+				bits = <4 6>;
-+			};
-+
-+			tsens_s5_p2: s5-p2@223 {
-+				reg = <0x224 0x1>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s6_p1: s6-p1@224 {
-+				reg = <0x224 0x1>;
++			tsens_s5_p1: s5-p1@200 {
++				reg = <0x200 0x1>;
 +				bits = <0 6>;
 +			};
 +
-+			tsens_s6_p2: s6-p2@224 {
-+				reg = <0x224 0x2>;
++			tsens_s5_p2: s5-p2@200 {
++				reg = <0x200 0x2>;
 +				bits = <6 6>;
 +			};
 +
-+			tsens_s7_p1: s7-p1@225 {
-+				reg = <0x225 0x2>;
++			tsens_s6_p1: s6-p1@201 {
++				reg = <0x201 0x2>;
 +				bits = <4 6>;
 +			};
 +
-+			tsens_s7_p2: s7-p2@226 {
-+				reg = <0x226 0x2>;
++			tsens_s6_p2: s6-p2@202 {
++				reg = <0x202 0x1>;
 +				bits = <2 6>;
 +			};
 +
-+			tsens_mode: mode@228 {
-+				reg = <0x228 1>;
++			tsens_s7_p1: s7-p1@203 {
++				reg = <0x203 0x1>;
++				bits = <0 6>;
++			};
++
++			tsens_s7_p2: s7-p2@203 {
++				reg = <0x203 0x2>;
++				bits = <6 6>;
++			};
++
++			tsens_s8_p1: s8-p1@204 {
++				reg = <0x204 0x2>;
++				bits = <4 6>;
++			};
++
++			tsens_s8_p2: s8-p2@205 {
++				reg = <0x205 0x1>;
++				bits = <2 6>;
++			};
++
++			tsens_s9_p1: s9-p1@206 {
++				reg = <0x206 0x1>;
++				bits = <0 6>;
++			};
++
++			tsens_s9_p2: s9-p2@206 {
++				reg = <0x206 0x2>;
++				bits = <6 6>;
++			};
++
++			tsens_mode: mode@208 {
++				reg = <0x208 1>;
 +				bits = <0 3>;
 +			};
 +
-+			tsens_s8_p1: s8-p1@228 {
-+				reg = <0x228 0x2>;
-+				bits = <3 6>;
++			tsens_base1: base1@208 {
++				reg = <0x208 2>;
++				bits = <3 8>;
 +			};
 +
-+			tsens_s8_p2: s8-p2@229 {
-+				reg = <0x229 0x1>;
-+				bits = <1 6>;
++			tsens_base2: base2@208 {
++				reg = <0x209 2>;
++				bits = <3 8>;
 +			};
 +
-+			tsens_s9_p1: s9-p1@229 {
-+				reg = <0x229 0x2>;
-+				bits = <7 6>;
-+			};
-+
-+			tsens_s9_p2: s9-p2@22a {
-+				reg = <0x22a 0x2>;
-+				bits = <5 6>;
-+			};
-+
-+			tsens_s10_p1: s10-p1@22b {
-+				reg = <0x22b 0x2>;
-+				bits = <3 6>;
-+			};
-+
-+			tsens_s10_p2: s10-p2@22c {
-+				reg = <0x22c 0x1>;
-+				bits = <1 6>;
- 			};
- 		};
- 
-@@ -492,8 +613,32 @@ tsens: thermal-sensor@4a9000 {
+ 			cpr_efuse_quot_offset1: qoffset1@231 {
+ 				reg = <0x231 0x4>;
+ 				bits = <4 7>;
+@@ -447,8 +560,30 @@ tsens: thermal-sensor@4a9000 {
+ 			compatible = "qcom,qcs404-tsens", "qcom,tsens-v1";
+ 			reg = <0x004a9000 0x1000>, /* TM */
  			      <0x004a8000 0x1000>; /* SROT */
- 			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "uplow";
 -			nvmem-cells = <&tsens_caldata>;
 -			nvmem-cell-names = "calib";
 +			nvmem-cells = <&tsens_mode>,
@@ -244,8 +241,7 @@ index 05dcb30b0779..2d360d05aa5e 100644
 +				      <&tsens_s6_p1>, <&tsens_s6_p2>,
 +				      <&tsens_s7_p1>, <&tsens_s7_p2>,
 +				      <&tsens_s8_p1>, <&tsens_s8_p2>,
-+				      <&tsens_s9_p1>, <&tsens_s9_p2>,
-+				      <&tsens_s10_p1>, <&tsens_s10_p2>;
++				      <&tsens_s9_p1>, <&tsens_s9_p2>;
 +			nvmem-cell-names = "mode",
 +					   "base1", "base2",
 +					   "s0_p1", "s0_p2",
@@ -257,11 +253,10 @@ index 05dcb30b0779..2d360d05aa5e 100644
 +					   "s6_p1", "s6_p2",
 +					   "s7_p1", "s7_p2",
 +					   "s8_p1", "s8_p2",
-+					   "s9_p1", "s9_p2",
-+					   "s10_p1", "s10_p2";
- 			#qcom,sensors = <11>;
- 			#thermal-sensor-cells = <1>;
- 		};
++					   "s9_p1", "s9_p2";
+ 			#qcom,sensors = <10>;
+ 			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "uplow";
 -- 
 2.39.0
 
