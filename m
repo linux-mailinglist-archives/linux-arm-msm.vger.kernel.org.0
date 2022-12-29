@@ -2,96 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE097659240
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 22:41:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3D5659260
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 23:10:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbiL2Vlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 16:41:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45988 "EHLO
+        id S229871AbiL2WKh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 17:10:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230155AbiL2Vli (ORCPT
+        with ESMTP id S229820AbiL2WKg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 16:41:38 -0500
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D7F310046;
-        Thu, 29 Dec 2022 13:41:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672350091;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=FCYu/+2jwjS7Uakcb1o/IFHjx95os9NV5cCdt0qqmk8=;
-    b=KHZEnWSD93VHbRpn+w8cWpmVwvFEi0phNEmA+U/yDBBm/sFOOw9waFX5bRGoUBykfJ
-    ZYy018apK3SS3Vv75pqE5DPIBwwuexceGl1dT9EM0qFuR3rD3x0xR1FoJLvFe5wDRHDX
-    KWwki68lyyzmD+w2h3WsFXDbsE4D01P9TGyzVekZHg7SBuBUkLd3BY2QvwkMpgBPWhUR
-    k0tsy4hDeBCzondU4TAfqAgLji187irI5e1jAHFcpenKmspGKb0r3OTdFdCP30WGQiWP
-    lHX3HstFw5DcblnKS6JqpLhH4MiKfQf96qIb3WnTzqF2irDAi5dHaED0tpgrUsdXsb63
-    XDPw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWyvDI"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
-    with ESMTPSA id Yce349yBTLfTXsA
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 29 Dec 2022 22:41:29 +0100 (CET)
-Date:   Thu, 29 Dec 2022 22:41:22 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] phy: qcom-usb-hs: Add qcom,dp-manual-pullup logic
-Message-ID: <Y64Jgu2o6aJV4ggk@gerhold.net>
-References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
- <20221229183410.683584-3-bryan.odonoghue@linaro.org>
- <Y63uSgMdP4m6nvhL@gerhold.net>
- <Y64AfHcUw192Pyr6@gerhold.net>
- <6061938c-b830-2fe0-2f4d-368e34c33676@linaro.org>
- <Y64CaOzWZXERrvkz@gerhold.net>
- <cdcef656-1ae7-fe8a-a4dd-3547d6395b33@linaro.org>
+        Thu, 29 Dec 2022 17:10:36 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8274B6560;
+        Thu, 29 Dec 2022 14:10:35 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id b2so20157310pld.7;
+        Thu, 29 Dec 2022 14:10:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kRyde3/fSKsKjFS+aPwf5uEQhzkfhK22Fr/7tHCPJdA=;
+        b=DQdMsvS8ZUtWgRPvyO7PU438V0JhSyDrONOmWpJBDzHacXngRgWBil64F+xY7I5Zw6
+         mKfnUjRbKIaspnl8Uazvq624XhEO8gli3jD54oIXccMxNbSedIUMEU7xPE/xGJ7pUSce
+         0PZ0e7oWp6XZCLlv18zWDQc3GVfNk3u6rhhyFHnjjiGlyipe+054J8NjhzDzcm16ZuKN
+         fDG9W8W9Yt214FezG1878nP7+vVTKXqU9I9X0TbuSM06W/OYakvGSiu/MGaMtjRJgaLd
+         nVDBJMclGQ70Fq1HLBbJ/PeQG2zWalG467/ATKzC63fN1PcxN5mlKur+ThePH09nPXZo
+         KRqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kRyde3/fSKsKjFS+aPwf5uEQhzkfhK22Fr/7tHCPJdA=;
+        b=nEexOtRGj9VTXQCejLdxk3NGm6+0CfBDbPnO1xj+yFCxvi/XN7ua0J49iMg2rrgrrr
+         6g0yd5KfSbMJHPrOPrZYbk+RW9EenVrKLOzR4BdonlZCpQKP42xc5diCpM52lPYUZB9e
+         /Dql0NjuMR2Mn1jjJMUUVAt9iIeghvKMYt5u635vUxsl/912sgCwL4de+8MqBDod8J2z
+         OHUZBtlVT8N5UTktIGui1G7tZm3BGV17aFsz8CtO9owDqujqAAyApBLrf1EV+GFvpHPh
+         H59tWRrL8paQ6a3gJT25FakkjubH887xs9F8EdKXTdka5mQAkT4z5h4RP+HRZwtsjyAn
+         zgDw==
+X-Gm-Message-State: AFqh2koUspFHnYTCyyFHOiin8nPBkis5ZVKq0nZSApC845B5elKXDH/C
+        2vs/jajNUok7TSOOH+AxUJw=
+X-Google-Smtp-Source: AMrXdXtk9ysIPzG6lLR3ceBm7y+Qz32EHSryZjB+EMiLeHjPoXCqYtH6t3LaPxb14AMfH+lilsf4vg==
+X-Received: by 2002:a17:902:70cb:b0:189:cada:4294 with SMTP id l11-20020a17090270cb00b00189cada4294mr29391770plt.5.1672351834917;
+        Thu, 29 Dec 2022 14:10:34 -0800 (PST)
+Received: from localhost (c-73-67-135-195.hsd1.or.comcast.net. [73.67.135.195])
+        by smtp.gmail.com with ESMTPSA id n3-20020a170902e54300b001745662d568sm13469088plf.278.2022.12.29.14.10.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 14:10:34 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [RFC] drm/msm/a6xx: Fix devcore register range bugs
+Date:   Thu, 29 Dec 2022 14:10:27 -0800
+Message-Id: <20221229221031.775463-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cdcef656-1ae7-fe8a-a4dd-3547d6395b33@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 09:20:03PM +0000, Bryan O'Donoghue wrote:
-> On 29/12/2022 21:11, Stephan Gerhold wrote:
-> > Then it doesn't seem to be a particularly complete schematic. 😄
-> > PM8916 definitely has USB_IN pads (pad # N13, P13). 😄
-> 
-> Let me check again.
-> 
-> No sorry USB_IN_0 and USB_IN_1 are connected to +5V in my schematic, I did
-> check USB_IN I just forgot why it wasn't usable... +5v not VBUS is what its
-> connected to.
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-That is still good enough to replace qcom,dp-manual-pullup though.
+RB_MRT_FLAG_BUFFER is 0x8903->0xa91a inclusive.. don't split it (with a
+hole) in the ps_cluster_rac and don't accidentially re-dump part of the
+range in ps_cluster_rbp.
 
-If you have +5V connected to USB_IN then &pm8916_usbin should report
-active VBUS permanently. Set it as extcon for &usb and &usb_hs_phy and
-you should have VBUSVLDEXT "pulled-up" like in your patch here, without
-any driver changes. :-)
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+I'm not 100% sure about this, because the RB_RB_SUB_BLOCK_SEL_CNTL_CD
+stuff makes me think the registers dumped are not what the offsets
+imply.  But if this is the case, the devcore doesn't capture enough
+information to decode these regs properly in the first place!  Either
+way there is *something* wrong.
 
-It's a bit of a hack of course, which probably deserves a comment in the
-device tree. But since it should not make any functional difference
-compared to this patch the approach might be easier than getting this
-patch finalized & accepted.
+I noticed this because these result in the crashdec tool encountering
+only _LO or _HI components of 64b regs that it expects to come in
+pairs of 32b dwords.
 
-I leave that up to you :)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Stephan
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index 2fb58b7098e4..a03891d844a5 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -18,12 +18,12 @@ static const u32 a6xx_gras_cluster[] = {
+ static const u32 a6xx_ps_cluster_rac[] = {
+ 	0x8800, 0x8806, 0x8809, 0x8811, 0x8818, 0x881e, 0x8820, 0x8865,
+ 	0x8870, 0x8879, 0x8880, 0x8889, 0x8890, 0x8891, 0x8898, 0x8898,
+-	0x88c0, 0x88c1, 0x88d0, 0x88e3, 0x8900, 0x890c, 0x890f, 0x891a,
++	0x88c0, 0x88c1, 0x88d0, 0x88e3, 0x8900, 0x891a,
+ 	0x8c00, 0x8c01, 0x8c08, 0x8c10, 0x8c17, 0x8c1f, 0x8c26, 0x8c33,
+ };
+ 
+ static const u32 a6xx_ps_cluster_rbp[] = {
+-	0x88f0, 0x88f3, 0x890d, 0x890e, 0x8927, 0x8928, 0x8bf0, 0x8bf1,
++	0x88f0, 0x88f3, 0x8927, 0x8928, 0x8bf0, 0x8bf1,
+ 	0x8c02, 0x8c07, 0x8c11, 0x8c16, 0x8c20, 0x8c25,
+ };
+ 
+-- 
+2.38.1
+
