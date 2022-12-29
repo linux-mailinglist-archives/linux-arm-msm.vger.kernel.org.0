@@ -2,124 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E726658ECD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 17:12:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5C9F658ED9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 17:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233694AbiL2QMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 11:12:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51032 "EHLO
+        id S233555AbiL2QT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 11:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231217AbiL2QMx (ORCPT
+        with ESMTP id S233187AbiL2QTz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 11:12:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A605FF0;
-        Thu, 29 Dec 2022 08:12:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9AABA6183D;
-        Thu, 29 Dec 2022 16:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE60C433F0;
-        Thu, 29 Dec 2022 16:12:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672330372;
-        bh=1FBrD6XHPFiM6g/S/VhHmBUtyYNpfvk6206YTBkt7w8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q131yO/zv6p1g6U2mU9idvwcbdySugYey845zHfH6jwVsd8IPXO4vQrzm1K4h1EJj
-         rlxP9tKe3/ejHQrxsqhv/GhtgiWSoP6MmWnW8Ow4v1HCm6AgLah9zTpQit0UjO0bJU
-         ceSwQQWClkT/eb3jq2Jwk5YiQ9GCA18sObq5WU/tmSmVGBMWtnQdRjM63frJ8lguv/
-         O7ufGJLxx0ZfeILrkidSLMOhjPZ7/kHL5woC59gBHlNwSIcqDjIWKp075EMWs4Mbjk
-         TYTB71xXqacRWGGoOIg08f9nc0ckd9FV+mlnXXt+ngaQxL/V9DBV6slbNDYcrHAokm
-         WqURj/aty78kg==
-Date:   Thu, 29 Dec 2022 10:12:49 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        marijn.suijten@somainline.org, Vinod Koul <vkoul@kernel.org>,
+        Thu, 29 Dec 2022 11:19:55 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB61912A80
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 08:19:54 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id bk16so4600524wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 08:19:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ckwJsNHq8jA8+KkatVoyYsHVYWJiVU+B5bcV7q8fzuE=;
+        b=rnCmU3MGagqA8FlzGwm6mCGQsANjiRvoxXs7IliDgwzA1zQRFXdrwwr4o7cUboB26W
+         o7MsGfb3vDonVS6n3UL7lNUT6ukXvkj7MbiXzZMuIVeIZ5H52IT/feGqzDUgZxUfSnzU
+         0ekXGloi35jcqdc0aZTISlcgwuIQJa1jvWE4vdG++upwWMNQL2W4Mbftj5xuYnvahUQ1
+         sDKwUipV6HCCVDwCFLXl81hF3W03VF9jWGuEntJhr8j/Q0X02+n37CSMppO7xYENFxtV
+         71LiQEZ3/nd1on/of2pZzZy9SU7uHfX3LnxTOUocvlhKPy3x5H9b6+IXsPcnfE0gi6z3
+         qOuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ckwJsNHq8jA8+KkatVoyYsHVYWJiVU+B5bcV7q8fzuE=;
+        b=jeEgKfwLGK2vdIAUQJzAr7WXBb1n2CSvKPaa3guAbma2a75ewetx11pR0hV3TvHswS
+         atWFwDxFZQ42TcNNgRm17whvBdiA6EHeEA3PRkpybaOspSEnlX6v5MihSNbMlByjcOjP
+         g2Mk8zSjPg9n3SnFhU4Ue2okZvaUY6moa/wTWjNw+JSQGqwKFdT6+bt0gnfnhIq6B3SZ
+         AgbPxH5lFzPRnNlw/8aowxVOCd/ZVsklUWazs6SCvn7U9ESZGe2f+41ZZLZl6ev5mUdc
+         +1wdyvuhYrNewnYAtnLlljZsGC1BfFOvVXthy3O0HT4GYSKNs9S1zocDzOq+lYqKtv0w
+         bSgw==
+X-Gm-Message-State: AFqh2kpe1BTaKCF2QtIYMmasO7soqNuKNjqXmsrDOGQVOE/fapykGPuH
+        +9Y+wY401LBS4SZhi5u3kPHnxQ7NKpogd1Rp
+X-Google-Smtp-Source: AMrXdXvOeWNklXhFqY7ecbCXLrmicRULJuL54wADGZiWhUCeQP/MZc8LYdzBa6AvFLOHDGK72xk6Fw==
+X-Received: by 2002:adf:f007:0:b0:28e:66ae:75af with SMTP id j7-20020adff007000000b0028e66ae75afmr201935wro.58.1672330793007;
+        Thu, 29 Dec 2022 08:19:53 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:8f7a:98d8:9d8d:ced8])
+        by smtp.gmail.com with ESMTPSA id t5-20020a5d49c5000000b0028cf987d944sm1333199wrs.33.2022.12.29.08.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 08:19:52 -0800 (PST)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] arm64: dts: qcom: sm8450: add spmi node
-Message-ID: <20221229161249.34jgdev2446rdxkf@builder.lan>
-References: <20221229103212.984324-1-konrad.dybcio@linaro.org>
- <7b32e414-96a9-7265-efee-f872badb32b2@linaro.org>
- <71d7a162-569d-1443-9e53-3ba374d06ccd@linaro.org>
- <ee24809b-cf9b-c555-9c30-956949be25a4@linaro.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [RESEND PATCH 0/2] tty: serial: add and use a managed variant of uart_add_one_port()
+Date:   Thu, 29 Dec 2022 17:19:46 +0100
+Message-Id: <20221229161948.594102-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ee24809b-cf9b-c555-9c30-956949be25a4@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 11:57:58AM +0100, Krzysztof Kozlowski wrote:
-> On 29/12/2022 11:45, Konrad Dybcio wrote:
-> > 
-> > 
-> > On 29.12.2022 11:42, Krzysztof Kozlowski wrote:
-> >> On 29/12/2022 11:32, Konrad Dybcio wrote:
-> >>> From: Vinod Koul <vkoul@kernel.org>
-> >>>
-> >>> Add the spmi bus as found in the SM8450 SoC
-> >>>
-> >>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> >>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> >>> [Konrad: 0x0 -> 0, move #cells down, make reg-names a vertical list]
-> >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>> ---
-> >>> v1 -> v2:
-> >>> No changes
-> >>>
-> >>>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
-> >>>  1 file changed, 22 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> >>> index 570475040d95..b9b59c5223eb 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> >>> @@ -2715,6 +2715,28 @@ aoss_qmp: power-controller@c300000 {
-> >>>  			#clock-cells = <0>;
-> >>>  		};
-> >>>  
-> >>> +		spmi_bus: spmi@c42d000 {
-> >>
-> >> Hmm looks different than reg.
-> >>
-> >>> +			compatible = "qcom,spmi-pmic-arb";
-> >>> +			reg = <0 0x0c400000 0 0x00003000>,
-> >>> +			      <0 0x0c500000 0 0x00400000>,
-> >>> +			      <0 0x0c440000 0 0x00080000>,
-> >>> +			      <0 0x0c4c0000 0 0x00010000>,
-> >>> +			      <0 0x0c42d000 0 0x00010000>;
-> >> x
-> > Hm, my guess would be that Vinod chose to put the "cnfg" reg
-> > instead of "core" in the unit address, as 8450 has 2 SPMI bus
-> > hosts and they both share the core reg, so it would have been
-> > impossible to have two spmi@core nodes..
-> 
-> Eh? SM8450 has 2 SPMI hosts both using 0x0c400000? How does that work?
-> Usually address can be mapped only once.
-> 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The SPMI controller does something like multi-master. The driver expects
-the same region to be mapped multiple times and qcom,channel is used to
-select which one each instance should operate on.
+Resending rebased on top of v6.2-rc1
 
-Regards,
-Bjorn
+--
 
-> Where is the second SPMI? I cannot find it in linux-next.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+This series adds a managed variant of uart_add_one_port() and uses it in the
+qcom-geni-serial driver.
+
+I've been asked by Greg to send it separately and he didn't seem to be
+impressed by the proposition of adding devres interfaces to the tty layer
+in general. I can only assume it has something to do with the ongoing
+discussion about the supposed danger of using devres interfaces in conjunction
+with exporting character devices to user-space.
+
+The bug in question can be triggered by opening a device file, unbinding the
+driver that exported it and then calling any of the system calls on the
+associated file descriptor.
+
+After some testing I noticed that many subsystems are indeed either crashing
+or deadlocking in the above situation. I've sent patches that attempt to fix
+the GPIO and I2C subsystems[1][2]. Neither of these issues have anything to
+do with devres and all to do with the fact that certain resources are freed
+on driver unbind and others need to live for as long as the character device
+exists. More details on that in the cover letters and commit messages in the
+links.
+
+I'd like to point out that the serial code is immune to this issue as before
+every operation, the serial core takes the port lock and checks the uart
+state. If the device no longer exists (when the uart port is removed, the
+pointer to uart_port inside uart_state is to NULL), it gracefully returns
+-ENODEV to user-space.
+
+Please consider applying the patches in the series as devres is the easiest
+way to lessen the burden on driver developers when dealing with complex error
+paths and resource leaks. The general rule for devres is: if it can be freed
+in .remove() then it can be managed by devres, which is the case for this new
+helper.
+
+Bart
+
+[1] https://lkml.org/lkml/2022/12/8/826
+[2] https://lkml.org/lkml/2022/12/5/414
+
+Bartosz Golaszewski (2):
+  tty: serial: provide devm_uart_add_one_port()
+  tty: serial: qcom-geni-serial: use devres for uart port management
+
+ .../driver-api/driver-model/devres.rst        |  3 ++
+ drivers/tty/serial/qcom_geni_serial.c         |  8 +---
+ drivers/tty/serial/serial_core.c              | 48 +++++++++++++++++++
+ include/linux/serial_core.h                   |  6 +++
+ 4 files changed, 58 insertions(+), 7 deletions(-)
+
+-- 
+2.37.2
+
