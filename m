@@ -2,94 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 086B2658AB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:47:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6F74658AF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 10:29:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbiL2Irf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 03:47:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
+        id S229747AbiL2J3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 04:29:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbiL2Ird (ORCPT
+        with ESMTP id S229669AbiL2J3Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 03:47:33 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FBCF12096
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:47:30 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bf43so26673734lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:47:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4cemsfu0VaWmJoNllBIK96LxIdmY+A3DSnp/dsjJwnM=;
-        b=z8pgJ4Ovtr6LQ4qC0f8Lc1A7iQHUjeNKLE3T4eBQV8smae26lIVpLUuv7TF3lQowMM
-         U9cq9VnbnF7aXWP2KnlaACTowHeAT0g8zoxJcLDpVApOAcZc8Mv7gdS99iNGdfAp76Ru
-         UlstAQdPmiMFRx5flqNzrdh9mGAHj5olThDKqW33IUpZ6QbQ6ls6ZBpvzj1verqTa3uo
-         Wb4NBJDkN5jHGqtCqeU3ib1TszrySYsrn/Q7vvCA3UE5/vZyTFMZ//0WOsEW1QnBCzD0
-         mmbP355GfwRK4XrcnHGXyEq3ESqwA/3X8rb00QIMN4UN4zGI3YuO6ITXUq+XZJIRD1nV
-         CZJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4cemsfu0VaWmJoNllBIK96LxIdmY+A3DSnp/dsjJwnM=;
-        b=NUV3EgQ/ikopAlaARZWQc16wvFV0ejcaaiJHq3CShoNMcUvEDy5i54XT5FgDoirB7P
-         jB9QjA6V9f544KX6QbsmsaDr6+7gVcxP34pfAgwisKloptoNbf7n2iTjDcFrU2X3ZXAs
-         Kwa4SLBcbkKgP+lSzNEF8cjfnvSR4LGfbabu9s9LJwgQVnWOBscKMfaV0wKxVEDgb5bc
-         FMXd9XE8bYelT1TgxnJlfqFnXryBrjcbVKrfuSg7utuiKpQhFSAu0SrRKLaaihf16Frj
-         Sj+Y6k28YB8SmWrIY0/kzys3+5T0k7URc4L6W02rCZsQxFln+5iAbRWA6eJUG4MJ8Ck9
-         F5Lg==
-X-Gm-Message-State: AFqh2kqOWZURBLvYywGWY4kTbtc+fUQ0nEOSiow29lEskTORINFXhh8S
-        ELZx/xysoP7Alvv3u4FxQmLs+4IrEEXLes9X
-X-Google-Smtp-Source: AMrXdXvHQpo/g6VjyDZZZBZ4JHZ/0GDqwy0mwFL0s9vQERWlTIACcnMY4tr9YXTVbuTN7Ir8C6PfpA==
-X-Received: by 2002:ac2:558f:0:b0:4b6:f51e:b8b6 with SMTP id v15-20020ac2558f000000b004b6f51eb8b6mr7010798lfg.56.1672303648851;
-        Thu, 29 Dec 2022 00:47:28 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id x16-20020a056512079000b004bbd09aca40sm2974914lfr.77.2022.12.29.00.47.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 00:47:28 -0800 (PST)
-Message-ID: <98992679-47bb-24d3-d253-48fefb4a45f5@linaro.org>
-Date:   Thu, 29 Dec 2022 09:47:27 +0100
+        Thu, 29 Dec 2022 04:29:16 -0500
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA38D13D2A;
+        Thu, 29 Dec 2022 01:29:15 -0800 (PST)
+Received: from dggpemm500007.china.huawei.com (unknown [172.30.72.56])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NjNNQ5j9BzJqkC;
+        Thu, 29 Dec 2022 17:28:06 +0800 (CST)
+Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
+ (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Thu, 29 Dec
+ 2022 17:29:13 +0800
+From:   Yang Yingliang <yangyingliang@huawei.com>
+To:     <linux-i2c@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <neil.armstrong@linaro.org>,
+        <wsa@kernel.org>, <yangyingliang@huawei.com>
+Subject: [PATCH v2] i2c: qcom-geni: fix missing clk_disable_unprepare() and geni_se_resources_off()
+Date:   Thu, 29 Dec 2022 17:26:17 +0800
+Message-ID: <20221229092617.4160160-1-yangyingliang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 4/4] dt-bindings: iio/adc: qcom,spmi-iadc: document
- PM8226 compatible
-Content-Language: en-US
-To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221228230421.56250-1-rayyan@ansari.sh>
- <20221228230421.56250-5-rayyan@ansari.sh>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221228230421.56250-5-rayyan@ansari.sh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.103.91]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500007.china.huawei.com (7.185.36.183)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/12/2022 00:04, Rayyan Ansari wrote:
-> Document the compatible for the IADC used on PM8226.
-> 
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+Add missing clk_disable_unprepare() and geni_se_resources_off() in the error
+path in geni_i2c_probe().
 
+Fixes: 14d02fbadb5d ("i2c: qcom-geni: add desc struct to prepare support for I2C Master Hub variant")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+---
+v1 -> v2:
+  Also add missing geni_se_resources_off().
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index fd70794bfcee..3d915729fc95 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -859,6 +859,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	ret = geni_se_resources_on(&gi2c->se);
+ 	if (ret) {
+ 		dev_err(dev, "Error turning on resources %d\n", ret);
++		clk_disable_unprepare(gi2c->core_clk);
+ 		return ret;
+ 	}
+ 	proto = geni_se_read_proto(&gi2c->se);
+@@ -878,8 +879,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		/* FIFO is disabled, so we can only use GPI DMA */
+ 		gi2c->gpi_mode = true;
+ 		ret = setup_gpi_dma(gi2c);
+-		if (ret)
++		if (ret) {
++			geni_se_resources_off(&gi2c->se);
++			clk_disable_unprepare(gi2c->core_clk);
+ 			return dev_err_probe(dev, ret, "Failed to setup GPI DMA mode\n");
++		}
+ 
+ 		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+ 	} else {
+@@ -892,6 +896,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 		if (!tx_depth) {
+ 			dev_err(dev, "Invalid TX FIFO depth\n");
++			geni_se_resources_off(&gi2c->se);
++			clk_disable_unprepare(gi2c->core_clk);
+ 			return -EINVAL;
+ 		}
+ 
+-- 
+2.25.1
 
