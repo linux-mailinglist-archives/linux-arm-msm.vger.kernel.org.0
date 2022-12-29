@@ -2,163 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9412A659211
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 22:16:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75C8B659230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 22:23:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233555AbiL2VQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 16:16:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
+        id S230160AbiL2VXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 16:23:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234242AbiL2VQW (ORCPT
+        with ESMTP id S234385AbiL2VWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 16:16:22 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F101E5FF0;
-        Thu, 29 Dec 2022 13:16:20 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BTKfpfY001084;
-        Thu, 29 Dec 2022 21:15:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qIkk/qrW5WiupjGqG3RQ5ycIyhS77t9ozHsuaoUqxOc=;
- b=oIbmDuRUbURiMmZ4WYT1KTCWZrPBkxycp5FJ8IUs25NiPSwZZ4bh5g+3GW3jQjfRHOi8
- swgLrAYZJZ32RlszbK2K5xmB23P5csdb+452fJecLOTPmWce/Ojs/d+S34aCclBApdRL
- 5tniJVJpubZFIO8z29AkNdvrmvchy9/6qqqXkerMNH5BUsD0I3JVWZ9EV/0iOGWVsn0i
- /5C1GgcWvFSdejJhRRL49gkWdQnkMG6FoBhbYh2nxs0SW0/gwtOIwmqc/Ti+uEX2pqy2
- eUKRkm1LjvRSmgxgf4lqSstroe9UCUUPTWGgPw8tGeAAkC2YIKxex28paE7mhSm08GQT Qg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mrau43v39-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Dec 2022 21:15:20 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BTLFIGq029699
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Dec 2022 21:15:18 GMT
-Received: from [10.110.125.32] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 29 Dec
- 2022 13:14:43 -0800
-Message-ID: <f7f80320-02bb-a573-dd95-b6d58c260624@quicinc.com>
-Date:   Thu, 29 Dec 2022 13:14:43 -0800
+        Thu, 29 Dec 2022 16:22:40 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67799175A3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 13:20:06 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id i15so28248278edf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 13:20:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wCKY2PQJHOCiDRhEZNp0Rqp+epTZrGx6K/Sb1RZff4g=;
+        b=b+IjD7d8FVO9nGq21lEqB26ImDC36QEGC4+0eF7piOvZh0hTZHL75KHPEKQLZjHhkr
+         t8RPcTWLGUbxOeOTgo12B7+n2W1tpc0D82f0Nd9dqmRczzH/b9vcMdaEZ6Zfr4grPhFS
+         Foe1yh1vjTxiuwLHAvn1xOtHjZ8GEN+HePHn4SaKYJEH6QBpIxAQNMF1OnZuavhmQxxV
+         EDsb93Xnou9S3trzAmK9HfT3x0is03bLCw/4BMLxx84OzuqKp1sJoJAvnBaarKrqxN2L
+         keUl/rjZ56MnxhIBlyIvCUjM/UpcSdpnwWTRS23roYgQTiM/yH+UdxGeLgwtmY3tbkkG
+         Dvlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wCKY2PQJHOCiDRhEZNp0Rqp+epTZrGx6K/Sb1RZff4g=;
+        b=AjvdC8ehFn9eMopYKEeDakYUcU2iu0R5TGi/rm4JCF3x28iVC4lRnVkyT32c4M1bF9
+         FAmhVwagNsvsV04xWTUXKhHBahIW5Jg5Z0Qf4ruzNQTyxhCAxDu5i5Gz9Ui0ElB4c3kS
+         I66W4PplOFE8U8ytXK01nU+AGljCcj7rdwe7Z8+bSmA3xAF/q+u2QaFjsitDb9iuMLnb
+         PONZgfnvDR1q0FmfF1qxrQkLj30Bo640cIQ2TzTr6y1DuDjqp2A5TJ7K3X6snnWv1bIb
+         prjXUWaITdCbJl4X0JXnM0lA1vZ6jGynEaZYnxgUFoTVWqLv3CKkScrR3YbfigVuIuGK
+         ejYw==
+X-Gm-Message-State: AFqh2kqV31L+LE+a6hPg/v0JwM8R21jNSq3c3YrQExXm9RwUm1YHgBV7
+        CPkq8bSuSpYXOiWLcrFdqwWkPQ==
+X-Google-Smtp-Source: AMrXdXt9Qg4APzfofYEf0yIb/xcSUmX+cpIGBmWpVd7JEZv5+QAEwAKIyS1lzbzesLNianxSKYL5YA==
+X-Received: by 2002:aa7:c0d6:0:b0:488:6fd0:cf88 with SMTP id j22-20020aa7c0d6000000b004886fd0cf88mr6235612edp.36.1672348805033;
+        Thu, 29 Dec 2022 13:20:05 -0800 (PST)
+Received: from ?IPV6:2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f? (2001-1c06-2302-5600-12a8-8cf4-e3f6-f90f.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f])
+        by smtp.gmail.com with ESMTPSA id hz8-20020a1709072ce800b007b839689adesm8995612ejc.166.2022.12.29.13.20.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 13:20:04 -0800 (PST)
+Message-ID: <cdcef656-1ae7-fe8a-a4dd-3547d6395b33@linaro.org>
+Date:   Thu, 29 Dec 2022 21:20:03 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 07/14] usb: host: xhci: Add XHCI secondary interrupter
- support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 2/2] phy: qcom-usb-hs: Add qcom,dp-manual-pullup logic
 Content-Language: en-US
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <agross@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-8-quic_wcheng@quicinc.com>
- <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
+ <20221229183410.683584-3-bryan.odonoghue@linaro.org>
+ <Y63uSgMdP4m6nvhL@gerhold.net> <Y64AfHcUw192Pyr6@gerhold.net>
+ <6061938c-b830-2fe0-2f4d-368e34c33676@linaro.org>
+ <Y64CaOzWZXERrvkz@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <Y64CaOzWZXERrvkz@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YntXHpoCwTQ5evl0mf0Ts-VjU7LYksRk
-X-Proofpoint-ORIG-GUID: YntXHpoCwTQ5evl0mf0Ts-VjU7LYksRk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-29_12,2022-12-29_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- mlxlogscore=859 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
- mlxscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212290176
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathias,
+On 29/12/2022 21:11, Stephan Gerhold wrote:
+> Then it doesn't seem to be a particularly complete schematic. 😄
+> PM8916 definitely has USB_IN pads (pad # N13, P13). 😄
 
-On 12/28/2022 7:47 AM, Mathias Nyman wrote:
-> On 24.12.2022 1.31, Wesley Cheng wrote:
->> Implement the XHCI operations for allocating and requesting for a 
->> secondary
->> interrupter.  The secondary interrupter can allow for events for a
->> particular endpoint to be routed to a separate event ring.  The event
->> routing is defined when submitting a transfer descriptor to the USB HW.
->> There is a specific field which denotes which interrupter ring to 
->> route the
->> event to when the transfer is completed.
->>
->> An example use case, such as audio packet offloading can utilize a 
->> separate
->> event ring, so that these events can be routed to a different processor
->> within the system.  The processor would be able to independently submit
->> transfers and handle its completions without intervention from the main
->> processor.
->>
-> 
-> Adding support for more xHCI interrupters than just the primary one make 
-> sense for
-> both the offloading and virtualization cases.
-> 
-> xHCI support for several interrupters was probably added to support 
-> virtualization,
-> to hand over usb devices to virtual machines and give them their own 
-> event ring and
-> MSI/MSI-X vector.
-> 
-> In this offloading case you probably want to avoid xHC interrupts from 
-> this device
-> completely, making sure it doesn't wake up the main CPU unnecessarily.
-> 
-> So is the idea here to let xhci driver set up the new interrupter, its 
-> event ring,
-> and the endpoint transfer rings. Then pass the address of the endpoint 
-> transfer rings
-> and the new event ring to the separate processor.
-> 
-> This separate processor then both polls the event ring for new events, 
-> sets its dequeue
-> pointer, clears EHB bit, and queues new TRBs on the transfer ring.
-> 
-> so xhci driver does not handle any events for the audio part, and no 
-> audio data URBs
-> are sent to usb core?
+Let me check again.
 
-Your entire description is correct.  To clarify, the interfaces which 
-are non-audio will still be handled by the main processor.  For example, 
-a USB headset can have a HID interface as well for volume control.  The 
-HID interface will still be handled by the main processor, and events 
-routed to the main event ring.
+No sorry USB_IN_0 and USB_IN_1 are connected to +5V in my schematic, I 
+did check USB_IN I just forgot why it wasn't usable... +5v not VBUS is 
+what its connected to.
 
-> 
-> How about the control part?
-> Is the control endpoint for this device still handled normally by usb 
-> core/xhci?
-> 
+VBUS connects to VBUS_DET on the USB Hub - a USB2514BQFN36, there's no 
+corresponding routing of VBUS onto a GPIO or USB_IN_x on the PMIC.
 
-Control transfers are always handled on the main processor.  Only audio 
-interface's endpoints.
+I assume there's some good reason the PCB designer did it this way .. 
+there's enough of a reason behind it that Qcom put a workaround for the 
+case where PCBs don't route the VBUS state to the SoC or PMIC.
 
-> For the xhci parts I think we should start start by adding generic 
-> support for several
-> interrupters, then add parts needed for offloading.
-
-I can split up the patchsets to add interrupters first, then adding the 
-offloading APIs in a separate patch.
-
-Thanks
-Wesley Cheng
+---
+bod
