@@ -2,164 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED200658A93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:35:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38E87658A9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:42:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233179AbiL2Ifu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 03:35:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48064 "EHLO
+        id S233226AbiL2ImH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 03:42:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiL2Ifs (ORCPT
+        with ESMTP id S229535AbiL2ImF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 03:35:48 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C64B272B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:35:47 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id bq39so18855432lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:35:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nn+L7ZFW/RK3/kCOolsV87i3HVKdOq4YpEDAmCcTxBM=;
-        b=UgJuilLIQDUhAmJ6TlExHb682enSnsoybnVOxhzesUJ473aemV7pUT7ZOuvdzKt991
-         Ng0r5nSA9aMFYBrQ7bfyJGkFcixVHevpJgYRTWr8uknKzRa21ljLaayNvdyFuWPgkkYn
-         sHS8BNcfFxz9N9ZNHFvRAB1epi97g3pniYBu7O9WxFETtYp0hB+x4LmdevPDKoJO25VO
-         yFRgL5KxqS7imE53ybKT/4wNwLPjRlWZmyqRvQiaq/8nuEEd97EQTKvWgW/f3tLPs5+D
-         Jg0312reonBJkcjYr5mhlCDN0CgOSd3AhqYhS8SXwngBrqIAWABey7S7cqypf/ZEKZF3
-         +XFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nn+L7ZFW/RK3/kCOolsV87i3HVKdOq4YpEDAmCcTxBM=;
-        b=fSFrTirytenl9b9J4g5qYqltgBxhq2vd0tzrDXeYHNko+GzLZH/qGtj1J//1DPqnld
-         m5+PxxAWSOPRY8mHPn3S/phw1Kerl5cYOaDUzvVWi+VGpxy1TQn/B1ICmx9KR+gPL7lt
-         iM9DgScEHSXQ8lAWMPgUzjFs6ovsj//uDQY65XkkWjYkqqfFP50ux33Oph3ZNiO5l2vO
-         VESUtf/Mc93w0bbQ3y18Sxz80LmS0W+WUpZ3rQHul8r/1VavefaWUufqJkCWCihPrYg1
-         PcpMEQEvskbCiyqlZeKUzjO72fhkocQ9AK2x3IZXyLyWB8rYLUPd2Ai43jVQ8zmSnoYl
-         PlpQ==
-X-Gm-Message-State: AFqh2koPaDDwJjU/RjgIAhff23Vt8CrfcdicVVOfjx9PpqgAkEDvcK4w
-        bTmVpdRqBTDWrQ1tLXZqin/j4g==
-X-Google-Smtp-Source: AMrXdXsenEXFrzEM+P6NXUEyIR8Q04dG1lJhUB27Nv56yKOGvZGysmx5i31pwnnDdK8i0WWOkNWlmw==
-X-Received: by 2002:ac2:5318:0:b0:4b5:7720:5fe4 with SMTP id c24-20020ac25318000000b004b577205fe4mr8365186lfh.67.1672302945497;
-        Thu, 29 Dec 2022 00:35:45 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id o6-20020ac25e26000000b004b01305732bsm2977571lfg.216.2022.12.29.00.35.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 00:35:45 -0800 (PST)
-Message-ID: <ef9d5f72-e39a-e32c-5d7d-4a6ee57101aa@linaro.org>
-Date:   Thu, 29 Dec 2022 09:35:43 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v5 02/20] dt-bindings: thermal: tsens: support per-sensor
- calibration cells
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thu, 29 Dec 2022 03:42:05 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15911004D;
+        Thu, 29 Dec 2022 00:42:04 -0800 (PST)
+Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B7620CC38B;
+        Thu, 29 Dec 2022 08:42:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1672303323; bh=z74Wvw2dl/J6TN1vPrye61RN3quWMD3vkV0739va1Mk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=ppugLIFkeEkZ3D4fy3r7n+6r6SIVDcfslAWLHs8RwdKwYzwjUFMkefDrC78v4nBbN
+         D6pEU6RrZTh9eUHAJeqnUp2lpF0GtcmMsc/RKjyHXuqCJSVm8U1ICR5A+Wc2dEyxk6
+         WGADAKl7S02wwi6laqsDQ8cc1Z0DwKAR+JbjkqJs=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
- <20221229030106.3303205-3-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221229030106.3303205-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
+Subject: Re: [PATCH v2] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable ADSP
+Date:   Thu, 29 Dec 2022 09:42:02 +0100
+Message-ID: <2660205.mvXUDI8C0e@g550jk>
+In-Reply-To: <20221218211957.118473-1-matti.lehtimaki@gmail.com>
+References: <20221218211957.118473-1-matti.lehtimaki@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
+        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/12/2022 04:00, Dmitry Baryshkov wrote:
-> Allow specifying the exact calibration mode and calibration data as nvmem
-> cells, rather than specifying just a single calibration data blob.
-> 
-> Note, unlike the vendor kernel the calibration data uses hw_ids rather
-> than software sensor indices (to match actual tsens usage in
-> thermal zones).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi Matti,
+
+On Sonntag, 18. Dezember 2022 22:19:57 CET Matti Lehtim=E4ki wrote:
+> Configure the reserved memory for ADSP and enable it.
+> Delete nodes with reference to label.
+>=20
+> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+
 > ---
->  .../bindings/thermal/qcom-tsens.yaml          | 95 +++++++++++++++++--
->  1 file changed, 85 insertions(+), 10 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index f3660af0b3bf..4bb689f4602d 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -81,18 +81,63 @@ properties:
->      maxItems: 2
->  
->    nvmem-cells:
-> -    minItems: 1
-> -    maxItems: 2
-> -    description:
-> -      Reference to an nvmem node for the calibration data
-> +    oneOf:
-> +      - minItems: 1
-> +        maxItems: 2
-> +        description:
-> +          Reference to an nvmem node for the calibration data
-> +      - minItems: 5
-> +        maxItems: 35
-> +        description: |
-> +          Reference to nvmem cells for the calibration mode, two calibration
-> +          bases and two cells per each sensor
->  
->    nvmem-cell-names:
-> -    minItems: 1
-> -    items:
-> -      - const: calib
-> -      - enum:
-> -          - calib_backup
-> -          - calib_sel
-> +    oneOf:
-> +      - minItems: 1
-> +        items:
-> +          - const: calib
-> +          - enum:
-> +              - calib_backup
-> +              - calib_sel
-> +      - minItems: 5
-> +        items:
-> +          enum:
-
-This should not be an enum but a list of const... unless "holes" are
-expected (e.g. s0_p1 and s5_p2, without ones in between).
-
-> +            - mode
-> +            - base1
-> +            - base2
-> +            - s0_p1
-> +            - s0_p2
-> +            - s1_p1
-> +            - s1_p2
-> +            - s2_p1
-> +            - s2_p2
-> +            - s3_p1
-> +            - s3_p2
-> +            - s4_p1
+> Changes in v2:
+>   - Delete nodes with reference to label
+> ---
+>  .../arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts index
+> 1c52337af560..15b9590ba07b 100644
+> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> @@ -9,6 +9,9 @@
+>  #include "qcom-msm8226.dtsi"
+>  #include "qcom-pm8226.dtsi"
+>=20
+> +/delete-node/ &adsp_region;
+> +/delete-node/ &smem_region;
+> +
+>  / {
+>  	model =3D "Samsung Galaxy Tab 4 10.1";
+>  	compatible =3D "samsung,matisse-wifi", "qcom,apq8026";
+> @@ -133,7 +136,7 @@ wcnss@d200000 {
+>  			no-map;
+>  		};
+>=20
+> -		adsp@d900000 {
+> +		adsp_region: adsp@d900000 {
+>  			reg =3D <0x0d900000 0x1800000>;
+>  			no-map;
+>  		};
+> @@ -143,7 +146,6 @@ venus@f100000 {
+>  			no-map;
+>  		};
+>=20
+> -		/delete-node/ smem@3000000;
+>  		smem_region: smem@fa00000 {
+>  			reg =3D <0x0fa00000 0x100000>;
+>  			no-map;
+> @@ -169,6 +171,10 @@ rmtfs@fd80000 {
+>  	};
+>  };
+>=20
+> +&adsp {
+> +	status =3D "okay";
+> +};
+> +
+>  &blsp1_i2c2 {
+>  	status =3D "okay";
 
 
-Best regards,
-Krzysztof
+
 
