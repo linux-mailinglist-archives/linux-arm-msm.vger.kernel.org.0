@@ -2,82 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF43165893B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 04:45:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A54F658A2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:06:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232838AbiL2Dpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Dec 2022 22:45:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38740 "EHLO
+        id S231172AbiL2IGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 03:06:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232778AbiL2Dpt (ORCPT
+        with ESMTP id S233111AbiL2IGP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Dec 2022 22:45:49 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9304CBCE;
-        Wed, 28 Dec 2022 19:45:45 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 563D1B81919;
-        Thu, 29 Dec 2022 03:45:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D27C433D2;
-        Thu, 29 Dec 2022 03:45:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672285543;
-        bh=9VyqVOPLYNAauiCh0jZNa43f/bOKcdJMq44I7kXU9I4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nBddxy2U9sUC1mMBdygi2b1iM/EIqwpaf02vFZ2Uzxl8KVspmk9UmmzufibvRc7D6
-         cT1S/jT4oFWkrnm99vf7f/jv25aYVS93CDzgQyMs3WB9Y0pjBJ2VBXjNEyfQ+Hf+Yt
-         7QlYWHyTfpnxCpWrPQvCDVS/c8hCE/SGZY0/5ed8sFWU9fC/q0cr1tAmz7cESc8Qsg
-         YeTlqeLypRL43X2o28W1BJeAohX5s4mam+PXzxkQJZzD3lDGAtwZEnEiH6hbtyT/mR
-         D3k5vU7L3E+Shn61UhOtuPlIJP9AmzPkInqL7KdsZesvWN2JvJ4UCzvyMZnarc6qex
-         ZBVOVP52uN6/g==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     rayyan@ansari.sh, linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, agross@kernel.org
-Subject: Re: [PATCH 0/3] ARM: dts: qcom: pm8226: style fixes and new nodes
-Date:   Wed, 28 Dec 2022 21:45:39 -0600
-Message-Id: <167228553503.1017132.8709562208620324843.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221223193403.781355-1-rayyan@ansari.sh>
-References: <20221223193403.781355-1-rayyan@ansari.sh>
+        Thu, 29 Dec 2022 03:06:15 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA63CC26
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:06:13 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id m6so16180457lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:06:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ben8+4oiArxexQJyJIBwbQtQ9giuKq12emDFPOAB0/A=;
+        b=jufpxaDQuVBA0SebIRrM4IEex4ljQthZbGvev2zfkGOV/gkQ+/y36QDPqFDhUpOLdB
+         md5nPBiW5qSbkYYISL+qf1hh07zuo6X8/peed5sHge+qh0ZCXqT0Gsbq6H8XADK0D7bD
+         fMMDbnIj1oxGmllKQ1upIjpqwH+xb7wfGNsfNDkH0gpv9Xyu2OutUCjKr65X0K4WwdqE
+         CZXCWg6A4TgTvbhOFy0467qt3gdO1easnHGL7bsnu8lVXhu+uocBJLLppPxb9ypvspSj
+         qVSmDLyaDopfP2csfVO8wu0dPb4eafmJiSajVISsX3RCpUFcx4eFL28gH5/ErN+0xSVY
+         eCpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ben8+4oiArxexQJyJIBwbQtQ9giuKq12emDFPOAB0/A=;
+        b=bm+UL/d4pUDkeBktVC4EeTCWTYpMSSHJJ8T74OxyECBhFdRscuuNZP+FGgc9Nj2H+Q
+         /vcWLci+LhsP1etu34mB62lKHaCMBkUURyRyl+L13RMjX/I+snlesfwRyXsu+UzUgjn3
+         IaKlX5z/Ad84Bea8DYVnzs2lX9dSMQslO0hl9own1KrN6Fqn8M+CVEEQIyAUlwha1sYj
+         cVGdcp6F2hISuT5IcoKdbeMqLSARsRGcyumlL302vmyzsPySlFbbk5pM5lDTPVSpQcet
+         WCuK63lK4S0USTT4lR1cen5Mq5e8UDHptSvcQkjPxwcKz3+LVUDRIZIjs/J1yEMdDfIK
+         qYLg==
+X-Gm-Message-State: AFqh2korak/OnrztuBrUFriqq3YpZJwSHWChFKqXEu1u8sUobzzzulJH
+        rdSYxj/dagFw3WsxinCviYQdsA==
+X-Google-Smtp-Source: AMrXdXtAmfVtj1IoPnGmK4xqeGUXuvnkJ8kCHhPjHiGxwb3HU1LujrXhq0Ja4bqnsKuNo/EyORORyA==
+X-Received: by 2002:ac2:528f:0:b0:4b5:6504:a556 with SMTP id q15-20020ac2528f000000b004b56504a556mr7164960lfm.61.1672301172157;
+        Thu, 29 Dec 2022 00:06:12 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id d21-20020ac24c95000000b0049465afdd38sm2979222lfl.108.2022.12.29.00.06.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 00:06:11 -0800 (PST)
+Message-ID: <0180241f-4f10-f914-1288-371106c4fa1c@linaro.org>
+Date:   Thu, 29 Dec 2022 09:06:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
+ <c4109766-22f1-7227-47bb-9273a027bb0c@linaro.org>
+ <CPDFHXBPSP76.5CWNQK4N1KGI@otso>
+ <5391e6e5-3773-a012-c396-b59b1f54ea51@linaro.org>
+ <CPDJZJHDL1XJ.2UY1U1E19CTUH@otso>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CPDJZJHDL1XJ.2UY1U1E19CTUH@otso>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Dec 2022 19:34:00 +0000, Rayyan Ansari wrote:
-> The following patches sort the nodes and includes in PM8226's
-> device tree file, and add new nodes for PON (with the resin sub-node)
-> and IADC.
+On 28/12/2022 16:24, Luca Weiss wrote:
+> On Wed Dec 28, 2022 at 12:58 PM CET, Krzysztof Kozlowski wrote:
+>> On 28/12/2022 12:53, Luca Weiss wrote:
+>>> Hi Krzysztof,
+>>>
+>>> On Wed Dec 28, 2022 at 12:50 PM CET, Krzysztof Kozlowski wrote:
+>>>> On 09/12/2022 15:29, Luca Weiss wrote:
+>>>>> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
+>>>>> in the bindings so the existing dts can validate successfully.
+>>>>>
+>>>>> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
+>>>>> sm8450: add Inline Crypto Engine registers and clock") so move the
+>>>>> compatible to the correct if.
+>>>>>
+>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>> ---
+>>>>> (no cover subject)
+>>>>>
+>>>>> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
+>>>>> and sa8540p-ride.dtb:
+>>>>>
+>>>>
+>>>> Any plans on fixing the patch (after testing it) and resending?
+>>>
+>>> I wasn't quite sure how to fix the comments, but re-reading them this
+>>> comment from you is how you expect it to be in v2?
+>>
+>> The patch fails testing, so I meant this.
+>>
+>>>
+>>>> Just add it to top-level with minItems: 1 and per variant customize:
+>>>> 1. maxItems: 1
+>>>> 2. minItems: 2 + required
+>>>
 > 
-> Rayyan Ansari (3):
->   ARM: dts: qcom: pm8226: sort includes alphabetically and nodes by
->     address
->   ARM: dts: qcom: pm8226: add PON device node along with resin sub-node
->   ARM: dts: qcom: pm8226: add IADC node
+> I tried a bit now but couldn't get it to work when using 'items' so that
+> we have the "std" and "ice" names in there.
 > 
-> [...]
+> Documentation/devicetree/bindings/ufs/qcom,ufs.yaml: allOf:2:then:properties:reg-names: 'oneOf' conditional failed, one must be fixed:
+>         [{'const': 'std'}, {'const': 'ice'}] is too long
+>         [{'const': 'std'}, {'const': 'ice'}] is too short
+>         False schema does not allow 2
+>         1 was expected
+>         hint: "minItems" is only needed if less than the "items" list length
+>         from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+> 
+> Since I have 'minItems: 1' in top-level I seemingly cannot use 'items'
+> in the 'if' neither alone nor with 'minItems' and/or 'maxItems', getting
+> different errors when doing that.
 
-Applied, thanks!
+top-level cannot have only minItems:1.
 
-[1/3] ARM: dts: qcom: pm8226: sort includes alphabetically and nodes by address
-      commit: bc6ecf993b10238b4747261f5b495ecd46a72833
-[2/3] ARM: dts: qcom: pm8226: add PON device node along with resin sub-node
-      commit: 79ca56c11e9004ba1b012822a68eb4d57826a721
-[3/3] ARM: dts: qcom: pm8226: add IADC node
-      commit: 07eccde43b030bf8129fea1a81c00946c9edf1fe
+> 
+> Can I just put 'reg-names: true' top-level and then specify either items
+> for the ones that use ICE or for the others use the 'maxItems: 1'?
+> 
+> Or am I supposed to ignore 'items' completely but driver expects 'ice'
+> name so I'd rather include it.
+
+Use the syntax like:
+https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L57
+
 
 Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Krzysztof
+
