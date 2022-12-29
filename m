@@ -2,116 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B367D658FD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:29:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A99D5658FDB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:31:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233871AbiL2R3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 12:29:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50750 "EHLO
+        id S233856AbiL2RbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 12:31:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233963AbiL2R21 (ORCPT
+        with ESMTP id S234075AbiL2RaP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 12:28:27 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A798186FE;
-        Thu, 29 Dec 2022 09:25:54 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Thu, 29 Dec 2022 12:30:15 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DCA1573E;
+        Thu, 29 Dec 2022 09:29:50 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D79511F9A9;
-        Thu, 29 Dec 2022 18:25:49 +0100 (CET)
-Date:   Thu, 29 Dec 2022 18:25:48 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: sm6125: QUPs, SPI and Seine I2C
- buses
-Message-ID: <20221229172548.eddluubb7ljqwiqy@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221216233408.1283581-1-marijn.suijten@somainline.org>
- <20221229171301.7sjbyvqpn3qjwexu@builder.lan>
- <20221229172148.2hcmi7uypwlnxmhu@SoMainline.org>
+        by sin.source.kernel.org (Postfix) with ESMTPS id D0376CE16B8;
+        Thu, 29 Dec 2022 17:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C57C433D2;
+        Thu, 29 Dec 2022 17:29:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672334987;
+        bh=G+SWBiYi4yJIL5V5j7GqWjgDRQL0QUPCjoveiHSWEys=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CwTopccyU0qtmz7hrUHjKgdNsQrcMOeRCMSs3du5zRXM/bVQDZMF937F/K9PDK2bC
+         4bfWT8xNGQWeOQGGmaJD+VjgOK79IrJftXw3YkZybR7Tgz0qJsM8wuWPGaG1v9bQA2
+         ZzdkyN9sF1aIkFK8uGUlXRuABUNG2JdKwXU15WbDUg2XlZZWblFqbDwpcX/bfNcS0r
+         rAWoAo2m4fkWP6cl8RQJPeAPG70QWmA5LFSexq8EjBjFz+avfaLJRC7OVAHd0AUdXG
+         wYN/VF8NIj9EURov3AQkOpZg/U4yYL2FpDwVM6f02C3C1+oyWNwXwUXi4XGr8D23N2
+         pbGMZnwr7JjEA==
+Date:   Thu, 29 Dec 2022 11:29:44 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mani@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        svarbanov@mm-sol.com, shawn.guo@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/9] arm64: dts: qcom: ipq8074: fix Gen3 PCIe QMP PHY
+Message-ID: <20221229172944.6lg6mb53uqj2hps6@builder.lan>
+References: <20221116214841.1116735-1-robimarko@gmail.com>
+ <20221116214841.1116735-2-robimarko@gmail.com>
+ <20221205215253.itobukkyiecn7xi7@builder.lan>
+ <CAOX2RU5C6uYKS4Hc7NBwnzRju1=gzewrEHudMksUAL1XdKcfCQ@mail.gmail.com>
+ <20221227192049.zk5gqhpnq2m7baqa@builder.lan>
+ <CAOX2RU4SGmmZT6e0V5YCsCYU82wAJH736PhEz4Tx+Q0XTFU_9A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221229172148.2hcmi7uypwlnxmhu@SoMainline.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAOX2RU4SGmmZT6e0V5YCsCYU82wAJH736PhEz4Tx+Q0XTFU_9A@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-29 18:21:55, Marijn Suijten wrote:
-> On 2022-12-29 11:13:01, Bjorn Andersson wrote:
-> > On Sat, Dec 17, 2022 at 12:34:05AM +0100, Marijn Suijten wrote:
-> > > Introduce Qualcomm Universal Peripheral support on SM6125 and define all
-> > > known SPI and I2C Serial Engines.  On Sony Seine PDX201 all I2C buses
-> > > with known-connected hardware are enabled for future hardware mapping,
-> > > together with the respective GPI DMA 0 and QUP 0.
-> > > 
-> > > Changes since v1:
-> > > - Un-downstream pinctrl mapping:
-> > >   - Remove nested mux {} / config {};
-> > >   - Remove useless comments;
-> > >   - Remove unreferenced pinctrl states;
-> > > - Use qup14 pinctrl function name instead of unknown qup_14;
-> > > - Reword commit message;
-> > > - Add iommus to QUP nodes now that this series depends on apps_smmu to
-> > >   be available;
-> > > - Reorder all properties to match other SoCs;
-> > > - Reorder/intersperse QUP nodes with GPI DMA nodes to maintain sorting
-> > >   by address;
-> > > - Reorder SPI nodes to fit in with I2C nodes, restoring sorting by
-> > >   address too;
-> > > - Use QCOM_GPI_* constants;
-> > > - Adhere to 3 instead of 5 dma cells for gpi_dma.
-> > > 
-> > > v1: https://lore.kernel.org/all/20221001185628.494884-1-martin.botka@somainline.org/T/#u
-> > > 
-> > > Depends on:
-> > > - SM6125 APPS SMMU: https://lore.kernel.org/linux-arm-msm/20221216215819.1164973-1-marijn.suijten@somainline.org/T/#u
-> > > - SM6125 GPI DMA: https://lore.kernel.org/linux-arm-msm/20221216231528.1268447-1-marijn.suijten@somainline.org/T/#u
-> > 
-> > Please, in the future, when you have dependencies between your dts
-> > patches, send them together so I don't need to go on a treasure hunt in
-> > my mailbox to figure out which order to apply things...
+On Wed, Dec 28, 2022 at 12:10:17PM +0100, Robert Marko wrote:
+> On Tue, 27 Dec 2022 at 20:20, Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Tue, Dec 06, 2022 at 10:51:40AM +0100, Robert Marko wrote:
+> > > On Mon, 5 Dec 2022 at 22:52, Bjorn Andersson <andersson@kernel.org> wrote:
+> > > >
+> > > > On Wed, Nov 16, 2022 at 10:48:34PM +0100, Robert Marko wrote:
+> > > > > IPQ8074 comes in 2 silicon versions:
+> > > > > * v1 with 2x Gen2 PCIe ports and QMP PHY-s
+> > > > > * v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
+> > > > >
+> > > > > v2 is the final and production version that is actually supported by the
+> > > > > kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+> > > > >
+> > > > > Now that we have Gen3 QMP PHY support, we can start fixing the PCIe support
+> > > > > by fixing the Gen3 QMP PHY node first.
+> > > > >
+> > > > > Change the compatible to the Gen3 QMP PHY, correct the register space start
+> > > > > and size, add the missing misc PCS register space.
+> > > > >
+> > > >
+> > > > Does this imply that the current node doesn't actually work?
+> > >
+> > > Hi Bjorn,
+> > > Yes, the node is for a completely different PHY generation, basically
+> > > PCIe on IPQ8074
+> > > is completely broken, hence this patch series.
+> > >
+> > > >
+> > > > If that's the case, could we perhaps adopt Johan Hovolds' new binding
+> > > > and drop the subnode in favor of just a flat reg covering the whole
+> > > > QMP region?
+> > >
+> > > I have not seen that so far, any examples?
+> > >
+> >
+> > See
+> > Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml in
+> > v6.2-rc1.
+> >
+> > The idea is to, at least, use this for all new platforms introduced.
+> >
+> > And if the current definition doesn't actually work I suggest that we
+> > replace it with the new one.
 > 
-> I was quite confident separating out "unrelated" patches in separate
-> series was preferred, especially when dependencies are marked explicitly
-> like this... what changed?
+> I understand the intention, but these bindings dont match the QMP generation
+> found in IPQ8074 at all, and Gen3 has already been documented in bindings.
+> 
+> This would require updating the driver to carry the offsets and rework
+> of bindings to
+> not require power domains, etc for IPQ8074 as I have not found any
+> code downstream
+> to indicate it has GSDC-s for PCIe though I dont have any docs at all
+> for the SoC.
+> 
 
-Perhaps because both dependencies have been resent, and the links for
-APPS SMMU v4 and GPI DMA v2 have become obsolete in favour of:
+I was only thinking of the structural difference, not the power-domains
+etc. But yes you're right that it means updating the driver and the
+binding.
 
-- SM6125 APPS SMMU v5: https://lore.kernel.org/linux-arm-msm/20221222193254.126925-1-marijn.suijten@somainline.org/T/#u
-- SM6125 GPI DMA v3: https://lore.kernel.org/linux-arm-msm/20221222194600.139854-1-marijn.suijten@somainline.org/T/#u
+The end result would be much nicer though...
 
-- Marijn
+Regards,
+Bjorn
