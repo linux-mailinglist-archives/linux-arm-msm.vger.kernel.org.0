@@ -2,115 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F2B65909D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 19:57:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C19726590C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 20:12:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233693AbiL2S5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 13:57:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60632 "EHLO
+        id S233946AbiL2TMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 14:12:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbiL2S5r (ORCPT
+        with ESMTP id S233335AbiL2TMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 13:57:47 -0500
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FFD13EB7;
-        Thu, 29 Dec 2022 10:57:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672340256;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=og/5NweM9CpQZmCLz/mFb+oKie8+YSeYfWJcuhS3+Cc=;
-    b=nfGk9s7G9qViIcRKLecFQyR38KGkA8V2nPSZtgtVA0OdctYm+LuT8lvsQSJmXthNZh
-    1dQSJLLO1JgOAKIzMnvcfcT92adMv8YT+mqW7LcM0juyZTGZXx0mobeJreMM+9vLm5VR
-    Uy6GongJZC7GwPwRXvAy1H5LXi4wOQcA2cH4CBZOYuij8MbGVn2iMW2UIDMK46a+63zR
-    av6kzqtxl2Sg22hr2VBTPS9kjbVNJKhMdGrhfo4oxCIaKaszEecwBpwm6bwVbDM6mEiX
-    OTTarXF2563KsiSqdi88QLW7sTxdx8fzhluEf5UwkP6kuMUxFrO2H9xMAMvEtkdte7n0
-    XCCw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWyvDI"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
-    with ESMTPSA id Yce349yBTIvZXjA
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 29 Dec 2022 19:57:35 +0100 (CET)
-Date:   Thu, 29 Dec 2022 19:57:29 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: phy: Add qcom,dp-manual-pullup
- description
-Message-ID: <Y63jBu38L/5cQ75S@gerhold.net>
-References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
- <20221229183410.683584-2-bryan.odonoghue@linaro.org>
+        Thu, 29 Dec 2022 14:12:53 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94E6AD2DE;
+        Thu, 29 Dec 2022 11:12:49 -0800 (PST)
+Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 17E4ACA889;
+        Thu, 29 Dec 2022 19:12:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1672341167; bh=Iik8yy7q1EoLGhtZihsdRMr9LgVe2immk1/jOSNNRHg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=aG6Ri/RPvpPFQtT1WR2IAHlypKM92qYpNfUisPshQ6t8VVumCNR2jLd/10Khm0OdH
+         Z2OzBLS8uV4lovIiC+70fRrKnNhbna4082AqnGg488525D3521yXEKNDzmHT/mcLXw
+         fN6dciNdrfU/+L5zG6ilEtFZSbmnSdFbiWP+XtTA=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        afd@ti.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] regulator: dt-bindings: qcom,usb-vbus-regulator: change
+ node name
+Date:   Thu, 29 Dec 2022 20:12:46 +0100
+Message-ID: <5890061.lOV4Wx5bFT@g550jk>
+In-Reply-To: <Y63fvNfPrnot+C6a@sirena.org.uk>
+References: <20221031173933.936147-1-luca@z3ntu.xyz> <12119923.O9o76ZdvQC@g550jk>
+ <Y63fvNfPrnot+C6a@sirena.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229183410.683584-2-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
+        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 06:34:09PM +0000, Bryan O'Donoghue wrote:
-> The original Qualcomm driver for the HighSpeed USB PHY contains a flag
-> which tells the driver that the controller and PHY do not connect to VBUS.
+On Donnerstag, 29. Dezember 2022 19:43:08 CET Mark Brown wrote:
+> On Thu, Dec 29, 2022 at 07:11:10PM +0100, Luca Weiss wrote:
+> > The patch was sent end of October, that is two months ago. I don't think
+> > two months of waiting is an unreasonable amount of time and is also more
+> > than "a couple of weeks"...
+> > 
+> > And as far as I am aware there's no open review comments, which is why I
+> > did send the email to ask what the status is so that it can go into 6.3
+> > and I can remove it from my inbox.
 > 
-> In this case an external IC such as a Type-C port manager supplies VBUS and
-> the VBUS signal is not routed to the SoC. This means we cannot detect the
-> presence or absence of VBUS and cannot take action based on it.
+> Please read the rest of the mail:
+> > > directly if something has gone wrong you'll have to resend the patches
+> > > anyway, so sending again is generally a better approach though there are
+> > > some other maintainers who like them - if in doubt look at how patches
+> > > for the subsystem are normally handled.
 > 
-> Document the downstream boolean qcom,dp-manual-pullup to allow the HS PHY
-> implement the necessary logic.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> I can't do anything with your content free ping on patch 2 of
+> some series...
 
-AFAIK it is not possible to route VBUS directly to the controller on
-these SoCs so this property would likely be added to the SoC dtsi
-(i.e. msm8916.dtsi and msm8939.dtsi) and used by all boards.
+I'll just resend, that should alleviate all problems.
 
-This means we could just bind this behavior to the existing SoC-specific
-compatible (i.e. of_device_is_compatible(..., "qcom,usb-hs-phy-msm8916"))
-and avoid having an extra property.
 
-Thoughts?
 
-Thanks,
-Stephan
-
-> ---
->  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> index aa97478dd0161..c55a59df71ad0 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> @@ -80,6 +80,13 @@ properties:
->              the address is offset from the ULPI_EXT_VENDOR_SPECIFIC address
->          - description: value
->  
-> +  qcom,dp-manual-pullup:
-> +    type: boolean
-> +    description: This flag indicates to the HS USB PHY driver that it should
-> +                 enable or disable an internal pullup when powering on or
-> +                 powering off the HS PHY instead of toggling the value when VBUS
-> +                 is absent or present.
-> +
->  required:
->    - clocks
->    - clock-names
-> -- 
-> 2.34.1
-> 
