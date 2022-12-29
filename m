@@ -2,393 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A88B5658B7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:16:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33C80658B94
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:17:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233099AbiL2KPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 05:15:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
+        id S232967AbiL2KQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 05:16:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233170AbiL2KNU (ORCPT
+        with ESMTP id S230237AbiL2KO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 05:13:20 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B069413F95
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:05:20 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id p36so26867350lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:05:20 -0800 (PST)
+        Thu, 29 Dec 2022 05:14:29 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274C0B87A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:14:07 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id bf43so26915047lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BEg+7O0bMcFEptEbMe/48vx9Lz2TOL8oqK4EcTHhCs4=;
-        b=CE4Ow8eEOaHlnpQ1GHsWMuywBnuogDiZdTpjmniuMz8ARpZHu39/8l87YM1YM6ha/L
-         WJAjpM12VSr2M/d4NA22GxFFeOAIKZMxklnI/7z5yLVNsK4Sgs7CAaJbyHk2rL8hmjJU
-         siYTMWvNLCuSNPTimPu3qXgODpndYDKkKl3Fyi8W6Li3yHsBCI0YotSi7L6wDcL6Rvfi
-         JUIuqA48vSJpioqvRLyaNofBjvMv4gOzNXWuGMyGBRPGfwBJbFYPUw2YR3wkH9ZqUxVq
-         o37xok2HpVnHrafdcLOLIrYlWbmgX2xlz/IhOIEvvBaeWBqeSqPGjieNX/dVbAtl6KC4
-         Iv4w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5OLQk/GuZ1RmMBbMLG8GgkkjESDctOzFQH3zJcOJbq4=;
+        b=PO2rNo25jh/oldeOXrXYMPIWvC2tOyMthdiHVYN/I1rxa0HwjCdvlIs0o38r4t6oP0
+         GbXdiIRjeGwe4jV8q8DnyB+QS3QtuRth+SijOiud6r//AIEPTi6oedIFWFm9ZuCQ2k1n
+         LiNbuES/BhDMGwUnrIxpTgL6lJHc2hbexhEj44qOfqllYdgotLYygvnKn9YQ0JVRrlMn
+         C9Lx6ltQKxqRSnz1gzbQn2OkY97wYaEt2/7YH5YdnY2g1nOuRVhsxDINaWPjy7t6dotv
+         2d1LeQAXvFc3cIGUOtTWmDnSsUYcAjxzBJZkSIYlAungporIXCVtin92vNJS4TEL8Lrd
+         hfkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BEg+7O0bMcFEptEbMe/48vx9Lz2TOL8oqK4EcTHhCs4=;
-        b=O3wo9TQCNWAngNCUO5g6BWcgVUI3ErlTLit+c7TfCmvevTo5w4Wb8i2CDC67F25LOB
-         0BzBA9MVwqWhn/KBwceTw2JgchDDP5EIUGf2pAC7PGqAbeCIaaaoI5qSPTLfr6VI+1bg
-         H/VyOdcMgtdtp1NkB3G3TukmNgMXvqC9r4aqsLLDTvb3MgXvRQ1qyRReVFQLgLLdlMJT
-         Oyhu1I6b+bm3hbu5a1Lmj90yoJYVT+AmcQ1joetvENYbks7sI86nAhTwe9fLVNXw9YYu
-         RIcXH1Go8IB1M6roIZWhl2irXJoKS7dHHXgZNTmSYajocBXnIjaifqlvlcwQSv8VC8O1
-         gcsA==
-X-Gm-Message-State: AFqh2kojnwFEMkf26Bw+UUJRIDtheh9gW6y5YNwnA4hdS9yYKXvNewni
-        4N5aAUE+9/L0NHlMvgp6aVNOXWE4p1CgoRqo
-X-Google-Smtp-Source: AMrXdXsMvEauy81PnqJaGLlZdF8KNqz/0zuKpjGhSqfaqVrN3I7pe1eadByUUx3I9YHQP0xniH/l4A==
-X-Received: by 2002:ac2:5e6a:0:b0:4b0:f376:225a with SMTP id a10-20020ac25e6a000000b004b0f376225amr10207832lfr.63.1672308318806;
-        Thu, 29 Dec 2022 02:05:18 -0800 (PST)
-Received: from localhost.localdomain (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id x2-20020a0565123f8200b004b590b0c084sm2959896lfa.3.2022.12.29.02.05.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 02:05:18 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5OLQk/GuZ1RmMBbMLG8GgkkjESDctOzFQH3zJcOJbq4=;
+        b=zDsELTiwOKckFOT07i7/Zlwj0hr/f1UWVls7Vg4tBODqfbzvn8Cyt+TQGWNW47C+Bl
+         zAfSMZxljafea3StUDM3KVGPpcF2Z2mM232kHbmO7eVVgp+x+EUWIfuSvKzcTrRkv3e5
+         fcS/uxqmj5wfX1bWgEhjuKiqJtQZZyV2lzRgHD1AS4O8OryJNhQiW6Z5KiCWYEyXC8DY
+         JQ7nDK1Z2ShBiVlrPBqEISiZpLdLOjWVXRtoZB4MiEk7cOlbSxyQaDqz9ztu84t8B5uq
+         zGxEUEhRPeAve+AaWg65POwRsQ/skG/sm+PVjyjmob4R30kthVH8mWc06K1gO47rRXwX
+         CE8A==
+X-Gm-Message-State: AFqh2krDX/qSBi9T3wq9ZxFUg5ANt3pjyNS7iD1SsKQk6/n2kVWW4trf
+        1DIEpoNBYq7TOahSkAnyVvp7c7RfmgvgLZr5
+X-Google-Smtp-Source: AMrXdXt7ilFNSG5vyUHxOkVX+LMAaz3kV0gWtbuwW3JZKmsyWGcRsg6L0MNUzQPVB9s+zvTggtaVLw==
+X-Received: by 2002:a05:6512:3b07:b0:4ab:f3f1:8299 with SMTP id f7-20020a0565123b0700b004abf3f18299mr8317929lfv.6.1672308845487;
+        Thu, 29 Dec 2022 02:14:05 -0800 (PST)
+Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
+        by smtp.gmail.com with ESMTPSA id s7-20020a056512214700b004b57bbaef87sm2997981lfr.224.2022.12.29.02.14.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 02:14:05 -0800 (PST)
+Message-ID: <a7f09231-fbe6-7bea-258d-5c9503c74791@linaro.org>
+Date:   Thu, 29 Dec 2022 11:14:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 1/4] ARM: dts: qcom: pm8226: sort includes
+ alphabetically and nodes by address
+Content-Language: en-US
+To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8150: Wire up MDSS
-Date:   Thu, 29 Dec 2022 11:05:10 +0100
-Message-Id: <20221229100511.979972-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221229100511.979972-1-konrad.dybcio@linaro.org>
-References: <20221229100511.979972-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20221228230421.56250-1-rayyan@ansari.sh>
+ <20221228230421.56250-2-rayyan@ansari.sh>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221228230421.56250-2-rayyan@ansari.sh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add required nodes for MDSS and hook up provided clocks in DISPCC.
-This setup is almost identical to 8[23]50.
 
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # Xperia 5
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v1 -> v2:
-- Pick up tags
-- mdss@ -> display-subsystem@
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 271 ++++++++++++++++++++++++++-
- 1 file changed, 267 insertions(+), 4 deletions(-)
+On 29.12.2022 00:04, Rayyan Ansari wrote:
+> Sort the includes and nodes for consistency.
+> 
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index c7935f7a2926..f7721ec37b03 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,dispcc-sm8150.h>
- #include <dt-bindings/clock/qcom,gcc-sm8150.h>
- #include <dt-bindings/clock/qcom,gpucc-sm8150.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
-@@ -3579,14 +3580,276 @@ camnoc_virt: interconnect@ac00000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		mdss: display-subsystem@ae00000 {
-+			compatible = "qcom,sm8150-mdss";
-+			reg = <0 0x0ae00000 0 0x1000>;
-+			reg-names = "mdss";
-+
-+			interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-+					<&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
-+			interconnect-names = "mdp0-mem", "mdp1-mem";
-+
-+			power-domains = <&dispcc MDSS_GDSC>;
-+
-+			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&gcc GCC_DISP_SF_AXI_CLK>,
-+				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+			clock-names = "iface", "bus", "nrt_bus", "core";
-+
-+			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			iommus = <&apps_smmu 0x800 0x420>;
-+
-+			status = "disabled";
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			mdss_mdp: display-controller@ae01000 {
-+				compatible = "qcom,sm8150-dpu";
-+				reg = <0 0x0ae01000 0 0x8f000>,
-+				      <0 0x0aeb0000 0 0x2008>;
-+				reg-names = "mdp", "vbif";
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_DISP_HF_AXI_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				clock-names = "iface", "bus", "core", "vsync";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				assigned-clock-rates = <19200000>;
-+
-+				operating-points-v2 = <&mdp_opp_table>;
-+				power-domains = <&rpmhpd SM8150_MMCX>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dpu_intf1_out: endpoint {
-+							remote-endpoint = <&mdss_dsi0_in>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dpu_intf2_out: endpoint {
-+							remote-endpoint = <&mdss_dsi1_in>;
-+						};
-+					};
-+				};
-+
-+				mdp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-171428571 {
-+						opp-hz = /bits/ 64 <171428571>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-300000000 {
-+						opp-hz = /bits/ 64 <300000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-345000000 {
-+						opp-hz = /bits/ 64 <345000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-460000000 {
-+						opp-hz = /bits/ 64 <460000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0: dsi@ae94000 {
-+				compatible = "qcom,mdss-dsi-ctrl";
-+				reg = <0 0x0ae94000 0 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <4>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_DISP_HF_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-+				assigned-clock-parents = <&mdss_dsi0_phy 0>,
-+							 <&mdss_dsi0_phy 1>;
-+
-+				operating-points-v2 = <&dsi_opp_table>;
-+				power-domains = <&rpmhpd SM8150_MMCX>;
-+
-+				phys = <&mdss_dsi0_phy>;
-+
-+				status = "disabled";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dsi0_in: endpoint {
-+							remote-endpoint = <&dpu_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdss_dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+
-+				dsi_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-187500000 {
-+						opp-hz = /bits/ 64 <187500000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-300000000 {
-+						opp-hz = /bits/ 64 <300000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-358000000 {
-+						opp-hz = /bits/ 64 <358000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0_phy: phy@ae94400 {
-+				compatible = "qcom,dsi-phy-7nm";
-+				reg = <0 0x0ae94400 0 0x200>,
-+				      <0 0x0ae94600 0 0x280>,
-+				      <0 0x0ae94900 0 0x260>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&rpmhcc RPMH_CXO_CLK>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+
-+			mdss_dsi1: dsi@ae96000 {
-+				compatible = "qcom,mdss-dsi-ctrl";
-+				reg = <0 0x0ae96000 0 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <5>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_DISP_HF_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
-+				assigned-clock-parents = <&mdss_dsi1_phy 0>,
-+							 <&mdss_dsi1_phy 1>;
-+
-+				operating-points-v2 = <&dsi_opp_table>;
-+				power-domains = <&rpmhpd SM8150_MMCX>;
-+
-+				phys = <&mdss_dsi1_phy>;
-+
-+				status = "disabled";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dsi1_in: endpoint {
-+							remote-endpoint = <&dpu_intf2_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdss_dsi1_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			mdss_dsi1_phy: phy@ae96400 {
-+				compatible = "qcom,dsi-phy-7nm";
-+				reg = <0 0x0ae96400 0 0x200>,
-+				      <0 0x0ae96600 0 0x280>,
-+				      <0 0x0ae96900 0 0x260>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&rpmhcc RPMH_CXO_CLK>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+		};
-+
- 		dispcc: clock-controller@af00000 {
- 			compatible = "qcom,sm8150-dispcc";
- 			reg = <0 0x0af00000 0 0x10000>;
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
--				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
-+				 <&mdss_dsi0_phy 0>,
-+				 <&mdss_dsi0_phy 1>,
-+				 <&mdss_dsi1_phy 0>,
-+				 <&mdss_dsi1_phy 1>,
- 				 <0>,
- 				 <0>;
- 			clock-names = "bi_tcxo",
--- 
-2.39.0
-
+Konrad
+>  arch/arm/boot/dts/qcom-pm8226.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
+> index eb36d3662464..a2092569970a 100644
+> --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
+> @@ -1,7 +1,7 @@
+>  // SPDX-License-Identifier: BSD-3-Clause
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+>  #include <dt-bindings/interrupt-controller/irq.h>
+>  #include <dt-bindings/spmi/spmi.h>
+> -#include <dt-bindings/iio/qcom,spmi-vadc.h>
+>  
+>  &spmi_bus {
+>  	pm8226_0: pm8226@0 {
+> @@ -41,13 +41,6 @@ smbb: charger@1000 {
+>  			chg_otg: otg-vbus { };
+>  		};
+>  
+> -		rtc@6000 {
+> -			compatible = "qcom,pm8941-rtc";
+> -			reg = <0x6000>, <0x6100>;
+> -			reg-names = "rtc", "alarm";
+> -			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> -		};
+> -
+>  		pm8226_vadc: adc@3100 {
+>  			compatible = "qcom,spmi-vadc";
+>  			reg = <0x3100>;
+> @@ -81,6 +74,13 @@ adc-chan@f {
+>  			};
+>  		};
+>  
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+>  		pm8226_mpps: mpps@a000 {
+>  			compatible = "qcom,pm8226-mpp", "qcom,spmi-mpp";
+>  			reg = <0xa000>;
