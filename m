@@ -2,129 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F24B658BE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:45:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11216658BE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 11:47:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbiL2Kpy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 05:45:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34954 "EHLO
+        id S233095AbiL2Kri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 05:47:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiL2Kpx (ORCPT
+        with ESMTP id S232081AbiL2Krg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 05:45:53 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42C091274A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:45:52 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id j17so17505702lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:45:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NTIWrY/I9iznPzbsuEZTHxW4AmSb2jAgZYmVDCvvcHM=;
-        b=Swr2zkRQfivt3MiiJUmjule/G9pOEKThwbZllV8yDBQBXo4zhD31f29Fbj0LTKCY6S
-         CCluJMmtMso7KZfL6YeXrRSI8FDe8wkw4yX92GhVr/Ra4IpfnlPncfbQVzQSgPPVfuCx
-         9RI989CoIPlGdq9D9JArkAAiIaZvnJoqOQnxGNrKTGa4/dZXu2xHWPfGTcdYiiVwUrOq
-         +Uztn+lfWQJPWdqXJENG91hXcmtGPuv7XfgD/197l2OtCCu1J5dwUd2GRphD7bjyam2e
-         g+sCkqHY8NCJII82cLViYjhLdyouAXHj70KFrqb/JikO9sKasdqrBOHOFJQ33Xc872E/
-         tqOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NTIWrY/I9iznPzbsuEZTHxW4AmSb2jAgZYmVDCvvcHM=;
-        b=h08Y8x6YRxZq8dEDgAjQpoHapc3ykDi2fqq5xFc1sQyne1pqTzNxZnghDT6hzKlbHC
-         I3kCwXZIRG7+y2nsOrKyC2GthrSnLVRkrub9MLXDUlru9HSnSGnlOqOgIob1OTLnNZ+t
-         SI66ypQz8sUuIbjkF3k80oRcxxVEkqvWv2UZu3SLvoz2akza/m+TyFL/UZAe2v2s1hGv
-         7ttbrTj2ZBgukSZ5pg1bWnuDYZdAhCk/12KT/d3C6iGPw5IXZ5AGwAw3Dob5Q+bbfIkJ
-         Y7UTi/v7Ugw2mHrEFo/q+oHY3SvaHBW9eHvfAeorRmu0C3jJKUtN5D0tM9U5bKRAYB45
-         Hj0w==
-X-Gm-Message-State: AFqh2kqJsIRsoC4EqnCZ7+MCWj0jVuSoJwXpBI4wRtzjQ4YAIgkL7pIe
-        EtdCSEqM6g3mY8CYIqvekBnSyg==
-X-Google-Smtp-Source: AMrXdXtRTwT3Y1PV0nYirk3i9PKbnQoJFfVhyUcj6OWn5YAfUdVHJnWQd3FNE+qq0i8vDTRYgSl9qg==
-X-Received: by 2002:a05:6512:340d:b0:4b6:ec96:bb9a with SMTP id i13-20020a056512340d00b004b6ec96bb9amr10753400lfr.60.1672310750662;
-        Thu, 29 Dec 2022 02:45:50 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id u20-20020a05651220d400b004949f7cbb6esm3023225lfr.79.2022.12.29.02.45.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 02:45:50 -0800 (PST)
-Message-ID: <71d7a162-569d-1443-9e53-3ba374d06ccd@linaro.org>
-Date:   Thu, 29 Dec 2022 11:45:48 +0100
+        Thu, 29 Dec 2022 05:47:36 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D20AC1275D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 02:47:34 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D92023F114;
+        Thu, 29 Dec 2022 11:47:31 +0100 (CET)
+Date:   Thu, 29 Dec 2022 11:47:30 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Emma Anholt <emma@anholt.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/adreno: Make adreno quirks not overwrite each
+ other
+Message-ID: <20221229104730.guopbgyleb6hif4h@SoMainline.org>
+References: <20221229101846.981223-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 1/7] arm64: dts: qcom: sm8450: add spmi node
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Vinod Koul <vkoul@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221229103212.984324-1-konrad.dybcio@linaro.org>
- <7b32e414-96a9-7265-efee-f872badb32b2@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <7b32e414-96a9-7265-efee-f872badb32b2@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221229101846.981223-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29.12.2022 11:42, Krzysztof Kozlowski wrote:
-> On 29/12/2022 11:32, Konrad Dybcio wrote:
->> From: Vinod Koul <vkoul@kernel.org>
->>
->> Add the spmi bus as found in the SM8450 SoC
->>
->> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> [Konrad: 0x0 -> 0, move #cells down, make reg-names a vertical list]
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->> v1 -> v2:
->> No changes
->>
->>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
->>  1 file changed, 22 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 570475040d95..b9b59c5223eb 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -2715,6 +2715,28 @@ aoss_qmp: power-controller@c300000 {
->>  			#clock-cells = <0>;
->>  		};
->>  
->> +		spmi_bus: spmi@c42d000 {
+On 2022-12-29 11:18:45, Konrad Dybcio wrote:
+> So far the adreno quirks have all been assigned with an OR operator,
+> which is problematic, because they were assigned consecutive integer
+> values, which makes checking them with an AND operator kind of no bueno..
 > 
-> Hmm looks different than reg.
+> Switch to using BIT(n) so that only the quirks that the programmer chose
+> are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
 > 
->> +			compatible = "qcom,spmi-pmic-arb";
->> +			reg = <0 0x0c400000 0 0x00003000>,
->> +			      <0 0x0c500000 0 0x00400000>,
->> +			      <0 0x0c440000 0 0x00080000>,
->> +			      <0 0x0c4c0000 0 0x00010000>,
->> +			      <0 0x0c42d000 0 0x00010000>;
-> x
-Hm, my guess would be that Vinod chose to put the "cnfg" reg
-instead of "core" in the unit address, as 8450 has 2 SPMI bus
-hosts and they both share the core reg, so it would have been
-impossible to have two spmi@core nodes..
+> Fixes: b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
+Nice catch!
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+Not sure if it's the right Fixes commit though, as it would have worked
+when ADRENO_QUIRK_LMLOADKILL_DISABLE was added with constant 4 instead
+of 3 in 370063ee427a ("drm/msm/adreno: Add A540 support"), but then
+using bitflags in an enum value type is invalid anyway, AFAIK.
+
+- Marijn
+
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
 > 
-> Best regards,
-> Krzysztof
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index c85857c0a228..5eb254c9832a 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -29,11 +29,9 @@ enum {
+>  	ADRENO_FW_MAX,
+>  };
+>  
+> -enum adreno_quirks {
+> -	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
+> -	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
+> -	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
+> -};
+> +#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
+> +#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
+> +#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+>  
+>  struct adreno_rev {
+>  	uint8_t  core;
+> @@ -65,7 +63,7 @@ struct adreno_info {
+>  	const char *name;
+>  	const char *fw[ADRENO_FW_MAX];
+>  	uint32_t gmem;
+> -	enum adreno_quirks quirks;
+> +	u64 quirks;
+>  	struct msm_gpu *(*init)(struct drm_device *dev);
+>  	const char *zapfw;
+>  	u32 inactive_period;
+> -- 
+> 2.39.0
 > 
