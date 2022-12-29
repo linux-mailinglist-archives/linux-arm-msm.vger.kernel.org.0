@@ -2,155 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A54F658A2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:06:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A93A5658A7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 09:26:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231172AbiL2IGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 03:06:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34842 "EHLO
+        id S233170AbiL2I0G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 03:26:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233111AbiL2IGP (ORCPT
+        with ESMTP id S231264AbiL2I0E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 03:06:15 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA63CC26
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:06:13 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id m6so16180457lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:06:13 -0800 (PST)
+        Thu, 29 Dec 2022 03:26:04 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B7738F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:26:03 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id i19so5859363ljg.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 00:26:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ben8+4oiArxexQJyJIBwbQtQ9giuKq12emDFPOAB0/A=;
-        b=jufpxaDQuVBA0SebIRrM4IEex4ljQthZbGvev2zfkGOV/gkQ+/y36QDPqFDhUpOLdB
-         md5nPBiW5qSbkYYISL+qf1hh07zuo6X8/peed5sHge+qh0ZCXqT0Gsbq6H8XADK0D7bD
-         fMMDbnIj1oxGmllKQ1upIjpqwH+xb7wfGNsfNDkH0gpv9Xyu2OutUCjKr65X0K4WwdqE
-         CZXCWg6A4TgTvbhOFy0467qt3gdO1easnHGL7bsnu8lVXhu+uocBJLLppPxb9ypvspSj
-         qVSmDLyaDopfP2csfVO8wu0dPb4eafmJiSajVISsX3RCpUFcx4eFL28gH5/ErN+0xSVY
-         eCpA==
+        bh=2jD6n3VI4U3d7CzDLMYOr4tAgBELkqFchc0PWmapwU8=;
+        b=qhEE4crGFgsdwFNKY2hdx6b7U+9CNNrQU/L8EM7pLIpvdLqLPQ/X0IBU6xWI/+Tjsb
+         9FjNHb7ac8oTGST4Pbt4LqMouaI7o6ptRX4gxrDV+DY0BsNtQ6dSwvr001n+5/bQS1TW
+         dOYdrUbb3v+dkIbYWz8iLCg7x3t4MMPZ2yEMkhH+Z1WWRJ5+yQu/egLPHHwdl+1Fnl0r
+         PuT+vKRtc4y/RnrOZISux3vGOnMZ5wVwplKkBDryIN5kA1LWgtUpYvt5rXpBwKcDY8L/
+         6qQO0TjZcXtrHmmg4U1cLbF5ONgdzmJSCfn+i6u1lzyWWaYS2DnxoS5MODp9cAuXOAFC
+         PUxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ben8+4oiArxexQJyJIBwbQtQ9giuKq12emDFPOAB0/A=;
-        b=bm+UL/d4pUDkeBktVC4EeTCWTYpMSSHJJ8T74OxyECBhFdRscuuNZP+FGgc9Nj2H+Q
-         /vcWLci+LhsP1etu34mB62lKHaCMBkUURyRyl+L13RMjX/I+snlesfwRyXsu+UzUgjn3
-         IaKlX5z/Ad84Bea8DYVnzs2lX9dSMQslO0hl9own1KrN6Fqn8M+CVEEQIyAUlwha1sYj
-         cVGdcp6F2hISuT5IcoKdbeMqLSARsRGcyumlL302vmyzsPySlFbbk5pM5lDTPVSpQcet
-         WCuK63lK4S0USTT4lR1cen5Mq5e8UDHptSvcQkjPxwcKz3+LVUDRIZIjs/J1yEMdDfIK
-         qYLg==
-X-Gm-Message-State: AFqh2korak/OnrztuBrUFriqq3YpZJwSHWChFKqXEu1u8sUobzzzulJH
-        rdSYxj/dagFw3WsxinCviYQdsA==
-X-Google-Smtp-Source: AMrXdXtAmfVtj1IoPnGmK4xqeGUXuvnkJ8kCHhPjHiGxwb3HU1LujrXhq0Ja4bqnsKuNo/EyORORyA==
-X-Received: by 2002:ac2:528f:0:b0:4b5:6504:a556 with SMTP id q15-20020ac2528f000000b004b56504a556mr7164960lfm.61.1672301172157;
-        Thu, 29 Dec 2022 00:06:12 -0800 (PST)
+        bh=2jD6n3VI4U3d7CzDLMYOr4tAgBELkqFchc0PWmapwU8=;
+        b=jeyZXQIx2OxFHm1AmJxJ4g+wTgJ5GAfNI9V0Lzu3cqSpfy4secyk3c2d6ogN3nB4iR
+         sKRO6DeqDHnDPN3ppTG79p6Rsy+S8LdJF4ZDL1Bho9xZb1fsQHgpqYgtt6mVN0qEkw00
+         cdgs+GunfKe+YYfQ2pjXg8hcY6wp+y9434otTnGXZgOWJJjzD2HaB0rGu5GFjcHsGIx7
+         k465j/CDTScQ+XFrRQuHG6fgadvlAnEhaTlSOv/Z2r9PkiV+qKnT9GfP+j7YukJd015U
+         X8BMlLB5EdkjYnWEVluKq1qbNIvPGpYcJN2uZ6i04msvqZe6H5Aa4GhKhXbJpNlGB3vb
+         NpoQ==
+X-Gm-Message-State: AFqh2ko+RpWkVyE0gnppPRBqAYJQqsc7OgCUol0GFZ/2fFkp+MMzTlh1
+        N/iqdHfzWPQvtGVlEpbAluNsww==
+X-Google-Smtp-Source: AMrXdXtydbHGlVS8vt7G1ajfd6J2r0uGDhywhmHhWEcVTDCakT7GghbtMJ0/ytEappMkCSN9KHVobg==
+X-Received: by 2002:a05:651c:1a2c:b0:27f:cccc:1df3 with SMTP id by44-20020a05651c1a2c00b0027fcccc1df3mr2208846ljb.41.1672302361996;
+        Thu, 29 Dec 2022 00:26:01 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d21-20020ac24c95000000b0049465afdd38sm2979222lfl.108.2022.12.29.00.06.10
+        by smtp.gmail.com with ESMTPSA id p5-20020a2eb105000000b0027f77c96339sm2257519ljl.0.2022.12.29.00.26.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 00:06:11 -0800 (PST)
-Message-ID: <0180241f-4f10-f914-1288-371106c4fa1c@linaro.org>
-Date:   Thu, 29 Dec 2022 09:06:10 +0100
+        Thu, 29 Dec 2022 00:26:01 -0800 (PST)
+Message-ID: <06a46227-1a0c-aa5b-0b06-f202a5eff05b@linaro.org>
+Date:   Thu, 29 Dec 2022 09:26:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add reg-names property for ICE
+Subject: Re: [PATCH v2 1/1] dt-bindings: msm: dsi-phy-28nm: Add missing
+ qcom,dsi-phy-regulator-ldo-mode
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_mkrishn@quicinc.com, andersson@kernel.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221209-dt-binding-ufs-v1-0-8d502f0e18d5@fairphone.com>
- <c4109766-22f1-7227-47bb-9273a027bb0c@linaro.org>
- <CPDFHXBPSP76.5CWNQK4N1KGI@otso>
- <5391e6e5-3773-a012-c396-b59b1f54ea51@linaro.org>
- <CPDJZJHDL1XJ.2UY1U1E19CTUH@otso>
+References: <20221228131110.213116-1-bryan.odonoghue@linaro.org>
+ <20221228131110.213116-2-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CPDJZJHDL1XJ.2UY1U1E19CTUH@otso>
+In-Reply-To: <20221228131110.213116-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 16:24, Luca Weiss wrote:
-> On Wed Dec 28, 2022 at 12:58 PM CET, Krzysztof Kozlowski wrote:
->> On 28/12/2022 12:53, Luca Weiss wrote:
->>> Hi Krzysztof,
->>>
->>> On Wed Dec 28, 2022 at 12:50 PM CET, Krzysztof Kozlowski wrote:
->>>> On 09/12/2022 15:29, Luca Weiss wrote:
->>>>> The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add this
->>>>> in the bindings so the existing dts can validate successfully.
->>>>>
->>>>> Also sm8450 is using ICE since commit 276ee34a40c1 ("arm64: dts: qcom:
->>>>> sm8450: add Inline Crypto Engine registers and clock") so move the
->>>>> compatible to the correct if.
->>>>>
->>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>>> ---
->>>>> (no cover subject)
->>>>>
->>>>> The only remaining validation issues I see is the following on sc8280xp-crd.dtb
->>>>> and sa8540p-ride.dtb:
->>>>>
->>>>
->>>> Any plans on fixing the patch (after testing it) and resending?
->>>
->>> I wasn't quite sure how to fix the comments, but re-reading them this
->>> comment from you is how you expect it to be in v2?
->>
->> The patch fails testing, so I meant this.
->>
->>>
->>>> Just add it to top-level with minItems: 1 and per variant customize:
->>>> 1. maxItems: 1
->>>> 2. minItems: 2 + required
->>>
+On 28/12/2022 14:11, Bryan O'Donoghue wrote:
+> Add in missing qcom,dsi-phy-regulator-ldo-mode to the 28nm DSI PHY.
+> When converting from .txt to .yaml we missed this one.
 > 
-> I tried a bit now but couldn't get it to work when using 'items' so that
-> we have the "std" and "ice" names in there.
+> Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml         | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> Documentation/devicetree/bindings/ufs/qcom,ufs.yaml: allOf:2:then:properties:reg-names: 'oneOf' conditional failed, one must be fixed:
->         [{'const': 'std'}, {'const': 'ice'}] is too long
->         [{'const': 'std'}, {'const': 'ice'}] is too short
->         False schema does not allow 2
->         1 was expected
->         hint: "minItems" is only needed if less than the "items" list length
->         from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> 
-> Since I have 'minItems: 1' in top-level I seemingly cannot use 'items'
-> in the 'if' neither alone nor with 'minItems' and/or 'maxItems', getting
-> different errors when doing that.
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+> index 3d8540a06fe22..95076c90ea171 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+> @@ -25,6 +25,10 @@ properties:
+>        - description: dsi phy register set
+>        - description: dsi phy regulator register set
+>  
+> +  qcom,dsi-phy-regulator-ldo-mode:
+> +    type: boolean
+> +    description: Indicates if the LDO mode PHY regulator is wanted.
+> +
+Do not add it between reg/reg-names (or any other grouped properties).
+Should go after reg-names.
 
-top-level cannot have only minItems:1.
-
-> 
-> Can I just put 'reg-names: true' top-level and then specify either items
-> for the ones that use ICE or for the others use the 'maxItems: 1'?
-> 
-> Or am I supposed to ignore 'items' completely but driver expects 'ice'
-> name so I'd rather include it.
-
-Use the syntax like:
-https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L57
-
-
-Best regards,
 Krzysztof
 
