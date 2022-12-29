@@ -2,206 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A98B0658D15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 14:27:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD06E658DA1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 14:49:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233148AbiL2N1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 08:27:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50028 "EHLO
+        id S233423AbiL2Ntc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 08:49:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231261AbiL2N1j (ORCPT
+        with ESMTP id S230423AbiL2Ntb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 08:27:39 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B56CFACF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 05:27:37 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id bp15so27468584lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 05:27:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gZSCpbFYEqU4kXdvZagC2f9wuaUgm6zGDC72Dg77aBg=;
-        b=EwfxI6MHyfLh+RSomgQ/cBEJaIlk0FfQzfv/1WmxeBnIqFl+gB6RBwDJjb6x2mq5xV
-         i74mE6DVGWFPrVoCO9sqzlYASEzyvDfz6oS2BwoyAVRfmmwuIgg3+VwrJ6DZ0XWwB3nk
-         KKL2qZYJ4M0emp+ggc19qQhLyiohmz2/MYqxv+B0g/V/5naXND6T1B7YL3SADG9+6RaV
-         I94ex3DIgPZL9BHtpCFYGTOgUn/3rNJP/OaueAMsBr/6XKAvlO9l7e+8nTwNYzJNDm4d
-         sbsyZa3JprKLvqb/Om/QIawYIMq2EtLzVqF8KCWv5HbvZBFrFanYXbhwsIGdFr+KddNp
-         jAIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gZSCpbFYEqU4kXdvZagC2f9wuaUgm6zGDC72Dg77aBg=;
-        b=jXmLen2Q2eov/uYVL+FES+7FJd1KkbgDj/SXN0YrUZyJvk/YEqpItgwvrUDTdTks5a
-         RlEDDbIgLYxsFgtaVyc9G0GHToVZZnztyHed5KN6K4IsmBH2F3C8zedEK0Hc2MHY+fEq
-         UMyzMGO1by0jEwlUSBXZzVJmUFtAVLKu+vtwAdpvN5s87iiaLgwifBWxzj9DRgGjGd+5
-         PAnmyzWwmZH5FVTAe7nAfQa+Kq5vNLx2DIGDJtvmnTfag+O5ZeRF0J8U+bzKu7+R+XsM
-         W60Za7jJwe42Du3WMqXOyEJbEp7L8jkbLaHMwGCF3rCH66rYdWSA+TQ1cx3i9755r4DC
-         IGVQ==
-X-Gm-Message-State: AFqh2kqHY8HBMN2ajFApABKQtxa2foa9QRoJwx+OB6A5wc1BffQqtzD7
-        Xqst8MyTCi6qjn6jEFN9b5eW1g==
-X-Google-Smtp-Source: AMrXdXsZF5PMbIvZk9Qtlm7oBw6pmmt5L+LuelrSLsR94OcdSMuTwoN6ZdPt/P+Mn+1tEN8QXaqxhg==
-X-Received: by 2002:ac2:5327:0:b0:4b6:e64c:aec1 with SMTP id f7-20020ac25327000000b004b6e64caec1mr7226461lfh.53.1672320455538;
-        Thu, 29 Dec 2022 05:27:35 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id 3-20020ac25f43000000b004996fbfd75esm3040595lfz.71.2022.12.29.05.27.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 05:27:35 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8250: add cache size
-Date:   Thu, 29 Dec 2022 14:27:31 +0100
-Message-Id: <20221229132731.1193713-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Thu, 29 Dec 2022 08:49:31 -0500
+Received: from EUR04-VI1-obe.outbound.protection.outlook.com (mail-vi1eur04on2057.outbound.protection.outlook.com [40.107.8.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE5091EA;
+        Thu, 29 Dec 2022 05:49:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hNWufXSklnW8eXXnYTFu+tEZVNEkYxpncNMi4DQ2zkAcmvqdY+mT48rt9ppwDyYFjtHn6qsKw3mO7muNZdxmY9CACadm/O7cUW+N0hQyRPPctFPDaadqRweZSWDaVKPwE86VyOxGYJMN7G4qOOIRXgHlc7X7WE6bXPjnwcDb/QbUj4uaE902NFF0pqNFwuXmaxYHwtWSl2g/oUHMEid5PrbBkHu0O0DOXvG6doTi2t6SVdKB9OHetC2CrwrLEyXQeByJS7NbJVAmsA5tcd9zN6EdiIyWujdj+5AlJQRnR38pXJZH91x2mDUYbjTosO3PHo4RAKG3qiVV8PAt1vlTWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tOGAfx/guPmUARXxFkmG6O4/lEBz4kLkW3y8nSEDQps=;
+ b=RptzvDFmo81OCIg+hYIaCsd/7BcmdGABX86RFWInPlCo0UOAzt3j+f3amKkqWEm+PCAYMsG99DVXADAnqmuZVTCvTtEOeccURc1/f0rhANLlCoBxWcBmDhpJLw1peQ9qXarLF/weRo6d3ElnpJtQsALFALwhf/QoF+RZLNKr0C4vpAan9jb0qdRBTxjeY+dBD8njUTGQEL4vOpeOsGgyp4pxTW7HmLk2AA2dVlmYOdg5Gdv4+OBTu5a41dhvTyZ73Ja//Jj6AamNbdmfcGpBXW3uoJDkE2WHwiBv43V/H62odv3DhjFo3oqXi6GIvQD1aZ2kjleI0bdyhiTUr37tPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=suse.com; dmarc=pass action=none header.from=suse.com;
+ dkim=pass header.d=suse.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tOGAfx/guPmUARXxFkmG6O4/lEBz4kLkW3y8nSEDQps=;
+ b=Nrem9Pt4JNVHsfP25qDFwa150WxW14hb3gAaAjiS7LhgaY70opxjKF7nwGBkhn/C5bPRuR4zYQJbj3anZNba/SQZB4zAMMaeGpPro14ovyjPib59vMPT7iFrXSPkm+9+IfKqJDvW7LSVcQt7ucWa8UONWNbWPVxcZKMeH/te49krZYUEOAImWJ7jKov79jpyXAk7+b9nrc4HLkITkOAhuMEAsRattOBjcG3EOgmSPOGKQn4hHvMNEYKcMJqoIIY8HH8v0ZTXRNZtv0KqzvRRM1+7UiM3vHw3uB/aAE31R0SkZHLTwnlascUh+srwF1bVau9Uunq2A8gHWYtnJB9sHw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=suse.com;
+Received: from VI1PR04MB7104.eurprd04.prod.outlook.com (2603:10a6:800:126::9)
+ by DB8PR04MB6955.eurprd04.prod.outlook.com (2603:10a6:10:11d::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.16; Thu, 29 Dec
+ 2022 13:49:25 +0000
+Received: from VI1PR04MB7104.eurprd04.prod.outlook.com
+ ([fe80::8d51:14ac:adfd:2d9b]) by VI1PR04MB7104.eurprd04.prod.outlook.com
+ ([fe80::8d51:14ac:adfd:2d9b%5]) with mapi id 15.20.5944.016; Thu, 29 Dec 2022
+ 13:49:25 +0000
+Message-ID: <80f92635-6d14-8ff3-17ac-de2e5b977947@suse.com>
+Date:   Thu, 29 Dec 2022 14:49:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [RFC PATCH 04/14] sound: usb: card: Introduce USB SND vendor op
+ callbacks
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-5-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From:   Oliver Neukum <oneukum@suse.com>
+In-Reply-To: <20221223233200.26089-5-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR3P281CA0066.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:4b::17) To VI1PR04MB7104.eurprd04.prod.outlook.com
+ (2603:10a6:800:126::9)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1PR04MB7104:EE_|DB8PR04MB6955:EE_
+X-MS-Office365-Filtering-Correlation-Id: c24555f4-b798-4ee3-f984-08dae9a37eac
+X-LD-Processed: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba,ExtFwd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 25UvJLzIJNi+EsjKt5Vge8hETjTsp7in8TKuQaiMqtRQkmEUjO9pltptqYEmjXpQoJGe1HGCv3DcKrqmmAdJNX8vaFxB1/0Pq6y9G8I9ysBlt01Kn3KlfdjkXr1AgMnLyOWk5lvoPjFUkoqVhnlc87mtaamarmBbaoD4WBduoJECMy2a9hDqyxclvOBB4UC2HmFHyksc7lLY1ShKI1PCAqk2wb4GP63265E9kC/8omypjhkE7qj8Xsmtg1d55P9ALVqKXv0ZKbHE2NqLUa+yd/h6gNg+eUskZSLPMdbeLJjToY/B3ahkTx72LTVL5QQPyoKq4x/9erVZlVCJS62DLLeIo0Lc2sHpOqqMCF8GvVyR+pm4LCNrDd7IYGlRN/WNiWEFgfOfIq9dKDhjr6rIX+w5uwh0NPVFDC+nfIa+2qzOkMERL8nsdiYwQdibaGL9vcraqOEEZQg0YyUOtQ6gfUDcQdDAFE560YqflBaaaA/fB5dTn0LbjYon/WbPzJ5MVMHXh2zEro5U8OqPjShj4JmHbdqsin44zB/YGFgCFL40Vtd+fiW6JziQxZGQZbjuRjFml6+ycNrmLs6XM2IfsWiPaAmFME/gT67E2qixNRWZjAAQvOvKutAfOLPfGqfuT1HUDLVqw+/aehMQi5S3SdC+gmQQUsCHnywT2r2An8zpLCnyxNAbYr685iqfn4fegqrDaY/6xAQb297CemdLI2a0z64XjfqhNVqeOTzLh8Min/EtNkrR4iRAihrFNWC3
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB7104.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(396003)(366004)(376002)(136003)(39860400002)(346002)(451199015)(6512007)(31686004)(5660300002)(4744005)(7416002)(8676002)(41300700001)(8936002)(66946007)(66476007)(4326008)(66556008)(186003)(2616005)(36756003)(921005)(2906002)(478600001)(6486002)(316002)(86362001)(6666004)(53546011)(31696002)(6506007)(38100700002)(83380400001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aWVRZHcwMjg0dUt0NWZ5OFo1dXRvVGFtR0Q3RnRDQWJQV3FEUjA5QTJQdGVy?=
+ =?utf-8?B?NGVnVEUvMG5yai9rWmcvL0dPS3Q2Q0NGZFhPZVZCK1ZlVUcwOTRCNUI5dDZw?=
+ =?utf-8?B?K3Jya2tIOHJZYmlmdkJrNFZRZ0xuODRIWTNoSkRQak5xMEFtK0x1WmJRZTMy?=
+ =?utf-8?B?MkE4clZyL3UrWnVKbFh6aTBZYTYwcUJha2J6bDFScGt4bWRvYkg4dURNSThr?=
+ =?utf-8?B?RHF6eE13cmlET2wxMUhLZERXemc4VGgxLzdxV2pYS3Q5L2tvVjhWbWVhS1hX?=
+ =?utf-8?B?SlNaWUdqUkJ4Q08rVmt4d3BRbnFOcDdqVHdNRmdYOVh3K1lNQ3JjaTNTYTVu?=
+ =?utf-8?B?V0FQM1lSbnlyUHRjaTlpVE9FVExCbkVEcjJENk5odlk1bmdJbGtXaXlwMUpN?=
+ =?utf-8?B?YlZpbGNxdFcrb21jRTRFYzY3dFZjM3lrWUxhaERuM0lGQnE3d05rMHUzQWdU?=
+ =?utf-8?B?b0plRVNVNzY5LzdWdUlSMUJvMzNMclZNVElud0hMN0tKVzlRSHB4Mm9rcXl2?=
+ =?utf-8?B?NFRvUzI2VktyYnhCc2l4em4yM3VoYlZ1T2JjQ0s3V1JYOUhIenF4dEFTM3lx?=
+ =?utf-8?B?c01Sb3lOOXlucndTUVF1M29GRHA1WWxMd09qd2paMXQwd3pPVndlRzB5UzBG?=
+ =?utf-8?B?R3hVUVJkMklJWmRmVCt1aGRWMEdUWTBsd0Z5ZDBNQks1Y0M4Ui9oQVlQcmVP?=
+ =?utf-8?B?N3pOMEF1RnVLL0ZldExvZ3pUOWtYRzVYSE85N05jbGh0L3FQOGcxVnIvbGVU?=
+ =?utf-8?B?THRjWVVaRjM5Z3BuYjh6YTkyMVZxS3doTSt6SWt1ckVpSjJ1YjcrYmU2M2hP?=
+ =?utf-8?B?VDlNOURzSmxjU0hBVitZT01LR3I5R01KcmRNWGhhaG1QZFg0blJFSHVBaGJU?=
+ =?utf-8?B?T0JGVHFEL05NbGx6SHFES3JHZGRzcURhd3l5c3hBdHBKSmtnQjIyUlI4RlFQ?=
+ =?utf-8?B?UXBPdnNDSFN4Nk00ZHhzZGFmaGNucUgza3RBdGd0RWlSaGlIM0pReXQ2QnR6?=
+ =?utf-8?B?d2N3VGJkenUrTlhXaWRHTU8rM2NkclpXbjVaekQ5WE1XVUJXQlUvTXcyZ1Ev?=
+ =?utf-8?B?V29PeldjUCtxNi9qa3FHN1pubXFKMUNlZDRUNzl5b2lseG00MnhrSVdNalpR?=
+ =?utf-8?B?M0gzZVpsdm1hV25JYWcyUmhtbnFSZndRSkxESW1GY3NUU1pLRnJOaVIySUIw?=
+ =?utf-8?B?YzRqUlZjalpuNXRoTTdpeTZsRFNIbjRmck92Y1hmbFh1UDdXWUJSTUYrc3Fq?=
+ =?utf-8?B?NE1GaFFTeUtjTC96ZituOWw2dGtxMDhCRGVKcGZadHRRYTAzbUQ2dTY5OTJw?=
+ =?utf-8?B?QmN4MmhJcFNob3JMZ2t1TkppcnFOcVUwRHZrbHJhK3RnU0Mxald0TXYzQVpr?=
+ =?utf-8?B?RndMc3c3U0RKM24xWlIzUzNxRytod0pWSzhRYVBrY2l3UkdCYWZxRVFlTE1i?=
+ =?utf-8?B?SjVVRzF3KzFlUWJsS3B0Nmw2VmtWSWZiYjhxcmwwUll3bkVuNDU0R0lFSG9j?=
+ =?utf-8?B?SGhDZjJwcHEzamNnMDBnUFdYRjQ5bUJhNUpOaTE1SjJNcmowVGE4bklrMURy?=
+ =?utf-8?B?dVdlMkZxT09qakZMeFFaOFZYMEdXVTF0b0RpYXNlWFpXend4M1FRRjdXK20r?=
+ =?utf-8?B?TXdJZ1AwMHY1MjFpR2txZEY5RFVWM1BDV3V6TU9kNWtsdHdIOXo4eVdwdXlu?=
+ =?utf-8?B?VEM4K1VZWDlnN1Zxemh4aEtkWmhIb3JPSjk0dkdCSlF5dTVXR216UlR5MnRn?=
+ =?utf-8?B?OWVqbThNdW5PdTRSNGlWanFUbFNBRU5QR1VtZEZsb0YzU21SMmlDNUhST05p?=
+ =?utf-8?B?SUZWWFB2bWJoTE9jZWczZkNwSENHMU9TaFdrOHlraU5HK3pSd2QxbVg4MXNr?=
+ =?utf-8?B?U3dzSmZ0TDdxTEdodHVoekRoMVZnRVFUOWZyeENpenJnNC9CRHVZbUVtVWp5?=
+ =?utf-8?B?K2oxcHpsT2FrUTZsTmJ1aWM3Vld6UWZrMkpEZDNQQ01HSlVWQ29DeW1ZZ2RI?=
+ =?utf-8?B?REU1eDFrbzE2eTgvZDdQM09yY2RHSkpNdEZOUFE1aklIR3gwbDh0RTF4WFZi?=
+ =?utf-8?B?bmFPWDU2V0pBdUwxampqc1JjMG1UUm5janozcC9qeGJWd25ycTZpcks1dkM2?=
+ =?utf-8?B?d3lFTHhpcEpYdTBuMU81dm5yd1BWY2xyRVh4K0RDUzJhSWdUTGMvamhiQ1Ix?=
+ =?utf-8?Q?ApZTjEnZBoTOB9myhv3h6EwJEdBJ4B9dsPL591YtbCEl?=
+X-OriginatorOrg: suse.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c24555f4-b798-4ee3-f984-08dae9a37eac
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB7104.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2022 13:49:24.8208
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: f7a17af6-1c5c-4a36-aa8b-f5be247aa4ba
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: evRh6gyk/8CzmlodGygCF/60r6j4+/2zFdKLVNUM2SqGpN6thOhdbiYWQ4O8XDj+5OCWPqjZ0vt2CTFtPdR0zg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR04MB6955
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add full cache description to DTS to avoid:
-1. "Early cacheinfo failed" warnings,
-2. Cache topology detection which leads to early memory allocations and
-   "BUG: sleeping function called from invalid context" on PREEMPT_RT
-   kernel:
 
-  smp: Bringing up secondary CPUs ...
-  Detected VIPT I-cache on CPU1
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/1
-  preempt_count: 1, expected: 0
-  RCU nest depth: 1, expected: 1
-  3 locks held by swapper/1/0:
-   #0: ffff5e337eee5f18 (&pcp->lock){+.+.}-{3:3}, at: get_page_from_freelist+0x20c/0xffc
-   #1: ffffa9e24a900b18 (rcu_read_lock){....}-{1:3}, at: rt_spin_trylock+0x40/0xe4
-   #2: ffff5e337efc8918 (&zone->lock){+.+.}-{3:3}, at: rmqueue_bulk+0x54/0x720
-  irq event stamp: 0
-  Call trace:
-   __might_resched+0x17c/0x214
-   rt_spin_lock+0x5c/0x100
-   rmqueue_bulk+0x54/0x720
-   get_page_from_freelist+0xcfc/0xffc
-   __alloc_pages+0xec/0x1150
-   alloc_page_interleave+0x1c/0xd0
-   alloc_pages+0xec/0x160
-   new_slab+0x330/0x454
-   ___slab_alloc+0x5b8/0xba0
-   __kmem_cache_alloc_node+0xf4/0x20c
-   __kmalloc+0x60/0x100
-   detect_cache_attributes+0x2a8/0x5a0
-   update_siblings_masks+0x28/0x300
-   store_cpu_topology+0x58/0x70
-   secondary_start_kernel+0xc8/0x154
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 24.12.22 00:31, Wesley Cheng wrote:
+> Allow for different vendors to be notified on USB SND connect/disconnect
+> seqeunces.  This allows for vendor USB SND modules to properly initialize
+> and populate internal structures with references to the USB SND chip
+> device.
 
----
+Hi,
 
-The patch extends and depends in context on:
-https://lore.kernel.org/r/20221107155825.1644604-17-pierre.gondois@arm.com
+this raises a design question. If the system is suspending or, worse,
+hibernating, how do you make sure the offloader and the device are
+suspended in the correct order?
+And what happens if you need to go into reset_resume() when resuming?
 
-Cache sizes from publicly available data:
-https://en.wikichip.org/wiki/qualcomm/snapdragon_800/865
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 4478bf0e7b22..4555345ee42e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -111,10 +111,14 @@ CPU0: cpu@0 {
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x20000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 				L3_0: l3-cache {
- 					compatible = "cache";
- 					cache-level = <3>;
-+					cache-size = <0x400000>;
-+					cache-unified;
- 				};
- 			};
- 		};
-@@ -137,6 +141,8 @@ CPU1: cpu@100 {
- 			L2_100: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x20000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
-@@ -159,6 +165,8 @@ CPU2: cpu@200 {
- 			L2_200: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x20000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
-@@ -181,6 +189,8 @@ CPU3: cpu@300 {
- 			L2_300: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x20000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
-@@ -203,6 +213,8 @@ CPU4: cpu@400 {
- 			L2_400: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x40000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
-@@ -225,6 +237,8 @@ CPU5: cpu@500 {
- 			L2_500: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x40000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 
-@@ -248,6 +262,8 @@ CPU6: cpu@600 {
- 			L2_600: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x40000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
-@@ -270,6 +286,8 @@ CPU7: cpu@700 {
- 			L2_700: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-size = <0x80000>;
-+				cache-unified;
- 				next-level-cache = <&L3_0>;
- 			};
- 		};
--- 
-2.34.1
-
+	Regards
+		Oliver
