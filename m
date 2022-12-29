@@ -2,109 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1560658F86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:22:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73BD0658F8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:23:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233491AbiL2RWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 12:22:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49488 "EHLO
+        id S233765AbiL2RXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 12:23:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233504AbiL2RWA (ORCPT
+        with ESMTP id S233335AbiL2RXp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 12:22:00 -0500
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4301408C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 09:21:58 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Thu, 29 Dec 2022 12:23:45 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DDB14007;
+        Thu, 29 Dec 2022 09:23:44 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6181A1F98E;
-        Thu, 29 Dec 2022 18:21:55 +0100 (CET)
-Date:   Thu, 29 Dec 2022 18:21:48 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: sm6125: QUPs, SPI and Seine I2C
- buses
-Message-ID: <20221229172148.2hcmi7uypwlnxmhu@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221216233408.1283581-1-marijn.suijten@somainline.org>
- <20221229171301.7sjbyvqpn3qjwexu@builder.lan>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DF9126185D;
+        Thu, 29 Dec 2022 17:23:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09391C433D2;
+        Thu, 29 Dec 2022 17:23:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672334623;
+        bh=5fT/RTDsMIRCI7vqqQas00P1ECkoWfUHN3WO6EWD7qo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=YeA1yV48zylkU+UoL14P7pvGkQ+qMuG0tUSbp2zY7Dq8WKyGvHhi2rbDc1Bf+FXJj
+         Z69YGzkcyjYttgVYY2aYdC+q2sU6kK58UkVS0/Q5Nsp9mSXn0A6ZC/vCEgKex+EnOV
+         ftjpmjms3nLXZW7v+HEmGV/X0835bGSFH65GuuxZVnWLdj5PIc2HrL3bVdwt26DEM9
+         0bdapkaJlSEX3yUJtUM1UQvhl1oedeC2tYaMeiQK909uu/72tzJz98vz28cU6iCAI7
+         wAVID/hf2NLU8zvoSIOjnhGmzkyUAZodfIcKxXBJIjTuRQZkdxqa4gaVKjtVTsmcbA
+         J9Pvl19VZfVGg==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     freedreno@lists.freedesktop.org, bryan.odonoghue@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     swboyd@chromium.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, quic_abhinavk@quicinc.com,
+        airlied@gmail.com, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org, daniel@ffwll.ch,
+        dianders@chromium.org, sean@poorly.run,
+        linux-kernel@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        david@ixit.cz, dri-devel@lists.freedesktop.org
+Subject: Re: (subset) [PATCH v6 00/18] mdss-dsi-ctrl binding and dts fixes
+Date:   Thu, 29 Dec 2022 11:23:22 -0600
+Message-Id: <167233461766.1099840.17628700245792986354.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20221223021025.1646636-1-bryan.odonoghue@linaro.org>
+References: <20221223021025.1646636-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229171301.7sjbyvqpn3qjwexu@builder.lan>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-12-29 11:13:01, Bjorn Andersson wrote:
-> On Sat, Dec 17, 2022 at 12:34:05AM +0100, Marijn Suijten wrote:
-> > Introduce Qualcomm Universal Peripheral support on SM6125 and define all
-> > known SPI and I2C Serial Engines.  On Sony Seine PDX201 all I2C buses
-> > with known-connected hardware are enabled for future hardware mapping,
-> > together with the respective GPI DMA 0 and QUP 0.
-> > 
-> > Changes since v1:
-> > - Un-downstream pinctrl mapping:
-> >   - Remove nested mux {} / config {};
-> >   - Remove useless comments;
-> >   - Remove unreferenced pinctrl states;
-> > - Use qup14 pinctrl function name instead of unknown qup_14;
-> > - Reword commit message;
-> > - Add iommus to QUP nodes now that this series depends on apps_smmu to
-> >   be available;
-> > - Reorder all properties to match other SoCs;
-> > - Reorder/intersperse QUP nodes with GPI DMA nodes to maintain sorting
-> >   by address;
-> > - Reorder SPI nodes to fit in with I2C nodes, restoring sorting by
-> >   address too;
-> > - Use QCOM_GPI_* constants;
-> > - Adhere to 3 instead of 5 dma cells for gpi_dma.
-> > 
-> > v1: https://lore.kernel.org/all/20221001185628.494884-1-martin.botka@somainline.org/T/#u
-> > 
-> > Depends on:
-> > - SM6125 APPS SMMU: https://lore.kernel.org/linux-arm-msm/20221216215819.1164973-1-marijn.suijten@somainline.org/T/#u
-> > - SM6125 GPI DMA: https://lore.kernel.org/linux-arm-msm/20221216231528.1268447-1-marijn.suijten@somainline.org/T/#u
+On Fri, 23 Dec 2022 02:10:07 +0000, Bryan O'Donoghue wrote:
+> V6:
+> - Squashes a number of patches per Krzysztof's comments on bisectability
+> - Adds in Acked-by Rob and Krzysztof
 > 
-> Please, in the future, when you have dependencies between your dts
-> patches, send them together so I don't need to go on a treasure hunt in
-> my mailbox to figure out which order to apply things...
+> V5:
+> - Adds compat strings to bindings/display/msm/qcom,SoC-mdss.yaml - Dmitry
+> - Re-orders simple fixes to the start of the series to allow backports - Dmitry
+> - VDDA and drop of node-names - Krzysztof
+> - Deprecates qcom,dsi-ctrl-6g-qcm2290 - Krzysztof, Dmitry
+> - Expands set of updated files to include new msm8953 - bod
+> - Converts to agreed compat string qcom,SoC-dsi-ctrl hence
+>   -              - qcom,mdss-dsi-ctrl-msm8996
+>   +              - qcom,msm8996-dsi-ctrl
+> - Adds RB where indicated for the compat strings.
+> V4:
+> - Moves the update of the example from patch #5 to patch #4
+> 
+> [...]
 
-I was quite confident separating out "unrelated" patches in separate
-series was preferred, especially when dependencies are marked explicitly
-like this... what changed?
+Applied, thanks!
 
-(Aside that, would I then call this a v4+v2+v2?)
+[10/18] arm64: dts: qcom: msm8916: Add compat qcom,msm8916-dsi-ctrl
+        commit: cd8cecc723671016a28f88ab13ee31642cb9e391
+[11/18] arm64: dts: qcom: msm8953: Add compat qcom,msm8953-dsi-ctrl
+        commit: 634ecbc6b17ac2beea4d64f84df629520306e8cc
+[12/18] arm64: dts: qcom: msm8996: Add compat qcom,msm8996-dsi-ctrl
+        commit: 5ebe4191286add92e8560915aaeb803578407f12
+[13/18] arm64: dts: qcom: sc7180: Add compat qcom,sc7180-dsi-ctrl
+        commit: a45d0641d110e81826710aa92711e1c2eedecb43
+[14/18] arm64: dts: qcom: sc7280: Add compat qcom,sc7280-dsi-ctrl
+        commit: 5b5e4ac378e5d2b1f881c8a6ea0ae827201ee07d
+[15/18] arm64: dts: qcom: sdm630: Add compat qcom,sdm660-dsi-ctrl
+        commit: 197d28d46315353cfc91d8519b8b561ab08a02cc
+[16/18] arm64: dts: qcom: sdm660: Add compat qcom,sdm660-dsi-ctrl
+        commit: 3381020a778c559c95e31af6d868ad059fbd65e8
+[17/18] arm64: dts: qcom: sdm845: Add compat qcom,sdm845-dsi-ctrl
+        commit: a1a685c312f5bcc6fbf35b647d3bc5cfc6f70c7d
+[18/18] arm64: dts: qcom: sm8250: Add compat qcom,sm8250-dsi-ctrl
+        commit: ff114e399e746e07df56bad1b4aaf540f37d579d
 
-- Marijn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
