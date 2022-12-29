@@ -2,104 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 369A3658E40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:18:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 214F4658E71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:50:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231138AbiL2PSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 10:18:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34698 "EHLO
+        id S233477AbiL2Pui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 10:50:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiL2PSI (ORCPT
+        with ESMTP id S229831AbiL2Puh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 10:18:08 -0500
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E095643C;
-        Thu, 29 Dec 2022 07:18:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1672327077;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=o9yw6kwnyVHqftafsTZRSK4tSSkPBL8db2BOCD1EwNk=;
-    b=F+eYRHNUH3aMOrCmUY+iyyqyw39IdWu3vV7TBGa1gKcA8oju/dl4M/JQe/+WCDO2vF
-    tQbOoK3dpIu8Jc+fuvrOoujcRCyKFZwjAYGgb38phMO20rIYTx0ybF7F46A9Ot1rvTN9
-    9D4RLvkXonYr8UsLxN/9tmhFoCxbb03NBXT2EDzBWasSeqgoJ7fP4BakGJRb5yeomxYl
-    v1DW9CNRQSDsAf1qFK0P0dfxdzRwrTtn9hUejHgW6hP39fDHuEKh6DV9CiuFOqHkqTWZ
-    nAe7PKuu8MY/Yo7PMLNEUsBP6KcfVSuSforI1Koh7syclJHmSiu8iK0Ij6M5U4FbE+Xw
-    vhRQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIRvweF+KLA=="
-X-RZG-CLASS-ID: mo02
-Received: from droid..
-    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
-    with ESMTPSA id Yce349yBTFHuXT4
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 29 Dec 2022 16:17:56 +0100 (CET)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Thu, 29 Dec 2022 10:50:37 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A7013E26
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:35 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so13433260wms.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mxBRWEKdxDoxUmsf4m1Rf+wCWTOWa4yctJPkk6Ti6eA=;
+        b=mAWTeny0sqvADkOky+spceEmg9syZ8nm2BawGZXoEyTRWH6pr2xqeTmQP6z3nF7ga4
+         vJTk2fXB0ynr/dpSkhgIGH/AYtGa7mMVG+z0M/JjcThAmVF0p0wUVjpVmPj3lOfhTAU/
+         1Dh/x3SgVJpZYdoD2JxwQb4be7nzV0WLkdsPScKFuwHreV9O5FsSUmYEHeonc8ncGQBL
+         if+w7MFVFw/znWnPebEOCHBeErX1HH/SZZa+fqeAEu+TrfHwwvximtCfQSB0ZKsycRTx
+         OjveQ4o2aMYzc0HaY5yF5E0kXS30j6QPurPra3G9a3fVSClCvTlbDvp8i1f+mElmsU84
+         v3cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mxBRWEKdxDoxUmsf4m1Rf+wCWTOWa4yctJPkk6Ti6eA=;
+        b=lqFmVZudcslvlrAnqPWQlmc84kt1lHIDQzuv0Zmc85Y/TOmuFFPrr/31p8jUGE5jez
+         47Qy1MM0s7I5b8NKnVU3oS9XUwAOdvF0/OXXNM7J707PRofCXKqZHdh5LXcwQREQt5LQ
+         i1IdW7xrS90vPKnkfbksYkRpUr7Jsg+1E9eerj7s8h6swFCqD5oTkA7Zq4UZ6jiXkUBd
+         3KFBJJegXtqCsF4fDauCSi9S3fiiZaNUCid3SEaNnAFFq3uvd9RPGihgyojdaM10tOz7
+         AnpZNjfJsMps6aWp98OM/+qjxopIKBENtHPi/yCkH0KqTBcvXONeTfMYxBsstBBVnjdp
+         CY7g==
+X-Gm-Message-State: AFqh2kp6YN4k/wOSjUlcVUmt5U9xdHm5/Sl0tcLQVCKjmgb62GF2+rDI
+        58qBMgfSvEdWkh5gZtCBdIrGfHlp3shbs5c6
+X-Google-Smtp-Source: AMrXdXt180PN5Ceh/nenWRord0+ZdJloEExn/Z1fAmgzdQZ3Flv/bOvzy0bNwEZKtBazgUjhZSX2hg==
+X-Received: by 2002:a05:600c:1603:b0:3d1:c895:930c with SMTP id m3-20020a05600c160300b003d1c895930cmr20392802wmn.35.1672329033991;
+        Thu, 29 Dec 2022 07:50:33 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:8f7a:98d8:9d8d:ced8])
+        by smtp.gmail.com with ESMTPSA id bh12-20020a05600c3d0c00b003cfa81e2eb4sm25251647wmb.38.2022.12.29.07.50.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 07:50:33 -0800 (PST)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 2/2] soc: qcom: apr: Make qcom,protection-domain optional again
-Date:   Thu, 29 Dec 2022 16:16:48 +0100
-Message-Id: <20221229151648.19839-3-stephan@gerhold.net>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221229151648.19839-1-stephan@gerhold.net>
-References: <20221229151648.19839-1-stephan@gerhold.net>
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
+        =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v6 00/14] serial: qcom-geni-serial: implement support for SE DMA
+Date:   Thu, 29 Dec 2022 16:50:16 +0100
+Message-Id: <20221229155030.418800-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APR should not fail if the service device tree node does not have
-the qcom,protection-domain property, since this functionality does
-not exist on older platforms such as MSM8916 and MSM8996.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Ignore -EINVAL (returned when the property does not exist) to fix
-a regression on 6.2-rc1 that prevents audio from working:
+The goal of this series is to update the qcom-geni-serial driver to use
+the DMA mode of the QUPv3 serial engine. This is accomplished by the last
+patch in the series. The previous ones contain either various tweaks,
+reworks and refactoring or prepare the driver for adding DMA support.
 
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to read second value of qcom,protection-domain
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to add apr 3 svc
+More work will follow on the serial engine in order to reduce code
+redundancy among its users and add support for SE DMA to the qcom GENI
+SPI driver.
 
-Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- drivers/soc/qcom/apr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+v5 -> v6:
+- move patch 12/14 to the front of the series and mark it as a fix
+- rebase on top of v6.2-rc1 (there were some updates to the driver)
 
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index cd44f17dad3d..d51abb462ae5 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -461,9 +461,10 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		goto out;
- 	}
- 
-+	/* Protection domain is optional, it does not exist on older platforms */
- 	ret = of_property_read_string_index(np, "qcom,protection-domain",
- 					    1, &adev->service_path);
--	if (ret < 0) {
-+	if (ret < 0 && ret != -EINVAL) {
- 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
- 		goto out;
- 	}
+v4 -> v5:
+- split patch 8/13 into two: one for splitting out the chunk sending code
+  and one for refactoring it (for easier review)
+- when stopping uart: disable the irq first before stopping transfers in
+  progress, otherwise we rist rescheduling additional transfers after
+  interrupt
+- make types even nore consistent in qcom_geni_serial_send_chunk_fifo()
+
+v3 -> v4:
+- don't assign NULL (even cast) to variables of type dma_addr_t
+- refactor checking the SE_GENI_STATUS into two inline functions
+- drop min_t() in favor of regular min() after adding some consistency to types
+- check if the abort command was successful and emit a message if not when
+  stopping TX in DMA mode
+
+v2 -> v3:
+- drop devres patches from the series
+
+v1 -> v2:
+- turn to_dev_uport() macro into a static inline function
+- use CIRC_CNT_TO_END() and uart_xmit_advance() where applicable and don't
+  handle xmit->tail directly
+- drop sizeof() where BYTES_PER_FIFO_WORD can be used
+- further refactor qcom_geni_serial_handle_tx_fifo()
+- collect review tags
+
+Bartosz Golaszewski (14):
+  tty: serial: qcom-geni-serial: stop operations in progress at shutdown
+  tty: serial: qcom-geni-serial: drop unneeded forward definitions
+  tty: serial: qcom-geni-serial: remove unused symbols
+  tty: serial: qcom-geni-serial: align #define values
+  tty: serial: qcom-geni-serial: improve the to_dev_port() macro
+  tty: serial: qcom-geni-serial: remove stray newlines
+  tty: serial: qcom-geni-serial: refactor qcom_geni_serial_isr()
+  tty: serial: qcom-geni-serial: remove unneeded tabs
+  tty: serial: qcom-geni-serial: split out the FIFO tx code
+  tty: serial: qcom-geni-serial: refactor
+    qcom_geni_serial_send_chunk_fifo()
+  tty: serial: qcom-geni-serial: drop the return value from handle_rx
+  tty: serial: qcom-geni-serial: use of_device_id data
+  soc: qcom-geni-se: add more symbol definitions
+  tty: serial: qcom-geni-serial: add support for serial engine DMA
+
+ drivers/tty/serial/qcom_geni_serial.c | 626 +++++++++++++++++---------
+ include/linux/qcom-geni-se.h          |   3 +
+ 2 files changed, 413 insertions(+), 216 deletions(-)
+
 -- 
-2.39.0
+2.37.2
 
