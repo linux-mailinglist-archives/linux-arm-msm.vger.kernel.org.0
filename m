@@ -2,62 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3883658FE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:32:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C140659000
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 18:49:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233803AbiL2RcR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 12:32:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58678 "EHLO
+        id S229535AbiL2RtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 12:49:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233949AbiL2Rbs (ORCPT
+        with ESMTP id S233290AbiL2RtQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 12:31:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 897B015825;
-        Thu, 29 Dec 2022 09:31:39 -0800 (PST)
+        Thu, 29 Dec 2022 12:49:16 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8195F1582F;
+        Thu, 29 Dec 2022 09:49:15 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 46DC0B81A13;
-        Thu, 29 Dec 2022 17:31:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E31C433EF;
-        Thu, 29 Dec 2022 17:31:35 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1B44061862;
+        Thu, 29 Dec 2022 17:49:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CBAC433EF;
+        Thu, 29 Dec 2022 17:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672335097;
-        bh=j3qG4bGdaEXrYNRPEIJY/y6BAFFyj1LA3ARl7FLkrLc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=A4sAGzauvpyN7efg6S4Tt8IiUEpZ0pASvRe3oGUwwaLxVTNcPdlHIqrN58hpmaUUa
-         RiM42MzPJVTqIJe9AaD62iuWZQDB/STAAszJSBI2BMPdbPDzp12xY7nk22is9soD/t
-         qeAX9Bgon5afLZcXNpUckXI7DxqyBeEwUt64BhPYSf+TO3ZMWipEzT9+/gAokNa6Zi
-         OLE8z+ltM47ZoJsjQZ68IRB+FhS46sZIC60r2C2e59Y/m931blIbdT9TWtfKHb428C
-         kUWSuVrFYQNjK6TN89D+dVXgmG2KxR40igx+ARV/vRLI+B3j68ZLaNOBJz5bP5SClB
-         QjsaX0jrHUlFw==
-Date:   Thu, 29 Dec 2022 11:31:34 -0600
+        s=k20201202; t=1672336154;
+        bh=oyyimtOuBkmoKNFDKjMzAS6KKzVmkz6EtSahuvvM9Gw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=gD5PYaJuk93AWnTuR+Cr5t9OiDdEveuOMgQVwxSA0Mwhhgjfdq2isXnIiNsz0ZQMX
+         9mElXtzSvxaqJ+BOufQ+kbKLo1+RY+kvN15OSpVRzAoAKgJgJ7ckkP1q0/Ca93m7hK
+         PkGCAN61Cd17TZWuX4wbITuw6kvd3IY5+kHGNOXXSY1RV7lq21JbKJc49RW735hfN6
+         rZYrQ+0iHcyL2EI/kBBMFQOt8SDvKrDHICRPXF1NaU8Xwht2/5bywQTmkbDhp2wF/+
+         8/wQAwQjFSjrAfjLLqfoLHJ++5EAZHL2ZdmjVsXupS+VW0XPMEB28YfoxtxwSa6tCp
+         BtOcytEGd+nFg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 3/8] PCI: qcom: Add support for SM8350
-Message-ID: <20221229173134.ul2kzupf4yjvbvgk@builder.lan>
-References: <20221118233242.2904088-1-dmitry.baryshkov@linaro.org>
- <20221118233242.2904088-4-dmitry.baryshkov@linaro.org>
+To:     agross@kernel.org, quic_namajain@quicinc.com,
+        konrad.dybcio@somainline.org
+Cc:     quic_mojha@quicinc.com, quic_shashim@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: socinfo: Add support for new fields in revision 16
+Date:   Thu, 29 Dec 2022 11:49:12 -0600
+Message-Id: <167233614958.1102610.10357476169515943708.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20221125103533.2960-1-quic_namajain@quicinc.com>
+References: <20221125103533.2960-1-quic_namajain@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221118233242.2904088-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -67,32 +56,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Nov 19, 2022 at 01:32:37AM +0200, Dmitry Baryshkov wrote:
-> Add support for the PCIe host on Qualcomm SM8350 platform.
+On Fri, 25 Nov 2022 16:05:33 +0530, Naman Jain wrote:
+> Add support for new fields coming with socinfo structure under v16 to get
+> SKU information, product code and name and type of different parts present
+> in the SoC. Also, add debugfs nodes to read feature and product codes to
+> allow user to get SKU and other SoC details. Support for SoC parts name
+> and type parsing will be added separately. Details of fields added:
+> * feature_code: mapped to qcom internal and external SKU IDs
+> * pcode: product code
+> * npartnamemap_offset: parts name map array offset from socinfo base ptr
+> * nnum_partname_mapping: number of part mappings
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [...]
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Applied, thanks!
 
-Regards,
-Bjorn
+[1/1] soc: qcom: socinfo: Add support for new fields in revision 16
+      commit: f02a537357a61e7892587c0f3455f8295cc9075c
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 77e5dc7b88ad..b9350d93b4ba 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1826,6 +1826,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-sdm845", .data = &cfg_2_7_0 },
->  	{ .compatible = "qcom,pcie-sm8150", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sm8250", .data = &cfg_1_9_0 },
-> +	{ .compatible = "qcom,pcie-sm8350", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
->  	{ }
-> -- 
-> 2.35.1
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
