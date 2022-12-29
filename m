@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5835E658E8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:51:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FDC0658E8C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Dec 2022 16:51:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233672AbiL2Pvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 10:51:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
+        id S233692AbiL2Pvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 10:51:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233555AbiL2Pup (ORCPT
+        with ESMTP id S233512AbiL2Put (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 10:50:45 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F69C3A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:43 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id ay40so13429121wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:43 -0800 (PST)
+        Thu, 29 Dec 2022 10:50:49 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A159C07
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:44 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id bg10so13419531wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 07:50:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F2MzVRg5qsZeZ18MD/OVh4kRzP+Ug6N74PqvU/3Swas=;
-        b=Y5922RWr1l5HBO0JbK7W3Yjs7ASUaSdffFGQQEtjLvvPIEIvPMl8831AoB0e4ATkTn
-         6srnJDvyVx2vCYObMMJwu7Ok/5lBuhdxdlf2ucF18O2Xzt/jkCBiSyg/sMDbRM3ZBfIb
-         PyTGmtPihb1Xvd8QhM2KhNK1UmojfHGha+kcLYu7xer8H0Y/PbrMCcLSXTiShyhl7zbs
-         J+rOnMyw/ITsQE0l3Zg/HcmhcGwznCvl8bKx4UGEGl09jt46KxwrX59JRW5XM6a7FhIc
-         arF5yHwcWHqKDF4d1ZCrAd+ZRF8i5Z55YG+IsQh3My0iQJ+JfXM/pzhPCCA+VN3psBr5
-         IMpQ==
+        bh=WMVKrwdZWEXr4SpaY5rZECUzCmLZAbyQFJGjBVIK3cY=;
+        b=M4K3oPLWC8XPeEjHXcBiEU120Ik7Q3MhxDOxbT6QisHcUgbXhyMnIIQVhzuXEhsnKi
+         SOi42g9ylj8TQdeq9kuF52sBvj/8mx24DLAuRrYSbyKGnkur/8B6w/X2TeAj6t+pGK84
+         fR1fum/WpBxE150PCiI6gJ0nWLFaA4FMnMCcEpmU1vPfmGwwne0Rq1a32gC56qAe8Eay
+         DJQg6pSrnYTQEKnHbwHsICnQBp4yUC3p7afEZrl2+8ptdG9i3ClZW/dstgJkOuzEr6+o
+         fieZ1VtpPl7Obr/riPpG6Sxd6d/1q1F1zWOAqwRni9GGn+sxzDF1JW0ihLCuVnlb4JT5
+         IXqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=F2MzVRg5qsZeZ18MD/OVh4kRzP+Ug6N74PqvU/3Swas=;
-        b=DuRnB48Vv1RHi7FNxdA25Aq7w1LyOqPV20ahn8h+VaqzApG4GpguWLRuMMznlcFCLW
-         P8k6Jr7tRocUYMzKIb0zsjtjZU2mmPiE2dV0VCZPFGUTcqCDT/CvMx7LKyWAvS4CV9rw
-         qiuMN35w5QgG8MJN6WUgx244k0wCjRsOTPQM6vlBZyZwZeobA1baO2+769VAYRMsjr6e
-         XoI2J/U7cCuvZtwkcp9vvXehCADJCSsKQpK9/NoSpM9QnSd5EbO5tYnzPJUeZm7RIr7+
-         Ru2FIYleNCETARlma16WMNxX7UrWqoFXRNgZXsuhXTFgrFVx+n9AqUF5lTD4ZB6biKHV
-         pKMg==
-X-Gm-Message-State: AFqh2ko7H+5L4b7oM+YHDeowqeD5SCuma51rXp4W6ti3jh40I1CIDtz1
-        lM2nwhvs3yG0VbamsCsXbS7/XA==
-X-Google-Smtp-Source: AMrXdXtAkLnVo2ai/aPmHEOE8d9cd2QOOnUgDCzL++zMq+TxIIn/2285ryyO5APeXNQ7SkrNT1EWjg==
-X-Received: by 2002:a7b:c4c8:0:b0:3d3:5a4a:9101 with SMTP id g8-20020a7bc4c8000000b003d35a4a9101mr23683301wmk.23.1672329041742;
-        Thu, 29 Dec 2022 07:50:41 -0800 (PST)
+        bh=WMVKrwdZWEXr4SpaY5rZECUzCmLZAbyQFJGjBVIK3cY=;
+        b=z8id2w6Co7VKrV0IN4neveAKznoc/QEtyE/qgNUUlJ2f6yZvybxH8JdXM34Tc1XNkS
+         ILooCgt+8446z21il4v8+xeG6fWZu2K6dXQi+GJOoNzLChvQ/4tFjBkihcClWHxBsHyf
+         0sYJMnuGhie7QzGRcUJXZWb4qfP/WkwaGgz6mp9rhxoDr0GXCCCmvblrf+oj+W67dhja
+         iabW0hCuExUTled1VmU6o45znd31c2l0aNyHQZKBteJftlcfcFSumQyo7ZMqmttro27D
+         joR4ei4bCVU5CclwjVNgKQWRRpD9HE3hHsdUOOScyAZzSf8loI/nA0jX+gNogDPedknx
+         oi+A==
+X-Gm-Message-State: AFqh2krQjZgXQcYD9oe6UAgkDI4e5ojD8Ba7HAg3SXrhoQZnd4uL5HyI
+        pqDxQBOV2CXadL5Mn76WGsk/nw==
+X-Google-Smtp-Source: AMrXdXt2KvdOsGmdgCgY2p4lN7SOGTNM5pDZhTjrxi31uhL0bxEl8B0zOb6NWjynO+iUA0avgVVXdg==
+X-Received: by 2002:a05:600c:1e10:b0:3d1:f496:e25f with SMTP id ay16-20020a05600c1e1000b003d1f496e25fmr21640763wmb.16.1672329042697;
+        Thu, 29 Dec 2022 07:50:42 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:8f7a:98d8:9d8d:ced8])
-        by smtp.gmail.com with ESMTPSA id bh12-20020a05600c3d0c00b003cfa81e2eb4sm25251647wmb.38.2022.12.29.07.50.40
+        by smtp.gmail.com with ESMTPSA id bh12-20020a05600c3d0c00b003cfa81e2eb4sm25251647wmb.38.2022.12.29.07.50.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 07:50:41 -0800 (PST)
+        Thu, 29 Dec 2022 07:50:42 -0800 (PST)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,11 +62,10 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v6 08/14] tty: serial: qcom-geni-serial: remove unneeded tabs
-Date:   Thu, 29 Dec 2022 16:50:24 +0100
-Message-Id: <20221229155030.418800-9-brgl@bgdev.pl>
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v6 09/14] tty: serial: qcom-geni-serial: split out the FIFO tx code
+Date:   Thu, 29 Dec 2022 16:50:25 +0100
+Message-Id: <20221229155030.418800-10-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20221229155030.418800-1-brgl@bgdev.pl>
 References: <20221229155030.418800-1-brgl@bgdev.pl>
@@ -83,57 +82,110 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Remove redundant indentation in struct member assignment.
+qcom_geni_serial_handle_tx() is pretty big, let's move the code that
+handles the actual writing of data to a separate function which makes
+sense in preparation for introducing a dma variant of handle_tx().
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 60 +++++++++++++++------------
+ 1 file changed, 33 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 92aefd4f8527..e34fe56247d9 100644
+index e34fe56247d9..bd91a6a5ad37 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -141,26 +141,26 @@ static inline struct qcom_geni_serial_port *to_dev_port(struct uart_port *uport)
- static struct qcom_geni_serial_port qcom_geni_uart_ports[GENI_UART_PORTS] = {
- 	[0] = {
- 		.uport = {
--				.iotype = UPIO_MEM,
--				.ops = &qcom_geni_uart_pops,
--				.flags = UPF_BOOT_AUTOCONF,
--				.line = 0,
-+			.iotype = UPIO_MEM,
-+			.ops = &qcom_geni_uart_pops,
-+			.flags = UPF_BOOT_AUTOCONF,
-+			.line = 0,
- 		},
- 	},
- 	[1] = {
- 		.uport = {
--				.iotype = UPIO_MEM,
--				.ops = &qcom_geni_uart_pops,
--				.flags = UPF_BOOT_AUTOCONF,
--				.line = 1,
-+			.iotype = UPIO_MEM,
-+			.ops = &qcom_geni_uart_pops,
-+			.flags = UPF_BOOT_AUTOCONF,
-+			.line = 1,
- 		},
- 	},
- 	[2] = {
- 		.uport = {
--				.iotype = UPIO_MEM,
--				.ops = &qcom_geni_uart_pops,
--				.flags = UPF_BOOT_AUTOCONF,
--				.line = 2,
-+			.iotype = UPIO_MEM,
-+			.ops = &qcom_geni_uart_pops,
-+			.flags = UPF_BOOT_AUTOCONF,
-+			.line = 2,
- 		},
- 	},
- };
+@@ -704,19 +704,48 @@ static void qcom_geni_serial_start_rx(struct uart_port *uport)
+ 	writel(irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+ }
+ 
++static int qcom_geni_serial_send_chunk_fifo(struct uart_port *uport,
++					    unsigned int chunk)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++	struct circ_buf *xmit = &uport->state->xmit;
++	size_t remaining = chunk;
++	int i, tail = xmit->tail;
++
++	for (i = 0; i < chunk; ) {
++		unsigned int tx_bytes;
++		u8 buf[sizeof(u32)];
++		int c;
++
++		memset(buf, 0, sizeof(buf));
++		tx_bytes = min_t(size_t, remaining, BYTES_PER_FIFO_WORD);
++
++		for (c = 0; c < tx_bytes ; c++) {
++			buf[c] = xmit->buf[tail++];
++			tail &= UART_XMIT_SIZE - 1;
++		}
++
++		iowrite32_rep(uport->membase + SE_GENI_TX_FIFOn, buf, 1);
++
++		i += tx_bytes;
++		uport->icount.tx += tx_bytes;
++		remaining -= tx_bytes;
++		port->tx_remaining -= tx_bytes;
++	}
++
++	return tail;
++}
++
+ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
+ 		bool active)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	struct circ_buf *xmit = &uport->state->xmit;
+ 	size_t avail;
+-	size_t remaining;
+ 	size_t pending;
+-	int i;
+ 	u32 status;
+ 	u32 irq_en;
+ 	unsigned int chunk;
+-	int tail;
+ 
+ 	status = readl(uport->membase + SE_GENI_TX_FIFO_STATUS);
+ 
+@@ -735,7 +764,6 @@ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
+ 	avail = port->tx_fifo_depth - (status & TX_FIFO_WC);
+ 	avail *= BYTES_PER_FIFO_WORD;
+ 
+-	tail = xmit->tail;
+ 	chunk = min(avail, pending);
+ 	if (!chunk)
+ 		goto out_write_wakeup;
+@@ -750,29 +778,7 @@ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
+ 					uport->membase + SE_GENI_M_IRQ_EN);
+ 	}
+ 
+-	remaining = chunk;
+-	for (i = 0; i < chunk; ) {
+-		unsigned int tx_bytes;
+-		u8 buf[sizeof(u32)];
+-		int c;
+-
+-		memset(buf, 0, sizeof(buf));
+-		tx_bytes = min_t(size_t, remaining, BYTES_PER_FIFO_WORD);
+-
+-		for (c = 0; c < tx_bytes ; c++) {
+-			buf[c] = xmit->buf[tail++];
+-			tail &= UART_XMIT_SIZE - 1;
+-		}
+-
+-		iowrite32_rep(uport->membase + SE_GENI_TX_FIFOn, buf, 1);
+-
+-		i += tx_bytes;
+-		uport->icount.tx += tx_bytes;
+-		remaining -= tx_bytes;
+-		port->tx_remaining -= tx_bytes;
+-	}
+-
+-	xmit->tail = tail;
++	xmit->tail = qcom_geni_serial_send_chunk_fifo(uport, chunk);
+ 
+ 	/*
+ 	 * The tx fifo watermark is level triggered and latched. Though we had
 -- 
 2.37.2
 
