@@ -2,68 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA99C659902
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 14:52:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8A9465991D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 14:57:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235155AbiL3NvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 08:51:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47504 "EHLO
+        id S235017AbiL3N5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 08:57:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235101AbiL3Nuy (ORCPT
+        with ESMTP id S235009AbiL3N44 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 08:50:54 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C84E1147D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 05:50:52 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id z26so31805625lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 05:50:52 -0800 (PST)
+        Fri, 30 Dec 2022 08:56:56 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085EB12083
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 05:56:50 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id y25so31829080lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 05:56:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nI8e/WlhysOYJ8g3aZB6ye/hx/UC/4lV7s/lAfytAMA=;
-        b=DoJBDYzaxIgvqgtCMXGZjRrqxt1XPGWyQEyqPp2hvqpp+jwCENNL0UOHZyRiFxTmjs
-         mH7VRDUeMe4Ld3V9XCl1JZOXnQeDU3jYBQhhfcO3mnWGlfrIfhLOcSXUburaWj4RE4Lj
-         YpW4a+CWW+8DNXkoHWaaSGT71pDdzUhq0iZwT79R2rBGfJrRZnf+YrlEhtyuM9TO1Eqn
-         Oc35Qpz5H/9ILAcDTAnVXUYlgZQxmJky9T9sdXgSMbtXt1r/KU46UVpx5X4szHJg3Z/c
-         BH8goMedx9OunzykLfr21mhw/0K203SnEShrdcXQqETk5TtKDc8HcfgY0lnbveQGuotS
-         z/wg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZA5k5Um4QC/Gu6DGvK7WlL+xj8bUXjpr8IzDN/ZjXGg=;
+        b=AgQoDwE8bEf90Yvuyo11KZfRK9WErnd9GYYHLFCa4+YP7WHojgPnaZn22Ce9v1IVRn
+         kARxgJuqV+qypQ3EUHW+pbcfTYRlGtI4NRsnPEk2wXFdpb0lZJOs99pYeYYFZ8ex/fhc
+         SEX5yK4h52g81fuHm4T1mhxs8k3f0wVjc/Hg1g9tMcmqUazng5rCpcRiFNG9rGv4DzDA
+         QnyhUu924cQp16dAMUr6s5M9FutV8BU+xxchx1osvVlG65VUwGZzD6efUT/ACJmQPeZt
+         vZdOEPwaMMsTi5TFgdTtEy5BR4OQUqTO42MyNg3GC4fRAVuuMmYVpm0axv/zCGXGS9QS
+         Bt6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nI8e/WlhysOYJ8g3aZB6ye/hx/UC/4lV7s/lAfytAMA=;
-        b=fwLV/I9+r4j+/5GDjOQQRvMErBN+kElV+x94GXUIHxHtcaU2GQGJmsv2Nv7pyhrQGC
-         urwxQjt/7TqO43MobjlYxa5CsGV+F1hA4MTwWAAtJSBGUvxZYTseqM0UxBk4EBy0Y74h
-         voqhlLt6oFLGP65dLNUqeb8YLDcVTYXGD+DdOKkNAacnQAe9Kh9x/sZUioq1qm9WBBMV
-         6R8kJy1FwasgfalfjOfHzbVlEK7X2ppGbCw9nIAaODDQWDRyLOu9WB/JzMRnGfRD+pod
-         7xmkt6IXLxbPvFnoH6JpRRj1abXRNy3vncGdIrh8fo8iejtnJ6TRPeQIjuS+B0d90iLY
-         anEA==
-X-Gm-Message-State: AFqh2krvw6Feoo7ECvj6tAd3bq6MSeu05fXSmdMLpYVq9VHmOS/+g1Vu
-        RzRbyxDzVHTzMkMtPzZushGipqHRIbdHKVB3
-X-Google-Smtp-Source: AMrXdXu3mXETrCUP3x0pgC0Ic/4KHE60wiE62LKDmBWJULVEhYTmhFAoQCDcu0Lzr+j93aV9LAJT+Q==
-X-Received: by 2002:a05:6512:25ac:b0:4b5:8053:5bcc with SMTP id bf44-20020a05651225ac00b004b580535bccmr9463538lfb.47.1672408250400;
-        Fri, 30 Dec 2022 05:50:50 -0800 (PST)
-Received: from localhost.localdomain (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id e16-20020ac24e10000000b004b4ea0f4e25sm3447970lfr.301.2022.12.30.05.50.49
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZA5k5Um4QC/Gu6DGvK7WlL+xj8bUXjpr8IzDN/ZjXGg=;
+        b=dByArsEoNl5f98SJ6Bj51Ya4WuPzdP1dXtLOIfwW1qo7ZAeRZL4tqMqyZEoFde+5pE
+         6cJ7xT55ILi+s1DtvwK65VPEeZHpftyozanBRgGLoiK4XILVXEpIsvKtMjSAF8jA8wQD
+         z2UZ8HOEXISAr37CzErVWpvZGvHMiaFOG6WXpKPH9awaHEFU2TqUvBNOI3xMnY84ZU1J
+         aznHnhnkjL9ypaZ7PwsKHNQ2Fsq+gK5YoDY7ptsNhDom30QUjj20S+ZRrpM5wgkcWl/N
+         iGN4T4kXLePsOvXVyieapa7rz27U0RrKFdHkpBc1jV2R7fn/vOPPQB14ooJyuomZyL6p
+         ncug==
+X-Gm-Message-State: AFqh2kr24r3e/A0jkEWR5GAJMTCl5bLl/jeNBtXe6bjHgtzCKR5VrpAY
+        R4RpYHpeZL9fz9wrGrC3wIhlAw==
+X-Google-Smtp-Source: AMrXdXs3b/uH5YdoAg91RJwml6Oqtz6T3gUdSvXHyM0KJdwIHnSqY4yXZM6NXOtH9CHHfSJbxCJNfA==
+X-Received: by 2002:a05:6512:2527:b0:4b5:8504:7072 with SMTP id be39-20020a056512252700b004b585047072mr9217541lfb.14.1672408608381;
+        Fri, 30 Dec 2022 05:56:48 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id d9-20020a056512368900b004a26ba3458fsm3454787lfs.62.2022.12.30.05.56.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 05:50:50 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
+        Fri, 30 Dec 2022 05:56:47 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Iskren Chernev <me@iskren.info>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8250: Sort audio hw nodes
-Date:   Fri, 30 Dec 2022 14:50:44 +0100
-Message-Id: <20221230135044.287874-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221230135044.287874-1-konrad.dybcio@linaro.org>
-References: <20221230135044.287874-1-konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/9] dt-bindings: pinctrl: qcom,sc8280xp-lpass-lpi: correct pins pattern
+Date:   Fri, 30 Dec 2022 14:56:37 +0100
+Message-Id: <20221230135645.56401-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,173 +83,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Half of the audio hardware nodes were not sorted properly. Fix that.
+SC8280XP LPASS LPI pin controller has GPIO 0-18:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+  sa8540p-ride.dtb: pinctrl@33c0000: tx-swr-default-state: 'oneOf' conditional failed, one must be fixed:
+    'pins' is a required property
+    'function' is a required property
+    'clk-pins', 'data-pins' do not match any of the regexes: 'pinctrl-[0-9]+'
+    'bias-bus-hold' does not match any of the regexes: 'pinctrl-[0-9]+'
+    'gpio2' does not match '^gpio([0-1]|1[0-8])$'
+
+Fixes: 958bb025f5b3 ("dt-bindings: pinctrl: qcom: Add sc8280xp lpass lpi pinctrl bindings")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 142 +++++++++++++--------------
- 1 file changed, 71 insertions(+), 71 deletions(-)
+ .../bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index dffce681d417..0b6a6a809503 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2214,77 +2214,6 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+index 7d2589387e1a..309d3dd9013b 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+@@ -65,7 +65,7 @@ $defs:
+           List of gpio pins affected by the properties specified in this
+           subnode.
+         items:
+-          pattern: "^gpio([0-1]|1[0-8])$"
++          pattern: "^gpio([0-9]|1[0-8])$"
  
--		wsamacro: codec@3240000 {
--			compatible = "qcom,sm8250-lpass-wsa-macro";
--			reg = <0 0x03240000 0 0x1000>;
--			clocks = <&audiocc LPASS_CDC_WSA_MCLK>,
--				 <&audiocc LPASS_CDC_WSA_NPL>,
--				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
--				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
--				 <&aoncc LPASS_CDC_VA_MCLK>,
--				 <&vamacro>;
--			clock-names = "mclk",
--				      "npl",
--				      "macro",
--				      "dcodec",
--				      "va",
--				      "fsgen";
--
--			pinctrl-names = "default";
--			pinctrl-0 = <&wsa_swr_active>;
--
--			#clock-cells = <0>;
--			clock-frequency = <9600000>;
--			clock-output-names = "mclk";
--			#sound-dai-cells = <1>;
--			status = "disabled";
--		};
--
--		swr0: soundwire-controller@3250000 {
--			compatible = "qcom,soundwire-v1.5.1";
--			reg = <0 0x03250000 0 0x2000>;
--			interrupts = <GIC_SPI 202 IRQ_TYPE_LEVEL_HIGH>;
--			clocks = <&wsamacro>;
--			clock-names = "iface";
--
--			qcom,din-ports = <2>;
--			qcom,dout-ports = <6>;
--
--			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
--			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
--			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
--			qcom,ports-block-pack-mode =	/bits/ 8 <0x0 0x0 0x1 0x0 0x0 0x1 0x0 0x0>;
--
--			#sound-dai-cells = <1>;
--			#address-cells = <2>;
--			#size-cells = <0>;
--			status = "disabled";
--		};
--
--		audiocc: clock-controller@3300000 {
--			compatible = "qcom,sm8250-lpass-audiocc";
--			reg = <0 0x03300000 0 0x30000>;
--			#clock-cells = <1>;
--			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
--				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
--				 <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
--			clock-names = "core", "audio", "bus";
--		};
--
--		vamacro: codec@3370000 {
--			compatible = "qcom,sm8250-lpass-va-macro";
--			reg = <0 0x03370000 0 0x1000>;
--			clocks = <&aoncc LPASS_CDC_VA_MCLK>,
--				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
--				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
--			clock-names = "mclk", "macro", "dcodec";
--
--			#clock-cells = <0>;
--			clock-frequency = <9600000>;
--			clock-output-names = "fsgen";
--			#sound-dai-cells = <1>;
--		};
--
- 		rxmacro: rxmacro@3200000 {
- 			compatible = "qcom,sm8250-lpass-rx-macro";
- 			reg = <0 0x03200000 0 0x1000>;
-@@ -2388,6 +2317,77 @@ swr2: soundwire-controller@3230000 {
- 			status = "disabled";
- 		};
- 
-+		wsamacro: codec@3240000 {
-+			compatible = "qcom,sm8250-lpass-wsa-macro";
-+			reg = <0 0x03240000 0 0x1000>;
-+			clocks = <&audiocc LPASS_CDC_WSA_MCLK>,
-+				 <&audiocc LPASS_CDC_WSA_NPL>,
-+				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&aoncc LPASS_CDC_VA_MCLK>,
-+				 <&vamacro>;
-+			clock-names = "mclk",
-+				      "npl",
-+				      "macro",
-+				      "dcodec",
-+				      "va",
-+				      "fsgen";
-+
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&wsa_swr_active>;
-+
-+			#clock-cells = <0>;
-+			clock-frequency = <9600000>;
-+			clock-output-names = "mclk";
-+			#sound-dai-cells = <1>;
-+			status = "disabled";
-+		};
-+
-+		swr0: soundwire-controller@3250000 {
-+			compatible = "qcom,soundwire-v1.5.1";
-+			reg = <0 0x03250000 0 0x2000>;
-+			interrupts = <GIC_SPI 202 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&wsamacro>;
-+			clock-names = "iface";
-+
-+			qcom,din-ports = <2>;
-+			qcom,dout-ports = <6>;
-+
-+			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
-+			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
-+			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
-+			qcom,ports-block-pack-mode =	/bits/ 8 <0x0 0x0 0x1 0x0 0x0 0x1 0x0 0x0>;
-+
-+			#sound-dai-cells = <1>;
-+			#address-cells = <2>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+		};
-+
-+		audiocc: clock-controller@3300000 {
-+			compatible = "qcom,sm8250-lpass-audiocc";
-+			reg = <0 0x03300000 0 0x30000>;
-+			#clock-cells = <1>;
-+			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "core", "audio", "bus";
-+		};
-+
-+		vamacro: codec@3370000 {
-+			compatible = "qcom,sm8250-lpass-va-macro";
-+			reg = <0 0x03370000 0 0x1000>;
-+			clocks = <&aoncc LPASS_CDC_VA_MCLK>,
-+				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "mclk", "macro", "dcodec";
-+
-+			#clock-cells = <0>;
-+			clock-frequency = <9600000>;
-+			clock-output-names = "fsgen";
-+			#sound-dai-cells = <1>;
-+		};
-+
- 		aoncc: clock-controller@3380000 {
- 			compatible = "qcom,sm8250-lpass-aoncc";
- 			reg = <0 0x03380000 0 0x40000>;
+       function:
+         enum: [ swr_tx_clk, swr_tx_data, swr_rx_clk, swr_rx_data,
 -- 
-2.39.0
+2.34.1
 
