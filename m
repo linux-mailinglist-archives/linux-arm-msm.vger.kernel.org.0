@@ -2,94 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23240659350
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 00:38:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCA946593AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 01:15:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234086AbiL2XiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Dec 2022 18:38:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
+        id S234153AbiL3APx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Dec 2022 19:15:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234334AbiL2XiI (ORCPT
+        with ESMTP id S229667AbiL3APX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Dec 2022 18:38:08 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A891758E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 15:38:07 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id u19so48098349ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 15:38:07 -0800 (PST)
+        Thu, 29 Dec 2022 19:15:23 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDFE913D55;
+        Thu, 29 Dec 2022 16:15:22 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id g2so7372548ila.4;
+        Thu, 29 Dec 2022 16:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9vpODbbW8nv/1gmrzoOYAs/3zgZuLXQsZO+5Y3msoUU=;
-        b=K7yPI0bqehDYYKmfM5pZ1XgC4V47yDWUlIWB8GHEJhQn/TDttLg7lDZ/EZjdkAQdVi
-         vZQFwcOky+GluhCFel1lIXQKkeHHgbDgu1sfzQqUNil+gS9rYztr8zIgsvNZMok5Oqsn
-         Wo+lPiB0IYThjUgYy7OrRjamQsmLlYf0L2kdV//k/f3W3h+RPPvWHdOMJgMxQvQM1oMq
-         2/IagqkbQ7hV6fHFE309gqleJ4OpHATAmDpd2XRDNJm+oLwHu7D5fLAXYy3eGhUP+IEb
-         6nQ2XuDj/SEzWistc2eWiPT5rD5351Xtl40w6t1i6s56cFt7wHZzNNdKgVeMo7sumbgN
-         kTtw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vgvoEEnyjKhsQK10130Jze9YY2KZ/Q9IY37GnBFEgKI=;
+        b=gNGRGSxl8V4wHDSPwtt4bphd8lyOKtJ62I6Ng6kLm+jQDhfbjWzgcaLBW1pZifh1PG
+         goFH83WAlXYiMYST4WESMUWO2jJBp1StIjbMxhYo4zSnyAiu42b/eI4mwiM5lbRcUP3o
+         HlQ1dzXGUh60H4y7wgq5RpptUKiX2HZ7FDHO9dqJAVGDddpaHTxFsa5kBXQ3nR9joLfy
+         TABo7umBHYqGX/N0fcgwG3yTy16kOHqKgz9O0xSyuSj8yMBsLWNziJwcoVK7g9vZEuLo
+         kN/lRXqpmLT67xBi8Hg8WHjl8Cf+hKSRmXnLQTtdyXo6ddaJ02ABEKbP/3tEh7QcdF+p
+         JHzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9vpODbbW8nv/1gmrzoOYAs/3zgZuLXQsZO+5Y3msoUU=;
-        b=J9wEqZl0yRC89OxDPVzw2U1MQ/y7G0g5Fv+QLfXkrhqtWiR2uW4AeUIkB6U9m+QtBp
-         EU62rn4xlE6ctqvf4rcmDMxuzJTg4rg4zyZxRwPW895PEHwPkrncecY2A3nOvv86NQci
-         FtxQk9v2bpyp1zQNVGLyNHD+b2riBQrERHz08c9mcwHN6iR32lZnQUeZjbDcGzIFojNh
-         XNfQGMkxSGTUpSvWoB+m3mFYvc3J22EddVZmXMcosyytVR0JXXULidA7Rc/fgzU/fSUR
-         TpSsfkB+kn3FhBI8hQnOsj9RAhbLwzYPoVhCmvQ9WcUA23/vgM1K3u8BuGJFxkAkCW3A
-         pD3A==
-X-Gm-Message-State: AFqh2kp5raCv6SqTjJuiIpRq6pCMahjCPMXdVHclXJwjblX2Suvu2aDl
-        XkmCSzLVRqnnZNUDFgZ6UZ7Mbg==
-X-Google-Smtp-Source: AMrXdXtHDddptb63umIGoRiuWh8e+jb0yppN9RIWyWkJa+ed5ZRq8TA9Y5v2Z4xFLMqrd4IgIwysPw==
-X-Received: by 2002:a17:907:d10:b0:82d:e258:fa55 with SMTP id gn16-20020a1709070d1000b0082de258fa55mr30292942ejc.36.1672357086039;
-        Thu, 29 Dec 2022 15:38:06 -0800 (PST)
-Received: from ?IPV6:2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f? (2001-1c06-2302-5600-12a8-8cf4-e3f6-f90f.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:12a8:8cf4:e3f6:f90f])
-        by smtp.gmail.com with ESMTPSA id q26-20020a17090676da00b008302732f569sm9071899ejn.78.2022.12.29.15.38.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Dec 2022 15:38:05 -0800 (PST)
-Message-ID: <da671da3-61f5-ce4d-05aa-76f3f6ae12cf@linaro.org>
-Date:   Thu, 29 Dec 2022 23:38:04 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vgvoEEnyjKhsQK10130Jze9YY2KZ/Q9IY37GnBFEgKI=;
+        b=AO/IbvKl/J/N+KvBypKgx6xAyXrhNBZN0bDmrpl1tinTkDj7VeGS21zV4vp2Y6TEM7
+         QJxxLmYVEavG1xhH5T0r6TjIsKn59uRTiKYNczoTVqNpvErAHd27D7lsbsANX/mySy8p
+         M3LHRpkZF7FFUcOIggNdP2CccZd2sabS3gF8tAz+ssjT/6+UuH4PjTiY7WdGebXGW88B
+         Wo/NMhkEcm635QWVua2JRHasw6ESpKWaWkcu3vPNUi8gErsH7nXqvzEw6CGTAyuLiAg4
+         f8N4tSR6qcdDWdQa/3b5KuSY0dNeKkLLdmZt1BUqyWmVtiUVoYbmAIjQE9xZKBVpGfD1
+         R+Tw==
+X-Gm-Message-State: AFqh2kqq4UI/HouYiG/zchCB/neN4Fa7C35bfay8c8K26QcwYO2FEjY0
+        PsDHWYjTgV//nlVwjt02cOE=
+X-Google-Smtp-Source: AMrXdXu47pJ52bYyRnQiS09cn2wkVFPR3q8S55x0BzwGHbUPrR4BqtZZoU8EylarKxHLB1j1h9H76g==
+X-Received: by 2002:a05:6e02:1d91:b0:302:3883:e567 with SMTP id h17-20020a056e021d9100b003023883e567mr38620194ila.29.1672359322227;
+        Thu, 29 Dec 2022 16:15:22 -0800 (PST)
+Received: from localhost ([2607:fea8:a2df:3d00::b8e2])
+        by smtp.gmail.com with ESMTPSA id g20-20020a02b714000000b0038a56594026sm6443996jam.66.2022.12.29.16.15.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 16:15:21 -0800 (PST)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v2 0/4] SDM670 Interconnects
+Date:   Thu, 29 Dec 2022 19:14:38 -0500
+Message-Id: <20221230001442.369608-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 2/2] phy: qcom-usb-hs: Add qcom,dp-manual-pullup logic
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
- <20221229183410.683584-3-bryan.odonoghue@linaro.org>
- <Y63uSgMdP4m6nvhL@gerhold.net> <Y64AfHcUw192Pyr6@gerhold.net>
- <6061938c-b830-2fe0-2f4d-368e34c33676@linaro.org>
- <Y64CaOzWZXERrvkz@gerhold.net>
- <cdcef656-1ae7-fe8a-a4dd-3547d6395b33@linaro.org>
- <Y64Jgu2o6aJV4ggk@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <Y64Jgu2o6aJV4ggk@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/12/2022 21:41, Stephan Gerhold wrote:
-> That is still good enough to replace qcom,dp-manual-pullup though.
+This series adds interconnects and consumers to the Snapdragon 670.
 
-But there's no requirement to tie USB_IN_x high if VBUS is not connected 
-to it.
+Changes:
+ - change qcom,sdm670.h to qcom,sdm670-rpmh.h (1/4, 4/4)
 
----
-bod
+Richard Acayan (4):
+  dt-bindings: interconnect: add sdm670 interconnects
+  interconnect: qcom: add sdm670 interconnects
+  arm64: dts: qcom: sdm670: add interconnects
+  arm64: dts: qcom: sdm670: add opps for peripherals
+
+ .../bindings/interconnect/qcom,rpmh.yaml      |   8 +
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 165 +++++++
+ drivers/interconnect/qcom/Kconfig             |   9 +
+ drivers/interconnect/qcom/Makefile            |   2 +
+ drivers/interconnect/qcom/sdm670.c            | 440 ++++++++++++++++++
+ drivers/interconnect/qcom/sdm670.h            | 128 +++++
+ .../interconnect/qcom,sdm670-rpmh.h           | 136 ++++++
+ 7 files changed, 888 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/sdm670.c
+ create mode 100644 drivers/interconnect/qcom/sdm670.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sdm670-rpmh.h
+
+-- 
+2.39.0
+
