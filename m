@@ -2,134 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B41659623
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 09:14:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DACB659615
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 09:08:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234427AbiL3IOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 03:14:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+        id S233908AbiL3II0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 03:08:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234095AbiL3IOQ (ORCPT
+        with ESMTP id S234534AbiL3II0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 03:14:16 -0500
-X-Greylist: delayed 937 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 30 Dec 2022 00:14:14 PST
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A0AC8193F3;
-        Fri, 30 Dec 2022 00:14:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
-        Content-Type; bh=E9HpHLqgjy0h2hyIEIGNv9NmMuTdVk+OKWwEi64Mkzk=;
-        b=poW0W6/5D+k9/qIhEKN7tO71sWnWqOnMFRDjhRlySeF7ccZPec1xslZqpE1jZo
-        55W3kxYlmI0dARItrhh4d0X6kRB41EiDM7piyImpHUN+DxvP0ll8bO3YjNQ3w7w4
-        Fl8xi0vW1C8zgOptp8yjtSvDGh5iL1PaqFBgy7UxoGWqw=
-Received: from ubuntu.localdomain (unknown [112.31.70.25])
-        by zwqz-smtp-mta-g4-2 (Coremail) with SMTP id _____wD3LGT5ma5jfWdJAA--.30241S2;
-        Fri, 30 Dec 2022 15:57:47 +0800 (CST)
-From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-To:     mani@kernel.org, slark_xiao@163.com
-Cc:     loic.poulain@linaro.org, gregkh@linuxfoundation.org,
-        dnlplm@gmail.com, yonglin.tan@outlook.com,
-        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org,
-        jerry.meng@quectel.com, duke.xin@quectel.com,
-        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Add support for Quectel RM520N-GL modem
-Date:   Thu, 29 Dec 2022 23:57:26 -0800
-Message-Id: <20221230075726.122806-1-duke_xinanwen@163.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 30 Dec 2022 03:08:26 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8B612D15
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:08:24 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id m6so20434498lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:08:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qZuUPPj7POQgrgUmQr0W44coDKoeQ+r4sHxkONGBEbo=;
+        b=gcQi1AjRCRn0NUKC9qb1Lxm3ZX3cooPwQ0vv7LWza7T9fSIfpwbAFvDwGjXZZ/UM5+
+         iWw8rLFaPnauTg3x8EAuk8EqYj51wHLdrv2B5lb7ukwnjBeCtQSCv3/It0AM39c1EHFJ
+         AqxFb2a/6etdbc5UziuZZSNueKJ4uBe0zdU6urtjk3b3mDYDASMKng3eaLKJh8p5p0LU
+         83volJT0FNUmMCCbwGxoH/6AeFs08P55kPZRFsAu9kR2NI1AEbh6uLubHO/b8x0CkVnq
+         rxI9oWOU9xx6+aVdu7idMmC3DLP68NeRhPGQ8MiTjekZRjPDtuHbbJKNdVg+6TAt0wDz
+         aaWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qZuUPPj7POQgrgUmQr0W44coDKoeQ+r4sHxkONGBEbo=;
+        b=vOPvwPVuBTXNgEADJD51eAVH0RsTDsVdp0wQakWd9enayBzb0QsiiqG9sZK3xCuqM0
+         B4iuvK43xFsMqfC7eP1m6j6VgSBaGdRgbSofsITyUvtXHRtTejcBhyRTE8CkCDRVp+ks
+         0mwvPCiOZXibvgE987Qnuwau0eNAEbydwMnWMnhWfWUbVx1pDF7pnyykwB2h7Z5XBsGm
+         IAIOaqm+lNz4WcP1bKaYFqx2PkInR+GjwEUOibnwvh46qfA/mL9IdqjKv1r05U8j9hul
+         ZEoL3Y3uGh8Z41r0eBkTcappu6mLkG1Y6G+cecM/OK+Tk5HP5JHShv4b/pOt66/72SlS
+         EUxg==
+X-Gm-Message-State: AFqh2kplK+fQamFhj5XTQ7ca6mZiYXgBebo4R1DDy/+Do1SfJIf30zb8
+        3A1k+fnx/ahzSCDD5wyZiK30QQ==
+X-Google-Smtp-Source: AMrXdXt2dvOLFZXV9QC0OXYs6SE6Jvai4T8mNKAEwswxW7IRGJJWozZmK0quXrerlcKLULgfRmjyKQ==
+X-Received: by 2002:a05:6512:4002:b0:4b5:637f:f1b0 with SMTP id br2-20020a056512400200b004b5637ff1b0mr9675274lfb.2.1672387702887;
+        Fri, 30 Dec 2022 00:08:22 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id h4-20020a056512054400b004a9b9ccfbe6sm3396021lfl.51.2022.12.30.00.08.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Dec 2022 00:08:22 -0800 (PST)
+Message-ID: <9b37ca5b-b28a-f5c0-661f-3c7168439470@linaro.org>
+Date:   Fri, 30 Dec 2022 09:08:21 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: apr: Make
+ qcom,protection-domain optional again
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20221229151648.19839-1-stephan@gerhold.net>
+ <20221229151648.19839-2-stephan@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221229151648.19839-2-stephan@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wD3LGT5ma5jfWdJAA--.30241S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZFyDAr4DXw1DtF45ur4DJwb_yoW5Zw1rpF
-        WxZrWFyrs2yw43X3yfA34DKas5Zw1fCr9rKrnrCw1Iq3Wvy3y8ZFW0g342qFWYvayvqF1f
-        tF1rJr9xu3WDJrUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pEZXOZUUUUU=
-X-Originating-IP: [112.31.70.25]
-X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbivh3ne1Zcf+WpiAAAsO
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The project is based on Qualcomm's sdx6x chips for laptop,so the mhi interface definition and
-enumeration align with previous Quectel sdx24 configuration
+On 29/12/2022 16:16, Stephan Gerhold wrote:
+> The protection domain functionality exists only in SoCs starting from
+> MSM8998 [1], while the APR bindings are also used on older platforms.
+> 
+> Commit 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to
+> shared schema") made the "qcom,protection-domain" required but it
+> should remain optional to avoid dtbs_check warnings on older platforms,
+> e.g.:
+> 
+> arch/arm64/boot/dts/qcom/apq8096-db820c.dtb:
+>   apr: service@3: 'qcom,protection-domain' is a required property
+>   From schema: Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+> 
+> [1]: https://lore.kernel.org/all/20200312120842.21991-1-sibis@codeaurora.org/
+> 
+> Fixes: 41288c305836 ("ASoC: dt-bindings: qcom,apr: Split services to shared schema")
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
 
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 46 ++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index f39657f71483..83f40617af9a 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -335,6 +335,50 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
- 	.sideband_wake = true,
- };
- 
-+static const struct mhi_channel_config mhi_quectel_rm5xx_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-+	/* The EDL firmware is a flash-programmer exposing firehose protocol */
-+	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-+};
-+
-+static struct mhi_event_config mhi_quectel_rm5xx_events[] = {
-+	MHI_EVENT_CONFIG_CTRL(0, 128),
-+	MHI_EVENT_CONFIG_DATA(1, 128),
-+	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-+};
-+
-+static const struct mhi_controller_config modem_quectel_rm5xx_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 20000,
-+	.num_channels = ARRAY_SIZE(mhi_quectel_rm5xx_channels),
-+	.ch_cfg = mhi_quectel_rm5xx_channels,
-+	.num_events = ARRAY_SIZE(mhi_quectel_rm5xx_events),
-+	.event_cfg = mhi_quectel_rm5xx_events,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info = {
-+	.name = "quectel-rm5xx",
-+	.edl = "qcom/prog_firehose_sdx6x.elf",
-+	.config = &modem_quectel_rm5xx_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = true,
-+};
-+
- static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-@@ -569,6 +613,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004), /* RM520N-GL (sdx6x) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
--- 
-2.25.1
+Best regards,
+Krzysztof
 
