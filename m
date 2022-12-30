@@ -2,128 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8906659641
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 09:22:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 287DD659671
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 09:50:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234727AbiL3IWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 03:22:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45412 "EHLO
+        id S230316AbiL3IuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 03:50:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234788AbiL3IWC (ORCPT
+        with ESMTP id S229519AbiL3IuR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 03:22:02 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286CA1A21C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:22:00 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id bq39so23069333lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:22:00 -0800 (PST)
+        Fri, 30 Dec 2022 03:50:17 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0ACC764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:50:16 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so9328311wmk.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 00:50:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bAnyyfuNqQmQvEppT7FkugRphAcXPYjh2BEsSM40weQ=;
-        b=YDM3xsBL4hjlX2yRXGZOX3s9wdciMI5NPmFnk7jGnE730AtD0oiYK+qSxizUbaVvDK
-         pInWdU7XCDDiVJlleM7on5EdvIUVSCbwWcG6hD86b/bfCmMCOmTUqZNrCdZgGXXIpUxq
-         GNlXogZ3suBdnlp3nff56MST2hCXrsux7YmouR0HHK5Zg0WXar2bCKzISZgIXIdiaYVb
-         k0jyKfb+HWYD4xrjeV0FVa0GalqTjxRJsgvh3FYApdE2Tx+2pPiuXj+Pva9bKu9Q0sT9
-         oNDo2HOiTMFKy7QYvH32xK+q9PI+UGVmYTitT2u9z1xdTH39Jam786YJVgolMbuz+60E
-         kGtQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GN2FSEX7eS4zfNg7tbkbHXZHA7GmeTgA/fVSW3xN/JY=;
+        b=hVm2wH14FZTtEwXm/Y6uEwnchiXQVfFIyb4+gn2gPUnXsnuk2ntRajXqkWTr38OFOf
+         pdxZHzWZDFLL5hYdHkgNYun4k+6to9KqUCmA+nwkZTyfgIph/rYHk16jAxfsAXNvlXK1
+         2znQxZ+uqXlC4CDjepUnB6fz4EPYqaNyOd/6at+YTh6k6VJA2HMV4i+B95mLDcNjLehM
+         VR3fV3H/jUO+/Jst5krZ9Rxrrx1sH1baoU4ayufSAzWm82KO8NbjiyZIXyjyoqCfKb4l
+         Myh2nPZVWRu33iKH3vdr1ZttJnp1iRilCKoZCivap6YQ/dUQhZCG759S0zotI1TKOH2M
+         vkqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bAnyyfuNqQmQvEppT7FkugRphAcXPYjh2BEsSM40weQ=;
-        b=cD2Iy9aRWLpYztUf+SIiTJg7OsvNNRVmPwV/MI3eJB9shqsUbmtQwJgoEGIzUVyF5b
-         H+tbNm5FCniozDZrsSPs+dWZR14Ttxf7vAsfVEhHNfG2btu6PdNrujZqsx7JjEpN4FEL
-         U/D9PGN+TfAUFKT3zZqixDS1Lb6btvyRu5yX7NsXHT6/nK8Gd8+pypKkkOe8owHmaIIW
-         jWW3x5spebuph9G2YfWaWyNJoPeQEyHUpSt6KZaHyapuKN+uEHN9IGkC567VoMXfZI95
-         2nYfFsp00UwY28X5hpeQGc/nQ3d5g8PkiNdX15qfMNo/cbLoHRy5+BL9fCYyCfskwLxn
-         fvgw==
-X-Gm-Message-State: AFqh2kq5DWFOZrKuLnx5GZkVR/LLPOd9BhjNJm3U+qOq+rBk0+qxMj3e
-        3MVqjtpQwW9bBv2xSB2bPu3etA==
-X-Google-Smtp-Source: AMrXdXs66FW6eSUKv7C5khMqMv0kG/5KJRDx92H/vnali+TbjLXc+HKnG3MgYcfaCLXO6/AqOwxwrA==
-X-Received: by 2002:a05:6512:3701:b0:4b5:9e59:8cdd with SMTP id z1-20020a056512370100b004b59e598cddmr9338231lfr.67.1672388518539;
-        Fri, 30 Dec 2022 00:21:58 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id e13-20020a05651236cd00b004b57a810e09sm3398791lfs.288.2022.12.30.00.21.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Dec 2022 00:21:58 -0800 (PST)
-Message-ID: <b23c9e9d-35ea-ebc7-eb18-46fd0c9f3d45@linaro.org>
-Date:   Fri, 30 Dec 2022 09:21:56 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GN2FSEX7eS4zfNg7tbkbHXZHA7GmeTgA/fVSW3xN/JY=;
+        b=z0Upib/1TQUVIvVnG6nWyZtlr8ckXc+hSwCYgX0wi0eWNoyUBDvvjOP4vtK/uovAe5
+         RJ5wz65te0+9jy1pP+26KjS5dTbXXLfYyfRo4HCnUQCeOWu9Lqr712FZ8wmkVmMHhYBQ
+         /a0YTWQ1Sl9ZE718/9McWe1JDhmVqlGmOW/3V3fzmjXct7FG+91eBYzNrfCv0vy3zabH
+         IbsHHW+mtcCjTJbBvf56B++FbT4kjxZolrb7xkV6g6IUZwWCK2JwJNGacMCdQslYiHDe
+         GbR5j6NQg/emZO1ToquqLdMgD+bvRaynOEzyK7EiOVVYh6SW52t0VWev9IE4gzcZo6sO
+         cYZQ==
+X-Gm-Message-State: AFqh2kowTo+xiuzTRM2NmfX8VJc2SmV8lIjng+UTVibOAMFUs3fpBRKk
+        1UyXq+4gxnqZDIJHyeXgBf/QqQ==
+X-Google-Smtp-Source: AMrXdXtAtbpgehbhllb2eqL7qgGHLL/g07hl5Ik1iLQ1FgXlbDGO9JoRcYhltp/gUmTLAr3ziPqKww==
+X-Received: by 2002:a05:600c:1e8c:b0:3d6:2952:679b with SMTP id be12-20020a05600c1e8c00b003d62952679bmr21963079wmb.34.1672390214913;
+        Fri, 30 Dec 2022 00:50:14 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id bh12-20020a05600c3d0c00b003cfa81e2eb4sm27599612wmb.38.2022.12.30.00.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Dec 2022 00:50:14 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Add RTC support
+Date:   Fri, 30 Dec 2022 10:50:10 +0200
+Message-Id: <20221230085010.717423-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: phy: Add qcom,dp-manual-pullup
- description
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20221229183410.683584-1-bryan.odonoghue@linaro.org>
- <20221229183410.683584-2-bryan.odonoghue@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221229183410.683584-2-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/12/2022 19:34, Bryan O'Donoghue wrote:
-> The original Qualcomm driver for the HighSpeed USB PHY contains a flag
-> which tells the driver that the controller and PHY do not connect to VBUS.
-> 
-> In this case an external IC such as a Type-C port manager supplies VBUS and
-> the VBUS signal is not routed to the SoC. This means we cannot detect the
-> presence or absence of VBUS and cannot take action based on it.
-> 
-> Document the downstream boolean qcom,dp-manual-pullup to allow the HS PHY
-> implement the necessary logic.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> index aa97478dd0161..c55a59df71ad0 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> @@ -80,6 +80,13 @@ properties:
->              the address is offset from the ULPI_EXT_VENDOR_SPECIFIC address
->          - description: value
->  
-> +  qcom,dp-manual-pullup:
-> +    type: boolean
-> +    description: This flag indicates to the HS USB PHY driver that it should
+The PMK8350 PMIC has an available RTC block. Describe it in
+sc8280xp-pmics dtsi and enable it in Lenovo Thinkpad X13s specific dts.
+Mark it as wakeup-source to allow waking the system from sleep.
 
-Drop references to the driver and rephrase it to describe the controller
-behavior/feature or the board layout/configuration, not the driver. The
-same applies to property name - "manual pullup" is describing driver,
-not hardware.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ .../arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ++++
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi              | 8 ++++++++
+ 2 files changed, 12 insertions(+)
 
-> +                 enable or disable an internal pullup when powering on or
-> +                 powering off the HS PHY instead of toggling the value when VBUS
-> +                 is absent or present.
-
-Wrong indentation. It's two spaces.
-
-> +
->  required:
->    - clocks
->    - clock-names
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 568c6be1ceaa..4f6daa3f8cb9 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -419,6 +419,10 @@ &pmk8280_pon_resin {
+ 	status = "okay";
+ };
+ 
++&pmk8280_rtc {
++	status = "okay";
++};
++
+ &pmk8280_vadc {
+ 	status = "okay";
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+index f2c0b71b5d8e..00b13f9a7af8 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+@@ -95,6 +95,14 @@ pmk8280_adc_tm: adc-tm@3400 {
+ 			#thermal-sensor-cells = <1>;
+ 			status = "disabled";
+ 		};
++
++		pmk8280_rtc: rtc@6100 {
++			compatible = "qcom,pmk8350-rtc";
++			reg = <0x6100>, <0x6200>;
++			reg-names = "rtc", "alarm";
++			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
++			status = "disabled";
++		};
+ 	};
+ 
+ 	pmc8280_1: pmic@1 {
+-- 
+2.34.1
 
