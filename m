@@ -2,58 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B94E26594CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 06:16:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1BE86594D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 06:18:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbiL3FQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 00:16:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
+        id S234188AbiL3FSh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 00:18:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbiL3FQ4 (ORCPT
+        with ESMTP id S229609AbiL3FS0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 00:16:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360B9640D;
-        Thu, 29 Dec 2022 21:16:55 -0800 (PST)
+        Fri, 30 Dec 2022 00:18:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 733B2640D;
+        Thu, 29 Dec 2022 21:18:25 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C100FB819EB;
-        Fri, 30 Dec 2022 05:16:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA194C433EF;
-        Fri, 30 Dec 2022 05:16:51 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0536361A22;
+        Fri, 30 Dec 2022 05:18:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8821EC433D2;
+        Fri, 30 Dec 2022 05:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672377412;
-        bh=j2+6UeRT2aBSsAEe8hXoqg43P5bsOp3tTR0mxHo9hWY=;
+        s=k20201202; t=1672377504;
+        bh=2qylLi2kCTdKliwyFYLHMEdujewzC6sE3S4J7gHkrZQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=R6ZDEJIhlXrRnthkudDQRtSh3t1UAYZtQQfj+1U+NzPFVFY2c9aLwIzCy4l3/XlEh
-         qN6U6EwmjCZ7qP8KUDbazGzsbwBzjkwU/pbDioOVaVS+pDGt14H5fysTuIwmSdwFBK
-         BE2U4GAwvfME3Qo30LzU42evl2Q/o3NWxUsMfDEEj4dZs+JU/WeFCgVzEuDwVWXBf3
-         FPxl9Z24UyCjq5KhZv9/44lw39nd/3nTd0KBCKt6UW6t6RQS7Utc3AAql4iQpEpxKh
-         ydkqqVm8KI63GBbGzuQoMkIRPQBNg3MCeZhuca+zDcKx6afcWHZdK2W6Ul+XdR7X0v
-         3GGGq+97F+3NA==
-Date:   Fri, 30 Dec 2022 10:46:47 +0530
+        b=W6UhDdsirwtb50xtkgIr5O7T3gydw4+sSocahqHU/N7KOU2dsh9YWFXqWUJ5Kqn6g
+         jhFpFctZ2xqX7TcIUyMBOkF5zeISVeDWuBLhcWt7UZzRXjkwfLJx5h/GQadUtjlV+u
+         0wTp4mw5aWwAbiZIYeiHQfBKJyKPBL0DtrQ/y5d6dSmSvRQD77E94wBV03cXdIabgv
+         HwKt5kvW1LqsHIXDqiz3gRGQx9VowXocpn0mqwtosAdrD4CHEfXy+2ffmIm4/W3mbc
+         LAbBeqK7ui7EyaO8urQ1CCi8fYMLDqvn9iinZF/h2QZrAPrGKU7aQc2IOdICfkx23N
+         vZjDor6OIr0KQ==
+Date:   Fri, 30 Dec 2022 10:48:20 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
         marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] arm64: dts: qcom: sm8450: add spmi node
-Message-ID: <Y650PwlDUJsyKxzC@matsya>
+Subject: Re: [PATCH v2 2/7] arm64: dts: qcom: sm8450-nagara: Include PMIC
+ DTSIs
+Message-ID: <Y650nIthLg1/IDeT@matsya>
 References: <20221229103212.984324-1-konrad.dybcio@linaro.org>
- <7b32e414-96a9-7265-efee-f872badb32b2@linaro.org>
- <71d7a162-569d-1443-9e53-3ba374d06ccd@linaro.org>
- <ee24809b-cf9b-c555-9c30-956949be25a4@linaro.org>
- <20221229161249.34jgdev2446rdxkf@builder.lan>
+ <20221229103212.984324-2-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221229161249.34jgdev2446rdxkf@builder.lan>
+In-Reply-To: <20221229103212.984324-2-konrad.dybcio@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,64 +60,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-12-22, 10:12, Bjorn Andersson wrote:
-> On Thu, Dec 29, 2022 at 11:57:58AM +0100, Krzysztof Kozlowski wrote:
-> > On 29/12/2022 11:45, Konrad Dybcio wrote:
-> > > 
-> > > 
-> > > On 29.12.2022 11:42, Krzysztof Kozlowski wrote:
-> > >> On 29/12/2022 11:32, Konrad Dybcio wrote:
-> > >>> From: Vinod Koul <vkoul@kernel.org>
-> > >>>
-> > >>> Add the spmi bus as found in the SM8450 SoC
-> > >>>
-> > >>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > >>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > >>> [Konrad: 0x0 -> 0, move #cells down, make reg-names a vertical list]
-> > >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > >>> ---
-> > >>> v1 -> v2:
-> > >>> No changes
-> > >>>
-> > >>>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
-> > >>>  1 file changed, 22 insertions(+)
-> > >>>
-> > >>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>> index 570475040d95..b9b59c5223eb 100644
-> > >>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>> @@ -2715,6 +2715,28 @@ aoss_qmp: power-controller@c300000 {
-> > >>>  			#clock-cells = <0>;
-> > >>>  		};
-> > >>>  
-> > >>> +		spmi_bus: spmi@c42d000 {
-> > >>
-> > >> Hmm looks different than reg.
-> > >>
-> > >>> +			compatible = "qcom,spmi-pmic-arb";
-> > >>> +			reg = <0 0x0c400000 0 0x00003000>,
-> > >>> +			      <0 0x0c500000 0 0x00400000>,
-> > >>> +			      <0 0x0c440000 0 0x00080000>,
-> > >>> +			      <0 0x0c4c0000 0 0x00010000>,
-> > >>> +			      <0 0x0c42d000 0 0x00010000>;
-> > >> x
-> > > Hm, my guess would be that Vinod chose to put the "cnfg" reg
-> > > instead of "core" in the unit address, as 8450 has 2 SPMI bus
-> > > hosts and they both share the core reg, so it would have been
-> > > impossible to have two spmi@core nodes..
-> > 
-> > Eh? SM8450 has 2 SPMI hosts both using 0x0c400000? How does that work?
-> > Usually address can be mapped only once.
-> > 
-> 
-> The SPMI controller does something like multi-master. The driver expects
-> the same region to be mapped multiple times and qcom,channel is used to
-> select which one each instance should operate on.
+On 29-12-22, 11:32, Konrad Dybcio wrote:
+> Now that SPMI is finally in place, include the DTSIs of PMICs present
+> on Nagara.
 
-Right, this one adds same as downstream. I agree in future we should
-revisit this and decide how we should model this. For now I am more
-inclined to get this piece closed, it been more than a year :-( lets not
-make it two!
+I never got to send mine, so thanks for sending
+
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> v1 -> v2:
+> No changes
+> 
+>  arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> index 45ee922de4e8..e29fb7adc780 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> @@ -5,6 +5,12 @@
+>  
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sm8450.dtsi"
+> +#include "pm8350.dtsi"
+> +#include "pm8350b.dtsi"
+> +#include "pm8350c.dtsi"
+> +#include "pm8450.dtsi"
+> +#include "pmk8350.dtsi"
+> +#include "pmr735a.dtsi"
+>  
+>  /delete-node/ &adsp_mem;
+>  /delete-node/ &rmtfs_mem;
+> -- 
+> 2.39.0
 
 -- 
 ~Vinod
