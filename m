@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A486B659A91
+	by mail.lfdr.de (Postfix) with ESMTP id 594A4659A90
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 17:34:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235173AbiL3Qeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 11:34:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45958 "EHLO
+        id S235088AbiL3Qev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 11:34:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235176AbiL3Qer (ORCPT
+        with ESMTP id S235177AbiL3Qer (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 30 Dec 2022 11:34:47 -0500
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34521C41E;
-        Fri, 30 Dec 2022 08:34:42 -0800 (PST)
-Received: by mail-io1-f49.google.com with SMTP id n63so11335934iod.7;
-        Fri, 30 Dec 2022 08:34:42 -0800 (PST)
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26911C413;
+        Fri, 30 Dec 2022 08:34:41 -0800 (PST)
+Received: by mail-il1-f181.google.com with SMTP id y2so11533196ily.5;
+        Fri, 30 Dec 2022 08:34:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=IVMuYU/vHF21K2lU7GvEDrbozOGbCPgQ7TCMzyTk+uk=;
-        b=wZi7Q2nf//sCl9k7VltUioqd28xzWcNk8syJXCa3KCv2MxYk/9pkxx37QGwuARna+N
-         udX1q0v/B7SSN0UjnfCOQfqTQMXGRcZReLi/GsITP42FyDt1Hnx9C5IkNnnHZPwJZTNN
-         JZWIaZoPAMgHMvILYlzXr+yVSpIYWf+sTJfk1xgnSzGg1QwGo0P9YLqonqHZ8n8ilxNl
-         jveZsxBlDoLN+kn+vBkYn3V6rjEmTT34DcystnSfh2Sl1okcbfRvPUWgYzTjIS8PSvMf
-         or7+iwPRFg4JOXSXVfsru7Wjw/wgaEoY+ywOSZRLyFAWTiM3SNU/nzWt+CIQx5zLK5PZ
-         2NQQ==
-X-Gm-Message-State: AFqh2ko88Hily23todooZdoMZ5komLWLMI6dKZ6UcFMgyCBLs341Eyxw
-        7KXeFlcHzmJ0KBcHeq/Jk/hlgLnOqA==
-X-Google-Smtp-Source: AMrXdXt0zJP+koONqfFZC0NfkxNdtKlpaZUPY1hKOqMFpfmsDx1palO47uHfosnYAYiLZTtyJW2w1w==
-X-Received: by 2002:a05:6602:4189:b0:6f1:f493:7240 with SMTP id bx9-20020a056602418900b006f1f4937240mr23844642iob.3.1672418082443;
-        Fri, 30 Dec 2022 08:34:42 -0800 (PST)
+        bh=w+v7wd3dT3eh8vuF26/+yKiLrnBmKfWIUiJDjsHaDWM=;
+        b=y5oQuNN6JUcZHx7crVlWBdvWZRdlMl1ziKpwXO4giSGbxnSppBWJJ1Q4un07JW9E/e
+         TH8qqbNkS5vVVdx1fzu2zStA/OFARmtv2AXLvSUzg2Z3BwQUNYdH9XL2M3ju4mbWXB7t
+         yQcNpwGbVmcKRVoZdseGDYWgweb4RtDbwUIBgaWsLm22nNxB4XpbBmEU3mrXF4O3A3Ht
+         x1oX7bJs2v4os5+HApGS1eCfpoUTdXVcmzgSBdjcXz3DOho0/2gcY3qaGVyB72IlbppG
+         EDtP36AZLMEPg/5fOV3yu3EjF9J+bqK1N5iQEVq3DMclwbS0ksQCIds9dwZMAi2hBHmG
+         S6ig==
+X-Gm-Message-State: AFqh2kr/RjA8fuRYiYJ8MrqEYnsEJ4qhTNvCimOWWqnft67wIHmiPd+j
+        WNnPy9a9zVKANJUuIDjNIg==
+X-Google-Smtp-Source: AMrXdXv3fY9Kz2DtRRLLOs8xLxNlA7/NakEv6wgyqMVFh8rk68CwW73iliRhxeL44HyFvDdLWHICrg==
+X-Received: by 2002:a05:6e02:112:b0:30c:3204:5fbd with SMTP id t18-20020a056e02011200b0030c32045fbdmr1770681ilm.31.1672418080549;
+        Fri, 30 Dec 2022 08:34:40 -0800 (PST)
 Received: from robh_at_kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id b20-20020a026f54000000b003987df8bccdsm7045959jae.43.2022.12.30.08.34.41
+        by smtp.gmail.com with ESMTPSA id w5-20020a029685000000b003758390c97esm6925751jai.83.2022.12.30.08.34.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 08:34:42 -0800 (PST)
-Received: (nullmailer pid 1935061 invoked by uid 1000);
+        Fri, 30 Dec 2022 08:34:40 -0800 (PST)
+Received: (nullmailer pid 1935059 invoked by uid 1000);
         Fri, 30 Dec 2022 16:34:28 -0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
+        Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20221230001442.369608-2-mailingradian@gmail.com>
-References: <20221230001442.369608-1-mailingradian@gmail.com>
- <20221230001442.369608-2-mailingradian@gmail.com>
-Message-Id: <167241775321.1928629.8586378707373499445.robh@kernel.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: interconnect: add sdm670 interconnects
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-phy@lists.infradead.org,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+In-Reply-To: <20221229115932.3312318-2-dmitry.baryshkov@linaro.org>
+References: <20221229115932.3312318-1-dmitry.baryshkov@linaro.org>
+ <20221229115932.3312318-2-dmitry.baryshkov@linaro.org>
+Message-Id: <167241774332.1928179.4447846135439331544.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: phy: qcom,pcie2-phy: convert to YAML format
 Date:   Fri, 30 Dec 2022 10:34:28 -0600
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
@@ -71,19 +71,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 29 Dec 2022 19:14:39 -0500, Richard Acayan wrote:
-> There are controllable interconnects on Snapdragon 670. Add the
-> compatible strings to the documentation and interconnect ID definitions.
+On Thu, 29 Dec 2022 13:59:31 +0200, Dmitry Baryshkov wrote:
+> Convert the bindings for the Qualcomm PCIe2 PHY into the YAML format
+> from the text description.
 > 
-> The device tree header was generated by
-> linux-interconnect-driver-generator and the copyright year was changed.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/interconnect/qcom,rpmh.yaml      |   8 ++
->  .../interconnect/qcom,sdm670-rpmh.h           | 136 ++++++++++++++++++
->  2 files changed, 144 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,sdm670-rpmh.h
+>  .../bindings/phy/qcom,pcie2-phy.yaml          | 86 +++++++++++++++++++
+>  .../bindings/phy/qcom-pcie2-phy.txt           | 42 ---------
+>  2 files changed, 86 insertions(+), 42 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
 > 
 
 Running 'make dtbs_check' with the schema in this patch gives the
@@ -93,117 +91,10 @@ incorrect. These may not be new warnings.
 Note that it is not yet a requirement to have 0 warnings for dtbs_check.
 This will change in the future.
 
-Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221230001442.369608-2-mailingradian@gmail.com
+Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221229115932.3312318-2-dmitry.baryshkov@linaro.org
 
 
-interconnect-0: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb
-
-interconnect@16e0000: Unevaluated properties are not allowed ('clocks' was unexpected)
-	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb
-
-interconnect@1700000: Unevaluated properties are not allowed ('clocks' was unexpected)
-	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb
-
-interconnect-1: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dtb
-	arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb
-
-interconnect-aggre1-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-aggre2-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-clk-virt: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-config-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-dc-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-gem-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-lpass-ag-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-mc-virt: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-	arch/arm/boot/dts/qcom-sdx65-mtp.dtb
-
-interconnect-mmss-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-nspa-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect-nspb-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-
-interconnect: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
-
-interconnect-system-noc: 'reg' is a required property
-	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
-	arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
-	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+phy@7786000: '#clock-cells' is a required property
+	arch/arm64/boot/dts/qcom/qcs404-evb-1000.dtb
+	arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
 
