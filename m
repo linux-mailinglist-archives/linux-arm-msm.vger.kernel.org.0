@@ -2,248 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6AB6599FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 16:37:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FC6A659A24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 16:46:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235356AbiL3PhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 10:37:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49530 "EHLO
+        id S229832AbiL3PqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 10:46:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235215AbiL3Pgd (ORCPT
+        with ESMTP id S229527AbiL3PqL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 10:36:33 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B071C123
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 07:36:20 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so9954448wmk.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 07:36:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ctxOvK28D28f3o6Pe3qUkH7ZxEJEHxVrpCcUg+NUh04=;
-        b=g+KWhYGJxl7BWHkPVNQW1thWA8kAFGFXKPDHOZ373tFmfHrrrPrIE8mDNU+pEvbUcv
-         sYbdVvT4u8d+m/kCUGSTSPZsQvC4+rrnz6+zgo+346ucE9ZCvb/Wx3BHgmR92wKGPbmi
-         T9oHmoYYv3xuSLBhnj1fxSNfm4vVXAFA2EG6KHsA5TKAo5ifpHxLny4+OExRO6+uUwXJ
-         g5T18A0HRPaIxiNXHMIaIrcovFujD0egizRlMXz6MTMPwMy9FQhJvlyxMmkiIxEx+sBS
-         2BnoQnguqkD7JYL3lq4S4xSpGPaW/fkXLLIbdC3L7QDhqaBbrEf8dYHKOhPgJUwEykwA
-         Z0kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ctxOvK28D28f3o6Pe3qUkH7ZxEJEHxVrpCcUg+NUh04=;
-        b=Yw541fNKkxd0pACo6aMTXVGXrKZoBA0DTS39s7QI5P2CnZw8hH/4mnjIHRf9YgcfAA
-         NJZ10oaC2FwaaCIRp+K0e1aT9AUeH6w4wFvmrI7SDHmQCxpLXucvGyc7QaNzxqgzyjDv
-         veg+ZSNNvuIdadcR//EEJehrf6k1y0w9KGTzMhU7N+a3e64QiO3f1kQ/YdOB1r70c9pV
-         CyyFk4MTGHRNbbC0JXYz+d76TmSuGx0FZ3LP23BEzebSSIWdvrBetK+jGsS3qFSxQ3Z6
-         LGWtPJi49eRue4NMLs7N71mH6i43PWT2eNt1rsCUYyEmZ2A1U3u4T6D+6NUpapZz7hHP
-         Pn5A==
-X-Gm-Message-State: AFqh2kqeQTox402buE//ivvEQ+FPJD27h6rYJssBeRqppYrbNu8zsWwE
-        ZKMRJtFXx1kDEUeomdBg83WyrQ==
-X-Google-Smtp-Source: AMrXdXupiR1KHz1rC6eEmvSjNUuoXVux4kIV6jTnI6HXoz6vZWYwnghGJbUlafDEiY/R85jV3v2VKw==
-X-Received: by 2002:a05:600c:4995:b0:3d3:4f43:fbc2 with SMTP id h21-20020a05600c499500b003d34f43fbc2mr23117665wmp.41.1672414580409;
-        Fri, 30 Dec 2022 07:36:20 -0800 (PST)
-Received: from prec5560.. (freifunk-gw.bsa1-cpe1.syseleven.net. [176.74.57.43])
-        by smtp.gmail.com with ESMTPSA id l42-20020a05600c1d2a00b003cfbbd54178sm49857993wms.2.2022.12.30.07.36.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 07:36:20 -0800 (PST)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        quic_jesszhan@quicinc.com, robert.foss@linaro.org,
-        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
-        vkoul@kernel.org, a39.skl@gmail.com, quic_khsieh@quicinc.com,
-        quic_vpolimer@quicinc.com, swboyd@chromium.org,
-        dianders@chromium.org, liushixin2@huawei.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
-        vinod.koul@linaro.org
-Subject: [PATCH v4 11/11] arm64: dts: qcom: sm8350-hdk: Enable lt9611uxc dsi-hdmi bridge
-Date:   Fri, 30 Dec 2022 16:35:54 +0100
-Message-Id: <20221230153554.105856-12-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221230153554.105856-1-robert.foss@linaro.org>
-References: <20221230153554.105856-1-robert.foss@linaro.org>
+        Fri, 30 Dec 2022 10:46:11 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A3D1B9EF;
+        Fri, 30 Dec 2022 07:46:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1CF68B81B92;
+        Fri, 30 Dec 2022 15:46:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC7CC433D2;
+        Fri, 30 Dec 2022 15:46:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672415167;
+        bh=2AVHoufg330kW2hssR4nmveKmkX70vDH6IXBOdzJ9fU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QcruFRIUZkPRQHPXbnqaHB82Mo/IXsBbr1P+H1EZJz/ni784t42Bd6DF7dkcbXJrQ
+         TpsU56Gff/NaVrtVvp234kLyCnZUHJGZcxKiVS7u+658/DHm2k07WG/fc+hWDbcSt6
+         hG0huUfXoB9n/CuvFXE51jeuIykxhJyJeu3bujuNg3TJ932sk9GqA8+qi5VTfvgV+z
+         nRmVooB6q5CvZbZQ2YpCuU7n3LYbqRPepCfH60y2da18RyS4aubs+jAQPpH2gC/H6L
+         HNPcx76oaWPdWurtRnaCkHC0rFMtSin6nXmPBpE86Xm80SDKbYNHS5GLNDxlwvHi1q
+         Egi7clqxVyIdg==
+Date:   Fri, 30 Dec 2022 16:46:01 +0100
+From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bhelgaas@google.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: PCI: qcom: Document msi-map and
+ msi-map-mask properties
+Message-ID: <Y68HucsiuX+/0DJa@lpieralisi>
+References: <20221222133123.50676-1-manivannan.sadhasivam@linaro.org>
+ <20221222133123.50676-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221222133123.50676-3-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sm8350-hdk ships with the LT9611 UXC DSI/HDMI bridge chip.
+On Thu, Dec 22, 2022 at 07:01:22PM +0530, Manivannan Sadhasivam wrote:
+> The Qcom PCIe controller is capable of using either internal MSI controller
+> or the external GIC-ITS for receiving the MSIs from endpoint devices.
 
-In order to toggle the board to enable the HDMI output,
-switch #7 & #8 on the rightmost multi-switch package have
-to be toggled to On.
+"For signaling MSIs sent by endpoint devices"
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 105 ++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index 1961f941ff83..6b21897c92dc 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -20,6 +20,17 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	hdmi-connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&lt9611_out>;
-+			};
-+		};
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -29,6 +40,31 @@ vph_pwr: vph-pwr-regulator {
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
-+
-+	lt9611_1v2: lt9611-1v2-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "LT9611_1V2";
-+
-+		vin-supply = <&vph_pwr>;
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+		gpio = <&tlmm 49 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-boot-on;
-+	};
-+
-+	lt9611_3v3: lt9611-3v3-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "LT9611_3V3";
-+
-+		vin-supply = <&vreg_bob>;
-+		gpio = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		enable-active-high;
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
- };
- 
- &adsp {
-@@ -220,6 +256,15 @@ &dispcc {
- &mdss_dsi0 {
- 	vdda-supply = <&vreg_l6b_1p2>;
- 	status = "okay";
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&lt9611_a>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
- };
- 
- &mdss_dsi0_phy  {
-@@ -231,6 +276,46 @@ &gpi_dma1 {
- 	status = "okay";
- };
- 
-+&i2c15 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	lt9611_codec: hdmi-bridge@2b {
-+		compatible = "lontium,lt9611uxc";
-+		reg = <0x2b>;
-+
-+		interrupts-extended = <&tlmm 50 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&tlmm 48 GPIO_ACTIVE_HIGH>;
-+
-+		vdd-supply = <&lt9611_1v2>;
-+		vcc-supply = <&lt9611_3v3>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&lt9611_state>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				lt9611_a: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				lt9611_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &mdss {
- 	status = "okay";
- };
-@@ -248,6 +333,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_2 {
-+	status = "okay";
-+};
-+
- &slpi {
- 	status = "okay";
- 	firmware-name = "qcom/sm8350/slpi.mbn";
-@@ -544,4 +633,20 @@ usb_hub_enabled_state: usb-hub-enabled-state {
- 		drive-strength = <2>;
- 		output-low;
- 	};
-+
-+	lt9611_state: lt9611-state {
-+		rst {
-+			pins = "gpio48";
-+			function = "normal";
-+
-+			output-high;
-+			input-disable;
-+		};
-+
-+		irq {
-+			pins = "gpio50";
-+			function = "gpio";
-+			bias-disable;
-+		};
-+	};
- };
--- 
-2.34.1
-
+> Currently, the binding only documents the internal MSI implementation.
+> 
+> Let's document the GIC-ITS imeplementation by making use of msi-map and
+> msi-map-mask properties. Only one of the implementation should be used
+> at a time.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 02450fb26bb9..10fec6a7abfc 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -104,14 +104,20 @@ required:
+>    - compatible
+>    - reg
+>    - reg-names
+> -  - interrupts
+> -  - interrupt-names
+> -  - "#interrupt-cells"
+>    - interrupt-map-mask
+>    - interrupt-map
+>    - clocks
+>    - clock-names
+>  
+> +oneOf:
+> +  - required:
+> +      - interrupts
+> +      - interrupt-names
+> +      - "#interrupt-cells"
+> +  - required:
+> +      - msi-map
+> +      - msi-map-mask
+> +
+>  allOf:
+>    - $ref: /schemas/pci/pci-bus.yaml#
+>    - if:
+> -- 
+> 2.25.1
+> 
