@@ -2,136 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 467B1659599
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 08:11:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0B56595DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 08:44:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234229AbiL3HLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 02:11:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47640 "EHLO
+        id S234631AbiL3Hni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 02:43:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbiL3HLl (ORCPT
+        with ESMTP id S234719AbiL3Hmp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 02:11:41 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894E2A452;
-        Thu, 29 Dec 2022 23:11:39 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2BU5sFsr026256;
-        Fri, 30 Dec 2022 07:10:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FwhgSt+H12LokA09wY+Ljn6TvSwI6v7ncaNm3O6cwro=;
- b=J/mcI0k/6vjX9FhdSxYJYSt40LPnfc/hcIYWxD2v846nVodvXcdDdlw/duoiE3ywlZHb
- YGHRzGwgkoCFOjTzsqfMbLxRtVczH6NpeAB+gn2OH5gHj4/ukVXE5LJff+fvwEeUcE4t
- HsWLiWsBsU/amsSjsiIpAnt2pWLHyViBBAwZa7AU8nK5m2wgDzUMIJfnSXAv4oMeJgtG
- h5n2TQPFNWOXWZPeJ4LP3HyBS9aVAyBp/lRmptm7trMZpPZkbb+9uN+ONQF7WNT3ZllT
- zYX9PRSoeXB2uHjuvAICTBNKG/6SsAwxn6BwngGLBgPzaLThWlUGZhnzcT03N4GWVNPq 5A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ms2nra9nb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Dec 2022 07:10:46 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2BU7AcoQ007450
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Dec 2022 07:10:38 GMT
-Received: from [10.110.125.32] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 29 Dec
- 2022 23:10:37 -0800
-Message-ID: <ec632e64-2d9c-3f71-4fe7-e1c6acb81393@quicinc.com>
-Date:   Thu, 29 Dec 2022 23:10:36 -0800
+        Fri, 30 Dec 2022 02:42:45 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA241A23C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:42:29 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id n3so18494091wrc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:42:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2AFK51349QJ0+Ar/9LyUa3RFs2+XbTP6GGanaFPZqqk=;
+        b=4tlJg+Kyqh+spAFYZ6rsYwogBP/vXCAFmaT1XKGDZZDMMUB++fkGLqwyuJbEIJQ7kC
+         ooM9OmaNK6b2hAgY/KK7qEKv3KN8nFmeU+93vJ2LVa6oi0VHaw1R57RcGNWHt5jotVl2
+         uH0zJPNZBuDIbAZgSC+ZTybWeLsn8RfQGcmmGZc7Ky1ghjsNDfF3X5kv1x4KHheduHL4
+         M5FC96CCgsKI3SMPsORry/ecoNGVjM3TBpmb0/4IJrvCh6dEU9aR8ZfWnoWEgl2m7lMX
+         EeAMBk+CIYZVUu8Rorz7Mxa7PMpHN9BlBygFbgLDzvpvTORkFcPs2hRcDZASqoSfpO+/
+         bBDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2AFK51349QJ0+Ar/9LyUa3RFs2+XbTP6GGanaFPZqqk=;
+        b=EL10drSpWI1EqNkCnJcm+BClVzft1ecTJfcxAw5RqIkUROKZ3UDaTjRhLd0YqDV7W0
+         8WPFNnkKatswt5MaL+n+TY474X5rascM4jcf8cIDx74zWcfXHsj1yOi4bYei3VdCfafH
+         4mn4GTSOSsyr50cItFuswQ6v43nIbQuJEGQ6dkLyfa3RSNahgWGXlSmuwYxgNLe9Yw+f
+         skY6dCzsvpoBeLQE1dV5PLwo0m+hwllj3w5eKJX0vIujQacTRE3AkMmeK/vlECG1JrUW
+         CiwyoBTkQjhPw7+hZzqngpTD14oaLZn/2vx6rtYdsc1F5UzDGEA6lCMqR7BOP9MCx2K+
+         koCA==
+X-Gm-Message-State: AFqh2koXoLlbWykn0gUQD+apBuctpg9FxDP5RioBX4HjN7OBBXUDYrmI
+        /GrLSTQaeJdXMQ9M6OtKAVa2Sw==
+X-Google-Smtp-Source: AMrXdXvvSxOl/IYJdRtoKk7/wnZsSzRjN8xIDWKHKQKkGCwAPDL65dluoUtz1mfi8uDEAqt1p56Oug==
+X-Received: by 2002:a5d:66c6:0:b0:277:ae6c:a94d with SMTP id k6-20020a5d66c6000000b00277ae6ca94dmr13187947wrw.68.1672386147843;
+        Thu, 29 Dec 2022 23:42:27 -0800 (PST)
+Received: from [192.168.0.28] (2a02-8388-6582-fe80-0000-0000-0000-0007.cable.dynamic.v6.surfer.at. [2a02:8388:6582:fe80::7])
+        by smtp.gmail.com with ESMTPSA id a6-20020adfed06000000b0028e8693bb75sm1887655wro.63.2022.12.29.23.42.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 23:42:27 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Date:   Fri, 30 Dec 2022 08:42:05 +0100
+Subject: [PATCH v2 1/3] arm64: dts: qcom: sm6115: Add missing reg-names
+ property for UFS
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 04/14] sound: usb: card: Introduce USB SND vendor op
- callbacks
-Content-Language: en-US
-To:     Takashi Iwai <tiwai@suse.de>, Oliver Neukum <oneukum@suse.com>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-5-quic_wcheng@quicinc.com>
- <80f92635-6d14-8ff3-17ac-de2e5b977947@suse.com> <87lemqxpet.wl-tiwai@suse.de>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87lemqxpet.wl-tiwai@suse.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Eb4Q5qdFJpjmSWS6gnMU0-nbVChD5pAE
-X-Proofpoint-GUID: Eb4Q5qdFJpjmSWS6gnMU0-nbVChD5pAE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-30_03,2022-12-29_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=682 spamscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2212300061
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Message-Id: <20221209-dt-binding-ufs-v2-1-dc7a04699579@fairphone.com>
+References: <20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com>
+In-Reply-To: <20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <me@iskren.info>
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.11.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The UFS driver expects the second reg to be named "ice" otherwise the
+Inline Crypto Engine won't get enabled.
 
-On 12/29/2022 6:20 AM, Takashi Iwai wrote:
-> On Thu, 29 Dec 2022 14:49:21 +0100,
-> Oliver Neukum wrote:
->>
->>
->>
->> On 24.12.22 00:31, Wesley Cheng wrote:
->>> Allow for different vendors to be notified on USB SND connect/disconnect
->>> seqeunces.  This allows for vendor USB SND modules to properly initialize
->>> and populate internal structures with references to the USB SND chip
->>> device.
->>
->> Hi,
->>
->> this raises a design question. If the system is suspending or, worse,
->> hibernating, how do you make sure the offloader and the device are
->> suspended in the correct order?
->> And what happens if you need to go into reset_resume() when resuming?
+Fixes: 97e563bf5ba1 ("arm64: dts: qcom: sm6115: Add basic soc dtsi")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-It may depend on how the offloading is implemented, but we do have a 
-mechanism to force the audio stream off from the qc_usb_audio_offload. 
-Regardless of if the UDEV is suspended first, or the USB backend, as 
-long as we ensure that the offloading is disabled before entering 
-suspend, I think that should be sufficient.  I would need to add some 
-suspend handling in the offload driver to issue the command to stop the 
-offloading.
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 572bf04adf90..85673d562723 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -704,6 +704,7 @@ opp-202000000 {
+ 		ufs_mem_hc: ufs@4804000 {
+ 			compatible = "qcom,sm6115-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+ 			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
++			reg-names = "std", "ice";
+ 			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+ 			phys = <&ufs_mem_phy_lanes>;
+ 			phy-names = "ufsphy";
 
-As for the resume path, is there a concern if either device is resumed 
-first?  The only scenario where maybe it could cause some mishandling is 
-if the USB backend is resumed before the offload driver is 
-connected/resumed.  This means that the userspace ALSA would have access 
-to the platform sound card, and could potentially attempt to route audio 
-streams to it.  I think in worst case, if we were going through a 
-reset_resume() we would end up rejecting that request coming from the 
-audio DSP to enable the stream.  However, userspace entities would be 
-resumed/unfrozen last, so not sure if that would ever be a problem.
-
-The reset_resume() path is fine.  Bus reset is going to cause a 
-disconnect() callback in the offload driver, in which we already have 
-the proper handling for ensuring the offload path is halted, and we 
-reject any incoming stream start requests.
-
-Thanks
-Wesley Cheng
-
+-- 
+2.39.0
