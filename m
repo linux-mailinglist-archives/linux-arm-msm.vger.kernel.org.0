@@ -2,97 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21817659B28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 18:56:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55269659BB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 20:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbiL3R43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 12:56:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43620 "EHLO
+        id S235393AbiL3TpJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 14:45:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiL3R43 (ORCPT
+        with ESMTP id S235069AbiL3TpH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 12:56:29 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1739BE1B;
-        Fri, 30 Dec 2022 09:56:27 -0800 (PST)
-Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0005.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::5])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A8F7ECA59D;
-        Fri, 30 Dec 2022 17:56:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1672422986; bh=9SMJto/BbTzXNOAp7b3wav53yOz7csIc23s0OeluJrY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=boxv0jwrk7qJI2n/2Jy8o2f/Cn625a6JYc+epwjAOLmqEGhmLoEGRDm0HUiL2IrDg
-         JsHmGheKyUgGM5I5BEangD0dVHym0bjVZgtbGL0rmjGKcaJ3+kdN+7xboIStw9Ssqo
-         S7pD/dLisvEb61oCRte/ht/LowiJs3YRwwQiVAPY=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org, Mark Brown <broonie@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Fri, 30 Dec 2022 14:45:07 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7595D193F7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 11:45:04 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id b24-20020a05600c4a9800b003d21efdd61dso15753389wmp.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 11:45:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=q72SkNrjUv6hApXPAFQeSLQafL5ZXzh4liHqcfBQoss=;
+        b=cl+lv5TpIcUAycTAeAn5TmieFmvwZ3TC9P3bzUzh8NMNaZlhTHCchdvZLOWRsIwFHF
+         N739iA1eLpJa7Rth4rnlBI9QqtmQKQGA5bjBmcwrUOS7Rrj0lzIqslyIPJZTZyS+FTt1
+         bwfUrkYy1W85CM42cEi+eqleY8cvrhYnwutMZrTSmmzQAY/W1W27lVBQ8YyCxvvqGjbC
+         YDkMQiAkXazpjplvjj+Jn0i+CsnsLgbpSgJ9FlrQwnBTzQM7YKBoWutv07wbQX7/hRIX
+         fq8YzxjbBpkKJvpOwi+f/HGK9+xIy1CxvKgOTwS7DQDHMCoFpanNaTvE1wvHv6WZ+viZ
+         qiEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q72SkNrjUv6hApXPAFQeSLQafL5ZXzh4liHqcfBQoss=;
+        b=xJHdCqvkme9FShRFl5UNGLlhjO/c8c/rfinAWDj5l27AwnVoSRkzAV7cloN4Uw+UVH
+         +Xo+gHau2PmfjRYpI75Xewu/8EHRJa30s3HpqRtZp0hlApbUFAVgynToZBTYGDfPIqAP
+         9oh8yx6NmluBxWVZXiLvNubaBX9xVWQ2STQyqlCf1d/bCR16F3W4ffboXtqGm2Caaa1d
+         +95FU7SXuMHyJcIkc931yDlHPTh63BNLJBWAm/VlwjWrdZjR+4aK7iKHMPOcA0Av+LFB
+         0q8Z1Lcn7oVz6Xg3rSJz1mhOgCwqq+0OsI7t3G8+LYBFDce6rzAar55WGr/1/OLNX4L1
+         a+Xw==
+X-Gm-Message-State: AFqh2kqtQnOUuyPQvtVIUmW0SmoJ0ezivkJIAOQ9lDfg5/AYwSXeOwde
+        St46PME8VmB+95srca+de+AEow==
+X-Google-Smtp-Source: AMrXdXsnGymGIz5wKkyeGlp5NGCZTlccx+1TfgiDq4nzoUgDuD/JJts9ZAFkwK5mVOXUx44yP3ydGA==
+X-Received: by 2002:a05:600c:3491:b0:3d1:f16d:5848 with SMTP id a17-20020a05600c349100b003d1f16d5848mr23777360wmq.26.1672429502975;
+        Fri, 30 Dec 2022 11:45:02 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id j30-20020a05600c1c1e00b003c71358a42dsm44855413wms.18.2022.12.30.11.45.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Dec 2022 11:45:02 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3] regulator: dt-bindings: qcom,usb-vbus-regulator: change node
- name
-Date:   Fri, 30 Dec 2022 18:56:24 +0100
-Message-ID: <4449469.LvFx2qVVIh@g550jk>
-In-Reply-To: <167235422463.130576.13068228295548630470.b4-ty@kernel.org>
-References: <20221229191542.123367-1-luca@z3ntu.xyz>
- <167235422463.130576.13068228295548630470.b4-ty@kernel.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
+Subject: [PATCH v3 0/2] pinctrl: qcom: Add support for SM8550
+Date:   Fri, 30 Dec 2022 21:44:57 +0200
+Message-Id: <20221230194459.2370924-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Donnerstag, 29. Dezember 2022 23:50:24 CET Mark Brown wrote:
-> On Thu, 29 Dec 2022 20:15:43 +0100, luca@z3ntu.xyz wrote:
-> > usb-vbus-regulator is a better generic node name than dcdc to change the
-> > example to match.
-> 
-> Applied to
-> 
->    broonie/regulator.git for-next
-> 
-> Thanks!
-> 
-> [1/1] regulator: dt-bindings: qcom,usb-vbus-regulator: change node name
->       commit: d13da2f4c81602fc22cdf2cb13b15283b260e0d5
-> 
+This patchset adds pinctrl support for the new Qualcomm SM8550 SoC,
 
-Thank you and sorry about the mess on the v2.
+Changes since v2:
+ * dropped the i2c pull up bit for now. (dropped patches #2 and #3).
+   It needs a proper approach which I intend to take care of soon.
 
-Regards
-Luca
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-> All being well this means that it will be integrated into the linux-next
-> tree (usually sometime in the next 24 hours) and sent to Linus during
-> the next merge window (or sooner if it is a bug fix), however if
-> problems are discovered then the patch may be dropped or reverted.
-> 
-> You may get further e-mails resulting from automated or manual testing
-> and review of the tree, please engage with people reporting problems and
-> send followup patches addressing any issues that are reported if needed.
-> 
-> If any updates are required or you are submitting further changes they
-> should be sent as incremental updates against current git, existing
-> patches will not be replaced.
-> 
-> Please add any relevant lists and maintainers to the CCs when replying
-> to this mail.
-> 
-> Thanks,
-> Mark
+Abel Vesa (2):
+  dt-bindings: pinctrl: qcom: Add SM8550 pinctrl
+  pinctrl: qcom: Add SM8550 pinctrl driver
 
+ .../bindings/pinctrl/qcom,sm8550-tlmm.yaml    |  163 ++
+ drivers/pinctrl/qcom/Kconfig                  |   10 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-sm8550.c         | 1789 +++++++++++++++++
+ 4 files changed, 1963 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8550.c
 
-
+-- 
+2.34.1
 
