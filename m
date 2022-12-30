@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B3C1659A39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 16:55:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68528659A49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 17:02:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235215AbiL3PzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 10:55:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60494 "EHLO
+        id S235193AbiL3QCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 11:02:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235193AbiL3PzJ (ORCPT
+        with ESMTP id S235355AbiL3QBp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 10:55:09 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA7A1BEAF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 07:55:08 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id z26so32211453lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 07:55:07 -0800 (PST)
+        Fri, 30 Dec 2022 11:01:45 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180BFE010
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 08:01:44 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id 1so32233547lfz.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 08:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
         bh=VGfyma8Qn7sSFvu2zSEpMZKY5/A9O53T6J2YqTZdXjc=;
-        b=OFnopBeZPQAUbNaRLYVpb7OIMIGUbHsbCDQv1dukARbxv0lwF2fMcinCIPg1rIHLbY
-         NTZTfoA/ZCefIue/e5dCz10TeMPxcPglosk4+DzVZiWfOsq7CxTuuPZ5ae3EesO8OXAI
-         YsVACSTniFkatgmHIoR6S5oQ1VVz5XUMcnN4a+dtg88N2as97ludx9SYvWC1mUciC9RI
-         visOK15+zSj+U7tD4J5/+2Q/ex53tdisF5gvrCSCuBL18vTPOc4kc0SJ4kHfSACcRy8c
-         YG7xOu8fynvbJtyfQaJXL79fWmsWIRdMZKqlscul5NmJyDtC8qDtN/XSWA91r/n6jyy3
-         Zi8Q==
+        b=NsYdUEiXhzDWEhPP3sA+t1ou6d7qZpKv5r/C8chTf2MbxUME5Rg44kJBQZSyEvVyFl
+         mt7oKYgToWrzQSasHWqRkSNKDfDyDqrteEhgykX6+AWLJ4XdU3ABZUkX0vqV1TY22qSG
+         hdilPwDlNjCLlKMU79bIL365cRvLXGUhzRRjsqCrxmD4Ohl3AT1bKdYTrXVWTxAmVTAw
+         DUXWDJFbPVL3BLO9rNQose7Ag3cC5nE3Kjf6c3RT16m0MtBHLfwjKBI3ATDRyrrsMLOH
+         Yi9hiWARm8DLOFA/rZ4gSlf4GNcgwJxwiFffGDx/UcImFQFbBhjv9OoJXDFAYvzYrEwV
+         Py3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=VGfyma8Qn7sSFvu2zSEpMZKY5/A9O53T6J2YqTZdXjc=;
-        b=AdMobUvIbifjLsSkVvWorp8izAVGR4nM576GJj8BKCh1zcg36xVMe2s1Y8twNUlpZz
-         hP8kJoXvnjp74Yadn8vRybq8vK7VN7NXcD90C14Hdl4IeUCg4C3R1NgjWtVTKjuQXOXf
-         pQLhgdXPMiRbkUXK/P8xN0KdAs+yZj+oJ/d0OxN7vh8UvBA1dMpIXrtxKFgoEmarC5tv
-         h+18Grk/ruWJOJwLJg4cc+ymKJ0Bgdq8sQHetQjcj23JP/CSW/fihe8o4dCkCkxqslrd
-         wiQHQzxM/n/nKo+vW6qr8355VYYbMqmpfzxY5tbsXpFc0ve1uAMk4jAxoTEkmCZfmq70
-         QuPA==
-X-Gm-Message-State: AFqh2kpLNnjomAQj9iilJ65CPkcG37Un5q4V2pE0qlRE/BUvGmdCTSZK
-        UNFzGLLGv4Ptjn53Hjk/Hmn05A==
-X-Google-Smtp-Source: AMrXdXvLmPUA4Zd1qNu6Cy/5mT64Qmj3iYHxUKZJgRpzLHWD6hamB78MApyV68kq/q7oikoYxyl1CA==
-X-Received: by 2002:a05:6512:1049:b0:4b0:a1e7:915a with SMTP id c9-20020a056512104900b004b0a1e7915amr10290789lfb.49.1672415706422;
-        Fri, 30 Dec 2022 07:55:06 -0800 (PST)
+        b=JtWvqUI2Ub0285UO5ZHUd7LImhPmkqENvdVE3GxXn74USK+ovfNvLpFdNyPFwty+ps
+         2yVIqZHQXH7dunFYoJTR9gXbVfVxq4LZOkzT6X+QqlFn1lhgvoKMYY9WMzNYBZRBwaL1
+         ERg9c9GpBlB7ZxEVl7thrHryHHRl7Yw27wbIBRUwla09rC3QOerOOfdI2DiaZD8kx5Pw
+         yjapCFsOZuBkfKMi5gZ17f6sLzFmhOh/MyZMCFYi7I8sIEZMMjf3Sa8svA3QW0G7B4AV
+         k8dvRsFlZ9oSz6ojEXts+sSsDeZlIlemUxrjYy6+sVl72ussEjEuCKOymQKhV3RjGUek
+         yqcA==
+X-Gm-Message-State: AFqh2kry4KNn8VzlTKi4fOz53TD1pYZ1i/HPkH0I+jfDPb5XA+GRJ5PK
+        dUs5Us1ue8EI2cjuWJyV9DH4cA==
+X-Google-Smtp-Source: AMrXdXtPr6GRbIJtyKEHHxHJ4KM4PlNxVGE1BeXMpC5H5rLaL7uaPuFYwHKhVCKjpecLilQclnHJ2w==
+X-Received: by 2002:a05:6512:31c5:b0:4b0:25f9:14ea with SMTP id j5-20020a05651231c500b004b025f914eamr10669569lfe.21.1672416102378;
+        Fri, 30 Dec 2022 08:01:42 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id z21-20020a196515000000b004b4bab7d5a9sm3546979lfb.46.2022.12.30.07.55.04
+        by smtp.gmail.com with ESMTPSA id p1-20020ac24ec1000000b004b15bc0ff63sm3520874lfr.277.2022.12.30.08.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 07:55:05 -0800 (PST)
+        Fri, 30 Dec 2022 08:01:41 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT PATCH] arm64: dts: qcom: sc8280xp: remove GCC from CX power domain
-Date:   Fri, 30 Dec 2022 16:55:02 +0100
-Message-Id: <20221230155502.115205-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/7] arm64: dts: qcom: sc8280xp: remove GCC from CX power domain
+Date:   Fri, 30 Dec 2022 17:00:57 +0100
+Message-Id: <20221230160103.250996-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
