@@ -2,105 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF13D659AE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 18:16:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FFA3659ADA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 18:09:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231290AbiL3RQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 12:16:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59726 "EHLO
+        id S231193AbiL3RJs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 12:09:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiL3RQY (ORCPT
+        with ESMTP id S235178AbiL3RJr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 12:16:24 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56BFB2654;
-        Fri, 30 Dec 2022 09:16:23 -0800 (PST)
+        Fri, 30 Dec 2022 12:09:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F951901E;
+        Fri, 30 Dec 2022 09:09:46 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E3DA86181A;
-        Fri, 30 Dec 2022 17:16:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B68FC433EF;
-        Fri, 30 Dec 2022 17:16:21 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7C32FB81CEA;
+        Fri, 30 Dec 2022 17:09:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C198C433EF;
+        Fri, 30 Dec 2022 17:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672420582;
-        bh=EjjJYlDGDYCeAbL7B91JnbZs5ulwNKec7qPkIMCdOvw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lLn77BkYgZHJjz375jHL6HGSvBeJ1aI/IBmmoKjVVWEEDDKKLsjEK2SsN9XYimbYi
-         bjRAmiJp25ARsoy2dOFjrqZxbH+RcFEaUmUgXZKm5gOPqoaKV11T7OCYQ+tN/BNMUw
-         Jd5FlVE2Eknoj6Rk8k88/bwM8Au0J88/owbTTwLyphdRA2prmsfeJvGG6253aROfUQ
-         nUNsrxAYP/x+kA3+VDigcc5JnAUXEPA5Sqvre1xzZIgJyZUDfQThM3RG63W9rrExOf
-         WLpwP1SM2IAT9+Ydkd3asy4aNDTymnstCLVzfKHSh2icxkoublQaiHYFFaEHJyE2sF
-         YJfzY4n3/lTjw==
-Date:   Fri, 30 Dec 2022 11:16:19 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
+        s=k20201202; t=1672420184;
+        bh=JOyOOPHb4ZGilsFo4o531BT2E+thHzuywmesWMld4ew=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=LDnzZ5HvuNwR+gTS0iPNsbLzW3p1QPyUSj4zb20QOFJhb3U/mMVnPjvmsxEURNyVI
+         6h8j7IQhwuOiQySsQfHsqix/CoEMB479JS1e65FOj/cZEWn95kXsRoj1ZkOaotFhA1
+         unvSXA6QZ0v0mfW9fDJ1W4S9z8yJ9921/QDhnVFGZnQyov1l7MZfaG2PP6qzixMavf
+         m5gBrEh3YY7XwbzoOvg5vOOGaXYZs+FK/bzdLjaxf+Sc7+36DNHtZRr5Vb3XTxs81k
+         G9xqiUpjUIkOPCGtoFcoBBCn9VBbjHSAplunO4sCmI/D2A9TrjIFLq/3Nbkjzvl9Cm
+         YC1vwdLlv0Y2g==
+Date:   Fri, 30 Dec 2022 17:23:01 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFT PATCH] arm64: dts: qcom: sc8280xp: remove GCC from CX power
- domain
-Message-ID: <20221230171619.om5mfvsp7gwatvu6@builder.lan>
-References: <20221230155502.115205-1-krzysztof.kozlowski@linaro.org>
+        Luca Weiss <luca@z3ntu.xyz>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] dt-bindings: iio/adc: qcom,spmi-iadc: document
+ PM8226 compatible
+Message-ID: <20221230172301.6bbfaf3e@jic23-huawei>
+In-Reply-To: <98992679-47bb-24d3-d253-48fefb4a45f5@linaro.org>
+References: <20221228230421.56250-1-rayyan@ansari.sh>
+        <20221228230421.56250-5-rayyan@ansari.sh>
+        <98992679-47bb-24d3-d253-48fefb4a45f5@linaro.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221230155502.115205-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,TVD_SUBJ_WIPE_DEBT autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 30, 2022 at 04:55:02PM +0100, Krzysztof Kozlowski wrote:
-> Bindings do not allow power-domain property in GCC clock controller and
-> documentation does not indicate that GCC is part of VDD_CX.
+On Thu, 29 Dec 2022 09:47:27 +0100
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
+
+> On 29/12/2022 00:04, Rayyan Ansari wrote:
+> > Document the compatible for the IADC used on PM8226.
+> > 
+> > Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>  
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> ---
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied to the togreg branch of iio.git and initially pushed out as testing for 0-day
+to take a poke at it.
+
+Thanks,
+
+Jonathan
+
 > 
-> Maybe the bindings should be fixed? Maybe this was added as workaround?
-> Anyway looking at documentation I do not see such relation, except
-> downstream vdd_cx-supply (which is the same as in other SoCs and we do
-> not represent it in upstream).
-
-The GCC itself is powered by CX and the GDSC power-domains exposed by
-GCC are powered by CX.
-
-It's fairly recently that we started attempting to scale CX - and
-attempted to suspend things. But this is probably how it should be
-represented on all platforms.
-
-
-So let's fix the binding instead.
-
-Regards,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 -
->  1 file changed, 1 deletion(-)
+> Best regards,
+> Krzysztof
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 1d1420c8720c..d14663c9f34c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -799,7 +799,6 @@ gcc: clock-controller@100000 {
->  				 <&pcie4_phy>,
->  				 <0>,
->  				 <0>;
-> -			power-domains = <&rpmhpd SC8280XP_CX>;
->  		};
->  
->  		ipcc: mailbox@408000 {
-> -- 
-> 2.34.1
-> 
+
