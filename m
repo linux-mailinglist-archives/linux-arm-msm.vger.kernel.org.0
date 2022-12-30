@@ -2,155 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B640E6595D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 08:44:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DEB06595EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Dec 2022 08:51:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234451AbiL3Hnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 02:43:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57750 "EHLO
+        id S230405AbiL3Hvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 02:51:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234744AbiL3Hmu (ORCPT
+        with ESMTP id S234524AbiL3Hvh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 02:42:50 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260A51A38A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:42:31 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id h16so19212735wrz.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:42:31 -0800 (PST)
+        Fri, 30 Dec 2022 02:51:37 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6BCACD3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:51:36 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id f34so30745624lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Dec 2022 23:51:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Vm3xbs/GyRNJ6DBbaHm+OuOgD7iBzBULuO7wncj0ttk=;
-        b=YJ3xv/XPA73EvkaW1lBKOVggaYFcs84tPHS+DB5p6ao+VfYOKYLZycW4L+J4AXPXNo
-         hHMgM7Nyc5iQkkJro4aqTvmK1IMYyFyC1Tsqi+lKUVKxmMHBFDWRhe4mugp8+wk1rL34
-         M+ybcXraUP5kFSsAsFmenhVcK70hMCnz2882Ccf0FfUO9rQp0Uwk8bN8nICJjB6HpWp+
-         89ftsz37OPQsnOrW054W+3mfT3Vj7Jqxhrv69cPmVyEeIPWRUcWubxNIeXuBE5FE8jPM
-         kYUa2SitK92OTWyVdctlAtDPk+htFO4PdgJVD6vJE+K1rTn+CuvyX5kRnXcYdPzEQzPG
-         lRgA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zgR0zD0bNX9NZwJOWo6peYaWFZB7v3MfUoWFSr4OpXc=;
+        b=OM5P2USJNCMmACe49nEBXl5f5iOZKN/R/kfY8BpDTOALOt+2JBwQQTs+gwsb7A5kuO
+         2XvoUy2ry6BR183u/uR2TOp6Kas5U5ce74bWUpVkW3KqAtiiinRVU3kfe0/yWq6T6yUb
+         dn0ePrebSHxkuedAKZ+gROOQGjL+Qno5p2D1kjOl3YzhdGrVDHW4gSeAUhU9SpXEL9lO
+         JFqthR3SPyqB92t5xDNUrvPqbj21ybOFEJdu1xGIQCstbT/sD9oVZ7h6T04q2L+dkvg5
+         Z8vcqriNra0gA5YPj/Jd3QUvbjf9QSttVjyV6YWHlD5DTKsRn4o46C+h6bYNxj0RaunI
+         UARw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vm3xbs/GyRNJ6DBbaHm+OuOgD7iBzBULuO7wncj0ttk=;
-        b=ejpGcDKOf328RmJM/JsjPVl7M1PP0mk/q9AhLynHsOgQTqRusfglsNrP5hF9gr9l2P
-         tpeTQFdwHX+DS47bbwNQlt5zC8fagDlrS1Oid8anjbCl1tBzaPqorJLkIeV5R0jl0ieX
-         LiZ1attggL051bIbCn+nWsMNS6w0B/21p25Pxb7NTGdn6VURAdW3UgwSYk/a4UMAqUfh
-         EOeufSaDoWu2nVQflFbQ86tMcIriEqPfWvwT6+odNDPENH7HGSWDoorhqZPqqf2ml6uG
-         +bRbcsgc4fA/5q2C2LXkL1LJdah5TrRHibec2PgArC06rzLmuChLGc37j6btUQXZDqZf
-         gkew==
-X-Gm-Message-State: AFqh2kpcfeBTMIrGGjshJG5tw40IcRzsmqz5seQtMeQYn/U7eqIGrmgA
-        FvNZUFYkglZmq0RRgeiN6KuMQg==
-X-Google-Smtp-Source: AMrXdXt6z1uMHoe7utI/pUhm++yBQy6DLzGRR17VY7G/5v6NkL3RnZ6C3wj1ZihItZ3ZB4PCHTMS1A==
-X-Received: by 2002:a5d:6ac1:0:b0:284:2216:c23e with SMTP id u1-20020a5d6ac1000000b002842216c23emr6917966wrw.44.1672386149693;
-        Thu, 29 Dec 2022 23:42:29 -0800 (PST)
-Received: from [192.168.0.28] (2a02-8388-6582-fe80-0000-0000-0000-0007.cable.dynamic.v6.surfer.at. [2a02:8388:6582:fe80::7])
-        by smtp.gmail.com with ESMTPSA id a6-20020adfed06000000b0028e8693bb75sm1887655wro.63.2022.12.29.23.42.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 23:42:29 -0800 (PST)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Fri, 30 Dec 2022 08:42:07 +0100
-Subject: [PATCH v2 3/3] dt-bindings: ufs: qcom: Fix sm8450 bindings
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zgR0zD0bNX9NZwJOWo6peYaWFZB7v3MfUoWFSr4OpXc=;
+        b=qEh+Bzd/1OF9dHYxXc3r4CWJkt51STyCpk53Kn+nPmEuM295vMe7uosoQ/I7k+VMF8
+         vGs7fG5MOJLmoy3eZGGoVgdUAHj18ycCUGhaDvfuRfVkD9zyNIU0RF417AAOQ6NKsSQ9
+         /VqBljHZt/hbeERKMQhxSsZxcLutBGMqgzIexL+/augQrxydGFEF+xNNnYmo/mVz4itS
+         5R0Zs9lzfDGPp1ucZUij83QfZgdYlH9F0B9e1+yQrfw/YZ+r2mBhdFNg6h810z5oQy3C
+         yUUxXkKZsKzDPHHHOqaZ73Uh5aVU3pkzqZyARzlqbXO+QGOEOC2cJE/ik3xwneW5A8ix
+         YsUw==
+X-Gm-Message-State: AFqh2kqiW/kAhlhoatlWsPIUrGChGXj0S1WPxEuTBG6XeRT+FKBhlHAZ
+        7yWcQVpm8E3qQO2ssr0Dg5V4tLlyvU6qJnmC
+X-Google-Smtp-Source: AMrXdXs1nWKNtBWARTnmhz5BAPjxDGXYYFcJitvnKNsRdXxDcKxke05eIQ81yBnz0sDZkhMPjJGeFA==
+X-Received: by 2002:ac2:5e9d:0:b0:4cb:b47:7c9e with SMTP id b29-20020ac25e9d000000b004cb0b477c9emr3856729lfq.38.1672386695279;
+        Thu, 29 Dec 2022 23:51:35 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a7-20020a056512200700b004cb08ec4c30sm1949738lfb.99.2022.12.29.23.51.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 23:51:34 -0800 (PST)
+Message-ID: <444480df-f903-e492-0b9f-5ec63b17b5cf@linaro.org>
+Date:   Fri, 30 Dec 2022 08:51:33 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20221209-dt-binding-ufs-v2-3-dc7a04699579@fairphone.com>
-References: <20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com>
-In-Reply-To: <20221209-dt-binding-ufs-v2-0-dc7a04699579@fairphone.com>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/4] dt-bindings: interconnect: add sdm670
+ interconnects
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Iskren Chernev <me@iskren.info>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.11.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Luca Weiss <luca@z3ntu.xyz>
+References: <20221230001442.369608-1-mailingradian@gmail.com>
+ <20221230001442.369608-2-mailingradian@gmail.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221230001442.369608-2-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
-bindings and the example to match.
+On 30/12/2022 01:14, Richard Acayan wrote:
+> There are controllable interconnects on Snapdragon 670. Add the
+> compatible strings to the documentation and interconnect ID definitions.
+> 
+> The device tree header was generated by
+> linux-interconnect-driver-generator and the copyright year was changed.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../bindings/interconnect/qcom,rpmh.yaml      |   8 ++
+>  .../interconnect/qcom,sdm670-rpmh.h           | 136 ++++++++++++++++++
+>  2 files changed, 144 insertions(+)
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sdm670-rpmh.h
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index a8d896e1617b..2f73a84fcf41 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -107,7 +107,6 @@ allOf:
-               - qcom,sc8280xp-ufshc
-               - qcom,sm8250-ufshc
-               - qcom,sm8350-ufshc
--              - qcom,sm8450-ufshc
-     then:
-       properties:
-         clocks:
-@@ -137,6 +136,7 @@ allOf:
-               - qcom,sdm845-ufshc
-               - qcom,sm6350-ufshc
-               - qcom,sm8150-ufshc
-+              - qcom,sm8450-ufshc
-     then:
-       properties:
-         clocks:
-@@ -243,7 +243,9 @@ examples:
-         ufs@1d84000 {
-             compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
-                          "jedec,ufs-2.0";
--            reg = <0 0x01d84000 0 0x3000>;
-+            reg = <0 0x01d84000 0 0x3000>,
-+                  <0 0x01d88000 0 0x8000>;
-+            reg-names = "std", "ice";
-             interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-             phys = <&ufs_mem_phy_lanes>;
-             phy-names = "ufsphy";
-@@ -271,7 +273,8 @@ examples:
-                           "ref_clk",
-                           "tx_lane0_sync_clk",
-                           "rx_lane0_sync_clk",
--                          "rx_lane1_sync_clk";
-+                          "rx_lane1_sync_clk",
-+                          "ice_core_clk";
-             clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-                      <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-                      <&gcc GCC_UFS_PHY_AHB_CLK>,
-@@ -279,7 +282,8 @@ examples:
-                      <&rpmhcc RPMH_CXO_CLK>,
-                      <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-                      <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
--                     <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-+                     <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
-+                     <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-             freq-table-hz = <75000000 300000000>,
-                             <0 0>,
-                             <0 0>,
-@@ -287,6 +291,7 @@ examples:
-                             <75000000 300000000>,
-                             <0 0>,
-                             <0 0>,
--                            <0 0>;
-+                            <0 0>,
-+                            <75000000 300000000>;
-         };
-     };
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
--- 
-2.39.0
+Best regards,
+Krzysztof
+
