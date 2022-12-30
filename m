@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63982659E94
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 00:43:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB744659E92
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 00:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235659AbiL3Xnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 18:43:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
+        id S235644AbiL3Xnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 18:43:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235634AbiL3XnT (ORCPT
+        with ESMTP id S235786AbiL3Xni (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 18:43:19 -0500
+        Fri, 30 Dec 2022 18:43:38 -0500
 Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E245B1DDE7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:43:17 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id f34so33513783lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:43:17 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB1841DF3B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:43:37 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id f34so33514616lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:43:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ce8sXtLInYl99I5ByWTpCKTjPaoI/Ho1kj93QrNo0Mg=;
-        b=NpHhtB97jP2jbL4ovO18e5gkTsKdj1S8OXp6f/dTF2FwU3cqVjdPDP6dVvzuRv+zaX
-         6TvlswzGduWkIyw6mcQvT6fYpc6OsCtupRiM3YZCAxorC2u6TNUV8xfS92G6eujoSRx8
-         fsWASe+ZpAD+aSrSuqHd2QMAEzF3DIOToPoefDP5kM3C9rSSiuKztqJOF1IpanENsHBv
-         9+PlCLIc3Baq5oTANMJ4Mnu5Tr/WkcduA8BoEbG/pF0xZ1SFRh4XsASCBfptdgHeFXTl
-         EN23pHpP6Idk86freLfIU3LgeXRkEdLdfZ60WGRJp1Fqn5EZyvpn/meisnBCnPTs/YGr
-         eh/w==
+        bh=862I2TD1EQ7J/TWCINRSGRvQqbyFoXTMH97n/yq/UIU=;
+        b=tWPX2awYawi+TrH58Kn1D0gbVrXzj9gCb3NsempBw7BXnlcdDWLg6cl8WuKiYc5xrf
+         eT5a4Lb08pE27wWTJcbvwb3vyEIft5hQkIclJZSJrReWZH80m3tw/CQTkH0Ve6ZKqoe9
+         pB6B+cm6OCQULBsxUhIlvu9RfUTVdrmR9TiDOvqTKo0b+pQUujuVdLtSN2IEMKsoiZnn
+         rQN3WVIwsQj2rNHBx3q/aJdOkj7LqQLBb8lgR4CkdIdPec/6oUCg8jlz5M0UC2jdOmb2
+         f10IikqXbtCdNN1DYuVDrmIAMme5/hA9XN8lyMBGDkuUFWtYoyAB7yIYRJk6QtHVA+Ya
+         dbxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ce8sXtLInYl99I5ByWTpCKTjPaoI/Ho1kj93QrNo0Mg=;
-        b=Wu44MeY1ypjIkPJy60ApPT6E0YXXZqGKQGxZWkK6dbTjOkbwQE5ZyLoG9f5zgsVHlu
-         WaBLF+4mgE1fIk7ZAAQ0acUIwR5duA3Xq7aDhPgeARMub1XzJlaFTJjSxxVL1asSEn8S
-         oGDwxudWtdxV6b8dp6HGFFhbLK7QhDe7xVw9DR88SuwqL/SRN4RTGa/pAU6Z7SCn1r5C
-         tQNcrOTDbEkPD8akuxGafaaAmn8IMe8dPqAsrGAz11V1GMFkt0WkEHSDfPBTNW42MbmK
-         f9bqd4VfN35FMp1VAor+2N/kNEIW9b53BKPDOmfZghY/kXrd9Sg3tO2acPwW73a7Ay/+
-         WcBQ==
-X-Gm-Message-State: AFqh2koGEenjXDx+vo2CIdMiwUlY/GwRaIsj54dr3z8uUUPGtR3R+g9U
-        1a5Ls2fEoWLLjHCQrweToeEZmw==
-X-Google-Smtp-Source: AMrXdXtBn4FWSFSbDgdkS3hqSxQ+WZU7VLbgH6dS4Z3PJ7RocAGVPLUm9/hi5eyj6Syr9JUGI4+Oxw==
-X-Received: by 2002:a05:6512:3b91:b0:4a9:9827:68e8 with SMTP id g17-20020a0565123b9100b004a9982768e8mr11290558lfv.7.1672443796318;
-        Fri, 30 Dec 2022 15:43:16 -0800 (PST)
+        bh=862I2TD1EQ7J/TWCINRSGRvQqbyFoXTMH97n/yq/UIU=;
+        b=P7D0FjlXkM9I1T+qoNtdVacSueBBJiD2/551A2fuO2ArKmb1t8aUhzQDg6ycXzQ79f
+         A59TgYdb8Xyuyb7sJLRJdKjYavRvVoFu+QmNM0D0PhjnArOEdKEPASmRSau91avORvOE
+         IWz5GvI9V6SRsUicSmJ51I+zy3EtP083pJbAd5M8NnoJPNHhl5BLwUtc8IBxY4ixTSp1
+         5JUyrGljxWDwGHrahmOqKbGo38BILrixUU3QRxcrzYkweSdayPW7n3ONgNYCzzOWaCCI
+         9vF80IrHCxDpAumOL3qBJ1hoxwFbVNyGfEuB0qlR7Ydz8MM4G6OGDv9P1Kx/RrjLSMhD
+         v9sw==
+X-Gm-Message-State: AFqh2krfGPSm3VUnmZuoeqnUQM2q5bKKOSFssMArrBGfYaeHZOqY9Cuh
+        B11cdgK01g7H+qRV4UThG92MMw==
+X-Google-Smtp-Source: AMrXdXsSm5J9QQvMNe7QDx2WtyFboGYDn3NHcaU+z8wWxYHre4hnNNH0dWmegTCjLgwwD4jSetIfiA==
+X-Received: by 2002:a05:6512:10c3:b0:4b6:e64c:aec6 with SMTP id k3-20020a05651210c300b004b6e64caec6mr11770271lfg.63.1672443816023;
+        Fri, 30 Dec 2022 15:43:36 -0800 (PST)
 Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056512358700b004b55da14ba8sm3628163lfr.291.2022.12.30.15.43.15
+        by smtp.gmail.com with ESMTPSA id s7-20020a056512214700b004b57bbaef87sm3643400lfr.224.2022.12.30.15.43.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Dec 2022 15:43:15 -0800 (PST)
-Message-ID: <3fc6398a-f08a-040d-16b5-a6fc1c6edaab@linaro.org>
-Date:   Sat, 31 Dec 2022 00:43:14 +0100
+        Fri, 30 Dec 2022 15:43:35 -0800 (PST)
+Message-ID: <036ce9f8-f24d-0255-e623-3612af09cd51@linaro.org>
+Date:   Sat, 31 Dec 2022 00:43:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: sm8250: align PSCI domain names
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sm8350: align PSCI domain names
  with DT schema
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -66,15 +66,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221230160103.250996-1-krzysztof.kozlowski@linaro.org>
- <20221230160103.250996-5-krzysztof.kozlowski@linaro.org>
+ <20221230160103.250996-6-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221230160103.250996-5-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221230160103.250996-6-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,7 +85,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 30.12.2022 17:01, Krzysztof Kozlowski wrote:
 > Bindings expect power domains to follow generic naming pattern:
 > 
->   sm8250-hdk.dtb: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6',
+>   sm8350-hdk.dtb: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6',
 >     'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
@@ -94,14 +93,14 @@ On 30.12.2022 17:01, Krzysztof Kozlowski wrote:
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 18 +++++++++---------
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 18 +++++++++---------
 >  1 file changed, 9 insertions(+), 9 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 6c7adce6c9b8..b101b7000034 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -677,55 +677,55 @@ psci {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index a7da48b7e788..743ca0c80ac3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -297,55 +297,55 @@ psci {
 >  		compatible = "arm,psci-1.0";
 >  		method = "smc";
 >  
