@@ -2,113 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 259E965A53B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 16:05:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D395665A5BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 17:43:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235620AbiLaPFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 10:05:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41076 "EHLO
+        id S231165AbiLaQnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 11:43:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231804AbiLaPFn (ORCPT
+        with ESMTP id S229450AbiLaQnU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 10:05:43 -0500
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5366375
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 07:05:41 -0800 (PST)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-476e643d1d5so216949727b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 07:05:41 -0800 (PST)
+        Sat, 31 Dec 2022 11:43:20 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C0B6584;
+        Sat, 31 Dec 2022 08:43:16 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id y25so35886168lfa.9;
+        Sat, 31 Dec 2022 08:43:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=otCJd+mbWKew73SAuEiOsVxEPv8TQTUETo28KN4US0M=;
-        b=YL5L8alik3IIWKSY2wXmnkmJjxNQcZTzSY5wbniTbbdAo6rd0gfxqh5v9dnsXfRd46
-         QkdhjoVLpeUZXfVUZqCOUER31lHNXSIwx8ctZvpJTf1t4dFaFmkIYcgNIpK6RpSRN4Ql
-         wIB2tdYKrx5E0VSNaGW39Nv+p5jeVLuAqKSEdzU2NW0AmZPDlrgEt1PDgyFH95j5Ua2W
-         BjOie02Uh2Di975rx7dANxuy5tGc/NmL9HMHvrRkRzKL23mR1TKv38eE1nLGOb4Nzx6C
-         vkBXkciBjJ1ydiuOVmkb/lHXpvaa8qvNlYVLp3LuA5TE1b0o9ZIxT2BBPLe02kNADyzX
-         cXuw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rkaK90EkPNFGjK3eO8YBzLCRfs4j3rNDEINUCKNOHA=;
+        b=EAsYZtQsICraZr68ccUcaUK7GOx3hEfjQmLHIe3qtZfolYAgrM9zYC1U86DBdHZy9C
+         FSvl1xdSp7VZQLeEOIy03r+9T6ytinPas/scV5Xf+kKtRDY4ryUCfJxdJEudG4Rg3BXB
+         yOjlpaR3RJETf9VLwmQh+QvTSzmbSfgfiz7+8js7ZiADefpUTbS3yQh10erWtOxsSSWb
+         B6n5UKpcrpUCtDb3rztoagyeADqnxBFN3ntHoJXNoqZ5ulfAegMMPP64dYzqrSHPZM6D
+         wPBNn4D2NxpbLavYSAr8d6VpKiDR6PveV10SgD1WxDJPufI2cOEPJ4DtFrW9LQBADiaJ
+         PH8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=otCJd+mbWKew73SAuEiOsVxEPv8TQTUETo28KN4US0M=;
-        b=HjEDreBt9oh2cO8D4nw0zTAHbqO0P2ootXQTozyy7RDD1b6T+SoZsQOdjMNwFqSQgO
-         RakdD+2coCJhtn1A5Qt4D5bls9mmCMjeBoIOQCkHybCkVtfCessQ1EM4bjbzWKv9MBM6
-         br8LKDp7swOkO14ttrXt4YdS+UORtHJ6CWBx9x7OYvLx0QHnXgz1YGmA6rq1XjD8gGeJ
-         YN3LTIB5SsfTgSrzE+p4Pf5nDLgJ+pi26Ts8VXbjmxi6u0Dg/OK4Yp6q1dFYTRXbNHUV
-         n6l1V1t/Nb/wB9OvBKAih4rEtrpBH4xNA5t/QuSFl0EK+Xgug2D1RI73yl5ljBjMzNGP
-         1gYg==
-X-Gm-Message-State: AFqh2kppFjeo8gfN/V9t67RxqWp0L6wsYZh1iacuGK5d1kw7zS+ONfoQ
-        S/agbx+wUylpDH6waibFj8Ks0dveQj6wr70NlrcGiA==
-X-Google-Smtp-Source: AMrXdXvuKogl+BhNjHR9CEtgpZ8sliM6Bymjhqy9uSGsUaQrKltCMlksICHuv702289b6mmp6Cdca9QOijpc1MTeWEw=
-X-Received: by 2002:a0d:dc86:0:b0:3d5:ecbb:2923 with SMTP id
- f128-20020a0ddc86000000b003d5ecbb2923mr4536583ywe.485.1672499140811; Sat, 31
- Dec 2022 07:05:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20221229115932.3312318-1-dmitry.baryshkov@linaro.org>
- <20221229115932.3312318-2-dmitry.baryshkov@linaro.org> <167241774332.1928179.4447846135439331544.robh@kernel.org>
-In-Reply-To: <167241774332.1928179.4447846135439331544.robh@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 31 Dec 2022 17:05:30 +0200
-Message-ID: <CAA8EJpr2nEq3XYNmvWRcHBxS7mZjphXpSw=tfLb7oJwXQGRYAA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: phy: qcom,pcie2-phy: convert to YAML format
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        bh=3rkaK90EkPNFGjK3eO8YBzLCRfs4j3rNDEINUCKNOHA=;
+        b=M6eOsRanRFfwx2yi9mVDfML7qVRKDdEP6gbLVb3bR6aT89eLoR+gNq+gF7WdLYyBNC
+         pTKqgfUELqy5zxDR+RFe+MeC+CvYknYfi1yhDW8Amn8F+w3GUCqjMD2uMaudleRGLJso
+         ruIorfWUTB0gu2DVhaaijU18Fcu/w5lOu9xPa8Vs/gcCBkxsCKoZx3eRcIA3sknjh8Lp
+         MclrNAH1nvqxsyAI29ut+Fma6TXVFQZbG/eDjRa504HRYVzDEi7MBbevzkQr4XdBN+iG
+         xqw0rJn+0lQGD50BWSkm1ucgLyF8gc2eMuq7VYC7nA6+rDJZ/c83PJh80pcOD6bLmwO7
+         2XHQ==
+X-Gm-Message-State: AFqh2koPZaUDYVBXFNKeyIMG3xvTfJvcwnHiOeX4oHSzP7KF2wrSyZ0a
+        mr6+GSnvLH1fhsbawT7lIUZRNIcDZ/ZUZQ==
+X-Google-Smtp-Source: AMrXdXudcQ7FULwQ3SfMmzAwGHT7GMwamawECIbK9MWLXbgWWAjUSHMu1axh/6TE2QeQxCFuqp+niw==
+X-Received: by 2002:a05:6512:1384:b0:4cb:190:b0bb with SMTP id p4-20020a056512138400b004cb0190b0bbmr7229925lfa.37.1672504994370;
+        Sat, 31 Dec 2022 08:43:14 -0800 (PST)
+Received: from localhost.localdomain (byx211.neoplus.adsl.tpnet.pl. [83.30.43.211])
+        by smtp.gmail.com with ESMTPSA id z8-20020a056512376800b004b52aea5ff8sm3870367lft.30.2022.12.31.08.43.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Dec 2022 08:43:13 -0800 (PST)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: pinctrl-msm8976: Correct function names for wcss pins
+Date:   Sat, 31 Dec 2022 17:42:50 +0100
+Message-Id: <20221231164250.74550-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Dec 2022 at 18:34, Rob Herring <robh@kernel.org> wrote:
->
->
-> On Thu, 29 Dec 2022 13:59:31 +0200, Dmitry Baryshkov wrote:
-> > Convert the bindings for the Qualcomm PCIe2 PHY into the YAML format
-> > from the text description.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../bindings/phy/qcom,pcie2-phy.yaml          | 86 +++++++++++++++++++
-> >  .../bindings/phy/qcom-pcie2-phy.txt           | 42 ---------
-> >  2 files changed, 86 insertions(+), 42 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom,pcie2-phy.yaml
-> >  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-pcie2-phy.txt
-> >
->
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
->
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
->
-> Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221229115932.3312318-2-dmitry.baryshkov@linaro.org
->
-> phy@7786000: '#clock-cells' is a required property
->         arch/arm64/boot/dts/qcom/qcs404-evb-1000.dtb
->         arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
+Adjust names of function for wcss pins, also fix third gpio in bt group.
 
-The fix was a part of the v1 of the series and was picked by Bjorn already:
+Fixes: bcd11493f0ab ("pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-msm8976.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=arm64-for-6.3&id=977e9262c3542e87b513d4dad4c57b2c85e16c8c
-
-
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
+index ec43edf9b660..e11d84584719 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
+@@ -733,7 +733,7 @@ static const char * const codec_int2_groups[] = {
+ 	"gpio74",
+ };
+ static const char * const wcss_bt_groups[] = {
+-	"gpio39", "gpio47", "gpio88",
++	"gpio39", "gpio47", "gpio48",
+ };
+ static const char * const sdc3_groups[] = {
+ 	"gpio39", "gpio40", "gpio41",
+@@ -958,9 +958,9 @@ static const struct msm_pingroup msm8976_groups[] = {
+ 	PINGROUP(37, NA, NA, NA, qdss_tracedata_b, NA, NA, NA, NA, NA),
+ 	PINGROUP(38, NA, NA, NA, NA, NA, NA, NA, qdss_tracedata_b, NA),
+ 	PINGROUP(39, wcss_bt, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(40, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(41, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+-	PINGROUP(42, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(40, wcss_wlan2, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(41, wcss_wlan1, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
++	PINGROUP(42, wcss_wlan0, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
+ 	PINGROUP(43, wcss_wlan, sdc3, NA, NA, qdss_tracedata_a, NA, NA, NA, NA),
+ 	PINGROUP(44, wcss_wlan, sdc3, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(45, wcss_fm, NA, qdss_tracectl_a, NA, NA, NA, NA, NA, NA),
 -- 
-With best wishes
-Dmitry
+2.25.1
+
