@@ -2,67 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 963B365A48B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 14:08:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F72365A497
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 14:20:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235614AbiLaNIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 08:08:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46020 "EHLO
+        id S232052AbiLaNUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 08:20:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235648AbiLaNIG (ORCPT
+        with ESMTP id S231622AbiLaNT7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 08:08:06 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB796599
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:08:04 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id d9so7711468pll.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:08:04 -0800 (PST)
+        Sat, 31 Dec 2022 08:19:59 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A509C5F80
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:19:58 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id f3so15726445pgc.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:19:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X0IXPVtq9K1twOTm6NDDEYDtsm5gy6I4CxkJN0usls4=;
-        b=NPUExoCXn3bv8cVrXHBiUZJGue0soQHb0G96tLN0n+eLz1Y50SDNQycB5NyZt/PrWK
-         I5k3uGeMmYGPn1HASohpdtr4BCdHvND+EgsZkkoIajo6b7Ztmme+b2k2ill/YfPT5Vgq
-         EfCjIyK+VBql5cb4wXG3/pVmg0ymjASCkQQ4M1ZtolzRnpmqpwFzt+5hsu/as449mZEO
-         6qQBkj9ToM7FtoEqQNAjSDdGT50UpqLY6z4xjbUuCGrcJKQXYbz7IBEcFYKsCMp4Yl+Y
-         bT6BjZrOhtvlvJSlellsMcOE9bf4raX5DDV3/RIxUwn00hSGiHO/ZbLvDHkPGHNR9dTB
-         ShOg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z0TzfLVblu11BnOZpdHUHkIFyZ4wNC2FWblphcv+5ss=;
+        b=PUf1gptAuaeOnX85qX4xCkwWEmpJcjpOVT4ZdjI009BSDbgRE3NnmeiYX/rbTw3op7
+         BzCKY1/t7zWqtac7WiKyPVmXDVzm3UdsGSHKWLjynPWFbHrrBBrWvJpqVESbU23BVx2s
+         7/XLXxtrNuWV8nY18BfWA5usXBKhncMfszrp0ZtUFRj7hlgUn7dGMgzePFROIAEPY5ix
+         f/KJcZW576QMIZ6WuJ1tCwCTyKunqjkpgJV/cNK3mtdizH8jD/Tu2zXf2yVEhYeEWUG6
+         ldLY/8prpW8OqsNT/TbVO5etFv9ml0d+ud1gEwWFjNbPDyBlfaAIWK5VSq+IyDBiBNLU
+         2j5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X0IXPVtq9K1twOTm6NDDEYDtsm5gy6I4CxkJN0usls4=;
-        b=3+4hYpoadpyb2O+ukBhF19regNZBFP9p98accqva7dIARmkKTifCeGt+QzNhhNS8vk
-         dmrd0rIkqgFJPXWkOqaPk2qI0cJslBqyI+cqNnQ5WgMqfr/JuAlaV74NtiYto1MjuUxB
-         gsdnD5YrL+aw51SN13dEPxmQyz5D0vXkU9XZsMdY7Vx9LgGpPERrHaxSGRoZuHm+QrO8
-         aZa9VQuzLoRAkns+PD34KzJFdv638MpSgVKeKgWyV+iKp5bCxuH76Ymhnr3AyOKpXD3K
-         D6gMLJLpBNIlCSk06X5JuvmO+2ZdZ043zv7oqjcTk52E7efiYl+MLUPGN0iFAj4ukzRz
-         VgSw==
-X-Gm-Message-State: AFqh2kqDx0fpBgIsr1ozX0XBSmTVtjpYv77gk2uYkgV6C4SnAEGWBfCX
-        WQutytAwOt25MW+MhHLz+kD32sTxSGSnNy3t5bw=
-X-Google-Smtp-Source: AMrXdXuqJjc0Lfay/2Vg+JTsADhCB4qlilRKlTowJFlv2eMMxqzXbSnqX9K3pDAVuk7FzJ9S2PurLg==
-X-Received: by 2002:a17:90a:1bc7:b0:223:b680:d78b with SMTP id r7-20020a17090a1bc700b00223b680d78bmr36330841pjr.37.1672492083968;
-        Sat, 31 Dec 2022 05:08:03 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z0TzfLVblu11BnOZpdHUHkIFyZ4wNC2FWblphcv+5ss=;
+        b=ECoomSql8Jv5XriBkILRZG+UuVGnyaI0uwni4X8P1PVWdo+NJu3xRaFPyM2hyROk+a
+         CL+emyNQCQINQYlxOXpbSlGN1uoV9ROC+R9GiN6jHyEVqZQ0/ZIz4v0FMGGaqrxv67lY
+         ML0nvX1zLgGFaOyUIRx4im4/34hPkDXgt/FHHjjokC9llWgdIL4Jhawb83Suiubn7pWs
+         sHlyPrK1lhmJ71wjtEZjTMpHAdTIpKxihkdm6Ec+D1HZHUQ0UChmiJQeVbO8uC/I0jQS
+         D/KoimvkH6SFRnt44NPmHRBKJArDZrUC+DzYATrr/CulHUuQ6th/juR4PrM/1r06MkUi
+         qiug==
+X-Gm-Message-State: AFqh2krd67ErXUVaigkHtXYl55txXY+n59EIa8xbjrx+2uCbmdYSdQ2Z
+        3+H+i0ztqPgDBvYb/KauU2raYVozRfLjG2EOiKk=
+X-Google-Smtp-Source: AMrXdXsnGhpNhIwF6+O73w+A/1aIoKIM3XFd9Yup95Om3nfHxq99XvBNmmPmfJmkvzRMybJTzURmUA==
+X-Received: by 2002:a62:ae0f:0:b0:577:15e:d9eb with SMTP id q15-20020a62ae0f000000b00577015ed9ebmr54163124pff.1.1672492797674;
+        Sat, 31 Dec 2022 05:19:57 -0800 (PST)
 Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
-        by smtp.gmail.com with ESMTPSA id d7-20020a17090ab30700b0021904307a53sm14568161pjr.19.2022.12.31.05.07.58
+        by smtp.gmail.com with ESMTPSA id i27-20020aa796fb000000b00581a5fd4fa7sm6133415pfq.212.2022.12.31.05.19.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Dec 2022 05:08:03 -0800 (PST)
+        Sat, 31 Dec 2022 05:19:57 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
+To:     linux-arm-msm@vger.kernel.org
 Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org
-Subject: [PATCH 2/2] usb: misc: eud: Add driver support for SM6115 / SM4250
-Date:   Sat, 31 Dec 2022 18:37:43 +0530
-Message-Id: <20221231130743.3285664-3-bhupesh.sharma@linaro.org>
+        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, bhupesh.sharma@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+Date:   Sat, 31 Dec 2022 18:49:45 +0530
+Message-Id: <20221231131945.3286639-1-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221231130743.3285664-1-bhupesh.sharma@linaro.org>
-References: <20221231130743.3285664-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,144 +71,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
+Add the Embedded USB Debugger(EUD) device tree node for
+SM6115 / SM4250 SoC.
 
-On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
-needs to be accessed only via the secure world (through 'scm'
-calls).
+The node contains EUD base register region and EUD mode
+manager register regions along with the interrupt entry.
 
-Also, the enable bit inside 'tcsr_check_reg' needs to be set
-first to set the eud in 'enable' mode on these SoCs.
+Also add the typec connector node for EUD which is attached to
+EUD node via port. EUD is also attached to DWC3 node via port.
 
 Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/usb/misc/qcom_eud.c | 49 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 46 insertions(+), 3 deletions(-)
+- This patch is based on my earlier sm6115 usb related changes, which can
+  be seen here:
+  https://lore.kernel.org/linux-arm-msm/20221215094532.589291-1-bhupesh.sharma@linaro.org/
+- This patch is also dependent on my sm6115 eud dt-binding and driver changes
+  sent earlier, which can be seen here:
+  https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org/
 
-diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-index b7f13df007646..a96ca28a4899b 100644
---- a/drivers/usb/misc/qcom_eud.c
-+++ b/drivers/usb/misc/qcom_eud.c
-@@ -11,7 +11,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/qcom_scm.h>
- #include <linux/slab.h>
- #include <linux/sysfs.h>
- #include <linux/usb/role.h>
-@@ -30,15 +32,24 @@
- #define EUD_INT_SAFE_MODE	BIT(4)
- #define EUD_INT_ALL		(EUD_INT_VBUS | EUD_INT_SAFE_MODE)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 37 ++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 030763187cc3f..c775f7fdb7015 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -565,6 +565,37 @@ gcc: clock-controller@1400000 {
+ 			#power-domain-cells = <1>;
+ 		};
  
-+struct eud_soc_data {
-+	bool secure_eud_en;
-+	bool tcsr_check_enable;
-+};
++		eud: eud@1610000 {
++			compatible = "qcom,sm6115-eud","qcom,eud";
++			reg = <0x01610000 0x2000>,
++			      <0x01612000 0x1000>,
++			      <0x003e5018 0x4>;
++			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
++			ports {
++				port@0 {
++					eud_ep: endpoint {
++						remote-endpoint = <&usb2_role_switch>;
++					};
++				};
++				port@1 {
++					eud_con: endpoint {
++						remote-endpoint = <&con_eud>;
++					};
++				};
++			};
++		};
 +
- struct eud_chip {
- 	struct device			*dev;
- 	struct usb_role_switch		*role_sw;
-+	const struct eud_soc_data	*eud_data;
- 	void __iomem			*base;
- 	void __iomem			*mode_mgr;
- 	unsigned int			int_status;
- 	int				irq;
- 	bool				enabled;
- 	bool				usb_attached;
-+	phys_addr_t			mode_mgr_phys_base;
-+	phys_addr_t			tcsr_check_phys_base;
++		eud_typec: connector {
++			compatible = "usb-c-connector";
++			ports {
++				port@0 {
++					con_eud: endpoint {
++						remote-endpoint = <&eud_con>;
++					};
++				};
++			};
++		};
 +
- };
+ 		usb_hsphy: phy@1613000 {
+ 			compatible = "qcom,sm6115-qusb2-phy";
+ 			reg = <0x01613000 0x180>;
+@@ -1064,6 +1095,12 @@ usb_dwc3: usb@4e00000 {
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+ 				snps,usb3_lpm_capable;
++				usb-role-switch;
++				port {
++					usb2_role_switch: endpoint {
++						remote-endpoint = <&eud_ep>;
++					};
++				};
+ 			};
+ 		};
  
- static int enable_eud(struct eud_chip *priv)
-@@ -46,7 +57,11 @@ static int enable_eud(struct eud_chip *priv)
- 	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
- 	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
- 			priv->base + EUD_REG_INT1_EN_MASK);
--	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
-+
-+	if (priv->eud_data->secure_eud_en)
-+		qcom_scm_io_writel(priv->mode_mgr_phys_base + EUD_REG_EUD_EN2, BIT(0));
-+	else
-+		writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
- 
- 	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
- }
-@@ -54,7 +69,11 @@ static int enable_eud(struct eud_chip *priv)
- static void disable_eud(struct eud_chip *priv)
- {
- 	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
--	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
-+
-+	if (priv->eud_data->secure_eud_en)
-+		qcom_scm_io_writel(priv->mode_mgr_phys_base + EUD_REG_EUD_EN2, 0);
-+	else
-+		writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
- }
- 
- static ssize_t enable_show(struct device *dev,
-@@ -178,12 +197,15 @@ static void eud_role_switch_release(void *data)
- static int eud_probe(struct platform_device *pdev)
- {
- 	struct eud_chip *chip;
-+	struct resource *res;
- 	int ret;
- 
- 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
- 
-+	chip->eud_data = of_device_get_match_data(&pdev->dev);
-+
- 	chip->dev = &pdev->dev;
- 
- 	chip->role_sw = usb_role_switch_get(&pdev->dev);
-@@ -200,10 +222,25 @@ static int eud_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->base))
- 		return PTR_ERR(chip->base);
- 
--	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
-+	chip->mode_mgr = devm_platform_get_and_ioremap_resource(pdev, 1, &res);
- 	if (IS_ERR(chip->mode_mgr))
- 		return PTR_ERR(chip->mode_mgr);
- 
-+	if (chip->eud_data->secure_eud_en)
-+		chip->mode_mgr_phys_base = res->start;
-+
-+	if (chip->eud_data->tcsr_check_enable) {
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-+		if (!res)
-+			return dev_err_probe(chip->dev, -ENODEV, "failed to get tcsr reg base\n");
-+
-+		chip->tcsr_check_phys_base = res->start;
-+
-+		ret = qcom_scm_io_writel(chip->tcsr_check_phys_base, BIT(0));
-+		if (ret)
-+			return dev_err_probe(chip->dev, ret, "failed to write tcsr check reg\n");
-+	}
-+
- 	chip->irq = platform_get_irq(pdev, 0);
- 	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
- 			handle_eud_irq_thread, IRQF_ONESHOT, NULL, chip);
-@@ -230,8 +267,14 @@ static int eud_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static const struct eud_soc_data sm6115_eud_data = {
-+	.secure_eud_en = true,
-+	.tcsr_check_enable = true,
-+};
-+
- static const struct of_device_id eud_dt_match[] = {
- 	{ .compatible = "qcom,sc7280-eud" },
-+	{ .compatible = "qcom,sm6115-eud", .data = &sm6115_eud_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, eud_dt_match);
 -- 
 2.38.1
 
