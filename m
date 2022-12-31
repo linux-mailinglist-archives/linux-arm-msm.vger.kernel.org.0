@@ -2,66 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D395665A5BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 17:43:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DA3865A5E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 18:06:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231165AbiLaQnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 11:43:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
+        id S232091AbiLaRGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 12:06:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiLaQnU (ORCPT
+        with ESMTP id S229715AbiLaRGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 11:43:20 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C0B6584;
-        Sat, 31 Dec 2022 08:43:16 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id y25so35886168lfa.9;
-        Sat, 31 Dec 2022 08:43:16 -0800 (PST)
+        Sat, 31 Dec 2022 12:06:04 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF761148;
+        Sat, 31 Dec 2022 09:06:01 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id z26so35941252lfu.8;
+        Sat, 31 Dec 2022 09:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3rkaK90EkPNFGjK3eO8YBzLCRfs4j3rNDEINUCKNOHA=;
-        b=EAsYZtQsICraZr68ccUcaUK7GOx3hEfjQmLHIe3qtZfolYAgrM9zYC1U86DBdHZy9C
-         FSvl1xdSp7VZQLeEOIy03r+9T6ytinPas/scV5Xf+kKtRDY4ryUCfJxdJEudG4Rg3BXB
-         yOjlpaR3RJETf9VLwmQh+QvTSzmbSfgfiz7+8js7ZiADefpUTbS3yQh10erWtOxsSSWb
-         B6n5UKpcrpUCtDb3rztoagyeADqnxBFN3ntHoJXNoqZ5ulfAegMMPP64dYzqrSHPZM6D
-         wPBNn4D2NxpbLavYSAr8d6VpKiDR6PveV10SgD1WxDJPufI2cOEPJ4DtFrW9LQBADiaJ
-         PH8Q==
+        bh=iZuN1LxRja9IoziQ4hYPuG+gUEYeFJZkai3EMlidSdQ=;
+        b=SV6Csk5E1lUiIDAMmVJfmyHpbAQHwX+TweuEANl2e7fapdY8E9goESoL3uqWiX3MUN
+         v/qD/iEphEPD3n2Tq3iB4jLssDgCKP4Eco+BvkHarEWE5+PoIEMRZm7df9cLruqY4iUR
+         PHnhSHIP54ST0ZDZI8euujFt4sNNQbCb7EO40rTH9e1CeIZTIAKHnWCXqf6YnOw00GkK
+         rP2Hd18vHcCSurM1K44qMOPz3ED/otcQs5Ra3XRpCBhEdITr2H7y4TKU2MVRyTVNBM87
+         QGo5/B5OXNu2zn3Z1ZiH8hWXA2A8oOPDincCNIQDi2AWsSiygL9BhJ1JMXW/AodpdKlu
+         Mg+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3rkaK90EkPNFGjK3eO8YBzLCRfs4j3rNDEINUCKNOHA=;
-        b=M6eOsRanRFfwx2yi9mVDfML7qVRKDdEP6gbLVb3bR6aT89eLoR+gNq+gF7WdLYyBNC
-         pTKqgfUELqy5zxDR+RFe+MeC+CvYknYfi1yhDW8Amn8F+w3GUCqjMD2uMaudleRGLJso
-         ruIorfWUTB0gu2DVhaaijU18Fcu/w5lOu9xPa8Vs/gcCBkxsCKoZx3eRcIA3sknjh8Lp
-         MclrNAH1nvqxsyAI29ut+Fma6TXVFQZbG/eDjRa504HRYVzDEi7MBbevzkQr4XdBN+iG
-         xqw0rJn+0lQGD50BWSkm1ucgLyF8gc2eMuq7VYC7nA6+rDJZ/c83PJh80pcOD6bLmwO7
-         2XHQ==
-X-Gm-Message-State: AFqh2koPZaUDYVBXFNKeyIMG3xvTfJvcwnHiOeX4oHSzP7KF2wrSyZ0a
-        mr6+GSnvLH1fhsbawT7lIUZRNIcDZ/ZUZQ==
-X-Google-Smtp-Source: AMrXdXudcQ7FULwQ3SfMmzAwGHT7GMwamawECIbK9MWLXbgWWAjUSHMu1axh/6TE2QeQxCFuqp+niw==
-X-Received: by 2002:a05:6512:1384:b0:4cb:190:b0bb with SMTP id p4-20020a056512138400b004cb0190b0bbmr7229925lfa.37.1672504994370;
-        Sat, 31 Dec 2022 08:43:14 -0800 (PST)
+        bh=iZuN1LxRja9IoziQ4hYPuG+gUEYeFJZkai3EMlidSdQ=;
+        b=WP/6ZDoVm7HFCSVVvJGJD9C1A++yKDkjJujapO0KeWpIsnwVcfusSm315rCDTa5Dvo
+         oGTaIDk6QWjd/m6FkzKrsX0xRgwPochvGpSGIx2nnm02iDaFws1hOSYIF24uaFGDem8H
+         28cO6iWloBfaIHfmJfpP5/kDQJ8BBXyzEwySEEtu+IUg19/VtCdsIo9zLb4qIcnGywdf
+         kZ6xTpCx8eNN9fpDjqDZm3LhKDRU+JG0RtSFNRDF5CN4nCUTr3V0ERWmGw/8cIjWgQdL
+         Lqw+0imtR7/g4/s6my4JRQBsTgl4z4NrgPKEijp+leSgThq+2LbyqOxpg4ijPgIA8DEd
+         84iQ==
+X-Gm-Message-State: AFqh2krfyoF1pYDzitmtdCLXHp3FkYfYipxT7u09Atm611jmi/z4oo0k
+        /a+88A6clieROr8Qr33zV1sDHf7GnmLRfA==
+X-Google-Smtp-Source: AMrXdXs8Ll20pQVgnasU5JAgrg+bBenDu1rLCUUTtnOKPIxt8IoLCOU8Y7pbjnv4yTDLUROw7waFmA==
+X-Received: by 2002:a05:6512:695:b0:4b5:8502:efb4 with SMTP id t21-20020a056512069500b004b58502efb4mr12391854lfe.69.1672506360068;
+        Sat, 31 Dec 2022 09:06:00 -0800 (PST)
 Received: from localhost.localdomain (byx211.neoplus.adsl.tpnet.pl. [83.30.43.211])
-        by smtp.gmail.com with ESMTPSA id z8-20020a056512376800b004b52aea5ff8sm3870367lft.30.2022.12.31.08.43.12
+        by smtp.gmail.com with ESMTPSA id i3-20020a2ea223000000b0027dd8627ad2sm2868088ljm.69.2022.12.31.09.05.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Dec 2022 08:43:13 -0800 (PST)
+        Sat, 31 Dec 2022 09:05:59 -0800 (PST)
 From:   Adam Skladowski <a39.skl@gmail.com>
 Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Adam Skladowski <a39.skl@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] pinctrl: qcom: pinctrl-msm8976: Correct function names for wcss pins
-Date:   Sat, 31 Dec 2022 17:42:50 +0100
-Message-Id: <20221231164250.74550-1-a39.skl@gmail.com>
+Subject: [PATCH] dt-bindings: msm: dsi-phy-28nm: Document fam-b compatible
+Date:   Sat, 31 Dec 2022 18:05:32 +0100
+Message-Id: <20221231170532.77000-1-a39.skl@gmail.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,40 +80,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adjust names of function for wcss pins, also fix third gpio in bt group.
+Document omitted 28nm compatible which will be used on MSM8976 SoC.
 
-Fixes: bcd11493f0ab ("pinctrl: qcom: Add a pinctrl driver for MSM8976 and 8956")
 Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 ---
- drivers/pinctrl/qcom/pinctrl-msm8976.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-index ec43edf9b660..e11d84584719 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-@@ -733,7 +733,7 @@ static const char * const codec_int2_groups[] = {
- 	"gpio74",
- };
- static const char * const wcss_bt_groups[] = {
--	"gpio39", "gpio47", "gpio88",
-+	"gpio39", "gpio47", "gpio48",
- };
- static const char * const sdc3_groups[] = {
- 	"gpio39", "gpio40", "gpio41",
-@@ -958,9 +958,9 @@ static const struct msm_pingroup msm8976_groups[] = {
- 	PINGROUP(37, NA, NA, NA, qdss_tracedata_b, NA, NA, NA, NA, NA),
- 	PINGROUP(38, NA, NA, NA, NA, NA, NA, NA, qdss_tracedata_b, NA),
- 	PINGROUP(39, wcss_bt, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(40, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(41, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
--	PINGROUP(42, wcss_wlan, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(40, wcss_wlan2, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(41, wcss_wlan1, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
-+	PINGROUP(42, wcss_wlan0, sdc3, NA, qdss_tracedata_a, NA, NA, NA, NA, NA),
- 	PINGROUP(43, wcss_wlan, sdc3, NA, NA, qdss_tracedata_a, NA, NA, NA, NA),
- 	PINGROUP(44, wcss_wlan, sdc3, NA, NA, NA, NA, NA, NA, NA),
- 	PINGROUP(45, wcss_fm, NA, qdss_tracectl_a, NA, NA, NA, NA, NA, NA),
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+index 3d8540a06fe2..b237abe859f0 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+@@ -16,6 +16,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,dsi-phy-28nm-hpm
++      - qcom,dsi-phy-28nm-hpm-fam-b
+       - qcom,dsi-phy-28nm-lp
+       - qcom,dsi-phy-28nm-8960
+ 
 -- 
 2.25.1
 
