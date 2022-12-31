@@ -2,138 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7983165A2E5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 07:08:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2344865A3A8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 12:04:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbiLaGIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 01:08:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57560 "EHLO
+        id S229484AbiLaLEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 06:04:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235484AbiLaGIl (ORCPT
+        with ESMTP id S231539AbiLaLEp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 01:08:41 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39FD7178A5;
-        Fri, 30 Dec 2022 22:08:41 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id y18-20020a0568301d9200b0067082cd4679so14230951oti.4;
-        Fri, 30 Dec 2022 22:08:41 -0800 (PST)
+        Sat, 31 Dec 2022 06:04:45 -0500
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E34ECE00
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 03:04:43 -0800 (PST)
+Received: by mail-vs1-xe32.google.com with SMTP id o63so18702403vsc.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 03:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PB6nkYHwbeEU6BoPVup3kf2+k4tTb4RworfRekHpADE=;
-        b=kc6hmVULeBL/e4hBDUH8LlEO9h96/31TrQkGWpCU+BfBNu5COmTRSYoIiD5+XqrMSQ
-         6DhITkG8rzvzqPUja2u7q6gGtde27nXAqdZtOSa43QeWBsdnGAc5UQTsAlENzWeRpwgF
-         77gXfop2J4KwekCDszlMxreXl07Po8PHbEwLM1uXFQudtbTWdy6PpPkCTMajXkJjTuVp
-         hXRK8NOZ7Sx5eBlvfEstLgQ5O4NjkMCvzPStsjIlUgWLSso5ZcR5sHE+/8EO+M6S5vMP
-         Yxlqsm1Z7hm9WU8AvNhnybPfFoOsUUoC/du52jiT3EbvqCO+fI9wJtgszqcFQ0LDA4lL
-         eOcg==
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+8s9I1GFb9vnJYgyzF3LyGBW5PFYtk5cyL1Hz3ZGmM0=;
+        b=uPbAiz2zy95lZywFI2dEhF9ilRfpoGzunGA9KXqogD3RSi1/EWRrzJIM1vxnoNcLG/
+         wMRaS1tQFpJ7O0CHd/bAPop9GTEtzSq+ihpNxkWVTggDztMR/1EXThpUR0ma8qZJpsuB
+         +5yopTeCpNY32IXV+4QsqVei184W34IOQPvkTMRWarGgU0k+TufPQ88LiZSurlfnqkX6
+         KRIFSPPBLf6EptkgSOxoFOiyEIMfI/QcBcuaaIWPxbLUpy+3cnBLS+aMbHAYPhmjaAnx
+         npwb2foOdUX54K4VR7+ilQVPV5z+1Xq4kcwyWf9l/m8oVjIevhw4iLAXcvJOe3LN1w60
+         E41Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PB6nkYHwbeEU6BoPVup3kf2+k4tTb4RworfRekHpADE=;
-        b=Qj/8b7v5lCeZAv82nZLwQy+keP7Ft6s5XwB+SdPw4MO2xRtpHNI5dY2HYMT0VdOMk1
-         QLyTBsbSiN90ctc2lZkt7mKbtx9c0OVOlCMJm8dWCa9rEot+c6SD0Iva8xQVHPuelq3B
-         xIE/YG9LvtQg+xX5weoP3Gp5I0Zx2wUd6C1OlYxrETQlK8CJ6xfplF8TTow+AZIcNIE/
-         RqjUoOZzSaM+ozUP6EKPeJnMxT/ZV/ESG1tFa5jFLL8/vhNSCOi/D+tY8EHtLkEGOSQd
-         +kLhsDbplFOCEHvemgRzxj8YvPDgdEm4YAtOwjtEOhJtxsvQXbGubsQ85C0EXKm46rXS
-         F/TA==
-X-Gm-Message-State: AFqh2koDVR+Npo4DH5Fp/aKRMsQ7aXx9sCxMW81j5/fO5VQUGJLkUVGs
-        +Yo4S2BBnLqYlw8ANwKU81QRjdzfWX8=
-X-Google-Smtp-Source: AMrXdXsc/45o+KW09Y2iUOhPUGyGhuiWnuGz2IAoXrcdgIlgurZ4WbOG4MbtpI7kwS75UX8RS5GAGA==
-X-Received: by 2002:a05:6830:1459:b0:66e:7442:7d2c with SMTP id w25-20020a056830145900b0066e74427d2cmr25376611otp.30.1672466920541;
-        Fri, 30 Dec 2022 22:08:40 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id k25-20020a056830151900b0066e873e4c2csm11401715otp.45.2022.12.30.22.08.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 22:08:40 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date:   Fri, 30 Dec 2022 22:08:38 -0800
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+8s9I1GFb9vnJYgyzF3LyGBW5PFYtk5cyL1Hz3ZGmM0=;
+        b=TTsqGC66X8i7OzHtLYhxnluFMOrtgAmzVCq3MZcZ9xGIa/UpYWSV4bLR8HgIITm8QL
+         GcBHpuOOV9vc46PTNE74/tQFBR+NsF9o8CTaC3H8XRxXWh36RQhNknsDPm6vsI12ANFX
+         QPiJ+M90Zo83ybZOlMwecTNkiJqfkDggFcTAvzeY4JSVPA5JXu3PNWCPaySDpM1D8lJV
+         ia9JoLlLSxefDpZk9ywUE3sSEOgn0MrIgTU7pQ3nBhRn1HJ7ZtVTD7C9cnS4kZVfwdtG
+         dcla7Uk9/94OstD6e1QSP7QRo0jDq9W9XLwKEN92mRJ+m4QiiQLFSiRs4UJOimIRT25t
+         9ejQ==
+X-Gm-Message-State: AFqh2kr/HO8vOuljbkG5DXgagFu97I6j2wsrSHaMDSkPFV/0Dp0bu05a
+        EhA25Ol70j5JsI781w11/1ekDUjyr5y5nTR1W0y1zw==
+X-Google-Smtp-Source: AMrXdXsxTLOmViWobRZ2Cuj/KRsod18koNJDIh7HfLSsbcb9G+N+RMccym1kxCwlWb0RlW42UqAhlI3ZMJlpVGWDkK4=
+X-Received: by 2002:a67:fad7:0:b0:3b1:5690:a240 with SMTP id
+ g23-20020a67fad7000000b003b15690a240mr3963799vsq.68.1672484682183; Sat, 31
+ Dec 2022 03:04:42 -0800 (PST)
+MIME-Version: 1.0
+References: <20221230160103.250996-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221230160103.250996-1-krzysztof.kozlowski@linaro.org>
+From:   "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
+Date:   Sat, 31 Dec 2022 11:04:30 +0000
+Message-ID: <CAJB8c06F8MaDWEgNOVgL51NG3vgnxcuC2ta2UpbyrG2BqcOVfQ@mail.gmail.com>
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: sc8280xp: remove GCC from CX power domain
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org
-Subject: Re: [PATCH] watchdog: qcom: Use devm_clk_get_enabled() helper
-Message-ID: <20221231060838.GD2927444@roeck-us.net>
-References: <7c2d5f3815949faf6d3a0237a7b5f272f00a7ae9.1672418969.git.christophe.jaillet@wanadoo.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7c2d5f3815949faf6d3a0237a7b5f272f00a7ae9.1672418969.git.christophe.jaillet@wanadoo.fr>
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        TVD_SUBJ_WIPE_DEBT autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 30, 2022 at 05:49:47PM +0100, Christophe JAILLET wrote:
-> The devm_clk_get_enabled() helper:
->    - calls devm_clk_get()
->    - calls clk_prepare_enable() and registers what is needed in order to
->      call clk_disable_unprepare() when needed, as a managed resource.
-> 
-> This simplifies the code and avoids the need of a dedicated function used
-> with devm_add_action_or_reset().
-> 
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-
+On Fri, Dec 30, 2022 at 4:04 PM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Bindings do not allow power-domain property in GCC clock controller and
+> documentation does not indicate that GCC is part of VDD_CX.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
->  drivers/watchdog/qcom-wdt.c | 16 +---------------
->  1 file changed, 1 insertion(+), 15 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 0d2209c5eaca..d776474dcdf3 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -175,11 +175,6 @@ static const struct watchdog_info qcom_wdt_pt_info = {
->  	.identity	= KBUILD_MODNAME,
->  };
->  
-> -static void qcom_clk_disable_unprepare(void *data)
-> -{
-> -	clk_disable_unprepare(data);
-> -}
-> -
->  static const struct qcom_wdt_match_data match_data_apcs_tmr = {
->  	.offset = reg_offset_data_apcs_tmr,
->  	.pretimeout = false,
-> @@ -226,21 +221,12 @@ static int qcom_wdt_probe(struct platform_device *pdev)
->  	if (IS_ERR(wdt->base))
->  		return PTR_ERR(wdt->base);
->  
-> -	clk = devm_clk_get(dev, NULL);
-> +	clk = devm_clk_get_enabled(dev, NULL);
->  	if (IS_ERR(clk)) {
->  		dev_err(dev, "failed to get input clock\n");
->  		return PTR_ERR(clk);
->  	}
->  
-> -	ret = clk_prepare_enable(clk);
-> -	if (ret) {
-> -		dev_err(dev, "failed to setup clock\n");
-> -		return ret;
-> -	}
-> -	ret = devm_add_action_or_reset(dev, qcom_clk_disable_unprepare, clk);
-> -	if (ret)
-> -		return ret;
-> -
->  	/*
->  	 * We use the clock rate to calculate the max timeout, so ensure it's
->  	 * not zero to avoid a divide-by-zero exception.
-> -- 
+>
+> Maybe the bindings should be fixed? Maybe this was added as workaround?
+> Anyway looking at documentation I do not see such relation, except
+> downstream vdd_cx-supply (which is the same as in other SoCs and we do
+> not represent it in upstream).
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 1d1420c8720c..d14663c9f34c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -799,7 +799,6 @@ gcc: clock-controller@100000 {
+>                                  <&pcie4_phy>,
+>                                  <0>,
+>                                  <0>;
+> -                       power-domains = <&rpmhpd SC8280XP_CX>;
+>                 };
+>
+>                 ipcc: mailbox@408000 {
+> --
 > 2.34.1
-> 
+>
+
+You'd be better off adding the documentation. The CX rail is required
+to power the clock controller.
+If you are pulling this out and finding nothing breaks, its probably
+because the bootloader left it on.
+
+Per my understanding of what dts is though, we ought to be
+representing the hardware dependency.
+
+gcc is a root clock for just about every peripheral so, you can be
+sure it is on when you boot.
+
+Seems to me as if the right thing to do is to retain the dts and
+update the documentation.
+
+---
+bod
