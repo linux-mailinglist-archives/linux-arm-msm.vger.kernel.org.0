@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4404659EE0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 00:53:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5980C659F8F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 01:27:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235791AbiL3Xx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 18:53:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49810 "EHLO
+        id S235835AbiLaA1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 19:27:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235789AbiL3Xx0 (ORCPT
+        with ESMTP id S235651AbiLaA1V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 18:53:26 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8F71E3C5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:53:21 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id z126so836475iof.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 15:53:21 -0800 (PST)
+        Fri, 30 Dec 2022 19:27:21 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1161EAC0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 16:27:20 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id z18so12160540ils.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 16:27:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yaIIHCyPAmWR615tbC0Nk+wPaByZza1YhVt2KyUXJDk=;
-        b=YepwaYPDqvh2fMTqnr2Ug0m3VXi1/1ssxkSfD98N+DDQrFRq9YzydqmOUIurdKLQq3
-         ZtOpErHdR2+mslkHyoOXf8ejDrE6o2iAG4CP9kdq93AfiSjyHf/5zKwgC4Mh8WFIfStU
-         /t/WVi3b5FgUENAOjWPChZyBWiJAZfB+E60SUZ3iTykoP/9obp+59nmjxx9AFepJnpY+
-         o4j0RIc7cI8R2X+5oQqjopL6UYgAD9vdHJz1wyZpS7NGHjRHUcmM9mm7rBnfRBsP1jwR
-         eWG8ueGQlzFXg2l5C73GmBupeLfCi9Pq+Mlpu9WFnBlA7Qzu2STHs+/A0qENX5Ta+mcW
-         ZFqw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FxYmD3MKNHGkzolG6Z5MV/mrr6zFi3TuI0Acg35raUw=;
+        b=uH5i5hxS2db0gl9TP2bZAQjpr0wfz5+0z84KT2RLjdV1BAd1e7QrWes04UwlOg7Pb2
+         pWJoAaIEKJKcvq4vSjaqB15CMNGFrhFFc7A9m/0TZJdtBedFFMVSzZPhxHExISzk9RkO
+         KjZ66UVJs0iJpxUIKLLLtn1TgEzImPwgFNXq05e70860m4CtLGzivCbf22RGKYd5QDjl
+         YhaZ77wnUxflEAEX0Hr4G+gg3IQpyWMXTSJdQWQq8YWQRWqxcUZ4Y0YtPDPbTFKzl2lz
+         jpoZh8gXtiJ9zpsiwfYCO4DJGDsWETWLDnN1y9DmWXT6bLynaMK+o5ixfeYiTKH2+JJ1
+         jIcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yaIIHCyPAmWR615tbC0Nk+wPaByZza1YhVt2KyUXJDk=;
-        b=cg49DjBo0/zElkqQn1M1km03ZpXh4f/52aZJxEgmZSRnU0Xxd50Knq4hhoYItBhZwb
-         Xr8CeAqWHhFhVcpCcloq7E/n2lw/3ofvYXcgwvj7HkGHOzEn8Os+hMuTiko4N5gwDtcz
-         1f/PktVCpq69fGHqRiXQggIPuLAfKYAihoXfsEn3DMbPl7kdh1RvQgKzTrc1I8Pyp4m/
-         JmsOx2oL6AZEl/yWogcmfnfBxyJYbbGaAY52ej0A/u2fL4sVVlDVHySe9E5uaI4ov4ZU
-         6qwCcXjJjuBAuYI0VolUPFT+xkr36tJxh4cppTPMIUAGVlxUs6AICG8fkmSaA0NwVFBJ
-         Oofw==
-X-Gm-Message-State: AFqh2koYzEcaXvZk1pRgGvds78mg5Zbf9l+j8NzKDWlDLo3+ojSw2ni0
-        owiEzxNHIZps28sFSaxkCtiFDQ==
-X-Google-Smtp-Source: AMrXdXtA1uM+5d0hzTdQjOg114pyKUxZstpIsPcMhUlPHPTLiQnXeX798H2SAyX9xamrH94Y/kHwAA==
-X-Received: by 2002:a5e:c708:0:b0:6bc:d715:362d with SMTP id f8-20020a5ec708000000b006bcd715362dmr21400562iop.2.1672444400974;
-        Fri, 30 Dec 2022 15:53:20 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id k5-20020a0566022a4500b006dffde23fa9sm8172082iov.24.2022.12.30.15.53.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Dec 2022 15:53:20 -0800 (PST)
-Message-ID: <4bd03a34-7de9-2ae4-ff82-df2470b92ea5@linaro.org>
-Date:   Fri, 30 Dec 2022 17:53:19 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH net-next 2/2] net: ipa: add IPA v4.7 support
-Content-Language: en-US
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FxYmD3MKNHGkzolG6Z5MV/mrr6zFi3TuI0Acg35raUw=;
+        b=G2JWzG6XIHwyiM3ZbzJj7+wiRokH2SGqnL7JrKN8RL73PJpOd0ATmxVAkF7z11eVOq
+         8IPMRmEVJE6KF9CNIGrFqCWAKnQOydh5PGb6uDt+O5JYQLuT5d7ynTOEkAy/dNXU8fIH
+         JXn4YemGNGRFzLl83OC7qUwv2LX+uSNHvqBr02ztlMLI8eYqsEc8PKgxPcNvnv6OIn7L
+         NVjiXav4z055JNjCMuLzoHsBMiD5zbe2L74uILmbMLPV5eofogmzqHbaMY7zXAZrjX0F
+         xROGnpBGr+EHdLrLiYU2gD0rct4npK/o4G4iGZE3rKoe7Yj8K9MIpL3QvMruY26jOwMu
+         VFeA==
+X-Gm-Message-State: AFqh2kp51VVLcYIsBg1VgbKzj+rLOnpEoSRQaTQ8DRwggE//FJxzP2cT
+        D2Xn4k+5WoZKmb9CeVFjn1vN9tXOdiu6m753
+X-Google-Smtp-Source: AMrXdXvZ55pFDq6DptGgKckLQ6pfj0htYFe28lUwLhD6q6rCjSIi+aLk+JnD/4J9yvM1q4EKXyW0Rw==
+X-Received: by 2002:a05:6e02:5a6:b0:30b:ce86:ce4b with SMTP id k6-20020a056e0205a600b0030bce86ce4bmr23190411ils.8.1672446439727;
+        Fri, 30 Dec 2022 16:27:19 -0800 (PST)
+Received: from presto.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id t4-20020a922c04000000b002f9f7d24d78sm6969279ile.76.2022.12.30.16.27.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Dec 2022 16:27:19 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc:     andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-References: <20221208211529.757669-1-elder@linaro.org>
- <20221208211529.757669-3-elder@linaro.org>
- <47b2fb29-1c2e-db6e-b14f-6dfe90341825@linaro.org>
- <fa6d342e-0cfe-b870-b044-b0af476e3905@linaro.org>
- <48bef9dd-b71c-b6aa-e853-1cf821e88b50@linaro.org>
- <20b2f7c3-6481-eabf-7c46-f5f38d258c62@linaro.org>
-In-Reply-To: <20b2f7c3-6481-eabf-7c46-f5f38d258c62@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] dts: qcom: use "qcom,gsi-loader"
+Date:   Fri, 30 Dec 2022 18:27:14 -0600
+Message-Id: <20221231002716.2367375-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,19 +73,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/30/22 11:28 AM, Alex Elder wrote:
-> 
-> Anyway, for a given SoC, the whole IMEM region is used
-> by different entities.  For SM7550, for example, it is
+IPA hardware has a GSI component that needs firmware loaded.
+Recently, the way to specify how this firmware is loaded has
+been changed.  As a result, indicating this via the presence or
+absence of a "modem-init" property is now deprecated.  Instead,
+a new "qcom,gsi-loader" property is used; this permits a third
+method of loading GSI firmware to be supported.
+  https://lore.kernel.org/netdev/20221116073257.34010-1-elder@linaro.org/
 
-NOTE:  This is a typo.  I meant SM7250 above.
-
-> divided into 6 parts of various sizes (100KB, 24KB, 32KB,
-> 8KB, 8KB, and 4KB).  For IPA on this SoC, the offset is
-> 0x146a9000, with size 0x2000.  Hence the range defined
-> above.
-
-Konrad pointed out the error, I just want to be sure
-it's corrected so it's clear...
+This series updates all of the exiting ARM and arm64 DTS files for
+platforms implementing IPA so they specify the GSI loader using the
+new property.
 
 					-Alex
+
+Alex Elder (2):
+  ARM: dts: qcom: use qcom,gsi-loader for IPA
+  arm64: dts: qcom: use qcom,gsi-loader for IPA
+
+ arch/arm/boot/dts/qcom-sdx55-t55.dts                         | 4 ++--
+ arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts             | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi         | 5 ++---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi                     | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi                   | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi                   | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi               | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts                      | 3 ++-
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 ++-
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           | 1 +
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts         | 3 ++-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts             | 3 ++-
+ arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts   | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8350-mtp.dts                      | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi      | 3 ++-
+ 17 files changed, 29 insertions(+), 24 deletions(-)
+
+-- 
+2.34.1
+
