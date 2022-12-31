@@ -2,97 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D67A965A430
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 13:49:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A3B265A442
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 13:59:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231719AbiLaMtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 07:49:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34766 "EHLO
+        id S231693AbiLaM7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 07:59:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235683AbiLaMtT (ORCPT
+        with ESMTP id S235610AbiLaM7R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 07:49:19 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F7611054B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:49:03 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id g20so7719295pfb.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:49:03 -0800 (PST)
+        Sat, 31 Dec 2022 07:59:17 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E0495B5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:59:16 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id j17so25675428lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8DXWGlRQXwEWsvjY0axdM/4CSvGdmhgjoXDmsx5XAE=;
-        b=GKHfIO5/zPApXtAUOUA0aOVIZUwLAURpCXBHgDj1NR1eDpPZ8kJqGc9kYxtnJ8J6n0
-         G7VioD9KKPNReKRZffb5YWGKGrwy7MKl3bL1EccIOeRJVGChBnOjTxOTdKusj1dAVoka
-         lOL7EYDnoTSZwvhuUp0IvnnoufI2Gr390XZrZpzt8yzHrOuSQG1e2YC56zmxhAYmVTkA
-         E3+HowNHFYPE/naF/0ShWsCbZHz2o5P478U7NMHJ17JVORUMQtc0IwnOS0FdMIDjmkQS
-         +eFhB5UlvXPh8sHVCVIEuVaWIp38bOx52PZLr62+JWbPvPc/wGIH1Wbbq4N/oAOAGnp4
-         csUA==
+        bh=i+ipLw5suspFYXyK3GuaVyqet6j2yEOptDlFPK2wkvo=;
+        b=TiCgCWGkdxMagDHygoTWwRpxIHzJHre4JLQAVqX1rtgbzPp8+PZ5ggQnFALRuR4NJI
+         7C5LvzNRVslzZUAsQT3/McfFAQ4SDcXEIEevjD96B6LX8P2QUKWi/v66y/Xy6yQdRyno
+         lJ1OLx/SJV2S47rXt5i+iA+rkF/3XCIkyg31bQMqptbti60iyHf6hlMYHKKbTCkBOl5G
+         K98hzkSTj9p8lEk+iidBQwA8r21MrO/Qf7tQCKvN9uxqs8Qr9tXSbaGvz0T9cubaKnyI
+         BhIZB/bSQpS2Ory2ZXdy6RGn9vQ6+SRXGRnM64vQuk8oWvjII44OK8tuNXA21jhXPp+X
+         9Sig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q8DXWGlRQXwEWsvjY0axdM/4CSvGdmhgjoXDmsx5XAE=;
-        b=8LzmhYRiZyh29dW3G0OaHyWRy/D9djnBgesXtnn51/ld0jN9iAp3zHOEhiRw91avWd
-         7QgJP22raxNSk56fBSfGg0VIO3E3vC/xMB4wKBfx3n8LTNGZ4G0viLI4UzQiMlZ0axWk
-         puFJCBqrqOmvco2iKJXiMucNR7hZQWHzRJttVVa4suOZ0I7bA5rpHxd7XLMPzLCFPPx8
-         ozt+7g/FwsUoSq4iZrJl9pgtYZovgHDfDOMfUEVW60FdhJfXfDAqhUr0wV6JFnJsPVf3
-         N4Ma1qPaCIZWjtsBQ7+t7x5Yv4fChLr3Jb8PSKYK49kidJSLgDfZcQjUYPnHLl7eUpEG
-         9W+g==
-X-Gm-Message-State: AFqh2kp1pq8ldKUJLxf9yCWE5xO1bTNV/ho4BwZ7Tlwokpt5ii+EeqF2
-        YiPk189aGuE8Hc813xL8JziYVDCEXz7jXUsfnzE=
-X-Google-Smtp-Source: AMrXdXt4c0FpjWbTrXvCfeqQQBQwRmV7yv8JVygcOx12CA48lg1ae5I7PrwtSe5VDyzE/rqRXF7cSQ==
-X-Received: by 2002:a62:b619:0:b0:574:3cde:385a with SMTP id j25-20020a62b619000000b005743cde385amr32875759pff.32.1672490942302;
-        Sat, 31 Dec 2022 04:49:02 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
-        by smtp.gmail.com with ESMTPSA id r29-20020aa7963d000000b005750d6b4761sm10337204pfg.168.2022.12.31.04.48.58
+        bh=i+ipLw5suspFYXyK3GuaVyqet6j2yEOptDlFPK2wkvo=;
+        b=FlG1iEyas+u7b85yakUzFsUSLNikbARjK4HWs08VNn5nF6q1U6OCMYgtqWQq3wekYL
+         FdzX/B4frpSvR1XIkC+7BuDTiwyrWAnoipfcwWtlYrrPUDCA9ZR8o264yCEQCPC36IWc
+         9yoK7gD+mONBtlawVCaD1Z/LOLJlWAq/2Ib5j4upqAw+i1B0cQJXC9Q7AU/WfNcjJhi7
+         GHtouQswrF0xg406zmMFkJFVgeMKqt/VHMSFkEfdMb8wkpsvHStKAjUv9CDxHyRxy/aQ
+         fIKNGJcto9tVpb24qGqDMpm3Mudy98fUYKE15NSpqa4pM9lcHPSj4vDgPejF3Fd1Gy0D
+         3QDA==
+X-Gm-Message-State: AFqh2krzooWUGLC7yatzSGdZDoeuytTmHwCbAz0/M5495z2kxa2AOvrN
+        mgRG/OweYOzQ+hfJBwM7oiwIgDsEXaNetL1W
+X-Google-Smtp-Source: AMrXdXvXo4IdMyU8lXgXL1igPmBM8Tvu8BgPM9z3kCC2Ceuh0McAoBcj2NAsLkmrZJ/4CYrqFFjEFA==
+X-Received: by 2002:a05:6512:4014:b0:4b6:f22c:8001 with SMTP id br20-20020a056512401400b004b6f22c8001mr15596480lfb.56.1672491554956;
+        Sat, 31 Dec 2022 04:59:14 -0800 (PST)
+Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id d10-20020a0565123d0a00b004cb344a8c77sm22266lfv.54.2022.12.31.04.59.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Dec 2022 04:49:01 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, soc@kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     arnd@arndb.de, agross@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        will@kernel.org, konrad.dybcio@somainline.org,
-        catalin.marinas@arm.com, krzysztof.kozlowski@linaro.org
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm EUD
-Date:   Sat, 31 Dec 2022 18:18:52 +0530
-Message-Id: <20221231124852.3283597-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        Sat, 31 Dec 2022 04:59:14 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 00/18] Misc DT style fixes
+Date:   Sat, 31 Dec 2022 13:58:53 +0100
+Message-Id: <20221231125911.437599-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the EUD (Embedded USB Debugger) block is supported on
-several Qualcomm SoCs upstream, enable the same as a module in
-the arm64 defconfig as a module.
+As part of trying to write up everything we care about when reviewing
+DTs [1], I put my regex to a test and removed some reg inconsistencies,
+among fixing up some other things in ipq6018.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+No dependencies as far as I'm aware.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 851e8f9be06da..c43aeb936d9ad 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -922,6 +922,7 @@ CONFIG_USB_SERIAL=m
- CONFIG_USB_SERIAL_CP210X=m
- CONFIG_USB_SERIAL_FTDI_SIO=m
- CONFIG_USB_SERIAL_OPTION=m
-+CONFIG_USB_QCOM_EUD=m
- CONFIG_USB_HSIC_USB3503=y
- CONFIG_NOP_USB_XCEIV=y
- CONFIG_USB_GADGET=y
+Konrad Dybcio (18):
+  arm64: dts: qcom: ipq6018: Pad addresses to 8 hex digits
+  arm64: dts: qcom: ipq6018: Use tabs instead of spaces
+  arm64: dts: qcom: ipq6018: Sort nodes properly
+  arm64: dts: qcom: ipq6018: Fix up some indentation
+  arm64: dts: qcom: ipq6018: Add/remove some newlines
+  arm64: dts: qcom: ipq6018: Use lowercase hex
+  arm64: dts: qcom: sc8280xp: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm8150: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm6350: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sdm845: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm8250: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm8350: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sc7180: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sc7280: Pad addresses to 8 hex digits
+  arm64: dts: qcom: msm8994-octagon: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm8450: Pad addresses to 8 hex digits
+  arm64: dts: qcom: msm8994-kitakami: Pad addresses to 8 hex digits
+  arm64: dts: qcom: sm6115: Pad addresses to 8 hex digits
+
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         | 548 +++++++++---------
+ .../dts/qcom/msm8994-msft-lumia-octagon.dtsi  |  52 +-
+ .../qcom/msm8994-sony-xperia-kitakami.dtsi    |   2 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  20 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  46 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  46 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          |   6 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  16 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  68 +--
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  54 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  16 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  48 +-
+ 13 files changed, 461 insertions(+), 463 deletions(-)
+
 -- 
-2.38.1
+2.39.0
 
