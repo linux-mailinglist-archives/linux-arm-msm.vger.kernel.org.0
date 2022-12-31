@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D11A659F95
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 01:27:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E6AE65A192
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 03:29:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235695AbiLaA1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Dec 2022 19:27:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
+        id S236147AbiLaC3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Dec 2022 21:29:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235932AbiLaA1X (ORCPT
+        with ESMTP id S236141AbiLaC3l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Dec 2022 19:27:23 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D7B1EAC7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 16:27:22 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id g2so8970104ila.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 16:27:22 -0800 (PST)
+        Fri, 30 Dec 2022 21:29:41 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A48261CB17
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 18:29:40 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id j17so24532587lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Dec 2022 18:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XU58kPYl9n82LN59dtODH7bg7cp4BHh6YJsgbAZI+Ks=;
-        b=t33hWfZzTekkZPTFN2v5aPWvOuFLfga2yWC4R7FZG8dbJx7MhhspkKC7sJuV91HXqT
-         Kj0ycqZbQ4hEI5eJCuElLowh9uqaq0CodlclWiDUxMDqRRtaUt3/9C10f/QdXOlPRNZ3
-         vbVPBopwb1/J8mSRK2UwHSgay1yNWNw8mHbX1OyJuf5pB3cfbDnsZzoEKE91UicPM4RL
-         zCXVkJ9ntM1DKfm1dPzhMwYAt6xABnuSX7jBuqRUB/xETiblYVOTozLdHcpHSHt57ldB
-         9Vrf98DgKz6EFdjcn9NUPEPTqNJjNcKqDTfXqQKUwvnLGJ3gPUxRk47EGNmagTKUeNP5
-         Qc9Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vq6Y9+70rY8XVkQFLk3Qlj1zt9Xu549GNuu+Ch1Bb6U=;
+        b=GRoGxAsjITrHtzu8u9Of8PA58T0kKy83D34WXGyNjLSdG9HAcgC4dxmu9T4VmMmswV
+         F8+tB44FLNc4vCVlFvQoUPw1IcDlN7R7Cnz5Zkay2A5ysWxeELMMAMRnLFha7xm43COV
+         dGzkYFjFqiJ2o6uk9eyFOZPKVt10sO9Geb/pZgmoqT/NHxht3Rke4YeD3r0NgWImvyvI
+         mI0iNNm8Avx8QUVprmPYr889VJyL4OUAEVKIUtOwbz3cdfa7qV6lXrCploXOhaRWuhBM
+         XcJEIvF+6I6mWs1A0X6Scq4ms64VRWOACwEc8mPl+vKBZKGkLaIrzoz1ArhWaYcgEP5Z
+         vpFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XU58kPYl9n82LN59dtODH7bg7cp4BHh6YJsgbAZI+Ks=;
-        b=Mv917oL72bfQQ3RpXzdPKbVJpdHj9wtqjkHdnYc5K1vwUBeSHAxSAj11ARMe3QMicm
-         Podq2ChS3Z2isxpaw63gZtiKDaBxOnxZVA5AE0GRuzlI6X58WBZSkJGO0xde0vFRyNE3
-         chDbT4nze5GFL87s5E9oYqlml/854xhb+qKhEjGNUbplV+tF+4YTBXWdvzE7n1dGkvwQ
-         r26UU05exgmdYB9XrUoG7NHvYTMeki2Q6QuayFWcxl1GDdS5RBW/gorJ7fbWGF7Zadxo
-         cBloUy/U8ik/BXbCSsGB+CeovhTBRc9mZjBLMSznwZ6za6Z4+2RGXQ4M5alUgoqVytcN
-         /9cw==
-X-Gm-Message-State: AFqh2krhxCfiFKA0tl93svzrjK8w6rRYo4hsASVdoeIoD5rw0InxDLUs
-        OZCQdbX1t+RzvSWy6ShyeOZKDw==
-X-Google-Smtp-Source: AMrXdXvlUHSbyBgmovCj8d/Gsd+ikI6F8/sKZNwvtCWADE61C7G94gt6YYrfNdLgtRqs5HeMKAZj+g==
-X-Received: by 2002:a92:d950:0:b0:30c:2ff1:c8d7 with SMTP id l16-20020a92d950000000b0030c2ff1c8d7mr2910385ilq.0.1672446441882;
-        Fri, 30 Dec 2022 16:27:21 -0800 (PST)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id t4-20020a922c04000000b002f9f7d24d78sm6969279ile.76.2022.12.30.16.27.20
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Vq6Y9+70rY8XVkQFLk3Qlj1zt9Xu549GNuu+Ch1Bb6U=;
+        b=3iet5w0rBNZLU2hGL5cIvVCkZRcVGOQe6/idkJYpSCC+QuaYh0HGg4FmWTjcsROpPi
+         UTnKjYkRbKt1rsrC5hXbxWAjdw3ZMEQqfFfsiifsqWS+NXVIHaIY+u95nfgsQh9hj5Is
+         NHi3Etsua7SdDclDyTL2FTbd71O03sihbt1Cyn5WsFPxRDfQo6iVJq0OZwhW57XO5slg
+         dAg0+HwHYEV13siYC/cBoueI83b5SS7+jC9dG9CTty5UYbWcm0pkksq1XmOiFXoxWfFw
+         ZlRosdx2BYrzoZuUvgiHI7sMA8EDM7ZvyzF1jfRvGpQYk7VbKFE7HxgUrP0tRQ0TQDQj
+         MA1w==
+X-Gm-Message-State: AFqh2koVHu5NwsFS2feoWIh+yew8vjVQ8p5l6UQaqfoROvFRp05aK9wN
+        U/8TTrf7xNr0luLCmwE+A9pMJQ==
+X-Google-Smtp-Source: AMrXdXvg0qLjmJspZohtomaCHL/2fkIyD5en3wFEP7tTEYuKk740n8RBzm6TAcm6+DKnWyH1OerftA==
+X-Received: by 2002:a05:6512:220a:b0:4b4:b667:4b1d with SMTP id h10-20020a056512220a00b004b4b6674b1dmr11161162lfu.27.1672453778949;
+        Fri, 30 Dec 2022 18:29:38 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id w4-20020a05651234c400b0049d0a98f73csm3667231lfr.154.2022.12.30.18.29.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 16:27:21 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org
-Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: use qcom,gsi-loader for IPA
-Date:   Fri, 30 Dec 2022 18:27:16 -0600
-Message-Id: <20221231002716.2367375-3-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221231002716.2367375-1-elder@linaro.org>
-References: <20221231002716.2367375-1-elder@linaro.org>
+        Fri, 30 Dec 2022 18:29:38 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: another fix for the headless Adreno GPU
+Date:   Sat, 31 Dec 2022 04:29:37 +0200
+Message-Id: <20221231022937.286491-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,267 +73,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Depending on the platform, either the modem or the AP must load GSI
-firmware for IPA before it can be used.  To date, this has been
-indicated by the presence or absence of a "modem-init" property.
+Fix another oops reproducible when rebooting the board with the Adreno
+GPU wokring in the headless mode (e.g. iMX platforms).
 
-That mechanism has been deprecated.  Instead, we indicate how GSI
-firmware should be loaded by the value of the "qcom,gsi-loader"
-property.
+Unable to handle kernel NULL pointer dereference at virtual address 00000000 when read
+[00000000] *pgd=74936831, *pte=00000000, *ppte=00000000
+Internal error: Oops: 17 [#1] ARM
+CPU: 0 PID: 51 Comm: reboot Not tainted 6.2.0-rc1-dirty #11
+Hardware name: Freescale i.MX53 (Device Tree Support)
+PC is at msm_atomic_commit_tail+0x50/0x970
+LR is at commit_tail+0x9c/0x188
+pc : [<c06aa430>]    lr : [<c067a214>]    psr: 600e0013
+sp : e0851d30  ip : ee4eb7eb  fp : 00090acc
+r10: 00000058  r9 : c2193014  r8 : c4310000
+r7 : c4759380  r6 : 07bef61d  r5 : 00000000  r4 : 00000000
+r3 : c44cc440  r2 : 00000000  r1 : 00000000  r0 : 00000000
+Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+Control: 10c5387d  Table: 74910019  DAC: 00000051
+Register r0 information: NULL pointer
+Register r1 information: NULL pointer
+Register r2 information: NULL pointer
+Register r3 information: slab kmalloc-1k start c44cc400 pointer offset 64 size 1024
+Register r4 information: NULL pointer
+Register r5 information: NULL pointer
+Register r6 information: non-paged memory
+Register r7 information: slab kmalloc-128 start c4759380 pointer offset 0 size 128
+Register r8 information: slab kmalloc-2k start c4310000 pointer offset 0 size 2048
+Register r9 information: non-slab/vmalloc memory
+Register r10 information: non-paged memory
+Register r11 information: non-paged memory
+Register r12 information: non-paged memory
+Process reboot (pid: 51, stack limit = 0xc80046d9)
+Stack: (0xe0851d30 to 0xe0852000)
+1d20:                                     c4759380 fbd77200 000005ff 002b9c70
+1d40: c4759380 c4759380 00000000 07bef61d 00000600 c0d6fe7c c2193014 00000058
+1d60: 00090acc c067a214 00000000 c4759380 c4310000 00000000 c44cc854 c067a89c
+1d80: 00000000 00000000 00000000 c4310468 00000000 c4759380 c4310000 c4310468
+1da0: c4310470 c0643258 c4759380 00000000 00000000 c0c4ee24 00000000 c44cc810
+1dc0: 00000000 c0c4ee24 00000000 c44cc810 00000000 0347d2a8 e0851e00 e0851e00
+1de0: c4759380 c067ad20 c4310000 00000000 c44cc810 c27f8718 c44cc854 c067adb8
+1e00: c4933000 00000002 00000001 00000000 00000000 c2130850 00000000 c2130854
+1e20: c25fc488 00000000 c0ff162c 00000000 00000001 00000002 00000000 00000000
+1e40: c43102c0 c43102c0 00000000 0347d2a8 c44cc810 c44cc814 c2133da8 c06d1a60
+1e60: 00000000 00000000 00079028 c2012f24 fee1dead c4933000 00000058 c01431e4
+1e80: 01234567 c0143a20 00000000 00000000 00000000 00000000 00000000 00000000
+1ea0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1ec0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1ee0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1f00: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1f20: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1f40: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1f60: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+1f80: 00000000 00000000 00000000 0347d2a8 00000002 00000004 00000078 00000058
+1fa0: c010028c c0100060 00000002 00000004 fee1dead 28121969 01234567 00079028
+1fc0: 00000002 00000004 00000078 00000058 0002fdc5 00000000 00000000 00090acc
+1fe0: 00000058 becc9c64 b6e97e05 b6e0e5f6 600e0030 fee1dead 00000000 00000000
+ msm_atomic_commit_tail from commit_tail+0x9c/0x188
+ commit_tail from drm_atomic_helper_commit+0x160/0x188
+ drm_atomic_helper_commit from drm_atomic_commit+0xac/0xe0
+ drm_atomic_commit from drm_atomic_helper_disable_all+0x1b0/0x1c0
+ drm_atomic_helper_disable_all from drm_atomic_helper_shutdown+0x88/0x140
+ drm_atomic_helper_shutdown from device_shutdown+0x16c/0x240
+ device_shutdown from kernel_restart+0x38/0x90
+ kernel_restart from __do_sys_reboot+0x174/0x224
+ __do_sys_reboot from ret_fast_syscall+0x0/0x1c
+Exception stack(0xe0851fa8 to 0xe0851ff0)
+1fa0:                   00000002 00000004 fee1dead 28121969 01234567 00079028
+1fc0: 00000002 00000004 00000078 00000058 0002fdc5 00000000 00000000 00090acc
+1fe0: 00000058 becc9c64 b6e97e05 b6e0e5f6
+Code: 15922088 1184421c e1500003 1afffff8 (e5953000)
+---[ end trace 0000000000000000 ]---
 
-Update all arm64 platforms that use IPA to use the "qcom,gsi-loader"
-property to specify how the GSI firmware is loaded.
-
-Update the affected nodes so the status property is last.
-
-Signed-off-by: Alex Elder <elder@linaro.org>
+Fixes: 0a58d2ae572a ("drm/msm: Make .remove and .shutdown HW shutdown consistent")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi         | 5 ++---
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi                     | 2 +-
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi                   | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi                   | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi               | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-mtp.dts                      | 3 ++-
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 4 ++--
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 4 ++--
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 ++-
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           | 1 +
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts         | 3 ++-
- arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts             | 3 ++-
- arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts   | 4 ++--
- arch/arm64/boot/dts/qcom/sm8350-mtp.dts                      | 4 ++--
- arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi      | 3 ++-
- 15 files changed, 25 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-index fd4b712037542..bffcbd141bd7c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-@@ -19,12 +19,11 @@ &remoteproc_mpss {
- };
+As can be seen from the backtrace, the error is generated because
+msm_atomic_commit_tail is called in the shutdown path. I've fixed the
+particular issue. Maybe we should consider shortcutting all mode_config
+initialization in case of headless Adreno chip? This would be more
+intrusive, so I haven't followed that path. However if you think that
+this should be a proper way to fix the issue, I'll try doing it.
+
+---
+ drivers/gpu/drm/msm/msm_atomic.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+index 1686fbb611fd..98c526246ff1 100644
+--- a/drivers/gpu/drm/msm/msm_atomic.c
++++ b/drivers/gpu/drm/msm/msm_atomic.c
+@@ -186,11 +186,16 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	struct msm_kms *kms = priv->kms;
+ 	struct drm_crtc *async_crtc = NULL;
+ 	unsigned crtc_mask = get_crtc_mask(state);
+-	bool async = kms->funcs->vsync_time &&
+-			can_do_async(state, &async_crtc);
++	bool async;
++
++	if (!kms)
++		return;
  
- &ipa {
--	status = "okay";
--
+ 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
+ 
++	async = kms->funcs->vsync_time &&
++			can_do_async(state, &async_crtc);
++
+ 	kms->funcs->enable_commit(kms);
+ 
  	/*
- 	 * Trogdor doesn't have QHEE (Qualcomm's EL2 blob), so the
- 	 * modem needs to cover certain init steps (GSI init), and
- 	 * the AP needs to wait for it.
- 	 */
--	modem-init;
-+	qcom,gsi-loader = "modem";
-+	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index f7efb9966afd1..5ad97cd5f1b75 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -377,8 +377,8 @@ &gpi_dma1 {
- };
- 
- &ipa {
-+	qcom,gsi-loader = "modem";
- 	status = "okay";
--	modem-init;
- };
- 
- &lpass_cpu {
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index df49564ae6dc1..6d80c64097e97 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -337,8 +337,8 @@ vreg_bob: bob {
- /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
- 
- &ipa {
-+	qcom,gsi-loader = "modem";
- 	status = "okay";
--	modem-init;
- };
- 
- &lpass_va_macro {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index ca676e04687b0..c194a88f91fd1 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -756,8 +756,8 @@ &gpu {
- };
- 
- &ipa {
-+	qcom,gsi-loader = "modem";
- 	status = "okay";
--	modem-init;
- };
- 
- &lpasscc {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 1eb423e4be24c..b62beffc27bf7 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -474,8 +474,8 @@ zap-shader {
- };
- 
- &ipa {
-+	qcom,gsi-loader = "modem";
- 	status = "okay";
--	modem-init;
- };
- 
- &mss_pil {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-index de2d10e0315af..f5a186fd7c72b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-@@ -518,8 +518,9 @@ &i2c10 {
- };
- 
- &ipa {
--	status = "okay";
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
-+	status = "okay";
- };
- 
- &mdss {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 42cf4dd5ea284..d8a601d36c6df 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -424,10 +424,10 @@ rmi4_f12: rmi4-f12@12 {
- };
- 
- &ipa {
--	status = "okay";
--
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sdm845/oneplus6/ipa_fws.mbn";
-+	status = "okay";
- };
- 
- &mdss {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index bb77ccfdc68c0..fcd401f460456 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -495,10 +495,10 @@ touchscreen@38 {
- };
- 
- &ipa {
--	status = "okay";
--
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sdm845/axolotl/ipa_fws.mbn";
-+	status = "okay";
- };
- 
- &mdss {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index eb6b2b676eca4..d6b11d56ebb37 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -299,9 +299,10 @@ &mss_pil {
- };
- 
- &ipa {
--	status = "okay";
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sdm845/beryllium/ipa_fws.mbn";
-+	status = "okay";
- };
- 
- &pm8998_gpio {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index 38ba809a95cd6..9ca4682aea1b2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -449,6 +449,7 @@ &ibb {
- };
- 
- &ipa {
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sdm845/polaris/ipa_fws.mbn";
- 	status = "okay";
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index f32b7445f7c96..15da94808b21d 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -465,8 +465,9 @@ ecsh: hid@5c {
- };
- 
- &ipa {
--	status = "okay";
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
-+	status = "okay";
- };
- 
- &mdss {
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-index daca1e0ad62ad..15f6059b75757 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-@@ -383,9 +383,10 @@ digitizer@9 {
- };
- 
- &ipa {
--	status = "okay";
-+	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sdm850/samsung/w737/ipa_fws.elf";
-+	status = "okay";
- };
- 
- /* No idea why it causes an SError when enabled */
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-index 9c4cfd995ff29..00f16cde6c4ac 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-@@ -290,9 +290,9 @@ &i2c11 {
- };
- 
- &ipa {
--	status = "okay";
--
-+	qcom,gsi-loader = "self";
- 	memory-region = <&pil_ipa_fw_mem>;
-+	status = "okay";
- };
- 
- &mpss {
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-index 52cf3045602f9..f70e0de0509c5 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-@@ -376,7 +376,7 @@ &usb_2_qmpphy {
- };
- 
- &ipa {
--	status = "okay";
--
-+	qcom,gsi-loader = "self";
- 	memory-region = <&pil_ipa_fw_mem>;
-+	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-index 1f2d660f8f86c..d00e8d922ceeb 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-@@ -524,9 +524,10 @@ &i2c17 {
- };
- 
- &ipa {
--	status = "okay";
-+	qcom,gsi-loader = "self";
- 	memory-region = <&pil_ipa_fw_mem>;
- 	firmware-name = "qcom/sm8350/Sony/sagami/ipa_fws.mbn";
-+	status = "okay";
- };
- 
- &mpss {
 -- 
-2.34.1
+2.39.0
 
