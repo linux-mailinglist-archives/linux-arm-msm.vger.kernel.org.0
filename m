@@ -2,122 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED69E65A47A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 14:02:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5653365A487
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 14:08:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236023AbiLaNBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 08:01:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38058 "EHLO
+        id S232080AbiLaNH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 08:07:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231831AbiLaNA7 (ORCPT
+        with ESMTP id S232089AbiLaNH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 08:00:59 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA3FD11450
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:00:06 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id s22so24604652ljp.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:00:06 -0800 (PST)
+        Sat, 31 Dec 2022 08:07:56 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B74D6275
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:07:55 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id p4so24980966pjk.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 05:07:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lIxmppUh5zsETJqIpBWngzESP8KE8QhCm/D2gCLXS+E=;
-        b=nJ2TVWUhWSr+mirsoCk3wxL8miwBgzdEntyBTZQoxn8a2ffJfQ1PI1JUzQmTdMoEKa
-         wqI5bq4dDh2qZKKzEWtLDX84XaGJglJE6Lme9kEUfhgAc4/yfT84yymGz3YDD3Eta3Js
-         12O/7wGX4LsG9IYhRCVu5mjCw160kOfV+Fs+7S8dYwzdkUECV65xcrw/TEclO0dy6xWk
-         QYTsZ9BSdjSAMoxsx0bfKpasP0mg0l3o9Oj73gQxiEm0WLStt5jk8yl8CuoV/p5dYv4T
-         PEqg0GkzdOLMriWAROBlyJzN0HSHua9x1iZXVCtqlZvTZf+fGD9RMV4oE9iqBMwVEWYU
-         gQFw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/WmUGDU9j7tMbOdllnp/w1LH52F3Q0nBmj5c63hXoY=;
+        b=HcErrNyru3IXwnUjHyPigj4DgCH5tLR+ehl9cK0upg81tu92hM/q0QwFzPXCdVrRQC
+         1e5I2qu0uCfZl1LU1MPA6dnworHc7Tz+3NO3EoKvSHKG++DIf/bZtOsR+gOVNTJ+YIhn
+         +8XMNlLfdFp/TVCEvd4hjsBHeZXt+6AyncbdRSX2IoIipW2OfVQk9fnGlx7j23/6yvbk
+         Z2bjbugAXIuvs2av3j3SX6T9C18JkNvmopBpo/5X3LKc6YPM4qMzAFjOnzJmtogDsJ/v
+         yf3nK9lBMug7GVhXO3wAwY8LLNsuR3rWFWkkBXpCwhpvr28d07qJUbaY7YAkyvkgdb/W
+         8e4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lIxmppUh5zsETJqIpBWngzESP8KE8QhCm/D2gCLXS+E=;
-        b=aBIiytVtUq0Z7N3vR+CFP7LQ2d/U2QEqpRYj91bBEYRg0qLnClTOm2ZBpPxfNTPDbb
-         6lOvN0TY6GQeuHOvPzBhCAeW2Fq3JX+y7WwCKKUsnuzZHpCbJPrq48b9MTK3xGPR+gpr
-         6ZX8HGuEnN8XxlayQ6vToOa/qhvSEzlB3yOdfCqT7Fw+Wd9MMq8gS8eMmUYjFLyQrdM7
-         zwksuBr1G6hY8p8vR225tzhQEzmoeGNNrcuIGRARh4CnP5RwdrY175PXzQxOsqxaEcaO
-         eVUnSvCqGRvkrGugGBHp/Bwn5IhO0179fUj/AuAXla+4nwrhoaxK3royZHh5FEV0z3J1
-         +5SQ==
-X-Gm-Message-State: AFqh2koCXT3xmPS875n1kVx+XUd7Om0/nUEZsoaejktGLmTPnzAwqzdr
-        OU0pvHJRwa0sWfY0/I75JUeMzhZBKFi6gjCz
-X-Google-Smtp-Source: AMrXdXs7XR935SDEnYgWkCXhjgPgL/GSAPTXcOr2Jn+EGXpVWwhbU8X/szIP9rKRe7kXc8PF7oo1sQ==
-X-Received: by 2002:a05:651c:2003:b0:279:4a7:283e with SMTP id s3-20020a05651c200300b0027904a7283emr8537799ljo.27.1672491604793;
-        Sat, 31 Dec 2022 05:00:04 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id n23-20020a2e8797000000b0027fe3bc3c24sm385421lji.39.2022.12.31.05.00.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Dec 2022 05:00:04 -0800 (PST)
-Message-ID: <51875ab4-b0af-466a-cf27-d3bed65a94c5@linaro.org>
-Date:   Sat, 31 Dec 2022 14:00:02 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z/WmUGDU9j7tMbOdllnp/w1LH52F3Q0nBmj5c63hXoY=;
+        b=fmukIyJt6675nGYsNESKE9ej4zzIHnHBBcthJGhnq9aQzwFomfut2Wg4AzeM7znQQQ
+         JWcf0hDlimIYHh5h97MUQR/2L9j7/ztX8OwUFScnvgv5AffROKXeZpTc3ZxIe7LFwpCO
+         EYrqB0cwMadfxbw3xeQiJPOGVpkNI69ITDGXOyocrH29xX11+iO++WAzS0nwddZ2s6bx
+         zoCKQjLrbQ1Lkh4++uKOVZWpb4N6Af568G5WLgvuEy0nEHlqkBWtWv2puC9SDJHMisGP
+         NUm9pPz9X5xmovys8NweVkG8hhHB4UiNXvHtV5AEU9/zVkqDHPi6jd5EarZ4xa5f6g5D
+         N2Nw==
+X-Gm-Message-State: AFqh2krd6YwJQu9W7Vwa/iSu5WoWwAGq9VSxw6M4nUnmdWtbCA+ks1Fh
+        AR2XTCAdo+QgGcCPyIlraJ5oy5J75Eu2wrl3on8=
+X-Google-Smtp-Source: AMrXdXt0x2hv/NzCU5gypltMHPHNGVaAB4/E4enfVWVr3bbDnCQh0OgrIxyYaOiebMRIIqw/LRk4ug==
+X-Received: by 2002:a17:90b:4a45:b0:226:102:2dc9 with SMTP id lb5-20020a17090b4a4500b0022601022dc9mr18128660pjb.14.1672492074231;
+        Sat, 31 Dec 2022 05:07:54 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
+        by smtp.gmail.com with ESMTPSA id d7-20020a17090ab30700b0021904307a53sm14568161pjr.19.2022.12.31.05.07.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Dec 2022 05:07:53 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org
+Subject: [PATCH 0/2] Add Qualcomm SM6115 / SM4250 EUD dt-bindings & driver support
+Date:   Sat, 31 Dec 2022 18:37:41 +0530
+Message-Id: <20221231130743.3285664-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 00/18] Misc DT style fixes
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org
-References: <20221231125911.437599-1-konrad.dybcio@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221231125911.437599-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds the dt-binding and driver support for SM6115 / SM4250
+EUD (Embedded USB Debugger) block available on Qualcomm SoCs.
 
+The EUD is a mini-USB hub implemented on chip to support the USB-based debug
+and trace capabilities.
 
-On 31.12.2022 13:58, Konrad Dybcio wrote:
-> As part of trying to write up everything we care about when reviewing
-> DTs [1], I put my regex to a test and removed some reg inconsistencies,
-> among fixing up some other things in ipq6018.
-[1] https://github.com/konradybcio-work/dt_review
+EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH.
 
-Konrad
-> 
-> No dependencies as far as I'm aware.
-> 
-> Konrad Dybcio (18):
->   arm64: dts: qcom: ipq6018: Pad addresses to 8 hex digits
->   arm64: dts: qcom: ipq6018: Use tabs instead of spaces
->   arm64: dts: qcom: ipq6018: Sort nodes properly
->   arm64: dts: qcom: ipq6018: Fix up some indentation
->   arm64: dts: qcom: ipq6018: Add/remove some newlines
->   arm64: dts: qcom: ipq6018: Use lowercase hex
->   arm64: dts: qcom: sc8280xp: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm8150: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm6350: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sdm845: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm8250: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm8350: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sc7180: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sc7280: Pad addresses to 8 hex digits
->   arm64: dts: qcom: msm8994-octagon: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm8450: Pad addresses to 8 hex digits
->   arm64: dts: qcom: msm8994-kitakami: Pad addresses to 8 hex digits
->   arm64: dts: qcom: sm6115: Pad addresses to 8 hex digits
-> 
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi         | 548 +++++++++---------
->  .../dts/qcom/msm8994-msft-lumia-octagon.dtsi  |  52 +-
->  .../qcom/msm8994-sony-xperia-kitakami.dtsi    |   2 +-
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          |  20 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |  46 +-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |   2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |  46 +-
->  arch/arm64/boot/dts/qcom/sm6115.dtsi          |   6 +-
->  arch/arm64/boot/dts/qcom/sm6350.dtsi          |  16 +-
->  arch/arm64/boot/dts/qcom/sm8150.dtsi          |  68 +--
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  54 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi          |  16 +-
->  arch/arm64/boot/dts/qcom/sm8450.dtsi          |  48 +-
->  13 files changed, 461 insertions(+), 463 deletions(-)
-> 
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+
+Bhupesh Sharma (2):
+  dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 binding
+  usb: misc: eud: Add driver support for SM6115 / SM4250
+
+ .../bindings/soc/qcom/qcom,eud.yaml           | 10 ++++
+ drivers/usb/misc/qcom_eud.c                   | 49 +++++++++++++++++--
+ 2 files changed, 56 insertions(+), 3 deletions(-)
+
+-- 
+2.38.1
+
