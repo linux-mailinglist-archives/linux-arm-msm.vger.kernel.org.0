@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A435E65A3D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 12:53:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF7E265A3E7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Dec 2022 13:21:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbiLaLxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Dec 2022 06:53:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52482 "EHLO
+        id S229638AbiLaMVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Dec 2022 07:21:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231866AbiLaLxe (ORCPT
+        with ESMTP id S229523AbiLaMVI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Dec 2022 06:53:34 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519D7BC32
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 03:53:32 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id m6so24634423lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 03:53:32 -0800 (PST)
+        Sat, 31 Dec 2022 07:21:08 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600238FD6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:21:04 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id m15so12650948ilq.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Dec 2022 04:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NkJmVYb2dSqPK/T7xVy4KTErmNKrOgLp0utmNWQPWi4=;
-        b=wfl3JVQ8n+sNbLjY5/+fsKauppg5jNdt+0eo+HuO7p5iJatGrznD3OSXqOemUl33eJ
-         EWJdfEeDGcw6gApvR3DA3/RR2yG3/xbAQOPvswgF+tJ4riqZ29uA4TWm0rCrceL1Rlnc
-         ZmRJQ4qdiGnd6ZpOuMtliniD60yy8QGSqyzB7zcZJnZactp/TGmHxalQ9d2wNePYcF+w
-         jHIwxZ0nRHgAtbjX/LBGG+3CuG1lyOPSlWTZaYH01E+mv6mwp+PnOAio7svBKOJeH27r
-         OIvAwr3cW3AOuC5Z6x6DnuJPLUglCRY119NVH7SJXgx2GE6wTKe4AXCQVJPqxSlFQH0h
-         O7KA==
+        bh=eHyvwjFgtUAVt21YsLkg4uXGhQ3k3u+3P7bUVoiseTg=;
+        b=PNYwRvN67KohL7ytiDP6pZKZozIdVGKqddCyJ8x8xS1CvkG963uhzVPanfgNRudAdC
+         FyjLtV/eoJsG6/LiGDJ1HCVwrWluabbWyjoQOKzC9sw/H0W2PbCgQUxBzWrvtevLicPj
+         +LKz+CgSTLfYpxbsq7V9xRp4p173EPhzMHwGWYn1KC3t6VjBpOU1Hd6Mhvmv3BjtOmWI
+         o3uwTRxRrh8tsjFJYAIXFpUnSPv2qNVybDMbUZYMKtCRF5/5CItL32Qx868BC87vgig8
+         TiK+pxwJRJ5mKz5CtN1DotJfA0pY3dDgTdhWWxDozhYRWQ866mJQVh0pwX+7TPpkPiAx
+         oFJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NkJmVYb2dSqPK/T7xVy4KTErmNKrOgLp0utmNWQPWi4=;
-        b=TIdnhHGxDF4ynBwkkXNzKAgAnBir2JOmomAT6g5FtkwfWOuHLaElK+/mO5I8CZULl9
-         8OQLC2/TSiE9L1kL02KdIRBDJe95eomvcCHaGa83NTZI8AflsglJ77yQidFDsTD3Bk0x
-         jcgunwz7BL7nBHL9Ywq9hPjOY6N4m6BAtW5XJSKAwxBL+dSyVMVb42SAUDFj8s3FdApn
-         ktCVlqqiLneEMo4ai4iaViTBGR7al7IOZbLQV2TewixwrjQy5Uuq0WfnZ5gYuJyU4dNj
-         3Ur4JBF6P1DmTo/PuagWzjMnG6SpkdUJM/nJ/+Mg799v7GAUv/wKV0BzLKwxacYDMXOG
-         JGyw==
-X-Gm-Message-State: AFqh2kqGKTZ6DT+BMXvf7J6dWxvTeyuPveMOLAXE5YMBhR5IewxBah2Q
-        UFHErdr4Y0gK6rZdaURsics4bg==
-X-Google-Smtp-Source: AMrXdXsqhfCs5oCPwHv1Q86YNRQTjtDZEtkD9c8AvGEnqihG5mKAUmdDltHhuIVNKFWorwu+H8ipHA==
-X-Received: by 2002:ac2:50d9:0:b0:4cb:2c19:ec21 with SMTP id h25-20020ac250d9000000b004cb2c19ec21mr1098080lfm.0.1672487610585;
-        Sat, 31 Dec 2022 03:53:30 -0800 (PST)
-Received: from [192.168.1.101] (abyl184.neoplus.adsl.tpnet.pl. [83.9.31.184])
-        by smtp.gmail.com with ESMTPSA id c8-20020a056512324800b00499aefcf68esm3851977lfr.292.2022.12.31.03.53.28
+        bh=eHyvwjFgtUAVt21YsLkg4uXGhQ3k3u+3P7bUVoiseTg=;
+        b=flWVhegIB9NEgEP/sk6tpT6xAa4wBkMqTmTFNmNGYOscFMIjvHtfRHNEjTwkPfYXCu
+         LrCo2xVDbfwMASauG3OITz9m+OvuvFqucrvaWyKcQZuWcBf0FBpLem0vQcO/ikBBVlPU
+         QhCd+icKj0gZ1B7Wm6j1P7URKKLDYTt0uYgfdP3PCOwJO0P/AaM/N3m5ypqqtI+rLA4W
+         f3ummhz1tsviXpDcWZ7/bshYe/RFV+3TKOnVlRAXDkjN6C6GjKey5WqJrFBJBYKBJWt2
+         r3bOIoThD5qAELcRHI11mrnIacaNI76oCxRw9t5nuiSq+y4Rvqcp5AlwhQOiOLLJEHzf
+         rlhw==
+X-Gm-Message-State: AFqh2kphUvwRSuOsJar++MdMHWL4LZ7P0DXYRun24vphUXFYuUgStF5W
+        yWtl6YgGb8et49iwC66kmOCKyQ==
+X-Google-Smtp-Source: AMrXdXs1PloNm8WS1dZpxGaleJqB1vINRpBdIbKv4RjigCCTdRdhZmGlECyuJcz2RbPovIFXGk6xTw==
+X-Received: by 2002:a92:bf0c:0:b0:30c:3c0:7a56 with SMTP id z12-20020a92bf0c000000b0030c03c07a56mr11491172ilh.5.1672489263551;
+        Sat, 31 Dec 2022 04:21:03 -0800 (PST)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id az36-20020a05663841a400b0039db6cffcbasm5956607jab.71.2022.12.31.04.21.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Dec 2022 03:53:30 -0800 (PST)
-Message-ID: <398531b5-d556-00c8-3998-0120aadb3143@linaro.org>
-Date:   Sat, 31 Dec 2022 12:53:27 +0100
+        Sat, 31 Dec 2022 04:21:02 -0800 (PST)
+Message-ID: <e72955ce-5c0c-f335-8deb-8a2893c842b5@linaro.org>
+Date:   Sat, 31 Dec 2022 06:21:01 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: use qcom,gsi-loader for IPA
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 0/6] net: ipa: simplify IPA interrupt handling
+To:     Jakub Kicinski <kuba@kernel.org>, Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221230232230.2348757-1-elder@linaro.org>
+ <20221230195218.65eaaf92@kernel.org>
 Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221231002716.2367375-1-elder@linaro.org>
- <20221231002716.2367375-3-elder@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221231002716.2367375-3-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From:   Alex Elder <alex.elder@linaro.org>
+In-Reply-To: <20221230195218.65eaaf92@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -81,270 +81,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/30/22 9:52 PM, Jakub Kicinski wrote:
+> On Fri, 30 Dec 2022 17:22:24 -0600 Alex Elder wrote:
+>> [PATCH net-next 0/6] net: ipa: simplify IPA interrupt handling
+> 
+> We kept net-next closed for an extra week due to end-of-the-year
+> festivities, back in business next week, sorry.
 
+No, *I* am sorry.  I forgot to even check this time, and I normally do.
+   http://vger.kernel.org/~davem/net-next.html
 
-On 31.12.2022 01:27, Alex Elder wrote:
-> Depending on the platform, either the modem or the AP must load GSI
-> firmware for IPA before it can be used.  To date, this has been
-> indicated by the presence or absence of a "modem-init" property.
-> 
-> That mechanism has been deprecated.  Instead, we indicate how GSI
-> firmware should be loaded by the value of the "qcom,gsi-loader"
-> property.
-> 
-> Update all arm64 platforms that use IPA to use the "qcom,gsi-loader"
-> property to specify how the GSI firmware is loaded.
-> 
-> Update the affected nodes so the status property is last.
-> 
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+It's perfectly fine, I'll wait.  I won't re-send next week unless it
+becomes obvious I should.
 
-Konrad
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi         | 5 ++---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi                     | 2 +-
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi                   | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi                   | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi               | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts                      | 3 ++-
->  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 4 ++--
->  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 4 ++--
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 ++-
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           | 1 +
->  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts         | 3 ++-
->  arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts             | 3 ++-
->  arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts   | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8350-mtp.dts                      | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi      | 3 ++-
->  15 files changed, 25 insertions(+), 20 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> index fd4b712037542..bffcbd141bd7c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> @@ -19,12 +19,11 @@ &remoteproc_mpss {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> -
->  	/*
->  	 * Trogdor doesn't have QHEE (Qualcomm's EL2 blob), so the
->  	 * modem needs to cover certain init steps (GSI init), and
->  	 * the AP needs to wait for it.
->  	 */
-> -	modem-init;
-> +	qcom,gsi-loader = "modem";
-> +	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index f7efb9966afd1..5ad97cd5f1b75 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -377,8 +377,8 @@ &gpi_dma1 {
->  };
->  
->  &ipa {
-> +	qcom,gsi-loader = "modem";
->  	status = "okay";
-> -	modem-init;
->  };
->  
->  &lpass_cpu {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> index df49564ae6dc1..6d80c64097e97 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> @@ -337,8 +337,8 @@ vreg_bob: bob {
->  /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
->  
->  &ipa {
-> +	qcom,gsi-loader = "modem";
->  	status = "okay";
-> -	modem-init;
->  };
->  
->  &lpass_va_macro {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> index ca676e04687b0..c194a88f91fd1 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> @@ -756,8 +756,8 @@ &gpu {
->  };
->  
->  &ipa {
-> +	qcom,gsi-loader = "modem";
->  	status = "okay";
-> -	modem-init;
->  };
->  
->  &lpasscc {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> index 1eb423e4be24c..b62beffc27bf7 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> @@ -474,8 +474,8 @@ zap-shader {
->  };
->  
->  &ipa {
-> +	qcom,gsi-loader = "modem";
->  	status = "okay";
-> -	modem-init;
->  };
->  
->  &mss_pil {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> index de2d10e0315af..f5a186fd7c72b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> @@ -518,8 +518,9 @@ &i2c10 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
-> +	status = "okay";
->  };
->  
->  &mdss {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index 42cf4dd5ea284..d8a601d36c6df 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -424,10 +424,10 @@ rmi4_f12: rmi4-f12@12 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> -
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
->  	firmware-name = "qcom/sdm845/oneplus6/ipa_fws.mbn";
-> +	status = "okay";
->  };
->  
->  &mdss {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> index bb77ccfdc68c0..fcd401f460456 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-> @@ -495,10 +495,10 @@ touchscreen@38 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> -
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
->  	firmware-name = "qcom/sdm845/axolotl/ipa_fws.mbn";
-> +	status = "okay";
->  };
->  
->  &mdss {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index eb6b2b676eca4..d6b11d56ebb37 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -299,9 +299,10 @@ &mss_pil {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
->  	firmware-name = "qcom/sdm845/beryllium/ipa_fws.mbn";
-> +	status = "okay";
->  };
->  
->  &pm8998_gpio {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> index 38ba809a95cd6..9ca4682aea1b2 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> @@ -449,6 +449,7 @@ &ibb {
->  };
->  
->  &ipa {
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
->  	firmware-name = "qcom/sdm845/polaris/ipa_fws.mbn";
->  	status = "okay";
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index f32b7445f7c96..15da94808b21d 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -465,8 +465,9 @@ ecsh: hid@5c {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
-> +	status = "okay";
->  };
->  
->  &mdss {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> index daca1e0ad62ad..15f6059b75757 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> @@ -383,9 +383,10 @@ digitizer@9 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&ipa_fw_mem>;
->  	firmware-name = "qcom/sdm850/samsung/w737/ipa_fws.elf";
-> +	status = "okay";
->  };
->  
->  /* No idea why it causes an SError when enabled */
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> index 9c4cfd995ff29..00f16cde6c4ac 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> @@ -290,9 +290,9 @@ &i2c11 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> -
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&pil_ipa_fw_mem>;
-> +	status = "okay";
->  };
->  
->  &mpss {
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> index 52cf3045602f9..f70e0de0509c5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> @@ -376,7 +376,7 @@ &usb_2_qmpphy {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> -
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&pil_ipa_fw_mem>;
-> +	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> index 1f2d660f8f86c..d00e8d922ceeb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> @@ -524,9 +524,10 @@ &i2c17 {
->  };
->  
->  &ipa {
-> -	status = "okay";
-> +	qcom,gsi-loader = "self";
->  	memory-region = <&pil_ipa_fw_mem>;
->  	firmware-name = "qcom/sm8350/Sony/sagami/ipa_fws.mbn";
-> +	status = "okay";
->  };
->  
->  &mpss {
+Thanks, and happy new year!
+
+					-Alex
