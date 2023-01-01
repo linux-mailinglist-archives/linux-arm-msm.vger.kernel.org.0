@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E23A65AAB5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 17:42:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADA1565AABD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 17:48:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjAAQma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Jan 2023 11:42:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
+        id S229550AbjAAQs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Jan 2023 11:48:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjAAQm3 (ORCPT
+        with ESMTP id S229447AbjAAQs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Jan 2023 11:42:29 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0621152
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 08:42:28 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id e13so24496098ljn.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 08:42:28 -0800 (PST)
+        Sun, 1 Jan 2023 11:48:26 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C532621
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 08:48:25 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id q2so27089651ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 08:48:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DyHmJqMwBFUTDUCLBa6xYcpZiFOVVP1mRqK8f17ZqlQ=;
-        b=nlo6vvboC1gDKb90dwiGsoLvLW04p9t5Iuivx1rAOrJQ6IdEGnrYpwh7jiDBPfE/3D
-         /SMwuvv2zdSpkX3dgprB2gdElbPIkRczorWVOEB821htUEsSZdQlXni1KB2PltWAtEiU
-         duBP9BJ+ZUkQTfY3MHdF5GDxVfYlrnXii5Fe+uSAh2XXhhXWVppStGOaYMrQ0N3kRayx
-         uDlPAxzZyXRVO7PyNKmoKgq2xT3baa+YWX5aLoMUFQ32mQGvmiqRLJqeQMA+YQ/0kBGG
-         nG4V/dc/WuOXxNT7AqOKI3SGw0IDcnnOmQUljoQy3JwlvVxahlXdRn5EAaePVMzvq6E9
-         Ga5Q==
+        bh=Ge4PP1SVJmKzIUfpzygbNjv7xfpf7GwfAHU5wdsn3v8=;
+        b=iyWofjg1cuc1wFt7FbNU03134Ig4lU4d7FLbhbPl/5XKtZZzoggW9hhf/5Bn+T6NRV
+         vyntxu9tdPh1FFPRtc2lY87M26ZGGIJvH+dsuUEHpuuTK3+I2rrTkAMDLJJEDFotdKTu
+         poawfAgq6/2fO+SRgzqMWgpDpBv8DpBjh57Bmg3fVlvJ5YcrAG3/2X4uuAUeNeZI/ALY
+         PvcQkh+5DnchCubmpZoa2BeP/bFzZsL4cO1PNVoidx0jjCQGZaR2PpUGEIp7uwaL8hhu
+         IV19ZfdqZlmWN41RXaFzCWFCpY61XLp2dAJuKLIjTyK4ooYqDjR36JiFbpihzlNBi+xx
+         VIcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DyHmJqMwBFUTDUCLBa6xYcpZiFOVVP1mRqK8f17ZqlQ=;
-        b=oJ9dfgMK8FDfNU6umrxvdDJBPg1AEgjP9MvHgu9YSr6i05xVwbxYvy86VCSQRAQ13P
-         33un+15d5OPDPfCYo/bL0LxjXV2f7RS9ISpHLJ31RKY0anHZIAFK3hnkXTzUOPK6IlWL
-         7z97iVB2N9FW8nrB4VbI+i9aWxCpRK35w3EQz2FEbyI0mPjNEzC1rizFuBO5rbeQBNDX
-         wZcZHnmFxF/Wtp2DB17rf4EuSeq8PWW9wTx3C9ckLS/6qi3px/xvgqVCMFSDPadiqIMJ
-         HeBIMdwwaN2i6OdedLoVxDKv3EewwLn/R8vO7VbLzPPMJ4jA5eiAppDiIo+iNEeE0C6Q
-         x+Xg==
-X-Gm-Message-State: AFqh2koByhNvCJT4f/AgGIbYMdEYmytNt6GQvTGPjGtlZED/XjlDjsaM
-        HX8cFNLUrwNHGhmTHKeAELTBZA==
-X-Google-Smtp-Source: AMrXdXtaUkfXq3/pXQqKV7l0Qid+mJyMwHrwTgiPlwkTGs86H4Do7vJZvJh904esgyxZHUHgnau53Q==
-X-Received: by 2002:a2e:a54d:0:b0:27f:bc58:3926 with SMTP id e13-20020a2ea54d000000b0027fbc583926mr8113638ljn.43.1672591346531;
-        Sun, 01 Jan 2023 08:42:26 -0800 (PST)
+        bh=Ge4PP1SVJmKzIUfpzygbNjv7xfpf7GwfAHU5wdsn3v8=;
+        b=USHbm7LM4oX0vAFEM6eF1oyE8NG7wijw2U7bQOIDqXFKlTVbL+U2aYLCd2naVI25/8
+         +5fQcKWc4nf8zVxL05L+abMyTeVdgA1JwnZf6iy1TS8Jy2lrmMgtgRvR1nN2/0bo1SWa
+         g6P+gjQzrbIav5GbYt6bbxDPwLI3bQCfKRIBbhnMxWRzzpIkXII6z3enU3a3iVgUx+dl
+         mzzE+uNAMfluPYfPPTQjrQAJhli4eiOi7kbHWSLBomnxnTjwnpktpYOp+/P1agGqXwdE
+         IZp0WA2c6geWgqzVDRB03lk4XGcdsOFfDSQuzuGIsjmPGJZliWHQsQIpF+Ra0M8Jcp/W
+         fqhw==
+X-Gm-Message-State: AFqh2kqsV0prrPP9Hfd+PX3fkC0qKzhMLrYODzNUptUBCsMD1LgaD3QB
+        ATZxz30xEE0swodDUS5w8QfMXQ==
+X-Google-Smtp-Source: AMrXdXsbed8972ttl4tuW+r6II/l4+IDIN3XfWFXtwKU+S+h7RqPDrhNKmmYR0qUvjU6oenThQCNSA==
+X-Received: by 2002:a2e:88c2:0:b0:27f:d050:d95c with SMTP id a2-20020a2e88c2000000b0027fd050d95cmr4172562ljk.10.1672591703879;
+        Sun, 01 Jan 2023 08:48:23 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s9-20020a2eb8c9000000b00267232d0652sm3055761ljp.46.2023.01.01.08.42.25
+        by smtp.gmail.com with ESMTPSA id e26-20020a05651c039a00b0027e4da2d952sm3014101ljp.68.2023.01.01.08.48.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jan 2023 08:42:25 -0800 (PST)
-Message-ID: <3dceb85f-1c1c-e8c6-1cc7-3c75f3f4c0b7@linaro.org>
-Date:   Sun, 1 Jan 2023 18:42:25 +0200
+        Sun, 01 Jan 2023 08:48:23 -0800 (PST)
+Message-ID: <9d77ed88-a6b7-74f0-4f0e-f67b3ab15982@linaro.org>
+Date:   Sun, 1 Jan 2023 18:48:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/adreno: Make adreno quirks not overwrite each
- other
+Subject: Re: [PATCH] drm/msm/a2xx: support loading legacy (iMX) firmware
 Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+To:     Fabio Estevam <festevam@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Emma Anholt <emma@anholt.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20221229101846.981223-1-konrad.dybcio@linaro.org>
+        freedreno@lists.freedesktop.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+References: <20230101155753.779176-1-dmitry.baryshkov@linaro.org>
+ <CAOMZO5AaZrXe8w7XhzG5LzCxdodOde-5ACV6Kgd8B+uYneKxWA@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221229101846.981223-1-konrad.dybcio@linaro.org>
+In-Reply-To: <CAOMZO5AaZrXe8w7XhzG5LzCxdodOde-5ACV6Kgd8B+uYneKxWA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,22 +80,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/12/2022 12:18, Konrad Dybcio wrote:
-> So far the adreno quirks have all been assigned with an OR operator,
-> which is problematic, because they were assigned consecutive integer
-> values, which makes checking them with an AND operator kind of no bueno..
+On 01/01/2023 18:38, Fabio Estevam wrote:
+> Hi Dmitry,
 > 
-> Switch to using BIT(n) so that only the quirks that the programmer chose
-> are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
+> On Sun, Jan 1, 2023 at 12:58 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> Support loading A200 firmware generated from the iMX firmware header
+>> files. The firmware lacks protection support, however it allows GPU to
+>> function properly while using the firmware files with clear license
+>> which allows redistribution.
 > 
-> Fixes: b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Could you please share more details as to what firmware you are using
+> with the i.MX53?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I have been testing i.MX53 with the firmware generated from EfikaMX 
+generated files 
+(https://github.com/genesi/linux-legacy/tree/master/drivers/mxc/amd-gpu).
 
-> ---
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
->   1 file changed, 4 insertions(+), 6 deletions(-)-- 
+> Is it available on the linux-firmare repository?
+
+Not yet. As the firmware have clear attribution and clear licence 
+(BSD-3) which allows redistribution, I'm going to send pull request to 
+linux-firmware as soon as the approach, presented in this patch, is 
+accepted by Rob.
+
+-- 
 With best wishes
 Dmitry
 
