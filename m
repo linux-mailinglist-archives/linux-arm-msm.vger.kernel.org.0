@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D075365AA68
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 16:40:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69ECD65AA6D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 16:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbjAAPkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Jan 2023 10:40:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35202 "EHLO
+        id S231491AbjAAPlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Jan 2023 10:41:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbjAAPke (ORCPT
+        with ESMTP id S231479AbjAAPlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Jan 2023 10:40:34 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 947952DED
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 07:40:33 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id bt23so21745908lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 07:40:33 -0800 (PST)
+        Sun, 1 Jan 2023 10:41:47 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC54A5588
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 07:41:46 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id j17so28916044lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 07:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c5RuwWSVhOy4bx3U84+ZDzXx4NkVujrybKX74oDk6bs=;
-        b=p8LUuneUt0KRQyiTOVJOG2ZINoHCZC9JZAqRg65HoN7tPfgd5wC+2B6khS0mexhByU
-         SS+4PaKyhWC/kdYaWlwAXb269IxXgLwbb8qUvZafx95iD465JmTZQx62XmmhyC3U6ne+
-         /MipjrLY/AkgJtPrEkyGfbuzn/6rog13TatWOE9MAPNSTGYWeZ1t+zrshD2qG1w71wCA
-         t5yJXTlLSXXf+ImaMNnjcyqovYkUatErnMvdY0mVgorfLuo8HFMg98My3H1sNjMtzIiU
-         fsy+YBuUB1Yxuh3XgpgO4VNYUP++bDc0hzNj3++CThwNLOT+8wDeCxbYo1uWtGPbJicA
-         8UvQ==
+        bh=n0yD3wERlGAM8pv5eeEX31uYMLCnHOtnWRAsTfmi30Y=;
+        b=qeGNsAtZHXdURWEhF+H3FgvhVvRwqMUnZlGU28ZmQ84w14j2B5l2HP09ToQwlySnQm
+         3TgkyhPGPLVQiSlSlWksU668SjS5B4Yv5xRNiXB+wVa6BucShiU/inBVZcnR7BpCZLz2
+         LOJYy65mOYak3gF74MXinBEG5p3L6ZvQUQW9USdYmSLY1r7LBNDpJze2XN7o6VaSSBlm
+         x9tkPs52CianzXBU+0YTM3qZYnOO9C5949IdQGuW6Zma0/fxn6UVMvZMjt2zs1UzKg87
+         rpc9RZHgzwovMXHmCAOk4m8TcUrztfUTijUbCLu2ZJVCvh2mUqZUbsvxPixIXINj78SG
+         ADvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c5RuwWSVhOy4bx3U84+ZDzXx4NkVujrybKX74oDk6bs=;
-        b=rDweb85lDxkFTs2NNsN4fMfbBepEH587FneRvsFLUL4GVlThrKRWpBwN8O57Vl08oO
-         0TgZBYZ9teNhwRsrXY8gg5MvJESwQ/F7kXARh48K59Wr2IeSfkxsdrYt7nTvhdqSnHBe
-         djcxbhZjq46YXAKi1QLfdn2IYy85IVVOzmC/gKA9nFFXxbsPLMJ7b3WEpDnbQH9SeSmF
-         web4uO6p9dn66+Zx2B5sECh2oU3j8gp+NkaKwk+62q8Ks2nrXzhseDppLeYipH/oZnyY
-         NTQ6d/H3DlgaFL8AGV3e7DrkzHJQEE+FCD1OTFiylBfVZxpqoTgOZYLcjZds937/5fNO
-         hBvA==
-X-Gm-Message-State: AFqh2koKz1vSagybkW/QUyR+G6/puuAieJU7cIP3JgkpZgABh0AqyZvG
-        OZnTP+bdIBMdJJ4h+OMEr0ObRQ==
-X-Google-Smtp-Source: AMrXdXskNqBM5s1DAF2mSUlq4PHai+KtIFBVwyONA30znFvyr7u1VisNSecOLbVdEMZCF73YgMbNnw==
-X-Received: by 2002:ac2:5494:0:b0:4b5:5bc1:16da with SMTP id t20-20020ac25494000000b004b55bc116damr10172196lfk.39.1672587633160;
-        Sun, 01 Jan 2023 07:40:33 -0800 (PST)
+        bh=n0yD3wERlGAM8pv5eeEX31uYMLCnHOtnWRAsTfmi30Y=;
+        b=cnYjVA/pylIBhyzqC1kHf7fcO3Y4cELWhAocT6i7tpZR6nLaITPr+YqNsEKbe1R4rn
+         lorKKK9smZztFV6eXbHS6UkWkVbF4Mi9GDuTPNwsB8bog05LJpiOpITxQgWie7Fq0Mfh
+         CEx/tke8Gj2pEcshfORaQqonIQuG0kissInNWeaqOsBs2LQ99Llyiez0BltvEp3SXIwk
+         Ye09ouhoseieCGPTzdAdRRBzsx4BVHm4fLOzO7ICS1573fm/snedbrgcPA9WUvS8t4AC
+         KbopcrftlVR6nD5S8R+V62y2Hbj456uSAfFkqH7Wx3o0lJE+qp6ddmqyUuP99j4IEQtl
+         lxUw==
+X-Gm-Message-State: AFqh2kopFw3Ut3pP8a+UeT2pZbHRdd5//E7O60DHS7szkBIHWukU+N6J
+        yMTtOd+VygQe6PZvd+FWNDAE8w==
+X-Google-Smtp-Source: AMrXdXvAGX+KauCUfod5Ps7UZ3sIVH1Arp3+D4BElKB9MZZFVU7WsDG+p81ErPfcqwvfc38Hyb1Anw==
+X-Received: by 2002:ac2:5494:0:b0:4b5:5bc1:16da with SMTP id t20-20020ac25494000000b004b55bc116damr10172612lfk.39.1672587705164;
+        Sun, 01 Jan 2023 07:41:45 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id w4-20020a05651234c400b0049d0a98f73csm4152591lfr.154.2023.01.01.07.40.31
+        by smtp.gmail.com with ESMTPSA id z8-20020a056512370800b004b55b404d36sm4166310lfr.156.2023.01.01.07.41.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jan 2023 07:40:32 -0800 (PST)
-Message-ID: <396b0ef2-b3da-2c44-66a1-16d1b21ac6ef@linaro.org>
-Date:   Sun, 1 Jan 2023 16:40:31 +0100
+        Sun, 01 Jan 2023 07:41:44 -0800 (PST)
+Message-ID: <3e67f0e1-1809-344c-5bc9-fdb72ade4df7@linaro.org>
+Date:   Sun, 1 Jan 2023 16:41:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v5 5/6] dt-bindings: arm: qcom: Document
- xiaomi,laurel-sprout board
+Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: sm6125: Add UFS nodes
 Content-Language: en-US
 To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -67,9 +66,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221231222420.75233-1-they@mint.lgbt>
- <20221231222420.75233-6-they@mint.lgbt>
+ <20221231222420.75233-5-they@mint.lgbt>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221231222420.75233-6-they@mint.lgbt>
+In-Reply-To: <20221231222420.75233-5-they@mint.lgbt>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,27 +81,65 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 31/12/2022 23:24, Lux Aliaga wrote:
-> Document the Xiaomi Mi A3 (xiaomi-laurel-sprout) smartphone which is
-> based on the Snapdragon 665 SoC.
+> Adds a UFS host controller node and its corresponding PHY to
+> the sm6125 platform.
 > 
 > Signed-off-by: Lux Aliaga <they@mint.lgbt>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi | 59 ++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> index df5453fcf2b9..9cb081332849 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> @@ -511,6 +511,65 @@ sdhc_2: mmc@4784000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		ufs_mem_hc: ufs@4804000 {
+> +			compatible = "qcom,sm6125-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+> +			reg = <0x04804000 0x3000>, <0x04810000 0x8000>;
+> +			reg-names = "std", "ice";
+> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <1>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +			iommus = <&apps_smmu 0x200 0x0>;
+> +
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "ice_core_clk";
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+> +			freq-table-hz = <50000000 240000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<37500000 150000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<75000000 300000000>;
+> +
+> +			non-removable;
 
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions. However, there's no need to repost patches *only* to add the
-tags. The upstream maintainer will do that for acks received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
-
-If a tag was not added on purpose, please state why and what changed.
-
-
-
+Does not look like you tested the bindings. Please run `make
+dt_binding_check` (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
 
 Best regards,
 Krzysztof
