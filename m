@@ -2,119 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6712365ABBD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 22:33:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AFD965AC08
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 23:18:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbjAAVdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Jan 2023 16:33:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55886 "EHLO
+        id S229588AbjAAWS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Jan 2023 17:18:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjAAVdm (ORCPT
+        with ESMTP id S230456AbjAAWSZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Jan 2023 16:33:42 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382DA110B
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 13:33:41 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id u19so62817832ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 13:33:41 -0800 (PST)
+        Sun, 1 Jan 2023 17:18:25 -0500
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B1B261B;
+        Sun,  1 Jan 2023 14:18:24 -0800 (PST)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-144bd860fdbso31597111fac.0;
+        Sun, 01 Jan 2023 14:18:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yyX96uVGJMMaNM8wZZWyXIyRqapSrshMe1zf2VI54Gc=;
-        b=gSw5fX1Bkm7fQmXRIRnGTyyos+zIm+kBLxXP81KQpsb3rLEabKuUAbHFc3zYDXnWbs
-         AGjnENSsuIA9DPgm6QM/wXLIoq/IQ7jBnzxyDYNg/FGfwEKGIfg2x27FyhCI7Xo9OwTQ
-         ygZUVFs79gcCVrwujTUUTHSf+GHYcGTa88YGaqkgeXAEShwLBYbyNHFh9bSxB+/WVmxW
-         yrjGG0q3DeSv4SA2WYrtz2qLAmT67GyE5lMyTb16pO41/JofWyYesQ8PqUGBmsmqq8mq
-         i77+4PyJq0tAeMMr58zyQRSZhBTyf4uirsCvZqH6BQaR9ULl21lVr8xoUKjTLYonDjXD
-         8BRg==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yy52nz5EWhcJsvWpjun3W8BAed7Pu6I0tRm9djceBtE=;
+        b=aUKgOPghXlTvzrc6u7k5kEW3PvtUpuXnRdFSLQ/HFxtA6NEyFCGeIJl5XEM3oSYvMf
+         yYBCOvMvrbLLqsn3ljLul0VQ5m1mief/TwD2BvREIf58XjoWaiKgm+6hfJ6TI46cjZEe
+         AaJGQ+Nuy/06MFO1sIE2johDMzmR9gjbY6uzGckDHw+JpdCEZlGlfMQVIzZe4KgGTlXj
+         /Kzwr9YunMYk8/bflwQVODouOYRc9Da+KNWAaky0VoTNcP3OzsJbGd/mSE90Knh8mm3k
+         uhoVFbWcZ8nqA4GFNaw4ztPW1vXQ6waLEtTUg0JNhL7Q1TwR0Bwj91flhywYpdXOApta
+         N/1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yyX96uVGJMMaNM8wZZWyXIyRqapSrshMe1zf2VI54Gc=;
-        b=OCWehhyoTX0n3KO9Wu4UQvQgH87vgqznm0Gho0MuH03pV8ullcYQIRyTgEFsEJmiuY
-         UQLQJicqHX0oPIYnEZWIyhvfs8SivJEnZDsghFeygm6pPgvrAkH97PVdwDjRVAKNyx2z
-         MySLk+AQ/TpJMBD7SB46SjEOlV0CrYXAahdYSFmKeYgUQS8i2ZoVgBQtWRGXUN/9MBtC
-         KDp4+wIdpZ6hVzfg1zJ6EwxT5AeVq9MyAXF0joWvGI0kn8Y1QjAdnLplIKOzw/NcJPrE
-         E/boCoqefcHRjmhDpwHR7WaEPq4xNGDCUEAmQDFYYhs9mkVqWyeJXP2Uk2gZEGDQTE1s
-         TXXA==
-X-Gm-Message-State: AFqh2kp93YefZQti8anyzONTupRPWy5x7VFS63Wy6gvIUOGxQg5MFo3G
-        W0SiUcHWBHCz49TBKP6U/3xGFw==
-X-Google-Smtp-Source: AMrXdXuIzVKHbCr/cOQ9XZLjyA7akuauNPpkKOy2DJ228mNpxKjLLqaiW0w47WAi5TfUVRXgYtr0fg==
-X-Received: by 2002:a17:906:b043:b0:7c0:d23c:ead3 with SMTP id bj3-20020a170906b04300b007c0d23cead3mr33986334ejb.27.1672608819181;
-        Sun, 01 Jan 2023 13:33:39 -0800 (PST)
-Received: from ?IPV6:2001:1c06:2302:5600:5825:7f8d:c381:cef4? (2001-1c06-2302-5600-5825-7f8d-c381-cef4.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:5825:7f8d:c381:cef4])
-        by smtp.gmail.com with ESMTPSA id h21-20020a170906829500b00782e3cf7277sm12056805ejx.120.2023.01.01.13.33.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jan 2023 13:33:38 -0800 (PST)
-Message-ID: <fde591a3-1e1c-c186-a119-5d2af48d2ae5@linaro.org>
-Date:   Sun, 1 Jan 2023 21:33:37 +0000
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yy52nz5EWhcJsvWpjun3W8BAed7Pu6I0tRm9djceBtE=;
+        b=PZVlwu+eRB0ASA/hUGj1yFqA29F6jx9PzhdcNt9b/szBBw3GMdtASzZXEccjDWZaaU
+         9rjF9pKr0u2wMu6VetlhJNFuZsRyBnnqrWue5p3VPfTGu1l3J/xFErRj4z1U+cZyWIKk
+         7Ah23UUxzk/WNsg81ZsFKNHxMxt7rWhGgFgjop6Amfl+B1xpNq3UaiIGHoe10VbEF3f1
+         C+PknOTZufL/MXwV/AbR34kiHV2jfEkhJMWu6f+GAo2Zmt6WgTBX0J9Lhub5JQ2GIjzj
+         UaEHqvr2hbAKArGHtZRw3w9StXc0CH4jzr/h1tlyr1ED2cbjLL4TpE5+wSx7wgEUjptp
+         REiw==
+X-Gm-Message-State: AFqh2ko+bmntC1nKOnAODBeFxXFOENu/JqYLamcY3hV5KXFvFvrEk1dF
+        QjN1ENPrIPAUyTX201N4rxyU4qiesfiSPRugY7M=
+X-Google-Smtp-Source: AMrXdXte8iX8MMHmEPzIXd/8vUmQGEbPcEziUE4Pov+05WakJv8QOTo5ISycioy38t6wUo32zfYPD4Qn9C2ptiMz+wk=
+X-Received: by 2002:a05:6870:513:b0:13d:51fe:3404 with SMTP id
+ j19-20020a056870051300b0013d51fe3404mr2226606oao.183.1672611504025; Sun, 01
+ Jan 2023 14:18:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v6 07/20] thermal/drivers/tsens: fix slope values for
- msm8939
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     Shawn Guo <shawn.guo@linaro.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230101194034.831222-1-dmitry.baryshkov@linaro.org>
- <20230101194034.831222-8-dmitry.baryshkov@linaro.org>
- <7298fd96-14ec-c82b-8005-bb5dd912a055@linaro.org>
- <fc6f9558-46c6-a7f6-7f41-afad418c8f7b@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <fc6f9558-46c6-a7f6-7f41-afad418c8f7b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20221229101846.981223-1-konrad.dybcio@linaro.org> <20221229104730.guopbgyleb6hif4h@SoMainline.org>
+In-Reply-To: <20221229104730.guopbgyleb6hif4h@SoMainline.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 1 Jan 2023 14:18:11 -0800
+Message-ID: <CAF6AEGvCT5S0KhcnUwGAbVqZXKxAQk4gfCegucAfQvy+Pgr4+A@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: Make adreno quirks not overwrite each other
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Emma Anholt <emma@anholt.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/01/2023 21:30, Dmitry Baryshkov wrote:
-> On 01/01/2023 22:24, Bryan O'Donoghue wrote:
->> On 01/01/2023 19:40, Dmitry Baryshkov wrote:
->>> +static int __init init_8939(struct tsens_priv *priv) {
->>> +    priv->sensor[0].slope = 2911;
->>> +    priv->sensor[1].slope = 2789;
->>> +    priv->sensor[2].slope = 2906;
->>> +    priv->sensor[3].slope = 2763;
->>> +    priv->sensor[4].slope = 2922;
->>> +    priv->sensor[5].slope = 2867;
->>> +    priv->sensor[6].slope = 2833;
->>> +    priv->sensor[7].slope = 2838;
->>> +    priv->sensor[8].slope = 2840;
->>> +    priv->sensor[9].slope = 2852;
->>
->> How are you coming up with the last value here ?
->>
->> https://github.com/android-linux-stable/msm-3.18/blob/60a8d8af3751b9dc22894fe68b3964ea94ae7888/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L525
-> 
->  From this DTSi. There was a separate configuration for 8939 v3. And I 
-> don't know why Qualcomm completely ignored it for later releases (3.14, 
-> 3.18).
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.3.7.c26-03900-8976.0/arch/arm/boot/dts/qcom/msm8939-v3.0.dtsi#L613
-> 
+On Thu, Dec 29, 2022 at 2:47 AM Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2022-12-29 11:18:45, Konrad Dybcio wrote:
+> > So far the adreno quirks have all been assigned with an OR operator,
+> > which is problematic, because they were assigned consecutive integer
+> > values, which makes checking them with an AND operator kind of no bueno..
+> >
+> > Switch to using BIT(n) so that only the quirks that the programmer chose
+> > are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
+> >
+> > Fixes: b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Nice catch!
+>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
+> Not sure if it's the right Fixes commit though, as it would have worked
+> when ADRENO_QUIRK_LMLOADKILL_DISABLE was added with constant 4 instead
+> of 3 in 370063ee427a ("drm/msm/adreno: Add A540 support"), but then
+> using bitflags in an enum value type is invalid anyway, AFAIK.
 
-Fair enough
+It isn't a thing that c++ like so much, but for c code, gdb will
+decode enum bitfields in a sensible way (IIRC).  Also, maybe it
+doesn't matter at this point, but it would conflict for stable
+backports prior to adding LMLOADKILL_DISABLE.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+with the fixes msg corrected,
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+> - Marijn
+>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
+> >  1 file changed, 4 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > index c85857c0a228..5eb254c9832a 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > @@ -29,11 +29,9 @@ enum {
+> >       ADRENO_FW_MAX,
+> >  };
+> >
+> > -enum adreno_quirks {
+> > -     ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
+> > -     ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
+> > -     ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
+> > -};
+> > +#define ADRENO_QUIRK_TWO_PASS_USE_WFI                BIT(0)
+> > +#define ADRENO_QUIRK_FAULT_DETECT_MASK               BIT(1)
+> > +#define ADRENO_QUIRK_LMLOADKILL_DISABLE              BIT(2)
+> >
+> >  struct adreno_rev {
+> >       uint8_t  core;
+> > @@ -65,7 +63,7 @@ struct adreno_info {
+> >       const char *name;
+> >       const char *fw[ADRENO_FW_MAX];
+> >       uint32_t gmem;
+> > -     enum adreno_quirks quirks;
+> > +     u64 quirks;
+> >       struct msm_gpu *(*init)(struct drm_device *dev);
+> >       const char *zapfw;
+> >       u32 inactive_period;
+> > --
+> > 2.39.0
+> >
