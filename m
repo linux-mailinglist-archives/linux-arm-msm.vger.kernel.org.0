@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8CDF65AB84
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 21:17:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2422665AB89
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 21:25:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbjAAURn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Jan 2023 15:17:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48386 "EHLO
+        id S230112AbjAAUY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Jan 2023 15:24:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbjAAURl (ORCPT
+        with ESMTP id S229561AbjAAUY5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Jan 2023 15:17:41 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DFCB261A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 12:17:38 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id qk9so62623385ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 12:17:38 -0800 (PST)
+        Sun, 1 Jan 2023 15:24:57 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31011263C
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 12:24:54 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id kw15so62571025ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 12:24:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ICumxnqx79Zlt31ygyhoGVRMM9iZ4lSSUIEGeCPK1SU=;
-        b=vt8F3nsolkG24gJe8VyvRmNJqEGZdUBGs2I5embe4ADHcvEUOZvF7toC+OlXigM1sx
-         5vI2TsTf3GsVF9gLb0wjUte7QvzmQBovqgk0dtyqprqmXUdsKGlj+e7pMVJJ7A3viirH
-         8TjGDNfZMkQbqsNg2I07Te1u1kLlAOFy9zFL+KnbG2PpejmYyBQTOaKjxMvyR9aC2Uj4
-         I47n5GRMTPTyoJY9kGLKFvLri9g36G0VPwlrV+9wpElqv0WrwnumPtNEbSdoDqn5a2js
-         IWIor1nvLpuuF0sqKedSb1ckwiwDoxc1UjWBZfubQ+bA6LtUZ3xQabZCVA7256nbJQwK
-         oZMw==
+        bh=HPJMzApKUEgomZ6Z914OrX4ob+ppzNbrVaTxN/F0SUs=;
+        b=ae6mqkKwWVDxEzvCRJR2NBJsLQ+OHI8UhlSOmMwaxQ9zoVQkJyW/4j5kXg5c7qrHyr
+         +OC5ynw1ob8aAOe7whJhJDI2g2QLKwz5xcabhxz+W1GmKJq2Way9tdI3kyZzuxWDaXws
+         5WY6WwvwBKY55XUYpZkNe7D4JYaDxmYhdLxQXRPuP0Az/r83mJ1nIA+UD1NqXmgZ3bdN
+         j73BpjrG3mJ+FpJE6zwtS/tK+ldgzto+jzi9BJq3Q9ZvYGxSC42uUQ0hQjXwi7KLQvOG
+         KeK/AV9WuZN4up6XvuYZOSNTjMu+JHiWpPsX8CraqXYIe9PjKSIgfFKthFVyXclJ68qe
+         bCqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ICumxnqx79Zlt31ygyhoGVRMM9iZ4lSSUIEGeCPK1SU=;
-        b=wH/f0n+XmKjZUaBl+yiSwlwchkMMtIxyvu1q4J3erEFXP+Suf89qD4Ik3bqmtZA7G8
-         vUoxGgXe/wzo+CcdY+4wp5yhdCsNchTKc1nal7CjkSmC1KxeTfKd23p2yOs203fqbNbk
-         Rp7tVxcl2OCA+5xjExyLIUmQXtmD9wiqj/kp6TKHcgkiNTtByUaMc3KHScg4sAWaBrLc
-         KJ5Bbq4iN5BvNRSxAKNTI2lYVqTzFb9d1uj2zFqvtONoFjLwOF9OPRUS2003+tX8ixeI
-         KaxDvBeEvXiZ4Z26l27iPMngbiDH9rvNYNRY2FOFKrKCOfqP7sygBNsGTyzPt1p3gXC1
-         Z8lw==
-X-Gm-Message-State: AFqh2kpR1aBN+YKHPaAg3jNF6JOqcnNy0J+9OcyKkdqa2FHbgXUaxCLm
-        JVAeponmE1uVri9jh7TJ7zW/Tg==
-X-Google-Smtp-Source: AMrXdXvVYNcR65AI2UIc/mTj7k+sO1EyevNqwxCRT4oghrcx7YBR8nO56Ng2K3BbmumLu2lLK+Ph6w==
-X-Received: by 2002:a17:906:30c9:b0:78d:f457:1052 with SMTP id b9-20020a17090630c900b0078df4571052mr32479352ejb.15.1672604256854;
-        Sun, 01 Jan 2023 12:17:36 -0800 (PST)
+        bh=HPJMzApKUEgomZ6Z914OrX4ob+ppzNbrVaTxN/F0SUs=;
+        b=0q4bK39pdzJCG/WJdJJNmYCHNvL1mgFOb6mkz/BsZ/WdGnbQ6GkRXGElwKlq0LCfb5
+         IpYjFKWjFcc0DiE8T1G+OdqIdswAZ+EXoF9bQCS5QYZEL2U+NeDIfM+7+pfyZ4oTLVHQ
+         UY7d1sOnNdbD1ezcrckoULXnztgKaOuyJcqGTs+cBQ2jjBpAI/FlmfcFx40Y/w8bDRh6
+         jpbqAS6X9Hx3dmtx3gONXJ/AmBUER6dEOJuxzyiFXkGZPoqTF5GG7JFA9/CYt0tVTzwq
+         kbMO5+hvVM/qGO0C2ScA1esN4TtLbQ80XOYTSzQO2nPGcbb8tVMsmLPzaFLhfxn82ihO
+         4VMA==
+X-Gm-Message-State: AFqh2kr7L5BQnc+RzIS0USWBUbIqmw+nkZel2VbAcY0e4GKHMPyq/tGe
+        jtm/Q+JzuScLqXDg7BG+640LmA==
+X-Google-Smtp-Source: AMrXdXtdDHy2b41X1oJ5eRemgM9ibCP4cPMKgNFCYHhUukXlDZFDO1bOObisZ9ylCn7CD3bzT83lsQ==
+X-Received: by 2002:a17:906:490a:b0:7c1:1444:da2e with SMTP id b10-20020a170906490a00b007c11444da2emr34090160ejq.63.1672604692822;
+        Sun, 01 Jan 2023 12:24:52 -0800 (PST)
 Received: from ?IPV6:2001:1c06:2302:5600:5825:7f8d:c381:cef4? (2001-1c06-2302-5600-5825-7f8d-c381-cef4.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:5825:7f8d:c381:cef4])
-        by smtp.gmail.com with ESMTPSA id r18-20020a17090609d200b0084c5a355f28sm8297876eje.179.2023.01.01.12.17.32
+        by smtp.gmail.com with ESMTPSA id z25-20020a170906945900b007c1633cea13sm12402630ejx.12.2023.01.01.12.24.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jan 2023 12:17:34 -0800 (PST)
-Message-ID: <8dd9f17b-957c-61b3-ae64-85309cd1332c@linaro.org>
-Date:   Sun, 1 Jan 2023 20:17:22 +0000
+        Sun, 01 Jan 2023 12:24:52 -0800 (PST)
+Message-ID: <7298fd96-14ec-c82b-8005-bb5dd912a055@linaro.org>
+Date:   Sun, 1 Jan 2023 20:24:51 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v6 08/20] thermal/drivers/tsens: limit num_sensors to 9
- for msm8939
+Subject: Re: [PATCH v6 07/20] thermal/drivers/tsens: fix slope values for
+ msm8939
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -72,15 +72,14 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     Shawn Guo <shawn.guo@linaro.org>, linux-arm-msm@vger.kernel.org,
         linux-pm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230101194034.831222-1-dmitry.baryshkov@linaro.org>
- <20230101194034.831222-9-dmitry.baryshkov@linaro.org>
+ <20230101194034.831222-8-dmitry.baryshkov@linaro.org>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230101194034.831222-9-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230101194034.831222-8-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,86 +87,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/01/2023 19:40, Dmitry Baryshkov wrote:
-> On msm8939 last (hwid=10) sensor was added in the hw revision 3.0.
-> Calibration data for it was placed outside of the main calibration data
-> blob, so it is not accessible by the current blob-parsing code.
-> 
-> Moreover data for the sensor's p2 is not contiguous in the fuses. This
-> makes it hard to use nvmem_cell API to parse calibration data in a
-> generic way.
-> 
-> Since the sensor doesn't seem to be actually used by the existing
-> hardware, disable the sensor for now.
-> 
-> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for MSM8939")
-> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Cc: Shawn Guo <shawn.guo@linaro.org>
-> Acked-by: Shawn Guo <shawn.guo@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/thermal/qcom/tsens-v0_1.c | 13 ++++---------
->   1 file changed, 4 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index 6645c98ff56c..579028ea48f4 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -285,7 +285,7 @@ static int calibrate_8939(struct tsens_priv *priv)
->   	u32 p1[10], p2[10];
->   	int mode = 0;
->   	u32 *qfprom_cdata;
-> -	u32 cdata[6];
-> +	u32 cdata[4];
->   
->   	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
->   	if (IS_ERR(qfprom_cdata))
-> @@ -296,8 +296,6 @@ static int calibrate_8939(struct tsens_priv *priv)
->   	cdata[1] = qfprom_cdata[13];
->   	cdata[2] = qfprom_cdata[0];
->   	cdata[3] = qfprom_cdata[1];
-> -	cdata[4] = qfprom_cdata[22];
-> -	cdata[5] = qfprom_cdata[21];
->   
->   	mode = (cdata[0] & MSM8939_CAL_SEL_MASK) >> MSM8939_CAL_SEL_SHIFT;
->   	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> @@ -314,8 +312,6 @@ static int calibrate_8939(struct tsens_priv *priv)
->   		p2[6] = (cdata[2] & MSM8939_S6_P2_MASK) >> MSM8939_S6_P2_SHIFT;
->   		p2[7] = (cdata[3] & MSM8939_S7_P2_MASK) >> MSM8939_S7_P2_SHIFT;
->   		p2[8] = (cdata[3] & MSM8939_S8_P2_MASK) >> MSM8939_S8_P2_SHIFT;
-> -		p2[9] = (cdata[4] & MSM8939_S9_P2_MASK_0_4) >> MSM8939_S9_P2_SHIFT_0_4;
-> -		p2[9] |= ((cdata[5] & MSM8939_S9_P2_MASK_5) >> MSM8939_S9_P2_SHIFT_5) << 5;
->   		for (i = 0; i < priv->num_sensors; i++)
->   			p2[i] = (base1 + p2[i]) << 2;
->   		fallthrough;
-> @@ -331,7 +327,6 @@ static int calibrate_8939(struct tsens_priv *priv)
->   		p1[6] = (cdata[2] & MSM8939_S6_P1_MASK) >> MSM8939_S6_P1_SHIFT;
->   		p1[7] = (cdata[3] & MSM8939_S7_P1_MASK) >> MSM8939_S7_P1_SHIFT;
->   		p1[8] = (cdata[3] & MSM8939_S8_P1_MASK) >> MSM8939_S8_P1_SHIFT;
-> -		p1[9] = (cdata[4] & MSM8939_S9_P1_MASK) >> MSM8939_S9_P1_SHIFT;
->   		for (i = 0; i < priv->num_sensors; i++)
->   			p1[i] = ((base0) + p1[i]) << 2;
->   		break;
-> @@ -544,7 +539,7 @@ static int __init init_8939(struct tsens_priv *priv) {
->   	priv->sensor[6].slope = 2833;
->   	priv->sensor[7].slope = 2838;
->   	priv->sensor[8].slope = 2840;
-> -	priv->sensor[9].slope = 2852;
-> +	/* priv->sensor[9].slope = 2852; */
->   
->   	return init_common(priv);
->   }
-> @@ -620,9 +615,9 @@ static const struct tsens_ops ops_8939 = {
->   };
->   
->   struct tsens_plat_data data_8939 = {
-> -	.num_sensors	= 10,
-> +	.num_sensors	= 9,
->   	.ops		= &ops_8939,
-> -	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 },
-> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, /* 10 */ },
->   
->   	.feat		= &tsens_v0_1_feat,
->   	.fields	= tsens_v0_1_regfields,
+> +static int __init init_8939(struct tsens_priv *priv) {
+> +	priv->sensor[0].slope = 2911;
+> +	priv->sensor[1].slope = 2789;
+> +	priv->sensor[2].slope = 2906;
+> +	priv->sensor[3].slope = 2763;
+> +	priv->sensor[4].slope = 2922;
+> +	priv->sensor[5].slope = 2867;
+> +	priv->sensor[6].slope = 2833;
+> +	priv->sensor[7].slope = 2838;
+> +	priv->sensor[8].slope = 2840;
+> +	priv->sensor[9].slope = 2852;
 
+How are you coming up with the last value here ?
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+https://github.com/android-linux-stable/msm-3.18/blob/60a8d8af3751b9dc22894fe68b3964ea94ae7888/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L525
+
+---
+bod
