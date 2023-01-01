@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADA1565AABD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 17:48:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5120965AAF8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jan 2023 19:32:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjAAQs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Jan 2023 11:48:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
+        id S229604AbjAAScg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Jan 2023 13:32:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjAAQs0 (ORCPT
+        with ESMTP id S229588AbjAAScf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Jan 2023 11:48:26 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C532621
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 08:48:25 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id q2so27089651ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 08:48:25 -0800 (PST)
+        Sun, 1 Jan 2023 13:32:35 -0500
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2BEB26DB
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jan 2023 10:32:31 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id u8so7246773ilg.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jan 2023 10:32:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ge4PP1SVJmKzIUfpzygbNjv7xfpf7GwfAHU5wdsn3v8=;
-        b=iyWofjg1cuc1wFt7FbNU03134Ig4lU4d7FLbhbPl/5XKtZZzoggW9hhf/5Bn+T6NRV
-         vyntxu9tdPh1FFPRtc2lY87M26ZGGIJvH+dsuUEHpuuTK3+I2rrTkAMDLJJEDFotdKTu
-         poawfAgq6/2fO+SRgzqMWgpDpBv8DpBjh57Bmg3fVlvJ5YcrAG3/2X4uuAUeNeZI/ALY
-         PvcQkh+5DnchCubmpZoa2BeP/bFzZsL4cO1PNVoidx0jjCQGZaR2PpUGEIp7uwaL8hhu
-         IV19ZfdqZlmWN41RXaFzCWFCpY61XLp2dAJuKLIjTyK4ooYqDjR36JiFbpihzlNBi+xx
-         VIcQ==
+        bh=zV+r8U+uyILbJMrsnc8nz4otj7n7TRZfcA159F36ua8=;
+        b=aiOdnmjLVqsJa494JxM/Z8J/2spEVF+y1wt2A6OzAuUccZOkKsyAAwpqxxAxNReF8F
+         PpLvjst6s5Hu5V6DloGawRphoxOKOeMeEftlJKALLfENcUsLNTzv1HBNMoDou+WKbP8r
+         d0dStqr7e6BwVcKgMDQ7PR32V3/wly+iAWkF07eKcEtKSEfNJ/av5fVyU/7qlLHMw55d
+         dwgQo34Ur9NRAzPgJ5Gj2InhtxI37NA6/DVgZY0rcWZMts8WtBG3Yk3OcUhHWTIMqUF2
+         aLISP92WT8/+hFmxk/rNdvTSN4wM3rFlp9/S48d7/4Rz/zFpZPDcr4am0tvnfBEK4qCt
+         DOzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ge4PP1SVJmKzIUfpzygbNjv7xfpf7GwfAHU5wdsn3v8=;
-        b=USHbm7LM4oX0vAFEM6eF1oyE8NG7wijw2U7bQOIDqXFKlTVbL+U2aYLCd2naVI25/8
-         +5fQcKWc4nf8zVxL05L+abMyTeVdgA1JwnZf6iy1TS8Jy2lrmMgtgRvR1nN2/0bo1SWa
-         g6P+gjQzrbIav5GbYt6bbxDPwLI3bQCfKRIBbhnMxWRzzpIkXII6z3enU3a3iVgUx+dl
-         mzzE+uNAMfluPYfPPTQjrQAJhli4eiOi7kbHWSLBomnxnTjwnpktpYOp+/P1agGqXwdE
-         IZp0WA2c6geWgqzVDRB03lk4XGcdsOFfDSQuzuGIsjmPGJZliWHQsQIpF+Ra0M8Jcp/W
-         fqhw==
-X-Gm-Message-State: AFqh2kqsV0prrPP9Hfd+PX3fkC0qKzhMLrYODzNUptUBCsMD1LgaD3QB
-        ATZxz30xEE0swodDUS5w8QfMXQ==
-X-Google-Smtp-Source: AMrXdXsbed8972ttl4tuW+r6II/l4+IDIN3XfWFXtwKU+S+h7RqPDrhNKmmYR0qUvjU6oenThQCNSA==
-X-Received: by 2002:a2e:88c2:0:b0:27f:d050:d95c with SMTP id a2-20020a2e88c2000000b0027fd050d95cmr4172562ljk.10.1672591703879;
-        Sun, 01 Jan 2023 08:48:23 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id e26-20020a05651c039a00b0027e4da2d952sm3014101ljp.68.2023.01.01.08.48.23
+        bh=zV+r8U+uyILbJMrsnc8nz4otj7n7TRZfcA159F36ua8=;
+        b=fxWw9OyLqPSfW3BzPdlUBvdyuMpQwqVU3GBHYNesh3GtbEgNRoA6vZtYOF1T1tXtZ6
+         YwfHhiezM9fhdu5E+vL4Qvcps0JtM1f0FTfmywDS8RKkhp7z8nO1xP+K996k1GA+zRE7
+         jm+LYtlMFZzm5dGsDgO5Ep2siAUy12mz6KRN3/rmWYMMZ7ecgq3Ajqz37KNsSzfr8nHX
+         iML4m5lQh3AnZWQCvL+tIdln1J6XPcaNjeC31nCXilibIBzQxIb9QLHAUCJkLHDOeO7i
+         Dpk/tv+n3Uab+E7CpokF0GFSh/mo3zLwtGLgUC9b4UdFtTfyjQauYUEGusrjczqHHjhs
+         sYdA==
+X-Gm-Message-State: AFqh2kodYQ3CJ6OujRITz6qk8llJrq58bCNnyTOR0oak2M/vVrQlq4Z+
+        m9ichFSeZBpduxurKsov7qWILQ==
+X-Google-Smtp-Source: AMrXdXu3PUHcbQ8d34A3Ed8p9psE9dXPNA/g4KLrkXYa48KE1al5SdgEZcdJFfcxboCozxbiYrW4eg==
+X-Received: by 2002:a05:6e02:525:b0:30c:2bb4:a2ea with SMTP id h5-20020a056e02052500b0030c2bb4a2eamr7454639ils.13.1672597950897;
+        Sun, 01 Jan 2023 10:32:30 -0800 (PST)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id x2-20020a92d642000000b0030c053fb7ccsm5797894ilp.47.2023.01.01.10.32.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jan 2023 08:48:23 -0800 (PST)
-Message-ID: <9d77ed88-a6b7-74f0-4f0e-f67b3ab15982@linaro.org>
-Date:   Sun, 1 Jan 2023 18:48:22 +0200
+        Sun, 01 Jan 2023 10:32:30 -0800 (PST)
+Message-ID: <c0e789a5-4573-1487-f279-4e2a447e3937@linaro.org>
+Date:   Sun, 1 Jan 2023 12:32:28 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/a2xx: support loading legacy (iMX) firmware
-Content-Language: en-GB
-To:     Fabio Estevam <festevam@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
-References: <20230101155753.779176-1-dmitry.baryshkov@linaro.org>
- <CAOMZO5AaZrXe8w7XhzG5LzCxdodOde-5ACV6Kgd8B+uYneKxWA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAOMZO5AaZrXe8w7XhzG5LzCxdodOde-5ACV6Kgd8B+uYneKxWA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 3/6] net: ipa: enable IPA interrupt handlers
+ separate from registration
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Alex Elder <elder@linaro.org>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221230232230.2348757-1-elder@linaro.org>
+ <20221230232230.2348757-4-elder@linaro.org>
+ <de723e81-f3ba-19f3-827f-28134e904c97@linaro.org>
+Content-Language: en-US
+From:   Alex Elder <alex.elder@linaro.org>
+In-Reply-To: <de723e81-f3ba-19f3-827f-28134e904c97@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -80,32 +82,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/01/2023 18:38, Fabio Estevam wrote:
-> Hi Dmitry,
+On 12/31/22 11:56 AM, Caleb Connolly wrote:
 > 
-> On Sun, Jan 1, 2023 at 12:58 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+> 
+> On 30/12/2022 23:22, Alex Elder wrote:
+>> Expose ipa_interrupt_enable() and have functions that register
+>> IPA interrupt handlers enable them directly, rather than having the
+>> registration process do that.  Do the same for disabling IPA
+>> interrupt handlers.
+> 
+> Hi,
 >>
->> Support loading A200 firmware generated from the iMX firmware header
->> files. The firmware lacks protection support, however it allows GPU to
->> function properly while using the firmware files with clear license
->> which allows redistribution.
+>> Signed-off-by: Alex Elder <elder@linaro.org>
+>> ---
+>>   drivers/net/ipa/ipa_interrupt.c |  8 ++------
+>>   drivers/net/ipa/ipa_interrupt.h | 14 ++++++++++++++
+>>   drivers/net/ipa/ipa_power.c     |  6 +++++-
+>>   drivers/net/ipa/ipa_uc.c        |  4 ++++
+>>   4 files changed, 25 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/net/ipa/ipa_interrupt.c 
+>> b/drivers/net/ipa/ipa_interrupt.c
+>> index 7b7388c14806f..87f4b94d02a3f 100644
+>> --- a/drivers/net/ipa/ipa_interrupt.c
+>> +++ b/drivers/net/ipa/ipa_interrupt.c
+>> @@ -135,7 +135,7 @@ static void ipa_interrupt_enabled_update(struct 
+>> ipa *ipa)
+>>   }
+>>   /* Enable an IPA interrupt type */
+>> -static void ipa_interrupt_enable(struct ipa *ipa, enum ipa_irq_id 
+>> ipa_irq)
+>> +void ipa_interrupt_enable(struct ipa *ipa, enum ipa_irq_id ipa_irq)
+>>   {
+>>       /* Update the IPA interrupt mask to enable it */
+>>       ipa->interrupt->enabled |= BIT(ipa_irq);
+>> @@ -143,7 +143,7 @@ static void ipa_interrupt_enable(struct ipa *ipa, 
+>> enum ipa_irq_id ipa_irq)
+>>   }
+>>   /* Disable an IPA interrupt type */
+>> -static void ipa_interrupt_disable(struct ipa *ipa, enum ipa_irq_id 
+>> ipa_irq)
+>> +void ipa_interrupt_disable(struct ipa *ipa, enum ipa_irq_id ipa_irq)
+>>   {
+>>       /* Update the IPA interrupt mask to disable it */
+>>       ipa->interrupt->enabled &= ~BIT(ipa_irq);
+>> @@ -232,8 +232,6 @@ void ipa_interrupt_add(struct ipa_interrupt 
+>> *interrupt,
+>>           return;
+>>       interrupt->handler[ipa_irq] = handler;
+>> -
+>> -    ipa_interrupt_enable(interrupt->ipa, ipa_irq);
+>>   }
+>>   /* Remove the handler for an IPA interrupt type */
+>> @@ -243,8 +241,6 @@ ipa_interrupt_remove(struct ipa_interrupt 
+>> *interrupt, enum ipa_irq_id ipa_irq)
+>>       if (WARN_ON(ipa_irq >= IPA_IRQ_COUNT))
+>>           return;
+>> -    ipa_interrupt_disable(interrupt->ipa, ipa_irq);
+>> -
+>>       interrupt->handler[ipa_irq] = NULL;
+>>   }
+>> diff --git a/drivers/net/ipa/ipa_interrupt.h 
+>> b/drivers/net/ipa/ipa_interrupt.h
+>> index f31fd9965fdc6..5f7d2e90ea337 100644
+>> --- a/drivers/net/ipa/ipa_interrupt.h
+>> +++ b/drivers/net/ipa/ipa_interrupt.h
+>> @@ -85,6 +85,20 @@ void ipa_interrupt_suspend_clear_all(struct 
+>> ipa_interrupt *interrupt);
+>>    */
+>>   void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt);
+>> +/**
+>> + * ipa_interrupt_enable() - Enable an IPA interrupt type
+>> + * @ipa:    IPA pointer
+>> + * @ipa_irq:    IPA interrupt ID
+>> + */
+>> +void ipa_interrupt_enable(struct ipa *ipa, enum ipa_irq_id ipa_irq);
 > 
-> Could you please share more details as to what firmware you are using
-> with the i.MX53?
+> I think you forgot a forward declaration for enum ipa_irq_id
 
-I have been testing i.MX53 with the firmware generated from EfikaMX 
-generated files 
-(https://github.com/genesi/linux-legacy/tree/master/drivers/mxc/amd-gpu).
+Thanks, I'll verify this and will send v2 with a fix once
+net-next is open for business again.
 
-> Is it available on the linux-firmare repository?
+					-Alex
 
-Not yet. As the firmware have clear attribution and clear licence 
-(BSD-3) which allows redistribution, I'm going to send pull request to 
-linux-firmware as soon as the approach, presented in this patch, is 
-accepted by Rob.
-
--- 
-With best wishes
-Dmitry
+> 
+> Kind Regards,
+> Caleb
+>> +
+>> +/**
+>> + * ipa_interrupt_disable() - Disable an IPA interrupt type
+>> + * @ipa:    IPA pointer
+>> + * @ipa_irq:    IPA interrupt ID
+>> + */
+>> +void ipa_interrupt_disable(struct ipa *ipa, enum ipa_irq_id ipa_irq);
+>> +
+>>   /**
+>>    * ipa_interrupt_config() - Configure the IPA interrupt framework
+>>    * @ipa:    IPA pointer
+>> diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+>> index 8420f93128a26..9148d606d5fc2 100644
+>> --- a/drivers/net/ipa/ipa_power.c
+>> +++ b/drivers/net/ipa/ipa_power.c
+>> @@ -337,10 +337,13 @@ int ipa_power_setup(struct ipa *ipa)
+>>       ipa_interrupt_add(ipa->interrupt, IPA_IRQ_TX_SUSPEND,
+>>                 ipa_suspend_handler);
+>> +    ipa_interrupt_enable(ipa, IPA_IRQ_TX_SUSPEND);
+>>       ret = device_init_wakeup(&ipa->pdev->dev, true);
+>> -    if (ret)
+>> +    if (ret) {
+>> +        ipa_interrupt_disable(ipa, IPA_IRQ_TX_SUSPEND);
+>>           ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_TX_SUSPEND);
+>> +    }
+>>       return ret;
+>>   }
+>> @@ -348,6 +351,7 @@ int ipa_power_setup(struct ipa *ipa)
+>>   void ipa_power_teardown(struct ipa *ipa)
+>>   {
+>>       (void)device_init_wakeup(&ipa->pdev->dev, false);
+>> +    ipa_interrupt_disable(ipa, IPA_IRQ_TX_SUSPEND);
+>>       ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_TX_SUSPEND);
+>>   }
+>> diff --git a/drivers/net/ipa/ipa_uc.c b/drivers/net/ipa/ipa_uc.c
+>> index 0a890b44c09e1..af541758d047f 100644
+>> --- a/drivers/net/ipa/ipa_uc.c
+>> +++ b/drivers/net/ipa/ipa_uc.c
+>> @@ -187,7 +187,9 @@ void ipa_uc_config(struct ipa *ipa)
+>>       ipa->uc_powered = false;
+>>       ipa->uc_loaded = false;
+>>       ipa_interrupt_add(interrupt, IPA_IRQ_UC_0, 
+>> ipa_uc_interrupt_handler);
+>> +    ipa_interrupt_enable(ipa, IPA_IRQ_UC_0);
+>>       ipa_interrupt_add(interrupt, IPA_IRQ_UC_1, 
+>> ipa_uc_interrupt_handler);
+>> +    ipa_interrupt_enable(ipa, IPA_IRQ_UC_1);
+>>   }
+>>   /* Inverse of ipa_uc_config() */
+>> @@ -195,7 +197,9 @@ void ipa_uc_deconfig(struct ipa *ipa)
+>>   {
+>>       struct device *dev = &ipa->pdev->dev;
+>> +    ipa_interrupt_disable(ipa, IPA_IRQ_UC_1);
+>>       ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_UC_1);
+>> +    ipa_interrupt_disable(ipa, IPA_IRQ_UC_0);
+>>       ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_UC_0);
+>>       if (ipa->uc_loaded)
+>>           ipa_power_retention(ipa, false);
 
