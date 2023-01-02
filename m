@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBD7665B49B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:04:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9018D65B4A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:06:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236480AbjABQE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 11:04:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51682 "EHLO
+        id S236184AbjABQGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 11:06:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236202AbjABQEz (ORCPT
+        with ESMTP id S232506AbjABQGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 11:04:55 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948DBBF2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 08:04:54 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bf43so42101836lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 08:04:54 -0800 (PST)
+        Mon, 2 Jan 2023 11:06:22 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6BD234
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 08:06:21 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id p36so42086126lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 08:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=sEF2FgWcD6lMSK4vj9U4bFMyfM1FOZj/hk7aIZXWWdA=;
-        b=Rja8l9wOuNOelHVwForjNs4KmIX9lOz5Yn6lhVkFjbgYyznvWlnTIlZ1Qyjex0Qe7e
-         bkhaYDfTxzoBOrvsGnVcuz2Bx/2sowHP1xMzlVZa6qZwk1F9kJrXG5J4YKdsG8v2q850
-         NIURboQ/r1CWcqAUFGw7FSaQLmVE3hUC59lkgnAJJ2F11n2dmLIHrJD4AjgrvgXgDBFg
-         ZpGZaDCMBTbLQEo5gGrigAEgoznLCy0JQYAru9KrS7PRP9ERuIE3yCQEZgMzVRobI7i/
-         rcwTGMhD1wjLTs8Zut+oDP5uo9VXeWhDSPu+baaslKLnmO6mC1nsvbGT1gz6Qleq4Fjx
-         W4vg==
+        bh=Z+EMDzXKErZf+vN6mQ6zrYx42SBQGjtY/gt+5BMs6Xo=;
+        b=NByzatRvqGeMsX9gRB0PWiiFGd2j4qzqNkin5/k5I6Uqpzb5up4rRBkrmCAp9y9ApF
+         VgCfP4MF+im8kHjYmARUbu7QWAa3IlDHzfSOggE2q6EmWyOlJ4jWvuXx5SyATdBCMHsW
+         6TSo6iKP3fygGJ4u9KZbzbkXiHENbgS6i0g/TSF5KM8ccf6Zw+EbUxF9QbTAeCVtQtl1
+         Cs8C+suxQ61kf3f+KBbgUb2AEJEAZUPOBBgEGpGnsKBPETnnoAJFoEBoCeZaEuHA/xl1
+         4zmqp/W1ip3YVdhfKj/veOaVV4/3GzP95s1jRND2p0vsiBn5qjqHRqmBAoHYXvdEJ0tj
+         yDdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sEF2FgWcD6lMSK4vj9U4bFMyfM1FOZj/hk7aIZXWWdA=;
-        b=wctQpnjnE45Kk1d2gg64qfgaTM79/QKTDvM6cOrmIXZVcBIog5BX6ZGmxM4C7GRCeO
-         9j2k43CcEY6yPG5uum6NIcSBXLrnf5pK8TvN5nsNRrqE8cpEWf8Y8A4yMrr/axUe3eSH
-         B5UR82N+7IZvWvNp5OYmrOG2hzo3PhHuVlY7jBlmWN1tdUjmmvnrPtWRL7M2NS6agxjS
-         LMbnCdJPsbMPxymoSW+lDcYPeQdJroPbkb/OvYPTuSxMK9z68Ele1ENeAx7qEuUGluuM
-         QWnnEX6+2TCU47f/LRJMPyNmrhbSzzY2IVp8JoDTxKYUG5hGmtH0Xi7FiYwiKfUQTtv4
-         3tkQ==
-X-Gm-Message-State: AFqh2konuYWJw7wJslfF+xtkb6OCZqz0epbCFRTyRkjiKk3bqsLBRHTk
-        5kly4gUvukMh8Wzc9jMqGJeghSD+Dzk7sns1
-X-Google-Smtp-Source: AMrXdXsJFt23TRg1ASw9Ysr4Z1DGvumrwQqBO2iwAAURtYtMIzjKiCfitlJfN/EnA0prqfsiFn0sWA==
-X-Received: by 2002:a05:6512:4013:b0:4a4:8044:9b8 with SMTP id br19-20020a056512401300b004a4804409b8mr12541658lfb.9.1672675492948;
-        Mon, 02 Jan 2023 08:04:52 -0800 (PST)
+        bh=Z+EMDzXKErZf+vN6mQ6zrYx42SBQGjtY/gt+5BMs6Xo=;
+        b=mj62xjRQkPoGyoVKUoDS6FW+EEUIUAWZiK5Pcc9lD++fO832Eq3+a4L3ktHb3h+oXD
+         7dJHgl/kdkjon/YFm9v6iXnadwjNhWGMUZWPFPKWMbk2cV8031mIC++/kBcJuJruANkb
+         Swbs6sa79OuiA9+ziiXxr90Mqa+6f8hEJ8Zvo9deC1LrnQPrcjb1Np1g3jAN1Ykq/j3/
+         NKvcdeY9XjDcwj2xTn/fogZesQO65WUkHnKmNlFl3Pzzt/9koNoBMakviicbzqXJCmG3
+         mv7138ZKU+lAAe8PgaLieN7q6HVhRi2yakDCisyRK0ESe9KUGlg8/iCMQkn8mkouN7m+
+         mSkw==
+X-Gm-Message-State: AFqh2kotHUeJevB83vl60Oe+ANJu+wPIMFfk/2YPVY51g39heQSus7az
+        geVB5v8bDZGCW35U57bfHc6fgw==
+X-Google-Smtp-Source: AMrXdXsI7m71wDiaaYCddxW/n9A0hM58yHs5YFdq547y5RSna47BOWVWEbwrzQagmNWSI52hIzY0sQ==
+X-Received: by 2002:a05:6512:2c8a:b0:4b6:fdc3:a65f with SMTP id dw10-20020a0565122c8a00b004b6fdc3a65fmr15349997lfb.11.1672675579318;
+        Mon, 02 Jan 2023 08:06:19 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id j4-20020a056512344400b004cb0dfe4993sm2685455lfr.65.2023.01.02.08.04.51
+        by smtp.gmail.com with ESMTPSA id b17-20020ac25e91000000b004cb061887b5sm3342325lfq.126.2023.01.02.08.06.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 08:04:52 -0800 (PST)
-Message-ID: <71704270-5342-ab54-79f5-cdc817ddb255@linaro.org>
-Date:   Mon, 2 Jan 2023 17:04:51 +0100
+        Mon, 02 Jan 2023 08:06:18 -0800 (PST)
+Message-ID: <7b769e39-aa80-1de0-78e7-c0224e3513f5@linaro.org>
+Date:   Mon, 2 Jan 2023 17:06:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 3/4] clk: qcom: lpasscc-sc7280: Remove qdsp6ss clock
- control
+Subject: Re: [PATCH v2 2/4] dt-bindings: clock: qcom,sc7280-lpasscc: Add
+ resets for audioreach
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
@@ -66,9 +66,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
 References: <1672407799-13768-1-git-send-email-quic_srivasam@quicinc.com>
- <1672407799-13768-4-git-send-email-quic_srivasam@quicinc.com>
+ <1672407799-13768-3-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1672407799-13768-4-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1672407799-13768-3-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,111 +81,43 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/12/2022 14:43, Srinivasa Rao Mandadapu wrote:
-> The qdsp6ss memory region is being shared by ADSP remoteproc device and
-> lpasscc clock device, hence causing memory conflict.
-> As the qdsp6ss clocks are being enabled in remoteproc driver,
-> remove clock controlling in the clock driver.
-> 
-> Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
+> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
+> for audioreach based SC7280 platforms.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
->  drivers/clk/qcom/lpasscc-sc7280.c | 63 +--------------------------------------
->  1 file changed, 1 insertion(+), 62 deletions(-)
+>  .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml         | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-> index 5c1e17b..87e1c21 100644
-> --- a/drivers/clk/qcom/lpasscc-sc7280.c
-> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
-> @@ -30,48 +30,6 @@ static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
->  	},
->  };
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+> index 9c72b8e..40fc6ab 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+> @@ -31,13 +31,18 @@ properties:
+>    '#clock-cells':
+>      const: 1
 >  
-> -static struct clk_branch lpass_qdsp6ss_core_clk = {
-> -	.halt_reg = 0x20,
-> -	/* CLK_OFF would not toggle until LPASS is out of reset */
-> -	.halt_check = BRANCH_HALT_SKIP,
-> -	.clkr = {
-> -		.enable_reg = 0x20,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "lpass_qdsp6ss_core_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-> -static struct clk_branch lpass_qdsp6ss_xo_clk = {
-> -	.halt_reg = 0x38,
-> -	/* CLK_OFF would not toggle until LPASS is out of reset */
-> -	.halt_check = BRANCH_HALT_SKIP,
-> -	.clkr = {
-> -		.enable_reg = 0x38,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "lpass_qdsp6ss_xo_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-> -static struct clk_branch lpass_qdsp6ss_sleep_clk = {
-> -	.halt_reg = 0x3c,
-> -	/* CLK_OFF would not toggle until LPASS is out of reset */
-> -	.halt_check = BRANCH_HALT_SKIP,
-> -	.clkr = {
-> -		.enable_reg = 0x3c,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(struct clk_init_data){
-> -			.name = "lpass_qdsp6ss_sleep_clk",
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
->  static struct regmap_config lpass_regmap_config = {
->  	.reg_bits	= 32,
->  	.reg_stride	= 4,
-> @@ -90,18 +48,6 @@ static const struct qcom_cc_desc lpass_cc_top_sc7280_desc = {
->  	.num_clks = ARRAY_SIZE(lpass_cc_top_sc7280_clocks),
->  };
->  
-> -static struct clk_regmap *lpass_qdsp6ss_sc7280_clocks[] = {
-> -	[LPASS_QDSP6SS_XO_CLK] = &lpass_qdsp6ss_xo_clk.clkr,
-> -	[LPASS_QDSP6SS_SLEEP_CLK] = &lpass_qdsp6ss_sleep_clk.clkr,
-> -	[LPASS_QDSP6SS_CORE_CLK] = &lpass_qdsp6ss_core_clk.clkr,
-> -};
-> -
-> -static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
-> -	.config = &lpass_regmap_config,
-> -	.clks = lpass_qdsp6ss_sc7280_clocks,
-> -	.num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
-> -};
-> -
->  static int lpass_cc_sc7280_probe(struct platform_device *pdev)
->  {
->  	const struct qcom_cc_desc *desc;
-> @@ -118,17 +64,10 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
->  		goto destroy_pm_clk;
->  	}
->  
-> -	lpass_regmap_config.name = "qdsp6ss";
-> -	desc = &lpass_qdsp6ss_sc7280_desc;
-> -
-> -	ret = qcom_cc_probe_by_index(pdev, 0, desc);
-> -	if (ret)
-> -		goto destroy_pm_clk;
-> -
->  	lpass_regmap_config.name = "top_cc";
->  	desc = &lpass_cc_top_sc7280_desc;
->  
-> -	ret = qcom_cc_probe_by_index(pdev, 1, desc);
-> +	ret = qcom_cc_probe_by_index(pdev, 0, desc);
+> +  '#reset-cells':
+> +    const: 1
+> +
+>    reg:
+>      items:
+>        - description: LPASS top-cc register
+> +      - description: LPASS reset-cgcr register
 
-ABI break but actually does not work with upstream either. DTS at this
-point has here on index "0" different address and you probe now top_cc
-on it.
+It's now even a bigger mess. First ABI break, then bring it back to
+previous stage - so two IO addresses - but with different values! There
+is no way this works with other systems or DTS users.
+
+>  
+>    reg-names:
+>      items:
+>        - const: top_cc
+> +      - const: reset_cgcr
+
+
+The 'reg-names' is only a helper, order and contents of 'reg' is fixed.
 
 Best regards,
 Krzysztof
