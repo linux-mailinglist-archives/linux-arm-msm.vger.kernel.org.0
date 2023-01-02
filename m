@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B9E65B056
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:13:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A62365B05B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:14:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232202AbjABLNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 06:13:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38716 "EHLO
+        id S232419AbjABLOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:14:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231730AbjABLNn (ORCPT
+        with ESMTP id S232357AbjABLO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:13:43 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE07B296
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:13:41 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id bf43so41170461lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:13:41 -0800 (PST)
+        Mon, 2 Jan 2023 06:14:29 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4CC62C6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:14:28 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id bp15so41151940lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:14:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jp/E2xpiQcIxTmzefLDj7yuF/B7XddyP9lDxrbw6PoM=;
-        b=DYJlyMTVI4rxn39VkT5M3nz3eaDXhl4w28+zHZK9w0mI2Si/iX0jXFizuUscUvl0vx
-         Gyj02tCO46fWHOx6dAFUQi578kRJxKagnUSMTHVoYXDri6kTL3eWenmk12k6dK6Hmi7S
-         2VnjaHosyjFSbaHQP2IpEEE9/3sTxoEYS0KIfWTn1Daa/1n/vjuQKg8iN+gmUX7Vk4OC
-         M+Zo3+9Bl+UPV2UYH8j2VG4VwNR8LpF/uxWj5WZr9HseF6faxwMoPU4VPVNPfUNd5pQM
-         5FFtb7NADSs7bT3B7vEoq0bqlcFbE/YX+seQ7nVPWq/iBvVWw/16hAwdT7HKP3BDzbPi
-         Bh1w==
+        bh=Jt0wCG03tGFVNQOZNggM83RnxWMauNZ2iVmL0QtApec=;
+        b=E/5/hfGI8HwxHW9PrjHCGcdrb54WpLWDfCkchCWa3oQyRCmkzFtj9LwmnXh37qZulx
+         OD4+MBnog8fFQ2CAvh0F0YLCTZ51mZBRVSpU2JANrDrLDw9sEg2ahTGR9HPJzP46RiAk
+         oaM1LhjZ/Wilzl4x/vI9aYGTxCn/Tra2vNEIpHKT+AcQQjUg/M9dDE7u71wUhFdtPhaX
+         WJLbQC1IFpAcZPoU1zkrAWcBQvOHTnZwmRjTjGWAJ9xW5b0Hrv/gNmp4jaq2vw6sGkd1
+         A7PMvWPZLT3McUDbTWYxAcdFkBtHq036H/eNx52Dqtm5DUxhZlIwQZS+uUimsCKAQIod
+         qqQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jp/E2xpiQcIxTmzefLDj7yuF/B7XddyP9lDxrbw6PoM=;
-        b=vVXZo2szhyYt/HOhUH3OZW0mAKM41DM1+vyxlid3W1dCKZW8J+V/q1EWUAjaaR/NEh
-         QEo9qUvNbk6OvKngQTn7btBGMK6WpbTFOxBDL3ZwrqHXoOOflo7rZarB3Ezt8oc2I3aM
-         Hj8PEPXo9ty/H89PcFmwP6AyBjuhrh0lzQolrNQAt3Bc7AGuXtkaO4G3ZxBkAMzlcl5+
-         GhxF7OriqypCmR3LVHz+7RYpHV8WmMXAZz9qI9YuLmZjHy+IbQDhDFG4R5ySzi0Xsau5
-         H1WcAMzaMAONgc/Vo7PhsQ7wUwkVBxQEB5PSLpbZVQRgduxDxVPtHPmhyPwLgbHCIyoG
-         8bnw==
-X-Gm-Message-State: AFqh2kpNDtSkae77l810AUDQQqd4UQmow3zCHx+9RwbQQgoaanWmWqoT
-        lUGA0mckA/KI8runpPgOkfGzFg==
-X-Google-Smtp-Source: AMrXdXuJEjDK5aDk4+uxB27Xvh0Mngk3VKSbJaTWJC1SZSp2rv28LmzW2jsvRhfZP/hsxecqsLhJFw==
-X-Received: by 2002:a05:6512:3da2:b0:4b9:f5e5:8fb4 with SMTP id k34-20020a0565123da200b004b9f5e58fb4mr15978692lfv.3.1672658020368;
-        Mon, 02 Jan 2023 03:13:40 -0800 (PST)
+        bh=Jt0wCG03tGFVNQOZNggM83RnxWMauNZ2iVmL0QtApec=;
+        b=KRGRNP+1f4FKUg/tWsqiMn48qcRHqINqfjHYTKb8j1kDd3M39eRVCKNsMJlrTnGF6X
+         cvUezT8XAyd/GlU/dvnL56YmJ3C1vbngh/pfMfjXVw6cRsx/Bg0aLbc/u4IGuRIQ1lDG
+         6H7NrNE4cVa4kdc5aG8bQ5Isfqh81qYQR42pYsW29uv+lKvs5v8EEw+omB+07NGTBR0w
+         P7yOdWo0ojow28Y5PYVnych105G6CQcTkaeVa+J9DOZPrriway80VxbuDh2bgedQjFiv
+         X4EFq6YrAji4Y5dcKl2nCphwFIs4ZiRtSTpFf/5LATp0ojq71yBpAwF/8qdcSOjLMdbD
+         jG6Q==
+X-Gm-Message-State: AFqh2kp5W9BG4mAZr6cGLG8BPjwbzksjPNTTZsgqNyS1TsOSYkxmlExE
+        7Zu3zCM69nGDiJtcpk2HuUoMrw==
+X-Google-Smtp-Source: AMrXdXvwXcOY1obeuIZVkrEgCEXjiZE0pmZkvu/ptTyd1xiaThKWMUknh+BWrHJj1FptOjObtMDIvg==
+X-Received: by 2002:ac2:5606:0:b0:4b6:e493:b798 with SMTP id v6-20020ac25606000000b004b6e493b798mr12608880lfd.68.1672658066995;
+        Mon, 02 Jan 2023 03:14:26 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id x4-20020a19f604000000b004cb0d2735c0sm2694260lfe.266.2023.01.02.03.13.39
+        by smtp.gmail.com with ESMTPSA id o10-20020ac24e8a000000b004cb1e2f8f4dsm1690661lfr.152.2023.01.02.03.14.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 03:13:40 -0800 (PST)
-Message-ID: <cd172e6e-a8c0-0e2c-971f-590e155c4a76@linaro.org>
-Date:   Mon, 2 Jan 2023 12:13:38 +0100
+        Mon, 02 Jan 2023 03:14:26 -0800 (PST)
+Message-ID: <b579ea50-1edb-7291-7eb5-da6d462bbda8@linaro.org>
+Date:   Mon, 2 Jan 2023 12:14:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: sc8280xp: clean up tx-macro node
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: sc8280xp-x13s: fix wcd938x codec
+ node
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
@@ -65,9 +66,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-4-johan+linaro@kernel.org>
+ <20230102105038.8074-5-johan+linaro@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230102105038.8074-4-johan+linaro@kernel.org>
+In-Reply-To: <20230102105038.8074-5-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,27 +83,91 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 2.01.2023 11:50, Johan Hovold wrote:
-> Drop the bogus address and size-cells properties from the tx-macro node,
-> which do not have any child nodes.
+> The wcd938x codec is not a memory-mapped device and does not belong
+> under the soc node.
+> 
+> Move the node to the root node to avoid DT validation failures.
+> 
+> While at it, clean up the node somewhat by adding newline separators,
+> reordering properties and renaming it 'audio-codec'.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 --
->  1 file changed, 2 deletions(-)
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 54 ++++++++++---------
+>  1 file changed, 28 insertions(+), 26 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index c1ce2d7b3675..11e3d560c627 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1784,8 +1784,6 @@ txmacro: txmacro@3220000 {
->  			clock-output-names = "mclk";
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 97ff74d5095e..ae67c11bfc22 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -21,6 +21,34 @@ / {
+>  	model = "Lenovo ThinkPad X13s";
+>  	compatible = "lenovo,thinkpad-x13s", "qcom,sc8280xp";
 >  
->  			#clock-cells = <0>;
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
->  			#sound-dai-cells = <1>;
+> +	wcd938x: audio-codec {
+> +		compatible = "qcom,wcd9380-codec";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&wcd_default>;
+> +
+> +		reset-gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
+> +
+> +		vdd-buck-supply = <&vreg_s10b>;
+> +		vdd-rxtx-supply = <&vreg_s10b>;
+> +		vdd-io-supply = <&vreg_s10b>;
+> +		vdd-mic-bias-supply = <&vreg_bob>;
+> +
+> +		qcom,micbias1-microvolt = <1800000>;
+> +		qcom,micbias2-microvolt = <1800000>;
+> +		qcom,micbias3-microvolt = <1800000>;
+> +		qcom,micbias4-microvolt = <1800000>;
+> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> +		qcom,rx-device = <&wcd_rx>;
+> +		qcom,tx-device = <&wcd_tx>;
+> +
+> +		#sound-dai-cells = <1>;
+> +
+> +		status = "disabled";
+> +	};
+> +
+>  	backlight {
+>  		compatible = "pwm-backlight";
+>  		pwms = <&pmc8280c_lpg 3 1000000>;
+> @@ -628,32 +656,6 @@ &remoteproc_nsp0 {
+>  	status = "okay";
+>  };
 >  
->  			status = "disabled";
+> -&soc {
+> -	wcd938x: codec {
+> -		compatible = "qcom,wcd9380-codec";
+> -		pinctrl-names = "default";
+> -		pinctrl-0 = <&wcd_default>;
+> -		reset-gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
+> -		#sound-dai-cells = <1>;
+> -
+> -		vdd-buck-supply = <&vreg_s10b>;
+> -		vdd-rxtx-supply = <&vreg_s10b>;
+> -		vdd-io-supply = <&vreg_s10b>;
+> -		vdd-mic-bias-supply = <&vreg_bob>;
+> -		qcom,micbias1-microvolt = <1800000>;
+> -		qcom,micbias2-microvolt = <1800000>;
+> -		qcom,micbias3-microvolt = <1800000>;
+> -		qcom,micbias4-microvolt = <1800000>;
+> -		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> -		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> -		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> -		qcom,rx-device = <&wcd_rx>;
+> -		qcom,tx-device = <&wcd_tx>;
+> -
+> -		status = "disabled";
+> -	};
+> -};
+> -
+>  &sound {
+>  	compatible = "qcom,sc8280xp-sndcard";
+>  	model = "SC8280XP-LENOVO-X13S";
