@@ -2,167 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDB1365B54F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:50:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A837C65B558
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:52:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232909AbjABQup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 11:50:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46312 "EHLO
+        id S236543AbjABQwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 11:52:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234954AbjABQuo (ORCPT
+        with ESMTP id S236468AbjABQwO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 11:50:44 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E84C3BE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 08:50:42 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id y25so42271544lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 08:50:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+0Hsdkn9Ik2bsrBztjUnz8QbQ+4RQ0dV6PdSxg6F+H8=;
-        b=iM/zicdP4fDksBdQClbPeGnvZ2ZdUJzYaVLfEqaCgpyG0mgT8VCI0YUwrizq31W+zb
-         aBVvZRBGvjKps55MjEVa1+Vc5rxYutQh45lkayaIT4dvLaJUmFGJTnDaH3q+Tve/lLFq
-         hYegFz5B/O3/k+zdtWhWLzGC7UEdtZ9hc3KXyLY6T7OuAmTsTvF9KoZZ+Gk4y734Qa8A
-         LOYbnwzZMyoRi9QcHkoMSSBZoYq0CvvXW5EnDGJxlBoJ6hWgw06BMt2Cc1xbprGVk3C8
-         VuyMQNZdRQomcF39GFjv2fvTmi3rY85aaD9gZLkTbg4ZmSxblEBESoBA7P4h838WY87y
-         Gkqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+0Hsdkn9Ik2bsrBztjUnz8QbQ+4RQ0dV6PdSxg6F+H8=;
-        b=a4/NldORRuPnZwPeO7ewQiJr56y+WCSHe1vz8jzakifzgaN8bnHtpgls4B2fNUIPtK
-         VUTOJSYWV0bcJW0xl/5OcjmTQEu+ojZWphymdgJRQODH7dFK+dtMP3OeN/hcx74gP4T3
-         MoALyQi43Glzpans+WzFMT3ITE9HMd0MR497U8zdwDI8rcBGe6XUVOL9Ujoy6i/LuIPg
-         2qYJ6p2P5/7hyFae50KR/afN06uBjm84PIlzOCICEUI047xD4mNG19qLWs6+ZfIn1x2B
-         ATf2IEWS9+GsVVBKu96XuWoKdqe/snK6tHooYOojVxEmEO2cu+txZrbLuxApAAD2x60F
-         nf/w==
-X-Gm-Message-State: AFqh2koLRXpHdQohEZjkPmmTfDq/qOAwY+4nFL36OIHJ1498Ug1m8KRa
-        6DG78yreEqHHzFrPokkZZFjE2NYCHf15E7Py
-X-Google-Smtp-Source: AMrXdXsTRfgOlSc/J+mZZreOlJvJGk9L6RUEAWxCdOrSYW2yM6lIlnuzyn6CFI18QGR66ChJ383ewQ==
-X-Received: by 2002:a05:6512:32cb:b0:4c5:38ae:4b1e with SMTP id f11-20020a05651232cb00b004c538ae4b1emr15797405lfg.45.1672678240762;
-        Mon, 02 Jan 2023 08:50:40 -0800 (PST)
-Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id o8-20020ac24348000000b004b49025f96dsm4510491lfl.187.2023.01.02.08.50.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 08:50:40 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
+        Mon, 2 Jan 2023 11:52:14 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 904BB306;
+        Mon,  2 Jan 2023 08:52:13 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6C106B80DC8;
+        Mon,  2 Jan 2023 16:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118F3C433D2;
+        Mon,  2 Jan 2023 16:52:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672678330;
+        bh=RblA8l52lCFfQ575CfuEMO+etxSSFmtAoRMD5k18uw4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=l3XNmg+RU2dVXCCsBxZzsC6B5mojibwjRROestfUDmXuoTFiy7lveCUzawKw5S5jK
+         qOwI69FT8JKuk6M7Co79/yNN1TQtha2G7pa/629HQ4ABPUB9pxnMH0qKUnTbZ+X7v9
+         J5UDKcxvhuQneCPyzGzQRqgvTPfiB62NKufME1rAHUIPB9wPIoJAqciPnkSAT82EUu
+         OUTsiV1dXrLUj16iSjk7nLL9j1NJQU1qs7qxeDidoYQgiwaDfbjnj5er6PEhvSq2CF
+         +Q3No7yDxyMOWNq7gvTb4M7cU3aNIkXUdy6bIz+2kH7146rjJDyVtwkElgn9tTeprp
+         Vs6U6MXZpFIVQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pCO30-0000cl-Jv; Mon, 02 Jan 2023 17:52:27 +0100
+Date:   Mon, 2 Jan 2023 17:52:26 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v2 2/2] soc: qcom: rmtfs: Optionally map RMTFS to NAV VM
-Date:   Mon,  2 Jan 2023 17:50:34 +0100
-Message-Id: <20230102165034.830620-2-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230102165034.830620-1-konrad.dybcio@linaro.org>
-References: <20230102165034.830620-1-konrad.dybcio@linaro.org>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sc8280xp-x13s: disable soundcard
+Message-ID: <Y7MLysGoyGp29jea@hovoldconsulting.com>
+References: <20230102105038.8074-2-johan+linaro@kernel.org>
+ <fc42801a-55d9-90b9-f7f0-48657ec7a373@linaro.org>
+ <Y7LzJ+RRzDNRf3jR@hovoldconsulting.com>
+ <81e3994e-49d9-ea5b-b055-cbcc737a6e37@linaro.org>
+ <Y7L3OTs/u8FsH8o2@hovoldconsulting.com>
+ <8bd6487a-3ae7-f7c1-e478-1effd68700d3@linaro.org>
+ <Y7L6t3p57uTCECRy@hovoldconsulting.com>
+ <5de95075-ca62-3cae-ce07-d263ea3aa264@linaro.org>
+ <Y7L/JbUICN0OQhaK@hovoldconsulting.com>
+ <70a6fcc9-6922-60e7-b2ce-1de32277483f@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <70a6fcc9-6922-60e7-b2ce-1de32277483f@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Loic Poulain <loic.poulain@linaro.org>
+On Mon, Jan 02, 2023 at 05:13:24PM +0100, Krzysztof Kozlowski wrote:
+> On 02/01/2023 16:58, Johan Hovold wrote:
+> > On Mon, Jan 02, 2023 at 04:46:40PM +0100, Krzysztof Kozlowski wrote:
+> >> On 02/01/2023 16:39, Johan Hovold wrote:
+> >>>>>>>>>  	wcd_tx: wcd9380-tx@0,3 {
+> >>>>>>>>>  		compatible = "sdw20217010d00";
+> >>>>>>>>> @@ -781,6 +787,8 @@ &vamacro {
+> >>>>>>>>>  	pinctrl-names = "default";
+> >>>>>>>>>  	vdd-micb-supply = <&vreg_s10b>;
+> >>>>>>>>>  	qcom,dmic-sample-rate = <600000>;
+> >>>>>>>>> +
+> >>>>>>>>> +	status = "disabled";
+> >>>>>>>>
+> >>>>>>>> That's a double disable.
+> >>>>>>>
+> >>>>>>> Yes, that's on purpose. We're temporarily disabling these nodes instead
+> >>>>>>> of reverting the series which should not have been merged.
+> >>>>>>
+> >>>>>> I don't get why disabling something twice is anyhow related to
+> >>>>>> "temporarily disable". One disable is enough for temporary or permanent
+> >>>>>> disables.
+> >>>>>
+> >>>>> It clearly shows that this was done on purpose and indicates which
+> >>>>> properties need to be changed to "okay" once we have actual support.
+> >>>>
+> >>>> No, it shows nothing clearly as from time to time we got duplicated
+> >>>> properties and it's a simply mistake. The double disable without any
+> >>>> comment looks like mistake, not intentional code.
+> >>>
+> >>> It's not a mistake. It's intentional. And I don't want to spend hours on
+> >>> this because of someone else's cock-up.
+> >>
+> >> To you it looks intentional, but for the reader of DTS which has
+> >> disabled node in DTSI and in DTS - so in two places - it looks like a
+> >> pure bug. Just because you know the reason behind the change does not
+> >> make the code readable.
+> > 
+> > Calling a (temporary) redundant property a 'pure bug' seems like a bit
+> > of stretch, and it has nothing to do with readability.
+> 
+> Redundant properties is not a code which we want to have anywhere. Why
+> you are so opposed to documenting this oddity?
 
-Some SoCs require that RMTFS is also mapped to the NAV VM. Trying to
-power on the modem without that results in the whole platform crashing
-and forces a hard reboot within about 2 seconds.
+I'm not at all opposed to adding a comment that this is a temporary
+disable. Hopefully we can even get the driver support ready, things
+tested, and enable these nodes before 6.3 is released.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-[Konrad: reword, make conditional, add a define for NAV VMID]
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v1 -> v2:
-No changes
+> >>>>>>>
+> >>>>>>> Once we have driver support, these properties will be updated again.
+> >>>>>>
+> >>>>>> Linux kernel is not the only consumer of DTS, thus having or not having
+> >>>>>> the support in the kernel is not reason to disable pieces of it.
+> >>>>>> Assuming the DTS is correct, of course, because maybe that's the problem?
+> >>>>>
+> >>>>> Okay, let's revert these sound dts changes then until we have support.
+> >>>>> We have no idea if the dts changes are correct as sound still depends
+> >>>>> on out-of-tree hacks.
+> >>>>>
+> >>>>> People are using -next for development and I don't want to see them
+> >>>>> toast their speakers because we failed get the dependencies merged
+> >>>>> before merging the dts changes which is how we normally do this.
+> >>>>
+> >>>> If the error is in DTS, yeah, revert or disable is a way. But if the
+> >>>> issue is in the incomplete or broken Linux drivers, then these should be
+> >>>> changed, e.g. intentionally fail probing, skip new devices, drop new
+> >>>> compatible etc.
+> >>>
+> >>> And how long does it take for that to propagate and isn't the response
+> >>> just going go to be "well then fix the driver".
+> >>>
+> >>> I think you're just being unreasonable here.
+> >>
+> >> I did not propose to fix the driver. I proposed to fail the driver's
+> >> probe or remove the compatible from it.
+> >>
+> >> Such change propagate the same speed as DTS change.
+> > 
+> > But the DTS changes are in Bjorn branch and Bjorn and I discussed it and
+> > decided to disable them temporarily instead of reverting.
+> > 
+> > Now you're asking me to figure out all the dependent driver and patch
+> > them individually. And this may not reach next before the DTS changes
+> > do.
+> 
+> Users do not work on linux-next. linux-next is integration tree for
+> developers. Pretty often broken and not stable, so anyone using it
+> accepts the risks. Using now linux-next argument for a change is not
+> appropriate. The change should be reasonable regardless of users of
+> linux-next.
 
- drivers/soc/qcom/rmtfs_mem.c | 22 +++++++++++++++-------
- include/linux/qcom_scm.h     |  1 +
- 2 files changed, 16 insertions(+), 7 deletions(-)
+The argument is that this should never have been merged last week. And
+we do have users running linux-next as support for x13s is very much
+still under development. Sure, they don't expect things to always work
+perfectly, but I still want to avoid toasting there speakers if I can.
 
-diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-index 0feaae357821..999f2c5b49b0 100644
---- a/drivers/soc/qcom/rmtfs_mem.c
-+++ b/drivers/soc/qcom/rmtfs_mem.c
-@@ -171,12 +171,13 @@ static void qcom_rmtfs_mem_release_device(struct device *dev)
- static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
- {
- 	struct device_node *node = pdev->dev.of_node;
--	struct qcom_scm_vmperm perms[2];
-+	struct qcom_scm_vmperm perms[3];
- 	struct reserved_mem *rmem;
- 	struct qcom_rmtfs_mem *rmtfs_mem;
-+	bool assign_to_nav;
- 	u32 client_id;
- 	u32 vmid;
--	int ret;
-+	int ret, cnt = 0;
- 
- 	rmem = of_reserved_mem_lookup(node);
- 	if (!rmem) {
-@@ -191,6 +192,8 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
- 
- 	}
- 
-+	assign_to_nav = of_property_read_bool(node, "qcom,assign-to-nav");
-+
- 	rmtfs_mem = kzalloc(sizeof(*rmtfs_mem), GFP_KERNEL);
- 	if (!rmtfs_mem)
- 		return -ENOMEM;
-@@ -236,14 +239,19 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
- 			goto remove_cdev;
- 		}
- 
--		perms[0].vmid = QCOM_SCM_VMID_HLOS;
--		perms[0].perm = QCOM_SCM_PERM_RW;
--		perms[1].vmid = vmid;
--		perms[1].perm = QCOM_SCM_PERM_RW;
-+		perms[cnt].vmid = QCOM_SCM_VMID_HLOS;
-+		perms[cnt++].perm = QCOM_SCM_PERM_RW;
-+		perms[cnt].vmid = vmid;
-+		perms[cnt++].perm = QCOM_SCM_PERM_RW;
-+
-+		if (assign_to_nav) {
-+			perms[cnt].vmid = QCOM_SCM_VMID_NAV;
-+			perms[cnt++].perm = QCOM_SCM_PERM_RW;
-+		}
- 
- 		rmtfs_mem->perms = BIT(QCOM_SCM_VMID_HLOS);
- 		ret = qcom_scm_assign_mem(rmtfs_mem->addr, rmtfs_mem->size,
--					  &rmtfs_mem->perms, perms, 2);
-+					  &rmtfs_mem->perms, perms, cnt);
- 		if (ret < 0) {
- 			dev_err(&pdev->dev, "assign memory failed\n");
- 			goto remove_cdev;
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index f8335644a01a..150b72edb879 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -55,6 +55,7 @@ enum qcom_scm_ice_cipher {
- #define QCOM_SCM_VMID_MSS_MSA    0xF
- #define QCOM_SCM_VMID_WLAN       0x18
- #define QCOM_SCM_VMID_WLAN_CE    0x19
-+#define QCOM_SCM_VMID_NAV        0x2B
- #define QCOM_SCM_PERM_READ       0x4
- #define QCOM_SCM_PERM_WRITE      0x2
- #define QCOM_SCM_PERM_EXEC       0x1
--- 
-2.39.0
+> >>> If Bjorn could rebase his tree, he could simply drop these for now as
+> >>> sound support was clearly not ready. Since that isn't the case we need
+> >>> to at least try to be constructive and figure out a reasonable
+> >>> alternative. While "Linux isn't the only consumer" is a true statement,
+> >>> it really is not relevant just because there are some dts changes in
+> >>> Bjorn's tree which should not be there.
+> >>
+> >> The SC8280XP audio DTS looks in general correct, except some style
+> >> issues, redundant properties and never tested against DT bindings.
+> >> Therefore it looks as accurate and more-or-less correct representation
+> >> of the hardware, unless you have some more details on this.
+> > 
+> > Only that the drivers fail to probe in multiple ways, some which may
+> > require updating the bindings to address. 
+> 
+> I don't think there is anything needed to fix in bindings in
+> incompatible way. I was working on them as well (for HDK8450) and I
+> don't recall any issues.
+> 
+> If you see anything specific, use specific arguments, because otherwise
+> it is just FUD.
 
+You can call it FUD if you want, I just call it being cautious.
+
+> > There's also an indication
+> > that some further driver support is needed for proper speaker
+> > protection. That really should be in place before we enable this.
+> 
+> There is easy solution for this - drop the compatible from drivers. Or
+> if driver is SC8280xp specific, mark it as BROKEN in Kconfig. Or fail
+> the probe so it won't bother your system.
+
+Or we just revert or disable it temporarily in the x13s dts until we
+better understand the missing driver bits.
+
+Johan
