@@ -2,155 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0926465B258
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 13:48:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B873C65B2FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 14:58:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232955AbjABMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 07:48:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52774 "EHLO
+        id S232107AbjABN6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 08:58:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232934AbjABMsF (ORCPT
+        with ESMTP id S233028AbjABN6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 07:48:05 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76EAE62D2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 04:48:04 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b3so41451025lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 04:48:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z+B/2MT9KOw7iDSSgcxQCDSNt6KQrJQRbxT0rQMu0cg=;
-        b=hONI5Q10Qo+StGwWC+GrLjI0E9DJcHhX8ebnDsfSBup8VwcsrVu9mh5JvdKi2aiq0g
-         0Ftw1UXkvPL46zxaOAIpBbGtVpr1IQ6Rm3u7hhLsdcimvKAUVmtrZkJviC7PpHOjwXRO
-         vuwIEAlCnqmB5DMaQle25ZZkX3uma7iuYZU6vR2mXvHkx8lll0uYD2Oj2jRH72aq2MTy
-         iEUqfYyLV/K9+D4jeHwC1VHgaKn/deQwb4rrBEPOMR2OKShzr9lKNbK0RRZELyui3P4d
-         +MhBTQyusS7MCisclA3iNO66pq9b86jvNIW7bHgSPpQWnokgvLYoDlGnDi3Hy+Zb1nNS
-         AA+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z+B/2MT9KOw7iDSSgcxQCDSNt6KQrJQRbxT0rQMu0cg=;
-        b=G3FTDMKSfs/TrMagFRmnNb+np6ZIxIEydifIf1d+QbTjamrXtvBKNMQNOhlCSGqeXq
-         HRbxpzM1wYTPIMrKgLyMlt7hHrskid6vq5K9EZza8HemnamFfyT5S3By4Z+LV3nnAHMt
-         11A9sKokENW21Q13c1VvGi3wuLsv9Z4OIaM9Ye5qSPPp0w43vB+PIGpHkB7ksHuQRncC
-         ZfvGhh2psypUsBOcE6SgTPKzEo41xkXKTZZkXHfTxkrYQIrCxsmbDeXJhDaM51CS6w9t
-         gor93HqyGQ1XVfjqH4LjpBoNL0GTLCi7X0kSFcSn2QXw+D1Z1wOBn6LkRvgG2iuY4kRP
-         5kRg==
-X-Gm-Message-State: AFqh2kpPhdyehW1f0anegT84uvnc8hQtUQmmn9Ukc/K5pUhZe5AKbr2o
-        sEwOGT1pjNa4TxCPgeIdhwmaAg==
-X-Google-Smtp-Source: AMrXdXuqLEYh6ksSaIjjO+1QQ01igF2Kvvpvqt8ZvgjPBdzwcxhDYNGyAbSXdwsw7bB4ie1ntN8hMQ==
-X-Received: by 2002:a05:6512:c23:b0:4cb:3e21:94ab with SMTP id z35-20020a0565120c2300b004cb3e2194abmr160035lfu.15.1672663682770;
-        Mon, 02 Jan 2023 04:48:02 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id g6-20020a056512118600b004cb003c3b2dsm3656482lfr.175.2023.01.02.04.48.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 04:48:01 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 2 Jan 2023 08:58:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50ECBD6A;
+        Mon,  2 Jan 2023 05:58:11 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E3EEAB80D3D;
+        Mon,  2 Jan 2023 13:58:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB838C433EF;
+        Mon,  2 Jan 2023 13:58:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672667888;
+        bh=JIYbF5LXM59r0MW5XyyTv1fzDEtrT9phK9DtFS9rHPI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CvbTqQFJYz3KyOeequ7tIHBiktauX4rr8jCsJcWnwXQC/V1oLCQIN80IqiY7SxxWc
+         Ru5+9joAKHoJkWslTr6NH//0Nv6LVCa68kicbWXA3fq6YSw0GsF4nxfqGvGx7bVLBw
+         IJ79K8yO2cUrtqta+v1/NNY1NvnpZvJX6JMrVSdGdUnWQZ0pudYPGpFa0poQ2t7rky
+         sgEBfYL2FXovBaNkVpvoklCWxEpAi9fRK2DSGpzxQPikudbsmmhUhyLzpzppBClR3i
+         pNZ2NIYcNFsR91ivAHyMwm1TQLdILEuNXkuz03eutp90N70j4pmrgpVjbtQavyhvWp
+         4Q//MzrmvFs8w==
+Date:   Mon, 2 Jan 2023 07:58:05 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8450: disable by default Soundwire and VA-macro
-Date:   Mon,  2 Jan 2023 13:37:34 +0100
-Message-Id: <20230102123734.478433-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 2/2] pinctrl: qcom: Add SM8550 pinctrl driver
+Message-ID: <20230102135805.vw6bv236soxj5lbs@builder.lan>
+References: <20221230194459.2370924-1-abel.vesa@linaro.org>
+ <20221230194459.2370924-3-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221230194459.2370924-3-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Soundwire is a bus and VA-macro requires a supply, thus both are
-expected to be explicitly enabled and populated by board DTS.  The
-HDK8450 already enables Soundwire devices, except swr4 which as a result
-of this commit will stay disabled.
+On Fri, Dec 30, 2022 at 09:44:59PM +0200, Abel Vesa wrote:
+> Add pinctrl driver for TLMM block found in SM8550 SoC.
+> 
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 4 ++++
- arch/arm64/boot/dts/qcom/sm8450.dtsi    | 5 +++++
- 2 files changed, 9 insertions(+)
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-index 4de3e1f1c39c..d27a8f42d522 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -516,6 +516,8 @@ platform {
- };
- 
- &swr0 {
-+	status = "okay";
-+
- 	left_spkr: speaker@0,1 {
- 		compatible = "sdw10217020200";
- 		reg = <0 1>;
-@@ -622,6 +624,8 @@ &vamacro {
- 	pinctrl-names = "default";
- 	vdd-micb-supply = <&vreg_s10b_1p8>;
- 	qcom,dmic-sample-rate = <600000>;
-+
-+	status = "okay";
- };
- 
- &tlmm {
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 61575f6fab0b..e241c05bdd77 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2143,6 +2143,7 @@ swr4: soundwire-controller@31f0000 {
- 			#address-cells = <2>;
- 			#size-cells = <0>;
- 			#sound-dai-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		rxmacro: codec@3200000 {
-@@ -2189,6 +2190,7 @@ swr1: soundwire-controller@3210000 {
- 			#address-cells = <2>;
- 			#size-cells = <0>;
- 			#sound-dai-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		txmacro: codec@3220000 {
-@@ -2256,6 +2258,7 @@ swr0: soundwire-controller@3250000 {
- 			#address-cells = <2>;
- 			#size-cells = <0>;
- 			#sound-dai-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		swr2: soundwire-controller@33b0000 {
-@@ -2284,6 +2287,7 @@ swr2: soundwire-controller@33b0000 {
- 			#address-cells = <2>;
- 			#size-cells = <0>;
- 			#sound-dai-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		vamacro: codec@33f0000 {
-@@ -2300,6 +2304,7 @@ vamacro: codec@33f0000 {
- 			#clock-cells = <0>;
- 			clock-output-names = "fsgen";
- 			#sound-dai-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		remoteproc_adsp: remoteproc@30000000 {
--- 
-2.34.1
-
+Regards,
+Bjorn
