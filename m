@@ -2,144 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97C9E65AD62
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 07:14:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8263865ADD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 09:01:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbjABGOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 01:14:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53276 "EHLO
+        id S229447AbjABIBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 03:01:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjABGOH (ORCPT
+        with ESMTP id S229722AbjABIBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 01:14:07 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D4A2198;
-        Sun,  1 Jan 2023 22:14:06 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 302595qY023075;
-        Mon, 2 Jan 2023 06:13:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=SDQzgjhc5R340O/XO+258MgMeSVddmGE3eBiECfk4kM=;
- b=ecrdtb67HOk/sLW7Yq8aY271LQYMtFSe1EVee42srh/Jcz3W4PyMjsl+VPoJ1fEwAVyk
- w6xyCVt1jR+hsczd6fnE/ijjngIeCoHWTgwQgxsa5CBh+z7u7nohnSN8sy2ZB0XGXIFv
- n6SkSVT6wO+CRhazAeWHn9hn1iZCvV101FyT+dpJxCVNilbvub0pDx0GfBkgDoY6dNYo
- QAsvXcqBn6mvrdRUZpwJ4d9ir6Yq3siqsID01pyDYmZ6/i4GSlw7f+9g/VFiRwZM2M6Q
- /1CewnrKf3Rwd4w9ardLT5K9qBi4ApZyt5pWeoCYKupmT1qyImxTzFJXhswoLzwt3TWD XQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mtecg28vd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 02 Jan 2023 06:13:42 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3026DgEW012011
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 2 Jan 2023 06:13:42 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 1 Jan 2023
- 22:13:34 -0800
-Date:   Mon, 2 Jan 2023 11:43:30 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will Deacon" <will@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-acpi@vger.kernel.org>
-Subject: Re: [PATCH v8 09/28] mailbox: Add Gunyah message queue mailbox
-Message-ID: <20230102061330.GA1836549@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-10-quic_eberman@quicinc.com>
+        Mon, 2 Jan 2023 03:01:20 -0500
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B893BB8A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 00:01:19 -0800 (PST)
+Received: by mail-oo1-xc36.google.com with SMTP id x15-20020a4ab90f000000b004e64a0a967fso1759769ooo.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 00:01:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=40JsF6PNmDEZZ4y8a8jdXK2aWXlWFPHueZj2OHlZ0eg=;
+        b=c9/UDfhp8SQ2BtyvFBkKPyAXxdwVen1w2VO/AWBh8I9/xiR0kuqMXnutL6DjL+FtYw
+         nk8KWCqU3dxvdHb5JZ5NgdAJmBZbRAC0Q5CpET6gMXz+E4ZKrV3jFdt1Iu+sU/S6DNk3
+         rdiI9KH2w3e7Cgamhmy7t/INRXx94/9fesPRA/bp65r5q3wKqXg6+9aE9tSfxeLrGAw5
+         +9737DzFSQ7KJKpjnYnmHD//JcWX3d2XJyrdfWp0L6zmivC1kG3/I/1GMhalo2oQdg8n
+         yJkHMpkNR6ohto3q1CJilOkTVm0cIw8fr7gltxFTwNy2jplH+D6mDEUl25pStNAJ4L/L
+         VTbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=40JsF6PNmDEZZ4y8a8jdXK2aWXlWFPHueZj2OHlZ0eg=;
+        b=dsoOjdqF8Ybj0VyOKfPaCZ0gmrX5xHXZPxzXlgze8H8KyYIsHT2N/L5sDGysgAhLAq
+         NHW1rcfPW7POztpGqkQDwEGmaac3B92Ol9NQwZakJm15ZbolPejY1AlmbSd+FuWbV8h+
+         rsJ22AdhJButhf6zUoqaiUhL8jeelZ5+5cjluKNvUkT99liSIGCZzjvRDRbAvL1NYM+7
+         UB2fqEprbOfyY9S98lcqVSQfdAMTT1qMKd3ilVmSlRMiTWSbwOHIWCD+92Jkqo/JhkUq
+         lep5jIglM6+LgVDpN1j0/H7ljZc+o0UZ9Z+VEDVc+u5mCWOqyjYgCnQ+wwaqk8xYCmmk
+         TcuQ==
+X-Gm-Message-State: AFqh2koPG8XsIDmjSMfcc5QTgFNJ1T2GpMOcShJoQB4PziQ3tJILDnlf
+        ylKeDoPPDMGEwgASqtCyylHmBdE9nVWplxNiYAnxDg==
+X-Google-Smtp-Source: AMrXdXu1Qi5mlSVdZMFT2cQ/3oABMgacFmnT1FSvlTPrxV6i4ytnGLFT3VQMVBbgf2xOvoXXPH5wcVqfrIFQEU/ityg=
+X-Received: by 2002:a05:6820:82c:b0:498:260c:d780 with SMTP id
+ bg44-20020a056820082c00b00498260cd780mr1849729oob.27.1672646478952; Mon, 02
+ Jan 2023 00:01:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20221219225850.2397345-10-quic_eberman@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zV24wA6ROSMieOl4ZzN1EyLV9jfPRiey
-X-Proofpoint-GUID: zV24wA6ROSMieOl4ZzN1EyLV9jfPRiey
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-02_03,2022-12-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- malwarescore=0 adultscore=0 mlxlogscore=264 lowpriorityscore=0
- impostorscore=0 clxscore=1011 phishscore=0 bulkscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301020055
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221230075726.122806-1-duke_xinanwen@163.com>
+In-Reply-To: <20221230075726.122806-1-duke_xinanwen@163.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Mon, 2 Jan 2023 09:00:42 +0100
+Message-ID: <CAMZdPi_zPFq7meLbTQ9mA8b+9VHtz-N=8-NFAwKzPDaq7XAakg@mail.gmail.com>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Quectel
+ RM520N-GL modem
+To:     =?UTF-8?B?RHVrZSBYaW4o6L6b5a6J5paHKQ==?= <duke_xinanwen@163.com>
+Cc:     mani@kernel.org, slark_xiao@163.com, gregkh@linuxfoundation.org,
+        dnlplm@gmail.com, yonglin.tan@outlook.com,
+        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org,
+        jerry.meng@quectel.com, duke.xin@quectel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:30]:
+Hi Duke,
 
-> +static inline bool gh_msgq_has_tx(struct gh_msgq *msgq)
-> +{
-
-Consider possibility that msgq->tx_ghrc can be NULL?
-
-> +	return msgq->tx_ghrsc->type == GUNYAH_RESOURCE_TYPE_MSGQ_TX;
-> +}
+On Fri, 30 Dec 2022 at 08:57, Duke Xin(=E8=BE=9B=E5=AE=89=E6=96=87) <duke_x=
+inanwen@163.com> wrote:
+>
+> The project is based on Qualcomm's sdx6x chips for laptop,so the mhi inte=
+rface definition and
+> enumeration align with previous Quectel sdx24 configuration
+>
+> Signed-off-by: Duke Xin(=E8=BE=9B=E5=AE=89=E6=96=87) <duke_xinanwen@163.c=
+om>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 46 ++++++++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+>
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pc=
+i_generic.c
+> index f39657f71483..83f40617af9a 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -335,6 +335,50 @@ static const struct mhi_pci_dev_info mhi_quectel_em1=
+xx_info =3D {
+>         .sideband_wake =3D true,
+>  };
+>
+> +static const struct mhi_channel_config mhi_quectel_rm5xx_channels[] =3D =
+{
+> +       MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
+> +       MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
+> +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
+> +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> +       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +       /* The EDL firmware is a flash-programmer exposing firehose proto=
+col */
+> +       MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> +};
 > +
-> +static inline bool gh_msgq_has_rx(struct gh_msgq *msgq)
-> +{
-
-Consider possibility that msgq->rx_ghrc can be NULL?
-
-> +	return msgq->rx_ghrsc->type == GUNYAH_RESOURCE_TYPE_MSGQ_RX;
-> +}
+> +static struct mhi_event_config mhi_quectel_rm5xx_events[] =3D {
+> +       MHI_EVENT_CONFIG_CTRL(0, 128),
+> +       MHI_EVENT_CONFIG_DATA(1, 128),
+> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> +       MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
+> +};
 > +
-> +static irqreturn_t gh_msgq_rx_irq_handler(int irq, void *data)
-> +{
-> +	struct gh_msgq *msgq = data;
-> +	struct gh_msgq_rx_data rx_data;
-> +	unsigned long gh_err;
-> +	ssize_t ret;
-> +	bool ready = false;
+> +static const struct mhi_controller_config modem_quectel_rm5xx_config =3D=
+ {
+> +       .max_channels =3D 128,
+> +       .timeout_ms =3D 20000,
+> +       .num_channels =3D ARRAY_SIZE(mhi_quectel_rm5xx_channels),
+> +       .ch_cfg =3D mhi_quectel_rm5xx_channels,
+> +       .num_events =3D ARRAY_SIZE(mhi_quectel_rm5xx_events),
+> +       .event_cfg =3D mhi_quectel_rm5xx_events,
+> +};
 > +
-> +	do {
-> +		gh_err = gh_hypercall_msgq_recv(msgq->rx_ghrsc->capid,
-> +				(uintptr_t)&rx_data.data, sizeof(rx_data.data),
-> +				&rx_data.length, &ready);
-> +		if (gh_err == GH_ERROR_OK) {
-> +			mbox_chan_received_data(gh_msgq_chan(msgq), &rx_data);
-> +		} else if (GH_ERROR_MSGQUEUE_EMPTY) {
+> +static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info =3D {
+> +       .name =3D "quectel-rm5xx",
+> +       .edl =3D "qcom/prog_firehose_sdx6x.elf",
+> +       .config =3D &modem_quectel_rm5xx_config,
 
-gh_err == GH_ERROR_MSGQUEUE_EMPTY 
+Use `modem_quectel_em1xx_config` if compatible instead of duplicating
+the configuration.
 
-> +			break;
-> +		} else {
-> +			pr_warn("Failed to receive data from msgq for %s: %ld\n",
-> +				msgq->mbox.dev ? dev_name(msgq->mbox.dev) : "", ret);
-> +			break;
-> +		}
-> +	} while (ready);
-> +
-> +	return IRQ_HANDLED;
-> +}
+Regards,
+Loic
