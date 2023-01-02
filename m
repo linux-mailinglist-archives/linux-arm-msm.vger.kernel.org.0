@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94D2965AEFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 10:48:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC5E65AEF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 10:48:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232537AbjABJry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 04:47:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47216 "EHLO
+        id S232471AbjABJru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 04:47:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232517AbjABJrD (ORCPT
+        with ESMTP id S232506AbjABJrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 04:47:03 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38ED5FDD
+        Mon, 2 Jan 2023 04:47:02 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F49A5FDC
         for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 01:46:56 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id z26so40921196lfu.8
+Received: by mail-lf1-x12b.google.com with SMTP id 1so40906361lfz.4
         for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 01:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=h+t6Lz+oXnFe2Ws/5geoOgO4PqaaAI/xdGXpqBWi0Dg=;
-        b=xPJAeDwFaKlTKD5tf/mrGxMle/y0AN8lQ5hHTvtmQff+E8BdmyFIeH80i0oz2JhsmY
-         XI4gFdDZbtp52bRapPDq6BaodJb87Ui0h7hSOTANucV8mtJLdDWEd9mnO1wDx50dcOVl
-         E2MAxVPIe4jvb6e9HXkYlilHlvru2mT9LCWE+ScC7npLM7DUnWdrA2oSZEqAfsgitLt6
-         DneysUlHiLaoSy+Jm6buIQkaH2EkVBiewe83nvwdEGYW13k4PbXCQ9vIlyvFCKZZfJFM
-         wVT0lslbNfkh4zf3BFlF75vpGIex2nLucW5jnF6yodpL4vhATuDg9ebV4KRZI4XOBUNL
-         GdFQ==
+        bh=AOSH1C5CfYfmPliXAbNEvFv7j4iFV+C5hOgV7eJDr+Q=;
+        b=Wr9A/5xS+AfsPBRo4SLTkHXh6yN57bJZrMOYjINP/j2UQ19KhIbsRYfWNhl16n3i3K
+         aOKLFOoeayI2jRvCc8ynrjQY3cRX5hHVq1J+XFmOQft/jn3su5Y7OHgFkgtc2vIXBxuq
+         OrTZLIiAh042yVPgPDnzUEz4XBrkenB9PkQ8Um4XbD0NoIdPz9F3iEgwW7fIxUFq0Mk2
+         oSjVsoYUnVh6FMiwzbW+Hm/C0lXZZ5YWLLrJbFyO9XeA0GES1degOo4CqtqxjdVfgJ20
+         Fhd2jImHaKd263t6v1ehJAh28QwQrqbkz182No3E5zfArbfq8P0mNNx93Yz/PKPsqs8o
+         RJZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=h+t6Lz+oXnFe2Ws/5geoOgO4PqaaAI/xdGXpqBWi0Dg=;
-        b=dPul+hC8oHweyvjNwANIQvgvdaNVaO0hHdB1zNnkV+Uw1zZ/5mcG2jh+6X3o34VYGp
-         TdIfve6uaQCADWQcE2q/fkek3LT52bF703iL30V/p81LuX7EtxZoK0etLRyAFOC9YobU
-         pRZimVUocVEnuEf52CcGF9Vo9z6/3/85DxY1xlLDiG49NdZVwBkicTNARhoiO+IPUkrW
-         NUVRH8W9jQRYGl5k6WPI3qkTU63cIRNdgZicv0/o92TUgIz5C2BnqjbOLvxQQh0DOpl+
-         CVbfPqtbm02ex8oBGKpj/UnU74er052QBVxlCjw1QdWWLkWIfckWMpIaXV5foj+HIag0
-         d98g==
-X-Gm-Message-State: AFqh2kps/gFO/NqIFfAS25lW4Lyjbo5hzUaDUFtFcSQE3cOjh2U2WJ1G
-        GqILwx3EL3N5VdCi2zDPBHfMt+WcInLHpP0K
-X-Google-Smtp-Source: AMrXdXvVqqjQggCEzGBkkOt878BcI1mvnMK9seEF37LBEMWzkkT75TWtcBEVT16tL378Se51WIXnEA==
-X-Received: by 2002:a05:6512:2c8a:b0:4b6:fdc3:a65f with SMTP id dw10-20020a0565122c8a00b004b6fdc3a65fmr15011594lfb.11.1672652814754;
-        Mon, 02 Jan 2023 01:46:54 -0800 (PST)
+        bh=AOSH1C5CfYfmPliXAbNEvFv7j4iFV+C5hOgV7eJDr+Q=;
+        b=xMSlrh18dhU8816DSOTuKKS+5ATckfnuCMFAvBDlJojsgopSh9xCG1fUYaesUIomWZ
+         9LeJAD8pQhRcb2cO+q9ycnApI94PE+SSQPrzgPkCZNRsjSgg4jyCNdn0uY9RwIVhvBSb
+         U9djUrkny8V4foWdA37TXr0nbzNwbXwM3g/dyrBS8eZpIFHiE3rGGQoZ+qrrXuPtKRzk
+         C6ZZW3cuLs2f7QPDm9b/Vv8NQ5vBadPMnETqSlqo4rX7WLMyvwN4bk35MelgsOhijLfR
+         mLUtwGe1YqxPb0kN2i8pnyxyMvN4Y83uUCtwCP0Z8h4V2TTkhaXW2jw1xx1QhdlHeNx2
+         fBaA==
+X-Gm-Message-State: AFqh2koV94iME0JfVsEiUT1HaRYr6d6Z8UMLCapyVsbBcnvxCLPpMWTr
+        +zbnenmwZghHWaU1dBAzIcwWoZYOn4+bUs98
+X-Google-Smtp-Source: AMrXdXsP24ybZy3WPPDdBe3z+LH+QUjMEVmTH3kN19+j3nbmCidqEzTzDZEfY07dpalYPObVZMXt2w==
+X-Received: by 2002:a19:f804:0:b0:4b5:28e5:29f8 with SMTP id a4-20020a19f804000000b004b528e529f8mr13391213lff.42.1672652815976;
+        Mon, 02 Jan 2023 01:46:55 -0800 (PST)
 Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id x11-20020a0565123f8b00b004b5adb59ed5sm4382143lfa.297.2023.01.02.01.46.53
+        by smtp.gmail.com with ESMTPSA id x11-20020a0565123f8b00b004b5adb59ed5sm4382143lfa.297.2023.01.02.01.46.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 01:46:54 -0800 (PST)
+        Mon, 02 Jan 2023 01:46:55 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -58,9 +58,9 @@ Cc:     marijn.suijten@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 07/17] arm64: dts: qcom: sm8150: Pad addresses to 8 hex digits
-Date:   Mon,  2 Jan 2023 10:46:32 +0100
-Message-Id: <20230102094642.74254-8-konrad.dybcio@linaro.org>
+Subject: [PATCH v2 08/17] arm64: dts: qcom: sm6350: Pad addresses to 8 hex digits
+Date:   Mon,  2 Jan 2023 10:46:33 +0100
+Message-Id: <20230102094642.74254-9-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102094642.74254-1-konrad.dybcio@linaro.org>
 References: <20230102094642.74254-1-konrad.dybcio@linaro.org>
@@ -83,263 +83,57 @@ Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 v1 -> v2:
 No changes
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 68 ++++++++++++++--------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 73f39bbeab13..f6b16c31e8b0 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -890,7 +890,7 @@ gcc: clock-controller@100000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 8944dcbbe3a2..e71ffc31d41e 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -557,7 +557,7 @@ gpi_dma0: dma-controller@800000 {
  
- 		gpi_dma0: dma-controller@800000 {
- 			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
--			reg = <0 0x800000 0 0x60000>;
-+			reg = <0 0x00800000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-@@ -979,7 +979,7 @@ i2c0: i2c@880000 {
+ 		qupv3_id_0: geniqup@8c0000 {
+ 			compatible = "qcom,geni-se-qup";
+-			reg = <0x0 0x8c0000 0x0 0x2000>;
++			reg = <0x0 0x008c0000 0x0 0x2000>;
+ 			clock-names = "m-ahb", "s-ahb";
+ 			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+ 				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+@@ -630,7 +630,7 @@ gpi_dma1: dma-controller@900000 {
  
- 			spi0: spi@880000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x880000 0 0x4000>;
-+				reg = <0 0x00880000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-@@ -1013,7 +1013,7 @@ i2c1: i2c@884000 {
+ 		qupv3_id_1: geniqup@9c0000 {
+ 			compatible = "qcom,geni-se-qup";
+-			reg = <0x0 0x9c0000 0x0 0x2000>;
++			reg = <0x0 0x009c0000 0x0 0x2000>;
+ 			clock-names = "m-ahb", "s-ahb";
+ 			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+ 				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+@@ -702,7 +702,7 @@ i2c8: i2c@988000 {
  
- 			spi1: spi@884000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x884000 0 0x4000>;
-+				reg = <0 0x00884000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
-@@ -1047,7 +1047,7 @@ i2c2: i2c@888000 {
- 
- 			spi2: spi@888000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x888000 0 0x4000>;
-+				reg = <0 0x00888000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-@@ -1081,7 +1081,7 @@ i2c3: i2c@88c000 {
- 
- 			spi3: spi@88c000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x88c000 0 0x4000>;
-+				reg = <0 0x0088c000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
-@@ -1115,7 +1115,7 @@ i2c4: i2c@890000 {
- 
- 			spi4: spi@890000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x890000 0 0x4000>;
-+				reg = <0 0x00890000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-@@ -1149,7 +1149,7 @@ i2c5: i2c@894000 {
- 
- 			spi5: spi@894000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x894000 0 0x4000>;
-+				reg = <0 0x00894000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-@@ -1183,7 +1183,7 @@ i2c6: i2c@898000 {
- 
- 			spi6: spi@898000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x898000 0 0x4000>;
-+				reg = <0 0x00898000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-@@ -1217,7 +1217,7 @@ i2c7: i2c@89c000 {
- 
- 			spi7: spi@89c000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0x89c000 0 0x4000>;
-+				reg = <0 0x0089c000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-@@ -1236,7 +1236,7 @@ spi7: spi@89c000 {
- 
- 		gpi_dma1: dma-controller@a00000 {
- 			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
--			reg = <0 0xa00000 0 0x60000>;
-+			reg = <0 0x00a00000 0 0x60000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1287,7 +1287,7 @@ i2c8: i2c@a80000 {
- 
- 			spi8: spi@a80000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa80000 0 0x4000>;
-+				reg = <0 0x00a80000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
-@@ -1321,7 +1321,7 @@ i2c9: i2c@a84000 {
- 
- 			spi9: spi@a84000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa84000 0 0x4000>;
-+				reg = <0 0x00a84000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
-@@ -1355,7 +1355,7 @@ i2c10: i2c@a88000 {
- 
- 			spi10: spi@a88000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa88000 0 0x4000>;
-+				reg = <0 0x00a88000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-@@ -1389,7 +1389,7 @@ i2c11: i2c@a8c000 {
- 
- 			spi11: spi@a8c000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa8c000 0 0x4000>;
-+				reg = <0 0x00a8c000 0 0x4000>;
- 				reg-names = "se";
+ 			uart9: serial@98c000 {
+ 				compatible = "qcom,geni-debug-uart";
+-				reg = <0 0x98c000 0 0x4000>;
++				reg = <0 0x0098c000 0 0x4000>;
  				clock-names = "se";
  				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
-@@ -1432,7 +1432,7 @@ i2c12: i2c@a90000 {
+ 				pinctrl-names = "default";
+@@ -1654,11 +1654,11 @@ aoss_qmp: power-controller@c300000 {
  
- 			spi12: spi@a90000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa90000 0 0x4000>;
-+				reg = <0 0x00a90000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
-@@ -1450,7 +1450,7 @@ spi12: spi@a90000 {
- 
- 			i2c16: i2c@94000 {
- 				compatible = "qcom,geni-i2c";
--				reg = <0 0x0094000 0 0x4000>;
-+				reg = <0 0x00094000 0 0x4000>;
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
- 				dmas = <&gpi_dma2 0 5 QCOM_GPI_I2C>,
-@@ -1466,7 +1466,7 @@ i2c16: i2c@94000 {
- 
- 			spi16: spi@a94000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xa94000 0 0x4000>;
-+				reg = <0 0x00a94000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-@@ -1485,7 +1485,7 @@ spi16: spi@a94000 {
- 
- 		gpi_dma2: dma-controller@c00000 {
- 			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
--			reg = <0 0xc00000 0 0x60000>;
-+			reg = <0 0x00c00000 0 0x60000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1537,7 +1537,7 @@ i2c17: i2c@c80000 {
- 
- 			spi17: spi@c80000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc80000 0 0x4000>;
-+				reg = <0 0x00c80000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
-@@ -1571,7 +1571,7 @@ i2c18: i2c@c84000 {
- 
- 			spi18: spi@c84000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc84000 0 0x4000>;
-+				reg = <0 0x00c84000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
-@@ -1605,7 +1605,7 @@ i2c19: i2c@c88000 {
- 
- 			spi19: spi@c88000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc88000 0 0x4000>;
-+				reg = <0 0x00c88000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S2_CLK>;
-@@ -1639,7 +1639,7 @@ i2c13: i2c@c8c000 {
- 
- 			spi13: spi@c8c000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc8c000 0 0x4000>;
-+				reg = <0 0x00c8c000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
-@@ -1673,7 +1673,7 @@ i2c14: i2c@c90000 {
- 
- 			spi14: spi@c90000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc90000 0 0x4000>;
-+				reg = <0 0x00c90000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
-@@ -1707,7 +1707,7 @@ i2c15: i2c@c94000 {
- 
- 			spi15: spi@c94000 {
- 				compatible = "qcom,geni-spi";
--				reg = <0 0xc94000 0 0x4000>;
-+				reg = <0 0x00c94000 0 0x4000>;
- 				reg-names = "se";
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
-@@ -1864,10 +1864,10 @@ pcie0_phy: phy@1c06000 {
- 			status = "disabled";
- 
- 			pcie0_lane: phy@1c06200 {
--				reg = <0 0x1c06200 0 0x170>, /* tx */
--				      <0 0x1c06400 0 0x200>, /* rx */
--				      <0 0x1c06800 0 0x1f0>, /* pcs */
--				      <0 0x1c06c00 0 0xf4>; /* "pcs_lane" same as pcs_misc? */
-+				reg = <0 0x01c06200 0 0x170>, /* tx */
-+				      <0 0x01c06400 0 0x200>, /* rx */
-+				      <0 0x01c06800 0 0x1f0>, /* pcs */
-+				      <0 0x01c06c00 0 0xf4>; /* "pcs_lane" same as pcs_misc? */
- 				clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
- 				clock-names = "pipe0";
- 
-@@ -1963,12 +1963,12 @@ pcie1_phy: phy@1c0e000 {
- 			status = "disabled";
- 
- 			pcie1_lane: phy@1c0e200 {
--				reg = <0 0x1c0e200 0 0x170>, /* tx0 */
--				      <0 0x1c0e400 0 0x200>, /* rx0 */
--				      <0 0x1c0ea00 0 0x1f0>, /* pcs */
--				      <0 0x1c0e600 0 0x170>, /* tx1 */
--				      <0 0x1c0e800 0 0x200>, /* rx1 */
--				      <0 0x1c0ee00 0 0xf4>; /* "pcs_com" same as pcs_misc? */
-+				reg = <0 0x01c0e200 0 0x170>, /* tx0 */
-+				      <0 0x01c0e400 0 0x200>, /* rx0 */
-+				      <0 0x01c0ea00 0 0x1f0>, /* pcs */
-+				      <0 0x01c0e600 0 0x170>, /* tx1 */
-+				      <0 0x01c0e800 0 0x200>, /* rx1 */
-+				      <0 0x01c0ee00 0 0xf4>; /* "pcs_com" same as pcs_misc? */
- 				clocks = <&gcc GCC_PCIE_1_PIPE_CLK>;
- 				clock-names = "pipe0";
- 
+ 		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+-			reg = <0 0xc440000 0 0x1100>,
+-			      <0 0xc600000 0 0x2000000>,
+-			      <0 0xe600000 0 0x100000>,
+-			      <0 0xe700000 0 0xa0000>,
+-			      <0 0xc40a000 0 0x26000>;
++			reg = <0 0x0c440000 0 0x1100>,
++			      <0 0x0c600000 0 0x2000000>,
++			      <0 0x0e600000 0 0x100000>,
++			      <0 0x0e700000 0 0xa0000>,
++			      <0 0x0c40a000 0 0x26000>;
+ 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+ 			interrupt-names = "periph_irq";
+ 			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.39.0
 
