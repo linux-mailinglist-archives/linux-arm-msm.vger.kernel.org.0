@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC5E65AEF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 10:48:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA59F65AEE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 10:47:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232471AbjABJru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 04:47:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46930 "EHLO
+        id S231567AbjABJrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 04:47:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232506AbjABJrC (ORCPT
+        with ESMTP id S232538AbjABJrF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 04:47:02 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F49A5FDC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 01:46:56 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id 1so40906361lfz.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 01:46:56 -0800 (PST)
+        Mon, 2 Jan 2023 04:47:05 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3562AB4A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 01:46:59 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id f34so40882582lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 01:46:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AOSH1C5CfYfmPliXAbNEvFv7j4iFV+C5hOgV7eJDr+Q=;
-        b=Wr9A/5xS+AfsPBRo4SLTkHXh6yN57bJZrMOYjINP/j2UQ19KhIbsRYfWNhl16n3i3K
-         aOKLFOoeayI2jRvCc8ynrjQY3cRX5hHVq1J+XFmOQft/jn3su5Y7OHgFkgtc2vIXBxuq
-         OrTZLIiAh042yVPgPDnzUEz4XBrkenB9PkQ8Um4XbD0NoIdPz9F3iEgwW7fIxUFq0Mk2
-         oSjVsoYUnVh6FMiwzbW+Hm/C0lXZZ5YWLLrJbFyO9XeA0GES1degOo4CqtqxjdVfgJ20
-         Fhd2jImHaKd263t6v1ehJAh28QwQrqbkz182No3E5zfArbfq8P0mNNx93Yz/PKPsqs8o
-         RJZA==
+        bh=72AkIAFfJkoY5e7h+zMu2iYwO8py3/WRN6cib9gd2j4=;
+        b=Xcv1+1Graf0+LkrUab4pNJM3Lu2zFnAGbWYvrzN9GLEZqTW6sTWXdtTAmkWXz+fxbA
+         BNfesjz76wrTR6VlXLTdrnLJZb0xFdobwtj7K4qHbR49fHrH4TSwSK8sbo1FvCGFdmXI
+         fhX+6xHClmYqkdeCW0TOOhKVpBm1+E3G5C0ED5j+eIZcT9EDTekSY+G16jdUvk2HdfCo
+         H4uz6TGnDGLa+VE/Ssc0NiEOCta3y2RpRujSu7LEbyW5T+Vd9Q4O24KClVEdYBNlQI/A
+         son1cv0+3VXwdYctjClwGR9aSUqvMhpCtxabsRMX/vgidHZ7LTKZd2PdklXMj221me/j
+         hLAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AOSH1C5CfYfmPliXAbNEvFv7j4iFV+C5hOgV7eJDr+Q=;
-        b=xMSlrh18dhU8816DSOTuKKS+5ATckfnuCMFAvBDlJojsgopSh9xCG1fUYaesUIomWZ
-         9LeJAD8pQhRcb2cO+q9ycnApI94PE+SSQPrzgPkCZNRsjSgg4jyCNdn0uY9RwIVhvBSb
-         U9djUrkny8V4foWdA37TXr0nbzNwbXwM3g/dyrBS8eZpIFHiE3rGGQoZ+qrrXuPtKRzk
-         C6ZZW3cuLs2f7QPDm9b/Vv8NQ5vBadPMnETqSlqo4rX7WLMyvwN4bk35MelgsOhijLfR
-         mLUtwGe1YqxPb0kN2i8pnyxyMvN4Y83uUCtwCP0Z8h4V2TTkhaXW2jw1xx1QhdlHeNx2
-         fBaA==
-X-Gm-Message-State: AFqh2koV94iME0JfVsEiUT1HaRYr6d6Z8UMLCapyVsbBcnvxCLPpMWTr
-        +zbnenmwZghHWaU1dBAzIcwWoZYOn4+bUs98
-X-Google-Smtp-Source: AMrXdXsP24ybZy3WPPDdBe3z+LH+QUjMEVmTH3kN19+j3nbmCidqEzTzDZEfY07dpalYPObVZMXt2w==
-X-Received: by 2002:a19:f804:0:b0:4b5:28e5:29f8 with SMTP id a4-20020a19f804000000b004b528e529f8mr13391213lff.42.1672652815976;
-        Mon, 02 Jan 2023 01:46:55 -0800 (PST)
+        bh=72AkIAFfJkoY5e7h+zMu2iYwO8py3/WRN6cib9gd2j4=;
+        b=AzVAPjv1kptDQ/2Z1JLa+fHO0M/DF5S+3uIWjbGi8Wfg1wCy3nYLF6+V4HJdAJ8nzk
+         qu4MFbKgEai+COn9nxNbzyHaJdqfWGyu2lnEHkOxAseVMWKdOxFmdG2YrrhaxSgtrtBF
+         ou9nXl3LpJz8vUiAOZvgJU/jCbge+8AAwixnVnqSQVyceHf4kC6B4RJLSw7ep3OT6yUu
+         7H5pRXUUaR/S2I9T4zE47sjFf+rCpfY1YcKuMd2OzhZCvvtnfqv7fozkPnhTmMbDwsrF
+         A8kfJ/Idr89zRB34aN5SSOAIXV2Os9T/xmwzjs1cCjahalRFfbEtziTRi9JOSY8Iw7cL
+         GdSQ==
+X-Gm-Message-State: AFqh2kq7uIXWHkI9V5i0rZMnSWagXZTWGPjLXs0NKLlY0fsepXKMGA/u
+        /aZAWoZyaJVVr33j9c4jRZ5kVmHUY8trbW9D
+X-Google-Smtp-Source: AMrXdXsVOYEmFswWu4NG8m/4j9A9TP+4UMOxMy3F2D5oR3xbJaAke/kxZN6X2/WHlsyRvR4wo82ZCQ==
+X-Received: by 2002:a05:6512:3e18:b0:4b5:5ceb:3caa with SMTP id i24-20020a0565123e1800b004b55ceb3caamr13056148lfv.19.1672652817232;
+        Mon, 02 Jan 2023 01:46:57 -0800 (PST)
 Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id x11-20020a0565123f8b00b004b5adb59ed5sm4382143lfa.297.2023.01.02.01.46.54
+        by smtp.gmail.com with ESMTPSA id x11-20020a0565123f8b00b004b5adb59ed5sm4382143lfa.297.2023.01.02.01.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 01:46:55 -0800 (PST)
+        Mon, 02 Jan 2023 01:46:56 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -58,9 +58,9 @@ Cc:     marijn.suijten@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 08/17] arm64: dts: qcom: sm6350: Pad addresses to 8 hex digits
-Date:   Mon,  2 Jan 2023 10:46:33 +0100
-Message-Id: <20230102094642.74254-9-konrad.dybcio@linaro.org>
+Subject: [PATCH v2 09/17] arm64: dts: qcom: sdm845: Pad addresses to 8 hex digits
+Date:   Mon,  2 Jan 2023 10:46:34 +0100
+Message-Id: <20230102094642.74254-10-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102094642.74254-1-konrad.dybcio@linaro.org>
 References: <20230102094642.74254-1-konrad.dybcio@linaro.org>
@@ -83,57 +83,101 @@ Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 v1 -> v2:
 No changes
 
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 46 ++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 8944dcbbe3a2..e71ffc31d41e 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -557,7 +557,7 @@ gpi_dma0: dma-controller@800000 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 154f5054a200..44bb3509df62 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2585,9 +2585,9 @@ ipa: ipa@1e40000 {
  
- 		qupv3_id_0: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
--			reg = <0x0 0x8c0000 0x0 0x2000>;
-+			reg = <0x0 0x008c0000 0x0 0x2000>;
- 			clock-names = "m-ahb", "s-ahb";
- 			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
- 				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-@@ -630,7 +630,7 @@ gpi_dma1: dma-controller@900000 {
+ 			iommus = <&apps_smmu 0x720 0x0>,
+ 				 <&apps_smmu 0x722 0x0>;
+-			reg = <0 0x1e40000 0 0x7000>,
+-			      <0 0x1e47000 0 0x2000>,
+-			      <0 0x1e04000 0 0x2c000>;
++			reg = <0 0x01e40000 0 0x7000>,
++			      <0 0x01e47000 0 0x2000>,
++			      <0 0x01e04000 0 0x2c000>;
+ 			reg-names = "ipa-reg",
+ 				    "ipa-shared",
+ 				    "gsi";
+@@ -4237,16 +4237,16 @@ videocc: clock-controller@ab00000 {
+ 		camss: camss@a00000 {
+ 			compatible = "qcom,sdm845-camss";
  
- 		qupv3_id_1: geniqup@9c0000 {
- 			compatible = "qcom,geni-se-qup";
--			reg = <0x0 0x9c0000 0x0 0x2000>;
-+			reg = <0x0 0x009c0000 0x0 0x2000>;
- 			clock-names = "m-ahb", "s-ahb";
- 			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
- 				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-@@ -702,7 +702,7 @@ i2c8: i2c@988000 {
+-			reg = <0 0xacb3000 0 0x1000>,
+-				<0 0xacba000 0 0x1000>,
+-				<0 0xacc8000 0 0x1000>,
+-				<0 0xac65000 0 0x1000>,
+-				<0 0xac66000 0 0x1000>,
+-				<0 0xac67000 0 0x1000>,
+-				<0 0xac68000 0 0x1000>,
+-				<0 0xacaf000 0 0x4000>,
+-				<0 0xacb6000 0 0x4000>,
+-				<0 0xacc4000 0 0x4000>;
++			reg = <0 0x0acb3000 0 0x1000>,
++				<0 0x0acba000 0 0x1000>,
++				<0 0x0acc8000 0 0x1000>,
++				<0 0x0ac65000 0 0x1000>,
++				<0 0x0ac66000 0 0x1000>,
++				<0 0x0ac67000 0 0x1000>,
++				<0 0x0ac68000 0 0x1000>,
++				<0 0x0acaf000 0 0x4000>,
++				<0 0x0acb6000 0 0x4000>,
++				<0 0x0acc4000 0 0x4000>;
+ 			reg-names = "csid0",
+ 				"csid1",
+ 				"csid2",
+@@ -4575,11 +4575,11 @@ mdss_dp: displayport-controller@ae90000 {
+ 				status = "disabled";
+ 				compatible = "qcom,sdm845-dp";
  
- 			uart9: serial@98c000 {
- 				compatible = "qcom,geni-debug-uart";
--				reg = <0 0x98c000 0 0x4000>;
-+				reg = <0 0x0098c000 0 0x4000>;
- 				clock-names = "se";
- 				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
- 				pinctrl-names = "default";
-@@ -1654,11 +1654,11 @@ aoss_qmp: power-controller@c300000 {
+-				reg = <0 0xae90000 0 0x200>,
+-				      <0 0xae90200 0 0x200>,
+-				      <0 0xae90400 0 0x600>,
+-				      <0 0xae90a00 0 0x600>,
+-				      <0 0xae91000 0 0x600>;
++				reg = <0 0x0ae90000 0 0x200>,
++				      <0 0x0ae90200 0 0x200>,
++				      <0 0x0ae90400 0 0x600>,
++				      <0 0x0ae90a00 0 0x600>,
++				      <0 0x0ae91000 0 0x600>;
  
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
--			reg = <0 0xc440000 0 0x1100>,
--			      <0 0xc600000 0 0x2000000>,
--			      <0 0xe600000 0 0x100000>,
--			      <0 0xe700000 0 0xa0000>,
--			      <0 0xc40a000 0 0x26000>;
-+			reg = <0 0x0c440000 0 0x1100>,
-+			      <0 0x0c600000 0 0x2000000>,
-+			      <0 0x0e600000 0 0x100000>,
-+			      <0 0x0e700000 0 0xa0000>,
-+			      <0 0x0c40a000 0 0x26000>;
- 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
- 			interrupt-names = "periph_irq";
- 			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&mdss>;
+ 				interrupts = <12>;
+@@ -4788,7 +4788,7 @@ dsi1_phy: phy@ae96400 {
+ 		gpu: gpu@5000000 {
+ 			compatible = "qcom,adreno-630.2", "qcom,adreno";
+ 
+-			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x10>;
++			reg = <0 0x05000000 0 0x40000>, <0 0x509e000 0 0x10>;
+ 			reg-names = "kgsl_3d0_reg_memory", "cx_mem";
+ 
+ 			/*
+@@ -4858,7 +4858,7 @@ opp-257000000 {
+ 
+ 		adreno_smmu: iommu@5040000 {
+ 			compatible = "qcom,sdm845-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2";
+-			reg = <0 0x5040000 0 0x10000>;
++			reg = <0 0x05040000 0 0x10000>;
+ 			#iommu-cells = <1>;
+ 			#global-interrupts = <2>;
+ 			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
+@@ -4881,9 +4881,9 @@ adreno_smmu: iommu@5040000 {
+ 		gmu: gmu@506a000 {
+ 			compatible = "qcom,adreno-gmu-630.2", "qcom,adreno-gmu";
+ 
+-			reg = <0 0x506a000 0 0x30000>,
+-			      <0 0xb280000 0 0x10000>,
+-			      <0 0xb480000 0 0x10000>;
++			reg = <0 0x0506a000 0 0x30000>,
++			      <0 0x0b280000 0 0x10000>,
++			      <0 0x0b480000 0 0x10000>;
+ 			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
+ 
+ 			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.39.0
 
