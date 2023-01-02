@@ -2,59 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F4D265AFFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:52:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4B4465B00C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:52:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232648AbjABKvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 05:51:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52458 "EHLO
+        id S230177AbjABKwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 05:52:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232657AbjABKvO (ORCPT
+        with ESMTP id S233006AbjABKwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 05:51:14 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5404962E2;
-        Mon,  2 Jan 2023 02:50:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D7047B80D07;
-        Mon,  2 Jan 2023 10:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C12C433B3;
-        Mon,  2 Jan 2023 10:50:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672656651;
-        bh=NnSjzogFraldpT+XgAkjYumPBRSVym0mp3juRqkdBpI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=R9XUZ6DlHPc+bBa0ForStYZhT5tJwdXf/wFRBVQ5wdWU+fYlbl5yISWRi5rxUKSBD
-         M6jiVrGmjr3TIORGvzU+BHTsZLJdbWelF2azHeNme6dc0lY+SiV/6ner5FlG/VbY2L
-         tR40DLeW4viM5CNAn22sOvh85Kp1DHUxk60kQsLD0Wq7GAB+SArbcXJhV8WJnE9PfD
-         8RX1ee7JEDXEhC5GswkxemVwGaDvZAbLTZLe4HcBligs7MzVWyPX9dGI3oeTqBCzeo
-         nJCY7d+blk0TCw84twVzigMjo53JkEVAqDSP/lcxum4kUANFpeImylqiWmwnUfCC6Y
-         NXdcD8B2XUWzg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pCIPM-000273-Jl; Mon, 02 Jan 2023 11:51:08 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6/6] arm64: dts: qcom: sm8450-hdk: fix wcd938x codec node
-Date:   Mon,  2 Jan 2023 11:50:38 +0100
-Message-Id: <20230102105038.8074-7-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.4
-In-Reply-To: <20230102105038.8074-1-johan+linaro@kernel.org>
-References: <20230102105038.8074-1-johan+linaro@kernel.org>
+        Mon, 2 Jan 2023 05:52:17 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9AE62D0;
+        Mon,  2 Jan 2023 02:52:13 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3026HN3k029485;
+        Mon, 2 Jan 2023 10:52:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=k9REcPPrfNLOnnRfbJEOwMzUHLTFcqDeBqHrIzrPZOs=;
+ b=f5cr7ktYzDXoug42tSlpeFq45m4mqSb0GfrHrYMziVuoFUeQzh1w/eW26lBAF4nzqG51
+ LDtlqQzFdWr8WTVnZS8EA8sHeK4PTZxyGVQqlQx6FZjZM6q+bdZQvzY648PSlh5bo9zd
+ 9uZwZek2tX7jVyZaBwDXD1mtRogaOSUDHfbQXL8MenyoAMlmexRq0J+xKk7nVXrQncux
+ OnU/w99OlVDTzA9PSXtdkoW9bzg3qoyO0qIjyZTrwIOju8ik64PRUGcCQhYGr8UBtFUL
+ dbol51+Cm3Aqj/zoRYStmL7x1W5isBxrZIXDn20kyt6oamTrsUxGTZeIHjy/LkORdgN8 bA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mtduqaman-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 02 Jan 2023 10:52:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 302Aq4gx022354
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 2 Jan 2023 10:52:04 GMT
+Received: from [10.216.21.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 2 Jan 2023
+ 02:51:58 -0800
+Message-ID: <442519fd-1bb7-1200-6b0f-97ddd5226411@quicinc.com>
+Date:   Mon, 2 Jan 2023 16:21:55 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [Freedreno] [PATCH v2] drm/msm/adreno: Make adreno quirks not
+ overwrite each other
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
+        <agross@kernel.org>, <krzysztof.kozlowski@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <marijn.suijten@somainline.org>, Sean Paul <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>
+References: <20230102100201.77286-1-konrad.dybcio@linaro.org>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20230102100201.77286-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eNSBRZwgmE1BbAY9QzFGp5PvshGW6Csy
+X-Proofpoint-ORIG-GUID: eNSBRZwgmE1BbAY9QzFGp5PvshGW6Csy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-02_06,2022-12-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 clxscore=1011 impostorscore=0 phishscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301020098
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,86 +90,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The wcd938x codec is not a memory-mapped device and does not belong
-under the soc node.
+On 1/2/2023 3:32 PM, Konrad Dybcio wrote:
+> So far the adreno quirks have all been assigned with an OR operator,
+> which is problematic, because they were assigned consecutive integer
+> values, which makes checking them with an AND operator kind of no bueno..
+>
+> Switch to using BIT(n) so that only the quirks that the programmer chose
+> are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
+>
+> Fixes: 370063ee427a ("drm/msm/adreno: Add A540 support")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> v1 -> v2:
+> - pick up tags
+> - correct the Fixes: tag
+>
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index c85857c0a228..5eb254c9832a 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -29,11 +29,9 @@ enum {
+>  	ADRENO_FW_MAX,
+>  };
+>  
+> -enum adreno_quirks {
+> -	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
+> -	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
+> -	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
+> -};
+> +#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
+> +#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
+> +#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+>  
+>  struct adreno_rev {
+>  	uint8_t  core;
+> @@ -65,7 +63,7 @@ struct adreno_info {
+>  	const char *name;
+>  	const char *fw[ADRENO_FW_MAX];
+>  	uint32_t gmem;
+> -	enum adreno_quirks quirks;
+> +	u64 quirks;
+>  	struct msm_gpu *(*init)(struct drm_device *dev);
+>  	const char *zapfw;
+>  	u32 inactive_period;
 
-Move the node to the root node to avoid DT validation failures.
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 52 ++++++++++++-------------
- 1 file changed, 25 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-index 4de3e1f1c39c..217b2c654745 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -17,6 +17,31 @@ aliases {
- 		serial0 = &uart7;
- 	};
- 
-+	wcd938x: codec {
-+		compatible = "qcom,wcd9380-codec";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wcd_default>;
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <1>;
-+
-+		vdd-buck-supply = <&vreg_s10b_1p8>;
-+		vdd-rxtx-supply = <&vreg_s10b_1p8>;
-+		vdd-io-supply = <&vreg_s10b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob>;
-+	};
-+
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-@@ -407,33 +432,6 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
--&soc {
--	wcd938x: codec {
--		compatible = "qcom,wcd9380-codec";
--
--		pinctrl-names = "default";
--		pinctrl-0 = <&wcd_default>;
--
--		qcom,micbias1-microvolt = <1800000>;
--		qcom,micbias2-microvolt = <1800000>;
--		qcom,micbias3-microvolt = <1800000>;
--		qcom,micbias4-microvolt = <1800000>;
--		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
--		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
--		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
--		qcom,rx-device = <&wcd_rx>;
--		qcom,tx-device = <&wcd_tx>;
--
--		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
--		#sound-dai-cells = <1>;
--
--		vdd-buck-supply = <&vreg_s10b_1p8>;
--		vdd-rxtx-supply = <&vreg_s10b_1p8>;
--		vdd-io-supply = <&vreg_s10b_1p8>;
--		vdd-mic-bias-supply = <&vreg_bob>;
--	};
--};
--
- &sound {
- 	compatible = "qcom,sm8450-sndcard";
- 	model = "SM8450-HDK";
--- 
-2.37.4
-
+-Akhil.
