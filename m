@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC71565B07D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:23:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 775EA65B156
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:42:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232709AbjABLXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 06:23:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44900 "EHLO
+        id S232686AbjABLmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:42:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232619AbjABLXd (ORCPT
+        with ESMTP id S232666AbjABLmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:23:33 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF09324A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:23:31 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id co23so26057865wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:23:31 -0800 (PST)
+        Mon, 2 Jan 2023 06:42:00 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D91D6E80
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:41:58 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bt23so24592511lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:41:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=He1UhKwO5iA0CtVhb4Fm4ggBLsoDYLxYgG6at6pHejY=;
-        b=ktn30PEaToI3GtkcPsPn8hZkhbVAJ0eyWsFqxgWtVvujmRLgU1oxkyUoA5Vn0rwhNP
-         kz4oTxksemVadkI1MVeT/3/LF6x03HvoyHOUlWq3aKcWbwbVoE3lfeyE3jq7lDXmD5Jo
-         BufRX80Zi/Tkjtt++75X+U79A80ubvLYzQtdOpSpxBzJ8h8na7gHeOWFlYf3DTof0P9Y
-         np3y8DckOrVRiLMUaIeDL5v06VfzobkFY7f7DU5SJKAUsTJ5N+dqzVbH6VqYPfD2GfYg
-         ztc0uVA+TOiG8qnQz0UgB560SwiJJNfJHD65KvFMpwH2vdd0ajn8EYoiXAcVsNS+AwY8
-         2e5Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ot07odIMBdi99ZptGGtgBesy1j3BRGxC/hcJ0N+TCxs=;
+        b=ROrZRy6C2QbxPLI+6Vx8HBTPv6HMBgAkapWo4sNLlX5XPiqHt6cS/4G2lfiTCCQmUj
+         pGJ0nRz91ehp4Po8Du+hLVqytJyUgi90OkhcfIv0jKwYu4ZfVVt8MxDUZmQH5FORMLSW
+         67wHSUpVcnXxIT0LsIhhTdu3JD/UxQ9HrbZc7Ep98ixE7tTtP3o7Xw3OSIqwMNjnf9jH
+         ZlJ3UOr7X3M/fcDlNiUneZk2HyBMw6rLHFMI1zFTWVsIrRxzWj/XJ21W8o9WqBpcVnl9
+         HcUGI6MVNFYOGKxf9p4soTjaWJKwHlvEhG+4qPrFw+/9Cz+vQ16xPrV/AjN/u1Fezuvk
+         SHvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=He1UhKwO5iA0CtVhb4Fm4ggBLsoDYLxYgG6at6pHejY=;
-        b=mecLGGaALJD+mGDt6dPVh2rd+svZqdlfBFyV7RPT0Q/YsdWnZSXKTezobDoOkq4rLE
-         8Na3yOuE80YLnMW6brydllCNLNWiECdwRGP6+YemhOeQU9qkY8Sp9b59bjsTd5j+9Svt
-         XA1mviS9yUel/TeDbK/mzRgc6S2FY6F2tAoxVRv6JH+5wyFSZ6NbBEAjXbXzNjFTgk6L
-         txqRhcXI073aR+qZV5zeQtu4bjN5jyViGQ6YiGZ78p48lzqZPqY52sQjCm+VmZ8ye6QN
-         HCt25YHRZHe8AhkwWuBeMvQaMe+slbPzsxWbcPSjsm0m7GbBYnvRjZNE/e5TbOyMOWln
-         eVmQ==
-X-Gm-Message-State: AFqh2kpAs5vl1rHckI8YVpDME8idGxw2ua6Tzjxt6+0J3g4rnRvISLkL
-        yhsLvrntnT/dQKwtahLOLd3Zzw==
-X-Google-Smtp-Source: AMrXdXuD+54sTdkbtzGXQeStL4I1NB/gu8n1pv4Sv8qbfcT17ZmiI/I83+LSm9wC1ismvoADdTLHlQ==
-X-Received: by 2002:a05:6000:818:b0:271:16e6:3d54 with SMTP id bt24-20020a056000081800b0027116e63d54mr23860090wrb.70.1672658610460;
-        Mon, 02 Jan 2023 03:23:30 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id l6-20020a05600c4f0600b003d9780466b0sm32777404wmq.31.2023.01.02.03.23.29
+        bh=ot07odIMBdi99ZptGGtgBesy1j3BRGxC/hcJ0N+TCxs=;
+        b=I6t3tbsM7EPFLTX/Wfpehlfw7FwDl2q4T/OP88K6sXoKZCEZXsh5CzagSsJFeN6+W/
+         FyHD6PZ9CZywcv10y4Jhb9YmDgvqBi6fPKOdcJF56PRhs0VkqeivpzjUr6AkAJQubA/F
+         tfBzN3I+KGNpVaoag4doja5+zgOYD4YW9H26/XYQ/B/dBuoNmXLmkrKCA/eA/m0KP3pb
+         fAaVjg3djFZEJxfMgiaX8Jrao/k8bx+hOFKhw4gaR4BArSSH4tanXqPeWGESqTYZEuto
+         zMAH+482tSsyLqdBvkEQZKM3qZjpifo/6tHWa1Cl+5Hin59wi6J7QVJ5Lr+YJTOwe0ER
+         tIfA==
+X-Gm-Message-State: AFqh2koq+33OSF2R+Xi953FS9nAQtebIiVmf40ld6rqnQOXvG8FoAz+c
+        pgCONaG6kOC1xgBlnBqCuc2pNA==
+X-Google-Smtp-Source: AMrXdXvnjqG2Y/pyr5nZjYWE9uLYb988hSA8gSfnRbitymR+6iWVJQzN6BffnHeN7xCV/A4uvftQNA==
+X-Received: by 2002:a19:f517:0:b0:4c3:35b3:9a0e with SMTP id j23-20020a19f517000000b004c335b39a0emr9440867lfb.56.1672659717229;
+        Mon, 02 Jan 2023 03:41:57 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id c20-20020ac24154000000b0048a8c907fe9sm4356397lfi.167.2023.01.02.03.41.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 03:23:29 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 02 Jan 2023 12:23:20 +0100
-Subject: [PATCH] regulator: qcom-rpmh: PM8550 ldo11 regulator is an nldo
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-v1-1-d97def246338@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAKi+smMC/w3MUQrDIAwA0KuUfC8Q7YSx2xjN2oDVYtoxKL37/
- Hw/7wKTrmLwni7o8lXTVgfcY4K0xroIah4GT34mRx6PtmtC214hEJ67HV3ihh/9iWGXBYtzjLXk
- hvzM4hPPIRPD+DiaIPdY0zrGepZy339kyXfkgAAAAA==
+        Mon, 02 Jan 2023 03:41:56 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/8] ASoC: codecs: wsa883x: Simplify &pdev->dev in probe
+Date:   Mon,  2 Jan 2023 12:41:45 +0100
+Message-Id: <20230102114152.297305-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -77,33 +79,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This fixes the definition of the PM8550 ldo11 regulator matching it's
-capabilities since this LDO is designed to work between 1,2V and 1,5V.
+The probe already stores pointer to &pdev->dev, so use it to make the
+code a bit easier to read.
 
-Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wsa883x.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 43b5b9377714..ae6021390143 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1016,7 +1016,7 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
- 	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
- 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
- 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
--	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,    "vdd-l11"),
-+	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,    "vdd-l11"),
- 	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
- 	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
- 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
-
----
-base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
-change-id: 20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-b4de2cb35d0b
-
-Best regards,
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 966ba4909204..8d69ed340e83 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -1375,7 +1375,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
+-	wsa883x = devm_kzalloc(&pdev->dev, sizeof(*wsa883x), GFP_KERNEL);
++	wsa883x = devm_kzalloc(dev, sizeof(*wsa883x), GFP_KERNEL);
+ 	if (!wsa883x)
+ 		return -ENOMEM;
+ 
+@@ -1388,17 +1388,17 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
+ 
+-	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
++	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
+ 						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
+ 	if (IS_ERR(wsa883x->sd_n)) {
+-		ret = dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n),
++		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
+ 				    "Shutdown Control GPIO not found\n");
+ 		goto err;
+ 	}
+ 
+-	dev_set_drvdata(&pdev->dev, wsa883x);
++	dev_set_drvdata(dev, wsa883x);
+ 	wsa883x->slave = pdev;
+-	wsa883x->dev = &pdev->dev;
++	wsa883x->dev = dev;
+ 	wsa883x->sconfig.ch_count = 1;
+ 	wsa883x->sconfig.bps = 1;
+ 	wsa883x->sconfig.direction = SDW_DATA_DIR_RX;
+@@ -1413,7 +1413,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
+ 	if (IS_ERR(wsa883x->regmap)) {
+ 		gpiod_direction_output(wsa883x->sd_n, 1);
+-		ret = dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->regmap),
++		ret = dev_err_probe(dev, PTR_ERR(wsa883x->regmap),
+ 				    "regmap_init failed\n");
+ 		goto err;
+ 	}
+@@ -1423,7 +1423,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+ 
+-	ret = devm_snd_soc_register_component(&pdev->dev,
++	ret = devm_snd_soc_register_component(dev,
+ 					      &wsa883x_component_drv,
+ 					       wsa883x_dais,
+ 					       ARRAY_SIZE(wsa883x_dais));
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
+
