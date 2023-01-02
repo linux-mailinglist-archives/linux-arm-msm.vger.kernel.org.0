@@ -2,69 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8263865ADD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 09:01:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2606265AE29
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 09:33:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjABIBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 03:01:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39606 "EHLO
+        id S231917AbjABIc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 03:32:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjABIBU (ORCPT
+        with ESMTP id S231484AbjABIc4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 03:01:20 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B893BB8A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 00:01:19 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id x15-20020a4ab90f000000b004e64a0a967fso1759769ooo.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 00:01:19 -0800 (PST)
+        Mon, 2 Jan 2023 03:32:56 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE0DEC19
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 00:32:55 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id u12so24779264ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 00:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=40JsF6PNmDEZZ4y8a8jdXK2aWXlWFPHueZj2OHlZ0eg=;
-        b=c9/UDfhp8SQ2BtyvFBkKPyAXxdwVen1w2VO/AWBh8I9/xiR0kuqMXnutL6DjL+FtYw
-         nk8KWCqU3dxvdHb5JZ5NgdAJmBZbRAC0Q5CpET6gMXz+E4ZKrV3jFdt1Iu+sU/S6DNk3
-         rdiI9KH2w3e7Cgamhmy7t/INRXx94/9fesPRA/bp65r5q3wKqXg6+9aE9tSfxeLrGAw5
-         +9737DzFSQ7KJKpjnYnmHD//JcWX3d2XJyrdfWp0L6zmivC1kG3/I/1GMhalo2oQdg8n
-         yJkHMpkNR6ohto3q1CJilOkTVm0cIw8fr7gltxFTwNy2jplH+D6mDEUl25pStNAJ4L/L
-         VTbw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kdsQq8pIU/cSQEcxLiA3V0Gt5zMs8XjFr211bRc9iVA=;
+        b=TMsImaDZztQVAwwtDJZZIOpoTCsof0K3Vh9jxbqoA5LHjsmqWvKFRb6RuZUi0NWBs7
+         36Bs3yejMt3RVVS/CT/DBTCgrj3KlOXPgVndlRE1iLxo/xJxGjlyfCbctIGIbnlsCeve
+         UgGdWE1CrTs8h5rlV4uxAMYLmZEj6ebdXiazUko0QoaEZQB/N/rnNRimAqwh6D0CvLau
+         MzfCdv3NGlEg6bdvjUnQ3kmynuLbkAPLkCB71w4gMjq3xCexNFZoYz3BBBeCZNj/7fxA
+         inVti/Bg4hFLhMf0PuZojEXFfzzfuj5hgou1tsBtrupXHqisT//CL5NlG/gbI7wQqTt6
+         GbCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=40JsF6PNmDEZZ4y8a8jdXK2aWXlWFPHueZj2OHlZ0eg=;
-        b=dsoOjdqF8Ybj0VyOKfPaCZ0gmrX5xHXZPxzXlgze8H8KyYIsHT2N/L5sDGysgAhLAq
-         NHW1rcfPW7POztpGqkQDwEGmaac3B92Ol9NQwZakJm15ZbolPejY1AlmbSd+FuWbV8h+
-         rsJ22AdhJButhf6zUoqaiUhL8jeelZ5+5cjluKNvUkT99liSIGCZzjvRDRbAvL1NYM+7
-         UB2fqEprbOfyY9S98lcqVSQfdAMTT1qMKd3ilVmSlRMiTWSbwOHIWCD+92Jkqo/JhkUq
-         lep5jIglM6+LgVDpN1j0/H7ljZc+o0UZ9Z+VEDVc+u5mCWOqyjYgCnQ+wwaqk8xYCmmk
-         TcuQ==
-X-Gm-Message-State: AFqh2koPG8XsIDmjSMfcc5QTgFNJ1T2GpMOcShJoQB4PziQ3tJILDnlf
-        ylKeDoPPDMGEwgASqtCyylHmBdE9nVWplxNiYAnxDg==
-X-Google-Smtp-Source: AMrXdXu1Qi5mlSVdZMFT2cQ/3oABMgacFmnT1FSvlTPrxV6i4ytnGLFT3VQMVBbgf2xOvoXXPH5wcVqfrIFQEU/ityg=
-X-Received: by 2002:a05:6820:82c:b0:498:260c:d780 with SMTP id
- bg44-20020a056820082c00b00498260cd780mr1849729oob.27.1672646478952; Mon, 02
- Jan 2023 00:01:18 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kdsQq8pIU/cSQEcxLiA3V0Gt5zMs8XjFr211bRc9iVA=;
+        b=nB3t2MuQjVkcusfFeOhiv4oeXVaaV/nAIYs65BnhebBO9DeWxB6A/Eq+rzqrkULjz/
+         Kb0xjZhK254XZoOohXpmgDIxjKMS0FhcnV0m5FaMv3W/KIhzrv7jt45ALGtJcg2699pf
+         tTDPLHaaMcdPKizVY3PJz95eFmSJSt+KXk2QkGjHDSL0OCzEzIIgaTAhxJcWyrtqk0PH
+         vyiGUIfQJESw38qyhS2n3kKpTnEPHzM5bgEGkKJlMkWyYRlcK8XBU115RtMVfURFJ00B
+         MzAoRwjhfZz+H3H32pDCSqSHy9ZKj6ZhFSvt6FiVR3L9l4+p2NhKHo7VjTcw4ncDFgHt
+         VgkA==
+X-Gm-Message-State: AFqh2kr0MFlJNwm+MXwdftpENxD5ikF6AZCoZiutEPsUwmMO4cPR/cKa
+        HQ49ERK4z+LFRift7oAOv6R47w==
+X-Google-Smtp-Source: AMrXdXvrQD47osxI5NxAqYygleVc6DQCZOXUa8TmKcXAf3A4+guTLZz9L1b3zXpVK5owHYYlkMxLYQ==
+X-Received: by 2002:a2e:8686:0:b0:27f:dc33:729e with SMTP id l6-20020a2e8686000000b0027fdc33729emr3521182lji.8.1672648374032;
+        Mon, 02 Jan 2023 00:32:54 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id r4-20020a2e8e24000000b0027feb520bf4sm313879ljk.138.2023.01.02.00.32.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jan 2023 00:32:53 -0800 (PST)
+Message-ID: <54246dbc-b75f-605c-8103-84a5ff8305be@linaro.org>
+Date:   Mon, 2 Jan 2023 09:32:52 +0100
 MIME-Version: 1.0
-References: <20221230075726.122806-1-duke_xinanwen@163.com>
-In-Reply-To: <20221230075726.122806-1-duke_xinanwen@163.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 2 Jan 2023 09:00:42 +0100
-Message-ID: <CAMZdPi_zPFq7meLbTQ9mA8b+9VHtz-N=8-NFAwKzPDaq7XAakg@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Quectel
- RM520N-GL modem
-To:     =?UTF-8?B?RHVrZSBYaW4o6L6b5a6J5paHKQ==?= <duke_xinanwen@163.com>
-Cc:     mani@kernel.org, slark_xiao@163.com, gregkh@linuxfoundation.org,
-        dnlplm@gmail.com, yonglin.tan@outlook.com,
-        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org,
-        jerry.meng@quectel.com, duke.xin@quectel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v5 02/20] dt-bindings: thermal: tsens: support per-sensor
+ calibration cells
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221229030106.3303205-1-dmitry.baryshkov@linaro.org>
+ <20221229030106.3303205-3-dmitry.baryshkov@linaro.org>
+ <ef9d5f72-e39a-e32c-5d7d-4a6ee57101aa@linaro.org>
+ <CAA8EJppp967vZNaMBDmB7HaU_EaCJfvUxFFHikb9oXRohGSCBg@mail.gmail.com>
+ <74d22d8b-04b6-77ec-610e-d7f5844225a5@linaro.org>
+ <c879951f-9b66-d68a-77e2-228b5b13c683@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <c879951f-9b66-d68a-77e2-228b5b13c683@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,75 +92,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Duke,
+On 01/01/2023 20:18, Dmitry Baryshkov wrote:
 
-On Fri, 30 Dec 2022 at 08:57, Duke Xin(=E8=BE=9B=E5=AE=89=E6=96=87) <duke_x=
-inanwen@163.com> wrote:
->
-> The project is based on Qualcomm's sdx6x chips for laptop,so the mhi inte=
-rface definition and
-> enumeration align with previous Quectel sdx24 configuration
->
-> Signed-off-by: Duke Xin(=E8=BE=9B=E5=AE=89=E6=96=87) <duke_xinanwen@163.c=
-om>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 46 ++++++++++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pc=
-i_generic.c
-> index f39657f71483..83f40617af9a 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -335,6 +335,50 @@ static const struct mhi_pci_dev_info mhi_quectel_em1=
-xx_info =3D {
->         .sideband_wake =3D true,
->  };
->
-> +static const struct mhi_channel_config mhi_quectel_rm5xx_channels[] =3D =
-{
-> +       MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-> +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +       /* The EDL firmware is a flash-programmer exposing firehose proto=
-col */
-> +       MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_quectel_rm5xx_events[] =3D {
-> +       MHI_EVENT_CONFIG_CTRL(0, 128),
-> +       MHI_EVENT_CONFIG_DATA(1, 128),
-> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +       MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-> +};
-> +
-> +static const struct mhi_controller_config modem_quectel_rm5xx_config =3D=
- {
-> +       .max_channels =3D 128,
-> +       .timeout_ms =3D 20000,
-> +       .num_channels =3D ARRAY_SIZE(mhi_quectel_rm5xx_channels),
-> +       .ch_cfg =3D mhi_quectel_rm5xx_channels,
-> +       .num_events =3D ARRAY_SIZE(mhi_quectel_rm5xx_events),
-> +       .event_cfg =3D mhi_quectel_rm5xx_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info =3D {
-> +       .name =3D "quectel-rm5xx",
-> +       .edl =3D "qcom/prog_firehose_sdx6x.elf",
-> +       .config =3D &modem_quectel_rm5xx_config,
+>>> Same applies to the msm8939 (no sensor #4).
+>>>
+>>> Note: if there was support for the prefixItems, I'd have probably
+>>> marked mode/base1/base2 to be the first items of the array.
+>>
+>> Then how about list of const items and patterns? Would be similar number
+>> of lines, just a bit more complicated pattern instead of simple string
+>> to enum.
+> 
+> Ack, this sounds good. I'll send it in the v6.
+> 
+> BTW: do you know if there are any plans to add support for prefixItems?
 
-Use `modem_quectel_em1xx_config` if compatible instead of duplicating
-the configuration.
+Yes, I think Rob is planning to introduce it.
 
-Regards,
-Loic
+Best regards,
+Krzysztof
+
