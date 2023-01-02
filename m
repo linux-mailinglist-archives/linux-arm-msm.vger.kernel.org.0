@@ -2,72 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D371165AE7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 09:59:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A59BD65AEA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 10:29:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231924AbjABI7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 03:59:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60768 "EHLO
+        id S229715AbjABJ3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 04:29:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbjABI7P (ORCPT
+        with ESMTP id S229496AbjABJ3J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 03:59:15 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E8926FE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 00:59:14 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id bt23so24126858lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 00:59:14 -0800 (PST)
+        Mon, 2 Jan 2023 04:29:09 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D27125D5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 01:29:08 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id bn6so18687207ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 01:29:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=L4q/jhl+3gZkrvW3nGc8IjCx71O7qM9VQv4+FQ3jfK4=;
-        b=OODQjf8rzsECesI4/DlAy5E/7P5nVKNg0lV1B9Xv8ILMlNkm2Yym4c4r0lwkXnCoEq
-         3YS9B9m/beohywqDiF2OhJGAqWnhcaSnOzHoxkeMAdz2UQABwhHOzQCk2Yx7ZEmCv8/h
-         kZEJn37eo//zRMt8mznFLHx2FAlUAmBPp0C2gP8MfuN1nF+svRmVUCEECKrP7pHlA0aa
-         queXEG8Xu074Yc6TbMYcBe7vp8D00EgyFek3AllapVNNtn+ODVq3S5+OnpXD5uTMRRYk
-         l3hb30Zs3VwvJwxOwO59q+0VzB11eyBOZMGhMLAMA10psY7CSzJasLBDwj3isGK3iX6l
-         /24g==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=54SvQg7V4G/yUh34P1HenewD+ErkpsXyiXw5J7ZoDjA=;
+        b=W1dFFFJQ94xENzXF4W1kr5P5CDMV8x20VuJoghbLlglWHn8ADNBIL1ONLGH6XssNvK
+         MmNu50NfeWZOPQWTnAJzGDkxCHPZwPtcZ6rNWwHAQDDmAqROm5vmUFaAQ5PFi3fKfwbA
+         xhI+mjiOf3ELU3c8DGzfPxENe1Egg34m+dkG1X/JF6XvGHU8pFJuygYiE7V8OudPWTOJ
+         lR/MDOBNGq6xFTZse/m7bzxf3Mq2fpo2qOFXFNe7BQLgz2twsRpKbgt7iKQjqihx0FR5
+         KRUq5hR4Iqz4DKedaBFWF3vDe7hwwuMA1FnJ/GwMMgzuH/YT0BK2iqDO/hO8nKQy02KO
+         s35A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L4q/jhl+3gZkrvW3nGc8IjCx71O7qM9VQv4+FQ3jfK4=;
-        b=zViYkh+KMS4FtOP0Xy1/sWC2egm0kXecbqSU1y6iA4WDuXtQftowm1Kdl4DnY2ZRXH
-         pudewnYV9f+BADYY+BtnEOJeBWUOg0hs5pAJKzvM63ELZXkhdOln9QWHuYHMD2hrrLBe
-         kW5cpACBJAq6qV1fbiHmMRzWEwe/az8zgac2J1yZDxIgAj7mkAlQikgsXxNrevbr0qSY
-         aKpOEkDuhYSPUXQaBQVH3fb93l+TrBI0tACy1CXlhzvIm4uQkZUbzq+fYb5Xv6TddOgi
-         OOhvMJueZhbHOS9BlpwBm9hzS2WKalnRoHtc8qwKFYGEtUpuy/M1oMfC176MNPIDo5Y8
-         27Sg==
-X-Gm-Message-State: AFqh2kqUFvNBthaPaVLIck7fb8S6+lR8bEP7Cdre3KEobo/wVr2d8owO
-        4vVnYYrKKGVAYA12Hp0qSKLlKtaQkwiJCkcp
-X-Google-Smtp-Source: AMrXdXspJWKdIifZHT3HNdT448iaptTWyDEqqaBpjqDxBVVjJnOAtDMpV+0t1lZYPG9PjGA2DRekLA==
-X-Received: by 2002:a05:6512:3901:b0:4a4:68b7:e71c with SMTP id a1-20020a056512390100b004a468b7e71cmr11302705lfu.6.1672649952849;
-        Mon, 02 Jan 2023 00:59:12 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id y2-20020ac24202000000b004bd8534ebbcsm4370798lfh.37.2023.01.02.00.59.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 00:59:12 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: clock: qcom,gcc-sc8280xp: document power domain
-Date:   Mon,  2 Jan 2023 09:59:09 +0100
-Message-Id: <20230102085909.24620-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=54SvQg7V4G/yUh34P1HenewD+ErkpsXyiXw5J7ZoDjA=;
+        b=ElISZKVX5M9Gl0SMrl72alTvOdj/2XAx8sQBZXlELUNq6/qulOeVT/x+E3HF4nzPiq
+         //YytiIYv9SJOHFlOE6RPuO/vRTiwLkXdh6ssvo9jcQCPqSbXrWG+wyx3oys+jyte4Dh
+         UtebHhEA3Fuf5ocYabwEGpE3fglYNSTE3qAdJJzlCgEuPEfhqKL0k6wL/8V7nRa4h8oQ
+         shJn67G/kROB79VSSaJGkA5sLgNpkqsWUV4KKHNeCcKAP2K+J7R0EWL45YpGbW8V6rk+
+         7xZHksL4q0EIkmk2VM46tg/HiWBCMCOxxUq8hXK9WYIzHtQi260qKIhGLrtNo6ae9pQA
+         JqMQ==
+X-Gm-Message-State: AFqh2kppb15CwZ82+OYRdIn0RvFQE6d3PqqFWuJLtUUrfyqz9Hw5XJIb
+        mnhMCiy9W8N5EMLiFR+641eTJg==
+X-Google-Smtp-Source: AMrXdXtedchdcPFKbA0yA741M6X/8cIi4PDMmyDbu2yHmKpgVk0+RWUIRZS0TRgijzMsK4XvP6/xTA==
+X-Received: by 2002:a2e:8396:0:b0:27b:5596:1e4d with SMTP id x22-20020a2e8396000000b0027b55961e4dmr9977811ljg.34.1672651746779;
+        Mon, 02 Jan 2023 01:29:06 -0800 (PST)
+Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id h21-20020a2ea495000000b00279e41de7e6sm3216902lji.3.2023.01.02.01.29.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jan 2023 01:29:06 -0800 (PST)
+Message-ID: <62310fb8-4159-36e1-07cc-21b248daf198@linaro.org>
+Date:   Mon, 2 Jan 2023 10:29:03 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [RFC PATCH 1/7] drm/msm/dpu: Remove unused INTF0 interrupt mask
+ from sm6115/qcm2290
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221231215006.211860-1-marijn.suijten@somainline.org>
+ <20221231215006.211860-2-marijn.suijten@somainline.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221231215006.211860-2-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,47 +97,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-GCC clock controller is supplied by CX power domain:
 
-  sc8280xp-crd.dtb: clock-controller@100000: Unevaluated properties are not allowed ('power-domains' was unexpected)
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml       | 7 +++++++
- 1 file changed, 7 insertions(+)
+On 31.12.2022 22:50, Marijn Suijten wrote:
+> Neither of these SoCs has INTF0, they only have a DSI interface on index
+> 1.  Stop enabling an interrupt that can't fire.
+Double space.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-index c9d8e436d73a..5681e535fede 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-@@ -55,6 +55,10 @@ properties:
-       - description: First EMAC controller reference clock
-       - description: Second EMAC controller reference clock
- 
-+  power-domains:
-+    items:
-+      - description: CX domain
-+
-   protected-clocks:
-     maxItems: 389
- 
-@@ -70,6 +74,8 @@ unevaluatedProperties: false
- examples:
-   - |
-     #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-     clock-controller@100000 {
-       compatible = "qcom,gcc-sc8280xp";
-       reg = <0x00100000 0x1f0000>;
-@@ -106,6 +112,7 @@ examples:
-                <&pcie4_lane>,
-                <&rxc0_ref_clk>,
-                <&rxc1_ref_clk>;
-+      power-domains = <&rpmhpd SC8280XP_CX>;
- 
-       #clock-cells = <1>;
-       #reset-cells = <1>;
--- 
-2.34.1
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Konrad
+> 
+> Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
+> Fixes: 5334087ee743 ("drm/msm: add support for QCM2290 MDSS")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 2196e205efa5..9814ad52cc04 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -90,6 +90,11 @@
+>  			 BIT(MDP_AD4_0_INTR) | \
+>  			 BIT(MDP_AD4_1_INTR))
+>  
+> +#define IRQ_QCM2290_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+> +			 BIT(MDP_SSPP_TOP0_INTR2) | \
+> +			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> +			 BIT(MDP_INTF1_INTR))
+> +
+>  #define IRQ_SC7180_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>  			 BIT(MDP_SSPP_TOP0_INTR2) | \
+>  			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> @@ -1884,7 +1889,7 @@ static const struct dpu_mdss_cfg sm6115_dpu_cfg = {
+>  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>  	.vbif = sdm845_vbif,
+>  	.perf = &sm6115_perf_data,
+> -	.mdss_irqs = IRQ_SC7180_MASK,
+> +	.mdss_irqs = IRQ_QCM2290_MASK,
+>  };
+>  
+>  static const struct dpu_mdss_cfg sm8150_dpu_cfg = {
+> @@ -2008,7 +2013,7 @@ static const struct dpu_mdss_cfg qcm2290_dpu_cfg = {
+>  	.reg_dma_count = 1,
+>  	.dma_cfg = &sdm845_regdma,
+>  	.perf = &qcm2290_perf_data,
+> -	.mdss_irqs = IRQ_SC7180_MASK,
+> +	.mdss_irqs = IRQ_QCM2290_MASK,
+>  };
+>  
+>  static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
