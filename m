@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C22AC65B3BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 16:05:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F3CF65B3C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 16:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236185AbjABPFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 10:05:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
+        id S232791AbjABPHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 10:07:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235976AbjABPFo (ORCPT
+        with ESMTP id S236235AbjABPHE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 10:05:44 -0500
+        Mon, 2 Jan 2023 10:07:04 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5B665D9;
-        Mon,  2 Jan 2023 07:05:43 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8B825D6;
+        Mon,  2 Jan 2023 07:07:03 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 08F0060C3D;
-        Mon,  2 Jan 2023 15:05:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605C4C433EF;
-        Mon,  2 Jan 2023 15:05:42 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A80E660CEB;
+        Mon,  2 Jan 2023 15:07:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3EEC433F1;
+        Mon,  2 Jan 2023 15:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672671942;
-        bh=3ZiIkfUIAE9Vkh9OW78BgI9MqwvdnLBCZLjlGknuWf8=;
+        s=k20201202; t=1672672022;
+        bh=NElXGm6hHy6K17n7JxUOZurHu/PkYIWVK3rpp2A5LMw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hJzpA2ikSS1PkP2mpwYDkTA/D6IF9EzwDGUt+TYc8ThFildKKda6v/OVhTN84JWr3
-         wVLajCJv6cD5RycJo1IxBgCeMrQGqWzkdnZqHdQ+lyYf0UyaOhGo+uG6dO4N1lURwi
-         dBjLsALCVMFyUOYQ4mUyxj5uUUaVoxOzs3PKS++BK1qsCEoD1d3MOFtbS+ncotp5tj
-         we0Yfso57mlHSLw3NQChMSk08c27kzajNKZJGqRnlwsO9YNcRmxHMdhoFTkiTks2jS
-         CKvw01g3NZUKMnFz92SI4Lx3EQGdpgDPzMl9tZMBvcCcvePq+OlILCJ8SIMy911h7h
-         eyD58QP2XTvXw==
+        b=MGJf2GlhoU/N7/K+xRTawCJ/1vPblYadcHWbuVkpco2hZ1ZfKwe1TgXSj0R0L5paa
+         gXG1LTxhw1Accg1+v32qDI/3/0zQPxqjRk89mcHhchxZdp6FpFblqqjlq1oPEt3BJT
+         FB0h6cWlrMhsk2ZOfjNHHegwXbIUvPIQ+npxhFQ+RVwExocOd7DQterTkMv5V/97+u
+         X07bUHsHLS3q5lff7MKTJ2QY6ProjN+QeL1eNUtwtRiJGd2qjm4eTbxIBNBnke6G7R
+         hqBXsFmgF7iUK8ydeJ+an+RVGxHnvH+fr7S/0B6r26fmtbvFqZqcYsDT3En1+SQaH9
+         r5QEunDRA1Emw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pCMNz-0007l4-KK; Mon, 02 Jan 2023 16:05:59 +0100
-Date:   Mon, 2 Jan 2023 16:05:59 +0100
+        id 1pCMPH-0007mK-4b; Mon, 02 Jan 2023 16:07:19 +0100
+Date:   Mon, 2 Jan 2023 16:07:19 +0100
 From:   Johan Hovold <johan@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
@@ -47,16 +47,15 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450-hdk: fix wcd938x codec node
-Message-ID: <Y7Ly1wlft4Y6VfIG@hovoldconsulting.com>
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sc8280xp-x13s: disable soundcard
+Message-ID: <Y7LzJ+RRzDNRf3jR@hovoldconsulting.com>
 References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-7-johan+linaro@kernel.org>
- <c2a32bd3-90cf-6d1b-1ca7-76071232c81b@linaro.org>
- <791c0e37-f825-c324-7a99-163b0566c758@linaro.org>
+ <20230102105038.8074-2-johan+linaro@kernel.org>
+ <fc42801a-55d9-90b9-f7f0-48657ec7a373@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <791c0e37-f825-c324-7a99-163b0566c758@linaro.org>
+In-Reply-To: <fc42801a-55d9-90b9-f7f0-48657ec7a373@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -66,37 +65,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 02, 2023 at 01:24:34PM +0100, Krzysztof Kozlowski wrote:
-> On 02/01/2023 13:23, Krzysztof Kozlowski wrote:
-> > On 02/01/2023 11:50, Johan Hovold wrote:
-> >> The wcd938x codec is not a memory-mapped device and does not belong
-> >> under the soc node.
-> >>
-> >> Move the node to the root node to avoid DT validation failures.
-> >>
-> >> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 52 ++++++++++++-------------
-> >>  1 file changed, 25 insertions(+), 27 deletions(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> >> index 4de3e1f1c39c..217b2c654745 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> >> @@ -17,6 +17,31 @@ aliases {
-> >>  		serial0 = &uart7;
-> >>  	};
-> >>  
-> >> +	wcd938x: codec {
+On Mon, Jan 02, 2023 at 01:25:38PM +0100, Krzysztof Kozlowski wrote:
+> On 02/01/2023 11:50, Johan Hovold wrote:
+> > Driver support for the X13s soundcard is not yet in place so disable it
+> > for now to avoid probe failures such as:
 > > 
-> > Let's call it audio-codec and put it somewhere ordered alphabetically.
-> > This avoids useless reshuffles immediately. Moving things back and forth
-> > does not make sense.
+> > [   11.077727] qcom-prm gprsvc:service:2:2: DSP returned error[100100f] 1
+> > [   11.077926] rx_macro: probe of 3200000.rxmacro failed with error -22
+> > [   21.221104] platform 3210000.soundwire-controller: deferred probe pending
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts  | 12 ++++++++++--
+> >  1 file changed, 10 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index 0201c6776746..97ff74d5095e 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -649,6 +649,8 @@ wcd938x: codec {
+> >  		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> >  		qcom,rx-device = <&wcd_rx>;
+> >  		qcom,tx-device = <&wcd_tx>;
+> > +
+> > +		status = "disabled";
+> >  	};
+> >  };
+> >  
+> > @@ -669,6 +671,8 @@ &sound {
+> >  		"TX DMIC2", "MIC BIAS3",
+> >  		"TX SWR_ADC1", "ADC2_OUTPUT";
+> >  
+> > +	status = "disabled";
+> > +
+> >  	wcd-playback-dai-link {
+> >  		link-name = "WCD Playback";
+> >  		cpu {
+> > @@ -731,6 +735,8 @@ codec {
+> >  };
+> >  
+> >  &swr0 {
+> > +	status = "disabled";
+> > +
+> >  	left_spkr: wsa8830-left@0,1 {
+> >  		compatible = "sdw10217020200";
+> >  		reg = <0 1>;
+> > @@ -757,7 +763,7 @@ right_spkr: wsa8830-right@0,2{
+> >  };
+> >  
+> >  &swr1 {
+> > -	status = "okay";
+> > +	status = "disabled";
+> >  
+> >  	wcd_rx: wcd9380-rx@0,4 {
+> >  		compatible = "sdw20217010d00";
+> > @@ -767,7 +773,7 @@ wcd_rx: wcd9380-rx@0,4 {
+> >  };
+> >  
+> >  &swr2 {
+> > -	status = "okay";
+> > +	status = "disabled";
 > 
-> Eh, on the other hand SM8250-MTP uses name codec so maybe the rename in
-> SC8280xp should be dropped.
+> That's a double disable.
+> 
+> >  
+> >  	wcd_tx: wcd9380-tx@0,3 {
+> >  		compatible = "sdw20217010d00";
+> > @@ -781,6 +787,8 @@ &vamacro {
+> >  	pinctrl-names = "default";
+> >  	vdd-micb-supply = <&vreg_s10b>;
+> >  	qcom,dmic-sample-rate = <600000>;
+> > +
+> > +	status = "disabled";
+> 
+> That's a double disable.
 
-Nah, let's go with audio-codec. Your MTP change hasn't been merged yet
-so we can still drop or respin that one.
+Yes, that's on purpose. We're temporarily disabling these nodes instead
+of reverting the series which should not have been merged.
+
+Once we have driver support, these properties will be updated again.
 
 Johan
