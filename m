@@ -2,210 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8541A65B4E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:14:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BACB65B526
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 17:37:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjABQNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 11:13:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59914 "EHLO
+        id S232103AbjABQhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 11:37:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236593AbjABQN3 (ORCPT
+        with ESMTP id S229447AbjABQhp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 11:13:29 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B7E1FE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 08:13:27 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id p36so42115627lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 08:13:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B45ARsjYKeYyUPM468UJSOfYF6QTwYEJnWcRpLeLJ1Q=;
-        b=ErWFMZEJC2+Tu/oLqrGuiMBQutHk575btqGsQPR2GlPpgG5kEtPDD9MtizaZ2kH/j+
-         pASGkEQhVmnpgmu9w8gnDQ7WMUtGHWbDFAPndFGXbAF1fQLrl+BbMS8c+Jp2ZztUDMba
-         zUCkFDUqjxrgi+InhO1F4cmMoPkcCLAPia8Uk18/ELMXbePq13X3x4cCzW8nEzOOSN+K
-         o7uGBXNhdNzzsw1nkNoJYbzDamdUT1KPsfBNfAnviYGt/V5DQZhqle6KTABq0C8eOLjT
-         R7lESgzGyDnYpEq+DgyA3JyIs06o/eEV36FYiGp/jxhZivPTrhM3qg2dFEGCjFQeTF+P
-         t1PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B45ARsjYKeYyUPM468UJSOfYF6QTwYEJnWcRpLeLJ1Q=;
-        b=zZd4PEwcmgDBzwwr7egYnsZBJlScBQSWSQDFZLxt2DhzygZqQrug204cSVDXtcvXOy
-         LeBeWNzTneyimG5NMvQeSzDZzz4kfxT96Ao3rkwoM01FvU+jEXAiKhtpAo8AvDrtjVKF
-         xcdHXWqCpSS8wk8o/nG9SZ2NmeuG2EKNvVj+ROngYB5tCNO2aaEMqE93tmbwbNlAyw0i
-         CVgUnUnxPNUEiCAl8QWy3bFOPOL2AvN1ORw5hw+4JA78evn/yBDwG9eQtrkFdOOyEQZ5
-         HxE1jsmeoyj/NvSnfM30Y8iHxFQdw3icGD5JXhcP/rWPZ+QbYxJVH4QXnDCDx5LYzUG0
-         g6Iw==
-X-Gm-Message-State: AFqh2kr6HCOOfklX6oc3Uq2XpG/0pgHtzEIBw3ZXZyUuk2jQrgHoFfpP
-        e3xDFuBKCcGmHHWqD5Ud2JdAbg==
-X-Google-Smtp-Source: AMrXdXuaJKeaFsTAvoTZgU3pEnOvANnA53tMa5fQ8Ap7iPi7HD75K0cLRnedWC4bZIr6sqUCw+FuUw==
-X-Received: by 2002:a05:6512:20d4:b0:4b6:f08e:1196 with SMTP id u20-20020a05651220d400b004b6f08e1196mr10366637lfr.11.1672676006301;
-        Mon, 02 Jan 2023 08:13:26 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id x10-20020a056512078a00b004b587e37265sm4534210lfr.58.2023.01.02.08.13.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 08:13:25 -0800 (PST)
-Message-ID: <70a6fcc9-6922-60e7-b2ce-1de32277483f@linaro.org>
-Date:   Mon, 2 Jan 2023 17:13:24 +0100
+        Mon, 2 Jan 2023 11:37:45 -0500
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911BC138;
+        Mon,  2 Jan 2023 08:37:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1672677464; x=1704213464;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=kN/SHISxRWT2L0F6Vw5HZe3KAE4ojWJmQqCG+JrHEBY=;
+  b=bkWqbt/f39Iw7pW+XOg9nMrRmbBXx7XZ62MCajUm5kMOcV56gWMEU3eQ
+   Zia2FjVcaHHhFuha+7K80h9s06ArLjp0cCGssNZL0/L4G5Z7xLXtgbn9b
+   ACfHB5vfn6u1vp2qBFNEylhfyXhFEtqOotOp/FlXLOLyOzMyyNc17Rtv/
+   R5pAUb3ANPglM/HfkcEuUbcUw1oGnfpYQ5PvLsp+97aepUg2v6E3jqJQ4
+   qZf7mXBel/mpa/OFTgrVl0/TLsovW/Mi6k9R05x7S6WmKJjgKivry3O0R
+   ub749ADbGAUaTu/BHrk8mf3U4I5P5cpPVLE/7p5EnuxdRkvhIrAsl1SNg
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10578"; a="305019794"
+X-IronPort-AV: E=Sophos;i="5.96,294,1665471600"; 
+   d="scan'208";a="305019794"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jan 2023 08:37:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10578"; a="743245438"
+X-IronPort-AV: E=Sophos;i="5.96,294,1665471600"; 
+   d="scan'208";a="743245438"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by FMSMGA003.fm.intel.com with ESMTP; 02 Jan 2023 08:37:38 -0800
+Message-ID: <5f54c5a3-caf0-2920-e90f-68124ed2e06c@linux.intel.com>
+Date:   Mon, 2 Jan 2023 18:38:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: sc8280xp-x13s: disable soundcard
+ Firefox/102.0 Thunderbird/102.4.2
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-8-quic_wcheng@quicinc.com>
+ <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
+ <f7f80320-02bb-a573-dd95-b6d58c260624@quicinc.com>
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-2-johan+linaro@kernel.org>
- <fc42801a-55d9-90b9-f7f0-48657ec7a373@linaro.org>
- <Y7LzJ+RRzDNRf3jR@hovoldconsulting.com>
- <81e3994e-49d9-ea5b-b055-cbcc737a6e37@linaro.org>
- <Y7L3OTs/u8FsH8o2@hovoldconsulting.com>
- <8bd6487a-3ae7-f7c1-e478-1effd68700d3@linaro.org>
- <Y7L6t3p57uTCECRy@hovoldconsulting.com>
- <5de95075-ca62-3cae-ce07-d263ea3aa264@linaro.org>
- <Y7L/JbUICN0OQhaK@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y7L/JbUICN0OQhaK@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [RFC PATCH 07/14] usb: host: xhci: Add XHCI secondary interrupter
+ support
+In-Reply-To: <f7f80320-02bb-a573-dd95-b6d58c260624@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/01/2023 16:58, Johan Hovold wrote:
-> On Mon, Jan 02, 2023 at 04:46:40PM +0100, Krzysztof Kozlowski wrote:
->> On 02/01/2023 16:39, Johan Hovold wrote:
->>>>>>>>>  	wcd_tx: wcd9380-tx@0,3 {
->>>>>>>>>  		compatible = "sdw20217010d00";
->>>>>>>>> @@ -781,6 +787,8 @@ &vamacro {
->>>>>>>>>  	pinctrl-names = "default";
->>>>>>>>>  	vdd-micb-supply = <&vreg_s10b>;
->>>>>>>>>  	qcom,dmic-sample-rate = <600000>;
->>>>>>>>> +
->>>>>>>>> +	status = "disabled";
->>>>>>>>
->>>>>>>> That's a double disable.
->>>>>>>
->>>>>>> Yes, that's on purpose. We're temporarily disabling these nodes instead
->>>>>>> of reverting the series which should not have been merged.
->>>>>>
->>>>>> I don't get why disabling something twice is anyhow related to
->>>>>> "temporarily disable". One disable is enough for temporary or permanent
->>>>>> disables.
->>>>>
->>>>> It clearly shows that this was done on purpose and indicates which
->>>>> properties need to be changed to "okay" once we have actual support.
->>>>
->>>> No, it shows nothing clearly as from time to time we got duplicated
->>>> properties and it's a simply mistake. The double disable without any
->>>> comment looks like mistake, not intentional code.
+On 29.12.2022 23.14, Wesley Cheng wrote:
+> Hi Mathias,
+> 
+> On 12/28/2022 7:47 AM, Mathias Nyman wrote:
+>> On 24.12.2022 1.31, Wesley Cheng wrote:
+>>> Implement the XHCI operations for allocating and requesting for a secondary
+>>> interrupter.  The secondary interrupter can allow for events for a
+>>> particular endpoint to be routed to a separate event ring.  The event
+>>> routing is defined when submitting a transfer descriptor to the USB HW.
+>>> There is a specific field which denotes which interrupter ring to route the
+>>> event to when the transfer is completed.
 >>>
->>> It's not a mistake. It's intentional. And I don't want to spend hours on
->>> this because of someone else's cock-up.
->>
->> To you it looks intentional, but for the reader of DTS which has
->> disabled node in DTSI and in DTS - so in two places - it looks like a
->> pure bug. Just because you know the reason behind the change does not
->> make the code readable.
-> 
-> Calling a (temporary) redundant property a 'pure bug' seems like a bit
-> of stretch, and it has nothing to do with readability.
-
-Redundant properties is not a code which we want to have anywhere. Why
-you are so opposed to documenting this oddity?
-
-> 
->>>>>>>
->>>>>>> Once we have driver support, these properties will be updated again.
->>>>>>
->>>>>> Linux kernel is not the only consumer of DTS, thus having or not having
->>>>>> the support in the kernel is not reason to disable pieces of it.
->>>>>> Assuming the DTS is correct, of course, because maybe that's the problem?
->>>>>
->>>>> Okay, let's revert these sound dts changes then until we have support.
->>>>> We have no idea if the dts changes are correct as sound still depends
->>>>> on out-of-tree hacks.
->>>>>
->>>>> People are using -next for development and I don't want to see them
->>>>> toast their speakers because we failed get the dependencies merged
->>>>> before merging the dts changes which is how we normally do this.
->>>>
->>>> If the error is in DTS, yeah, revert or disable is a way. But if the
->>>> issue is in the incomplete or broken Linux drivers, then these should be
->>>> changed, e.g. intentionally fail probing, skip new devices, drop new
->>>> compatible etc.
+>>> An example use case, such as audio packet offloading can utilize a separate
+>>> event ring, so that these events can be routed to a different processor
+>>> within the system.  The processor would be able to independently submit
+>>> transfers and handle its completions without intervention from the main
+>>> processor.
 >>>
->>> And how long does it take for that to propagate and isn't the response
->>> just going go to be "well then fix the driver".
->>>
->>> I think you're just being unreasonable here.
 >>
->> I did not propose to fix the driver. I proposed to fail the driver's
->> probe or remove the compatible from it.
+>> Adding support for more xHCI interrupters than just the primary one make sense for
+>> both the offloading and virtualization cases.
 >>
->> Such change propagate the same speed as DTS change.
-> 
-> But the DTS changes are in Bjorn branch and Bjorn and I discussed it and
-> decided to disable them temporarily instead of reverting.
-> 
-> Now you're asking me to figure out all the dependent driver and patch
-> them individually. And this may not reach next before the DTS changes
-> do.
-
-Users do not work on linux-next. linux-next is integration tree for
-developers. Pretty often broken and not stable, so anyone using it
-accepts the risks. Using now linux-next argument for a change is not
-appropriate. The change should be reasonable regardless of users of
-linux-next.
-
-> 
->>> If Bjorn could rebase his tree, he could simply drop these for now as
->>> sound support was clearly not ready. Since that isn't the case we need
->>> to at least try to be constructive and figure out a reasonable
->>> alternative. While "Linux isn't the only consumer" is a true statement,
->>> it really is not relevant just because there are some dts changes in
->>> Bjorn's tree which should not be there.
+>> xHCI support for several interrupters was probably added to support virtualization,
+>> to hand over usb devices to virtual machines and give them their own event ring and
+>> MSI/MSI-X vector.
 >>
->> The SC8280XP audio DTS looks in general correct, except some style
->> issues, redundant properties and never tested against DT bindings.
->> Therefore it looks as accurate and more-or-less correct representation
->> of the hardware, unless you have some more details on this.
+>> In this offloading case you probably want to avoid xHC interrupts from this device
+>> completely, making sure it doesn't wake up the main CPU unnecessarily.
+>>
+>> So is the idea here to let xhci driver set up the new interrupter, its event ring,
+>> and the endpoint transfer rings. Then pass the address of the endpoint transfer rings
+>> and the new event ring to the separate processor.
+>>
+>> This separate processor then both polls the event ring for new events, sets its dequeue
+>> pointer, clears EHB bit, and queues new TRBs on the transfer ring.
+>>
+>> so xhci driver does not handle any events for the audio part, and no audio data URBs
+>> are sent to usb core?
 > 
-> Only that the drivers fail to probe in multiple ways, some which may
-> require updating the bindings to address. 
+> Your entire description is correct.  To clarify, the interfaces which are non-audio will still be handled by the main processor.  For example, a USB headset can have a HID interface as well for volume control.  The HID interface will still be handled by the main processor, and events routed to the main event ring.
+> 
+>>
+>> How about the control part?
+>> Is the control endpoint for this device still handled normally by usb core/xhci?
+>>
+> 
+> Control transfers are always handled on the main processor.  Only audio interface's endpoints.
 
-I don't think there is anything needed to fix in bindings in
-incompatible way. I was working on them as well (for HDK8450) and I
-don't recall any issues.
+Good to know, that means interrupter should be chosen per endpoint, not per device.
 
-If you see anything specific, use specific arguments, because otherwise
-it is just FUD.
+> 
+>> For the xhci parts I think we should start start by adding generic support for several
+>> interrupters, then add parts needed for offloading.
+> 
+> I can split up the patchsets to add interrupters first, then adding the offloading APIs in a separate patch.
 
-> There's also an indication
-> that some further driver support is needed for proper speaker
-> protection. That really should be in place before we enable this.
 
-There is easy solution for this - drop the compatible from drivers. Or
-if driver is SC8280xp specific, mark it as BROKEN in Kconfig. Or fail
-the probe so it won't bother your system.
-Best regards,
-Krzysztof
+I started looking at supporting secondary interrupters myself.
+Let me work on that part a bit first. We have a bit different end goals.
+I want to handle interrupts from a secondary interrupter, while this audio offload
+really just wants to mask some interrupts.
+
+Thanks
+Mathias
 
