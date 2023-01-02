@@ -2,76 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA6F465B065
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:17:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 784F965B076
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:23:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232603AbjABLRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 06:17:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41108 "EHLO
+        id S232760AbjABLXG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:23:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232499AbjABLQv (ORCPT
+        with ESMTP id S235640AbjABLWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:16:51 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BA71028
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:16:48 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id z26so41177372lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:16:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2nNJE27UFSVYT9QWUr/Yq5NlT4xBOUzY+RpF8vfGt8A=;
-        b=cDQZkz4VTKIlJmwOou1MCRvVmgzEIx2pBw3qLRzPt7fdy6IfqZV6mJY6m6vh+e4TBL
-         LyTRWFdnLggNV+8niQYxlw19NCfGzDSy0+lfeuQF6U1AkoIvExpUJR1A4zBqsmWXgp2N
-         UqR60JMePi4rd3LjwL+h6mKDX2zX6WI5TQOpPvSgs3WY9RPKwLxWDw36XzR7FbBCYpdn
-         LDhC3nw4nZ+4OtDHMfU4c28CoTNQM73dvgoyrVhIB2ABH4ABYAzKtfLKOCsFWvvxUMn0
-         hFhagDP4OFQ2CqpIkraJGzy/YIVWkr70qo3N3tMMIJ2bH+/rI0o0OecHNeIJ+FGe3Ko2
-         c/SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nNJE27UFSVYT9QWUr/Yq5NlT4xBOUzY+RpF8vfGt8A=;
-        b=yFyBeTL+QA8vpBlWtkIKeUiu6+K/2+aVNuejNQGKJocwqfAFLajglA3qVJaQ5s28PU
-         olzopGAnd0jq9+3k7x9wiih8kqhW9pxyyggvLDmPXXyzeLD0M7pjzPeTYBdG83ZW6kXd
-         Hj+K/ZT0UzSRpRtnkJK8UP0s+YBbCfmPy2vPx3U1IDbgDW3zThDgfg37Ni4HP8mrnEBZ
-         UgzZhrNH8byyxOcKhIBIubD0BJAXYY6BKUyJ37Fu0KXJQr4AguB1HJVmL2mSccXV0FpO
-         /lp3phfV7P3RwwdJAzvLS+ElR4L4VUjFiF3T5LQ0lWAx/T66RIV0CgEbNt2bu3heSn7M
-         Msfw==
-X-Gm-Message-State: AFqh2kqlyhpiv9yQj8/e9PEEWGzw92qQfMsF5KD8jwP86h/3R7Jer3uJ
-        hL9U2Au70yQTY/CgETNchPHtRg==
-X-Google-Smtp-Source: AMrXdXsARwZ2D/GSWiU2/jf4ewnDCZQzLd6Fiplz47PEFhPkmSRKSpUlvvtWuVosNN8AMowDnjYjeg==
-X-Received: by 2002:a05:6512:2284:b0:4b5:634f:9b93 with SMTP id f4-20020a056512228400b004b5634f9b93mr13244402lfu.18.1672658206598;
-        Mon, 02 Jan 2023 03:16:46 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id o17-20020ac24351000000b0048a934168c0sm4430166lfl.35.2023.01.02.03.16.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 03:16:46 -0800 (PST)
-Message-ID: <6447bb2f-0ef1-a8a8-4b94-875e16954ca6@linaro.org>
-Date:   Mon, 2 Jan 2023 12:16:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450-hdk: fix wcd938x codec node
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mon, 2 Jan 2023 06:22:13 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29699241;
+        Mon,  2 Jan 2023 03:22:07 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BB20560F37;
+        Mon,  2 Jan 2023 11:22:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186FAC433D2;
+        Mon,  2 Jan 2023 11:22:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672658526;
+        bh=NsliRdZaxPkfi38ZXX6vQ+MBs+Xqv26nZtoV92gg+YI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=h6lNPlsJcPnXiYXZyBDpTbzfbt1MJ7RWOMJdRYDLVJCY8pn+hy9gerBbWm8pKtOnc
+         n5/AZ1G5di1CiGIgf0TwJpT+1RHXDRkxe2wLSY/Y33KJl7yHZnGL3btp02LejGEGRy
+         Ywvh5jcuBlu90ERP3V511BOTvLpdWlTA+OQ7K4dzl9MDrEMYMEqxDC/apUuH35T7DQ
+         zCm9oabcpRz1B2m1YxsZx6rzTJ1mlp5rb3PjO3SPTRwTwe4Lsy+HTeMm56RnNp3/Jq
+         QQNirxRWUtCPrwdQUG6H4MeBsCdzMmZ8LhOrYTCwzD0Wh+Izh2i/VWObVWKB4VO3eR
+         hhsNdsBPCZMCg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pCIta-0005Cf-4f; Mon, 02 Jan 2023 12:22:22 +0100
+Date:   Mon, 2 Jan 2023 12:22:22 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: sm8250-mtp: fix wcd938x codec node
+Message-ID: <Y7K+bniJmFdVv62Y@hovoldconsulting.com>
 References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-7-johan+linaro@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230102105038.8074-7-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+ <20230102105038.8074-6-johan+linaro@kernel.org>
+ <77bd335a-1989-2d5f-d480-d388e141ec91@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <77bd335a-1989-2d5f-d480-d388e141ec91@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,90 +64,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2.01.2023 11:50, Johan Hovold wrote:
-> The wcd938x codec is not a memory-mapped device and does not belong
-> under the soc node.
+On Mon, Jan 02, 2023 at 12:15:50PM +0100, Konrad Dybcio wrote:
 > 
-> Move the node to the root node to avoid DT validation failures.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-Third patch concerning the audio codec and third different
-order of properties :/ Please consolidate that.
+> On 2.01.2023 11:50, Johan Hovold wrote:
+> > The wcd938x codec is not a memory-mapped device and does not belong
+> > under the soc node.
+> > 
+> > Move the node to the root node to avoid DT validation failures.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> Could you rename it to audio-codec and separate/sort the properties
+> like you did for x13s?
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 52 ++++++++++++-------------
->  1 file changed, 25 insertions(+), 27 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 4de3e1f1c39c..217b2c654745 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -17,6 +17,31 @@ aliases {
->  		serial0 = &uart7;
->  	};
->  
-> +	wcd938x: codec {
-> +		compatible = "qcom,wcd9380-codec";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wcd_default>;
-> +
-> +		qcom,micbias1-microvolt = <1800000>;
-> +		qcom,micbias2-microvolt = <1800000>;
-> +		qcom,micbias3-microvolt = <1800000>;
-> +		qcom,micbias4-microvolt = <1800000>;
-> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> +		qcom,rx-device = <&wcd_rx>;
-> +		qcom,tx-device = <&wcd_tx>;
-> +
-> +		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-> +		#sound-dai-cells = <1>;
-> +
-> +		vdd-buck-supply = <&vreg_s10b_1p8>;
-> +		vdd-rxtx-supply = <&vreg_s10b_1p8>;
-> +		vdd-io-supply = <&vreg_s10b_1p8>;
-> +		vdd-mic-bias-supply = <&vreg_bob>;
-> +	};
-> +
->  	chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
-> @@ -407,33 +432,6 @@ &sdhc_2 {
->  	status = "okay";
->  };
->  
-> -&soc {
-> -	wcd938x: codec {
-> -		compatible = "qcom,wcd9380-codec";
-> -
-> -		pinctrl-names = "default";
-> -		pinctrl-0 = <&wcd_default>;
-> -
-> -		qcom,micbias1-microvolt = <1800000>;
-> -		qcom,micbias2-microvolt = <1800000>;
-> -		qcom,micbias3-microvolt = <1800000>;
-> -		qcom,micbias4-microvolt = <1800000>;
-> -		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-> -		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> -		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> -		qcom,rx-device = <&wcd_rx>;
-> -		qcom,tx-device = <&wcd_tx>;
-> -
-> -		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-> -		#sound-dai-cells = <1>;
-> -
-> -		vdd-buck-supply = <&vreg_s10b_1p8>;
-> -		vdd-rxtx-supply = <&vreg_s10b_1p8>;
-> -		vdd-io-supply = <&vreg_s10b_1p8>;
-> -		vdd-mic-bias-supply = <&vreg_bob>;
-> -	};
-> -};
-> -
->  &sound {
->  	compatible = "qcom,sm8450-sndcard";
->  	model = "SM8450-HDK";
+Possibly, but unlike for sc8280xp, I don't really care about these
+platforms and how their DT authors have chosen to order properties so I
+left out the clean up bits on purpose.
+
+Johan
