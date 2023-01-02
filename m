@@ -2,278 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AEDD65B045
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:06:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D7065B052
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:13:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232151AbjABLGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 06:06:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36382 "EHLO
+        id S232086AbjABLNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:13:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbjABLGS (ORCPT
+        with ESMTP id S229494AbjABLNT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:06:18 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB07CA;
-        Mon,  2 Jan 2023 03:06:15 -0800 (PST)
-Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5CEAF1F54F;
-        Mon,  2 Jan 2023 12:06:12 +0100 (CET)
-Date:   Mon, 2 Jan 2023 12:06:11 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     phone-devel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 6/7] drm/msm/dpu: Implement tearcheck support on INTF
- block
-Message-ID: <20230102110611.e3k36evk23ai35gg@SoMainline.org>
-References: <20221231215006.211860-1-marijn.suijten@somainline.org>
- <20221231215006.211860-7-marijn.suijten@somainline.org>
- <593cae1c-ade3-c68a-25d3-84ba1b968175@linaro.org>
+        Mon, 2 Jan 2023 06:13:19 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4D8296
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:13:16 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id p36so41147703lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:13:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XrAuu6jhWQcJPRy3SyR8DJMB6n9oyPHi0cJUo5aTP1M=;
+        b=TDxK7d58A8UUv02W8aKwKPEUAyJ3zuNrur2SMEHuZv/XN6EQqTht78KO95AEPDz5RV
+         XxxEva42gcnEMTwkAPjn3oj7ehnaYPkSwT0MdR8nZWcvjKvVYOBebfR8w7UUh7/pLqU9
+         KcTPhLR0CUOUieC1SXUV/kaqIrYFqep23w19lUkOzpQl39pLKy+A3aLxFlnKWZwCpHOS
+         fFaMsX2H4/Itrmi/HxL36MATC5M+1/6w1heZrytpk5167EhpARmKctB98lb3o0zAcAxf
+         H4LxWB+BJPF14LWQaw+BwG2KZyhjda+u3A51HmIlS/cDAtw9TC9/fc4sp1b5OkERnKJB
+         fNNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XrAuu6jhWQcJPRy3SyR8DJMB6n9oyPHi0cJUo5aTP1M=;
+        b=krOAkpVa/F6RBkMjp9KGmuQio9bxarISNzYAthtUqLKKmVlmIuLc5PuHyOSbbrloIv
+         oi9iai5uUGMaczxwb8/pBVm6DQrjrxNxdRq0f++pfuShyBIITH7nBAtWa+guY2ySkKuV
+         pyJfc6NZqrwxcMAcT8ju4nfaHI+ek0EgccfrQ6ybhIcvjxPJ0Y0ksVrAIDCiBPldoczs
+         XcbvF63Ceba06kAXxEr+hp7pV/eT4TfOqyf4hDRoA9pdazFQ13/duiiAj4BKd0itCp3L
+         Bg+YEikLbS0L0rkfLtzfNHvM3rKw6B9LPcIpBbJ3RcQVoQc2jqJ5zJUaad2y/bWpRytJ
+         HzsA==
+X-Gm-Message-State: AFqh2kqQJLeoPh/I3h6g5vzW+k7RrD94aIKn+H7790Y2UWHoYrZo1+sM
+        g3+3F04M7x5H0aQjlC1twOOy1yXc59NGA9bj
+X-Google-Smtp-Source: AMrXdXu9A6IJpPIV473+gDxlcRy5OhdMTgcZTjcjH9z3hHhKbWNgCinBM66KDhd4qIObIxYnh6mgHA==
+X-Received: by 2002:a05:6512:1687:b0:4cb:bf8:cf0e with SMTP id bu7-20020a056512168700b004cb0bf8cf0emr7727872lfb.19.1672657995269;
+        Mon, 02 Jan 2023 03:13:15 -0800 (PST)
+Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id z5-20020ac24f85000000b004b5480edf67sm4426477lfs.36.2023.01.02.03.13.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jan 2023 03:13:14 -0800 (PST)
+Message-ID: <32f7fea6-e99c-9bf5-fa7c-044a45e9a68a@linaro.org>
+Date:   Mon, 2 Jan 2023 12:13:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <593cae1c-ade3-c68a-25d3-84ba1b968175@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: sc8280xp: disable sound nodes
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230102105038.8074-1-johan+linaro@kernel.org>
+ <20230102105038.8074-3-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230102105038.8074-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-01 15:32:11, Dmitry Baryshkov wrote:
-> On 31/12/2022 23:50, Marijn Suijten wrote:
-> > Since DPU 5.0.0 the TEARCHECK registers and interrupts moved out of the
-> > PINGPONG block and into the INTF.  Implement the necessary callbacks in
-> > the INTF block, and use these callbacks together with the INTF_TEAR
-> > interrupts
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+
+On 2.01.2023 11:50, Johan Hovold wrote:
+> The sound nodes in the SoC dtsi should be disabled by default.
 > 
-> Generally I have the same question as for the patch 2. Can we have some 
-> higher level functions in the hw_pp and hw_intf files?
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-That is mostly because patch 2 only cleaned up non-optional handling of
-hw_pp callbacks in dpu_encoder_phys_cmd_prepare_commit, which utilizes
-hw_intf's autorefresh callbacks since this patch.  I don't think there's
-any logic in the encoder currently that is unique to either PP or INTF?
-
-There are quite a few functions that check for NULL hw_pp only, while -
-especially after this patch - should also check hw_intf to raise
-"invalid encoder".  Should I extend those checks as well?
-
-> Moreover, as I
-> review your patch I have the feeling that it would make sense to have to 
-> two sets of encoder callbacks, one for the hw_pp tearing handling and 
-> another set for hw_intf-based one.
-
-Do you mean to duplicate most phy_cmd functions and switch them based on
-has_intf_te in dpu_encoder_phys_cmd_init_ops?  Or introduce an entirely
-new set of callbacks that simply hide / abstract away the check on
-has_intf_te?  The former would duplicate a bunch of code unless that is
-abstracted away into other functions, mainly in
-dpu_encoder_phys_cmd_tearcheck_config and
-dpu_encoder_phys_cmd_prepare_commit.
-
-Alternatively, could we find a way where these PP and INTF ops share the
-same struct and function signature?  That might be tricky for passing in
-the hw_pp or hw_intf struct without leaking those details to the
-callback and/or have the switching logic in there.
-
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  11 +
-> >   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  10 +-
-> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 113 +++++++---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 206 ++++++++++++++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  29 +++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
-> >   6 files changed, 340 insertions(+), 31 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > index 9c6817b5a194..8b9070220ab2 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -673,6 +673,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
-> >   	struct dpu_kms *dpu_kms;
-> >   	struct dpu_hw_mdp *hw_mdptop;
-> >   	struct drm_encoder *drm_enc;
-> > +	struct dpu_encoder_phys *phys_enc;
-> >   	int i;
-> >   
-> >   	if (!dpu_enc || !disp_info) {
-> > @@ -703,12 +704,22 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
-> >   			vsync_cfg.ppnumber[i] = dpu_enc->hw_pp[i]->idx;
-> >   
-> >   		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
-> > +		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
-> > +
-> >   		if (disp_info->is_te_using_watchdog_timer)
-> >   			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_WD_TIMER_0;
-> >   		else
-> >   			vsync_cfg.vsync_source = DPU_VSYNC0_SOURCE_GPIO;
-> >   
-> >   		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
-> > +
-> > +		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-> > +			phys_enc = dpu_enc->phys_encs[i];
-> > +
-> > +			if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
-> > +				phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
-> > +						vsync_cfg.vsync_source);
-> > +		}
-> >   	}
-> >   }
-> >   
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> > index f2af07d87f56..47e79401032c 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> > @@ -148,10 +148,10 @@ struct dpu_encoder_phys_ops {
-> >   /**
-> >    * enum dpu_intr_idx - dpu encoder interrupt index
-> >    * @INTR_IDX_VSYNC:    Vsync interrupt for video mode panel
-> > - * @INTR_IDX_PINGPONG: Pingpong done unterrupt for cmd mode panel
-> > - * @INTR_IDX_UNDERRUN: Underrun unterrupt for video and cmd mode panel
-> > - * @INTR_IDX_RDPTR:    Readpointer done unterrupt for cmd mode panel
-> > - * @INTR_IDX_WB_DONE:  Writeback fone interrupt for virtual connector
-> > + * @INTR_IDX_PINGPONG: Pingpong done interrupt for cmd mode panel
-> > + * @INTR_IDX_UNDERRUN: Underrun interrupt for video and cmd mode panel
-> > + * @INTR_IDX_RDPTR:    Readpointer done interrupt for cmd mode panel
-> > + * @INTR_IDX_WB_DONE:  Writeback done interrupt for virtual connector
-> >    */
-> >   enum dpu_intr_idx {
-> >   	INTR_IDX_VSYNC,
-> > @@ -195,6 +195,7 @@ enum dpu_intr_idx {
-> >    *                              pending.
-> >    * @pending_kickoff_wq:		Wait queue for blocking until kickoff completes
-> >    * @irq:			IRQ indices
-> > + * @has_intf_te:		Interface TE configuration support
-> >    */
-> >   struct dpu_encoder_phys {
-> >   	struct drm_encoder *parent;
-> > @@ -220,6 +221,7 @@ struct dpu_encoder_phys {
-> >   	atomic_t pending_kickoff_cnt;
-> >   	wait_queue_head_t pending_kickoff_wq;
-> >   	int irq[INTR_IDX_MAX];
-> > +	bool has_intf_te;
-> >   };
-> >   
-> >   static inline int dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > index 7e5ba52197cd..ca44a8087f01 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > @@ -100,12 +100,12 @@ static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-> >   	DPU_ATRACE_END("pp_done_irq");
-> >   }
-> >   
-> > -static void dpu_encoder_phys_cmd_pp_rd_ptr_irq(void *arg, int irq_idx)
-> > +static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg, int irq_idx)
-> >   {
-> >   	struct dpu_encoder_phys *phys_enc = arg;
-> >   	struct dpu_encoder_phys_cmd *cmd_enc;
-> >   
-> > -	if (!phys_enc->hw_pp)
-> > +	if (!phys_enc->hw_pp || !phys_enc->hw_intf)
-> >   		return;
-> >   
-> >   	DPU_ATRACE_BEGIN("rd_ptr_irq");
-> > @@ -147,11 +147,19 @@ static void dpu_encoder_phys_cmd_atomic_mode_set(
-> >   		struct drm_crtc_state *crtc_state,
-> >   		struct drm_connector_state *conn_state)
-> >   {
-> > +	if (phys_enc->has_intf_te && !phys_enc->hw_intf) {
-> > +		DPU_ERROR("invalid intf configuration\n");
-> > +		return;
-> > +	}
-> > +
-> >   	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
-> >   
-> >   	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
-> >   
-> > -	phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
-> > +	if (phys_enc->has_intf_te)
-> > +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
-> > +	else
-> > +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
-> >   
-> >   	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
-> >   }
-> > @@ -264,7 +272,7 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
-> >   	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
-> >   		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
-> >   				phys_enc->irq[INTR_IDX_RDPTR],
-> > -				dpu_encoder_phys_cmd_pp_rd_ptr_irq,
-> > +				dpu_encoder_phys_cmd_te_rd_ptr_irq,
-> >   				phys_enc);
-> >   	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
-> >   		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-
-Fwiw looks like this function is a prime candidate to get updated with
-hw_intf information (in error checking and logging), as this callback is
-now shared between PP and INTF.
-
-> > @@ -336,10 +344,18 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
-> >   
-> >   	DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
-> >   
-> > -	if (!phys_enc->hw_pp->ops.setup_tearcheck ||
-> > -		!phys_enc->hw_pp->ops.enable_tearcheck) {
-> > -		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > -		return;
-> > +	if (phys_enc->has_intf_te) {
-> > +		if (!phys_enc->hw_intf->ops.setup_tearcheck ||
-> > +			!phys_enc->hw_intf->ops.enable_tearcheck) {
-> > +			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > +			return;
-> > +		}
-> > +	} else {
-> > +		if (!phys_enc->hw_pp->ops.setup_tearcheck ||
-> > +			!phys_enc->hw_pp->ops.enable_tearcheck) {
-> > +			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
-> > +			return;
-> > +		}
-> >   	}
-> >   
-> >   	dpu_kms = phys_enc->dpu_kms;
-> > @@ -392,8 +408,13 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
-> >   		phys_enc->hw_pp->idx - PINGPONG_0, tc_cfg.sync_cfg_height,
-> >   		tc_cfg.sync_threshold_start, tc_cfg.sync_threshold_continue);
-> >   
-> > -	phys_enc->hw_pp->ops.setup_tearcheck(phys_enc->hw_pp, &tc_cfg);
-> > -	phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, tc_enable);
+Konrad
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> A simple random example: setup_tearcheck is always followed with the 
-> enable_tearcheck. If we merge them, the code would be simpler.
-
-setup_tearcheck could include this functionality, but note that
-dpu_encoder_phys_cmd_disable currently calls enable_tearcheck(false)
-without setup_tearcheck.
-
-- Marijn
-
-> > <snip>
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index ed1e2bee86ee..c1ce2d7b3675 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -1733,6 +1733,8 @@ rxmacro: rxmacro@3200000 {
+>  
+>  			pinctrl-names = "default";
+>  			pinctrl-0 = <&rx_swr_default>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		/* RX */
+> @@ -1760,6 +1762,8 @@ swr1: soundwire-controller@3210000 {
+>  			#sound-dai-cells = <1>;
+>  			#address-cells = <2>;
+>  			#size-cells = <0>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		txmacro: txmacro@3220000 {
+> @@ -1783,6 +1787,8 @@ txmacro: txmacro@3220000 {
+>  			#address-cells = <2>;
+>  			#size-cells = <2>;
+>  			#sound-dai-cells = <1>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		wsamacro: codec@3240000 {
+> @@ -1804,6 +1810,8 @@ wsamacro: codec@3240000 {
+>  
+>  			pinctrl-names = "default";
+>  			pinctrl-0 = <&wsa_swr_default>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		/* WSA */
+> @@ -1830,6 +1838,8 @@ swr0: soundwire-controller@3250000 {
+>  			#sound-dai-cells = <1>;
+>  			#address-cells = <2>;
+>  			#size-cells = <0>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		/* TX */
+> @@ -1858,6 +1868,8 @@ swr2: soundwire-controller@3330000 {
+>  			qcom,ports-word-length =	/bits/ 8 <0xff 0x00 0xff 0xff>;
+>  			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+>  			qcom,ports-lane-control =	/bits/ 8 <0x00 0x01 0x00 0x00>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		vamacro: codec@3370000 {
+> @@ -1874,6 +1886,8 @@ vamacro: codec@3370000 {
+>  			#clock-cells = <0>;
+>  			clock-output-names = "fsgen";
+>  			#sound-dai-cells = <1>;
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		lpass_tlmm: pinctrl@33c0000 {
+> @@ -1888,6 +1902,8 @@ lpass_tlmm: pinctrl@33c0000 {
+>  				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>  			clock-names = "core", "audio";
+>  
+> +			status = "disabled";
+> +
+>  			tx_swr_default: tx-swr-default-state {
+>  				clk-pins {
+>  					pins = "gpio0";
