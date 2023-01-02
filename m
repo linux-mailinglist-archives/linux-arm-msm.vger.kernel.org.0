@@ -2,138 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25CAB65B032
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:59:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AEDD65B045
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:06:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232739AbjABK7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 05:59:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60344 "EHLO
+        id S232151AbjABLGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:06:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231917AbjABK7I (ORCPT
+        with ESMTP id S229494AbjABLGS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 05:59:08 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D3EC6A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 02:59:07 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id d10so18105452pgm.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 02:59:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gKYbhDNGtqupbPRUKCCINaSoc+lb4pCR63iH2vtYHr8=;
-        b=Qwt4rqH5AdvU0i3hJHzjsqhvUAZrYDolSqESxZJAMmrw+VIYKJC+RbPA4QQl1QQoT2
-         jX5Eg9ekFa2WhQ7JoZ5BadUYSAblL31m5AIqWYV65kuDyMxS6xiasCLgCs0pZ77wH3t/
-         BPg4cZTrKllvZ/Yk0k7J+zDcomYD4LdfsJN6og8iuNJ9O4R6L/Gz3gw46YxYVI94T6iA
-         NNe1X2eOgBBdUF9Wf9hsey3bkjrV2pRICXhXhUKXjiIAZ7tzKzT7wimTyFk4/y+MZsTu
-         AEQBp6EIXB2bt/iAZbYmnEXSBfFbd2QykcIeD+DO9PsN17IjE7XyUYK2ApKxvADUkUpy
-         KBWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gKYbhDNGtqupbPRUKCCINaSoc+lb4pCR63iH2vtYHr8=;
-        b=5CSgJV/Ch1o/YrYG0z1IMRlFIUTA3tqiMseiJO+x+xtwX1WwoY/HDXEILzhliy67j9
-         Py4cmFBlJQIJdhTQWhYdrVLx4Ffganov52Cpqua/2DdmGtMVgg2X2a+HofzAhRW5N4HW
-         eAUB3OCXL/y1ZLHUb6Z+tGExkAMFwsvdqqSz3Y5nEfzTQuHFXu+XQxJSBExLC8YfGlCK
-         4ffXfJ58Unk7rC5hGf5Wk2EIn5oYUHWu/EXnuEnfC20Rdd/aC5mBUxXKf0wKzqU6Nkg6
-         3dQYoHUiQv4Sf7XdMCrRterqEDOhfZ8x3jkhYOOUubjzvvr7MeXcc4FerOjeWO4ch1e9
-         uflg==
-X-Gm-Message-State: AFqh2kofRKZfV0XrafHj7awqe9srRbbvE9Q15KikbOsQzOz/lJ9gtvyj
-        4/iikzpPdrQ20nnneS/3qHXR
-X-Google-Smtp-Source: AMrXdXs/oDbtqNDAcqgwBH/WGHqDA/PlPcKdwRPMBMnmmaFF114TWVFgqj31yZ4L/Uhz1o8JopW2Mg==
-X-Received: by 2002:aa7:8215:0:b0:580:9151:afe5 with SMTP id k21-20020aa78215000000b005809151afe5mr33795493pfi.22.1672657147061;
-        Mon, 02 Jan 2023 02:59:07 -0800 (PST)
-Received: from localhost.localdomain ([220.158.158.187])
-        by smtp.gmail.com with ESMTPSA id k26-20020aa79d1a000000b0058130f1eca1sm12756773pfp.182.2023.01.02.02.59.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 02:59:06 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bhelgaas@google.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lpieralisi@kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sm8450: Use GIC-ITS for PCIe0 and PCIe1
-Date:   Mon,  2 Jan 2023 16:28:21 +0530
-Message-Id: <20230102105821.28243-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230102105821.28243-1-manivannan.sadhasivam@linaro.org>
-References: <20230102105821.28243-1-manivannan.sadhasivam@linaro.org>
+        Mon, 2 Jan 2023 06:06:18 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB07CA;
+        Mon,  2 Jan 2023 03:06:15 -0800 (PST)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5CEAF1F54F;
+        Mon,  2 Jan 2023 12:06:12 +0100 (CET)
+Date:   Mon, 2 Jan 2023 12:06:11 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     phone-devel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 6/7] drm/msm/dpu: Implement tearcheck support on INTF
+ block
+Message-ID: <20230102110611.e3k36evk23ai35gg@SoMainline.org>
+References: <20221231215006.211860-1-marijn.suijten@somainline.org>
+ <20221231215006.211860-7-marijn.suijten@somainline.org>
+ <593cae1c-ade3-c68a-25d3-84ba1b968175@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <593cae1c-ade3-c68a-25d3-84ba1b968175@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
-received from endpoint devices to the CPU using GIC-ITS MSI controller.
-Add support for it.
+On 2023-01-01 15:32:11, Dmitry Baryshkov wrote:
+> On 31/12/2022 23:50, Marijn Suijten wrote:
+> > Since DPU 5.0.0 the TEARCHECK registers and interrupts moved out of the
+> > PINGPONG block and into the INTF.  Implement the necessary callbacks in
+> > the INTF block, and use these callbacks together with the INTF_TEAR
+> > interrupts
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> Generally I have the same question as for the patch 2. Can we have some 
+> higher level functions in the hw_pp and hw_intf files?
 
-Currently, BDF (0:0.0) and BDF (1:0.0) are enabled and with the
-msi-map-mask of 0xff00, all the 32 devices under these two busses can
-share the same Device ID.
+That is mostly because patch 2 only cleaned up non-optional handling of
+hw_pp callbacks in dpu_encoder_phys_cmd_prepare_commit, which utilizes
+hw_intf's autorefresh callbacks since this patch.  I don't think there's
+any logic in the encoder currently that is unique to either PP or INTF?
 
-The GIC-ITS MSI implementation provides an advantage over internal MSI
-implementation using Locality-specific Peripheral Interrupts (LPI) that
-would allow MSIs to be targeted for each CPU core.
+There are quite a few functions that check for NULL hw_pp only, while -
+especially after this patch - should also check hw_intf to raise
+"invalid encoder".  Should I extend those checks as well?
 
-It should be noted that the MSIs for BDF (1:0.0) only works with Device
-ID of 0x5980 and 0x5a00. Hence, the IDs are swapped.
+> Moreover, as I
+> review your patch I have the feeling that it would make sense to have to 
+> two sets of encoder callbacks, one for the hw_pp tearing handling and 
+> another set for hw_intf-based one.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+Do you mean to duplicate most phy_cmd functions and switch them based on
+has_intf_te in dpu_encoder_phys_cmd_init_ops?  Or introduce an entirely
+new set of callbacks that simply hide / abstract away the check on
+has_intf_te?  The former would duplicate a bunch of code unless that is
+abstracted away into other functions, mainly in
+dpu_encoder_phys_cmd_tearcheck_config and
+dpu_encoder_phys_cmd_prepare_commit.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 570475040d95..c4dd5838fac6 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1733,9 +1733,13 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
--			#interrupt-cells = <1>;
-+			/*
-+			 * MSIs for BDF (1:0.0) only works with Device ID 0x5980.
-+			 * Hence, the IDs are swapped.
-+			 */
-+			msi-map = <0x0 &gic_its 0x5981 0x1>,
-+				  <0x100 &gic_its 0x5980 0x1>;
-+			msi-map-mask = <0xff00>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
- 					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-@@ -1842,9 +1846,13 @@ pcie1: pci@1c08000 {
- 			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
- 
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
--			#interrupt-cells = <1>;
-+			/*
-+			 * MSIs for BDF (1:0.0) only works with Device ID 0x5a00.
-+			 * Hence, the IDs are swapped.
-+			 */
-+			msi-map = <0x0 &gic_its 0x5a01 0x1>,
-+				  <0x100 &gic_its 0x5a00 0x1>;
-+			msi-map-mask = <0xff00>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
- 					<0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
--- 
-2.25.1
+Alternatively, could we find a way where these PP and INTF ops share the
+same struct and function signature?  That might be tricky for passing in
+the hw_pp or hw_intf struct without leaking those details to the
+callback and/or have the switching logic in there.
 
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  11 +
+> >   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  10 +-
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 113 +++++++---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 206 ++++++++++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  29 +++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
+> >   6 files changed, 340 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index 9c6817b5a194..8b9070220ab2 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -673,6 +673,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
+> >   	struct dpu_kms *dpu_kms;
+> >   	struct dpu_hw_mdp *hw_mdptop;
+> >   	struct drm_encoder *drm_enc;
+> > +	struct dpu_encoder_phys *phys_enc;
+> >   	int i;
+> >   
+> >   	if (!dpu_enc || !disp_info) {
+> > @@ -703,12 +704,22 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
+> >   			vsync_cfg.ppnumber[i] = dpu_enc->hw_pp[i]->idx;
+> >   
+> >   		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
+> > +		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
+> > +
+> >   		if (disp_info->is_te_using_watchdog_timer)
+> >   			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_WD_TIMER_0;
+> >   		else
+> >   			vsync_cfg.vsync_source = DPU_VSYNC0_SOURCE_GPIO;
+> >   
+> >   		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
+> > +
+> > +		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> > +			phys_enc = dpu_enc->phys_encs[i];
+> > +
+> > +			if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
+> > +				phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
+> > +						vsync_cfg.vsync_source);
+> > +		}
+> >   	}
+> >   }
+> >   
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > index f2af07d87f56..47e79401032c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > @@ -148,10 +148,10 @@ struct dpu_encoder_phys_ops {
+> >   /**
+> >    * enum dpu_intr_idx - dpu encoder interrupt index
+> >    * @INTR_IDX_VSYNC:    Vsync interrupt for video mode panel
+> > - * @INTR_IDX_PINGPONG: Pingpong done unterrupt for cmd mode panel
+> > - * @INTR_IDX_UNDERRUN: Underrun unterrupt for video and cmd mode panel
+> > - * @INTR_IDX_RDPTR:    Readpointer done unterrupt for cmd mode panel
+> > - * @INTR_IDX_WB_DONE:  Writeback fone interrupt for virtual connector
+> > + * @INTR_IDX_PINGPONG: Pingpong done interrupt for cmd mode panel
+> > + * @INTR_IDX_UNDERRUN: Underrun interrupt for video and cmd mode panel
+> > + * @INTR_IDX_RDPTR:    Readpointer done interrupt for cmd mode panel
+> > + * @INTR_IDX_WB_DONE:  Writeback done interrupt for virtual connector
+> >    */
+> >   enum dpu_intr_idx {
+> >   	INTR_IDX_VSYNC,
+> > @@ -195,6 +195,7 @@ enum dpu_intr_idx {
+> >    *                              pending.
+> >    * @pending_kickoff_wq:		Wait queue for blocking until kickoff completes
+> >    * @irq:			IRQ indices
+> > + * @has_intf_te:		Interface TE configuration support
+> >    */
+> >   struct dpu_encoder_phys {
+> >   	struct drm_encoder *parent;
+> > @@ -220,6 +221,7 @@ struct dpu_encoder_phys {
+> >   	atomic_t pending_kickoff_cnt;
+> >   	wait_queue_head_t pending_kickoff_wq;
+> >   	int irq[INTR_IDX_MAX];
+> > +	bool has_intf_te;
+> >   };
+> >   
+> >   static inline int dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > index 7e5ba52197cd..ca44a8087f01 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > @@ -100,12 +100,12 @@ static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
+> >   	DPU_ATRACE_END("pp_done_irq");
+> >   }
+> >   
+> > -static void dpu_encoder_phys_cmd_pp_rd_ptr_irq(void *arg, int irq_idx)
+> > +static void dpu_encoder_phys_cmd_te_rd_ptr_irq(void *arg, int irq_idx)
+> >   {
+> >   	struct dpu_encoder_phys *phys_enc = arg;
+> >   	struct dpu_encoder_phys_cmd *cmd_enc;
+> >   
+> > -	if (!phys_enc->hw_pp)
+> > +	if (!phys_enc->hw_pp || !phys_enc->hw_intf)
+> >   		return;
+> >   
+> >   	DPU_ATRACE_BEGIN("rd_ptr_irq");
+> > @@ -147,11 +147,19 @@ static void dpu_encoder_phys_cmd_atomic_mode_set(
+> >   		struct drm_crtc_state *crtc_state,
+> >   		struct drm_connector_state *conn_state)
+> >   {
+> > +	if (phys_enc->has_intf_te && !phys_enc->hw_intf) {
+> > +		DPU_ERROR("invalid intf configuration\n");
+> > +		return;
+> > +	}
+> > +
+> >   	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
+> >   
+> >   	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
+> >   
+> > -	phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
+> > +	if (phys_enc->has_intf_te)
+> > +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
+> > +	else
+> > +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
+> >   
+> >   	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+> >   }
+> > @@ -264,7 +272,7 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+> >   	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
+> >   		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
+> >   				phys_enc->irq[INTR_IDX_RDPTR],
+> > -				dpu_encoder_phys_cmd_pp_rd_ptr_irq,
+> > +				dpu_encoder_phys_cmd_te_rd_ptr_irq,
+> >   				phys_enc);
+> >   	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
+> >   		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+
+Fwiw looks like this function is a prime candidate to get updated with
+hw_intf information (in error checking and logging), as this callback is
+now shared between PP and INTF.
+
+> > @@ -336,10 +344,18 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+> >   
+> >   	DPU_DEBUG_CMDENC(cmd_enc, "pp %d\n", phys_enc->hw_pp->idx - PINGPONG_0);
+> >   
+> > -	if (!phys_enc->hw_pp->ops.setup_tearcheck ||
+> > -		!phys_enc->hw_pp->ops.enable_tearcheck) {
+> > -		DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
+> > -		return;
+> > +	if (phys_enc->has_intf_te) {
+> > +		if (!phys_enc->hw_intf->ops.setup_tearcheck ||
+> > +			!phys_enc->hw_intf->ops.enable_tearcheck) {
+> > +			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
+> > +			return;
+> > +		}
+> > +	} else {
+> > +		if (!phys_enc->hw_pp->ops.setup_tearcheck ||
+> > +			!phys_enc->hw_pp->ops.enable_tearcheck) {
+> > +			DPU_DEBUG_CMDENC(cmd_enc, "tearcheck not supported\n");
+> > +			return;
+> > +		}
+> >   	}
+> >   
+> >   	dpu_kms = phys_enc->dpu_kms;
+> > @@ -392,8 +408,13 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+> >   		phys_enc->hw_pp->idx - PINGPONG_0, tc_cfg.sync_cfg_height,
+> >   		tc_cfg.sync_threshold_start, tc_cfg.sync_threshold_continue);
+> >   
+> > -	phys_enc->hw_pp->ops.setup_tearcheck(phys_enc->hw_pp, &tc_cfg);
+> > -	phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, tc_enable);
+> 
+> A simple random example: setup_tearcheck is always followed with the 
+> enable_tearcheck. If we merge them, the code would be simpler.
+
+setup_tearcheck could include this functionality, but note that
+dpu_encoder_phys_cmd_disable currently calls enable_tearcheck(false)
+without setup_tearcheck.
+
+- Marijn
+
+> > <snip>
