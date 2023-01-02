@@ -2,75 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C66A265AFBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:46:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C624A65AFD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:49:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbjABKqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 05:46:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
+        id S229828AbjABKtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 05:49:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231949AbjABKqH (ORCPT
+        with ESMTP id S232378AbjABKtV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 05:46:07 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 564AAB25
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 02:46:06 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id u12so25028401ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 02:46:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1gsaUC0v/Cx5daJxVpaOTwcaRSbHxERH/kPKOxzGKg8=;
-        b=ySumzhfMgn3J5b1AANttX0HuNBh+TRE28mbc3axsMnBXWRt0CblRawg0KCCbs5Hes1
-         Y0CrIPjLGiyap2GE9bzcMQ5GwyMBBOCoVss1remJH70Dyv9BKOpmRKKAfVQIwpYoM+7T
-         8/QagXqqkXmSqwGgrNZ9G00Py2y4kvwtHYNZgR53ewaTYUq8lt+7DawIEHTjznWUjN2W
-         GEdWO5drD7iHWmYtlIndlqITdJXSBlMxWF5lBI/PFgIqmaRU6ZwbwNMtQVciImrG3PBy
-         1roOjvyI38f4UwGGP5/l72bjjA3TTTDfL6z2Qp47HnOx2ODhK78Yy5us+6YjzMCrub9Q
-         gQ3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1gsaUC0v/Cx5daJxVpaOTwcaRSbHxERH/kPKOxzGKg8=;
-        b=56Gp/xEpfiFLGM4iCJ19WCSMbXuRlY3G+FUqo2WEw9BUX8qHh0utSI7Hl1Hvel/NU/
-         4/6vS0MQ97jCrAHxtR7sx2YHs5a9koXcKzVnhZr/E40XI73EkAHWyNphxgZR/ZoTwsiS
-         dGrKTa1L9Tc3PLP2ofoUmx/BZafp4zpYFoDUJ2lE8cmxoRjEDsqx4GJpi+xO46Z+rmuq
-         XUYtfmnodQvzVbWzzKTyAzYC3EhqcFOhS27opBTFSFXpijEvqTUdBBKMErdeHX4wLXqE
-         9zUYeuT7TYdtbINP42AdopehfQp6aZ72GncxpKv7fqJlcdna0lC99UKAwq7+M8nAPzC/
-         1P6A==
-X-Gm-Message-State: AFqh2krOvLf9Nek8Ne+p+hZF58ZLsV6H9uIrafGh5ttDHjTUi5HCsFRR
-        T7dRF3qhNfG2pFPXHx2RuOWoyg==
-X-Google-Smtp-Source: AMrXdXuasK8L9eUYNVBhGgmy9LlpmUexMB/f0GpYDAJGhlriilXQgFqKIoDK+pbJNMPY8DBYhFDTyQ==
-X-Received: by 2002:a2e:934c:0:b0:27f:b489:d8d4 with SMTP id m12-20020a2e934c000000b0027fb489d8d4mr9907313ljh.47.1672656364664;
-        Mon, 02 Jan 2023 02:46:04 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id a24-20020a2e9818000000b0027fc11a8e1asm2090917ljj.60.2023.01.02.02.46.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 02:46:04 -0800 (PST)
-Message-ID: <514482a4-614c-d6b8-ec7c-0e69fff72295@linaro.org>
-Date:   Mon, 2 Jan 2023 11:46:03 +0100
+        Mon, 2 Jan 2023 05:49:21 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19CFDB87;
+        Mon,  2 Jan 2023 02:49:21 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 302AAvrD012099;
+        Mon, 2 Jan 2023 10:48:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=RSf8P3pVo0pQ3dKKyoCr9K8iN7clmptkqL8x8ilOuQk=;
+ b=bSfhQs7Nwy6pULR2796STV+GUkaHZhgGYuDWmlftjVtHvy02+x6NJv1hrvip3o2MLf14
+ 6oP5OL/5trRww1mu9bKTA4jmRuRfbM7peLUpVZ/Kji3K35SH0YZYrtO0t8f8TOVxBKPh
+ 4/kYOkaiRvSLlTcSDNk/o21kV0vKqofbY/70IRnDQFTR6+vNMaVIhk5nf+QTDJsgCkA3
+ q9qMkkKsE8N1WwIg9jqWuyRlhSjuXKBADx3/60zwFHSjZB5Ac9bVm6Bt8kTRNUtWFT2A
+ n7S/e61UjwoRpd/8EAiicGSuPZzuPbTRRqofcayshjnzOiYcVBaDanuzQi1l63txT0WB dw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mtcdsjwxa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 02 Jan 2023 10:48:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 302AmnDE012583
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 2 Jan 2023 10:48:49 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 2 Jan 2023 02:48:40 -0800
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Chia-I Wu <olvaffe@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Douglas Anderson" <dianders@chromium.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Kevin Hilman <khilman@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Len Brown" <len.brown@intel.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Sean Paul" <sean@poorly.run>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: [PATCH v5 0/5] Improve GPU reset sequence for Adreno GPU
+Date:   Mon, 2 Jan 2023 16:18:26 +0530
+Message-ID: <1672656511-1931-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3
- connector
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-References: <20221231131945.3286639-1-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221231131945.3286639-1-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jSLXBoal9ABZNoKgyxYqjiPhCZZiQZoA
+X-Proofpoint-GUID: jSLXBoal9ABZNoKgyxYqjiPhCZZiQZoA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-02_06,2022-12-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=974 phishscore=0 suspectscore=0
+ spamscore=0 adultscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301020098
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,101 +96,55 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+This is a rework of [1] using genpd instead of 'reset' framework.
 
-On 31.12.2022 14:19, Bhupesh Sharma wrote:
-> Add the Embedded USB Debugger(EUD) device tree node for
-> SM6115 / SM4250 SoC.
-> 
-> The node contains EUD base register region and EUD mode
-> manager register regions along with the interrupt entry.
-> 
-> Also add the typec connector node for EUD which is attached to
-> EUD node via port. EUD is also attached to DWC3 node via port.
-> 
-> Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> - This patch is based on my earlier sm6115 usb related changes, which can
->   be seen here:
->   https://lore.kernel.org/linux-arm-msm/20221215094532.589291-1-bhupesh.sharma@linaro.org/
-> - This patch is also dependent on my sm6115 eud dt-binding and driver changes
->   sent earlier, which can be seen here:
->   https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org/
-> 
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 37 ++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 030763187cc3f..c775f7fdb7015 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -565,6 +565,37 @@ gcc: clock-controller@1400000 {
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		eud: eud@1610000 {
-> +			compatible = "qcom,sm6115-eud","qcom,eud";
-Missing space between entries.
+As per the recommended reset sequence of Adreno gpu, we should ensure that
+gpucc-cx-gdsc has collapsed at hardware to reset gpu's internal hardware states.
+Because this gdsc is implemented as 'votable', gdsc driver doesn't poll and
+wait until its hw status says OFF.
 
-> +			reg = <0x01610000 0x2000>,
-> +			      <0x01612000 0x1000>,
-> +			      <0x003e5018 0x4>;
-> +			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
-> +			ports {
-Newline before ports {}.
+So use the newly introduced genpd api (dev_pm_genpd_synced_poweroff()) to
+provide a hint to the gdsc driver to poll for the hw status and use genpd
+notifier to wait from adreno gpu driver until gdsc is turned OFF.
 
-Not sure if debugging hardware should be enabled by default..
-> +				port@0 {
-> +					eud_ep: endpoint {
-> +						remote-endpoint = <&usb2_role_switch>;
-> +					};
-> +				};
-Newline between subsequent nodes.
+This series is rebased on top of linux-next (20221215) since the changes span
+multiple drivers.
 
-> +				port@1 {
-> +					eud_con: endpoint {
-> +						remote-endpoint = <&con_eud>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		eud_typec: connector {
-Non-MMIO nodes don't belong under /soc.
+[1] https://patchwork.freedesktop.org/series/107507/
 
-> +			compatible = "usb-c-connector";
-Newline between properties and subnode.
+Changes in v5:
+- Capture all Reviewed-by tags
 
+Changes in v4:
+- Update genpd function documentation (Ulf)
 
-> +			ports {
-> +				port@0 {
-> +					con_eud: endpoint {
-> +						remote-endpoint = <&eud_con>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
->  		usb_hsphy: phy@1613000 {
->  			compatible = "qcom,sm6115-qusb2-phy";
->  			reg = <0x01613000 0x180>;
-> @@ -1064,6 +1095,12 @@ usb_dwc3: usb@4e00000 {
->  				snps,has-lpm-erratum;
->  				snps,hird-threshold = /bits/ 8 <0x10>;
->  				snps,usb3_lpm_capable;
-> +				usb-role-switch;
-Same here.
+Changes in v3:
+- Rename the var 'force_sync' to 'wait (Stephen)
 
-On a note, this commit + driver-side changes give me a:
+Changes in v2:
+- Minor formatting fix
+- Select PM_GENERIC_DOMAINS from Kconfig
 
-1610000.eud     qcom_eud: failed to get role switch
+Akhil P Oommen (4):
+  clk: qcom: gdsc: Support 'synced_poweroff' genpd flag
+  drm/msm/a6xx: Vote for cx gdsc from gpu driver
+  drm/msm/a6xx: Remove cx gdsc polling using 'reset'
+  drm/msm/a6xx: Use genpd notifier to ensure cx-gdsc collapse
 
-Konrad
-> +				port {
-> +					usb2_role_switch: endpoint {
-> +						remote-endpoint = <&eud_ep>;
-> +					};
-> +				};
->  			};
->  		};
->  
+Ulf Hansson (1):
+  PM: domains: Allow a genpd consumer to require a synced power off
+
+ drivers/base/power/domain.c           | 26 ++++++++++++++++++++
+ drivers/clk/qcom/gdsc.c               | 11 +++++----
+ drivers/gpu/drm/msm/Kconfig           |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 46 ++++++++++++++++++++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  7 ++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 13 +++++++---
+ drivers/gpu/drm/msm/msm_gpu.c         |  4 ---
+ drivers/gpu/drm/msm/msm_gpu.h         |  4 ---
+ include/linux/pm_domain.h             |  5 ++++
+ 9 files changed, 97 insertions(+), 20 deletions(-)
+
+-- 
+2.7.4
+
