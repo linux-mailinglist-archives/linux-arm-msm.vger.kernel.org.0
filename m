@@ -2,63 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EC0665B5C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:17:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3479165B5C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:20:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236217AbjABRRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 12:17:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60460 "EHLO
+        id S232796AbjABRUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 12:20:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236249AbjABRRQ (ORCPT
+        with ESMTP id S232185AbjABRUa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 12:17:16 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6308BC1D;
-        Mon,  2 Jan 2023 09:17:15 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 2AF5DCE0F68;
-        Mon,  2 Jan 2023 17:17:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324FAC433EF;
-        Mon,  2 Jan 2023 17:17:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672679832;
-        bh=/eTZJkiq9bKPRQHnxXWMxz+r5NOSTNj4GpY73M58HFU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HMj9iNgwpqjSHkDndP5Md8kEvg2a8BpHkjIbwUk1L/+kWAc2jaaMvCaPFdStFrR19
-         YnXhG/Jki4aSWbyUhS5R6vieKdR4np/BsfqmkfSaIv1aBXm9awCzurinTzauhZa7E/
-         nvVW7RJa6F8TnrZ+jBFJtbfQyluJn1Zu65zMshQVKI7WbznB8pFIIB08wMAhSTDYtf
-         3fFvgSDlG9CnVfPy1r30d2mrwYTjHaeWmcCk1AeD84fP8W63nLbpODVAl+szh0j7zt
-         f70XykF4CZ09zJo61UUWDb0FtOV95Ldi5DdU0kTsjsKurqVgzPCdCmXWZuYCON3Qqj
-         ww54x+HO6UYYA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pCORF-00012T-Hc; Mon, 02 Jan 2023 18:17:29 +0100
-Date:   Mon, 2 Jan 2023 18:17:29 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Mon, 2 Jan 2023 12:20:30 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9D0AE53
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 09:20:28 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id u12so25848778ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 09:20:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HhiywSazON54Mhvv4AES789lmzGPYER5DTGViA52XI8=;
+        b=FEpL3u3qwAlN7fWGm5sJBqEAKdxHd2FQkJYWzzpBh6ZKNdCwTPtqyxVEuav46RVfIv
+         t1NnwkYn0D7n1RNHKp9K40+R6jnJBTtlMTrm1KkJfIEBK+N7nlsgkdT8dmb3IcinLZUC
+         wLL6meYssFfoSgIbzV732v2ymNy6mQBmxgp4znPeQPBBPdTC/mWhXM5H1iOSZSWyT6HH
+         u6TpgtSoPC1v/xbHgMjCNtGfz/TvJEU4X9ZF4DQCC4Tlmcg5cMJf7DLVQi4AUBEOM6vZ
+         VPxcOddov9gmd7o4hzjWiyYpI0dGZMwj1qPotMLz5tUN6d84zC7mUSmfdNRNZxqL/io4
+         BxxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HhiywSazON54Mhvv4AES789lmzGPYER5DTGViA52XI8=;
+        b=3Mbt8vB0VpcTOkDuTOJhSPIWMaN/LZn1RawFeMkIKGc6/NYPExCwv+RnB0fcdiuIrY
+         xvFJ6XX4tVa0gd0MrsIz8zDKNPwgxI+oYYS8KlGlm/x1BLnmcvwTNNIEe+xbepXL5zeZ
+         GmfHNi4NsHnafsm9RlbFFgXtOz3LUlqjpm/7D3nQjOW2x+SXFx1vo8heaqf3IoUcqkDk
+         xz6yy1GMAvJ72+l80Ocls5H0yDnX1922pYewrk4N07jm7wK9UpMgEe1PBnbU4CHcQViz
+         s420ku3WPZY+uGSZvUeoCjL5eI4MemtuomLAbVtWv4Wk9KeUnr8LoK1ETq2FffKNQOCY
+         e+7g==
+X-Gm-Message-State: AFqh2kphKs7ZcTGZ3Tqi112IgbY5StrDcm6LfM2jHfcGMGbcR8onD++2
+        zO20XDXm9qTNJK3PCwJidOIlJw==
+X-Google-Smtp-Source: AMrXdXvfUnc+NWPdVOY3n0YcrYO0gHwfUQiG6a3yeb18y/WILz9N2ccXaFoTrsmBow/StcZQYXjHaw==
+X-Received: by 2002:a2e:be04:0:b0:279:e2cd:9ad7 with SMTP id z4-20020a2ebe04000000b00279e2cd9ad7mr13925532ljq.0.1672680027140;
+        Mon, 02 Jan 2023 09:20:27 -0800 (PST)
+Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id 17-20020a2eb951000000b002777a07f48esm3306723ljs.12.2023.01.02.09.20.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jan 2023 09:20:26 -0800 (PST)
+Message-ID: <2fc23a4c-baf0-0b31-b55c-8795cf089f57@linaro.org>
+Date:   Mon, 2 Jan 2023 18:20:25 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: sc8280xp: disable sound nodes
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sc8280xp: disable sound nodes
-Message-ID: <Y7MRqbYWY3Qlyc8+@hovoldconsulting.com>
 References: <20230102105038.8074-1-johan+linaro@kernel.org>
  <20230102105038.8074-3-johan+linaro@kernel.org>
  <82ac16e1-6c8a-b050-d627-535b4562a422@linaro.org>
  <Y7L1HkPRwzuliUjR@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y7L1HkPRwzuliUjR@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+ <Y7MRqbYWY3Qlyc8+@hovoldconsulting.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <Y7MRqbYWY3Qlyc8+@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,40 +85,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 02, 2023 at 04:15:42PM +0100, Johan Hovold wrote:
-> On Mon, Jan 02, 2023 at 01:29:38PM +0100, Krzysztof Kozlowski wrote:
-> > On 02/01/2023 11:50, Johan Hovold wrote:
-> > > The sound nodes in the SoC dtsi should be disabled by default.
-> > > 
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
-> > >  1 file changed, 16 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > index ed1e2bee86ee..c1ce2d7b3675 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > @@ -1733,6 +1733,8 @@ rxmacro: rxmacro@3200000 {
-> > >  
-> > >  			pinctrl-names = "default";
-> > >  			pinctrl-0 = <&rx_swr_default>;
-> > > +
-> > > +			status = "disabled";
-> > 
-> > There is no reason this should be disabled by default. No external (per
-> > board) configuration is needed and by default SoC components should be
-> > enabled if they do not need anything from the board.
+
+
+On 2.01.2023 18:17, Johan Hovold wrote:
+> On Mon, Jan 02, 2023 at 04:15:42PM +0100, Johan Hovold wrote:
+>> On Mon, Jan 02, 2023 at 01:29:38PM +0100, Krzysztof Kozlowski wrote:
+>>> On 02/01/2023 11:50, Johan Hovold wrote:
+>>>> The sound nodes in the SoC dtsi should be disabled by default.
+>>>>
+>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
+>>>>  1 file changed, 16 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>> index ed1e2bee86ee..c1ce2d7b3675 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>> @@ -1733,6 +1733,8 @@ rxmacro: rxmacro@3200000 {
+>>>>  
+>>>>  			pinctrl-names = "default";
+>>>>  			pinctrl-0 = <&rx_swr_default>;
+>>>> +
+>>>> +			status = "disabled";
+>>>
+>>> There is no reason this should be disabled by default. No external (per
+>>> board) configuration is needed and by default SoC components should be
+>>> enabled if they do not need anything from the board.
+>>
+>> This node is one of the nodes for which driver support is not yet in
+>> place so that's one reason for at least disabling it temporarily.
+>>
+>> Since all other pinconfig lives in the board dts, if we decide to move
+>> also the sound pinconfig then then that may be a second.
 > 
-> This node is one of the nodes for which driver support is not yet in
-> place so that's one reason for at least disabling it temporarily.
+> Also note that these depend on q6prmcc which is in turn depends on
+> remoteproc_adsp being enabled by the x13s dts.
 > 
-> Since all other pinconfig lives in the board dts, if we decide to move
-> also the sound pinconfig then then that may be a second.
+> So keeping them disabled by default seems justified.
+This I agree with, having sound-related nodes enabled by default
+results in a big chunk of "deferred probe pending" spam when you
+boot with adsp disabled (for example when you don't have fw for
+your board in your rootfs)..
 
-Also note that these depend on q6prmcc which is in turn depends on
-remoteproc_adsp being enabled by the x13s dts.
-
-So keeping them disabled by default seems justified.
-
-Johan
+Konrad
+> 
+> Johan
