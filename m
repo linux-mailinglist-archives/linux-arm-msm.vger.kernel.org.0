@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8D4F65B060
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:16:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA6F465B065
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 12:17:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbjABLP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 06:15:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40510 "EHLO
+        id S232603AbjABLRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 06:17:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbjABLPy (ORCPT
+        with ESMTP id S232499AbjABLQv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:15:54 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C194C44
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:15:53 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id p2so13203655ljn.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:15:53 -0800 (PST)
+        Mon, 2 Jan 2023 06:16:51 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BA71028
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 03:16:48 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id z26so41177372lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 03:16:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yh/CwGy+ykyw5/odWrqqFD1ozv3E0j8ssCuCBrxKXQY=;
-        b=y6vONfLp3LSHnE58z2ybdyZnBEUmRKmHExkYn9TqwRM6P1xJN+CuiJK7Vx8l/D9wov
-         M4OeFglLC+JdRpX2dxSWWefBIJ5dm/Byzv3eVGnSD9U52uTIdDL6csXJ9ava42jOHhua
-         zRrsB8aD37i2clJLOBt3hKEJPw+SHA5tqU9vUqT7BesoJd1TBLVrNebu0lOxwWCMqfOB
-         hLLbu+h+LRNY1llZ1q2B8AcK80D4GjLzQMaEuSM9EicFXEKySdKhET8OHJuWmsLlyO6y
-         u/TVdm34X9/DjYiqG5Z5OCMxHEG1oU+HfVHNZ2hVd82tZTXbD7yUXASBLMliTws14Eg+
-         L7MA==
+        bh=2nNJE27UFSVYT9QWUr/Yq5NlT4xBOUzY+RpF8vfGt8A=;
+        b=cDQZkz4VTKIlJmwOou1MCRvVmgzEIx2pBw3qLRzPt7fdy6IfqZV6mJY6m6vh+e4TBL
+         LyTRWFdnLggNV+8niQYxlw19NCfGzDSy0+lfeuQF6U1AkoIvExpUJR1A4zBqsmWXgp2N
+         UqR60JMePi4rd3LjwL+h6mKDX2zX6WI5TQOpPvSgs3WY9RPKwLxWDw36XzR7FbBCYpdn
+         LDhC3nw4nZ+4OtDHMfU4c28CoTNQM73dvgoyrVhIB2ABH4ABYAzKtfLKOCsFWvvxUMn0
+         hFhagDP4OFQ2CqpIkraJGzy/YIVWkr70qo3N3tMMIJ2bH+/rI0o0OecHNeIJ+FGe3Ko2
+         c/SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yh/CwGy+ykyw5/odWrqqFD1ozv3E0j8ssCuCBrxKXQY=;
-        b=RQSo4Jtn3+sBpo1ma4kvIUHkvFGqfS6/jjOjBXi9LmJXCiq+CwRqJrpPGmgVriTuZo
-         8KMw7tKLnuMpo9u/nIft5AW5nmaFlSEhuZkwW7gWvFta7uP1ywdeckJuBF7QX8Bb9xUZ
-         tiAdrwE2/37ArqOD8X96v801mFZflYWEZldsnl3h3XRZ3q2oNl027MJqLWWTNdHOPcf2
-         479dd/uz9KXenQ3PQwVS7x2uquJ7wPwKjivJwST8ivwEwCWmMytwKzD2jD8Xj8fffCHM
-         EK6e2XFIdiFU9ZquZ/CmAij0qFTrH6uZVlnxjOJc51d0io2FJhZB2klKl0oxXzSxcXC7
-         6l4g==
-X-Gm-Message-State: AFqh2kqHsqj3dW4R4RtQEbzcM31aPsMFr9CCbbHbsYUnUUzh4RU8UyH5
-        OHig1e5bXN6/9x6Bdch7yAyFd3cSoAXAFdFg
-X-Google-Smtp-Source: AMrXdXswnzcEl6Dv0ei17hEqjia6KuCWFl3+7b4U828dXClSFvAFyTsYb9HOaQjAYVu2l6jLyjULQw==
-X-Received: by 2002:a05:651c:2c2:b0:27f:c8aa:f839 with SMTP id f2-20020a05651c02c200b0027fc8aaf839mr6430625ljo.40.1672658151752;
-        Mon, 02 Jan 2023 03:15:51 -0800 (PST)
+        bh=2nNJE27UFSVYT9QWUr/Yq5NlT4xBOUzY+RpF8vfGt8A=;
+        b=yFyBeTL+QA8vpBlWtkIKeUiu6+K/2+aVNuejNQGKJocwqfAFLajglA3qVJaQ5s28PU
+         olzopGAnd0jq9+3k7x9wiih8kqhW9pxyyggvLDmPXXyzeLD0M7pjzPeTYBdG83ZW6kXd
+         Hj+K/ZT0UzSRpRtnkJK8UP0s+YBbCfmPy2vPx3U1IDbgDW3zThDgfg37Ni4HP8mrnEBZ
+         UgzZhrNH8byyxOcKhIBIubD0BJAXYY6BKUyJ37Fu0KXJQr4AguB1HJVmL2mSccXV0FpO
+         /lp3phfV7P3RwwdJAzvLS+ElR4L4VUjFiF3T5LQ0lWAx/T66RIV0CgEbNt2bu3heSn7M
+         Msfw==
+X-Gm-Message-State: AFqh2kqlyhpiv9yQj8/e9PEEWGzw92qQfMsF5KD8jwP86h/3R7Jer3uJ
+        hL9U2Au70yQTY/CgETNchPHtRg==
+X-Google-Smtp-Source: AMrXdXsARwZ2D/GSWiU2/jf4ewnDCZQzLd6Fiplz47PEFhPkmSRKSpUlvvtWuVosNN8AMowDnjYjeg==
+X-Received: by 2002:a05:6512:2284:b0:4b5:634f:9b93 with SMTP id f4-20020a056512228400b004b5634f9b93mr13244402lfu.18.1672658206598;
+        Mon, 02 Jan 2023 03:16:46 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id q9-20020ac25109000000b004cb147c1056sm1810862lfb.94.2023.01.02.03.15.50
+        by smtp.gmail.com with ESMTPSA id o17-20020ac24351000000b0048a934168c0sm4430166lfl.35.2023.01.02.03.16.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 03:15:51 -0800 (PST)
-Message-ID: <77bd335a-1989-2d5f-d480-d388e141ec91@linaro.org>
-Date:   Mon, 2 Jan 2023 12:15:50 +0100
+        Mon, 02 Jan 2023 03:16:46 -0800 (PST)
+Message-ID: <6447bb2f-0ef1-a8a8-4b94-875e16954ca6@linaro.org>
+Date:   Mon, 2 Jan 2023 12:16:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: sm8250-mtp: fix wcd938x codec node
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450-hdk: fix wcd938x codec node
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
@@ -65,9 +65,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-6-johan+linaro@kernel.org>
+ <20230102105038.8074-7-johan+linaro@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230102105038.8074-6-johan+linaro@kernel.org>
+In-Reply-To: <20230102105038.8074-7-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,30 +89,27 @@ On 2.01.2023 11:50, Johan Hovold wrote:
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
-Could you rename it to audio-codec and separate/sort the properties
-like you did for x13s?
+Third patch concerning the audio codec and third different
+order of properties :/ Please consolidate that.
 
 Konrad
-
->  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 40 ++++++++++++-------------
->  1 file changed, 19 insertions(+), 21 deletions(-)
+>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 52 ++++++++++++-------------
+>  1 file changed, 25 insertions(+), 27 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> index 3ed8c84e25b8..ea43dbdc3671 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> @@ -23,6 +23,25 @@ aliases {
->  		serial0 = &uart12;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> index 4de3e1f1c39c..217b2c654745 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> @@ -17,6 +17,31 @@ aliases {
+>  		serial0 = &uart7;
 >  	};
 >  
 > +	wcd938x: codec {
 > +		compatible = "qcom,wcd9380-codec";
-> +		#sound-dai-cells = <1>;
-> +		reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
-> +		vdd-buck-supply = <&vreg_s4a_1p8>;
-> +		vdd-rxtx-supply = <&vreg_s4a_1p8>;
-> +		vdd-io-supply = <&vreg_s4a_1p8>;
-> +		vdd-mic-bias-supply = <&vreg_bob>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&wcd_default>;
+> +
 > +		qcom,micbias1-microvolt = <1800000>;
 > +		qcom,micbias2-microvolt = <1800000>;
 > +		qcom,micbias3-microvolt = <1800000>;
@@ -122,24 +119,30 @@ Konrad
 > +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
 > +		qcom,rx-device = <&wcd_rx>;
 > +		qcom,tx-device = <&wcd_tx>;
+> +
+> +		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
+> +		#sound-dai-cells = <1>;
+> +
+> +		vdd-buck-supply = <&vreg_s10b_1p8>;
+> +		vdd-rxtx-supply = <&vreg_s10b_1p8>;
+> +		vdd-io-supply = <&vreg_s10b_1p8>;
+> +		vdd-mic-bias-supply = <&vreg_bob>;
 > +	};
 > +
 >  	chosen {
 >  		stdout-path = "serial0:115200n8";
 >  	};
-> @@ -631,27 +650,6 @@ &slpi {
->  	firmware-name = "qcom/sm8250/slpi.mbn";
+> @@ -407,33 +432,6 @@ &sdhc_2 {
+>  	status = "okay";
 >  };
 >  
 > -&soc {
 > -	wcd938x: codec {
 > -		compatible = "qcom,wcd9380-codec";
-> -		#sound-dai-cells = <1>;
-> -		reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
-> -		vdd-buck-supply = <&vreg_s4a_1p8>;
-> -		vdd-rxtx-supply = <&vreg_s4a_1p8>;
-> -		vdd-io-supply = <&vreg_s4a_1p8>;
-> -		vdd-mic-bias-supply = <&vreg_bob>;
+> -
+> -		pinctrl-names = "default";
+> -		pinctrl-0 = <&wcd_default>;
+> -
 > -		qcom,micbias1-microvolt = <1800000>;
 > -		qcom,micbias2-microvolt = <1800000>;
 > -		qcom,micbias3-microvolt = <1800000>;
@@ -149,9 +152,17 @@ Konrad
 > -		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
 > -		qcom,rx-device = <&wcd_rx>;
 > -		qcom,tx-device = <&wcd_tx>;
+> -
+> -		reset-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
+> -		#sound-dai-cells = <1>;
+> -
+> -		vdd-buck-supply = <&vreg_s10b_1p8>;
+> -		vdd-rxtx-supply = <&vreg_s10b_1p8>;
+> -		vdd-io-supply = <&vreg_s10b_1p8>;
+> -		vdd-mic-bias-supply = <&vreg_bob>;
 > -	};
 > -};
 > -
 >  &sound {
->  	compatible = "qcom,sm8250-sndcard";
->  	model = "SM8250-MTP-WCD9380-WSA8810-VA-DMIC";
+>  	compatible = "qcom,sm8450-sndcard";
+>  	model = "SM8450-HDK";
