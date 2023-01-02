@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4814165B5A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:10:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E91365B5AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:12:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236108AbjABRKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 12:10:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54980 "EHLO
+        id S232827AbjABRLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 12:11:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236643AbjABRKY (ORCPT
+        with ESMTP id S236602AbjABRLH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 12:10:24 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F810BC07
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 09:10:22 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id 60-20020a17090a0fc200b002264ebad204so7057452pjz.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 09:10:22 -0800 (PST)
+        Mon, 2 Jan 2023 12:11:07 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2F05F9F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 09:11:01 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id n8so18592970oih.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 09:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r9oz15QNNm81zokVTxgMCrGaFEQ0wDDWXatzQ1zjom0=;
-        b=oS1/FN4NZ+sjYZAo7wURUFJYZDgkDpAtxxwoN6oEMhdFdT7/aNZ/A5BAfE50EexvKH
-         KQuW6dCNo/SwfYqNlLHRHw4YzraEYwUlcJ2K+NAC32evuUig6RANl2prDDcuQMrNXpF4
-         8VBcOkvAqjld8+R0gWnpICAo0cGEpbmV9rTU7MGc+mcKAHKIYoJsmv4m62ksUCsk3i6Y
-         nSLIR5Y3vkub9XD4Tdu7/uBghJrMMCoqgS8r+9bc8Qz24+PIkY8hojdWlTp/xBTlr6d4
-         SOYNPRdsudruoBo9ld7piEmNUymoVAHMV0RbQF5RAB5GKGQoEruxDsMq+x3cMosgUg6X
-         4THw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fkrlTW01QZiW+rfRh4HCDBkrk4FHHNPvdhykJiEQI9E=;
+        b=PSrfo52rXafgrME6wfouzPUZakPSi4zMi0esKLyfcUTdw3ZaLwczE7cqwq4+MAKDTp
+         OPl7k/UcH/KvwiuB2Ijya3ZTt/RKJkdMX+lFk1LSSQFO/zSpVva0jt/XMT+DFhJyXmtv
+         Dlg+29EtE39mSsu0+YR5gcVXPIgrI3oD6ZWMXHSW6Ja0FiNjgFuWd/WMvpBPRYm+Y2/M
+         58YQCvE3Lxv7wYTUSWuWAcFMnMtr18bpUR8C+elEZ83RfcTyOs+rzRY011f1EPN5s+pi
+         XWz0wLru8QmRF8N+6vF7Vn/3sS3eBC51zuFFPivBzOGyGSRasKOasO1UrkShD5TdzviP
+         m9HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9oz15QNNm81zokVTxgMCrGaFEQ0wDDWXatzQ1zjom0=;
-        b=t/NyyrqPjNG1dvstkbWmEsWtGtfWC2GhGDkeanmJBdtxwSaQCOei063UtNhPub2EZ5
-         owu8Ztw0JzI/wMTWHqeLVUJkDl9t0VNOSuP343dZFjG0YQnePewgSgbhqn80oy8rvz8h
-         YxbBN0h46+AKjlkc4996gw4G2iO3ptjwHHmbUEOLafzMmgvPzmvgYUCm+1Dfu63MNOXf
-         pQdT3m+zUwOnCFQY3TnSeFKCpoFdgafsSpNgFPgDKOidpMDAviIuqbAyFQjPV6c2zCXi
-         GI8XeaRtm66iIIIafOxjDrRBThcX0lvE5GC8+AnddzRNgJf4vFfqDPcMA0ikZqriJ92+
-         FjuA==
-X-Gm-Message-State: AFqh2kpyYGhF6H5bmk81RhbrWANM66wWVms7K3ImkhBU841MXv0vkwoz
-        lmDXsCsCwRrrzNBA033jOFpAhcwvYfNk3OOKZLc=
-X-Google-Smtp-Source: AMrXdXsyGQdA4ODoCF4RIBgtXj/wtPu77paoDFpGnXa8kMpf0OLyu42uDilhg3RA6/pxgTBf72a1UA==
-X-Received: by 2002:a17:903:451:b0:192:820d:d1 with SMTP id iw17-20020a170903045100b00192820d00d1mr30338778plb.25.1672679421704;
-        Mon, 02 Jan 2023 09:10:21 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c5e:e3b5:c341:16de:ce17:b857? ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
-        by smtp.gmail.com with ESMTPSA id r10-20020a170902c60a00b001811a197797sm20545505plr.194.2023.01.02.09.10.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 09:10:21 -0800 (PST)
-Message-ID: <cc8c5677-f2ea-c134-6539-0412ccff6bc7@linaro.org>
-Date:   Mon, 2 Jan 2023 22:40:16 +0530
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fkrlTW01QZiW+rfRh4HCDBkrk4FHHNPvdhykJiEQI9E=;
+        b=IZF2GDDnpz42enLl+hCQUtJu7y02kRmlvxS4jyApOkojd8gsgPPJcRKsVVTrnwzXA4
+         3o/0BQlso7F0/DZ3C2BTp9alf6YiDgYy+K0huj3kni2H1xOVQd8Ywy9zLAzdQoiT3Ntd
+         g7hmLhXh67s0F4FIEsYq87PPXSbsDZnBZT7TLD6q2vXoc588YMJxtZlIzghw431BPdwO
+         nTHlI+aAje+g5jJIvHDEEbXXN/BgQaJW42fsPfV+KL6Wm4XY5H7mxmD9UF9XQSHVvdM8
+         2Rmfp7KsU/QrUu2j/yZnguKdM5STOBWQ0EiYe9F+SyKGwAuc4ycVeExg4qIr2M9XmK7D
+         jDdw==
+X-Gm-Message-State: AFqh2kquJ7CQbMtDQ4AIa4/vNNKfV8lINuX/evQZ3g2syXkFUpt7bgkM
+        WjAXpCreAEQ9QcSBdyZbcKVm4LrnVtNUtEO7I8S/zw==
+X-Google-Smtp-Source: AMrXdXudAWzRSkReGXrlA2k8y1GjMgzJ0Sqz2gL9E0bvitUpLzt30zx7sw5KpOjYmAMpIKholY97galZNRmQhhE4MY4=
+X-Received: by 2002:a05:6808:3090:b0:35e:5a1b:825c with SMTP id
+ bl16-20020a056808309000b0035e5a1b825cmr2536418oib.155.1672679460249; Mon, 02
+ Jan 2023 09:11:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3
- connector
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-References: <20221231131945.3286639-1-bhupesh.sharma@linaro.org>
- <514482a4-614c-d6b8-ec7c-0e69fff72295@linaro.org>
- <016e9b47-35b4-2110-bbef-ddfd0abc6a8d@linaro.org>
- <abbaa799-c7a9-e4cd-cd81-3cf3f0d83110@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <abbaa799-c7a9-e4cd-cd81-3cf3f0d83110@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20221230153554.105856-1-robert.foss@linaro.org>
+ <20221230153554.105856-9-robert.foss@linaro.org> <deb17787-1a5a-89a3-3ecf-7690b4149f5c@linaro.org>
+In-Reply-To: <deb17787-1a5a-89a3-3ecf-7690b4149f5c@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 2 Jan 2023 18:10:49 +0100
+Message-ID: <CAG3jFysU84LRcqQOspub+9vtsP3syiksrGX6D7i3ff+X6+mbTA@mail.gmail.com>
+Subject: Re: [PATCH v4 08/11] arm64: dts: qcom: sm8350: Use 2 interconnect cells
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        quic_jesszhan@quicinc.com,
+        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
+        vkoul@kernel.org, a39.skl@gmail.com, quic_khsieh@quicinc.com,
+        quic_vpolimer@quicinc.com, swboyd@chromium.org,
+        dianders@chromium.org, liushixin2@huawei.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
+        vinod.koul@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,126 +80,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 30 Dec 2022 at 17:12, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 30/12/2022 16:35, Robert Foss wrote:
+> > Use two interconnect cells in order to optionally
+> > support a path tag.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 ++++++++++++++--------------
+> >  1 file changed, 14 insertions(+), 14 deletions(-)
+> >
+>
+> I think you need to rebase to include:
+> https://lore.kernel.org/all/167233461761.1099840.5517525898039031248.b4-ty@kernel.org/
 
+Ah, I see. Functionally I seemed to do fine without those commits.
 
-On 1/2/23 10:33 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 2.01.2023 17:54, Bhupesh Sharma wrote:
->>
->> On 1/2/23 4:16 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 31.12.2022 14:19, Bhupesh Sharma wrote:
->>>> Add the Embedded USB Debugger(EUD) device tree node for
->>>> SM6115 / SM4250 SoC.
->>>>
->>>> The node contains EUD base register region and EUD mode
->>>> manager register regions along with the interrupt entry.
->>>>
->>>> Also add the typec connector node for EUD which is attached to
->>>> EUD node via port. EUD is also attached to DWC3 node via port.
->>>>
->>>> Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>>> ---
->>>> - This patch is based on my earlier sm6115 usb related changes, which can
->>>>     be seen here:
->>>>     https://lore.kernel.org/linux-arm-msm/20221215094532.589291-1-bhupesh.sharma@linaro.org/
->>>> - This patch is also dependent on my sm6115 eud dt-binding and driver changes
->>>>     sent earlier, which can be seen here:
->>>>     https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org/
->>>>
->>>>    arch/arm64/boot/dts/qcom/sm6115.dtsi | 37 ++++++++++++++++++++++++++++
->>>>    1 file changed, 37 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> index 030763187cc3f..c775f7fdb7015 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> @@ -565,6 +565,37 @@ gcc: clock-controller@1400000 {
->>>>                #power-domain-cells = <1>;
->>>>            };
->>>>    +        eud: eud@1610000 {
->>>> +            compatible = "qcom,sm6115-eud","qcom,eud";
->>> Missing space between entries.
->>>
->>>> +            reg = <0x01610000 0x2000>,
->>>> +                  <0x01612000 0x1000>,
->>>> +                  <0x003e5018 0x4>;
->>>> +            interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
->>>> +            ports {
->>> Newline before ports {}.
->>>
->>> Not sure if debugging hardware should be enabled by default..
->>>> +                port@0 {
->>>> +                    eud_ep: endpoint {
->>>> +                        remote-endpoint = <&usb2_role_switch>;
->>>> +                    };
->>>> +                };
->>> Newline between subsequent nodes.
->>>
->>>> +                port@1 {
->>>> +                    eud_con: endpoint {
->>>> +                        remote-endpoint = <&con_eud>;
->>>> +                    };
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +
->>>> +        eud_typec: connector {
->>> Non-MMIO nodes don't belong under /soc.
->>>
->>>> +            compatible = "usb-c-connector";
->>> Newline between properties and subnode.
->>>
->>>
->>>> +            ports {
->>>> +                port@0 {
->>>> +                    con_eud: endpoint {
->>>> +                        remote-endpoint = <&eud_con>;
->>>> +                    };
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +
->>>>            usb_hsphy: phy@1613000 {
->>>>                compatible = "qcom,sm6115-qusb2-phy";
->>>>                reg = <0x01613000 0x180>;
->>>> @@ -1064,6 +1095,12 @@ usb_dwc3: usb@4e00000 {
->>>>                    snps,has-lpm-erratum;
->>>>                    snps,hird-threshold = /bits/ 8 <0x10>;
->>>>                    snps,usb3_lpm_capable;
->>>> +                usb-role-switch;
->>> Same here.
->>
->> For all the above points, the format is same as suggested in [1] and already used in existing dts [2].
->>
->> [1]. https://www.kernel.org/doc/Documentation/devicetree/bindings/soc/qcom/qcom%2Ceud.yaml
->> [2]. https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7280.dtsi#L3587
-> The fact that it's landed does not necessarily imply it's 100% correct..
-> That one seems to have slipped through review and could use some fixing up.
+>
+> On which tree/revision did you base this?
 
-Fair enough. I will send a v2 with fixes for existing yaml documentation 
-and dts files.
+msm/drm-msm-display-for-6.2
 
->>> On a note, this commit + driver-side changes give me a:
->>>
->>> 1610000.eud     qcom_eud: failed to get role switch
->>
->> You need to set dr_mode = "otg", for 'usb_dwc3' to make the role switch work.
-> Thanks, couldn't find that anywhere. This however kicks me into EDL,
-> so that's one more reason to disable it by default.
-
-Ok. BTW it works fine on my sm6115 based board, but I agree it can be 
-left as disabled by default for now.
-
-Thanks.
->>>> +                port {
->>>> +                    usb2_role_switch: endpoint {
->>>> +                        remote-endpoint = <&eud_ep>;
->>>> +                    };
->>>> +                };
->>>>                };
->>>>            };
->>>>    
+>
+> Best regards,
+> Krzysztof
+>
