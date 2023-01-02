@@ -2,229 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB39865AFDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:50:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8719565AFE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 11:51:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232506AbjABKtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 05:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
+        id S232684AbjABKvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 05:51:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232490AbjABKtn (ORCPT
+        with ESMTP id S232626AbjABKvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 05:49:43 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963CFB87;
-        Mon,  2 Jan 2023 02:49:42 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 302AG7PT028684;
-        Mon, 2 Jan 2023 10:49:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=vP4cwRcWki3cMWzaww8+zSXXB5DIbu/Yv3Swnz6JckQ=;
- b=icnaEWB+Eldb29GhObMhfkpRDc/saV9xSGYAOzOXr4PnChCf7/ARncsIrUMcNBGrmY9z
- BVQt8oDLGPcZ5m+MceDKFjg+u068DvwvD26O8l6B0WjtZluh66iQvIi7eO8+sGFJFlFj
- o7r500e04f7I94Z71/gsepHeR060tR7SDrswSrloJUCkxx1MlTSe0UrUL/Cqz1jlIYgW
- LS2C5JFE/fxrMTb9oBfuTI3wJiujrE8gOV32Nb6vLTXICqlcsLXg+An0mP3MnNulb9CI
- jBYt4GBGSWWNu8srcIr2F5qjQPHpyYuTkDGztF0eAkn4dbyFnZmTwv7W2YYbFeSxKo++ Jg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mtd61avtu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 02 Jan 2023 10:49:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 302AnIBl007505
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 2 Jan 2023 10:49:18 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 2 Jan 2023 02:49:12 -0800
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 5/5] drm/msm/a6xx: Use genpd notifier to ensure cx-gdsc collapse
-Date:   Mon, 2 Jan 2023 16:18:31 +0530
-Message-ID: <20230102161757.v5.5.I9e10545c6a448d5eb1b734839b871d1b3146dac3@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1672656511-1931-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1672656511-1931-1-git-send-email-quic_akhilpo@quicinc.com>
+        Mon, 2 Jan 2023 05:51:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD6062EC;
+        Mon,  2 Jan 2023 02:50:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 05FA360ECA;
+        Mon,  2 Jan 2023 10:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B886C433F1;
+        Mon,  2 Jan 2023 10:50:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672656651;
+        bh=yGI5iSphXYrpFU5loWTxWRokLwgsxQu/6JAkUvh34PU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hYIqk8TZJJO/0wy1j2QwUfJf6OUr5w2y83+3+RzjpR7+sSGtUvn5Y/4kEcPOSHZxs
+         aHsVU0nWprWPKgVvVhrDvJmMGVVK8odvpal8sbB1yyiyGAtEhiPyZX3RDcF9yAYdIl
+         TWf+cpq+xgQ3i9NHNGQKa3ONjsq5tJezPY5Cd2nBht+4xxvD43BJy+JbMry4HUiCk6
+         b929EhSzAZJuxOIrPceDC1BvMMHvwuPv7TiS+GhX0L3l9ajZUUVzpugG1uoNgysclf
+         NZKPtQMtJs6o3eIchF46EyPXRL9/m7Xi6ZC9hYRZJZyMs/55tSDu1kBW7FxzXsKDYi
+         /k9YkFrs7EL1Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pCIPM-00026o-2X; Mon, 02 Jan 2023 11:51:08 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/6] arm64: dts: qcom: disable x13s sound + cleanups
+Date:   Mon,  2 Jan 2023 11:50:32 +0100
+Message-Id: <20230102105038.8074-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.4
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FnKxYPAyC9cKh-vTeEIjMl9zcOCYDZ3c
-X-Proofpoint-ORIG-GUID: FnKxYPAyC9cKh-vTeEIjMl9zcOCYDZ3c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-02_06,2022-12-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
- clxscore=1015 suspectscore=0 phishscore=0 spamscore=0 adultscore=0
- mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301020098
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per the recommended recovery sequence of adreno gpu, cx gdsc should
-collapse at hardware before it is turned back ON. This helps to clear
-out the stale states in hardware before it is reinitialized. Use the
-genpd notifier along with the newly introduced
-dev_pm_genpd_synced_poweroff() api to ensure that cx gdsc has collapsed
-before we turn it back ON.
+Apparently enabling the soundcard in the X13s devicetree was a bit
+premature so disable it for now until driver support is in place (e.g.
+to avoid probe failures during boot).
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
----
+This series also clean up the sc8280xp sound nodes somewhat, for
+example, by making sure they are disabled by default and moving the
+wcd938x node which do not belong under 'soc' to the root node. Two other
+devicetrees had the wcd938x node under 'soc' and the fixes are also
+included here.
 
-(no changes since v2)
+Johan
 
-Changes in v2:
-- Select PM_GENERIC_DOMAINS from Kconfig
 
- drivers/gpu/drm/msm/Kconfig           |  1 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 15 +++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  6 ++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
- 4 files changed, 33 insertions(+)
+Johan Hovold (6):
+  arm64: dts: qcom: sc8280xp-x13s: disable soundcard
+  arm64: dts: qcom: sc8280xp: disable sound nodes
+  arm64: dts: qcom: sc8280xp: clean up tx-macro node
+  arm64: dts: qcom: sc8280xp-x13s: fix wcd938x codec node
+  arm64: dts: qcom: sm8250-mtp: fix wcd938x codec node
+  arm64: dts: qcom: sm8450-hdk: fix wcd938x codec node
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 3c9dfdb0b328..74f5916f5ca5 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -28,6 +28,7 @@ config DRM_MSM
- 	select SYNC_FILE
- 	select PM_OPP
- 	select NVMEM
-+	select PM_GENERIC_DOMAINS
- 	help
- 	  DRM/KMS driver for MSM/snapdragon.
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 1580d0090f35..c03830957c26 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1507,6 +1507,17 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- 	gmu->initialized = false;
- }
- 
-+static int cxpd_notifier_cb(struct notifier_block *nb,
-+			unsigned long action, void *data)
-+{
-+	struct a6xx_gmu *gmu = container_of(nb, struct a6xx_gmu, pd_nb);
-+
-+	if (action == GENPD_NOTIFY_OFF)
-+		complete_all(&gmu->pd_gate);
-+
-+	return 0;
-+}
-+
- int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- {
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-@@ -1640,6 +1651,10 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 		goto detach_cxpd;
- 	}
- 
-+	init_completion(&gmu->pd_gate);
-+	complete_all(&gmu->pd_gate);
-+	gmu->pd_nb.notifier_call = cxpd_notifier_cb;
-+
- 	/*
- 	 * Get a link to the GX power domain to reset the GPU in case of GMU
- 	 * crash
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index 5a42dd4dd31f..0bc3eb443fec 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -4,8 +4,10 @@
- #ifndef _A6XX_GMU_H_
- #define _A6XX_GMU_H_
- 
-+#include <linux/completion.h>
- #include <linux/iopoll.h>
- #include <linux/interrupt.h>
-+#include <linux/notifier.h>
- #include "msm_drv.h"
- #include "a6xx_hfi.h"
- 
-@@ -90,6 +92,10 @@ struct a6xx_gmu {
- 	bool initialized;
- 	bool hung;
- 	bool legacy; /* a618 or a630 */
-+
-+	/* For power domain callback */
-+	struct notifier_block pd_nb;
-+	struct completion pd_gate;
- };
- 
- static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4b16e75dfa50..dd618b099110 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -10,6 +10,7 @@
- 
- #include <linux/bitfield.h>
- #include <linux/devfreq.h>
-+#include <linux/pm_domain.h>
- #include <linux/soc/qcom/llcc-qcom.h>
- 
- #define GPU_PAS_ID 13
-@@ -1258,6 +1259,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-+	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
- 	int i, active_submits;
- 
- 	adreno_dump_info(gpu);
-@@ -1290,6 +1292,10 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	 */
- 	gpu->active_submits = 0;
- 
-+	reinit_completion(&gmu->pd_gate);
-+	dev_pm_genpd_add_notifier(gmu->cxpd, &gmu->pd_nb);
-+	dev_pm_genpd_synced_poweroff(gmu->cxpd);
-+
- 	/* Drop the rpm refcount from active submits */
- 	if (active_submits)
- 		pm_runtime_put(&gpu->pdev->dev);
-@@ -1297,6 +1303,11 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	/* And the final one from recover worker */
- 	pm_runtime_put_sync(&gpu->pdev->dev);
- 
-+	if (!wait_for_completion_timeout(&gmu->pd_gate, msecs_to_jiffies(1000)))
-+		DRM_DEV_ERROR(&gpu->pdev->dev, "cx gdsc didn't collapse\n");
-+
-+	dev_pm_genpd_remove_notifier(gmu->cxpd);
-+
- 	pm_runtime_use_autosuspend(&gpu->pdev->dev);
- 
- 	if (active_submits)
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 62 +++++++++++--------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 18 +++++-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts       | 40 ++++++------
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts       | 52 ++++++++--------
+ 4 files changed, 96 insertions(+), 76 deletions(-)
+
 -- 
-2.7.4
+2.37.4
 
