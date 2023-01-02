@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D6CE65B477
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 16:52:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E96C65B483
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 16:58:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236194AbjABPwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 10:52:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46506 "EHLO
+        id S234025AbjABP6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 10:58:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232107AbjABPwk (ORCPT
+        with ESMTP id S229583AbjABP6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 10:52:40 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DE8D329
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 07:52:39 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id f34so42013724lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 07:52:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uIB/5bHUrZzNsC9yit8NcJgWuAABAvHpydAaIbNKh6w=;
-        b=n2pEoBXz3GS/RUK1I0VXyzBtJyBv2kqEUYb0KGV/n02XADMcUn+U9U+9t49LEeGlk9
-         fWY3e7NwYNnpWPVFUbttFjYH+OP/IwinONFnjC9sYzMuswUASugLtEVm5jOm0eXwxSxz
-         hDaeSBilAOTzVbZiVjwWruR61eQ/mHsOV/zOYQJHj+cWWTd2CFynAsmcjiu9ldjrK8qD
-         O2O7KxD9MCDa0XSD8GoVABc148fZ7w2i0FlqSU6Cj9rvrUgNjoNioZ7yUdZGwHH1HKfy
-         8Q6y24tbqPbg99UxgYgRMF4ZVRzBs0YpXWzZW6qOzbnMP3zvN/4mV0R9ufY4oZNApI5U
-         5tpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uIB/5bHUrZzNsC9yit8NcJgWuAABAvHpydAaIbNKh6w=;
-        b=ugNOvr1+iYJ6HZtHzX6DtC6Qbd5Cc6akQ6T7i9DZURu5sFA6JNrFfbmoHQk7azNN1/
-         lyXYaHGvoQJzASpi6Vosh8PN1d13FSstPkEaTEH0zUOSZbJ1vZ65hUY2FgCg7L8ydxFy
-         NO5LCstsR0GjLEG1HOzkajxPXVdp5m40o5pv82j0w1Bt5M5zwmB9c7zhBZMNt6Ml3U1S
-         KfsIGfiS65h5tSvwqlY3G/34InzVv1XCWIzda+fGtjt1zgbKkiYzTJ2z45ToMEBjYY2x
-         fw7CP1aa0J5IBSRCyfoGJN7V3Hy+PO6cNrYAI5f55k2IxYyof0BuHGV4BKQGWZOVAMw9
-         u8Bw==
-X-Gm-Message-State: AFqh2krDYT6SRCROHfMVODEMrF8TkSPXupOjZSW/1Nw2RRWXe1+Xi4XE
-        3lJaXtMOmKPBpBXensDfynNfDg==
-X-Google-Smtp-Source: AMrXdXvddvHdzrpXQdwSWx/8hQ2XjKT9aAox5/Kx1PUttalQ4jgtb007U9JOYEQ20Ke8g8BnAwgwlQ==
-X-Received: by 2002:a05:6512:3194:b0:4b0:2a2f:ea6d with SMTP id i20-20020a056512319400b004b02a2fea6dmr13769966lfe.35.1672674757361;
-        Mon, 02 Jan 2023 07:52:37 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id m28-20020a056512015c00b004b580a526c3sm4514903lfo.295.2023.01.02.07.52.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 07:52:36 -0800 (PST)
-Message-ID: <0db74f94-e385-6329-c1e6-7c94805b718f@linaro.org>
-Date:   Mon, 2 Jan 2023 17:52:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/a2xx: support loading legacy (iMX) firmware
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 2 Jan 2023 10:58:18 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C679712E;
+        Mon,  2 Jan 2023 07:58:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 558D961015;
+        Mon,  2 Jan 2023 15:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C32C433EF;
+        Mon,  2 Jan 2023 15:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672675096;
+        bh=Tn8CE4Z5S/X7P04a19+R8hhIyimSiUh/dShOcnmOjxE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hy5Vf2lgSzExLkHQsDeA5ukKGa+WhU23EmNxrouqIxoNrsPTafX+41cdtGYRSTEHN
+         ke6E9IIABzM1bCMXyIJEV1kN9jJzSzkq36Rj8H2lj14FkkrZahA6hmnEsiunTPfq6v
+         7Cp+MizPsaR7w+khhXSCHW8D9wq06B2qKR3bNdAIo78Yo4aR+Xnz+m0BY5IpFnFprH
+         36q4XrSzy8upJlTlOKlejhhdGzZiGrXP8MU9ZlStlouKHWtQgJ++Dh+XuqLjptBEnD
+         GyDyU9y+JNF1ieHDZwiVHXxlsA8EzpQx2rwtgnCJt70smP8FT8D7KNLJMiGFxj+O3+
+         xOflAH4KzbDxw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pCNCn-0008Pz-Fj; Mon, 02 Jan 2023 16:58:30 +0100
+Date:   Mon, 2 Jan 2023 16:58:29 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Jonathan Marek <jonathan@marek.ca>
-References: <20230101155753.779176-1-dmitry.baryshkov@linaro.org>
- <CAF6AEGvG9UJzvjvvfBeO6tC+APqOStAHBgeRwsuHUFSozyE8oA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAF6AEGvG9UJzvjvvfBeO6tC+APqOStAHBgeRwsuHUFSozyE8oA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sc8280xp-x13s: disable soundcard
+Message-ID: <Y7L/JbUICN0OQhaK@hovoldconsulting.com>
+References: <20230102105038.8074-1-johan+linaro@kernel.org>
+ <20230102105038.8074-2-johan+linaro@kernel.org>
+ <fc42801a-55d9-90b9-f7f0-48657ec7a373@linaro.org>
+ <Y7LzJ+RRzDNRf3jR@hovoldconsulting.com>
+ <81e3994e-49d9-ea5b-b055-cbcc737a6e37@linaro.org>
+ <Y7L3OTs/u8FsH8o2@hovoldconsulting.com>
+ <8bd6487a-3ae7-f7c1-e478-1effd68700d3@linaro.org>
+ <Y7L6t3p57uTCECRy@hovoldconsulting.com>
+ <5de95075-ca62-3cae-ce07-d263ea3aa264@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5de95075-ca62-3cae-ce07-d263ea3aa264@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,121 +71,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/01/2023 03:39, Rob Clark wrote:
-> On Sun, Jan 1, 2023 at 7:57 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> Support loading A200 firmware generated from the iMX firmware header
->> files. The firmware lacks protection support, however it allows GPU to
->> function properly while using the firmware files with clear license
->> which allows redistribution.
->>
->> Cc: Jonathan Marek <jonathan@marek.ca>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 27 +++++++++++++++++++++++----
->>   drivers/gpu/drm/msm/adreno/a2xx_gpu.h |  1 +
->>   2 files changed, 24 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> index 6c9a747eb4ad..c67089a7ebc1 100644
->> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
->> @@ -53,6 +53,8 @@ static void a2xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>
->>   static bool a2xx_me_init(struct msm_gpu *gpu)
->>   {
->> +       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> +       struct a2xx_gpu *a2xx_gpu = to_a2xx_gpu(adreno_gpu);
->>          struct msm_ringbuffer *ring = gpu->rb[0];
->>
->>          OUT_PKT3(ring, CP_ME_INIT, 18);
->> @@ -84,15 +86,20 @@ static bool a2xx_me_init(struct msm_gpu *gpu)
->>          /* NQ and External Memory Swap */
->>          OUT_RING(ring, 0x00000000);
->>          /* protected mode error checking (0x1f2 is REG_AXXX_CP_INT_CNTL) */
->> -       OUT_RING(ring, 0x200001f2);
->> +       if (a2xx_gpu->protection_disabled)
->> +               OUT_RING(ring, 0x00000000);
->> +       else
->> +               OUT_RING(ring, 0x200001f2);
->>          /* Disable header dumping and Header dump address */
->>          OUT_RING(ring, 0x00000000);
->>          /* Header dump size */
->>          OUT_RING(ring, 0x00000000);
->>
->> -       /* enable protected mode */
->> -       OUT_PKT3(ring, CP_SET_PROTECTED_MODE, 1);
->> -       OUT_RING(ring, 1);
->> +       if (!a2xx_gpu->protection_disabled) {
->> +               /* enable protected mode */
->> +               OUT_PKT3(ring, CP_SET_PROTECTED_MODE, 1);
->> +               OUT_RING(ring, 1);
->> +       }
->>
->>          adreno_flush(gpu, ring, REG_AXXX_CP_RB_WPTR);
->>          return a2xx_idle(gpu);
->> @@ -101,6 +108,7 @@ static bool a2xx_me_init(struct msm_gpu *gpu)
->>   static int a2xx_hw_init(struct msm_gpu *gpu)
->>   {
->>          struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> +       struct a2xx_gpu *a2xx_gpu = to_a2xx_gpu(adreno_gpu);
->>          dma_addr_t pt_base, tran_error;
->>          uint32_t *ptr, len;
->>          int i, ret;
->> @@ -221,6 +229,17 @@ static int a2xx_hw_init(struct msm_gpu *gpu)
->>          len = adreno_gpu->fw[ADRENO_FW_PM4]->size / 4;
->>          DBG("loading PM4 ucode version: %x", ptr[1]);
->>
->> +       /*
->> +        * New firmware files seem to have GPU and firmware version in this
->> +        * word (0x20xxxx for A200, 0x220xxx for A220, 0x225xxx for A225).
->> +        * Older firmware files, which lack protection support, have 0 instead.
->> +        */
->> +       if (ptr[1] == 0) {
+On Mon, Jan 02, 2023 at 04:46:40PM +0100, Krzysztof Kozlowski wrote:
+> On 02/01/2023 16:39, Johan Hovold wrote:
+> >>>>>>>  	wcd_tx: wcd9380-tx@0,3 {
+> >>>>>>>  		compatible = "sdw20217010d00";
+> >>>>>>> @@ -781,6 +787,8 @@ &vamacro {
+> >>>>>>>  	pinctrl-names = "default";
+> >>>>>>>  	vdd-micb-supply = <&vreg_s10b>;
+> >>>>>>>  	qcom,dmic-sample-rate = <600000>;
+> >>>>>>> +
+> >>>>>>> +	status = "disabled";
+> >>>>>>
+> >>>>>> That's a double disable.
+> >>>>>
+> >>>>> Yes, that's on purpose. We're temporarily disabling these nodes instead
+> >>>>> of reverting the series which should not have been merged.
+> >>>>
+> >>>> I don't get why disabling something twice is anyhow related to
+> >>>> "temporarily disable". One disable is enough for temporary or permanent
+> >>>> disables.
+> >>>
+> >>> It clearly shows that this was done on purpose and indicates which
+> >>> properties need to be changed to "okay" once we have actual support.
+> >>
+> >> No, it shows nothing clearly as from time to time we got duplicated
+> >> properties and it's a simply mistake. The double disable without any
+> >> comment looks like mistake, not intentional code.
+> > 
+> > It's not a mistake. It's intentional. And I don't want to spend hours on
+> > this because of someone else's cock-up.
 > 
-> I don't really have a good enough picture about all the possible fw
-> versions floating around out there, esp back to the pre-qc days, to
-> know if this is a good enough check.  But I guess we can go with it,
-> and in the worst case later add an allowlist table of fw checksums (or
-> similar) if this doesn't turn out to be sufficient, so the overall
-> approach isn't painting us into a corner.
+> To you it looks intentional, but for the reader of DTS which has
+> disabled node in DTSI and in DTS - so in two places - it looks like a
+> pure bug. Just because you know the reason behind the change does not
+> make the code readable.
+
+Calling a (temporary) redundant property a 'pure bug' seems like a bit
+of stretch, and it has nothing to do with readability.
+
+> >>>>>
+> >>>>> Once we have driver support, these properties will be updated again.
+> >>>>
+> >>>> Linux kernel is not the only consumer of DTS, thus having or not having
+> >>>> the support in the kernel is not reason to disable pieces of it.
+> >>>> Assuming the DTS is correct, of course, because maybe that's the problem?
+> >>>
+> >>> Okay, let's revert these sound dts changes then until we have support.
+> >>> We have no idea if the dts changes are correct as sound still depends
+> >>> on out-of-tree hacks.
+> >>>
+> >>> People are using -next for development and I don't want to see them
+> >>> toast their speakers because we failed get the dependencies merged
+> >>> before merging the dts changes which is how we normally do this.
+> >>
+> >> If the error is in DTS, yeah, revert or disable is a way. But if the
+> >> issue is in the incomplete or broken Linux drivers, then these should be
+> >> changed, e.g. intentionally fail probing, skip new devices, drop new
+> >> compatible etc.
+> > 
+> > And how long does it take for that to propagate and isn't the response
+> > just going go to be "well then fix the driver".
+> > 
+> > I think you're just being unreasonable here.
 > 
-> Reviewed-by: Rob Clark <robdclark@gmail.com>
-
-For the reference. I have pushed existing redistributable firmware files 
-to https://github.com/lumag/yamato-firmware.git (I can move the repo to 
-some other location, e.g. to gitlab.fdo.org/msm if that's a better place).
-
-I've also sent a patch to linux-firmware, so at some point we should be 
-able to use a200 with the default setup.
-
+> I did not propose to fix the driver. I proposed to fail the driver's
+> probe or remove the compatible from it.
 > 
->> +               dev_warn(gpu->dev->dev,
->> +                        "Legacy firmware detected, disabling protection support\n");
->> +               a2xx_gpu->protection_disabled = true;
->> +       }
->> +
->>          gpu_write(gpu, REG_AXXX_CP_DEBUG,
->>                          AXXX_CP_DEBUG_MIU_128BIT_WRITE_ENABLE);
->>          gpu_write(gpu, REG_AXXX_CP_ME_RAM_WADDR, 0);
->> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.h b/drivers/gpu/drm/msm/adreno/a2xx_gpu.h
->> index 02fba2cb8932..161a075f94af 100644
->> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.h
->> @@ -15,6 +15,7 @@
->>   struct a2xx_gpu {
->>          struct adreno_gpu base;
->>          bool pm_enabled;
->> +       bool protection_disabled;
->>   };
->>   #define to_a2xx_gpu(x) container_of(x, struct a2xx_gpu, base)
->>
->> --
->> 2.39.0
->>
+> Such change propagate the same speed as DTS change.
 
--- 
-With best wishes
-Dmitry
+But the DTS changes are in Bjorn branch and Bjorn and I discussed it and
+decided to disable them temporarily instead of reverting.
 
+Now you're asking me to figure out all the dependent driver and patch
+them individually. And this may not reach next before the DTS changes
+do.
+
+> > If Bjorn could rebase his tree, he could simply drop these for now as
+> > sound support was clearly not ready. Since that isn't the case we need
+> > to at least try to be constructive and figure out a reasonable
+> > alternative. While "Linux isn't the only consumer" is a true statement,
+> > it really is not relevant just because there are some dts changes in
+> > Bjorn's tree which should not be there.
+> 
+> The SC8280XP audio DTS looks in general correct, except some style
+> issues, redundant properties and never tested against DT bindings.
+> Therefore it looks as accurate and more-or-less correct representation
+> of the hardware, unless you have some more details on this.
+
+Only that the drivers fail to probe in multiple ways, some which may
+require updating the bindings to address. There's also an indication
+that some further driver support is needed for proper speaker
+protection. That really should be in place before we enable this.
+
+Johan
