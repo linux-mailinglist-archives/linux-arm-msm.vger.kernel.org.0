@@ -2,132 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3479165B5C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:20:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A62A365B5D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jan 2023 18:28:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232796AbjABRUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 12:20:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33304 "EHLO
+        id S234259AbjABR25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 12:28:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232185AbjABRUa (ORCPT
+        with ESMTP id S232808AbjABR2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 12:20:30 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9D0AE53
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 09:20:28 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id u12so25848778ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 09:20:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HhiywSazON54Mhvv4AES789lmzGPYER5DTGViA52XI8=;
-        b=FEpL3u3qwAlN7fWGm5sJBqEAKdxHd2FQkJYWzzpBh6ZKNdCwTPtqyxVEuav46RVfIv
-         t1NnwkYn0D7n1RNHKp9K40+R6jnJBTtlMTrm1KkJfIEBK+N7nlsgkdT8dmb3IcinLZUC
-         wLL6meYssFfoSgIbzV732v2ymNy6mQBmxgp4znPeQPBBPdTC/mWhXM5H1iOSZSWyT6HH
-         u6TpgtSoPC1v/xbHgMjCNtGfz/TvJEU4X9ZF4DQCC4Tlmcg5cMJf7DLVQi4AUBEOM6vZ
-         VPxcOddov9gmd7o4hzjWiyYpI0dGZMwj1qPotMLz5tUN6d84zC7mUSmfdNRNZxqL/io4
-         BxxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HhiywSazON54Mhvv4AES789lmzGPYER5DTGViA52XI8=;
-        b=3Mbt8vB0VpcTOkDuTOJhSPIWMaN/LZn1RawFeMkIKGc6/NYPExCwv+RnB0fcdiuIrY
-         xvFJ6XX4tVa0gd0MrsIz8zDKNPwgxI+oYYS8KlGlm/x1BLnmcvwTNNIEe+xbepXL5zeZ
-         GmfHNi4NsHnafsm9RlbFFgXtOz3LUlqjpm/7D3nQjOW2x+SXFx1vo8heaqf3IoUcqkDk
-         xz6yy1GMAvJ72+l80Ocls5H0yDnX1922pYewrk4N07jm7wK9UpMgEe1PBnbU4CHcQViz
-         s420ku3WPZY+uGSZvUeoCjL5eI4MemtuomLAbVtWv4Wk9KeUnr8LoK1ETq2FffKNQOCY
-         e+7g==
-X-Gm-Message-State: AFqh2kphKs7ZcTGZ3Tqi112IgbY5StrDcm6LfM2jHfcGMGbcR8onD++2
-        zO20XDXm9qTNJK3PCwJidOIlJw==
-X-Google-Smtp-Source: AMrXdXvfUnc+NWPdVOY3n0YcrYO0gHwfUQiG6a3yeb18y/WILz9N2ccXaFoTrsmBow/StcZQYXjHaw==
-X-Received: by 2002:a2e:be04:0:b0:279:e2cd:9ad7 with SMTP id z4-20020a2ebe04000000b00279e2cd9ad7mr13925532ljq.0.1672680027140;
-        Mon, 02 Jan 2023 09:20:27 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id 17-20020a2eb951000000b002777a07f48esm3306723ljs.12.2023.01.02.09.20.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 09:20:26 -0800 (PST)
-Message-ID: <2fc23a4c-baf0-0b31-b55c-8795cf089f57@linaro.org>
-Date:   Mon, 2 Jan 2023 18:20:25 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sc8280xp: disable sound nodes
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230102105038.8074-1-johan+linaro@kernel.org>
- <20230102105038.8074-3-johan+linaro@kernel.org>
- <82ac16e1-6c8a-b050-d627-535b4562a422@linaro.org>
- <Y7L1HkPRwzuliUjR@hovoldconsulting.com>
- <Y7MRqbYWY3Qlyc8+@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <Y7MRqbYWY3Qlyc8+@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 2 Jan 2023 12:28:42 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B30019F;
+        Mon,  2 Jan 2023 09:28:37 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id C7BE6342A7;
+        Mon,  2 Jan 2023 17:28:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1672680515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=c+p+ZHZvJLaVRQr5NTszckwP5nV6LjSTDHOD89k5qNI=;
+        b=ANkNie0iEw+MUPgAvLqNXpLtkCUzRqRfOgJpC594NUXYaDxiY0ZToLCCvayH8+/acLOskm
+        WjgRbB9mrM9lwKA6rIRi2W++cSewn6f0kr15VS9qKwvPKpl5O5EPwiARv+2ujwKx5eFeKN
+        0w6nMhR/x82e6RGCWuEETudE7Id91l4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1672680515;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=c+p+ZHZvJLaVRQr5NTszckwP5nV6LjSTDHOD89k5qNI=;
+        b=tWgOFZcqs4GLxyLAh3jp6i0EgE7JPjCDyRfptR9lzceBDEYk76L6j/PcrKE6zBOBjdSpj5
+        1KDBnaRWSnWbIVCg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6BE0513427;
+        Mon,  2 Jan 2023 17:28:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 6vZjGUMUs2ORIQAAMHmgww
+        (envelope-from <tiwai@suse.de>); Mon, 02 Jan 2023 17:28:35 +0000
+Date:   Mon, 02 Jan 2023 18:28:34 +0100
+Message-ID: <87edscsv5p.wl-tiwai@suse.de>
+From:   Takashi Iwai <tiwai@suse.de>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
+Subject: Re: [RFC PATCH 09/14] sound: usb: Introduce QC USB SND offloading support
+In-Reply-To: <20221223233200.26089-10-quic_wcheng@quicinc.com>
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+        <20221223233200.26089-10-quic_wcheng@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 24 Dec 2022 00:31:55 +0100,
+Wesley Cheng wrote:
+> 
+> Several Qualcomm SoCs have a dedicated audio DSP, which has the ability to
+> support USB sound devices.  This vendor driver will implement the required
+> handshaking with the DSP, in order to pass along required resources that
+> will be utilized by the DSP's USB SW.  The communication channel used for
+> this handshaking will be using the QMI protocol.  Required resources
+> include:
+> - Allocated secondary event ring address
+> - EP transfer ring address
+> - Interrupter number
+> 
+> The above information will allow for the audio DSP to execute USB transfers
+> over the USB bus.  It will also be able to support devices that have an
+> implicit feedback and sync endpoint as well.  Offloading these data
+> transfers will allow the main/applications processor to enter lower CPU
+> power modes, and sustain a longer duration in those modes.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+
+Hmm, this must be the main part that works to bypass the normal USB
+packet handling in USB audio driver but hooks to the own offload one,
+but there is no description how to take over and manage.
+A missing "big picture" makes it difficult to understand and review.
+
+Also, since both drivers are asynchronous, we may need some proper
+locking.
+
+More on the code change:
+
+> +static int snd_interval_refine_set(struct snd_interval *i, unsigned int val)
+> +{
+> +	struct snd_interval t;
+> +
+> +	t.empty = 0;
+> +	t.min = t.max = val;
+> +	t.openmin = t.openmax = 0;
+> +	t.integer = 1;
+> +	return snd_interval_refine(i, &t);
+> +}
+> +
+> +static int _snd_pcm_hw_param_set(struct snd_pcm_hw_params *params,
+> +				 snd_pcm_hw_param_t var, unsigned int val,
+> +				 int dir)
+> +{
+> +	int changed;
+> +
+> +	if (hw_is_mask(var)) {
+> +		struct snd_mask *m = hw_param_mask(params, var);
+> +
+> +		if (val == 0 && dir < 0) {
+> +			changed = -EINVAL;
+> +			snd_mask_none(m);
+> +		} else {
+> +			if (dir > 0)
+> +				val++;
+> +			else if (dir < 0)
+> +				val--;
+> +			changed = snd_mask_refine_set(
+> +					hw_param_mask(params, var), val);
+> +		}
+> +	} else if (hw_is_interval(var)) {
+> +		struct snd_interval *i = hw_param_interval(params, var);
+> +
+> +		if (val == 0 && dir < 0) {
+> +			changed = -EINVAL;
+> +			snd_interval_none(i);
+> +		} else if (dir == 0)
+> +			changed = snd_interval_refine_set(i, val);
+> +		else {
+> +			struct snd_interval t;
+> +
+> +			t.openmin = 1;
+> +			t.openmax = 1;
+> +			t.empty = 0;
+> +			t.integer = 0;
+> +			if (dir < 0) {
+> +				t.min = val - 1;
+> +				t.max = val;
+> +			} else {
+> +				t.min = val;
+> +				t.max = val+1;
+> +			}
+> +			changed = snd_interval_refine(i, &t);
+> +		}
+> +	} else
+> +		return -EINVAL;
+> +	if (changed) {
+> +		params->cmask |= 1 << var;
+> +		params->rmask |= 1 << var;
+> +	}
+> +	return changed;
+> +}
+
+Those are taken from sound/core/oss/pcm_oss.c?  We may put to the
+common PCM helper instead of duplication.
+
+> +static void disable_audio_stream(struct snd_usb_substream *subs)
+> +{
+> +	struct snd_usb_audio *chip = subs->stream->chip;
+> +
+> +	if (subs->data_endpoint || subs->sync_endpoint) {
+> +		close_endpoints(chip, subs);
+> +
+> +		mutex_lock(&chip->mutex);
+> +		subs->cur_audiofmt = NULL;
+> +		mutex_unlock(&chip->mutex);
+> +	}
+> +
+> +	snd_usb_autosuspend(chip);
+> +}
+> +
+> +static int enable_audio_stream(struct snd_usb_substream *subs,
+> +				snd_pcm_format_t pcm_format,
+> +				unsigned int channels, unsigned int cur_rate,
+> +				int datainterval)
+> +{
+> +	struct snd_usb_audio *chip = subs->stream->chip;
+> +	struct snd_pcm_hw_params params;
+> +	const struct audioformat *fmt;
+> +	int ret;
+> +
+> +	_snd_pcm_hw_params_any(&params);
+> +	_snd_pcm_hw_param_set(&params, SNDRV_PCM_HW_PARAM_FORMAT,
+> +			pcm_format, 0);
+> +	_snd_pcm_hw_param_set(&params, SNDRV_PCM_HW_PARAM_CHANNELS,
+> +			channels, 0);
+> +	_snd_pcm_hw_param_set(&params, SNDRV_PCM_HW_PARAM_RATE,
+> +			cur_rate, 0);
+
+What about other parameters like period / buffer sizes?
+
+> +struct qmi_uaudio_stream_req_msg_v01 {
+> +	u8 enable;
+> +	u32 usb_token;
+> +	u8 audio_format_valid;
+> +	u32 audio_format;
+> +	u8 number_of_ch_valid;
+> +	u32 number_of_ch;
+> +	u8 bit_rate_valid;
+> +	u32 bit_rate;
+> +	u8 xfer_buff_size_valid;
+> +	u32 xfer_buff_size;
+> +	u8 service_interval_valid;
+> +	u32 service_interval;
+> +};
+
+Are this and the other structs a part of DSP ABI?
+Or is it a definition only used in kernel?  I'm asking because
+__packed attribute is required for most of ABI definitions with
+different field types.
 
 
-On 2.01.2023 18:17, Johan Hovold wrote:
-> On Mon, Jan 02, 2023 at 04:15:42PM +0100, Johan Hovold wrote:
->> On Mon, Jan 02, 2023 at 01:29:38PM +0100, Krzysztof Kozlowski wrote:
->>> On 02/01/2023 11:50, Johan Hovold wrote:
->>>> The sound nodes in the SoC dtsi should be disabled by default.
->>>>
->>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
->>>>  1 file changed, 16 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>> index ed1e2bee86ee..c1ce2d7b3675 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>> @@ -1733,6 +1733,8 @@ rxmacro: rxmacro@3200000 {
->>>>  
->>>>  			pinctrl-names = "default";
->>>>  			pinctrl-0 = <&rx_swr_default>;
->>>> +
->>>> +			status = "disabled";
->>>
->>> There is no reason this should be disabled by default. No external (per
->>> board) configuration is needed and by default SoC components should be
->>> enabled if they do not need anything from the board.
->>
->> This node is one of the nodes for which driver support is not yet in
->> place so that's one reason for at least disabling it temporarily.
->>
->> Since all other pinconfig lives in the board dts, if we decide to move
->> also the sound pinconfig then then that may be a second.
-> 
-> Also note that these depend on q6prmcc which is in turn depends on
-> remoteproc_adsp being enabled by the x13s dts.
-> 
-> So keeping them disabled by default seems justified.
-This I agree with, having sound-related nodes enabled by default
-results in a big chunk of "deferred probe pending" spam when you
-boot with adsp disabled (for example when you don't have fw for
-your board in your rootfs)..
+thanks,
 
-Konrad
-> 
-> Johan
+Takashi
