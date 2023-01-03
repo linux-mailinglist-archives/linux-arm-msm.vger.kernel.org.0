@@ -2,193 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7869965C4CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 18:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1220A65C511
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 18:32:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238283AbjACRNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 12:13:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54566 "EHLO
+        id S238011AbjACRbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 12:31:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238299AbjACRMm (ORCPT
+        with ESMTP id S237815AbjACRbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 12:12:42 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD7B513E16;
-        Tue,  3 Jan 2023 09:11:47 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 303GkE13032564;
-        Tue, 3 Jan 2023 17:11:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=r7DQyXh5gAucigmedJ3yha+lh4GmJ5T3l2qn9I7r4KE=;
- b=Ire6fu8w+NwlSEnZKlA1hBoe2/3JZgYUjlJMqatOErGi8/X8P8dBDxeiAGrhoamBoE+x
- qQyWzThSIRWrS6KbsNfVqkjHWVT+ix6qEObgHIHUBL2bSGb/hKlLZvmiYqNaLXMEjGsF
- 1KPb/Q0YC8eEdD/tViF8Q8n6nlLMaRslf21uWJIOKNcusNXSDqTiBFwk4vzymQlKe+TA
- fvpw3eyeBhSazBzl484DyIgFkOjoQkpJnEGtHyycJcJSWjP4HVCwHq5Xl4bvYbsk67K2
- L1gyXLaOOq7oudt5HDaordr7mr+ZpGZxmg70RD0puNZbc9673k2MB7U3LhnOsDHdzaed dA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mvqrp83ga-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Jan 2023 17:11:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 303HBa6W009687
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Jan 2023 17:11:36 GMT
-Received: from [10.110.6.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 3 Jan 2023
- 09:11:35 -0800
-Message-ID: <e5e8a6ae-29cf-beb2-e2b2-1875cb3a84e1@quicinc.com>
-Date:   Tue, 3 Jan 2023 09:11:34 -0800
+        Tue, 3 Jan 2023 12:31:10 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5C510A2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 09:31:09 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bt23so29943663lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 09:31:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sO6SUqVw2xTFajMx+hD52rACWsikx2Bdie3aQKKgmBc=;
+        b=sKT+ErZCG/vn8T8T/vb65Fv0rvNz2/3BkseTSV4iep6x/XE5PHNAgjU624UL7ldCeV
+         G4MggSBTBA4AXVD8rQNQGoVxaOUhmXC40r3hKoNAJ1E8Qr3lFDqUSWUBMmw2XeUJKgKD
+         viiRbda3KxDvIPIHRBmjkflp0adm5ZUqZzxFYLLPY9oD7pZ5ywVKbozmbtuKTOwh0Cej
+         9iF67YNTnNc2wWdDU8bQsDt7w4+LtK1nrq4Cnoh7Qmuri7Chy+ZAYB90P/neW5wCNSLD
+         7xMX7mrOquJD7gMkG6j5MX/JRVhzLr2P/QDItCAw6fQLbXVWuqZCqKwTIgB96zLyCUNJ
+         2t5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sO6SUqVw2xTFajMx+hD52rACWsikx2Bdie3aQKKgmBc=;
+        b=QLsWDy/Kg+yGzulaak0/bMUo4L7zAxQRPiJ6d8iF9+7tSHBC+qvI3Anm1elAoOPNOs
+         JYUUWsfNSQmoSMmX7DPTmnziAaP1qnwtGup8IVmcDPtS8Rz+mkrlUont2spd39dJnS3B
+         G3QzsWNtiOU2/cX1dZhGbwKM5Z8TojUXfThaEiGnI9EkDwURvqfvjjfrzPAI3YiPVgK0
+         kja/ylZPUGmRCDgMgZ/obW98T+TwRCGJgKh2GYzmH4nIU0Z8XtU38Dt3gn35ufCvC4SM
+         t4w7x0l1qDL4PcCFWUAU+ksMv+4yvjrn/6K4L5/5FQ9F69w3O6P2AWSIe+WCvesnxoo4
+         ZokA==
+X-Gm-Message-State: AFqh2kpCs1KkjQIPRxeZLBfKcI91rxzVqVIVYUBdHH60Vs1tNjBi+EUA
+        2uMqLpuM0ZOUrhpQNQnA9Ua106TF84wLgjmq
+X-Google-Smtp-Source: AMrXdXtRuHRrMeMcw8VJe8kq/FI3A09Nu2cAUW98IOvRcpS0jNxsQfZwpT2zd01GWgyHI9hfNPA5WA==
+X-Received: by 2002:a05:6512:b23:b0:4cb:d3:3b99 with SMTP id w35-20020a0565120b2300b004cb00d33b99mr10295016lfu.36.1672767067289;
+        Tue, 03 Jan 2023 09:31:07 -0800 (PST)
+Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id o9-20020ac25e29000000b004b4b5da5f80sm4916818lfg.219.2023.01.03.09.31.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 09:31:06 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/4] interconnect: qcom: rpm: Don't set QoS params before non-zero bw is requested
+Date:   Tue,  3 Jan 2023 18:30:56 +0100
+Message-Id: <20230103173059.265856-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v16 1/5] arm64: dts: qcom: add data-lanes and
- link-freuencies into dp_out endpoint
-Content-Language: en-US
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <devicetree@vger.kernel.org>,
-        <airlied@gmail.com>
-CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1672163103-31254-1-git-send-email-quic_khsieh@quicinc.com>
- <1672163103-31254-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <1672163103-31254-2-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZjAL-29wo2191xPuriAZaZuRWO6NsmsO
-X-Proofpoint-GUID: ZjAL-29wo2191xPuriAZaZuRWO6NsmsO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-03_05,2023-01-03_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 adultscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0 phishscore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301030147
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof/Dmitry,
+Until now, the icc-rpm driver unconditionally set QoS params, even on
+empty requests. This is superfluous and the downstream counterpart does
+not do it. Follow it by doing the same.
 
-Would you please review this patch.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/interconnect/qcom/icc-rpm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Thanks,
+diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+index 43b9ce0dcb6a..06e0fee547ab 100644
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -193,6 +193,12 @@ static int qcom_icc_qos_set(struct icc_node *node, u64 sum_bw)
+ 	struct qcom_icc_provider *qp = to_qcom_provider(node->provider);
+ 	struct qcom_icc_node *qn = node->data;
+ 
++	/* Defer setting QoS until the first non-zero bandwidth request. */
++	if (!(node->avg_bw || node->peak_bw)) {
++		dev_dbg(node->provider->dev, "NOT Setting QoS for %s\n", qn->name);
++		return 0;
++	}
++
+ 	dev_dbg(node->provider->dev, "Setting QoS for %s\n", qn->name);
+ 
+ 	switch (qp->type) {
+-- 
+2.39.0
 
-
-On 12/27/2022 9:44 AM, Kuogee Hsieh wrote:
-> Move data-lanes property from mdss_dp node to dp_out endpoint. Also
-> add link-frequencies property into dp_out endpoint as well. The last
-> frequency specified at link-frequencies will be the max link rate
-> supported by DP.
->
-> Changes in v5:
-> -- revert changes at sc7180.dtsi and sc7280.dtsi
-> -- add &dp_out to sc7180-trogdor.dtsi and sc7280-herobrine.dtsi
->
-> Changes in v6:
-> -- add data-lanes and link-frequencies to yaml
->
-> Changes in v7:
-> -- change 160000000 to 1620000000
-> -- separate yaml to different patch
->
-> Changes in v8:
-> -- correct Bjorn mail address to kernel.org
->
-> Changes in v9:
-> -- use symbol rate (hz) for link-frequencies at dp_out at sc7180_trogdor.dtsi
->
-> Changes in v13:
-> -- delete an extra space at data-lanes
->
-> Changes in v15:
-> -- replace space with tab at sc7180-trogdor.dtsi
->
-> Changes in v16:
-> -- rename dp_out with mdss_dp_Out and keep the order
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 4 ++++
->   arch/arm64/boot/dts/qcom/sc7180.dtsi           | 2 +-
->   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++++
->   arch/arm64/boot/dts/qcom/sc7280.dtsi           | 2 +-
->   4 files changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index eae22e6..21fbaff 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -814,7 +814,11 @@ hp_i2c: &i2c9 {
->   	status = "okay";
->   	pinctrl-names = "default";
->   	pinctrl-0 = <&dp_hot_plug_det>;
-> +};
-> +
-> +&mdss_dp_out {
->   	data-lanes = <0 1>;
-> +	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
->   };
->   
->   &pm6150_adc {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 58976a1b..0a90cce 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3119,7 +3119,7 @@
->   
->   					port@1 {
->   						reg = <1>;
-> -						dp_out: endpoint { };
-> +						mdss_dp_out: endpoint { };
->   					};
->   				};
->   
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index c11e371..3f6f1c9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -442,7 +442,11 @@ ap_i2c_tpm: &i2c14 {
->   	status = "okay";
->   	pinctrl-names = "default";
->   	pinctrl-0 = <&dp_hot_plug_det>;
-> +};
-> +
-> +&mdss_dp_out {
->   	data-lanes = <0 1>;
-> +	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
->   };
->   
->   &mdss_mdp {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 2125803..43ef6dc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -4135,7 +4135,7 @@
->   
->   					port@1 {
->   						reg = <1>;
-> -						dp_out: endpoint { };
-> +						mdss_dp_out: endpoint { };
->   					};
->   				};
->   
