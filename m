@@ -2,118 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A8E65BD23
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 10:27:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2943065BE30
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 11:33:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237201AbjACJ1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 04:27:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52150 "EHLO
+        id S236987AbjACKbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 05:31:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237234AbjACJ0z (ORCPT
+        with ESMTP id S237127AbjACKbk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 04:26:55 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2959A558B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 01:26:54 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id y25so44855797lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 01:26:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/w/HVtfVylFb92xZ3cLJHBmfw9Fvd9M+61nNyBqRlQw=;
-        b=RTLhoxkH+nPWqbV4+/wsP1hbkiXd+l89odwyVICOIKfv0tv3vI2z2vgSLpeWzbdf/4
-         7jmOlUMawjAT4OY3fnJMT1/gokohqPxF7zEav5Jw3V6G8/EP990p8jd8ZvQ+YHSZ5SNu
-         P8jEtL4VPSoLQsiAcAe1GWE9XzBjGqJuFCsyeUd7axrIgN0MQ+JGCea0Z/9wjFJOXdFq
-         tuw+RRIckHLwm6UCUUoP/YLPr+ZSdEFmbqPcx2X4vjjk5c24bUQmsGxqIOfoPsY/jE51
-         e0cDJjFz9L+WEY61i+G38N6ICgYtH+c6tQZ1RpyPDYgDRZu4GzhBL7AOC/6Hr5jRbh9o
-         RMQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/w/HVtfVylFb92xZ3cLJHBmfw9Fvd9M+61nNyBqRlQw=;
-        b=zafOU/ZLU4wzUJQwZFCQR/VNITkRDlHGz9N7AnB2t8/BXrSZMqrCmLe5zyqCw5mXs+
-         2We7OYRjh8XMCrPi3a3SgYYqzFHy/OlJFclDMLZ+G/WfALodM3Rq6hfBkFjv6LT5jZJ9
-         M0c9SzsCq/yIPM4xWepvchpnCbl+vdzB5B8EgSkgT5E8eWQUFHXpR7wGAhcuPGv3Lw7L
-         846Mm/Ms8SySXHcLOGEol6ooKGU8i0DQ+Iya193JNuSF6S5p0I4Dt9+3rjkPpTFxpd5W
-         blvxKLwRwPMNe9S4pq7MPrvBmMl6rdtK4EFBtBG3k8DnGIT3Ub5rPbIwzYCFGMLRNS8W
-         eL/Q==
-X-Gm-Message-State: AFqh2kp2BFN66p/7WvWbKji0qNbq9+vyMSXCI6lQ6KATGkWrDXyBKF7O
-        EC5dwl/uLmm6FpaHRwQ5B5OgWQ==
-X-Google-Smtp-Source: AMrXdXtxBjEkK70iD51Dp0X3k5oQpocNZh8ibg9YbJMfLNtcc4svtr8iSFKyEPRp4WwGOQw+jjzdVA==
-X-Received: by 2002:a05:6512:1116:b0:4a4:68b7:dee8 with SMTP id l22-20020a056512111600b004a468b7dee8mr15192136lfg.68.1672738012533;
-        Tue, 03 Jan 2023 01:26:52 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id o17-20020ac24351000000b0048a934168c0sm4768418lfl.35.2023.01.03.01.26.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 01:26:52 -0800 (PST)
-Message-ID: <207b6699-fe4f-8ab7-5ddb-4eb2e4183c88@linaro.org>
-Date:   Tue, 3 Jan 2023 10:26:50 +0100
+        Tue, 3 Jan 2023 05:31:40 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E513888;
+        Tue,  3 Jan 2023 02:31:38 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 57923B80E8F;
+        Tue,  3 Jan 2023 10:31:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C26C433D2;
+        Tue,  3 Jan 2023 10:31:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672741896;
+        bh=68oUZCvOyh2DfT3yErbuubEfNI1BBBZOuFmzO/RIRm8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LrIrMo5UYJZdI+xvp036Wp86hwYGd+b2P5kPWASjTmFPEL1KcFSxg+U+uG8BvydZp
+         dlfe7tQfPibkwpIeV2y6JCiN5rhy5idlNPsV/L5N66S7sOLy8PajxMa7j4CaFTCUTb
+         Jq+u7PMXtSn6BtwFaPBZd6AZ58wOzxXkrOzAf4IjVPHcK4QyeabmoZ+M9OTJO6G1Y7
+         uBR4KgWpYE4LxvW4ejpzj8Vlzh/zEGbX3p9vRia5jBoWam+zwnUYwge7jMitf27NSm
+         0lH7UgECfeWWL/7Dt5UfUDgHJjCYHWNTl9ykaG0Sql/qcLfAb3lT6Y1d/CnCpkV0mK
+         aWTG5U+5fzzKg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pCeaJ-00047M-HU; Tue, 03 Jan 2023 11:31:55 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 0/6] arm64: dts: qcom: sound cleanups
+Date:   Tue,  3 Jan 2023 11:31:35 +0100
+Message-Id: <20230103103141.15807-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v4 08/11] arm64: dts: qcom: sm8350: Use 2 interconnect
- cells
-Content-Language: en-US
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        quic_jesszhan@quicinc.com,
-        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
-        vkoul@kernel.org, a39.skl@gmail.com, quic_khsieh@quicinc.com,
-        quic_vpolimer@quicinc.com, swboyd@chromium.org,
-        dianders@chromium.org, liushixin2@huawei.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
-        vinod.koul@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20221230153554.105856-1-robert.foss@linaro.org>
- <20221230153554.105856-9-robert.foss@linaro.org>
- <deb17787-1a5a-89a3-3ecf-7690b4149f5c@linaro.org>
- <CAG3jFysU84LRcqQOspub+9vtsP3syiksrGX6D7i3ff+X6+mbTA@mail.gmail.com>
- <b8a0d9c5-eb26-c41c-1190-2628977bc582@linaro.org>
- <CAG3jFyuUV79nyjnqNysDKQSyYb4HUSWu-BvxG6LAz1Uavmvkbg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAG3jFyuUV79nyjnqNysDKQSyYb4HUSWu-BvxG6LAz1Uavmvkbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/01/2023 10:24, Robert Foss wrote:
->>>> On which tree/revision did you base this?
->>>
->>> msm/drm-msm-display-for-6.2
->>
->> Then it is not a proper base for DTS changes - you will miss quite some
->> commits. The DTS patches should be based on Bjorn's SoC tree or
->> linux-next (although the latter sometimes can lead to conflicts).
-> 
-> Alright, then in that case this series needs to be split into 3 parts.
-> 
-> The dts fixes, remaining dts changes & the remainder of code.
+This series clean up the sc8280xp sound nodes somewhat, for example, by
+making sure the nodes are disabled by default in the SoC dtsi.
 
-The split of any fixes (or unrelated cleanups) is good idea anyway.
-However code can go with DTS - just base on linux-next. If you do not
-want to base on linux-next then splitting code from DTS is indeed one
-more good way to send it.
+Included are also two related cleanups for sm8450-hdk and sm8250.
 
-> 
-> Is this what you'd like to see?
+Note that sound on the X13s is currently broken and depends on
+out-of-tree hacks to even probe:
 
-Best regards,
-Krzysztof
+[   10.719830] qcom-apm gprsvc:service:2:1: CMD timeout for [1001021] opcode
+[   10.762206] q6apm-dai 3000000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 19
+[   10.857910] qcom-prm gprsvc:service:2:2: DSP returned error[100100f] 1
+[   10.858386] rx_macro: probe of 3200000.rxmacro failed with error -22
+[   10.975745] qcom-soundwire 3250000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
+[   10.981406] wsa883x-codec sdw:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   10.986440] wsa883x-codec sdw:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.086238] qcom-soundwire 3330000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
+[   11.087322] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+[   14.342332] qcom-soundwire 3330000.soundwire-controller: swrm_wait_for_rd_fifo_avail err read underflow
+[   14.342464] soundwire sdw-master-1: trf on Slave 1 failed:-5 read addr 41 count 1
+[   14.342503] wcd9380-codec sdw:0:0217:010d:00:3: SDW_SCP_INTMASK1 write failed:-5
+[   14.342536] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 initialization failed: -5
+[   14.346734] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+[   17.727488] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 state check1: UNATTACHED, status was 1
+[   17.839483] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+[   17.896325] qcom-soundwire 3330000.soundwire-controller: swrm_wait_for_frame_gen_enabled: link status not disconnected
+[   17.896374] qcom-soundwire 3330000.soundwire-controller: link failed to connect
+[   20.962617] platform 3210000.soundwire-controller: deferred probe pending
+
+The out-of-tree patches I had seen that looked related to speaker
+protection had been merged for 6.2-rc1 so hopefully the above log spew
+is the only downside of keeping these nodes enabled for now.
+
+Johan
+
+
+Changes in v2
+ - keep the sound nodes on x13s enabled despite the missing driver
+   support -- hopefully Srini and Krzysztof can get this sorted before
+   6.3 is released (Krzysztof)
+ - moves the x13 vamacro node (new patch)
+ - clean up the sm8450-hdk wcd938x node somewhat when moving it (Konrad)
+ - rebase on sm8250 patch which had already moved the wcd938x node
+   (Krzysztof)
+
+Johan Hovold (6):
+  arm64: dts: qcom: sc8280xp: disable sound nodes
+  arm64: dts: qcom: sc8280xp-x13s: move vamacro node
+  arm64: dts: qcom: sc8280xp: clean up tx-macro node
+  arm64: dts: qcom: sc8280xp-x13s: move wcd938x codec node
+  arm64: dts: qcom: sm8450-hdk: move wcd938x codec node
+  arm64: dts: qcom: sm8250: clean up wcd938x codec node
+
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 78 ++++++++++++-------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 18 ++++-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts       | 16 ++--
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts       | 53 +++++++------
+ 4 files changed, 103 insertions(+), 62 deletions(-)
+
+-- 
+2.37.4
 
