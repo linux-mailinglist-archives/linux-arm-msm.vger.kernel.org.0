@@ -2,97 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45D4E65C324
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 16:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDDC965C350
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 16:51:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237884AbjACPiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 10:38:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
+        id S230459AbjACPvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 10:51:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbjACPiS (ORCPT
+        with ESMTP id S238039AbjACPvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 10:38:18 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B9411C0E;
-        Tue,  3 Jan 2023 07:38:16 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id m18so74537009eji.5;
-        Tue, 03 Jan 2023 07:38:16 -0800 (PST)
+        Tue, 3 Jan 2023 10:51:01 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88E5A10B47
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 07:50:57 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso20363502wms.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 07:50:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qnD1cDOmNAJpkQ6T4dHEcYD9uVqliMR1LVDe+Z15bUE=;
-        b=Iv1X7xuxVaFSptHgLbIWWfPN9wFmWy5OetaEGRHUYf+22Qc0pMRgXhMJR52ZpXUwrh
-         XpifyNSEbtPqKt35Ofss4i2mxykqjemG0v3qLPLJP72K3ZtJzNb/94Qhz+fIlGHd3Jfq
-         1ABhT9xZLiu8AImzZgkeD3Om/BLz4VVs05Vd3Er/4CBFggQswMloVJj3ttYWgm3FmwNE
-         87X1puDaCguiScnZE4EhpNzr8EjnK6i6CI5ztjIdzFMSukLUP/DlPtncXIaQpbZsDVy/
-         sKDIa3oc3s6nJT3BT2U3hWCY6lnwrBk3Ryxvg+hQwYxwy6pW1FLMYDQ+q+9xSsX9c+Dh
-         27bA==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GXXZY3HiOPqHWHEumfC48xGI6ASMZFdp2zTpaG6aNNk=;
+        b=ORhFKQtxmlddNzM+62mkWTfV5XbRIfKuGw8NDzsQMmUKCipeacJUHzzUfj6EvXS97y
+         Teh++ZFI24gTetXe+bXRLTfSSoYK9JqbY4pdWM2caGcd52JS7pd5oUKZMuPNAOb5YuBg
+         PzEjgJGzFuLt6ZbZ1uq71QvELIl7JBjFD6kqA9JI8lWnLzYekWFLRTq7Rqk984C2L5/X
+         41WQrex9WSeCNih8h4sz3vjMNXBe+QNAXlKvQefIagU9tftJ0BswaUy81ngWr8P5Dv3r
+         wZ8+It7mJWCdvA8wSKX6Aa3uSxZLQqcf1teWtehgv90VnxPzopUhpjerGiAJ0W384PWa
+         ilog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qnD1cDOmNAJpkQ6T4dHEcYD9uVqliMR1LVDe+Z15bUE=;
-        b=pV+9ccFLytlpLulJqY7caybps/tHn6Jh2DPnMWfgBtbs6A2uZ6SXophT3NbzClI3Yk
-         hw1p9TA5wHmRvtGY9bfKFsMuQuibnk03lg48CF9lBv/A4rzHC/GjOVCD5GM4I5prztDL
-         NbDNAiSPtrjfILfeLce50Z7zKBl7hWRpa7euR6UGk3Q3DiJ4LaFifB8FozB/VTAN4emI
-         b1DmpBf+kmpLoB3Vc7Q1dAxdkd8YYrQAiSdib/UOos0ix2vf+DWSKfVLqDNl8rR5TScH
-         aVMS/ynZb+dHA7e6El1WOXGv+ZmA+AVfF1uJVnF9o7FXjyzzam332azXEwDZpfTBe6kR
-         8vKg==
-X-Gm-Message-State: AFqh2kqyhn4qcMznGupwIzPxUoMULkW6LWlUSHwXA62TycZUAdiYujmQ
-        u3BpKTtt9uN70L0V37Pz286o3rEwOFm3ChY+87M=
-X-Google-Smtp-Source: AMrXdXsqsRWBmQm2rrCrJ26cXBP2shbcsB3baAFq/41tPZjRzMUN2eJ0DUIMQZfQvqKpoxQGfEpCn9x5+tmyeD1QNcM=
-X-Received: by 2002:a17:906:a3cd:b0:7c1:9b74:d27a with SMTP id
- ca13-20020a170906a3cd00b007c19b74d27amr5362235ejb.601.1672760295330; Tue, 03
- Jan 2023 07:38:15 -0800 (PST)
-MIME-Version: 1.0
-References: <20221228133243.3052132-1-dmitry.baryshkov@linaro.org> <20221228133243.3052132-6-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221228133243.3052132-6-dmitry.baryshkov@linaro.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 3 Jan 2023 08:38:04 -0700
-Message-ID: <CAOCk7Noa1A4mBqg3OAxk3hnnUg-qjCeCE0tyhq3ktbFcETicqw@mail.gmail.com>
-Subject: Re: [PATCH 05/16] dt-bindings: clock: qcom,mmcc-msm8998: drop core_bi_pll_test_se
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GXXZY3HiOPqHWHEumfC48xGI6ASMZFdp2zTpaG6aNNk=;
+        b=sA/OWxzgbgQiGNWADkOYlXagB3TVIEq3iSxOijW45cSnQLQ9y27c5l+jGIxFizQiYh
+         fq0T0uYe7Uv1SEXDGJffF84xm/DzCcvFRg7XM/54WWLS1Ast32TEFmP/JpNTHR71uit/
+         0T24WPSlWcjunshvvVcJ74u9LwTf/EbzsW3UD/jViall9wNGk5zsHPQYIYj1yZMpkiWw
+         SMJ0uT1/AlHplgadOyo/h4zY0kOWAvIkqs/Dln17zVomqD4Grfx5Cnp/7hdAeRuAd4vO
+         kqpb+tpSU1G4KcMxkbfBpc+3qr+5zvv9zazCBR3MUmP8dv9qWju1O3+tbJjp+em3SLEH
+         /1mQ==
+X-Gm-Message-State: AFqh2kphZ3orzpbxAoEfnq2yLvZmfRY5K0yIpNTjEm9OZMaSewLEzcLn
+        k0f0P5T6vLhkrgINLRH1xrRD3w==
+X-Google-Smtp-Source: AMrXdXuKxgBopBOn5wDZcnN3taIktGBbhoifcXvhZmGfs4QknOhnEcJzJb3u0nfSmgTf7dlvwAZwBA==
+X-Received: by 2002:a05:600c:12c6:b0:3cf:6926:2abb with SMTP id v6-20020a05600c12c600b003cf69262abbmr34095757wmd.7.1672761056137;
+        Tue, 03 Jan 2023 07:50:56 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id e8-20020a05600c13c800b003cfd58409desm45598077wmg.13.2023.01.03.07.50.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 07:50:55 -0800 (PST)
+Date:   Tue, 3 Jan 2023 17:50:54 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] regulator: qcom-rpmh: PM8550 ldo11 regulator is an nldo
+Message-ID: <Y7RO3uf0Q64ptnOT@linaro.org>
+References: <20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-v1-1-d97def246338@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-v1-1-d97def246338@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 28, 2022 at 6:33 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The test clock apparently it's not used by anyone upstream. Remove it.
+On 23-01-02 12:23:20, Neil Armstrong wrote:
+> This fixes the definition of the PM8550 ldo11 regulator matching it's
+> capabilities since this LDO is designed to work between 1,2V and 1,5V.
+> 
+> Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-IMO, NACK,
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-This is not a valid justification.
-
-The DT is supposed to describe the hardware, and should be complete in
-that regard.  This clock exists in the hardware, so it should be
-described.
-
-DT is supposed to be separate from Linux, that is it doesn't matter
-that Linux doesn't consume this clock.  Maybe FreeBSD does, or some
-other OS.  Linux doesn't own Device Tree any more than it owns BIOS or
-ACPI.
-
-Also, I'm listed as a maintainer for this binding, yet this series is
-not addressed to me.  Seems like you might need to review how you are
-composing your patches.
+> ---
+>  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index 43b5b9377714..ae6021390143 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -1016,7 +1016,7 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
+>  	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
+>  	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
+>  	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
+> -	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,    "vdd-l11"),
+> +	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,    "vdd-l11"),
+>  	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
+>  	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
+>  	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
+> 
+> ---
+> base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
+> change-id: 20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-b4de2cb35d0b
+> 
+> Best regards,
+> -- 
+> Neil Armstrong <neil.armstrong@linaro.org>
