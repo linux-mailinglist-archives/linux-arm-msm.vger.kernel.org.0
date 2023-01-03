@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64F3465C293
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:57:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34ABD65C2B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 16:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237967AbjACO42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 09:56:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60750 "EHLO
+        id S237767AbjACPEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 10:04:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237930AbjACOzs (ORCPT
+        with ESMTP id S237412AbjACPEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 09:55:48 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0CA612613
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:55:39 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id f20so32079835lja.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:55:39 -0800 (PST)
+        Tue, 3 Jan 2023 10:04:41 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40CC711A07
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 07:04:41 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id jn22so32801718plb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 07:04:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s/uwobszORt87pwL1AH7ZVk/kYoJ04eNFcidz9MKWGI=;
-        b=kOfPzQ/ei7XOeNhiRlhR2/NKnTFi07r4Z78NJp5Tp/H1nsLG3OimnpgX767EECJK79
-         XuDOXAg2Wspe9T2GkISlrX4I49EHBzlkvIRqylMeO1gMwpdYLMNIbP55v2VPbKomCUra
-         GMQn0L9FChKEaIQrzUIatm1nORBj2Oqdhm7rMiuAfxaQFGnTp8jAD/zbUOKlU9mg4NST
-         n79fWX32jMIBxsEJtx5p+uOcHs3ccihuFd6dANvl12/op3Rtmq6E1k944wwVuxra8iOV
-         e0K/yVS72mTnzGne+PJV7jdlCxJd15bOb5tXq6gdYXOppiOPZah1w+G3Gd2PdOXkBX8W
-         cj6g==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1BwCBo4Zr8bJj5E25ZcOmbkv9a8SrGtxNJejHcEkMD0=;
+        b=PPNgOUCoTmqp/7ScY0IUSjlEYQsIUI7V/Nfi3Iv3DOEofK3FkpgICi3GTFcaxSsg6g
+         CnnN+kkr0H8Z6iNu32VTbDfRz/JHoZG0mk0L1qoCmxUWpHkR6UG/u3mXrLzch4PJiw8E
+         jD+MSzAK2YwlI2hCkMHwn1fpB2DqTVb1mPA/9RpTW3qHgVLCPxbl4x+qtGbGX18c3PMM
+         fPeuYTn20RY1VCP40yFC+zUjLE8ZHqdGWppIwzWFTgS88/CQbs9YxAFZji11ixXv6m2E
+         e2l/zhrsORQdIHniO9miIcXEQV7ceX5RyyOPtN4jnGvvr3jQz51sFUzXhFK7qljGK9qA
+         ytHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s/uwobszORt87pwL1AH7ZVk/kYoJ04eNFcidz9MKWGI=;
-        b=E29cKIcq/OQVSB6w1Zl3Y7ywAsAtl6q7odhE2OF8p8N3zp84aIBj3NO5tA6xLubpWw
-         H3dDN+cxbTFxWiXljOwY0fVfAsr/g9ZliDVK0huDJNzvjQCIeinVgZu9pEM6isYlrc9n
-         y6CxFgECU7fGfa9ZH1qt/oqqCoZCCiV7BM3vnAIFU5QF7Z+17W7w3YF4FrMiK9pJmzzr
-         JJdmuvfuK66A5luNILZHTcgPu0Q1LlnIXMjEHKVZhVLvDtkTLICck2FFRb0/UAvF3c7K
-         knfGiYI0SQ09oWiTkTCg0VqwZ+wRWkGBHfnsEiBhWsb39XvVnZc+miuG0e/nbKquOvu1
-         eznA==
-X-Gm-Message-State: AFqh2kqK3Qg1TnbAaqU9A7INIi+NBWiT9rt3hu00neByZuFm7vygFn1E
-        9fHdAeRsbE60RROJWS448ZUCkA==
-X-Google-Smtp-Source: AMrXdXsS9PO49PSertcVCgvx9gyspkIoepPHdp+DovL+eGvfCcptgZxXP2MkIKPbPcwtf6/aqIHjXg==
-X-Received: by 2002:a2e:9084:0:b0:27b:57da:b39b with SMTP id l4-20020a2e9084000000b0027b57dab39bmr16330037ljg.23.1672757738086;
-        Tue, 03 Jan 2023 06:55:38 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s24-20020a2eb638000000b00279cbcfd7dbsm3544015ljn.30.2023.01.03.06.55.37
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1BwCBo4Zr8bJj5E25ZcOmbkv9a8SrGtxNJejHcEkMD0=;
+        b=Ofl8EZfU6E9nIUr6C/AdFeQXVBNymj6uG3wjwKJNk3hyZc/RRHPTzS5mjUHyh7ZIcc
+         DEQDEVqWvpcCQSKKWzv6byPkODqmEjqIH5YFHBWR2Zm+CfXam3HmNykXKp9lifrEWpVy
+         Uby56guTtAM04QUegeuEVSPbOFoH/SjJ5EnNPA3G+OZtryEUnzHehmnkIO7VQIABjUD0
+         Ikot69mTwFtIaFiX4ryf3WuLujxf4MsLMLfKv1Y0w5a7w2/kht9UOEj1DSjYk3yqMu6r
+         Kxk0NBy3ahAwsl9A/2qPCkGIAFjL75jaDYhnS4QldHqBRhdziek1dxv90MRrw7lJ8bB2
+         M4bA==
+X-Gm-Message-State: AFqh2kod5C0+X747UCwjrJ67OLApIQ/FJo6xIC9+4/q1oW1stjnXWno8
+        lyciCLl0amFnz3fc4kmcEMxgWmErMu47T2uHN9o=
+X-Google-Smtp-Source: AMrXdXtZo5TvwTptDdiFgWJJjORv2RIeZ1ezX2qUKXTwZnE0UDOFQ94hXCRUeIlN5auemkOFhcKSVw==
+X-Received: by 2002:a17:90a:fc92:b0:226:6b58:f427 with SMTP id ci18-20020a17090afc9200b002266b58f427mr9077052pjb.15.1672758280127;
+        Tue, 03 Jan 2023 07:04:40 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
+        by smtp.gmail.com with ESMTPSA id 8-20020a17090a0f0800b0021952b5e9bcsm20952300pjy.53.2023.01.03.07.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 06:55:37 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH 21/21] clk: qcom: videocc-sm8250: switch to devm_pm_runtime_enable
-Date:   Tue,  3 Jan 2023 16:55:15 +0200
-Message-Id: <20230103145515.1164020-22-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230103145515.1164020-1-dmitry.baryshkov@linaro.org>
-References: <20230103145515.1164020-1-dmitry.baryshkov@linaro.org>
+        Tue, 03 Jan 2023 07:04:39 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH v2 0/2] Add Qualcomm SM6115 / SM4250 EUD dt-bindings & driver support
+Date:   Tue,  3 Jan 2023 20:34:17 +0530
+Message-Id: <20230103150419.3923421-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,39 +73,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch to using the devm_pm_runtime_enable() instead of hand-coding
-corresponding action to call pm_runtime_disable().
+Changes since v1:
+----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org
+- Added Krzysztof in Cc list.
+- Fixed the following issue reported by kernel test bot:
+  >> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/videocc-sm8250.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+This series adds the dt-binding and driver support for SM6115 / SM4250
+EUD (Embedded USB Debugger) block available on Qualcomm SoCs.
 
-diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-index f28f2cb051d7..ad46c4014a40 100644
---- a/drivers/clk/qcom/videocc-sm8250.c
-+++ b/drivers/clk/qcom/videocc-sm8250.c
-@@ -361,19 +361,12 @@ static const struct of_device_id video_cc_sm8250_match_table[] = {
- };
- MODULE_DEVICE_TABLE(of, video_cc_sm8250_match_table);
- 
--static void video_cc_sm8250_pm_runtime_disable(void *data)
--{
--	pm_runtime_disable(data);
--}
--
- static int video_cc_sm8250_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap;
- 	int ret;
- 
--	pm_runtime_enable(&pdev->dev);
--
--	ret = devm_add_action_or_reset(&pdev->dev, video_cc_sm8250_pm_runtime_disable, &pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
- 	if (ret)
- 		return ret;
- 
+The EUD is a mini-USB hub implemented on chip to support the USB-based debug
+and trace capabilities.
+
+EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH.
+
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+
+Bhupesh Sharma (2):
+  dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 binding
+  usb: misc: eud: Add driver support for SM6115 / SM4250
+
+ .../bindings/soc/qcom/qcom,eud.yaml           | 10 ++++
+ drivers/usb/misc/Kconfig                      |  1 +
+ drivers/usb/misc/qcom_eud.c                   | 49 +++++++++++++++++--
+ 3 files changed, 57 insertions(+), 3 deletions(-)
+
 -- 
-2.39.0
+2.38.1
 
