@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FEDF65BC89
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 09:57:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC04965BCAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 10:02:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236999AbjACI5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 03:57:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32860 "EHLO
+        id S236898AbjACJCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 04:02:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236939AbjACI5I (ORCPT
+        with ESMTP id S232950AbjACJCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 03:57:08 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE951DBE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 00:57:06 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id p2so15576838ljn.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 00:57:06 -0800 (PST)
+        Tue, 3 Jan 2023 04:02:54 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DAF63F9
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 01:02:53 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id y25so44778794lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 01:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FVam3FPvVcVUPkFARUn9WWGX9bvQ9k6HzVFVKcvWyZE=;
-        b=tbfh3qioo77N98XjSFjd7PWy0XS7UHqQ0rnPICB/GFgnLr36lA59Nnhk2zRCgNwf3E
-         yZfUrCAVxeP05N4N6KGfR+8H84WM+ckoAFIxPQlFOhVaJEc/2zev65dxW4n2if7eR/RB
-         Q76GsIylyfR9RUSXCXRyZyyj94MSAp2Us7ZP+TTLNv+NFUfQXAzu48phTLoc2x1YxADn
-         GzPuByvzjlv2WY2cs+5nocxxigfu99C5WmdAmD3ns4tKA1CA2O5w/6BhM2lgeSCWFxiq
-         5Dv6IJ3fvjIzabxCErbEWBLQ5C5cFq6iyXb21tkmYiFFkkgIAgh4JdN/yPOb782/X7yw
-         kqtg==
+        bh=Rma1OXXtPwZorAATSPbIGVsCt0s7nGTGyXy8BRV6/bU=;
+        b=OlLux7s2JLGz6488fEjnlO/wdyBRA8JLHewattA+W86HDetZuNSdSSyeYNWvNCL9At
+         UrqMqQA9O1BIyBnAYes7Ng0KTegwNeqM/pSfkXxM/QTltEQLBBne7P5OCeh7z4nLZsFJ
+         prkibeotV5EdIscZre8uQstBPFL6CsLCvOv4Z3KiTY8fKrNZ0M9nZxwahPfaNkf+tUwj
+         vnJtuPY0DxGvDY3FCMkj37lG1Dw+G6ksRnLNHr9KvAb+V0GPX4CH2QD64V2hBAlIMWOz
+         VGAp2X4dU3hGD0VlN2Lb2l+qpE1NThSOGUTs37dxlWrGBfCt++zXFQ3/T5JeKO7UAk63
+         /GYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FVam3FPvVcVUPkFARUn9WWGX9bvQ9k6HzVFVKcvWyZE=;
-        b=3oePcxotetqs14Qmu0LZPVZxEFwmQjlB0gavLo4nGwzV9dOyJ+gQRrSvQxCLip3qp9
-         +bIspW8tT/GPKobxuNx91xWb2PvwI/p0lXOSyIcUMnxVORUg/LRckXP24YPvjWoRpGXb
-         zx6ey9aa6hzqNkRboYKSQA3HeZUhsFAzTDMs72uogP9nv8H8dmMPdvGso0kn3wrd6rWT
-         x5n1SdiUnEBbIdQ2izzyk+0NIfsYzTL7pQkXwN+j1QVhbnKQ4r+Q3+pELIz3zHwhBTcM
-         pM0Tro1wV/e3Iw48CCrdfWEVuWOagxf+NjVd5QrOunNr9ATgcDmCpuXhfobD0z89EjGJ
-         zznw==
-X-Gm-Message-State: AFqh2ko+6g5YiDnz5KyAgrNwyu/9jLaO10e4Qh4+CmJvFbrIVPKbsDy7
-        zK9QgO/yFC+nUBH/leT8F85KBg==
-X-Google-Smtp-Source: AMrXdXsAmGHVUPFl2qLHgz7MtYi89rEbq9xWFBU46j9e11S6S1IWHRAtPUrkkcXlHtb2NXJtGJ+4xw==
-X-Received: by 2002:a2e:aa9f:0:b0:27f:cb0c:fd1b with SMTP id bj31-20020a2eaa9f000000b0027fcb0cfd1bmr7425321ljb.8.1672736225351;
-        Tue, 03 Jan 2023 00:57:05 -0800 (PST)
+        bh=Rma1OXXtPwZorAATSPbIGVsCt0s7nGTGyXy8BRV6/bU=;
+        b=EojYpi0TUtB9NlMz/qUWnW4x9Yc+rI4xZeNfrg9RwWhfzTqFAR4rSd1u0r9QwTaSit
+         T228B85i0WMgj6RpVx8GZBlzkJn2T9jy8k26WbflVSfa/3qyINgZF7EFCakwTdHN3xQU
+         0c7ui1S2qZwpwanzunvdse9I9+VYkUu3gUY+DuIoaIrD7mnIDEWy5OkU+Vo8tkxx+PtG
+         WAOhYNSYmfUMf+un+uifzS2liLriIkP86AXK8XSd+wggab11fEefEBnOje77NJ0YY7Ds
+         +OPbqqFCTl4NH033utcBmNDoMdwfOmQ/42vT2g2CezjPo1+Jao1Kkp1EKeQVgY8InoRN
+         Q6vw==
+X-Gm-Message-State: AFqh2koxjVIIavza3itRR6bl+37dd9cp3mYQbuHLAnSJtxT9FQJ9UuVd
+        v1CE7By1HlgkyFDz2vLw//0Byg==
+X-Google-Smtp-Source: AMrXdXuKSKb4fXDliXY3IUZECvd6jGgLhEO6HXKkRbrr0zxUThMGA6Ko67tu68FtPxF7Lu0U9qP6fg==
+X-Received: by 2002:ac2:43a4:0:b0:4cb:3a60:65cc with SMTP id t4-20020ac243a4000000b004cb3a6065ccmr1399538lfl.5.1672736571492;
+        Tue, 03 Jan 2023 01:02:51 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id f13-20020a05651c03cd00b0027fea3a3318sm608902ljp.23.2023.01.03.00.57.04
+        by smtp.gmail.com with ESMTPSA id w4-20020a05651234c400b0049d0a98f73csm4739133lfr.154.2023.01.03.01.02.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 00:57:04 -0800 (PST)
-Message-ID: <3267da40-5c53-0b79-fd65-3009ee17c7ee@linaro.org>
-Date:   Tue, 3 Jan 2023 09:57:03 +0100
+        Tue, 03 Jan 2023 01:02:50 -0800 (PST)
+Message-ID: <ba4ec52a-d6ee-b471-bfa5-521f876aef2d@linaro.org>
+Date:   Tue, 3 Jan 2023 10:02:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 1/4] dt-bindings: clock: qcom,sc7280-lpasscc: Remove
- qdsp6ss reg property
+Subject: Re: [PATCH v2 1/7] dt-bindings: interconnect: Move interconnect child
+ node definition
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-References: <1672407799-13768-1-git-send-email-quic_srivasam@quicinc.com>
- <1672407799-13768-2-git-send-email-quic_srivasam@quicinc.com>
- <0d225fb0-7bc7-4de0-0f07-039502926e6b@linaro.org>
- <ca053156-7da1-f0f4-e23c-7c515a1e6afe@quicinc.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org
+References: <20230103010904.3201835-1-bryan.odonoghue@linaro.org>
+ <20230103010904.3201835-2-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ca053156-7da1-f0f4-e23c-7c515a1e6afe@quicinc.com>
+In-Reply-To: <20230103010904.3201835-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -82,59 +80,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/01/2023 06:51, Srinivasa Rao Mandadapu wrote:
-> 
-> On 1/2/2023 9:33 PM, Krzysztof Kozlowski wrote:
-> Thanks for Your time Krzyszto!!!
->> On 30/12/2022 14:43, Srinivasa Rao Mandadapu wrote:
->>> The qdsp6ss memory region is being shared by ADSP remoteproc device and
->>> lpasscc clock device, hence causing memory conflict.
->>> As the qdsp6ss clocks are being enabled in remoteproc driver, remove
->>> clock controlling in the clock driver.
->>>
->> That's an ABI break change. You cannot just drop it because the driver
->> will fail now to probe with old DTS.
->>
->> This ABI break (and Fixes tag below) requires extensive justification
->> where is the bug and how it affects users. Otherwise, I see no reason
->> for ABI changes.
-> 
-> As ADSP path is not used so far due to various vendor requirements, we 
-> haven't seen this conflict till now.
+On 03/01/2023 02:08, Bryan O'Donoghue wrote:
+> New properties should be defined before the allOf. Move the
+> patternProperties definition to before the additionalProperties: false in
+> this file.
 
-The device is used in sc7280.dtsi (and it is not disabled), thus it is
-available in every board.
+Your commit description suggests it is just a move but it is not.
+Instead you make these properties available for all compatibles, which
+is not justified here.
+
+Either provide full explanation why making such change or make the move
+equivalent by disallowing the properties for other variants.
 
 > 
-> Actually, in the below commit,  clock handling in remoteproc driver has 
-> already up-streamed by Bjorn.
-> 
-> If we add PIL device node and use remoteproc driver, qcom_q6v5_adsp.c, 
-> it's mandatory to remove it from clock
-> 
-> driver.
-> 
-> Also the memory region is used by clock driver is part of 
-> LPASS_QDSP6V67SS register region.
-> 
-> Here is the commit 0c6de4c299cc8f3283c38f3778777e00ed7e4b69 
-> ("remoteproc: qcom: qdsp6-adsp: Add support for QCS404 CDSP")
+> Fixes: dfeef93fe3ee ("dt-bindings: interconnect: Convert snoc-mm to a sub-node of snoc")
 
-The commit introduces qcom,qcs404-cdsp-pil which is not used in upstream
-DTS...
+There is no bug to fix, at least no bug described in commit msg. Style
+and convention issues are not bugs and not worth backporting. Drop the
+Fixes.
 
-Anyway none of the reasons above explain to me why ABI has to be broken.
-To remind - valid reasons are usually only: "it never worked" or "I was
-introduced recently so there are no users".
-
-> For ABI Break resolution shall I include, device tree changes also in 
-> this series? Or Could you please suggest better approach?
-
-Lack of DTS changes causes upstream to be broken. This is independent of
-ABI break. ABI means supporting users of the binding, so firmware, other
-OS, out-of-tree DTS users etc. All of them are broken.
-
-You need to keep backwards compatibility.
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
 Best regards,
 Krzysztof
 
