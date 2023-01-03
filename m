@@ -2,50 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01CC365B9B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 04:34:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F31965B9BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 04:35:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230400AbjACDd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 22:33:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49062 "EHLO
+        id S232968AbjACDfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 22:35:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbjACDd6 (ORCPT
+        with ESMTP id S230435AbjACDfF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 22:33:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63953C749;
-        Mon,  2 Jan 2023 19:33:57 -0800 (PST)
+        Mon, 2 Jan 2023 22:35:05 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3905C749;
+        Mon,  2 Jan 2023 19:35:03 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C510861196;
-        Tue,  3 Jan 2023 03:33:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1824C433EF;
-        Tue,  3 Jan 2023 03:33:55 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3DBE9B80D75;
+        Tue,  3 Jan 2023 03:35:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22051C433EF;
+        Tue,  3 Jan 2023 03:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672716836;
-        bh=xgXMydclE92yA0ZH1ozMDhpXFcx/ctZ7pT0bp0bI+Uo=;
+        s=k20201202; t=1672716900;
+        bh=dCkckECAvLQtZaeZmpoNgVJKnT+aYXzBTqQgYjJLq80=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=J7w2SuL/WtP5G2fwqg77r/UYRf0vfcySmICCRycBfOEKBfKQ+fLVd3qPZv7wIb6jG
-         iJFqeT5XBN9Zj06siA2wLfCiMJvqKeqsW9sa2zouF4jcpM7j/OWH9h9vEPc6OrTkQe
-         BnrRLnbWIiZbpHP0jbsS6bYjBT/FOMhpuIJoCuOH+sK/V+2sk3nBcOpumIZJvO9vzl
-         wPsVEP8q1Jo/kgRe04wq+kI/FPVJ+mWCcQneiTrWR3jsFv2y1D/PuBD85l6PkdETwl
-         NiMOSXX9HQ7F3gbNCK8D6TysVI+SxY9zXItPiXWV7Ra4wMsof6vfvunl+kqC/rdI53
-         /mSZ4tkyGglQg==
-Date:   Mon, 2 Jan 2023 21:33:53 -0600
+        b=S9eq+dx75O+t277fS2OQTxltcXQoA5NqAL7Q/02fwyulyXbhd97EmBz9ROiMF6NWd
+         +hlVuil9QGMpGmbem/7ir0Vk+zwS5B3Y8nhvInCHpm5C6Rn1wNLFxpvNvlo+8PQcxM
+         VejYjAMLtE/k6E9AKxeeGfSQRjFlR3YVuiwuq6xfIBn8Kps3z3qg7MuU+ixFqtN/E6
+         VTdyb56OyFo9eojisdUjD+/LzJhp4h9GAhz4lSyGnf81xoCxJ8uGW7fAW+z/7wIfj8
+         Kj7xdqrJ4qbOeQtOslCBvqsPeBoXJ6JD9Nhuvll8zcDuG63mK4nvL29rEyhlexLsZV
+         Bs1ThJ1j6f1PQ==
+Date:   Mon, 2 Jan 2023 21:34:58 -0600
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: osm-l3: drop unuserd header inclusion
-Message-ID: <20230103033353.u3gzssofbmxlmn7o@builder.lan>
-References: <20230103031159.1060075-1-dmitry.baryshkov@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        bhelgaas@google.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        lpieralisi@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: PCI: qcom: Update maintainers
+Message-ID: <20230103033458.kdtylqhnlkrk46oh@builder.lan>
+References: <20230102105821.28243-1-manivannan.sadhasivam@linaro.org>
+ <20230102105821.28243-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230103031159.1060075-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230102105821.28243-2-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,47 +58,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 03, 2023 at 05:11:59AM +0200, Dmitry Baryshkov wrote:
-> The commit 4529992c9474 ("interconnect: qcom: osm-l3: Use
-> platform-independent node ids") made osm-l3 driver use
-> platform-independent IDs, removing the need to include platform headers.
+On Mon, Jan 02, 2023 at 04:28:19PM +0530, Manivannan Sadhasivam wrote:
+> Stanimir has left mm-sol and already expressed his wish to not continue
+> maintaining the PCIe RC driver. So his entry can be removed.
 > 
-> Fixes: 4529992c9474 ("interconnect: qcom: osm-l3: Use platform-independent node ids")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/interconnect/qcom/osm-l3.c | 7 -------
->  1 file changed, 7 deletions(-)
+> Adding myself as the co-maintainer since I took over the PCIe RC driver
+> maintainership from Stanimir.
 > 
-> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-> index 5fa171087425..0c907765783e 100644
-> --- a/drivers/interconnect/qcom/osm-l3.c
-> +++ b/drivers/interconnect/qcom/osm-l3.c
-> @@ -14,13 +14,6 @@
->  
->  #include <dt-bindings/interconnect/qcom,osm-l3.h>
->  
-> -#include "sc7180.h"
-> -#include "sc7280.h"
-> -#include "sc8180x.h"
-> -#include "sdm845.h"
-> -#include "sm8150.h"
-> -#include "sm8250.h"
-> -
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Thanks for cleaning this up Dmitry. The <platform>_MASTER_OSM_L3_APPS
-and <platform>_SLAVE_OSM_L3 in these header files could also be removed,
-if you would like.
-
-Either way, you have my:
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Bjorn Andersson <andersson@kernel.org>
 
 Regards,
 Bjorn
 
->  #define LUT_MAX_ENTRIES			40U
->  #define LUT_SRC				GENMASK(31, 30)
->  #define LUT_L_VAL			GENMASK(7, 0)
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index a5859bb3dc28..a3639920fcbb 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -8,7 +8,7 @@ title: Qualcomm PCI express root complex
+>  
+>  maintainers:
+>    - Bjorn Andersson <bjorn.andersson@linaro.org>
+> -  - Stanimir Varbanov <svarbanov@mm-sol.com>
+> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>  
+>  description: |
+>    Qualcomm PCIe root complex controller is based on the Synopsys DesignWare
 > -- 
-> 2.39.0
+> 2.25.1
 > 
