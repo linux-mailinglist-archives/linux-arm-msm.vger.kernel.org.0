@@ -2,135 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FCED65C519
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 18:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E58B65C549
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 18:44:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237767AbjACRbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 12:31:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35510 "EHLO
+        id S233243AbjACRo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 12:44:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238239AbjACRbO (ORCPT
+        with ESMTP id S231240AbjACRo2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 12:31:14 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C512DFF4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 09:31:13 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id b3so46615631lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 09:31:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pKKn2ob5FVX8E1rKj4RwcuOoKO8R4a0VcIQiC+ia4Vo=;
-        b=pdrf8zkVnAuKKS88V/P2hnBeJ536mptQCQFvKs/0m0XX28JdGErm+2R6xDRRo8nOdO
-         NUvH/jfxH2EJOapvv1mjbYQGFxk1iroh6ObhWuCNQv0PqFGOboeDGM388KwWEijFDJja
-         aKORv829TVWoB6jP+Sos8OeHcNVlhQ3C3zZtvNFH58Kb3R3dtqst2xO/FONQ3t7DPiIJ
-         0bEbOq6WAMLPoOwC1LeY2N9TqYGjR2I0fjWZmTMnjOep2yQWA/RCRdGldUWrnCOGmHUB
-         IlrflF8+5ukPAC+uHxMhVuqkwC5pCXdDOFjgIx7hnzMyTPlMKCzowQahXiXEKjhtPv4t
-         WO9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pKKn2ob5FVX8E1rKj4RwcuOoKO8R4a0VcIQiC+ia4Vo=;
-        b=IXXWFgIdlDah5puM8MyovFy1cO7zvgF3lfttAUIosCbbUtQFekBqNKE89Iz3McaiuL
-         ej/WByoYU3Zk31NSLI/CxD2GInnuzvmVLnLciU3YyelwuhpBRQTNRY+5bGXwvDTMUAu7
-         co2dBA9JeLpnlB5CyPqQr6lEBvE4tV4aGROU9kx60seP26iV9sFrN5R79bakd5Ku7AY4
-         n8JPNo1CLlUem1IevRczw2RnH5mYwEMN7CiYe/DkTeaOkljg82zVQQcl6pRS5zX5cEAE
-         xF3gCqbRGt8CKBFbblVg+GEuiSxxei5ZExD3/8WoaKO9R5bnDhBXPrMRwBDFOXUsSTQl
-         tzXg==
-X-Gm-Message-State: AFqh2koFnDgctZOCeqWnWvVodQibRAhU+haO+J/o/NrqnsIpScKHJ7ha
-        ljnE4GdHnRIKiESTvD9fOy+XmDgs9nrEu3kM
-X-Google-Smtp-Source: AMrXdXuk7EWv52SdG4bHxuow0TiS3P1sIt6t7Gulg1PYNBcGdWIs8EkXD8f0fC0lidu1hmp2netW7g==
-X-Received: by 2002:a05:6512:3681:b0:4b5:83ba:11ad with SMTP id d1-20020a056512368100b004b583ba11admr10479300lfs.35.1672767071579;
-        Tue, 03 Jan 2023 09:31:11 -0800 (PST)
-Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id o9-20020ac25e29000000b004b4b5da5f80sm4916818lfg.219.2023.01.03.09.31.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 09:31:11 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] interconnect: qcom: rpm: Add support for specifying channel num
-Date:   Tue,  3 Jan 2023 18:30:59 +0100
-Message-Id: <20230103173059.265856-4-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230103173059.265856-1-konrad.dybcio@linaro.org>
-References: <20230103173059.265856-1-konrad.dybcio@linaro.org>
+        Tue, 3 Jan 2023 12:44:28 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24EB52A5;
+        Tue,  3 Jan 2023 09:44:27 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id CC29AB81037;
+        Tue,  3 Jan 2023 17:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D47C433D2;
+        Tue,  3 Jan 2023 17:44:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672767864;
+        bh=LckIA+Gz2HvlJFTUCOOcP66kxq0hG8yz1WKdpVjE/xw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rLEnW9wGp3Z6Q59S+JwrZph3YhZJJVqowPqSQECJuDE53pVqR/Sj0YqQz83zB2pUZ
+         ZbkfXfocDWExQhS3inMdUczLRARUe1uRPhv1pTUPdSRnG8TsIAUtUywxr3sr4YHHlw
+         lyxc4zcrcw9ngl/94/71H4KNflC5V3CAQIWzX9D+SXYgLoQgLiCtHHyUxMQf5VRkg+
+         +U+1wOq7+laGbKtBvXTanpclz8SXgPneLrrqey3/x/j26PvxByRzmp9y321SFi5dz4
+         WO5Xt28gURXGYgIhhCFMgvTjhUDWKbDu+Ub6HuavuP8YYAIPK/THmyS1asBEZ+2lNC
+         fMf8njjTLVF9w==
+Date:   Tue, 3 Jan 2023 17:44:17 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+        robh+dt@kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+Subject: Re: [RFC PATCH 12/14] sound: soc: qcom: qusb6: Ensure PCM format is
+ supported by USB audio device
+Message-ID: <Y7RpcfWG5yrd6J3X@sirena.org.uk>
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-13-quic_wcheng@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="hij50yuqfbUKxTCY"
+Content-Disposition: inline
+In-Reply-To: <20221223233200.26089-13-quic_wcheng@quicinc.com>
+X-Cookie: So many men
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
-one channel. This should be taken into account in bandwidth calcualtion,
-as we're supposed to feed msmbus with the per-channel bandwidth. Add
-support for specifying that and use it during bandwidth aggregation.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
- drivers/interconnect/qcom/icc-rpm.h | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+--hij50yuqfbUKxTCY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 8ec1ca17816a..04fe742c25a3 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -328,6 +328,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
- {
- 	struct icc_node *node;
- 	struct qcom_icc_node *qn;
-+	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
- 	int i;
- 
- 	/* Initialise aggregate values */
-@@ -345,7 +346,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
- 	list_for_each_entry(node, &provider->nodes, node_list) {
- 		qn = node->data;
- 		for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
--			agg_avg[i] += qn->sum_avg[i];
-+			if (qn->channels)
-+				sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
-+			else
-+				sum_avg[i] = qn->sum_avg[i];
-+			agg_avg[i] += sum_avg[i];
- 			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
- 		}
- 	}
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index 8ba1918d7997..8aed5400afda 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -66,6 +66,7 @@ struct qcom_icc_qos {
-  * @id: a unique node identifier
-  * @links: an array of nodes where we can go next while traversing
-  * @num_links: the total number of @links
-+ * @channels: number of channels at this node (e.g. DDR channels)
-  * @buswidth: width of the interconnect between a node and the bus (bytes)
-  * @sum_avg: current sum aggregate value of all avg bw requests
-  * @max_peak: current max aggregate value of all peak bw requests
-@@ -78,6 +79,7 @@ struct qcom_icc_node {
- 	u16 id;
- 	const u16 *links;
- 	u16 num_links;
-+	u16 channels;
- 	u16 buswidth;
- 	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
- 	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
--- 
-2.39.0
+On Fri, Dec 23, 2022 at 03:31:58PM -0800, Wesley Cheng wrote:
 
+> Check for if the PCM format is supported during the hw_params callback.  If
+> the profile is not supported then the userspace ALSA entity will receive an
+> error, and can take further action.
+
+Ideally we'd wire up constraints for this but that gets complicated with
+DPCM so it's probably disproportionate effort.  Otherwise other than the
+subject lines not using ASoC on this and the previous change I don't
+have any issues that other people didn't raise, but then most of the
+complication is in the USB bits.
+
+--hij50yuqfbUKxTCY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmO0aXAACgkQJNaLcl1U
+h9D1xQf+LwgGcwM55I9NHiwQ3ebZ4m7VhjDLgWvKR107h7Duq8GctdogaoB5LvTP
+O9xWQH1QhvotKZf1j+Wn0NoYxROayG9QPwht4tIGzQmAhgq72kfiSZ6IiETIW+IP
+K58dG61EXGWBLniqpXQNpxnqL1XeW9wHfSwuVOqN1Or0XoOCyjGupDURXP4Uau6z
+AJ5cGhqW3cd2xobybkD7asnAvDniZokvV0sreSFRYy4a/vNm4cVe5WRhibUh+S7K
+K7akWpFDvsOAobbQvGkEkeCvltQMkZxYbtm6av1vQBI6j7kQ5WXw9G72a2AX8VbR
+I8ILJBI6jfDXIjH8Fnc/L23TEnwfPw==
+=p0V6
+-----END PGP SIGNATURE-----
+
+--hij50yuqfbUKxTCY--
