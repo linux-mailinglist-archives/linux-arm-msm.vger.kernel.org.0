@@ -2,326 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3FB65C12E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 14:51:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0401265C137
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 14:54:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237777AbjACNvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 08:51:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45954 "EHLO
+        id S232179AbjACNyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 08:54:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237773AbjACNuv (ORCPT
+        with ESMTP id S237567AbjACNyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 08:50:51 -0500
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55381181F;
-        Tue,  3 Jan 2023 05:50:36 -0800 (PST)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 303AqhYL009376;
-        Tue, 3 Jan 2023 14:50:19 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=pGT9+waS5UFAF4HoI9ksovFP3BcAx2wPj5gKc3fQsUY=;
- b=Oy18l7DhsW51SzcMCVlzJrdOsmP4LU2fgfAu3tsAmTJLx/xdWcyR2fUBcPvTTEseDhOd
- ZHOr/tRvEXJvp67LhU1PKJOx+T87dyKCFvT03VY9EUMePfvbwa5AUn0IVNBHeFLE2xlz
- KujwAk48tJ3P5Zs1fwn31NxHyXSqxCtzV147YniQ0TjUVkDhggvJNK/gflUWNN/PWesc
- p/V3TqbUqwZkW573qt2urmEeI424Q8Do1g1m3Vf/IH93Y57BKplV29z1tR6d5aUieHZ0
- Ehe7Ti5w4gNmmBGS6C7bQNTzEjc4ufj5mGwS6QxXMsFZd21BhcEZZ/ZDDjUe3h+o9aaa DQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3mtcupne53-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Jan 2023 14:50:19 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 5D75610002A;
-        Tue,  3 Jan 2023 14:50:14 +0100 (CET)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 550C7222CB9;
-        Tue,  3 Jan 2023 14:50:14 +0100 (CET)
-Received: from [10.252.14.6] (10.252.14.6) by SHFDAG1NODE2.st.com
- (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.13; Tue, 3 Jan
- 2023 14:50:13 +0100
-Message-ID: <1cbcd57c-ba6d-390f-a28c-fa651d1d7262@foss.st.com>
-Date:   Tue, 3 Jan 2023 14:50:13 +0100
+        Tue, 3 Jan 2023 08:54:05 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE5E63B8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 05:54:03 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so20642485wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 05:54:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UpwhHma8piz6/MBi40TBeXOcZ3UlgFDgKhUmh3BfGhE=;
+        b=E8mrLpt0A4zrdpvYzf3wPVYTUz6Cy1erBfhV30ZlPFtYvXERDsTDe+3xDXA/M5G/f2
+         H1RQ4NAVaEUaboxz0IZJlgOA5qzBpCl7ZSJvRDct+pj/pDbke4DOJ2PZrB3zU2Q2JrxB
+         0z9lSa2s8rLGZa6VVb8sXgxEszxJ7CfFasCvyICTxsMTsX43bn3jaYG/32jBfTMsE/cc
+         v7dC28JamM7MG7cXUtp5QFXCfMGl977IGNwkOKzqraN1TTAWrIoBEqeGWP1xGg2Xqbt5
+         wfNZCyJy9D6W5XYnZLD9F5qlTLl0wqKpsg3SlT7ScVScjwwBj8b/avwSNL9g/H1heUMn
+         EYPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UpwhHma8piz6/MBi40TBeXOcZ3UlgFDgKhUmh3BfGhE=;
+        b=V03NLMEs+9WG4Y4IGX/DfN9Yjs3747cT9ZHNDSxTAfgBnWA/64a879utxk9MmZmJD5
+         j4zEffroLds882PUak/MUHzjKNFjBR4ya7EOtwToi4kmK7AlW2SiAyfjB685J4hO4P18
+         wZJXPaQVkAHMCD2OogR7vgarTD04ut+4v1ut+7+GJPuofYosEe9CBiV/v45OCF67JuPB
+         SHb8Dx9vp6FT3HyQq6L5Nq0qqy7Eh9koxyr3BSVBx45XPzZM719VwPlBbhnd1VsZKKsw
+         9hstaWpF/H+hkybwh9W64c2CNYPOEr6ouyaRQflQRKAtlg8Uc2JufM0yKNQyeiPvJPQV
+         LfLA==
+X-Gm-Message-State: AFqh2kpzVVbN7te/UFi419g4cRFipVBZB+Nat9pF7glbSrpA1dFpIj2o
+        IhcvCW8g/Pe9nPVD9FzNZpzM/A==
+X-Google-Smtp-Source: AMrXdXskftYtVsw1lLMDSb/EULvWtJ17A6xGxwvaRq5KKRFj+Gpu6vEg8owWQ4r8owHys+Xonln36w==
+X-Received: by 2002:a05:600c:35ca:b0:3d1:f2de:195a with SMTP id r10-20020a05600c35ca00b003d1f2de195amr34415673wmq.32.1672754042525;
+        Tue, 03 Jan 2023 05:54:02 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ay39-20020a05600c1e2700b003cfa80443a0sm42138195wmb.35.2023.01.03.05.54.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 05:54:02 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 03 Jan 2023 14:53:58 +0100
+Subject: [PATCH 1/3] dt-bindings: clock: document SM8550 DISPCC clock controller
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH V4 1/3] rpmsg: core: Add signal API support
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Sarannya S <quic_sarannya@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-References: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
- <1670418258-11502-2-git-send-email-quic_sarannya@quicinc.com>
- <6ba10328-bc48-c953-49e7-29e079fb6406@foss.st.com>
- <20221227153252.ufenietw5wgsk7kj@builder.lan>
-Content-Language: en-US
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Organization: STMicroelectronics
-In-Reply-To: <20221227153252.ufenietw5wgsk7kj@builder.lan>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.252.14.6]
-X-ClientProxiedBy: SHFCAS1NODE2.st.com (10.75.129.73) To SHFDAG1NODE2.st.com
- (10.75.129.70)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-03_04,2023-01-03_02,2022-06-22_01
-X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Message-Id: <20230103-topic-sm8550-upstream-dispcc-v1-1-81bfcc26b2dc@linaro.org>
+References: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.11.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Document device tree bindings for display clock controller for
+Qualcomm SM8550 SoC.
 
-On 12/27/22 16:32, Bjorn Andersson wrote:
-> On Wed, Dec 21, 2022 at 05:12:22PM +0100, Arnaud POULIQUEN wrote:
->> Hello,
->>
->> On 12/7/22 14:04, Sarannya S wrote:
->>> Some transports like Glink support the state notifications between
->>> clients using flow control signals similar to serial protocol signals.
->>> Local glink client drivers can send and receive flow control status
->>> to glink clients running on remote processors.
->>>
->>> Add APIs to support sending and receiving of flow control status by
->>> rpmsg clients.
->>>
->>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
->>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
->>> ---
->>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
->>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
->>>  include/linux/rpmsg.h          | 15 +++++++++++++++
->>>  3 files changed, 38 insertions(+)
->>>
->>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->>> index d6dde00e..77aeba0 100644
->>> --- a/drivers/rpmsg/rpmsg_core.c
->>> +++ b/drivers/rpmsg/rpmsg_core.c
->>> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>>  
->>>  /**
->>> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
->>> + * @ept:	the rpmsg endpoint
->>> + * @enable:	enable or disable serial flow control
->>
->> What does it mean "enable and disable serial flow control"?
->> Do you speak about the flow control feature or the data flow itself?
->>
-> 
-> Good point, the purpose of the boolean is to "request throttling of the
-> incoming data flow".
-> 
->> I guess it is the activation/deactivation of the data stream
->> regarding Bjorn's comment in V1:
->>
->> "I therefore asked Deepak to change it so the rpmsg api would contain a
->> single "pause incoming data"/"resume incoming data" - given that this is
->> a wish that we've seen in a number of discussions."
->>
->> For me this is the software flow control:
->> https://en.wikipedia.org/wiki/Software_flow_control
->>
->> I would suggest not limiting the control only to activation/deactivation but to
->> offer more flexibility in terms of services. replace the boolean by a bitmap
->> would allow to extend it later.
->>
->> For instance by introducing 2 definitions:
->>
->> /* RPMSG pause transmission request:
->>  * sent to the remote endpoint to request to suspend its transmission */
->>  */
->> #define RPMSG_FC_PT_REQ  (1 << 0)
-> 
-> enable = true
-> 
->>
->> /* RPMSG resume transmission request
->>  * sent to the remote endpoint to allow to resume its transmission
->>  */
->> #define RPMSG_FC_RT_REQ  (1 << 1)
->>
-> 
-> enable = false
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ .../bindings/clock/qcom,sm8550-dispcc.yaml         | 106 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,sm8550-dispcc.h     | 101 ++++++++++++++++++++
+ 2 files changed, 207 insertions(+)
 
-Do you mean that it should be only one definition? If yes you are right
-only one definition is sufficient for the pause/resume
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+new file mode 100644
+index 000000000000..06c04656cb55
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+@@ -0,0 +1,106 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sm8550-dispcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Display Clock & Reset Controller for SM8550
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++description: |
++  Qualcomm display clock control module provides the clocks, resets and power
++  domains on SM8550.
++
++  See also:: include/dt-bindings/clock/qcom,sm8550-dispcc.h
++
++properties:
++  compatible:
++    enum:
++      - qcom,sm8550-dispcc
++
++  clocks:
++    minItems: 3
++    items:
++      - description: Board XO source
++      - description: Board Always On XO source
++      - description: Display's AHB clock
++      - description: sleep clock
++      - description: Byte clock from DSI PHY0
++      - description: Pixel clock from DSI PHY0
++      - description: Byte clock from DSI PHY1
++      - description: Pixel clock from DSI PHY1
++      - description: Link clock from DP PHY0
++      - description: VCO DIV clock from DP PHY0
++      - description: Link clock from DP PHY1
++      - description: VCO DIV clock from DP PHY1
++      - description: Link clock from DP PHY2
++      - description: VCO DIV clock from DP PHY2
++      - description: Link clock from DP PHY3
++      - description: VCO DIV clock from DP PHY3
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  power-domains:
++    description:
++      A phandle and PM domain specifier for the MMCX power domain.
++    maxItems: 1
++
++  required-opps:
++    description:
++      A phandle to an OPP node describing required MMCX performance point.
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    clock-controller@af00000 {
++      compatible = "qcom,sm8550-dispcc";
++      reg = <0x0af00000 0x10000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&gcc GCC_DISP_AHB_CLK>,
++               <&sleep_clk>,
++               <&dsi0_phy 0>,
++               <&dsi0_phy 1>,
++               <&dsi1_phy 0>,
++               <&dsi1_phy 1>,
++               <&dp0_phy 0>,
++               <&dp0_phy 1>,
++               <&dp1_phy 0>,
++               <&dp1_phy 1>,
++               <&dp2_phy 0>,
++               <&dp2_phy 1>,
++               <&dp3_phy 0>,
++               <&dp3_phy 1>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      power-domains = <&rpmhpd SM8550_MMCX>;
++      required-opps = <&rpmhpd_opp_low_svs>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,sm8550-dispcc.h b/include/dt-bindings/clock/qcom,sm8550-dispcc.h
+new file mode 100644
+index 000000000000..ed3094c694e0
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sm8550-dispcc.h
+@@ -0,0 +1,101 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_SM8550_DISP_CC_H
++#define _DT_BINDINGS_CLK_QCOM_SM8550_DISP_CC_H
++
++/* DISP_CC clocks */
++#define DISP_CC_MDSS_ACCU_CLK					0
++#define DISP_CC_MDSS_AHB1_CLK					1
++#define DISP_CC_MDSS_AHB_CLK					2
++#define DISP_CC_MDSS_AHB_CLK_SRC				3
++#define DISP_CC_MDSS_BYTE0_CLK					4
++#define DISP_CC_MDSS_BYTE0_CLK_SRC				5
++#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC				6
++#define DISP_CC_MDSS_BYTE0_INTF_CLK				7
++#define DISP_CC_MDSS_BYTE1_CLK					8
++#define DISP_CC_MDSS_BYTE1_CLK_SRC				9
++#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC				10
++#define DISP_CC_MDSS_BYTE1_INTF_CLK				11
++#define DISP_CC_MDSS_DPTX0_AUX_CLK				12
++#define DISP_CC_MDSS_DPTX0_AUX_CLK_SRC				13
++#define DISP_CC_MDSS_DPTX0_CRYPTO_CLK				14
++#define DISP_CC_MDSS_DPTX0_LINK_CLK				15
++#define DISP_CC_MDSS_DPTX0_LINK_CLK_SRC				16
++#define DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC			17
++#define DISP_CC_MDSS_DPTX0_LINK_INTF_CLK			18
++#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK				19
++#define DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC			20
++#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK				21
++#define DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC			22
++#define DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK		23
++#define DISP_CC_MDSS_DPTX1_AUX_CLK				24
++#define DISP_CC_MDSS_DPTX1_AUX_CLK_SRC				25
++#define DISP_CC_MDSS_DPTX1_CRYPTO_CLK				26
++#define DISP_CC_MDSS_DPTX1_LINK_CLK				27
++#define DISP_CC_MDSS_DPTX1_LINK_CLK_SRC				28
++#define DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC			29
++#define DISP_CC_MDSS_DPTX1_LINK_INTF_CLK			30
++#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK				31
++#define DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC			32
++#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK				33
++#define DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC			34
++#define DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK		35
++#define DISP_CC_MDSS_DPTX2_AUX_CLK				36
++#define DISP_CC_MDSS_DPTX2_AUX_CLK_SRC				37
++#define DISP_CC_MDSS_DPTX2_CRYPTO_CLK				38
++#define DISP_CC_MDSS_DPTX2_LINK_CLK				39
++#define DISP_CC_MDSS_DPTX2_LINK_CLK_SRC				40
++#define DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC			41
++#define DISP_CC_MDSS_DPTX2_LINK_INTF_CLK			42
++#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK				43
++#define DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC			44
++#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK				45
++#define DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC			46
++#define DISP_CC_MDSS_DPTX3_AUX_CLK				47
++#define DISP_CC_MDSS_DPTX3_AUX_CLK_SRC				48
++#define DISP_CC_MDSS_DPTX3_CRYPTO_CLK				49
++#define DISP_CC_MDSS_DPTX3_LINK_CLK				50
++#define DISP_CC_MDSS_DPTX3_LINK_CLK_SRC				51
++#define DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC			52
++#define DISP_CC_MDSS_DPTX3_LINK_INTF_CLK			53
++#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK				54
++#define DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC			55
++#define DISP_CC_MDSS_ESC0_CLK					56
++#define DISP_CC_MDSS_ESC0_CLK_SRC				57
++#define DISP_CC_MDSS_ESC1_CLK					58
++#define DISP_CC_MDSS_ESC1_CLK_SRC				59
++#define DISP_CC_MDSS_MDP1_CLK					60
++#define DISP_CC_MDSS_MDP_CLK					61
++#define DISP_CC_MDSS_MDP_CLK_SRC				62
++#define DISP_CC_MDSS_MDP_LUT1_CLK				63
++#define DISP_CC_MDSS_MDP_LUT_CLK				64
++#define DISP_CC_MDSS_NON_GDSC_AHB_CLK				65
++#define DISP_CC_MDSS_PCLK0_CLK					66
++#define DISP_CC_MDSS_PCLK0_CLK_SRC				67
++#define DISP_CC_MDSS_PCLK1_CLK					68
++#define DISP_CC_MDSS_PCLK1_CLK_SRC				69
++#define DISP_CC_MDSS_RSCC_AHB_CLK				70
++#define DISP_CC_MDSS_RSCC_VSYNC_CLK				71
++#define DISP_CC_MDSS_VSYNC1_CLK					72
++#define DISP_CC_MDSS_VSYNC_CLK					73
++#define DISP_CC_MDSS_VSYNC_CLK_SRC				74
++#define DISP_CC_PLL0						75
++#define DISP_CC_PLL1						76
++#define DISP_CC_SLEEP_CLK					77
++#define DISP_CC_SLEEP_CLK_SRC					78
++#define DISP_CC_XO_CLK						79
++#define DISP_CC_XO_CLK_SRC					80
++
++/* DISP_CC resets */
++#define DISP_CC_MDSS_CORE_BCR					0
++#define DISP_CC_MDSS_CORE_INT2_BCR				1
++#define DISP_CC_MDSS_RSCC_BCR					2
++
++/* DISP_CC GDSCR */
++#define MDSS_GDSC						0
++#define MDSS_INT2_GDSC						1
++
++#endif
 
-> 
->> Then we could add (in a next step) some other flow controls such as
->> /* RPMSG pause transmission information
->>  * Sent to the remote endpoint to inform that no more data will be sent
->>  * until the reception of RPMSG_FC_RT_INFO
->>  */
->> #define RPMSG_FC_PT_INFO  (1 << 16)
->> #define RPMSG_FC_RT_INFO  (1 << 16)
->>
-> 
-> I presume you're looking for a usage pattern where the client would send
-> this to the remote and then the flow control mechanism would be used for
-> the remote end to request more data.
-> 
-> I find Deepak's (adjusted) proposal to be generic and to the point, and
-> your proposal builds unnecessary "flexibility" into this same mechanism.
-> 
-> If you have a rpmsg protocol where the client is expected to sit
-> waiting, and upon a request from the remote side send another piece of
-> data, why don't you just build this into the application protocol?  That
-> way your application would work over both transports with and without
-> flow control...
-> 
-> 
-> Perhaps I'm misunderstanding what you're asking for?
-
-With the RPMSG_FC_PT_INFO example I had in mind the possibility to implement PM
-runtime.
-
-But my main point here is to allow to extend the flow control in future.
-or instance an comment in OpenAMP PR part [1] was:
-
-"ON/OFF info isn't enough in the advanced flow control since the additional info
-is required(e.g. the slide window, round trip delay, congestion etc..)."
-
-[1]https://github.com/OpenAMP/open-amp/pull/394#discussion_r878363627
-
-Using a @enable boolean would imply to create new ops if someone want to extend
-the flow control (to keep legacy compatibility). Using a bit map for the
-parameter could ease a future extension.
-
-Regards,
-Arnaud
-
-> 
-> Regards,
-> Bjorn
-> 
->>> + * @dst:	destination address of the endpoint
->>
->> Thanks to have integrated this in your patch!
->>
->> Regards,
->> Arnaud
->>
->>> + *
->>> + * Return: 0 on success and an appropriate error value on failure.
->>> + */
->>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
->>> +{
->>> +	if (WARN_ON(!ept))
->>> +		return -EINVAL;
->>> +	if (!ept->ops->set_flow_control)
->>> +		return -ENXIO;
->>> +
->>> +	return ept->ops->set_flow_control(ept, enable, dst);
->>> +}
->>> +EXPORT_SYMBOL(rpmsg_set_flow_control);
->>> +
->>> +/**
->>>   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->>>   * @ept: the rpmsg endpoint
->>>   *
->>> @@ -539,6 +558,8 @@ static int rpmsg_dev_probe(struct device *dev)
->>>  
->>>  		rpdev->ept = ept;
->>>  		rpdev->src = ept->addr;
->>> +
->>> +		ept->flow_cb = rpdrv->flowcontrol;
->>>  	}
->>>  
->>>  	err = rpdrv->probe(rpdev);
->>> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
->>> index 39b646d..b6efd3e 100644
->>> --- a/drivers/rpmsg/rpmsg_internal.h
->>> +++ b/drivers/rpmsg/rpmsg_internal.h
->>> @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
->>>   * @trysendto:		see @rpmsg_trysendto(), optional
->>>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->>>   * @poll:		see @rpmsg_poll(), optional
->>> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
->>>   * @get_mtu:		see @rpmsg_get_mtu(), optional
->>>   *
->>>   * Indirection table for the operations that a rpmsg backend should implement.
->>> @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
->>>  			     void *data, int len);
->>>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->>>  			     poll_table *wait);
->>> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable, u32 dst);
->>>  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
->>>  };
->>>  
->>> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
->>> index 523c98b..a0e9d38 100644
->>> --- a/include/linux/rpmsg.h
->>> +++ b/include/linux/rpmsg.h
->>> @@ -64,12 +64,14 @@ struct rpmsg_device {
->>>  };
->>>  
->>>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
->>> +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
->>>  
->>>  /**
->>>   * struct rpmsg_endpoint - binds a local rpmsg address to its user
->>>   * @rpdev: rpmsg channel device
->>>   * @refcount: when this drops to zero, the ept is deallocated
->>>   * @cb: rx callback handler
->>> + * @flow_cb: remote flow control callback handler
->>>   * @cb_lock: must be taken before accessing/changing @cb
->>>   * @addr: local rpmsg address
->>>   * @priv: private data for the driver's use
->>> @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
->>>  	struct rpmsg_device *rpdev;
->>>  	struct kref refcount;
->>>  	rpmsg_rx_cb_t cb;
->>> +	rpmsg_flowcontrol_cb_t flow_cb;
->>>  	struct mutex cb_lock;
->>>  	u32 addr;
->>>  	void *priv;
->>> @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
->>>   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
->>>   * @remove: invoked when the rpmsg channel is removed
->>>   * @callback: invoked when an inbound message is received on the channel
->>> + * @flowcontrol: invoked when remote side flow control status is received
->>>   */
->>>  struct rpmsg_driver {
->>>  	struct device_driver drv;
->>> @@ -113,6 +117,7 @@ struct rpmsg_driver {
->>>  	int (*probe)(struct rpmsg_device *dev);
->>>  	void (*remove)(struct rpmsg_device *dev);
->>>  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
->>> +	int (*flowcontrol)(struct rpmsg_device *, void *, bool);
->>>  };
->>>  
->>>  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
->>> @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->>>  
->>>  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->>>  
->>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst);
->>> +
->>>  #else
->>>  
->>>  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
->>> @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->>>  	return -ENXIO;
->>>  }
->>>  
->>> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
->>> +{
->>> +	/* This shouldn't be possible */
->>> +	WARN_ON(1);
->>> +
->>> +	return -ENXIO;
->>> +}
->>> +
->>>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->>>  
->>>  /* use a macro to avoid include chaining to get THIS_MODULE */
+-- 
+2.34.1
