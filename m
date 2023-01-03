@@ -2,194 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11F8165BEC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 12:16:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AC565BED0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 12:19:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236916AbjACLQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 06:16:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52912 "EHLO
+        id S237404AbjACLTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 06:19:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236652AbjACLQ1 (ORCPT
+        with ESMTP id S237387AbjACLTR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 06:16:27 -0500
-Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A997110B;
-        Tue,  3 Jan 2023 03:16:26 -0800 (PST)
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 303BGGCi094124;
-        Tue, 3 Jan 2023 05:16:16 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1672744576;
-        bh=RMcrotq/Tz8HcR5hKM3/+kFg3e7/OG5DejTKOeZFUIY=;
-        h=Date:Subject:To:CC:References:From:In-Reply-To;
-        b=UCHdUPYII7rIGRosvNkBCmaLPJ9xEA6N3CJW01tt+FD6RjE4Ln/cDhk1nDAw4nNna
-         pIsxprzch6QkKVg/igc833PduYVoqfJkWpgCzRhdt4P7TUGtdegA3gmlWgaCIO/F4p
-         M40e8aWr000SyP5G/X+4a9x8RWMRCRQDoANCjy1E=
-Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 303BGG5Y029962
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 3 Jan 2023 05:16:16 -0600
-Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE113.ent.ti.com
- (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Tue, 3
- Jan 2023 05:16:16 -0600
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE111.ent.ti.com
- (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Tue, 3 Jan 2023 05:16:15 -0600
-Received: from [10.24.69.26] (ileaxei01-snat2.itg.ti.com [10.180.69.6])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 303BGBr3048662;
-        Tue, 3 Jan 2023 05:16:12 -0600
-Message-ID: <dad3aba3-a40b-8b76-c689-3dc877800263@ti.com>
-Date:   Tue, 3 Jan 2023 16:46:11 +0530
+        Tue, 3 Jan 2023 06:19:17 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F40CF584
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 03:19:16 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id fc4so72749520ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 03:19:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BQJyR5W3A4f1ySu0UGGHSzR6lOpSLkq+TzKRR4GKR3s=;
+        b=uiPQEnOeSUlbBNbrKOyzbrLx7Zl5d72kqG93ulTrg7ZDZHPRt3L2aE9Ks1kaQ54CcS
+         F6xoKoMzKDU362iYQwJ2zkA7JNzUywQQRqGJJYSsXKBIw4fKyVttGqrm58ZqONb7LDos
+         GyhEp1x6L8zoMYFqjvpPqxveF0qm6HcsNL5FGAhxpk0pQVlnZXRbKI1ZCNWRYYZdsE9I
+         6H8yFx8gO+IKKkFdtsGCqUYw3uzjhEvCLPylg5rwFjVmi01rbrMtok282mVbe0DBv6ld
+         fgupCUMFpEC9XSe5Uy3gmezyioXlafT+EpISk0rzNNaNSVtl3h6S6GLV8+qTJMK9b5Su
+         MfUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BQJyR5W3A4f1ySu0UGGHSzR6lOpSLkq+TzKRR4GKR3s=;
+        b=iKO3kc3dVV72DmvuIoFQoivMVHOPyQHkzGJcVQkIFxky2g51m1xJuH2YU6kOps7+cD
+         Fa4MXqGEnTrof2IgiQiSEFpwaqMRamM0N/rk8mR+kunTkGGzT7/FsFbTety5NNNBjPb3
+         ns0fGGSbRK2FvFsYgQnx9iu6wZyVzgqH66IwqINiuxVrQQE0Y726zbt3JEflY+sUAr1V
+         o5nF2E2lMeOoLkSpdK6nullKc1xnRnU2crqe5A7FLWKsUUmftp7QROBa1wl51+E5FI5X
+         +BvUEyrEmCWjh7AWW6OrcapxSETBQ8OzeY87/yQ4Nw2/Qctnc9TIH8T9AstucaP3JPFW
+         R9XQ==
+X-Gm-Message-State: AFqh2koNgMbt9LrlX0W/3+kMwr44p/BKlwty9D74kBE8CtelU/q6Xi6+
+        OevCaLMIVY5rltShSxSY8NZKuw==
+X-Google-Smtp-Source: AMrXdXuzwiaCZt1ZjEmk+p69Sd4xpuX0vBLO7a+8it9tst+k6JqXO4pEx2T5IkhLyynjradloprwRA==
+X-Received: by 2002:a17:907:d389:b0:7c1:5a37:825 with SMTP id vh9-20020a170907d38900b007c15a370825mr49560094ejc.34.1672744754929;
+        Tue, 03 Jan 2023 03:19:14 -0800 (PST)
+Received: from ?IPV6:2001:1c06:2302:5600:29fe:fa1a:5ca3:7f83? (2001-1c06-2302-5600-29fe-fa1a-5ca3-7f83.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:29fe:fa1a:5ca3:7f83])
+        by smtp.gmail.com with ESMTPSA id bw1-20020a170906c1c100b007aef930360asm13997509ejb.59.2023.01.03.03.19.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jan 2023 03:19:14 -0800 (PST)
+Message-ID: <b146fcf8-e829-8df7-7153-b4a8913e4c9b@linaro.org>
+Date:   Tue, 3 Jan 2023 11:19:11 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 1/1] PCI: qcom: Add support for system suspend and resume
+Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <robh@kernel.org>
-CC:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_krichai@quicinc.com>, <johan+linaro@kernel.org>,
-        <steev@kali.org>
-References: <20230103074907.12784-1-manivannan.sadhasivam@linaro.org>
- <20230103074907.12784-2-manivannan.sadhasivam@linaro.org>
-From:   Dhruva Gole <d-gole@ti.com>
-In-Reply-To: <20230103074907.12784-2-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org
+References: <20230103010904.3201835-1-bryan.odonoghue@linaro.org>
+ <20230103010904.3201835-8-bryan.odonoghue@linaro.org>
+ <f293e1c3-d192-fe98-c599-e9c40d01175d@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <f293e1c3-d192-fe98-c599-e9c40d01175d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 03/01/23 13:19, Manivannan Sadhasivam wrote:
-> During the system suspend, vote for minimal interconnect bandwidth and
-> also turn OFF the resources like clock and PHY if there are no active
-> devices connected to the controller. For the controllers with active
-> devices, the resources are kept ON as removing the resources will
-> trigger access violation during the late end of suspend cycle as kernel
-> tries to access the config space of PCIe devices to mask the MSIs.
+On 03/01/2023 02:29, Konrad Dybcio wrote:
+> 12, 13?
 > 
-> Also, it is not desirable to put the link into L2/L3 state as that
-> implies VDD supply will be removed and the devices may go into powerdown
-> state. This will affect the lifetime of storage devices like NVMe.
-> 
-> And finally, during resume, turn ON the resources if the controller was
-> truly suspended (resources OFF) and update the interconnect bandwidth
-> based on PCIe Gen speed.
-> 
-> Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
+> Also, why does this node exist in the first place? Is it
+> going to be used for some non-standard touchpanel-off-flipping?
 
-Nice to have another driver added to the list of system suspend
-support!
+For most of your comments here the answer is "because that's what the 
+incoming dts does" from Sony's downstream.
 
-Acked-by: Dhruva Gole <d-gole@ti.com>
+For V3 I will see if I can get some better insight on the gpio bias and 
+what this entry here is intended for.
 
->   drivers/pci/controller/dwc/pcie-qcom.c | 52 ++++++++++++++++++++++++++
->   1 file changed, 52 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 5696e327795b..48810f1f2dba 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -227,6 +227,7 @@ struct qcom_pcie {
->   	struct gpio_desc *reset;
->   	struct icc_path *icc_mem;
->   	const struct qcom_pcie_cfg *cfg;qcom_pcie_icc_update
-> +	bool suspended;
->   };
->   
->   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1835,6 +1836,52 @@ static int qcom_pcie_remove(struct platform_device *pdev)
->   	return 0;
->   }
->   
-> +static int qcom_pcie_suspend_noirq(struct device *dev)
-> +{
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	int ret;
-> +
-> +	ret = icc_set_bw(pcie->icc_mem, 0, 0);
-> +	if (ret) {
-> +		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/*
-> +	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
-> +	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
-> +	 * (sub)states.
-> +	 *
-> +	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
-> +	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
-> +	 * config space for masking MSIs.
-> +	 *
-> +	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
-> +	 * will be removed and the devices may go into powerdown state. This will affect the
-> +	 * lifetime of the storage devices like NVMe.
-> +	 */
-> +	if (!dw_pcie_link_up(pcie->pci)) {
-> +		qcom_pcie_host_deinit(&pcie->pci->pp);
-> +		pcie->suspended = true;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_pcie_resume_noirq(struct device *dev)
-> +{
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +
-> +	if (pcie->suspended) {
-> +		qcom_pcie_host_init(&pcie->pci->pp);
-> +		pcie->suspended = false;
-> +	}
-> +
-> +	qcom_pcie_icc_update(pcie);
-> +
-> +	return 0;
-> +}
-> +
->   static const struct of_device_id qcom_pcie_match[] = {
->   	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
->   	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> @@ -1870,12 +1917,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
->   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
->   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
->   
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
-> +};
-> +
->   static struct platform_driver qcom_pcie_driver = {
->   	.probe = qcom_pcie_probe,
->   	.remove = qcom_pcie_remove,
->   	.driver = {
->   		.name = "qcom-pcie",
->   		.of_match_table = qcom_pcie_match,
-> +		.pm = &qcom_pcie_pm_ops,
->   	},
->   };
->   module_platform_driver(qcom_pcie_driver);
-
-Out of curiosity, were you able to measure how much power you were able
-to save after adding suspend support for PCIe? I don't know if clock
-gating really saves much amount of power, but yeah its true that we
-can't really cut off the power domain entirely in this case.
-
--- 
-Thanks and Regards,
-Dhruva Gole
+---
+bod
