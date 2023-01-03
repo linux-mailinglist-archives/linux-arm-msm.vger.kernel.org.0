@@ -2,157 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EDDE65C787
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 20:30:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 442E265C807
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 21:25:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232967AbjACT3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 14:29:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
+        id S231881AbjACUZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 15:25:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233170AbjACT3W (ORCPT
+        with ESMTP id S232686AbjACUZ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 14:29:22 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F5A13EA4;
-        Tue,  3 Jan 2023 11:29:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4056E614FE;
-        Tue,  3 Jan 2023 19:29:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E50CC433D2;
-        Tue,  3 Jan 2023 19:29:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672774160;
-        bh=kS1/OyPfwcshfjZ/3SRHvug8fTiy5Wp9PW3ZNN6JzkY=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=pVFMp+O7STYIzNC26PdnlOB+c8TEatF6kKtV74xmbxzfcUAgnz3l52ERbwcVEEQVR
-         iPX8VOIHAJfP67k3yMDCVkLMU9UNjOgHHj7PC1MU+n6bRjOpuQhFXrf79U7Qp8gelK
-         +fqGyFRzXPNx2V2R9+pswBxersPoCp4IgsbYCoRbMe6BfQABV/13+ccEJe0Na4cUiB
-         ZfCWj3fii45asfmzvj3hIK8Gs3nyJ2brfsLIpw3b/NzziiAtVm4kRzDAyx16/F4irb
-         SFf8Rcz+8RHR+vb2JEQq+CTjeLWBXg4a6aWIq6ufp9F3TsEFT4N1jNOmJ7tJ6KVG3y
-         j897npKffKRaQ==
-Received: by mail-vs1-f54.google.com with SMTP id x65so19280454vsb.13;
-        Tue, 03 Jan 2023 11:29:20 -0800 (PST)
-X-Gm-Message-State: AFqh2koi+O/gtHaRIRSPHgPVoZ2wmmA7vR0EZt0AiI3hgcakfFPgE5V7
-        BU3csidkBPtWYlvb9rjx/xxw+ONPuDPmCUX6kQ==
-X-Google-Smtp-Source: AMrXdXsQ2RTXm/Q35pqeUXeb1yWkLtg8oApHK2GmDp4d+XS1Y9R+sLOqoroDn7dwWaNBSf2fnc/56BSdJ4WHQRyGYuk=
-X-Received: by 2002:a67:edd4:0:b0:3b5:1fe4:f1c2 with SMTP id
- e20-20020a67edd4000000b003b51fe4f1c2mr5170483vsp.0.1672774159592; Tue, 03 Jan
- 2023 11:29:19 -0800 (PST)
+        Tue, 3 Jan 2023 15:25:29 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49AE013CF8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 12:25:27 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id v14so22702409qtq.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 12:25:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iARVLMD3v8IODdCw3GdczKsFsUhthsaW0rxu4UEbvTk=;
+        b=XaaaoCFcnicDj2syudEzP6QsRP6hWeKn0p+ctG9G7m+fmb3ZiSvqVPiEG5VMa0at6b
+         h4OWCrAFPNBpncx/vd7h6y4kS493H45Txq908qdKEobXGxL7fJPE9JPvX2ZRo2gKsGV7
+         mgcfBQlIr1PRQqD2UsjUJhoAzQye7bpvamzq36EnCCIM0oxzPsi3I62SKWU20dVt407I
+         u7s7CywiZXWb00xRb7iVdQ3T2SQRlJtr+4999L+P5mE8To03yEFqMuXb5MbXqOaOFLEa
+         ihZ+exCUEONWeoUrj5Ioe0xK23UuJlWAkn0pkpRv3Sd5v49tqbuOV5tsVlc+MjnmJZY7
+         xQkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iARVLMD3v8IODdCw3GdczKsFsUhthsaW0rxu4UEbvTk=;
+        b=z6uUchoUjBNu5zslmcWX1HDJZQi2p5KJe0URodPKH8zApPw+qtLtGAwpMl3HRGx/O7
+         DgUCG6zsC12l6lHiTm+yZJMR25nKvZvI5IYF+GTTDG9Egp8YqAlFFaCh2nsPm1hiVpAN
+         gJqExipzNmqlzdVEvJOCzcw+k3MHcUDA/kqSD6qwEHySF+ek7N+HXrW24XsBetXsI9K6
+         Tt9T2UZ0QTcghEDdJIjdJ8UE/BP8tLPD3SXF+vq6zMEQP7Qc45vS2hv8fc1WfKesyx0G
+         AyojBOLtMWAaq+MiaDgLjLu8RTWhpZ+un7vvXBoqdxIOtnUk7beqPsqqkOogdnAD0Nt0
+         ha9g==
+X-Gm-Message-State: AFqh2kovJboInn7ANrTGdOmtKDIu8gOtxG7RzbP4geOQVoVUmIPTWglS
+        bBwJCtw8iQ+6kiNESq7qv9e+sg==
+X-Google-Smtp-Source: AMrXdXvBvT7RbkeGYJ+AxMrhF0TW14Ntz4Ek3DmsmesFrA4OPGdMpshhSzSKebvi316jMXL+rfkfzQ==
+X-Received: by 2002:ac8:7386:0:b0:3a8:fd7:7347 with SMTP id t6-20020ac87386000000b003a80fd77347mr65246203qtp.32.1672777526289;
+        Tue, 03 Jan 2023 12:25:26 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id i1-20020ac84881000000b003a7ec97c882sm19318413qtq.6.2023.01.03.12.25.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jan 2023 12:25:25 -0800 (PST)
+Message-ID: <444adc6b-809f-be35-2114-f05b54db48bf@linaro.org>
+Date:   Tue, 3 Jan 2023 14:25:24 -0600
 MIME-Version: 1.0
-References: <20221207211327.2848665-1-robh@kernel.org>
-In-Reply-To: <20221207211327.2848665-1-robh@kernel.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 3 Jan 2023 13:29:08 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKmULjtP7UCMZDxJTL3p7C_WS9qMaL5tMg5Jv74Sb0QQw@mail.gmail.com>
-Message-ID: <CAL_JsqKmULjtP7UCMZDxJTL3p7C_WS9qMaL5tMg5Jv74Sb0QQw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Fix CPU nodes compatible string
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 3/6] net: ipa: enable IPA interrupt handlers
+ separate from registration
+Content-Language: en-US
+To:     Caleb Connolly <caleb.connolly@linaro.org>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221230232230.2348757-1-elder@linaro.org>
+ <20221230232230.2348757-4-elder@linaro.org>
+ <de723e81-f3ba-19f3-827f-28134e904c97@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <de723e81-f3ba-19f3-827f-28134e904c97@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 7, 2022 at 3:13 PM Rob Herring <robh@kernel.org> wrote:
->
-> 'arm,kryo' is not documented and is not an Arm Ltd thing either as that
-> is Qualcomm branding. The correct compatible is 'qcom,kryo'.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+On 12/31/22 11:56 AM, Caleb Connolly wrote:
+>>
+>> diff --git a/drivers/net/ipa/ipa_interrupt.h 
+>> b/drivers/net/ipa/ipa_interrupt.h
+>> index f31fd9965fdc6..5f7d2e90ea337 100644
+>> --- a/drivers/net/ipa/ipa_interrupt.h
+>> +++ b/drivers/net/ipa/ipa_interrupt.h
+>> @@ -85,6 +85,20 @@ void ipa_interrupt_suspend_clear_all(struct 
+>> ipa_interrupt *interrupt);
+>>    */
+>>   void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt);
+>> +/**
+>> + * ipa_interrupt_enable() - Enable an IPA interrupt type
+>> + * @ipa:    IPA pointer
+>> + * @ipa_irq:    IPA interrupt ID
+>> + */
+>> +void ipa_interrupt_enable(struct ipa *ipa, enum ipa_irq_id ipa_irq);
+> 
+> I think you forgot a forward declaration for enum ipa_irq_id
+> 
+> Kind Regards,
+> Caleb
 
-Ping!
+OK I checked this.
 
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 212580316d3e..f06cc7588acc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -166,7 +166,7 @@ cpus {
->
->                 CPU0: cpu@0 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x0>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> @@ -189,7 +189,7 @@ L3_0: l3-cache {
->
->                 CPU1: cpu@100 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x100>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> @@ -209,7 +209,7 @@ L2_100: l2-cache {
->
->                 CPU2: cpu@200 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x200>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> @@ -229,7 +229,7 @@ L2_200: l2-cache {
->
->                 CPU3: cpu@300 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x300>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> @@ -249,7 +249,7 @@ L2_300: l2-cache {
->
->                 CPU4: cpu@400 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x400>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&BIG_CPU_SLEEP_0
-> @@ -269,7 +269,7 @@ L2_400: l2-cache {
->
->                 CPU5: cpu@500 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x500>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&BIG_CPU_SLEEP_0
-> @@ -289,7 +289,7 @@ L2_500: l2-cache {
->
->                 CPU6: cpu@600 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x600>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&BIG_CPU_SLEEP_0
-> @@ -309,7 +309,7 @@ L2_600: l2-cache {
->
->                 CPU7: cpu@700 {
->                         device_type = "cpu";
-> -                       compatible = "arm,kryo";
-> +                       compatible = "qcom,kryo";
->                         reg = <0x0 0x700>;
->                         enable-method = "psci";
->                         cpu-idle-states = <&BIG_CPU_SLEEP_0
-> --
-> 2.35.1
->
+You are correct that ipa_irq_id should be declared as an
+enum at the top of "ipa_interrupt.h".  In addition to the
+new function declarations, there were some existing
+references to the enumerated type.  I believe this became
+a (not-reported) problem starting with this commit:
+
+   322053105f095 net: ipa: move definition of enum ipa_irq_id
+
+It being missing did not result in any build warnings,
+however.  Here's why.
+
+The ipa_irq_id enumerated type is defined in "ipa_reg.h".
+
+Note that "ipa_reg.h" is included by "ipa_endpoint.h".  So if
+"ipa_endpoint.h" is included before "ipa_interrupt.h", the
+ipa_irq_id type will have been defined before it's referenced
+in "ipa_interrupt.h".
+
+These files include "ipa_interrupt.h":
+
+ipa.h:
+It is included after "ipa_endpoint.h", so the enumerated type
+is defined before it's needed in "ipa_interrupt.h".
+
+ipa_main.c:
+Here too, "ipa_endpoint.h" (as well as "ipa_reg.h") is included
+before "ipa_interrupt.h", so the enumerated type is defined
+before it's used there.
+
+ipa_interrupt.c
+In this case "ipa_reg.h" is included, then "ipa_endpoint.h",
+before "ipa_interrupt.h".  So again, the enumerated type is
+defined before it's referenced in "ipa_interrupt.h".
+
+Nevertheless, your point is a good one and I'm going to
+implement your suggestion when I post version 2.
+
+Thank you!
+
+					-Alex
