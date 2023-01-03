@@ -2,101 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A71465BF84
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 13:00:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E40DC65BFBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 13:18:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237491AbjACL7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 06:59:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49864 "EHLO
+        id S237540AbjACMSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 07:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237435AbjACL7d (ORCPT
+        with ESMTP id S233108AbjACMSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 06:59:33 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B79FCFC;
-        Tue,  3 Jan 2023 03:59:32 -0800 (PST)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        Tue, 3 Jan 2023 07:18:20 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75563A0;
+        Tue,  3 Jan 2023 04:18:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 74AE26602CE7;
-        Tue,  3 Jan 2023 11:59:29 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1672747170;
-        bh=/EzXblkT2s5G5iuzR271kOa2ZyEevP0o+iEY8c1rpe8=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=itL6o8LGmxDL9Oy7vbVGRMKQvWDJ0eI+dcG23HJmKFr930dykN71/l431hib7336n
-         F9ZNoqref0+FflC/XHm/pPg1VKAlCew/6hsqitS9Oc4BAL0QziH3I6mGLQOKAzElIB
-         Gt8dMCvT27ETO5yXQ2NnP2wJoggwk1OybcKEbgPeIA8/3GimIFdPJ/uBppptGgUxlC
-         ooFWgbPTNfccjTgudYnKlBcT+iQ2Nu8sNCddw3Gj6IRO+XYjzwExIa1QSLGNp5W3bH
-         9OT7eLFX58ti681qp2FvBR8ScYe0J4oKVkcb3AyWIfBFARzd5GUZUaMWVi6cDwINSc
-         oHIi+IAqiDq8Q==
-Message-ID: <d3688dc6-d869-b313-3849-b07043a3c064@collabora.com>
-Date:   Tue, 3 Jan 2023 12:59:26 +0100
+        by ams.source.kernel.org (Postfix) with ESMTPS id 45F42B80E46;
+        Tue,  3 Jan 2023 12:18:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CE7C433EF;
+        Tue,  3 Jan 2023 12:18:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672748297;
+        bh=Avbtatmn2oCDfdQYMRTRfQ5ZfoGXDNhE5Ig0SHUTj9g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hlDOU0xL8Fuo3Ou6gLKN7HM3b7hvMkPkRF6RzGQzP7CamivRed4I9vdiIEViWuzCF
+         OidBdzeUT6DcgMy6E6l0rpiPWQQAZ4FEss6tpW5TFjmV271+Os+CbniGZEDlOYFXmU
+         x6TrduuG6B5n9R3HHZyOtywv6OBI07Yn9vP3SBeqyVnpx+pi6z7StAWz1oAEmH+p+K
+         eBjYHtZH0ua/KrDAXxliIqEfvHdK7YOaP61gNO6pnCL7VSv38gSeTzT+6WYJH+hrC7
+         Jgc8dGOWdIxDO/8jJ1u/WeX11pgBA7Z3Y+C7x5uB4MXRkwmiA0GHcOFKQV/nmLGjav
+         vO5m+QTf7Xl0Q==
+Date:   Tue, 3 Jan 2023 12:18:10 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: leds: spmi-flash-led: Add pm6150l
+ compatible
+Message-ID: <Y7QdAqZNpVFDbmlG@google.com>
+References: <20221209-fp4-pm6150l-flash-v1-0-531521eb2a72@fairphone.com>
+ <20221209-fp4-pm6150l-flash-v1-1-531521eb2a72@fairphone.com>
+ <Y6WiQKRI/YCbMBhA@google.com>
+ <e1fb7474-d029-8004-709d-1d0b437f192d@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 02/11] dt-bindings: nvmem: Fix qcom,qfprom compatibles
- enum ordering
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        jic23@kernel.org, lars@metafoo.de, keescook@chromium.org,
-        tony.luck@intel.com, gpiccoli@igalia.com, evgreen@chromium.org,
-        gregkh@linuxfoundation.org, a39.skl@gmail.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
-        kernel@collabora.com, luca@z3ntu.xyz
-References: <20221111120156.48040-1-angelogioacchino.delregno@collabora.com>
- <20221111120156.48040-3-angelogioacchino.delregno@collabora.com>
- <b611f647-c46f-3780-c6b4-3cfb4fe402e7@linaro.org>
- <1fac581e-ef02-4576-0dbf-67662a29f724@collabora.com>
- <c5ef569d-0f36-19ac-da53-3a5acdca4165@linaro.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <c5ef569d-0f36-19ac-da53-3a5acdca4165@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e1fb7474-d029-8004-709d-1d0b437f192d@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 03/01/23 12:58, Srinivas Kandagatla ha scritto:
-> 
-> 
-> On 16/11/2022 08:50, AngeloGioacchino Del Regno wrote:
->> Il 15/11/22 17:42, Krzysztof Kozlowski ha scritto:
->>> On 11/11/2022 13:01, AngeloGioacchino Del Regno wrote:
->>>> Move qcom,msm8974-qfprom after qcom,msm8916-qfprom to respect
->>>> alphabetical ordering.
->>>>
->>>> Fixes: c8b336bb1aeb ("dt-bindings: nvmem: Add soc qfprom compatible strings")
->>>
->>> It's a style, code readability, but not a bug. I propose to drop the tag.
->>>
->>> With that:
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>>
->>
->> Should I send a v3, or is it possible to drop the tag while applying it?
-> 
-> Applied after dropping fixes tag..
-> 
+On Sat, 24 Dec 2022, Krzysztof Kozlowski wrote:
 
-Thanks for that!
+> On 23/12/2022 13:42, Lee Jones wrote:
+> > On Fri, 09 Dec 2022, Luca Weiss wrote:
+> > 
+> >> Add the compatible for the flash-led block found on pm6150l PMIC.
+> >>
+> >> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >> ---
+> >>  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
+> >>  1 file changed, 1 insertion(+)
+> > 
+> > Who takes LED DT Bindings presently?
+> 
+> Preferably Pavel and/or you. Rob was taking only on exceptional cases.
 
-Cheers,
-Angelo
+Works for me.  That's the case from now on then, thank you.
 
-
+-- 
+Lee Jones [李琼斯]
