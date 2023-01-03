@@ -2,67 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0363A65C1C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:23:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2CE065C1C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:23:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237570AbjACOV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 09:21:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
+        id S237817AbjACOWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 09:22:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237549AbjACOV2 (ORCPT
+        with ESMTP id S237765AbjACOWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 09:21:28 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3938E2DC8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:21:27 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j17so36360791lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:21:27 -0800 (PST)
+        Tue, 3 Jan 2023 09:22:33 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7317C2620
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:22:32 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id d9so1034062wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NAMOnkH/hQzTqE2MEDKvDzak0AhyVO2rIspP4ZVIx1U=;
-        b=AWL8XwbP8Pmxp9hMQgrwXSiH3RMRxVYE5wa4qgt3cHCEljppJ4b1N9CadaKq1pIb29
-         racj8FkVZf8Jdcmwp/w1gAwLz8LXc+/pxV4ifyqdgOBLSONcD4sFEMTsebRx/DdSV2I9
-         n0bOwE9wF/lk5X4K5LlQmCjh0paMTNjZeQAzOfLt5ZSGxAbqlardWE/kZBsGWVaEr41v
-         DDcF+H2gEP3d/x8sx+dymYH85phQi58XutJ5URyYmJY3MGbU2bNM/uecIv0sNVLi5qPS
-         KhyGnbY2Pd7Rx/GL4JdqsmewNoUdTSpm445cjczSrJAQOtlr6vPsqajyDMNJ2EombkcC
-         Vpkg==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BrQTlFtoTu8he9ydQRdvctc8hmi7ieuddKkLwr03Ix0=;
+        b=xHYxZ0jDW2+TBmQ5IAf+o48+WdHcrpuYIJpkEKuoa8Hvb/BQHziGbWUph2B1hstbEU
+         uOyZAreWTU3SynAXgs/KUVW609XGxXbjE8SsFSYwTSxphKlGUqg45z2jv+ip4PNysIhJ
+         wLWNeS5qSAFdzN+2Z0T6EqzqQ9FX3YK4UKmLI76hIez8PmYQUq1WhrC8nv/0nqFQ/1LF
+         PCUBCuC4YGW5VHu3UoRcGpJG8YR3gqXl/ieW1R1rMvOIBWb3ugsRIo02L/g6ewizQvWq
+         wZ7p2jYJTssUMdyu0jckxKPj6/vtUUc3Wz+cmmQ/69Fy/D/7ZK2CNhweVpsmgFUl9bvD
+         NejA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NAMOnkH/hQzTqE2MEDKvDzak0AhyVO2rIspP4ZVIx1U=;
-        b=jCwWPzGkQNwoYheqrdDrfvtC+EoeEcyTErK1IQv1iyleXiGrS+BNKqEC7VjYdF4dCA
-         Bs1KxIt3XnGwxJTkYJvCaRHh6b9peB0saC+8+7uINqi+Q59dqwUtHH9NmQxFEgmxE3cL
-         9SX2CFdsZ2nvGVESX++m3j5xXCo3/Vi+lx+AXaaQ8FdLpTT1EGTJQuARAhePrkxpFQCd
-         XNW3VMXBkz8YKclKinsIY1PI9ddSeSh9k0jUZqbYyhwFwIxFk5zdPZ5Teuj+Pi5+oKKn
-         jHKOsSrJb7OuMOENcq+BzPtffvMSbn/Zcwpn+mxjQEolburTb+r/bik5UUn90wAjkBdI
-         Hg8w==
-X-Gm-Message-State: AFqh2krX65tsmZvoVSCdIST0vRe2o0qPoomP2gLCtHs0UnNlqu9vYY9s
-        nDyUEP1Ek6/4VMPvkLvlfOy367JazspbW2N4
-X-Google-Smtp-Source: AMrXdXucwvVajwPhn+nT7Ms1H/CJ6Va7ZJ9v1yD9UacHT3y0jbqCzm9IDH9ypHCd4URCuy1DE6OlyA==
-X-Received: by 2002:ac2:5142:0:b0:4cb:2260:8553 with SMTP id q2-20020ac25142000000b004cb22608553mr4942442lfd.30.1672755685378;
-        Tue, 03 Jan 2023 06:21:25 -0800 (PST)
-Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id bi2-20020a0565120e8200b004b543f38b7csm4864965lfb.21.2023.01.03.06.21.24
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BrQTlFtoTu8he9ydQRdvctc8hmi7ieuddKkLwr03Ix0=;
+        b=LoNB9QW/EjGULfs22PRvcqr9VRKNQNVjVjo9VVk4vvwdmw62GaQGM9KvjQnuiLSwm/
+         zyDqkBIHIFzhDxUdAS06lWR8bASeqHDZLghb3RXAf0eTY23Y3hhswx1x3DLL0yjnvWkQ
+         ADaTeN9AYFUIas3y50upOo8BqgUfdRy5VbC4NmTWS35BuTa1Lon6NBtMGElB6rkjLo/b
+         /QWs/OOb2i3vwiLn3hFlfv6VPODkfiFsYMS7ZCswmMDs6e9QcAyA0F3D/pFvGX0C8d4C
+         LiXZaUruYshJhVQs/1STjOJhBIMuZ1C8WFj6D5Ws4cEnmoNiARSUGpHfyg/7d0K9xoXX
+         Y39A==
+X-Gm-Message-State: AFqh2kr608CJNSpySO7X9PaEo1aUzG/ACcin59/Nr0iV/CnQU1pvNhTJ
+        aj0qULwzNGgU9eU8JiSfmA0ICw==
+X-Google-Smtp-Source: AMrXdXtnzaQHGwPx//u/Ga79fT/ywgStvs4FSMtqKeiQ5XHpCdrPdwXKkzKkcqbwm/wMjYulEUQyaQ==
+X-Received: by 2002:adf:cc81:0:b0:275:ae5c:d448 with SMTP id p1-20020adfcc81000000b00275ae5cd448mr26043702wrj.13.1672755751009;
+        Tue, 03 Jan 2023 06:22:31 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id i6-20020a5d55c6000000b00283c7b5ee3bsm20182163wrw.101.2023.01.03.06.22.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 06:21:24 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] interconnect: qcom: qcm2290: Fix MASTER_SNOC_BIMC_NRT
-Date:   Tue,  3 Jan 2023 15:21:20 +0100
-Message-Id: <20230103142120.15605-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
+        Tue, 03 Jan 2023 06:22:30 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 03 Jan 2023 15:22:27 +0100
+Subject: [PATCH 1/2] dt-bindings: display: panel: document the Visionox
+ VTDR6130 AMOLED DSI Panel bindings
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-1-9b746b858378@linaro.org>
+References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.11.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -73,35 +80,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Due to what seems to be a copy-paste error, the _NRT master was
-identical to the _RT master, which should not be the case.. Fix it
-using the values available from the downstream kernel [1].
+Document the 1080x2400 Visionox VTDR6130 AMOLED DSI Panel bindings.
 
-[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/scuba-bus.dtsi#127
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Not tested on real hw.
+ .../bindings/display/panel/visionox,vtdr6130.yaml  | 53 ++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
- drivers/interconnect/qcom/qcm2290.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+diff --git a/Documentation/devicetree/bindings/display/panel/visionox,vtdr6130.yaml b/Documentation/devicetree/bindings/display/panel/visionox,vtdr6130.yaml
+new file mode 100644
+index 000000000000..49e2fd4b4e99
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/visionox,vtdr6130.yaml
+@@ -0,0 +1,53 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/visionox,vtdr6130.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Visionox VTDR6130 AMOLED DSI Panel
++
++maintainers:
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    const: visionox,vtdr6130
++
++  vddio-supply: true
++  vci-supply: true
++  vdd-supply: true
++  port: true
++  reset-gpios: true
++
++additionalProperties: false
++
++required:
++  - compatible
++  - vddio-supply
++  - vci-supply
++  - vdd-supply
++  - reset-gpios
++  - port
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++    panel {
++        compatible = "visionox,vtdr6130";
++
++        vddio-supply = <&vreg_l12b_1p8>;
++        vci-supply = <&vreg_l13b_3p0>;
++        vdd-supply = <&vreg_l11b_1p2>;
++
++        reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
++
++        port {
++            panel0_in: endpoint {
++                remote-endpoint = <&dsi0_out>;
++            };
++        };
++    };
++...
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index 0da612d6398c..a29cdb4fac03 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -147,9 +147,9 @@ static struct qcom_icc_node mas_snoc_bimc_nrt = {
- 	.name = "mas_snoc_bimc_nrt",
- 	.buswidth = 16,
- 	.qos.ap_owned = true,
--	.qos.qos_port = 2,
-+	.qos.qos_port = 3,
- 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
--	.mas_rpm_id = 163,
-+	.mas_rpm_id = 164,
- 	.slv_rpm_id = -1,
- 	.num_links = ARRAY_SIZE(mas_snoc_bimc_nrt_links),
- 	.links = mas_snoc_bimc_nrt_links,
 -- 
-2.39.0
-
+2.34.1
