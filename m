@@ -2,125 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E620E65BA1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 05:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08B6A65BA22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 05:57:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236423AbjACEp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 23:45:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39926 "EHLO
+        id S233379AbjACE52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 23:57:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230071AbjACEp5 (ORCPT
+        with ESMTP id S232898AbjACE5W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 23:45:57 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA56664D6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 20:45:55 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id 20so18011603plo.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 20:45:55 -0800 (PST)
+        Mon, 2 Jan 2023 23:57:22 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5509596
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 20:57:20 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id j17so34688668lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 20:57:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5r2SpeKo/dsm6TJm7k5ZEFJZ1B6qJV7pDaoh0+GMrDA=;
-        b=PIMtxS4MCr2yd/V98x1M0WVzhwxok8v0zFDS5ob3HM8+hLK8f1YQECXRa9GkngJQ19
-         mw526XmfUqCJiahu24KKtaReMK8svdyTnqNguRFFM3IqH9yToQyX90MR7clsc9t0gG89
-         hgS6jqF4kMadta8wcMwaqNyE40Xcl68I4ve4CW0l4KecOfUjqkDOlAMS7YWjMkk/hyc9
-         Wl9RfD9Ba7vfCfrYpADX4TTQcHYulXzMlGd/Je7xPIcDHV0STP1sNbFtBu6/dGBIjhGT
-         i4hv92Okma105aXB245HF8POGL9h8QfcxH2BNh4im2fSazQWtTwxGyNVRw7BhXQM087B
-         H/gQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=032AleYKwYBfKPehAkrDGenXwgSPtz3uJUu4le8LKMc=;
+        b=lFrCd8Mwwx57UQRYDLwiNFuDZNpzzYyFKc6Bg0c4hz1+VUfURjwMxXq+we23rxXipu
+         x5aTH9qXEN9JxeKj7Tk5yfbtGE7iZBTfxMffSUkKWEF6d/7tZpq5ToR0BId4XzPZvmLH
+         BcmcgdgRRkve5V6Pru5fazsTeU8LfG+ltHjPpSqdLh2MQwYn/gpm4m2qHNRzDJX9V+vY
+         sNlcm1QmqjodEPGgwDiUmUZ8QZ68QtJ+Gt7JsGYGM01fPL9KbYSLq2j050CjIuwWEpAW
+         m0RjcmVkXPTZAyME1vZoN+i+KVpTOS9TiGwLSLYOypkWNPZiqPMmBDuzLRjXt+EQ2ZiL
+         pXCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5r2SpeKo/dsm6TJm7k5ZEFJZ1B6qJV7pDaoh0+GMrDA=;
-        b=Ds/NFxjLu0Iziu+eKHoVNjRqWMusgXn++o98nN3iiLSJd0lu0VCm10nHDE87mwXKw5
-         fp9UW7NhtDnfhyJG5v8wKmKvnhjn3O4QlyFRaeXSxhnCwcuilKaXWDmwWTb9Z5fE2nu4
-         t4WOIxqUtkbaGqvofEFdqD0YmXWAjfeFKBfS+INhdgzuLD0myQho0s6kG/q0uOA1PVGc
-         EaM/46bwbRm1FdzgjjeI/ZG1SVUDosk4WA4SyF6u2zjC34Wkbj2MveWIONHnb9yJ4wvo
-         XPGDHOeU2/vxaMEdkw7Zcn1Kh4QE81pvqYBSdiGNKobqJNYDHkZUNXQ0R+x0daVPqOJy
-         0SNA==
-X-Gm-Message-State: AFqh2krC6jAav+Ls/OoFzH5ov8+DXnWmQg75fJ4/dmlj7AULl1iOD5lq
-        GRi31Nfe+Sq/uRjbZf1HKonhAg==
-X-Google-Smtp-Source: AMrXdXuXqoCFzqofEoGdlX/Jo/KW97I/INTMOP7PlP95lQMRtK8ZZV8x9HRIX/rd3Br9I+nSrXs4eQ==
-X-Received: by 2002:a05:6a20:8ee1:b0:ac:3f3f:9fbd with SMTP id m33-20020a056a208ee100b000ac3f3f9fbdmr43533668pzk.48.1672721155036;
-        Mon, 02 Jan 2023 20:45:55 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c5e:e3b5:c341:16de:ce17:b857? ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
-        by smtp.gmail.com with ESMTPSA id x7-20020aa78f07000000b00580f630a05csm15555599pfr.180.2023.01.02.20.45.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jan 2023 20:45:54 -0800 (PST)
-Message-ID: <3db705bf-d63b-2804-53d3-4e538722369d@linaro.org>
-Date:   Tue, 3 Jan 2023 10:15:48 +0530
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=032AleYKwYBfKPehAkrDGenXwgSPtz3uJUu4le8LKMc=;
+        b=Arn/KlKAVd0Z9c/6dwNJ2ucGu7Pb0VXBhdbtSGcZE1ByjUOKsJPCOsw5XI+cqRKwh0
+         +4TXiaC1r8sFR/Fx+hdauUhfoacQDs1+fSEzI5Vf5mHymc5ZfyKmrZgaTvEBN8ki3r02
+         odU/W/jxQYA+0mUPkf41GqLZw0B1uRpqllNR4jwQaQAIgoac8GaZwCnN6pDwcqIXLzdH
+         Be7+5c4EUpJM/+aFHfsdfdYkEcnxMbrKKNYdxJHX0u6u+T+esNfk5DcSovceFTpIKsX9
+         Cv+StmzvfEXd2Wfx5NpkS0E2VP2oKNQF+HO1ab8ABlo4Tl3pnJvnHcfN99Z3NTm2DW0N
+         fgEg==
+X-Gm-Message-State: AFqh2kpeWXDHEi6XMrEJAhEmguh6RckkaOiCn7+TWDr/gDtLm8ybA9dK
+        2vxCQnD2J+0t3Mjsql7AJFYG4g==
+X-Google-Smtp-Source: AMrXdXtlJGFF8EVeegodK0AhKIktQmt6sVGC0J0pRQSxmmPRjZk7zKnSNTtan9Pa0vLwh5tsWJ/TkA==
+X-Received: by 2002:a05:6512:168d:b0:4ca:fd5f:ce82 with SMTP id bu13-20020a056512168d00b004cafd5fce82mr9663992lfb.49.1672721838408;
+        Mon, 02 Jan 2023 20:57:18 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id y26-20020a0565123f1a00b00494603953b6sm4714819lfa.6.2023.01.02.20.57.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jan 2023 20:57:17 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: drop obsolete OSM_L3/EPSS defines
+Date:   Tue,  3 Jan 2023 06:57:17 +0200
+Message-Id: <20230103045717.1079067-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 2/2] usb: misc: eud: Add driver support for SM6115 /
- SM4250
-To:     kernel test robot <lkp@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, quic_schowdhu@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org
-References: <20221231130743.3285664-3-bhupesh.sharma@linaro.org>
- <202301010719.babWy02L-lkp@intel.com>
-Content-Language: en-US
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <202301010719.babWy02L-lkp@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Since Qualcomm platforms have switched to the separate OSM_L3/EPSS
+driver, old related defines became unused. Drop them now.
 
+Suggested-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4529992c9474 ("interconnect: qcom: osm-l3: Use platform-independent node ids")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/interconnect/qcom/sc7180.h  | 2 --
+ drivers/interconnect/qcom/sc7280.h  | 2 --
+ drivers/interconnect/qcom/sc8180x.h | 2 --
+ drivers/interconnect/qcom/sdm845.h  | 2 --
+ drivers/interconnect/qcom/sm8150.h  | 2 --
+ drivers/interconnect/qcom/sm8250.h  | 2 --
+ 6 files changed, 12 deletions(-)
 
-On 1/1/23 5:29 AM, kernel test robot wrote:
-> Hi Bhupesh,
-> 
-> I love your patch! Yet something to improve:
-> 
-> [auto build test ERROR on usb/usb-testing]
-> [also build test ERROR on usb/usb-next usb/usb-linus robh/for-next westeri-thunderbolt/next linus/master v6.2-rc1 next-20221226]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/dt-bindings-soc-qcom-eud-Add-SM6115-SM4250-binding/20221231-211214
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-> patch link:    https://lore.kernel.org/r/20221231130743.3285664-3-bhupesh.sharma%40linaro.org
-> patch subject: [PATCH 2/2] usb: misc: eud: Add driver support for SM6115 / SM4250
-> config: arc-randconfig-r043-20230101
-> compiler: arceb-elf-gcc (GCC) 12.1.0
-> reproduce (this is a W=1 build):
->          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->          chmod +x ~/bin/make.cross
->          # https://github.com/intel-lab-lkp/linux/commit/b5caddbdc606744113a894749b7457e5b2621678
->          git remote add linux-review https://github.com/intel-lab-lkp/linux
->          git fetch --no-tags linux-review Bhupesh-Sharma/dt-bindings-soc-qcom-eud-Add-SM6115-SM4250-binding/20221231-211214
->          git checkout b5caddbdc606744113a894749b7457e5b2621678
->          # save the config file
->          mkdir build_dir && cp config build_dir/.config
->          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc olddefconfig
->          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash
-> 
-> If you fix the issue, kindly add following tag where applicable
-> | Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All errors (new ones prefixed by >>, old ones prefixed by <<):
-> 
->>> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
+diff --git a/drivers/interconnect/qcom/sc7180.h b/drivers/interconnect/qcom/sc7180.h
+index c6212a10c2f6..c2d8388bb880 100644
+--- a/drivers/interconnect/qcom/sc7180.h
++++ b/drivers/interconnect/qcom/sc7180.h
+@@ -145,7 +145,5 @@
+ #define SC7180_SLAVE_SERVICE_SNOC			134
+ #define SC7180_SLAVE_QDSS_STM				135
+ #define SC7180_SLAVE_TCU				136
+-#define SC7180_MASTER_OSM_L3_APPS			137
+-#define SC7180_SLAVE_OSM_L3				138
+ 
+ #endif
+diff --git a/drivers/interconnect/qcom/sc7280.h b/drivers/interconnect/qcom/sc7280.h
+index 1fb9839b2c14..175e400305c5 100644
+--- a/drivers/interconnect/qcom/sc7280.h
++++ b/drivers/interconnect/qcom/sc7280.h
+@@ -150,7 +150,5 @@
+ #define SC7280_SLAVE_PCIE_1			139
+ #define SC7280_SLAVE_QDSS_STM			140
+ #define SC7280_SLAVE_TCU			141
+-#define SC7280_MASTER_EPSS_L3_APPS		142
+-#define SC7280_SLAVE_EPSS_L3			143
+ 
+ #endif
+diff --git a/drivers/interconnect/qcom/sc8180x.h b/drivers/interconnect/qcom/sc8180x.h
+index 2eafd35543c7..ce32295af8f3 100644
+--- a/drivers/interconnect/qcom/sc8180x.h
++++ b/drivers/interconnect/qcom/sc8180x.h
+@@ -168,8 +168,6 @@
+ #define SC8180X_SLAVE_EBI_CH0_DISPLAY		158
+ #define SC8180X_SLAVE_MNOC_SF_MEM_NOC_DISPLAY	159
+ #define SC8180X_SLAVE_MNOC_HF_MEM_NOC_DISPLAY	160
+-#define SC8180X_MASTER_OSM_L3_APPS		161
+-#define SC8180X_SLAVE_OSM_L3			162
+ 
+ #define SC8180X_MASTER_QUP_CORE_0		163
+ #define SC8180X_MASTER_QUP_CORE_1		164
+diff --git a/drivers/interconnect/qcom/sdm845.h b/drivers/interconnect/qcom/sdm845.h
+index 776e9c2acb27..bc7e425ce985 100644
+--- a/drivers/interconnect/qcom/sdm845.h
++++ b/drivers/interconnect/qcom/sdm845.h
+@@ -136,7 +136,5 @@
+ #define SDM845_SLAVE_SERVICE_SNOC			128
+ #define SDM845_SLAVE_QDSS_STM				129
+ #define SDM845_SLAVE_TCU				130
+-#define SDM845_MASTER_OSM_L3_APPS			131
+-#define SDM845_SLAVE_OSM_L3				132
+ 
+ #endif /* __DRIVERS_INTERCONNECT_QCOM_SDM845_H__ */
+diff --git a/drivers/interconnect/qcom/sm8150.h b/drivers/interconnect/qcom/sm8150.h
+index 97996f64d799..3e01ac76ae1d 100644
+--- a/drivers/interconnect/qcom/sm8150.h
++++ b/drivers/interconnect/qcom/sm8150.h
+@@ -148,7 +148,5 @@
+ #define SM8150_SLAVE_VSENSE_CTRL_CFG		137
+ #define SM8150_SNOC_CNOC_MAS			138
+ #define SM8150_SNOC_CNOC_SLV			139
+-#define SM8150_MASTER_OSM_L3_APPS		140
+-#define SM8150_SLAVE_OSM_L3			141
+ 
+ #endif
+diff --git a/drivers/interconnect/qcom/sm8250.h b/drivers/interconnect/qcom/sm8250.h
+index b31fb431a20f..7eb6c709c30d 100644
+--- a/drivers/interconnect/qcom/sm8250.h
++++ b/drivers/interconnect/qcom/sm8250.h
+@@ -158,7 +158,5 @@
+ #define SM8250_SLAVE_VSENSE_CTRL_CFG		147
+ #define SM8250_SNOC_CNOC_MAS			148
+ #define SM8250_SNOC_CNOC_SLV			149
+-#define SM8250_MASTER_EPSS_L3_APPS		150
+-#define SM8250_SLAVE_EPSS_L3			151
+ 
+ #endif
+-- 
+2.39.0
 
-Thanks for reporting the issue. I think 'select QCOM_SCM' should be 
-added to 'config USB_QCOM_EUD' configuration option as well.
-
-I will send a fixed v2 shortly.
-
-Regards.
