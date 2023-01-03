@@ -2,73 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECD8465C1CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:23:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1363B65C1E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:25:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237920AbjACOWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 09:22:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39144 "EHLO
+        id S233478AbjACOZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 09:25:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237676AbjACOWg (ORCPT
+        with ESMTP id S238004AbjACOZE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 09:22:36 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983D3267E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:22:33 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id bk16so16393454wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:22:33 -0800 (PST)
+        Tue, 3 Jan 2023 09:25:04 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8A8912603
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:24:23 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-48641a481dfso264569897b3.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lYRf914ZDPT+KPrvlhcxKH4FxiPWHPeHNJpw8iVwcFM=;
-        b=LkRS9f2CKbWjaL2/h1mg1AbKjfsQ2NJHMqRkS+01j6Qg313K11y1dXcrSM4sgmB1Ki
-         67rDXrlFWxS5Lug6BuWZdASEqRMp7i2kUAoVSnaD1bfmMzWtv7WE3EzSL81Nw+tuPamU
-         zkRrv1apZzfsKVWQfA2NaH0nlWtA40W+0sL2NkFArI0cVttGhTUzF/Dx7Z7kmffH6gww
-         y1HkEWZvJZjl9Jdfai7MjtDoR9pILV6xQKiKE1cCXfKdKbtJtbFAkWOpf6C6YH0KUGUy
-         CIxu0uYzgZ5FyzRGD/HHKFOzdQhuPOZI7OCO2lUE3OXEUjnlrHQ7O5xbLrmQixy/QFwh
-         t86w==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NE5M4o+uQQasvN424i3ug4ExVm+nFuQNfHX3PyiYrhY=;
+        b=i3jwR45oeE2d35x6ntkFfkol7/wtQxjvWn0I0lU5AyI9apocva0aLf5om/lKbpSFc9
+         nqVX/42fAyDN+D8kQahGzdNS/dFfR7vgJVty93UCDArtK8vUvUDu/Bov8t8WXdUacmaX
+         06VUEBM8F53prRApJYuAOdrBdtkQkNpYWMUdLaU+Ht+g57ofJZjv3TtIJlCU/MhgKWof
+         IRlfHBJgjw80yoyl8oK4pzui0Ouqx1XtA/Jem5nKyBvDgczgJvNQo5Am1SnYHmN7PX23
+         vbBpW1u4S0GysFGuZ9iqHMeu6tjvdVV9aGPFHSmZLoiHp+pMjIoJHvmnH0N9ud+Pg7SA
+         qUgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lYRf914ZDPT+KPrvlhcxKH4FxiPWHPeHNJpw8iVwcFM=;
-        b=4OTlMmj9DR9KJI1BIxP9pDolvsfMBmBdO7u8SNhGyqcAvkthJjnDrbZ9AYtB652X6D
-         NWb39xnB2EWNo2N7mIWYI605ehSmtByqsMQLWg7aRU/or3+0kYpTItGEHG0eVJenPpZa
-         gIVBI2BWbPc5yor11kyI4uSTnuZUUD9RXKyBMWjCThpQ40sbJfmWc3mII8uLlJEbYQ/T
-         6i2LGQvYv3ahIGdb4bXLMbK7UUiYZDGha+jysv0IU3ZKjcOtGka+nLGuC+7ofphck6wy
-         Im8o9Cg4GndhC+dcHMQyLqp97FLzVqP7yLdlGZ6s9Le7arY4OVqnsISdGrBdkZlSoW6y
-         mi1Q==
-X-Gm-Message-State: AFqh2kof78GTbtvoeoNBM4h3RcN5t+mWczkWTHpC7Umea8CA4onn93Rz
-        QKLz16aQTOelO/LetRpN0OQ+Ag==
-X-Google-Smtp-Source: AMrXdXv328TX1cSTFdcrFaYM6shQ9hUzCXVuPqpTXkd+7rdzZT7MRry0p1iXZvw2eUvaMpT0yBZoIA==
-X-Received: by 2002:a05:6000:5ca:b0:24f:11eb:2988 with SMTP id bh10-20020a05600005ca00b0024f11eb2988mr26805283wrb.71.1672755752044;
-        Tue, 03 Jan 2023 06:22:32 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id i6-20020a5d55c6000000b00283c7b5ee3bsm20182163wrw.101.2023.01.03.06.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 06:22:31 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 03 Jan 2023 15:22:28 +0100
-Subject: [PATCH 2/2] drm/panel: add visionox vtdr6130 DSI panel driver
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NE5M4o+uQQasvN424i3ug4ExVm+nFuQNfHX3PyiYrhY=;
+        b=0OG3SbZ1ylX/+uHKR7QZPOmi7v0JO0zRQ5UmeZCbTtIx/LOIahYWFFMntWSjNmAvI+
+         BngyIQnLbP5WPD15JxMcjcVZX1X8wsl3szKVuD757m/06uOY2+qHjVnsGVu+vmupqMhN
+         7f98vEc0mYlw4E8S7BagmsoxHuCcp0CaYQKddoIeQk540ufG/8/HtwrI1LBKk3yHlGp/
+         HCecruyeHoKtEVFxTadpVsCddhGnuGin65fB29fdQevqm3aK4Lb3pBbeYph87bRP4w7K
+         ecMKOoHASMlNUEJGHf8+ul8bdfUoZi1gBDbr+O3qq8dbJDZ2R+U7LwAwuhaRS77JaCMZ
+         YSJw==
+X-Gm-Message-State: AFqh2kr0yx+Kg8FF+yiGWF/GHID8oGrfEI5SQ3AXXdNeoz0k/8EX2QdX
+        ZXHzgKjKSBceCZbJpT2YYEew7Nuh+6gxkfAW4Q5hSQ==
+X-Google-Smtp-Source: AMrXdXvfTDeGRopOZf2rluGeZaq7+pVIG0eHIP/6bV4NHM+1knLBXuE/oXdbslh3vqljSqaxplnY3e2rVZMChqZXziM=
+X-Received: by 2002:a0d:dc86:0:b0:3d5:ecbb:2923 with SMTP id
+ f128-20020a0ddc86000000b003d5ecbb2923mr5716457ywe.485.1672755863093; Tue, 03
+ Jan 2023 06:24:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-2-9b746b858378@linaro.org>
-References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
+ <20230103-topic-sm8550-upstream-dispcc-v1-3-81bfcc26b2dc@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v1-3-81bfcc26b2dc@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 3 Jan 2023 16:24:11 +0200
+Message-ID: <CAA8EJprLTLCskyTOLzfchNt1mrCUu47qMH43REOKbY0c3CxYTw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] clk: qcom: add SM8550 DISPCC driver
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,426 +75,272 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the 1080x2400 Visionox VTDR6130 AMOLED DSI panel
-found on the Qualcomm SM8550 MTP board.
+On Tue, 3 Jan 2023 at 15:54, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Add support for the display clock controller found in SM8550
+> based devices.
+>
+> This clock controller feeds the Multimedia Display SubSystem (MDSS).
+> This driver is based on the SM8450 support.
 
-By default the the panel is configured to work with DSI compressed
-streams, but can work in uncompressed video mode since 1080x2400 in
-RGB888 fits in the 4 DSI lanes bandwidth.
+Looks good, few minor nits below:
 
-While display compression is preferred for performance and power
-reasons, let's start with the uncompressed video mode support and
-add the DSC support later on.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/clk/qcom/Kconfig         |    9 +
+>  drivers/clk/qcom/Makefile        |    1 +
+>  drivers/clk/qcom/dispcc-sm8550.c | 1814 ++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 1824 insertions(+)
+>
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/panel/Kconfig                   |   8 +
- drivers/gpu/drm/panel/Makefile                  |   1 +
- drivers/gpu/drm/panel/panel-visionox-vtdr6130.c | 366 ++++++++++++++++++++++++
- 3 files changed, 375 insertions(+)
+[skipped]
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 737edcdf9eef..fd1d7e6f536b 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -717,6 +717,14 @@ config DRM_PANEL_VISIONOX_RM69299
- 	  Say Y here if you want to enable support for Visionox
- 	  RM69299  DSI Video Mode panel.
- 
-+config DRM_PANEL_VISIONOX_VTDR6130
-+	tristate "Visionox VTDR6130"
-+	depends on OF
-+	depends on DRM_MIPI_DSI
-+	help
-+	  Say Y here if you want to enable support for Visionox
-+	  VTDR6130 1080x2400 AMOLED DSI panel.
-+
- config DRM_PANEL_WIDECHIPS_WS2401
- 	tristate "Widechips WS2401 DPI panel driver"
- 	depends on SPI && GPIOLIB
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index f8f9d9f6a307..1966404fcf7a 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -73,5 +73,6 @@ obj-$(CONFIG_DRM_PANEL_TPO_TD043MTEA1) += panel-tpo-td043mtea1.o
- obj-$(CONFIG_DRM_PANEL_TPO_TPG110) += panel-tpo-tpg110.o
- obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
- obj-$(CONFIG_DRM_PANEL_VISIONOX_RM69299) += panel-visionox-rm69299.o
-+obj-$(CONFIG_DRM_PANEL_VISIONOX_VTDR6130) += panel-visionox-vtdr6130.o
- obj-$(CONFIG_DRM_PANEL_WIDECHIPS_WS2401) += panel-widechips-ws2401.o
- obj-$(CONFIG_DRM_PANEL_XINPENG_XPP055C272) += panel-xinpeng-xpp055c272.o
-diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-new file mode 100644
-index 000000000000..94ad2a32efc9
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-@@ -0,0 +1,366 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2023, Linaro Limited
-+
-+#include <linux/backlight.h>
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include <drm/drm_mipi_dsi.h>
-+#include <drm/drm_modes.h>
-+#include <drm/drm_panel.h>
-+#include <drm/display/drm_dsc.h>
-+#include <linux/regulator/consumer.h>
-+
-+struct visionox_vtdr6130 {
-+	struct drm_panel panel;
-+	struct mipi_dsi_device *dsi;
-+	struct gpio_desc *reset_gpio;
-+	struct regulator_bulk_data supplies[3];
-+	bool prepared;
-+};
-+
-+static inline struct visionox_vtdr6130 *to_visionox_vtdr6130(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct visionox_vtdr6130, panel);
-+}
-+
-+static inline int visionox_vtdr6130_dsi_write(struct mipi_dsi_device *dsi, const void *seq,
-+					      size_t len)
-+{
-+	return mipi_dsi_dcs_write_buffer(dsi, seq, len);
-+}
-+
-+#define dsi_dcs_write_seq(dsi, seq...)					\
-+	{								\
-+		const u8 d[] = { seq };					\
-+		visionox_vtdr6130_dsi_write(dsi, d, ARRAY_SIZE(d));	\
-+	}
-+
-+static void visionox_vtdr6130_reset(struct visionox_vtdr6130 *ctx)
-+{
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+	usleep_range(10000, 11000);
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+	usleep_range(10000, 11000);
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+	usleep_range(10000, 11000);
-+}
-+
-+static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
-+{
-+	struct mipi_dsi_device *dsi = ctx->dsi;
-+	struct device *dev = &dsi->dev;
-+	int ret;
-+
-+	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-+
-+	dsi_dcs_write_seq(dsi, 0x03, 0x01);
-+	dsi_dcs_write_seq(dsi, 0x35, 0x00);
-+	dsi_dcs_write_seq(dsi, 0x53, 0x20);
-+	dsi_dcs_write_seq(dsi, 0x51, 0x00, 0x00);
-+	dsi_dcs_write_seq(dsi, 0x59, 0x09);
-+	dsi_dcs_write_seq(dsi, 0x6c, 0x01);
-+	dsi_dcs_write_seq(dsi, 0x6d, 0x00);
-+	dsi_dcs_write_seq(dsi, 0x6f, 0x01);
-+	dsi_dcs_write_seq(dsi, 0x70,
-+			  0x12, 0x00, 0x00, 0xab, 0x30, 0x80, 0x09, 0x60, 0x04,
-+			  0x38, 0x00, 0x28, 0x02, 0x1c, 0x02, 0x1c, 0x02, 0x00,
-+			  0x02, 0x0e, 0x00, 0x20, 0x03, 0xdd, 0x00, 0x07, 0x00,
-+			  0x0c, 0x02, 0x77, 0x02, 0x8b, 0x18, 0x00, 0x10, 0xf0,
-+			  0x07, 0x10, 0x20, 0x00, 0x06, 0x0f, 0x0f, 0x33, 0x0e,
-+			  0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62, 0x69, 0x70, 0x77,
-+			  0x79, 0x7b, 0x7d, 0x7e, 0x02, 0x02, 0x22, 0x00, 0x2a,
-+			  0x40, 0x2a, 0xbe, 0x3a, 0xfc, 0x3a, 0xfa, 0x3a, 0xf8,
-+			  0x3b, 0x38, 0x3b, 0x78, 0x3b, 0xb6, 0x4b, 0xb6, 0x4b,
-+			  0xf4, 0x4b, 0xf4, 0x6c, 0x34, 0x84, 0x74, 0x00, 0x00,
-+			  0x00, 0x00, 0x00, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xf0, 0xaa, 0x10);
-+	dsi_dcs_write_seq(dsi, 0xb1,
-+			  0x01, 0x38, 0x00, 0x14, 0x00, 0x1c, 0x00, 0x01, 0x66,
-+			  0x00, 0x14, 0x00, 0x14, 0x00, 0x01, 0x66, 0x00, 0x14,
-+			  0x05, 0xcc, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xf0, 0xaa, 0x13);
-+	dsi_dcs_write_seq(dsi, 0xce,
-+			  0x09, 0x11, 0x09, 0x11, 0x08, 0xc1, 0x07, 0xfa, 0x05,
-+			  0xa4, 0x00, 0x3c, 0x00, 0x34, 0x00, 0x24, 0x00, 0x0c,
-+			  0x00, 0x0c, 0x04, 0x00, 0x35);
-+	dsi_dcs_write_seq(dsi, 0xf0, 0xaa, 0x14);
-+	dsi_dcs_write_seq(dsi, 0xb2, 0x03, 0x33);
-+	dsi_dcs_write_seq(dsi, 0xb4,
-+			  0x00, 0x33, 0x00, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x00,
-+			  0x3e, 0x00, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xb5,
-+			  0x00, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x06, 0x01);
-+	dsi_dcs_write_seq(dsi, 0xb9, 0x00, 0x00, 0x08, 0x09, 0x09, 0x09);
-+	dsi_dcs_write_seq(dsi, 0xbc,
-+			  0x10, 0x00, 0x00, 0x06, 0x11, 0x09, 0x3b, 0x09, 0x47,
-+			  0x09, 0x47, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xbe,
-+			  0x10, 0x10, 0x00, 0x08, 0x22, 0x09, 0x19, 0x09, 0x25,
-+			  0x09, 0x25, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x5a, 0x80);
-+	dsi_dcs_write_seq(dsi, 0x65, 0x14);
-+	dsi_dcs_write_seq(dsi, 0xfa, 0x08, 0x08, 0x08);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x5a, 0x81);
-+	dsi_dcs_write_seq(dsi, 0x65, 0x05);
-+	dsi_dcs_write_seq(dsi, 0xf3, 0x0f);
-+	dsi_dcs_write_seq(dsi, 0xf0, 0xaa, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x5a, 0x82);
-+	dsi_dcs_write_seq(dsi, 0xf9, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x51, 0x83);
-+	dsi_dcs_write_seq(dsi, 0x65, 0x04);
-+	dsi_dcs_write_seq(dsi, 0xf8, 0x00);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x5a, 0x00);
-+	dsi_dcs_write_seq(dsi, 0x65, 0x01);
-+	dsi_dcs_write_seq(dsi, 0xf4, 0x9a);
-+	dsi_dcs_write_seq(dsi, 0xff, 0x5a, 0x00);
-+
-+	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(120);
-+
-+	ret = mipi_dsi_dcs_set_display_on(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to set display on: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(20);
-+
-+	return 0;
-+}
-+
-+static int visionox_vtdr6130_off(struct visionox_vtdr6130 *ctx)
-+{
-+	struct mipi_dsi_device *dsi = ctx->dsi;
-+	struct device *dev = &dsi->dev;
-+	int ret;
-+
-+	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-+
-+	ret = mipi_dsi_dcs_set_display_off(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to set display off: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(20);
-+
-+	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to enter sleep mode: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(120);
-+
-+	return 0;
-+}
-+
-+static int visionox_vtdr6130_prepare(struct drm_panel *panel)
-+{
-+	struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
-+	struct device *dev = &ctx->dsi->dev;
-+	int ret;
-+
-+	if (ctx->prepared)
-+		return 0;
-+
-+	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies),
-+				    ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	visionox_vtdr6130_reset(ctx);
-+
-+	ret = visionox_vtdr6130_on(ctx);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to initialize panel: %d\n", ret);
-+		gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+		regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+		return ret;
-+	}
-+
-+	/* Explicitly disable DSC since compression is on by default on the panel */
-+	mipi_dsi_compression_mode(ctx->dsi, false);
-+
-+	ctx->prepared = true;
-+	return 0;
-+}
-+
-+static int visionox_vtdr6130_unprepare(struct drm_panel *panel)
-+{
-+	struct visionox_vtdr6130 *ctx = to_visionox_vtdr6130(panel);
-+	struct device *dev = &ctx->dsi->dev;
-+	int ret;
-+
-+	if (!ctx->prepared)
-+		return 0;
-+
-+	ret = visionox_vtdr6130_off(ctx);
-+	if (ret < 0)
-+		dev_err(dev, "Failed to un-initialize panel: %d\n", ret);
-+
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+
-+	regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+
-+	ctx->prepared = false;
-+	return 0;
-+}
-+
-+static const struct drm_display_mode visionox_vtdr6130_mode = {
-+	.clock = (1080 + 20 + 2 + 20) * (2400 + 20 + 2 + 18) * 144 / 1000,
-+	.hdisplay = 1080,
-+	.hsync_start = 1080 + 20,
-+	.hsync_end = 1080 + 20 + 2,
-+	.htotal = 1080 + 20 + 2 + 20,
-+	.vdisplay = 2400,
-+	.vsync_start = 2400 + 20,
-+	.vsync_end = 2400 + 20 + 2,
-+	.vtotal = 2400 + 20 + 2 + 18,
-+	.width_mm = 0,
-+	.height_mm = 0,
-+};
-+
-+static int visionox_vtdr6130_get_modes(struct drm_panel *panel,
-+				       struct drm_connector *connector)
-+{
-+	struct drm_display_mode *mode;
-+
-+	mode = drm_mode_duplicate(connector->dev, &visionox_vtdr6130_mode);
-+	if (!mode)
-+		return -ENOMEM;
-+
-+	drm_mode_set_name(mode);
-+
-+	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
-+	connector->display_info.width_mm = mode->width_mm;
-+	connector->display_info.height_mm = mode->height_mm;
-+	drm_mode_probed_add(connector, mode);
-+
-+	return 1;
-+}
-+
-+static const struct drm_panel_funcs visionox_vtdr6130_panel_funcs = {
-+	.prepare = visionox_vtdr6130_prepare,
-+	.unprepare = visionox_vtdr6130_unprepare,
-+	.get_modes = visionox_vtdr6130_get_modes,
-+};
-+
-+static int visionox_vtdr6130_bl_update_status(struct backlight_device *bl)
-+{
-+	struct mipi_dsi_device *dsi = bl_get_data(bl);
-+	u16 brightness = backlight_get_brightness(bl);
-+	int ret;
-+
-+	ret = mipi_dsi_dcs_set_display_brightness(dsi, cpu_to_le16(brightness));
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static const struct backlight_ops visionox_vtdr6130_bl_ops = {
-+	.update_status = visionox_vtdr6130_bl_update_status,
-+};
-+
-+static struct backlight_device *
-+visionox_vtdr6130_create_backlight(struct mipi_dsi_device *dsi)
-+{
-+	struct device *dev = &dsi->dev;
-+	const struct backlight_properties props = {
-+		.type = BACKLIGHT_RAW,
-+		.brightness = 4095,
-+		.max_brightness = 4095,
-+	};
-+
-+	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
-+					      &visionox_vtdr6130_bl_ops, &props);
-+}
-+
-+static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
-+{
-+	struct device *dev = &dsi->dev;
-+	struct visionox_vtdr6130 *ctx;
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->supplies[0].supply = "vddio";
-+	ctx->supplies[1].supply = "vci";
-+	ctx->supplies[2].supply = "vdd";
-+
-+	ret = devm_regulator_bulk_get(&dsi->dev, ARRAY_SIZE(ctx->supplies),
-+				      ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->reset_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
-+				     "Failed to get reset-gpios\n");
-+
-+	ctx->dsi = dsi;
-+	mipi_dsi_set_drvdata(dsi, ctx);
-+
-+	dsi->lanes = 4;
-+	dsi->format = MIPI_DSI_FMT_RGB888;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_NO_EOT_PACKET |
-+			  MIPI_DSI_CLOCK_NON_CONTINUOUS;
-+
-+	drm_panel_init(&ctx->panel, dev, &visionox_vtdr6130_panel_funcs,
-+		       DRM_MODE_CONNECTOR_DSI);
-+
-+	ctx->panel.backlight = visionox_vtdr6130_create_backlight(dsi);
-+	if (IS_ERR(ctx->panel.backlight))
-+		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
-+				     "Failed to create backlight\n");
-+
-+	drm_panel_add(&ctx->panel);
-+
-+	ret = mipi_dsi_attach(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
-+		drm_panel_remove(&ctx->panel);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void visionox_vtdr6130_remove(struct mipi_dsi_device *dsi)
-+{
-+	struct visionox_vtdr6130 *ctx = mipi_dsi_get_drvdata(dsi);
-+	int ret;
-+
-+	ret = mipi_dsi_detach(dsi);
-+	if (ret < 0)
-+		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
-+
-+	drm_panel_remove(&ctx->panel);
-+}
-+
-+static const struct of_device_id visionox_vtdr6130_of_match[] = {
-+	{ .compatible = "visionox,vtdr6130" },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, visionox_vtdr6130_of_match);
-+
-+static struct mipi_dsi_driver visionox_vtdr6130_driver = {
-+	.probe = visionox_vtdr6130_probe,
-+	.remove = visionox_vtdr6130_remove,
-+	.driver = {
-+		.name = "panel-visionox-vtdr6130",
-+		.of_match_table = visionox_vtdr6130_of_match,
-+	},
-+};
-+module_mipi_dsi_driver(visionox_vtdr6130_driver);
-+
-+MODULE_AUTHOR("Neil Armstron <neil.armstrong@linaro.org>");
-+MODULE_DESCRIPTION("Panel driver for the visionox VTDR6130 AMOLED DSI panel");
-+MODULE_LICENSE("GPL");
+> +static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
+> +       .reg = 0x8120,
+> +       .shift = 0,
+> +       .width = 4,
+> +       .clkr.hw.init = &(struct clk_init_data) {
+> +               .name = "disp_cc_mdss_byte0_div_clk_src",
+> +               .parent_data = &(const struct clk_parent_data) {
+> +                       .hw = &disp_cc_mdss_byte0_clk_src.clkr.hw,
+> +               },
+
+We can use parent_hws in such cases (here and below).
+
+> +               .num_parents = 1,
+> +               .ops = &clk_regmap_div_ops,
+> +       },
+> +};
+> +
+> +static struct clk_regmap_div disp_cc_mdss_byte1_div_clk_src = {
+> +       .reg = 0x813c,
+> +       .shift = 0,
+> +       .width = 4,
+> +       .clkr.hw.init = &(struct clk_init_data) {
+> +               .name = "disp_cc_mdss_byte1_div_clk_src",
+> +               .parent_data = &(const struct clk_parent_data) {
+> +                       .hw = &disp_cc_mdss_byte1_clk_src.clkr.hw,
+> +               },
+> +               .num_parents = 1,
+> +               .ops = &clk_regmap_div_ops,
+> +       },
+> +};
+
+[skipped most of the clocks]
+
+> +static struct gdsc mdss_gdsc = {
+> +       .gdscr = 0x9000,
+> +       .pd = {
+> +               .name = "mdss_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +       .flags = HW_CTRL | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc mdss_int2_gdsc = {
+> +       .gdscr = 0xb000,
+> +       .pd = {
+> +               .name = "mdss_int2_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +       .flags = HW_CTRL | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct clk_regmap *disp_cc_sm8550_clocks[] = {
+> +       [DISP_CC_MDSS_ACCU_CLK] = &disp_cc_mdss_accu_clk.clkr,
+> +       [DISP_CC_MDSS_AHB1_CLK] = &disp_cc_mdss_ahb1_clk.clkr,
+> +       [DISP_CC_MDSS_AHB_CLK] = &disp_cc_mdss_ahb_clk.clkr,
+> +       [DISP_CC_MDSS_AHB_CLK_SRC] = &disp_cc_mdss_ahb_clk_src.clkr,
+> +       [DISP_CC_MDSS_BYTE0_CLK] = &disp_cc_mdss_byte0_clk.clkr,
+> +       [DISP_CC_MDSS_BYTE0_CLK_SRC] = &disp_cc_mdss_byte0_clk_src.clkr,
+> +       [DISP_CC_MDSS_BYTE0_DIV_CLK_SRC] = &disp_cc_mdss_byte0_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_BYTE0_INTF_CLK] = &disp_cc_mdss_byte0_intf_clk.clkr,
+> +       [DISP_CC_MDSS_BYTE1_CLK] = &disp_cc_mdss_byte1_clk.clkr,
+> +       [DISP_CC_MDSS_BYTE1_CLK_SRC] = &disp_cc_mdss_byte1_clk_src.clkr,
+> +       [DISP_CC_MDSS_BYTE1_DIV_CLK_SRC] = &disp_cc_mdss_byte1_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_BYTE1_INTF_CLK] = &disp_cc_mdss_byte1_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_AUX_CLK] = &disp_cc_mdss_dptx0_aux_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_AUX_CLK_SRC] = &disp_cc_mdss_dptx0_aux_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX0_CRYPTO_CLK] = &disp_cc_mdss_dptx0_crypto_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_LINK_CLK] = &disp_cc_mdss_dptx0_link_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_LINK_CLK_SRC] = &disp_cc_mdss_dptx0_link_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx0_link_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX0_LINK_INTF_CLK] = &disp_cc_mdss_dptx0_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_PIXEL0_CLK] = &disp_cc_mdss_dptx0_pixel0_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx0_pixel0_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX0_PIXEL1_CLK] = &disp_cc_mdss_dptx0_pixel1_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx0_pixel1_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK] =
+> +               &disp_cc_mdss_dptx0_usb_router_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_AUX_CLK] = &disp_cc_mdss_dptx1_aux_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_AUX_CLK_SRC] = &disp_cc_mdss_dptx1_aux_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX1_CRYPTO_CLK] = &disp_cc_mdss_dptx1_crypto_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_LINK_CLK] = &disp_cc_mdss_dptx1_link_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_LINK_CLK_SRC] = &disp_cc_mdss_dptx1_link_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx1_link_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX1_LINK_INTF_CLK] = &disp_cc_mdss_dptx1_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_PIXEL0_CLK] = &disp_cc_mdss_dptx1_pixel0_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx1_pixel0_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX1_PIXEL1_CLK] = &disp_cc_mdss_dptx1_pixel1_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx1_pixel1_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK] =
+> +               &disp_cc_mdss_dptx1_usb_router_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_AUX_CLK] = &disp_cc_mdss_dptx2_aux_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_AUX_CLK_SRC] = &disp_cc_mdss_dptx2_aux_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX2_CRYPTO_CLK] = &disp_cc_mdss_dptx2_crypto_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_LINK_CLK] = &disp_cc_mdss_dptx2_link_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_LINK_CLK_SRC] = &disp_cc_mdss_dptx2_link_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx2_link_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX2_LINK_INTF_CLK] = &disp_cc_mdss_dptx2_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_PIXEL0_CLK] = &disp_cc_mdss_dptx2_pixel0_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx2_pixel0_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX2_PIXEL1_CLK] = &disp_cc_mdss_dptx2_pixel1_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx2_pixel1_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX3_AUX_CLK] = &disp_cc_mdss_dptx3_aux_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX3_AUX_CLK_SRC] = &disp_cc_mdss_dptx3_aux_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX3_CRYPTO_CLK] = &disp_cc_mdss_dptx3_crypto_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX3_LINK_CLK] = &disp_cc_mdss_dptx3_link_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX3_LINK_CLK_SRC] = &disp_cc_mdss_dptx3_link_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx3_link_div_clk_src.clkr,
+> +       [DISP_CC_MDSS_DPTX3_LINK_INTF_CLK] = &disp_cc_mdss_dptx3_link_intf_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX3_PIXEL0_CLK] = &disp_cc_mdss_dptx3_pixel0_clk.clkr,
+> +       [DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx3_pixel0_clk_src.clkr,
+> +       [DISP_CC_MDSS_ESC0_CLK] = &disp_cc_mdss_esc0_clk.clkr,
+> +       [DISP_CC_MDSS_ESC0_CLK_SRC] = &disp_cc_mdss_esc0_clk_src.clkr,
+> +       [DISP_CC_MDSS_ESC1_CLK] = &disp_cc_mdss_esc1_clk.clkr,
+> +       [DISP_CC_MDSS_ESC1_CLK_SRC] = &disp_cc_mdss_esc1_clk_src.clkr,
+> +       [DISP_CC_MDSS_MDP1_CLK] = &disp_cc_mdss_mdp1_clk.clkr,
+> +       [DISP_CC_MDSS_MDP_CLK] = &disp_cc_mdss_mdp_clk.clkr,
+> +       [DISP_CC_MDSS_MDP_CLK_SRC] = &disp_cc_mdss_mdp_clk_src.clkr,
+> +       [DISP_CC_MDSS_MDP_LUT1_CLK] = &disp_cc_mdss_mdp_lut1_clk.clkr,
+> +       [DISP_CC_MDSS_MDP_LUT_CLK] = &disp_cc_mdss_mdp_lut_clk.clkr,
+> +       [DISP_CC_MDSS_NON_GDSC_AHB_CLK] = &disp_cc_mdss_non_gdsc_ahb_clk.clkr,
+> +       [DISP_CC_MDSS_PCLK0_CLK] = &disp_cc_mdss_pclk0_clk.clkr,
+> +       [DISP_CC_MDSS_PCLK0_CLK_SRC] = &disp_cc_mdss_pclk0_clk_src.clkr,
+> +       [DISP_CC_MDSS_PCLK1_CLK] = &disp_cc_mdss_pclk1_clk.clkr,
+> +       [DISP_CC_MDSS_PCLK1_CLK_SRC] = &disp_cc_mdss_pclk1_clk_src.clkr,
+> +       [DISP_CC_MDSS_RSCC_AHB_CLK] = &disp_cc_mdss_rscc_ahb_clk.clkr,
+> +       [DISP_CC_MDSS_RSCC_VSYNC_CLK] = &disp_cc_mdss_rscc_vsync_clk.clkr,
+> +       [DISP_CC_MDSS_VSYNC1_CLK] = &disp_cc_mdss_vsync1_clk.clkr,
+> +       [DISP_CC_MDSS_VSYNC_CLK] = &disp_cc_mdss_vsync_clk.clkr,
+> +       [DISP_CC_MDSS_VSYNC_CLK_SRC] = &disp_cc_mdss_vsync_clk_src.clkr,
+> +       [DISP_CC_PLL0] = &disp_cc_pll0.clkr,
+> +       [DISP_CC_PLL1] = &disp_cc_pll1.clkr,
+> +       [DISP_CC_SLEEP_CLK] = &disp_cc_sleep_clk.clkr,
+> +       [DISP_CC_SLEEP_CLK_SRC] = &disp_cc_sleep_clk_src.clkr,
+> +       [DISP_CC_XO_CLK_SRC] = &disp_cc_xo_clk_src.clkr,
+> +};
+> +
+> +static const struct qcom_reset_map disp_cc_sm8550_resets[] = {
+> +       [DISP_CC_MDSS_CORE_BCR] = { 0x8000 },
+> +       [DISP_CC_MDSS_CORE_INT2_BCR] = { 0xa000 },
+> +       [DISP_CC_MDSS_RSCC_BCR] = { 0xc000 },
+> +};
+> +
+> +static struct gdsc *disp_cc_sm8550_gdscs[] = {
+> +       [MDSS_GDSC] = &mdss_gdsc,
+> +       [MDSS_INT2_GDSC] = &mdss_int2_gdsc,
+> +};
+> +
+> +static const struct regmap_config disp_cc_sm8550_regmap_config = {
+> +       .reg_bits = 32,
+> +       .reg_stride = 4,
+> +       .val_bits = 32,
+> +       .max_register = 0x11008,
+> +       .fast_io = true,
+> +};
+> +
+> +static struct qcom_cc_desc disp_cc_sm8550_desc = {
+> +       .config = &disp_cc_sm8550_regmap_config,
+> +       .clks = disp_cc_sm8550_clocks,
+> +       .num_clks = ARRAY_SIZE(disp_cc_sm8550_clocks),
+> +       .resets = disp_cc_sm8550_resets,
+> +       .num_resets = ARRAY_SIZE(disp_cc_sm8550_resets),
+> +       .gdscs = disp_cc_sm8550_gdscs,
+> +       .num_gdscs = ARRAY_SIZE(disp_cc_sm8550_gdscs),
+> +};
+> +
+> +static const struct of_device_id disp_cc_sm8550_match_table[] = {
+> +       { .compatible = "qcom,sm8550-dispcc" },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, disp_cc_sm8550_match_table);
+> +
+> +static void disp_cc_sm8550_pm_runtime_disable(void *data)
+> +{
+> +       pm_runtime_disable(data);
+> +}
+> +
+> +static int disp_cc_sm8550_probe(struct platform_device *pdev)
+> +{
+> +       struct regmap *regmap;
+> +       int ret;
+> +
+> +       pm_runtime_enable(&pdev->dev);
+
+We can use devm_pm_runtime_enable() here.
+
+> +
+> +       ret = devm_add_action_or_reset(&pdev->dev, disp_cc_sm8550_pm_runtime_disable, &pdev->dev);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = pm_runtime_resume_and_get(&pdev->dev);
+> +       if (ret)
+> +               return ret;
+> +
+> +       regmap = qcom_cc_map(pdev, &disp_cc_sm8550_desc);
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       clk_lucid_evo_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
+> +       clk_lucid_evo_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
+> +
+> +       /* Enable clock gating for MDP clocks */
+> +       regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
+> +
+> +       /*
+> +        * Keep clocks always enabled:
+> +        *      disp_cc_xo_clk
+> +        */
+> +       regmap_update_bits(regmap, 0xe054, BIT(0), BIT(0));
+> +
+> +       ret = qcom_cc_really_probe(pdev, &disp_cc_sm8550_desc, regmap);
+> +
+> +       pm_runtime_put(&pdev->dev);
+> +
+> +       return ret;
+> +}
+> +
+> +static struct platform_driver disp_cc_sm8550_driver = {
+> +       .probe = disp_cc_sm8550_probe,
+> +       .driver = {
+> +               .name = "disp_cc-sm8550",
+> +               .of_match_table = disp_cc_sm8550_match_table,
+> +       },
+> +};
+> +
+> +static int __init disp_cc_sm8550_init(void)
+> +{
+> +       return platform_driver_register(&disp_cc_sm8550_driver);
+> +}
+> +subsys_initcall(disp_cc_sm8550_init);
+> +
+> +static void __exit disp_cc_sm8550_exit(void)
+> +{
+> +       platform_driver_unregister(&disp_cc_sm8550_driver);
+> +}
+> +module_exit(disp_cc_sm8550_exit);
+> +
+> +MODULE_DESCRIPTION("QTI DISPCC SM8550 Driver");
+> +MODULE_LICENSE("GPL");
+>
+> --
+> 2.34.1
+
+
 
 -- 
-2.34.1
+With best wishes
+Dmitry
