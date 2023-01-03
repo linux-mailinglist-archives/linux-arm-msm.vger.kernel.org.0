@@ -2,345 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1363B65C1E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:25:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53DF565C244
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 15:50:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233478AbjACOZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 09:25:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
+        id S233299AbjACOu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 09:50:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238004AbjACOZE (ORCPT
+        with ESMTP id S232179AbjACOu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 09:25:04 -0500
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8A8912603
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 06:24:23 -0800 (PST)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-48641a481dfso264569897b3.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 06:24:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NE5M4o+uQQasvN424i3ug4ExVm+nFuQNfHX3PyiYrhY=;
-        b=i3jwR45oeE2d35x6ntkFfkol7/wtQxjvWn0I0lU5AyI9apocva0aLf5om/lKbpSFc9
-         nqVX/42fAyDN+D8kQahGzdNS/dFfR7vgJVty93UCDArtK8vUvUDu/Bov8t8WXdUacmaX
-         06VUEBM8F53prRApJYuAOdrBdtkQkNpYWMUdLaU+Ht+g57ofJZjv3TtIJlCU/MhgKWof
-         IRlfHBJgjw80yoyl8oK4pzui0Ouqx1XtA/Jem5nKyBvDgczgJvNQo5Am1SnYHmN7PX23
-         vbBpW1u4S0GysFGuZ9iqHMeu6tjvdVV9aGPFHSmZLoiHp+pMjIoJHvmnH0N9ud+Pg7SA
-         qUgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NE5M4o+uQQasvN424i3ug4ExVm+nFuQNfHX3PyiYrhY=;
-        b=0OG3SbZ1ylX/+uHKR7QZPOmi7v0JO0zRQ5UmeZCbTtIx/LOIahYWFFMntWSjNmAvI+
-         BngyIQnLbP5WPD15JxMcjcVZX1X8wsl3szKVuD757m/06uOY2+qHjVnsGVu+vmupqMhN
-         7f98vEc0mYlw4E8S7BagmsoxHuCcp0CaYQKddoIeQk540ufG/8/HtwrI1LBKk3yHlGp/
-         HCecruyeHoKtEVFxTadpVsCddhGnuGin65fB29fdQevqm3aK4Lb3pBbeYph87bRP4w7K
-         ecMKOoHASMlNUEJGHf8+ul8bdfUoZi1gBDbr+O3qq8dbJDZ2R+U7LwAwuhaRS77JaCMZ
-         YSJw==
-X-Gm-Message-State: AFqh2kr0yx+Kg8FF+yiGWF/GHID8oGrfEI5SQ3AXXdNeoz0k/8EX2QdX
-        ZXHzgKjKSBceCZbJpT2YYEew7Nuh+6gxkfAW4Q5hSQ==
-X-Google-Smtp-Source: AMrXdXvfTDeGRopOZf2rluGeZaq7+pVIG0eHIP/6bV4NHM+1knLBXuE/oXdbslh3vqljSqaxplnY3e2rVZMChqZXziM=
-X-Received: by 2002:a0d:dc86:0:b0:3d5:ecbb:2923 with SMTP id
- f128-20020a0ddc86000000b003d5ecbb2923mr5716457ywe.485.1672755863093; Tue, 03
- Jan 2023 06:24:23 -0800 (PST)
+        Tue, 3 Jan 2023 09:50:26 -0500
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630422BDB;
+        Tue,  3 Jan 2023 06:50:25 -0800 (PST)
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 303BF7Dn015497;
+        Tue, 3 Jan 2023 15:50:16 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=N+7XrpvtkCAvSahMsoTBDO1zGgn4UyQ0bJMGg6cxkmM=;
+ b=Y2dZ604I4L9v4/7lX/JYuudqvoJg8aUKzpC0u8F6mw+1ZCVvoaiPRqBCjexZlvrRskqm
+ RakERtmlu/whUo0iOhr/gXeluYntG+0MhgyA8C64Cj2FEMCyJbqVx1C4ZQaqITCIhnz2
+ /83Muiopj5NdhF0fwMvz7HgPxsP/1wG+lxk/mVMsi3LIjXmnfnQGb8e/ob5lemqy+/jZ
+ BblMm9YxfvDHzgIaXdL5X/x9bgN3ZEWa5rXXd46PIXN7FxyfBVjfdP3OcEPVDW8O1Tvg
+ CA4H/G/8DZ5jkewGCtfKMvAuKoMZteBpiA/1CSEUbWU8mjpMvv3XXhj+CCIuG8VyHUSF UA== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3mtda65fc3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Jan 2023 15:50:16 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id C268210002A;
+        Tue,  3 Jan 2023 15:50:11 +0100 (CET)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id B9C01226FA3;
+        Tue,  3 Jan 2023 15:50:11 +0100 (CET)
+Received: from [10.252.14.6] (10.252.14.6) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.13; Tue, 3 Jan
+ 2023 15:50:10 +0100
+Message-ID: <45444451-26e3-c203-bdeb-59170b6cc5ba@foss.st.com>
+Date:   Tue, 3 Jan 2023 15:50:10 +0100
 MIME-Version: 1.0
-References: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
- <20230103-topic-sm8550-upstream-dispcc-v1-3-81bfcc26b2dc@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v1-3-81bfcc26b2dc@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Jan 2023 16:24:11 +0200
-Message-ID: <CAA8EJprLTLCskyTOLzfchNt1mrCUu47qMH43REOKbY0c3CxYTw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clk: qcom: add SM8550 DISPCC driver
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH V4 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Sarannya S <quic_sarannya@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+References: <1670418258-11502-1-git-send-email-quic_sarannya@quicinc.com>
+ <1670418258-11502-4-git-send-email-quic_sarannya@quicinc.com>
+ <12f53ff1-a358-7129-c9ed-9b9fd7dad7e7@foss.st.com>
+ <20221227155641.xlkel7uhk7jr4qru@builder.lan>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <20221227155641.xlkel7uhk7jr4qru@builder.lan>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.252.14.6]
+X-ClientProxiedBy: SHFCAS1NODE2.st.com (10.75.129.73) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-03_05,2023-01-03_02,2022-06-22_01
+X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Jan 2023 at 15:54, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> Add support for the display clock controller found in SM8550
-> based devices.
->
-> This clock controller feeds the Multimedia Display SubSystem (MDSS).
-> This driver is based on the SM8450 support.
+On 12/27/22 16:56, Bjorn Andersson wrote:
+> On Wed, Dec 21, 2022 at 05:28:16PM +0100, Arnaud POULIQUEN wrote:
+>>
+>>
+>> On 12/7/22 14:04, Sarannya S wrote:
+>>> Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
+>>> to get/set the low level transport signals.
+>>>
+>>> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+>>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+>>> ---
+>>>  drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
+>>>  1 file changed, 52 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+>>> index 3e0b8f3..8109d18 100644
+>>> --- a/drivers/rpmsg/rpmsg_char.c
+>>> +++ b/drivers/rpmsg/rpmsg_char.c
+>>> @@ -23,6 +23,7 @@
+>>>  #include <linux/rpmsg.h>
+>>>  #include <linux/skbuff.h>
+>>>  #include <linux/slab.h>
+>>> +#include <linux/termios.h>
+>>>  #include <linux/uaccess.h>
+>>>  #include <uapi/linux/rpmsg.h>
+>>>  
+>>> @@ -68,6 +69,8 @@ struct rpmsg_eptdev {
+>>>  	struct sk_buff_head queue;
+>>>  	wait_queue_head_t readq;
+>>>  
+>>> +	u32 remote_signals;
+>>> +	bool signals_pending;
+>>
+>> Could you detail the need/use of signals_pending, in your implementation?
+>> This is not obvious (at least for me)...
+>>
+> 
+> I agree. With the move to use the concept of flow control in the rpmsg
+> API, there's no longer any "signals" in this client driver.
+> 
+>>>  };
+>>>  
+>>>  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+>>> @@ -109,7 +112,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>>>  	skb_queue_tail(&eptdev->queue, skb);
+>>>  	spin_unlock(&eptdev->queue_lock);
+>>>  
+>>> -	/* wake up any blocking processes, waiting for new data */
+>>> +	wake_up_interruptible(&eptdev->readq);
+>>> +
+>>> +	return 0;
+>>> +}
+>>> +
+>>> +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
+>>> +{
+>>> +	struct rpmsg_eptdev *eptdev = priv;
+>>> +
+>>> +	if (enable)
+>>> +		eptdev->remote_signals = TIOCM_DSR | TIOCM_CTS;
+>>> +	else
+>>> +		eptdev->remote_signals = 0;
+>>> +
+>>> +	eptdev->signals_pending = true;
+>>> +
+>>>  	wake_up_interruptible(&eptdev->readq);
+>>>  
+>>>  	return 0;
+>>> @@ -146,6 +164,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>>>  		return -EINVAL;
+>>>  	}
+>>>  
+>>> +	ept->flow_cb = rpmsg_ept_flow_cb;
+>>>  	eptdev->ept = ept;
+>>>  	filp->private_data = eptdev;
+>>>  	mutex_unlock(&eptdev->ept_lock);
+>>> @@ -166,6 +185,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>>>  		eptdev->ept = NULL;
+>>>  	}
+>>>  	mutex_unlock(&eptdev->ept_lock);
+>>> +	eptdev->signals_pending = false;
+>>>  
+>>>  	/* Discard all SKBs */
+>>>  	skb_queue_purge(&eptdev->queue);
+>>> @@ -279,6 +299,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>>>  	if (!skb_queue_empty(&eptdev->queue))
+>>>  		mask |= EPOLLIN | EPOLLRDNORM;
+>>>  
+>>> +	if (eptdev->signals_pending)
+>>> +		mask |= EPOLLPRI;
+>>> +
+>>>  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
+>>>  
+>>>  	return mask;
+>>> @@ -289,14 +312,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>>>  {
+>>>  	struct rpmsg_eptdev *eptdev = fp->private_data;
+>>>  
+>>> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+>>> -		return -EINVAL;
+>>> -
+>>> -	/* Don't allow to destroy a default endpoint. */
+>>> -	if (eptdev->default_ept)
+>>> -		return -EINVAL;
+>>> +	bool set;
+>>> +	u32 val;
+>>> +	int ret;
+>>> +	
+>>> +	switch (cmd) {
+>>> +	case TIOCMGET:
+>>> +		eptdev->signals_pending = false;
+>>> +		ret = put_user(eptdev->remote_signals, (int __user *)arg);
+>>> +		break;
+>>> +	case TIOCMSET:
+>>> +		ret = get_user(val, (int __user *)arg);
+>>> +		if (ret)
+>>> +			break;
+>>> +		set = (val & (TIOCM_DTR | TIOCM_RTS)) ? true : false;
+>>> +		ret = rpmsg_set_flow_control(eptdev->ept, set, 0);
+>>> +		break;
+>>
+>> I still wonder if it makes sense to implement serial IOCTRL in rpmsg_char.
+> 
+> I've thinking about this since v1 as well...
+> 
+>> I think it is quite dangerous to have such kind of mixed interface.
+>> User application would want to use the serial interface should use the tty
+>> interface.
+>>
+> 
+> Can you please elaborate on this statement, because I have a hard time
+> to state why the user space application must use the tty interface
+> instead of rpmsg_char.
+> 
+> And in particular, I don't think this is a question for the "user
+> application", but rather for the system configuration.
+> 
+> In order to move an application that works with rpmsg_char to the tty
+> driver ("because it's the right thing to do..."?) means that the system
+> needs to be reconfigured, such that the given rpmsg channel is exposed
+> through the tty driver instead.
+> 
+> This in turn either implies that the firmware needs to be changed to
+> expose these channels with the name "rpmsg-tty" - and the application
+> taught how to figure out which ttyRPMSGn to open - or the rpmsg_ctrl
+> interface needs to be extended to allow the Linux side to request a
+> particular channel to be exposed as rpmsg_char vs rpmsg-tty...
+> 
 
-Looks good, few minor nits below:
+You are right, it can be not straightforward to migrate to rpmsg_tty. That's why
+it also makes sense to implement flow control in the rpmsg char.
 
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/clk/qcom/Kconfig         |    9 +
->  drivers/clk/qcom/Makefile        |    1 +
->  drivers/clk/qcom/dispcc-sm8550.c | 1814 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 1824 insertions(+)
->
+What I try to highlight is the use of the RS232 signaling(e.g TIOCM_DTR) and
+TIOCMGET/TIOCMSE  terminal IOCTL in this patch.
+Please tell me if I wrong, but seems to me that such interface is dedicated to
+the serial/TTY frameworks [1].
+So does it make sense to reuse this interface for the rpmsg char?
 
-[skipped]
+[1]https://elixir.bootlin.com/linux/latest/source/include/uapi/asm-generic/ioctls.h#L8
 
-> +static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
-> +       .reg = 0x8120,
-> +       .shift = 0,
-> +       .width = 4,
-> +       .clkr.hw.init = &(struct clk_init_data) {
-> +               .name = "disp_cc_mdss_byte0_div_clk_src",
-> +               .parent_data = &(const struct clk_parent_data) {
-> +                       .hw = &disp_cc_mdss_byte0_clk_src.clkr.hw,
-> +               },
+Instead we could have generic RPMSG IOCTLs that can be implemented on different
+rpmsg clients whatever the rpmsg channel (so not only the rpmsg char). This is
+the proposal below.
 
-We can use parent_hws in such cases (here and below).
+Regards,
+Arnaud
 
-> +               .num_parents = 1,
-> +               .ops = &clk_regmap_div_ops,
-> +       },
-> +};
-> +
-> +static struct clk_regmap_div disp_cc_mdss_byte1_div_clk_src = {
-> +       .reg = 0x813c,
-> +       .shift = 0,
-> +       .width = 4,
-> +       .clkr.hw.init = &(struct clk_init_data) {
-> +               .name = "disp_cc_mdss_byte1_div_clk_src",
-> +               .parent_data = &(const struct clk_parent_data) {
-> +                       .hw = &disp_cc_mdss_byte1_clk_src.clkr.hw,
-> +               },
-> +               .num_parents = 1,
-> +               .ops = &clk_regmap_div_ops,
-> +       },
-> +};
-
-[skipped most of the clocks]
-
-> +static struct gdsc mdss_gdsc = {
-> +       .gdscr = 0x9000,
-> +       .pd = {
-> +               .name = "mdss_gdsc",
-> +       },
-> +       .pwrsts = PWRSTS_OFF_ON,
-> +       .flags = HW_CTRL | RETAIN_FF_ENABLE,
-> +};
-> +
-> +static struct gdsc mdss_int2_gdsc = {
-> +       .gdscr = 0xb000,
-> +       .pd = {
-> +               .name = "mdss_int2_gdsc",
-> +       },
-> +       .pwrsts = PWRSTS_OFF_ON,
-> +       .flags = HW_CTRL | RETAIN_FF_ENABLE,
-> +};
-> +
-> +static struct clk_regmap *disp_cc_sm8550_clocks[] = {
-> +       [DISP_CC_MDSS_ACCU_CLK] = &disp_cc_mdss_accu_clk.clkr,
-> +       [DISP_CC_MDSS_AHB1_CLK] = &disp_cc_mdss_ahb1_clk.clkr,
-> +       [DISP_CC_MDSS_AHB_CLK] = &disp_cc_mdss_ahb_clk.clkr,
-> +       [DISP_CC_MDSS_AHB_CLK_SRC] = &disp_cc_mdss_ahb_clk_src.clkr,
-> +       [DISP_CC_MDSS_BYTE0_CLK] = &disp_cc_mdss_byte0_clk.clkr,
-> +       [DISP_CC_MDSS_BYTE0_CLK_SRC] = &disp_cc_mdss_byte0_clk_src.clkr,
-> +       [DISP_CC_MDSS_BYTE0_DIV_CLK_SRC] = &disp_cc_mdss_byte0_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_BYTE0_INTF_CLK] = &disp_cc_mdss_byte0_intf_clk.clkr,
-> +       [DISP_CC_MDSS_BYTE1_CLK] = &disp_cc_mdss_byte1_clk.clkr,
-> +       [DISP_CC_MDSS_BYTE1_CLK_SRC] = &disp_cc_mdss_byte1_clk_src.clkr,
-> +       [DISP_CC_MDSS_BYTE1_DIV_CLK_SRC] = &disp_cc_mdss_byte1_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_BYTE1_INTF_CLK] = &disp_cc_mdss_byte1_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_AUX_CLK] = &disp_cc_mdss_dptx0_aux_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_AUX_CLK_SRC] = &disp_cc_mdss_dptx0_aux_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX0_CRYPTO_CLK] = &disp_cc_mdss_dptx0_crypto_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_LINK_CLK] = &disp_cc_mdss_dptx0_link_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_LINK_CLK_SRC] = &disp_cc_mdss_dptx0_link_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX0_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx0_link_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX0_LINK_INTF_CLK] = &disp_cc_mdss_dptx0_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_PIXEL0_CLK] = &disp_cc_mdss_dptx0_pixel0_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx0_pixel0_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX0_PIXEL1_CLK] = &disp_cc_mdss_dptx0_pixel1_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx0_pixel1_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX0_USB_ROUTER_LINK_INTF_CLK] =
-> +               &disp_cc_mdss_dptx0_usb_router_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_AUX_CLK] = &disp_cc_mdss_dptx1_aux_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_AUX_CLK_SRC] = &disp_cc_mdss_dptx1_aux_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX1_CRYPTO_CLK] = &disp_cc_mdss_dptx1_crypto_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_LINK_CLK] = &disp_cc_mdss_dptx1_link_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_LINK_CLK_SRC] = &disp_cc_mdss_dptx1_link_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX1_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx1_link_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX1_LINK_INTF_CLK] = &disp_cc_mdss_dptx1_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_PIXEL0_CLK] = &disp_cc_mdss_dptx1_pixel0_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx1_pixel0_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX1_PIXEL1_CLK] = &disp_cc_mdss_dptx1_pixel1_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX1_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx1_pixel1_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX1_USB_ROUTER_LINK_INTF_CLK] =
-> +               &disp_cc_mdss_dptx1_usb_router_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_AUX_CLK] = &disp_cc_mdss_dptx2_aux_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_AUX_CLK_SRC] = &disp_cc_mdss_dptx2_aux_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX2_CRYPTO_CLK] = &disp_cc_mdss_dptx2_crypto_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_LINK_CLK] = &disp_cc_mdss_dptx2_link_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_LINK_CLK_SRC] = &disp_cc_mdss_dptx2_link_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX2_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx2_link_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX2_LINK_INTF_CLK] = &disp_cc_mdss_dptx2_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_PIXEL0_CLK] = &disp_cc_mdss_dptx2_pixel0_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx2_pixel0_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX2_PIXEL1_CLK] = &disp_cc_mdss_dptx2_pixel1_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX2_PIXEL1_CLK_SRC] = &disp_cc_mdss_dptx2_pixel1_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX3_AUX_CLK] = &disp_cc_mdss_dptx3_aux_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX3_AUX_CLK_SRC] = &disp_cc_mdss_dptx3_aux_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX3_CRYPTO_CLK] = &disp_cc_mdss_dptx3_crypto_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX3_LINK_CLK] = &disp_cc_mdss_dptx3_link_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX3_LINK_CLK_SRC] = &disp_cc_mdss_dptx3_link_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX3_LINK_DIV_CLK_SRC] = &disp_cc_mdss_dptx3_link_div_clk_src.clkr,
-> +       [DISP_CC_MDSS_DPTX3_LINK_INTF_CLK] = &disp_cc_mdss_dptx3_link_intf_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX3_PIXEL0_CLK] = &disp_cc_mdss_dptx3_pixel0_clk.clkr,
-> +       [DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC] = &disp_cc_mdss_dptx3_pixel0_clk_src.clkr,
-> +       [DISP_CC_MDSS_ESC0_CLK] = &disp_cc_mdss_esc0_clk.clkr,
-> +       [DISP_CC_MDSS_ESC0_CLK_SRC] = &disp_cc_mdss_esc0_clk_src.clkr,
-> +       [DISP_CC_MDSS_ESC1_CLK] = &disp_cc_mdss_esc1_clk.clkr,
-> +       [DISP_CC_MDSS_ESC1_CLK_SRC] = &disp_cc_mdss_esc1_clk_src.clkr,
-> +       [DISP_CC_MDSS_MDP1_CLK] = &disp_cc_mdss_mdp1_clk.clkr,
-> +       [DISP_CC_MDSS_MDP_CLK] = &disp_cc_mdss_mdp_clk.clkr,
-> +       [DISP_CC_MDSS_MDP_CLK_SRC] = &disp_cc_mdss_mdp_clk_src.clkr,
-> +       [DISP_CC_MDSS_MDP_LUT1_CLK] = &disp_cc_mdss_mdp_lut1_clk.clkr,
-> +       [DISP_CC_MDSS_MDP_LUT_CLK] = &disp_cc_mdss_mdp_lut_clk.clkr,
-> +       [DISP_CC_MDSS_NON_GDSC_AHB_CLK] = &disp_cc_mdss_non_gdsc_ahb_clk.clkr,
-> +       [DISP_CC_MDSS_PCLK0_CLK] = &disp_cc_mdss_pclk0_clk.clkr,
-> +       [DISP_CC_MDSS_PCLK0_CLK_SRC] = &disp_cc_mdss_pclk0_clk_src.clkr,
-> +       [DISP_CC_MDSS_PCLK1_CLK] = &disp_cc_mdss_pclk1_clk.clkr,
-> +       [DISP_CC_MDSS_PCLK1_CLK_SRC] = &disp_cc_mdss_pclk1_clk_src.clkr,
-> +       [DISP_CC_MDSS_RSCC_AHB_CLK] = &disp_cc_mdss_rscc_ahb_clk.clkr,
-> +       [DISP_CC_MDSS_RSCC_VSYNC_CLK] = &disp_cc_mdss_rscc_vsync_clk.clkr,
-> +       [DISP_CC_MDSS_VSYNC1_CLK] = &disp_cc_mdss_vsync1_clk.clkr,
-> +       [DISP_CC_MDSS_VSYNC_CLK] = &disp_cc_mdss_vsync_clk.clkr,
-> +       [DISP_CC_MDSS_VSYNC_CLK_SRC] = &disp_cc_mdss_vsync_clk_src.clkr,
-> +       [DISP_CC_PLL0] = &disp_cc_pll0.clkr,
-> +       [DISP_CC_PLL1] = &disp_cc_pll1.clkr,
-> +       [DISP_CC_SLEEP_CLK] = &disp_cc_sleep_clk.clkr,
-> +       [DISP_CC_SLEEP_CLK_SRC] = &disp_cc_sleep_clk_src.clkr,
-> +       [DISP_CC_XO_CLK_SRC] = &disp_cc_xo_clk_src.clkr,
-> +};
-> +
-> +static const struct qcom_reset_map disp_cc_sm8550_resets[] = {
-> +       [DISP_CC_MDSS_CORE_BCR] = { 0x8000 },
-> +       [DISP_CC_MDSS_CORE_INT2_BCR] = { 0xa000 },
-> +       [DISP_CC_MDSS_RSCC_BCR] = { 0xc000 },
-> +};
-> +
-> +static struct gdsc *disp_cc_sm8550_gdscs[] = {
-> +       [MDSS_GDSC] = &mdss_gdsc,
-> +       [MDSS_INT2_GDSC] = &mdss_int2_gdsc,
-> +};
-> +
-> +static const struct regmap_config disp_cc_sm8550_regmap_config = {
-> +       .reg_bits = 32,
-> +       .reg_stride = 4,
-> +       .val_bits = 32,
-> +       .max_register = 0x11008,
-> +       .fast_io = true,
-> +};
-> +
-> +static struct qcom_cc_desc disp_cc_sm8550_desc = {
-> +       .config = &disp_cc_sm8550_regmap_config,
-> +       .clks = disp_cc_sm8550_clocks,
-> +       .num_clks = ARRAY_SIZE(disp_cc_sm8550_clocks),
-> +       .resets = disp_cc_sm8550_resets,
-> +       .num_resets = ARRAY_SIZE(disp_cc_sm8550_resets),
-> +       .gdscs = disp_cc_sm8550_gdscs,
-> +       .num_gdscs = ARRAY_SIZE(disp_cc_sm8550_gdscs),
-> +};
-> +
-> +static const struct of_device_id disp_cc_sm8550_match_table[] = {
-> +       { .compatible = "qcom,sm8550-dispcc" },
-> +       { }
-> +};
-> +MODULE_DEVICE_TABLE(of, disp_cc_sm8550_match_table);
-> +
-> +static void disp_cc_sm8550_pm_runtime_disable(void *data)
-> +{
-> +       pm_runtime_disable(data);
-> +}
-> +
-> +static int disp_cc_sm8550_probe(struct platform_device *pdev)
-> +{
-> +       struct regmap *regmap;
-> +       int ret;
-> +
-> +       pm_runtime_enable(&pdev->dev);
-
-We can use devm_pm_runtime_enable() here.
-
-> +
-> +       ret = devm_add_action_or_reset(&pdev->dev, disp_cc_sm8550_pm_runtime_disable, &pdev->dev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret = pm_runtime_resume_and_get(&pdev->dev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       regmap = qcom_cc_map(pdev, &disp_cc_sm8550_desc);
-> +       if (IS_ERR(regmap))
-> +               return PTR_ERR(regmap);
-> +
-> +       clk_lucid_evo_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
-> +       clk_lucid_evo_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
-> +
-> +       /* Enable clock gating for MDP clocks */
-> +       regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
-> +
-> +       /*
-> +        * Keep clocks always enabled:
-> +        *      disp_cc_xo_clk
-> +        */
-> +       regmap_update_bits(regmap, 0xe054, BIT(0), BIT(0));
-> +
-> +       ret = qcom_cc_really_probe(pdev, &disp_cc_sm8550_desc, regmap);
-> +
-> +       pm_runtime_put(&pdev->dev);
-> +
-> +       return ret;
-> +}
-> +
-> +static struct platform_driver disp_cc_sm8550_driver = {
-> +       .probe = disp_cc_sm8550_probe,
-> +       .driver = {
-> +               .name = "disp_cc-sm8550",
-> +               .of_match_table = disp_cc_sm8550_match_table,
-> +       },
-> +};
-> +
-> +static int __init disp_cc_sm8550_init(void)
-> +{
-> +       return platform_driver_register(&disp_cc_sm8550_driver);
-> +}
-> +subsys_initcall(disp_cc_sm8550_init);
-> +
-> +static void __exit disp_cc_sm8550_exit(void)
-> +{
-> +       platform_driver_unregister(&disp_cc_sm8550_driver);
-> +}
-> +module_exit(disp_cc_sm8550_exit);
-> +
-> +MODULE_DESCRIPTION("QTI DISPCC SM8550 Driver");
-> +MODULE_LICENSE("GPL");
->
-> --
-> 2.34.1
-
-
-
--- 
-With best wishes
-Dmitry
+>> For the rpmsg char, I would be in favor of creating a specific RPMSG IOCTRLs
+>> to avoid confusion.
+>>
+>> For instance:
+>>
+>>  - RPMSG_GET_SIGN_IOCTRL
+>>  - RPMSG_SET_SIGN_IOCTRL
+>>
+> 
+> Again, we're talking "flow control" at this level. So either we follow
+> the standard IOCTL and make it easy for existing applications to use
+> rpmsg_char, or we provide a _good_ explanation why they must use the
+> tty interface instead (and if so solve above mentioned problems).
+> 
+> Regards,
+> Bjorn
+> 
+>> With associated parameter corresponding to the bitmap proposed in my comment of
+>> your patch 1/4.
+>>
+>> Of course, this is only a suggestion, I let Bjorn and Mathieu comment.
+>>
+>> Regards,
+>> Arnaud
+>>
+>>
+>>> +	case RPMSG_DESTROY_EPT_IOCTL:
+>>> +		/* Don't allow to destroy a default endpoint. */
+>>> +		if (eptdev->default_ept) {
+>>> +			ret = -EINVAL;
+>>> +			break;
+>>> +		}
+>>> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+>>> +		break;
+>>> +	default:
+>>> +		ret = -EINVAL;
+>>> +	}
+>>>  
+>>> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+>>> +	return ret;
+>>>  }
+>>>  
+>>>  static const struct file_operations rpmsg_eptdev_fops = {
