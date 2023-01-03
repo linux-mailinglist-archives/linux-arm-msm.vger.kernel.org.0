@@ -2,231 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CA3C65C2BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 16:07:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D28665C2C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 16:09:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233544AbjACPFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 10:05:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40234 "EHLO
+        id S233365AbjACPIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 10:08:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237948AbjACPEv (ORCPT
+        with ESMTP id S237764AbjACPIQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 10:04:51 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A982411A10
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 07:04:50 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id n12so20247556pjp.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 07:04:50 -0800 (PST)
+        Tue, 3 Jan 2023 10:08:16 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2082DE016;
+        Tue,  3 Jan 2023 07:08:15 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id i9so44166787edj.4;
+        Tue, 03 Jan 2023 07:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N13vpL6q9P0WudTM1gFfahAVjoJ4UnTdBTjpXvHDPN4=;
-        b=fAhuk6kMp791OWqVdI0FD/kqqSvppMpzbLNlO8XgrHygfFi+VOJiX6JfcTBC4UZ9dG
-         kPCbEGi9xotF2PfePRt9GR7ZsNe43J0DY6xqF2dzRgmBcNqbX/dsH3bj1iN8VbBLXy69
-         nE0WwAn/6EC0ht2IPyIE+L+JG+KYmyhqcDAdiW773VASGgZAVEw8mIECSZm7/DY9lby1
-         Y4f1Ao0hfkuMOGK+YSGKvn+aNqoKQoQ1bv+SvAWrW+On4kH5MSTbbWhRGDc/RVs3eMqm
-         EVxBaTsX0n+YptQmI7YtFUH4dOK8EN1O/kxzz8bLw40cdNAYI+Pd6hQ7SEnRAzQnFkZA
-         tffw==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CSPq5yWRC/HN3+IV4EMGejHH3BfnS0uYnlKMfUqiABA=;
+        b=Mi7kh54ZuRKNF7iTtPdRl4ylg2qyJVH9qGo2E75htRrborm0TpfJ9I4ZmrHFb4Zwvf
+         wYelNvAwOLdt8xMYgFRbryRG6yL92oIiLlLqluSvrhAJcVWRuyiKe1xVUAG0R2AIKZRo
+         HhLRPIeuxnzc71bHLh21cKlOGwIMbLaUT9SWk5f9MnoiZ/q3vdCBy8iLAD0xh1oAStOS
+         fF00fJlPMXCew3A8qs2fq1s3IKs6a9JPIac/ZP82CrQiPBiHEBJs3ZzPzWBcLDzJ4ma3
+         7FaVhoyV90OOJTs3cga7XisFX7B8J5T99qUfphrLeJNccdZabUcsBszfJycA5ii4ld+G
+         EFDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N13vpL6q9P0WudTM1gFfahAVjoJ4UnTdBTjpXvHDPN4=;
-        b=iPPqjtyyu/dOH0ivRtuEvdtAjkDBdj79fn9NQR5rUcm5JiTmUllPBIbE9i7470WyKV
-         rMEx9Q0xpHulkLRiHnskGbMumks6a4SX8zGSHd01mxnNOrMU/SOL3h9L8uQpUxL+RGK9
-         4j1BrRwxPXXlYrRovxHjajUMbLJMwK4LNeGqVXqq2O1lYwZHuTRjuUbnJil3qv3dKQx4
-         yR0VsT5SQW9F6LXR544N00s/BracP6EGLAuxEVe9uSOmSBQerUzP5RS5dtGxDRdNM1Dg
-         0qZbkadmYLnaBdIr+gRZvPpB01DaPVOIJ0TanLpAeNjzMGVWEMrJTYvjGIVqlQpLxzg0
-         k9rg==
-X-Gm-Message-State: AFqh2kr3fByoP3l8QzinGpytA7uGsXU5BNP0Neq3bPtn8kH4AUrBJc6C
-        uIpwBcGrlpZYFtmbHwrjjro+sJFGBiQnnXRqXHE=
-X-Google-Smtp-Source: AMrXdXu/v7kZRf/c0WyJrK50QNP+TUaXV7Kd2o6twyvDsRq1+UHAWhoNwU9BGEPmL6OajdvAk7vVlg==
-X-Received: by 2002:a17:90a:8a08:b0:223:3642:f74f with SMTP id w8-20020a17090a8a0800b002233642f74fmr53242910pjn.0.1672758289750;
-        Tue, 03 Jan 2023 07:04:49 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
-        by smtp.gmail.com with ESMTPSA id 8-20020a17090a0f0800b0021952b5e9bcsm20952300pjy.53.2023.01.03.07.04.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 07:04:49 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Subject: [PATCH v2 2/2] usb: misc: eud: Add driver support for SM6115 / SM4250
-Date:   Tue,  3 Jan 2023 20:34:19 +0530
-Message-Id: <20230103150419.3923421-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230103150419.3923421-1-bhupesh.sharma@linaro.org>
-References: <20230103150419.3923421-1-bhupesh.sharma@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CSPq5yWRC/HN3+IV4EMGejHH3BfnS0uYnlKMfUqiABA=;
+        b=566RKbRzYV7wcs0+pYr77wP63CRfkFG+WhAlv+Ro5mO/HX84Cg3gKSzRyB7itWX7bS
+         rUK7afIJDv5kvrdDxgukIsX2Xt7OQuGnZ4H6uiJSyFiVLLePuM5K5uQQGOFoksqUoNFO
+         3bxy93dF+Uam/E592ZYrA/zAYSPBaYwO/3znDVMTsr7f+iI13ANe7SbxB983AV/GUatn
+         6UbyQfA7lLO2bPg026QyKT11nM/JKyReyY8B9Q5MplTeZqni/DEPTA93fYrurMQjJ7RP
+         qqODAhF9uZKeTXMIJAJK/NQubpGVTll+vKJ3A1LGhNGHFp3C9UPtuu2RqQFL9ikCvmqI
+         rq3A==
+X-Gm-Message-State: AFqh2kpB7dPGlsMvwYNW3VfI6PeZpJc5tixB+UJIzLSe0+Uc8XXW3QFx
+        CzsUQ5V2u5TgQc7ih0yyrBDg5EGFplAAfDGyxF0=
+X-Google-Smtp-Source: AMrXdXvYnuLBC4Fj0rKv0iLw2gdsYOf4uyg+BbMa4D8vswaCBJ6neJWhUajjhoFS7FdLq5jx+JKSdPeQqPPXLQGVOvQ=
+X-Received: by 2002:a50:951e:0:b0:484:a88c:a850 with SMTP id
+ u30-20020a50951e000000b00484a88ca850mr2614952eda.400.1672758493675; Tue, 03
+ Jan 2023 07:08:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230103145515.1164020-1-dmitry.baryshkov@linaro.org> <20230103145515.1164020-16-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230103145515.1164020-16-dmitry.baryshkov@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Tue, 3 Jan 2023 08:08:02 -0700
+Message-ID: <CAOCk7Nr4smGnQS-yh1hGKFFXzeUUt86JSdiuoSun7vJ11z9SWQ@mail.gmail.com>
+Subject: Re: [PATCH 15/21] clk: qcom: gpucc-msm8998: switch to parent_hws
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
+On Tue, Jan 3, 2023 at 7:56 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Change several entries of parent_data to use parent_hws instead, which
+> results in slightly more ovbious code.
 
-On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
-needs to be accessed only via the secure world (through 'scm'
-calls).
+obvious -> obvious
 
-Also, the enable bit inside 'tcsr_check_reg' needs to be set
-first to set the eud in 'enable' mode on these SoCs.
-
-Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/usb/misc/Kconfig    |  1 +
- drivers/usb/misc/qcom_eud.c | 49 ++++++++++++++++++++++++++++++++++---
- 2 files changed, 47 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
-index a5f7652db7da1..ed4ae32ff1577 100644
---- a/drivers/usb/misc/Kconfig
-+++ b/drivers/usb/misc/Kconfig
-@@ -140,6 +140,7 @@ config USB_APPLEDISPLAY
- config USB_QCOM_EUD
- 	tristate "QCOM Embedded USB Debugger(EUD) Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
-+	select QCOM_SCM
- 	select USB_ROLE_SWITCH
- 	help
- 	  This module enables support for Qualcomm Technologies, Inc.
-diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-index b7f13df007646..a96ca28a4899b 100644
---- a/drivers/usb/misc/qcom_eud.c
-+++ b/drivers/usb/misc/qcom_eud.c
-@@ -11,7 +11,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/qcom_scm.h>
- #include <linux/slab.h>
- #include <linux/sysfs.h>
- #include <linux/usb/role.h>
-@@ -30,15 +32,24 @@
- #define EUD_INT_SAFE_MODE	BIT(4)
- #define EUD_INT_ALL		(EUD_INT_VBUS | EUD_INT_SAFE_MODE)
- 
-+struct eud_soc_data {
-+	bool secure_eud_en;
-+	bool tcsr_check_enable;
-+};
-+
- struct eud_chip {
- 	struct device			*dev;
- 	struct usb_role_switch		*role_sw;
-+	const struct eud_soc_data	*eud_data;
- 	void __iomem			*base;
- 	void __iomem			*mode_mgr;
- 	unsigned int			int_status;
- 	int				irq;
- 	bool				enabled;
- 	bool				usb_attached;
-+	phys_addr_t			mode_mgr_phys_base;
-+	phys_addr_t			tcsr_check_phys_base;
-+
- };
- 
- static int enable_eud(struct eud_chip *priv)
-@@ -46,7 +57,11 @@ static int enable_eud(struct eud_chip *priv)
- 	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
- 	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
- 			priv->base + EUD_REG_INT1_EN_MASK);
--	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
-+
-+	if (priv->eud_data->secure_eud_en)
-+		qcom_scm_io_writel(priv->mode_mgr_phys_base + EUD_REG_EUD_EN2, BIT(0));
-+	else
-+		writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
- 
- 	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
- }
-@@ -54,7 +69,11 @@ static int enable_eud(struct eud_chip *priv)
- static void disable_eud(struct eud_chip *priv)
- {
- 	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
--	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
-+
-+	if (priv->eud_data->secure_eud_en)
-+		qcom_scm_io_writel(priv->mode_mgr_phys_base + EUD_REG_EUD_EN2, 0);
-+	else
-+		writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
- }
- 
- static ssize_t enable_show(struct device *dev,
-@@ -178,12 +197,15 @@ static void eud_role_switch_release(void *data)
- static int eud_probe(struct platform_device *pdev)
- {
- 	struct eud_chip *chip;
-+	struct resource *res;
- 	int ret;
- 
- 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
- 
-+	chip->eud_data = of_device_get_match_data(&pdev->dev);
-+
- 	chip->dev = &pdev->dev;
- 
- 	chip->role_sw = usb_role_switch_get(&pdev->dev);
-@@ -200,10 +222,25 @@ static int eud_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->base))
- 		return PTR_ERR(chip->base);
- 
--	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
-+	chip->mode_mgr = devm_platform_get_and_ioremap_resource(pdev, 1, &res);
- 	if (IS_ERR(chip->mode_mgr))
- 		return PTR_ERR(chip->mode_mgr);
- 
-+	if (chip->eud_data->secure_eud_en)
-+		chip->mode_mgr_phys_base = res->start;
-+
-+	if (chip->eud_data->tcsr_check_enable) {
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-+		if (!res)
-+			return dev_err_probe(chip->dev, -ENODEV, "failed to get tcsr reg base\n");
-+
-+		chip->tcsr_check_phys_base = res->start;
-+
-+		ret = qcom_scm_io_writel(chip->tcsr_check_phys_base, BIT(0));
-+		if (ret)
-+			return dev_err_probe(chip->dev, ret, "failed to write tcsr check reg\n");
-+	}
-+
- 	chip->irq = platform_get_irq(pdev, 0);
- 	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
- 			handle_eud_irq_thread, IRQF_ONESHOT, NULL, chip);
-@@ -230,8 +267,14 @@ static int eud_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static const struct eud_soc_data sm6115_eud_data = {
-+	.secure_eud_en = true,
-+	.tcsr_check_enable = true,
-+};
-+
- static const struct of_device_id eud_dt_match[] = {
- 	{ .compatible = "qcom,sc7280-eud" },
-+	{ .compatible = "qcom,sm6115-eud", .data = &sm6115_eud_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, eud_dt_match);
--- 
-2.38.1
-
+Also, you are changing one of two parent_data structs in this file.
+That's not "several".  It's really not clear why you are touching one,
+but not the other.  Can you be more specific about what is going on in
+this particular file?
