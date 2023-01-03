@@ -2,324 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F360865C778
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 20:27:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EDDE65C787
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 20:30:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238883AbjACT0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 14:26:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
+        id S232967AbjACT3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 14:29:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239085AbjACT0C (ORCPT
+        with ESMTP id S233170AbjACT3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 14:26:02 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3489F15F2B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 11:24:14 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id o15so23623385wmr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 11:24:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=soA8N1Ws7r8ib/8pXw2ez+/oRcp2B0qvESayRn9yAKc=;
-        b=up3lO+E54ZiEHD4zK9yhS7bfw2P4QiU6Cgk/+i9/RtuBwPTF9NzWgM5hPXGwbLDtqT
-         jArhicTnX9iCoYHsJeus+LLUDy5kvkkvriMTLDNmMUBuzHYBHDQOGlyAsLCs/7V0YsFs
-         0XJEAYldCvj41zB+y4ZLttnMnFrWBppu6prlTQl4yFtM5qO1Regf9VlTm+xIfiRxQ0xp
-         99UbmDZIpl9rmladDxgKOi3RXZHYhg+pGZVqOJFkyf1TizWWwHqEwrhzpw6IZN1W2uPa
-         2jRqAt/uvXf5itrUVdDOAuXtypscJg+qMF0Reng3HJavYApRXS6gQHKITGQLDjG1Lz8Z
-         z+KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=soA8N1Ws7r8ib/8pXw2ez+/oRcp2B0qvESayRn9yAKc=;
-        b=r01zvRzKLknVxNhsVA+EqSd0BSmlSgYHUR6fJnTUnulQQKdL2DrVduC+fttS1hpeME
-         3U3Sn1QyKw8skMU/FybhAXEgV5zXo/ktWuZv2kZIejU7qIWSukXdrB/KEB4q4db+ONOR
-         e5tKRpudr4+ypxypQQucnpbAHeaGycJp+gmzVDQkX3Q4jERStjoUVksmVk/WFU5HUdmy
-         8Btfvu+iHvtRsncKo9pW9XPBscVPuBSBHdcmXbixJlNi4GSEmCVcZSTEkkBP4aEBJIod
-         i5+1rM/6/jH6k8hT/ISsN+5nz8hNWa6H9wUHesghalfDpGScYmyroUdP3q3Lc/Jzuzwn
-         1AlA==
-X-Gm-Message-State: AFqh2ko2zCBTyy5YAIet9QfO7IiEfMJy6GNT/7XgnPnlY5au7cq5XHJD
-        SyRn+fxYX2EDkAM434s1u2lKLg==
-X-Google-Smtp-Source: AMrXdXvAvigHhXWq3rwvWdeC0mUyxWGw2Zl9y6OMrh3/bqBLJtfTARc+g8W65dyiyxvRGjklsd14pg==
-X-Received: by 2002:a05:600c:1c21:b0:3d2:2043:9cb7 with SMTP id j33-20020a05600c1c2100b003d220439cb7mr31281222wms.5.1672773852779;
-        Tue, 03 Jan 2023 11:24:12 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id l42-20020a05600c1d2a00b003cfbbd54178sm70803660wms.2.2023.01.03.11.24.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 11:24:11 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
+        Tue, 3 Jan 2023 14:29:22 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F5A13EA4;
+        Tue,  3 Jan 2023 11:29:21 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4056E614FE;
+        Tue,  3 Jan 2023 19:29:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E50CC433D2;
+        Tue,  3 Jan 2023 19:29:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672774160;
+        bh=kS1/OyPfwcshfjZ/3SRHvug8fTiy5Wp9PW3ZNN6JzkY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=pVFMp+O7STYIzNC26PdnlOB+c8TEatF6kKtV74xmbxzfcUAgnz3l52ERbwcVEEQVR
+         iPX8VOIHAJfP67k3yMDCVkLMU9UNjOgHHj7PC1MU+n6bRjOpuQhFXrf79U7Qp8gelK
+         +fqGyFRzXPNx2V2R9+pswBxersPoCp4IgsbYCoRbMe6BfQABV/13+ccEJe0Na4cUiB
+         ZfCWj3fii45asfmzvj3hIK8Gs3nyJ2brfsLIpw3b/NzziiAtVm4kRzDAyx16/F4irb
+         SFf8Rcz+8RHR+vb2JEQq+CTjeLWBXg4a6aWIq6ufp9F3TsEFT4N1jNOmJ7tJ6KVG3y
+         j897npKffKRaQ==
+Received: by mail-vs1-f54.google.com with SMTP id x65so19280454vsb.13;
+        Tue, 03 Jan 2023 11:29:20 -0800 (PST)
+X-Gm-Message-State: AFqh2koi+O/gtHaRIRSPHgPVoZ2wmmA7vR0EZt0AiI3hgcakfFPgE5V7
+        BU3csidkBPtWYlvb9rjx/xxw+ONPuDPmCUX6kQ==
+X-Google-Smtp-Source: AMrXdXsQ2RTXm/Q35pqeUXeb1yWkLtg8oApHK2GmDp4d+XS1Y9R+sLOqoroDn7dwWaNBSf2fnc/56BSdJ4WHQRyGYuk=
+X-Received: by 2002:a67:edd4:0:b0:3b5:1fe4:f1c2 with SMTP id
+ e20-20020a67edd4000000b003b51fe4f1c2mr5170483vsp.0.1672774159592; Tue, 03 Jan
+ 2023 11:29:19 -0800 (PST)
+MIME-Version: 1.0
+References: <20221207211327.2848665-1-robh@kernel.org>
+In-Reply-To: <20221207211327.2848665-1-robh@kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 3 Jan 2023 13:29:08 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKmULjtP7UCMZDxJTL3p7C_WS9qMaL5tMg5Jv74Sb0QQw@mail.gmail.com>
+Message-ID: <CAL_JsqKmULjtP7UCMZDxJTL3p7C_WS9qMaL5tMg5Jv74Sb0QQw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Fix CPU nodes compatible string
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 4/4] clk: qcom: Add TCSR clock driver for SM8550
-Date:   Tue,  3 Jan 2023 21:21:58 +0200
-Message-Id: <20230103192158.1155197-5-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230103192158.1155197-1-abel.vesa@linaro.org>
-References: <20230103192158.1155197-1-abel.vesa@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The TCSR clock controller found on SM8550 provides refclks
-for PCIE, USB and UFS. Add clock driver for it.
+On Wed, Dec 7, 2022 at 3:13 PM Rob Herring <robh@kernel.org> wrote:
+>
+> 'arm,kryo' is not documented and is not an Arm Ltd thing either as that
+> is Qualcomm branding. The correct compatible is 'qcom,kryo'.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 
-This patch is based on initial code downstream.
+Ping!
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/Kconfig         |   7 ++
- drivers/clk/qcom/Makefile        |   1 +
- drivers/clk/qcom/tcsrcc-sm8550.c | 192 +++++++++++++++++++++++++++++++
- 3 files changed, 200 insertions(+)
- create mode 100644 drivers/clk/qcom/tcsrcc-sm8550.c
-
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 70d43f0a8919..b9f5505d68f0 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -797,6 +797,13 @@ config SM_GPUCC_8350
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
- 
-+config SM_TCSRCC_8550
-+	tristate "SM8550 TCSR Clock Controller"
-+	select QCOM_GDSC
-+	help
-+	  Support for the TCSR clock controller on SM8550 devices.
-+	  Say Y if you want to use peripheral devices such as SD/UFS.
-+
- config SM_VIDEOCC_8150
- 	tristate "SM8150 Video Clock Controller"
- 	select SM_GCC_8150
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index f18c446a97ea..f5ce429c724c 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -112,6 +112,7 @@ obj-$(CONFIG_SM_GPUCC_6350) += gpucc-sm6350.o
- obj-$(CONFIG_SM_GPUCC_8150) += gpucc-sm8150.o
- obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
- obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
-+obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
- obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
- obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
- obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
-diff --git a/drivers/clk/qcom/tcsrcc-sm8550.c b/drivers/clk/qcom/tcsrcc-sm8550.c
-new file mode 100644
-index 000000000000..2c67ee71c196
---- /dev/null
-+++ b/drivers/clk/qcom/tcsrcc-sm8550.c
-@@ -0,0 +1,192 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2022, Linaro Limited
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,sm8550-tcsr.h>
-+
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
-+#include "clk-pll.h"
-+#include "clk-rcg.h"
-+#include "clk-regmap.h"
-+#include "clk-regmap-divider.h"
-+#include "clk-regmap-mux.h"
-+#include "common.h"
-+#include "reset.h"
-+
-+enum {
-+	DT_BI_TCXO_PAD,
-+};
-+
-+static struct clk_branch tcsr_pcie_0_clkref_en = {
-+	.halt_reg = 0x15100,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15100,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_0_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_pcie_1_clkref_en = {
-+	.halt_reg = 0x15114,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15114,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_1_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_ufs_clkref_en = {
-+	.halt_reg = 0x15110,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15110,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_ufs_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_ufs_pad_clkref_en = {
-+	.halt_reg = 0x15104,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15104,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_ufs_pad_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb2_clkref_en = {
-+	.halt_reg = 0x15118,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15118,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb2_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb3_clkref_en = {
-+	.halt_reg = 0x15108,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x15108,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb3_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_regmap *tcsr_cc_sm8550_clocks[] = {
-+	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
-+	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
-+	[TCSR_UFS_CLKREF_EN] = &tcsr_ufs_clkref_en.clkr,
-+	[TCSR_UFS_PAD_CLKREF_EN] = &tcsr_ufs_pad_clkref_en.clkr,
-+	[TCSR_USB2_CLKREF_EN] = &tcsr_usb2_clkref_en.clkr,
-+	[TCSR_USB3_CLKREF_EN] = &tcsr_usb3_clkref_en.clkr,
-+};
-+
-+static const struct regmap_config tcsr_cc_sm8550_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register = 0x2f000,
-+	.fast_io = true,
-+};
-+
-+static const struct qcom_cc_desc tcsr_cc_sm8550_desc = {
-+	.config = &tcsr_cc_sm8550_regmap_config,
-+	.clks = tcsr_cc_sm8550_clocks,
-+	.num_clks = ARRAY_SIZE(tcsr_cc_sm8550_clocks),
-+};
-+
-+static const struct of_device_id tcsr_cc_sm8550_match_table[] = {
-+	{ .compatible = "qcom,sm8550-tcsr" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, tcsr_cc_sm8550_match_table);
-+
-+static int tcsr_cc_sm8550_probe(struct platform_device *pdev)
-+{
-+	struct regmap *regmap;
-+
-+	regmap = qcom_cc_map(pdev, &tcsr_cc_sm8550_desc);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	return qcom_cc_really_probe(pdev, &tcsr_cc_sm8550_desc, regmap);
-+}
-+
-+static struct platform_driver tcsr_cc_sm8550_driver = {
-+	.probe = tcsr_cc_sm8550_probe,
-+	.driver = {
-+		.name = "tcsr_cc-sm8550",
-+		.of_match_table = tcsr_cc_sm8550_match_table,
-+	},
-+};
-+
-+static int __init tcsr_cc_sm8550_init(void)
-+{
-+	return platform_driver_register(&tcsr_cc_sm8550_driver);
-+}
-+subsys_initcall(tcsr_cc_sm8550_init);
-+
-+static void __exit tcsr_cc_sm8550_exit(void)
-+{
-+	platform_driver_unregister(&tcsr_cc_sm8550_driver);
-+}
-+module_exit(tcsr_cc_sm8550_exit);
-+
-+MODULE_DESCRIPTION("QTI TCSRCC SM8550 Driver");
-+MODULE_LICENSE("GPL");
--- 
-2.34.1
-
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 212580316d3e..f06cc7588acc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -166,7 +166,7 @@ cpus {
+>
+>                 CPU0: cpu@0 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x0>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> @@ -189,7 +189,7 @@ L3_0: l3-cache {
+>
+>                 CPU1: cpu@100 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x100>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> @@ -209,7 +209,7 @@ L2_100: l2-cache {
+>
+>                 CPU2: cpu@200 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x200>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> @@ -229,7 +229,7 @@ L2_200: l2-cache {
+>
+>                 CPU3: cpu@300 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x300>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> @@ -249,7 +249,7 @@ L2_300: l2-cache {
+>
+>                 CPU4: cpu@400 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x400>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0
+> @@ -269,7 +269,7 @@ L2_400: l2-cache {
+>
+>                 CPU5: cpu@500 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x500>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0
+> @@ -289,7 +289,7 @@ L2_500: l2-cache {
+>
+>                 CPU6: cpu@600 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x600>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0
+> @@ -309,7 +309,7 @@ L2_600: l2-cache {
+>
+>                 CPU7: cpu@700 {
+>                         device_type = "cpu";
+> -                       compatible = "arm,kryo";
+> +                       compatible = "qcom,kryo";
+>                         reg = <0x0 0x700>;
+>                         enable-method = "psci";
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0
+> --
+> 2.35.1
+>
