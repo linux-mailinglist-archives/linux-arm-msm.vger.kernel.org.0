@@ -2,94 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F31965B9BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 04:35:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E620E65BA1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 05:46:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232968AbjACDfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Jan 2023 22:35:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
+        id S236423AbjACEp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Jan 2023 23:45:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbjACDfF (ORCPT
+        with ESMTP id S230071AbjACEp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Jan 2023 22:35:05 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3905C749;
-        Mon,  2 Jan 2023 19:35:03 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3DBE9B80D75;
-        Tue,  3 Jan 2023 03:35:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22051C433EF;
-        Tue,  3 Jan 2023 03:35:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672716900;
-        bh=dCkckECAvLQtZaeZmpoNgVJKnT+aYXzBTqQgYjJLq80=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S9eq+dx75O+t277fS2OQTxltcXQoA5NqAL7Q/02fwyulyXbhd97EmBz9ROiMF6NWd
-         +hlVuil9QGMpGmbem/7ir0Vk+zwS5B3Y8nhvInCHpm5C6Rn1wNLFxpvNvlo+8PQcxM
-         VejYjAMLtE/k6E9AKxeeGfSQRjFlR3YVuiwuq6xfIBn8Kps3z3qg7MuU+ixFqtN/E6
-         VTdyb56OyFo9eojisdUjD+/LzJhp4h9GAhz4lSyGnf81xoCxJ8uGW7fAW+z/7wIfj8
-         Kj7xdqrJ4qbOeQtOslCBvqsPeBoXJ6JD9Nhuvll8zcDuG63mK4nvL29rEyhlexLsZV
-         Bs1ThJ1j6f1PQ==
-Date:   Mon, 2 Jan 2023 21:34:58 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        bhelgaas@google.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lpieralisi@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: PCI: qcom: Update maintainers
-Message-ID: <20230103033458.kdtylqhnlkrk46oh@builder.lan>
-References: <20230102105821.28243-1-manivannan.sadhasivam@linaro.org>
- <20230102105821.28243-2-manivannan.sadhasivam@linaro.org>
+        Mon, 2 Jan 2023 23:45:57 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA56664D6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jan 2023 20:45:55 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id 20so18011603plo.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jan 2023 20:45:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5r2SpeKo/dsm6TJm7k5ZEFJZ1B6qJV7pDaoh0+GMrDA=;
+        b=PIMtxS4MCr2yd/V98x1M0WVzhwxok8v0zFDS5ob3HM8+hLK8f1YQECXRa9GkngJQ19
+         mw526XmfUqCJiahu24KKtaReMK8svdyTnqNguRFFM3IqH9yToQyX90MR7clsc9t0gG89
+         hgS6jqF4kMadta8wcMwaqNyE40Xcl68I4ve4CW0l4KecOfUjqkDOlAMS7YWjMkk/hyc9
+         Wl9RfD9Ba7vfCfrYpADX4TTQcHYulXzMlGd/Je7xPIcDHV0STP1sNbFtBu6/dGBIjhGT
+         i4hv92Okma105aXB245HF8POGL9h8QfcxH2BNh4im2fSazQWtTwxGyNVRw7BhXQM087B
+         H/gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5r2SpeKo/dsm6TJm7k5ZEFJZ1B6qJV7pDaoh0+GMrDA=;
+        b=Ds/NFxjLu0Iziu+eKHoVNjRqWMusgXn++o98nN3iiLSJd0lu0VCm10nHDE87mwXKw5
+         fp9UW7NhtDnfhyJG5v8wKmKvnhjn3O4QlyFRaeXSxhnCwcuilKaXWDmwWTb9Z5fE2nu4
+         t4WOIxqUtkbaGqvofEFdqD0YmXWAjfeFKBfS+INhdgzuLD0myQho0s6kG/q0uOA1PVGc
+         EaM/46bwbRm1FdzgjjeI/ZG1SVUDosk4WA4SyF6u2zjC34Wkbj2MveWIONHnb9yJ4wvo
+         XPGDHOeU2/vxaMEdkw7Zcn1Kh4QE81pvqYBSdiGNKobqJNYDHkZUNXQ0R+x0daVPqOJy
+         0SNA==
+X-Gm-Message-State: AFqh2krC6jAav+Ls/OoFzH5ov8+DXnWmQg75fJ4/dmlj7AULl1iOD5lq
+        GRi31Nfe+Sq/uRjbZf1HKonhAg==
+X-Google-Smtp-Source: AMrXdXuXqoCFzqofEoGdlX/Jo/KW97I/INTMOP7PlP95lQMRtK8ZZV8x9HRIX/rd3Br9I+nSrXs4eQ==
+X-Received: by 2002:a05:6a20:8ee1:b0:ac:3f3f:9fbd with SMTP id m33-20020a056a208ee100b000ac3f3f9fbdmr43533668pzk.48.1672721155036;
+        Mon, 02 Jan 2023 20:45:55 -0800 (PST)
+Received: from ?IPV6:2401:4900:1c5e:e3b5:c341:16de:ce17:b857? ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
+        by smtp.gmail.com with ESMTPSA id x7-20020aa78f07000000b00580f630a05csm15555599pfr.180.2023.01.02.20.45.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jan 2023 20:45:54 -0800 (PST)
+Message-ID: <3db705bf-d63b-2804-53d3-4e538722369d@linaro.org>
+Date:   Tue, 3 Jan 2023 10:15:48 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230102105821.28243-2-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 2/2] usb: misc: eud: Add driver support for SM6115 /
+ SM4250
+To:     kernel test robot <lkp@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, quic_schowdhu@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org
+References: <20221231130743.3285664-3-bhupesh.sharma@linaro.org>
+ <202301010719.babWy02L-lkp@intel.com>
+Content-Language: en-US
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <202301010719.babWy02L-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 02, 2023 at 04:28:19PM +0530, Manivannan Sadhasivam wrote:
-> Stanimir has left mm-sol and already expressed his wish to not continue
-> maintaining the PCIe RC driver. So his entry can be removed.
-> 
-> Adding myself as the co-maintainer since I took over the PCIe RC driver
-> maintainership from Stanimir.
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Acked-by: Bjorn Andersson <andersson@kernel.org>
 
-Regards,
-Bjorn
+On 1/1/23 5:29 AM, kernel test robot wrote:
+> Hi Bhupesh,
+> 
+> I love your patch! Yet something to improve:
+> 
+> [auto build test ERROR on usb/usb-testing]
+> [also build test ERROR on usb/usb-next usb/usb-linus robh/for-next westeri-thunderbolt/next linus/master v6.2-rc1 next-20221226]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/dt-bindings-soc-qcom-eud-Add-SM6115-SM4250-binding/20221231-211214
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+> patch link:    https://lore.kernel.org/r/20221231130743.3285664-3-bhupesh.sharma%40linaro.org
+> patch subject: [PATCH 2/2] usb: misc: eud: Add driver support for SM6115 / SM4250
+> config: arc-randconfig-r043-20230101
+> compiler: arceb-elf-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>          chmod +x ~/bin/make.cross
+>          # https://github.com/intel-lab-lkp/linux/commit/b5caddbdc606744113a894749b7457e5b2621678
+>          git remote add linux-review https://github.com/intel-lab-lkp/linux
+>          git fetch --no-tags linux-review Bhupesh-Sharma/dt-bindings-soc-qcom-eud-Add-SM6115-SM4250-binding/20221231-211214
+>          git checkout b5caddbdc606744113a894749b7457e5b2621678
+>          # save the config file
+>          mkdir build_dir && cp config build_dir/.config
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc olddefconfig
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag where applicable
+> | Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+> 
+>>> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
 
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index a5859bb3dc28..a3639920fcbb 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -8,7 +8,7 @@ title: Qualcomm PCI express root complex
->  
->  maintainers:
->    - Bjorn Andersson <bjorn.andersson@linaro.org>
-> -  - Stanimir Varbanov <svarbanov@mm-sol.com>
-> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->  
->  description: |
->    Qualcomm PCIe root complex controller is based on the Synopsys DesignWare
-> -- 
-> 2.25.1
-> 
+Thanks for reporting the issue. I think 'select QCOM_SCM' should be 
+added to 'config USB_QCOM_EUD' configuration option as well.
+
+I will send a fixed v2 shortly.
+
+Regards.
