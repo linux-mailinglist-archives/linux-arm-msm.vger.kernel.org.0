@@ -2,90 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C47265BED6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 12:22:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC9EC65BF26
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jan 2023 12:39:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbjACLVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 06:21:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54352 "EHLO
+        id S237224AbjACLim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 06:38:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237361AbjACLUy (ORCPT
+        with ESMTP id S237438AbjACLif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 06:20:54 -0500
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C27C41;
-        Tue,  3 Jan 2023 03:20:52 -0800 (PST)
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 303BKNFe010592;
-        Tue, 3 Jan 2023 05:20:23 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1672744823;
-        bh=RRtlhIVdMPvZliBk15tTr78QoIbXJRGIQlWDSZqcXFc=;
-        h=Date:Subject:To:CC:References:From:In-Reply-To;
-        b=TGLWuljAnw9woyYbAgDmrKqd8oLESZN91vpjuPAzA5sTBINvXVD6fCUscEyRaY5SB
-         IXxrJ2L0we5X8x/Yw5eLq2tIXx5nlccElR9rnkoErlcnScQenqnpUQGXQMLCuDGfG/
-         hxl4HPo/gxTWQzrLSjvSB5BjM5nf5tHThsK5FGtU=
-Received: from DFLE106.ent.ti.com (dfle106.ent.ti.com [10.64.6.27])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 303BKNS3031690
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 3 Jan 2023 05:20:23 -0600
-Received: from DFLE109.ent.ti.com (10.64.6.30) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Tue, 3
- Jan 2023 05:20:23 -0600
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE109.ent.ti.com
- (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Tue, 3 Jan 2023 05:20:22 -0600
-Received: from [10.24.69.26] (ileaxei01-snat.itg.ti.com [10.180.69.5])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 303BKId5015911;
-        Tue, 3 Jan 2023 05:20:18 -0600
-Message-ID: <ca201f4f-b0a5-0ab2-3c3f-364ad0081b8f@ti.com>
-Date:   Tue, 3 Jan 2023 16:50:17 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v5 2/6] dt-bindings: phy: Add QMP UFS PHY compatible for
- SM6125
-Content-Language: en-US
-To:     Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Tue, 3 Jan 2023 06:38:35 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E81261;
+        Tue,  3 Jan 2023 03:38:33 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8872C61284;
+        Tue,  3 Jan 2023 11:38:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF6DC433D2;
+        Tue,  3 Jan 2023 11:38:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672745911;
+        bh=R2Dzj/2kb3SslWczETl2IKtdwzAJ8TDrNr/cvB9c/bY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ViZbtT6fzJtT12QWCtJch3B/IdWvJMDV0JzyQ9EluMiaHGPwcvstBdXAFkS4dGICs
+         AJ+uATz2UcTNe/76z9x7RXq/O4up0kIMcfeV7i5mi08f8s58pW+oAt4iTHuxg16CEX
+         hseKN4p66dYkSATyVnUh7bO9uLmkgqPsXmDBo7HRp/egiPNIlHfqh/o6krJd4gr5GF
+         rveCcDgmbj3vUseF/cB24YarBegw6IY+RYuhaT2zcA9/8HpAy7JGWNKNG0YsG5s/Oz
+         qY2OVvWJhFNalLqq4cB+ezdPR0TjXz/07qA6u8xwWiJIMCwXMkoicHIR0iDAegd58I
+         I+KXfuYDC8OqA==
+Date:   Tue, 3 Jan 2023 11:38:25 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <martin.botka@somainline.org>, <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221231222420.75233-1-they@mint.lgbt>
- <20221231222420.75233-3-they@mint.lgbt>
-From:   Dhruva Gole <d-gole@ti.com>
-In-Reply-To: <20221231222420.75233-3-they@mint.lgbt>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: document
+ pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550, pm8010 & pmr735d
+Message-ID: <Y7QTsdL9xSQzIM2b@google.com>
+References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-spmi-v2-1-b839bf2d558a@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-spmi-v2-1-b839bf2d558a@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+I changed the subject line for you.
 
+On Fri, 18 Nov 2022, Neil Armstrong wrote:
 
-On 01/01/23 03:54, Lux Aliaga wrote:
-> Document the QMP UFS PHY compatible for SM6125.
+> Document compatible for the pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550.
+> pm8010 & pmr735d SPMI PMICs
 > 
-> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
-Acked-by: Dhruva Gole <d-gole@ti.com>
+Applied, thanks
 
 -- 
-Thanks and Regards,
-Dhruva Gole
+Lee Jones [李琼斯]
