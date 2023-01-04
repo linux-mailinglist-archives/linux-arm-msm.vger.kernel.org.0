@@ -2,140 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CAC965D622
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 15:40:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDD1D65D663
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 15:45:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239492AbjADOko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 09:40:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
+        id S239420AbjADOpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 09:45:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239582AbjADOkd (ORCPT
+        with ESMTP id S239561AbjADOpL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 09:40:33 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3856416
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 06:40:31 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b3so50689957lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 06:40:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E7COyuGFa8puGN4hHGdXVhEeO8dZ9H0YPzp0d+LJYE8=;
-        b=ImdfTnvx3mLW3FELaaTZudIVpTyirpQHI5OJOxeh2m4h+wAqoRwNaDsaoLxTdqsb3b
-         aRfkHg3WKtgcVyVJx+QhaZtJGyfaIIvUHtVb9x23uaOwtFjvQvJETyt/SP5C5b3FxASt
-         4tU65h8DpGRGxypYFIBvrSEZLXR01BjNHnUCf9EnCNSGJIiJKk1TyGbCEn0oBrJGlqo5
-         sEBq90W8ZyMXQwWbxvB0fQSDPn1pvi6ABrxOKBDBEAIOwcahvcDyRMXl7vX7XUfXlLG+
-         HNhRx1TVNiFDhP+C8+tMXYIdI+QeeUpVkJs7xwT+U25sVMtoZ4C4thGi6YolvE0yHXhx
-         TiyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7COyuGFa8puGN4hHGdXVhEeO8dZ9H0YPzp0d+LJYE8=;
-        b=AaoHD79f+RtJ9/hiAOdaTClnt0diRCJHokPwhrpb++ALv4jXe5xa6QYYhLRHWoIvrr
-         IBOBZbDZlt1wPXT6/a9DcI1WMoERh0ZcSaTbf3/cblamIQsUtDfq3OIJIJckNJwMWnad
-         4QY9ONEbE+9C7SZUJLQiJUxCipnDCygRwXdVxWear6HtGJhUNp6dv4cnPK8+B/16yTIV
-         5z7Gss4dV8yxQlGYf2COJzHAfjXH0WBFwLMR2JnvJMvk2WjR8U1xdZv+FWpRyLgnwz0e
-         LBeBvw5LktWFto6I1pSACEJF/n/BWiaC7dqm+PmJEJ1v9ssX/pQabnOuk6v2/Vkbweha
-         M4Jg==
-X-Gm-Message-State: AFqh2kovnCZEcUdOFe775rbJOzIkdj2CHPkO9BVqvyCxDFP74qybXZsR
-        WsmEm7Tq7/oeLEvooR62auYuig==
-X-Google-Smtp-Source: AMrXdXvcDU9IVMakA31Z/Q2KEc6zPD8IYA6jFRDNOEz+Qt0RVjADy8JjyKjCNMGrdC4r2kC7pyXAyg==
-X-Received: by 2002:a05:6512:3b87:b0:4a4:68b7:d623 with SMTP id g7-20020a0565123b8700b004a468b7d623mr15491527lfv.10.1672843229979;
-        Wed, 04 Jan 2023 06:40:29 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id c20-20020ac24154000000b0048a8c907fe9sm5059843lfi.167.2023.01.04.06.40.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jan 2023 06:40:29 -0800 (PST)
-Message-ID: <1d3b7744-4e1c-b2c7-c6e4-87c256ee137a@linaro.org>
-Date:   Wed, 4 Jan 2023 16:40:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v8 3/4] clk: qcom: rpmh: Add support for SM8550 rpmh
- clocks
-Content-Language: en-GB
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20230104093450.3150578-1-abel.vesa@linaro.org>
- <20230104093450.3150578-4-abel.vesa@linaro.org>
- <07a849a9-03dc-f3af-1d3f-2369cb71451e@linaro.org>
- <Y7V00JiPAYfqF4wH@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y7V00JiPAYfqF4wH@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Wed, 4 Jan 2023 09:45:11 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB2539FAB;
+        Wed,  4 Jan 2023 06:45:10 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 304E1C0s022325;
+        Wed, 4 Jan 2023 14:45:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=3JJBPP/5K+0qKmmA13iU9ZcypdRKdxprNDERoX8hcXE=;
+ b=BDvQ/YPYgiXxJnSWS0i05TpYr8iceKr338UZnqFkwuSoc3U99dI/3LhTsaFrOdwJMc24
+ haOezKyLrNbmQ6V814UplVY93TVTeiINrG813cFgO9HmchGvRUX1nA8D5SJUVEx2HC3x
+ M0NOVzYQnoR/RWbjYIGYC/qnxE6Zi1c2QwHCWXvQYzL0nHc+L+SdnLiau7yFCrD99KWt
+ JWfWLn9lS8fyzAUfqH4l4gMRGAA8p8oyXazND4n3RDzbV6NwtjlJKvqDw+47kp5eEnas
+ bV6qj0RuOFpRQH1IXXnD9bWNCM8qEdaQR2zV/AYCE8+lvcfsqgwZVJlwa9UcAu/shF0n rQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mvsvfa0yw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 04 Jan 2023 14:45:08 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 304Ej3Ma005853;
+        Wed, 4 Jan 2023 14:45:03 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3mte5k87xw-1;
+        Wed, 04 Jan 2023 14:45:03 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 304Ej3Rr005844;
+        Wed, 4 Jan 2023 14:45:03 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 304Ej3UE005824;
+        Wed, 04 Jan 2023 14:45:03 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+        id B7FE64A59; Wed,  4 Jan 2023 20:15:02 +0530 (+0530)
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+To:     linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        nicolas@ndufresne.ca, Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v3] venus: venc: add handling for VIDIOC_ENCODER_CMD
+Date:   Wed,  4 Jan 2023 20:14:56 +0530
+Message-Id: <1672843496-14111-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wz6aSkzJ1QAoKIcE3C7gPtowlp7rAE5_
+X-Proofpoint-GUID: wz6aSkzJ1QAoKIcE3C7gPtowlp7rAE5_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-04_07,2023-01-04_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 malwarescore=0
+ adultscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301040125
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/01/2023 14:45, Abel Vesa wrote:
-> On 23-01-04 12:46:55, Dmitry Baryshkov wrote:
->> On 04/01/2023 11:34, Abel Vesa wrote:
->>> Adds the RPMH clocks present in SM8550 SoC.
->>>
->>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/clk/qcom/clk-rpmh.c | 36 ++++++++++++++++++++++++++++++++++++
->>>    1 file changed, 36 insertions(+)
->>
->> I think the plan was to have the _PAD clock as a child node of the rpmcc. Is
->> it still the planned implementation?
-> 
-> Yes. Here is how the dts rpmhcc node will look like:
-> 
->           rpmhcc: clock-controller {
->                   compatible = "qcom,sm8550-rpmh-clk";
->                   #clock-cells = <1>;
->                   clock-names = "xo";
->                   clocks = <&xo_board>;
-> 
->                   bi_tcxo_div2: bi-tcxo-div2-clk {
->                           #clock-cells = <0>;
->                           compatible = "fixed-factor-clock";
->                           clocks = <&rpmhcc RPMH_CXO_CLK>;
->                           clock-mult = <1>;
->                           clock-div = <2>;
->                   };
-> 
->                   bi_tcxo_ao_div2: bi-tcxo-div2-ao-clk {
->                           #clock-cells = <0>;
->                           compatible = "fixed-factor-clock";
->                           clocks = <&rpmhcc RPMH_CXO_CLK_A>;
->                           clock-mult = <1>;
->                           clock-div = <2>;
->                   };
->           };
+Add handling for below commands in encoder:
+1. V4L2_ENC_CMD_STOP
+2. V4L2_ENC_CMD_START
 
-Does this snippet pass bindings validation?
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-> 
-> The clock nodes will be probed on of_clk_init.
+---
+change since v2:
+  add a check to return EBUSY if CMD_START is called
+  in VENUS_ENC_STATE_DRAIN state
 
-Ah, I see. of_clk_init() will initialize clocks even if the parent 
-device is not fully probed. Thank you for the explanation!
+ drivers/media/platform/qcom/venus/core.h |  9 +++++
+ drivers/media/platform/qcom/venus/venc.c | 66 ++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+)
 
-
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 32551c2..d147154 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -317,6 +317,14 @@ enum venus_dec_state {
+ 	VENUS_DEC_STATE_DRC		= 7,
+ };
+ 
++enum venus_enc_state {
++	VENUS_ENC_STATE_DEINIT		= 0,
++	VENUS_ENC_STATE_INIT		= 1,
++	VENUS_ENC_STATE_ENCODING	= 2,
++	VENUS_ENC_STATE_STOPPED		= 3,
++	VENUS_ENC_STATE_DRAIN		= 4,
++};
++
+ struct venus_ts_metadata {
+ 	bool used;
+ 	u64 ts_ns;
+@@ -428,6 +436,7 @@ struct venus_inst {
+ 	u8 quantization;
+ 	u8 xfer_func;
+ 	enum venus_dec_state codec_state;
++	enum venus_enc_state enc_state;
+ 	wait_queue_head_t reconf_wait;
+ 	unsigned int subscriptions;
+ 	int buf_count;
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index cdb1254..eae63b9 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -520,6 +520,49 @@ static int venc_subscribe_event(struct v4l2_fh *fh,
+ 	}
+ }
+ 
++static int
++venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
++{
++	struct venus_inst *inst = to_inst(file);
++	struct hfi_frame_data fdata = {0};
++	int ret = 0;
++
++	ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
++	if (ret)
++		return ret;
++
++	mutex_lock(&inst->lock);
++
++	if (cmd->cmd == V4L2_ENC_CMD_STOP &&
++	    inst->enc_state == VENUS_ENC_STATE_ENCODING) {
++		/*
++		 * Implement V4L2_ENC_CMD_STOP by enqueue an empty buffer on
++		 * encoder input to signal EOS.
++		 */
++		if (!(inst->streamon_out && inst->streamon_cap))
++			goto unlock;
++
++		fdata.buffer_type = HFI_BUFFER_INPUT;
++		fdata.flags |= HFI_BUFFERFLAG_EOS;
++		fdata.device_addr = 0xdeadb000;
++
++		ret = hfi_session_process_buf(inst, &fdata);
++
++		inst->enc_state = VENUS_ENC_STATE_DRAIN;
++	} else if (cmd->cmd == V4L2_ENC_CMD_START) {
++		if (inst->enc_state == VENUS_ENC_STATE_DRAIN)
++			return -EBUSY;
++		if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
++			vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
++			inst->enc_state = VENUS_ENC_STATE_ENCODING;
++		}
++	}
++
++unlock:
++	mutex_unlock(&inst->lock);
++	return ret;
++}
++
+ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+ 	.vidioc_querycap = venc_querycap,
+ 	.vidioc_enum_fmt_vid_cap = venc_enum_fmt,
+@@ -548,6 +591,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+ 	.vidioc_subscribe_event = venc_subscribe_event,
+ 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+ 	.vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
++	.vidioc_encoder_cmd = venc_encoder_cmd,
+ };
+ 
+ static int venc_pm_get(struct venus_inst *inst)
+@@ -1196,6 +1240,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+ 	if (ret)
+ 		goto error;
+ 
++	inst->enc_state = VENUS_ENC_STATE_ENCODING;
++
+ 	mutex_unlock(&inst->lock);
+ 
+ 	return 0;
+@@ -1215,10 +1261,21 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
+ {
+ 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
++	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 
+ 	venc_pm_get_put(inst);
+ 
+ 	mutex_lock(&inst->lock);
++
++	if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
++		vbuf->sequence = inst->sequence_cap++;
++		vbuf->field = V4L2_FIELD_NONE;
++		vb2_set_plane_payload(vb, 0, 0);
++		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
++		mutex_unlock(&inst->lock);
++		return;
++	}
++
+ 	venus_helper_vb2_buf_queue(vb);
+ 	mutex_unlock(&inst->lock);
+ }
+@@ -1260,6 +1317,10 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 		vb->planes[0].data_offset = data_offset;
+ 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
+ 		vbuf->sequence = inst->sequence_cap++;
++		if ((vbuf->flags & V4L2_BUF_FLAG_LAST) &&
++		    inst->enc_state == VENUS_ENC_STATE_DRAIN) {
++			inst->enc_state = VENUS_ENC_STATE_STOPPED;
++		}
+ 	} else {
+ 		vbuf->sequence = inst->sequence_out++;
+ 	}
+@@ -1362,6 +1423,9 @@ static int venc_open(struct file *file)
+ 	inst->core_acquired = false;
+ 	inst->nonblock = file->f_flags & O_NONBLOCK;
+ 
++	if (inst->enc_state == VENUS_ENC_STATE_DEINIT)
++		inst->enc_state = VENUS_ENC_STATE_INIT;
++
+ 	venus_helper_init_instance(inst);
+ 
+ 	ret = venc_ctrl_init(inst);
+@@ -1424,6 +1488,8 @@ static int venc_close(struct file *file)
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 
++	inst->enc_state = VENUS_ENC_STATE_DEINIT;
++
+ 	venc_pm_put(inst, false);
+ 
+ 	kfree(inst);
 -- 
-With best wishes
-Dmitry
+2.7.4
 
