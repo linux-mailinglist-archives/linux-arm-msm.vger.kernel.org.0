@@ -2,103 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3284665CD9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 08:30:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F04B465CDC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 08:44:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233424AbjADH36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 02:29:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38904 "EHLO
+        id S233446AbjADHoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 02:44:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230387AbjADH35 (ORCPT
+        with ESMTP id S230251AbjADHoE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 02:29:57 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A741413F75
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 23:29:56 -0800 (PST)
-Received: from [192.168.1.15] (91-154-32-225.elisa-laajakaista.fi [91.154.32.225])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6BFD2108;
-        Wed,  4 Jan 2023 08:29:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1672817393;
-        bh=82pyUUf7pT/43ndvROF+ofhgFaSVX8TXD5BpYvrTqWQ=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=BzOjKTVtnZiVl2irEaEBv8gP58/0VhKIey2Y5UxsL04+LgLkJz52MpgvtcEJEXusj
-         JTpjxJ1MhD2VogxBE/Bh1/8Vd2F9tyDbomBRKNd9/VgorZufwyRGfFZBu9tQIB42Ed
-         5ng03o56Tixj8izNubKzvw4OipOFP835K5nYs0U8=
-Message-ID: <baa8df6b-ecd4-6df8-9fb5-6a3a39e1a04f@ideasonboard.com>
-Date:   Wed, 4 Jan 2023 09:29:49 +0200
+        Wed, 4 Jan 2023 02:44:04 -0500
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417C8193F2;
+        Tue,  3 Jan 2023 23:44:01 -0800 (PST)
+Received: from dggpemm500007.china.huawei.com (unknown [172.30.72.53])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Nn1ll4VwCzRqpv;
+        Wed,  4 Jan 2023 15:42:27 +0800 (CST)
+Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
+ (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 4 Jan
+ 2023 15:43:58 +0800
+From:   Yang Yingliang <yangyingliang@huawei.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ansuelsmth@gmail.com>,
+        <yangyingliang@huawei.com>
+Subject: [PATCH] clk: qcom: krait-cc: fix wrong pointer passed to IS_ERR()
+Date:   Wed, 4 Jan 2023 16:02:35 +0800
+Message-ID: <20230104080235.1748953-1-yangyingliang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <362452c5-8858-9ac5-e0ca-8ff993e966b7@linaro.org>
-Content-Language: en-US
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-In-Reply-To: <362452c5-8858-9ac5-e0ca-8ff993e966b7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.103.91]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ dggpemm500007.china.huawei.com (7.185.36.183)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/12/2022 23:58, Dmitry Baryshkov wrote:
-> On 02/11/2022 20:06, Dmitry Baryshkov wrote:
->>  From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
->> DRM driver do a proper work of calling
->> drm_bridge_connector_en/disable_hpd() in right places. Rather than
->> teaching each and every driver how to properly handle
->> drm_bridge_connector's HPD, make that automatic.
->>
->> Add two additional drm_connector helper funcs: enable_hpd() and
->> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
->> is the time where the drm_bridge_connector's functions are called by the
->> drivers too).
-> 
-> Since we are at the beginning of the development window, gracious ping 
-> for this patchset.
-> 
-> It would be nice to finally handle the bridge_connector's hpd properly. 
-> Calling drm_bridge_connector_enable_hpd() from 
-> drm_bridge_connector_init() is not a proper way to do this. It results 
-> in calling bridge->funcs->hpd_enable() before the rest of the pipeline 
-> was set up properly.
+It should be 'mux' passed to IS_ERR/PTR_ERR().
 
-For the series:
+Fixes: 56a655e1c41a ("clk: qcom: krait-cc: convert to parent_data API")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+---
+ drivers/clk/qcom/krait-cc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-
-I've been using this series in my local branch for quite a while to fix 
-the HPD issues. Works for me.
-
-I still think the "fix" aspect should be highlighted more here, as the 
-current upstream triggers a WARN for "Hot plug detection already 
-enabled" (at least) on OMAP.
-
-  Tomi
+diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+index 2f9287c263ec..410ae8390f1c 100644
+--- a/drivers/clk/qcom/krait-cc.c
++++ b/drivers/clk/qcom/krait-cc.c
+@@ -376,8 +376,8 @@ static int krait_cc_probe(struct platform_device *pdev)
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		mux = krait_add_clks(dev, cpu, id->data);
+-		if (IS_ERR(clk))
+-			return PTR_ERR(clk);
++		if (IS_ERR(mux))
++			return PTR_ERR(mux);
+ 		clks[cpu] = mux->clk;
+ 	}
+ 
+-- 
+2.25.1
 
