@@ -2,170 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 047B865CC2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 04:35:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 380EE65CC88
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 06:21:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234268AbjADDfJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 22:35:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36588 "EHLO
+        id S229699AbjADFVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 00:21:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230060AbjADDfJ (ORCPT
+        with ESMTP id S229667AbjADFU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 22:35:09 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D574917E0D;
-        Tue,  3 Jan 2023 19:35:07 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id j16so14362053edw.11;
-        Tue, 03 Jan 2023 19:35:07 -0800 (PST)
+        Wed, 4 Jan 2023 00:20:59 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CF46DF7F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 21:20:58 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id z7so16388832pfq.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 21:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rg/4sD9rsFme2W7/tIqbHRALCzSlujDOlXVJMQfwtKg=;
-        b=ZgaWET0nvy7ALz28iMroptnlY+TgxZ8mg6QGNd1CZV9YYogAaxl4Hx1XWIecY5BJEu
-         YPhmUIRHfzb4tnodH3d6E0ZUKyE/JXkYe52TCp/48rUTHgU5TC4HUyoaIu/ku5WvwvUK
-         d4zPJ3X3rqovgW3U7MoLoCVwZSjqGjeK/t1wUtm9kuIn0SJH6ovZnF8QHjdutKS3v+Mh
-         vNNnUjPLWc72Z7IT3WejpLD5u83wOaflXoLZqntzwy6BcM/KDES9ibzAjvKNoVigwnYb
-         3opaD2n82MPHMrfKnDkZax3Y1/ur7xMX1TRxwQSnbEV4ZlKoZLByLYfKVXqOsvsKOHwu
-         QLBg==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x6YKskugShgNtlmuvZE9iNBLytliO5KXjfz6TB5SwOM=;
+        b=orh+A6fZc5yPKPtF2vxjko56PgjwmGz78OmAhhMOleFKvStI8nhIaX9ktwAWFkzWij
+         y8Jn1VJiqnLpNIfPteyBYWx2v7gBXgtmN+5pmoiGLb9lF/zRboQciSPr6swU572Nco/0
+         pQRh0uwf/drepMmVCzr3mU1K7chuFBWf18sW69Le10W8c/WejpguHSJ54v3PnUytqese
+         K0ODbmSPwTJnYuZCmgjVWA1hSQzLxVKtz2FQHEglRXirf2ljURiiMgoI9K1Yyq2Wvs2X
+         PHNb774lfXEU5DM87ZjatSLWP0ef9cwcmFTlImNj7EiGNAohO5BrkIyoVMpqIWF3eYoX
+         DL6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rg/4sD9rsFme2W7/tIqbHRALCzSlujDOlXVJMQfwtKg=;
-        b=BlglFgcASlp1N9cL8p3pDDeIHUJGFHDIjSPKsulczv+o9KI39GDIPYTDyOzNlptU5j
-         rmXM8BqAWKbdQkR0LSBG1/ETBbmgSpSzQ3f0LKaqpq6svjN0i7NA6/ahtw1WI3k6IC+0
-         gHnjkYd0XEHeOiNOciWdxUwptsm6n9SqIzN6ef/2m0+YSb8izS5svIa2eagWPGD4QfMb
-         IW3O3JsgPOcEann8LrJICzs2AY5nzuvZ3uEx1uJc4/urK32cPJ7Ra23EqnQxqwOS4ZW9
-         Rh/+mUdyF3m9r3pZZbgV1pqjtJBK7so3JlpDOUqq3cogOtuMcmXjM4EIELN+/IU9hitL
-         VbQA==
-X-Gm-Message-State: AFqh2krv3TQ+t4JejPJ9qE0WEydpBmLF14HrlaonBdVIyTS6bzX7UTNt
-        9769XlKxsuAAHKxGt7CAY42SAZa9FQMOlSynYKQ=
-X-Google-Smtp-Source: AMrXdXuRsu44HxVyHbVKzh3xjrg8EVZH3Jc8BlfDz5MGuWEaxW9E+Aef5xAJB2ix45FtZ4NgGQuSFKJsxYOWom+eOgY=
-X-Received: by 2002:a50:951e:0:b0:484:a88c:a850 with SMTP id
- u30-20020a50951e000000b00484a88ca850mr2796037eda.400.1672803306466; Tue, 03
- Jan 2023 19:35:06 -0800 (PST)
+        bh=x6YKskugShgNtlmuvZE9iNBLytliO5KXjfz6TB5SwOM=;
+        b=CUGnt6Uz1ni8C+jU3hV8QUemDdusJHorhqCRYAyTj4VKc9hk5yZJjBHiSzBxgoMkZz
+         3IPiBx3bS7R9sUh5Gy9jJ5pHBthzu3m/1Ap3TydlSwphQs7lyxyHWcycmAeP4vUkULFf
+         Ijzzhn00E5abGhSNZFddZMUpKGfi++e6SLcmjzf8pVfvVTA4LyG37d8SUkCLYebwhm0X
+         EFf4b9tiKAvOToI7U6UfJbsCiRbRlZ36ATrPS8z6+PqN06LDB/TXgEeMh+wE983siSLu
+         SYHTv4Z4UxnFAX7vH/knFibu50oLY/4Q0tAU0BKPpxqm2hzowo4ed3tix5++uQOPCQYI
+         JOSg==
+X-Gm-Message-State: AFqh2kqIiZjHoeVsAV7tlNQEkgQysk4d2TQ4brm+26QnVyMP0xN3YuhV
+        FuBiFT4suDrNNPMdh59jK7Ab5ui3TSYv3UQ2FAI=
+X-Google-Smtp-Source: AMrXdXtVIrNfQMys15m/cCb4UXCy5JUnkJu/o5G6OM37xIz9aWosUkZtmHzXD0RXJ4xva2o7k1z2cA==
+X-Received: by 2002:aa7:9559:0:b0:581:7b3a:198c with SMTP id w25-20020aa79559000000b005817b3a198cmr24641166pfq.13.1672809657263;
+        Tue, 03 Jan 2023 21:20:57 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c5e:e3b5:c341:16de:ce17:b857])
+        by smtp.gmail.com with ESMTPSA id a1-20020aa78e81000000b005811c4245c7sm16710342pfr.126.2023.01.03.21.20.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 21:20:56 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, bhupesh.sharma@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+Date:   Wed,  4 Jan 2023 10:50:47 +0530
+Message-Id: <20230104052047.3945983-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20230104021445.47484-1-quic_bqiang@quicinc.com>
- <CAOCk7NpGBD-2nHFBE3a4WxNb4XPhEV3uoCDz1J9ArbaOE7Vscg@mail.gmail.com>
- <7dac372b-167c-2dff-b207-6e32fd40c7bb@quicinc.com> <CAOCk7NqNrxcXLsw3PRRdsiOrq5SB9DfxpuSH84-rB9-43fdpog@mail.gmail.com>
- <b0e8d03f-0e4e-b736-aa9d-cd49181d9041@quicinc.com>
-In-Reply-To: <b0e8d03f-0e4e-b736-aa9d-cd49181d9041@quicinc.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 3 Jan 2023 20:34:55 -0700
-Message-ID: <CAOCk7NrnfjZR5ADcVk4iSt9_aP5_9Aamb4eJBoBq7hDH1SVoVg@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: host: Change the log levels for SYS_ERR event
-To:     Baochen Qiang <quic_bqiang@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        mhi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-So your firmware is glitching, but it isn't kicking you to the RDDM
-EE?  RDDM EE triggers an entirely different code path than the syserr
-process. If that assumption is correct, then I'm not entirely sure why
-that check exists since the current code would do the syserr
-processing only if it's not a RDDM event.
+Add the Embedded USB Debugger(EUD) device tree node for
+SM6115 / SM4250 SoC.
 
-There are other reasons the FW might trigger syserr, which would not
-be a fatal error or rddm, and that should trigger both the
-controller's processing as well as the MHI core.
+The node contains EUD base register region, EUD mode manager
+register region and TCSR Check register region along with the
+interrupt entry.
 
-If I were to guess, I would say that Hemanth and Bhaumik had that in
-there because they were concerned about the RDDM processing triggering
-multiple times.  I don't see how RDDM processing can trigger without
-the RDDM EE, which seems to make that concern moot.  Sadly, I can no
-longer ask them to confirm.
+Also add the typec connector node for EUD which is attached to
+EUD node via port. EUD is also attached to DWC3 node via port.
 
-Have you experimented with removing that check?  That seems like a
-valid fix for your system.  What you propose is bypassing the dynamic
-debug mechanism, which doesn't seem justified in this case from what
-I've seen so far.
+To enable the role switch, we need to set dr_mode = "otg" property
+for 'usb_dwc3' sub-node in the board dts file.
 
--Jeff
+Also the EUD device can be enabled on a board once linux is boot'ed
+by setting:
+ $ echo 1 > /sys/bus/platform/drivers/qcom_eud/../enable
 
-On Tue, Jan 3, 2023 at 8:17 PM Baochen Qiang <quic_bqiang@quicinc.com> wrote:
->
->
-> On 1/4/2023 11:11 AM, Jeffrey Hugo wrote:
-> > On Tue, Jan 3, 2023 at 7:57 PM Baochen Qiang <quic_bqiang@quicinc.com> wrote:
-> >>
-> >> On 1/4/2023 10:41 AM, Jeffrey Hugo wrote:
-> >>> Why was this not sent to the MHI mailing list?
-> >> I don't know the MHI mailing list address, could tell me that?
-> > The relevant entry from MAINTAINERS -
-> >
-> > MHI BUS
-> > M: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > L: mhi@lists.linux.dev
-> > L: linux-arm-msm@vger.kernel.org
-> > S: Maintained
-> > T: git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
-> > F: Documentation/ABI/stable/sysfs-bus-mhi
-> > F: Documentation/mhi/
-> > F: drivers/bus/mhi/
-> > F: include/linux/mhi.h
-> >
-> >>> On Tue, Jan 3, 2023 at 7:19 PM Baochen Qiang <quic_bqiang@quicinc.com> wrote:
-> >>>> Currently no log printed when SYS_ERR happens, this makes
-> >>>> debug quite hard, so change log level to make it noisy.
-> >>> You are going to need to explain this more.
-> >>> There are two drivers in the upstream kernel that are MHI clients -
-> >>> pci_generic and ath11k.
-> >>> I'm assuming that you care about ath11k because you included that mail list.
-> >> Yes, I am talking about ath11k.
-> >>> In ath11k_mhi_op_status_cb() I see a warning message printed when the
-> >>> syserr callback is triggered.
-> >>> I see something similar in pci_generic.
-> >>>
-> >>> Looks like a log is printed when SYS_ERR happens in all possible
-> >>> scenarios, so I don't understand the point of this change.
-> >>> Particularly given that dev_dbg messages can be trivially enabled.
-> >>>
-> >>> -Jeff
-> >> Well, this is not true in some cases. For example, we have met cases where
-> >>
-> >> WLAN HW/firmware is not working well, and only send a SYS_ERR event to MHI
-> >>
-> >> driver, however this event is not sent to ath11k host becuase of
-> >> mhi_pm_sys_err_handler(),
-> >>
-> >> so we got no log at all.
-> >>
-> > With the 6.1 kernel?
-> >
-> > mhi_pm_sys_err_handler() queues the st_worker.
-> >
-> > mhi_pm_st_worker() , which is the st_worker function, calls
-> > mhi_pm_sys_error_transition() in the DEV_ST_TRANSITION_SYS_ERR case
-> > (we are processing a SYS_ERR).
-> >
-> > Pretty much the first thing mhi_pm_sys_err_transition() does is this -
-> >
-> > /* We must notify MHI control driver so it can clean up first */
-> > mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_SYS_ERROR);
-> >
-> > Which calls the ath11k driver ath11k_mhi_op_status_cb() I mentioned earlier.
-> >
-> > -Jeff
->
->
-> No, mhi_pm_sys_err_handler() will NOT queue the st_worker because ath11k
-> host supports RDDM, so the SYS_ERR event will be skipped. See below log:
->
-> kernel: [  165.393720] mhi mhi0: local ee: MISSION MODE state: M0 device
-> ee: RAMDUMP DOWNLOAD MODE state: M0
-> kernel: [  165.401820] mhi mhi0: State change event to state: SYS ERROR
-> kernel: [  165.401824] mhi mhi0: System error detected
-> kernel: [  165.401827] mhi mhi0: Controller supports RDDM, skip SYS_ERROR
->
+Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221231131945.3286639-1-bhupesh.sharma@linaro.org/
+- v2 addresses the review comments from Konrad.
+- This patch is based on my earlier sm6115 usb related changes, which can
+  be seen here:
+  https://lore.kernel.org/linux-arm-msm/20221215094532.589291-1-bhupesh.sharma@linaro.org/
+- This patch is also dependent on my sm6115 eud dt-binding and driver changes
+  (v2) sent earlier, which can be seen here:
+  https://lore.kernel.org/linux-arm-msm/20230103150419.3923421-1-bhupesh.sharma@linaro.org/
+
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 42 ++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 030763187cc3f..8e83bab3ed0f6 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -170,6 +170,18 @@ core3 {
+ 		};
+ 	};
+ 
++	eud_typec: connector {
++		compatible = "usb-c-connector";
++
++		ports {
++			port@0 {
++				con_eud: endpoint {
++					remote-endpoint = <&eud_con>;
++				};
++			};
++		};
++	};
++
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-sm6115", "qcom,scm";
+@@ -565,6 +577,29 @@ gcc: clock-controller@1400000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		eud: eud@1610000 {
++			compatible = "qcom,sm6115-eud", "qcom,eud";
++			reg = <0x01610000 0x2000>,
++			      <0x01612000 0x1000>,
++			      <0x003e5018 0x4>;
++			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
++			status = "disabled";
++
++			ports {
++				port@0 {
++					eud_ep: endpoint {
++						remote-endpoint = <&usb2_role_switch>;
++					};
++				};
++
++				port@1 {
++					eud_con: endpoint {
++						remote-endpoint = <&con_eud>;
++					};
++				};
++			};
++		};
++
+ 		usb_hsphy: phy@1613000 {
+ 			compatible = "qcom,sm6115-qusb2-phy";
+ 			reg = <0x01613000 0x180>;
+@@ -1064,6 +1099,13 @@ usb_dwc3: usb@4e00000 {
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+ 				snps,usb3_lpm_capable;
++				usb-role-switch;
++
++				port {
++					usb2_role_switch: endpoint {
++						remote-endpoint = <&eud_ep>;
++					};
++				};
+ 			};
+ 		};
+ 
+-- 
+2.38.1
+
