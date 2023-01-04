@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37DE765DB2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:21:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C91C765DB84
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:48:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239571AbjADRVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 12:21:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36916 "EHLO
+        id S235053AbjADRsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 12:48:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240147AbjADRVB (ORCPT
+        with ESMTP id S239803AbjADRse (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 12:21:01 -0500
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9D6DF5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:20:58 -0800 (PST)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-3e45d25de97so485027857b3.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:20:58 -0800 (PST)
+        Wed, 4 Jan 2023 12:48:34 -0500
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758371A818
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:48:29 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id j206so37428515ybj.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:48:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nL02Rh1qmJ+y+2QtT3JxhgjmywEhlM/M66BwZCj7KOs=;
-        b=TyJt2DFJnxrrzLUQRSO71GCi5DoLx9eYJnv8dOey98aTChHwFdHJ/4oiI9FThEcnmx
-         TFVtUs380c+/YfgeIgW7bus2sjh3cNZYuXlO76v4nWptfhqYVUTfbmsZcttwShu8KfuY
-         FRZ5NAgDUXhcmIQeL7ex6LFn8Dwqr4O0rHU14KEphPyQdZF0tlct9TKspNTUWqmGRkXM
-         XXg3Lavd4dakkiw/q9RlJhDy/TexTkoCzOuVVEotgsYnms6ncSv6epMkiGsqm1GKJES1
-         mAtMd1ffIhS62lzkGQ6xylxK7ZAmtLL5c21ycFSqilaZYa13j7iu+P4x4vzf9up08M24
-         Zm3Q==
+        bh=h6ernteAwaoJavQln9yDUlEHLQyyCv6s+N2K/1h5NJc=;
+        b=c8T0coN2VqEx+gs0ROuXhPs7kCS4obyZ/UI06gKIGvD0Ihja5IGREFjVP+Xxd98hZj
+         JmN6Hn34JL/q+Xe5Chb4rHZLYeJKTGtGlwWMd5x8kJy8znBPKE6/o5tJ2P9UAXTSSgnK
+         MtzmlTkj/kIwQNIChRWNpZlXaR43D3nX6jpSSo5VuCbxd3//AF2ac8LKvsJKTEs4ot09
+         LLNkYJuein+LHqM/4NmAVGNItnrA3aVURF2hHR0cB7punrzIHp1y8EDj1LJdZQ7uQNcu
+         zvLexEulaVLFfNrInPdeLZZaK9a/1BABQAZqTJfRnANh7asjBt/H+PsBVOddTmRPWC86
+         0uug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nL02Rh1qmJ+y+2QtT3JxhgjmywEhlM/M66BwZCj7KOs=;
-        b=e+7yOJosIjvw0zXepvyA5fChXEPELY4iEq0OECld6qf4BqA/rFWUfaXEEXoQMkrONl
-         o0QX8h0Liy3Ury65G9sAUcUTijOzqJ2M4t/IxwqA+QQ2dKRjTrchWj1HfIPcwBmv3v9E
-         WU3fMsD8appGJ50KmOyqxTQ6V8K/ZY6hdt4/QvAgynFOtFKcjcwwatFDeZWGG0tuyHex
-         2ekxmHe5hRmVHLMEtulI4AL02g8IfrtC7TU/h4wegCRoT5jsK1mQdDfm6gNkXnrG27WH
-         ZZLsKIumR5Eg1diiDLnV4M2Z8JKu7MIHndxj5WNVgcuKUUAffBdZ9dxuB8yWzXHKC9QM
-         S1zg==
-X-Gm-Message-State: AFqh2kpVLVz91JAGfYd4n5gN3o+A7E1F+gKuEvNrBM3B95kbAj9m/SHO
-        DmcwgehMqJAC6XzQAMmcgztf4Mio5+OPbKSanl/1Vg==
-X-Google-Smtp-Source: AMrXdXv7InDULbhb/a83U+trri33z2HsaN34ajFbweGt+IZoRAuqCcv0/ge6iawr5DBlxzYHW5l4AZEUrhvqU5NubnM=
-X-Received: by 2002:a05:690c:fd5:b0:4a4:7135:9214 with SMTP id
- dg21-20020a05690c0fd500b004a471359214mr2070871ywb.378.1672852858082; Wed, 04
- Jan 2023 09:20:58 -0800 (PST)
+        bh=h6ernteAwaoJavQln9yDUlEHLQyyCv6s+N2K/1h5NJc=;
+        b=IVs5v7bWFyN81EzS1YzUu+b+m3ilfSCMSkDIVvKc9JwGJCD6YixHbJdBR60lfVeaDL
+         AOjsElz0KZkE+uTPx6ufq4PK34/LhjLEjCjvbA0CW3ItJX3QX8FINBi28baBkczyIX9x
+         vITmIhGfLHcaCnCGcdSR5pT0thtRWNEhmJWXq7pyyr03Zjgs0WRWth/upTX9vZ5L0Gre
+         PDDocg6eEqHMYQ/gHFrSIlwPHUAZHsozWbf8GabPrnDxos9HrifHRMmRkTqTXqGks5o3
+         Cv4rkO7nsJvLKk46xxY4Rnn85XLNoceVZ8aHeTHG2g3ozmsLl+eq6UrxKPxc8GN/2R12
+         a0sg==
+X-Gm-Message-State: AFqh2kpaq4SL3JOJ2X8klNrcrZWm0E7ySMMz3mklEn1jqlMAczedftGg
+        LlV5MWaRNQjLPDcELKAR9wQwY3wuyN8bddODAPl2HA==
+X-Google-Smtp-Source: AMrXdXuACj2NxKuibRwSdOimb0397QQRnaQeVI/kN9TdsBU3F52F+lvf5NW7TBxyVHHjkeuwiN4WM5G/dxrKKeA1TIs=
+X-Received: by 2002:a25:606:0:b0:709:9335:236e with SMTP id
+ 6-20020a250606000000b007099335236emr4325601ybg.288.1672854508646; Wed, 04 Jan
+ 2023 09:48:28 -0800 (PST)
 MIME-Version: 1.0
 References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
- <20230103-topic-sm8550-upstream-mdss-dsi-v1-5-9ccd7e652fcd@linaro.org>
- <aa6724af-99bc-de1d-4c03-82609b59174c@linaro.org> <0e28b301-6980-968c-552d-db16fade6df9@linaro.org>
-In-Reply-To: <0e28b301-6980-968c-552d-db16fade6df9@linaro.org>
+ <20230103-topic-sm8550-upstream-mdss-dsi-v1-3-9ccd7e652fcd@linaro.org>
+ <96ccae6f-3788-e030-480f-7aa2478ca560@linaro.org> <de3860ba-40f9-cdd5-097c-e015f6b19255@linaro.org>
+In-Reply-To: <de3860ba-40f9-cdd5-097c-e015f6b19255@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 4 Jan 2023 19:20:46 +0200
-Message-ID: <CAA8EJpqF3bCNa_yGQLt++kmZp3d=La2ZsS=rQOwp6Yp9C+oVJg@mail.gmail.com>
-Subject: Re: [PATCH 5/6] drm/msm/dsi: add support for DSI-PHY on SM8550
+Date:   Wed, 4 Jan 2023 19:48:17 +0200
+Message-ID: <CAA8EJpoi8QFpvR0qWpNpenZKzEZAQpwp3gNpGd3RwHovgC+Odw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] drm/msm/dpu: add support for SM8550
 To:     neil.armstrong@linaro.org
 Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -77,193 +77,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Jan 2023 at 12:11, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+On Wed, 4 Jan 2023 at 12:08, Neil Armstrong <neil.armstrong@linaro.org> wrote:
 >
-> On 04/01/2023 10:53, Dmitry Baryshkov wrote:
+> On 04/01/2023 10:45, Dmitry Baryshkov wrote:
 > > On 04/01/2023 11:08, Neil Armstrong wrote:
-> >> SM8550 use a 4nm DSI PHYs, which share register definitions
-> >> with 7nm DSI PHYs. Rather than duplicating the driver, handle
-> >> 4nm variant inside the common 5+7nm driver.
+> >> Add definitions for the display hardware used on Qualcomm SM8550
+> >> platform.
 > >>
 > >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > >> ---
-> >>   drivers/gpu/drm/msm/Kconfig               |   4 +-
-> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   2 +
-> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   1 +
-> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 102 ++++++++++++++++++++++++------
-> >>   4 files changed, 89 insertions(+), 20 deletions(-)
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 197 +++++++++++++++++++++++++
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   1 +
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |   2 +
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |   1 +
+> >>   4 files changed, 201 insertions(+)
 > >>
-> >> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-> >> index e7b100d97f88..949b18a29a55 100644
-> >> --- a/drivers/gpu/drm/msm/Kconfig
-> >> +++ b/drivers/gpu/drm/msm/Kconfig
-> >> @@ -140,11 +140,11 @@ config DRM_MSM_DSI_10NM_PHY
-> >>         Choose this option if DSI PHY on SDM845 is used on the platform.
-> >>   config DRM_MSM_DSI_7NM_PHY
-> >> -    bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
-> >> +    bool "Enable DSI 7nm/5nm/4nm PHY driver in MSM DRM"
-> >>       depends on DRM_MSM_DSI
-> >>       default y
-> >>       help
-> >> -      Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
-> >> +      Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SM8550/SC7280
-> >>         is used on the platform.
-> >>   config DRM_MSM_HDMI
-> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> >> index 0c956fdab23e..54e03cc9fbe7 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> >> @@ -573,6 +573,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
-> >>         .data = &dsi_phy_5nm_8350_cfgs },
-> >>       { .compatible = "qcom,dsi-phy-5nm-8450",
-> >>         .data = &dsi_phy_5nm_8450_cfgs },
-> >> +    { .compatible = "qcom,dsi-phy-4nm-8550",
-> >> +      .data = &dsi_phy_4nm_8550_cfgs },
-> >>   #endif
-> >>       {}
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> >> index b4ca123d8e69..adf5e25269dc 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>
+> <snip>
+>
+> >> @@ -776,6 +821,45 @@ static const struct dpu_ctl_cfg sm8450_ctl[] = {
+> >>       },
 > >>   };
-> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> >> index f7a907ed2b4b..58f9e09f5224 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> >> @@ -59,6 +59,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
-> >>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
-> >>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
-> >>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
-> >> +extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
-> >>   struct msm_dsi_dphy_timing {
-> >>       u32 clk_zero;
-> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >> index 7b2c16b3a36c..11629c431c30 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >> @@ -47,6 +47,8 @@
-> >>   #define DSI_PHY_7NM_QUIRK_V4_2        BIT(2)
-> >>   /* Hardware is V4.3 */
-> >>   #define DSI_PHY_7NM_QUIRK_V4_3        BIT(3)
-> >> +/* Hardware is V5.2 */
-> >> +#define DSI_PHY_7NM_QUIRK_V5_2        BIT(4)
-> >>   struct dsi_pll_config {
-> >>       bool enable_ssc;
-> >> @@ -124,14 +126,25 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
-> >>       if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
-> >>           config->pll_clock_inverters = 0x28;
-> >> -    else if (pll_freq <= 1000000000ULL)
-> >> -        config->pll_clock_inverters = 0xa0;
-> >> -    else if (pll_freq <= 2500000000ULL)
-> >> -        config->pll_clock_inverters = 0x20;
-> >> -    else if (pll_freq <= 3020000000ULL)
-> >> -        config->pll_clock_inverters = 0x00;
-> >> -    else
-> >> -        config->pll_clock_inverters = 0x40;
-> >> +    else if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >> +        if (pll_freq <= 1300000000ULL)
-> >> +            config->pll_clock_inverters = 0xa0;
-> >> +        else if (pll_freq <= 2500000000ULL)
-> >> +            config->pll_clock_inverters = 0x20;
-> >> +        else if (pll_freq <= 4000000000ULL)
-> >> +            config->pll_clock_inverters = 0x00;
-> >> +        else
-> >> +            config->pll_clock_inverters = 0x40;
-> >> +    } else {
-> >> +        if (pll_freq <= 1000000000ULL)
-> >> +            config->pll_clock_inverters = 0xa0;
-> >> +        else if (pll_freq <= 2500000000ULL)
-> >> +            config->pll_clock_inverters = 0x20;
-> >> +        else if (pll_freq <= 3020000000ULL)
-> >> +            config->pll_clock_inverters = 0x00;
-> >> +        else
-> >> +            config->pll_clock_inverters = 0x40;
-> >> +    }
-> >>       config->decimal_div_start = dec;
-> >>       config->frac_div_start = frac;
-> >> @@ -222,6 +235,13 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
-> >>               vco_config_1 = 0x01;
-> >>       }
-> >> +    if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >> +        if (pll->vco_current_rate < 1557000000ULL)
-> >> +            vco_config_1 = 0x08;
-> >> +        else
-> >> +            vco_config_1 = 0x01;
-> >> +    }
+> >> +static const struct dpu_ctl_cfg sm8550_ctl[] = {
+> >> +    {
+> >> +    .name = "ctl_0", .id = CTL_0,
+> >> +    .base = 0x15000, .len = 0x290,?
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_SPLIT_DISPLAY) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >
+> > CTL_SC7280_MASK | BIT(DPU_CTL_SPLIT_DISPLAY) ?
+>
+> Indeed DPU_CTL_VM_CFG is missing, will switch to that.
+>
+> >
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
+> >> +    },
+> >> +    {
+> >> +    .name = "ctl_1", .id = CTL_1,
+> >> +    .base = 0x16000, .len = 0x290,
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_SPLIT_DISPLAY) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
+> >> +    },
+> >> +    {
+> >> +    .name = "ctl_2", .id = CTL_2,
+> >> +    .base = 0x17000, .len = 0x290,
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >
+> > CTL_SC7280_MASK?
+>
+> Ack
+>
+> >
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
+> >> +    },
+> >> +    {
+> >> +    .name = "ctl_3", .id = CTL_3,
+> >> +    .base = 0x18000, .len = 0x290,
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
+> >> +    },
+> >> +    {
+> >> +    .name = "ctl_4", .id = CTL_4,
+> >> +    .base = 0x19000, .len = 0x290,
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
+> >> +    },
+> >> +    {
+> >> +    .name = "ctl_5", .id = CTL_5,
+> >> +    .base = 0x1a000, .len = 0x290,
+> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
+> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 23),
+> >> +    },
+> >> +};
 > >> +
-> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
-> >>                 analog_controls_five_1);
-> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
-> >> @@ -860,7 +880,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
-> >>           pr_warn("PLL turned on before configuring PHY\n");
-> >>       /* Request for REFGEN READY */
-> >> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
-> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
-> >> +        (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >>           dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
-> >>           udelay(500);
-> >>       }
-> >> @@ -881,20 +902,38 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
-> >>       glbl_str_swi_cal_sel_ctrl = 0x00;
-> >>       if (phy->cphy_mode) {
-> >> -        vreg_ctrl_0 = 0x51;
-> >> -        vreg_ctrl_1 = 0x55;
-> >> +        if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >> +            vreg_ctrl_0 = 0x45;
-> >> +            vreg_ctrl_1 = 0x45;
-> >> +        } else {
-> >> +            vreg_ctrl_0 = 0x51;
-> >> +            vreg_ctrl_1 = 0x55;
-> >> +        }
-> >
-> > Please move these quirk-specific values down, to the rest of if (QUIRK_5_2) statement.
+> >>   static const struct dpu_ctl_cfg sc7280_ctl[] = {
+> >>       {
+> >>       .name = "ctl_0", .id = CTL_0,
 >
-> Ok
+> <snip>
+>
+> >> @@ -1268,6 +1386,16 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+> >>       .len = 0x20, .version = 0x20000},
+> >>   };
+> >> +#define PP_BLK_DIPHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+> >> +    {\
+> >> +    .name = _name, .id = _id, \
+> >> +    .base = _base, .len = 0, \
+> >
+> > len = 0 looks incorrect. Any particular reason why can't we use plain PP_BLK here?
+>
+> The TE block has been moved to the DSI INTF blocks since SM8350 I think, or earlier.
+
+I think, 8150. Marijn has been working on adding support for INTF-based TE.
+
+> This removes the DPU_PINGPONG_DITHER feature used downstream to enable the PP TE callbacks.
+> Since there's only the DIPHER sub-block remaining, this is why I set len to 0.
+
+I went on with some research. Usually PP len is 0xd4. However it seems
+since 8350 (since the change of DSC block) the PP size should be 0x0),
+despite dowsnstream DTs having sde-pp-size=0xd4 for sm8350 and sm8450
+(or 0x4 for neo, DPU 9.1.0).
+So, it looks like you are correct here (and we should fix 8350/8450
+patches instead).
+
 >
 > >
-> >>           glbl_hstx_str_ctrl_0 = 0x00;
-> >>           glbl_pemph_ctrl_0 = 0x11;
-> >>           lane_ctrl0 = 0x17;
-> >>       } else {
-> >> -        vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
-> >> -        vreg_ctrl_1 = 0x5c;
-> >> +        if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >> +            vreg_ctrl_0 = 0x44;
-> >> +            vreg_ctrl_1 = 0x19;
-> >> +        } else {
-> >> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
-> >> +            vreg_ctrl_1 = 0x5c;
-> >> +        }
-> >>           glbl_hstx_str_ctrl_0 = 0x88;
-> >>           glbl_pemph_ctrl_0 = 0x00;
-> >>           lane_ctrl0 = 0x1f;
-> >>       }
-> >> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
-> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-> >> +        if (phy->cphy_mode) {
-> >> +            glbl_rescode_top_ctrl = 0x00;
-> >> +            glbl_rescode_bot_ctrl = 0x00;
-> >> +        } else {
-> >> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x03;
-> >> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3c;
-> >> +        }
-> >> +    } else if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
-> >>           if (phy->cphy_mode) {
-> >>               glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
-> >>               glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
-> >> @@ -943,9 +982,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
-> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0x00);
-> >>       /* program CMN_CTRL_4 for minor_ver 2 chipsets*/
-> >> -    data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0);
-> >> -    data = data & (0xf0);
-> >> -    if (data == 0x20)
-> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2) ||
-> >> +        (dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0) & (0xf0)) == 0x20)
-> >>           dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_4, 0x04);
-> >
-> > Ugh. I should change this statement to use quirks too.
+> >> +    .features = BIT(DPU_PINGPONG_DITHER), \
+> >> +    .merge_3d = _merge_3d, \
+> >> +    .sblk = &_sblk, \
+> >> +    .intr_done = _done, \
+> >> +    .intr_rdptr = _rdptr, \
+> >> +    }
+> >>   #define PP_BLK_TE(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+> >>       {\
+> >>       .name = _name, .id = _id, \
 >
-> Sorrt I don't see what you mean, should I change the original REVISION_ID0 to a proper quirk ?
+> <snip>
 >
 
-No, I'll do this. For now you can leave this piece code as is (reading
-rev + your quirk).
 
 -- 
 With best wishes
