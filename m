@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C65665DB98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:53:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18F7A65DB9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:53:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239965AbjADRwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 12:52:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
+        id S240078AbjADRwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 12:52:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240020AbjADRwr (ORCPT
+        with ESMTP id S240029AbjADRwr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 4 Jan 2023 12:52:47 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C32053B903
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:52:42 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id h6so18381818iof.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:52:42 -0800 (PST)
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070341EEC3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:52:44 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id m15so19859117ilq.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:52:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/QwLXlyTB2wFg+f6fFku0I75a5v4iUbGFGBGgx1ehZU=;
-        b=xrrxam0XOk7hykrPjRzHHIp0hv6JZmzE2vflvDLE1rjC6SR7Wt19lnE4BCK2OSlqF7
-         FRRdK76E2Ii6nVseaiIZ+AuHjnIfYccAj3WkNKPF4YWT0BEXaW0Y7PyRcOY5mYlGSKfJ
-         H/cKOaqSxbOuLTratRvGFMmNa/+5p9Rbyu5Zg7Qarg7t2kDj2GxaxIgttXGOKAM5Un8y
-         XOzE2XY5ss+E0FmBt1s7i4yju0XWtUdfd9Lshzaq8OUJR9n/dL0I/z/UM5u4PIwGajmq
-         zfZtkvxuA8HHCCp85HCAeGovfy4g7Ank4ZULfl52A/yaMzIQN0L7nmJLZABfrvIt6Riw
-         BlRA==
+        bh=5Jqtwulo4xzPm3E3C/EoXy5OKlXyrXoplOZxQkvpLg0=;
+        b=i7I+Knrt5TZe13bZa2OB2m65UCtltdGpXYGt7kgUBd9mUK3GECbDzOjwJU0xb2aeV2
+         YsykgCL/u0831awefPQ6L1vxBYNcn94VLsoYFkgjkqqaWEJitzDwnFPFFLvbu1ixOMNf
+         4GlakvnaiSiBxlvSqegICcSiZ3fFZcabGuHLPBSzXDNmZZF9L5o7Ccai17B8G6C/oqpO
+         ZFjJq/Xp7M4uPjT9GBrGdGDhEi99ECUQn4bkoTxtHb/CjFWn1cNaHIuXhkL1X3Q9IoIV
+         oqYGUn2dPE+bes8+9fGveAxO4FpHnrk2KLXvbtqAPLMvuipQcTXUFkhbjCITcybiZAGP
+         0t4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/QwLXlyTB2wFg+f6fFku0I75a5v4iUbGFGBGgx1ehZU=;
-        b=TS0r98W7fkS69CtIgOdH8xqLm9NmQCz2GvhNeTLUaUhBl+g0FEdNrN+sd0HqlOuTh5
-         y8C7BMU1JnjWvmDhdG2ilxC4r+koFmw4DEzlRVJ5KKlf2pTQ1VCCLUOfbRrjtLfdbhS6
-         4+DxzxYyEuwi8fPutnTZvYw/1DknTRoZVGGgsl6SIAp3D0mZGba0hF7/QNSK3vLZt9Xq
-         T4Pyve2IqkEJXR+DQxAw+yMyjrwsDSXvZ1ZKku3BugNQzPtLScj0j1qTtuqkeTY6smNj
-         VC8fDCmc1n2PiyuMO0i+G9LyV7xh+KzXgbX7OIfvzWIECMaEy8JUkVRy2MMG+b46hkqc
-         DatA==
-X-Gm-Message-State: AFqh2koJReGL0akm2a4iR8qzsY33HmdbggNvtwtwPY5pspWtKR5YgCSL
-        g5Lc2+ABFlIIx7rMPWNNXln9Gg==
-X-Google-Smtp-Source: AMrXdXsF0KjwJAjuFHYt1tKUJCY6v+AKlNMWeSb48Vf9ENncmKYYEKlkP7MQF87qH7eaHsv1VXPy1g==
-X-Received: by 2002:a6b:f70e:0:b0:6e5:d22f:8566 with SMTP id k14-20020a6bf70e000000b006e5d22f8566mr43880789iog.14.1672854762126;
-        Wed, 04 Jan 2023 09:52:42 -0800 (PST)
+        bh=5Jqtwulo4xzPm3E3C/EoXy5OKlXyrXoplOZxQkvpLg0=;
+        b=Z98dEUqI49NWMZtiDi+f0ce7ND7AnqPbqj8VPsezUeVdBedqICDR+6xoOqd2UiPC5G
+         Na7CyXJDXHCeTzBWKKpAV/eLjhn827tszcPSTc/TPGHofR77q79qD3qaq9ah3U70MhDk
+         KIv9U5VRg4D+NBU9CNjiF2lSezDH1GO03MQrdDbtHrju4VubYfLzgEdRIfZP25WIizCc
+         wzOAhLT+AoG2OvAP+trr/m7XK6GcY3sdWMDIkea5Y3zNkslBBSglV9VNZElMjsuv0JGT
+         7EVxRFx/ubGgpFVe/168opfFBwHpbnHYZ5LhT50afrtshEQ5nPvau6mjFdNRReY1DHCp
+         AwwQ==
+X-Gm-Message-State: AFqh2kpDipIUg/WVWkcFAb85zU43k2eKPKcZ0S6dp1675PEsvWjd1mWH
+        XmweNM5h3G/RxPBq5DkCZnWUcA==
+X-Google-Smtp-Source: AMrXdXsLStGR6ptjrkejzmOywW/g5BEs3vyXy4zCyjcq2EY+Vc7pxNng3q1df6kZZh906dazD4EkLQ==
+X-Received: by 2002:a92:d811:0:b0:30a:fb1a:a037 with SMTP id y17-20020a92d811000000b0030afb1aa037mr38951857ilm.31.1672854763362;
+        Wed, 04 Jan 2023 09:52:43 -0800 (PST)
 Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id u3-20020a02cbc3000000b00375783003fcsm10872304jaq.136.2023.01.04.09.52.41
+        by smtp.gmail.com with ESMTPSA id u3-20020a02cbc3000000b00375783003fcsm10872304jaq.136.2023.01.04.09.52.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 09:52:41 -0800 (PST)
+        Wed, 04 Jan 2023 09:52:42 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -59,9 +59,9 @@ Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
         quic_subashab@quicinc.com, elder@kernel.org,
         netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 4/6] net: ipa: register IPA interrupt handlers directly
-Date:   Wed,  4 Jan 2023 11:52:31 -0600
-Message-Id: <20230104175233.2862874-5-elder@linaro.org>
+Subject: [PATCH net-next v2 5/6] net: ipa: kill ipa_interrupt_add()
+Date:   Wed,  4 Jan 2023 11:52:32 -0600
+Message-Id: <20230104175233.2862874-6-elder@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230104175233.2862874-1-elder@linaro.org>
 References: <20230104175233.2862874-1-elder@linaro.org>
@@ -69,175 +69,161 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Declare the microcontroller IPA interrupt handler publicly, and
-assign it directly in ipa_interrupt_config().  Make the SUSPEND IPA
-interrupt handler public, and rename it ipa_power_suspend_handler().
-Assign it directly in ipa_interrupt_config() as well.
-
-This makes it unnecessary to do this in ipa_interrupt_add().  Make
-similar changes for removing IPA interrupt handlers.
-
-The next two patches will finish the cleanup, removing the
-add/remove functions and the handler array entirely.
+The dynamic assignment of IPA interrupt handlers isn't needed; we
+only handle three IPA interrupt types, and their handler functions
+are now assigned directly.  We can get rid of ipa_interrupt_add()
+and ipa_interrupt_remove() now, because they serve no purpose.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_interrupt.c | 16 ++++++++--------
- drivers/net/ipa/ipa_power.c     | 14 ++------------
- drivers/net/ipa/ipa_power.h     | 12 ++++++++++++
- drivers/net/ipa/ipa_uc.c        |  2 +-
- drivers/net/ipa/ipa_uc.h        |  8 ++++++++
- 5 files changed, 31 insertions(+), 21 deletions(-)
+ drivers/net/ipa/ipa_interrupt.c | 16 ++--------------
+ drivers/net/ipa/ipa_interrupt.h | 33 ---------------------------------
+ drivers/net/ipa/ipa_power.c     |  7 +------
+ drivers/net/ipa/ipa_uc.c        |  6 ------
+ 4 files changed, 3 insertions(+), 59 deletions(-)
 
 diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index 87f4b94d02a3f..f32ac40a79372 100644
+index f32ac40a79372..f0a68b0a242c1 100644
 --- a/drivers/net/ipa/ipa_interrupt.c
 +++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -26,6 +26,8 @@
- #include "ipa.h"
- #include "ipa_reg.h"
- #include "ipa_endpoint.h"
-+#include "ipa_power.h"
-+#include "ipa_uc.h"
+@@ -30,6 +30,8 @@
+ #include "ipa_uc.h"
  #include "ipa_interrupt.h"
  
- /**
-@@ -228,20 +230,14 @@ void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt)
- void ipa_interrupt_add(struct ipa_interrupt *interrupt,
- 		       enum ipa_irq_id ipa_irq, ipa_irq_handler_t handler)
- {
--	if (WARN_ON(ipa_irq >= IPA_IRQ_COUNT))
--		return;
--
--	interrupt->handler[ipa_irq] = handler;
-+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
- }
- 
- /* Remove the handler for an IPA interrupt type */
- void
- ipa_interrupt_remove(struct ipa_interrupt *interrupt, enum ipa_irq_id ipa_irq)
- {
--	if (WARN_ON(ipa_irq >= IPA_IRQ_COUNT))
--		return;
--
--	interrupt->handler[ipa_irq] = NULL;
-+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
- }
- 
- /* Configure the IPA interrupt framework */
-@@ -284,6 +280,10 @@ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
- 		goto err_free_irq;
- 	}
- 
-+	interrupt->handler[IPA_IRQ_UC_0] = ipa_uc_interrupt_handler;
-+	interrupt->handler[IPA_IRQ_UC_1] = ipa_uc_interrupt_handler;
-+	interrupt->handler[IPA_IRQ_TX_SUSPEND] = ipa_power_suspend_handler;
++typedef void (*ipa_irq_handler_t)(struct ipa *ipa, enum ipa_irq_id irq_id);
 +
- 	return interrupt;
- 
- err_free_irq:
-diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-index 9148d606d5fc2..4198f8e97e40b 100644
---- a/drivers/net/ipa/ipa_power.c
-+++ b/drivers/net/ipa/ipa_power.c
-@@ -202,17 +202,7 @@ u32 ipa_core_clock_rate(struct ipa *ipa)
- 	return ipa->power ? (u32)clk_get_rate(ipa->power->core) : 0;
+ /**
+  * struct ipa_interrupt - IPA interrupt information
+  * @ipa:		IPA pointer
+@@ -226,20 +228,6 @@ void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt)
+ 	ipa_interrupt_process(interrupt, IPA_IRQ_TX_SUSPEND);
  }
+ 
+-/* Add a handler for an IPA interrupt */
+-void ipa_interrupt_add(struct ipa_interrupt *interrupt,
+-		       enum ipa_irq_id ipa_irq, ipa_irq_handler_t handler)
+-{
+-	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+-}
+-
+-/* Remove the handler for an IPA interrupt type */
+-void
+-ipa_interrupt_remove(struct ipa_interrupt *interrupt, enum ipa_irq_id ipa_irq)
+-{
+-	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+-}
+-
+ /* Configure the IPA interrupt framework */
+ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+ {
+diff --git a/drivers/net/ipa/ipa_interrupt.h b/drivers/net/ipa/ipa_interrupt.h
+index 90b61e013064b..764a65e6b5036 100644
+--- a/drivers/net/ipa/ipa_interrupt.h
++++ b/drivers/net/ipa/ipa_interrupt.h
+@@ -13,39 +13,6 @@ struct ipa;
+ struct ipa_interrupt;
+ enum ipa_irq_id;
  
 -/**
-- * ipa_suspend_handler() - Handle the suspend IPA interrupt
+- * typedef ipa_irq_handler_t - IPA interrupt handler function type
 - * @ipa:	IPA pointer
-- * @irq_id:	IPA interrupt type (unused)
+- * @irq_id:	interrupt type
 - *
-- * If an RX endpoint is suspended, and the IPA has a packet destined for
-- * that endpoint, the IPA generates a SUSPEND interrupt to inform the AP
-- * that it should resume the endpoint.  If we get one of these interrupts
-- * we just wake up the system.
+- * Callback function registered by ipa_interrupt_add() to handle a specific
+- * IPA interrupt type
 - */
--static void ipa_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
-+void ipa_power_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
+-typedef void (*ipa_irq_handler_t)(struct ipa *ipa, enum ipa_irq_id irq_id);
+-
+-/**
+- * ipa_interrupt_add() - Register a handler for an IPA interrupt type
+- * @interrupt:	IPA interrupt structure
+- * @irq_id:	IPA interrupt type
+- * @handler:	Handler function for the interrupt
+- *
+- * Add a handler for an IPA interrupt and enable it.  IPA interrupt
+- * handlers are run in threaded interrupt context, so are allowed to
+- * block.
+- */
+-void ipa_interrupt_add(struct ipa_interrupt *interrupt, enum ipa_irq_id irq_id,
+-		       ipa_irq_handler_t handler);
+-
+-/**
+- * ipa_interrupt_remove() - Remove the handler for an IPA interrupt type
+- * @interrupt:	IPA interrupt structure
+- * @irq_id:	IPA interrupt type
+- *
+- * Remove an IPA interrupt handler and disable it.
+- */
+-void ipa_interrupt_remove(struct ipa_interrupt *interrupt,
+-			  enum ipa_irq_id irq_id);
+-
+ /**
+  * ipa_interrupt_suspend_enable - Enable TX_SUSPEND for an endpoint
+  * @interrupt:		IPA interrupt structure
+diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+index 4198f8e97e40b..a282512ebd2d8 100644
+--- a/drivers/net/ipa/ipa_power.c
++++ b/drivers/net/ipa/ipa_power.c
+@@ -325,15 +325,11 @@ int ipa_power_setup(struct ipa *ipa)
  {
- 	/* To handle an IPA interrupt we will have resumed the hardware
- 	 * just to handle the interrupt, so we're done.  If we are in a
-@@ -336,7 +326,7 @@ int ipa_power_setup(struct ipa *ipa)
  	int ret;
  
- 	ipa_interrupt_add(ipa->interrupt, IPA_IRQ_TX_SUSPEND,
--			  ipa_suspend_handler);
-+			  ipa_power_suspend_handler);
+-	ipa_interrupt_add(ipa->interrupt, IPA_IRQ_TX_SUSPEND,
+-			  ipa_power_suspend_handler);
  	ipa_interrupt_enable(ipa, IPA_IRQ_TX_SUSPEND);
  
  	ret = device_init_wakeup(&ipa->pdev->dev, true);
-diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
-index 896f052e51a1c..3a4c59ea1222b 100644
---- a/drivers/net/ipa/ipa_power.h
-+++ b/drivers/net/ipa/ipa_power.h
-@@ -10,6 +10,7 @@ struct device;
+-	if (ret) {
++	if (ret)
+ 		ipa_interrupt_disable(ipa, IPA_IRQ_TX_SUSPEND);
+-		ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_TX_SUSPEND);
+-	}
  
- struct ipa;
- struct ipa_power_data;
-+enum ipa_irq_id;
- 
- /* IPA device power management function block */
- extern const struct dev_pm_ops ipa_pm_ops;
-@@ -47,6 +48,17 @@ void ipa_power_modem_queue_active(struct ipa *ipa);
-  */
- void ipa_power_retention(struct ipa *ipa, bool enable);
- 
-+/**
-+ * ipa_power_suspend_handler() - Handler for SUSPEND IPA interrupts
-+ * @ipa:	IPA pointer
-+ * @irq_id:	IPA interrupt ID (unused)
-+ *
-+ * If an RX endpoint is suspended, and the IPA has a packet destined for
-+ * that endpoint, the IPA generates a SUSPEND interrupt to inform the AP
-+ * that it should resume the endpoint.
-+ */
-+void ipa_power_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id);
-+
- /**
-  * ipa_power_setup() - Set up IPA power management
-  * @ipa:	IPA pointer
-diff --git a/drivers/net/ipa/ipa_uc.c b/drivers/net/ipa/ipa_uc.c
-index af541758d047f..6b7d289cfaffa 100644
---- a/drivers/net/ipa/ipa_uc.c
-+++ b/drivers/net/ipa/ipa_uc.c
-@@ -170,7 +170,7 @@ static void ipa_uc_response_hdlr(struct ipa *ipa)
- 	}
+ 	return ret;
+ }
+@@ -342,7 +338,6 @@ void ipa_power_teardown(struct ipa *ipa)
+ {
+ 	(void)device_init_wakeup(&ipa->pdev->dev, false);
+ 	ipa_interrupt_disable(ipa, IPA_IRQ_TX_SUSPEND);
+-	ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_TX_SUSPEND);
  }
  
--static void ipa_uc_interrupt_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
-+void ipa_uc_interrupt_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
+ /* Initialize IPA power management */
+diff --git a/drivers/net/ipa/ipa_uc.c b/drivers/net/ipa/ipa_uc.c
+index 6b7d289cfaffa..cb8a76a75f21d 100644
+--- a/drivers/net/ipa/ipa_uc.c
++++ b/drivers/net/ipa/ipa_uc.c
+@@ -182,13 +182,9 @@ void ipa_uc_interrupt_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
+ /* Configure the IPA microcontroller subsystem */
+ void ipa_uc_config(struct ipa *ipa)
  {
- 	/* Silently ignore anything unrecognized */
- 	if (irq_id == IPA_IRQ_UC_0)
-diff --git a/drivers/net/ipa/ipa_uc.h b/drivers/net/ipa/ipa_uc.h
-index 8514096e6f36f..85aa0df818c23 100644
---- a/drivers/net/ipa/ipa_uc.h
-+++ b/drivers/net/ipa/ipa_uc.h
-@@ -7,6 +7,14 @@
- #define _IPA_UC_H_
+-	struct ipa_interrupt *interrupt = ipa->interrupt;
+-
+ 	ipa->uc_powered = false;
+ 	ipa->uc_loaded = false;
+-	ipa_interrupt_add(interrupt, IPA_IRQ_UC_0, ipa_uc_interrupt_handler);
+ 	ipa_interrupt_enable(ipa, IPA_IRQ_UC_0);
+-	ipa_interrupt_add(interrupt, IPA_IRQ_UC_1, ipa_uc_interrupt_handler);
+ 	ipa_interrupt_enable(ipa, IPA_IRQ_UC_1);
+ }
  
- struct ipa;
-+enum ipa_irq_id;
-+
-+/**
-+ * ipa_uc_interrupt_handler() - Handler for microcontroller IPA interrupts
-+ * @ipa:	IPA pointer
-+ * @irq_id:	IPA interrupt ID
-+ */
-+void ipa_uc_interrupt_handler(struct ipa *ipa, enum ipa_irq_id irq_id);
+@@ -198,9 +194,7 @@ void ipa_uc_deconfig(struct ipa *ipa)
+ 	struct device *dev = &ipa->pdev->dev;
  
- /**
-  * ipa_uc_config() - Configure the IPA microcontroller subsystem
+ 	ipa_interrupt_disable(ipa, IPA_IRQ_UC_1);
+-	ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_UC_1);
+ 	ipa_interrupt_disable(ipa, IPA_IRQ_UC_0);
+-	ipa_interrupt_remove(ipa->interrupt, IPA_IRQ_UC_0);
+ 	if (ipa->uc_loaded)
+ 		ipa_power_retention(ipa, false);
+ 
 -- 
 2.34.1
 
