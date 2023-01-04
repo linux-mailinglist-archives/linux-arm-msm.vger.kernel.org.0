@@ -2,81 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EDBF65CAEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:34:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8A6765CAFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:39:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238686AbjADAd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 19:33:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42410 "EHLO
+        id S230352AbjADAjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 19:39:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234202AbjADAc4 (ORCPT
+        with ESMTP id S233600AbjADAjl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 19:32:56 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43C3140E2;
-        Tue,  3 Jan 2023 16:32:55 -0800 (PST)
+        Tue, 3 Jan 2023 19:39:41 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8203B3AF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 16:39:39 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id g13so48206537lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 16:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1672792375; x=1704328375;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=eIhpR/qxce8uXXnWI0sljvTxC15yx0vN5/MwkffQu8E=;
-  b=zDiNrWNi9/Wm2xJWh0a/Y836cvfCQQrZVaLCUbZgLbNbCYLl4o7zjnfk
-   3sjkxj6DV9crGmplszHWn+EVeJLXjEzSQo/io8MZsUKAHehwHqetSVzFL
-   Kn7JtM0gwNwCOKZ8+7XSFDXPkoQ8bcYHagSKOKpYIYrZTVzEAG0qcvNg4
-   w=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 03 Jan 2023 16:32:55 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jan 2023 16:32:55 -0800
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 3 Jan 2023
- 16:32:54 -0800
-Message-ID: <e414d0f3-515a-17ac-e65a-53fc73692eae@quicinc.com>
-Date:   Tue, 3 Jan 2023 16:32:37 -0800
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WVBnuKlPE/oUTRqhFq4kUqzVA1XN6vIiFknTafswgoQ=;
+        b=LDmdQjzOsglTDJU1x/UviTH05DPRnDwLZeI4jv3+hfRYH9DCbcrkdDi3eH9Bj/iyKt
+         60Ej2buIMkhP/Q2nLxlaHt/7odf6abDi81TO5fZ37hcuVKNAFyBn4efgA6usvVYKG73D
+         tiaBtjbGpFvlTg/JF+8JbBuSl+zm7Mq24HZFM+phBQVFqyyjRLDHPJgzcCya6paeHe28
+         R04FRlvHifbFkGbPiVF17EajIdPdri3u2IXcdoPAsPALkzuCTKXu5IbCXzXEtyx556/l
+         GohsuuSjcAW67UZI/r7Kr1HLgPywNRGtdq5LSdmLyiyssg+AdIdtZ7GA3p8JL0AQ2jeR
+         19QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WVBnuKlPE/oUTRqhFq4kUqzVA1XN6vIiFknTafswgoQ=;
+        b=jZpkEff9NBUnlMlP8MClM6T9EqHyhIRpoUyUHGGK7ujVQ6U97qLHTAlncje+1hNlg7
+         U9l4th6e1G54JiftSi6ybYNAeNTnRKbvSjO5smlvty0+BxFHZ6ONFShaQp4VmqR+tpIC
+         vdnuL7zAcZmCLjWdhvqfjxdDyBRstshHPIox+/w+vvtjeNSdVMlvG6BG+EmlhYM2THud
+         ZpAHihTcxkJx+7QWS90/1xVLL64JMhFFtUuBXc4t7qnT0aUYzHf4v3Z+o7vGcGDyxOAt
+         cGXQQHOIRvpyCO3e2Y+mt3tDyx91fMvjpbijG6tJjMzkWzHFUzQoNKfu7fVp8m36UaiO
+         3wlg==
+X-Gm-Message-State: AFqh2kqVqcIeIXtvvJKL1QvuD3laf/aVGrkXVgH9Psj97Qbp4hXiBYBJ
+        yXNwGMM+WMF/GcHiaSmTxCdxyA==
+X-Google-Smtp-Source: AMrXdXtLoi8JfPAeyx/akMXTY99ljU6r9amWVkiMz5z+fAPp28qXKnsS1TqW/vrHX5b/zqcEafDqEg==
+X-Received: by 2002:a05:6512:3e0c:b0:4b5:a5c7:3286 with SMTP id i12-20020a0565123e0c00b004b5a5c73286mr15789966lfv.9.1672792777825;
+        Tue, 03 Jan 2023 16:39:37 -0800 (PST)
+Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id p21-20020a05651212d500b00494a603953dsm4942374lfg.89.2023.01.03.16.39.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jan 2023 16:39:37 -0800 (PST)
+Message-ID: <108e52fa-e53b-220c-b0a8-b5b746aafde6@linaro.org>
+Date:   Wed, 4 Jan 2023 01:39:36 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v8 09/28] mailbox: Add Gunyah message queue mailbox
-To:     Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will Deacon" <will@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-acpi@vger.kernel.org>
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-10-quic_eberman@quicinc.com>
- <20230102061330.GA1836549@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/4] interconnect: qcom: rpm: Set QoS parameters
+ regardless of RPM bw setting
 Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230102061330.GA1836549@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>
+References: <20230103173059.265856-1-konrad.dybcio@linaro.org>
+ <20230103173059.265856-2-konrad.dybcio@linaro.org>
+ <0e2bdaec-b7ba-0474-8b80-8901fcc87a0f@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <0e2bdaec-b7ba-0474-8b80-8901fcc87a0f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,42 +83,136 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1/1/2023 10:13 PM, Srivatsa Vaddagiri wrote:
-> * Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:30]:
+On 4.01.2023 00:43, Bryan O'Donoghue wrote:
+> On 03/01/2023 17:30, Konrad Dybcio wrote:
+>> QoS parameters and RPM bandwidth requests are wholly separate. Setting one
+>> should only depend on the description of the interconnect node and not
+>> whether the other is present. If we vote through RPM, QoS parameters
+>> should be set so that the bus controller can make better decisions.
 > 
->> +static inline bool gh_msgq_has_tx(struct gh_msgq *msgq)
->> +{
+> Is that true ?
 > 
-> Consider possibility that msgq->tx_ghrc can be NULL?
-> 
->> +	return msgq->tx_ghrsc->type == GUNYAH_RESOURCE_TYPE_MSGQ_TX;
->> +}
+>> If we don't vote through RPM, QoS parameters should be set regardless,
+>> as we're requesting additional bandwidth by setting the interconnect
+>> clock rates.
+>>
+>> The Fixes tag references the commit in which this logic was added, it
+>> has since been shuffled around to a different file, but it's the one
+>> where it originates from.
+>>
+>> Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/interconnect/qcom/icc-rpm.c | 6 ++++--
+>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+>> index 06e0fee547ab..a190a0a839c8 100644
+>> --- a/drivers/interconnect/qcom/icc-rpm.c
+>> +++ b/drivers/interconnect/qcom/icc-rpm.c
+>> @@ -252,8 +252,10 @@ static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
+>>           ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
+>>           if (ret)
+>>               return ret;
+>> -    } else if (qn->qos.qos_mode != -1) {
+>> -        /* set bandwidth directly from the AP */
+>> +    }
 >> +
->> +static inline bool gh_msgq_has_rx(struct gh_msgq *msgq)
->> +{
+>> +    if (qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
+>> +        /* Set QoS params from the AP */
+>>           ret = qcom_icc_qos_set(n, sum_bw);
+>>           if (ret)
+>>               return ret;
 > 
-> Consider possibility that msgq->rx_ghrc can be NULL?
+> Taking the example of
 > 
->> +	return msgq->rx_ghrsc->type == GUNYAH_RESOURCE_TYPE_MSGQ_RX;
->> +}
->> +
->> +static irqreturn_t gh_msgq_rx_irq_handler(int irq, void *data)
->> +{
->> +	struct gh_msgq *msgq = data;
->> +	struct gh_msgq_rx_data rx_data;
->> +	unsigned long gh_err;
->> +	ssize_t ret;
->> +	bool ready = false;
->> +
->> +	do {
->> +		gh_err = gh_hypercall_msgq_recv(msgq->rx_ghrsc->capid,
->> +				(uintptr_t)&rx_data.data, sizeof(rx_data.data),
->> +				&rx_data.length, &ready);
->> +		if (gh_err == GH_ERROR_OK) {
->> +			mbox_chan_received_data(gh_msgq_chan(msgq), &rx_data);
->> +		} else if (GH_ERROR_MSGQUEUE_EMPTY) {
+> static struct qcom_icc_node bimc_snoc_slv = {
+>         .name = "bimc_snoc_slv",
+>         .id = MSM8939_BIMC_SNOC_SLV,
+>         .buswidth = 16,
+>         .mas_rpm_id = -1,
+>         .slv_rpm_id = 2,
+>         .num_links = ARRAY_SIZE(bimc_snoc_slv_links),
+>         .links = bimc_snoc_slv_links,
+> };
 > 
-> gh_err == GH_ERROR_MSGQUEUE_EMPTY
+> #define NOC_QOS_MODE_INVALID -1
+> ap_owned == false
+> qos_mode == NOC_QOS_MODE_FIXED
 > 
+> 
+> if (!qn->qos.ap_owned) {
+>     /* bod: this will run */
+>     /* send bandwidth request message to the RPM processor */
+>     ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
+>     if (ret)
+>         return ret;
+> } else if (qn->qos.qos_mode != -1) {
+>     /* bod: this will not run */
+>     /* set bandwidth directly from the AP */
+>     ret = qcom_icc_qos_set(n, sum_bw);
+>     if (ret)
+>         return ret;
+> }
+> 
+> and your proposed change
+> 
+> if (!qn->qos.ap_owned) {
+>     /* bod: this will run */
+>     /* send bandwidth request message to the RPM processor */
+>     ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
+>     if (ret)
+>         return ret;
+> }
+> 
+> if (qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
+>     /* bod: this will run */
+>     /* set bandwidth directly from the AP */
+>     ret = qcom_icc_qos_set(n, sum_bw);
+>     if (ret)
+>         return ret;
+> }
+> 
+> however if we look downstream we have the concept of ap_owned
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_fabric_adhoc.c#L194
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_fabric_adhoc.c#L208
+> 
+> In simple terms
+> if (node_info->ap_owned) {
+>     ret = fabdev->noc_ops.set_bw(node_info,
+>                                     } else {
+>     ret = send_rpm_msg(node_device);
+> }
+> 
+> I agree your code does what it says on the tin but, whats the overall justification to depart from the downstream logic ?
+Okay, so maybe it would be worth checking with Qualcomm what it's
+supposed to do. On msm-5.4 setting QoS is done unconditionally,
+no matter if the node has valid (!= -1) rpm mas/slv IDs.
 
-Applied the 3 comments, thanks!
+https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.9.14.r1/drivers/interconnect/qcom/icc-rpm.c#L97
+
+It may be something that began with newer SoCs, or maybe the
+carried-with-us-ever-since-3.4 chonky msm_bus driver had a bug..
+or maybe the msm-5.4 interconnect impl has a bug.. We really
+won't know unless somebody can confirm it for us..
+
+My understanding would be such that the QoS parameters are always
+set from the AP and RPM just scales the bandwidth on certain nodes,
+like it scales power and frequency for some lines/devices. That
+may or may not be true or might also depend on the SoC / RPM fw..
+
+And even if RPM sets these values internally, it shouldn't hurt to
+adjust them from AP again, but that would both deserve a different
+comment and would be a rather bad design, as tuning the values
+would require a rpm firmware update (and we know how vendors treat
+firmware updates), so that might have been something qc engineers
+took into account..
+
+tldr: new soc good (*), old soc bad-or-no-effect (*), should ask QC
+
+Konrad
+> 
+> ---
+> bod
