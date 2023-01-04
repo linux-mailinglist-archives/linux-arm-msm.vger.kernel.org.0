@@ -2,71 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8F7B65D32E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 13:54:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 467B565D3EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 14:14:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230513AbjADMyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 07:54:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
+        id S239252AbjADNOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 08:14:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233812AbjADMyd (ORCPT
+        with ESMTP id S239496AbjADNNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 07:54:33 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 865471AD90
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 04:54:32 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id pa22so16206458qkn.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 04:54:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
-        b=WgtPiGBL7pKpeGAONT7jyOZBlPA87PF+BcZ0At3DRbjh8r4a90VkFTuegmf7v5I05U
-         8O8yRsMlEC8d3azBuhTVnh5a19IMri1yaM5CNo7nGSQjhbPmAzApkJwS9Ixgc01L8XVA
-         9+oXPryfLJjc92HnUP6sxIyah9VARXZTMfFxXMcqBFJ6snOmablGghR0F2+Y0sgoHgie
-         QmoiaDCXomaXijXUVGiYmzsfSWGfWMMdh1Ev9V0gp78bfPbYO2S9uBzuU4GRDkm7vJO6
-         RsJ5hkLkj5KAchsYozNwRuUxQUGpmscZ9Mbjv/HN5G//qfUumyrbxcj+0dSg+lcPq80U
-         5Wuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
-        b=Ch6wDKZ8RLK6RgZiOQGFmsr4okSyptuagQono4M7OeMv+3SOD0eAaXsFgvvmFrdL4K
-         lNS2dqOyz/YifR2+9sWjnoSYBxaJjiyjkBEjogpugi7n1oV6XVsDiDoiV+TGyR706zrG
-         tUxfxw8HzJhMJcAv1FlBq3FHFVLWKFutMpf4SFQv3HJEpWJrnFlPcyl4IQnsCJrcnj9u
-         VIvhLMDLakFZAelEWlDjqrQunn9fR/cK/HoD8OCgv7O93yxQJ7jjchIIWx0mPsGs7+7E
-         oSL6qpUQ912aPr8LS1eBseORiDjHd7zo9vnrdJPxwnIWHvQojHDIwiGEd3TYN2dMwoPQ
-         1wZw==
-X-Gm-Message-State: AFqh2kr85G/pD8y5jxKzUJRt7AXhYc2P8K44ysuVkWeNra5gj8LVVwPk
-        sqiFzWubV/PTDBkHoOyMlGJADPHCuIhzvpftTTQ=
-X-Google-Smtp-Source: AMrXdXulKMdRBV/p4kXNikXMHFtLk5IOIYLDRJA7lpoRUfUF8+2cEqH8pHXLi4qSeE4J34Id+Th3n/mMQjaZgJWZFyc=
-X-Received: by 2002:a05:620a:8502:b0:704:ad9e:ad7 with SMTP id
- pe2-20020a05620a850200b00704ad9e0ad7mr1970941qkn.574.1672836871311; Wed, 04
- Jan 2023 04:54:31 -0800 (PST)
+        Wed, 4 Jan 2023 08:13:42 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7A7A03B911;
+        Wed,  4 Jan 2023 05:11:17 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BD30D1063;
+        Wed,  4 Jan 2023 05:11:58 -0800 (PST)
+Received: from [10.57.42.13] (unknown [10.57.42.13])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B8B53F587;
+        Wed,  4 Jan 2023 05:11:14 -0800 (PST)
+Message-ID: <9a86f7cd-2dce-f27a-af21-d64318ca3ef7@arm.com>
+Date:   Wed, 4 Jan 2023 13:11:13 +0000
 MIME-Version: 1.0
-Received: by 2002:a05:6200:5d91:b0:4a5:78e9:2012 with HTTP; Wed, 4 Jan 2023
- 04:54:30 -0800 (PST)
-Reply-To: Gregdenzell9@gmail.com
-From:   Greg Denzell <mzsophie@gmail.com>
-Date:   Wed, 4 Jan 2023 12:54:30 +0000
-Message-ID: <CAEoj5=a-iCsZoe4s4S8=o2P=8nfbDVvG8sm_YZ9wpP37ZOqYKA@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] coresight: cti: Add PM runtime call in enable_store
+Content-Language: en-US
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Tingwei <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>
+References: <20221224141700.20891-1-quic_jinlmao@quicinc.com>
+From:   James Clark <james.clark@arm.com>
+In-Reply-To: <20221224141700.20891-1-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Seasons Greetings!
 
-This will remind you again that I have not yet received your reply to
-my last message to you.
+
+On 24/12/2022 14:17, Mao Jinlong wrote:
+> In commit 6746eae4bbad ("coresight: cti: Fix hang in cti_disable_hw()")
+> PM runtime calls are removed from cti_enable_hw/cti_disable_hw. When
+> enabling CTI by writing enable sysfs node, clock for accessing CTI
+> register won't be enabled. Device will crash due to register access
+> issue. Add PM runtime call in enable_store to fix this issue.
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  drivers/hwtracing/coresight/coresight-cti-sysfs.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> index 6d59c815ecf5..b1ed424ae043 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> @@ -108,10 +108,17 @@ static ssize_t enable_store(struct device *dev,
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (val)
+> +	if (val) {
+> +		ret = pm_runtime_resume_and_get(dev->parent);
+> +		if (ret)
+> +			return ret;
+>  		ret = cti_enable(drvdata->csdev);
+> -	else
+> +		if (ret)
+> +			pm_runtime_put(dev->parent);
+> +	} else {
+>  		ret = cti_disable(drvdata->csdev);
+> +		pm_runtime_put(dev->parent);
+
+Hi Jinlong,
+
+This new pm_runtime_put() causes this when writing 0 to enable:
+
+  [  483.253814] coresight-cti 23020000.cti: Runtime PM usage count
+underflow!
+
+Maybe we can modify cti_disable_hw() to return a value to indicate that
+the disable actually happened, and only then call pm_runtime_put().
+
+I suppose you could also check in the store function if it was already
+enabled first, but then I don't know what kind of locking that would
+need? cti_disable_hw() already seems to have a couple of locks, so maybe
+the return value solution is easiest.
+
+Thanks
+James
+
