@@ -2,147 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7AAB65CAC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:25:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF9965CAD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:29:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238568AbjADAZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 19:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36348 "EHLO
+        id S230480AbjADA3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 19:29:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238567AbjADAZa (ORCPT
+        with ESMTP id S229773AbjADA3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 19:25:30 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 350AD1758F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 16:25:21 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id z26so48180462lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 16:25:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lHvYK3MFqjttdQWMiOHkYctTXu2WUFxG+8qUCFSB91A=;
-        b=FWXlyH0DAQ3qjP4Q2pgF0o5aG6p4f7qR3FOS2CBLCo1QzxsiBPk7duiTskSFrNN1Kb
-         RgpUWyJLf4huPnauN9j6DAk1jZr4qSTitFN47DiHK7pAHjDN8rM0KEQ1JIRYhs1UHqfQ
-         ieXQ8J1Y9gDKxl3n8vY8zrLhJ4LVy3iDdU9Ive6Wv4TWIe7cQNgpO1NsE3jS6Fri0bMr
-         FlvRjORSjmBgWs9LVilG47sy3nKVh+ix1RH/CnC8xiuxOZpmVwelEz0JI3s/O8eAYiqo
-         TmUoz+vTTgDQ/Jmpq8DUpJ8nxkiSpm8cLLGTsudLURsQr8OcVOmKvATN7FWPaYogOJa9
-         9ESw==
+        Tue, 3 Jan 2023 19:29:08 -0500
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48835E8;
+        Tue,  3 Jan 2023 16:29:08 -0800 (PST)
+Received: by mail-il1-f180.google.com with SMTP id a9so6550429ilk.6;
+        Tue, 03 Jan 2023 16:29:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lHvYK3MFqjttdQWMiOHkYctTXu2WUFxG+8qUCFSB91A=;
-        b=WDtf9mZkYaxTlKFMKZKdjS6zCcu7OVQKk/0Bi7tL+UhEhaHuD6+MiyxxYHX+y4Kf5h
-         l6cxK1uXf02v6ktWbIWL2k+zmmyiQ/Q3YOUL/PXMtlKIOC4y0x+99dvEwm02hLK+hQYp
-         wH1ARAe3tjWl3XKZSFPB9KQ973NzI7T8/hDEpdnHekVcugYWkxcYcPxzNO0RQ2wPC2LT
-         QYyKcgwVfCA5o2DM5jtpr+6bR6p7dgqMjMnka0J8d7dihxRDPKMVtzHlAJxCpE/P4nQ9
-         ziEBXnpoVIL4Mm0s1K2NnZ7RQj0bOn6bLo0+vPnS1o5k6s2x0nwz+8w3mtcZzaa3nFq8
-         nwtQ==
-X-Gm-Message-State: AFqh2kojdqxowujbre7ALy4N0CBaE9DADNvfGuMwNjtdJjHi5NBsF1DK
-        w70XI2YVRplsJrpCfc9ozgmkSlsacMtYt9Wn
-X-Google-Smtp-Source: AMrXdXtuuKCKPyNVd7CcOz8YCpIOur3HAg7vUMbcUsAGJKMF6k4Cmoo7HHKVO8xqJ066BUBm3YOLqg==
-X-Received: by 2002:a05:6512:3d9f:b0:4a4:68b7:f878 with SMTP id k31-20020a0565123d9f00b004a468b7f878mr19118870lfv.28.1672791919499;
-        Tue, 03 Jan 2023 16:25:19 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id f2-20020a056512228200b004ca0ea7af24sm4969112lfu.174.2023.01.03.16.25.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 16:25:19 -0800 (PST)
-Message-ID: <14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org>
-Date:   Wed, 4 Jan 2023 01:25:17 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7oFl9C+pdV8o+KMF9oxiGndE/yHy/VbU0fKzAvJ4LrQ=;
+        b=cuPl1wJcat5HyvXofY/GK/lTevwwFf4uSauWSWPT7SM3diyATbnu2AH/N4qf878HUZ
+         GJnUZKjczm/DNqercjrQwRvmLY7sqvEmpVZkYgzljf+CTIqqfgIIOX7ENd2wtXoKo55i
+         Sxo3/oJ9VIRKchRv/VjmuTcFQmUA5R8iUKM2LSTuVCTDqtyINVN5aJG2ZGDKauX5NtE+
+         gegVY4cedA62uUNtIw3jYzVEl8ztPvfbPTTt6oN87mrxzvjjjadPkKDgsdZhQBYG3ATg
+         7v0eyBqSJkDgFcAFwWu+US23Y2kwraB0JrNOLtN1+Eyxtla+w+DF47aCVcMTP2WHl0Ln
+         AvWA==
+X-Gm-Message-State: AFqh2kqZWsz+IQYRP2xwbFCf1+4XJFwbf562lMQ5UWALRiluOHX32VKc
+        w4mHXU1pdcDb6/pEYUllfQ==
+X-Google-Smtp-Source: AMrXdXtT403stngUA7JGfIW3gdVGtgW+fbAfI4N20y5CYBCxGtOZUKCUGWgIkSQqAkYQIE8JGXUwnw==
+X-Received: by 2002:a92:c085:0:b0:30c:f88:e807 with SMTP id h5-20020a92c085000000b0030c0f88e807mr17877427ile.6.1672792147532;
+        Tue, 03 Jan 2023 16:29:07 -0800 (PST)
+Received: from robh_at_kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id d5-20020a92ddc5000000b002faf6559e90sm10184711ilr.51.2023.01.03.16.29.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 16:29:07 -0800 (PST)
+Received: (nullmailer pid 143313 invoked by uid 1000);
+        Wed, 04 Jan 2023 00:29:05 -0000
+Date:   Tue, 3 Jan 2023 18:29:05 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch,
+        dianders@chromium.org, david@ixit.cz,
+        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
+        konrad.dybcio@somainline.org, agross@kernel.org,
+        andersson@kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 07/18] dt-bindings: display/msm: Add list of
+ mdss-dsi-ctrl compats
+Message-ID: <20230104002905.GA134092-robh@kernel.org>
+References: <20221223021025.1646636-1-bryan.odonoghue@linaro.org>
+ <20221223021025.1646636-8-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 1/4] interconnect: qcom: rpm: Don't set QoS params before
- non-zero bw is requested
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230103173059.265856-1-konrad.dybcio@linaro.org>
- <735088f7-2888-04b1-7751-a3ad7e13a857@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <735088f7-2888-04b1-7751-a3ad7e13a857@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221223021025.1646636-8-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4.01.2023 00:07, Bryan O'Donoghue wrote:
-> On 03/01/2023 17:30, Konrad Dybcio wrote:
->> Until now, the icc-rpm driver unconditionally set QoS params, even on
->> empty requests. This is superfluous and the downstream counterpart does
->> not do it. Follow it by doing the same.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/icc-rpm.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->> index 43b9ce0dcb6a..06e0fee547ab 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.c
->> +++ b/drivers/interconnect/qcom/icc-rpm.c
->> @@ -193,6 +193,12 @@ static int qcom_icc_qos_set(struct icc_node *node, u64 sum_bw)
->>       struct qcom_icc_provider *qp = to_qcom_provider(node->provider);
->>       struct qcom_icc_node *qn = node->data;
->>   +    /* Defer setting QoS until the first non-zero bandwidth request. */
->> +    if (!(node->avg_bw || node->peak_bw)) {
->> +        dev_dbg(node->provider->dev, "NOT Setting QoS for %s\n", qn->name);
->> +        return 0;
->> +    }
->> +
->>       dev_dbg(node->provider->dev, "Setting QoS for %s\n", qn->name);
->>         switch (qp->type) {
+On Fri, Dec 23, 2022 at 02:10:14AM +0000, Bryan O'Donoghue wrote:
+> Add the list of current compats absent the deprecated qcm2290 to the list
+> of dsi compats listed here.
 > 
-> Doesn't downstream clear the registers on a zero allocation request ?
+> Several MDSS yaml files exist which document the dsi sub-node.
+> For each existing SoC MDSS yaml, provide the right dsi compat string.
 > 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_bimc.c#L1302
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_bimc.c#L1318
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_bimc.c#L1367
-> 
-> msm_bus_bimc_set_qos_bw()
-> {
->     /* Only calculate if there's a requested bandwidth and window */
->     if (qbw->bw && qbw->ws) {
->     }else
->         /* Clear bandwidth registers */
->         set_qos_bw_regs(base, mas_index, 0, 0, 0, 0, 0);
-> }
-Yes, looks like that's the case, but also it's only for BIMC, not
-for NOC:
-
-https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_noc.c#L246
-
-Moreover, it only concerns QoS parameters that are not supported on
-mainline (Grant Period, Grant Count, Threshold Lo/Me/Hi) [1], so that
-pretty much addresses your worries, I think..
-
-And FWIW that's definitely not the case anymore for QNOC (and BIMC
-for that matter) on msm-5.4:
-
-https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.9.14.r1/drivers/interconnect/qcom/icc-rpm.c#L217
-
-
-Konrad
-
-[1] Note: msm8939 seems to be a somewhat heavy user of these properties,
-maybe it would be worth looking into implementing them?
-> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-> bod
+>  .../bindings/display/msm/qcom,mdss.yaml          | 16 +++++++++++++++-
+>  .../bindings/display/msm/qcom,msm8998-mdss.yaml  |  8 +++++---
+>  .../bindings/display/msm/qcom,sc7180-mdss.yaml   |  6 ++++--
+>  .../bindings/display/msm/qcom,sc7280-mdss.yaml   |  6 ++++--
+>  .../bindings/display/msm/qcom,sdm845-mdss.yaml   |  8 +++++---
+>  .../bindings/display/msm/qcom,sm8250-mdss.yaml   |  8 +++++---
+>  6 files changed, 38 insertions(+), 14 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
+> index ba0460268731b..86bb43489bf4a 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
+> @@ -94,7 +94,21 @@ patternProperties:
+>      type: object
+>      properties:
+>        compatible:
+> -        const: qcom,mdss-dsi-ctrl
+> +        items:
+> +          - enum:
+> +              - qcom,apq8064-dsi-ctrl
+> +              - qcom,msm8916-dsi-ctrl
+> +              - qcom,msm8953-dsi-ctrl
+> +              - qcom,msm8974-dsi-ctrl
+> +              - qcom,msm8996-dsi-ctrl
+> +              - qcom,msm8998-dsi-ctrl
+> +              - qcom,qcm2290-dsi-ctrl
+> +              - qcom,sc7180-dsi-ctrl
+> +              - qcom,sc7280-dsi-ctrl
+> +              - qcom,sdm660-dsi-ctrl
+> +              - qcom,sdm845-dsi-ctrl
+> +              - qcom,sm8250-dsi-ctrl
+> +          - const: qcom,mdss-dsi-ctrl
+
+No need to have an exact match here. Just this is enough:
+
+compatible:
+  contains:
+    const: qcom,mdss-dsi-ctrl
+
+Then the DSI schema will check the rest.
+
+Same for the rest.
+
+Rob
