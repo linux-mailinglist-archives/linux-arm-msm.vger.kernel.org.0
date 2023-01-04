@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 108A765CF25
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 10:09:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7EC565CF2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 10:09:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238926AbjADJJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 04:09:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34436 "EHLO
+        id S234533AbjADJJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 04:09:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238935AbjADJIz (ORCPT
+        with ESMTP id S238948AbjADJIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 4 Jan 2023 04:08:55 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0424193CB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 01:08:53 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id ay40so25099732wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 01:08:53 -0800 (PST)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09381B1FD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 01:08:54 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso22698844wms.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 01:08:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rVTStAw/57xAbd/BBwUFRLDbIskvb7+C7pKSrxlmzjA=;
-        b=yqsMYaDaOJWrpdE4zi+nRqT7vx1HNbIceWUyIhRfxhXr8uOaSegu5REZZoUrFkN8Uz
-         Zx26TQ1k+BVQ9hjY967vadWCZQbNFJDn7NTUvzZEJaQuaqfsbwG1Rsb0KLIc1dvXwxG9
-         bHoxzfF+1ivVM4KHywzmWw3rZEmoSsi/W7x/SO6VHpdCi2cOE/yl9ERFd0KF0tSD2mf1
-         LjRrUvKvnY/SJAdHRCB7wqJYTxXaFs2eR7Km+K/7b8+2G3SEBKQgvUpXUWz+h02NyzvL
-         Z93VAlHa5V7G+i7waqQ3Cp+3i290C79QVdZymhA7RtvHNf2SuQtbKwxQbVOxU90xLh5s
-         Kr5Q==
+        bh=RW8zq/j/mruXN6/WTKeap/h29XYUPaSNwCYMmo6FJKQ=;
+        b=nMMd/v3HFY4szFYLEaKcpk0c7SiE4v2hmay0BJN0rm4EPyuTnUt7yH9fmMkpWpYQ1x
+         kv1GxehAQfBLQpUThWtUZkXRmS3BCK/RKPUVkkP7ieceowGRkjGW1Vx7Rn2ZAzofiIgT
+         Lmk7XGz1HaB0HEYWNZFP1lA9hopNgFGdtdj5seBbURcaFn31wgaXvIqSkeO4Ja7CQluD
+         VFIwcMtpzoXmHvJLfiJI0WPTjY6w6Za/SRQ9BWV39o800kr+LlYJfZ6hWYtmOXvYHoht
+         qa2FcB1Oncjo1An90deepimnrlPzGUBh1gIk4SvwDZ8Bbpe5tdEeEy0dC/xF1Ecr0Gzo
+         v2EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rVTStAw/57xAbd/BBwUFRLDbIskvb7+C7pKSrxlmzjA=;
-        b=2JD/1D5WIbrXDCPh+7f98swy7FWm0pmOifwFRBrICag6wMKIk2AlMJ6DL5ouu1JipU
-         vex1mVCb0rDkmALrV/RHPAXq89httEOeaNFCoX30VxjmvNy7geaR6du0W3zAia0YGWUj
-         zDsOXuyvfoGKLQ4wkKS7f6wlP5mXvRSsTg4jAW4v2SpMZniwaPjTR2Jp3XpDd8m3LC3A
-         eBi0msJaqMJqOK+9VphcSRN70rSGqj3tjMYW4+s5Yf9TSf934E7y+ACh0yhvvfy5j0YL
-         4UEc+fQk0lgb6AFiH7cA2pk0jXo5ieEXnQTRkQ/9UL3akXd7bzA9kqv5g53/Fdbm3aEV
-         LtDA==
-X-Gm-Message-State: AFqh2ko9/+x9TEQaPdUWbIRKXRx3zkjJHWaERVco3TkqODCUiKAKQ++L
-        5vc6ZZAyce06a3X3cIdL1B/5Qw==
-X-Google-Smtp-Source: AMrXdXsGkiZ6pYJinkRF34QD/AQxj60OWCWjzqIUvxD0QC4A2tr0LyN3orxrDKjoJKBL6qnADHIW0g==
-X-Received: by 2002:a05:600c:4a90:b0:3d2:3ae8:886a with SMTP id b16-20020a05600c4a9000b003d23ae8886amr36765712wmp.17.1672823332297;
-        Wed, 04 Jan 2023 01:08:52 -0800 (PST)
+        bh=RW8zq/j/mruXN6/WTKeap/h29XYUPaSNwCYMmo6FJKQ=;
+        b=a1l37jit5M0bfxfJ1vJTVakBlwtF9dnIcHz7v1zwgjXQ2Ra0MEbBif/srXAIp0P/Rr
+         Yqs1BzuR0I1lYOCxsZ9dItK+x5y7zcRSbpvj79/1cFRCyMF2knKEPTI9kbenVBrQPJl/
+         XemSikOA1z7BHdFZJuttoXagB2/rnhh9ftVkQUXQPMFFVh8gbbAqSqUkw4TJAgVlSYe4
+         IOw41ywxLbg6XYAbm17xg5oo12U2NM+fRO2vWuFAA6fL1uZISDj3r+VgFZ8X7vxeBCQQ
+         nzyEZUC8qMeqlE113y4lXXvNDCNVAp24/F9o+mrpdr4vn6Mz51G+KVEMtF2FExYDnAIo
+         0Mvg==
+X-Gm-Message-State: AFqh2ko/xtPjiDCq8upXdmnSN9VPtuhTsCsAWT3+kFd6u1m1RffhEcJw
+        lN/Nkss0zVR5cGGY8MEHP23zuw==
+X-Google-Smtp-Source: AMrXdXtTn0L2mtxXUP6CMnmtcwC9FWRBQC4xzA90BRPGajQqe4oSN3qZ4i7MrOggned3SnNYib/zUw==
+X-Received: by 2002:a05:600c:c8a:b0:3d9:7062:e0b7 with SMTP id fj10-20020a05600c0c8a00b003d97062e0b7mr27355377wmb.33.1672823333305;
+        Wed, 04 Jan 2023 01:08:53 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id j34-20020a05600c1c2200b003d98438a43asm36124622wms.34.2023.01.04.01.08.51
+        by smtp.gmail.com with ESMTPSA id j34-20020a05600c1c2200b003d98438a43asm36124622wms.34.2023.01.04.01.08.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 01:08:51 -0800 (PST)
+        Wed, 04 Jan 2023 01:08:52 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 04 Jan 2023 10:08:47 +0100
-Subject: [PATCH 5/6] drm/msm/dsi: add support for DSI-PHY on SM8550
+Date:   Wed, 04 Jan 2023 10:08:48 +0100
+Subject: [PATCH 6/6] drm/msm/dsi: add support for DSI 2.7.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230103-topic-sm8550-upstream-mdss-dsi-v1-5-9ccd7e652fcd@linaro.org>
+Message-Id: <20230103-topic-sm8550-upstream-mdss-dsi-v1-6-9ccd7e652fcd@linaro.org>
 References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
 In-Reply-To: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -74,244 +74,67 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
 X-Mailer: b4 0.11.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8550 use a 4nm DSI PHYs, which share register definitions
-with 7nm DSI PHYs. Rather than duplicating the driver, handle
-4nm variant inside the common 5+7nm driver.
+Add support for DSI 2.7.0 (block used on sm8550).
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/gpu/drm/msm/Kconfig               |   4 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 102 ++++++++++++++++++++++++------
- 4 files changed, 89 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 16 ++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index e7b100d97f88..949b18a29a55 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -140,11 +140,11 @@ config DRM_MSM_DSI_10NM_PHY
- 	  Choose this option if DSI PHY on SDM845 is used on the platform.
- 
- config DRM_MSM_DSI_7NM_PHY
--	bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
-+	bool "Enable DSI 7nm/5nm/4nm PHY driver in MSM DRM"
- 	depends on DRM_MSM_DSI
- 	default y
- 	help
--	  Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
-+	  Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SM8550/SC7280
- 	  is used on the platform.
- 
- config DRM_MSM_HDMI
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 0c956fdab23e..54e03cc9fbe7 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -573,6 +573,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
- 	  .data = &dsi_phy_5nm_8350_cfgs },
- 	{ .compatible = "qcom,dsi-phy-5nm-8450",
- 	  .data = &dsi_phy_5nm_8450_cfgs },
-+	{ .compatible = "qcom,dsi-phy-4nm-8550",
-+	  .data = &dsi_phy_4nm_8550_cfgs },
- #endif
- 	{}
- };
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index f7a907ed2b4b..58f9e09f5224 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -59,6 +59,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
- 
- struct msm_dsi_dphy_timing {
- 	u32 clk_zero;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 7b2c16b3a36c..11629c431c30 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -47,6 +47,8 @@
- #define DSI_PHY_7NM_QUIRK_V4_2		BIT(2)
- /* Hardware is V4.3 */
- #define DSI_PHY_7NM_QUIRK_V4_3		BIT(3)
-+/* Hardware is V5.2 */
-+#define DSI_PHY_7NM_QUIRK_V5_2		BIT(4)
- 
- struct dsi_pll_config {
- 	bool enable_ssc;
-@@ -124,14 +126,25 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
- 
- 	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
- 		config->pll_clock_inverters = 0x28;
--	else if (pll_freq <= 1000000000ULL)
--		config->pll_clock_inverters = 0xa0;
--	else if (pll_freq <= 2500000000ULL)
--		config->pll_clock_inverters = 0x20;
--	else if (pll_freq <= 3020000000ULL)
--		config->pll_clock_inverters = 0x00;
--	else
--		config->pll_clock_inverters = 0x40;
-+	else if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-+		if (pll_freq <= 1300000000ULL)
-+			config->pll_clock_inverters = 0xa0;
-+		else if (pll_freq <= 2500000000ULL)
-+			config->pll_clock_inverters = 0x20;
-+		else if (pll_freq <= 4000000000ULL)
-+			config->pll_clock_inverters = 0x00;
-+		else
-+			config->pll_clock_inverters = 0x40;
-+	} else {
-+		if (pll_freq <= 1000000000ULL)
-+			config->pll_clock_inverters = 0xa0;
-+		else if (pll_freq <= 2500000000ULL)
-+			config->pll_clock_inverters = 0x20;
-+		else if (pll_freq <= 3020000000ULL)
-+			config->pll_clock_inverters = 0x00;
-+		else
-+			config->pll_clock_inverters = 0x40;
-+	}
- 
- 	config->decimal_div_start = dec;
- 	config->frac_div_start = frac;
-@@ -222,6 +235,13 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
- 			vco_config_1 = 0x01;
- 	}
- 
-+	if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-+		if (pll->vco_current_rate < 1557000000ULL)
-+			vco_config_1 = 0x08;
-+		else
-+			vco_config_1 = 0x01;
-+	}
-+
- 	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
- 		      analog_controls_five_1);
- 	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
-@@ -860,7 +880,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 		pr_warn("PLL turned on before configuring PHY\n");
- 
- 	/* Request for REFGEN READY */
--	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
-+	if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
-+	    (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
- 		dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
- 		udelay(500);
- 	}
-@@ -881,20 +902,38 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 
- 	glbl_str_swi_cal_sel_ctrl = 0x00;
- 	if (phy->cphy_mode) {
--		vreg_ctrl_0 = 0x51;
--		vreg_ctrl_1 = 0x55;
-+		if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-+			vreg_ctrl_0 = 0x45;
-+			vreg_ctrl_1 = 0x45;
-+		} else {
-+			vreg_ctrl_0 = 0x51;
-+			vreg_ctrl_1 = 0x55;
-+		}
- 		glbl_hstx_str_ctrl_0 = 0x00;
- 		glbl_pemph_ctrl_0 = 0x11;
- 		lane_ctrl0 = 0x17;
- 	} else {
--		vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
--		vreg_ctrl_1 = 0x5c;
-+		if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-+			vreg_ctrl_0 = 0x44;
-+			vreg_ctrl_1 = 0x19;
-+		} else {
-+			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
-+			vreg_ctrl_1 = 0x5c;
-+		}
- 		glbl_hstx_str_ctrl_0 = 0x88;
- 		glbl_pemph_ctrl_0 = 0x00;
- 		lane_ctrl0 = 0x1f;
- 	}
- 
--	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
-+	if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
-+		if (phy->cphy_mode) {
-+			glbl_rescode_top_ctrl = 0x00;
-+			glbl_rescode_bot_ctrl = 0x00;
-+		} else {
-+			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x03;
-+			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3c;
-+		}
-+	} else if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
- 		if (phy->cphy_mode) {
- 			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
- 			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
-@@ -943,9 +982,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0x00);
- 
- 	/* program CMN_CTRL_4 for minor_ver 2 chipsets*/
--	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0);
--	data = data & (0xf0);
--	if (data == 0x20)
-+	if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2) ||
-+	    (dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0) & (0xf0)) == 0x20)
- 		dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_4, 0x04);
- 
- 	/* Configure PHY lane swap (TODO: we need to calculate this) */
-@@ -1058,7 +1096,8 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
- 	dsi_phy_hw_v4_0_config_lpcdrx(phy, false);
- 
- 	/* Turn off REFGEN Vote */
--	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
-+	if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
-+	    (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
- 		dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
- 		wmb();
- 		/* Delay to ensure HW removes vote before PHY shut down */
-@@ -1092,6 +1131,10 @@ static const struct regulator_bulk_data dsi_phy_7nm_97800uA_regulators[] = {
- 	{ .supply = "vdds", .init_load_uA = 97800 },
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+index 59a4cc95a251..33884ebd2f86 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -181,6 +181,20 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+ 	.num_dsi = 2,
  };
  
-+static const struct regulator_bulk_data dsi_phy_7nm_98400uA_regulators[] = {
-+	{ .supply = "vdds", .init_load_uA = 98400 },
++static const struct regulator_bulk_data sm8550_dsi_regulators[] = {
++	{ .supply = "vdda", .init_load_uA = 16800 },	/* 1.2 V */
 +};
 +
- const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
- 	.has_phy_lane = true,
- 	.regulator_data = dsi_phy_7nm_36mA_regulators,
-@@ -1201,3 +1244,26 @@ const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
- 	.num_dsi_phy = 2,
- 	.quirks = DSI_PHY_7NM_QUIRK_V4_3,
- };
-+
-+const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs = {
-+	.has_phy_lane = true,
-+	.regulator_data = dsi_phy_7nm_98400uA_regulators,
-+	.num_regulators = ARRAY_SIZE(dsi_phy_7nm_98400uA_regulators),
-+	.ops = {
-+		.enable = dsi_7nm_phy_enable,
-+		.disable = dsi_7nm_phy_disable,
-+		.pll_init = dsi_pll_7nm_init,
-+		.save_pll_state = dsi_7nm_pll_save_state,
-+		.restore_pll_state = dsi_7nm_pll_restore_state,
-+		.set_continuous_clock = dsi_7nm_set_continuous_clock,
-+	},
-+	.min_pll_rate = 600000000UL,
-+#ifdef CONFIG_64BIT
-+	.max_pll_rate = 5000000000UL,
-+#else
-+	.max_pll_rate = ULONG_MAX,
-+#endif
-+	.io_start = { 0xae95000, 0xae97000 },
-+	.num_dsi_phy = 2,
-+	.quirks = DSI_PHY_7NM_QUIRK_V5_2,
++static const struct msm_dsi_config sm8550_dsi_cfg = {
++	.io_offset = DSI_6G_REG_SHIFT,
++	.regulator_data = sm8550_dsi_regulators,
++	.num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
++	.bus_clk_names = dsi_sdm845_bus_clk_names,
++	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
++	.io_start = { 0xae94000, 0xae96000 },
++	.num_dsi = 2,
 +};
++
+ static const struct regulator_bulk_data sc7180_dsi_regulators[] = {
+ 	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
+ };
+@@ -302,6 +316,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+ 		&sc7280_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_6_0,
+ 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
++	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_7_0,
++		&sm8550_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ };
+ 
+ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index 95957fab499d..44be4a88aa83 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -26,6 +26,7 @@
+ #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
+ #define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
+ #define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
++#define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
+ 
+ #define MSM_DSI_V2_VER_MINOR_8064	0x0
+ 
 
 -- 
 2.34.1
