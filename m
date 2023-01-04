@@ -2,79 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8A6765CAFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:39:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEF6A65CB03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 01:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230352AbjADAjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Jan 2023 19:39:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46272 "EHLO
+        id S238501AbjADAmB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Jan 2023 19:42:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233600AbjADAjl (ORCPT
+        with ESMTP id S234247AbjADAmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Jan 2023 19:39:41 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8203B3AF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jan 2023 16:39:39 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id g13so48206537lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jan 2023 16:39:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WVBnuKlPE/oUTRqhFq4kUqzVA1XN6vIiFknTafswgoQ=;
-        b=LDmdQjzOsglTDJU1x/UviTH05DPRnDwLZeI4jv3+hfRYH9DCbcrkdDi3eH9Bj/iyKt
-         60Ej2buIMkhP/Q2nLxlaHt/7odf6abDi81TO5fZ37hcuVKNAFyBn4efgA6usvVYKG73D
-         tiaBtjbGpFvlTg/JF+8JbBuSl+zm7Mq24HZFM+phBQVFqyyjRLDHPJgzcCya6paeHe28
-         R04FRlvHifbFkGbPiVF17EajIdPdri3u2IXcdoPAsPALkzuCTKXu5IbCXzXEtyx556/l
-         GohsuuSjcAW67UZI/r7Kr1HLgPywNRGtdq5LSdmLyiyssg+AdIdtZ7GA3p8JL0AQ2jeR
-         19QQ==
+        Tue, 3 Jan 2023 19:42:00 -0500
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9E4140D3;
+        Tue,  3 Jan 2023 16:41:54 -0800 (PST)
+Received: by mail-il1-f169.google.com with SMTP id d10so18881149ilc.12;
+        Tue, 03 Jan 2023 16:41:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WVBnuKlPE/oUTRqhFq4kUqzVA1XN6vIiFknTafswgoQ=;
-        b=jZpkEff9NBUnlMlP8MClM6T9EqHyhIRpoUyUHGGK7ujVQ6U97qLHTAlncje+1hNlg7
-         U9l4th6e1G54JiftSi6ybYNAeNTnRKbvSjO5smlvty0+BxFHZ6ONFShaQp4VmqR+tpIC
-         vdnuL7zAcZmCLjWdhvqfjxdDyBRstshHPIox+/w+vvtjeNSdVMlvG6BG+EmlhYM2THud
-         ZpAHihTcxkJx+7QWS90/1xVLL64JMhFFtUuBXc4t7qnT0aUYzHf4v3Z+o7vGcGDyxOAt
-         cGXQQHOIRvpyCO3e2Y+mt3tDyx91fMvjpbijG6tJjMzkWzHFUzQoNKfu7fVp8m36UaiO
-         3wlg==
-X-Gm-Message-State: AFqh2kqVqcIeIXtvvJKL1QvuD3laf/aVGrkXVgH9Psj97Qbp4hXiBYBJ
-        yXNwGMM+WMF/GcHiaSmTxCdxyA==
-X-Google-Smtp-Source: AMrXdXtLoi8JfPAeyx/akMXTY99ljU6r9amWVkiMz5z+fAPp28qXKnsS1TqW/vrHX5b/zqcEafDqEg==
-X-Received: by 2002:a05:6512:3e0c:b0:4b5:a5c7:3286 with SMTP id i12-20020a0565123e0c00b004b5a5c73286mr15789966lfv.9.1672792777825;
-        Tue, 03 Jan 2023 16:39:37 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id p21-20020a05651212d500b00494a603953dsm4942374lfg.89.2023.01.03.16.39.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 16:39:37 -0800 (PST)
-Message-ID: <108e52fa-e53b-220c-b0a8-b5b746aafde6@linaro.org>
-Date:   Wed, 4 Jan 2023 01:39:36 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7i5QCkn5f7/8bQHHWhpZfw+Hrwcm09g6oLcGGwmqm4Y=;
+        b=tnwWDMwWgDjqvkLQKMpl5kelgrYH1KMlpaOLG+bKTfwgopRJXe1v4HPAdxACJVuIlV
+         2qfLbcbZCh1GlUhQm43NfFWwMiDl7uU2xBPH5hCvJb1aPMs5+noi1DR1XkI7Q7UYeR7o
+         TFNc9nueLHK0iLufsKFLzn3jfnbPepjWwIkYpxovX/+6TqZhOtjyzmcS741hW+oNliTF
+         hKTOVzGpSZ1wFo+/ELissROAI0UjlKhkzPZHlxrYF6xGYHm0YTtWdS9hFF5ftKGL/Xok
+         7lb1DtfJAPd3TseamelXfohpFJlrdsMUivlGTSQUUmTx4xHNF/OE5iv0LQVxWtr4CaFS
+         C9bg==
+X-Gm-Message-State: AFqh2krFZW3wciDBt+e3vjhsOKygIwHLLN8f/p/DccmO+cv/ALiXZ3/K
+        ejKSkZkJBiC9TzWUE4404WICGeVk1A==
+X-Google-Smtp-Source: AMrXdXt8R8M3J07HjvnrwFZepzmoP7CIx516i0FzByPM6GyFR9cjiBdwLlH3aoq3iU0UQkzD0+SzOg==
+X-Received: by 2002:a05:6e02:218d:b0:30c:2266:cfca with SMTP id j13-20020a056e02218d00b0030c2266cfcamr20059297ila.9.1672792913990;
+        Tue, 03 Jan 2023 16:41:53 -0800 (PST)
+Received: from robh_at_kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id y17-20020a926411000000b00305e6279bf2sm10160256ilb.74.2023.01.03.16.41.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 16:41:53 -0800 (PST)
+Received: (nullmailer pid 160851 invoked by uid 1000);
+        Wed, 04 Jan 2023 00:41:52 -0000
+Date:   Tue, 3 Jan 2023 18:41:52 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH] dt-bindings: soundwire: qcom,soundwire: correct sizes
+ related to number of ports
+Message-ID: <167279291060.160766.17238671980369497938.robh@kernel.org>
+References: <20221223132159.81211-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 2/4] interconnect: qcom: rpm: Set QoS parameters
- regardless of RPM bw setting
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>
-References: <20230103173059.265856-1-konrad.dybcio@linaro.org>
- <20230103173059.265856-2-konrad.dybcio@linaro.org>
- <0e2bdaec-b7ba-0474-8b80-8901fcc87a0f@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <0e2bdaec-b7ba-0474-8b80-8901fcc87a0f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221223132159.81211-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,137 +73,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 4.01.2023 00:43, Bryan O'Donoghue wrote:
-> On 03/01/2023 17:30, Konrad Dybcio wrote:
->> QoS parameters and RPM bandwidth requests are wholly separate. Setting one
->> should only depend on the description of the interconnect node and not
->> whether the other is present. If we vote through RPM, QoS parameters
->> should be set so that the bus controller can make better decisions.
+On Fri, 23 Dec 2022 14:21:59 +0100, Krzysztof Kozlowski wrote:
+> There are several properties depending on number of ports.  Some of them
+> had maximum limit of 5 and some of 8.  SM8450 AudioReach comes with 8
+> ports, so fix the limits:
 > 
-> Is that true ?
+>   sm8450-sony-xperia-nagara-pdx224.dtb: soundwire-controller@3250000: qcom,ports-word-length: 'oneOf' conditional failed, one must be fixed:
+>     [[255, 255, 255, 255, 255, 255, 255, 255]] is too short
+>     [255, 255, 255, 255, 255, 255, 255, 255] is too long
 > 
->> If we don't vote through RPM, QoS parameters should be set regardless,
->> as we're requesting additional bandwidth by setting the interconnect
->> clock rates.
->>
->> The Fixes tag references the commit in which this logic was added, it
->> has since been shuffled around to a different file, but it's the one
->> where it originates from.
->>
->> Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/icc-rpm.c | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->> index 06e0fee547ab..a190a0a839c8 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.c
->> +++ b/drivers/interconnect/qcom/icc-rpm.c
->> @@ -252,8 +252,10 @@ static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
->>           ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
->>           if (ret)
->>               return ret;
->> -    } else if (qn->qos.qos_mode != -1) {
->> -        /* set bandwidth directly from the AP */
->> +    }
->> +
->> +    if (qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
->> +        /* Set QoS params from the AP */
->>           ret = qcom_icc_qos_set(n, sum_bw);
->>           if (ret)
->>               return ret;
-> 
-> Taking the example of
-> 
-> static struct qcom_icc_node bimc_snoc_slv = {
->         .name = "bimc_snoc_slv",
->         .id = MSM8939_BIMC_SNOC_SLV,
->         .buswidth = 16,
->         .mas_rpm_id = -1,
->         .slv_rpm_id = 2,
->         .num_links = ARRAY_SIZE(bimc_snoc_slv_links),
->         .links = bimc_snoc_slv_links,
-> };
-> 
-> #define NOC_QOS_MODE_INVALID -1
-> ap_owned == false
-> qos_mode == NOC_QOS_MODE_FIXED
-> 
-> 
-> if (!qn->qos.ap_owned) {
->     /* bod: this will run */
->     /* send bandwidth request message to the RPM processor */
->     ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
->     if (ret)
->         return ret;
-> } else if (qn->qos.qos_mode != -1) {
->     /* bod: this will not run */
->     /* set bandwidth directly from the AP */
->     ret = qcom_icc_qos_set(n, sum_bw);
->     if (ret)
->         return ret;
-> }
-> 
-> and your proposed change
-> 
-> if (!qn->qos.ap_owned) {
->     /* bod: this will run */
->     /* send bandwidth request message to the RPM processor */
->     ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
->     if (ret)
->         return ret;
-> }
-> 
-> if (qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
->     /* bod: this will run */
->     /* set bandwidth directly from the AP */
->     ret = qcom_icc_qos_set(n, sum_bw);
->     if (ret)
->         return ret;
-> }
-> 
-> however if we look downstream we have the concept of ap_owned
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_fabric_adhoc.c#L194
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_fabric_adhoc.c#L208
-> 
-> In simple terms
-> if (node_info->ap_owned) {
->     ret = fabdev->noc_ops.set_bw(node_info,
->                                     } else {
->     ret = send_rpm_msg(node_device);
-> }
-> 
-> I agree your code does what it says on the tin but, whats the overall justification to depart from the downstream logic ?
-Okay, so maybe it would be worth checking with Qualcomm what it's
-supposed to do. On msm-5.4 setting QoS is done unconditionally,
-no matter if the node has valid (!= -1) rpm mas/slv IDs.
-
-https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.9.14.r1/drivers/interconnect/qcom/icc-rpm.c#L97
-
-It may be something that began with newer SoCs, or maybe the
-carried-with-us-ever-since-3.4 chonky msm_bus driver had a bug..
-or maybe the msm-5.4 interconnect impl has a bug.. We really
-won't know unless somebody can confirm it for us..
-
-My understanding would be such that the QoS parameters are always
-set from the AP and RPM just scales the bandwidth on certain nodes,
-like it scales power and frequency for some lines/devices. That
-may or may not be true or might also depend on the SoC / RPM fw..
-
-And even if RPM sets these values internally, it shouldn't hurt to
-adjust them from AP again, but that would both deserve a different
-comment and would be a rather bad design, as tuning the values
-would require a rpm firmware update (and we know how vendors treat
-firmware updates), so that might have been something qc engineers
-took into account..
-
-tldr: new soc good (*), old soc bad-or-no-effect (*), should ask QC
-
-Konrad
-> 
+> Fixes: febc50b82bc9 ("dt-bindings: soundwire: Convert text bindings to DT Schema")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-> bod
+>  .../devicetree/bindings/soundwire/qcom,soundwire.yaml  | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+
+Applied, thanks!
