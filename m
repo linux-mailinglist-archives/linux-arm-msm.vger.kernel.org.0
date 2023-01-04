@@ -2,109 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 467B565D3EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 14:14:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F57265D430
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 14:32:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239252AbjADNOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 08:14:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53036 "EHLO
+        id S239409AbjADNcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 08:32:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239496AbjADNNm (ORCPT
+        with ESMTP id S239402AbjADNbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 08:13:42 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7A7A03B911;
-        Wed,  4 Jan 2023 05:11:17 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BD30D1063;
-        Wed,  4 Jan 2023 05:11:58 -0800 (PST)
-Received: from [10.57.42.13] (unknown [10.57.42.13])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B8B53F587;
-        Wed,  4 Jan 2023 05:11:14 -0800 (PST)
-Message-ID: <9a86f7cd-2dce-f27a-af21-d64318ca3ef7@arm.com>
-Date:   Wed, 4 Jan 2023 13:11:13 +0000
+        Wed, 4 Jan 2023 08:31:34 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 862866586;
+        Wed,  4 Jan 2023 05:29:40 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 304C2SSX031851;
+        Wed, 4 Jan 2023 13:29:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=fUw5rIZT+w0OaKCTkpkfHTn9ZdkIHNTL3qKKX182P/U=;
+ b=IBDvQlm0JNzBPu+Zz1ZW8nAbLzmRcZOaGWXCKR1AKGgPgTzG/1TCtp/cs0TqrXnDB/2A
+ B5IpTEZER/KNGY7Y+usbZcam29cKDVGiIsxERuK8qHqcQsqcDAH2ifWzJCTLWDV6bwDN
+ sguJCngVMyzJtQbPZ5jbkEuYCWKsysGpdomv1JvDusjXoVZf0PE6F9yABN1cq27g4OOb
+ ay01klX6ZLGk5Jh1Daou+7ah6Dtwl++bIpQeDnl0hTI4C+574Md6yLTjJQWMoM66GT9s
+ g+dLiL9ItHaXYiLikO3ThuV1dT+PjwP/JCAIFM2k+ACmZyA02eI/5N52vvM6+a/FkCkk Xw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mvsvva0hk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 04 Jan 2023 13:29:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 304DTVaj006473
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 4 Jan 2023 13:29:31 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 4 Jan 2023 05:29:26 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v3 0/4] Add resets for ADSP based audio clock controller driver.
+Date:   Wed, 4 Jan 2023 18:59:11 +0530
+Message-ID: <1672838955-7759-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] coresight: cti: Add PM runtime call in enable_store
-Content-Language: en-US
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Tingwei <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>
-References: <20221224141700.20891-1-quic_jinlmao@quicinc.com>
-From:   James Clark <james.clark@arm.com>
-In-Reply-To: <20221224141700.20891-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8CKuKcmpTFeTP3ljGXgEbwlEVXgIRLut
+X-Proofpoint-GUID: 8CKuKcmpTFeTP3ljGXgEbwlEVXgIRLut
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-04_07,2023-01-04_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=706
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301040113
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 
+Changes since v2:
+    -- Avoid Removing qdsp6ss clock control by conditional check.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
-On 24/12/2022 14:17, Mao Jinlong wrote:
-> In commit 6746eae4bbad ("coresight: cti: Fix hang in cti_disable_hw()")
-> PM runtime calls are removed from cti_enable_hw/cti_disable_hw. When
-> enabling CTI by writing enable sysfs node, clock for accessing CTI
-> register won't be enabled. Device will crash due to register access
-> issue. Add PM runtime call in enable_store to fix this issue.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  drivers/hwtracing/coresight/coresight-cti-sysfs.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> index 6d59c815ecf5..b1ed424ae043 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> +++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> @@ -108,10 +108,17 @@ static ssize_t enable_store(struct device *dev,
->  	if (ret)
->  		return ret;
->  
-> -	if (val)
-> +	if (val) {
-> +		ret = pm_runtime_resume_and_get(dev->parent);
-> +		if (ret)
-> +			return ret;
->  		ret = cti_enable(drvdata->csdev);
-> -	else
-> +		if (ret)
-> +			pm_runtime_put(dev->parent);
-> +	} else {
->  		ret = cti_disable(drvdata->csdev);
-> +		pm_runtime_put(dev->parent);
+Srinivasa Rao Mandadapu (4):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add resets for audioreach
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+  clk: qcom: lpasscc-sc7280: Add resets for audioreach
 
-Hi Jinlong,
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml        | 19 +++++++++++--
+ drivers/clk/qcom/lpasscc-sc7280.c                  | 33 ++++++++++++++++++----
+ 2 files changed, 45 insertions(+), 7 deletions(-)
 
-This new pm_runtime_put() causes this when writing 0 to enable:
-
-  [  483.253814] coresight-cti 23020000.cti: Runtime PM usage count
-underflow!
-
-Maybe we can modify cti_disable_hw() to return a value to indicate that
-the disable actually happened, and only then call pm_runtime_put().
-
-I suppose you could also check in the store function if it was already
-enabled first, but then I don't know what kind of locking that would
-need? cti_disable_hw() already seems to have a couple of locks, so maybe
-the return value solution is easiest.
-
-Thanks
-James
+-- 
+2.7.4
 
