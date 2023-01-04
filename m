@@ -2,71 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C91C765DB84
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:48:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B999865DB94
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:53:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235053AbjADRsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 12:48:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
+        id S239937AbjADRwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 12:52:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239803AbjADRse (ORCPT
+        with ESMTP id S239889AbjADRwn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 12:48:34 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758371A818
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:48:29 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id j206so37428515ybj.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:48:29 -0800 (PST)
+        Wed, 4 Jan 2023 12:52:43 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3055D3476A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:52:38 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id v2so18388610ioe.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:52:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=h6ernteAwaoJavQln9yDUlEHLQyyCv6s+N2K/1h5NJc=;
-        b=c8T0coN2VqEx+gs0ROuXhPs7kCS4obyZ/UI06gKIGvD0Ihja5IGREFjVP+Xxd98hZj
-         JmN6Hn34JL/q+Xe5Chb4rHZLYeJKTGtGlwWMd5x8kJy8znBPKE6/o5tJ2P9UAXTSSgnK
-         MtzmlTkj/kIwQNIChRWNpZlXaR43D3nX6jpSSo5VuCbxd3//AF2ac8LKvsJKTEs4ot09
-         LLNkYJuein+LHqM/4NmAVGNItnrA3aVURF2hHR0cB7punrzIHp1y8EDj1LJdZQ7uQNcu
-         zvLexEulaVLFfNrInPdeLZZaK9a/1BABQAZqTJfRnANh7asjBt/H+PsBVOddTmRPWC86
-         0uug==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fg/enfb4RCctdkewRQV7tDb9j91n7CjfohPG/ug4xNA=;
+        b=UJ/LrgnN4pcaz198G+5P7BM0ISpetZ/ZOmv/tKYGHv49MGNMuNjbcTvgQhYh/TLb88
+         sO/rvZOiWLxuI4oZx9bDghFf/Br/1GqbVVks/ONde/4HhZpXT6LcTfS53bY7tOYCgnYK
+         tUpw/6Ki9kcq90w7Q6Sb11fvO0csYO/Nyqkt+qWgW3uctLqb3J9cDAUBHB7K4arOj4eD
+         CzhlyNjJaEr2HjWwCIaIfenzkZMn0cRuJYw0HN9SuPnpMhgYZPEUHIztE2d3duFb8W9x
+         IarZy11oiY+Nhu5XoxTt9qRsSS5bneT2xUki/Yeo5LwRBK9wINrffHKFNs5CAyj2EO8+
+         xqmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=h6ernteAwaoJavQln9yDUlEHLQyyCv6s+N2K/1h5NJc=;
-        b=IVs5v7bWFyN81EzS1YzUu+b+m3ilfSCMSkDIVvKc9JwGJCD6YixHbJdBR60lfVeaDL
-         AOjsElz0KZkE+uTPx6ufq4PK34/LhjLEjCjvbA0CW3ItJX3QX8FINBi28baBkczyIX9x
-         vITmIhGfLHcaCnCGcdSR5pT0thtRWNEhmJWXq7pyyr03Zjgs0WRWth/upTX9vZ5L0Gre
-         PDDocg6eEqHMYQ/gHFrSIlwPHUAZHsozWbf8GabPrnDxos9HrifHRMmRkTqTXqGks5o3
-         Cv4rkO7nsJvLKk46xxY4Rnn85XLNoceVZ8aHeTHG2g3ozmsLl+eq6UrxKPxc8GN/2R12
-         a0sg==
-X-Gm-Message-State: AFqh2kpaq4SL3JOJ2X8klNrcrZWm0E7ySMMz3mklEn1jqlMAczedftGg
-        LlV5MWaRNQjLPDcELKAR9wQwY3wuyN8bddODAPl2HA==
-X-Google-Smtp-Source: AMrXdXuACj2NxKuibRwSdOimb0397QQRnaQeVI/kN9TdsBU3F52F+lvf5NW7TBxyVHHjkeuwiN4WM5G/dxrKKeA1TIs=
-X-Received: by 2002:a25:606:0:b0:709:9335:236e with SMTP id
- 6-20020a250606000000b007099335236emr4325601ybg.288.1672854508646; Wed, 04 Jan
- 2023 09:48:28 -0800 (PST)
-MIME-Version: 1.0
-References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
- <20230103-topic-sm8550-upstream-mdss-dsi-v1-3-9ccd7e652fcd@linaro.org>
- <96ccae6f-3788-e030-480f-7aa2478ca560@linaro.org> <de3860ba-40f9-cdd5-097c-e015f6b19255@linaro.org>
-In-Reply-To: <de3860ba-40f9-cdd5-097c-e015f6b19255@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 4 Jan 2023 19:48:17 +0200
-Message-ID: <CAA8EJpoi8QFpvR0qWpNpenZKzEZAQpwp3gNpGd3RwHovgC+Odw@mail.gmail.com>
-Subject: Re: [PATCH 3/6] drm/msm/dpu: add support for SM8550
-To:     neil.armstrong@linaro.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        bh=fg/enfb4RCctdkewRQV7tDb9j91n7CjfohPG/ug4xNA=;
+        b=4NVXMIGITZEUUecE0k8xWwr2NdMIhC6/a8/n92ERZtWiEXQASpZZjgL1JU1uqaPwSe
+         S+y9x12eatf+Q431SqxhEqVE1lfxmDlkNziKDeucw9sJlzrvV1pNbT2yFY3xZQ+8OCnE
+         CvcJ/s/avlNWUwgSjRu88cgqAQtzKnlmsNvuCRqaVbAws9Prj1/LkIm7vBvGGXbT/ezA
+         nHZ+BusIEiRi5lNf8BiVDbjXUbxf/lFfRcmOCfqwA8X3PU4DUtPghQL6XrNf/oZO5Ni4
+         RrHlKZ7E0AKLSFwze/XhAujtFYPyMUGb5IC6tw2jcQcywry00GIoGx1liPflM8RdvwTa
+         t9JA==
+X-Gm-Message-State: AFqh2kpD60rHsppM0O/Eu/CgiitCRZlIOhXvYcSh48a+cnE9DIQrhAq8
+        IFpGUdO3qFVlZJtyqV15I4PcgQ==
+X-Google-Smtp-Source: AMrXdXty1V+JnpVbB5CWeA7DSYM9WrOT7Gkb1e1k1yRFY+fmuPV2xxjTe19RHszSEcB6o6rrr2954w==
+X-Received: by 2002:a6b:5010:0:b0:6bc:d70f:8b2f with SMTP id e16-20020a6b5010000000b006bcd70f8b2fmr33993243iob.9.1672854757450;
+        Wed, 04 Jan 2023 09:52:37 -0800 (PST)
+Received: from presto.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id u3-20020a02cbc3000000b00375783003fcsm10872304jaq.136.2023.01.04.09.52.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Jan 2023 09:52:36 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH net-next v2 0/6] net: ipa: simplify IPA interrupt handling
+Date:   Wed,  4 Jan 2023 11:52:27 -0600
+Message-Id: <20230104175233.2862874-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -77,128 +74,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Jan 2023 at 12:08, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> On 04/01/2023 10:45, Dmitry Baryshkov wrote:
-> > On 04/01/2023 11:08, Neil Armstrong wrote:
-> >> Add definitions for the display hardware used on Qualcomm SM8550
-> >> platform.
-> >>
-> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 197 +++++++++++++++++++++++++
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   1 +
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |   2 +
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |   1 +
-> >>   4 files changed, 201 insertions(+)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> index b4ca123d8e69..adf5e25269dc 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->
-> <snip>
->
-> >> @@ -776,6 +821,45 @@ static const struct dpu_ctl_cfg sm8450_ctl[] = {
-> >>       },
-> >>   };
-> >> +static const struct dpu_ctl_cfg sm8550_ctl[] = {
-> >> +    {
-> >> +    .name = "ctl_0", .id = CTL_0,
-> >> +    .base = 0x15000, .len = 0x290,?
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_SPLIT_DISPLAY) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >
-> > CTL_SC7280_MASK | BIT(DPU_CTL_SPLIT_DISPLAY) ?
->
-> Indeed DPU_CTL_VM_CFG is missing, will switch to that.
->
-> >
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> >> +    },
-> >> +    {
-> >> +    .name = "ctl_1", .id = CTL_1,
-> >> +    .base = 0x16000, .len = 0x290,
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_SPLIT_DISPLAY) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
-> >> +    },
-> >> +    {
-> >> +    .name = "ctl_2", .id = CTL_2,
-> >> +    .base = 0x17000, .len = 0x290,
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >
-> > CTL_SC7280_MASK?
->
-> Ack
->
-> >
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
-> >> +    },
-> >> +    {
-> >> +    .name = "ctl_3", .id = CTL_3,
-> >> +    .base = 0x18000, .len = 0x290,
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
-> >> +    },
-> >> +    {
-> >> +    .name = "ctl_4", .id = CTL_4,
-> >> +    .base = 0x19000, .len = 0x290,
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
-> >> +    },
-> >> +    {
-> >> +    .name = "ctl_5", .id = CTL_5,
-> >> +    .base = 0x1a000, .len = 0x290,
-> >> +    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE),
-> >> +    .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 23),
-> >> +    },
-> >> +};
-> >> +
-> >>   static const struct dpu_ctl_cfg sc7280_ctl[] = {
-> >>       {
-> >>       .name = "ctl_0", .id = CTL_0,
->
-> <snip>
->
-> >> @@ -1268,6 +1386,16 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
-> >>       .len = 0x20, .version = 0x20000},
-> >>   };
-> >> +#define PP_BLK_DIPHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
-> >> +    {\
-> >> +    .name = _name, .id = _id, \
-> >> +    .base = _base, .len = 0, \
-> >
-> > len = 0 looks incorrect. Any particular reason why can't we use plain PP_BLK here?
->
-> The TE block has been moved to the DSI INTF blocks since SM8350 I think, or earlier.
+One of the IPA's two IRQs fires when data on a suspended channel is
+available (to request that the channel--or system--be resumed to
+recieve the pending data).  This interrupt also handles a few
+conditions signaled by the embedded microcontroller.
 
-I think, 8150. Marijn has been working on adding support for INTF-based TE.
+For this "IPA interrupt", the current code requires a handler to be
+dynamically registered for each interrupt condition.  Any condition
+that has no registered handler is quietly ignored.  This design is
+derived from the downstream IPA driver implementation.
 
-> This removes the DPU_PINGPONG_DITHER feature used downstream to enable the PP TE callbacks.
-> Since there's only the DIPHER sub-block remaining, this is why I set len to 0.
+There isn't any need for this complexity.  Even in the downstream
+code, only four of the available 30 or so IPA interrupt conditions
+are ever handled.  So these handlers can pretty easily just be
+called directly in the main IRQ handler function.
 
-I went on with some research. Usually PP len is 0xd4. However it seems
-since 8350 (since the change of DSC block) the PP size should be 0x0),
-despite dowsnstream DTs having sde-pp-size=0xd4 for sm8350 and sm8450
-(or 0x4 for neo, DPU 9.1.0).
-So, it looks like you are correct here (and we should fix 8350/8450
-patches instead).
+This series simplifies the interrupt handling code by having the
+small number of IPA interrupt handlers be called directly, rather
+than having them be registered dynamically.
 
->
-> >
-> >> +    .features = BIT(DPU_PINGPONG_DITHER), \
-> >> +    .merge_3d = _merge_3d, \
-> >> +    .sblk = &_sblk, \
-> >> +    .intr_done = _done, \
-> >> +    .intr_rdptr = _rdptr, \
-> >> +    }
-> >>   #define PP_BLK_TE(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
-> >>       {\
-> >>       .name = _name, .id = _id, \
->
-> <snip>
->
+Version 2 just adds a missing forward-reference, as suggested by
+Caleb.
 
+					-Alex
+
+Alex Elder (6):
+  net: ipa: introduce a common microcontroller interrupt handler
+  net: ipa: introduce ipa_interrupt_enable()
+  net: ipa: enable IPA interrupt handlers separate from registration
+  net: ipa: register IPA interrupt handlers directly
+  net: ipa: kill ipa_interrupt_add()
+  net: ipa: don't maintain IPA interrupt handler array
+
+ drivers/net/ipa/ipa_interrupt.c | 103 ++++++++++++++------------------
+ drivers/net/ipa/ipa_interrupt.h |  48 +++++----------
+ drivers/net/ipa/ipa_power.c     |  19 ++----
+ drivers/net/ipa/ipa_power.h     |  12 ++++
+ drivers/net/ipa/ipa_uc.c        |  21 +++++--
+ drivers/net/ipa/ipa_uc.h        |   8 +++
+ 6 files changed, 99 insertions(+), 112 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
