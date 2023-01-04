@@ -2,128 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17E5865D2FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 13:45:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F7B65D32E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 13:54:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239198AbjADMpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 07:45:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
+        id S230513AbjADMyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 07:54:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233514AbjADMpJ (ORCPT
+        with ESMTP id S233812AbjADMyd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 07:45:09 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37ECA19C1F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 04:45:08 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so26317532wms.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 04:45:08 -0800 (PST)
+        Wed, 4 Jan 2023 07:54:33 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 865471AD90
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 04:54:32 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id pa22so16206458qkn.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 04:54:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JoyE4PJWzp52kEQxZdg5xRzmINtYTSDR3GIdh/fen5o=;
-        b=i2Q/j+795TYv9w0QGb5kGADj0/TDDYgZ7oc9eCOCy8Xrgx1fBkExbj4IrVJVkwUM21
-         8ES9qTesJVKLd49BSl+uXksWGO7vf8sI4EfhxMK67L6JQNFTqZHqwHTCWgxiEy+oavFK
-         EeDqIPKvUKsMvoyQLGSptukGhbsdLBw/cZUVnLx2I4XaGt9RwZSdpqfmwgF3t991ES0p
-         LVq9LKBrnxUzguC22xPQ/UT+gi43vjis4XleOV7RqPvh3jLowLV+eDI2POPaY/bIG1eF
-         tHqFKVlTXMUYlTENM0qkltyKfY/W0kbXBdXeLdhJCffE1bB794OhfPPGSoBnCmWgTKsw
-         Pu3A==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=WgtPiGBL7pKpeGAONT7jyOZBlPA87PF+BcZ0At3DRbjh8r4a90VkFTuegmf7v5I05U
+         8O8yRsMlEC8d3azBuhTVnh5a19IMri1yaM5CNo7nGSQjhbPmAzApkJwS9Ixgc01L8XVA
+         9+oXPryfLJjc92HnUP6sxIyah9VARXZTMfFxXMcqBFJ6snOmablGghR0F2+Y0sgoHgie
+         QmoiaDCXomaXijXUVGiYmzsfSWGfWMMdh1Ev9V0gp78bfPbYO2S9uBzuU4GRDkm7vJO6
+         RsJ5hkLkj5KAchsYozNwRuUxQUGpmscZ9Mbjv/HN5G//qfUumyrbxcj+0dSg+lcPq80U
+         5Wuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JoyE4PJWzp52kEQxZdg5xRzmINtYTSDR3GIdh/fen5o=;
-        b=RRxAMkMXVSzDxf/5bFcAC5WCZXypCWU9jJqQ4nfkBhnWTOmqyPY0eHLK4UIy7hAl25
-         uot1Q+lQM1YMTjWcaL4lvD53M8Irt8nKh1CNQWnECKhj4tjQazV9pHCcEvSiWO2We3Ur
-         OwjTad4bV/7lyhJwLZiopftICGsTH4y/OffsTv4809+K78R1cLkAmoJBV4MKOJZuMKDd
-         5Vtd6mrXPXrsRQPk55swaRMMblLQuNBrot0PvuUt1dSbi1sdnrLwvBVJRKb95AuYm0Di
-         SYULpWip69DfJ4TqWVRKxADbvSt7W2HtTAU9U3htdJSWiwVjIU79tbv7/HAcqG/vKjfK
-         HpPg==
-X-Gm-Message-State: AFqh2kqw26y2mP/193cdHS/mTgXQLCKdLmecKUEq+0326+/5yFEt4XVO
-        WP4SrYXm+KlooHWG1IzUmVQ30w==
-X-Google-Smtp-Source: AMrXdXuOHq0R3jJqhQZ89qbuXqn8jDJ+4fL/qm9ZowCLln8b45hYqyJuEujJSRfFX1H2V9Pf4KG6pg==
-X-Received: by 2002:a05:600c:4a9b:b0:3d1:dc6f:b1a4 with SMTP id b27-20020a05600c4a9b00b003d1dc6fb1a4mr41485468wmp.5.1672836306720;
-        Wed, 04 Jan 2023 04:45:06 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b003d1e3b1624dsm54726447wms.2.2023.01.04.04.45.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 04:45:06 -0800 (PST)
-Date:   Wed, 4 Jan 2023 14:45:04 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v8 3/4] clk: qcom: rpmh: Add support for SM8550 rpmh
- clocks
-Message-ID: <Y7V00JiPAYfqF4wH@linaro.org>
-References: <20230104093450.3150578-1-abel.vesa@linaro.org>
- <20230104093450.3150578-4-abel.vesa@linaro.org>
- <07a849a9-03dc-f3af-1d3f-2369cb71451e@linaro.org>
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=Ch6wDKZ8RLK6RgZiOQGFmsr4okSyptuagQono4M7OeMv+3SOD0eAaXsFgvvmFrdL4K
+         lNS2dqOyz/YifR2+9sWjnoSYBxaJjiyjkBEjogpugi7n1oV6XVsDiDoiV+TGyR706zrG
+         tUxfxw8HzJhMJcAv1FlBq3FHFVLWKFutMpf4SFQv3HJEpWJrnFlPcyl4IQnsCJrcnj9u
+         VIvhLMDLakFZAelEWlDjqrQunn9fR/cK/HoD8OCgv7O93yxQJ7jjchIIWx0mPsGs7+7E
+         oSL6qpUQ912aPr8LS1eBseORiDjHd7zo9vnrdJPxwnIWHvQojHDIwiGEd3TYN2dMwoPQ
+         1wZw==
+X-Gm-Message-State: AFqh2kr85G/pD8y5jxKzUJRt7AXhYc2P8K44ysuVkWeNra5gj8LVVwPk
+        sqiFzWubV/PTDBkHoOyMlGJADPHCuIhzvpftTTQ=
+X-Google-Smtp-Source: AMrXdXulKMdRBV/p4kXNikXMHFtLk5IOIYLDRJA7lpoRUfUF8+2cEqH8pHXLi4qSeE4J34Id+Th3n/mMQjaZgJWZFyc=
+X-Received: by 2002:a05:620a:8502:b0:704:ad9e:ad7 with SMTP id
+ pe2-20020a05620a850200b00704ad9e0ad7mr1970941qkn.574.1672836871311; Wed, 04
+ Jan 2023 04:54:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <07a849a9-03dc-f3af-1d3f-2369cb71451e@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Received: by 2002:a05:6200:5d91:b0:4a5:78e9:2012 with HTTP; Wed, 4 Jan 2023
+ 04:54:30 -0800 (PST)
+Reply-To: Gregdenzell9@gmail.com
+From:   Greg Denzell <mzsophie@gmail.com>
+Date:   Wed, 4 Jan 2023 12:54:30 +0000
+Message-ID: <CAEoj5=a-iCsZoe4s4S8=o2P=8nfbDVvG8sm_YZ9wpP37ZOqYKA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-04 12:46:55, Dmitry Baryshkov wrote:
-> On 04/01/2023 11:34, Abel Vesa wrote:
-> > Adds the RPMH clocks present in SM8550 SoC.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >   drivers/clk/qcom/clk-rpmh.c | 36 ++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 36 insertions(+)
-> 
-> I think the plan was to have the _PAD clock as a child node of the rpmcc. Is
-> it still the planned implementation?
+Seasons Greetings!
 
-Yes. Here is how the dts rpmhcc node will look like:
-
-         rpmhcc: clock-controller {
-                 compatible = "qcom,sm8550-rpmh-clk";
-                 #clock-cells = <1>;
-                 clock-names = "xo";
-                 clocks = <&xo_board>;
-
-                 bi_tcxo_div2: bi-tcxo-div2-clk {
-                         #clock-cells = <0>;
-                         compatible = "fixed-factor-clock";
-                         clocks = <&rpmhcc RPMH_CXO_CLK>;
-                         clock-mult = <1>;
-                         clock-div = <2>;
-                 };
-
-                 bi_tcxo_ao_div2: bi-tcxo-div2-ao-clk {
-                         #clock-cells = <0>;
-                         compatible = "fixed-factor-clock";
-                         clocks = <&rpmhcc RPMH_CXO_CLK_A>;
-                         clock-mult = <1>;
-                         clock-div = <2>;
-                 };
-         };
-
-The clock nodes will be probed on of_clk_init.
-
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+This will remind you again that I have not yet received your reply to
+my last message to you.
