@@ -2,144 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5B3365CF87
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 10:28:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB6E365CF9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 10:35:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233973AbjADJ2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 04:28:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47192 "EHLO
+        id S234183AbjADJfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 04:35:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239075AbjADJ2P (ORCPT
+        with ESMTP id S239128AbjADJf3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 04:28:15 -0500
-Received: from mailrelay5-1.pub.mailoutpod2-cph3.one.com (mailrelay5-1.pub.mailoutpod2-cph3.one.com [46.30.211.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2952812D3A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 01:28:13 -0800 (PST)
+        Wed, 4 Jan 2023 04:35:29 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A6A11CB10
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 01:35:04 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so23395980wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 01:35:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=rsa2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=2DXwEG/gDuXeSPpZjXIXMjYCJ0FeZAl+aZ5Y9/GpzH8=;
-        b=xllPdRwcrFK+BPin+Gj0X+3YEWsU/EDmvljxuDSq3DynzcPzsJSSNzST6w7nmGAvHLfnHaS3pXqe8
-         hrKj+ntU6q4rBpGKGZd+8Rwf0qXxAjLrTJQ6Kh56fLec7kr8K4QuYyPrf9pqWaZMhYovhh4/fWdZe3
-         zRdMHW4uf2P49fGXPrfBhWXMD4ofT9biWcRWVfnAbcrNzGVQ7zWSvC3Qrkw+j1xmAWDXzyZg/fLbuA
-         v+S/r+J5onMSnCVImCKZdb1uxBs4618ktCQmXfaxl7bvhs7IaimBp2EakGoLa6JOSmPNirapTq+CKk
-         949a9gfsFG0GQApaOYK9oAG5IqttuAg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=ed2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=2DXwEG/gDuXeSPpZjXIXMjYCJ0FeZAl+aZ5Y9/GpzH8=;
-        b=Q0fnIRs0JZ7uliqgZ6c1ks9IDhxdKRfY+mbj1zuOrZtyL0hIdAR4Wq3QL2wg/HzP2OhaWvEc23QSD
-         OesI8hrDQ==
-X-HalOne-ID: f5253b6e-8c11-11ed-9c1d-7703b0afff57
-Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-        by mailrelay5 (Halon) with ESMTPSA
-        id f5253b6e-8c11-11ed-9c1d-7703b0afff57;
-        Wed, 04 Jan 2023 09:27:09 +0000 (UTC)
-Date:   Wed, 4 Jan 2023 10:27:08 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bn35MCymS4jefAOtB8LpHRl6V3chqeTKM4An0AeJQ8Q=;
+        b=rug8cHT3SMg1Zi5j+BhP5N7pPAd1Fv0zoxcy5+Wfd/4hoI7jy7PmTwcj7pw20vVwoI
+         F48LcmbtOqhmVa2sjulZ0qTEBd/YpTf8HW83k8vLCN1R3fqTGUpZayZreN38HoL7BaTO
+         ducmaxN7/sTgk3S06c6yYxCm5tidP7VEhh+Nr3FkEKyalZpw2v6Vr5q1v1oq4f4iUZ2I
+         RRWeJIyBs1j1DOT61dbtNngDUIGXUXLV+MRDErM8imtZlxZJANQkhM/B4MNMOiXEPmE7
+         1ss8IPG0EGGENxMgN8ejSIr0TYpZRTkafYTXKliRlraAIscw4zpD85U1bcsCVBKwe8Vu
+         BVOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bn35MCymS4jefAOtB8LpHRl6V3chqeTKM4An0AeJQ8Q=;
+        b=VDeZzXLF4k4a5r+QjJz8KuRIMYjP309YZmU9yQGGaq0VCM7NZHi1EOFTjxXAfKTQ3i
+         +GCqCGyBlrhtpPe5CLSk1y7oJTIhemniOTCGRl0mMyd+Si2sc7lmUknA3YTqTZe15zTR
+         wnJF01IveeV/VIfK7NOa9mLaA2RdSUoF5fKlvmu5FcHItX7RlcsUcuFV7i6gyCPFgWAF
+         3Y/0XZyQJDVOhPAjiEU6QkqZBGH0GmcOBYGvG3bguaJoWZ3VTgwcCDE+rjQ0hrAVK39Y
+         qw2Q5kd7YhEgvJgcI1jWEyrQxk05ozpqO2ApD2Przzw7YAFF6b+Wti2KPbq3MlVifa1K
+         JsuA==
+X-Gm-Message-State: AFqh2krt8dhbKBNxjIE0DGtp/yiPyr3/ub/1wYRXRIdTD2BTw+hjSDmZ
+        9PiGWSC2NgntL62ouW2EfolUog==
+X-Google-Smtp-Source: AMrXdXuqzkSn3rR1xjuy80hePampeT5Cf59w1yG+YqfnwcxBFFloj6msrL55FaBTqOxpmsZizCsspg==
+X-Received: by 2002:a05:600c:2e54:b0:3cf:ceac:94d3 with SMTP id q20-20020a05600c2e5400b003cfceac94d3mr32396174wmf.13.1672824902914;
+        Wed, 04 Jan 2023 01:35:02 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id b22-20020a05600c4e1600b003c6d21a19a0sm45561452wmq.29.2023.01.04.01.35.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Jan 2023 01:35:02 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] drm/panel: add visionox vtdr6130 DSI panel driver
-Message-ID: <Y7VGbPoNVYBwfnlc@ravnborg.org>
-References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
- <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-2-9b746b858378@linaro.org>
- <Y7RwuZKh1XMMuB70@ravnborg.org>
- <e9f2befa-a433-c737-ce96-2f94556b290c@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v8 0/4] clk: qcom: Add support for SM8550
+Date:   Wed,  4 Jan 2023 11:34:46 +0200
+Message-Id: <20230104093450.3150578-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e9f2befa-a433-c737-ce96-2f94556b290c@linaro.org>
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLACK autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil,
+This patchset adds more clocks support for the Qualcomm SM8550 SoC,
+It adds the TCSR clock controller driver and the rpmh clocks.
 
-> 
-> > 
-> > > +
-> > > +struct visionox_vtdr6130 {
-> > > +	struct drm_panel panel;
-> > > +	struct mipi_dsi_device *dsi;
-> > > +	struct gpio_desc *reset_gpio;
-> > > +	struct regulator_bulk_data supplies[3];
-> > > +	bool prepared;
-> > > +};
-> > > +
-> > > +static inline struct visionox_vtdr6130 *to_visionox_vtdr6130(struct drm_panel *panel)
-> > > +{
-> > > +	return container_of(panel, struct visionox_vtdr6130, panel);
-> > > +}
-> > > +
-> > > +static inline int visionox_vtdr6130_dsi_write(struct mipi_dsi_device *dsi, const void *seq,
-> > > +					      size_t len)
-> > > +{
-> > > +	return mipi_dsi_dcs_write_buffer(dsi, seq, len);
-> > > +}
-> > > +
-> > > +#define dsi_dcs_write_seq(dsi, seq...)					\
-> > > +	{								\
-> > > +		const u8 d[] = { seq };					\
-> > > +		visionox_vtdr6130_dsi_write(dsi, d, ARRAY_SIZE(d));	\
-> > > +	}
-> > Please use mipi_dsi_dcs_write_seq()
-> > No need to add your own macros here.
-> > 
-> > This will also add a little bit of error reporting that is missing here.
-> 
-> OK, should I add a check and return in the macro in case of error ?
-> Checkpatch emits some warning when this is done.
+Changes since v7:
+ * Replaced RPMH_CXO_PAD_CLK with RPMH_CXO_CLK in the TCSR CC binding
+   schema example
 
-I expect you can use the macro as-is like this:
-- dsi_dcs_write_seq(dsi, 0x51, 0x00, 0x00);
-+ mipi_dsi_dcs_write_seq(dsi, 0x51, 0x00, 0x00);
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Michael Turquette <mturquette@baylibre.com>
+To: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-So no need to create your own macro at all - just use the already
-existing mipi_dsi_dcs_write_seq().
+Abel Vesa (4):
+  dt-bindings: clock: Add SM8550 TCSR CC clocks
+  dt-bindings: clock: Add RPMHCC for SM8550
+  clk: qcom: rpmh: Add support for SM8550 rpmh clocks
+  clk: qcom: Add TCSR clock driver for SM8550
 
-> 
-> > 
-> > 
-> > > +
-> > > +static void visionox_vtdr6130_reset(struct visionox_vtdr6130 *ctx)
-> > > +{
-> > > +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> > > +	usleep_range(10000, 11000);
-> > > +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> > > +	usleep_range(10000, 11000);
-> > > +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> > > +	usleep_range(10000, 11000);
-> > > +}
-> > I have seen this pattern before - and I am still confused if the HW
-> > really requires the 0 => 1 => 0 sequence.
-> > I would expect writing 1 - wait and then writing 0 would do it.
-> 
-> It's what downstream code uses and recommend all over the place, if it's an issue
-> I can try to remove the first set_value
-This was a fly-by comment - do what you find best.
+ .../bindings/clock/qcom,rpmhcc.yaml           |   1 +
+ .../bindings/clock/qcom,sm8550-tcsr.yaml      |  55 +++++
+ drivers/clk/qcom/Kconfig                      |   7 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/clk-rpmh.c                   |  36 ++++
+ drivers/clk/qcom/tcsrcc-sm8550.c              | 192 ++++++++++++++++++
+ include/dt-bindings/clock/qcom,sm8550-tcsr.h  |  18 ++
+ 7 files changed, 310 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+ create mode 100644 drivers/clk/qcom/tcsrcc-sm8550.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-tcsr.h
 
-> > > +
-> > > +	ret = mipi_dsi_dcs_set_display_brightness(dsi, cpu_to_le16(brightness));
-> > mipi_dsi_dcs_set_display_brightness() take u16 as brightness - so this
-> > will do an implicit conversion.
-> 
-> I know, but the panel needs an inversed value, so perhaps I should directly
-> call mipi_dsi_dcs_write_buffer() here instead of needing a double
-> inversion.
-If the generic one cannot be used without tricks like this, then yes, it
-is better to hand-roll your own with a suitable comment.
+-- 
+2.34.1
 
-	Sam
