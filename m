@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08D4E65DB13
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37DE765DB2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jan 2023 18:21:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239677AbjADRRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 12:17:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33522 "EHLO
+        id S239571AbjADRVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 12:21:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239882AbjADRQx (ORCPT
+        with ESMTP id S240147AbjADRVB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 12:16:53 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13FF13E26
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:16:51 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id b3so51380147lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:16:51 -0800 (PST)
+        Wed, 4 Jan 2023 12:21:01 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9D6DF5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 09:20:58 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-3e45d25de97so485027857b3.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 09:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ch6/y+WqEvaqNcXLTo9/PlLHC2sfP0seupkFoL9CYQY=;
-        b=oqv0Bu21zVcvr8zqh7LlN9FmkI2p8lTFVm4+Qk3Yi7tFjlGQPnwIBeU7aRoZr2u4KF
-         LcsBPcOj/gW1nGf+K60hpAtVcI8Yv0hrAkWrENpgBMmwltgvz3ddWGTe0GcAfArTjpTX
-         hCi4PtDNHv/OygtoBTaSpL0f6kauiHPAu7oWu6CaBHmhSbujYVa9KW3cx+ojUhetYH4s
-         EjGxNWOfTj5XxgZezFOflbxr0sb29MWxZ1h3FoJuYFPerikwh1H9NPufWk8VlOB7JyFm
-         eTIdfQE5ky9kjRcbHW/2okoOd9DciidT921zq/zcCvdS10HyXnOkEyh5tfvfCNbtthzP
-         TvWg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nL02Rh1qmJ+y+2QtT3JxhgjmywEhlM/M66BwZCj7KOs=;
+        b=TyJt2DFJnxrrzLUQRSO71GCi5DoLx9eYJnv8dOey98aTChHwFdHJ/4oiI9FThEcnmx
+         TFVtUs380c+/YfgeIgW7bus2sjh3cNZYuXlO76v4nWptfhqYVUTfbmsZcttwShu8KfuY
+         FRZ5NAgDUXhcmIQeL7ex6LFn8Dwqr4O0rHU14KEphPyQdZF0tlct9TKspNTUWqmGRkXM
+         XXg3Lavd4dakkiw/q9RlJhDy/TexTkoCzOuVVEotgsYnms6ncSv6epMkiGsqm1GKJES1
+         mAtMd1ffIhS62lzkGQ6xylxK7ZAmtLL5c21ycFSqilaZYa13j7iu+P4x4vzf9up08M24
+         Zm3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ch6/y+WqEvaqNcXLTo9/PlLHC2sfP0seupkFoL9CYQY=;
-        b=kPQLciRX8xUfJfsaUFYJfnOjxcEBGxBvg0swdSov4IrOm3tzmNeVhM01N3X3id+zN2
-         jSYjd8cYzG3+H7Igw6veMrl/h8R+WOTKLxmQBND+vdtrKA+iQ0DsVLEsjKnTBI7Ap4tD
-         JmmRRhCgujseV9KwYNEmPmO84ezsU365t7M7UwW78P5sJvSG4p4HmQKYnTt2TmUPy4nl
-         09kkzaINEa5TeS4B5grRgEhOkKtJ0VBxIW1Ir9AlKBvnNMMRlm8HNinrYGNrWxqLk6lF
-         RvqDnMRB7m7qxGeTGiOp3WGqJc5gqwJGhKPSYNqEjMYIUL2NN+9Pj9Sx+KGNLlkE6Nt9
-         aCtg==
-X-Gm-Message-State: AFqh2kpwXL7fIVU5cJiAyPOvTSy4hyws3tizbysugneCVkd3nutfJvQs
-        ETa902sGcVJSC9tQdDsQq/ElUvtyZDjKNFwn
-X-Google-Smtp-Source: AMrXdXu0RihaaHzJ/qZZvLo0qXusFXwbOc6bfz24b14C+amrbeZXk/SkaDQWQlIp8ztdyzSU+Utf2A==
-X-Received: by 2002:a05:6512:3ba1:b0:4b5:8fbf:7dd6 with SMTP id g33-20020a0565123ba100b004b58fbf7dd6mr22488780lfv.61.1672852609444;
-        Wed, 04 Jan 2023 09:16:49 -0800 (PST)
-Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id o22-20020a056512051600b004a44ffb1050sm5179520lfb.171.2023.01.04.09.16.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 09:16:49 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nL02Rh1qmJ+y+2QtT3JxhgjmywEhlM/M66BwZCj7KOs=;
+        b=e+7yOJosIjvw0zXepvyA5fChXEPELY4iEq0OECld6qf4BqA/rFWUfaXEEXoQMkrONl
+         o0QX8h0Liy3Ury65G9sAUcUTijOzqJ2M4t/IxwqA+QQ2dKRjTrchWj1HfIPcwBmv3v9E
+         WU3fMsD8appGJ50KmOyqxTQ6V8K/ZY6hdt4/QvAgynFOtFKcjcwwatFDeZWGG0tuyHex
+         2ekxmHe5hRmVHLMEtulI4AL02g8IfrtC7TU/h4wegCRoT5jsK1mQdDfm6gNkXnrG27WH
+         ZZLsKIumR5Eg1diiDLnV4M2Z8JKu7MIHndxj5WNVgcuKUUAffBdZ9dxuB8yWzXHKC9QM
+         S1zg==
+X-Gm-Message-State: AFqh2kpVLVz91JAGfYd4n5gN3o+A7E1F+gKuEvNrBM3B95kbAj9m/SHO
+        DmcwgehMqJAC6XzQAMmcgztf4Mio5+OPbKSanl/1Vg==
+X-Google-Smtp-Source: AMrXdXv7InDULbhb/a83U+trri33z2HsaN34ajFbweGt+IZoRAuqCcv0/ge6iawr5DBlxzYHW5l4AZEUrhvqU5NubnM=
+X-Received: by 2002:a05:690c:fd5:b0:4a4:7135:9214 with SMTP id
+ dg21-20020a05690c0fd500b004a471359214mr2070871ywb.378.1672852858082; Wed, 04
+ Jan 2023 09:20:58 -0800 (PST)
+MIME-Version: 1.0
+References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
+ <20230103-topic-sm8550-upstream-mdss-dsi-v1-5-9ccd7e652fcd@linaro.org>
+ <aa6724af-99bc-de1d-4c03-82609b59174c@linaro.org> <0e28b301-6980-968c-552d-db16fade6df9@linaro.org>
+In-Reply-To: <0e28b301-6980-968c-552d-db16fade6df9@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 4 Jan 2023 19:20:46 +0200
+Message-ID: <CAA8EJpqF3bCNa_yGQLt++kmZp3d=La2ZsS=rQOwp6Yp9C+oVJg@mail.gmail.com>
+Subject: Re: [PATCH 5/6] drm/msm/dsi: add support for DSI-PHY on SM8550
+To:     neil.armstrong@linaro.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm6350: Set up DDR & L3 scaling
-Date:   Wed,  4 Jan 2023 18:16:42 +0100
-Message-Id: <20230104171643.1004054-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104171643.1004054-1-konrad.dybcio@linaro.org>
-References: <20230104171643.1004054-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -78,276 +77,194 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the CPU OPP tables including core frequency and L3 bus frequency.
-The L3 throughput values were chosen by studying the frequencies
-available in HW LUT and picking the highest one that's less than the
-CPU frequency. DDR clock rates come from the vendor kernel.
+On Wed, 4 Jan 2023 at 12:11, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 04/01/2023 10:53, Dmitry Baryshkov wrote:
+> > On 04/01/2023 11:08, Neil Armstrong wrote:
+> >> SM8550 use a 4nm DSI PHYs, which share register definitions
+> >> with 7nm DSI PHYs. Rather than duplicating the driver, handle
+> >> 4nm variant inside the common 5+7nm driver.
+> >>
+> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> >> ---
+> >>   drivers/gpu/drm/msm/Kconfig               |   4 +-
+> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   2 +
+> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   1 +
+> >>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 102 ++++++++++++++++++++++++------
+> >>   4 files changed, 89 insertions(+), 20 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> >> index e7b100d97f88..949b18a29a55 100644
+> >> --- a/drivers/gpu/drm/msm/Kconfig
+> >> +++ b/drivers/gpu/drm/msm/Kconfig
+> >> @@ -140,11 +140,11 @@ config DRM_MSM_DSI_10NM_PHY
+> >>         Choose this option if DSI PHY on SDM845 is used on the platform.
+> >>   config DRM_MSM_DSI_7NM_PHY
+> >> -    bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
+> >> +    bool "Enable DSI 7nm/5nm/4nm PHY driver in MSM DRM"
+> >>       depends on DRM_MSM_DSI
+> >>       default y
+> >>       help
+> >> -      Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
+> >> +      Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SM8550/SC7280
+> >>         is used on the platform.
+> >>   config DRM_MSM_HDMI
+> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> >> index 0c956fdab23e..54e03cc9fbe7 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> >> @@ -573,6 +573,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+> >>         .data = &dsi_phy_5nm_8350_cfgs },
+> >>       { .compatible = "qcom,dsi-phy-5nm-8450",
+> >>         .data = &dsi_phy_5nm_8450_cfgs },
+> >> +    { .compatible = "qcom,dsi-phy-4nm-8550",
+> >> +      .data = &dsi_phy_4nm_8550_cfgs },
+> >>   #endif
+> >>       {}
+> >>   };
+> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> >> index f7a907ed2b4b..58f9e09f5224 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> >> @@ -59,6 +59,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+> >>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+> >>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+> >>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+> >> +extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
+> >>   struct msm_dsi_dphy_timing {
+> >>       u32 clk_zero;
+> >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >> index 7b2c16b3a36c..11629c431c30 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >> @@ -47,6 +47,8 @@
+> >>   #define DSI_PHY_7NM_QUIRK_V4_2        BIT(2)
+> >>   /* Hardware is V4.3 */
+> >>   #define DSI_PHY_7NM_QUIRK_V4_3        BIT(3)
+> >> +/* Hardware is V5.2 */
+> >> +#define DSI_PHY_7NM_QUIRK_V5_2        BIT(4)
+> >>   struct dsi_pll_config {
+> >>       bool enable_ssc;
+> >> @@ -124,14 +126,25 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+> >>       if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
+> >>           config->pll_clock_inverters = 0x28;
+> >> -    else if (pll_freq <= 1000000000ULL)
+> >> -        config->pll_clock_inverters = 0xa0;
+> >> -    else if (pll_freq <= 2500000000ULL)
+> >> -        config->pll_clock_inverters = 0x20;
+> >> -    else if (pll_freq <= 3020000000ULL)
+> >> -        config->pll_clock_inverters = 0x00;
+> >> -    else
+> >> -        config->pll_clock_inverters = 0x40;
+> >> +    else if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >> +        if (pll_freq <= 1300000000ULL)
+> >> +            config->pll_clock_inverters = 0xa0;
+> >> +        else if (pll_freq <= 2500000000ULL)
+> >> +            config->pll_clock_inverters = 0x20;
+> >> +        else if (pll_freq <= 4000000000ULL)
+> >> +            config->pll_clock_inverters = 0x00;
+> >> +        else
+> >> +            config->pll_clock_inverters = 0x40;
+> >> +    } else {
+> >> +        if (pll_freq <= 1000000000ULL)
+> >> +            config->pll_clock_inverters = 0xa0;
+> >> +        else if (pll_freq <= 2500000000ULL)
+> >> +            config->pll_clock_inverters = 0x20;
+> >> +        else if (pll_freq <= 3020000000ULL)
+> >> +            config->pll_clock_inverters = 0x00;
+> >> +        else
+> >> +            config->pll_clock_inverters = 0x40;
+> >> +    }
+> >>       config->decimal_div_start = dec;
+> >>       config->frac_div_start = frac;
+> >> @@ -222,6 +235,13 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+> >>               vco_config_1 = 0x01;
+> >>       }
+> >> +    if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >> +        if (pll->vco_current_rate < 1557000000ULL)
+> >> +            vco_config_1 = 0x08;
+> >> +        else
+> >> +            vco_config_1 = 0x01;
+> >> +    }
+> >> +
+> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
+> >>                 analog_controls_five_1);
+> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
+> >> @@ -860,7 +880,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >>           pr_warn("PLL turned on before configuring PHY\n");
+> >>       /* Request for REFGEN READY */
+> >> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
+> >> +        (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >>           dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
+> >>           udelay(500);
+> >>       }
+> >> @@ -881,20 +902,38 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >>       glbl_str_swi_cal_sel_ctrl = 0x00;
+> >>       if (phy->cphy_mode) {
+> >> -        vreg_ctrl_0 = 0x51;
+> >> -        vreg_ctrl_1 = 0x55;
+> >> +        if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >> +            vreg_ctrl_0 = 0x45;
+> >> +            vreg_ctrl_1 = 0x45;
+> >> +        } else {
+> >> +            vreg_ctrl_0 = 0x51;
+> >> +            vreg_ctrl_1 = 0x55;
+> >> +        }
+> >
+> > Please move these quirk-specific values down, to the rest of if (QUIRK_5_2) statement.
+>
+> Ok
+>
+> >
+> >>           glbl_hstx_str_ctrl_0 = 0x00;
+> >>           glbl_pemph_ctrl_0 = 0x11;
+> >>           lane_ctrl0 = 0x17;
+> >>       } else {
+> >> -        vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> >> -        vreg_ctrl_1 = 0x5c;
+> >> +        if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >> +            vreg_ctrl_0 = 0x44;
+> >> +            vreg_ctrl_1 = 0x19;
+> >> +        } else {
+> >> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> >> +            vreg_ctrl_1 = 0x5c;
+> >> +        }
+> >>           glbl_hstx_str_ctrl_0 = 0x88;
+> >>           glbl_pemph_ctrl_0 = 0x00;
+> >>           lane_ctrl0 = 0x1f;
+> >>       }
+> >> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >> +        if (phy->cphy_mode) {
+> >> +            glbl_rescode_top_ctrl = 0x00;
+> >> +            glbl_rescode_bot_ctrl = 0x00;
+> >> +        } else {
+> >> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x03;
+> >> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3c;
+> >> +        }
+> >> +    } else if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
+> >>           if (phy->cphy_mode) {
+> >>               glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> >>               glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> >> @@ -943,9 +982,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >>       dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0x00);
+> >>       /* program CMN_CTRL_4 for minor_ver 2 chipsets*/
+> >> -    data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0);
+> >> -    data = data & (0xf0);
+> >> -    if (data == 0x20)
+> >> +    if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2) ||
+> >> +        (dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0) & (0xf0)) == 0x20)
+> >>           dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_4, 0x04);
+> >
+> > Ugh. I should change this statement to use quirks too.
+>
+> Sorrt I don't see what you mean, should I change the original REVISION_ID0 to a proper quirk ?
+>
 
-Available values from the HW LUT:
-300000000
-556800000
-652800000
-806400000
-844800000
-940800000
-1132800000
-1209600000
-1286400000
-1401600000
-1459200000
+No, I'll do this. For now you can leave this piece code as is (reading
+rev + your quirk).
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v1 -> v2:
-Make sure to tag the paths with an ACTIVE moniker, so that the poor
-thing doesn't spontaneously decide to vote for 8GiB/s of DDR bandwith
-while sleeping..
-
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 140 +++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm7225.dtsi |  19 ++++
- 2 files changed, 159 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 893a1ffb5e3d..94a6f6cdfdd6 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -10,6 +10,8 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/interconnect/qcom,icc.h>
-+#include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interconnect/qcom,sm6350.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -49,6 +51,10 @@ CPU0: cpu@0 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_0: l2-cache {
- 				compatible = "cache";
-@@ -68,6 +74,10 @@ CPU1: cpu@100 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_100>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_100: l2-cache {
- 				compatible = "cache";
-@@ -84,6 +94,10 @@ CPU2: cpu@200 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_200>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_200: l2-cache {
- 				compatible = "cache";
-@@ -100,6 +114,10 @@ CPU3: cpu@300 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_300>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_300: l2-cache {
- 				compatible = "cache";
-@@ -116,6 +134,10 @@ CPU4: cpu@400 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_400>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_400: l2-cache {
- 				compatible = "cache";
-@@ -132,6 +154,10 @@ CPU5: cpu@500 {
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_500>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_500: l2-cache {
- 				compatible = "cache";
-@@ -149,6 +175,10 @@ CPU6: cpu@600 {
- 			dynamic-power-coefficient = <703>;
- 			next-level-cache = <&L2_600>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			operating-points-v2 = <&cpu6_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_600: l2-cache {
- 				compatible = "cache";
-@@ -165,6 +195,10 @@ CPU7: cpu@700 {
- 			dynamic-power-coefficient = <703>;
- 			next-level-cache = <&L2_700>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			operating-points-v2 = <&cpu6_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
- 			#cooling-cells = <2>;
- 			L2_700: l2-cache {
- 				compatible = "cache";
-@@ -222,6 +256,112 @@ memory@80000000 {
- 		reg = <0x0 0x80000000 0x0 0x0>;
- 	};
- 
-+	cpu0_opp_table: opp-table-cpu0 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			/* DDR: 4-wide, 2 channels, double data rate, L3: 16-wide, 2 channels */
-+			opp-peak-kBps = <(200000 * 4 * 2 * 2) (300000 * 16 * 2)>;
-+		};
-+
-+		opp-576000000 {
-+			opp-hz = /bits/ 64 <576000000>;
-+			opp-peak-kBps = <(547000 * 4 * 2 * 2) (556800 * 16 * 2)>;
-+		};
-+
-+		opp-768000000 {
-+			opp-hz = /bits/ 64 <768000000>;
-+			opp-peak-kBps = <(768000 * 4 * 2 * 2) (652800 * 16 * 2)>;
-+		};
-+
-+		opp-1017600000 {
-+			opp-hz = /bits/ 64 <1017600000>;
-+			opp-peak-kBps = <(1017000 * 4 * 2 * 2) (940800 * 16 * 2)>;
-+		};
-+
-+		opp-1248000000 {
-+			opp-hz = /bits/ 64 <1248000000>;
-+			opp-peak-kBps = <(1017000 * 4 * 2 * 2) (1209600 * 16 * 2)>;
-+		};
-+
-+		opp-1324800000 {
-+			opp-hz = /bits/ 64 <1324800000>;
-+			opp-peak-kBps = <(1017000 * 4 * 2 * 2) (1286400 * 16 * 2)>;
-+		};
-+
-+		opp-1516800000 {
-+			opp-hz = /bits/ 64 <1516800000>;
-+			opp-peak-kBps = <(1353000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+
-+		opp-1612800000 {
-+			opp-hz = /bits/ 64 <1612800000>;
-+			opp-peak-kBps = <(1555000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+
-+		opp-1708800000 {
-+			opp-hz = /bits/ 64 <1708800000>;
-+			opp-peak-kBps = <(1555000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+	};
-+
-+	cpu6_opp_table: opp-table-cpu6 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			opp-peak-kBps = <(200000 * 4 * 2 * 2) (300000 * 16 * 2)>;
-+		};
-+
-+		opp-787200000 {
-+			opp-hz = /bits/ 64 <787200000>;
-+			opp-peak-kBps = <(768000 * 4 * 2 * 2) (652800 * 16 * 2)>;
-+		};
-+
-+		opp-979200000 {
-+			opp-hz = /bits/ 64 <979200000>;
-+			opp-peak-kBps = <(768000 * 4 * 2 * 2) (940800 * 16 * 2)>;
-+		};
-+
-+		opp-1036800000 {
-+			opp-hz = /bits/ 64 <1036800000>;
-+			opp-peak-kBps = <(1017000 * 4 * 2 * 2) (940800 * 16 * 2)>;
-+		};
-+
-+		opp-1248000000 {
-+			opp-hz = /bits/ 64 <1248000000>;
-+			opp-peak-kBps = <(1017000 * 4 * 2 * 2) (1209600 * 16 * 2)>;
-+		};
-+
-+		opp-1401600000 {
-+			opp-hz = /bits/ 64 <1401600000>;
-+			opp-peak-kBps = <(1353000 * 4 * 2 * 2) (1401600 * 16 * 2)>;
-+		};
-+
-+		opp-1555200000 {
-+			opp-hz = /bits/ 64 <1555200000>;
-+			opp-peak-kBps = <(1555000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+
-+		opp-1766400000 {
-+			opp-hz = /bits/ 64 <1766400000>;
-+			opp-peak-kBps = <(1555000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+
-+		opp-1900800000 {
-+			opp-hz = /bits/ 64 <1900800000>;
-+			opp-peak-kBps = <(1804000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+
-+		opp-2073600000 {
-+			opp-hz = /bits/ 64 <2073600000>;
-+			opp-peak-kBps = <(2092000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+		};
-+	};
-+
- 	pmu {
- 		compatible = "arm,armv8-pmuv3";
- 		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_LOW>;
-diff --git a/arch/arm64/boot/dts/qcom/sm7225.dtsi b/arch/arm64/boot/dts/qcom/sm7225.dtsi
-index 7b2a002ca7ff..b7b4044e9bb0 100644
---- a/arch/arm64/boot/dts/qcom/sm7225.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm7225.dtsi
-@@ -14,3 +14,22 @@
- &CPU5 { compatible = "qcom,kryo570"; };
- &CPU6 { compatible = "qcom,kryo570"; };
- &CPU7 { compatible = "qcom,kryo570"; };
-+
-+&cpu0_opp_table {
-+	opp-1804800000 {
-+		opp-hz = /bits/ 64 <1804800000>;
-+		opp-peak-kBps = <(1804000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+	};
-+};
-+
-+&cpu6_opp_table {
-+	opp-2131200000 {
-+		opp-hz = /bits/ 64 <2131200000>;
-+		opp-peak-kBps = <(2092000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+	};
-+
-+	opp-2208000000 {
-+		opp-hz = /bits/ 64 <2208000000>;
-+		opp-peak-kBps = <(2092000 * 4 * 2 * 2) (1459200 * 16 * 2)>;
-+	};
-+};
 -- 
-2.39.0
-
+With best wishes
+Dmitry
