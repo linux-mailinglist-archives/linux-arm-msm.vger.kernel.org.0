@@ -2,148 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9722065EAAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 13:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DF3C65EB02
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 13:51:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231429AbjAEMbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 07:31:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58674 "EHLO
+        id S233242AbjAEMvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 07:51:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjAEMbv (ORCPT
+        with ESMTP id S232920AbjAEMvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 07:31:51 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6695332EA0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 04:31:46 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id z26so54816372lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 04:31:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oIFqJ2FUub3KBG2R5dCykiETjNtSxdajFNxKC1jZqWM=;
-        b=kAN8oyePsPoUHtkrmxcy9IcLC5UnpjIIvcquPhkZoCUbA9T1IYV6Div3yuGVjfbMZU
-         44xU7l8pE3pFMHfb+N3Hq9KUlnGzrpGQhC9RlSzuCJSv+26GOoQ594Ba/W0IuU0tfKuv
-         wo42ISHQjzIbbUZoaXnB1Xb03WcNAqIwqycJnVsenBRlgXULm7wZl6tsgrKvMwKNByiY
-         qnzp1/zkUv1nkzWmcAc5tUbXpMTL1GlyuEmoo4ECvU+h0yctKpmG1l4YOHlJQYtUe9eA
-         abu4MetJBupouhtU/qV/DIYHkd07wFt5yb0cJWa4V1ysjozHAddLjBQ5FeafC1bLWjEM
-         Q5RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oIFqJ2FUub3KBG2R5dCykiETjNtSxdajFNxKC1jZqWM=;
-        b=H0sVdtOxXehTQjZ8mvW/VZKpHjnPLSxYMHKZJrTAZPL54Bc5RS6zeeCZFRfQwEkuU0
-         fPIU2WCNepPbVpoGuhYazINSkxrwHb19Zz3xoz+5EQJ7RzY72natxb1UuLuItkJhf9GK
-         xdUzjXf9ZNxrKvtn49tBxSsWXnCLuBFquBRi9wQVn8xlcQQFfW2Xh+xPvUK4xFBmt6Re
-         9SShfcRpIbI7tO+ClikVL5n2L2Rei86EYjfPApwIWbJNpIKF0GkICSyjd7sPWzSV1rlb
-         ljRZu7TZ8PXNU/Ffe77Pbihh0y1HKW3z9mhnTXOohSeSN9p8aqr90t/78tYardCw+u2o
-         UX0g==
-X-Gm-Message-State: AFqh2koV+89qQzhG+vsWne1HgCi8OpYTpKy4Ed/pDyefg+wqWNdjLkmN
-        DWjk22aH+vXwHSB3CRBVqSBLPQ==
-X-Google-Smtp-Source: AMrXdXs1Ic63PTBM7olfEHl8M8WpZbHuxq/8HDfCGzBrF4O5dxEmZvRBQOxx6bkwpIsT35uxwKQrxg==
-X-Received: by 2002:ac2:58e1:0:b0:4b5:4606:7ad9 with SMTP id v1-20020ac258e1000000b004b546067ad9mr14544367lfo.39.1672921904371;
-        Thu, 05 Jan 2023 04:31:44 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x3-20020a056512130300b004cb10601096sm3471695lfu.136.2023.01.05.04.31.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 04:31:43 -0800 (PST)
-Message-ID: <64c66b81-b347-f659-1038-c104eb5c5468@linaro.org>
-Date:   Thu, 5 Jan 2023 14:31:42 +0200
+        Thu, 5 Jan 2023 07:51:24 -0500
+X-Greylist: delayed 1043 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 Jan 2023 04:51:22 PST
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BE74BD68;
+        Thu,  5 Jan 2023 04:51:22 -0800 (PST)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id B7F4F405D5;
+        Thu,  5 Jan 2023 17:33:54 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1672922035; bh=JY3J18vceNqkSljuhdCvK7VZGF4GKA73SWNTTOQTB8M=;
+        h=From:To:Cc:Subject:Date:From;
+        b=SZ+qLlPOV4Wt3/zRoqX2hI0ItaBm6Rwhu3jThWYFfnvPgHf2RgfsnJ0ucvkI0K6dC
+         Tx4SeA0cQ/nqSsPMOhX90ZZR7U4uo6wBMCJnHZOSL/CxsasCN5ZQp0M9BO9lPED85w
+         dC24BDvF5P3thm2lCj1iI2TaFDF00Lny5vU797zHPNby1zTZSD+Twlpt8qzcVNTaCf
+         Pvi9R2mkgoHDhk0VEjy2Hf8rjIO9VnS0pITrOYSxNqAJAhNTurZTJO59VNssKywiXl
+         shQD9pApGw7jPF3LTruM9EiKakElPJPLjM9EaTzhZ3jx8BXIfU9zlWkXcf0QrGwQyc
+         bFprF6YDmY2xg==
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Siddharth Manthan <siddharth.manthan@gmail.com>,
+        Jasper Korten <jja2000@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 0/8] Add support for Samsung Galaxy tab A (2015) tablets
+Date:   Thu,  5 Jan 2023 17:32:32 +0500
+Message-Id: <20230105123240.1089375-1-nikita@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-Content-Language: en-GB
-To:     neil.armstrong@linaro.org,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <362452c5-8858-9ac5-e0ca-8ff993e966b7@linaro.org>
- <baa8df6b-ecd4-6df8-9fb5-6a3a39e1a04f@ideasonboard.com>
- <37e48125-072d-e55d-d997-67fd3796a779@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <37e48125-072d-e55d-d997-67fd3796a779@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_ANY_PILL_PRICE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/01/2023 11:05, Neil Armstrong wrote:
-> On 04/01/2023 08:29, Tomi Valkeinen wrote:
->> On 28/12/2022 23:58, Dmitry Baryshkov wrote:
->>> On 02/11/2022 20:06, Dmitry Baryshkov wrote:
->>>>  From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
->>>> DRM driver do a proper work of calling
->>>> drm_bridge_connector_en/disable_hpd() in right places. Rather than
->>>> teaching each and every driver how to properly handle
->>>> drm_bridge_connector's HPD, make that automatic.
->>>>
->>>> Add two additional drm_connector helper funcs: enable_hpd() and
->>>> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
->>>> is the time where the drm_bridge_connector's functions are called by 
->>>> the
->>>> drivers too).
->>>
->>> Since we are at the beginning of the development window, gracious 
->>> ping for this patchset.
->>>
->>> It would be nice to finally handle the bridge_connector's hpd 
->>> properly. Calling drm_bridge_connector_enable_hpd() from 
->>> drm_bridge_connector_init() is not a proper way to do this. It 
->>> results in calling bridge->funcs->hpd_enable() before the rest of the 
->>> pipeline was set up properly.
->>
->> For the series:
->>
->> Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
->>
->> I've been using this series in my local branch for quite a while to 
->> fix the HPD issues. Works for me.
+This series introduces basic support for two Galaxy Tab A
+tablets: 8 and 10 inch variants. They share most of the
+hardware and are mainly dffernet by the display.
 
-Thanks!
+With this series both tablets gain support for things like
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART
+- Regulators
+- WCNSS (WiFi/BT)
+- GPIO keys
+- Fuel gauge
+- Touchscreen
+- Accelerometer
 
->>
->> I still think the "fix" aspect should be highlighted more here, as the 
->> current upstream triggers a WARN for "Hot plug detection already 
->> enabled" (at least) on OMAP.
-> 
-> LGTM then !
-> 
-> Tomi, Dmitry, I can push the whole serie via drm-misc-next or -fixes 
-> then, as you wish.
+In fact, with some additional patches like display and
+modem support, that are not included as part of this
+series, these tablets can actually reach one's expectations
+of what a "normal" tablet should be able to do.
 
 
-I'm fine either way. We have been living with the warning for some time, 
-so I don't think there is any urgency to get rid of it immediately.
+Jasper Korten (2):
+  arm64: dts: qcom: Add device tree for Samsung Galaxy Tab A (2015)
+  arm64: dts: qcom: msm8916-samsung-gt510: Add touchscreen
+
+Nikita Travkin (3):
+  dt-bindings: qcom: Document samsung,gt58 and gt510
+  arm64: dts: qcom: msm8916-samsung-gt510: Add Vibrator
+  arm64: dts: qcom: msm8916-samsung-gt5-common: Add fuelgauge
+
+Siddharth Manthan (3):
+  arm64: dts: qcom: msm8916-samsung-gt58: Add Vibrator
+  arm64: dts: qcom: msm8916-samsung-gt58: Add touchscreen
+  arm64: dts: qcom: msm8916-samsung-gt5-common: add sensors
+
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../dts/qcom/msm8916-samsung-gt5-common.dtsi  | 300 ++++++++++++++++++
+ .../boot/dts/qcom/msm8916-samsung-gt510.dts   | 116 +++++++
+ .../boot/dts/qcom/msm8916-samsung-gt58.dts    |  78 +++++
+ 5 files changed, 498 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts
 
 -- 
-With best wishes
-Dmitry
+2.38.1
 
