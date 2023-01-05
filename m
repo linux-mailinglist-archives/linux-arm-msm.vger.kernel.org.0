@@ -2,77 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98FC265EE51
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 15:04:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C795D65EE63
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 15:09:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234218AbjAEOEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 09:04:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50368 "EHLO
+        id S232766AbjAEOJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 09:09:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234646AbjAEOEM (ORCPT
+        with ESMTP id S231666AbjAEOJz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 09:04:12 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE54D4A964
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 06:03:51 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id z26so55145861lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 06:03:51 -0800 (PST)
+        Thu, 5 Jan 2023 09:09:55 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE082F7AF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 06:09:53 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so1388648wmk.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 06:09:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t+2bEOS8sQMLPpamnPGcP7WGEd0XhmvXigQQYpxuAjE=;
-        b=Z2lIRZ5oB7h68mXWc6QYU7S7CMKTvmB3VVzyQV3ptprWhE1h2NtQ/eWlpflRdksEXR
-         3ZpzRsRL3I+f5Bwf1k5vkUub/lU1ZtsVKVWsGCxfCkADhDZzr+JOf3hGtEbbnvFQhvH9
-         KTVUNa4SKRzd51nUhfDu3gpdOS/RK5QmlrLPhXLbJpUlKIdI5JjCDeiyfccUu7zHgfAt
-         7ZKxmNTV/9nL6bPCwNPiN7Qtil2l7VEcKy5+TTX8hSUTvwpl6an0iIrw/FmA9KXyDP1o
-         fY2lvASoQF2d00QIw3rD8SKbPf4maQ2CalpYqEw8fDiP1Luc6Mn6t9MoOfz9iM2zKWIo
-         /SWg==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=P1d2K6EBLa0i9DYaOKFUZQuPA0/Q9AJBs0TBBGG9+5A=;
+        b=fn3+0a53GsD702FNVt2A2IeOlAl+jUqW5lYG0rbNJBErCRhu8dhmNB5chNV3Z712bV
+         evZ5jv/7fR2HkKkAntN+zVrbFkzu/MaVYym+TPJ50CEOasGEQyb96g6Amhyf/78faxft
+         STG1mF8FmnAIVNyfzx+ckQAtTWDHok66ImQccOLaAnIl/oN71WSFJox0EVFLkvyDe8KZ
+         KCuyruYiVt43gKRVz5kBurjPIQ7Etd8uN6xzvDptt41Kubux6E824NBRMF1vJCXoTCxl
+         bI8x2lG56dXPQ8+3SFa2zWVUtowN4qSUWIG6lF+EXSGg7sxT0WV7SttZ7grcxk1FFydf
+         B/Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t+2bEOS8sQMLPpamnPGcP7WGEd0XhmvXigQQYpxuAjE=;
-        b=MPYtQOSU5ADSESA/Zg1T6D66BvoYqQFs9Y7sDA8KUn+W4VUDN8SjJcXe1MRZCWbo4T
-         4PIGrSjQyj6m5zr7LQi/JTp8Nn/JknCuCpZZjI7ISrl4sfn4ZN+P6OSq1KKUl3LeEg8s
-         bh6ita8cFzOzfHCQ3knPwTdhAYVRLhQ15xHN+v+H13FXT0FoaJDuyWz7ygI/AKqsWID0
-         TeC5AKL//OdpVuyPWHzqzHStES27GtoiKA5zPIkTaDvabqelNii2HJhQHcAa4fWS1RCJ
-         +DVuGjZk1ebhJpOo7/sd0n30w+uu3E63d40SEOQZJgxGiOf0dePlov24nrv9zvm4ijMj
-         JJng==
-X-Gm-Message-State: AFqh2kpkSzkXInn2rKstpfHlAPZRYrfjU+JwFGuUCk2cuvvtQ3PZsWcf
-        dxzQApYDo6OOpH2usd1518MRkQ==
-X-Google-Smtp-Source: AMrXdXttrg/Bi2fpS3ToeT8tr9PPdjj9wlHD9vFvjfamIUyHDyPEMcHzwCPI7IVr9GUmGPZzrbOXTg==
-X-Received: by 2002:a05:6512:2506:b0:4b5:b46d:e60 with SMTP id be6-20020a056512250600b004b5b46d0e60mr14866768lfb.27.1672927430063;
-        Thu, 05 Jan 2023 06:03:50 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512390e00b004b5872a7003sm5495806lfu.98.2023.01.05.06.03.49
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P1d2K6EBLa0i9DYaOKFUZQuPA0/Q9AJBs0TBBGG9+5A=;
+        b=0sXVp68+WkOhMFT9mPYRgbhY1qtMauF88+HsdlJ3lhFCmwTXT/q15zr6bSmH6N3odP
+         j4uMXgczgai6Hy2+d3JEc8qoQHYg1JS3MNMFvmd2r0tXSGQrSImBmRlpC98FRTcRPUMT
+         ENgiNLzncEP2QHqo9GrsQgPm7d2nECcQRXqY7dEteWEp3WGLN9XtfEjSlMZ5tdueA+FF
+         qYn/Qk96vNCZHdLYl+e+3UD5vfGqhie+2d0rD3HBXLoNhx5J2c6EK250IBnhMiTTw7cE
+         Jlc0+CTHlmYVNB1yyhyf+k4ZXm/+juI1zTGZ8NnXrZsRBDMT5vC39NQ16XFufCSsjUxh
+         3FlQ==
+X-Gm-Message-State: AFqh2kpq5MWGtLVK/4QGYiZ9m0ENJ0WJ2etPY7mWiFHWhpmTZftZlvPE
+        5nWncHnTX9Ye21W8glK078pJNQ==
+X-Google-Smtp-Source: AMrXdXthpMyfs3cO+WKLMQ4K1r95WyC+VFsKtEiWz6BGuZw4n1JeOQmBiUhRbgIDSc9jVBl8lIuWcw==
+X-Received: by 2002:a05:600c:4b1b:b0:3d2:1d51:2477 with SMTP id i27-20020a05600c4b1b00b003d21d512477mr44697947wmp.11.1672927792485;
+        Thu, 05 Jan 2023 06:09:52 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:1e12:c16d:1898:607c? ([2a01:e0a:982:cbb0:1e12:c16d:1898:607c])
+        by smtp.gmail.com with ESMTPSA id f19-20020a05600c155300b003d98a7aa12csm2914216wmg.16.2023.01.05.06.09.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 06:03:49 -0800 (PST)
-Message-ID: <8e761ec9-6d98-53f1-20b4-f08d63a4940b@linaro.org>
-Date:   Thu, 5 Jan 2023 16:03:49 +0200
+        Thu, 05 Jan 2023 06:09:52 -0800 (PST)
+Message-ID: <36ea5022-f915-11d5-068a-e5680faf67ba@linaro.org>
+Date:   Thu, 5 Jan 2023 15:09:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v3 2/2] clk: qcom: sdm845: Use generic
- clk_sync_state_disable_unused callback
-Content-Language: en-GB
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
- <20221227204528.1899863-2-abel.vesa@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221227204528.1899863-2-abel.vesa@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 4/7] drm/imx/dcss: stop using
+ drm_bridge_connector_en/disable_hpd()
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+ <20221102180705.459294-5-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20221102180705.459294-5-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -82,20 +96,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/12/2022 22:45, Abel Vesa wrote:
-> By adding the newly added clk_sync_state_disable_unused as sync_state
-> callback to all sdm845 clock providers, we make sure that no clock
-> belonging to these providers gets disabled on clk_disable_unused,
-> but rather they are disabled on sync_state, when it is safe, since
-> all the consumers build as modules have had their chance of enabling
-> their own clocks.
+On 02/11/2022 19:07, Dmitry Baryshkov wrote:
+> The functionality of drm_bridge_connector_enable_hpd() and
+> drm_bridge_connector_disable_hpd() is provided automatically by the
+> drm_kms_poll helpers. Stop calling these functions manually.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/imx/dcss/dcss-dev.c | 4 ----
+>   drivers/gpu/drm/imx/dcss/dcss-kms.c | 2 --
+>   2 files changed, 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/imx/dcss/dcss-dev.c b/drivers/gpu/drm/imx/dcss/dcss-dev.c
+> index 3f5750cc2673..0d8e44f20ec4 100644
+> --- a/drivers/gpu/drm/imx/dcss/dcss-dev.c
+> +++ b/drivers/gpu/drm/imx/dcss/dcss-dev.c
+> @@ -257,8 +257,6 @@ int dcss_dev_suspend(struct device *dev)
+>   	struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
+>   	int ret;
+>   
+> -	drm_bridge_connector_disable_hpd(kms->connector);
+> -
+>   	drm_mode_config_helper_suspend(ddev);
+>   
+>   	if (pm_runtime_suspended(dev))
+> @@ -292,8 +290,6 @@ int dcss_dev_resume(struct device *dev)
+>   
+>   	drm_mode_config_helper_resume(ddev);
+>   
+> -	drm_bridge_connector_enable_hpd(kms->connector);
+> -
+>   	return 0;
+>   }
+>   #endif /* CONFIG_PM_SLEEP */
+> diff --git a/drivers/gpu/drm/imx/dcss/dcss-kms.c b/drivers/gpu/drm/imx/dcss/dcss-kms.c
+> index b4f82ebca532..16ef8aa6da37 100644
+> --- a/drivers/gpu/drm/imx/dcss/dcss-kms.c
+> +++ b/drivers/gpu/drm/imx/dcss/dcss-kms.c
+> @@ -151,7 +151,6 @@ struct dcss_kms_dev *dcss_kms_attach(struct dcss_dev *dcss)
+>   	return kms;
+>   
+>   cleanup_crtc:
+> -	drm_bridge_connector_disable_hpd(kms->connector);
+>   	drm_kms_helper_poll_fini(drm);
+>   	dcss_crtc_deinit(crtc, drm);
+>   
+> @@ -167,7 +166,6 @@ void dcss_kms_detach(struct dcss_kms_dev *kms)
+>   	struct drm_device *drm = &kms->base;
+>   
+>   	drm_dev_unregister(drm);
+> -	drm_bridge_connector_disable_hpd(kms->connector);
+>   	drm_kms_helper_poll_fini(drm);
+>   	drm_atomic_helper_shutdown(drm);
+>   	drm_crtc_vblank_off(&kms->crtc.base);
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--- 
-With best wishes
-Dmitry
+I get:
+/drivers/gpu/drm/imx/dcss/dcss-dev.c: In function ‘dcss_dev_suspend’:
+/drivers/gpu/drm/imx/dcss/dcss-dev.c:256:23: warning: unused variable ‘kms’ [-Wunused-variable]
+   256 |  struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
+       |                       ^~~
+/drivers/gpu/drm/imx/dcss/dcss-dev.c: In function ‘dcss_dev_resume’:
+/drivers/gpu/drm/imx/dcss/dcss-dev.c:277:23: warning: unused variable ‘kms’ [-Wunused-variable]
+   277 |  struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
+       |                       ^~~
 
+I'll fix while applying,
+
+Neil
