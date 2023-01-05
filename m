@@ -2,298 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C76F65E2D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 03:17:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E7E565E2F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 03:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbjAECRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 21:17:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
+        id S229750AbjAECih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 21:38:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjAECRA (ORCPT
+        with ESMTP id S229674AbjAECig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 21:17:00 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6808E43A3E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 18:16:59 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id i19so24494693ljg.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 18:16:59 -0800 (PST)
+        Wed, 4 Jan 2023 21:38:36 -0500
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77E02F792;
+        Wed,  4 Jan 2023 18:38:34 -0800 (PST)
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 304MDwwP008873;
+        Thu, 5 Jan 2023 02:38:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2022-7-12;
+ bh=CKk0gRE0IMMi5D8m7lacmyc6ESQqVhqiRCXl0WHz1s8=;
+ b=r0gVJLyW1ixpsEwpSdtEl6fSHuNjq2we+W2VyauWK1dw1Pud1dmgSR//okkhzygz+PPv
+ d2VxHzEICksPp3ciQrpfIopLiNF9KDKrCxTL6LrInXhct6HZCB9rvVzI41wgNLIKFetO
+ xIuoKPkG5HalnW+50rzjEBslG8QTsjXLxZHY5fsTD6fNKwXD47iUbqz1v8ENQYQSk3BZ
+ KJo7BgfHyq0xV8gmKmDpf0lRD58WS8prjQ01nxTYXZ9uM3yQJiNYc2MSd9FuPSXYWAEE
+ guf65fM1BqR3/w7P1gqgvAcd+uZmCIiSomU86lz7mLB+QWdgx90K1PBjcKek5xSQKJm+ sg== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3mtcpt7y5g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 05 Jan 2023 02:38:02 +0000
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 3051HMjo031254;
+        Thu, 5 Jan 2023 02:38:01 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2106.outbound.protection.outlook.com [104.47.55.106])
+        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3mwg37abcq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 05 Jan 2023 02:38:01 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cO54f0E/JcQAcWnjQbEoA2Et7rhFilXA1Uvt9dhM4pGyC0qViAf1TjvFVXC44XQvN35V+ZD/Muet/ibpCiuLq4QscarC8ZlVCD9y2rj2KdQsYDJffEupVzerspn4orw52QUOPoDLqiijsxUxCzDds7KREfqX3I41OVKcL/CdiS9Z57NkNHU/q5TmqHcuAcuTj1msZRcGxBT6oTz0z41LzmDqXUVV7jB8HoIyI/G/fk0fxfAgy14zildlA2f/VbRG7ywKBmfUznYBjdhe0Ig5u2zkfAP5vwQnCSwBjoEKMM7iSp+f/rM1JNi2aufc8BJ2bM8oh9ObDpR4Wwi2tzoqtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CKk0gRE0IMMi5D8m7lacmyc6ESQqVhqiRCXl0WHz1s8=;
+ b=WpEqYz7VS5Z2PA6qBqTI9S29xmfXxjyeEMaSKY1f4QpU91PFhDey/rrZRvEoNBL8RD8eXUsYJ1eZts8NzW8Bvd4IS77pdx3PqhygGZFmB7101DVD0RcyePnzizO8GDb+JXB8t9gjassQR4iK+fDhUlIf+oCKBPqdSJZ+HBmTHR1xcUw+sZhniAo1lvVLR5So+AQ9IJSMO/N8wBwcYG1ZKqxa/cKxbSyrjxv4aGDhrCghWzze6vh946O64lIJhKTDa+Y5bOF0nEIgGI+CBNx72+oGtBgpxomJ5msjpbkjEa1gZ0HYC2bW3pGmJYtLlJCVmr+P6A5Swxv9wLYsHb2nng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zvSkLOiYSI8BTOeWAmpLO96acWHRQlaWwDJLFvoiyzo=;
-        b=kCJ0lZ/vSr0gFJWUjWAkM2Xr8Bs9t2EselICDHG/YCZf9QqJrdzyTYfQS4PZ89VtD1
-         VX+SUiNj6rpoN1ROpYXgGML/uCy4tTuGHLkGPgWOEiH7hhnQTK8Ap/rxskUR5CffJ6NT
-         i1MjvBIBNzdrd5WzP3UgkyJhAWJOIIWESBptc0jkOsx7nnW2i/Zduk2Nk69XAKX4++rJ
-         6rfsEZRw2NuOrEUMTNnF7AXeqIa50LkJcznPRWCfDYuHDIGAIKSoAvZaYVvPxviyniyS
-         BquY4VyVsr/teFjMJZTV44AyCqyWKJkkvi00abnNtGnqhNZO4/4CJmSLp8HMS7vjggbG
-         zJMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zvSkLOiYSI8BTOeWAmpLO96acWHRQlaWwDJLFvoiyzo=;
-        b=a4iT9zKNzmOe6vsScak48zBtDaRD0IFj5C8o/cAN90EmXIiF6asbcvZywTXvmTT7BR
-         nqiLst8urZI4+ZJg6TOJSq2kyIsbykD0Slcw4C8ztwPqCntnalN+dCM/aYedqXHjdR2h
-         1sbI2avnDR/np53LdAmcGrEBL6dmesybLEe3Iy52u0I28+1o7vQ8cnvC0XHi5k6cWgUv
-         JBprjj2w3lzd9baqnuI5MXqUn7FO+puCBUdpb4VHXm+xtH8GTblnG+/+2PYC8jj0GoZu
-         s/gv/J6tJpCH3UAJ32oSKB05fu9eyLeVGj5afsNKgVwTVjAentZlKN1un7Ysucq2KJlF
-         Dy1Q==
-X-Gm-Message-State: AFqh2koQ8ZQMQkQFka3MmofQR3Jzb6Ojx5ZgDX4bwEvoaTlyb2xs+Shl
-        bt6MJlUzGWG62aMnt0JXXYGEAQ==
-X-Google-Smtp-Source: AMrXdXuRfJOqnq/HoMg625beK0Jrb9cqNJh85x/2VJ4qoOyRQzUsAQI9A+/ihnqs+7pT2gjSbI20+w==
-X-Received: by 2002:a2e:6e14:0:b0:27f:e171:b7cf with SMTP id j20-20020a2e6e14000000b0027fe171b7cfmr4644649ljc.48.1672885017381;
-        Wed, 04 Jan 2023 18:16:57 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id c14-20020a056512324e00b004cafe65883dsm4661837lfr.122.2023.01.04.18.16.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jan 2023 18:16:56 -0800 (PST)
-Message-ID: <d352312a-9916-934c-0a1c-e79b7eb3c7e6@linaro.org>
-Date:   Thu, 5 Jan 2023 04:16:56 +0200
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CKk0gRE0IMMi5D8m7lacmyc6ESQqVhqiRCXl0WHz1s8=;
+ b=eMp/6JaFhe8nPyQQwXZzWeCBJSA4O8IGsppjIYGTyw9jzhROXn0Nu1hvjufR8Eztqs77gP+K3Zycik7qbKyCLlNgnaG1Y/W6up3LUJwz4RUuaqTL1CuyJqVwX93EqnkN0H5WFH1o60a4VY0O2O9SanCAS65aFe4hFErO064sDMs=
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by SN7PR10MB6307.namprd10.prod.outlook.com (2603:10b6:806:271::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.19; Thu, 5 Jan
+ 2023 02:37:59 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::25bc:7f6f:954:ca22]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::25bc:7f6f:954:ca22%2]) with mapi id 15.20.5944.019; Thu, 5 Jan 2023
+ 02:37:59 +0000
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     "Martin K. Petersen" <martin.petersen@oracle.com>,
+        jejb@linux.ibm.com, andersson@kernel.org, vkoul@kernel.org,
+        quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
+        abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+        bvanassche@acm.org
+Subject: Re: [PATCH v5 00/23] ufs: qcom: Add HS-G4 support
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1r0w91zbw.fsf@ca-mkp.ca.oracle.com>
+References: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
+        <yq17cy84gqc.fsf@ca-mkp.ca.oracle.com>
+        <20230102084707.GA16638@thinkpad>
+Date:   Wed, 04 Jan 2023 21:37:56 -0500
+In-Reply-To: <20230102084707.GA16638@thinkpad> (Manivannan Sadhasivam's
+        message of "Mon, 2 Jan 2023 14:17:07 +0530")
+Content-Type: text/plain
+X-ClientProxiedBy: SA9PR11CA0006.namprd11.prod.outlook.com
+ (2603:10b6:806:6e::11) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [RFC PATCH v3 3/3] drm/msm/dpu: Use color_fill property for DPU
- planes
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        quic_abhinavk@quicinc.com, contact@emersion.fr,
-        daniel.vetter@ffwll.ch, laurent.pinchart@ideasonboard.com,
-        ppaalanen@gmail.com, sebastian.wick@redhat.com,
-        wayland-devel@lists.freedesktop.org, ville.syrjala@linux.intel.com
-References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
- <20230104234036.636-4-quic_jesszhan@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230104234036.636-4-quic_jesszhan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4759:EE_|SN7PR10MB6307:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4fe95b1e-f60a-449d-864a-08daeec5dbb3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: MCYyRSknsra3QFRnAf/7nstr6EudeZ5Drx8PwlHikMagicyakO4aN8BL4L5PmhPTW9kwvVq0fpMrSMRPhi0guqtIwK81ZzAy2w4VDyPpnbUvPaM23ijBeIXd5ZV4ZfKjUw1tYv6OnLoj5T0Qt3riQ3rvRifFNsrgYy230e9ylwvm6cP11OXpVwSZV80mD/C0Yu2kz9QZ5b54FVNFDvmeGnCzgb1J+AnI5FFVJ0mbVFbMhBOMhwLe7i5tKIyjZQIFsLkAjDRJW/wRuVFdc1RDf7G2N8KI6JEU3m4ChUkCXOD0nM/hwUwnEBDLgzb4yNwrlpFaG/9hVPATcjpn2d6zErRR6I1X+FusI5LCmfWTIQmjUSONbYEA/wILufzOLgxgfiOcLUMZixBIrRfgx+ko7P2htynvITGol3yFBA6uz+OeX6sWxEbnaTzhGXBEN5X3sRlnqc7Xbbm1YvcTjYbBmjCnDyQtsMQNo+W/LMhF0i8AowxYGAgR9Wt0I3IYiNcc1CSPx7ZQXs+SKjnDjTPftN+dcJZDarvqaqpqljrashzBz3/+z2WMqRlP5GYy1CScHDWs+uu6f/ZvwHTK7M6jYrfeqMDeIa8/00p7pRwLsTM7KCyfi+7FHa6F5+wL90IPuOoGKwb6djySxPSpPEpxYQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(366004)(396003)(136003)(39860400002)(376002)(346002)(451199015)(86362001)(38100700002)(2906002)(8936002)(5660300002)(4744005)(7416002)(41300700001)(478600001)(6666004)(186003)(8676002)(6512007)(6506007)(26005)(4326008)(316002)(66476007)(6916009)(66946007)(36916002)(6486002)(66556008);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZRgxGYz+UeS3u5Q6Q7Yig7QAJNxXcoMlMmTPo5hVUN4rWucn7lXuFlijsMvk?=
+ =?us-ascii?Q?R9Z+UZmT6yurPIjaT/d69wbS+8aHdshIESCpR/phRTDwftXQdN+sVxCojag1?=
+ =?us-ascii?Q?pwlzPpOx9dq0Kdxmrbo/kbvHKQRLjWkmi88omX02SrGKOD6GpsTaHkDTQwRp?=
+ =?us-ascii?Q?ghDJ8VCu3s8b89PclaM5EbLshTFW65Z71aIPfn8AtL9M2LlCKOvk2b7UXjt4?=
+ =?us-ascii?Q?PTQZRsv3u8g8Ju6FxlVRQtSsD+KYsRLnw2fh04TTtstbH0IOCcyrMrmK1bRP?=
+ =?us-ascii?Q?+WFEqqJk67+1oVZo+4rHzlDKn4A3qgq1u9iKUcCCdjtzWkmUnGygGD6zHBts?=
+ =?us-ascii?Q?pWML8QfavBkdAX1dHQQt7d9rS/WOvx5MLk3PZarueuWQ0I8rNVtdKxuHPKAq?=
+ =?us-ascii?Q?FdSb7u61FFZOmM1p7JgMEUgRUkCIpDjMmm2FfK3VgmN3Sl6usy7yHp243czG?=
+ =?us-ascii?Q?+v0cCNd5ajiRUw+xd3ozvBtBOTLQ3dgR7ocwrzI3AXrWck7Co6j0z+pLqiKb?=
+ =?us-ascii?Q?8NKH1IxBYpSeX5MWifmvOlL+G9kL7vh9w/PVOK3fasHSLWIb22HN+QFEOyYv?=
+ =?us-ascii?Q?YaiDeBe7TyGg3kREouPoXejusKSVWqw+AaNllrO33SS5zn9krXbfM5d/rstk?=
+ =?us-ascii?Q?uFeWRU48gCASht+VoopMdjDQFOT0BLk/Rcv8CjZRGQM2yMZMpfWOwcIR6an3?=
+ =?us-ascii?Q?zA68CMrurpiyqha1yMdz1O4Q4yvQ7smekcHdWnFa9mSpEj074QAfK3QsG1Ke?=
+ =?us-ascii?Q?KanLIwKb/nG3Oy0bbw+8AYhINL2UfdwSsOPfEu7xN0JMYwWueiC6Pby5z35n?=
+ =?us-ascii?Q?OmNUIOBSHN4C4y/3stladBZT8yS7NGsmiZEFW8O9kDbUqXi5K/O0jUA0V6vt?=
+ =?us-ascii?Q?3UPu2NnFZylKi72M+hHE1rxsmb2C2bblPRiU6vVN+F5xty/XkfXBkClvJ0wM?=
+ =?us-ascii?Q?8NoApS/ggoDus1lzVdVTotpz9cCzmsV3Dy8IxPOEmqQIz1uyyUtMHWs3mTbP?=
+ =?us-ascii?Q?+Z9qQY4q/Gp17C4W1FAWFqOe/4uHF6oVPnhtAzqODuXox/ZWss7kJqLuKmxt?=
+ =?us-ascii?Q?ZYuDQYbAUNEIFSjBl7gv/Gr4qT9rPoPYmPDpac9cOrVm2TBw7TGDRf6XRFB+?=
+ =?us-ascii?Q?B7SKT+JUUygq6xTRHtdVHF9RzYKtnekZFzu7W+rgSt7AOCMNG+Q4DYojUES9?=
+ =?us-ascii?Q?4GZ2+3Wlpj1X0SsuOUeWI8Vy0XgG4aVfQAGU7qtZHRlWDELT7BzZHLBl6qxN?=
+ =?us-ascii?Q?N/HPobBmz131mYBpi3srti1ZBE05fI7qbsbx0bHDJAebYKe80XjZfkeRg+I2?=
+ =?us-ascii?Q?y8QQyixuZU9QeVNMWLMURKgSW90op4id3SUU9S/D+l++HeIUAxiENe9gmCx/?=
+ =?us-ascii?Q?pHf7l+ijltaoQDazBhoAMcnIBFZEPu9tJdEzHM/OsBMMN+wIjSzoTUgyQRfZ?=
+ =?us-ascii?Q?dVQ2X2k7z5W23HMyTiQNhF2pXwdfq6zca4abPK5A4Y6LWt6SV/f103VSC6ic?=
+ =?us-ascii?Q?wdDyEGrymD4Cv+V0PrbhkYUWTZ5SwYH3H/bLCgJVUE4vNYaoHAOPD8RFjJXh?=
+ =?us-ascii?Q?QEH21tCUEKtLhrH9Cv4brwUh+o4jVMm1QZK4ZO9x1RQQZuvlQ+eCtLr433Ot?=
+ =?us-ascii?Q?mg=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: =?us-ascii?Q?Ein2NJJ3UVS7XNHp8GpoOemdP9b6VpKOhhOg0gyz99AMwTyhGUE4ql+A4e/d?=
+ =?us-ascii?Q?hZrSJKwvpb2KAykx1WVN0XUa5F7Yhhvx/apcTD9C7AFc2PIp++3Yl8+JbsKx?=
+ =?us-ascii?Q?DdLE4Gtu3Y7s20iQZ+Zn0Qi496U+hH1xzroogvzsCHEykxms6GZuNFkIbtF7?=
+ =?us-ascii?Q?8sMsXSpBrFN4clg1bZKu+m+xy+L63zWp4J2tcPWWrzC5jOMhQ3If1kPdojMi?=
+ =?us-ascii?Q?Uovk9DJxZLXyW543p5eUHkQrxxKrywoQTmTPzZBuNsx7+utD/GaRMb0yGmwT?=
+ =?us-ascii?Q?a+cI8lbG4mXKQHVG5LPlkETRydmBRAwnwo+ZosO5dgvjTOKTOJe6XXZJKJrj?=
+ =?us-ascii?Q?gZz6siBbn2tUYxtKeJvB70e3oIYadx7Lb5Ulp/PLKK9FtIPAQY4eSVi73yqA?=
+ =?us-ascii?Q?bN6Yl0FUssKuHIZAa7tfSZgEZA4o1eRZ4h2bUtpoII+X9klfONPBzEFmaaqM?=
+ =?us-ascii?Q?urxJpNz4RXCzUmb2ZIyY2O/DBL/Pes36JPxN4zIErVLuZ1VIWyX9R36TU1dM?=
+ =?us-ascii?Q?u2xGHOsEbSgpptChDbdafqQ6AHaZHmIjawFfph5UQlV993VSG7Xjmn4xaw8D?=
+ =?us-ascii?Q?yMhcvWPdIT2UH9Q+BOAMhlJcT88UIQ0KdZqLarjLhHnJ09fVjRhGzlBafKqg?=
+ =?us-ascii?Q?+vHaD1VC0n0RMm9qgoSbXeY0S6/gpAH5/VgTv6PwyJUKt55RRIHjr+6MxwO4?=
+ =?us-ascii?Q?t9EYpTuEF1kxiI7KWxLtQMnDmWVLfjTSomiC48eRMWmZuqo2Ko+wmckHXLur?=
+ =?us-ascii?Q?QzG6ksLtHYR9ehD52HzR9VpTYy6LCnjX58KAXY0zm/M324nRTPDePONbbvEt?=
+ =?us-ascii?Q?N9TSHRA+VlvYz0917zW6Ami2U1vrvzigyvUHxkpAw+8Wi6UaGxXTPDit+od/?=
+ =?us-ascii?Q?k7JvdTGPybMeHaP+1KGyH4Tlz+ZpSyspSWbpsP5Dnhm15nQhKuICfnmtFLj8?=
+ =?us-ascii?Q?fyweHXX8jwvr0C77RK/vp6x6uFIw9n8R//EPzhRUF5z3w/5uX9K/dnMEvN3y?=
+ =?us-ascii?Q?VVfDKfx77VvLjSCUV3SwmBpMxb91nmvQkmnejYk7HtqvvKjIscmMdb+LB5Xi?=
+ =?us-ascii?Q?fpFVcfSkaZSrnvhsj9EjHNSQmhTAmfd0oGkUfdwrnmWYXZVzSBXLIlU/WkbR?=
+ =?us-ascii?Q?1nf+sf9VhYIH9soZxVvfyXefG6Lip+DaGzXUCuQ0C2A/SCgB+J16TEEPDEZG?=
+ =?us-ascii?Q?nGbOqoD+uMNck56FgkGcD6au/w8GFm6UBITNf4fw/hjofK5BH7vKySTfDHqY?=
+ =?us-ascii?Q?iJ4RugnJcFsVwggFj4K6?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4fe95b1e-f60a-449d-864a-08daeec5dbb3
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2023 02:37:59.0321
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1WlaYR5ecmijwqcMukNWolAsRt5Qke6RVG8Qrxz2nrQd9XERQaTbajNw/XmwLYa1zaeQUmWga9w7oGkDNbhkf/9ozfXGdxB/45UlWkJKEm8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6307
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-04_07,2023-01-04_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 bulkscore=0 mlxlogscore=974
+ malwarescore=0 suspectscore=0 phishscore=0 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301050020
+X-Proofpoint-ORIG-GUID: 7iP5En6R_iCWmPKmwA4RDOoj9vi_ZhpL
+X-Proofpoint-GUID: 7iP5En6R_iCWmPKmwA4RDOoj9vi_ZhpL
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 01:40, Jessica Zhang wrote:
-> Initialize and use the color_fill properties for planes in DPU driver. In
-> addition, relax framebuffer requirements within atomic commit path and
-> add checks for NULL framebuffers. Finally, drop DPU_PLANE_COLOR_FILL_FLAG
-> as it's unused.
-> 
-> Changes since V2:
-> - Fixed dropped 'const' warning
-> - Dropped use of solid_fill_format
-> - Switched to using drm_plane_solid_fill_enabled helper method
-> - Added helper to convert color fill to BGR888 (Rob)
-> - Added support for solid fill on planes of varying sizes
-> - Removed DPU_PLANE_COLOR_FILL_FLAG
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 +++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 65 ++++++++++++++---------
->   2 files changed, 49 insertions(+), 25 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 13ce321283ff..0695b70ea1b7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -409,6 +409,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   	struct drm_plane_state *state;
->   	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
->   	struct dpu_plane_state *pstate = NULL;
-> +	const struct msm_format *fmt;
->   	struct dpu_format *format;
->   	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
->   
-> @@ -441,7 +442,13 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   				sspp_idx - SSPP_VIG0,
->   				state->fb ? state->fb->base.id : -1);
->   
-> -		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
-> +		if (pstate->base.fb)
-> +			fmt = msm_framebuffer_format(pstate->base.fb);
-> +		else
-> +			fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
-> +					DRM_FORMAT_ABGR8888, 0);
-> +
-> +		format = to_dpu_format(fmt);
->   
->   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
->   			bg_alpha_enable = true;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 86719020afe2..51a7507373f7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -44,7 +44,6 @@
->   
->   #define DPU_NAME_SIZE  12
->   
-> -#define DPU_PLANE_COLOR_FILL_FLAG	BIT(31)
->   #define DPU_ZPOS_MAX 255
->   
->   /* multirect rect index */
-> @@ -105,7 +104,6 @@ struct dpu_plane {
->   	enum dpu_sspp pipe;
->   
->   	struct dpu_hw_pipe *pipe_hw;
-> -	uint32_t color_fill;
->   	bool is_error;
->   	bool is_rt_pipe;
->   	const struct dpu_mdss_cfg *catalog;
-> @@ -678,6 +676,17 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
->   				&scaler3_cfg);
->   }
->   
-> +static uint32_t _dpu_plane_get_fill_color(struct drm_solid_fill solid_fill)
-> +{
-> +	uint32_t ret = 0;
-> +
-> +	ret |= ((uint8_t) solid_fill.b) << 16;
-> +	ret |= ((uint8_t) solid_fill.g) << 8;
-> +	ret |= ((uint8_t) solid_fill.r);
-> +
-> +	return ret;
-> +}
-> +
->   /**
->    * _dpu_plane_color_fill - enables color fill on plane
->    * @pdpu:   Pointer to DPU plane object
-> @@ -1001,12 +1010,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   
->   	dst = drm_plane_state_dest(new_plane_state);
->   
-> -	fb_rect.x2 = new_plane_state->fb->width;
-> -	fb_rect.y2 = new_plane_state->fb->height;
-> +	if (new_plane_state->fb) {
-> +		fb_rect.x2 = new_plane_state->fb->width;
-> +		fb_rect.y2 = new_plane_state->fb->height;
-> +	}
->   
->   	max_linewidth = pdpu->catalog->caps->max_linewidth;
->   
-> -	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> +	if (new_plane_state->fb)
-> +		fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> +	else
-> +		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
 
-I think this should be more explicit:
+Manivannan,
 
-if (solid_fill)
-    fmt = dpu_get_dpu_format(...)
-else
-    fmt = to_dpu_format(msm_framebuffer_format(...).
+>> >   scsi: ufs: core: Add reinit_notify() callback
+>> >   scsi: ufs: core: Add support for reinitializing the UFS device
+>> 
+>> I would like to see some reviews of the proposed core changes.
+>> 
+>
+> Both patches are reviewed by Bart now.
 
-And in the _dpu_crtc_blend_setup_mixer() too.
-
-Maybe the code can be extracted to a helper.
-
->   
->   	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
->   
-> @@ -1018,7 +1032,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   		return -EINVAL;
->   
->   	/* check src bounds */
-> -	} else if (!dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
-> +	} else if (new_plane_state->fb && !dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
->   				DRM_RECT_ARG(&src));
->   		return -E2BIG;
-> @@ -1086,9 +1100,10 @@ void dpu_plane_flush(struct drm_plane *plane)
->   	if (pdpu->is_error)
->   		/* force white frame with 100% alpha pipe output on error */
->   		_dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
-> -	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
-> +	else if (!(plane->state->fb) && drm_plane_solid_fill_enabled(plane->state))
->   		/* force 100% alpha */
-> -		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-> +		_dpu_plane_color_fill(pdpu, _dpu_plane_get_fill_color(plane->state->solid_fill),
-> +				0xFF);
-
-I'd push alpha into _dpu_plane_get_fill_color(). Then adding alpha 
-support would be more transparent.
-
->   	else if (pdpu->pipe_hw && pdpu->pipe_hw->ops.setup_csc) {
->   		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
->   		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
-> @@ -1127,23 +1142,30 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   	struct drm_crtc *crtc = state->crtc;
->   	struct drm_framebuffer *fb = state->fb;
->   	bool is_rt_pipe, update_qos_remap;
-> -	const struct dpu_format *fmt =
-> -		to_dpu_format(msm_framebuffer_format(fb));
-> +	const struct dpu_format *fmt;
->   	struct dpu_hw_pipe_cfg pipe_cfg;
->   
-> -	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
-> -
-> -	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-> -
->   	pstate->pending = true;
->   
->   	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
->   	_dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
->   
-> -	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> -			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> -			crtc->base.id, DRM_RECT_ARG(&state->dst),
-> -			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> +	/* override for color fill */
-> +	if (!fb && drm_plane_solid_fill_enabled(plane->state)) {
-> +		/* skip remaining processing on color fill */
-> +		return;
-> +	}
-> +
-> +	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
-> +
-> +	fmt = to_dpu_format(msm_framebuffer_format(fb));
-> +	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-
-This change deserves a comment somewhere (in the commit message?). 
-Beforehand the driver tried to set the scanout/layout for the COLOR_FILL 
-case. You have changed this.
-
-> +
-> +	if (fb)
-> +		DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> +				", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> +				crtc->base.id, DRM_RECT_ARG(&state->dst),
-> +				(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
->   
->   	pipe_cfg.src_rect = state->src;
->   
-> @@ -1155,12 +1177,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   
->   	pipe_cfg.dst_rect = state->dst;
->   
-> -	/* override for color fill */
-> -	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
-> -		/* skip remaining processing on color fill */
-> -		return;
-> -	}
-> -
->   	if (pdpu->pipe_hw->ops.setup_rects) {
->   		pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
->   				&pipe_cfg,
-> @@ -1511,6 +1527,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
->   
->   	drm_plane_create_alpha_property(plane);
-> +	drm_plane_create_solid_fill_property(plane);
->   	drm_plane_create_blend_mode_property(plane,
->   			BIT(DRM_MODE_BLEND_PIXEL_NONE) |
->   			BIT(DRM_MODE_BLEND_PREMULTI) |
+Series applied to 6.3/scsi-staging, thanks!
 
 -- 
-With best wishes
-Dmitry
-
+Martin K. Petersen	Oracle Linux Engineering
