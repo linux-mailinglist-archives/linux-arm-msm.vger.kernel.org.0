@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E791465F0A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 16:58:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CAD865F0A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 16:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234467AbjAEP6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 10:58:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45390 "EHLO
+        id S233386AbjAEP6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 10:58:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234813AbjAEP54 (ORCPT
+        with ESMTP id S234824AbjAEP6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 10:57:56 -0500
+        Thu, 5 Jan 2023 10:58:11 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D77F66;
-        Thu,  5 Jan 2023 07:57:55 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 305DtCqG025495;
-        Thu, 5 Jan 2023 15:57:51 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6FA110BA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 07:58:08 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 305DiZt4026500;
+        Thu, 5 Jan 2023 15:57:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Xo83gKabN1O0R3UktLS+Q+GhShKE1s8GwQ3eMi8lJz4=;
- b=NbnolHFEWM3w95DY3Ud7bVyUCp7CeeoE7FTgNCjVcO7UhiS2r1nDuBYYvy3t2OvcEZcV
- uHNW9WFO60wcwMuf0kn/EWjXDxkTrmPRtXrWcPOwLZ+Az7Ft7kwWtF086kwTN1zpDVl0
- UxTxdabTaOtm4cxjLic/3KgPggkKstmrBO31EcPzMZAqb19ZaZSnAEgK/dQyZ71fSACG
- LFfM9P5qwgj2tYKvhg2E3iDq2bOt69KTDjB8SFNx/ziMU4whaTgAxRWjhb33iYu0+o9O
- RhEbLMVhupvT9puOVD07YBp1hjd2e1H+C/86Fb+fWesdgEeks8BkqYq0snu8PYcxVtuI Zw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwu4vrqaj-1
+ bh=NKtvogDaPYyPUNQMzj8aHf0a2laXGrzKV9ziz2vVcng=;
+ b=XAVvKw3sxOMdKRtQhOuvWb1luBDkQV/EAMLLsOGDno/DNXByWlvEr8JdTRPSrQbmdoag
+ 1UbvAutGhSpAtXGmMvFeonpX8K5m4O16bHD0evuKEvpgtTvZNMHcPYbfiGOeZ+ooVn9t
+ UQB+yYxrB/XcgIAxLEDqcy5BSt69XwE3m1VqzXy71SvF55lII9TOVw0VCA9F5NwLH6Up
+ xVKc4MCgfrzvemWq4n1Ud1UWrNXgAZc+cWmWyUeV9Gcc4V5Ur7WQVLtPs9lBwzZdJn+b
+ X8X9miuops/WCFwoAmWNj/NjGXzAT0mW6NXpmeA4TxIMkDHO76QeZREdaKnirTnI/o65 sg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwj4p9paq-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Jan 2023 15:57:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 305FvoVx032293
+        Thu, 05 Jan 2023 15:57:58 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 305Fvvfa027218
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Jan 2023 15:57:50 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Thu, 5 Jan 2023 15:57:57 GMT
+Received: from [10.110.122.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 5 Jan 2023
- 07:57:50 -0800
-Message-ID: <4497ea5f-e255-12a3-78ca-7210d34e3762@quicinc.com>
-Date:   Thu, 5 Jan 2023 08:57:49 -0700
+ 07:57:55 -0800
+Message-ID: <0c4f2985-4ad8-5dd3-a1f7-003624994de4@quicinc.com>
+Date:   Thu, 5 Jan 2023 07:57:54 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 6/6] bus: mhi: ep: Save channel state locally during
- suspend and resume
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [RFC PATCH v2 3/3] drm/msm/dpu: Use color_fill property for DPU
+ planes
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <mhi@lists.linux.dev>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20221228161704.255268-1-manivannan.sadhasivam@linaro.org>
- <20221228161704.255268-7-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20221228161704.255268-7-manivannan.sadhasivam@linaro.org>
+To:     Sebastian Wick <sebastian.wick@redhat.com>
+CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
+        <daniel.vetter@ffwll.ch>, <laurent.pinchart@ideasonboard.com>,
+        <ppaalanen@gmail.com>, <wayland-devel@lists.freedesktop.org>,
+        <ville.syrjala@linux.intel.com>
+References: <20221222221441.6980-1-quic_jesszhan@quicinc.com>
+ <20221222221441.6980-4-quic_jesszhan@quicinc.com>
+ <fd9a9aca-8225-6cd1-ff5e-19f0a39bf49c@linaro.org>
+ <66072aca-c8c5-db21-64c1-5d23762dc338@quicinc.com>
+ <CA+hFU4yySWjEjJc2Ay=ygJGSa2CzRMiDSLVHD5kpcZ5RWxydow@mail.gmail.com>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <CA+hFU4yySWjEjJc2Ay=ygJGSa2CzRMiDSLVHD5kpcZ5RWxydow@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bnNwF8f_R4Sa1sDzZ8yNUNgLm8zcM9pV
-X-Proofpoint-ORIG-GUID: bnNwF8f_R4Sa1sDzZ8yNUNgLm8zcM9pV
+X-Proofpoint-GUID: thxUvxKJFDhGQO5sTVaGT3ZQ9c1tGJ6F
+X-Proofpoint-ORIG-GUID: thxUvxKJFDhGQO5sTVaGT3ZQ9c1tGJ6F
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2023-01-05_06,2023-01-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=889 phishscore=0 suspectscore=0
- impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
- bulkscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301050125
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=999 malwarescore=0
+ phishscore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301050125
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,15 +89,235 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/28/2022 9:17 AM, Manivannan Sadhasivam wrote:
-> During suspend and resume, the channel state needs to be saved locally.
-> Otherwise, the endpoint may access the channels while they were being
-> suspended and causing access violations.
-> 
-> Fix it by saving the channel state locally during suspend and resume.
-> 
-> Cc: <stable@vger.kernel.org> # 5.19
-> Fixes: e4b7b5f0f30a ("bus: mhi: ep: Add support for suspending and resuming channels")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com)
+
+On 1/5/2023 6:49 AM, Sebastian Wick wrote:
+> On Wed, Jan 4, 2023 at 2:10 AM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 12/22/2022 7:12 PM, Dmitry Baryshkov wrote:
+>>> On 23/12/2022 00:14, Jessica Zhang wrote:
+>>>> Initialize and use the color_fill properties for planes in DPU driver. In
+>>>> addition, relax framebuffer requirements within atomic commit path and
+>>>> add checks for NULL framebuffers. Finally, drop DPU_PLANE_COLOR_FILL_FLAG
+>>>> as it's unused.
+>>>>
+>>>> Changes since V2:
+>>>> - Fixed dropped 'const' warning
+>>>> - Dropped use of solid_fill_format
+>>>> - Switched to using drm_plane_solid_fill_enabled helper method
+>>>> - Added helper to convert color fill to BGR888 (Rob)
+>>>> - Added support for solid fill on planes of varying sizes
+>>>> - Removed DPU_PLANE_COLOR_FILL_FLAG
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 +++-
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 65 ++++++++++++++---------
+>>>>    2 files changed, 49 insertions(+), 25 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> index 13ce321283ff..0695b70ea1b7 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> @@ -409,6 +409,7 @@ static void _dpu_crtc_blend_setup_mixer(struct
+>>>> drm_crtc *crtc,
+>>>>        struct drm_plane_state *state;
+>>>>        struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+>>>>        struct dpu_plane_state *pstate = NULL;
+>>>> +    const struct msm_format *fmt;
+>>>>        struct dpu_format *format;
+>>>>        struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+>>>> @@ -441,7 +442,13 @@ static void _dpu_crtc_blend_setup_mixer(struct
+>>>> drm_crtc *crtc,
+>>>>                    sspp_idx - SSPP_VIG0,
+>>>>                    state->fb ? state->fb->base.id : -1);
+>>>> -        format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
+>>>> +        if (pstate->base.fb)
+>>>> +            fmt = msm_framebuffer_format(pstate->base.fb);
+>>>> +        else
+>>>> +            fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
+>>>> +                    DRM_FORMAT_ABGR8888, 0);
+>>>> +
+>>>> +        format = to_dpu_format(fmt);
+>>>>            if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>>>>                bg_alpha_enable = true;
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>> index 86719020afe2..51a7507373f7 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>> @@ -44,7 +44,6 @@
+>>>>    #define DPU_NAME_SIZE  12
+>>>> -#define DPU_PLANE_COLOR_FILL_FLAG    BIT(31)
+>>>>    #define DPU_ZPOS_MAX 255
+>>>>    /* multirect rect index */
+>>>> @@ -105,7 +104,6 @@ struct dpu_plane {
+>>>>        enum dpu_sspp pipe;
+>>>>        struct dpu_hw_pipe *pipe_hw;
+>>>> -    uint32_t color_fill;
+>>>>        bool is_error;
+>>>>        bool is_rt_pipe;
+>>>>        const struct dpu_mdss_cfg *catalog;
+>>>> @@ -678,6 +676,17 @@ static void _dpu_plane_setup_scaler(struct
+>>>> dpu_plane *pdpu,
+>>>>                    &scaler3_cfg);
+>>>>    }
+>>>> +static uint32_t _dpu_plane_get_fill_color(struct drm_solid_fill
+>>>> solid_fill)
+>>>> +{
+>>>> +    uint32_t ret = 0;
+>>>> +
+>>>> +    ret |= ((uint8_t) solid_fill.b) << 16;
+>>>> +    ret |= ((uint8_t) solid_fill.g) << 8;
+>>>> +    ret |= ((uint8_t) solid_fill.r);
+>>>> +
+>>>> +    return ret;
+>>>> +}
+>>>> +
+>>>>    /**
+>>>>     * _dpu_plane_color_fill - enables color fill on plane
+>>>>     * @pdpu:   Pointer to DPU plane object
+>>>> @@ -1001,12 +1010,17 @@ static int dpu_plane_atomic_check(struct
+>>>> drm_plane *plane,
+>>>>        dst = drm_plane_state_dest(new_plane_state);
+>>>> -    fb_rect.x2 = new_plane_state->fb->width;
+>>>> -    fb_rect.y2 = new_plane_state->fb->height;
+>>>> +    if (new_plane_state->fb) {
+>>>> +        fb_rect.x2 = new_plane_state->fb->width;
+>>>> +        fb_rect.y2 = new_plane_state->fb->height;
+>>>> +    }
+>>>>        max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>>> -    fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>>>> +    if (new_plane_state->fb)
+>>>> +        fmt =
+>>>> to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>>>> +    else
+>>>> +        fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
+>>>>        min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
+>>>> @@ -1018,7 +1032,7 @@ static int dpu_plane_atomic_check(struct
+>>>> drm_plane *plane,
+>>>>            return -EINVAL;
+>>>>        /* check src bounds */
+>>>> -    } else if (!dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
+>>>> +    } else if (new_plane_state->fb && !dpu_plane_validate_src(&src,
+>>>> &fb_rect, min_src_size)) {
+>>>>            DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
+>>>>                    DRM_RECT_ARG(&src));
+>>>>            return -E2BIG;
+>>>> @@ -1086,9 +1100,10 @@ void dpu_plane_flush(struct drm_plane *plane)
+>>>>        if (pdpu->is_error)
+>>>>            /* force white frame with 100% alpha pipe output on error */
+>>>>            _dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
+>>>> -    else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+>>>> +    else if (!(plane->state->fb) &&
+>>>> drm_plane_solid_fill_enabled(plane->state))
+>>>
+>>> And what if the plane has both fb and solid_fill proprety?
+>>
+>> Hi Dmitry,
+>>
+>> If both the FB and solid_fill are set, then the driver should prioritize
+>> the FB over the solid_fill.
+> 
+> Please add this to the documentation of the property as well.
+
+Hi Sebastian,
+
+Noted, will add this in the v4.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>>
+>>>>            /* force 100% alpha */
+>>>> -        _dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+>>>> +        _dpu_plane_color_fill(pdpu,
+>>>> _dpu_plane_get_fill_color(plane->state->solid_fill),
+>>>> +                0xFF);
+>>>>        else if (pdpu->pipe_hw && pdpu->pipe_hw->ops.setup_csc) {
+>>>>            const struct dpu_format *fmt =
+>>>> to_dpu_format(msm_framebuffer_format(plane->state->fb));
+>>>>            const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu,
+>>>> fmt);
+>>>> @@ -1127,23 +1142,30 @@ static void
+>>>> dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>>>>        struct drm_crtc *crtc = state->crtc;
+>>>>        struct drm_framebuffer *fb = state->fb;
+>>>>        bool is_rt_pipe, update_qos_remap;
+>>>> -    const struct dpu_format *fmt =
+>>>> -        to_dpu_format(msm_framebuffer_format(fb));
+>>>> +    const struct dpu_format *fmt;
+>>>>        struct dpu_hw_pipe_cfg pipe_cfg;
+>>>> -    memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
+>>>> -
+>>>> -    _dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
+>>>> -
+>>>>        pstate->pending = true;
+>>>>        is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
+>>>>        _dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
+>>>> -    DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u "
+>>>> DRM_RECT_FMT
+>>>> -            ", %4.4s ubwc %d\n", fb->base.id,
+>>>> DRM_RECT_FP_ARG(&state->src),
+>>>> -            crtc->base.id, DRM_RECT_ARG(&state->dst),
+>>>> -            (char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
+>>>> +    /* override for color fill */
+>>>> +    if (!fb && drm_plane_solid_fill_enabled(plane->state)) {
+>>>
+>>> And here too.
+>>>
+>>>> +        /* skip remaining processing on color fill */
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
+>>>> +
+>>>> +    fmt = to_dpu_format(msm_framebuffer_format(fb));
+>>>> +    _dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
+>>>> +
+>>>> +    if (fb)
+>>>> +        DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u "
+>>>> DRM_RECT_FMT
+>>>> +                ", %4.4s ubwc %d\n", fb->base.id,
+>>>> DRM_RECT_FP_ARG(&state->src),
+>>>> +                crtc->base.id, DRM_RECT_ARG(&state->dst),
+>>>> +                (char *)&fmt->base.pixel_format,
+>>>> DPU_FORMAT_IS_UBWC(fmt));
+>>>>        pipe_cfg.src_rect = state->src;
+>>>> @@ -1155,12 +1177,6 @@ static void dpu_plane_sspp_atomic_update(struct
+>>>> drm_plane *plane)
+>>>>        pipe_cfg.dst_rect = state->dst;
+>>>> -    /* override for color fill */
+>>>> -    if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
+>>>> -        /* skip remaining processing on color fill */
+>>>> -        return;
+>>>> -    }
+>>>> -
+>>>>        if (pdpu->pipe_hw->ops.setup_rects) {
+>>>>            pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
+>>>>                    &pipe_cfg,
+>>>> @@ -1511,6 +1527,7 @@ struct drm_plane *dpu_plane_init(struct
+>>>> drm_device *dev,
+>>>>            DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
+>>>>        drm_plane_create_alpha_property(plane);
+>>>> +    drm_plane_create_solid_fill_property(plane);
+>>>>        drm_plane_create_blend_mode_property(plane,
+>>>>                BIT(DRM_MODE_BLEND_PIXEL_NONE) |
+>>>>                BIT(DRM_MODE_BLEND_PREMULTI) |
+>>>
+>>> --
+>>> With best wishes
+>>> Dmitry
+>>>
+>>
+> 
