@@ -2,93 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C795D65EE63
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 15:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E0FF65EE74
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 15:12:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232766AbjAEOJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 09:09:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55882 "EHLO
+        id S233940AbjAEOLl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 09:11:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231666AbjAEOJz (ORCPT
+        with ESMTP id S233839AbjAEOLL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 09:09:55 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE082F7AF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 06:09:53 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so1388648wmk.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 06:09:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=P1d2K6EBLa0i9DYaOKFUZQuPA0/Q9AJBs0TBBGG9+5A=;
-        b=fn3+0a53GsD702FNVt2A2IeOlAl+jUqW5lYG0rbNJBErCRhu8dhmNB5chNV3Z712bV
-         evZ5jv/7fR2HkKkAntN+zVrbFkzu/MaVYym+TPJ50CEOasGEQyb96g6Amhyf/78faxft
-         STG1mF8FmnAIVNyfzx+ckQAtTWDHok66ImQccOLaAnIl/oN71WSFJox0EVFLkvyDe8KZ
-         KCuyruYiVt43gKRVz5kBurjPIQ7Etd8uN6xzvDptt41Kubux6E824NBRMF1vJCXoTCxl
-         bI8x2lG56dXPQ8+3SFa2zWVUtowN4qSUWIG6lF+EXSGg7sxT0WV7SttZ7grcxk1FFydf
-         B/Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P1d2K6EBLa0i9DYaOKFUZQuPA0/Q9AJBs0TBBGG9+5A=;
-        b=0sXVp68+WkOhMFT9mPYRgbhY1qtMauF88+HsdlJ3lhFCmwTXT/q15zr6bSmH6N3odP
-         j4uMXgczgai6Hy2+d3JEc8qoQHYg1JS3MNMFvmd2r0tXSGQrSImBmRlpC98FRTcRPUMT
-         ENgiNLzncEP2QHqo9GrsQgPm7d2nECcQRXqY7dEteWEp3WGLN9XtfEjSlMZ5tdueA+FF
-         qYn/Qk96vNCZHdLYl+e+3UD5vfGqhie+2d0rD3HBXLoNhx5J2c6EK250IBnhMiTTw7cE
-         Jlc0+CTHlmYVNB1yyhyf+k4ZXm/+juI1zTGZ8NnXrZsRBDMT5vC39NQ16XFufCSsjUxh
-         3FlQ==
-X-Gm-Message-State: AFqh2kpq5MWGtLVK/4QGYiZ9m0ENJ0WJ2etPY7mWiFHWhpmTZftZlvPE
-        5nWncHnTX9Ye21W8glK078pJNQ==
-X-Google-Smtp-Source: AMrXdXthpMyfs3cO+WKLMQ4K1r95WyC+VFsKtEiWz6BGuZw4n1JeOQmBiUhRbgIDSc9jVBl8lIuWcw==
-X-Received: by 2002:a05:600c:4b1b:b0:3d2:1d51:2477 with SMTP id i27-20020a05600c4b1b00b003d21d512477mr44697947wmp.11.1672927792485;
-        Thu, 05 Jan 2023 06:09:52 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1e12:c16d:1898:607c? ([2a01:e0a:982:cbb0:1e12:c16d:1898:607c])
-        by smtp.gmail.com with ESMTPSA id f19-20020a05600c155300b003d98a7aa12csm2914216wmg.16.2023.01.05.06.09.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 06:09:52 -0800 (PST)
-Message-ID: <36ea5022-f915-11d5-068a-e5680faf67ba@linaro.org>
-Date:   Thu, 5 Jan 2023 15:09:50 +0100
+        Thu, 5 Jan 2023 09:11:11 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40823559C3;
+        Thu,  5 Jan 2023 06:11:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EBD9EB81AE8;
+        Thu,  5 Jan 2023 14:11:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9825CC433D2;
+        Thu,  5 Jan 2023 14:11:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1672927867;
+        bh=TKF/50WPsM6WG6z/BHETGFP0N5897i84bKSxeN2lavY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iIgyQ2kNfuWNdzFW1Ecy60rMnwEWLG+l0di09vAycPOQGPHsHHnkuRPmM+s+k9fgQ
+         4qj9mDXeBcLiT1tNe69oFeqCPKu8D8E+oMiyf1+j2l9baAnKXlVlM4vnOuOoxSZaB9
+         vetSColrEFjDfGFQlky2EotoxLjfo4wNdPA8Vw7pLWf847aUZxbMH0L6wr+pjb0E/6
+         i/IWFpJncAiQmNuE02rz9ScKAdmeDyJ2WKQGYZvPyVnCx5RuxuxWsemfwSCCDGcOlI
+         92AtJpc6pW9wog0wlvPMb1RYc7Tpip4d92VMRI/6Z5PBfYWAhJwOijkZg8AIaeUF7q
+         SqeC5vpbZzXnA==
+Date:   Thu, 5 Jan 2023 14:11:02 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pavel@ucw.cz, krzysztof.kozlowski@linaro.org,
+        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
+Subject: Re: [RESEND PATCH v5 0/2] Add LED driver for flash module in QCOM
+ PMICs
+Message-ID: <Y7badoCDWiENrzVI@google.com>
+References: <20221227081523.2277797-1-quic_fenglinw@quicinc.com>
+ <9a0d7b7c-53bb-cfa6-8629-a0c48b70364f@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 4/7] drm/imx/dcss: stop using
- drm_bridge_connector_en/disable_hpd()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <20221102180705.459294-5-dmitry.baryshkov@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20221102180705.459294-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <9a0d7b7c-53bb-cfa6-8629-a0c48b70364f@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,71 +57,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 19:07, Dmitry Baryshkov wrote:
-> The functionality of drm_bridge_connector_enable_hpd() and
-> drm_bridge_connector_disable_hpd() is provided automatically by the
-> drm_kms_poll helpers. Stop calling these functions manually.
+On Thu, 05 Jan 2023, Fenglin Wu wrote:
+
+> Hi Pavel, Jones,
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/imx/dcss/dcss-dev.c | 4 ----
->   drivers/gpu/drm/imx/dcss/dcss-kms.c | 2 --
->   2 files changed, 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/imx/dcss/dcss-dev.c b/drivers/gpu/drm/imx/dcss/dcss-dev.c
-> index 3f5750cc2673..0d8e44f20ec4 100644
-> --- a/drivers/gpu/drm/imx/dcss/dcss-dev.c
-> +++ b/drivers/gpu/drm/imx/dcss/dcss-dev.c
-> @@ -257,8 +257,6 @@ int dcss_dev_suspend(struct device *dev)
->   	struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
->   	int ret;
->   
-> -	drm_bridge_connector_disable_hpd(kms->connector);
-> -
->   	drm_mode_config_helper_suspend(ddev);
->   
->   	if (pm_runtime_suspended(dev))
-> @@ -292,8 +290,6 @@ int dcss_dev_resume(struct device *dev)
->   
->   	drm_mode_config_helper_resume(ddev);
->   
-> -	drm_bridge_connector_enable_hpd(kms->connector);
-> -
->   	return 0;
->   }
->   #endif /* CONFIG_PM_SLEEP */
-> diff --git a/drivers/gpu/drm/imx/dcss/dcss-kms.c b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-> index b4f82ebca532..16ef8aa6da37 100644
-> --- a/drivers/gpu/drm/imx/dcss/dcss-kms.c
-> +++ b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-> @@ -151,7 +151,6 @@ struct dcss_kms_dev *dcss_kms_attach(struct dcss_dev *dcss)
->   	return kms;
->   
->   cleanup_crtc:
-> -	drm_bridge_connector_disable_hpd(kms->connector);
->   	drm_kms_helper_poll_fini(drm);
->   	dcss_crtc_deinit(crtc, drm);
->   
-> @@ -167,7 +166,6 @@ void dcss_kms_detach(struct dcss_kms_dev *kms)
->   	struct drm_device *drm = &kms->base;
->   
->   	drm_dev_unregister(drm);
-> -	drm_bridge_connector_disable_hpd(kms->connector);
->   	drm_kms_helper_poll_fini(drm);
->   	drm_atomic_helper_shutdown(drm);
->   	drm_crtc_vblank_off(&kms->crtc.base);
+> Can you help to review the new flash LED driver changes for Qcom flash LED
+> module when you are available? It's pending for while.
+> Thanks
 
+The patches I have in my inbox are from last week.
 
-I get:
-/drivers/gpu/drm/imx/dcss/dcss-dev.c: In function ‘dcss_dev_suspend’:
-/drivers/gpu/drm/imx/dcss/dcss-dev.c:256:23: warning: unused variable ‘kms’ [-Wunused-variable]
-   256 |  struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
-       |                       ^~~
-/drivers/gpu/drm/imx/dcss/dcss-dev.c: In function ‘dcss_dev_resume’:
-/drivers/gpu/drm/imx/dcss/dcss-dev.c:277:23: warning: unused variable ‘kms’ [-Wunused-variable]
-   277 |  struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
-       |                       ^~~
+Please be patient - my backlog is presently very large.
 
-I'll fix while applying,
+You're 'on the list'.
 
-Neil
+> On 2022/12/27 16:15, Fenglin Wu wrote:
+> > Initial driver and binding document changes for supporting flash LED
+> > module in Qualcomm Technologies, Inc. PMICs.
+> > 
+> > Changes in V5:
+> >    1. Add MODULE_DEVICE_TABLE for auto-loading.
+> > 
+> > Changes in V4:
+> >    1. Added Tested-By tag.
+> >    2. Addressed review comments in the binding change and added
+> >       Reviewed-by tag.
+> > 
+> > Changes in V3:
+> >    1. Updated the driver to use regmap_field for register access.
+> >    2. Adressed the review comments in binding document change.
+> > 
+> > Changes in V2:
+> >    1. Addressed review comments in binding change, thanks Krzysztof!
+> >    2. Updated driver to address the compilation issue reported by
+> >       kernel test robot.
+> > 
+> > Fenglin Wu (2):
+> >    leds: flash: add driver to support flash LED module in QCOM PMICs
+> >    dt-bindings: leds: add QCOM flash LED controller
+> > 
+> >   .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 +++
+> >   drivers/leds/flash/Kconfig                    |  15 +
+> >   drivers/leds/flash/Makefile                   |   1 +
+> >   drivers/leds/flash/leds-qcom-flash.c          | 701 ++++++++++++++++++
+> >   4 files changed, 833 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> >   create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+> > 
+
+-- 
+Lee Jones [李琼斯]
