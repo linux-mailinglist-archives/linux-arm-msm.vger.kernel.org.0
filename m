@@ -2,98 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC61965F17D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 17:55:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BC2465F376
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 19:09:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234381AbjAEQzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 11:55:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42756 "EHLO
+        id S233287AbjAESJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 13:09:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233450AbjAEQzF (ORCPT
+        with ESMTP id S234094AbjAESJP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 11:55:05 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C00116A;
-        Thu,  5 Jan 2023 08:55:04 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 305DeJvU002378;
-        Thu, 5 Jan 2023 16:54:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=vI1DI2KQ0Fsy5vRXDrM4CuiG31w3dqMxsCH8s4bZ8wM=;
- b=WTapoAEua72mia4DR68/ZxNVe/ofN1Y8WDqizuaPPILaBq2yRWoYcXn0f+w6/nIW+FA5
- sbmHXg4swodKd/9R1ht4EIPPNrYyPofAANnhChDw13PrwFlqxp2jhiGMuVS1Ne+UOGfJ
- Nx5gVpkPuv6JRnJtquuHtN4RJknVmxo45NoEmxyDpkeH76VbYar94ARH0oBNwAx4hKgb
- IC4aqgPCeqpDkd5YpjbYTF2wVhTyuz4py3/3Ao3Yw5DdZreDmUyXPpm+FTf7wjRGk65Z
- Flsh0G/djglqEY3DkOIthEmxvh8ElHaRerJGb5d0T9qdrBDlSfbMHUYXAR94Viltb6Je Aw== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwvapgqbd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Jan 2023 16:54:40 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 305Gsd42022343
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Jan 2023 16:54:39 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 5 Jan 2023 08:54:39 -0800
-Date:   Thu, 5 Jan 2023 08:54:39 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     "Martin K. Petersen" <martin.petersen@oracle.com>
-CC:     <quic_cang@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
-        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v11 00/16] Add Multi Circular Queue Support
-Message-ID: <20230105165438.GC8114@asutoshd-linux1.qualcomm.com>
-References: <cover.1670541363.git.quic_asutoshd@quicinc.com>
- <yq1mt744jj7.fsf@ca-mkp.ca.oracle.com>
+        Thu, 5 Jan 2023 13:09:15 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC0BD1E1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 10:09:13 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id fm16-20020a05600c0c1000b003d96fb976efso1928414wmb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 10:09:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jTQXXh/dvztKjFBUGXCZQrUJyMbJ1vzV92prLWcVbIc=;
+        b=JotekkWG9cVcUN6JY5FzoA6/kA2g/fpF4KEGZQR4qRVkQrBx7ji6MfDeBlrZKVbtoD
+         e1TGJFo8OiWTEB4CXAtheRcgYGPawNmGwECJO2hWU8KgNJbFeep1MeJmDKdLk3N74yBA
+         hb5DyDUqepXDN3MaZHPOmpfQBnig6p9rN+pXNnl44HUk+ekcSxSX4NtYeCzbcBYvXIk2
+         ZiMVyIAYAM/PdVJBth2HVITnWn8fSH87jNjrJ87Ev2NS4eKnXiUaO4lHvkmSFKawZ4JX
+         UZZYgmqX/R9RWhDaZ5oxfXD6cTDLB86HkXBhKC3J3i6VynGfqx6yphTzQN7xXUMpHTdP
+         t9gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jTQXXh/dvztKjFBUGXCZQrUJyMbJ1vzV92prLWcVbIc=;
+        b=vrYWz0NyyhV6k9E7GIoY1IFaFODqJRejE0djea7MA2BLtdYT+DPVQr1EyTJE61+dyv
+         0ayzIuh3lSZrd/OziDJQeUe0kCu2Bo/mVWy0vwZvv/djaB7ILLv4BekBquwdmmRevOQO
+         6cg769MBkJYuDmuvkmGYu4aTAaY3zMFMq6PG9V1V3+YwBuKh/HwwoAzsvgS17TKxOScA
+         URTzHQC5qrTttKC34aruKR8qQ4oNmO6k4G2y0fanBzsN6RU0uNuRYfK/9OLAwxM5dAzA
+         qd8S/bHtKx8GVVTX+qNzBbRsyzk4y0S5oILttX+nxoZuAPRt1yVaP31AjVazjSXsWXL4
+         pQ9g==
+X-Gm-Message-State: AFqh2kqgqiX2EXGMa01ZUovxz8VQFC4b/cevoDbbVHlCZt6+6rgXjKsE
+        8w4sIhng65MhnLMQ37JYxyNEJQ==
+X-Google-Smtp-Source: AMrXdXtBbeH+ZaXZOnq96Ei2bJF3s4ZyM0k0lkiNPTScKXqcfHEVHc8v7Uqft1oLtnScRAJaxPzzaA==
+X-Received: by 2002:a7b:cb89:0:b0:3d2:2101:1f54 with SMTP id m9-20020a7bcb89000000b003d221011f54mr36891279wmi.4.1672942152244;
+        Thu, 05 Jan 2023 10:09:12 -0800 (PST)
+Received: from [192.168.1.100] ([178.197.217.234])
+        by smtp.gmail.com with ESMTPSA id b22-20020a05600c4e1600b003d34faca949sm3211743wmq.39.2023.01.05.10.09.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Jan 2023 10:09:11 -0800 (PST)
+Message-ID: <5b4d657c-1acf-f90b-be64-3e36cca96686@linaro.org>
+Date:   Thu, 5 Jan 2023 19:09:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <yq1mt744jj7.fsf@ca-mkp.ca.oracle.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: N2aQ9zzB_dkeRLX037ZzCJMM2cIouQk6
-X-Proofpoint-ORIG-GUID: N2aQ9zzB_dkeRLX037ZzCJMM2cIouQk6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-05_07,2023-01-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 clxscore=1011 mlxscore=0 impostorscore=0
- phishscore=0 spamscore=0 mlxlogscore=762 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301050133
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [RFC PATCH 02/14] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-3-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221223233200.26089-3-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 30 2022 at 14:25 -0800, Martin K. Petersen wrote:
->
->Asutosh,
->
->> This patch series is an implementation of UFS Multi-Circular Queue.
->> Please consider this series for next merge window.  This
->> implementation has been verified on a Qualcomm & MediaTek platform.
->
->I'll push my 6.3 staging tree shortly. Please rebase, there are a bunch
->of conflicts.
->
-Hello Martin
-Rebased and pushed v12. Please take a look.
+On 24/12/2022 00:31, Wesley Cheng wrote:
+> The QC ADSP is able to support USB playback and capture, so that the
+> main application processor can be placed into lower CPU power modes.  This
+> adds the required AFE port configurations and port start command to start
+> an audio session.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>  .../sound/qcom,q6dsp-lpass-ports.h            |   1 +
+>  sound/soc/qcom/qdsp6/q6afe-dai.c              |  47 +++++
+>  sound/soc/qcom/qdsp6/q6afe.c                  | 183 ++++++++++++++++++
+>  sound/soc/qcom/qdsp6/q6afe.h                  |  46 ++++-
+>  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      |  23 +++
+>  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h      |   1 +
+>  sound/soc/qcom/qdsp6/q6routing.c              |   8 +
+>  7 files changed, 308 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> index 9f7c5103bc82..746bc462bb2e 100644
+> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> @@ -131,6 +131,7 @@
+>  #define RX_CODEC_DMA_RX_7	126
+>  #define QUINARY_MI2S_RX		127
+>  #define QUINARY_MI2S_TX		128
+> +#define USB_RX				129
+>  
+>  #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
 
-Thanks
--asd
+Bindings are separate patches. Please split.
+
+Best regards,
+Krzysztof
 
