@@ -2,126 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9461A65EAB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 13:33:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0C0265EAFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 13:50:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231492AbjAEMdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 07:33:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58734 "EHLO
+        id S232952AbjAEMt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 07:49:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjAEMdb (ORCPT
+        with ESMTP id S232370AbjAEMt6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 07:33:31 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EFA32EA0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 04:33:28 -0800 (PST)
-Received: from [192.168.1.15] (91-154-32-225.elisa-laajakaista.fi [91.154.32.225])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 3B03D49C;
-        Thu,  5 Jan 2023 13:33:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1672922005;
-        bh=CT5uq3pz9N7Yk3nn0qDtAnoKb4PaVCXp5xAQURGaX80=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=JgXNxtZX9lSUiFKZp8uukTswkZXP5kXtoZSedtGhpPSImVluin+Xe3nI//E/fKlnd
-         S09r0paSGSBvPJeU1q+EgF3MbOYVXYSKmTwOijPKNXOCxAOGjiThb6IPJhYTj98sIs
-         bJ33zllbzEG1XoIIFcSmswlz1+/M69ClGaDNaAX0=
-Message-ID: <97ec36e8-620b-d6ed-70c7-caa289adb3e3@ideasonboard.com>
-Date:   Thu, 5 Jan 2023 14:33:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        neil.armstrong@linaro.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
+        Thu, 5 Jan 2023 07:49:58 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC073B931
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 04:49:57 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id t15so27141838wro.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 04:49:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T3qMRF1GNRdJeDqkXuS2/nTO+iJTQuqw4vXy5aAbbK8=;
+        b=X+2PEgw8rt7VT+EdaBphMOTic4+GLKrNo5BKPs7V4isiRAFuLwaAvBB6hEhMvsxkTp
+         TfkDrSAUw0xWRoTQPLvLromGbOrePs0K7f+ta91kcazZvGWcblftX3Med5BuNdwvXdw1
+         N0Uwmd5JJ+ifHeVx/lfVVXJJBgQUokhffq46c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T3qMRF1GNRdJeDqkXuS2/nTO+iJTQuqw4vXy5aAbbK8=;
+        b=En+U84eTlqBtTUqgtCx71koGMeVtI5P5kZZxG0WpyfWKKIoMuaB8LINhSmEty+iK3x
+         6cwjBzntCT77vT9o/vWYOV0RfI+LEtw0j4cRPlxVL2XuQFT949u/pAx7nNzo/3ypOrZc
+         sWtS0bkKefjIhvSc4m1q/lIfFEtEsYP2mi1mZ99He/PnPaR4g756eLIlv6ma3ApB0Bbb
+         RWA7HC0wFm7utdx3GwuVOEvOQnLmGABnVP4SlZXkMKeXgmISU3O1nYrx+R7UgB7hUwzH
+         nicFYnddwBMAyNi5WOxz1WLzwSGo7BuOqyHQCDguHL6paPx7K2c4flDai/wzSrPiphC2
+         p6rA==
+X-Gm-Message-State: AFqh2kqcR/tT08QO3HHLJGgN2XqvG4LbcjbpzRnHvaA+8IZDGzXt+9LX
+        Pz77KqC/Y8fCwbTSxfmXHPhshw==
+X-Google-Smtp-Source: AMrXdXszzCjklGnfpRwtfSRuYLCAYmB6iRZ01GByyDPZYpy5kgOcT+REOcuLIRSEsB2bdG+WQDpvAw==
+X-Received: by 2002:a5d:5965:0:b0:27f:1c70:58c3 with SMTP id e37-20020a5d5965000000b0027f1c7058c3mr22851191wri.24.1672922995942;
+        Thu, 05 Jan 2023 04:49:55 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id c11-20020a5d4ccb000000b002b6bcc0b64dsm382668wrt.4.2023.01.05.04.49.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 04:49:55 -0800 (PST)
+Date:   Thu, 5 Jan 2023 13:49:53 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Chia-I Wu <olvaffe@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <362452c5-8858-9ac5-e0ca-8ff993e966b7@linaro.org>
- <baa8df6b-ecd4-6df8-9fb5-6a3a39e1a04f@ideasonboard.com>
- <37e48125-072d-e55d-d997-67fd3796a779@linaro.org>
- <64c66b81-b347-f659-1038-c104eb5c5468@linaro.org>
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-In-Reply-To: <64c66b81-b347-f659-1038-c104eb5c5468@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm: Add MSM_SUBMIT_BO_NO_IMPLICIT
+Message-ID: <Y7bHcRAvk6GgMi5F@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Chia-I Wu <olvaffe@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20221206192123.661448-1-robdclark@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221206192123.661448-1-robdclark@gmail.com>
+X-Operating-System: Linux phenom 5.19.0-2-amd64 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 14:31, Dmitry Baryshkov wrote:
-> On 04/01/2023 11:05, Neil Armstrong wrote:
->> On 04/01/2023 08:29, Tomi Valkeinen wrote:
->>> On 28/12/2022 23:58, Dmitry Baryshkov wrote:
->>>> On 02/11/2022 20:06, Dmitry Baryshkov wrote:
->>>>>  From all the drivers using drm_bridge_connector only iMX/dcss and 
->>>>> OMAP
->>>>> DRM driver do a proper work of calling
->>>>> drm_bridge_connector_en/disable_hpd() in right places. Rather than
->>>>> teaching each and every driver how to properly handle
->>>>> drm_bridge_connector's HPD, make that automatic.
->>>>>
->>>>> Add two additional drm_connector helper funcs: enable_hpd() and
->>>>> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
->>>>> is the time where the drm_bridge_connector's functions are called 
->>>>> by the
->>>>> drivers too).
->>>>
->>>> Since we are at the beginning of the development window, gracious 
->>>> ping for this patchset.
->>>>
->>>> It would be nice to finally handle the bridge_connector's hpd 
->>>> properly. Calling drm_bridge_connector_enable_hpd() from 
->>>> drm_bridge_connector_init() is not a proper way to do this. It 
->>>> results in calling bridge->funcs->hpd_enable() before the rest of 
->>>> the pipeline was set up properly.
->>>
->>> For the series:
->>>
->>> Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
->>>
->>> I've been using this series in my local branch for quite a while to 
->>> fix the HPD issues. Works for me.
+On Tue, Dec 06, 2022 at 11:21:23AM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Thanks!
+> In cases where implicit sync is used, it is still useful (for things
+> like sub-allocation, etc) to allow userspace to opt-out of implicit
+> sync on per-BO basis.
 > 
->>>
->>> I still think the "fix" aspect should be highlighted more here, as 
->>> the current upstream triggers a WARN for "Hot plug detection already 
->>> enabled" (at least) on OMAP.
->>
->> LGTM then !
->>
->> Tomi, Dmitry, I can push the whole serie via drm-misc-next or -fixes 
->> then, as you wish.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c        |  3 ++-
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++++++++
+>  include/uapi/drm/msm_drm.h           |  4 +++-
+>  3 files changed, 16 insertions(+), 2 deletions(-)
 > 
-> 
-> I'm fine either way. We have been living with the warning for some time, 
-> so I don't think there is any urgency to get rid of it immediately.
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 017a512982a2..e0e1199a822f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -45,9 +45,10 @@
+>   * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
+>   * - 1.8.0 - Add MSM_BO_CACHED_COHERENT for supported GPUs (a6xx)
+>   * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
+> + * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
+>   */
+>  #define MSM_VERSION_MAJOR	1
+> -#define MSM_VERSION_MINOR	9
+> +#define MSM_VERSION_MINOR	10
+>  #define MSM_VERSION_PATCHLEVEL	0
+>  
+>  static const struct drm_mode_config_funcs mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index eb3536e3d66a..8bad07a04f85 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -334,9 +334,20 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+>  		if (ret)
+>  			return ret;
+>  
+> +		/* If userspace has determined that explicit fencing is
+> +		 * used, it can disable implicit sync on the entire
+> +		 * submit:
+> +		 */
+>  		if (no_implicit)
+>  			continue;
+>  
+> +		/* Otherwise userspace can ask for implicit sync to be
+> +		 * disabled on specific buffers.  This is useful for internal
+> +		 * usermode driver managed buffers, suballocation, etc.
+> +		 */
+> +		if (submit->bos[i].flags & MSM_SUBMIT_BO_NO_IMPLICIT)
+> +			continue;
+> +
+>  		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
 
-Yes, drm-misc-next is fine for me too.
+Won't this break shrinkers and fun stuff like that? It's why we added the
+new USAGE_OTHER fence slot at least, and also why I wonder whether we
+shouldn't push this into the helper to make the right call. Every driver
+kinda needs the same wheel.
+-Daniel
 
-  Tomi
+>  							      obj,
+>  							      write);
+> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> index f54b48ef6a2d..329100016e7c 100644
+> --- a/include/uapi/drm/msm_drm.h
+> +++ b/include/uapi/drm/msm_drm.h
+> @@ -222,10 +222,12 @@ struct drm_msm_gem_submit_cmd {
+>  #define MSM_SUBMIT_BO_READ             0x0001
+>  #define MSM_SUBMIT_BO_WRITE            0x0002
+>  #define MSM_SUBMIT_BO_DUMP             0x0004
+> +#define MSM_SUBMIT_BO_NO_IMPLICIT      0x0008
+>  
+>  #define MSM_SUBMIT_BO_FLAGS            (MSM_SUBMIT_BO_READ | \
+>  					MSM_SUBMIT_BO_WRITE | \
+> -					MSM_SUBMIT_BO_DUMP)
+> +					MSM_SUBMIT_BO_DUMP | \
+> +					MSM_SUBMIT_BO_NO_IMPLICIT)
+>  
+>  struct drm_msm_gem_submit_bo {
+>  	__u32 flags;          /* in, mask of MSM_SUBMIT_BO_x */
+> -- 
+> 2.38.1
+> 
 
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
