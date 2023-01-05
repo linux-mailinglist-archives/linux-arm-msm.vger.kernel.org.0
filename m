@@ -2,118 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A9865E4B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 05:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6812165E529
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 06:36:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbjAEEhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 23:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46620 "EHLO
+        id S230342AbjAEFgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 00:36:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjAEEhP (ORCPT
+        with ESMTP id S230261AbjAEFf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 23:37:15 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B5A12602
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 20:37:12 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id bs20so32916063wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 20:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V8n4KZU3ErLZb7D+5oV5JKZTvhpFWTfVUw/4LSSiqWc=;
-        b=T1QBcW/bIgzKPnVeL59jcQEp1vZU40PnLLKdMX6yYF0va5o0MbdVKdVFMz9QrQdS0l
-         Yt0Xs6/NsGHezhsriK5sZ4sYw2H/SuTxo5h8+6Bc3TcyQc8pP0TcjJBiYHJgX02FQan5
-         rUYWSmhY+M0qbWO43UYTMqaCtiJAJJ8XIQkhbNF03YM37VN55TaeXVA7yKf+WjWwt2EB
-         hMgMOj1eV4wMxwLCnSbJJ0hfeVFgRUBwUHuuYY08yHZaGuLomJ5ubCds7DiXUZiD5M/0
-         4qG/mavSBdUCvfIM7arRtQjJP3UmFfsTkw6aKEx7d0xiVeXJi0lT8pKVf4aTJEtlYN/t
-         vO2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V8n4KZU3ErLZb7D+5oV5JKZTvhpFWTfVUw/4LSSiqWc=;
-        b=tWPMYyMoOIgu9HLzm2bb+18o4I3/bXDnNQHyLVH9QlPm5iQyrrHVTeLFk8AdT36RXO
-         FyLwR3yBwwsPVTuAeqJ7YJN0LTue031aHQ26GjCWfk6ldbNg37It0IG17+Zauoldxovz
-         M3JfZXvHZ4vvXqWMFek2TGTBIjetAKwdeH5a3ZK530M1nZv0ZnBnKkQVKdthZDMl7eVy
-         ZTGTcCqhpuZfZPkHy+5ywVHMEylSLoFbmfA4eQidol14FeVC9r46ihuRhaacsYcX+/pD
-         OUldpbXkeYytwqauMNLL3rAJSN9Shs5twkCL7hmGKvNpxEaCb9LH35lZKZ5mJwavlPvL
-         W9Kg==
-X-Gm-Message-State: AFqh2kowaD+16RuEPQuS98svFGvdiVQUmyfwoLVWzBgfowRNJ+lGfCe8
-        Igxr3V1LIOVnQEJL0cNaYXg=
-X-Google-Smtp-Source: AMrXdXt/yqQWzK0JIKHjU/7CDgvchWlRfZKhJFMKPVJnTZ3cGXeN8hOkB/m/K6zF7kNjhTkMv6m3QA==
-X-Received: by 2002:adf:e690:0:b0:2b3:f6f:293b with SMTP id r16-20020adfe690000000b002b30f6f293bmr335845wrm.47.1672893431502;
-        Wed, 04 Jan 2023 20:37:11 -0800 (PST)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id m16-20020adffe50000000b00241bd7a7165sm39712107wrs.82.2023.01.04.20.37.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 20:37:10 -0800 (PST)
-Date:   Thu, 5 Jan 2023 07:37:08 +0300
-From:   Dan Carpenter <error27@gmail.com>
-To:     oe-kbuild@lists.linux.dev,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] drm/msm: another fix for the headless Adreno GPU
-Message-ID: <202301050715.xoGxiXQq-lkp@intel.com>
+        Thu, 5 Jan 2023 00:35:56 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB6B5131A;
+        Wed,  4 Jan 2023 21:35:50 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3054sjnr013420;
+        Thu, 5 Jan 2023 05:06:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gWnhZ1G48hLuLE7lUYmRytEXz6CP0hOeaqLWQIgEeIQ=;
+ b=fG1Kv3Vz7YjeR2E2ZHeHBMGciC7xKDb1PIwgAzu/x+8msBDeGmCBiarNAzcHHKPjgto/
+ It2zLhCovo/TRoY3sl17lpRCtnFXKu/DWienszyUzXG06wJx4XmbJy9ACLertuS3BaTd
+ 0zzXqmXH/n/PC+i4ZmBJv1us51JxQlUD3AL+WQv/efbUcXgHgjBVhTAJMgGuf26ejKXH
+ kQuOoHWyHZjStnJaovpuTMArXfn03bTFNDAU4jI3Ul69YEKyqlc5W+Da21RJxzvSgCjr
+ WGEvQMG9WPTykVmmkQiDcbcSUc5iWi6BZpBHYbSqRGCZCSt4pxkaFuw7GshFt1B1MeoB wQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwj1rrmh3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 05 Jan 2023 05:06:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 305561Bo027164
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 5 Jan 2023 05:06:01 GMT
+Received: from [10.50.40.159] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 4 Jan 2023
+ 21:05:55 -0800
+Message-ID: <311fe310-d43c-cf5f-623d-6f747bc2f2a5@quicinc.com>
+Date:   Thu, 5 Jan 2023 10:34:57 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221231022937.286491-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 1/2] soc: qcom: dcc: Fix examples list on
+ /sys/kernel/debug/dcc/.../[list-number]/config documentation
+Content-Language: en-US
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Linux Documentation <linux-doc@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Devicetree <devicetree@vger.kernel.org>
+CC:     Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        "Sibi Sankar" <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        kernel test robot <lkp@intel.com>
+References: <20221230135030.17002-1-bagasdotme@gmail.com>
+ <20221230135030.17002-2-bagasdotme@gmail.com>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <20221230135030.17002-2-bagasdotme@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6Hq9MFPcxPOu8LHBchXP5ZxzE4UT20xQ
+X-Proofpoint-GUID: 6Hq9MFPcxPOu8LHBchXP5ZxzE4UT20xQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-05_01,2023-01-04_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 mlxscore=0 priorityscore=1501 clxscore=1011 adultscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301050041
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-another-fix-for-the-headless-Adreno-GPU/20221231-103022
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20221231022937.286491-1-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH] drm/msm: another fix for the headless Adreno GPU
-config: loongarch-randconfig-m031-20230101
-compiler: loongarch64-linux-gcc (GCC) 12.1.0
+On 12/30/2022 7:20 PM, Bagas Sanjaya wrote:
+> kernel test robot reported htmldocs warnings:
+> 
+> Documentation/ABI/testing/debugfs-driver-dcc:34: WARNING: Unexpected indentation.
+> Documentation/ABI/testing/debugfs-driver-dcc:34: WARNING: Block quote ends without a blank line; unexpected unindent.
+> 
+> Fix these by fixing numbered list syntax on description of
+> /sys/kernel/debug/dcc/.../[list-number]/config, including adding blank line
+> separators as appropriate.
+> 
+> Link: https://lore.kernel.org/linux-doc/202212300426.eMLsZsvA-lkp@intel.com/
+> Fixes: 4cbe60cf5ad622 ("soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>   Documentation/ABI/testing/debugfs-driver-dcc | 63 +++++++++++++-------
+>   1 file changed, 41 insertions(+), 22 deletions(-)
+> 
+> diff --git a/Documentation/ABI/testing/debugfs-driver-dcc b/Documentation/ABI/testing/debugfs-driver-dcc
+> index a4680950205931..a00f4502885b58 100644
+> --- a/Documentation/ABI/testing/debugfs-driver-dcc
+> +++ b/Documentation/ABI/testing/debugfs-driver-dcc
+> @@ -44,35 +44,54 @@ Description:
+>   		example user can jump to list x only after list y is
+>   		configured and enabled. The format for entering all
+>   		types of instructions are explained in examples as
+> -		follows.
+> -		Example:
+> -	         i)Read Type Instruction
+> +		follows:
+> +
+> +	        i) Read Type Instruction
+> +
+>   		   echo R <1> <2> <3> >/sys/kernel/debug/dcc/../[list-number]/config
+> +
+>   		   1->Address to be considered for reading the value.
+> +
+>   		   2->The word count of the addresses, read n words
+>   		      starting from address <1>. Each word is of 32 bits.
+>   		      If not entered 1 is considered.
+> +
+>   		   3->Can be 'apb' or 'ahb' which indicates if it is apb or ahb
+>   		      bus respectively. If not entered ahb is considered.
+> -		ii)Write Type Instruction
+> -		   echo W <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> -		   1->Address to be considered for writing the value.
+> -		   2->The value that needs to be written at the location.
+> -		   3->Can be a 'apb' or 'ahb' which indicates if it is apb or ahb
+> -		      but respectively.
+> -	       iii)Read Modify Write type instruction
+> -		   echo RW <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> -		   1->The address which needs to be considered for read then write.
+> -		   2->The value that needs to be written on the address.
+> -		   3->The mask of the value to be written.
+> -		iv)Loop Type Instruction
+> -		   echo L <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> -		   1->The loop count, the number of times the value of the addresses will be
+> -		      captured.
+> -		   2->The address count, total number of addresses to be entered in this
+> -		      instruction.
+> -		   3->The series of addresses to be entered separated by a space like <addr1>
+> -		      <addr2>... and so on.
+> +
+> +		ii) Write Type Instruction
+> +
+> +		    echo W <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +
+> +		    1->Address to be considered for writing the value.
+> +
+> +		    2->The value that needs to be written at the location.
+> +
+> +		    3->Can be a 'apb' or 'ahb' which indicates if it is apb or ahb
+> +		       but respectively.
+> +
+> +	        iii) Read Modify Write type instruction
+> +
+> +		     echo RW <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +
+> +		     1->The address which needs to be considered for read then write.
+> +
+> +		     2->The value that needs to be written on the address.
+> +
+> +		     3->The mask of the value to be written.
+> +
+> +		iv) Loop Type Instruction
+> +
+> +		    echo L <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +
+> +		    1->The loop count, the number of times the value of the addresses will be
+> +		       captured.
+> +
+> +		    2->The address count, total number of addresses to be entered in this
+> +		       instruction.
+> +
+> +		    3->The series of addresses to be entered separated by a space like <addr1>
+> +		       <addr2>... and so on.
+>   
+>   What:           /sys/kernel/debug/dcc/.../[list-number]/enable
+>   Date:           December 2022
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <error27@gmail.com>
-
-smatch warnings:
-drivers/gpu/drm/msm/msm_atomic.c:194 msm_atomic_commit_tail() error: uninitialized symbol 'async'.
-
-vim +/async +194 drivers/gpu/drm/msm/msm_atomic.c
-
-d4d2c60497cfc5 Rob Clark        2019-08-29  181  
-d14659f5de7d28 Sean Paul        2018-02-28  182  void msm_atomic_commit_tail(struct drm_atomic_state *state)
-cf3a7e4ce08e68 Rob Clark        2014-11-08  183  {
-cf3a7e4ce08e68 Rob Clark        2014-11-08  184  	struct drm_device *dev = state->dev;
-0b776d457b9476 Rob Clark        2015-01-30  185  	struct msm_drm_private *priv = dev->dev_private;
-0b776d457b9476 Rob Clark        2015-01-30  186  	struct msm_kms *kms = priv->kms;
-2d99ced787e3d0 Rob Clark        2019-08-29  187  	struct drm_crtc *async_crtc = NULL;
-d4d2c60497cfc5 Rob Clark        2019-08-29  188  	unsigned crtc_mask = get_crtc_mask(state);
-91a514e50f1157 Dmitry Baryshkov 2022-12-31  189  	bool async;
-                                                        ^^^^^^^^^^^
-91a514e50f1157 Dmitry Baryshkov 2022-12-31  190  
-91a514e50f1157 Dmitry Baryshkov 2022-12-31  191  	if (!kms)
-91a514e50f1157 Dmitry Baryshkov 2022-12-31  192  		return;
-0b776d457b9476 Rob Clark        2015-01-30  193  
-d934a712c5e6a3 Rob Clark        2019-08-29 @194  	trace_msm_atomic_commit_tail_start(async, crtc_mask);
-                                                                                           ^^^^^
-Unitialized.
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
-
+Acked-by:Souradeep Chowdhury <quic_schowdhu@quicinc.com>
