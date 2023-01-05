@@ -2,92 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E03665E47D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 05:13:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10A9865E4B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 05:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbjAEEMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Jan 2023 23:12:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38166 "EHLO
+        id S229464AbjAEEhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Jan 2023 23:37:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231501AbjAEEMX (ORCPT
+        with ESMTP id S229441AbjAEEhP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Jan 2023 23:12:23 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B255913D39;
-        Wed,  4 Jan 2023 20:12:22 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30543kV0020204;
-        Thu, 5 Jan 2023 04:12:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=h5tJprJsUMF2KrpzE35hPHeUJaUoqcYRm33Jr1+Uiz8=;
- b=SXELPZuCkDbzv6IDx0TVcWBC+5uMl1C28omqH7nE13pTRfPfZEsWNdIDK3tGjWV2FMcz
- VGLOGVmoccWd6SIbHCgTmSKeoVf1AUoyWnoy8bZEJkcKovRZsn5NgxIHtICwvSE9177m
- 5GnOqHSNbxw7lxIWea0pI4Dt0NNhQjGhHu06FOm7OjJwnKE+kx8cwiZVpeiSO96XL+do
- ttBJj4omQIcjkd4xcwvDXPGQgenSSl8tNDoGBVr7vVnKRT/zFnoWz9Dya1mVbrSWLXeQ
- CZ/PL1T5oJW5GtzW4lGDmzXidx0DJyYf/mU169GdxpIb+pK3AeiuxFDSywrOiRXrfoPc AQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mvsvf3dbr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Jan 2023 04:12:14 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3054CDeQ007848
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Jan 2023 04:12:14 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 4 Jan 2023
- 20:12:13 -0800
-Message-ID: <8b145e5a-f021-795d-a083-636a3ac3cf74@quicinc.com>
-Date:   Wed, 4 Jan 2023 21:12:12 -0700
+        Wed, 4 Jan 2023 23:37:15 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B5A12602
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jan 2023 20:37:12 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id bs20so32916063wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jan 2023 20:37:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V8n4KZU3ErLZb7D+5oV5JKZTvhpFWTfVUw/4LSSiqWc=;
+        b=T1QBcW/bIgzKPnVeL59jcQEp1vZU40PnLLKdMX6yYF0va5o0MbdVKdVFMz9QrQdS0l
+         Yt0Xs6/NsGHezhsriK5sZ4sYw2H/SuTxo5h8+6Bc3TcyQc8pP0TcjJBiYHJgX02FQan5
+         rUYWSmhY+M0qbWO43UYTMqaCtiJAJJ8XIQkhbNF03YM37VN55TaeXVA7yKf+WjWwt2EB
+         hMgMOj1eV4wMxwLCnSbJJ0hfeVFgRUBwUHuuYY08yHZaGuLomJ5ubCds7DiXUZiD5M/0
+         4qG/mavSBdUCvfIM7arRtQjJP3UmFfsTkw6aKEx7d0xiVeXJi0lT8pKVf4aTJEtlYN/t
+         vO2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V8n4KZU3ErLZb7D+5oV5JKZTvhpFWTfVUw/4LSSiqWc=;
+        b=tWPMYyMoOIgu9HLzm2bb+18o4I3/bXDnNQHyLVH9QlPm5iQyrrHVTeLFk8AdT36RXO
+         FyLwR3yBwwsPVTuAeqJ7YJN0LTue031aHQ26GjCWfk6ldbNg37It0IG17+Zauoldxovz
+         M3JfZXvHZ4vvXqWMFek2TGTBIjetAKwdeH5a3ZK530M1nZv0ZnBnKkQVKdthZDMl7eVy
+         ZTGTcCqhpuZfZPkHy+5ywVHMEylSLoFbmfA4eQidol14FeVC9r46ihuRhaacsYcX+/pD
+         OUldpbXkeYytwqauMNLL3rAJSN9Shs5twkCL7hmGKvNpxEaCb9LH35lZKZ5mJwavlPvL
+         W9Kg==
+X-Gm-Message-State: AFqh2kowaD+16RuEPQuS98svFGvdiVQUmyfwoLVWzBgfowRNJ+lGfCe8
+        Igxr3V1LIOVnQEJL0cNaYXg=
+X-Google-Smtp-Source: AMrXdXt/yqQWzK0JIKHjU/7CDgvchWlRfZKhJFMKPVJnTZ3cGXeN8hOkB/m/K6zF7kNjhTkMv6m3QA==
+X-Received: by 2002:adf:e690:0:b0:2b3:f6f:293b with SMTP id r16-20020adfe690000000b002b30f6f293bmr335845wrm.47.1672893431502;
+        Wed, 04 Jan 2023 20:37:11 -0800 (PST)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id m16-20020adffe50000000b00241bd7a7165sm39712107wrs.82.2023.01.04.20.37.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Jan 2023 20:37:10 -0800 (PST)
+Date:   Thu, 5 Jan 2023 07:37:08 +0300
+From:   Dan Carpenter <error27@gmail.com>
+To:     oe-kbuild@lists.linux.dev,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH] drm/msm: another fix for the headless Adreno GPU
+Message-ID: <202301050715.xoGxiXQq-lkp@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 3/6] bus: mhi: ep: Only send -ENOTCONN status if client
- driver is available
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <mhi@lists.linux.dev>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20221228161704.255268-1-manivannan.sadhasivam@linaro.org>
- <20221228161704.255268-4-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20221228161704.255268-4-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jt5fE1gYFq_pf0Gh0VUaVfVIRLjidT8l
-X-Proofpoint-GUID: jt5fE1gYFq_pf0Gh0VUaVfVIRLjidT8l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-04_07,2023-01-04_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- clxscore=1011 priorityscore=1501 spamscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=984 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301050033
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221231022937.286491-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/28/2022 9:17 AM, Manivannan Sadhasivam wrote:
-> For the STOP and RESET commands, only send the channel disconnect status
-> -ENOTCONN if client driver is available. Otherwise, it will result in
-> null pointer dereference.
-> 
-> Cc: <stable@vger.kernel.org> # 5.19
-> Fixes: e827569062a8 ("bus: mhi: ep: Add support for processing command rings")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hi Dmitry,
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-another-fix-for-the-headless-Adreno-GPU/20221231-103022
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20221231022937.286491-1-dmitry.baryshkov%40linaro.org
+patch subject: [PATCH] drm/msm: another fix for the headless Adreno GPU
+config: loongarch-randconfig-m031-20230101
+compiler: loongarch64-linux-gcc (GCC) 12.1.0
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <error27@gmail.com>
+
+smatch warnings:
+drivers/gpu/drm/msm/msm_atomic.c:194 msm_atomic_commit_tail() error: uninitialized symbol 'async'.
+
+vim +/async +194 drivers/gpu/drm/msm/msm_atomic.c
+
+d4d2c60497cfc5 Rob Clark        2019-08-29  181  
+d14659f5de7d28 Sean Paul        2018-02-28  182  void msm_atomic_commit_tail(struct drm_atomic_state *state)
+cf3a7e4ce08e68 Rob Clark        2014-11-08  183  {
+cf3a7e4ce08e68 Rob Clark        2014-11-08  184  	struct drm_device *dev = state->dev;
+0b776d457b9476 Rob Clark        2015-01-30  185  	struct msm_drm_private *priv = dev->dev_private;
+0b776d457b9476 Rob Clark        2015-01-30  186  	struct msm_kms *kms = priv->kms;
+2d99ced787e3d0 Rob Clark        2019-08-29  187  	struct drm_crtc *async_crtc = NULL;
+d4d2c60497cfc5 Rob Clark        2019-08-29  188  	unsigned crtc_mask = get_crtc_mask(state);
+91a514e50f1157 Dmitry Baryshkov 2022-12-31  189  	bool async;
+                                                        ^^^^^^^^^^^
+91a514e50f1157 Dmitry Baryshkov 2022-12-31  190  
+91a514e50f1157 Dmitry Baryshkov 2022-12-31  191  	if (!kms)
+91a514e50f1157 Dmitry Baryshkov 2022-12-31  192  		return;
+0b776d457b9476 Rob Clark        2015-01-30  193  
+d934a712c5e6a3 Rob Clark        2019-08-29 @194  	trace_msm_atomic_commit_tail_start(async, crtc_mask);
+                                                                                           ^^^^^
+Unitialized.
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
+
