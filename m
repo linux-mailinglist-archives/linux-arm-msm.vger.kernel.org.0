@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ED8465ED4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 14:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7487665ED58
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 14:41:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233497AbjAENjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 08:39:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53750 "EHLO
+        id S232923AbjAENlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 08:41:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233571AbjAENjB (ORCPT
+        with ESMTP id S232541AbjAENlh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 08:39:01 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480EB37273;
-        Thu,  5 Jan 2023 05:38:54 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 305CtAWL032660;
-        Thu, 5 Jan 2023 13:38:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=o+Gzip8MI1YUsrzvw8xu85Wc4SqiMoRcrC30w+2ptfY=;
- b=R/My7XUSz4IsSCZ+ttIV0CtaBD+Bxj2cvHQEv3F7KNkzAEPShtPVm4/f+067TMTjgHEb
- neaAmzdXATroYVDefcM2RQEKg/W/238J+3PL/PbS3JCvt7AMyNyMaAbIBL7krIGq/xXH
- z5N3wqzl+Lwadsi29SIpG7dtvHErsIslvUNe5qcOSMtgj+5SjEuO7e+v4TomDdY66Oe/
- EDt9Fpyo1rJwbO7pjR4JqfTrh9/+uoSA3F5JiHEvKJbPDpQfgeBdan187pKvoLqdKBZW
- Do0lucNtf2PKZ5sgPCTJmX1JYgfOtxryECYeATGp/H1WSoyBN9yu+jQv+TFDcbY/VnXW 3Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwuuurcue-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Jan 2023 13:38:50 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 305DcnM8015206
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Jan 2023 13:38:49 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 5 Jan 2023 05:38:45 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <konrad.dybcio@linaro.org>, <mka@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2 8/8] arm64: dts: qcom: sc7280: audioreach: Disable legacy path clock nodes
-Date:   Thu, 5 Jan 2023 19:07:55 +0530
-Message-ID: <1672925875-2107-9-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 5 Jan 2023 08:41:37 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49375FA0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 05:41:35 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id j17so45596871lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 05:41:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tfbl4V9HTnOZUDmQLBRO+dO5pUjugSWLRCL32fMSRic=;
+        b=td+hv+S+hYL7dOGXr6zGJreRbZREGRZA022QIsuRna0dNPkh7YwU/XZI/flwnnNeKa
+         is9Nx9AS1EhesbvE6bhhwE1bj8Dy7U255cBxEXnvwS51mtxKWSOuksIo0TlZR2YZjwZ6
+         JRKHqTQpDk17tcbR2R5rs12aX+ME8SMAwi5WHqZ6Yz91NytJ8H8f4qpiTILWbePs+Lbn
+         kQxWv7dzYOftQOJCj2eYAYet61rY0d0tPiiJfohmPFajCidCyhveEVmHWKXKgLiGdkBo
+         FAOJsrvkN4JJVBQY0rE/MFlGrlU9y0TmtXhV6rpSxOME+0x3wtJUOoIu8+678JQTFJOh
+         5UQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tfbl4V9HTnOZUDmQLBRO+dO5pUjugSWLRCL32fMSRic=;
+        b=sSD1rcRBvDhL1GHU+k98LVaJIdqFdtShG1b7lQwX1+14mco3CVjfjm/zG2qiGfcT7c
+         vqcgq0cLq7k3yh611R5lzJUVjcg7fhydwhqPb0ed72kb2Xiakya0haCTVt2HqSm7OLTD
+         VJKAsCLfyoMg2d7hcACW+ucs7CqAmhFT1JiuU3hhz6PU0N57iq0GfaJae7Q5F0Nfz8H5
+         l2165DIrhc7dFKfaMfTzljvXq8mGAefORsnwHaw8aCYf7WkZ2ZKuvekL6+1NcbXwbFsO
+         IVCwW1gk65IYqVzoQ/SC9OYjfDVg/JXL6JnKtlMnRvqDp6EnBWUgaQbU2gc5TR0G8/Ai
+         fROA==
+X-Gm-Message-State: AFqh2kqWeqZNyaLMQL3VugsTiWRqBajn61FfFqfV0KIeLComq55EAW/A
+        Eq71XFOPuIrYVRGZcgiOpqNiYg==
+X-Google-Smtp-Source: AMrXdXvfJsaMgyaZ9WsxqqqTwcx9agMXetrqA8wA9FAsubVEmYQDQHZytvdUjhTNKzJaL5tzVdePjQ==
+X-Received: by 2002:a05:6512:3b2a:b0:4b5:5efb:7d26 with SMTP id f42-20020a0565123b2a00b004b55efb7d26mr17876201lfv.37.1672926094295;
+        Thu, 05 Jan 2023 05:41:34 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id bq25-20020a056512151900b004b592043413sm5461315lfb.12.2023.01.05.05.41.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 05:41:33 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 00/12] clock: qcom: apq8084: convert to parent_data/_hws
+Date:   Thu,  5 Jan 2023 15:41:21 +0200
+Message-Id: <20230105134133.1550618-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ygNOXtA2FTftNLN4xEjhk4FzEN6jN1Bc
-X-Proofpoint-ORIG-GUID: ygNOXtA2FTftNLN4xEjhk4FzEN6jN1Bc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-05_04,2023-01-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
- mlxscore=0 phishscore=0 mlxlogscore=937 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301050107
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Disable legacy path clock nodes to avoid conflicts with audioreach
-clock node.
+Rework apq8084 gcc and mmcc drivers to use parent_data and parent_hws
+instead of parent_names.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- .../boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi   | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Changes since RFC:
+- Fixed clock/clock-names's maxItems in qcom,mmcc.yaml
+- Expanded qcom,gcc-apq8084 example to include an example of UFS symbol
+  clock bindings
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-index 175ed9c..a88b305 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-@@ -190,3 +190,15 @@
- &swr1 {
- 	resets = <&lpasscc LPASS_AUDIO_SWR_TX_CGCR>;
- };
-+
-+&lpass_aon {
-+	status = "disabled";
-+};
-+
-+&lpass_audiocc {
-+	status = "disabled";
-+};
-+
-+&lpass_core {
-+	status = "disabled";
-+};
+Dmitry Baryshkov (12):
+  dt-bindings: clock: qcom,gcc-apq8084: define clocks/clock-names
+  dt-bindings: clock: qcom,gcc-apq8084: add GCC_MMSS_GPLL0_CLK_SRC
+  dt-bindings: clock: qcom,mmcc: define clocks/clock-names for APQ8084
+  clk: qcom: gcc-apq8084: use ARRAY_SIZE instead of specifying
+    num_parents
+  clk: qcom: gcc-apq8084: move PLL clocks up
+  clk: qcom: gcc-apq8084: use parent_hws/_data instead of parent_names
+  clk: qcom: gcc-apq8084: add GCC_MMSS_GPLL0_CLK_SRC
+  clk: qcom: mmcc-apq8084: use ARRAY_SIZE instead of specifying
+    num_parents
+  clk: qcom: mmcc-apq8084: move clock parent tables down
+  clk: qcom: mmcc-apq8084: remove spdm clocks
+  clk: qcom: mmcc-apq8084: use parent_hws/_data instead of parent_names
+  ARM: dts: qcom: apq8084: add clocks and clock-names to gcc device
+
+ .../bindings/clock/qcom,gcc-apq8084.yaml      |   48 +
+ .../devicetree/bindings/clock/qcom,mmcc.yaml  |   44 +-
+ arch/arm/boot/dts/qcom-apq8084.dtsi           |   18 +
+ drivers/clk/qcom/gcc-apq8084.c                | 1024 +++++++-------
+ drivers/clk/qcom/mmcc-apq8084.c               | 1189 +++++++----------
+ include/dt-bindings/clock/qcom,gcc-apq8084.h  |    1 +
+ 6 files changed, 1102 insertions(+), 1222 deletions(-)
+
 -- 
-2.7.4
+2.39.0
 
