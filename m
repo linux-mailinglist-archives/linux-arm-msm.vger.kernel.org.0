@@ -2,54 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DF7660609
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 18:56:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 259AB660637
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 19:14:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234216AbjAFR4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 12:56:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
+        id S229846AbjAFSOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 13:14:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234196AbjAFR4D (ORCPT
+        with ESMTP id S229698AbjAFSO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 12:56:03 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53CBD7D9E7;
-        Fri,  6 Jan 2023 09:56:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DF41361F0B;
-        Fri,  6 Jan 2023 17:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A179BC433EF;
-        Fri,  6 Jan 2023 17:56:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673027761;
-        bh=ot+tAafudNV7hoY7I2KoYwEZhq9iuC+POIAR3srNPPM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VO1gdWoxPVKG1w4XeWigCGI++6zlHzV8PLbl9wH7VSr3blZwMmz8b/uKTAWyWrAij
-         K4WFX3d5vgVnYL5H+2Q79lQiDGIAQq3K4yL0V5lWSem6GPyewV7gX8ZrMrbtWgyXHh
-         sH5cdkvPtiz1mzY4mXWNVNC+Hc3ip1JYHL+3P1OiapEDfsa6j6Xdr718JUDLWNJmiG
-         10H9sk/mROjM1vKLcN3y6xcx7ht+VmiXYhzvOFZ6T8onVM0UGvS/camNu3ep80RZgN
-         qaRBbez0PQRRIHRBcg84qFawDcnagdgOTnxRX4YdXzeHtLrXpWuPEnNdMZLQKsLfxq
-         UvwgT1iyh81KQ==
-Date:   Fri, 6 Jan 2023 11:55:58 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: reserved-memory: rmtfs: Document
- qcom,assign-to-nav
-Message-ID: <20230106175558.7sfutxaishdlwhoe@builder.lan>
-References: <20230102165034.830620-1-konrad.dybcio@linaro.org>
+        Fri, 6 Jan 2023 13:14:29 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0A476822
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 10:14:28 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-4c15c4fc8ccso33096707b3.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 10:14:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xP3geULSyX4lV8d6R9rMjnULV5w7kHHpTYX3xrPNxuU=;
+        b=UsNe0gNyAmOwYoDLj/i8PWxRee4X8jVDyisS53x003xJU8GpJ9FGr7LBLz9Q7mCcuZ
+         FP3rrd6blhEJhWHOaKCHN4riLuLTcrxVNIBsFEt8yoKjUhMM61KI6jRYNZZUZcDLsxHd
+         YhexIyBurtEAKJ0MtEO5v0WzSugvXSGoaDyejb3le0GET1TY5oD0cvBHWRuCZif2br2K
+         LxVd565xq0N7YcPuCC2Nzv/5fcsQAbUXVBZNE8abWQjr6DdDbpvbkkCdgDnZyVM4X0DL
+         bB5JTEjH/tCsNe8cTCWMiF9KG+7nl6HOBNhqYHa6z9w/U5HsrMW9a7y9LumOrzpeuivT
+         IgSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xP3geULSyX4lV8d6R9rMjnULV5w7kHHpTYX3xrPNxuU=;
+        b=BurNc9XHK/NM1CMKZwpQs+6/83pSKSsAficIO8S2PpIhH6ZO7mIK21HPs0aDiVY+wr
+         5FIVK2/0z0ndqVa8BBB+QEo3CtlsW9EwvmFn/hpaAYfjJxryTd6TYSXlV0tFPrzYEqUo
+         lb5bBzge7Wl9GFDE26BgRQaU2t8992QqUHcwDAynmSFLro/9bB6omoDTxM3mTMf3285M
+         LPQvCMRic8SyMDZpThxnLcrDaw0wssEdXeqUYPqL17G8UAK8HWgshhcT8C5PtuRcfGuy
+         Fj88zCumam8EKfr1ikTEaPa68SYW5HtV6XiaO/C8m4lMGVzkUaubo0Mn1J7YUVUp0mVr
+         3X+w==
+X-Gm-Message-State: AFqh2krUTMQr42vqb7IrLI0x5bU0aJEUwJLW5JETLwDrF9Ai32Ong+Af
+        EXISYz2J6a8oW+Yukxr5jAeeN2Mh2rfECEdPwSp7qg==
+X-Google-Smtp-Source: AMrXdXslvebv24QddXX/TLgWhNaCTYaNYEw3yuKcUZCybMMAI19TPi0KCw62PgInbStQYarDYBZo8VgZN7ECFstTgWU=
+X-Received: by 2002:a81:6702:0:b0:477:b56e:e1d6 with SMTP id
+ b2-20020a816702000000b00477b56ee1d6mr5205418ywc.188.1673028867810; Fri, 06
+ Jan 2023 10:14:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230102165034.830620-1-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <e0ced334-e6c1-caeb-322a-f67a23ee58da@linaro.org>
+In-Reply-To: <e0ced334-e6c1-caeb-322a-f67a23ee58da@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 6 Jan 2023 20:14:16 +0200
+Message-ID: <CAA8EJpr0A=VjWEv6NPaZ-t_3TgNaWpsVO8_inJhxqoThry_zZA@mail.gmail.com>
+Subject: Re: Annoying message on the console for the db845c board
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,44 +72,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 02, 2023 at 05:50:33PM +0100, Konrad Dybcio wrote:
-> Some SoCs mandate that the RMTFS is also assigned to the NAV VM, while
-> others really don't want that. Since it has to be conditional, add a
-> bool property to toggle this behavior.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> v1 -> v2:
-> - Rewrite the newly added description
-> 
->  .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> index 2998f1c8f0db..4026788a4e40 100644
-> --- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> @@ -31,6 +31,12 @@ properties:
->      description: >
->        vmid of the remote processor, to set up memory protection
->  
-> +  qcom,assign-to-nav:
-> +    type: boolean
-> +    description:
-> +      Whether to also assign the region to a third (NAV) VM, as opposed to
-> +      the usual 2.
+On Fri, 6 Jan 2023 at 18:37, Daniel Lezcano <daniel.lezcano@linaro.org> wrote:
+>
+>
+> Hi all,
+>
+> Does anyone have an idea on how to fix these timeout messages ? They are
+> displayed again and again every 5 seconds and that saturates the
+> filesystem after awhile.
 
-For better or worse, the binding currently takes the vmid of the first
-instance in qcom,vmid. Would it not be cleaner to turn qcom,vmid into an
-array and pass the nav vmid as a second element in that array?
+Could you please check that you have CONFIG_QCOM_RMTFS_MEM enabled and
+the rmtfs daemon running?
+I think that's the usual cause of such messages.
 
-Regards,
-Bjorn
+>
+> ...
+> [   24.662181] qcom-q6v5-mss 4080000.remoteproc: start timed out
+> [   24.768150] qcom-q6v5-mss 4080000.remoteproc: port failed halt
+> [   24.777618] remoteproc remoteproc0: can't start rproc
+> 4080000.remoteproc: -110
+> [   24.785022] remoteproc remoteproc0: Boot failed: -110
+> [   24.833657] remoteproc remoteproc0: powering up 4080000.remoteproc
+> [   24.840126] remoteproc remoteproc0: Booting fw image
+> qcom/sdm845/mba.mbn, size 238304
+> [   24.897361] qcom-q6v5-mss 4080000.remoteproc: MBA booted without
+> debug policy, loading mpss
+> [   31.573938] qcom-q6v5-mss 4080000.remoteproc: start timed out
+> [   31.680229] qcom-q6v5-mss 4080000.remoteproc: port failed halt
+> [   31.689683] remoteproc remoteproc0: can't start rproc
+> 4080000.remoteproc: -110
+> [   31.697070] remoteproc remoteproc0: Boot failed: -110
+> [   31.765283] remoteproc remoteproc0: powering up 4080000.remoteproc
+> [   31.771758] remoteproc remoteproc0: Booting fw image
+> qcom/sdm845/mba.mbn, size 238304
+> [   31.820553] qcom-q6v5-mss 4080000.remoteproc: MBA booted without
+> debug policy, loading mpss
+> ....
 
-> +
->  required:
->    - qcom,client-id
->  
-> -- 
-> 2.39.0
-> 
+
+-- 
+With best wishes
+Dmitry
