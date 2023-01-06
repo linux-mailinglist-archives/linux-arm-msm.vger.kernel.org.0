@@ -2,127 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19C9D65F3E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jan 2023 19:43:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 283CC65F83B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 01:38:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231165AbjAESno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 13:43:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58586 "EHLO
+        id S232155AbjAFAiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 19:38:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235096AbjAESnk (ORCPT
+        with ESMTP id S236394AbjAFAi3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 13:43:40 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9283CD104
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 10:43:37 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id az7so12625893wrb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 10:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rOC/pPBc7T03HB36QyCOetz9Y1pQjcGpASUmzxJmAUQ=;
-        b=KLDP33jF9H5Dayn+o7Q80o2HNHlo28RYSmh0cZVMKhrA7eIbPjromox6V8kvJbGZ4L
-         VDdDUDdb+LkByYmvpwlRxZRNBFoyHxzrxJLsBVFZXvpjS2vGSP/JtTot5+pY1bgLOXZu
-         dH6bLJMIzj3cSQ4XM40KDD/piQv0oQ3AK0nb+HDEuM8uoYMofR4R2uesQ/e9fTEGrfIR
-         yayZSxumZXTtxO5xuL1Gu69StRDGV+PdEIlnDBrAIS6qKJ7UgOuaaSBBOOTtayy7tiJI
-         dTR7hnFL9vPUqdiet10gDd4oB234ur8MQv4TU//WfUUjXe1pzVTuJI1YTcI28+lL9nFt
-         F3fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rOC/pPBc7T03HB36QyCOetz9Y1pQjcGpASUmzxJmAUQ=;
-        b=j/rQ4lxDlQfth0GLKjdqeWqkMYOba0bHKGsM8ZwX/CaX9LyKRk40Ef4hvMXa4Si2ma
-         /KfXGbq/n/ZXApKRqTdZkypyNaKZO2TKqu5Dxxo0GkWG/ibjZOdnjG3NNW7nE43M3CR2
-         P+z8tjz7Nrv6LiVmL/tr3JMX5hrXF6GTIDiI3STip+r7c3/NRqYkOB95VpUV7yraf9HJ
-         JAkB4o59SGtjQEy0N4KSHo4R2ex16ZLrpXMOIEXs7WJR/CpLMDaw+YqawWsRHmV19DMV
-         TRFCqAiZ8y51r82qURaba4rt4WcyG0EyjGCkOwy1QmiioR93+mvQcxvarl3DHOhEyNlW
-         QQJQ==
-X-Gm-Message-State: AFqh2ko9La7DX/ddSjZm5nd6+ytcXu4nhQk/8MScSg1LiEHVF63ILs20
-        M3ZWWanl3x+EsNIObdbhVux/TejhTuCzUvQS
-X-Google-Smtp-Source: AMrXdXsnhlKKaurxRjy6I/znYI2nvqvG+C4LYCd4bFGm0YbaP/egepH+5DqJZ8mtZdupUE824DEb6g==
-X-Received: by 2002:adf:cd0c:0:b0:28d:ef8b:a3d5 with SMTP id w12-20020adfcd0c000000b0028def8ba3d5mr15711211wrm.69.1672944216186;
-        Thu, 05 Jan 2023 10:43:36 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id z13-20020adff74d000000b002366f9bd717sm43456593wrp.45.2023.01.05.10.43.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 10:43:35 -0800 (PST)
-Message-ID: <4c822211-ef91-416d-2363-cd0022a417af@nexus-software.ie>
-Date:   Thu, 5 Jan 2023 18:43:34 +0000
+        Thu, 5 Jan 2023 19:38:29 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24594F12B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 16:38:27 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 305Maj3C017984;
+        Fri, 6 Jan 2023 00:38:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8MnO5LKnGXyOh3r2gvQJz5eW936KrvN13lmARg/MQlY=;
+ b=AZ3ftcxg6kfbrQIBH++dWSQ65X1TadZ2RFaVU9jgfSvHBFFwfSWqbt46gQkkRtLlwM0q
+ 7fsNtNO+qT6fngcBF6yjOW06vO6cyxruQZe27lVVK/rhhd3LbKT/USCsbAjwWOGrYpph
+ 2YPM4TXSRIE4t0DAmEip3E7pjt5hXiwm0bb9Pkmn+Q6aYiEMAze42FsYIwBAIDPkw5HP
+ l9+heHiIMsmfPneOQ83WCIXdYZD+Jm877PYfFEqc4XfrfIiuJKmiv6LrEmE2LE9ukNUP
+ E8h5rM6pBdXAbhkV9vK79rdu647zNSS62MmAOfH9iJeFMLd2t+VpCZ06qWPbvGNMDrqT hw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mx3f30p68-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 06 Jan 2023 00:38:11 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3060cA4c028306
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 6 Jan 2023 00:38:10 GMT
+Received: from [10.110.20.194] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 5 Jan 2023
+ 16:38:08 -0800
+Message-ID: <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com>
+Date:   Thu, 5 Jan 2023 16:37:55 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+To:     Daniel Vetter <daniel@ffwll.ch>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
+        <contact@emersion.fr>, <daniel.vetter@ffwll.ch>,
+        <laurent.pinchart@ideasonboard.com>, <ppaalanen@gmail.com>,
+        <sebastian.wick@redhat.com>, <wayland-devel@lists.freedesktop.org>,
+        <ville.syrjala@linux.intel.com>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
+ <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local>
 Content-Language: en-US
-To:     "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robert.foss@linaro.org, akapatra@quicinc.com, jzala@quicinc.com,
-        todor.too@gmail.com, hverkuil@xs4all.nl
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
- <a885c324-8ac5-da52-2b68-848f36fd045b@linaro.org>
- <a4b0ad23-c003-b2a5-acda-07164048673a@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <a4b0ad23-c003-b2a5-acda-07164048673a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0c_L9KDKb3tkV8WUcYv3lnNK0ScRYop7
+X-Proofpoint-ORIG-GUID: 0c_L9KDKb3tkV8WUcYv3lnNK0ScRYop7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-05_13,2023-01-05_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301060002
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 08:37, Milen Mitkov (Consultant) wrote:
-> On 09/12/2022 18:17, Bryan O'Donoghue wrote:
->> On 09/12/2022 09:40, quic_mmitkov@quicinc.com wrote:
->>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
->>>
->>> For v7:
->>> - Fix an issue with output state for different versions of the IFE
->>>    hardware (for platforms different from QRB5, e.g. QRB3).
->>>
->>
->> Yep.
->>
->> Working for me on rb3 now and thank you for updating the git commit in 
->> patch #4.
->>
->> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>
->> for the series.
->>
->> ---
->> bod
-> 
-> 
-> Hi Bryan, Robert, Hans and others,
-> 
-> 
-> Happy New Year!
-> 
-> Is there anything else I can/need to do to speed up the merging process 
-> of this series?
-> 
-> 
-> Thanks,
-> 
-> Milen
-> 
 
-I don't think so.
 
-Is everything still working on linux-next ?
+On 1/5/2023 3:33 AM, Daniel Vetter wrote:
+> On Wed, Jan 04, 2023 at 03:40:33PM -0800, Jessica Zhang wrote:
+>> Introduce and add support for a solid_fill property. When the solid_fill
+>> property is set, and the framebuffer is set to NULL, memory fetch will be
+>> disabled.
+>>
+>> In addition, loosen the NULL FB checks within the atomic commit callstack
+>> to allow a NULL FB when the solid_fill property is set and add FB checks
+>> in methods where the FB was previously assumed to be non-NULL.
+>>
+>> Finally, have the DPU driver use drm_plane_state.solid_fill and instead of
+>> dpu_plane_state.color_fill, and add extra checks in the DPU atomic commit
+>> callstack to account for a NULL FB in cases where solid_fill is set.
+>>
+>> Some drivers support hardware that have optimizations for solid fill
+>> planes. This series aims to expose these capabilities to userspace as
+>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
+>> hardware composer HAL) that can be set by apps like the Android Gears
+>> app.
+>>
+>> Userspace can set the solid_fill property to a blob containing the
+>> appropriate version number and solid fill color (in RGB323232 format) and
+>> setting the framebuffer to NULL.
+>>
+>> Note: Currently, there's only one version of the solid_fill blob property.
+>> However if other drivers want to support a similar feature, but require
+>> more than just the solid fill color, they can extend this feature by
+>> creating additional versions of the drm_solid_fill struct.
+>>
+>> Changes in V2:
+>> - Dropped SOLID_FILL_FORMAT property (Simon)
+>> - Switched to implementing solid_fill property as a blob (Simon, Dmitry)
+>> - Changed to checks for if solid_fill_blob is set (Dmitry)
+>> - Abstracted (plane_state && !solid_fill_blob) checks to helper method
+>>    (Dmitry)
+>> - Removed DPU_PLANE_COLOR_FILL_FLAG
+>> - Fixed whitespace and indentation issues (Dmitry)
+> 
+> Now that this is a blob, I do wonder again whether it's not cleaner to set
+> the blob as the FB pointer. Or create some kind other kind of special data
+> source objects (because solid fill is by far not the only such thing).
+> 
+> We'd still end up in special cases like when userspace that doesn't
+> understand solid fill tries to read out such a framebuffer, but these
+> cases already exist anyway for lack of priviledges.
+> 
+> So I still think that feels like the more consistent way to integrate this
+> feature. Which doesn't mean it has to happen like that, but the
+> patches/cover letter should at least explain why we don't do it like this.
 
-e45fb347b630e...cc3c08b41a9c9 master        -> linux-next/master
+Hi Daniel,
 
+IIRC we were facing some issues with this check [1] when trying to set 
+FB to a PROP_BLOB instead. Which is why we went with making it a 
+separate property instead. Will mention this in the cover letter.
+
+[1] 
+https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_property.c#L71
+
+Thanks,
+
+Jessica Zhang
+
+> -Daniel
+> 
+>>
+>> Changes in V3:
+>> - Fixed some logic errors in atomic checks (Dmitry)
+>> - Introduced drm_plane_has_visible_data() and drm_atomic_check_fb() helper
+>>    methods (Dmitry)
+>>
+>> Jessica Zhang (3):
+>>    drm: Introduce solid fill property for drm plane
+>>    drm: Adjust atomic checks for solid fill color
+>>    drm/msm/dpu: Use color_fill property for DPU planes
+>>
+>>   drivers/gpu/drm/drm_atomic.c              | 136 +++++++++++++---------
+>>   drivers/gpu/drm/drm_atomic_helper.c       |  34 +++---
+>>   drivers/gpu/drm/drm_atomic_state_helper.c |   9 ++
+>>   drivers/gpu/drm/drm_atomic_uapi.c         |  59 ++++++++++
+>>   drivers/gpu/drm/drm_blend.c               |  17 +++
+>>   drivers/gpu/drm/drm_plane.c               |   8 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |   9 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c |  65 +++++++----
+>>   include/drm/drm_atomic_helper.h           |   5 +-
+>>   include/drm/drm_blend.h                   |   1 +
+>>   include/drm/drm_plane.h                   |  62 ++++++++++
+>>   11 files changed, 302 insertions(+), 103 deletions(-)
+>>
+>> -- 
+>> 2.38.1
+>>
+> 
+> -- 
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
