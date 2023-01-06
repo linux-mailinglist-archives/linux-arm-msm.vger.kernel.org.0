@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 727C665FD40
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:03:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F39965FD43
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:04:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231805AbjAFJDX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 04:03:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36070 "EHLO
+        id S231845AbjAFJEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 04:04:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231719AbjAFJDX (ORCPT
+        with ESMTP id S231838AbjAFJEj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 04:03:23 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF9468C93
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:03:21 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id i17-20020a05600c355100b003d99434b1cfso639564wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:03:21 -0800 (PST)
+        Fri, 6 Jan 2023 04:04:39 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6171D68C99
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:04:38 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id bn26so718216wrb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:04:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8BzESQrUDM05zlTEwrX4Mj8dG0qJRTLEWdAlMpGzRIU=;
-        b=ipTeb+kU+Y9knB9QUZ7sUKNDljfl2Jel9SUsuWtjkKXaoI5rUdeCqry2nktxA255PR
-         JzrInWHtqpSM9HJNbN+vnvPDLJwc4esfi5OVDYxIzvq95Aq1JEjpVlrBCiz/jMR0gSVJ
-         PtBiZxSi3+HB3HMv1+1yL/f3cbo6wzZ0w8Qw4=
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7oh+tO4VAYKsBsuVwmWetnQdvzWD6pRcTuec9yQCMBE=;
+        b=VcaBOgij5Nk7bOXAUDlWpO3pECWUZyZWpSZ9DBn9QmP8brgHn/moTN+rNHmuO6cOtC
+         asHTEQw18D4FXFnaijCwcAt7eYm/Kh2f4vnvOhoSe5bCickgXh6TdjnkDr+bByGv+i1w
+         H24kaMd/bbmMxayX/wnQyntJY1KG+9uUD+jnY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8BzESQrUDM05zlTEwrX4Mj8dG0qJRTLEWdAlMpGzRIU=;
-        b=ivMWPDb8ADEAj5i997fUGW2y+1+rhQH4rmjD1bb4dZfHTec7JwKpuaaNaUNnKMI/1q
-         E9iJHHt4Rmn0Dvvowr9zE0u3+PivZ1prl/CPoUn41oyZVwT0SHxhcul7CUH3Z/t4AMKg
-         ZvNAj7BTRnJRT+JDfXbqLZGxyhEBMAImnoMqHNEleuOORLgaCAnSoTkHtr9FxGfWw8I3
-         d8uvlCyZ0crxkBmQhxGR5UrZsvtwKt3CEZ7b6xpfZtt/oxo31IGXHODz0RBmB4OLcPO7
-         82+qYp+l+NLTLuXJIlc/PWnvsLn7mUKKw0m7QqXNTj7rfgh5nkryQrcIpheXOPSYsChL
-         40nA==
-X-Gm-Message-State: AFqh2kqcRjC6ROWIqFYrM1sMeayVT8ELM9Nk4oyEshYkjONl/rE8iMBu
-        WzlCmrvL7BTUZuKq4Q4pDxxLXw==
-X-Google-Smtp-Source: AMrXdXt0arOZc3l0kts8OHBZ/+UO0oRr7Cuyh3i4z4GyM+Yn5GuirvZkRTu52vYbVVMlytkF25SSdg==
-X-Received: by 2002:a05:600c:3d86:b0:3cf:9ac8:c537 with SMTP id bi6-20020a05600c3d8600b003cf9ac8c537mr39944191wmb.14.1672995799979;
-        Fri, 06 Jan 2023 01:03:19 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7oh+tO4VAYKsBsuVwmWetnQdvzWD6pRcTuec9yQCMBE=;
+        b=SXxXxlO1JFXz+rVtnVfvnpYUtKUmuiD/E5uUvNUrzwXLIxnrZW+E/yy487lbnjRELe
+         ki4KyMGl5SsBV2DWFHDAERf6AxhifiYqb7mobQQ6Rp1s8CQlAka/9JIiKunYWxHg2kwJ
+         WLSPpuF03Wgs7Ajj/wKn8Pph813BDnyTYUuIl/jQcAKz7vN2pet7hnDV6J2FvreRg51C
+         DAeOjCDWuD3UFN3lPUpZ7a4SpyuK0quBr+15yTkvWzAdChj9w/VKPqUGcJNasxOFJih5
+         2qjxGRQa/X8LtRpNflhAHNAqMVx1710efURNLBYHGxJuauZAfY0oKYm714F3dCRDnOJE
+         e7lw==
+X-Gm-Message-State: AFqh2kr7MiHP+R/40fneGmU5yvEXOxKaQot3PZkfT1ioAZOw5/y+V9lx
+        H0ymXzUXX544/gAWVZm2R9lYP6/59OfMQ7I1
+X-Google-Smtp-Source: AMrXdXsF6r0whrWtJmT10SJbfExjNBDHpWpevEeXU/qX5vrGPfkbuLARTKy9wemqwWZrlmIvuLuqHw==
+X-Received: by 2002:a5d:48c6:0:b0:242:844a:835d with SMTP id p6-20020a5d48c6000000b00242844a835dmr30521789wrs.65.1672995876891;
+        Fri, 06 Jan 2023 01:04:36 -0800 (PST)
 Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id g12-20020a05600c310c00b003c70191f267sm5847712wmo.39.2023.01.06.01.03.18
+        by smtp.gmail.com with ESMTPSA id a14-20020adff7ce000000b002549b649b62sm569112wrq.50.2023.01.06.01.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 01:03:18 -0800 (PST)
-Date:   Fri, 6 Jan 2023 10:03:16 +0100
+        Fri, 06 Jan 2023 01:04:36 -0800 (PST)
+Date:   Fri, 6 Jan 2023 10:04:34 +0100
 From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Steev Klimaszewski <steev@kali.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] drm/msm: Set preferred depth.
-Message-ID: <Y7fj1N4blo2MYZDt@phenom.ffwll.local>
-Mail-Followup-To: Thomas Zimmermann <tzimmermann@suse.de>,
+Message-ID: <Y7fkIvBRHcsgHR0l@phenom.ffwll.local>
+Mail-Followup-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Steev Klimaszewski <steev@kali.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20230106071609.3948-1-steev@kali.org>
- <98a30f00-c98f-cecb-d681-30b55caf2f8a@suse.de>
+ <f52cca60-ab6a-460a-65f9-367c083b51fa@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <98a30f00-c98f-cecb-d681-30b55caf2f8a@suse.de>
+In-Reply-To: <f52cca60-ab6a-460a-65f9-367c083b51fa@linaro.org>
 X-Operating-System: Linux phenom 5.19.0-2-amd64 
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -83,8 +82,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 06, 2023 at 09:31:31AM +0100, Thomas Zimmermann wrote:
-> Am 06.01.23 um 08:16 schrieb Steev Klimaszewski:
+On Fri, Jan 06, 2023 at 09:18:21AM +0200, Dmitry Baryshkov wrote:
+> On 06/01/2023 09:16, Steev Klimaszewski wrote:
 > > As of commit 37c90d589dc0 ("drm/fb-helper: Fix single-probe color-format
 > > selection"), if no supported color formats are found, it tries to use the
 > > driver provided default, which msm didn't have set and leads to the
@@ -147,39 +146,14 @@ On Fri, Jan 06, 2023 at 09:31:31AM +0100, Thomas Zimmermann wrote:
 > > ---
 > >   drivers/gpu/drm/msm/msm_drv.c | 1 +
 > >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 8b0b0ac74a6f..65c4c93c311e 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -479,6 +479,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
-> >   	drm_helper_move_panel_connectors_to_head(ddev);
-> > +	ddev->mode_config.preferred_depth = 24;
 > 
-> Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-preferred_depth is not a mandatory thing, we need to fix the fbdev patch,
-not work around that in all the drivers. xrgb8888 is the assumed default.
+I think a documentation patch that preferred_depth = 0 actually means
+xrgb8888 would be good, since we seem to have a serious confusion going on
+here?
 -Daniel
-
-> 
-> Best regards
-> Thomas
-> 
-> >   	ddev->mode_config.funcs = &mode_config_funcs;
-> >   	ddev->mode_config.helper_private = &mode_config_helper_funcs;
-> 
-> -- 
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 Nürnberg, Germany
-> (HRB 36809, AG Nürnberg)
-> Geschäftsführer: Ivo Totev
-
-
-
-
 -- 
 Daniel Vetter
 Software Engineer, Intel Corporation
