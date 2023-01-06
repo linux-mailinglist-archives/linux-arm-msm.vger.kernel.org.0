@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F58C6607C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:11:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DCE6607CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:11:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236438AbjAFULL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 15:11:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49036 "EHLO
+        id S230032AbjAFULM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 15:11:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236495AbjAFUKj (ORCPT
+        with ESMTP id S236200AbjAFUKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 15:10:39 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFE6E840AB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 12:10:37 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bu8so3534085lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 12:10:37 -0800 (PST)
+        Fri, 6 Jan 2023 15:10:40 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DEA84096
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 12:10:38 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id bu8so3534153lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 12:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RNfbSTvzTfUVFclyKhJFzlWhnbUuUQRODnFghZoCEPo=;
-        b=Cpp6PbMszA8NXM5V/FLNTCCIQXOF4qxKXSNkgNa3UGHvtKFCDn5IirMlYMsVIEOu65
-         H0tQVJDVNY098LztdISe2BOZSbt/QtQTdjmd7t5aXUqV29HHRHY3lzOjw54z6i91RiJ/
-         g9VCOC1H+X1PdAFShPV4VYBBa6cmXHyAM76wa0IkewynxFrCdi5uV5CfaLbjLbuF1cB5
-         /box2ubN7qCIkd4i2ilqu/EoC40FLVHACdgi8ew8mAFIJTZ5RXYJro5KO7pHTv3i4Ge0
-         p+w86uDcXDYKxWb5GkuNoYTI2LVDrozT3CEPyvJJuNC+KNyhPy8+h1uG1ajDSJtr3eqS
-         H7Sg==
+        bh=RmoHH6Hgcnax4siMasK0u+Npv8V2UvkY+nngddvtueY=;
+        b=p57rjAp7lL4U0Yiv3/b2rQb72TkoTWnx/81x9BBdcG10iTsMkHd7j7ZC48O+IZnRh9
+         uuvp7LLq+nZvMlKwiv2Yt01ZanM48OUj7aL6ga1ooGzHDbrq2GvAq1diyDo0qXL/naQM
+         SLywR1Z5n3RUATTQruSsinNtN2x1EQKlxedCyyIABful73gcSA0uUwdVzD07N5dMXjyv
+         9bMDpgoCiWLCd/KsuzYh2+4+LOoyYG598N0URsN0OtxUAGbNGMCWpIkixKQtWu+TYmN9
+         ONe3fDFewOwZtQ+brv3Imylx/A/bjGyBZRN/m9ua7g8NPUasYndgFxc4gJT/9pi/rD32
+         A8rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RNfbSTvzTfUVFclyKhJFzlWhnbUuUQRODnFghZoCEPo=;
-        b=VbAuQ82CRPYcm4R13lStO9x3ZRMzD14rWfDsYB79eqy16xTD0yn16uoNTqFd4Fxu6d
-         VM5roCw9vkPRAcFKFou5ztzG6LkxmurwPzkh6gFC7rSZ1gDPZxZlLiXBbtYUgcesHAPi
-         YQ2qUD0Pkw8UW21iTataMgK+G3eBR0/gtBfX09BpS+hXP5BTLhIVV29RDsvekSG38m/p
-         BVFzZlFGnchH775GfvHRG2R1WJGFFibh01TOYmAyxpJ4Gr8VTF+sJR/MUAzYpXBRUnPz
-         PGgtTzzSU7va//9aOr/iV53oQpsgD88/qPWDgmoSp+6IppXTwbnTLDJAhfIApduLwvXn
-         m18g==
-X-Gm-Message-State: AFqh2kq/aeyQfV0+Y8fWD0djmomH5PEe0nrlJoGsSGUw1ZbJTuh2IBNe
-        oUhq8UfCBLuZcieGVwRtqeOlbHib5kPKiahn
-X-Google-Smtp-Source: AMrXdXsbIEOaQ8RJqoa/0MDJoGWyAGE8fp7cvabmZUzh1NpaqhqNy6xl1fjDhBv+R9LMhccbKbt7mQ==
-X-Received: by 2002:a05:6512:224d:b0:4b4:b5d3:6603 with SMTP id i13-20020a056512224d00b004b4b5d36603mr25635114lfu.32.1673035837373;
-        Fri, 06 Jan 2023 12:10:37 -0800 (PST)
+        bh=RmoHH6Hgcnax4siMasK0u+Npv8V2UvkY+nngddvtueY=;
+        b=beVNhfqPfesCITxT7iDicWidNlJ9hC5gSj/iYn7EgT5O2hTfUHcAu2Nt4xw0NtmBwV
+         BuxDsRUyHZddHiUDUeNeoJB0PDAAmw3yStp3BhXPLhwDI9qIm23jK3/6FiT1BHiVL4sI
+         t3f2bl8QIqOC/60pIwIGteKjd6L9G8ELiMscbr0tb/Ois64p1lpSX7HCl+Z0RUajSZ4y
+         cbG62dxciITOgT4w0xTCVaw3GAV1zulcpQvf0GsMoIEY1/E5URBFbBF1APuAZbDDW9mp
+         Ck8WmM1nGFOmB1ww+RN//H2OK3MwhRY3fzEcRQXee5OiJh2MJ5mp9gOBVFGR2V2oHRp3
+         1MiQ==
+X-Gm-Message-State: AFqh2kor4tULf2CC+8DuRzM1ADjm1uyhitma4H9Ng4I+/vp0idzYrdOz
+        i5WQK0CA5fCimOUQzs1pwcuAZg==
+X-Google-Smtp-Source: AMrXdXvzNENdbm35qnG4EAUyzRBiu68z9wGV++yc9vltA2yHxWGn2FKCYPRdR1kXH1WkYUdKutrviA==
+X-Received: by 2002:ac2:5f6d:0:b0:4b5:830d:12b7 with SMTP id c13-20020ac25f6d000000b004b5830d12b7mr13082099lfc.41.1673035838237;
+        Fri, 06 Jan 2023 12:10:38 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id f14-20020a0565123b0e00b004b7033da2d7sm260875lfv.128.2023.01.06.12.10.36
+        by smtp.gmail.com with ESMTPSA id f14-20020a0565123b0e00b004b7033da2d7sm260875lfv.128.2023.01.06.12.10.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 12:10:36 -0800 (PST)
+        Fri, 06 Jan 2023 12:10:37 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,11 +62,10 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Georgi Djakov <djakov@kernel.org>, Alex Elder <elder@linaro.org>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 08/11] dt-bindings: interconnect: qcom: drop IPA_CORE related defines
-Date:   Fri,  6 Jan 2023 22:10:25 +0200
-Message-Id: <20230106201028.1809541-9-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 09/11] clk: qcom: rpmh: define IPA clocks where required
+Date:   Fri,  6 Jan 2023 22:10:26 +0200
+Message-Id: <20230106201028.1809541-10-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230106201028.1809541-1-dmitry.baryshkov@linaro.org>
 References: <20230106201028.1809541-1-dmitry.baryshkov@linaro.org>
@@ -74,114 +73,57 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These interconnects are modeled as clks, not interconnects, therefore
-remove corresponding defines from the binding as they're unused.
+Follow the example of sc7180 and sdx55 and implement IP0 resource as
+clocks rather than interconnects.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- include/dt-bindings/interconnect/qcom,sc7180.h   | 3 ---
- include/dt-bindings/interconnect/qcom,sc8180x.h  | 3 ---
- include/dt-bindings/interconnect/qcom,sc8280xp.h | 4 ++--
- include/dt-bindings/interconnect/qcom,sdx55.h    | 2 --
- include/dt-bindings/interconnect/qcom,sm8150.h   | 3 ---
- include/dt-bindings/interconnect/qcom,sm8250.h   | 3 ---
- 6 files changed, 2 insertions(+), 16 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/dt-bindings/interconnect/qcom,sc7180.h b/include/dt-bindings/interconnect/qcom,sc7180.h
-index f9970f6032eb..de5d5867bd67 100644
---- a/include/dt-bindings/interconnect/qcom,sc7180.h
-+++ b/include/dt-bindings/interconnect/qcom,sc7180.h
-@@ -108,9 +108,6 @@
- #define SLAVE_LLCC			11
- #define SLAVE_SERVICE_GEM_NOC			12
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index 586a810c682c..5f914cf36b10 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -445,6 +445,7 @@ static struct clk_hw *sm8150_rpmh_clocks[] = {
+ 	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_a_ao.hw,
+ 	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_a.hw,
+ 	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_a_ao.hw,
++	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+ };
  
--#define MASTER_IPA_CORE			0
--#define SLAVE_IPA_CORE			1
--
- #define MASTER_LLCC			0
- #define SLAVE_EBI1			1
+ static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
+@@ -484,6 +485,7 @@ static struct clk_hw *sc8180x_rpmh_clocks[] = {
+ 	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_d_ao.hw,
+ 	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_d.hw,
+ 	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_d_ao.hw,
++	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+ };
  
-diff --git a/include/dt-bindings/interconnect/qcom,sc8180x.h b/include/dt-bindings/interconnect/qcom,sc8180x.h
-index e84cfec5afdd..0bdc8d6cb401 100644
---- a/include/dt-bindings/interconnect/qcom,sc8180x.h
-+++ b/include/dt-bindings/interconnect/qcom,sc8180x.h
-@@ -129,9 +129,6 @@
- #define SLAVE_SERVICE_GEM_NOC			16
- #define SLAVE_SERVICE_GEM_NOC_1			17
+ static const struct clk_rpmh_desc clk_rpmh_sc8180x = {
+@@ -504,6 +506,7 @@ static struct clk_hw *sm8250_rpmh_clocks[] = {
+ 	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
+ 	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_a.hw,
+ 	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_a_ao.hw,
++	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+ };
  
--#define MASTER_IPA_CORE				0
--#define SLAVE_IPA_CORE				1
--
- #define MASTER_LLCC				0
- #define SLAVE_EBI_CH0				1
+ static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
+@@ -546,6 +549,7 @@ static struct clk_hw *sc8280xp_rpmh_clocks[] = {
+ 	[RPMH_IPA_CLK]          = &clk_rpmh_ipa.hw,
+ 	[RPMH_PKA_CLK]          = &clk_rpmh_pka.hw,
+ 	[RPMH_HWKM_CLK]         = &clk_rpmh_hwkm.hw,
++	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+ };
  
-diff --git a/include/dt-bindings/interconnect/qcom,sc8280xp.h b/include/dt-bindings/interconnect/qcom,sc8280xp.h
-index a3e5fda7c127..f89f47e99c6d 100644
---- a/include/dt-bindings/interconnect/qcom,sc8280xp.h
-+++ b/include/dt-bindings/interconnect/qcom,sc8280xp.h
-@@ -48,11 +48,11 @@
- #define SLAVE_SERVICE_A2NOC		19
- 
- /* clk_virt */
--#define MASTER_IPA_CORE			0
-+/* 0 was used by MASTER_IPA_CORE, now represented as RPMh clock */
- #define MASTER_QUP_CORE_0		1
- #define MASTER_QUP_CORE_1		2
- #define MASTER_QUP_CORE_2		3
--#define SLAVE_IPA_CORE			4
-+/* 4 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
- #define SLAVE_QUP_CORE_0		5
- #define SLAVE_QUP_CORE_1		6
- #define SLAVE_QUP_CORE_2		7
-diff --git a/include/dt-bindings/interconnect/qcom,sdx55.h b/include/dt-bindings/interconnect/qcom,sdx55.h
-index bfb6524a2d90..1925f0784ab2 100644
---- a/include/dt-bindings/interconnect/qcom,sdx55.h
-+++ b/include/dt-bindings/interconnect/qcom,sdx55.h
-@@ -70,7 +70,5 @@
- #define SLAVE_QDSS_STM			48
- #define SLAVE_TCU			49
- 
--#define MASTER_IPA_CORE			0
--#define SLAVE_IPA_CORE			1
- 
- #endif
-diff --git a/include/dt-bindings/interconnect/qcom,sm8150.h b/include/dt-bindings/interconnect/qcom,sm8150.h
-index a25684680c42..ef292791f52e 100644
---- a/include/dt-bindings/interconnect/qcom,sm8150.h
-+++ b/include/dt-bindings/interconnect/qcom,sm8150.h
-@@ -121,9 +121,6 @@
- #define SLAVE_LLCC			15
- #define SLAVE_SERVICE_GEM_NOC		16
- 
--#define MASTER_IPA_CORE			0
--#define SLAVE_IPA_CORE			1
--
- #define MASTER_LLCC			0
- #define SLAVE_EBI_CH0			1
- 
-diff --git a/include/dt-bindings/interconnect/qcom,sm8250.h b/include/dt-bindings/interconnect/qcom,sm8250.h
-index 1b4d9fbe888d..a4af5cc19271 100644
---- a/include/dt-bindings/interconnect/qcom,sm8250.h
-+++ b/include/dt-bindings/interconnect/qcom,sm8250.h
-@@ -115,9 +115,6 @@
- #define SLAVE_SERVICE_GEM_NOC_2		15
- #define SLAVE_SERVICE_GEM_NOC		16
- 
--#define MASTER_IPA_CORE			0
--#define SLAVE_IPA_CORE			1
--
- #define MASTER_LLCC			0
- #define SLAVE_EBI_CH0			1
- 
+ static const struct clk_rpmh_desc clk_rpmh_sc8280xp = {
 -- 
 2.39.0
 
