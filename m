@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0877966045D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 17:37:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9656F66047E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 17:40:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235492AbjAFQhX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 11:37:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54238 "EHLO
+        id S231486AbjAFQje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 11:39:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235088AbjAFQhW (ORCPT
+        with ESMTP id S234688AbjAFQjE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 11:37:22 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEAFC78A5F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 08:37:20 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id l26so1421242wme.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 08:37:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G2/wW8oWU2UO8G+hBvXbq+ylbwBDQdJAzgI/Jam/m+c=;
-        b=P0csNwpg9MOjalR15dbOZ1LUq6TdUofEE7438rE/cpAX6qEn5+mMoWvJXJC6ZpwDXi
-         EARyvmG1YWxE3zP8yqecpslPwHBQqDrVX25OOeNKcNA4wogZKUTF21SDNUxtcohel9tV
-         uyrmTwytfXzK01YXqFqnvwRbqTmq1slYryNo/Rr9NvXFfeJfSIv/Vmi2tlxrQ/Vq6vX8
-         2FVWVdbganGHT5PwcT5KSp1Z2Bh+9KufRjFHVx4f1iL9FdE9z650VAAIsK053hbFtN38
-         WjudDhMIuOe+JqvyoB12nLnQzAfugau3CkZyjmbbxBmEnWdKrqVrcPp3S78J0Vydyz/y
-         FWmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=G2/wW8oWU2UO8G+hBvXbq+ylbwBDQdJAzgI/Jam/m+c=;
-        b=ddu6R+ZzHPwnKFW+iqkalwgkfYs3VtfYMIZraGcu6CAu6vAxvfjAPCj07Ur5hDXquy
-         AfHG/YOWG9k3LkhPbs97cTKe9lSGAWjk5Kte8Zah1/FrUCcmrSJDewQlwns4PDbcLww6
-         7DfULthbXWoTVrQb3Mzt4CUwO/UP4sO7CmfHTol3l5lgA1nMdTkvia4Df+W1+w+XFyAb
-         g7WKXLDTg4AKeijBtAXCSs88YaOGujV/yEENmflH8ZYlYZdGk/SHiC3XmotdXvhJkJMD
-         lnKOhRYAJF5X42/oD0al9bNnUhz5nc0hb7b+Tf0mAtftmWXXt+bz8PB31tiMhYiuAkXI
-         qTPQ==
-X-Gm-Message-State: AFqh2kqkGjnp+hb9WSMS+XTYe6xoN21ACAAqcPKl+PPtSdn9DKjoPC/N
-        lEi/Y0y60jVovHa/x0yHMQN9xg==
-X-Google-Smtp-Source: AMrXdXvPO6YvRPMFNA4tbcS1PTYl42JBHmgSt22BHUKuhzVUtPqixbPCPJIe9ANjVG/6QbqyJYPZYw==
-X-Received: by 2002:a05:600c:4d21:b0:3d2:2a72:2573 with SMTP id u33-20020a05600c4d2100b003d22a722573mr40022929wmp.11.1673023039183;
-        Fri, 06 Jan 2023 08:37:19 -0800 (PST)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id l7-20020a5d6747000000b002b57bae7174sm1617699wrw.5.2023.01.06.08.37.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 08:37:18 -0800 (PST)
-Message-ID: <e0ced334-e6c1-caeb-322a-f67a23ee58da@linaro.org>
-Date:   Fri, 6 Jan 2023 17:37:17 +0100
+        Fri, 6 Jan 2023 11:39:04 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9217378A65;
+        Fri,  6 Jan 2023 08:39:03 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 306Fn7S8014062;
+        Fri, 6 Jan 2023 16:38:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=CeXlX0s+orjC2dhmPD+GUdFg6bkJa/KBwHIzDdgndjc=;
+ b=YVPnDWVbH4QHUZEEIXABNJ4jWVDTOAoHn/rryjnn8TjfZvJTC+9CLp7i9Fqpv0ueA9Pg
+ fkBrP/Ii53IV7zzkQVF9UmvhMS2groPV8Vwh756rK4CoRqehWiQp+xr/7S2fs3FQmAZB
+ KRQNnCUJjcyEB+/jYwnEgEgUfBzRkSUCTGOWzNzBBLwLf98rVGibUGbzBhmWYTThbfGj
+ U49fyeX4pxAt2ThKeo15MVMIEK5WpgzSwQ3xJVl7kCMYYkE/jNijLGH9IzbB8N40ekad
+ vSiwsFV0bjLj7pKMfb41PUeS/e+SOfXylxnqa6vDWhIU4ezpzxFSh+FgbWGlSem2MBaO 2A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mx3s1terj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 06 Jan 2023 16:38:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 306GcWrX010026
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 6 Jan 2023 16:38:32 GMT
+Received: from [10.216.49.11] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
+ 08:38:29 -0800
+Message-ID: <a613ee3e-e45c-f84a-362f-9b0651a83f5e@quicinc.com>
+Date:   Fri, 6 Jan 2023 22:08:25 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: ERRATUM_858921 is broken on 5.15 kernel
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: Annoying message on the console for the db845c board
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Mark Rutland <mark.rutland@arm.com>
+CC:     <maz@kernel.org>, <daniel.lezcano@linaro.org>,
+        <tglx@linutronix.de>, <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+References: <ca4679a0-7f29-65f4-54b9-c575248192f1@quicinc.com>
+ <Y7bar/zQ4khMDyiv@FVFF77S0Q05N>
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+In-Reply-To: <Y7bar/zQ4khMDyiv@FVFF77S0Q05N>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ikwzcN-muuQhFcwp8rz7yd8rHXxbYNYB
+X-Proofpoint-GUID: ikwzcN-muuQhFcwp8rz7yd8rHXxbYNYB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-06_10,2023-01-06_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ bulkscore=0 adultscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301060128
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,41 +82,115 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-Hi all,
+On 1/5/2023 7:42 PM, Mark Rutland wrote:
+> On Thu, Jan 05, 2023 at 07:03:48PM +0530, Yogesh Lal wrote:
+>> Hi,
+>>
+>> We are observing issue on A73 core where ERRATUM_858921 is broken.
+> Do you *only* see this issue on v5.15.y, or is mainline (e.g. v6.2-rc2) also
+> broken?
 
-Does anyone have an idea on how to fix these timeout messages ? They are 
-displayed again and again every 5 seconds and that saturates the 
-filesystem after awhile.
+Checked the code path and looks like its broken on mainline also.
 
-...
-[   24.662181] qcom-q6v5-mss 4080000.remoteproc: start timed out
-[   24.768150] qcom-q6v5-mss 4080000.remoteproc: port failed halt
-[   24.777618] remoteproc remoteproc0: can't start rproc 
-4080000.remoteproc: -110
-[   24.785022] remoteproc remoteproc0: Boot failed: -110
-[   24.833657] remoteproc remoteproc0: powering up 4080000.remoteproc
-[   24.840126] remoteproc remoteproc0: Booting fw image 
-qcom/sdm845/mba.mbn, size 238304
-[   24.897361] qcom-q6v5-mss 4080000.remoteproc: MBA booted without 
-debug policy, loading mpss
-[   31.573938] qcom-q6v5-mss 4080000.remoteproc: start timed out
-[   31.680229] qcom-q6v5-mss 4080000.remoteproc: port failed halt
-[   31.689683] remoteproc remoteproc0: can't start rproc 
-4080000.remoteproc: -110
-[   31.697070] remoteproc remoteproc0: Boot failed: -110
-[   31.765283] remoteproc remoteproc0: powering up 4080000.remoteproc
-[   31.771758] remoteproc remoteproc0: Booting fw image 
-qcom/sdm845/mba.mbn, size 238304
-[   31.820553] qcom-q6v5-mss 4080000.remoteproc: MBA booted without 
-debug policy, loading mpss
-....
-
-Thanks
-   -- Daniel
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+> I don't see any fix that fits your exact description below, but I do see that
+> we've made a bunch of changes in this area since.
+>
+>> On 5.15 kernel arch_timer_enable_workaround is set by reading
+>> arm64_858921_read_cntpct_el0 and arm64_858921_read_cntvct_el0 during timer
+>> register using following path.
+>>
+>> arch_timer_enable_workaround->atomic_set(&timer_unstable_counter_workaround_in_use,
+>> 1);
+>>
+>> [code snap]
+>> 564 static
+>> 565 void arch_timer_enable_workaround(const struct
+>> arch_timer_erratum_workaround *wa,
+>> 566                               bool local)
+>> 567 {
+>> 568     int i;
+>> 569
+>> 570     if (local) {
+>> 571 __this_cpu_write(timer_unstable_counter_workaround, wa);
+>> 572     } else {
+>> 573             for_each_possible_cpu(i)
+>> 574                     per_cpu(timer_unstable_counter_workaround, i) = wa;
+>> 575     }
+>> 576
+>> 577     if (wa->read_cntvct_el0 || wa->read_cntpct_el0)
+>> 578 atomic_set(&timer_unstable_counter_workaround_in_use, 1);
+>>
+>>
+>> and based on above workaround enablement , appropriate function to get
+>> counter is used.
+>>
+>> 1008 static void __init arch_counter_register(unsigned type)
+>> 1009 {
+>> 1010     u64 start_count;
+>> 1011
+>> 1012     /* Register the CP15 based counter if we have one */
+>> 1013     if (type & ARCH_TIMER_TYPE_CP15) {
+>> 1014         u64 (*rd)(void);
+>> 1015
+>> 1016         if ((IS_ENABLED(CONFIG_ARM64) && !is_hyp_mode_available()) ||
+>> 1017             arch_timer_uses_ppi == ARCH_TIMER_VIRT_PPI) {
+>> 1018             if (arch_timer_counter_has_wa())
+>> 1019                 rd = arch_counter_get_cntvct_stable;
+>> 1020             else
+>> 1021                 rd = arch_counter_get_cntvct;
+>> 1022         } else {
+>> 1023             if (arch_timer_counter_has_wa())
+>> 1024                 rd = arch_counter_get_cntpct_stable;
+>> 1025             else
+>> 1026                 rd = arch_counter_get_cntpct;
+>> 1027         }
+>> [snap]
+>> 1043     /* 56 bits minimum, so we assume worst case rollover */
+>> 1044     sched_clock_register(arch_timer_read_counter, 56, arch_timer_rate);
+>>
+>>
+>> As our boot cores are not impacted by errata sched_clock_register() will
+>> register !arch_timer_counter_has_wa() callback.
+> It would be helpful to mention this fact (that the system is big.LITTLE, and
+> the boot cores are not Cortex-A73) earlier in the report.
+will take care
+>
+>> Now when errata impacted core boots up and sched_clock_register already
+>> register will !arch_timer_counter_has_wa() path.
+>> As sched_clock_register is not per_cpu bases so arch_timer_read_counter will
+>> always point to !arch_timer_counter_has_wa() function calls.
+> Hmm... yes, AFAICT this cannot work unless the affected CPUs are up before we
+> probe, and it doesn't make much sense for arch_counter_register() to look at
+> arch_timer_counter_has_wa() since it can be called before all CPUs are up.
+>
+>> Looks like this bug is side effect of following patch:
+>>
+>> commit 0ea415390cd345b7d09e8c9ebd4b68adfe873043
+>> Author: Marc Zyngier <marc.zyngier@arm.com>
+>> Date:   Mon Apr 8 16:49:07 2019 +0100
+>>
+>>      clocksource/arm_arch_timer: Use arch_timer_read_counter to access stable
+>> counters
+>>
+>>      Instead of always going via arch_counter_get_cntvct_stable to access the
+>>      counter workaround, let's have arch_timer_read_counter point to the
+>>      right method.
+>>
+>>      For that, we need to track whether any CPU in the system has a
+>>      workaround for the counter. This is done by having an atomic variable
+>>      tracking this.
+>>
+>>      Acked-by: Mark Rutland <mark.rutland@arm.com>
+>>      Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+>>      Signed-off-by: Will Deacon <will.deacon@arm.com>
+>>
+> Yeah, that does look to be broken, but I think there are futher issues anyway
+> (e.g. late onlining).
+>
+> AFAICT we need to detect this *stupidly early* in the CPU bringup path in order
+> to handle this safely, which is quite painful.
+>
+> What a great.
+>
+> Thanks,
+> Mark.
