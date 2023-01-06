@@ -2,231 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7FC6660904
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 22:57:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74046660A75
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 00:57:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235968AbjAFV5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 16:57:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41460 "EHLO
+        id S231187AbjAFX5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 18:57:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233616AbjAFV5A (ORCPT
+        with ESMTP id S229521AbjAFX5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 16:57:00 -0500
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21CA5669BC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 13:56:59 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-4c24993965eso33275047b3.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 13:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yURizICzWNmVt4WSBC2l5bUComb3tT4KsRBDfo5r7sA=;
-        b=bf2DVvfMT3v/7IRlng0JZyteNEPVZloq+pSkiVMt3vqwy6d4PcymGuna2iKFa2L90h
-         3xKxNParaiTCmIthyeSB2NhzmHWQRrO8NekICx/AFoVO/CpWHxAlwo6MWQgzD8Q3D1V+
-         JWpw/cGtNyTiqtOw8kXwxbDFPDKlDZKtJ5IKgj/8B/M912es82seJdGdAkX71/Uzit4y
-         iXUFQRpNgqGA+ccf2PGj6ym0/j+4JJQQgCVgHh7HhxxfZaX/6/Esy57OedKkABbDdw0U
-         5Ruv0MEAk3v8wwByVmlWoMOQrSUkiZgHmT/kr0/idYj1Rbd/jY+V+yCuw40g9lAI5r3R
-         L9BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yURizICzWNmVt4WSBC2l5bUComb3tT4KsRBDfo5r7sA=;
-        b=x5lfsDmkJrovV2jX9b2Y4QzqrRU+bmxLue6T/6sc/WyuhifeoIyvAiAPH6IK6Al9Jz
-         dI+AKjIwdOF8B/xO9ydEdK6Ot7lJbMRnQsVCiibty/1TH3IS1lJfpDZbJoGfRm6xPmOa
-         EXi5neqc2fHdotrgafp0J19+1cdWPW/SUGq4OD7uJyEf+ZPwP6v/z+VDj0mPCi7KZxRM
-         t+Fse6E7yuEc+n52BitwAY9lS4C94KLDI+DqWJiPqMMUHwgaCY3ay4FF/JSfom25kc0c
-         L9J0D6YqDGAaaLL+OeK/odzu2C8m3BvUeYnHBtcYerRQvOhwWRlHu3Oubo0SUo0sshrp
-         cuJA==
-X-Gm-Message-State: AFqh2koBsRbCBDgqx4oWFy2PndX8bg6scmQgXPrbrVkZ2/YXWYXHIBpq
-        hytlGbpCh60qFo3L7U17INvV7mpt4gZgpfM4SbNfEg==
-X-Google-Smtp-Source: AMrXdXu1ecowIJMb20Ss0toVvgXmYrv0ANIdEA802RgHL2TDAnWQDDYBKuo+qePZEW8M6LQUXv2oCf6Vmegm27oawh8=
-X-Received: by 2002:a05:690c:fd5:b0:4a4:7135:9214 with SMTP id
- dg21-20020a05690c0fd500b004a471359214mr3456604ywb.378.1673042218312; Fri, 06
- Jan 2023 13:56:58 -0800 (PST)
+        Fri, 6 Jan 2023 18:57:33 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF0E7CDFF;
+        Fri,  6 Jan 2023 15:57:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1673049451; x=1704585451;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=8LdS9t0yq4kp8/qxDPocyWeBPXOL5MJctnMU27azrbs=;
+  b=evIKAc08oWPugQU+ekdV1NgPexXoriqj6dmceF54d88rditxujI9qS1o
+   tH1yrzUzf4PIvQjX01s+EUehEwVswZZbPNfJjowYCEBdMKBYFjGwGGFLS
+   SMJG0LghyqlQIFxbmqGZarO0UjZ0n1K3T+P3ie0o2QqJYyImAinlr2wbB
+   MGlW6eCcDmz/f3Icfw3e0UM+ybagjJ9+SUy0GsHDvliJBLFgK7aybMwQW
+   hXQvrBTKjU9BYgsIQrobVFiChqV2KV0b3g9ZrJpn2kZMK+tNtPQlXYo13
+   Y1GG0t1ammgaMZWxHehzWheHgGiN9f9bUAKewUKm2Kf8NduUt/2nDlueF
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10582"; a="387047014"
+X-IronPort-AV: E=Sophos;i="5.96,306,1665471600"; 
+   d="scan'208";a="387047014"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 15:57:30 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10582"; a="984817911"
+X-IronPort-AV: E=Sophos;i="5.96,306,1665471600"; 
+   d="scan'208";a="984817911"
+Received: from apbaezbo-mobl2.amr.corp.intel.com (HELO [10.212.60.153]) ([10.212.60.153])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 15:57:29 -0800
+Message-ID: <3ecf7fbc-5640-ac99-e0f4-ccba310c103e@linux.intel.com>
+Date:   Fri, 6 Jan 2023 09:57:55 -0600
 MIME-Version: 1.0
-References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
- <20230104234036.636-4-quic_jesszhan@quicinc.com> <d352312a-9916-934c-0a1c-e79b7eb3c7e6@linaro.org>
- <60af746f-e88a-c78f-de36-7409a13006de@quicinc.com>
-In-Reply-To: <60af746f-e88a-c78f-de36-7409a13006de@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 6 Jan 2023 23:56:47 +0200
-Message-ID: <CAA8EJpq8PQyoZNGOC+urvdG2A864R8DC=EsDmpDnJ8D_7cP=8g@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC PATCH v3 3/3] drm/msm/dpu: Use color_fill
- property for DPU planes
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, sebastian.wick@redhat.com,
-        ppaalanen@gmail.com, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
-        swboyd@chromium.org, daniel.vetter@ffwll.ch, robdclark@gmail.com,
-        seanpaul@chromium.org, laurent.pinchart@ideasonboard.com,
-        contact@emersion.fr, wayland-devel@lists.freedesktop.org,
-        ville.syrjala@linux.intel.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.4.2
+Subject: Re: [RFC PATCH 00/14] Introduce QC USB SND audio offloading support
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <0991fdf5-a29d-6ef7-71ec-9b4d858ed1eb@linux.intel.com>
+ <178892ad-091e-1d95-d9d9-7270f19ef4ef@quicinc.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <178892ad-091e-1d95-d9d9-7270f19ef4ef@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 6 Jan 2023 at 22:57, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> On 1/4/2023 6:16 PM, Dmitry Baryshkov wrote:
-> > On 05/01/2023 01:40, Jessica Zhang wrote:
-> >> Initialize and use the color_fill properties for planes in DPU driver. In
-> >> addition, relax framebuffer requirements within atomic commit path and
-> >> add checks for NULL framebuffers. Finally, drop DPU_PLANE_COLOR_FILL_FLAG
-> >> as it's unused.
-> >>
-> >> Changes since V2:
-> >> - Fixed dropped 'const' warning
-> >> - Dropped use of solid_fill_format
-> >> - Switched to using drm_plane_solid_fill_enabled helper method
-> >> - Added helper to convert color fill to BGR888 (Rob)
-> >> - Added support for solid fill on planes of varying sizes
-> >> - Removed DPU_PLANE_COLOR_FILL_FLAG
-> >>
-> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 +++-
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 65 ++++++++++++++---------
-> >>   2 files changed, 49 insertions(+), 25 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> index 13ce321283ff..0695b70ea1b7 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> @@ -409,6 +409,7 @@ static void _dpu_crtc_blend_setup_mixer(struct
-> >> drm_crtc *crtc,
-> >>       struct drm_plane_state *state;
-> >>       struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
-> >>       struct dpu_plane_state *pstate = NULL;
-> >> +    const struct msm_format *fmt;
-> >>       struct dpu_format *format;
-> >>       struct dpu_hw_ctl *ctl = mixer->lm_ctl;
-> >> @@ -441,7 +442,13 @@ static void _dpu_crtc_blend_setup_mixer(struct
-> >> drm_crtc *crtc,
-> >>                   sspp_idx - SSPP_VIG0,
-> >>                   state->fb ? state->fb->base.id : -1);
-> >> -        format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
-> >> +        if (pstate->base.fb)
-> >> +            fmt = msm_framebuffer_format(pstate->base.fb);
-> >> +        else
-> >> +            fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
-> >> +                    DRM_FORMAT_ABGR8888, 0);
-> >> +
-> >> +        format = to_dpu_format(fmt);
-> >>           if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
-> >>               bg_alpha_enable = true;
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> >> index 86719020afe2..51a7507373f7 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> >> @@ -44,7 +44,6 @@
-> >>   #define DPU_NAME_SIZE  12
-> >> -#define DPU_PLANE_COLOR_FILL_FLAG    BIT(31)
-> >>   #define DPU_ZPOS_MAX 255
-> >>   /* multirect rect index */
-> >> @@ -105,7 +104,6 @@ struct dpu_plane {
-> >>       enum dpu_sspp pipe;
-> >>       struct dpu_hw_pipe *pipe_hw;
-> >> -    uint32_t color_fill;
-> >>       bool is_error;
-> >>       bool is_rt_pipe;
-> >>       const struct dpu_mdss_cfg *catalog;
-> >> @@ -678,6 +676,17 @@ static void _dpu_plane_setup_scaler(struct
-> >> dpu_plane *pdpu,
-> >>                   &scaler3_cfg);
-> >>   }
-> >> +static uint32_t _dpu_plane_get_fill_color(struct drm_solid_fill
-> >> solid_fill)
-> >> +{
-> >> +    uint32_t ret = 0;
-> >> +
-> >> +    ret |= ((uint8_t) solid_fill.b) << 16;
-> >> +    ret |= ((uint8_t) solid_fill.g) << 8;
-> >> +    ret |= ((uint8_t) solid_fill.r);
-> >> +
-> >> +    return ret;
-> >> +}
-> >> +
-> >>   /**
-> >>    * _dpu_plane_color_fill - enables color fill on plane
-> >>    * @pdpu:   Pointer to DPU plane object
-> >> @@ -1001,12 +1010,17 @@ static int dpu_plane_atomic_check(struct
-> >> drm_plane *plane,
-> >>       dst = drm_plane_state_dest(new_plane_state);
-> >> -    fb_rect.x2 = new_plane_state->fb->width;
-> >> -    fb_rect.y2 = new_plane_state->fb->height;
-> >> +    if (new_plane_state->fb) {
-> >> +        fb_rect.x2 = new_plane_state->fb->width;
-> >> +        fb_rect.y2 = new_plane_state->fb->height;
-> >> +    }
-> >>       max_linewidth = pdpu->catalog->caps->max_linewidth;
-> >> -    fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> >> +    if (new_plane_state->fb)
-> >> +        fmt =
-> >> to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> >> +    else
-> >> +        fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-> >
-> > I think this should be more explicit:
-> >
-> > if (solid_fill)
-> >     fmt = dpu_get_dpu_format(...)
-> > else
-> >     fmt = to_dpu_format(msm_framebuffer_format(...).
-> >
-> > And in the _dpu_crtc_blend_setup_mixer() too.
->
-> Hi Dmitry,
->
-> Noted.
->
-> >
-> > Maybe the code can be extracted to a helper.
-> >
-> >>       min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
-> >> @@ -1018,7 +1032,7 @@ static int dpu_plane_atomic_check(struct
-> >> drm_plane *plane,
-> >>           return -EINVAL;
-> >>       /* check src bounds */
-> >> -    } else if (!dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
-> >> +    } else if (new_plane_state->fb && !dpu_plane_validate_src(&src,
-> >> &fb_rect, min_src_size)) {
-> >>           DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
-> >>                   DRM_RECT_ARG(&src));
-> >>           return -E2BIG;
-> >> @@ -1086,9 +1100,10 @@ void dpu_plane_flush(struct drm_plane *plane)
-> >>       if (pdpu->is_error)
-> >>           /* force white frame with 100% alpha pipe output on error */
-> >>           _dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
-> >> -    else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
-> >> +    else if (!(plane->state->fb) &&
-> >> drm_plane_solid_fill_enabled(plane->state))
-> >>           /* force 100% alpha */
-> >> -        _dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-> >> +        _dpu_plane_color_fill(pdpu,
-> >> _dpu_plane_get_fill_color(plane->state->solid_fill),
-> >> +                0xFF);
-> >
-> > I'd push alpha into _dpu_plane_get_fill_color(). Then adding alpha
-> > support would be more transparent.
->
-> Acked.
 
-Actually after our discussion I wanted to discuss this with you. We
-pass the plane's alpha value and blending mode using LM_BLEND*
-registers. Does that integrate correctly with the alpha part of
-SSPP_SRC_CONSTANT_COLOR?
+>> On 12/23/22 17:31, Wesley Cheng wrote:
+>>> Several Qualcomm based chipsets can support USB audio offloading to a
+>>> dedicated audio DSP, which can take over issuing transfers to the USB
+>>> host controller.  The intention is to reduce the load on the main
+>>> processors in the SoC, and allow them to be placed into lower power
+>>> modes.
+>>
+>> It would be nice to clarify what you want to offload
+>> a) audio data transfers for isoc ports
+>> b) control for e.g. volume settings (those go to endpoint 0 IIRC)
+>> c) Both?
+>>
+> 
+> Thanks for sharing your experience, and inputs!
+> 
+> It would be the audio related endpoints only, so ISOC and potentially
+> feedback ep.
 
+That's good, that means there's a common basis for at least two separate
+hardware implementations.
+>> This has a lot of implications on the design. ASoC/DPCM is mainly
+>> intended for audio data transfers, control is a separate problem with
+>> configurations handled with register settings or bus-specific commands.
+>>
+> 
+> Control would still be handled by the main processor.
 
--- 
-With best wishes
-Dmitry
+Excellent, one more thing in common. Maintainers like this sort of
+alignment :-)
+
+>>> There are several parts to this design:
+>>>    1. Adding ASoC binding layer
+>>>    2. Create a USB backend for Q6DSP
+>>>    3. Introduce XHCI interrupter support
+>>>    4. Create vendor ops for the USB SND driver
+>>>
+>>> Adding ASoC binding layer:
+>>> soc-usb: Intention is to treat a USB port similar to a headphone jack.
+>>> The port is always present on the device, but cable/pin status can be
+>>> enabled/disabled.  Expose mechanisms for USB backend ASoC drivers to
+>>> communicate with USB SND.
+>>>
+>>> Create a USB backend for Q6DSP:
+>>> q6usb: Basic backend driver that will be responsible for maintaining the
+>>> resources needed to initiate a playback stream using the Q6DSP.  Will
+>>> be the entity that checks to make sure the connected USB audio device
+>>> supports the requested PCM format.  If it does not, the PCM open call
+>>> will
+>>> fail, and userpsace ALSA can take action accordingly.
+>>>
+>>> Introduce XHCI interrupter support:
+>>> XHCI HCD supports multiple interrupters, which allows for events to
+>>> be routed
+>>> to different event rings.  This is determined by "Interrupter Target"
+>>> field
+>>> specified in Section "6.4.1.1 Normal TRB" of the XHCI specification.
+>>>
+>>> Events in the offloading case will be routed to an event ring that is
+>>> assigned
+>>> to the audio DSP.
+
+To the best of my knowledge this isn't needed on Intel platforms, but
+that's something we would need to double-check.
+>>> Create vendor ops for the USB SND driver:
+>>> qc_audio_offload: This particular driver has several components
+>>> associated
+>>> with it:
+>>> - QMI stream request handler
+>>> - XHCI interrupter and resource management
+>>> - audio DSP memory management
+>>>
+>>> When the audio DSP wants to enable a playback stream, the request is
+>>> first
+>>> received by the ASoC platform sound card.  Depending on the selected
+>>> route,
+>>> ASoC will bring up the individual DAIs in the path.  The Q6USB
+>>> backend DAI
+>>> will send an AFE port start command (with enabling the USB playback
+>>> path), and
+>>> the audio DSP will handle the request accordingly.
+>>>
+>>> Part of the AFE USB port start handling will have an exchange of control
+>>> messages using the QMI protocol.  The qc_audio_offload driver will
+>>> populate the
+>>> buffer information:
+>>> - Event ring base address
+>>> - EP transfer ring base address
+>>>
+>>> and pass it along to the audio DSP.  All endpoint management will now
+>>> be handed
+>>> over to the DSP, and the main processor is not involved in transfers.
+>>>
+>>> Overall, implementing this feature will still expose separate sound
+>>> card and PCM
+>>> devices for both the platorm card and USB audio device:
+>>>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>>>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>>>   1 [Audio          ]: USB-Audio - USB Audio
+>>>                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4,
+>>> high speed
+>>>
+>>> This is to ensure that userspace ALSA entities can decide which route
+>>> to take
+>>> when executing the audio playback.  In the above, if card#1 is
+>>> selected, then
+>>> USB audio data will take the legacy path over the USB PCM drivers,
+>>> etc...
+>>
+>> You would still need some sort of mutual exclusion to make sure the isoc
+>> endpoints are not used concurrently by the two cards. Relying on
+>> userspace intelligence to enforce that exclusion is not safe IMHO.
+>>
+> 
+> Sure, I think we can make the USB card as being used if the offloading
+> path is currently being enabled.  Kernel could return an error to
+> userspace when this situation happens.
+
+It's problematic for servers such as PipeWire/PulseAudio that open all
+possible PCMs to figure out what they support in terms of formats. I am
+not sure we can enforce a user-space serialization when discovering
+capabilities?
+
+> 
+>> Intel looked at this sort of offload support a while ago and our
+>> directions were very different - for a variety of reasons USB offload is
+>> enabled on Windows platforms but remains a TODO for Linux. Rather than
+>> having two cards, you could have a single card and addition subdevices
+>> that expose the paths through the DSP. The benefits were that there was
+>> a single set of controls that userspace needed to know about, and volume
+>> settings were the same no matter which path you used (legacy or
+>> DSP-optimized paths). That's consistent with the directions to use 'Deep
+>> Buffer' PCM paths for local playback, it's the same idea of reducing
+>> power consumption with optimized routing.
+>>
+> 
+> Volume control would still be done through the legacy path as mentioned
+> above.  For example, if a USB headset w/ a HID interface exposed (for
+> volume control) was connected, those HID events would be routed to
+> userspace to adjust volume accordingly on the main processor. (although
+> you're right about having separate controls still present - one for the
+> ASoC card and another for USB card)
+
+The two sets of controls implied by the use of two cards is really
+problematic IMHO. This adds complexity for userspace to figure out that
+the controls are really the same and synchronize/mirror changes.
+
+The premise of offload is that it should really not get in the way of
+user-experience, design constructs that result in delayed starts/stop,
+changed volumes or quality differences should be avoided, or
+users/distros will disable this optimization.
+
+One card with additional DSP-based PCM devices seems simpler to me in
+terms of usage, but it's not without technical challenges either: with
+the use of the ASoC topology framework we only know what the DSP
+supports when registering a card and probing the ASoC components.
+
+The interaction between USB audio and ASoC would also be at least as
+complicated as display audio, in that it needs to work no matter what
+the probe order is, and even survive the Linux device/driver model
+requirement that there are no timing dependencies in the driver
+bind/unbind sequences.
+
+>> Another point is that there may be cases where the DSP paths are not
+>> available if the DSP memory and MCPS budget is exceeded. In those cases,
+>> the DSP parts needs the ability to notify userspace that the legacy path
+>> should be used.
+> 
+> If we ran into this scenario, the audio DSP AFE port start command would
+> fail, and this would be propagated to the userspace entity.  It could
+> then potentially re-route to the legacy/non-offload path.
+
+'start' or 'open'? This is a rather important design difference. Usually
+we try to make decisions in the .open or .hw_params stage. The 'start'
+or 'trigger' are usually not meant to fail due to unavailable resources
+in ALSA.
+>> Another case to handle is that some USB devices can handle way more data
+>> than DSPs can chew, for example Pro audio boxes that can deal with 8ch
+>> 192kHz will typically use the legacy paths. Some also handle specific
+>> formats such as DSD over PCM. So it's quite likely that PCM devices for
+>> card0 and card1 above do NOT expose support for the same formats, or put
+>> differently that only a subset of the USB device capabilities are
+>> handled through the DSP.
+> 
+> Same as the above.  We have programmed the USB backend to support the
+> profiles that the audio DSP can handle.  I assume if there was any other
+> request, the userspace entity would fail the PCM open for that requested
+> profile.
+
+What's not clear to me is whether there's any matching process between
+the DSP capabilities and what the USB device exposes? if the USB device
+is already way more complicated that what the ASoC back-end can deal
+with, why expose a card?
+
+>> And last, power optimizations with DSPs typically come from additional
+>> latency helping put the SoC in low-power modes. That's not necessarily
+>> ideal for all usages, e.g. for music recording and mixing I am not
+>> convinced the DSP path would help at all.
+>>
+> 
+> That's true.  At the same time, this feature is more for power related
+> benefits, not specifically for performance. (although we haven't seen
+> any performance related issues w/ this approach on the audio profiles
+> the DSP supports)  I think if its an audio profile that supports a high
+> sample rate and large number of channels, then the DSP wouldn't be able
+> to support it anyway, and userspace could still use the legacy path.
+> This would allow for those high-performance audio devices to not be
+> affected.
+
+ok, we are aligned as well here. Excellent. With the on-going work to
+introduce 'Deep Buffer' capabilities, we'll have a need to tag PCM
+devices with a usage or 'modifier', or have this information in
+UCM/topology. Logic will have to be introduced in userspace to use the
+best routing, I would think this work can be reused for USB cases to
+indicate the offload solution is geared to power optimizations.
