@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2350365FC28
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 08:34:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF5F65FC21
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 08:34:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232359AbjAFHeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 02:34:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
+        id S232575AbjAFHeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 02:34:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232366AbjAFHd3 (ORCPT
+        with ESMTP id S232375AbjAFHd3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 6 Jan 2023 02:33:29 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FFDC7814E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 23:33:22 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id z26so916928lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 23:33:22 -0800 (PST)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06BDC78154
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 23:33:24 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id j17so938160lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 23:33:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EMnUsGMyktU5tXP+S6owcB1l0/Pz8pgW25wFgOOYi7g=;
-        b=oFt1TXhdV7ws1DbbJ1hQdQSIfevOXBfPBQsBn2Ew8WWnf1qIQ/Sbm1gOqAX264x7Hu
-         ARN7fN+q4Q3j8ULbusWyDjhXFoDNnkJ9nhUrCYFtXcRHddJMQU6J6hjqu+UI9S+98ii/
-         JT2BWCnENtEoHAte+VOlGfjy5nQxlflTe46PI4yssE2ZgU5+oxkZaY+jLiXrXEOHI6Hs
-         O3yym41VxhNqsCaetRfr9YCSalx28LDNZ5N8vjtWw0KiU95aMb1naF5gEGHhVJZJjME0
-         pRl7FvQl6K2WlyCXWARbcaBMpwlm0Yr8M2/nC4Giq62Lc7s+5aSFQBdYJpJ56wMJvE7e
-         Ca1A==
+        bh=Qtqtaj1OFg/MyB7wNM/laqasuBrV7DJChC6a1lfJy+U=;
+        b=EmcEnZ+1smq/P29KCoPfIYa+sCzShyAh3Iz95Lw+SaxRgSXWyWYNEXsDwvrBlq4/ln
+         vls65jn2QK7jAzKcbtpBajWFYGSZuDelgu56JactOH1Gtc7iC8KcKlr/Vyw7SdHvlGqL
+         HMOlN49/PmKsAfYv8YN5gnxrDVhqaIcQ8rSRtHirrVdRWaPuTH13Dm3iUNvV+bNLUQ8R
+         42kvhjBxFsQXp2fkndh6/q7hi4ksdnUtb2KSYRzIyHNJWlzdHaBXM5HLxFR0VtXP3WED
+         HTjbQvZvHKTKlf37Zb1a4xHAKWzYkaMfl71ITO1QUPWiK2dKcbDhRYTNx1psJ8P6p4jc
+         Dn1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EMnUsGMyktU5tXP+S6owcB1l0/Pz8pgW25wFgOOYi7g=;
-        b=5K2LxI4P16uGpV4jIHuoyyUgJdPjF1+y/Bb+eizbUIgC7yv2yJJNqhEVWnM9OtYHGZ
-         l4Nfpk/4PxCyD7W5m9UiTBZaJcEZyDWdb3vBG+lhfl9yBPVs8TFmOBLjYts99M76Te4+
-         AFigUPzjiwmXaka3zp+hcJSHPHUoc7novImjD/M+WejbxeoySkD4kkqN1eUOzwzOo8hp
-         kAAFioR8mhdWu3pedG+8S9rsqIJ/ojHB2iwb14yNT/wsvIHmiy1oUA8A4+8ytVgtqHfy
-         CcbmXFO9NssnG8O5mG9QbEoN/zxYf3Hj7eIM6Z5TQokf4LIl7V0nqeDe/XGgNkfDAva9
-         2kHQ==
-X-Gm-Message-State: AFqh2kolDQAW1arIxBvFYWpSwdLMVrOpUHEO/3YxzFzcLM8zhG7cP5ob
-        Gaohvr1Dk18KwDGyKKH65aW0cg==
-X-Google-Smtp-Source: AMrXdXtis3+HHoYAaDDUWxHkSQv3cyyON5IU/dJbJYuokVsvJKB1BULKAyMOn5u9MKgDjPEn4N90FA==
-X-Received: by 2002:a05:6512:2022:b0:4cb:22ab:ce02 with SMTP id s2-20020a056512202200b004cb22abce02mr7078493lfs.3.1672990402083;
-        Thu, 05 Jan 2023 23:33:22 -0800 (PST)
+        bh=Qtqtaj1OFg/MyB7wNM/laqasuBrV7DJChC6a1lfJy+U=;
+        b=vDpBvw7ye+er36mACVp00lfZZ4T3wDJWBLrasF9jFdbFHK2rsChObJPIzr0mA+gKC7
+         7Rv9koabzxgH/5ImwRPEc4rgt7G+1wdUTeiVMSFqoq4zHpVBsZDIcpPIHDnAuucS545w
+         aokQb/pYy9/ARVHXyN3fzpzBZ4yoYMYocZd5BVGdOI5oK2Jc44+6ndQnj+xORHZqwnea
+         67ic2ZfCbDESYhrGvisxVbhFP1GvU3cYtYRUjt7ccz0PTFVfbe3DOS5HexX//b340mD/
+         kMUA5GYQY2XN9grf/0pCBBbU8ec6mZc9o3gvNbMOARkqbaPbr7RYso4f8I5o64IopoEj
+         G4Vg==
+X-Gm-Message-State: AFqh2koMEf4F+VuxLO5uU53roRp4onuUucWL4PJWJp4zma2lwGLWOKAC
+        ceNFREhv27+6rI4sFdMjS09ofg==
+X-Google-Smtp-Source: AMrXdXtc5mz1Y9WwcJcGHvCmhoz1myCD8ufBeFTcmKdNTJAgTU5+YyViD7/qeJv2/9/HiEPcAaFIDw==
+X-Received: by 2002:a05:6512:224d:b0:4b4:b5d3:6603 with SMTP id i13-20020a056512224d00b004b4b5d36603mr24549503lfu.32.1672990403564;
+        Thu, 05 Jan 2023 23:33:23 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id c28-20020ac25f7c000000b004b4bb6286d8sm61114lfc.84.2023.01.05.23.33.21
+        by smtp.gmail.com with ESMTPSA id c28-20020ac25f7c000000b004b4bb6286d8sm61114lfc.84.2023.01.05.23.33.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jan 2023 23:33:21 -0800 (PST)
+        Thu, 05 Jan 2023 23:33:22 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ Cc:     Georgi Djakov <djakov@kernel.org>,
         Alex Elder <elder@linaro.org>, Johan Hovold <johan@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 8/9] dt-bindings: interconnect: qcom: Remove sc7180/sdx55 ipa compatibles
-Date:   Fri,  6 Jan 2023 09:33:12 +0200
-Message-Id: <20230106073313.1720029-9-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 9/9] dt-bindings: interconnect: qcom: drop IPA_CORE related defines
+Date:   Fri,  6 Jan 2023 09:33:13 +0200
+Message-Id: <20230106073313.1720029-10-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230106073313.1720029-1-dmitry.baryshkov@linaro.org>
 References: <20230106073313.1720029-1-dmitry.baryshkov@linaro.org>
@@ -74,8 +74,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,41 +82,102 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 These interconnects are modeled as clks, not interconnects, therefore
-remove the compatibles from the binding as they're unused.
+remove corresponding defines from the binding as they're unused.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 3 ---
- 1 file changed, 3 deletions(-)
+ include/dt-bindings/interconnect/qcom,sc7180.h   | 3 ---
+ include/dt-bindings/interconnect/qcom,sc8180x.h  | 3 ---
+ include/dt-bindings/interconnect/qcom,sc8280xp.h | 2 --
+ include/dt-bindings/interconnect/qcom,sdx55.h    | 2 --
+ include/dt-bindings/interconnect/qcom,sm8150.h   | 3 ---
+ include/dt-bindings/interconnect/qcom,sm8250.h   | 3 ---
+ 6 files changed, 16 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-index a429a1ed1006..4e8d950c2832 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-@@ -58,7 +58,6 @@ properties:
-       - qcom,sc8180x-config-noc
-       - qcom,sc8180x-dc-noc
-       - qcom,sc8180x-gem-noc
--      - qcom,sc8180x-ipa-virt
-       - qcom,sc8180x-mc-virt
-       - qcom,sc8180x-mmss-noc
-       - qcom,sc8180x-qup-virt
-@@ -96,7 +95,6 @@ properties:
-       - qcom,sm8150-config-noc
-       - qcom,sm8150-dc-noc
-       - qcom,sm8150-gem-noc
--      - qcom,sm8150-ipa-virt
-       - qcom,sm8150-mc-virt
-       - qcom,sm8150-mmss-noc
-       - qcom,sm8150-system-noc
-@@ -106,7 +104,6 @@ properties:
-       - qcom,sm8250-config-noc
-       - qcom,sm8250-dc-noc
-       - qcom,sm8250-gem-noc
--      - qcom,sm8250-ipa-virt
-       - qcom,sm8250-mc-virt
-       - qcom,sm8250-mmss-noc
-       - qcom,sm8250-npu-noc
+diff --git a/include/dt-bindings/interconnect/qcom,sc7180.h b/include/dt-bindings/interconnect/qcom,sc7180.h
+index f9970f6032eb..de5d5867bd67 100644
+--- a/include/dt-bindings/interconnect/qcom,sc7180.h
++++ b/include/dt-bindings/interconnect/qcom,sc7180.h
+@@ -108,9 +108,6 @@
+ #define SLAVE_LLCC			11
+ #define SLAVE_SERVICE_GEM_NOC			12
+ 
+-#define MASTER_IPA_CORE			0
+-#define SLAVE_IPA_CORE			1
+-
+ #define MASTER_LLCC			0
+ #define SLAVE_EBI1			1
+ 
+diff --git a/include/dt-bindings/interconnect/qcom,sc8180x.h b/include/dt-bindings/interconnect/qcom,sc8180x.h
+index e84cfec5afdd..0bdc8d6cb401 100644
+--- a/include/dt-bindings/interconnect/qcom,sc8180x.h
++++ b/include/dt-bindings/interconnect/qcom,sc8180x.h
+@@ -129,9 +129,6 @@
+ #define SLAVE_SERVICE_GEM_NOC			16
+ #define SLAVE_SERVICE_GEM_NOC_1			17
+ 
+-#define MASTER_IPA_CORE				0
+-#define SLAVE_IPA_CORE				1
+-
+ #define MASTER_LLCC				0
+ #define SLAVE_EBI_CH0				1
+ 
+diff --git a/include/dt-bindings/interconnect/qcom,sc8280xp.h b/include/dt-bindings/interconnect/qcom,sc8280xp.h
+index a3e5fda7c127..7440c2776415 100644
+--- a/include/dt-bindings/interconnect/qcom,sc8280xp.h
++++ b/include/dt-bindings/interconnect/qcom,sc8280xp.h
+@@ -48,11 +48,9 @@
+ #define SLAVE_SERVICE_A2NOC		19
+ 
+ /* clk_virt */
+-#define MASTER_IPA_CORE			0
+ #define MASTER_QUP_CORE_0		1
+ #define MASTER_QUP_CORE_1		2
+ #define MASTER_QUP_CORE_2		3
+-#define SLAVE_IPA_CORE			4
+ #define SLAVE_QUP_CORE_0		5
+ #define SLAVE_QUP_CORE_1		6
+ #define SLAVE_QUP_CORE_2		7
+diff --git a/include/dt-bindings/interconnect/qcom,sdx55.h b/include/dt-bindings/interconnect/qcom,sdx55.h
+index bfb6524a2d90..1925f0784ab2 100644
+--- a/include/dt-bindings/interconnect/qcom,sdx55.h
++++ b/include/dt-bindings/interconnect/qcom,sdx55.h
+@@ -70,7 +70,5 @@
+ #define SLAVE_QDSS_STM			48
+ #define SLAVE_TCU			49
+ 
+-#define MASTER_IPA_CORE			0
+-#define SLAVE_IPA_CORE			1
+ 
+ #endif
+diff --git a/include/dt-bindings/interconnect/qcom,sm8150.h b/include/dt-bindings/interconnect/qcom,sm8150.h
+index a25684680c42..ef292791f52e 100644
+--- a/include/dt-bindings/interconnect/qcom,sm8150.h
++++ b/include/dt-bindings/interconnect/qcom,sm8150.h
+@@ -121,9 +121,6 @@
+ #define SLAVE_LLCC			15
+ #define SLAVE_SERVICE_GEM_NOC		16
+ 
+-#define MASTER_IPA_CORE			0
+-#define SLAVE_IPA_CORE			1
+-
+ #define MASTER_LLCC			0
+ #define SLAVE_EBI_CH0			1
+ 
+diff --git a/include/dt-bindings/interconnect/qcom,sm8250.h b/include/dt-bindings/interconnect/qcom,sm8250.h
+index 1b4d9fbe888d..a4af5cc19271 100644
+--- a/include/dt-bindings/interconnect/qcom,sm8250.h
++++ b/include/dt-bindings/interconnect/qcom,sm8250.h
+@@ -115,9 +115,6 @@
+ #define SLAVE_SERVICE_GEM_NOC_2		15
+ #define SLAVE_SERVICE_GEM_NOC		16
+ 
+-#define MASTER_IPA_CORE			0
+-#define SLAVE_IPA_CORE			1
+-
+ #define MASTER_LLCC			0
+ #define SLAVE_EBI_CH0			1
+ 
 -- 
 2.39.0
 
