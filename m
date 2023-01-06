@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96FA46606DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 20:03:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00495660748
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 20:44:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231335AbjAFTDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 14:03:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47698 "EHLO
+        id S229619AbjAFTo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 14:44:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235156AbjAFTDF (ORCPT
+        with ESMTP id S229452AbjAFTo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 14:03:05 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4947C26F0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 11:03:04 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id 17so2629192pll.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 11:03:04 -0800 (PST)
+        Fri, 6 Jan 2023 14:44:26 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738856B1B3
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 11:44:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cN1Hjv1ZjF1Fra4t2Mn0qNOiNK4+jB93cBxr0YMCnwU=;
-        b=Ey7z3A66Pzb0lcqqMt7lzKApR06KzbwNc88raWNB+go5VTfVweyGY/80D8spdoOnkY
-         sAHBjRedssOlc0LeTldAEMDilblEKDERD+bPNfwq5CuK6q/1NVnbXPy9rLc8/9NALSqZ
-         jC626zoqPMyvdQk3G5maM8JFqH34WkrYpKV515OhQMMNn7xw/LTJORjKMFiKuAnZeCBj
-         pvoydOVH/Huo5U07uDzgqc3r77FMDpKpWfIzqJPQpAFPccJez3uyL8hbBMGSmneUYRSV
-         P+1ufg+TuJzu/ynM6oa5FnmlPY3hSU9Gdli4T0jEaTSsUzk3TayX8rKPzt54Wc8TnIu3
-         fcuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cN1Hjv1ZjF1Fra4t2Mn0qNOiNK4+jB93cBxr0YMCnwU=;
-        b=Zu3nYw/drQzvgchfekx9+yK7GUn96g9dP3Tje+5H4+LxDo585xJOsI4udC+dz+fNFf
-         TOl9DGT3DMI3Pa6JHyVXiN34KCRZH0A/Jk1EnQ27L4XDHXWVC32ENqYnqOFlcPxIVxQy
-         1a5FmZ7siAsX/HRfcqHkEoKfBIyX84R67SJjvkboA4DCJn+hIF57Lb3DzmDKAFQAIxVS
-         mecuKzISQvMW4NFpS9mxiTpf5H5yng/JkC56YVjGwswUVHka1ZQQAl860I0RxkjcFSdq
-         bZapb3J7LNn9G/Gumbbvqsw1i8v25s8cfBIWH/kUVbprBoCnkUirr+s/ek8U0xdcAJj2
-         UAXg==
-X-Gm-Message-State: AFqh2ko6BCnRigesLuUi4pzfz6vrVJF0s311mWrDA31IZBje/hNSzNQv
-        15fZFBNA64KFmzEJ0AW100bL
-X-Google-Smtp-Source: AMrXdXtfMOGCp05TM2sHR7cXAOWHvJIBVZnzSN59IpmKgh+9sUVPEuNQKKQMNialZrVSnsAUd6Yl3g==
-X-Received: by 2002:a17:90b:23c7:b0:225:f8e9:a0b5 with SMTP id md7-20020a17090b23c700b00225f8e9a0b5mr45042090pjb.45.1673031783709;
-        Fri, 06 Jan 2023 11:03:03 -0800 (PST)
-Received: from thinkpad ([117.217.183.19])
-        by smtp.gmail.com with ESMTPSA id j23-20020a17090a061700b002262fcd92desm3217844pjj.7.2023.01.06.11.02.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 11:03:02 -0800 (PST)
-Date:   Sat, 7 Jan 2023 00:32:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Dhruva Gole <d-gole@ti.com>, lpieralisi@kernel.org,
-        robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org
-Subject: Re: [PATCH 1/1] PCI: qcom: Add support for system suspend and resume
-Message-ID: <20230106190252.GA485076@thinkpad>
-References: <20230103074907.12784-1-manivannan.sadhasivam@linaro.org>
- <20230103074907.12784-2-manivannan.sadhasivam@linaro.org>
- <dad3aba3-a40b-8b76-c689-3dc877800263@ti.com>
- <20230105133639.GC4463@thinkpad>
- <Y7hlr3x9IrT/Kg82@google.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1673034265; x=1704570265;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=CCrQGS+VdK6pdfSjZdxoBvR9kopNa4Ms3wMREu5mEVo=;
+  b=BqZg0CX1Tg3r2JUuZK2IneLL30DVvhythvERS+le8xg8AZ2P6gIYpM/O
+   Wise8uXkfV/Gr9GYdTarRvDuJr80Dktusf+K6mMkOXsA6TfqADRC2B3lA
+   9XF+XGcMKBlgjMtbnjNu1JmFNZWLWvgJHFPFms+1lE8ESnpym6ZWjYEHU
+   s=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Jan 2023 11:44:25 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 11:44:24 -0800
+Received: from [10.110.20.194] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
+ 11:44:23 -0800
+Message-ID: <5ddc0a33-114c-5fd5-78c0-2ead90accebc@quicinc.com>
+Date:   Fri, 6 Jan 2023 11:44:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y7hlr3x9IrT/Kg82@google.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Daniel Vetter <daniel@ffwll.ch>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_abhinavk@quicinc.com>,
+        <contact@emersion.fr>, <daniel.vetter@ffwll.ch>,
+        <laurent.pinchart@ideasonboard.com>, <ppaalanen@gmail.com>,
+        <sebastian.wick@redhat.com>, <wayland-devel@lists.freedesktop.org>,
+        <ville.syrjala@linux.intel.com>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
+ <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local>
+ <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com>
+ <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,147 +70,137 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 06, 2023 at 06:17:19PM +0000, Matthias Kaehlcke wrote:
-> On Thu, Jan 05, 2023 at 07:06:39PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Jan 03, 2023 at 04:46:11PM +0530, Dhruva Gole wrote:
-> > > 
-> > > 
-> > > On 03/01/23 13:19, Manivannan Sadhasivam wrote:
-> > > > During the system suspend, vote for minimal interconnect bandwidth and
-> > > > also turn OFF the resources like clock and PHY if there are no active
-> > > > devices connected to the controller. For the controllers with active
-> > > > devices, the resources are kept ON as removing the resources will
-> > > > trigger access violation during the late end of suspend cycle as kernel
-> > > > tries to access the config space of PCIe devices to mask the MSIs.
-> > > > 
-> > > > Also, it is not desirable to put the link into L2/L3 state as that
-> > > > implies VDD supply will be removed and the devices may go into powerdown
-> > > > state. This will affect the lifetime of storage devices like NVMe.
-> > > > 
-> > > > And finally, during resume, turn ON the resources if the controller was
-> > > > truly suspended (resources OFF) and update the interconnect bandwidth
-> > > > based on PCIe Gen speed.
-> > > > 
-> > > > Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > 
-> > > Nice to have another driver added to the list of system suspend
-> > > support!
-> > > 
-> > > Acked-by: Dhruva Gole <d-gole@ti.com>
-> > > 
-> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 52 ++++++++++++++++++++++++++
-> > > >   1 file changed, 52 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index 5696e327795b..48810f1f2dba 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -227,6 +227,7 @@ struct qcom_pcie {
-> > > >   	struct gpio_desc *reset;
-> > > >   	struct icc_path *icc_mem;
-> > > >   	const struct qcom_pcie_cfg *cfg;qcom_pcie_icc_update
-> > > > +	bool suspended;
-> > > >   };
-> > > >   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> > > > @@ -1835,6 +1836,52 @@ static int qcom_pcie_remove(struct platform_device *pdev)
-> > > >   	return 0;
-> > > >   }
-> > > > +static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > > +{
-> > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > > +	int ret;
-> > > > +
-> > > > +	ret = icc_set_bw(pcie->icc_mem, 0, 0);
-> > > > +	if (ret) {
-> > > > +		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
-> > > > +		return ret;
-> > > > +	}
-> > > > +
-> > > > +	/*
-> > > > +	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
-> > > > +	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
-> > > > +	 * (sub)states.
-> > > > +	 *
-> > > > +	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
-> > > > +	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
-> > > > +	 * config space for masking MSIs.
-> > > > +	 *
-> > > > +	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
-> > > > +	 * will be removed and the devices may go into powerdown state. This will affect the
-> > > > +	 * lifetime of the storage devices like NVMe.
-> > > > +	 */
-> > > > +	if (!dw_pcie_link_up(pcie->pci)) {
-> > > > +		qcom_pcie_host_deinit(&pcie->pci->pp);
-> > > > +		pcie->suspended = true;
-> > > > +	}
-> > > > +
-> > > > +	return 0;
-> > > > +}
-> > > > +
-> > > > +static int qcom_pcie_resume_noirq(struct device *dev)
-> > > > +{
-> > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > > +
-> > > > +	if (pcie->suspended) {
-> > > > +		qcom_pcie_host_init(&pcie->pci->pp);
-> > > > +		pcie->suspended = false;
-> > > > +	}
-> > > > +
-> > > > +	qcom_pcie_icc_update(pcie);
-> > > > +
-> > > > +	return 0;
-> > > > +}
-> > > > +
-> > > >   static const struct of_device_id qcom_pcie_match[] = {
-> > > >   	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
-> > > >   	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> > > > @@ -1870,12 +1917,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
-> > > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
-> > > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> > > > +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> > > > +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
-> > > > +};
-> > > > +
-> > > >   static struct platform_driver qcom_pcie_driver = {
-> > > >   	.probe = qcom_pcie_probe,
-> > > >   	.remove = qcom_pcie_remove,
-> > > >   	.driver = {
-> > > >   		.name = "qcom-pcie",
-> > > >   		.of_match_table = qcom_pcie_match,
-> > > > +		.pm = &qcom_pcie_pm_ops,
-> > > >   	},
-> > > >   };
-> > > >   module_platform_driver(qcom_pcie_driver);
-> > > 
-> > > Out of curiosity, were you able to measure how much power you were able
-> > > to save after adding suspend support for PCIe? I don't know if clock
-> > > gating really saves much amount of power, but yeah its true that we
-> > > can't really cut off the power domain entirely in this case.
-> > > 
-> > 
-> > I did not measure the power consumption and I agree that we won't save much
-> > power with setting icc bandwidth to 0. But it is better to have something
-> > than nothing. And in the coming days, I have plans to look into other power
-> > saving measures also.
+
+
+On 1/5/2023 7:43 PM, Dmitry Baryshkov wrote:
+> On Fri, 6 Jan 2023 at 02:38, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 1/5/2023 3:33 AM, Daniel Vetter wrote:
+>>> On Wed, Jan 04, 2023 at 03:40:33PM -0800, Jessica Zhang wrote:
+>>>> Introduce and add support for a solid_fill property. When the solid_fill
+>>>> property is set, and the framebuffer is set to NULL, memory fetch will be
+>>>> disabled.
+>>>>
+>>>> In addition, loosen the NULL FB checks within the atomic commit callstack
+>>>> to allow a NULL FB when the solid_fill property is set and add FB checks
+>>>> in methods where the FB was previously assumed to be non-NULL.
+>>>>
+>>>> Finally, have the DPU driver use drm_plane_state.solid_fill and instead of
+>>>> dpu_plane_state.color_fill, and add extra checks in the DPU atomic commit
+>>>> callstack to account for a NULL FB in cases where solid_fill is set.
+>>>>
+>>>> Some drivers support hardware that have optimizations for solid fill
+>>>> planes. This series aims to expose these capabilities to userspace as
+>>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
+>>>> hardware composer HAL) that can be set by apps like the Android Gears
+>>>> app.
+>>>>
+>>>> Userspace can set the solid_fill property to a blob containing the
+>>>> appropriate version number and solid fill color (in RGB323232 format) and
+>>>> setting the framebuffer to NULL.
+>>>>
+>>>> Note: Currently, there's only one version of the solid_fill blob property.
+>>>> However if other drivers want to support a similar feature, but require
+>>>> more than just the solid fill color, they can extend this feature by
+>>>> creating additional versions of the drm_solid_fill struct.
+>>>>
+>>>> Changes in V2:
+>>>> - Dropped SOLID_FILL_FORMAT property (Simon)
+>>>> - Switched to implementing solid_fill property as a blob (Simon, Dmitry)
+>>>> - Changed to checks for if solid_fill_blob is set (Dmitry)
+>>>> - Abstracted (plane_state && !solid_fill_blob) checks to helper method
+>>>>     (Dmitry)
+>>>> - Removed DPU_PLANE_COLOR_FILL_FLAG
+>>>> - Fixed whitespace and indentation issues (Dmitry)
+>>>
+>>> Now that this is a blob, I do wonder again whether it's not cleaner to set
+>>> the blob as the FB pointer. Or create some kind other kind of special data
+>>> source objects (because solid fill is by far not the only such thing).
+>>>
+>>> We'd still end up in special cases like when userspace that doesn't
+>>> understand solid fill tries to read out such a framebuffer, but these
+>>> cases already exist anyway for lack of priviledges.
+>>>
+>>> So I still think that feels like the more consistent way to integrate this
+>>> feature. Which doesn't mean it has to happen like that, but the
+>>> patches/cover letter should at least explain why we don't do it like this.
+>>
+>> Hi Daniel,
+>>
+>> IIRC we were facing some issues with this check [1] when trying to set
+>> FB to a PROP_BLOB instead. Which is why we went with making it a
+>> separate property instead. Will mention this in the cover letter.
 > 
-> On a sc7280 system I see a reduction of ~30mW with this patch when no PCI
-> card is plugged in. The reduction seems to come from powering the PHY down.
-> 
+> What kind of issues? Could you please describe them?
 
-Thanks a lot for testing!
+Hi Dmitry,
 
-> Interestingly on that system power consumption during suspend (without this
-> patch) is ~30mW higher *without* a PCI card vs. with a card. Maybe the PHY
-> doesn't enter a low power mode when no card is plugged in?
+PROP_BLOB is defined as a legacy type here [1], but FB_ID is a 
+PROP_OBJECT which is defined as an extended type [2]. So, setting a 
+property blob as the FB would fail drm_property_flags_valid() due to 
+this check [3].
 
-Yeah, both PHY and controllers are never put into low power mode even if there
-are no devices connected. I don't know if the low power mode is possible at
-all with PHY.
+[1] 
+https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/include/uapi/drm/drm_mode.h#L523
+
+[2] 
+https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/include/uapi/drm/drm_mode.h#L534
+
+[3] 
+https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_property.c#L71
 
 Thanks,
-Mani
 
--- 
-மணிவண்ணன் சதாசிவம்
+Jessica Zhang
+
+> 
+>>
+>> [1]
+>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_property.c#L71
+>>
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>> -Daniel
+>>>
+>>>>
+>>>> Changes in V3:
+>>>> - Fixed some logic errors in atomic checks (Dmitry)
+>>>> - Introduced drm_plane_has_visible_data() and drm_atomic_check_fb() helper
+>>>>     methods (Dmitry)
+>>>>
+>>>> Jessica Zhang (3):
+>>>>     drm: Introduce solid fill property for drm plane
+>>>>     drm: Adjust atomic checks for solid fill color
+>>>>     drm/msm/dpu: Use color_fill property for DPU planes
+>>>>
+>>>>    drivers/gpu/drm/drm_atomic.c              | 136 +++++++++++++---------
+>>>>    drivers/gpu/drm/drm_atomic_helper.c       |  34 +++---
+>>>>    drivers/gpu/drm/drm_atomic_state_helper.c |   9 ++
+>>>>    drivers/gpu/drm/drm_atomic_uapi.c         |  59 ++++++++++
+>>>>    drivers/gpu/drm/drm_blend.c               |  17 +++
+>>>>    drivers/gpu/drm/drm_plane.c               |   8 +-
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |   9 +-
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c |  65 +++++++----
+>>>>    include/drm/drm_atomic_helper.h           |   5 +-
+>>>>    include/drm/drm_blend.h                   |   1 +
+>>>>    include/drm/drm_plane.h                   |  62 ++++++++++
+>>>>    11 files changed, 302 insertions(+), 103 deletions(-)
+>>>>
+>>>> --
+>>>> 2.38.1
+>>>>
+>>>
+>>> --
+>>> Daniel Vetter
+>>> Software Engineer, Intel Corporation
+>>> http://blog.ffwll.ch
+> 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
