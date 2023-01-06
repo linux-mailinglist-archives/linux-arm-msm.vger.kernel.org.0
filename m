@@ -2,114 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1487E660129
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 14:25:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C5CC660169
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 14:39:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233796AbjAFNZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 08:25:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59188 "EHLO
+        id S232226AbjAFNjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 08:39:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232920AbjAFNZH (ORCPT
+        with ESMTP id S229491AbjAFNja (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 08:25:07 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4DFC76835
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 05:25:05 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id i83so654986ioa.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 05:25:05 -0800 (PST)
+        Fri, 6 Jan 2023 08:39:30 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078DF65ACB
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 05:39:29 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id h6so682268iof.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 05:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfTJ3c+9fxJ1NOftUlf5eAcEnHlaOW7AestwesRDhhc=;
-        b=TkH3WGHNMZcs1BI37yseipc329HqFYaJ4GVDQB+/wdTKpAEjO7d3EJ+vH8ZwTuYUpx
-         SYwrToyQRbvYU/GGm5z0JqgYc8QYc2H1bsGK7zQVnwyuDaBViSP+v5hyjjyNXdzFGRFw
-         iG6vCXVuUiJW1TJ2LU5KkDqeFkzyLDGt3LXuM/5ETZpGxy9vb9sdiCPsYvMZwalWujG5
-         iSpTNvtTsWXiShbNtwRC7rrchOngvkacnYEUpV0aVT7OlLUqa+QsU5orZuBwnbMYPbuh
-         YrseKr8DPVFFl+3YwimIzOTIjmJGBzZDoPRSVKMlELbT75RplPJhth54k59igkERsNz5
-         Utmw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ceg3VkOhpcJNdMZIgPdIbnXe0RLV55L3LTXGXOf9SIQ=;
+        b=pyySRwGk2hxTT2bnXRV85gzXyrvH9lG610OVdZ0sBfIFhFye/qMiQA2wmS7gN92XS8
+         doICUjM80sG45wlJ5XJsr+Oo7/WxnSFD5LuNj20Zzm0Jduh3nYrdYxHHgqrJiKAr9h8F
+         ITV3WoZ0QZMQTo5p790GYm/uWQKrC7ILcj4X0g0q4EpzaGQNXYeRI85fodXlFcq0XGAp
+         u15pX3g7vbbPl8jHwsAa9/GWx4bATYBLXCi8RRe7rQ9ocMb6Saf9kJRzjfslKTUUPL+A
+         4xQHTzrCkvLGQQe0mMX91P4v9Yh5SwjqeRu9zAF2R9WX3u5qN5IIAfK4MMdw5B2LGUf/
+         8+OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vfTJ3c+9fxJ1NOftUlf5eAcEnHlaOW7AestwesRDhhc=;
-        b=puigBrUAcbQCkmXitdk4piQC7bGNKmN8eXx1WdoKNKEXXnGXK4geSyKxbnT1pFnl2L
-         3zbYyoOa1hYrxsopeDc8UfReLipsT5wlKXkik+PqOyj/Hb6Trt6/akRP71lfmK/0kubV
-         HzsJEyuZlTeRFv+tHQh77f5JMjehPcmWyzSap28saCkVqP2aqXfynYxWgR/NAisfPzIZ
-         c7F8neswZwEFSBFkyD+UD2IPu5yl6IDuBoPI4kTooiTitMK1Gd/lgJxNgUxdwUoq/i/L
-         yAoLUoww+n7SdVfBucX8ctiG1bmqcWjZUgO1S5OmiSZXQnowRKOvWucxbU9PkMFsCGvT
-         uS0w==
-X-Gm-Message-State: AFqh2koqaJR9aGKWgEQGaplSso4e7UwECmDbDV3xYXXuOZqEqn10D8zN
-        b5YJ59ro2mEmbaKAKADU4BoU2g==
-X-Google-Smtp-Source: AMrXdXtzSjW6xpjttl/b7MIb6PGGuiMfWDaSmoEds9vUt/DtAvdt6YBba8McM3DgiPH/QDYEY+Wr5g==
-X-Received: by 2002:a5d:894c:0:b0:6e0:1ae:8d07 with SMTP id b12-20020a5d894c000000b006e001ae8d07mr47726693iot.8.1673011505124;
-        Fri, 06 Jan 2023 05:25:05 -0800 (PST)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id o63-20020a022242000000b0034c12270863sm332911jao.80.2023.01.06.05.25.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 05:25:04 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
-        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net v2] net: ipa: correct IPA v4.7 IMEM offset
-Date:   Fri,  6 Jan 2023 07:25:01 -0600
-Message-Id: <20230106132502.3307220-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ceg3VkOhpcJNdMZIgPdIbnXe0RLV55L3LTXGXOf9SIQ=;
+        b=ivGBvXg8UImHGJAXfbHYYUHluHL4Ecn354xI+Aj0ujL+ZYAGpJdRaTVSy60AOp1jpd
+         wwM3cmnd/MAdAOPGMcw5xtbaFkGuNJW3u6+gKoGuiCGJY/rkQAJS6c5Pr9R0u3KutShy
+         JGaDVljdSTgGMoMw4RX9u1RitzIfuqULH1Mi4Hxn+F68fbRgX3s4Uo7Q/ulgrJarbEkQ
+         kWHsit+ISUqNw9Eumzgv18KzMFaICNswev5o2rITtj7mmj8QJJEZS12qj96KiJ3UTmyJ
+         gpb8cOxAxqwjDsI6CnSmva9b2MAkjBY5aqbP3DWGIMzET0G+38MtLGfMiuAfeBPM5YE0
+         kZqQ==
+X-Gm-Message-State: AFqh2kroWUwwfSjkjGG7sViniC9sOp6sbXKD3NaeSkJCVfXJmex6H3fa
+        QxCuq8kQI+51hSwzzSM2PwHevg==
+X-Google-Smtp-Source: AMrXdXsg+VHVt3KwLloLHaCCwaqFJNO0SSyRpzNvBxputGf6uvCknauXhpUJfR028Ff2Q7UeJJX7DA==
+X-Received: by 2002:a05:6602:370a:b0:6ed:a708:7ed6 with SMTP id bh10-20020a056602370a00b006eda7087ed6mr37039786iob.9.1673012368365;
+        Fri, 06 Jan 2023 05:39:28 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id o23-20020a02a1d7000000b0038437cba721sm346630jah.7.2023.01.06.05.39.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jan 2023 05:39:27 -0800 (PST)
+Message-ID: <927673c9-ce50-d03a-83f5-45d5416838d1@linaro.org>
+Date:   Fri, 6 Jan 2023 07:39:26 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/9] clk: qcom: rpmh: define IPA clocks where required
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230106073313.1720029-1-dmitry.baryshkov@linaro.org>
+ <20230106073313.1720029-2-dmitry.baryshkov@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20230106073313.1720029-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit b310de784bacd ("net: ipa: add IPA v4.7 support") was merged
-despite an unresolved comment made by Konrad Dybcio.  Konrad
-observed that the IMEM region specified for IPA v4.7 did not match
-that used downstream for the SM7225 SoC.  In "lagoon.dtsi" present
-in a Sony Xperia source tree, a ipa_smmu_ap node was defined with a
-"qcom,additional-mapping" property that defined the IPA IMEM area
-starting at offset 0x146a8000 (not 0x146a9000 that was committed).
+On 1/6/23 1:33 AM, Dmitry Baryshkov wrote:
+> Follow the example of sc7180 and sdx55 and implement IP0 resource as
+> clocks rather than interconnects.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The IPA v4.7 target system used for testing uses the SM7225 SoC, so
-we'll adhere what the downstream code specifies is the address of
-the IMEM region used for IPA.
+So this is simply adding these clocks?  Were they not
+defined/implemented as interconnects before?  (It
+isn't clear from your message above, and I just want
+to be sure there's no duplication.)
 
-Link: https://lore.kernel.org/linux-arm-msm/20221208211529.757669-1-elder@linaro.org
-Fixes: b310de784bac ("net: ipa: add IPA v4.7 support")
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Alex Elder <elder@linaro.org>
----
-v2: Based on net/master this time...
+					-Alex
 
- drivers/net/ipa/data/ipa_data-v4.7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
-index 7552c400961eb..b83390c486158 100644
---- a/drivers/net/ipa/data/ipa_data-v4.7.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.7.c
-@@ -357,7 +357,7 @@ static const struct ipa_mem ipa_mem_local_data[] = {
- static const struct ipa_mem_data ipa_mem_data = {
- 	.local_count	= ARRAY_SIZE(ipa_mem_local_data),
- 	.local		= ipa_mem_local_data,
--	.imem_addr	= 0x146a9000,
-+	.imem_addr	= 0x146a8000,
- 	.imem_size	= 0x00002000,
- 	.smem_id	= 497,
- 	.smem_size	= 0x00009000,
--- 
-2.34.1
+> ---
+>   drivers/clk/qcom/clk-rpmh.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index 586a810c682c..5f914cf36b10 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -445,6 +445,7 @@ static struct clk_hw *sm8150_rpmh_clocks[] = {
+>   	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_a_ao.hw,
+>   	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_a.hw,
+>   	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_a_ao.hw,
+> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
+> @@ -484,6 +485,7 @@ static struct clk_hw *sc8180x_rpmh_clocks[] = {
+>   	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_d_ao.hw,
+>   	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_d.hw,
+>   	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_d_ao.hw,
+> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_sc8180x = {
+> @@ -504,6 +506,7 @@ static struct clk_hw *sm8250_rpmh_clocks[] = {
+>   	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
+>   	[RPMH_RF_CLK3]		= &clk_rpmh_rf_clk3_a.hw,
+>   	[RPMH_RF_CLK3_A]	= &clk_rpmh_rf_clk3_a_ao.hw,
+> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
+> @@ -546,6 +549,7 @@ static struct clk_hw *sc8280xp_rpmh_clocks[] = {
+>   	[RPMH_IPA_CLK]          = &clk_rpmh_ipa.hw,
+>   	[RPMH_PKA_CLK]          = &clk_rpmh_pka.hw,
+>   	[RPMH_HWKM_CLK]         = &clk_rpmh_hwkm.hw,
+> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+>   };
+>   
+>   static const struct clk_rpmh_desc clk_rpmh_sc8280xp = {
 
