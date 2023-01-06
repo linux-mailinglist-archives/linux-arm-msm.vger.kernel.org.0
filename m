@@ -2,136 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 163E165FE22
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:42:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2C4C65FE5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:52:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233878AbjAFJj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 04:39:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
+        id S231511AbjAFJue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 04:50:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233422AbjAFJjb (ORCPT
+        with ESMTP id S233697AbjAFJt5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 04:39:31 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A7C60866
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:32:01 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id o15so659453wmr.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:32:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v982tKjruzjnEGR+qtBvwCfxbuiittS57VqGvWmNxEA=;
-        b=xaCDj00Zx5JE+B4HrORfAr0IUeuE5ge23LPipHcZiC+zhR+ezzDiRV+IkbNT1CNAfz
-         rcZpOyT+Fjty9jGTicbtHTPGVD6+xBAHsPfRj7SmGkCbqgYflh6KN0ngzQiHkZ/wb0g2
-         GQwNtJiRUz9XyhjzUb4XRYeJXa/9JHTqgG/f+6ZMzLL5EV9512q02xKq0HL9ZrKmbdZo
-         qIf8MnF2ucYuTihFjPM26qK+eqI35YBoIWuZGBJN6rDpvJLAJAOqN2ynjxDf85eUp+9L
-         w/mouXYO4yJKgYvCtgK5fOo2+VuFObrE8U8Z4zW0W4w58uztuEn9Gk10ZqHfObAvhaQr
-         g5bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v982tKjruzjnEGR+qtBvwCfxbuiittS57VqGvWmNxEA=;
-        b=YUoOXHAEOZE0+d//NHsSwliETyQ7eyTkPaRJ6cUtTRo9QXPr1eDWolTaWJR9fRHKLR
-         SxTL4WdEgo4kwmMCwYgPhxekkS7VZgymCT7LJulaExqiNpYPbwtPmq5pXXDRbGA0W9Hx
-         TW4QnxzRLzcy//crXMveam9ABPZoTznDJnq/euvawoCOgjWN7cmFcbtr5IONCtPi6AaP
-         rsK/U3fBbiaqE5Tqx7ZiE0fIZ0i1dqHuK/dhEtobIFm+hQDJra1CIZeT46Ioxp9uXSY9
-         MPWVV7La9DQzTdPf952ztw2GPRXQz+jM+/NnSXMyIqdhIiE1q6EBSL4oXRovyY3gjGRD
-         bh9Q==
-X-Gm-Message-State: AFqh2koD433MuZysgA8gNYgrkusKPnEv72Pr5ScbkOnKs3rqcNRKUuEF
-        JDhFvGHXbHLOPsdkJkXmaBjsKQ==
-X-Google-Smtp-Source: AMrXdXvYSLjYzCElzyzK7yhn2iQbRJ2DGluk25DvaH9fz9jVXIzkSfkiBzSZ7TwN2v8AjLBXVXylQw==
-X-Received: by 2002:a05:600c:798:b0:3d3:5737:3b0f with SMTP id z24-20020a05600c079800b003d357373b0fmr47719090wmo.36.1672997519650;
-        Fri, 06 Jan 2023 01:31:59 -0800 (PST)
-Received: from [192.168.1.102] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id iv14-20020a05600c548e00b003b47b80cec3sm6203606wmb.42.2023.01.06.01.31.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 01:31:58 -0800 (PST)
-Message-ID: <bb52b82d-5149-c512-ad30-3b993221bd78@linaro.org>
-Date:   Fri, 6 Jan 2023 10:31:56 +0100
+        Fri, 6 Jan 2023 04:49:57 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274D343E4D;
+        Fri,  6 Jan 2023 01:49:47 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3069DWlH025776;
+        Fri, 6 Jan 2023 09:49:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AvNscPFQUAo5ARfnLPz9LEhGUhJd4Ssb0YagQ9ruQUw=;
+ b=kIEHO0jr/bvdxX1DO3GnNVWUIMlOlocs3lnTMQPASsYIWuZVct8bJ1CSXBzNfPvHG6vu
+ CoDBHP8cnH7PSStFcL5PshK305i3EdhEzfVdwhoNGvNQYkAHua2/x26jQIPQPmkQHWiY
+ gKan3ZyF1OtZAQP8KJ6DI7ZxSLeExbeIvtew2/JDT9mUlKtRcxhuCs6jp4DWC9QOHRgl
+ 5Go4wUeH0qTC+rDSQ7qpnIxyFKHiezkWCWIHXFbmJzRJWiBnBYtOnfEX238Rcla49xow
+ fikeQHwePjETos3RGmBKrFeAUlsgefuor2Xh6g/LlxKwf6VE74aagG0bi1aLNMVlJtjy Jg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwu4vtu5t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 06 Jan 2023 09:49:30 +0000
+Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3069nTYM027138
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 6 Jan 2023 09:49:29 GMT
+Received: from [10.251.44.175] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
+ 01:49:25 -0800
+Message-ID: <d54cd6d9-a970-6038-1fc5-6d8b4709ce62@quicinc.com>
+Date:   Fri, 6 Jan 2023 11:49:23 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 1/3] dt-bindings: clock: document SM8550 DISPCC clock
- controller
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
- <20230103-topic-sm8550-upstream-dispcc-v1-1-81bfcc26b2dc@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v1-1-81bfcc26b2dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
+        <jzala@quicinc.com>, <todor.too@gmail.com>, <hverkuil@xs4all.nl>
+CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
+        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
+ <a885c324-8ac5-da52-2b68-848f36fd045b@linaro.org>
+ <a4b0ad23-c003-b2a5-acda-07164048673a@quicinc.com>
+ <4c822211-ef91-416d-2363-cd0022a417af@nexus-software.ie>
+From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
+In-Reply-To: <4c822211-ef91-416d-2363-cd0022a417af@nexus-software.ie>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ij5KvQg3RmhuAY_cNOzcf3nkDApqxIg9
+X-Proofpoint-ORIG-GUID: ij5KvQg3RmhuAY_cNOzcf3nkDApqxIg9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-06_05,2023-01-05_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=914 phishscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ bulkscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301060077
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/01/2023 14:53, Neil Armstrong wrote:
-> Document device tree bindings for display clock controller for
-> Qualcomm SM8550 SoC.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/clock/qcom,sm8550-dispcc.yaml         | 106 +++++++++++++++++++++
->  include/dt-bindings/clock/qcom,sm8550-dispcc.h     | 101 ++++++++++++++++++++
->  2 files changed, 207 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-> new file mode 100644
-> index 000000000000..06c04656cb55
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
-> @@ -0,0 +1,106 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm8550-dispcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display Clock & Reset Controller for SM8550
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +  - Neil Armstrong <neil.armstrong@linaro.org>
-> +
-> +description: |
-> +  Qualcomm display clock control module provides the clocks, resets and power
-> +  domains on SM8550.
-> +
-> +  See also:: include/dt-bindings/clock/qcom,sm8550-dispcc.h
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm8550-dispcc
-> +
-> +  clocks:
-> +    minItems: 3
 
-Clock inputs should be optional if we can really treat them optional,
-e.g. reparent to something else or just adjust list of parents. Since
-the driver has fixed parent data, it suggests these are not really
-optional and they are all in the hardware (always).
+On 05/01/2023 20:43, Bryan O'Donoghue wrote:
+> On 05/01/2023 08:37, Milen Mitkov (Consultant) wrote:
+>> On 09/12/2022 18:17, Bryan O'Donoghue wrote:
+>>> On 09/12/2022 09:40, quic_mmitkov@quicinc.com wrote:
+>>>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+>>>>
+>>>> For v7:
+>>>> - Fix an issue with output state for different versions of the IFE
+>>>>    hardware (for platforms different from QRB5, e.g. QRB3).
+>>>>
+>>>
+>>> Yep.
+>>>
+>>> Working for me on rb3 now and thank you for updating the git commit 
+>>> in patch #4.
+>>>
+>>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>
+>>> for the series.
+>>>
+>>> ---
+>>> bod
+>>
+>>
+>> Hi Bryan, Robert, Hans and others,
+>>
+>>
+>> Happy New Year!
+>>
+>> Is there anything else I can/need to do to speed up the merging 
+>> process of this series?
+>>
+>>
+>> Thanks,
+>>
+>> Milen
+>>
+>
+> I don't think so.
+>
+> Is everything still working on linux-next ?
+>
+> e45fb347b630e...cc3c08b41a9c9 master        -> linux-next/master
+>
+Hi Bryan,
+
+Yes, I took the sm8250_config from 
+git.linaro.org/people/bryan.odonoghue/kernel.git, put it on most recent 
+master of git.linaro.org/kernel-org/linux-next.git and build with it, 
+virtual channels work as expected.
 
 
-Best regards,
-Krzysztof
+Regard,
+
+Milen
+
+
 
