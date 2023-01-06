@@ -2,54 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 660FF65FB1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 06:58:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6639965FB34
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 07:10:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbjAFF6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 00:58:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
+        id S231646AbjAFGKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 01:10:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjAFF6J (ORCPT
+        with ESMTP id S229497AbjAFGKT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 00:58:09 -0500
+        Fri, 6 Jan 2023 01:10:19 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387E360CF5;
-        Thu,  5 Jan 2023 21:58:09 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5027C6147A;
+        Thu,  5 Jan 2023 22:10:18 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 80E2161D0F;
-        Fri,  6 Jan 2023 05:58:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AE2C433EF;
-        Fri,  6 Jan 2023 05:58:06 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D247761D20;
+        Fri,  6 Jan 2023 06:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2F770C43396;
+        Fri,  6 Jan 2023 06:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1672984687;
-        bh=f4kAf4jl5OrqQs3HlMxTw6NS8FwWp+oskfarswKO6Bw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=JX3MTkZQChjBwMyE4a55F9V3FFLx/FfXM67tyeQ426oFgd/F59S/J5khgaEeP/WtB
-         G6q1JI+xMJdyj+AAUlCd0KNvAm1NHJpq0YbtY0vvOV/cXlceGRFY2vc7PVhK1mE2tk
-         lD/X+PFipAy3n8XCzRhxglQXYJupIB0JnfxNSDnKucmA336BsOK4qvC+144y8F/u4o
-         DJ8y0SjNTyuheDYvlCHLAh9ZXikGbEKjDUJCXLYKzWSfz6FYCrtGWvlY43syQe9id8
-         IE9GcfGtQCvuz+/Ehc4JuO/KRyk8uc99KpbCq91k/P3dLXdZMgYW/nPtAeGGWxaYtV
-         sjfHq2q6QW/6Q==
-Date:   Thu, 5 Jan 2023 21:58:06 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
-        caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: ipa: correct IPA v4.7 IMEM offset
-Message-ID: <20230105215806.4c192dad@kernel.org>
-In-Reply-To: <20230104181017.2880916-1-elder@linaro.org>
-References: <20230104181017.2880916-1-elder@linaro.org>
+        s=k20201202; t=1672985417;
+        bh=BqR+YVXxf+OLUvUxFDwbMkvpUZi8r+0UlXr60rYEOQo=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=S44TqlIF6L3ct0gTR0XX5+WX7yKMIg5ldo2K5eeQpIQVau2mFBSaP0KicRNz8KYN2
+         +MOZLq/GMYHXyJhiUO0c4NunvJcVI14wrEEJsAbvX9AlDZJp7B3nJztbeb6izqhAHp
+         2ioW3TnkuQW74Ub+ENG7CnMkzHrZeha9xr6945iiBYwz/eHOfBdBynah3QMIpqCzsw
+         J0PpbNzS19doPIvUxK/D2KhLGPowkWFjWFoiShbr3SVNDRNsWEQ3ozH2NoTmcpXOH2
+         Kw4LgMmhY/qZdhIVRJ8SK9JEizCZpnDoi1ju/I24C3vCN5TQvVdAl/Adsbf4KDKYVb
+         bQVb0ybfX9hkg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1A51CC395DF;
+        Fri,  6 Jan 2023 06:10:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v2 0/6] net: ipa: simplify IPA interrupt handling
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <167298541710.969.9209439108124310998.git-patchwork-notify@kernel.org>
+Date:   Fri, 06 Jan 2023 06:10:17 +0000
+References: <20230104175233.2862874-1-elder@linaro.org>
+In-Reply-To: <20230104175233.2862874-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
+        evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -59,10 +61,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed,  4 Jan 2023 12:10:17 -0600 Alex Elder wrote:
-> Note:  This fixes a commit that first landed in v6.2-rc1.
+Hello:
 
-Why is it tagged for net-next then? =F0=9F=A4=94=EF=B8=8F
-Let's treat it as a normal fix with a Fixes tag and for net.
-I reckon the commit message makes is sufficiently clear that
-I'm to blame :)
+This series was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Wed,  4 Jan 2023 11:52:27 -0600 you wrote:
+> One of the IPA's two IRQs fires when data on a suspended channel is
+> available (to request that the channel--or system--be resumed to
+> recieve the pending data).  This interrupt also handles a few
+> conditions signaled by the embedded microcontroller.
+> 
+> For this "IPA interrupt", the current code requires a handler to be
+> dynamically registered for each interrupt condition.  Any condition
+> that has no registered handler is quietly ignored.  This design is
+> derived from the downstream IPA driver implementation.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,v2,1/6] net: ipa: introduce a common microcontroller interrupt handler
+    https://git.kernel.org/netdev/net-next/c/e5709b7c1ede
+  - [net-next,v2,2/6] net: ipa: introduce ipa_interrupt_enable()
+    https://git.kernel.org/netdev/net-next/c/8e461e1f092b
+  - [net-next,v2,3/6] net: ipa: enable IPA interrupt handlers separate from registration
+    https://git.kernel.org/netdev/net-next/c/d50ed3558719
+  - [net-next,v2,4/6] net: ipa: register IPA interrupt handlers directly
+    https://git.kernel.org/netdev/net-next/c/482ae3a993e4
+  - [net-next,v2,5/6] net: ipa: kill ipa_interrupt_add()
+    https://git.kernel.org/netdev/net-next/c/8d8d3f1a3ef9
+  - [net-next,v2,6/6] net: ipa: don't maintain IPA interrupt handler array
+    (no matching commit)
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
