@@ -2,159 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F39965FD43
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:04:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D826765FD52
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:13:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231845AbjAFJEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 04:04:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36470 "EHLO
+        id S229532AbjAFJNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 04:13:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231838AbjAFJEj (ORCPT
+        with ESMTP id S232212AbjAFJNj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 04:04:39 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6171D68C99
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:04:38 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id bn26so718216wrb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:04:38 -0800 (PST)
+        Fri, 6 Jan 2023 04:13:39 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5AFF63D2A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:13:36 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so650342wms.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:13:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7oh+tO4VAYKsBsuVwmWetnQdvzWD6pRcTuec9yQCMBE=;
-        b=VcaBOgij5Nk7bOXAUDlWpO3pECWUZyZWpSZ9DBn9QmP8brgHn/moTN+rNHmuO6cOtC
-         asHTEQw18D4FXFnaijCwcAt7eYm/Kh2f4vnvOhoSe5bCickgXh6TdjnkDr+bByGv+i1w
-         H24kaMd/bbmMxayX/wnQyntJY1KG+9uUD+jnY=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5OdyRKFST2UkrnFQxoJYi7XQRvXEY/YmDNSwtGSyDTY=;
+        b=jaIjZJ8WvQZJ6gpN09cWaQq02Y8TPrEBfFCbgTx+QgJd26vyPxTXMIQI9ATnUSVuk/
+         H9vMIIsnijhTum/ltk1BGF0VZRxmn59ZH9GOHC2xllg4Y9zS9U8Lg//VyB/0/zX6Z6hX
+         nGojXyiQ5buKmL9ZSANJJt1vi5ttb9hCAtklYLYZeiPjvLGi1ZC4nwtnKT1z3PoCGnnu
+         JCUKcxBt9uH4P9kbRgQgVInn9XrhxMKMTpdCuvJF8HW5PHlOpo2Zo1999OZbsr//ZXMh
+         TNY4K6MnQqCyRHTkZMfxf8FlIaiLKbKQYHF9N3kD3pzJ6H5Rp9yzzszbPJOQDb54tS1L
+         AE3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7oh+tO4VAYKsBsuVwmWetnQdvzWD6pRcTuec9yQCMBE=;
-        b=SXxXxlO1JFXz+rVtnVfvnpYUtKUmuiD/E5uUvNUrzwXLIxnrZW+E/yy487lbnjRELe
-         ki4KyMGl5SsBV2DWFHDAERf6AxhifiYqb7mobQQ6Rp1s8CQlAka/9JIiKunYWxHg2kwJ
-         WLSPpuF03Wgs7Ajj/wKn8Pph813BDnyTYUuIl/jQcAKz7vN2pet7hnDV6J2FvreRg51C
-         DAeOjCDWuD3UFN3lPUpZ7a4SpyuK0quBr+15yTkvWzAdChj9w/VKPqUGcJNasxOFJih5
-         2qjxGRQa/X8LtRpNflhAHNAqMVx1710efURNLBYHGxJuauZAfY0oKYm714F3dCRDnOJE
-         e7lw==
-X-Gm-Message-State: AFqh2kr7MiHP+R/40fneGmU5yvEXOxKaQot3PZkfT1ioAZOw5/y+V9lx
-        H0ymXzUXX544/gAWVZm2R9lYP6/59OfMQ7I1
-X-Google-Smtp-Source: AMrXdXsF6r0whrWtJmT10SJbfExjNBDHpWpevEeXU/qX5vrGPfkbuLARTKy9wemqwWZrlmIvuLuqHw==
-X-Received: by 2002:a5d:48c6:0:b0:242:844a:835d with SMTP id p6-20020a5d48c6000000b00242844a835dmr30521789wrs.65.1672995876891;
-        Fri, 06 Jan 2023 01:04:36 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id a14-20020adff7ce000000b002549b649b62sm569112wrq.50.2023.01.06.01.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 01:04:36 -0800 (PST)
-Date:   Fri, 6 Jan 2023 10:04:34 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Steev Klimaszewski <steev@kali.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Set preferred depth.
-Message-ID: <Y7fkIvBRHcsgHR0l@phenom.ffwll.local>
-Mail-Followup-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230106071609.3948-1-steev@kali.org>
- <f52cca60-ab6a-460a-65f9-367c083b51fa@linaro.org>
+        bh=5OdyRKFST2UkrnFQxoJYi7XQRvXEY/YmDNSwtGSyDTY=;
+        b=1P829fiuG8yVvC3HUmwiiiX1PKdMOifDIhLUiwjOMQtLnbVUHPtkCGgrXLTehiWird
+         7R3BdLb1Ee8SXPgymCCrWdHaRIfek5bP50oxhHBE3eoJM8XNcPNtPwOhY3VezbGJkqO8
+         JzqSF9PVArUqnXue3sSI95KgbTxWfrpTr3Loaa9r0O5b4TjV07uFSher/2N9StN77tXi
+         T0yLTuIy3uAZDzpLwqDonlMmWJBzTLiYgxqk2BEhJmS/lptliqeDvfiJ58FzE/nb89JZ
+         0RY6F6odyNurazxAVvaeMwOo6xB59zeWE2UActTu54gt+HEWXaJi8Kh+jr3cYBObDUEg
+         v14g==
+X-Gm-Message-State: AFqh2kocHL3iJCZafUMsl/h5kMfJEekqh685z/N42cYjTk8z6s2IEf8i
+        RI4MDorv0DuuLW+nEGfLj62q9w==
+X-Google-Smtp-Source: AMrXdXtIAHzHGFPUTck4jeORiekJikKX1pv3b1Tw1WmT0umvTTwZXhYfJh6tmIJQmZmvLp3lbqrciw==
+X-Received: by 2002:a1c:7c0f:0:b0:3d5:816e:2fb2 with SMTP id x15-20020a1c7c0f000000b003d5816e2fb2mr41639542wmc.14.1672996415396;
+        Fri, 06 Jan 2023 01:13:35 -0800 (PST)
+Received: from [192.168.1.102] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id j1-20020a05600c1c0100b003cfaae07f68sm6093133wms.17.2023.01.06.01.13.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jan 2023 01:13:34 -0800 (PST)
+Message-ID: <fa0327b1-2180-1421-b448-a45ab0be9750@linaro.org>
+Date:   Fri, 6 Jan 2023 10:13:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f52cca60-ab6a-460a-65f9-367c083b51fa@linaro.org>
-X-Operating-System: Linux phenom 5.19.0-2-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: eud: Add SM6115 / SM4250
+ binding
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_schowdhu@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+References: <20230103150419.3923421-1-bhupesh.sharma@linaro.org>
+ <20230103150419.3923421-2-bhupesh.sharma@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230103150419.3923421-2-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 06, 2023 at 09:18:21AM +0200, Dmitry Baryshkov wrote:
-> On 06/01/2023 09:16, Steev Klimaszewski wrote:
-> > As of commit 37c90d589dc0 ("drm/fb-helper: Fix single-probe color-format
-> > selection"), if no supported color formats are found, it tries to use the
-> > driver provided default, which msm didn't have set and leads to the
-> > following output:
-> > 
-> > msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
-> > msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
-> > msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
-> > msm_dpu ae01000.display-controller: [drm] No compatible format found
-> > ------------[ cut here ]------------
-> > WARNING: CPU: 0 PID: 73 at drivers/gpu/drm/drm_atomic.c:1604 __drm_atomic_helper_set_config+0x240/0x33c
-> > Modules linked in: ext4 mbcache jbd2 msm mdt_loader ocmem gpu_sched llcc_qcom gpio_keys qrtr
-> > CPU: 0 PID: 73 Comm: kworker/u16:2 Not tainted 6.2.0-rc2-next-20230106 #53
-> > Hardware name: LENOVO 21BX0015US/21BX0015US, BIOS N3HET74W (1.46 ) 10/12/2022
-> > Workqueue: events_unbound deferred_probe_work_func
-> > pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > pc : __drm_atomic_helper_set_config+0x240/0x33c
-> > lr : __drm_atomic_helper_set_config+0x68/0x33c
-> > sp : ffff800008a7b790
-> > x29: ffff800008a7b790 x28: ffff73ee3e130a00 x27: 0000000000000000
-> > x26: ffff73ee3d256e00 x25: 0000000000000038 x24: ffff73e6c0d65e00
-> > x23: ffff73e6c17a7800 x22: ffff73e6c0d64e00 x21: ffff73e79c025e00
-> > x20: 00000000c0d64e00 x19: ffff73ee3e130a00 x18: ffffffffffffffff
-> > x17: 662074616d726f66 x16: 20656c6269746170 x15: 0000000000000000
-> > x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-> > x11: 0000000000000000 x10: 0000000000000000 x9 : ffffa829144ff8bc
-> > x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-> > x5 : ffff73e6c0d65f50 x4 : ffff73ee3d254950 x3 : ffff73e6c0d65ec0
-> > x2 : ffff73ee3c953a00 x1 : ffff73e79c025580 x0 : 0000000000000000
-> > Call trace:
-> > __drm_atomic_helper_set_config+0x240/0x33c
-> > drm_client_modeset_commit_atomic+0x160/0x280
-> > drm_client_modeset_commit_locked+0x64/0x194
-> > drm_client_modeset_commit+0x38/0x60
-> > __drm_fb_helper_initial_config_and_unlock+0x528/0x63c
-> > drm_fb_helper_initial_config+0x54/0x64
-> > msm_fbdev_init+0x94/0xfc [msm]
-> > msm_drm_bind+0x548/0x614 [msm]
-> > try_to_bring_up_aggregate_device+0x1e4/0x2d0
-> > __component_add+0xc4/0x1c0
-> > component_add+0x1c/0x2c
-> > dp_display_probe+0x2a4/0x460 [msm]
-> > platform_probe+0x70/0xcc
-> > really_probe+0xc8/0x3e0
-> > __driver_probe_device+0x84/0x190
-> > driver_probe_device+0x44/0x120
-> > __device_attach_driver+0xc4/0x160
-> > bus_for_each_drv+0x84/0xe0
-> > __device_attach+0xa4/0x1cc
-> > device_initial_probe+0x1c/0x2c
-> > bus_probe_device+0xa4/0xb0
-> > deferred_probe_work_func+0xc0/0x114
-> > process_one_work+0x1ec/0x470
-> > worker_thread+0x74/0x410
-> > kthread+0xfc/0x110
-> > ret_from_fork+0x10/0x20
-> > ---[ end trace 0000000000000000 ]---
-> > 
-> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_drv.c | 1 +
-> >   1 file changed, 1 insertion(+)
+On 03/01/2023 16:04, Bhupesh Sharma wrote:
+> Add dt-bindings for EUD found on Qualcomm SM6115 / SM4250 SoC.
 > 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> On this SoC (and derivatives) the enable bit inside 'tcsr_check_reg'
+> needs to be set first to 'enable' the eud module.
+> 
 
-I think a documentation patch that preferred_depth = 0 actually means
-xrgb8888 would be good, since we seem to have a serious confusion going on
-here?
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Subject: drop second, redundant "binding".
+
+
+> So, update the dt-bindings to accommodate the third register
+> property required by the driver on these SoCs.
+> 
+> Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,eud.yaml         | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> index c98aab209bc5d..1dffe14868735 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> @@ -18,12 +18,22 @@ properties:
+>      items:
+>        - enum:
+>            - qcom,sc7280-eud
+> +          - qcom,sm6115-eud
+>        - const: qcom,eud
+>  
+>    reg:
+> +    minItems: 2
+>      items:
+>        - description: EUD Base Register Region
+>        - description: EUD Mode Manager Register
+> +      - description: TCSR Check Register
+
+Is this valid also for sc7280? From commit description looks like not,
+so you should have allOf:if:then constraining the items per variant.
+
+> +
+> +  reg-names:
+> +    minItems: 2
+> +    items:
+> +      - const: eud-base
+> +      - const: eud-mode-mgr
+> +      - const: tcsr-check-base
+>  
+>    interrupts:
+>      description: EUD interrupt
+
+Best regards,
+Krzysztof
+
