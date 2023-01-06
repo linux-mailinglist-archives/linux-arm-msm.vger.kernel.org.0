@@ -2,320 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B05B165FDDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:27:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 163E165FE22
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:42:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233197AbjAFJ02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 04:26:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44572 "EHLO
+        id S233878AbjAFJj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 04:39:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234754AbjAFJZi (ORCPT
+        with ESMTP id S233422AbjAFJjb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 04:25:38 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14646718B4;
-        Fri,  6 Jan 2023 01:22:06 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3064K7Uk004166;
-        Fri, 6 Jan 2023 09:21:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=seTHc2EvtHTcMCsOiyOX3LGrepcCE5Xw4JutTZEv6e0=;
- b=STLp2Bszj10y7O53Mqlm0pPoi66Z/6BgHJ/I27l79/Lfd57wfV7qLUTFJJTWb3WJzNSf
- QwUmk9HmYguRs3fBzOLYQs/r8YAVM5BlujwAUOItEhGH82hJN+bcwJ8lRDxI4NRxIAmB
- H50fxWkC6cWtu1uRxSCRiDFC8BbdjL5FC9JCurETKu0ySMvkmAtGpDeSDeT6dkZlWsxB
- gZM7AvOBrR8RfZcPvNieaRoyGerH0pAWkYA35Ip99J43DHwyS4f87eKn4XD3qQcDie6e
- FenErYNB8ZB/2NXfB1s28UvRZ3VCobBO/9NjganPFiYmBqpnPahuky2MXbfkV1+zQ6I0 VA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwuuutq8r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Jan 2023 09:21:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3069LcaT022775
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Jan 2023 09:21:38 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 6 Jan 2023 01:21:38 -0800
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Fri, 6 Jan 2023 04:39:31 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A7C60866
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:32:01 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id o15so659453wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:32:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=v982tKjruzjnEGR+qtBvwCfxbuiittS57VqGvWmNxEA=;
+        b=xaCDj00Zx5JE+B4HrORfAr0IUeuE5ge23LPipHcZiC+zhR+ezzDiRV+IkbNT1CNAfz
+         rcZpOyT+Fjty9jGTicbtHTPGVD6+xBAHsPfRj7SmGkCbqgYflh6KN0ngzQiHkZ/wb0g2
+         GQwNtJiRUz9XyhjzUb4XRYeJXa/9JHTqgG/f+6ZMzLL5EV9512q02xKq0HL9ZrKmbdZo
+         qIf8MnF2ucYuTihFjPM26qK+eqI35YBoIWuZGBJN6rDpvJLAJAOqN2ynjxDf85eUp+9L
+         w/mouXYO4yJKgYvCtgK5fOo2+VuFObrE8U8Z4zW0W4w58uztuEn9Gk10ZqHfObAvhaQr
+         g5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v982tKjruzjnEGR+qtBvwCfxbuiittS57VqGvWmNxEA=;
+        b=YUoOXHAEOZE0+d//NHsSwliETyQ7eyTkPaRJ6cUtTRo9QXPr1eDWolTaWJR9fRHKLR
+         SxTL4WdEgo4kwmMCwYgPhxekkS7VZgymCT7LJulaExqiNpYPbwtPmq5pXXDRbGA0W9Hx
+         TW4QnxzRLzcy//crXMveam9ABPZoTznDJnq/euvawoCOgjWN7cmFcbtr5IONCtPi6AaP
+         rsK/U3fBbiaqE5Tqx7ZiE0fIZ0i1dqHuK/dhEtobIFm+hQDJra1CIZeT46Ioxp9uXSY9
+         MPWVV7La9DQzTdPf952ztw2GPRXQz+jM+/NnSXMyIqdhIiE1q6EBSL4oXRovyY3gjGRD
+         bh9Q==
+X-Gm-Message-State: AFqh2koD433MuZysgA8gNYgrkusKPnEv72Pr5ScbkOnKs3rqcNRKUuEF
+        JDhFvGHXbHLOPsdkJkXmaBjsKQ==
+X-Google-Smtp-Source: AMrXdXvYSLjYzCElzyzK7yhn2iQbRJ2DGluk25DvaH9fz9jVXIzkSfkiBzSZ7TwN2v8AjLBXVXylQw==
+X-Received: by 2002:a05:600c:798:b0:3d3:5737:3b0f with SMTP id z24-20020a05600c079800b003d357373b0fmr47719090wmo.36.1672997519650;
+        Fri, 06 Jan 2023 01:31:59 -0800 (PST)
+Received: from [192.168.1.102] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id iv14-20020a05600c548e00b003b47b80cec3sm6203606wmb.42.2023.01.06.01.31.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jan 2023 01:31:58 -0800 (PST)
+Message-ID: <bb52b82d-5149-c512-ad30-3b993221bd78@linaro.org>
+Date:   Fri, 6 Jan 2023 10:31:56 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/3] dt-bindings: clock: document SM8550 DISPCC clock
+ controller
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v16 8/8] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-Date:   Fri, 6 Jan 2023 01:21:19 -0800
-Message-ID: <20230106092119.20449-9-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230106092119.20449-1-quic_jinlmao@quicinc.com>
-References: <20230106092119.20449-1-quic_jinlmao@quicinc.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SQr5ULAies88irEmmtjHRosA0QTxoeBg
-X-Proofpoint-ORIG-GUID: SQr5ULAies88irEmmtjHRosA0QTxoeBg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-06_05,2023-01-05_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
- mlxscore=0 phishscore=0 mlxlogscore=934 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301060073
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org>
+ <20230103-topic-sm8550-upstream-dispcc-v1-1-81bfcc26b2dc@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v1-1-81bfcc26b2dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add tpdm mm and tpdm prng for sm8250.
+On 03/01/2023 14:53, Neil Armstrong wrote:
+> Document device tree bindings for display clock controller for
+> Qualcomm SM8550 SoC.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../bindings/clock/qcom,sm8550-dispcc.yaml         | 106 +++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,sm8550-dispcc.h     | 101 ++++++++++++++++++++
+>  2 files changed, 207 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+> new file mode 100644
+> index 000000000000..06c04656cb55
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+> @@ -0,0 +1,106 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sm8550-dispcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Clock & Reset Controller for SM8550
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Neil Armstrong <neil.armstrong@linaro.org>
+> +
+> +description: |
+> +  Qualcomm display clock control module provides the clocks, resets and power
+> +  domains on SM8550.
+> +
+> +  See also:: include/dt-bindings/clock/qcom,sm8550-dispcc.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm8550-dispcc
+> +
+> +  clocks:
+> +    minItems: 3
 
-+---------------+                +-------------+
-|  tpdm@6c08000 |                |tpdm@684C000 |
-+-------|-------+                +------|------+
-        |                               |
-+-------|-------+                       |
-| funnel@6c0b000|                       |
-+-------|-------+                       |
-        |                               |
-+-------|-------+                       |
-|funnel@6c2d000 |                       |
-+-------|-------+                       |
-        |                               |
-        |    +---------------+          |
-        +----- tpda@6004000  -----------+
-             +-------|-------+
-                     |
-             +-------|-------+
-             |funnel@6005000 |
-             +---------------+
+Clock inputs should be optional if we can really treat them optional,
+e.g. reparent to something else or just adjust list of parents. Since
+the driver has fixed parent data, it suggests these are not really
+optional and they are all in the hardware (always).
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 164 +++++++++++++++++++++++++++
- 1 file changed, 164 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index dab5579946f3..221fcbdb47a5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2746,6 +2746,73 @@ stm_out: endpoint {
- 			};
- 		};
- 
-+		tpda@6004000 {
-+			compatible = "qcom,coresight-tpda", "arm,primecell";
-+			reg = <0 0x06004000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					tpda_out_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_in_tpda>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@9 {
-+					reg = <9>;
-+					tpda_9_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_tpda9>;
-+					};
-+				};
-+
-+				port@17 {
-+					reg = <23>;
-+					tpda_23_in_tpdm_prng: endpoint {
-+						remote-endpoint = <&tpdm_prng_out_tpda_23>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6005000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06005000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_qatb_out_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel_in0_in_funnel_qatb>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					funnel_qatb_in_tpda: endpoint {
-+						remote-endpoint = <&tpda_out_funnel_qatb>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6041000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x06041000 0 0x1000>;
-@@ -2765,6 +2832,13 @@ in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@6 {
-+					reg = <6>;
-+					funnel_in0_in_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_out_funnel_in0>;
-+					};
-+				};
-+
- 				port@7 {
- 					reg = <7>;
- 					funnel0_in7: endpoint {
-@@ -2882,6 +2956,22 @@ etr_in: endpoint {
- 			};
- 		};
- 
-+		tpdm@684c000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0 0x0684c000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_prng_out_tpda_23: endpoint {
-+						remote-endpoint = <&tpda_23_in_tpdm_prng>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			arm,primecell-periphid = <0x000bb908>;
-@@ -2966,6 +3056,80 @@ replicator_in: endpoint {
- 			};
- 		};
- 
-+		tpdm@6c08000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0 0x06c08000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_mm_out_funnel_dl_mm: endpoint {
-+						remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c0b000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06c0b000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_dl_mm_out_funnel_dl_center: endpoint {
-+					remote-endpoint = <&funnel_dl_center_in_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@3 {
-+					reg = <3>;
-+					funnel_dl_mm_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c2d000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06c2d000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port {
-+					tpdm_mm_out_tpda9: endpoint {
-+						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@2 {
-+					reg = <2>;
-+					funnel_dl_center_in_funnel_dl_mm: endpoint {
-+					remote-endpoint = <&funnel_dl_mm_out_funnel_dl_center>;
-+					};
-+				};
-+			};
-+		};
-+
- 		etm@7040000 {
- 			compatible = "arm,coresight-etm4x", "arm,primecell";
- 			reg = <0 0x07040000 0 0x1000>;
--- 
-2.39.0
+Best regards,
+Krzysztof
 
