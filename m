@@ -2,106 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7330565FF88
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 12:26:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 475CC65FFA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 12:39:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233195AbjAFL0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 06:26:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60134 "EHLO
+        id S229580AbjAFLjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 06:39:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233252AbjAFL0U (ORCPT
+        with ESMTP id S229498AbjAFLjt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 06:26:20 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC3360C9
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 03:26:19 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id m26-20020a05600c3b1a00b003d9811fcaafso854142wms.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 03:26:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5l1OQud5PtBEYy3tKVwqWPj8C6sV/6VkPzpWrf+T4lU=;
-        b=asrnv1tiLJumHwWO0FdvosKBbuEC+K3Sam8YpyOTYzKrHyuznnw+NGwxgOp0q9XvEl
-         e/gYmPMIVo5jq8bFhHy+0MY0y1EGIoIsXcxbghGqHigQ80IZTFqS0cIO7S4UtkdpyR7D
-         TZOnTOd4ZJGc6c1EQKUUQ040tLV+cY+IERclS7lo6w26MSvfc2uHGUgWkqehqcWmYlIX
-         9i2+q6K5Ah556MB60rD+J1qfLRJTEkUkqR41xYVtlOd4XvBTO+lpp2yydBTc90Gi9nGc
-         HewRufSKI9vTuVXoWlANrChj6HMi9sqCJuI2zkShE+WjB2dAuiuB3iAKRe+6059/odZY
-         VDqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5l1OQud5PtBEYy3tKVwqWPj8C6sV/6VkPzpWrf+T4lU=;
-        b=vKXJAjmj+06nDoDmFjyOz9EshWQw2eemQqERYDxqaU/FTiEQ7lnfioGnNcGVCeOx/C
-         97f2FfyE9QGVoUzMKEnfTCBBIBsTdkEgUw2Ef1zeo4M/3aetEB6rmlBReWdl7E8esto3
-         amhdyzNrfxg02ovfzgUfhYXfqnBG6itULLGelRwaX6vKj3FK8egsoHuaIvW3ZalMmL7D
-         9s0/Ge2uFDP0fnQ4fkMGwtsUgvqVnGOxMVImJIXZOJjeiwlP3eiqi01fCiHup3aSfRq/
-         K+U2cspGjEObToR8Ujr0mx53NrwF4uboPyrCDve4iEBFocw/yZxhAnbFROPZVkhQ3Y/e
-         ixcw==
-X-Gm-Message-State: AFqh2kqcGmGfgz3m4NZVKv0vQqu5BPMMWryKK3aODlFEs5c4H/EDAQBl
-        fZ+7KiMFtlvLb7KcH+X9772aCA==
-X-Google-Smtp-Source: AMrXdXuWNBHffDg8m5KIOd5FY7J7wKII0TVE+1Kkw5uXqH6Gjuopgs2RLnDT3biVkIhC6Xwcg4wrng==
-X-Received: by 2002:a05:600c:4999:b0:3d3:4007:9c88 with SMTP id h25-20020a05600c499900b003d340079c88mr41144922wmp.18.1673004377916;
-        Fri, 06 Jan 2023 03:26:17 -0800 (PST)
-Received: from [192.168.1.102] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id bi22-20020a05600c3d9600b003d208eb17ecsm1342821wmb.26.2023.01.06.03.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 03:26:17 -0800 (PST)
-Message-ID: <2f9a150e-11bc-a963-f9b5-75b4ba3206bf@linaro.org>
-Date:   Fri, 6 Jan 2023 12:26:15 +0100
+        Fri, 6 Jan 2023 06:39:49 -0500
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 034BC7148D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 03:39:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+        s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+        References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=J886v4J/EW6dqdSq/tvO/h26eqhFQD1X9G4rcAW/GZg=; b=Qq1kqGvyd2iR8hYceYkyJejT9h
+        w6jRiihHltZPyNfk0i/XSG2aUdedzsw678/hTBuBPrVcYVCo4GisGqj+W6hy8OvQzuW/bnwAloX9H
+        WqTTRu2GMcgyqxX7BPZoGmVPJ1c5Jz979ONaRmmiJYXfLRcXe2n7l5TAlfytN3rp2RPg5/AEPIsWV
+        G9DxkK0wKwr/Bo3c7QcYeMhsI9M31PLvgbVwD0jnso8THz8H8JEL6PoyaGdIrRgl0a2gFy8bUMhnf
+        3nOEHYd9W6SdSBab7/hAgwmEUj5DX5olArAZBqGtNLfViONWq4TX9onhhHbUrqoGdiOIp4mIJR2jV
+        63d8VPdQ==;
+Received: from [187.36.234.139] (helo=[192.168.1.195])
+        by fanzine2.igalia.com with esmtpsa 
+        (Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+        id 1pDl4I-000np6-IQ; Fri, 06 Jan 2023 12:39:26 +0100
+Message-ID: <29bba036-129b-445b-41d0-118051a80480@igalia.com>
+Date:   Fri, 6 Jan 2023 08:39:22 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 4/8] arm64: dts: qcom: msm8916-samsung-gt510: Add Vibrator
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4] drm/fb-helper: Replace bpp/depth parameter by color
+ mode
 Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Siddharth Manthan <siddharth.manthan@gmail.com>,
-        Jasper Korten <jja2000@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230105123240.1089375-1-nikita@trvn.ru>
- <20230105123240.1089375-5-nikita@trvn.ru>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230105123240.1089375-5-nikita@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        steev@kali.org, dmitry.baryshkov@linaro.org, javierm@redhat.com,
+        airlied@gmail.com, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+References: <20230106112324.22055-1-tzimmermann@suse.de>
+From:   =?UTF-8?Q?Ma=c3=adra_Canal?= <mcanal@igalia.com>
+In-Reply-To: <20230106112324.22055-1-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 13:32, Nikita Travkin wrote:
-> gt510 uses a PWM controllable vibrator, that uses a general purpose
-> clock output for it's control. Set up the pwm, supply and the vibrator.
+On 1/6/23 08:23, Thomas Zimmermann wrote:
+> Replace the combination of bpp and depth with a single color-mode
+> argument. Handle special cases in simpledrm and ofdrm. Hard-code
+> XRGB8888 as fallback format for cases where no given format works.
 > 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> The color-mode argument accepts the same values as the kernel's video
+> parameter. These are mostly bpp values between 1 and 32. The exceptions
+> are 15, which has a color depth of 15 and a bpp value of 16; and 32,
+> which has a color depth of 24 and a bpp value of 32.
+> 
+> v4:
+> 	* add back lost test for bpp_specified (Maira)
+> 	* add Fixes tag (Daniel)
+> v3:
+> 	* fix ofdrm build (Maxime)
+> v2:
+> 	* minimize changes (Daniel)
+> 	* use drm_driver_legacy_fb_format() (Daniel)
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+
+Tested-by: Maíra Canal <mcanal@igalia.com> # vc4 and vkms
+
+Thanks for taking care of this!
+
+Best Regards,
+- Maíra Canal
+
+> Fixes: 37c90d589dc0 ("drm/fb-helper: Fix single-probe color-format selection")
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Javier Martinez Canillas <javierm@redhat.com>
+> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> Cc: Maxime Ripard <mripard@kernel.org>
 > ---
->  .../boot/dts/qcom/msm8916-samsung-gt510.dts   | 47 +++++++++++++++++++
->  1 file changed, 47 insertions(+)
+>   drivers/gpu/drm/drm_fb_helper.c  | 42 ++++++++++++++++++--------------
+>   drivers/gpu/drm/tiny/ofdrm.c     |  7 +++++-
+>   drivers/gpu/drm/tiny/simpledrm.c |  7 +++++-
+>   3 files changed, 36 insertions(+), 20 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> index e9916199e5a3..44d527b3f1f6 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> @@ -8,4 +8,51 @@ / {
->  	model = "Samsung Galaxy Tab A 9.7 (2015)";
->  	compatible = "samsung,gt510", "qcom,msm8916";
->  	chassis-type = "tablet";
+> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+> index 1369ca4ae39b..427631706128 100644
+> --- a/drivers/gpu/drm/drm_fb_helper.c
+> +++ b/drivers/gpu/drm/drm_fb_helper.c
+> @@ -1756,24 +1756,21 @@ static uint32_t drm_fb_helper_find_format(struct drm_fb_helper *fb_helper, const
+>   	return DRM_FORMAT_INVALID;
+>   }
+>   
+> -static uint32_t drm_fb_helper_find_cmdline_format(struct drm_fb_helper *fb_helper,
+> -						  const uint32_t *formats, size_t format_count,
+> -						  const struct drm_cmdline_mode *cmdline_mode)
+> +static uint32_t drm_fb_helper_find_color_mode_format(struct drm_fb_helper *fb_helper,
+> +						     const uint32_t *formats, size_t format_count,
+> +						     unsigned int color_mode)
+>   {
+>   	struct drm_device *dev = fb_helper->dev;
+>   	uint32_t bpp, depth;
+>   
+> -	if (!cmdline_mode->bpp_specified)
+> -		return DRM_FORMAT_INVALID;
+> -
+> -	switch (cmdline_mode->bpp) {
+> +	switch (color_mode) {
+>   	case 1:
+>   	case 2:
+>   	case 4:
+>   	case 8:
+>   	case 16:
+>   	case 24:
+> -		bpp = depth = cmdline_mode->bpp;
+> +		bpp = depth = color_mode;
+>   		break;
+>   	case 15:
+>   		bpp = 16;
+> @@ -1784,7 +1781,7 @@ static uint32_t drm_fb_helper_find_cmdline_format(struct drm_fb_helper *fb_helpe
+>   		depth = 24;
+>   		break;
+>   	default:
+> -		drm_info(dev, "unsupported bpp value of %d\n", cmdline_mode->bpp);
+> +		drm_info(dev, "unsupported color mode of %d\n", color_mode);
+>   		return DRM_FORMAT_INVALID;
+>   	}
+>   
+> @@ -1817,10 +1814,13 @@ static int __drm_fb_helper_find_sizes(struct drm_fb_helper *fb_helper, int prefe
+>   		drm_client_for_each_connector_iter(connector, &conn_iter) {
+>   			struct drm_cmdline_mode *cmdline_mode = &connector->cmdline_mode;
+>   
+> -			surface_format = drm_fb_helper_find_cmdline_format(fb_helper,
+> -									   plane->format_types,
+> -									   plane->format_count,
+> -									   cmdline_mode);
+> +			if (!cmdline_mode->bpp_specified)
+> +				continue;
 > +
-
-Squash. One patch per adding GT510, one for GT58.
-
-Best regards,
-Krzysztof
-
+> +			surface_format = drm_fb_helper_find_color_mode_format(fb_helper,
+> +									      plane->format_types,
+> +									      plane->format_count,
+> +									      cmdline_mode->bpp);
+>   			if (surface_format != DRM_FORMAT_INVALID)
+>   				break; /* found supported format */
+>   		}
+> @@ -1829,17 +1829,23 @@ static int __drm_fb_helper_find_sizes(struct drm_fb_helper *fb_helper, int prefe
+>   		if (surface_format != DRM_FORMAT_INVALID)
+>   			break; /* found supported format */
+>   
+> -		/* try preferred bpp/depth */
+> -		surface_format = drm_fb_helper_find_format(fb_helper, plane->format_types,
+> -							   plane->format_count, preferred_bpp,
+> -							   dev->mode_config.preferred_depth);
+> +		/* try preferred color mode */
+> +		surface_format = drm_fb_helper_find_color_mode_format(fb_helper,
+> +								      plane->format_types,
+> +								      plane->format_count,
+> +								      preferred_bpp);
+>   		if (surface_format != DRM_FORMAT_INVALID)
+>   			break; /* found supported format */
+>   	}
+>   
+>   	if (surface_format == DRM_FORMAT_INVALID) {
+> +		/*
+> +		 * If none of the given color modes works, fall back
+> +		 * to XRGB8888. Drivers are expected to provide this
+> +		 * format for compatibility with legacy applications.
+> +		 */
+>   		drm_warn(dev, "No compatible format found\n");
+> -		return -EAGAIN;
+> +		surface_format = drm_driver_legacy_fb_format(dev, 32, 24);
+>   	}
+>   
+>   	info = drm_format_info(surface_format);
+> diff --git a/drivers/gpu/drm/tiny/ofdrm.c b/drivers/gpu/drm/tiny/ofdrm.c
+> index 39c5fd463fec..6e349ca42485 100644
+> --- a/drivers/gpu/drm/tiny/ofdrm.c
+> +++ b/drivers/gpu/drm/tiny/ofdrm.c
+> @@ -1352,6 +1352,7 @@ static int ofdrm_probe(struct platform_device *pdev)
+>   {
+>   	struct ofdrm_device *odev;
+>   	struct drm_device *dev;
+> +	unsigned int color_mode;
+>   	int ret;
+>   
+>   	odev = ofdrm_device_create(&ofdrm_driver, pdev);
+> @@ -1363,7 +1364,11 @@ static int ofdrm_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> -	drm_fbdev_generic_setup(dev, drm_format_info_bpp(odev->format, 0));
+> +	color_mode = drm_format_info_bpp(odev->format, 0);
+> +	if (color_mode == 16)
+> +		color_mode = odev->format->depth; // can be 15 or 16
+> +
+> +	drm_fbdev_generic_setup(dev, color_mode);
+>   
+>   	return 0;
+>   }
+> diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/simpledrm.c
+> index 7355617f38d3..f658b99c796a 100644
+> --- a/drivers/gpu/drm/tiny/simpledrm.c
+> +++ b/drivers/gpu/drm/tiny/simpledrm.c
+> @@ -802,6 +802,7 @@ static int simpledrm_probe(struct platform_device *pdev)
+>   {
+>   	struct simpledrm_device *sdev;
+>   	struct drm_device *dev;
+> +	unsigned int color_mode;
+>   	int ret;
+>   
+>   	sdev = simpledrm_device_create(&simpledrm_driver, pdev);
+> @@ -813,7 +814,11 @@ static int simpledrm_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> -	drm_fbdev_generic_setup(dev, drm_format_info_bpp(sdev->format, 0));
+> +	color_mode = drm_format_info_bpp(sdev->format, 0);
+> +	if (color_mode == 16)
+> +		color_mode = sdev->format->depth; // can be 15 or 16
+> +
+> +	drm_fbdev_generic_setup(dev, color_mode);
+>   
+>   	return 0;
+>   }
