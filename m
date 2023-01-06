@@ -2,149 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2C4C65FE5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F6BF65FE71
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 10:59:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231511AbjAFJue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 04:50:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44482 "EHLO
+        id S232460AbjAFJ7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 04:59:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233697AbjAFJt5 (ORCPT
+        with ESMTP id S232707AbjAFJ7R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 04:49:57 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274D343E4D;
-        Fri,  6 Jan 2023 01:49:47 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3069DWlH025776;
-        Fri, 6 Jan 2023 09:49:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AvNscPFQUAo5ARfnLPz9LEhGUhJd4Ssb0YagQ9ruQUw=;
- b=kIEHO0jr/bvdxX1DO3GnNVWUIMlOlocs3lnTMQPASsYIWuZVct8bJ1CSXBzNfPvHG6vu
- CoDBHP8cnH7PSStFcL5PshK305i3EdhEzfVdwhoNGvNQYkAHua2/x26jQIPQPmkQHWiY
- gKan3ZyF1OtZAQP8KJ6DI7ZxSLeExbeIvtew2/JDT9mUlKtRcxhuCs6jp4DWC9QOHRgl
- 5Go4wUeH0qTC+rDSQ7qpnIxyFKHiezkWCWIHXFbmJzRJWiBnBYtOnfEX238Rcla49xow
- fikeQHwePjETos3RGmBKrFeAUlsgefuor2Xh6g/LlxKwf6VE74aagG0bi1aLNMVlJtjy Jg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mwu4vtu5t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Jan 2023 09:49:30 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3069nTYM027138
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Jan 2023 09:49:29 GMT
-Received: from [10.251.44.175] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
- 01:49:25 -0800
-Message-ID: <d54cd6d9-a970-6038-1fc5-6d8b4709ce62@quicinc.com>
-Date:   Fri, 6 Jan 2023 11:49:23 +0200
+        Fri, 6 Jan 2023 04:59:17 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C3D62F3
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 01:59:15 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bq39so1351516lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 01:59:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z+LdWRq5fCWm8JjYCgO39rTeTivKiGVldKJdA/0Hh1I=;
+        b=jH0Z4pH0KLFit9qCwnVDOtvvHNWSdBW37O0etIqFHtpt0SWCTme2FD3UDei/IIJNHg
+         ljApxx92B4xP4ubNfD8XH1J7WkIccMgCO9e4lINelGrubFtmUCrN6HlhwJMAhBdtzXCP
+         ahK5KCWIzqmfUMAQi4mmXza8RU4JNglRTPs8P36+y0bs3byedW68ttfculVZxIofEBrm
+         NzRSfXSOO+CE9RtWlB7KQ7CEhTl0zVIYa6S8e/1KmMIvnjQhvrR3M4n6X5XYJ6Y8giPS
+         +NolZfT0EGTTC+M1HHqctqELdBo3P97Rsvb/nmO9PmLcbbvoEc3/t/WgNxF3gpWw+st9
+         Zl5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z+LdWRq5fCWm8JjYCgO39rTeTivKiGVldKJdA/0Hh1I=;
+        b=jEP+JGACq9/z4IAqjKDizjXFvpgbrLcmEzXo7QJLDTss09IE6kGthlGoggx3znCDbr
+         OkLTq6oedzNrbP6Nv3LDz7QOUUNaQMkfNLux8bHj4f549Qxnd6jhPMi+O36FWtEVODe6
+         9xlBu+nX4WHhjwzQNVusuGg49I7aYC4IaYFTXB39OQE1dPGdCI8MYwaEjUTeDaftTxJx
+         WXAlWMSMA5GiUjXYfcZ18RdAODxho8grmPnQrLHL1XSuRvrYQXZb8FqThLwLloTYm7x8
+         RaZ9zLRJGZQnc+vs1zmD+o6oeCFpba2Sb+wstp//T+4HpsrxxFGYJLkJqhBB72sqdMTD
+         vbtw==
+X-Gm-Message-State: AFqh2krfFo6MV7bf45mit5284Z3qcx5FCU5kJckVQFToeI9/Kqny22fl
+        KWrxenkf3V7hvHI8Fu1XenH34skz/u9qE35KKYA9x0Pu7FbQ+A==
+X-Google-Smtp-Source: AMrXdXswe0SawivP7xFNZYxfdduHSC+ihxccaxSllNO6AcZOxbZESMNyPJ2gqBMW0OZefY7TGz2vwxEk0B7sQ3lr+r8=
+X-Received: by 2002:ac2:563a:0:b0:4cb:4404:5188 with SMTP id
+ b26-20020ac2563a000000b004cb44045188mr1008857lff.328.1672999153382; Fri, 06
+ Jan 2023 01:59:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
-        <jzala@quicinc.com>, <todor.too@gmail.com>, <hverkuil@xs4all.nl>
-CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
-        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
-        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
-        <laurent.pinchart@ideasonboard.com>
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
- <a885c324-8ac5-da52-2b68-848f36fd045b@linaro.org>
- <a4b0ad23-c003-b2a5-acda-07164048673a@quicinc.com>
- <4c822211-ef91-416d-2363-cd0022a417af@nexus-software.ie>
-From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
-In-Reply-To: <4c822211-ef91-416d-2363-cd0022a417af@nexus-software.ie>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ij5KvQg3RmhuAY_cNOzcf3nkDApqxIg9
-X-Proofpoint-ORIG-GUID: ij5KvQg3RmhuAY_cNOzcf3nkDApqxIg9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-06_05,2023-01-05_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=914 phishscore=0 suspectscore=0
- impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 adultscore=0
- bulkscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301060077
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230103150419.3923421-1-bhupesh.sharma@linaro.org>
+ <20230103150419.3923421-2-bhupesh.sharma@linaro.org> <fa0327b1-2180-1421-b448-a45ab0be9750@linaro.org>
+In-Reply-To: <fa0327b1-2180-1421-b448-a45ab0be9750@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Fri, 6 Jan 2023 15:29:01 +0530
+Message-ID: <CAH=2Nty2Gkx6ix3QwnhdLE6tZdAoUyQWQ_xHzbpD4Z2mr+oePA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 binding
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_schowdhu@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 05/01/2023 20:43, Bryan O'Donoghue wrote:
-> On 05/01/2023 08:37, Milen Mitkov (Consultant) wrote:
->> On 09/12/2022 18:17, Bryan O'Donoghue wrote:
->>> On 09/12/2022 09:40, quic_mmitkov@quicinc.com wrote:
->>>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
->>>>
->>>> For v7:
->>>> - Fix an issue with output state for different versions of the IFE
->>>>    hardware (for platforms different from QRB5, e.g. QRB3).
->>>>
->>>
->>> Yep.
->>>
->>> Working for me on rb3 now and thank you for updating the git commit 
->>> in patch #4.
->>>
->>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>
->>> for the series.
->>>
->>> ---
->>> bod
->>
->>
->> Hi Bryan, Robert, Hans and others,
->>
->>
->> Happy New Year!
->>
->> Is there anything else I can/need to do to speed up the merging 
->> process of this series?
->>
->>
->> Thanks,
->>
->> Milen
->>
+On Fri, 6 Jan 2023 at 14:43, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> I don't think so.
+> On 03/01/2023 16:04, Bhupesh Sharma wrote:
+> > Add dt-bindings for EUD found on Qualcomm SM6115 / SM4250 SoC.
+> >
+> > On this SoC (and derivatives) the enable bit inside 'tcsr_check_reg'
+> > needs to be set first to 'enable' the eud module.
+> >
 >
-> Is everything still working on linux-next ?
+> Subject: drop second, redundant "binding".
 >
-> e45fb347b630e...cc3c08b41a9c9 master        -> linux-next/master
 >
-Hi Bryan,
+> > So, update the dt-bindings to accommodate the third register
+> > property required by the driver on these SoCs.
+> >
+> > Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  .../devicetree/bindings/soc/qcom/qcom,eud.yaml         | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> > index c98aab209bc5d..1dffe14868735 100644
+> > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> > @@ -18,12 +18,22 @@ properties:
+> >      items:
+> >        - enum:
+> >            - qcom,sc7280-eud
+> > +          - qcom,sm6115-eud
+> >        - const: qcom,eud
+> >
+> >    reg:
+> > +    minItems: 2
+> >      items:
+> >        - description: EUD Base Register Region
+> >        - description: EUD Mode Manager Register
+> > +      - description: TCSR Check Register
+>
+> Is this valid also for sc7280? From commit description looks like not,
+> so you should have allOf:if:then constraining the items per variant.
 
-Yes, I took the sm8250_config from 
-git.linaro.org/people/bryan.odonoghue/kernel.git, put it on most recent 
-master of git.linaro.org/kernel-org/linux-next.git and build with it, 
-virtual channels work as expected.
+Ok, I will fix and send an updated version.
 
+Thanks,
+Bhupesh
 
-Regard,
-
-Milen
-
-
-
+> > +
+> > +  reg-names:
+> > +    minItems: 2
+> > +    items:
+> > +      - const: eud-base
+> > +      - const: eud-mode-mgr
+> > +      - const: tcsr-check-base
+> >
+> >    interrupts:
+> >      description: EUD interrupt
+>
+> Best regards,
+> Krzysztof
+>
