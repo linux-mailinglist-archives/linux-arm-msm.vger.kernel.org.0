@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47AB465FB94
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 07:48:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCBC565FBC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 08:16:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbjAFGsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 01:48:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40414 "EHLO
+        id S229732AbjAFHQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 02:16:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjAFGsR (ORCPT
+        with ESMTP id S230059AbjAFHQN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 01:48:17 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545B36EC83
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 22:48:14 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id g14so614508ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 22:48:14 -0800 (PST)
+        Fri, 6 Jan 2023 02:16:13 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 079DC63F65
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 23:16:12 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id s187so466276oie.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 23:16:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cXbXihXV6MI6wPU9ELSqbbiHv+KuaPURdjnGGvB+ZTA=;
-        b=cYMryEsQvFWnHfqF/NYykYbP8HFRy78QI1QVZQ7DZBobgJAYRNoW+a/87B90AxoXRa
-         AxnZ0haUClHj4xHrH0aaU6IANIqYgqj+U8F9db20zC/CbOdv12qcUZPhJ+18ZXIgt0Cn
-         /YZeWUnFzPg1tUyD4pTRfBlqNnUiTl0ERwPlSsctLIxWRFvM6hZHNRpv5Xir91RzHhib
-         d6m/T8Us8MQdfFlfoW2V/UvwOpgFMybsCNfrK+CgndNGC/5dQMIUo+3hE6qn3NrSI9Ot
-         xPT8QJSp8XpbjTut857FJ11o91LMSINEOGpV1+D11qfEE7WugiZUtXW46iGVGz+QT9SI
-         a1cg==
+        d=kali.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rrp6V7KWYZFDRr1re6vLXoec41Prjw9aIuZx3KbAjE=;
+        b=hkSiAvZQ5q7niMrgTomLfzJbqJJ/y3VphW3KaB3hIgfneZUn6KtYbtnN9CVk1dZ80M
+         S9WFDJb+OLC9+FZdZKPICuEorPEB7oLsq9c26ygU+XxZws0TqeJgbTzr6/EIVLtp4yA7
+         /ySS0U1uhVo2lw5Q/teBBNvrz06FTo7U8cezt7jSYNzfa3U4PVTo2FN9Cfl1cIA16AIB
+         ha/0NKomsCYw3MRO17h/tXbtnusSebPxaq/FeWsgH2cSY2zWJGs5T+47ZwSuASUgDj0O
+         eWgs2aJ3HlBrWZ1Sr13PxTgZ71azW1FxRq175F3z8R7yS/X9Z+v3Ezh8EeBhgyzCL3cC
+         XHjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cXbXihXV6MI6wPU9ELSqbbiHv+KuaPURdjnGGvB+ZTA=;
-        b=qH8uWV/eg3NNjntgtuNglAPyRJlCWNGC5nPSk5dMkg3JXprqmW/QyjoIQcK65m3aFJ
-         QHLed5Ac/0KJ34WkjPpcHXjWwt2/7Hit8lEEn3lX0vamQ4XaO7KIGOreEJM5BQTqimXd
-         zTvKqYodvHnmy0D/7ho32ZGv2aHKV4yhjY5j1P8a+sIti250YQGP+Vf9bUYzt+rvBfDl
-         Q0qvS0XWWXW9anha83PpU/DPW+9ObD+UVAgAsm1nAau9D+E3RoV7VVSDZws3LHB46KAQ
-         jB56RofeI2Zh9pFGWQWXd2cVdFUlnFjbnTGU392WUY2uUWwa6uYNo1meg85IVzqKxnJ+
-         YKTQ==
-X-Gm-Message-State: AFqh2kqsfh/mYt7FHejpXJo/bEW3IJ1mLrBadZQOuPgJcaN1S7nsxUlK
-        uuBPfNOFUAMgAr5ZwROdmH1/2iZO3qLLK1V2f7idUg==
-X-Google-Smtp-Source: AMrXdXvJgMr94Wo6/9butWn9yyjNDYyz5+lTRG/UM8O7dXWuk7sQFdwSnEx2/JhirmdBg/0HkQY+dDOG3HI1hKt3M9o=
-X-Received: by 2002:a05:651c:2001:b0:27f:ee4c:3c2d with SMTP id
- s1-20020a05651c200100b0027fee4c3c2dmr685128ljo.466.1672987692487; Thu, 05 Jan
- 2023 22:48:12 -0800 (PST)
+        bh=3rrp6V7KWYZFDRr1re6vLXoec41Prjw9aIuZx3KbAjE=;
+        b=iVEbWRqBmn0eCDGuxIoxjH0OGcx6G3qWMa/jVutuwjYm1COZd/bK/8BheIUoKfyCzQ
+         b9T3Rn0wL3nl3KFxeHFAQ1/TZ6T/qC6JPLuyY2uOow80MJg/B2TInPoByHMHgIHCo6qO
+         gbkaHF+eo37aiWu1UHLteal2jCfGU7bNFhGf7mJ5wYyOz8q0f3uPurlOOseksVONsWFK
+         uC7Ov/t2DHDrGbZ7qWoFOc+dRcUBWI9EJmEyQTmHekHyBDUdga8iQXWYRrJRWIT5rvHF
+         5/cWLaOt8x/h25VpMYG5cbAd6kLyxPVZ8GJH/DtTWeUV9c109mEZ1RQogYTOHpo7wjKs
+         BI/A==
+X-Gm-Message-State: AFqh2kpP8yeq2moPz+96yy7MeiUNXhhyMHPqNpwafl/dr3VbhUFmLXyg
+        +vvvS8xkUxZcSFVFUQp7kEbdsQ==
+X-Google-Smtp-Source: AMrXdXud5KDhZQApL7a3qEoR2W/iDOw8JuWICERDCbrP2ehGJAMny4mSwd3IA4pPORyRy6Mbqj9iYA==
+X-Received: by 2002:aca:4207:0:b0:360:bc5d:2ed2 with SMTP id p7-20020aca4207000000b00360bc5d2ed2mr20527042oia.53.1672989371307;
+        Thu, 05 Jan 2023 23:16:11 -0800 (PST)
+Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
+        by smtp.gmail.com with ESMTPSA id p3-20020aca5b03000000b0035c073aa0d8sm126616oib.18.2023.01.05.23.16.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 23:16:10 -0800 (PST)
+From:   Steev Klimaszewski <steev@kali.org>
+To:     steev@kali.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: Set preferred depth.
+Date:   Fri,  6 Jan 2023 01:16:09 -0600
+Message-Id: <20230106071609.3948-1-steev@kali.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20230104091922.3959602-1-bhupesh.sharma@linaro.org>
- <20230104091922.3959602-3-bhupesh.sharma@linaro.org> <167288699633.3289770.7520350746366547570.robh@kernel.org>
-In-Reply-To: <167288699633.3289770.7520350746366547570.robh@kernel.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 6 Jan 2023 12:18:00 +0530
-Message-ID: <CAH=2Nty0+610LzrR9HG+31p-CF6DzoTF6yNhQZA2S=StkRVaCQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dt-bindings: soc: qcom: eud: Fix identation issues in
- the example
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-usb@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_schowdhu@quicinc.com, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,50 +73,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Jan 2023 at 08:24, Rob Herring <robh@kernel.org> wrote:
->
->
-> On Wed, 04 Jan 2023 14:49:22 +0530, Bhupesh Sharma wrote:
-> > As noted by Konrad while reviewing [1], the example
-> > node in the EUD yaml documentation has identation
-> > issues.
-> >
-> > So fix them.
-> >
-> > [1]. https://lore.kernel.org/linux-arm-msm/20221231131945.3286639-1-bhupesh.sharma@linaro.org
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 8 +++++---
-> >  1 file changed, 5 insertions(+), 3 deletions(-)
-> >
->
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,eud.example.dtb: eud@88e0000: reg: [[0, 143523840], [0, 8192], [0, 143532032], [0, 4096]] is too long
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230104091922.3959602-3-bhupesh.sharma@linaro.org
->
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
+As of commit 37c90d589dc0 ("drm/fb-helper: Fix single-probe color-format
+selection"), if no supported color formats are found, it tries to use the
+driver provided default, which msm didn't have set and leads to the
+following output:
 
-Ok, let me try and fix this via v2.
+msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
+msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
+msm_dpu ae01000.display-controller: [drm] bpp/depth value of 32/0 not supported
+msm_dpu ae01000.display-controller: [drm] No compatible format found
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 73 at drivers/gpu/drm/drm_atomic.c:1604 __drm_atomic_helper_set_config+0x240/0x33c
+Modules linked in: ext4 mbcache jbd2 msm mdt_loader ocmem gpu_sched llcc_qcom gpio_keys qrtr
+CPU: 0 PID: 73 Comm: kworker/u16:2 Not tainted 6.2.0-rc2-next-20230106 #53
+Hardware name: LENOVO 21BX0015US/21BX0015US, BIOS N3HET74W (1.46 ) 10/12/2022
+Workqueue: events_unbound deferred_probe_work_func
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __drm_atomic_helper_set_config+0x240/0x33c
+lr : __drm_atomic_helper_set_config+0x68/0x33c
+sp : ffff800008a7b790
+x29: ffff800008a7b790 x28: ffff73ee3e130a00 x27: 0000000000000000
+x26: ffff73ee3d256e00 x25: 0000000000000038 x24: ffff73e6c0d65e00
+x23: ffff73e6c17a7800 x22: ffff73e6c0d64e00 x21: ffff73e79c025e00
+x20: 00000000c0d64e00 x19: ffff73ee3e130a00 x18: ffffffffffffffff
+x17: 662074616d726f66 x16: 20656c6269746170 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffa829144ff8bc
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : ffff73e6c0d65f50 x4 : ffff73ee3d254950 x3 : ffff73e6c0d65ec0
+x2 : ffff73ee3c953a00 x1 : ffff73e79c025580 x0 : 0000000000000000
+Call trace:
+__drm_atomic_helper_set_config+0x240/0x33c
+drm_client_modeset_commit_atomic+0x160/0x280
+drm_client_modeset_commit_locked+0x64/0x194
+drm_client_modeset_commit+0x38/0x60
+__drm_fb_helper_initial_config_and_unlock+0x528/0x63c
+drm_fb_helper_initial_config+0x54/0x64
+msm_fbdev_init+0x94/0xfc [msm]
+msm_drm_bind+0x548/0x614 [msm]
+try_to_bring_up_aggregate_device+0x1e4/0x2d0
+__component_add+0xc4/0x1c0
+component_add+0x1c/0x2c
+dp_display_probe+0x2a4/0x460 [msm]
+platform_probe+0x70/0xcc
+really_probe+0xc8/0x3e0
+__driver_probe_device+0x84/0x190
+driver_probe_device+0x44/0x120
+__device_attach_driver+0xc4/0x160
+bus_for_each_drv+0x84/0xe0
+__device_attach+0xa4/0x1cc
+device_initial_probe+0x1c/0x2c
+bus_probe_device+0xa4/0xb0
+deferred_probe_work_func+0xc0/0x114
+process_one_work+0x1ec/0x470
+worker_thread+0x74/0x410
+kthread+0xfc/0x110
+ret_from_fork+0x10/0x20
+---[ end trace 0000000000000000 ]---
 
-Thanks.
+Signed-off-by: Steev Klimaszewski <steev@kali.org>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 8b0b0ac74a6f..65c4c93c311e 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -479,6 +479,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 
+ 	drm_helper_move_panel_connectors_to_head(ddev);
+ 
++	ddev->mode_config.preferred_depth = 24;
+ 	ddev->mode_config.funcs = &mode_config_funcs;
+ 	ddev->mode_config.helper_private = &mode_config_helper_funcs;
+ 
+-- 
+2.39.0
+
