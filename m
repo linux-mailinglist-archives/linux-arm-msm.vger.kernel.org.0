@@ -2,78 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4018660796
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:08:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94E576607A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:11:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235738AbjAFUIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 15:08:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48176 "EHLO
+        id S229877AbjAFUKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 15:10:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236305AbjAFUI1 (ORCPT
+        with ESMTP id S236343AbjAFUKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 15:08:27 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23038408B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 12:08:25 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so4334392wmk.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 12:08:25 -0800 (PST)
+        Fri, 6 Jan 2023 15:10:33 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A613584096
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 12:10:31 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id g13so3520134lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 12:10:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i9+HW72JLcvyRBnz5C5bVByBYZYS05ui/XR6+SsBR3c=;
-        b=rNTzkWFrVk6h1c0XbWOX5bDusbJf+Ejjkg+kpICiEEPo7tuDA4cWbu1f8LqFnmtk/O
-         vCxNkjfCwh4XX5GK/ka812+vSjyV1zbvzZCwHI86jW2fvgAwYgFYpWkTdNomnRi3+YC/
-         gV4v5AEQaoFHU/bY/5JIE/aQgb+z1Oyxvl1vnXx8G22XqGBi0i1n0tLQQtkLIf8zKLga
-         2AtQbmSHdOrp9EpNw7DH6Ts+8+ZHNuuz5geJbXCHLe+Mnyp/GJUttdOfpRv+IRYFQ1m2
-         vq2Dg0g756Th5rSnojaY/LLLf49b3rrniUfYCe3zlgavzBRalSHbWbHzRLXXuGUSZ4xC
-         y2rg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ld16vqaKUSxN5A0I4GN+9kByy6in7O9iVGRZjqiJhYQ=;
+        b=Qqx1jPnzQSBBYjqqiJTAbL8U4eLPzKAXcL00ol0YYn37n5JyrsSoGzelaSV/NrN5s2
+         EgWyv4CVSsaIh2+EJKyrMtuaAZxFY7EwlupBDfpFHl4xBWZbg2JOxwFWl0wX5VN2w1DP
+         kS1DePzn/PZUrAHRw1msypXudCf2cRxzL65WJCZHGXuQJldUjPca8b2XokvqrzoHc4SL
+         z1pGLTZnO6OiYVyQnP5jq3KHN8GTgfdl+mf8pToByODVQQeIFAZ5+jrwberPvyBOHxyk
+         dYOfH/i4O6eQSfLPtGTfhV8Xy25O7m79Buph7nrg6085a9sqx9n6THRpgJ8NvvIBzYZg
+         63ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i9+HW72JLcvyRBnz5C5bVByBYZYS05ui/XR6+SsBR3c=;
-        b=CeHSRo/GMX1mmuENSHU+LQ9FJ5KR5NByPvO3qHJ4AiadkOXwcI141fuDiy4x7wX/gO
-         gyQ5ToGfaqEv4OqdHI/iSjlCU1fT9iyNyl5cloL0YF7jkrydPF9/v97azaarOrpHhENp
-         J7v7uhH2Lp84yLkkeeW+TGi3o9xZZfoBhFgWnjLzJ4PbW86sf0Hmylosytd421g+kYwP
-         OIZwJTXD57OiFM6fQERt0+2e7MekeQZxph2xEV+qGI3rPyun2MFcYHhu880VPzdl0EbR
-         dU69Y9ZXqRHdGWfT9f3fx19B8kkc7TWqs0jTEHr2jMzA+z4bmsz2NaYVp0ZFMLghJQv3
-         C1Xg==
-X-Gm-Message-State: AFqh2kprbtDhFRtejQFt+pikn+XZptQrooI4d9sPS5cbi+nAv04uI/qr
-        h0e4YTdOpwTdHjA2E3vHuM9Alw==
-X-Google-Smtp-Source: AMrXdXs3tTUj9ID+GCgF+VYiLKuPcIGiS2TOdonsG3ogg03JBTKudMK8+1+shmcuLiHK1HgBdO/wng==
-X-Received: by 2002:a05:600c:4f83:b0:3d2:3f55:f73f with SMTP id n3-20020a05600c4f8300b003d23f55f73fmr40568114wmq.8.1673035704091;
-        Fri, 06 Jan 2023 12:08:24 -0800 (PST)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id az28-20020a05600c601c00b003cf57329221sm7304548wmb.14.2023.01.06.12.08.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 12:08:23 -0800 (PST)
-Message-ID: <17e2d99d-31e5-b29a-e729-4f4d70b2efbc@linaro.org>
-Date:   Fri, 6 Jan 2023 21:08:22 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ld16vqaKUSxN5A0I4GN+9kByy6in7O9iVGRZjqiJhYQ=;
+        b=LZ1fpAPKW2gmRDWJiQwSKGHZjK3oBdutha99X3VddXHDB11Vew9F/CK3fd6UN0Tr78
+         B6y+FSDiX3Sp80XT9zO5ITc24P1mNJsQIH/aHAjkY6ghRuvw63rcd928cX8Vs8QUIxJS
+         yR8mBlWm19U2mmuE36dUtYGY9B1YZ1KHkXs8hoTCKYBggWaQyvbdPYsSUohoBYmK8qrO
+         z48+Dm3umd0XfpOKFmkm6n3bVAD+grbvkiER7gbGc7yzF+UXx7KhaHwmuhyDIB9tP97m
+         m18ZlJAFYX7b2UIh7DJEAiCvfRTQsUNLMZFmBX6p2ev+ZslP/EmtTHMN/0vr7vBnqu+v
+         u+SA==
+X-Gm-Message-State: AFqh2kpzNujwXphyRee9SKQ58fcL7TeLvl6iMh4N0XZa/cKClXVz1yaq
+        NnJV7H2Ykcivd+v6ymU7HZdibw==
+X-Google-Smtp-Source: AMrXdXtAerNPCONkOwYvsQomNiPLyeo4G2kUzYvjFXBPPrs00CzWrY0VwrWzchXhTHFfAoOgE8iPHA==
+X-Received: by 2002:a05:6512:2102:b0:4ca:f9bd:3390 with SMTP id q2-20020a056512210200b004caf9bd3390mr12515321lfr.31.1673035829961;
+        Fri, 06 Jan 2023 12:10:29 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id f14-20020a0565123b0e00b004b7033da2d7sm260875lfv.128.2023.01.06.12.10.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Jan 2023 12:10:29 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     Georgi Djakov <djakov@kernel.org>, Alex Elder <elder@linaro.org>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 00/11] clk/interconnect: qcom: finish migration of IP0 to clocks
+Date:   Fri,  6 Jan 2023 22:10:17 +0200
+Message-Id: <20230106201028.1809541-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: Annoying message on the console for the db845c board
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <e0ced334-e6c1-caeb-322a-f67a23ee58da@linaro.org>
- <CAA8EJpr0A=VjWEv6NPaZ-t_3TgNaWpsVO8_inJhxqoThry_zZA@mail.gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <CAA8EJpr0A=VjWEv6NPaZ-t_3TgNaWpsVO8_inJhxqoThry_zZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,35 +78,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/01/2023 19:14, Dmitry Baryshkov wrote:
-> On Fri, 6 Jan 2023 at 18:37, Daniel Lezcano <daniel.lezcano@linaro.org> wrote:
->>
->>
->> Hi all,
->>
->> Does anyone have an idea on how to fix these timeout messages ? They are
->> displayed again and again every 5 seconds and that saturates the
->> filesystem after awhile.
-> 
-> Could you please check that you have CONFIG_QCOM_RMTFS_MEM enabled and
-> the rmtfs daemon running?
-> I think that's the usual cause of such messages.
+Commits 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+interconnects") and 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+interconnects") removed IP0 interconnects (and ipa-virt devices support)
+in favour of the RPMH clocks. Follow this example for other platforms
+defining IP0 RPMH resource. While we are at it, remove several leftover
+from the mentioned patches.
 
-Yes, I have the option and the daemon running:
+Changes since v1:
+- Reorder patches to put clock patch after the interconnect patches
+  (Alex)
+- Add comments in place of removed defines (Alex)
+- Drop ipa-virt nodes from device trees
+- Add removed ipa-virt nodes to the blacklist in of_count_icc_providers
+  to let icc_sync_state work even with non-updated device trees.
 
-zcat /proc/config.gz | grep CONFIG_QCOM_RMTFS_MEM
-CONFIG_QCOM_RMTFS_MEM=y
+Dmitry Baryshkov (11):
+  interconnect: qcom: sdx55: drop IP0 remnants
+  interconnect: qcom: sc7180: drop IP0 remnants
+  interconnect: qcom: sm8150: Drop IP0 interconnects
+  interconnect: qcom: sm8250: Drop IP0 interconnects
+  interconnect: qcom: sc8180x: Drop IP0 interconnects
+  interconnect: qcom: sc8280xp: Drop IP0 interconnects
+  dt-bindings: interconnect: qcom: Remove ipa-virt compatibles
+  dt-bindings: interconnect: qcom: drop IPA_CORE related defines
+  clk: qcom: rpmh: define IPA clocks where required
+  arm64: dts: qcom: sm8150: drop the virtual ipa-virt device
+  arm64: dts: qcom: sm8250: drop the virtual ipa-virt device
 
-ps -ef | grep rmtfs
-root      9888     1  2 20:07 ?        00:00:00 /usr/bin/rmtfs -r -P -s
-
-
-
+ .../bindings/interconnect/qcom,rpmh.yaml      |  3 --
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  7 ----
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  7 ----
+ drivers/clk/qcom/clk-rpmh.c                   |  4 ++
+ drivers/interconnect/core.c                   |  3 ++
+ drivers/interconnect/qcom/sc7180.h            |  4 +-
+ drivers/interconnect/qcom/sc8180x.c           | 38 -------------------
+ drivers/interconnect/qcom/sc8180x.h           |  4 +-
+ drivers/interconnect/qcom/sc8280xp.c          | 25 ------------
+ drivers/interconnect/qcom/sc8280xp.h          |  4 +-
+ drivers/interconnect/qcom/sdx55.h             |  4 +-
+ drivers/interconnect/qcom/sm8150.c            | 21 ----------
+ drivers/interconnect/qcom/sm8150.h            |  4 +-
+ drivers/interconnect/qcom/sm8250.c            | 21 ----------
+ drivers/interconnect/qcom/sm8250.h            |  4 +-
+ .../dt-bindings/interconnect/qcom,sc7180.h    |  3 --
+ .../dt-bindings/interconnect/qcom,sc8180x.h   |  3 --
+ .../dt-bindings/interconnect/qcom,sc8280xp.h  |  4 +-
+ include/dt-bindings/interconnect/qcom,sdx55.h |  2 -
+ .../dt-bindings/interconnect/qcom,sm8150.h    |  3 --
+ .../dt-bindings/interconnect/qcom,sm8250.h    |  3 --
+ 21 files changed, 21 insertions(+), 150 deletions(-)
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+2.39.0
 
