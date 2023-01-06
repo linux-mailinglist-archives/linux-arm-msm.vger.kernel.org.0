@@ -2,65 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4AA6660898
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 22:03:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 123C06608EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 22:49:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbjAFVDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 16:03:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50732 "EHLO
+        id S229686AbjAFVts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 16:49:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjAFVDo (ORCPT
+        with ESMTP id S229604AbjAFVts (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 16:03:44 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 962B163FC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 13:03:42 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id jo4so6200042ejb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 13:03:42 -0800 (PST)
+        Fri, 6 Jan 2023 16:49:48 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED0A7CBC7
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 13:49:47 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id p188so3259222yba.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 13:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ncNdpkHYDCuzDDV8W7mrRJJ4OL6xfKFon52nI6t6AR0=;
-        b=OOMaVPF8PE33Yz9D50YP7LpaQEpk0GhXEZmO6kxhOY0F2fwTeXe09oMNPVWMAa8Knt
-         hVpxBHhT1iY7YZbwM90JrWfMCLfBPM8Bj/4uw+mr04p911eXAEI1rtHcxS3aS07O7iAb
-         6q0haKsfjWhbl8N/PVH6BjrZUkMBFtTUp+r04hYrPerl+ziIcndtlFCdIXp6uWHJVPLJ
-         j/B9DnKOfhMWZBFFgB0HRgil+AqpAFAgmMC2kmEBdEh8tPPHiJI3elD1+3XhXIcXRd3/
-         9v4SbMavpWDI802A4gCrKOvaJfAIRs0LOp6IlDErBT8w4yUOhD1rFPblzx35CwajdhpV
-         EX2w==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=daORM5azLSvNqEbm20aAyWdSOeJFRbH238ckKtg/tu0=;
+        b=kbjLsiELG9KMAFBdCircvd1SwQx+ZLcbxd7GMJkn7ow3OkRoohiVtiWzt5xWPc8305
+         hm3+Af2MOsrJC5YI8I2VbyRZjB6U/iavEUc38y0StRkKvvI4HgDsvfo5rkM3yn5Cw1Y1
+         tenf6pITishRwZDyiQ5lEvtlUGgkkCHoXRYABNUNOBbWkwLLqJc+jkkGQ93WnZrF2Odb
+         GbESVWI4lXdDqJ3YfI44HiXxSgtE1WVn67+Xl02CUuIixmhvYFI9Dmx2WIvq+I0dCSeR
+         2wFieLsjf0QI9l6oq4cZy1xeGVmgxt8QnjDACV2l67Uqahgu3R9ymTgDH9SacWs0mmLx
+         tJIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ncNdpkHYDCuzDDV8W7mrRJJ4OL6xfKFon52nI6t6AR0=;
-        b=smWvC9CfQz9O6xOvysA2uFtigqY4OEfJBcQv6UOWmrywogESemUY+p3PpU8k276gul
-         gyu7hgVe2i4hXUO86uM62JmamW9VPMi1EQqtiQ5C6kNrycTY96Xl30SW/TLKBW7Jz2nW
-         8bQqjv0XOkpYuQ8QwcidzYzSZiiv00Pckgfbmqfo5mH/uo9wnydpDZDfHUsh6MCI/pRs
-         VpeUkJCQxPWA/x30eqnLsFBudVVXUsqqBJKJvCXlnG7IE35To20Wqva89Fj5uv4C0LQF
-         teHEwhgDGG0SwdIlm3pUa3s5ON7MuOlJ8xdPC8YrS8GySqOPNoir0s31/xl4Jrhzu3Ed
-         +EuA==
-X-Gm-Message-State: AFqh2krhV/XG3chQmnmz/x3Lj30KiSx4VQpMaciPSjcioBwnYwUz9ffE
-        NjIJLl3P5dyh3Zl2LKO4aTUoFcnwKGFzHrozeUHNJQ==
-X-Google-Smtp-Source: AMrXdXsOPompBRikxSt1YgMhfN96Cl5lZBz061/02/RdBo5YhLPTsjR2CJjx3w/9oOFZWtD8MkXn+KW0WapXWE7jXDY=
-X-Received: by 2002:a17:906:e2c4:b0:829:e4f0:bf2b with SMTP id
- gr4-20020a170906e2c400b00829e4f0bf2bmr3719830ejb.389.1673039021141; Fri, 06
- Jan 2023 13:03:41 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=daORM5azLSvNqEbm20aAyWdSOeJFRbH238ckKtg/tu0=;
+        b=phhd1J2zllMV47t5cdddfZRLhBaLMTV20ImExd4UO1n2UZrinGIXMEDgPB/0V1CEi4
+         tNAZwCx8o3FK49WyRC1p8kc+hzhAQhcdwDVJYC1wzWIFE/FLBobsmcK1h37gRadJfH2T
+         EfzaQWlAFYZnujIlesQR9t1JSJJe46BbwDf6gMwc4P3qDpjDlfbmxNPQD5Y23CJ2zOlm
+         iGi3XvcMMv+ewgMJBNTJ31Of6UkR1NsBuJGIH6+jQssuvf4MgSkPgbUXICbucWl5Vh6B
+         ejq6kcD6psFrHWuN3tF5GWv/hE3izIkgtrkRlzT+Wclk4geNO+l1v4hmvt5S3Frhg/LO
+         X6Dg==
+X-Gm-Message-State: AFqh2kop11bth5ZEqlbZaZprovFunYy/9dCEm5kEvJMCUb0SL4rTutr0
+        lDcuw8906X6bq6GPAYPK50Pi2nbigDPUBEsROz142w==
+X-Google-Smtp-Source: AMrXdXtTexTtbAdJnEAEoI95xNx4TvEDUwzxuwS70gRNai2lJrRrVcq78GJmRo8MkM/VWZXSoGPXx0JzLcctElTuWzs=
+X-Received: by 2002:a25:b794:0:b0:723:5b57:cde9 with SMTP id
+ n20-20020a25b794000000b007235b57cde9mr6884900ybh.194.1673041786342; Fri, 06
+ Jan 2023 13:49:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20230106112324.22055-1-tzimmermann@suse.de> <5dcecae8-5c55-0e2e-bdf0-18fd559f8e00@suse.de>
-In-Reply-To: <5dcecae8-5c55-0e2e-bdf0-18fd559f8e00@suse.de>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Fri, 6 Jan 2023 15:03:29 -0600
-Message-ID: <CAKXuJqiy=NY1f-3scOCmVtKnidvcHsZ0RtxHFJMAphqovrp=6w@mail.gmail.com>
-Subject: Re: [PATCH v4] drm/fb-helper: Replace bpp/depth parameter by color mode
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     daniel@ffwll.ch, mcanal@igalia.com, dmitry.baryshkov@linaro.org,
-        javierm@redhat.com, airlied@gmail.com, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
+ <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local> <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com>
+ <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com> <Y7hrWDpg8msuefgZ@phenom.ffwll.local>
+In-Reply-To: <Y7hrWDpg8msuefgZ@phenom.ffwll.local>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 6 Jan 2023 23:49:34 +0200
+Message-ID: <CAA8EJppoejPPNhu3eHBc_vsstHvEEwYx67HZLo8+4W3K-gHkag@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, contact@emersion.fr,
+        daniel.vetter@ffwll.ch, laurent.pinchart@ideasonboard.com,
+        ppaalanen@gmail.com, sebastian.wick@redhat.com,
+        wayland-devel@lists.freedesktop.org, ville.syrjala@linux.intel.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,247 +74,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 6, 2023 at 8:05 AM Thomas Zimmermann <tzimmermann@suse.de> wrot=
-e:
+On Fri, 6 Jan 2023 at 20:41, Daniel Vetter <daniel@ffwll.ch> wrote:
 >
-> Hi,
+> On Fri, Jan 06, 2023 at 05:43:23AM +0200, Dmitry Baryshkov wrote:
+> > On Fri, 6 Jan 2023 at 02:38, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+> > >
+> > >
+> > >
+> > > On 1/5/2023 3:33 AM, Daniel Vetter wrote:
+> > > > On Wed, Jan 04, 2023 at 03:40:33PM -0800, Jessica Zhang wrote:
+> > > >> Introduce and add support for a solid_fill property. When the solid_fill
+> > > >> property is set, and the framebuffer is set to NULL, memory fetch will be
+> > > >> disabled.
+> > > >>
+> > > >> In addition, loosen the NULL FB checks within the atomic commit callstack
+> > > >> to allow a NULL FB when the solid_fill property is set and add FB checks
+> > > >> in methods where the FB was previously assumed to be non-NULL.
+> > > >>
+> > > >> Finally, have the DPU driver use drm_plane_state.solid_fill and instead of
+> > > >> dpu_plane_state.color_fill, and add extra checks in the DPU atomic commit
+> > > >> callstack to account for a NULL FB in cases where solid_fill is set.
+> > > >>
+> > > >> Some drivers support hardware that have optimizations for solid fill
+> > > >> planes. This series aims to expose these capabilities to userspace as
+> > > >> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
+> > > >> hardware composer HAL) that can be set by apps like the Android Gears
+> > > >> app.
+> > > >>
+> > > >> Userspace can set the solid_fill property to a blob containing the
+> > > >> appropriate version number and solid fill color (in RGB323232 format) and
+> > > >> setting the framebuffer to NULL.
+> > > >>
+> > > >> Note: Currently, there's only one version of the solid_fill blob property.
+> > > >> However if other drivers want to support a similar feature, but require
+> > > >> more than just the solid fill color, they can extend this feature by
+> > > >> creating additional versions of the drm_solid_fill struct.
+> > > >>
+> > > >> Changes in V2:
+> > > >> - Dropped SOLID_FILL_FORMAT property (Simon)
+> > > >> - Switched to implementing solid_fill property as a blob (Simon, Dmitry)
+> > > >> - Changed to checks for if solid_fill_blob is set (Dmitry)
+> > > >> - Abstracted (plane_state && !solid_fill_blob) checks to helper method
+> > > >>    (Dmitry)
+> > > >> - Removed DPU_PLANE_COLOR_FILL_FLAG
+> > > >> - Fixed whitespace and indentation issues (Dmitry)
+> > > >
+> > > > Now that this is a blob, I do wonder again whether it's not cleaner to set
+> > > > the blob as the FB pointer. Or create some kind other kind of special data
+> > > > source objects (because solid fill is by far not the only such thing).
+> > > >
+> > > > We'd still end up in special cases like when userspace that doesn't
+> > > > understand solid fill tries to read out such a framebuffer, but these
+> > > > cases already exist anyway for lack of priviledges.
+> > > >
+> > > > So I still think that feels like the more consistent way to integrate this
+> > > > feature. Which doesn't mean it has to happen like that, but the
+> > > > patches/cover letter should at least explain why we don't do it like this.
+> > >
+> > > Hi Daniel,
+> > >
+> > > IIRC we were facing some issues with this check [1] when trying to set
+> > > FB to a PROP_BLOB instead. Which is why we went with making it a
+> > > separate property instead. Will mention this in the cover letter.
+> >
+> > What kind of issues? Could you please describe them?
 >
-> I've pushed this fix into drm-misc-next. It will hopefully restore the
-> fbdev consoles. Sorry for the inconvenience. If things still don't work,
-> stating
+> We switched from bitmask to enum style for prop types, which means it's
+> not possible to express with the current uapi a property which accepts
+> both an object or a blob.
 >
->    video=3D1024x768-32
+> Which yeah sucks a bit ...
 >
-> on the kernel command line should be a safe override on most systems.
+> But!
 >
-> Best regards
-> Thomas
->
-> Am 06.01.23 um 12:23 schrieb Thomas Zimmermann:
-> > Replace the combination of bpp and depth with a single color-mode
-> > argument. Handle special cases in simpledrm and ofdrm. Hard-code
-> > XRGB8888 as fallback format for cases where no given format works.
-> >
-> > The color-mode argument accepts the same values as the kernel's video
-> > parameter. These are mostly bpp values between 1 and 32. The exceptions
-> > are 15, which has a color depth of 15 and a bpp value of 16; and 32,
-> > which has a color depth of 24 and a bpp value of 32.
-> >
-> > v4:
-> >       * add back lost test for bpp_specified (Maira)
-> >       * add Fixes tag (Daniel)
-> > v3:
-> >       * fix ofdrm build (Maxime)
-> > v2:
-> >       * minimize changes (Daniel)
-> >       * use drm_driver_legacy_fb_format() (Daniel)
-> >
-> > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> > Fixes: 37c90d589dc0 ("drm/fb-helper: Fix single-probe color-format sele=
-ction")
-> > Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> > Cc: Javier Martinez Canillas <javierm@redhat.com>
-> > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> > Cc: Maxime Ripard <mripard@kernel.org>
-> > ---
-> >   drivers/gpu/drm/drm_fb_helper.c  | 42 ++++++++++++++++++-------------=
--
-> >   drivers/gpu/drm/tiny/ofdrm.c     |  7 +++++-
-> >   drivers/gpu/drm/tiny/simpledrm.c |  7 +++++-
-> >   3 files changed, 36 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_h=
-elper.c
-> > index 1369ca4ae39b..427631706128 100644
-> > --- a/drivers/gpu/drm/drm_fb_helper.c
-> > +++ b/drivers/gpu/drm/drm_fb_helper.c
-> > @@ -1756,24 +1756,21 @@ static uint32_t drm_fb_helper_find_format(struc=
-t drm_fb_helper *fb_helper, const
-> >       return DRM_FORMAT_INVALID;
-> >   }
-> >
-> > -static uint32_t drm_fb_helper_find_cmdline_format(struct drm_fb_helper=
- *fb_helper,
-> > -                                               const uint32_t *formats=
-, size_t format_count,
-> > -                                               const struct drm_cmdlin=
-e_mode *cmdline_mode)
-> > +static uint32_t drm_fb_helper_find_color_mode_format(struct drm_fb_hel=
-per *fb_helper,
-> > +                                                  const uint32_t *form=
-ats, size_t format_count,
-> > +                                                  unsigned int color_m=
-ode)
-> >   {
-> >       struct drm_device *dev =3D fb_helper->dev;
-> >       uint32_t bpp, depth;
-> >
-> > -     if (!cmdline_mode->bpp_specified)
-> > -             return DRM_FORMAT_INVALID;
-> > -
-> > -     switch (cmdline_mode->bpp) {
-> > +     switch (color_mode) {
-> >       case 1:
-> >       case 2:
-> >       case 4:
-> >       case 8:
-> >       case 16:
-> >       case 24:
-> > -             bpp =3D depth =3D cmdline_mode->bpp;
-> > +             bpp =3D depth =3D color_mode;
-> >               break;
-> >       case 15:
-> >               bpp =3D 16;
-> > @@ -1784,7 +1781,7 @@ static uint32_t drm_fb_helper_find_cmdline_format=
-(struct drm_fb_helper *fb_helpe
-> >               depth =3D 24;
-> >               break;
-> >       default:
-> > -             drm_info(dev, "unsupported bpp value of %d\n", cmdline_mo=
-de->bpp);
-> > +             drm_info(dev, "unsupported color mode of %d\n", color_mod=
-e);
-> >               return DRM_FORMAT_INVALID;
-> >       }
-> >
-> > @@ -1817,10 +1814,13 @@ static int __drm_fb_helper_find_sizes(struct dr=
-m_fb_helper *fb_helper, int prefe
-> >               drm_client_for_each_connector_iter(connector, &conn_iter)=
- {
-> >                       struct drm_cmdline_mode *cmdline_mode =3D &connec=
-tor->cmdline_mode;
-> >
-> > -                     surface_format =3D drm_fb_helper_find_cmdline_for=
-mat(fb_helper,
-> > -                                                                      =
-  plane->format_types,
-> > -                                                                      =
-  plane->format_count,
-> > -                                                                      =
-  cmdline_mode);
-> > +                     if (!cmdline_mode->bpp_specified)
-> > +                             continue;
-> > +
-> > +                     surface_format =3D drm_fb_helper_find_color_mode_=
-format(fb_helper,
-> > +                                                                      =
-     plane->format_types,
-> > +                                                                      =
-     plane->format_count,
-> > +                                                                      =
-     cmdline_mode->bpp);
-> >                       if (surface_format !=3D DRM_FORMAT_INVALID)
-> >                               break; /* found supported format */
-> >               }
-> > @@ -1829,17 +1829,23 @@ static int __drm_fb_helper_find_sizes(struct dr=
-m_fb_helper *fb_helper, int prefe
-> >               if (surface_format !=3D DRM_FORMAT_INVALID)
-> >                       break; /* found supported format */
-> >
-> > -             /* try preferred bpp/depth */
-> > -             surface_format =3D drm_fb_helper_find_format(fb_helper, p=
-lane->format_types,
-> > -                                                        plane->format_=
-count, preferred_bpp,
-> > -                                                        dev->mode_conf=
-ig.preferred_depth);
-> > +             /* try preferred color mode */
-> > +             surface_format =3D drm_fb_helper_find_color_mode_format(f=
-b_helper,
-> > +                                                                   pla=
-ne->format_types,
-> > +                                                                   pla=
-ne->format_count,
-> > +                                                                   pre=
-ferred_bpp);
-> >               if (surface_format !=3D DRM_FORMAT_INVALID)
-> >                       break; /* found supported format */
-> >       }
-> >
-> >       if (surface_format =3D=3D DRM_FORMAT_INVALID) {
-> > +             /*
-> > +              * If none of the given color modes works, fall back
-> > +              * to XRGB8888. Drivers are expected to provide this
-> > +              * format for compatibility with legacy applications.
-> > +              */
-> >               drm_warn(dev, "No compatible format found\n");
-> > -             return -EAGAIN;
-> > +             surface_format =3D drm_driver_legacy_fb_format(dev, 32, 2=
-4);
-> >       }
-> >
-> >       info =3D drm_format_info(surface_format);
-> > diff --git a/drivers/gpu/drm/tiny/ofdrm.c b/drivers/gpu/drm/tiny/ofdrm.=
-c
-> > index 39c5fd463fec..6e349ca42485 100644
-> > --- a/drivers/gpu/drm/tiny/ofdrm.c
-> > +++ b/drivers/gpu/drm/tiny/ofdrm.c
-> > @@ -1352,6 +1352,7 @@ static int ofdrm_probe(struct platform_device *pd=
-ev)
-> >   {
-> >       struct ofdrm_device *odev;
-> >       struct drm_device *dev;
-> > +     unsigned int color_mode;
-> >       int ret;
-> >
-> >       odev =3D ofdrm_device_create(&ofdrm_driver, pdev);
-> > @@ -1363,7 +1364,11 @@ static int ofdrm_probe(struct platform_device *p=
-dev)
-> >       if (ret)
-> >               return ret;
-> >
-> > -     drm_fbdev_generic_setup(dev, drm_format_info_bpp(odev->format, 0)=
-);
-> > +     color_mode =3D drm_format_info_bpp(odev->format, 0);
-> > +     if (color_mode =3D=3D 16)
-> > +             color_mode =3D odev->format->depth; // can be 15 or 16
-> > +
-> > +     drm_fbdev_generic_setup(dev, color_mode);
-> >
-> >       return 0;
-> >   }
-> > diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/si=
-mpledrm.c
-> > index 7355617f38d3..f658b99c796a 100644
-> > --- a/drivers/gpu/drm/tiny/simpledrm.c
-> > +++ b/drivers/gpu/drm/tiny/simpledrm.c
-> > @@ -802,6 +802,7 @@ static int simpledrm_probe(struct platform_device *=
-pdev)
-> >   {
-> >       struct simpledrm_device *sdev;
-> >       struct drm_device *dev;
-> > +     unsigned int color_mode;
-> >       int ret;
-> >
-> >       sdev =3D simpledrm_device_create(&simpledrm_driver, pdev);
-> > @@ -813,7 +814,11 @@ static int simpledrm_probe(struct platform_device =
-*pdev)
-> >       if (ret)
-> >               return ret;
-> >
-> > -     drm_fbdev_generic_setup(dev, drm_format_info_bpp(sdev->format, 0)=
-);
-> > +     color_mode =3D drm_format_info_bpp(sdev->format, 0);
-> > +     if (color_mode =3D=3D 16)
-> > +             color_mode =3D sdev->format->depth; // can be 15 or 16
-> > +
-> > +     drm_fbdev_generic_setup(dev, color_mode);
-> >
-> >       return 0;
-> >   }
->
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-> (HRB 36809, AG N=C3=BCrnberg)
-> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
+> blob properties are kms objects (like framebuffers), so it should be
+> possible to stuff a blob into an object property as-is. Of course you need
+> to update the validation code to make sure we accept either an fb or a
+> blob for the internal representation. But that kind of split internally is
+> required no matter what I think.
 
-I know it's already in drm-misc-next, but wanted to chime in...
+I checked your idea and notes from Jessica. So while we can pass blobs
+to property objects, the prop_fb_id is created as an object property
+with the type DRM_MODE_OBJECT_FB. Passing DRM_MODE_OBJECT_BLOB would
+fail a check in drm_property_change_valid_get() ->
+__drm_mode_object_find(). And I don't think that we should break the
+existing validation code for this special case.
 
-I've tested v4 on the Thinkpad X13s as well as the Yoga C630 WoS, both
-msm based systems and this does fix the issue I was seeing as well as
-make my patch not needed and can be considered abandoned.
+If you insist on using FB_ID for passing solid_fill information, I'd
+ask you to reconsider using a 1x1 framebuffer. It would be fully
+compatible with the existing userspace, which can then treat it
+seamlessly.
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+> -Daniel
+>
+> >
+> > >
+> > > [1]
+> > > https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_property.c#L71
+
+-- 
+With best wishes
+Dmitry
