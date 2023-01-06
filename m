@@ -2,132 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0BB566039B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 16:43:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0877966045D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 17:37:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbjAFPmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 10:42:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53620 "EHLO
+        id S235492AbjAFQhX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 11:37:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234648AbjAFPmS (ORCPT
+        with ESMTP id S235088AbjAFQhW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 10:42:18 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23FD73E16
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 07:42:17 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id cf42so2489538lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 07:42:17 -0800 (PST)
+        Fri, 6 Jan 2023 11:37:22 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEAFC78A5F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 08:37:20 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id l26so1421242wme.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 08:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S8DsZ4xDi7WGGGxSEqK1CF2GfXaRjgknBXXbDJzfuIc=;
-        b=ItGYGwkXvY1/pRaKVx9JjcCPiEdo3rOFFI5QTSZ6uwD392GsRfAZPt7KVNfViDE5sE
-         5ecejYwh58e+71+mMOzy/i0GF5b4LKxkflRM4KmoUp7GO3gESVJOSQCSBx7DVR+PDo+a
-         w/tufrmMOvygcvBLD8rJEyNnebstsCOkGq58Z2WKPNiiE55efO3SXwnLTApy6WiyLbLU
-         JoEsCKHan+YYWRQ0hdohVHLWlP+GEiKFVAJzUPNNJJtD6zWs56i4YxmJK74vX1u2r+u+
-         u1HG0GT2ggvxHApkpiPippaW1/88xjjfj/syaMnnsQOnWvZArAVTjxW7eGEvkrxiyWYO
-         kzaw==
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G2/wW8oWU2UO8G+hBvXbq+ylbwBDQdJAzgI/Jam/m+c=;
+        b=P0csNwpg9MOjalR15dbOZ1LUq6TdUofEE7438rE/cpAX6qEn5+mMoWvJXJC6ZpwDXi
+         EARyvmG1YWxE3zP8yqecpslPwHBQqDrVX25OOeNKcNA4wogZKUTF21SDNUxtcohel9tV
+         uyrmTwytfXzK01YXqFqnvwRbqTmq1slYryNo/Rr9NvXFfeJfSIv/Vmi2tlxrQ/Vq6vX8
+         2FVWVdbganGHT5PwcT5KSp1Z2Bh+9KufRjFHVx4f1iL9FdE9z650VAAIsK053hbFtN38
+         WjudDhMIuOe+JqvyoB12nLnQzAfugau3CkZyjmbbxBmEnWdKrqVrcPp3S78J0Vydyz/y
+         FWmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S8DsZ4xDi7WGGGxSEqK1CF2GfXaRjgknBXXbDJzfuIc=;
-        b=RAr3DMG+H88iLLoIaxr+t55hVa2EU7qpfEhxx0wF4T2ypfDGuzJg8oqQHhSEtWQffi
-         5PyW0SCmbRBJwOaSiGe0+/UHMfIQeDt4rV2J8WXTDEvARo92RRP0xILmOgB42KzRBwZI
-         xnaoznEdX29AmL+fYocR/kCgppN8teMhqvnAhTOXs/6MRmGm4sHZuhJvdAdmRHQxzoQG
-         9xkCIJhwhvbcU5w7QaQR6d6HvEBnN05Y8RqPNrIS443mS26NcoWrlGiWpbvqIa4NzDLa
-         t4RGLcWXuaoGq3wAaVeskP/xNriivQdANb31RQM2SdCCzJAEL1aM+pMYPCd570CWTIKR
-         7l/Q==
-X-Gm-Message-State: AFqh2kqrkZPyPPkN4YmdQp8RpgzcIF4HlxPkEMv+VE2/eH8oQvHMkjR5
-        Ip3OnZaAem7tBlYDWsKl5Qajvw==
-X-Google-Smtp-Source: AMrXdXt8ZYswXAWp2K4iWM76QSXCXc1N6nCQi4oAWyZRzrTPjidUFRKcUo2QORTmpEDbAASVsaojgQ==
-X-Received: by 2002:a05:6512:c14:b0:4b5:abe3:c63d with SMTP id z20-20020a0565120c1400b004b5abe3c63dmr19055796lfu.42.1673019736162;
-        Fri, 06 Jan 2023 07:42:16 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v14-20020a05651203ae00b004b4b5da5f80sm187271lfp.219.2023.01.06.07.42.15
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=G2/wW8oWU2UO8G+hBvXbq+ylbwBDQdJAzgI/Jam/m+c=;
+        b=ddu6R+ZzHPwnKFW+iqkalwgkfYs3VtfYMIZraGcu6CAu6vAxvfjAPCj07Ur5hDXquy
+         AfHG/YOWG9k3LkhPbs97cTKe9lSGAWjk5Kte8Zah1/FrUCcmrSJDewQlwns4PDbcLww6
+         7DfULthbXWoTVrQb3Mzt4CUwO/UP4sO7CmfHTol3l5lgA1nMdTkvia4Df+W1+w+XFyAb
+         g7WKXLDTg4AKeijBtAXCSs88YaOGujV/yEENmflH8ZYlYZdGk/SHiC3XmotdXvhJkJMD
+         lnKOhRYAJF5X42/oD0al9bNnUhz5nc0hb7b+Tf0mAtftmWXXt+bz8PB31tiMhYiuAkXI
+         qTPQ==
+X-Gm-Message-State: AFqh2kqkGjnp+hb9WSMS+XTYe6xoN21ACAAqcPKl+PPtSdn9DKjoPC/N
+        lEi/Y0y60jVovHa/x0yHMQN9xg==
+X-Google-Smtp-Source: AMrXdXvPO6YvRPMFNA4tbcS1PTYl42JBHmgSt22BHUKuhzVUtPqixbPCPJIe9ANjVG/6QbqyJYPZYw==
+X-Received: by 2002:a05:600c:4d21:b0:3d2:2a72:2573 with SMTP id u33-20020a05600c4d2100b003d22a722573mr40022929wmp.11.1673023039183;
+        Fri, 06 Jan 2023 08:37:19 -0800 (PST)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id l7-20020a5d6747000000b002b57bae7174sm1617699wrw.5.2023.01.06.08.37.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 07:42:15 -0800 (PST)
-Message-ID: <c0051467-e8c3-1897-fcf5-b9140a7039bd@linaro.org>
-Date:   Fri, 6 Jan 2023 17:42:14 +0200
+        Fri, 06 Jan 2023 08:37:18 -0800 (PST)
+Message-ID: <e0ced334-e6c1-caeb-322a-f67a23ee58da@linaro.org>
+Date:   Fri, 6 Jan 2023 17:37:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v6 03/11] dt-bindings: display/msm: add sm8350 and sm8450
- DSI PHYs
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20221207012231.112059-1-dmitry.baryshkov@linaro.org>
- <20221207012231.112059-4-dmitry.baryshkov@linaro.org>
- <ccbb47e4-d780-0b1d-814e-27e86b6c369c@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <ccbb47e4-d780-0b1d-814e-27e86b6c369c@linaro.org>
+ Thunderbird/102.4.2
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: Annoying message on the console for the db845c board
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/01/2023 17:39, Krzysztof Kozlowski wrote:
-> On 07/12/2022 02:22, Dmitry Baryshkov wrote:
->> SM8350 and SM8450 platforms use the same driver and same bindings as the
->> existing 7nm DSI PHYs. Add corresponding compatibility strings.
->>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
->> index c851770bbdf2..bffd161fedfd 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
->> @@ -15,6 +15,8 @@ allOf:
->>   properties:
->>     compatible:
->>       enum:
->> +      - qcom,dsi-phy-5nm-8350
->> +      - qcom,dsi-phy-5nm-8450
-> 
-> If this patch was not merged (so far nothing in next), can we make it
-> proper SoC compatible?
 
-Ack. Bjorn has merged the dtsi bits, but I'll send a fixup.
+Hi all,
 
-> 
-> qcom,sm8450-dsi-phy-5nm
-> 
-> The SC7280 already uses such pattern.
-> 
->>         - qcom,dsi-phy-7nm
->>         - qcom,dsi-phy-7nm-8150
->>         - qcom,sc7280-dsi-phy-7nm
-> 
-> Best regards,
-> Krzysztof
-> 
+Does anyone have an idea on how to fix these timeout messages ? They are 
+displayed again and again every 5 seconds and that saturates the 
+filesystem after awhile.
+
+...
+[   24.662181] qcom-q6v5-mss 4080000.remoteproc: start timed out
+[   24.768150] qcom-q6v5-mss 4080000.remoteproc: port failed halt
+[   24.777618] remoteproc remoteproc0: can't start rproc 
+4080000.remoteproc: -110
+[   24.785022] remoteproc remoteproc0: Boot failed: -110
+[   24.833657] remoteproc remoteproc0: powering up 4080000.remoteproc
+[   24.840126] remoteproc remoteproc0: Booting fw image 
+qcom/sdm845/mba.mbn, size 238304
+[   24.897361] qcom-q6v5-mss 4080000.remoteproc: MBA booted without 
+debug policy, loading mpss
+[   31.573938] qcom-q6v5-mss 4080000.remoteproc: start timed out
+[   31.680229] qcom-q6v5-mss 4080000.remoteproc: port failed halt
+[   31.689683] remoteproc remoteproc0: can't start rproc 
+4080000.remoteproc: -110
+[   31.697070] remoteproc remoteproc0: Boot failed: -110
+[   31.765283] remoteproc remoteproc0: powering up 4080000.remoteproc
+[   31.771758] remoteproc remoteproc0: Booting fw image 
+qcom/sdm845/mba.mbn, size 238304
+[   31.820553] qcom-q6v5-mss 4080000.remoteproc: MBA booted without 
+debug policy, loading mpss
+....
+
+Thanks
+   -- Daniel
 
 -- 
-With best wishes
-Dmitry
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
