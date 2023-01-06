@@ -2,126 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A3B565F8AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 02:09:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E7965F90B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 02:25:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236600AbjAFBJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 20:09:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35012 "EHLO
+        id S229484AbjAFBZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 20:25:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236609AbjAFBJX (ORCPT
+        with ESMTP id S229732AbjAFBZK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 20:09:23 -0500
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81A1472D07
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jan 2023 17:09:18 -0800 (PST)
-Received: by mail-il1-x12c.google.com with SMTP id u8so467060ilg.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jan 2023 17:09:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a25YKiMypj1O1dkTeTf+41PYk2LkMRy8jApaMHcF3hQ=;
-        b=GfxYAaRQLGPOFoa26ErjjUE1UpmyQRlEngmnyE784ps7wQu+AricDPJa32a22yCALt
-         MhTCHBUleQASsrn09sMtfYq+H7L60n1dUwQJXnti6/CBbWRriMiw0gwrC/O9nGYfNf80
-         VtBY32mpB98Hg5zawDJAzkbyNAKgHVFOwTbtc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a25YKiMypj1O1dkTeTf+41PYk2LkMRy8jApaMHcF3hQ=;
-        b=sqbBEYG1C4Nj+4AEuIi/5Fp+hiO4ceZSRmFAd6N/ea1YTLHPY1IruN5iT/ieLBNIV0
-         dyXsJxiMD7AUQg2/6S4XjqGPNibFq3+7JOeRdbB/JdYnJT2WZ2lFeDExNZLzzBpFtHlq
-         2mIGZQ3AWoZNhXIlLZFs3VKogOiP65ZqhRg8fSDFEHgjSwotSKHlQotwG+K+nqGgqEcE
-         hhQxAENE3o5JHabstgd3VCvMeoLN5q3mQqCr1cAzM2/Rt5gg/0xIziOIE9w31iTQbbBs
-         lMLMtSmno4Wiof8s96ldTyn5qaECyr11eP1iRGB0d/ObJlr73VJDwoCLwiVHawwNKY/n
-         1f/g==
-X-Gm-Message-State: AFqh2koZRGKYsLXvoKX2ogmilYimz1jGqTH1WmsCWug9M7fBrJQ/Kmq2
-        BMZBHF6Z27CEoRcD7nTYYFbGMg==
-X-Google-Smtp-Source: AMrXdXsIxoPdIf7iemjPcehOoQbWhnzgHIYcO03uSrBdXX69Tjy1MRwwWy0vr8DbtCAKgqVNGwRwdw==
-X-Received: by 2002:a92:b10:0:b0:302:364f:68f4 with SMTP id b16-20020a920b10000000b00302364f68f4mr36470087ilf.17.1672967357902;
-        Thu, 05 Jan 2023 17:09:17 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id i2-20020a023b42000000b0039e0a7bf3a2sm5385077jaf.179.2023.01.05.17.09.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 17:09:17 -0800 (PST)
-Date:   Fri, 6 Jan 2023 01:09:17 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, mathieu.poirier@linaro.org,
-        corbet@lwn.net
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom: Add reg-names and
- power-domain-names
-Message-ID: <Y7d0vcAwNDsZouWF@google.com>
-References: <1672924363-22938-1-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 5 Jan 2023 20:25:10 -0500
+Received: from out199-6.us.a.mail.aliyun.com (out199-6.us.a.mail.aliyun.com [47.90.199.6])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 261946FE1A;
+        Thu,  5 Jan 2023 17:19:42 -0800 (PST)
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046056;MF=yang.lee@linux.alibaba.com;NM=1;PH=DS;RN=8;SR=0;TI=SMTPD_---0VYxJXpw_1672967833;
+Received: from localhost(mailfrom:yang.lee@linux.alibaba.com fp:SMTPD_---0VYxJXpw_1672967833)
+          by smtp.aliyun-inc.com;
+          Fri, 06 Jan 2023 09:17:14 +0800
+From:   Yang Li <yang.lee@linux.alibaba.com>
+To:     quic_schowdhu@quicinc.com
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Abaci Robot <abaci@linux.alibaba.com>
+Subject: [PATCH -next] soc: qcom: dcc: Fix unsigned comparison with less than zero
+Date:   Fri,  6 Jan 2023 09:17:10 +0800
+Message-Id: <20230106011710.2827-1-yang.lee@linux.alibaba.com>
+X-Mailer: git-send-email 2.20.1.7.g153144c
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1672924363-22938-1-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,
+        ENV_AND_HDR_SPF_MATCH,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,
+        USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 05, 2023 at 06:42:43PM +0530, Srinivasa Rao Mandadapu wrote:
+The return value from the call to kstrtouint_from_user() is int.
+However, the return value is being assigned to
+an unsigned int variable 'ret', so making 'ret' an int.
 
-> Subject: dt-bindings: remoteproc: qcom: Add reg-names and power-domain-name
+Eliminate the following warning:
+./drivers/soc/qcom/dcc.c:815:5-8: WARNING: Unsigned expression compared with zero: ret < 0
 
-For all qcom remoteprocs?
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3638
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+---
+ drivers/soc/qcom/dcc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Please make it clear in the subject that this is for sc7280-adsp-pil.
+diff --git a/drivers/soc/qcom/dcc.c b/drivers/soc/qcom/dcc.c
+index d4101f79cb5d..5b50d638771d 100644
+--- a/drivers/soc/qcom/dcc.c
++++ b/drivers/soc/qcom/dcc.c
+@@ -808,7 +808,8 @@ static ssize_t config_reset_write(struct file *filp,
+ 				  const char __user *user_buf, size_t count,
+ 				  loff_t *ppos)
+ {
+-	unsigned int val, ret;
++	unsigned int val;
++	int ret;
+ 	struct dcc_drvdata *drvdata = filp->private_data;
+ 
+ 	ret = kstrtouint_from_user(user_buf, count, 0, &val);
+-- 
+2.20.1.7.g153144c
 
-> Add reg-names and power-domain-names for remoteproc ADSP pheripheral
-> loader. This is to make compatible with remoteproc ADSP PIL driver.
-> Also change power domain from LCX to CX.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> index 94ca7a0..b5bee2c 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> @@ -23,6 +23,11 @@ properties:
->        - description: qdsp6ss register
->        - description: efuse q6ss register
->  
-> +  reg-names:
-> +    items:
-> +      - const: qdsp6ss_base
-> +      - const: lpass_efuse
-> +
->    iommus:
->      items:
->        - description: Phandle to apps_smmu node with sid mask
-> @@ -57,7 +62,11 @@ properties:
->  
->    power-domains:
->      items:
-> -      - description: LCX power domain
-> +      - description: CX power domain
-> +
-> +  power-domain-names:
-> +    items:
-> +      - const: cx
->  
->    resets:
->      items:
-> -- 
-> 2.7.4
-> 
