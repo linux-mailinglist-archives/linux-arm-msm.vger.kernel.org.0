@@ -2,129 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E48B365F92A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 02:33:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08DBA65F935
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 02:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjAFBdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Jan 2023 20:33:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
+        id S229554AbjAFBih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Jan 2023 20:38:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbjAFBds (ORCPT
+        with ESMTP id S229981AbjAFBig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Jan 2023 20:33:48 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757DD18B32;
-        Thu,  5 Jan 2023 17:33:41 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30617lYa002491;
-        Fri, 6 Jan 2023 01:32:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=EPPJJquUmVF7Qc2Iy/gHw+vCbRk1oBfl7WGwMVHjjxw=;
- b=BqdXZR1xIWucXLvhoM9kyeLFMB0vlS/Xe3PU92pVOX/+BiPm9GqtVwOM3P7YNxnD7ObF
- 1vhcbCjKky9iiwYUvAaozfnopkY1+MR87tvnAe0KJaLSudWe7LKeMaNByIWg/bdRfOwa
- cTcVLXhrNP9Q6hg1b4xXdDnij9esIemBKNmqltdVNuS7OcURvZ0SZQh3cYuZfMM13gRN
- DCmvrv1XlsvqIqtBN5IB1a1M6oGnVgCo7NzdLzq2BYLFGTpqi+wd0sQ+3I515Ou0IAoF
- Gd7uoO5zExcPsqUoquYttblzp18wyVzyXr8lYXzRDfnKnhL1LanrDX23ilVh9yNUIJRy HQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mx9jfg1ua-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Jan 2023 01:32:50 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3061Wn5i031136
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Jan 2023 01:32:49 GMT
-Received: from [10.110.47.113] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 5 Jan 2023
- 17:32:48 -0800
-Message-ID: <dd0bb92f-036e-3ba7-4c0a-9536ba0c179a@quicinc.com>
-Date:   Thu, 5 Jan 2023 17:32:47 -0800
+        Thu, 5 Jan 2023 20:38:36 -0500
+Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 099841B1F4;
+        Thu,  5 Jan 2023 17:38:33 -0800 (PST)
+Received: from localhost.localdomain (unknown [124.16.138.125])
+        by APP-05 (Coremail) with SMTP id zQCowADn7++Re7djDsVbCw--.11363S2;
+        Fri, 06 Jan 2023 09:38:25 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        sumit.semwal@linaro.org, christian.koenig@amd.com
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH] drm/msm: Add missing check and destroy for alloc_ordered_workqueue
+Date:   Fri,  6 Jan 2023 09:38:24 +0800
+Message-Id: <20230106013824.27208-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 02/14] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <agross@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-3-quic_wcheng@quicinc.com>
- <5b4d657c-1acf-f90b-be64-3e36cca96686@linaro.org>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <5b4d657c-1acf-f90b-be64-3e36cca96686@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1gRGGqNwZdkAeANIiLhfXAm7SBUBRYkT
-X-Proofpoint-ORIG-GUID: 1gRGGqNwZdkAeANIiLhfXAm7SBUBRYkT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-05_14,2023-01-05_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- bulkscore=0 phishscore=0 spamscore=0 adultscore=0 suspectscore=0
- mlxlogscore=731 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301060009
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowADn7++Re7djDsVbCw--.11363S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7urWkCF4DJFyxtFykJw43KFg_yoW8Xr4kpa
+        13AayrtryFya1agwnFyr1kua45C3W8K3WfC3yI9wnIgwn0yr4DAa48tFyjkry3GFZ7XF12
+        yFZ2ya4DZF1jkrJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUUvm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+        1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+        6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+        jxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+        n2IY04v7MxkIecxEwVAFwVWkMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
+        4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
+        67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
+        x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
+        z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
+        UI43ZEXa7VUbNzVUUUUUU==
+X-Originating-IP: [124.16.138.125]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Add check for the return value of alloc_ordered_workqueue as it may return
+NULL pointer.
+Moreover, use the destroy_workqueue in the later fails in order to avoid
+memory leak.
 
-On 1/5/2023 10:09 AM, Krzysztof Kozlowski wrote:
-> On 24/12/2022 00:31, Wesley Cheng wrote:
->> The QC ADSP is able to support USB playback and capture, so that the
->> main application processor can be placed into lower CPU power modes.  This
->> adds the required AFE port configurations and port start command to start
->> an audio session.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   .../sound/qcom,q6dsp-lpass-ports.h            |   1 +
->>   sound/soc/qcom/qdsp6/q6afe-dai.c              |  47 +++++
->>   sound/soc/qcom/qdsp6/q6afe.c                  | 183 ++++++++++++++++++
->>   sound/soc/qcom/qdsp6/q6afe.h                  |  46 ++++-
->>   sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      |  23 +++
->>   sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h      |   1 +
->>   sound/soc/qcom/qdsp6/q6routing.c              |   8 +
->>   7 files changed, 308 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
->> index 9f7c5103bc82..746bc462bb2e 100644
->> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
->> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
->> @@ -131,6 +131,7 @@
->>   #define RX_CODEC_DMA_RX_7	126
->>   #define QUINARY_MI2S_RX		127
->>   #define QUINARY_MI2S_TX		128
->> +#define USB_RX				129
->>   
->>   #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
-> 
-> Bindings are separate patches. Please split.
-> 
+Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Thanks for catching this.  Will do.
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 8b0b0ac74a6f..b82d938226ad 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -418,6 +418,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 	priv->dev = ddev;
+ 
+ 	priv->wq = alloc_ordered_workqueue("msm", 0);
++	if (!priv->wq)
++		return -ENOMEM;
+ 
+ 	INIT_LIST_HEAD(&priv->objects);
+ 	mutex_init(&priv->obj_lock);
+@@ -440,12 +442,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 
+ 	ret = msm_init_vram(ddev);
+ 	if (ret)
+-		return ret;
++		goto err_destroy_workqueue;
+ 
+ 	/* Bind all our sub-components: */
+ 	ret = component_bind_all(dev, ddev);
+ 	if (ret)
+-		return ret;
++		goto err_destroy_workqueue;
+ 
+ 	dma_set_max_seg_size(dev, UINT_MAX);
+ 
+@@ -540,6 +542,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 
+ err_msm_uninit:
+ 	msm_drm_uninit(dev);
++err_destroy_workqueue:
++	destroy_workqueue(priv->wq);
+ 	return ret;
+ }
+ 
+-- 
+2.25.1
 
-Thanks
-Wesley Cheng
