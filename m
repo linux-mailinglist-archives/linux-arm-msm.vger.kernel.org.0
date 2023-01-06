@@ -2,52 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 318C266083D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1E5660873
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 21:50:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbjAFUYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 15:24:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34676 "EHLO
+        id S230085AbjAFUuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 15:50:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbjAFUY1 (ORCPT
+        with ESMTP id S229782AbjAFUui (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 15:24:27 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD388FC5;
-        Fri,  6 Jan 2023 12:24:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 16B3AB81E95;
-        Fri,  6 Jan 2023 20:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D3BC43396;
-        Fri,  6 Jan 2023 20:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673036663;
-        bh=0KuWCg8Jmwvu7nhxqZhepBZzEJ4BG2/U7bhs8grOa0A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NE75Eh62cPiQtZwdMykDUv4azIWOcclQ2fq+17CLNRTorpOFiKnBupSfmlgBfW9Mh
-         hD/Vtdc6xVvrcrJpLi2YVUr9Sw2Q78rMJKzoi2SvoZFErdEBxW9J89YdzrCJZs146+
-         p5awZBVUCDRF1Kj1Kk23mIR8kXc5GjGgxT4LnJeSMUYhysbwof+xUrN0HtAMDfrp0f
-         Xw4FcDi4h4ope82OBu4PTOm9LjTcsr7/CgGLBwHHM0bK+gRQRjohIB0lt820Val2Yk
-         8kK6cjhVlkpOv7H6jeSC1Be/ajk9UZQ5jR/u8wA2ablXvKh+iv07k97GRh6Ysq+rj0
-         becPY3Fy0FgGQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     quic_schowdhu@quicinc.com, yang.lee@linux.alibaba.com
-Cc:     konrad.dybcio@linaro.org, abaci@linux.alibaba.com,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] soc: qcom: dcc: Fix unsigned comparison with less than zero
-Date:   Fri,  6 Jan 2023 14:24:19 -0600
-Message-Id: <167303665354.1802272.14384992770455268720.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230106011710.2827-1-yang.lee@linux.alibaba.com>
-References: <20230106011710.2827-1-yang.lee@linux.alibaba.com>
+        Fri, 6 Jan 2023 15:50:38 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 763E96B5F9;
+        Fri,  6 Jan 2023 12:50:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1673038237; x=1704574237;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=SSLr4RHf58wqfEI96obfVkLWfe5DwsXj720IBwW3wDE=;
+  b=Ptjw33cajnajUr1PjfbaXJzWKN/hmBE4cCu9oioyeGJPKs0JL0/fbpA1
+   8EcfWCDxUehDdYrN+W1Rn6j741qeNj1/xa7vQ0+eLgRlkQ693A3LF4rmY
+   E3Na2IQ/wNenwaJGpOz+qusvMDrfLbm5J9/czVzsRHrKwMxWBTXxM7Swv
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jan 2023 12:50:37 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 12:50:36 -0800
+Received: from [10.110.114.155] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
+ 12:50:31 -0800
+Message-ID: <c082205c-3e66-dc63-a6bb-7520c2ca54ae@quicinc.com>
+Date:   Fri, 6 Jan 2023 12:50:30 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v16 0/8] Coresight: Add support for TPDM and TPDA
+Content-Language: en-US
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230106092119.20449-1-quic_jinlmao@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20230106092119.20449-1-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,21 +76,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 6 Jan 2023 09:17:10 +0800, Yang Li wrote:
-> The return value from the call to kstrtouint_from_user() is int.
-> However, the return value is being assigned to
-> an unsigned int variable 'ret', so making 'ret' an int.
-> 
-> Eliminate the following warning:
-> ./drivers/soc/qcom/dcc.c:815:5-8: WARNING: Unsigned expression compared with zero: ret < 0
-> 
-> [...]
+On 1/6/2023 1:21 AM, Mao Jinlong wrote:
+> This patch series depends on patch series:
+> "[v6,00/14] coresight: Add new API to allocate trace source ID values"
+> https://patchwork.kernel.org/project/linux-arm-kernel/cover/20221123195010.6859-1-mike.leach@linaro.org/
 
-Applied, thanks!
+Do we know now when these patches will get revived and accepted to 
+unblock us?
 
-[1/1] soc: qcom: dcc: Fix unsigned comparison with less than zero
-      commit: d4b2c7484a8edd79c90b9f8acc8a03e5e3235b89
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+---Trilok Soni
