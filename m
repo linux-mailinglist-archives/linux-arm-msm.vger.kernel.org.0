@@ -2,205 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E66C66063F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 19:17:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8321666065B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 19:29:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235129AbjAFSRX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 13:17:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54218 "EHLO
+        id S230032AbjAFS3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 13:29:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234858AbjAFSRV (ORCPT
+        with ESMTP id S231367AbjAFS2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 13:17:21 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78D5B6276
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 10:17:20 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id u8so1407791ilg.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 10:17:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1nWrzelfArIcGuHXeTwgFSuDsGz4bBzAEBvOTmzqK8s=;
-        b=GviCqBDMsbHSqEZ7te60Ivt8W0zr+ldNmIFdvuQj2jKROT6ilJCUd55JsiRXMYZnVi
-         gKLQdPUy8q5dcS0O1bQCRPcFwP7IKlqOp8c5FbQo7te+CvLleeMbj9tvUnhyNPn3L3Gl
-         Zi+XcXixkDZgVK4U2+Ghv/jQGC+5iPObuxOLQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1nWrzelfArIcGuHXeTwgFSuDsGz4bBzAEBvOTmzqK8s=;
-        b=FmeZi2Z8T8EipIkFwW2Hz7iDMSzl9em5qPL8d5i0UlFAve4iMxW31XJ2W43lK1WoIh
-         U/e+0GCIfaFeAwaHw2L31nqKSLz2RjVX+DH0OoHFoRVL6zyXoJWVg5ooe6tEZRertYot
-         YgVMXuvSh7V9ukmnbDVdIObZrbOFXzIvS5mjmpIKIpREP3FrBTtNw/YjRXbN7oGOr/UJ
-         4/nhzlfz8JrXMMcUZf41s9cvUddwAlRCzg+/Q5Kdx5832oFjiZx3XJoUyArVI2E+hNP5
-         1iAn7vC3prrtGft86/W2ugJuEl73lTHBgcSgOyONWKFpZTDRYuvZ3F2m4lQz0O0rtf7g
-         SmUg==
-X-Gm-Message-State: AFqh2kr7UxE5qFuxEbEHWEqXyuJJ6zDwYpUvhelWHVK760QJDBKFKPhM
-        LKwZ0dRfbJJfexRz7I+t8dd4Ow==
-X-Google-Smtp-Source: AMrXdXv/vUk/gL6Jl2xL27nlEmdywf/mjK1IuZUYkgiPJdf892p0RRCTlocRVs5eCrAyJNG8DMc2fw==
-X-Received: by 2002:a92:3012:0:b0:30b:b34b:c3bd with SMTP id x18-20020a923012000000b0030bb34bc3bdmr32701767ile.21.1673029039802;
-        Fri, 06 Jan 2023 10:17:19 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id y88-20020a029561000000b0039e2e4c82c8sm502250jah.123.2023.01.06.10.17.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 10:17:19 -0800 (PST)
-Date:   Fri, 6 Jan 2023 18:17:19 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Dhruva Gole <d-gole@ti.com>, lpieralisi@kernel.org,
-        robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org
-Subject: Re: [PATCH 1/1] PCI: qcom: Add support for system suspend and resume
-Message-ID: <Y7hlr3x9IrT/Kg82@google.com>
-References: <20230103074907.12784-1-manivannan.sadhasivam@linaro.org>
- <20230103074907.12784-2-manivannan.sadhasivam@linaro.org>
- <dad3aba3-a40b-8b76-c689-3dc877800263@ti.com>
- <20230105133639.GC4463@thinkpad>
+        Fri, 6 Jan 2023 13:28:53 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82C478A7A;
+        Fri,  6 Jan 2023 10:28:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C01C61F0C;
+        Fri,  6 Jan 2023 18:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDBAC433EF;
+        Fri,  6 Jan 2023 18:28:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673029731;
+        bh=COqjyLV5j1ajbEXuw53ehn2Q19dbjKx1dD0iJ62Rvfo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=N25BixGqr149dZlfhgg2awzromGm4Zh9tOgRIUe5RRss9bw2fe3CkEPXFIQd47vae
+         QCTq0xef7XUfe2kqNCd8spJ8OYv0QJgsDiCcIJ8LNC8MpxOD0Yr+PbHDy0+cefLmEg
+         AThLVE+/ztWNY2IDJCTYy4l+aimYMp2i5WkGXidxZUr8VQZr1WCuL833iDNKuNUJU3
+         hHckzgc8jBtiqlO8o/by89KrmBCz2Xl8Gs4HfxMX5DH+J0nwPwkXoXJwbLNSDfLleV
+         bvcabo108JPrOWagnIJbrANYZeDhutNIXzrRK5VwjfJZgn2IMSVZQerv+vFhP2LRTG
+         GunFh7UZTMHZA==
+Date:   Fri, 6 Jan 2023 12:28:49 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Vincent Guittot <vincent.guittot@linaro.org>
+Cc:     dmitry.baryshkov@linaro.org, agross@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, danny@kdrag0n.dev
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: correct dynamic power
+ coefficients
+Message-ID: <20230106182849.kr47mdgokd4qa6zw@builder.lan>
+References: <20230106164618.1845281-1-vincent.guittot@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230105133639.GC4463@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230106164618.1845281-1-vincent.guittot@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 05, 2023 at 07:06:39PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Jan 03, 2023 at 04:46:11PM +0530, Dhruva Gole wrote:
-> > 
-> > 
-> > On 03/01/23 13:19, Manivannan Sadhasivam wrote:
-> > > During the system suspend, vote for minimal interconnect bandwidth and
-> > > also turn OFF the resources like clock and PHY if there are no active
-> > > devices connected to the controller. For the controllers with active
-> > > devices, the resources are kept ON as removing the resources will
-> > > trigger access violation during the late end of suspend cycle as kernel
-> > > tries to access the config space of PCIe devices to mask the MSIs.
-> > > 
-> > > Also, it is not desirable to put the link into L2/L3 state as that
-> > > implies VDD supply will be removed and the devices may go into powerdown
-> > > state. This will affect the lifetime of storage devices like NVMe.
-> > > 
-> > > And finally, during resume, turn ON the resources if the controller was
-> > > truly suspended (resources OFF) and update the interconnect bandwidth
-> > > based on PCIe Gen speed.
-> > > 
-> > > Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > 
-> > Nice to have another driver added to the list of system suspend
-> > support!
-> > 
-> > Acked-by: Dhruva Gole <d-gole@ti.com>
-> > 
-> > >   drivers/pci/controller/dwc/pcie-qcom.c | 52 ++++++++++++++++++++++++++
-> > >   1 file changed, 52 insertions(+)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 5696e327795b..48810f1f2dba 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -227,6 +227,7 @@ struct qcom_pcie {
-> > >   	struct gpio_desc *reset;
-> > >   	struct icc_path *icc_mem;
-> > >   	const struct qcom_pcie_cfg *cfg;qcom_pcie_icc_update
-> > > +	bool suspended;
-> > >   };
-> > >   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> > > @@ -1835,6 +1836,52 @@ static int qcom_pcie_remove(struct platform_device *pdev)
-> > >   	return 0;
-> > >   }
-> > > +static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > +{
-> > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > +	int ret;
-> > > +
-> > > +	ret = icc_set_bw(pcie->icc_mem, 0, 0);
-> > > +	if (ret) {
-> > > +		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
-> > > +		return ret;
-> > > +	}
-> > > +
-> > > +	/*
-> > > +	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
-> > > +	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
-> > > +	 * (sub)states.
-> > > +	 *
-> > > +	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
-> > > +	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
-> > > +	 * config space for masking MSIs.
-> > > +	 *
-> > > +	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
-> > > +	 * will be removed and the devices may go into powerdown state. This will affect the
-> > > +	 * lifetime of the storage devices like NVMe.
-> > > +	 */
-> > > +	if (!dw_pcie_link_up(pcie->pci)) {
-> > > +		qcom_pcie_host_deinit(&pcie->pci->pp);
-> > > +		pcie->suspended = true;
-> > > +	}
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +static int qcom_pcie_resume_noirq(struct device *dev)
-> > > +{
-> > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > +
-> > > +	if (pcie->suspended) {
-> > > +		qcom_pcie_host_init(&pcie->pci->pp);
-> > > +		pcie->suspended = false;
-> > > +	}
-> > > +
-> > > +	qcom_pcie_icc_update(pcie);
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > >   static const struct of_device_id qcom_pcie_match[] = {
-> > >   	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
-> > >   	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> > > @@ -1870,12 +1917,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
-> > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
-> > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> > > +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> > > +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
-> > > +};
-> > > +
-> > >   static struct platform_driver qcom_pcie_driver = {
-> > >   	.probe = qcom_pcie_probe,
-> > >   	.remove = qcom_pcie_remove,
-> > >   	.driver = {
-> > >   		.name = "qcom-pcie",
-> > >   		.of_match_table = qcom_pcie_match,
-> > > +		.pm = &qcom_pcie_pm_ops,
-> > >   	},
-> > >   };
-> > >   module_platform_driver(qcom_pcie_driver);
-> > 
-> > Out of curiosity, were you able to measure how much power you were able
-> > to save after adding suspend support for PCIe? I don't know if clock
-> > gating really saves much amount of power, but yeah its true that we
-> > can't really cut off the power domain entirely in this case.
-> > 
+On Fri, Jan 06, 2023 at 05:46:18PM +0100, Vincent Guittot wrote:
+
+Seems like using get_maintainer.pl would have saved you some trouble ;)
+
+> While stressing EAS on my dragonboard RB3, I have noticed that LITTLE cores
+> where never selected as the most energy efficient CPU whatever the
+> utilization level of waking task.
 > 
-> I did not measure the power consumption and I agree that we won't save much
-> power with setting icc bandwidth to 0. But it is better to have something
-> than nothing. And in the coming days, I have plans to look into other power
-> saving measures also.
+> energy model framework uses its cost field to estimate the energy with
+> the formula:
+> 
+>   nrg = cost of the selected OPP * utilization / CPU's max capacity
+> 
+> which ends up selecting the CPU with lowest cost / max capacity ration
+> as long as the utilization fits in the OPP's capacity.
+> 
+> If we compare the cost of a little OPP with similar capacity of a big OPP
+> like :
+>        OPP(kHz)   OPP capacity    cost     max capacity   cost/max capacity
+> LITTLE 1766400    407             351114   407            863
+> big    1056000    408             520267   1024           508
+> 
+> This can be interpreted as the LITTLE core consumes 70% more than big core
+> for the same compute capacity.
+> 
+> According to [1], LITTLE consumes 10% less than big core for Coremark
+> benchmark at those OPPs. If we consider that everything else stays
+> unchanged, the dynamic-power-coefficient of LITTLE core should be
+> only 53% of the current value: 290 * 53% = 154
+> 
+> Set the dynamic-power-coefficient of CPU0-3 to 154 to fix the energy model.
+> 
 
-On a sc7280 system I see a reduction of ~30mW with this patch when no PCI
-card is plugged in. The reduction seems to come from powering the PHY down.
+This is sounds reasonable.
 
-Interestingly on that system power consumption during suspend (without this
-patch) is ~30mW higher *without* a PCI card vs. with a card. Maybe the PHY
-doesn't enter a low power mode when no card is plugged in?
+But if the math was wrong for SDM845, I would assume that sm8150 and
+sm8250 are wrong as well, as that's what 0e0a8e35d725 is based on. And
+should I assume that patches for other platforms are off by 53% as well?
+
+Can you help me understand how to arrive at this number? (Without
+considering everything else stays unchanged, if needed).
+
+Regards,
+Bjorn
+
+> [1] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
+> 
+> Fixes: 0e0a8e35d725 ("arm64: dts: qcom: sdm845: correct dynamic power coefficients")
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 65032b94b46d..869bdb9bce6e 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -198,7 +198,7 @@ CPU0: cpu@0 {
+>  			reg = <0x0 0x0>;
+>  			enable-method = "psci";
+>  			capacity-dmips-mhz = <611>;
+> -			dynamic-power-coefficient = <290>;
+> +			dynamic-power-coefficient = <154>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			operating-points-v2 = <&cpu0_opp_table>;
+>  			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> @@ -222,7 +222,7 @@ CPU1: cpu@100 {
+>  			reg = <0x0 0x100>;
+>  			enable-method = "psci";
+>  			capacity-dmips-mhz = <611>;
+> -			dynamic-power-coefficient = <290>;
+> +			dynamic-power-coefficient = <154>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			operating-points-v2 = <&cpu0_opp_table>;
+>  			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> @@ -243,7 +243,7 @@ CPU2: cpu@200 {
+>  			reg = <0x0 0x200>;
+>  			enable-method = "psci";
+>  			capacity-dmips-mhz = <611>;
+> -			dynamic-power-coefficient = <290>;
+> +			dynamic-power-coefficient = <154>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			operating-points-v2 = <&cpu0_opp_table>;
+>  			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> @@ -264,7 +264,7 @@ CPU3: cpu@300 {
+>  			reg = <0x0 0x300>;
+>  			enable-method = "psci";
+>  			capacity-dmips-mhz = <611>;
+> -			dynamic-power-coefficient = <290>;
+> +			dynamic-power-coefficient = <154>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			operating-points-v2 = <&cpu0_opp_table>;
+>  			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> -- 
+> 2.34.1
+> 
