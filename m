@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9538A660089
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 13:50:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD47B6600AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 13:56:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233076AbjAFMul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 07:50:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39766 "EHLO
+        id S234734AbjAFM4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 07:56:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232518AbjAFMuk (ORCPT
+        with ESMTP id S234015AbjAFMzb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 07:50:40 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 767AD7459B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 04:50:39 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id z8-20020a05600c220800b003d33b0bda11so3850634wml.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 04:50:39 -0800 (PST)
+        Fri, 6 Jan 2023 07:55:31 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E02CB7A920
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jan 2023 04:54:35 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id d17so1197628wrs.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jan 2023 04:54:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rePk4otgmJsoUZx3wQir/mu8uKDtUT/unn9iCMuDGXc=;
-        b=MqIJJ92YjJFSQvhXLtVY8CkFHRQ13ALDrV/xKqsiSFrxW3Xqh3zr9vjSFz9dtQlu0O
-         vargvSI325gDktqjgCCUqTQvoNQFTolCA9ixi1w+O9pzujBdaK4FZu2+X/wapQAiqc1J
-         vDegVa3jmE3oWMQVaKLQgSYCBLj1KKpxUU65gCkG/C7oKimli2qjdn4vQMpiu2Q5yE5m
-         RDifRiDL6Z+QRTUevhcXVn4vowqHiXGiI/Z8H+16FyUX0cpAYITZpffjxz214WSF0P0Y
-         YzfnelvTityLktxfnTcKBSHFVV0ZJe3WGxJcDFpx1SYlgV/AXu4aSVTw5O7+0pdvqZJi
-         co6Q==
+        bh=0VQTtg9FSwvM20hhEBQ4latfuLMcaI0mRbc2gb+Wsmo=;
+        b=zGZsa8cLWEhtzBevZZussjAm4VHCN2pntlxPMLfsR3UVJPOee021IF6+6gUefIjOI8
+         IFDwpsrLlHuGtmcITRyyTTqXLa9L+CI2xskRTX2kKfbFQlHgHAg0z1bWHRHk8gbeV7HR
+         pV6KrpISoASdQsrrBvwFlS8J5bVPDnIoK6xtWc+0iO4L7X6CJombsXW+Dua/axoA4MJk
+         fxSpo2VD2OTARoCzMKQQ6sISZPjXleM4MS+8+9pqBGBSB/iP1Y9ZUVDjkBdpCGyQebhY
+         pll49HcO5hsd7sLhqj3fWKgx7OOn2bpwls0u8wpIE4rMvGIj1ubCnRZuNGu8PGmjt1dc
+         2J4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rePk4otgmJsoUZx3wQir/mu8uKDtUT/unn9iCMuDGXc=;
-        b=up1otfUELb5bz+H+xBTl8oNs4BNoYN94IokHaKlERFqpUg50jj+q4Don7a34mUqz7e
-         rCyaHx8sxRao2jesoiahKpAxoTkTdETygSUMiIAOY9MoFL4bxoMizGfRX6CLCm/OGAE6
-         9nI3cZoM6H/2HcNG0hiToSrr2hA0LtZ8ZuoXSTWecrdtnymZDytakdS6fVNxf8WHlaHZ
-         Ivm9u761/WfF1kpwxIRFls6Ka4JRHBnym4wxIx767KRPW5XeWKXfVbCQCsSEjiOWmMRf
-         /F9f769UCKM12lP0x+ga6ShCC0uOJWdibJtp+nIwVt9B8Q46I4wJTsVw9vHY5bWf4OFW
-         tdVg==
-X-Gm-Message-State: AFqh2krQkXzQfGOahTDbETx6jpBA/9QvVBKf7L4ZS9dylkQZOznnQaVu
-        WBviw10JpnURJ2pX0AzplNex1w==
-X-Google-Smtp-Source: AMrXdXtyoYVLJQIjlfYxEMk1BpTcEtQndRolLJIQH+LL6HNl3W2EK7y2mrtxK6fpyK1Iu3cAyTteFA==
-X-Received: by 2002:a05:600c:3495:b0:3c6:e62e:2e74 with SMTP id a21-20020a05600c349500b003c6e62e2e74mr39719299wmq.15.1673009438067;
-        Fri, 06 Jan 2023 04:50:38 -0800 (PST)
+        bh=0VQTtg9FSwvM20hhEBQ4latfuLMcaI0mRbc2gb+Wsmo=;
+        b=09hN/r+Drz4EEzXCanniRXE4DmCzs0UZ+8oC9f+oUWzVcRGMwd1vsR6bpeRLHh6NFe
+         klNIHh+Jak4JV2ApWXq5T9NakCUjSYJAm819xHVxubGLhfOrMOrRo6beUfqlV4sc2DQL
+         hP4IIE+CjYSRs8UMrFrWzJ0GlQNyyJx5aV8/yMoItDr/JBDWnWR46Ks8B+2jmmMKeljs
+         xwOMXl9GqfY5FRW4DWJmJyglb5+B6lstE4HGvTyTN0b3HUyA1kIKD2WrThkzpyvcbPoS
+         O2b34XBzl+kh1amdp/MQ8nzg7KXbC/okeajniGzIV75+F5wrlEwKJ+h70KcJzrocpuNE
+         PBgw==
+X-Gm-Message-State: AFqh2ko5Kdh31o0f8913ehtsXof5VuiQjPTkV2/DeERO6agsGH0wvSV8
+        EdCyQteN9krGcJNnCKLqmNRloA==
+X-Google-Smtp-Source: AMrXdXsdMCQTT70zgRFV/Vn26wT2YcgpPEAUPM7w5hQReZi/R7gT2YVbZF36R1ACF5NF6yt+Ntl4wg==
+X-Received: by 2002:a5d:525a:0:b0:287:6400:1f9c with SMTP id k26-20020a5d525a000000b0028764001f9cmr21089842wrc.42.1673009652170;
+        Fri, 06 Jan 2023 04:54:12 -0800 (PST)
 Received: from [192.168.1.102] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id u16-20020a05600c00d000b003cf4eac8e80sm1880432wmm.23.2023.01.06.04.50.36
+        by smtp.gmail.com with ESMTPSA id m8-20020a5d6a08000000b002a1ae285bfasm1078634wru.77.2023.01.06.04.54.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 04:50:37 -0800 (PST)
-Message-ID: <ed1b6934-a836-65ef-86a4-18706345ec29@linaro.org>
-Date:   Fri, 6 Jan 2023 13:50:35 +0100
+        Fri, 06 Jan 2023 04:54:11 -0800 (PST)
+Message-ID: <18bde666-db4b-95b9-7ce1-a012ed33bf04@linaro.org>
+Date:   Fri, 6 Jan 2023 13:54:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 03/12] dt-bindings: clock: qcom,mmcc: define
- clocks/clock-names for APQ8084
+Subject: Re: [PATCH 1/2] dt-bindings: display: panel: document the Visionox
+ VTDR6130 AMOLED DSI Panel bindings
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230105134133.1550618-1-dmitry.baryshkov@linaro.org>
- <20230105134133.1550618-4-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-0-9b746b858378@linaro.org>
+ <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-1-9b746b858378@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230105134133.1550618-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-vtdr6130-panel-v1-1-9b746b858378@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,15 +82,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 14:41, Dmitry Baryshkov wrote:
-> Define clock/clock-names properties of the MMCC device node to be used
-> on APQ8084 platform.
+On 03/01/2023 15:22, Neil Armstrong wrote:
+> Document the 1080x2400 Visionox VTDR6130 AMOLED DSI Panel bindings.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
+>  .../bindings/display/panel/visionox,vtdr6130.yaml  | 53 ++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
