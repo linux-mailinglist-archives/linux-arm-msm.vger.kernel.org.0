@@ -2,95 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 488E865FFC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 12:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD11A660032
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 13:26:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232518AbjAFLqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 06:46:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
+        id S231297AbjAFM0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 07:26:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232369AbjAFLp6 (ORCPT
+        with ESMTP id S229703AbjAFM0R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 06:45:58 -0500
+        Fri, 6 Jan 2023 07:26:17 -0500
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B351572895;
-        Fri,  6 Jan 2023 03:45:57 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A8AE8FCF;
+        Fri,  6 Jan 2023 04:26:12 -0800 (PST)
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 5029C41902;
-        Fri,  6 Jan 2023 16:45:52 +0500 (+05)
+        by box.trvn.ru (Postfix) with ESMTPSA id E4CB441902;
+        Fri,  6 Jan 2023 17:26:06 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1673005553; bh=Vh6xmQnYY5DuG/ni1O6gS2g/gbn0t6QBeTipIKy2lVg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ZOE37t5t/swQpUCu1ONl9BUDC21rjrpyTosEmBRYLJQIaZzzZk1hlwFq9DkAHrOhA
-         ZTFxd+zg3f3WoxaN+dl1nSHLbm+Fq1zNEYEr/De66LHHtw/CI+hXLOQzy5JYw2eIJQ
-         F2CnNwTF6MF1GfhyIak5b8FB4XJf43UfCGFlG4qc4t2eFOvPGdx/urS1Xg5nTdtCQQ
-         4wpCYpzz0f8Md2u431vBGNIuRZnquiNv1D4zClDZukImS/RYzO7F8U9JNOIM9olyhr
-         4JtJp2oLl04nOdS4fQXC96KNyRItc1ReFuZvCOhIk7zsH+ed3EQRljLxYR9g6vB7r9
-         0QjXij3r1fxkA==
-MIME-Version: 1.0
-Date:   Fri, 06 Jan 2023 16:45:50 +0500
+        t=1673007967; bh=86xiYSv+MPrFMXtYcOiY0Rh3lvW73O7CDGUCbBq3NfQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DVu3qIX34r8h8IsJhPeWHrynjbynNhMspWINBedML/lu6VZegi1frr4CZI0pOZmyJ
+         KhfyAGE+XPcuJiemfby48FyveDS+TuTt2o4UbshnC56r42rM/ChKVZmDchsmAZNgOK
+         porSTUN7bLSsmTtRrw4RhCg60Tc7giDG4QoyR/TwguFNFzSyfRxzK/ygNzQ9g3SHB1
+         B/ihtKVQpvT0ND9r0inD3gCv1m2dyX05OqfVYsi5YsDaSbAYxWjFdmLb5J+A2lCHiO
+         5PDWrUlT5DhkkbOxoMceBmDAmhey/o2claMXeMLUIBd/BNM7rwGVfyNmIKSfFlH40h
+         Kb0sQ1T3lWOeA==
 From:   Nikita Travkin <nikita@trvn.ru>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Siddharth Manthan <siddharth.manthan@gmail.com>,
         Jasper Korten <jja2000@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 4/8] arm64: dts: qcom: msm8916-samsung-gt510: Add Vibrator
-In-Reply-To: <2f9a150e-11bc-a963-f9b5-75b4ba3206bf@linaro.org>
-References: <20230105123240.1089375-1-nikita@trvn.ru>
- <20230105123240.1089375-5-nikita@trvn.ru>
- <2f9a150e-11bc-a963-f9b5-75b4ba3206bf@linaro.org>
-Message-ID: <0b7e6201fbabee8ee9b48bf649e8d616@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v2 0/3] Add support for Samsung Galaxy tab A (2015) tablets
+Date:   Fri,  6 Jan 2023 17:25:29 +0500
+Message-Id: <20230106122532.3310265-1-nikita@trvn.ru>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_ANY_PILL_PRICE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof Kozlowski писал(а) 06.01.2023 16:26:
-> On 05/01/2023 13:32, Nikita Travkin wrote:
->> gt510 uses a PWM controllable vibrator, that uses a general purpose
->> clock output for it's control. Set up the pwm, supply and the vibrator.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
->>  .../boot/dts/qcom/msm8916-samsung-gt510.dts   | 47 +++++++++++++++++++
->>  1 file changed, 47 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
->> index e9916199e5a3..44d527b3f1f6 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
->> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
->> @@ -8,4 +8,51 @@ / {
->>  	model = "Samsung Galaxy Tab A 9.7 (2015)";
->>  	compatible = "samsung,gt510", "qcom,msm8916";
->>  	chassis-type = "tablet";
->> +
-> 
-> Squash. One patch per adding GT510, one for GT58.
-> 
+This series introduces basic support for two Galaxy Tab A
+tablets: 8 and 10 inch variants. They share most of the
+hardware and are mainly dffernet by the display.
 
-When submitting the series, I decided to not squash the commits to
-preserve the authors for the changes as they were made.
+With this series both tablets gain support for things like
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART
+- Regulators
+- WCNSS (WiFi/BT)
+- GPIO keys
+- Fuel gauge
+- Touchscreen
+- Accelerometer
 
-I will send a v2, containing two commits for gt58 and gt510 with
-the dtsi changes as part of the first one.
+In fact, with some additional patches like display and
+modem support, that are not included as part of this
+series, these tablets can actually reach one's expectations
+of what a "normal" tablet should be able to do.
 
-Regards,
-Nikita
+Changes in v2:
+- Squashed the commits.
 
-> Best regards,
-> Krzysztof
+Jasper Korten (1):
+  arm64: dts: qcom: Add device tree for Samsung Galaxy Tab A 9.7 (2015)
+
+Nikita Travkin (1):
+  dt-bindings: qcom: Document samsung,gt58 and gt510
+
+Siddharth Manthan (1):
+  arm64: dts: qcom: Add device tree for Samsung Galaxy Tab A 8.0 (2015)
+
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../dts/qcom/msm8916-samsung-gt5-common.dtsi  | 300 ++++++++++++++++++
+ .../boot/dts/qcom/msm8916-samsung-gt510.dts   | 116 +++++++
+ .../boot/dts/qcom/msm8916-samsung-gt58.dts    |  78 +++++
+ 5 files changed, 498 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts
+
+-- 
+2.38.1
+
