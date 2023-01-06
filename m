@@ -2,125 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADB1165FC4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 08:56:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A6B765FC68
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jan 2023 09:08:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231245AbjAFH4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 02:56:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34506 "EHLO
+        id S229628AbjAFIIo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 03:08:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjAFH4y (ORCPT
+        with ESMTP id S231665AbjAFIIn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 02:56:54 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE6C7814E;
-        Thu,  5 Jan 2023 23:56:53 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3067p6So015569;
-        Fri, 6 Jan 2023 07:56:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=S99CK2uqgldob/xpdOz0tRfl+mlVpPSOv5ZRtV6QhcU=;
- b=GYCEmJT0l2ouW2sh5R4bTypNzCrVTLlqjV4w5Jj2Mx2NrCEvlDppWf8YCMPDsxOiEmmK
- 6lrcRlEv6yZ2P9Q6a10b4A+y8rxX7JvvEg5udZ8sqsDxx9Mb54QWo7zvFQETn845klN+
- ufD87NsGVm5Cf9ZeokMbwM2PPb3kFG02BcGSsi41Awtu9QtZAiPoKg9/KljsnbK79wOL
- DBsIDLnDuv1aliJAmLdqY23XzEOOMLJvLCyuzgp3eG3BaMgYEKDgS1dvyaVbF3ajXtAa
- hB2IedgBHWMXPtSfQmU31O/FrDq+8LApLx21KBeCrJLbADLB5aymTBphGw9yIBlV4Hvc gg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mx5b0h6v4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Jan 2023 07:56:01 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3067u0i8001996
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Jan 2023 07:56:00 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 5 Jan 2023 23:50:39 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, <mathieu.poirier@linaro.org>,
-        <corbet@lwn.net>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] dt-bindings: remoteproc: qcom: sc7280-adsp-pil: Add reg-names and power-domain-names
-Date:   Fri, 6 Jan 2023 13:20:25 +0530
-Message-ID: <1672991425-898-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Fri, 6 Jan 2023 03:08:43 -0500
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BACF034D6C;
+        Fri,  6 Jan 2023 00:08:42 -0800 (PST)
+Date:   Fri, 06 Jan 2023 08:08:29 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1672992520; x=1673251720;
+        bh=6Z4CZfzg9jsvKcLkDAU0UNbrWpC5ZjmGFpDg3aGRu7w=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=ypc6FOzOLAYhby59E1bymMZUV96BiwNhgxBjGg/+KsZAuqMwZqtvqqeA2ZpkxDsWp
+         pnK3vHFbe/XWJSz4nyEf0Kun3Rj+6I9XIICh5rZCQtjx4xJcxEziwN83KrWhDIHixo
+         WJbrfRRbxmmy8l1XdiRafguO6fAv4PzQLeP7lvVhiAHoK8rDoJUGKk4Qz9q7QyllVJ
+         tPYkg2zQzfbZPTV/RKWhzHbDxunqHFk+0TjpI759SsjnNNFz0QORWe35NVpmRJX3EZ
+         ZsAdcQqDVk8DdXBQBBuk8qNirF0q2Hp670eXRVx/JmNH/yRW8KfQffXgv1b1zVb/AU
+         v3Yuvz5ubJdRg==
+To:     linux-kernel@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stanislav Jakubek <stano.jakubek@gmail.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Jagan Teki <jagan@edgeble.ai>,
+        Chris Morgan <macromorgan@hotmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v5 0/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add initial device tree
+Message-ID: <20230106080644.255940-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ne0BeOfA8y4RylNLcg-2YdKJ55M-QIk7
-X-Proofpoint-GUID: ne0BeOfA8y4RylNLcg-2YdKJ55M-QIk7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-06_03,2023-01-05_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- mlxlogscore=999 impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301060061
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reg-names and power-domain-names for remoteproc ADSP pheripheral
-loader. This is to make compatible with remoteproc ADSP PIL driver.
-Also change power domain from LCX to CX.
+v5: Reword the flash LEDs patch.
+v4: Fix missing Makefile entry in v3.
+v3: Sort properties in l11 and nodes in touchscreen pinctrl.
+v2: Set property status =3D "okay"; as the last property.
+Reword the bindings patch.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes Since v1:
-    -- Modify subject line to SoC specific.
+GPLUS FL8005A is a tablet using the MSM8916 SoC released in 2015.
 
- .../devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Add a device tree for with initial support for:
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-index 94ca7a0..b5bee2c 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-@@ -23,6 +23,11 @@ properties:
-       - description: qdsp6ss register
-       - description: efuse q6ss register
- 
-+  reg-names:
-+    items:
-+      - const: qdsp6ss_base
-+      - const: lpass_efuse
-+
-   iommus:
-     items:
-       - description: Phandle to apps_smmu node with sid mask
-@@ -57,7 +62,11 @@ properties:
- 
-   power-domains:
-     items:
--      - description: LCX power domain
-+      - description: CX power domain
-+
-+  power-domain-names:
-+    items:
-+      - const: cx
- 
-   resets:
-     items:
--- 
-2.7.4
+- GPIO keys
+- GPIO LEDs
+- pm8916-vibrator
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART
+- WCNSS (WiFi/BT)
+- Regulators
+- Focaltech FT5402 touchscreen
+- Qualcomm GPIO flash LEDs
 
