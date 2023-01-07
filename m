@@ -2,203 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E86B660B17
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 01:52:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15275660DB3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 11:20:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbjAGAwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 19:52:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53376 "EHLO
+        id S229939AbjAGKUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Jan 2023 05:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbjAGAwO (ORCPT
+        with ESMTP id S229608AbjAGKUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 19:52:14 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4A138A;
-        Fri,  6 Jan 2023 16:52:13 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3070pNWI021772;
-        Sat, 7 Jan 2023 00:51:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PcCTzQLOna79iKhl3SfZY+DvvqfN7lJVlW4D5wl0maY=;
- b=JeM6/+1ngbSi50nsDLzRU7/lFCShKAeAJ30E2Z41AyUxovn3aavxcTTN6TVOVmKBXy0s
- hP3bAg1/8GAiI11aaV+ozFWmu6uE7ATFyk/NHNj/WmvsufRue0ltIy9MXNP2h3hqg/3/
- LC3xDWIZ5JKDV+DgsQEMWD2qDlJHIoJdK9QeuJS4hz1Vdmp1Lu4f79UYB3fvhpJ2kx/e
- kcf4kW7LufgvupBuOm4a4HbpIs8sS1XX+85RtU4oOLg2pRE3fYNaurZJsMKzRGBkmDR9
- jleMMNRoIhCAn5Byjmpib5e06fveVWo36P/V01XhN4qE6nR71SzAUi5y2q6lo3n8oYuk Jg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mx9jfjn0h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 07 Jan 2023 00:51:23 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3070pMNF023141
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 7 Jan 2023 00:51:22 GMT
-Received: from [10.110.74.54] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 6 Jan 2023
- 16:51:21 -0800
-Message-ID: <ed3d16a2-0320-596f-4091-ceef2d11fca9@quicinc.com>
-Date:   Fri, 6 Jan 2023 16:51:21 -0800
+        Sat, 7 Jan 2023 05:20:39 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6F682F78
+        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 02:20:36 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id m6so5461996lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 02:20:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j5DrSJVhwW7xN52teNHHpubxjnBjClsyPzyDg7+uVys=;
+        b=D2GBHDxJ2YBplJR9VAolgv/WYjkCdwjwR7ZCzbCVvitxD8DdU2EZv5Tj5HZbQqv6qG
+         VtCUQgnF8GJnR+jTPoCFCO/Cjh0G/bcsgF6UAdXQi7NmfZtf99gAVGNLOAIXlZXK8xua
+         tlYPvo0eWe2jh1VQdfLEuBuX2bzpv/QJpjIrqTQr+pos3qkXiAf3m9728CANMS+jH0wv
+         ygzs0K52pR2NswH8n/jNgLGOlVGfIhxgYbKFIO7AQ6K828YpiZ6anIue7i8HOMUTpwAS
+         KKX/zSVKcALvwOSmQrJ2UXOS4F93Wand4l1ZZdk+RCOINgqiwhq8o3cIOXeVqILy75f7
+         +MBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j5DrSJVhwW7xN52teNHHpubxjnBjClsyPzyDg7+uVys=;
+        b=TfQg3aM54ZKqaX2AGCKF4hqvvdWYvRChcwCsahI+mxCaoxbWPJR+jwebL1jH2lUeUb
+         TiWJgU2TxY+YwUtxr9yUTMxuzYM9kaXghDJ2mPRPs30P0y6t2ttHFNnPVzRc8gv18lIV
+         Fk2oGGT9ao6nUKFVI6fRQhb+EQR8BbRHE8ABHlkAQMpIp2QJhXoG5rGpH9WtVWy/Vc1p
+         vRPEXa4+m1YfcuXHBydohFji7jzhqeh/iyBUuJ3fP4piWOieI02fMPld/PLGJvJOA7d8
+         AemfJEyv2yMM8s99R/bVLxol0J6gN89RoSCUauUDx9W01NnaGA4UmWZn8Z6dcl+3OEz/
+         Belw==
+X-Gm-Message-State: AFqh2kozGqiMqV2W702xll24gI2drdUkpVGzq1//R/QuF5XKNT7Fr/te
+        jjB8tAnqFAt1aMXPRV8woT0TpA==
+X-Google-Smtp-Source: AMrXdXv+dxf/DElvVyTAVMFntR1ULobGPsDCOzmMEVbwpWA1cLwfTCEUb3Lal3vhxH2lv+0WCWxF3w==
+X-Received: by 2002:a05:6512:4013:b0:4a4:8044:9b8 with SMTP id br19-20020a056512401300b004a4804409b8mr17695688lfb.9.1673086834887;
+        Sat, 07 Jan 2023 02:20:34 -0800 (PST)
+Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
+        by smtp.gmail.com with ESMTPSA id 12-20020ac25f0c000000b004cb3aced3f9sm525041lfq.226.2023.01.07.02.20.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 Jan 2023 02:20:34 -0800 (PST)
+Message-ID: <ce0e8a89-8765-e986-6128-2b12287826df@linaro.org>
+Date:   Sat, 7 Jan 2023 11:20:32 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 02/14] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH net v2] net: ipa: correct IPA v4.7 IMEM offset
 Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <agross@kernel.org>
-CC:     <devicetree@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-3-quic_wcheng@quicinc.com>
- <5babccd6-9796-7613-cf82-cc859f338448@linux.intel.com>
- <6e13521a-84bf-f8a6-e8cc-5b90ff4bd675@quicinc.com>
- <65820e0e-be8b-c574-98d0-a2e60ee4be76@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <65820e0e-be8b-c574-98d0-a2e60ee4be76@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2qDcc9MT_mr9ckvvQHeLaPh9VIMfXPaR
-X-Proofpoint-ORIG-GUID: 2qDcc9MT_mr9ckvvQHeLaPh9VIMfXPaR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-06_14,2023-01-06_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 phishscore=0 spamscore=0 adultscore=0 suspectscore=0
- mlxlogscore=999 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301070005
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Alex Elder <elder@linaro.org>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     luca.weiss@fairphone.com, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230106132502.3307220-1-elder@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230106132502.3307220-1-elder@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
 
-On 1/6/2023 8:09 AM, Pierre-Louis Bossart wrote:
-> 
->>>> The QC ADSP is able to support USB playback and capture, so that the
->>>> main application processor can be placed into lower CPU power modes.
->>>> This
->>>> adds the required AFE port configurations and port start command to
->>>> start
->>>> an audio session.
->>>
->>> It would be good to clarify what sort of endpoints can be supported. I
->>> presume the SOF-synchronous case is handled, but how would you deal with
->>> async endpoints with feedback (be it explicit or implicit)?
->>>
->>
->> Sure, both types of feedback endpoints are expected to be supported by
->> the audio DSP, as well as sync eps.  We have the logic there to modify
->> the audio sample size accordingly.
-> 
-> did you mean modify samples per USB frame (or uframe), so as to change
-> the pace at which data is transferred? If yes it'd be the same for Intel.
-> 
 
-Yes, sorry for not being clear.  Your understanding is correct.
-
->>>>      static const struct snd_soc_dapm_route q6afe_dapm_routes[] = {
->>>> +    {"USB Playback", NULL, "USB_RX"},
->>>
->>> ... but here RX means playback?
->>>
->>> I am not sure I get the convention on directions and what is actually
->>> supported?
->>>
->>
->> The notation is based on the direction of which the audio data is
->> sourced or pushed on to the DSP.  So in playback, the DSP is receiving
->> audio data to send, and capture, it is transmitting audio data received.
->> (although we do not support capture yet)
+On 6.01.2023 14:25, Alex Elder wrote:
+> Commit b310de784bacd ("net: ipa: add IPA v4.7 support") was merged
+> despite an unresolved comment made by Konrad Dybcio.  Konrad
+> observed that the IMEM region specified for IPA v4.7 did not match
+> that used downstream for the SM7225 SoC.  In "lagoon.dtsi" present
+> in a Sony Xperia source tree, a ipa_smmu_ap node was defined with a
+> "qcom,additional-mapping" property that defined the IPA IMEM area
+> starting at offset 0x146a8000 (not 0x146a9000 that was committed).
 > 
-> ok, it'd be good to add a comment on this convention. Usually RX/TX is
-> bus-centric.
+> The IPA v4.7 target system used for testing uses the SM7225 SoC, so
+> we'll adhere what the downstream code specifies is the address of
+> the IMEM region used for IPA.
 > 
+> Link: https://lore.kernel.org/linux-arm-msm/20221208211529.757669-1-elder@linaro.org
+> Fixes: b310de784bac ("net: ipa: add IPA v4.7 support")
+> Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Sure, will do.
-
->>
->>>> +struct afe_param_id_usb_cfg {
->>>> +/* Minor version used for tracking USB audio device configuration.
->>>> + * Supported values: AFE_API_MINOR_VERSION_USB_AUDIO_CONFIG
->>>> + */
->>>> +    u32                  cfg_minor_version;
->>>> +/* Sampling rate of the port.
->>>> + * Supported values:
->>>> + * - AFE_PORT_SAMPLE_RATE_8K
->>>> + * - AFE_PORT_SAMPLE_RATE_11025
->>>> + * - AFE_PORT_SAMPLE_RATE_12K
->>>> + * - AFE_PORT_SAMPLE_RATE_16K
->>>> + * - AFE_PORT_SAMPLE_RATE_22050
->>>> + * - AFE_PORT_SAMPLE_RATE_24K
->>>> + * - AFE_PORT_SAMPLE_RATE_32K
->>>> + * - AFE_PORT_SAMPLE_RATE_44P1K
->>>> + * - AFE_PORT_SAMPLE_RATE_48K
->>>> + * - AFE_PORT_SAMPLE_RATE_96K
->>>> + * - AFE_PORT_SAMPLE_RATE_192K
->>>> + */
->>>> +    u32                  sample_rate;
->>>> +/* Bit width of the sample.
->>>> + * Supported values: 16, 24
->>>> + */
->>>> +    u16                  bit_width;
->>>> +/* Number of channels.
->>>> + * Supported values: 1 and 2
->>>
->>> that aligns with my feedback on the cover letter, if you connect a
->>> device that can support from than 2 channels should the DSP even expose
->>> this DSP-optimized path?
->>>
->>
->> My assumption is that I programmed the DAIs w/ PCM formats supported by
->> the DSP, so I think the ASoC core should not allow userspace to choose
->> that path if the hw params don't fit/match.
+Konrad
+> v2: Based on net/master this time...
 > 
-> Right, but the point I was trying to make is that if the device can do
-> more, why create this DSP path at all?
+>  drivers/net/ipa/data/ipa_data-v4.7.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-Yeah, I think this brings me back to needing to understand a bit more of 
-how the userspace chooses which PCM device to use.  At least for our 
-current use cases, userspace would always route through the offload 
-path, regardless of if the device can do more.  It will just select a 
-lower audio profile if so.
-
->>
->>> Oh and I forgot, what happens if there are multiple audio devices
->>> connected, can the DSP deal with all of them? If not, how is this
->>> handled?
->>>
->>
->> This is one topic that we were pretty open ended on.  At least on our
->> implementation, only one audio device can be supported at a time.  We
->> choose the latest device that was plugged in or discovered by the USB
->> SND class driver.
-> 
-> Similar case for Intel. I have to revisit this, I don't recall the details.
-> 
-
-Got it.
-
-Thanks
-Wesley Cheng
+> diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
+> index 7552c400961eb..b83390c486158 100644
+> --- a/drivers/net/ipa/data/ipa_data-v4.7.c
+> +++ b/drivers/net/ipa/data/ipa_data-v4.7.c
+> @@ -357,7 +357,7 @@ static const struct ipa_mem ipa_mem_local_data[] = {
+>  static const struct ipa_mem_data ipa_mem_data = {
+>  	.local_count	= ARRAY_SIZE(ipa_mem_local_data),
+>  	.local		= ipa_mem_local_data,
+> -	.imem_addr	= 0x146a9000,
+> +	.imem_addr	= 0x146a8000,
+>  	.imem_size	= 0x00002000,
+>  	.smem_id	= 497,
+>  	.smem_size	= 0x00009000,
