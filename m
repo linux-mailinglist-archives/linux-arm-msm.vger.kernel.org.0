@@ -2,120 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E70A660A7B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 00:57:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6E3660A91
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 01:08:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236337AbjAFX5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Jan 2023 18:57:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56664 "EHLO
+        id S232821AbjAGAIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Jan 2023 19:08:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236232AbjAFX5g (ORCPT
+        with ESMTP id S235746AbjAGAIY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Jan 2023 18:57:36 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0EA7CDFF;
-        Fri,  6 Jan 2023 15:57:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1673049454; x=1704585454;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=3d1DO0cDsSSFGxEy7xYujqdO/RXqj/Yc3KB9N5fpqDU=;
-  b=OmDQz8Ojbhii214FsWYPvwR8Wgq2GiiwUv6z8FnA1Z9BpUbf/VdumxbU
-   2gqlreDE8fN1+svoiclvs7ovo8AMSDbC3Ab89JEj1uckulFtdLKBgdEtv
-   H53pr0GoncpJTkB/DB7Bqpo1YnYJIFFU8veqFQG2c0q54PPQJp2fkQXWg
-   6IdMfYCJcK89SXhd0qg4c2EtHWMnnSQELc10SvkscCl2TOQZlGjb7ct0N
-   gjZUUeOU85wJKksaTEL3FghiO65ylbxYEpc8jFX3NS314G/e5c5neUKcc
-   p/imfVDFkWWIsyCCfTwdkSGykL9FoFopKOLAV/5SrzAnom6ZjNj+WlIzI
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10582"; a="387047041"
-X-IronPort-AV: E=Sophos;i="5.96,306,1665471600"; 
-   d="scan'208";a="387047041"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 15:57:34 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10582"; a="984817951"
-X-IronPort-AV: E=Sophos;i="5.96,306,1665471600"; 
-   d="scan'208";a="984817951"
-Received: from apbaezbo-mobl2.amr.corp.intel.com (HELO [10.212.60.153]) ([10.212.60.153])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2023 15:57:32 -0800
-Message-ID: <654077f4-2ae2-3457-b777-9eb3b816c6ba@linux.intel.com>
-Date:   Fri, 6 Jan 2023 10:16:09 -0600
+        Fri, 6 Jan 2023 19:08:24 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777243DBF8;
+        Fri,  6 Jan 2023 16:08:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id CFFBCCE1EBE;
+        Sat,  7 Jan 2023 00:08:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B4FC433EF;
+        Sat,  7 Jan 2023 00:08:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673050100;
+        bh=8u3Qc0RIaieWL44MYlHmNd9QLF5reVDmKXzh37Fj2lA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=lfix8YVR0kz4M/xfyWPZ0tinN9THWryewjoNtPtR4541XmbwbHGdctPOsJySb61v0
+         RXA/9R/G+Pw5R+G0d6o23UAl2H5n7yny64omZv2evtP+wTwfX1CHdxEyjx9hFQc3uP
+         YE6kdCWDsVPCIsPNTRXlBFgV6GGikvgMC3k9jY39/op/5h54kym3v/h1QHEIl1b/X+
+         mZY4nZWHUwiLw3qm2nClCpLBB8PusprQ4GfRtCAHzar0gnwjYIkRcTSRjBHGibkAta
+         eJEJjRFyYLPYtN+emoj0jOV0P14wuzBidAPpEYWJVKheDoPj59gqqUUt7lbQvm1m3h
+         9NL7068Z8gK/g==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     linux-doc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        bagasdotme@gmail.com
+Cc:     robh+dt@kernel.org, quic_rjendra@quicinc.com,
+        quic_sibis@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
+        elder@linaro.org, quic_saipraka@quicinc.com, agross@kernel.org,
+        konrad.dybcio@somainline.org, quic_schowdhu@quicinc.com,
+        vkoul@kernel.org
+Subject: Re: [PATCH 0/2] soc: qcom: dcc: Documentation improv
+Date:   Fri,  6 Jan 2023 18:08:17 -0600
+Message-Id: <167305009215.1816299.16435625611756424987.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20221230135030.17002-1-bagasdotme@gmail.com>
+References: <20221230135030.17002-1-bagasdotme@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.4.2
-Subject: Re: [RFC PATCH 03/14] ASoC: qcom: Add USB backend ASoC driver for Q6
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org
-Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-4-quic_wcheng@quicinc.com>
- <e29060b1-df65-c0d1-5777-023879a5863e@linux.intel.com>
- <0f903c49-a989-14a6-bac1-c4cae21839eb@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <0f903c49-a989-14a6-bac1-c4cae21839eb@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/5/23 19:05, Wesley Cheng wrote:
-> Hi Pierre,
+On Fri, 30 Dec 2022 20:50:29 +0700, Bagas Sanjaya wrote:
+> The DCC (Data Capture and Compare) patchset was sent and partially
+> merged [1] without Cc'ing linux-doc list for documentation review.
+> kernel test robot [2] noted htmldocs warnings as a result, which is fixed
+> in [1/2]. Later, when inspecting the sysfs description, the wording
+> could have been improved ([2/2]). So here is the improv series.
 > 
-> On 1/4/2023 3:41 PM, Pierre-Louis Bossart wrote:
->>
->>> +int q6usb_alsa_connection_cb(struct snd_soc_usb *usb, int card_idx,
->>> +            int connected)
->>> +{
->>> +    struct snd_soc_dapm_context *dapm;
->>> +    struct q6usb_port_data *data;
->>> +
->>> +    if (!usb->component)
->>> +        return 0;
->>> +
->>> +    dapm = snd_soc_component_get_dapm(usb->component);
->>> +    data = dev_get_drvdata(usb->component->dev);
->>> +
->>> +    if (connected) {
->>> +        snd_soc_dapm_enable_pin(dapm, "USB_RX_BE");
->>> +        /* We only track the latest USB headset plugged in */
->>
->> that answers to my earlier question on how to deal with multiple
->> devices, but is this a desirable policy? This could lead to a lot of
->> confusion. If there are restrictions to a single device, then it might
->> be more interesting for userspace or the user to indicate which USB
->> device gets to use USB offload and all others use legacy.
->>
+> [1]: https://lore.kernel.org/lkml/cover.1672148732.git.quic_schowdhu@quicinc.com/
+> [2]: https://lore.kernel.org/linux-doc/202212300426.eMLsZsvA-lkp@intel.com/
 > 
-> Yeah, as mentioned its still pretty open ended.  I think from the
-> feedback received from Mark/Takashi, this was a viable option for now.
-> Would you happen to have any insight/input on how the userspace can pass
-> down that selection to the ASoC framework?  Maybe some kind of PCM IOCTL
-> call?
+> [...]
 
-I don't have a turn-key solution either :-)
-We'd need userspace to make one device as 'preferred' or 'optimized' and
-give it a priority somehow. It can't be a PCM IOCTL, it has to be at the
-device level.
+Applied, thanks!
 
-It's really a second-level optimization that can be parked for now, the
-bulk of the work is really the interaction between USB audio and ASoC
-stacks, we should probably focus on that BIG topic with a design that
-can be shared across implementations.
+[1/2] soc: qcom: dcc: Fix examples list on /sys/kernel/debug/dcc/.../[list-number]/config documentation
+      commit: dc2f5a499de420001813562ddbc9d51ece295978
+[2/2] soc: qcom: dcc: rewrite description of dcc sysfs files
+      commit: 13763fb955a0043bd9b6fb1e237f4fd8fe8b3c75
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
