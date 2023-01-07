@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BC4A660E89
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 13:06:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58B43660E90
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 13:08:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232481AbjAGMGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Jan 2023 07:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39466 "EHLO
+        id S230102AbjAGMIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Jan 2023 07:08:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232563AbjAGMGk (ORCPT
+        with ESMTP id S231137AbjAGMIn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Jan 2023 07:06:40 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BE3D5C93E
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 04:06:36 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id y25so5699526lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 04:06:36 -0800 (PST)
+        Sat, 7 Jan 2023 07:08:43 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38815C1F0
+        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 04:08:42 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id bq39so5765526lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 04:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=szWiuzwy1ILS/TFdcNSbENvUjQTaXD04RLB3PoEYe0U=;
-        b=fNTkbXHjgiesE8YD9zKl+8BIvoAhtL3TosRlBcqxSLur+dEGM8fkm2BwePckMFCIB6
-         cD7YIlkBUaB9z6swTC1Xq6E1UZa/pTSjSzJiMktiEXafyySsQLdU/qfYX5aatQnBGf5l
-         B/QbfTOKWeEdw2Kn0iURpqUafL9dHEu/O6cV0eQwhbmqhiGCVVwGHk1zBqX5iSkgaxZg
-         LuvJrHZ5PFfPtUNub62e+DUVzQNMD564Pf7cUQHSD7iF6I2u49tQWTZ3P6fKgq0l5+wg
-         FkAeDxG/ZHf8cFWmoBuZPR6dL+c5+IuTgD8Oo1CPVPCo70MPQbixG+ShkuVY2kRbonuA
-         oWEA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vTceZJU+jlw4wCFKinH2H3cM1GRd+uz51sDHaYzOEgs=;
+        b=Y22T6VVcEpesOBF0FqcuOpa9AoYpws0EbO3NHp5LFWxTDotbWCUDQRV2M5e+mpTNqa
+         C8+zD9b/s29SpA9VMZkILpSmMBAwuvl7apxV48gFjsowdeTfp5IjBN7ruMsHb1bsBl/V
+         FUvXXDGgrK8VmhOT6bp9IUUJ0h2XIFJ1+VM3JiT7Qb8fa4gJJCE7b9EyyesZv15xjxWV
+         scjZ9dGGMapY4ZnfvQzoiPhYIWb0+cJ7ad342qCEk8VgAOlp1HN7j+Ng+sUQhwMAGdLA
+         7YwTE9Hp72L577p8QOv0fTiagMS0mZNyeA5F/MQrkja8F5V3lcz3SfSZPZiT9WuTmbxi
+         9C8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=szWiuzwy1ILS/TFdcNSbENvUjQTaXD04RLB3PoEYe0U=;
-        b=ibZvddrJjCf4y7NiK9R0iSt7DAsisWyvljJfejng44C2DoTmzsuZV549MELRsNDBhm
-         FiZA3E9RuLglQIdTH7f+gWEC0kKd8Sp/q2Hw/NktQH8JNL116vm5ib08xQn2xHtKqDx4
-         OkEwtebPYB5bKhtRdop96pLNNg/OgYTBz3AnQPXUJLNTWFQ1nW1mI4LNuy5okwm1xFk5
-         7/modrWI7RIPoj0x1B3QW2aNAtw5ps+HZT2cJiH9PpCsjdABeGuOgfyUcAGfnoViQfzT
-         vpl56gO7JCJ8WGBR8kbiPsh7TeHu1ACJ0WIAtPRhOJ4ZZJVTVBaZnbSJPqErTtSuearf
-         qpnA==
-X-Gm-Message-State: AFqh2krEmvQ6s9UuHUXNXgVXEGSHCJJJ9noSzPLfolm2VfspP3zLXTOF
-        0YptMdzCQAO92p/pQAToNaGD7QzAjX7BUNeD
-X-Google-Smtp-Source: AMrXdXui89qwgyefRu4tANL7SHcZteDnJ0Drd+aEze6Zg+iJLoqaWoyWGKQX/n9RONOYMQvXVOGBew==
-X-Received: by 2002:a05:6512:1523:b0:4a4:68b7:deb8 with SMTP id bq35-20020a056512152300b004a468b7deb8mr20059879lfb.20.1673093195000;
-        Sat, 07 Jan 2023 04:06:35 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vTceZJU+jlw4wCFKinH2H3cM1GRd+uz51sDHaYzOEgs=;
+        b=OjXYQw/kxpckNj06OwFgyb+QLuE4OYj41w/gw8+wvn4+Phf0Sn4paDBs0o2jsxjxRj
+         J/+lWMBHaZkkdW0tIR6V0f/bq92t0m6yiQxYUKnylCjXhIRiIlcXEYMOaF669AgDqo5X
+         5bkUGcJCGga/GJ+eThVSGRP1YcWcasuilicxlJa7brlU0ZDbmeH6G2IejDFj7BP7JyQa
+         7AdAXyZKNRyCbJHSDF5cpkrloCo57z8LMcDRqwOG16Dsh0r4hRC6pI6fXezsYS1RR5PT
+         G8lRplHPeCN4AiCA7ci/k8k5chjzJoD/3J0zSNJse0sj4PMVKDjU2bEwlyrvJlzsJv8q
+         XLpw==
+X-Gm-Message-State: AFqh2kqgBq5xfWV1ZYOT4+Qt2xmFE9yFWNTsL5+yVQSSUvhFUtGPuOju
+        CY2UnGYisKGjgxR4SOIfBDOmrY8xYoz/romK
+X-Google-Smtp-Source: AMrXdXvzKgyQxnUBbRZRCSO0pWyoVoCbTMRgEZofRRHd2IZf3l3H8r0AafVXsoeUXOduQ9hz1iJ9Kw==
+X-Received: by 2002:a05:6512:1049:b0:4a4:68b8:c2ec with SMTP id c9-20020a056512104900b004a468b8c2ecmr18855552lfb.67.1673093320986;
+        Sat, 07 Jan 2023 04:08:40 -0800 (PST)
 Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id m2-20020a056512114200b004caf992bba9sm551424lfg.268.2023.01.07.04.06.33
+        by smtp.gmail.com with ESMTPSA id h14-20020a05651c124e00b0027fd474e7aasm340858ljh.74.2023.01.07.04.08.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 04:06:34 -0800 (PST)
+        Sat, 07 Jan 2023 04:08:40 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -61,12 +60,10 @@ Cc:     marijn.suijten@somainline.org,
         Manivannan Sadhasivam <mani@kernel.org>,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] remoteproc: qcom: pas: Add SM6375 ADSP & CDSP
-Date:   Sat,  7 Jan 2023 13:06:23 +0100
-Message-Id: <20230107120623.1903056-3-konrad.dybcio@linaro.org>
+Subject: [PATCH v2 1/2] dt-bindings: remoteproc: qcom,sm8150-pas: Add SM6375 MPSS
+Date:   Sat,  7 Jan 2023 13:08:37 +0100
+Message-Id: <20230107120838.1903498-1-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230107120623.1903056-1-konrad.dybcio@linaro.org>
-References: <20230107120623.1903056-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,29 +76,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a config for the ADSP&CDSP present on SM6375.
+Add SM6375 MPSS to the 8150 binding, as it's so similar it falls into
+the pre-existing ifelse clauses.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
+Depends on: https://lore.kernel.org/linux-arm-msm/20230107120623.1903056-1-konrad.dybcio@linaro.org/T/#t
 v1 -> v2:
-No changes
+- Rebase on top of recent changes
+- move to sm8150 pas file
 
- drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ .../devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml         | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index f95e0229a6c1..d8a4ecec8535 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -948,6 +948,8 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm6350-adsp-pas", .data = &sm6350_adsp_resource},
- 	{ .compatible = "qcom,sm6350-cdsp-pas", .data = &sm6350_cdsp_resource},
- 	{ .compatible = "qcom,sm6350-mpss-pas", .data = &mpss_resource_init},
-+	{ .compatible = "qcom,sm6375-adsp-pas", .data = &sm6350_adsp_resource},
-+	{ .compatible = "qcom,sm6375-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource},
- 	{ .compatible = "qcom,sm8150-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sm8150-mpss-pas", .data = &mpss_resource_init},
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
+index 082ae70a3fcb..67cfdc017a02 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
+@@ -17,6 +17,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,sm6375-cdsp-pas
++      - qcom,sm6375-mpss-pas
+       - qcom,sm8150-adsp-pas
+       - qcom,sm8150-cdsp-pas
+       - qcom,sm8150-mpss-pas
+@@ -77,6 +78,7 @@ allOf:
+         compatible:
+           enum:
+             - qcom,sm6375-cdsp-pas
++            - qcom,sm6375-mpss-pas
+             - qcom,sm8150-adsp-pas
+             - qcom,sm8150-cdsp-pas
+             - qcom,sm8250-cdsp-pas
 -- 
 2.39.0
 
