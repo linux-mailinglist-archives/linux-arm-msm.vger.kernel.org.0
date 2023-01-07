@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C3ED660DE5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 11:26:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30B98660DED
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jan 2023 11:33:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232355AbjAGK0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Jan 2023 05:26:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35180 "EHLO
+        id S231728AbjAGKdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Jan 2023 05:33:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237212AbjAGKZf (ORCPT
+        with ESMTP id S231651AbjAGKdM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Jan 2023 05:25:35 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 922BC8CBCD
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 02:24:14 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id bp15so5471403lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 02:24:14 -0800 (PST)
+        Sat, 7 Jan 2023 05:33:12 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF8F887900
+        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 02:33:08 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bf43so5516047lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 02:33:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=g2EMcV+onqhOTA0NwBZpgQeCm+8rt/XlSXm0iVjEXzA=;
-        b=sMsbA5ceEzxqI4auYIpk66bzzaDA5L9CHd/ekkCqtHpypoezA6zth5wU8n6w5YwYxW
-         O2be8Lr/qejknQP2Iq63sXEjPDNRJ6ijZHEIwoODsX/LoOe38uldTDdH1KznmzQ6Pu2r
-         gcX2ftSzGQNuV43Hm21hsCxHF6yckL8lfG/rqzHv+u2Y6hYNUkf7/mPGquz7/VktMy8L
-         WDHOjVhyHWt8NF0Oc8Z5GHzNWxt8uvNjC3UrMtIaMDHYdZakKgNHzRBKLpwCZcgb+4XH
-         9toHokcyaGJbhVNmyXisbzWf0s9F9Rgw20bEkYzi7ad75UReZv6hqRwP3U3e52saeTwG
-         xK5w==
+        bh=eHdyANoawjtnReISD1rIy4t+lGWxTd9VQ6TSTCAxXiA=;
+        b=Mc2nxiOg0IIxoQLd/cIY+7U5m5SkI2BNosFjsTpY00a0P+f4dHuqJP4tyHaNHbou2o
+         GbRU16rKflsDt3hR14li/s5Q152mspENhxINtBlpjezd7YnKUNR2v1AJc1sQzIcO7kgU
+         Ja1PCYAQRvYLqfHyATSgiC0TC0ksA6hOQtnI1QVLVqLqeaVmX3JbJKNU+ySCdU55StV1
+         SrXnFB88aJG0WJ6a4ZfbTmRhpzCP34P2bNDlJneSyo1Q8LVtyhpuO3OWrXq6jZ3CCPPt
+         Uc608Vr6P5YoUBxO9ntZ9xMwxmpUtShAqXZfrS6uRmdWDNmusmsKsnUaL5KF/1w4ts/P
+         vy7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g2EMcV+onqhOTA0NwBZpgQeCm+8rt/XlSXm0iVjEXzA=;
-        b=YCHw7FRdMnNUphpsm3MW9txTZFUMOAF4yBxNrB8QTuGnyAjWQll095j08nb7MQ8TJr
-         Ip6WMAto7Z47JHI4bAnZZcMhaY5tJIQJmC6m3wH1lc1Vj7rOG2Xi8ENmGRrY+Np7JpnX
-         MWJNcQfaXeFuq1W1mGoE1p9xWFxjXGM8b7jZrF9GtR4tPVFsWT6LvxZNdA1K2W/t/uXA
-         2XcceSY6tstbyXRO9DwV2BtwNQQqPSCKh23QkBnPwUjH4RRfmbaHUJR1f9kh0WAjQ1gI
-         RUhPPhwURZYk0iTtoLKFmYQYep2xTsatGvcRS2Kvt/jTyIw6HXFGuwN+8vr7Ly1LHCHg
-         r53Q==
-X-Gm-Message-State: AFqh2krxwpD0hgqGrq8FR+Bh3cP8JjkrxoTb62QebXMPmr/leu0+J6WN
-        +l+y8UQI6uhEsBJJ8VkQlTBnLA==
-X-Google-Smtp-Source: AMrXdXt1YkoJc2KNUQwZUtm4Q9Mad6+0kFRCHSU8Y0Oi5MbMUA+IkVBFBLR35D4bWgp2lBG4rLWCxQ==
-X-Received: by 2002:ac2:50ca:0:b0:4cc:6f42:a082 with SMTP id h10-20020ac250ca000000b004cc6f42a082mr1302346lfm.4.1673087052911;
-        Sat, 07 Jan 2023 02:24:12 -0800 (PST)
+        bh=eHdyANoawjtnReISD1rIy4t+lGWxTd9VQ6TSTCAxXiA=;
+        b=PTaQLLe1fBPSNOSa++Z4JXi31TOxqGeIBBUGldCHxF7YmFFNAl6EdfYEt745TgSsVO
+         15Tqi9ekDPakqmBtfJRBcyZAf/8wuN4bgi6Mgi5enT6Al2CKII20ig2OCyEoMQxXenZ/
+         u8dPOjNYyYtY3Kh3UP7Uy7QQ1RMTiS+ZrGGescLRT9QgPFUEH2l4vEbANFkcBAVbG/qG
+         4jJdK5xSM4Q/TrAuWkWF9HewRmsI02r9DqwiFhKnfgKwlvqR2u7Y+g4d2yTn/PDxDRIJ
+         Vd2Dyx6tzwSTK6V3dtMoxftfeiUCVwu92nL6f+EfJJ+nArdpU5W8DSfdGSNpFKkYirEv
+         MCeQ==
+X-Gm-Message-State: AFqh2koRKetGnVtwrxszBMX8rl/HOLMLvVDS9NhSxXQ8KjrjacFJ7Is2
+        AtwvGMCAOhgjlmnLHevvXuI5ug==
+X-Google-Smtp-Source: AMrXdXvhLop+ludSjQdXno0DRvWP4lyW4k9jdAoXrp8F6txUTvD23CEVWitfqxcfun3tFjVaoD+/zQ==
+X-Received: by 2002:a05:6512:3fa1:b0:4b3:9b88:d9ce with SMTP id x33-20020a0565123fa100b004b39b88d9cemr24374867lfa.46.1673087587230;
+        Sat, 07 Jan 2023 02:33:07 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id cf33-20020a056512282100b004a05767bc07sm528921lfb.28.2023.01.07.02.24.11
+        by smtp.gmail.com with ESMTPSA id bt15-20020a056512260f00b004cb057f2252sm530235lfb.181.2023.01.07.02.33.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Jan 2023 02:24:12 -0800 (PST)
-Message-ID: <1b5f35ac-05ee-eae5-e17a-d34e2d988e43@linaro.org>
-Date:   Sat, 7 Jan 2023 11:24:10 +0100
+        Sat, 07 Jan 2023 02:33:06 -0800 (PST)
+Message-ID: <c84696be-2610-dbc3-49f4-b966e3ab6015@linaro.org>
+Date:   Sat, 7 Jan 2023 11:33:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: msm8916-gplus-fl8005a: Add
+ initial device tree
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stanislav Jakubek <stano.jakubek@gmail.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Jagan Teki <jagan@edgeble.ai>,
+        Chris Morgan <macromorgan@hotmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230106080644.255940-1-linmengbo0689@protonmail.com>
+ <20230106080911.256232-1-linmengbo0689@protonmail.com>
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-References: <20221215094532.589291-1-bhupesh.sharma@linaro.org>
- <20221215094532.589291-4-bhupesh.sharma@linaro.org>
- <20230106174640.ndis3zm5heoa5wpb@builder.lan>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230106174640.ndis3zm5heoa5wpb@builder.lan>
+In-Reply-To: <20230106080911.256232-1-linmengbo0689@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,99 +90,295 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6.01.2023 18:46, Bjorn Andersson wrote:
-> On Thu, Dec 15, 2022 at 03:15:32PM +0530, Bhupesh Sharma wrote:
->> Add USB superspeed qmp phy node to dtsi.
->> Make sure that the oneplus board dts (which includes the
->> sm4250.dtsi) continues to work as intended.
->>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
->>  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 37 ++++++++++++++++++-
->>  2 files changed, 38 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
->> index 3f39f25e0721e..4f0d65574448b 100644
->> --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
->> @@ -232,6 +232,9 @@ &usb {
->>  &usb_dwc3 {
->>  	maximum-speed = "high-speed";
->>  	dr_mode = "peripheral";
->> +
->> +	phys = <&usb_hsphy>;
->> +	phy-names = "usb2-phy";
->>  };
->>  
->>  &usb_hsphy {
->> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> index e4ce135264f3d..030763187cc3f 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> @@ -579,6 +579,39 @@ usb_hsphy: phy@1613000 {
->>  			status = "disabled";
->>  		};
->>  
->> +		usb_qmpphy: phy@1615000 {
->> +			compatible = "qcom,sm6115-qmp-usb3-phy";
->> +			reg = <0x01615000 0x200>;
->> +			clocks = <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->> +				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
->> +				 <&gcc GCC_AHB2PHY_USB_CLK>;
->> +			clock-names = "com_aux",
->> +				      "ref",
->> +				      "cfg_ahb";
->> +			resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
->> +				 <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
->> +			reset-names = "phy", "phy_phy";
->> +			status = "disabled";
->> +			#clock-cells = <1>;
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +			ranges;
->> +
->> +			usb_ssphy: phy@1615200 {
+On 6.01.2023 09:10, Lin, Meng-Bo wrote:
+> GPLUS FL8005A is a tablet using the MSM8916 SoC released in 2015.
 > 
-> These patches looks good, but before introducing any
-> qcom,sm6115-qmp-usb3-phy in any DT, could we please update the binding
-> and driver to the new flattened format - to avoid having to revisit this
-> when we try to introduce DP (which I'm guessing this instance has?)
-FWIW there's only a single DSI intf (and a single disabled one) on this SoC.
+> Add a device tree for with initial support for:
+> 
+> - GPIO keys
+> - GPIO LEDs
+> - pm8916-vibrator
+> - SDHCI (internal and external storage)
+> - USB Device Mode
+> - UART
+> - WCNSS (WiFi/BT)
+> - Regulators
+> 
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/msm8916-gplus-fl8005a.dts   | 239 ++++++++++++++++++
+>  2 files changed, 240 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 3e79496292e7..086654715fc6 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -9,6 +9,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-gplus-fl8005a.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-huawei-g7.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+> new file mode 100644
+> index 000000000000..a8e8d5273e75
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+> @@ -0,0 +1,239 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +/dts-v1/;
+> +
+> +#include "msm8916-pm8916.dtsi"
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/leds/common.h>
+> +
+> +/ {
+> +	model = "GPLUS FL8005A";
+> +	compatible = "gplus,fl8005a", "qcom,msm8916";
+> +	chassis-type = "tablet";
+> +
+> +	aliases {
+> +		serial0 = &blsp1_uart2;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0";
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&gpio_keys_default>;
+> +
+> +		label = "GPIO Buttons";
+> +
+> +		button-volume-up {
+> +			label = "Volume Up";
+> +			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +		};
+> +	};
+> +
+> +	gpio-leds {
+> +		compatible = "gpio-leds";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&gpio_leds_default>;
+> +
+> +		led-red {
+> +			function = LED_FUNCTION_CHARGING;
+> +			color = <LED_COLOR_ID_RED>;
+> +			gpios = <&msmgpio 117 GPIO_ACTIVE_HIGH>;
+> +			retain-state-suspended;
+> +		};
+> +
+> +		led-green {
+> +			function = LED_FUNCTION_CHARGING;
+> +			color = <LED_COLOR_ID_GREEN>;
+> +			gpios = <&msmgpio 118 GPIO_ACTIVE_HIGH>;
+> +			retain-state-suspended;
+> +		};
+> +	};
+> +
+> +	usb_id: usb-id {
+> +		compatible = "linux,extcon-usb-gpio";
+> +		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb_id_default>;
+> +	};
+> +};
+> +
+> +&blsp1_uart2 {
+> +	status = "okay";
+> +};
+> +
+> +&pm8916_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&pm8916_vib {
+> +	status = "okay";
+> +};
+> +
+> +&pronto {
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_1 {
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
+> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
+Please put pinctrl-names after pinctrl-N, as we're trying to keep
+things consistent with other similar properties, such as:
+
+clocks = ..
+clock-names = ..
+
+
+> +
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
+> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
+> +
+> +	cd-gpios = <&msmgpio 38 GPIO_ACTIVE_LOW>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb {
+> +	extcon = <&usb_id>, <&usb_id>;
+> +	status = "okay";
+> +};
+> +
+> +&usb_hs_phy {
+> +	extcon = <&usb_id>;
+> +};
+> +
+> +&smd_rpm_regulators {
+> +	vdd_l1_l2_l3-supply = <&pm8916_s3>;
+> +	vdd_l4_l5_l6-supply = <&pm8916_s4>;
+> +	vdd_l7-supply = <&pm8916_s4>;
+> +
+> +	s3 {
+> +		regulator-min-microvolt = <1200000>;
+> +		regulator-max-microvolt = <1300000>;
+> +	};
+> +
+> +	s4 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <2100000>;
+> +	};
+> +
+> +	l1 {
+> +		regulator-min-microvolt = <1225000>;
+> +		regulator-max-microvolt = <1225000>;
+> +	};
+> +
+> +	l2 {
+> +		regulator-min-microvolt = <1200000>;
+> +		regulator-max-microvolt = <1200000>;
+> +	};
+> +
+> +	l4 {
+> +		regulator-min-microvolt = <2050000>;
+> +		regulator-max-microvolt = <2050000>;
+> +	};
+> +
+> +	l5 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +	};
+> +
+> +	l6 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +	};
+> +
+> +	l7 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +	};
+> +
+> +	l8 {
+> +		regulator-min-microvolt = <2850000>;
+> +		regulator-max-microvolt = <2900000>;
+> +	};
+> +
+> +	l9 {
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	l10 {
+> +		regulator-min-microvolt = <2700000>;
+> +		regulator-max-microvolt = <2800000>;
+> +	};
+> +
+> +	l11 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <2950000>;
+> +		regulator-system-load = <200000>;
+> +		regulator-allow-set-load;
+> +	};
+> +
+> +	l12 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <2950000>;
+> +	};
+> +
+> +	l13 {
+> +		regulator-min-microvolt = <3075000>;
+> +		regulator-max-microvolt = <3075000>;
+> +	};
+> +
+> +	l14 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	l15 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	l16 {
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	l17 {
+> +		regulator-min-microvolt = <2850000>;
+> +		regulator-max-microvolt = <2850000>;
+> +	};
+> +
+> +	l18 {
+> +		regulator-min-microvolt = <2700000>;
+> +		regulator-max-microvolt = <2700000>;
+> +	};
+> +};
+> +
+> +&msmgpio {
+> +	gpio_keys_default: gpio-keys-default-state {
+> +		pins = "gpio107";
+> +		function = "gpio";
+> +
+Stray newlines, please remove.
+
+Other than that:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> 
-> Regards,
-> Bjorn
-> 
->> +				reg = <0x01615200 0x200>,
->> +				      <0x01615400 0x200>,
->> +				      <0x01615c00 0x400>,
->> +				      <0x01615600 0x200>,
->> +				      <0x01615800 0x200>,
->> +				      <0x01615a00 0x100>;
->> +				#phy-cells = <0>;
->> +				#clock-cells = <1>;
->> +				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->> +				clock-names = "pipe0";
->> +				clock-output-names = "usb3_phy_pipe_clk_src";
->> +			};
->> +		};
->> +
->>  		qfprom@1b40000 {
->>  			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
->>  			reg = <0x01b40000 0x7000>;
->> @@ -1023,8 +1056,8 @@ usb_dwc3: usb@4e00000 {
->>  				compatible = "snps,dwc3";
->>  				reg = <0x04e00000 0xcd00>;
->>  				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
->> -				phys = <&usb_hsphy>;
->> -				phy-names = "usb2-phy";
->> +				phys = <&usb_hsphy>, <&usb_ssphy>;
->> +				phy-names = "usb2-phy", "usb3-phy";
->>  				iommus = <&apps_smmu 0x120 0x0>;
->>  				snps,dis_u2_susphy_quirk;
->>  				snps,dis_enblslpm_quirk;
->> -- 
->> 2.38.1
->>
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +	};
+> +
+> +	gpio_leds_default: gpio-led-default-state {
+> +		pins = "gpio117", "gpio118";
+> +		function = "gpio";
+> +
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	usb_id_default: usb-id-default-state {
+> +		pins = "gpio110";
+> +		function = "gpio";
+> +
+> +		drive-strength = <8>;
+> +		bias-pull-up;
+> +	};
+> +};
