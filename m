@@ -2,91 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7473A661A98
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 23:52:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 804F0661AEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 00:09:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231238AbjAHWwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 17:52:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
+        id S233618AbjAHXJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 18:09:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231378AbjAHWw2 (ORCPT
+        with ESMTP id S230175AbjAHXJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 17:52:28 -0500
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4A49FCD;
-        Sun,  8 Jan 2023 14:52:27 -0800 (PST)
-Received: by mail-qt1-f182.google.com with SMTP id s5so2190331qtx.6;
-        Sun, 08 Jan 2023 14:52:27 -0800 (PST)
+        Sun, 8 Jan 2023 18:09:16 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0035B49B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 15:09:14 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id f34so10410271lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 15:09:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aHTsVemuZVdFBAOVhXekZDJCYjSFOYswDw57t68u+B0=;
+        b=E2SiNKam01JLHyR4YRcH3H1AOyoxfAJhrsUEL3HMNuBD+T7O86muHUbPIhyNqZQBoO
+         1x/8Cw6EqmvH06RHDUxYKdOzGPVvE/xCzYBt06+jNisp5GFGBCG6lqt5mSO2Rpw+DXlC
+         r3eI8fWwaZaUuXyG8DfTWFX4LNaVIgFcmz89idXaf+yDGRPAR04KNrGX/+qx2kdJ2XXT
+         cD51OX9AHyyVCX+66fWArOO5tf4UlR9o5d3NQwyN9X9VwgzmEGcvugECShDPCzEE9WWH
+         flF6GB0BesE07Jh1AXla68inOUmM4U/QE1/LsBR+Wh+5wC57CisuUJqrxQk0pcXMPZeH
+         v5/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dgynu7nhsfTLikdDDiF3tR6jiexexiBETtRvoB73o5I=;
-        b=J0dH0lWiTYZCTD0WCMgFrOgCs3lMwueabihtVRW/4w5RDxlc1xRg6YhIb+yuzFnRys
-         XIEUuP8pVHVMfl8n5qDuiZ+PGtI64n+dRS9pz6a43zmTzIQivnowp2QL+9F2dIgNaZxp
-         yQbsW0F/CO+s1ZCrtmLaloIG5M05fGTcAAFZ4buCBBjSZvfrtwDK8llK56ldxINVHy9R
-         gz8u2bmBBlP6eSoVwC444n/LHaaeMSKJkyalvDFucS4zrnCHQkDlaObfFkooFKnqXUpq
-         x86evnT6FRr7iHM8jJIOZcns5IwC8mZVWBJ1ysbg+fUSK+933POey6stG/xY4Y7mY/0O
-         uIig==
-X-Gm-Message-State: AFqh2krkXo1B9Gkdw1hksAZK0DEkhZJpXyy+I04rvLqb9tm4IjtwgW5S
-        00B+BvM304kVz7WozHx3fg==
-X-Google-Smtp-Source: AMrXdXuq48EJT//TfqDk4EqRCxeeHkxc7XsrDFmnC+B99Ce5Ep8we86AG30gF1iNXJJ3KJ7islJCZw==
-X-Received: by 2002:ac8:4f16:0:b0:3a7:ec99:56e4 with SMTP id b22-20020ac84f16000000b003a7ec9956e4mr98611248qte.39.1673218346175;
-        Sun, 08 Jan 2023 14:52:26 -0800 (PST)
-Received: from robh_at_kernel.org ([2605:ef80:80a5:9b51:39ae:24d1:33f3:811e])
-        by smtp.gmail.com with ESMTPSA id b5-20020a05620a04e500b006ee8874f5fasm4308662qkh.53.2023.01.08.14.52.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 14:52:25 -0800 (PST)
-Received: (nullmailer pid 388493 invoked by uid 1000);
-        Sun, 08 Jan 2023 22:52:22 -0000
-Date:   Sun, 8 Jan 2023 16:52:22 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-pci@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: PCI: qcom: add oneOf to compatible
- match
-Message-ID: <167321834112.388423.1847446372887431422.robh@kernel.org>
-References: <20230106081203.14118-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aHTsVemuZVdFBAOVhXekZDJCYjSFOYswDw57t68u+B0=;
+        b=gAALPNX0OVESoKa/zY06qT3GW69+QL9LwmrOzAKipB9Ez8hvVpg5tMW7dgfAY09Q21
+         Y/NWJyTYCzyUlBuV4DuYX42SiReewe5pV4iPU3zwKI8TAs5JMh/+VUd4/myvKj24RE+v
+         k9PMCsAiX5ooQR59ORS3ODKg42z+HMYjNZRVYJyfa6Z4HMHwbrjHHfTcICcnmbce62Ha
+         gsfj9JfuEC7YPF3jV9ozMloxBxzN9M6VMROaGAy7uoKqfEbOzkkexoiN6yc8jESTpdVi
+         8HzhweUM6olDXxlQpuX8TWDu05W4s6VN41x+iizs9SM92lSmtyOI8vZLbYj0MxhfYgHl
+         py7w==
+X-Gm-Message-State: AFqh2konl26do+PZGDpLQz3LCbEYKSHMoAlwE4GDBT+9sCpv97okYgfP
+        bYOiPg3Xd6iwvEdlY8AsXy6dBg==
+X-Google-Smtp-Source: AMrXdXt81nlX2Mx4LeY8PwzwnMFJQKhvqwBI2Cbzu5dcQTpAyBJCqJ+hXQu2QCpa6S1il70ht/ItqQ==
+X-Received: by 2002:a05:6512:2344:b0:4cb:90d:41b1 with SMTP id p4-20020a056512234400b004cb090d41b1mr15158956lfu.56.1673219353295;
+        Sun, 08 Jan 2023 15:09:13 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id s9-20020ac24649000000b004cb02ed464esm1256597lfo.196.2023.01.08.15.09.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Jan 2023 15:09:12 -0800 (PST)
+Message-ID: <5f1a846b-d536-f013-f311-2773945317bb@linaro.org>
+Date:   Mon, 9 Jan 2023 01:09:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230106081203.14118-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 1/6] dt-bindings: display/msm: document the SM8550 DSI PHY
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
+ <20230103-topic-sm8550-upstream-mdss-dsi-v1-1-9ccd7e652fcd@linaro.org>
+ <f8c8076e-2ac3-f67b-7641-d0c324784cb5@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f8c8076e-2ac3-f67b-7641-d0c324784cb5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 06/01/2023 17:41, Krzysztof Kozlowski wrote:
+> On 04/01/2023 10:08, Neil Armstrong wrote:
+>> Document the SM8550 DSI PHY which is very close from the 7nm
+>> and 5nm DSI PHYs found in earlier platforms.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>> index bffd161fedfd..f72727f81076 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>> @@ -15,6 +15,7 @@ allOf:
+>>   properties:
+>>     compatible:
+>>       enum:
+>> +      - qcom,dsi-phy-4nm-8550
+>>         - qcom,dsi-phy-5nm-8350
+>>         - qcom,dsi-phy-5nm-8450
+> 
+> Poor patterns once allowed like to keep growing... I commented here:
+> https://lore.kernel.org/all/ccbb47e4-d780-0b1d-814e-27e86b6c369c@linaro.org/
+> 
+> so let's wait for response about other compatibles.
 
-On Fri, 06 Jan 2023 09:12:01 +0100, Krzysztof Kozlowski wrote:
-> Prepare for extending compatible list by adding oneOf keyword.
-> No functional changes.
+I have fixed 8350 & 8450 while applying. Please rebase on top of 
+msm-next-lumag-next with fixed compatibles.
+
+Note: the DPU changes are not yet part of the msm-lumag-next.
+
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>         - qcom,dsi-phy-7nm
+>>
 > 
-> ---
-> 
-> Changes since v1:
-> 1. Split from previous patch as Bjorn requested.
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 39 ++++++++++---------
->  1 file changed, 20 insertions(+), 19 deletions(-)
+> Best regards,
+> Krzysztof
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+-- 
+With best wishes
+Dmitry
+
