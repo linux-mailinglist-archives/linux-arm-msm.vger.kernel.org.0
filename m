@@ -2,84 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29ECE661856
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 19:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFFD96618D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 20:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235375AbjAHSty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 13:49:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33234 "EHLO
+        id S233863AbjAHTyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 14:54:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235893AbjAHStx (ORCPT
+        with ESMTP id S233817AbjAHTx7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 13:49:53 -0500
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A91BF02B;
-        Sun,  8 Jan 2023 10:49:52 -0800 (PST)
-Received: by mail-il1-f171.google.com with SMTP id a9so3244331ilp.6;
-        Sun, 08 Jan 2023 10:49:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QBfc6frQTYTBFojIsbaKyBhhX3b6E0jigcJZMgl0JrQ=;
-        b=Fbpidt+5WWJvsfmWuF9jsmQHlQwSQqsNUM8iTf1hVpLgFpMITB1SA9fpzQSXUQX0zW
-         6z3fUWHMKuu7/kLqNq8yMgkOicri6ZBYOcBlLZNNKwIqkP0EHE92cGxUbRcrrEfAGaAR
-         +8TOs9fge+6oGRNW3y5BrKqMJZUJdLLs5vYBJqsLc0pEjSWCHwGAfl1jRIGrLHjAil63
-         1jszdZUEIxM6qr9TgnJEWnxngbKUEARyM5aJwsYAIQV26ARF+r0yTciBHDTDhl8c4NX1
-         Xj5x1S/LZnxzr20hJ8j/Egc4aLT68RbQxcm/ju1rF6ShLlFoeRe2zMAjLnoL74viYqyb
-         YVgg==
-X-Gm-Message-State: AFqh2kpOpDypJY9dVALoqou6x8eQY7TNYjZKPY3qn2G/73MbnjHy7UAL
-        LKQtjf2719X/1kla/+UELFnfP4E+XA==
-X-Google-Smtp-Source: AMrXdXvo7DMW/eAXa4+8ljdaOX7G+IzIj8Y/rjrLDEP2koe94ISfRyigR9jNMkceX3Z/Wfm9LeXAZQ==
-X-Received: by 2002:a05:6e02:112:b0:30c:3204:5fbd with SMTP id t18-20020a056e02011200b0030c32045fbdmr22652957ilm.31.1673203791274;
-        Sun, 08 Jan 2023 10:49:51 -0800 (PST)
-Received: from robh_at_kernel.org ([2605:ef80:8069:516a:f2b0:691e:4315:7c0f])
-        by smtp.gmail.com with ESMTPSA id e32-20020a026d60000000b0039e583abceasm2160636jaf.68.2023.01.08.10.49.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 10:49:50 -0800 (PST)
-Received: (nullmailer pid 198525 invoked by uid 1000);
-        Sun, 08 Jan 2023 18:49:47 -0000
-Date:   Sun, 8 Jan 2023 12:49:47 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     robh+dt@kernel.org, quic_mkrishn@quicinc.com, daniel@ffwll.ch,
-        andersson@kernel.org, robdclark@gmail.com, airlied@gmail.com,
-        linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org,
-        quic_abhinavk@quicinc.com, swboyd@chromium.org
-Subject: Re: [PATCH v3 1/1] dt-bindings: msm: dsi-phy-28nm: Add missing
- qcom,dsi-phy-regulator-ldo-mode
-Message-ID: <167320378648.198458.147612299624075109.robh@kernel.org>
-References: <20221229124438.504770-1-bryan.odonoghue@linaro.org>
- <20221229124438.504770-2-bryan.odonoghue@linaro.org>
+        Sun, 8 Jan 2023 14:53:59 -0500
+Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1ABD10D
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 11:53:57 -0800 (PST)
+Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
+        by amity.mint.lgbt (Postfix) with ESMTP id 4Nqnnw3YfHz1S5FN
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 14:53:56 -0500 (EST)
+Authentication-Results: amity.mint.lgbt (amavisd-new);
+        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
+        header.d=mint.lgbt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
+        content-transfer-encoding:mime-version:x-mailer:message-id:date
+        :subject:to:from; s=dkim; t=1673207635; x=1674071636; bh=9dsgbhg
+        A9vnJIYjG6YuVbFl47O4RVEcVJHNR4rpiPy0=; b=XZeTxp1l84FpPTY/Z14i5en
+        WqmXm4e75S/oeXvOC7s4z+OU2cBm7RdW9qTcEBQP8RpNNAziA5Lf7FtlmrW02mUX
+        9sPy/XjTNHPT0yBnZKwPN3FyRhz2bGu1Urli1x3rb9/DXMXFjydsNasr6ZgB03zV
+        utuGL0S6SWM+bemSFOfZaZaoJ8mC3KwKRVVlS0FEF4FzHQ+DCwXfN7jbW18dJ0LR
+        iawbeZupzEIM/st8dUh3QOp+Ofl/RbXhXjL+Pp/kQomSlaqmeMbTKtvauAUUF6e4
+        NpzGO/hsxGX4mveTRXNZBU8MqiGbckyMGeJa39G9gX01s05eEuq+M4q4eRWh4zg=
+        =
+X-Virus-Scanned: amavisd-new at amity.mint.lgbt
+Received: from amity.mint.lgbt ([127.0.0.1])
+        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Qauvrw1g3I9L for <linux-arm-msm@vger.kernel.org>;
+        Sun,  8 Jan 2023 14:53:55 -0500 (EST)
+Received: from dorothy.. (unknown [186.105.5.197])
+        by amity.mint.lgbt (Postfix) with ESMTPSA id 4Nqnnj34NHz1S56d;
+        Sun,  8 Jan 2023 14:53:45 -0500 (EST)
+From:   Lux Aliaga <they@mint.lgbt>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, alim.akhtar@samsung.com,
+        avri.altman@wdc.com, bvanassche@acm.org, keescook@chromium.org,
+        tony.luck@intel.com, gpiccoli@igalia.com
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
+        phone-devel@vger.kernel.org, martin.botka@somainline.org,
+        marijn.suijten@somainline.org
+Subject: [PATCH v6 0/6] arm64: dts: qcom: sm6125: UFS and xiaomi-laurel-sprout support
+Date:   Sun,  8 Jan 2023 16:53:30 -0300
+Message-Id: <20230108195336.388349-1-they@mint.lgbt>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229124438.504770-2-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Introduce Universal Flash Storage support on SM6125 and add support for t=
+he Xiaomi Mi A3 based on the former platform. Uses the name xiaomi-laurel=
+-sprout instead of the official codename (laurel_sprout) due to naming li=
+mitations in the kernel.
 
-On Thu, 29 Dec 2022 12:44:38 +0000, Bryan O'Donoghue wrote:
-> Add in missing qcom,dsi-phy-regulator-ldo-mode to the 28nm DSI PHY.
-> When converting from .txt to .yaml we missed this one.
-> 
-> Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml         | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+Changes since v5:
+- Drop "non-removable" property from ufs_mem_hc for sm6125 platform
+- Drop "status" and "autorepeat" properties from gpio-keys node for xiaom=
+i-laurel-sprout
+- Rename "key-vol-up" node to "key-volume-up" for xiaomi-laurel-sprout
+- Drop "gpio-key,wakeup" property from key-volume-up node for xiaomi-laur=
+el-sprout
+- Set "linux,input-type" and "wakeup-source" properties on key-volume-up =
+node for xiaomi-laurel-sprout
+- Change "key_vol_up" node name to "vol-up-n-state" and its label to "vol=
+_up_n" in PM6125 GPIO node for xiaomi-laurel-sprout
+- Use labels instead of node names for PM6125 ADC channels in xiaomi laur=
+el-sprout
+- Set "regulator-allow-set-load" properties on l4, l5, l10, l11, l18 and =
+l24 regulators on xiaomi-laurel-sprout
 
-Acked-by: Rob Herring <robh@kernel.org>
+v5: https://lore.kernel.org/linux-devicetree/20221231222420.75233-2-they@=
+mint.lgbt/
+
+
+
