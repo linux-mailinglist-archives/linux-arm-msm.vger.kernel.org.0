@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE746613DF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 08:26:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC446613E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 08:26:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232204AbjAHH0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 02:26:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
+        id S232110AbjAHH0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 02:26:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230205AbjAHH0B (ORCPT
+        with ESMTP id S231584AbjAHH0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 8 Jan 2023 02:26:01 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2341D0F6
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F057C1D0F8
         for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 23:25:58 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id j17so8334219lfr.3
+Received: by mail-lf1-x130.google.com with SMTP id bq39so8370773lfb.0
         for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 23:25:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EAAwwDMIubbBE3gJZq8/7iTQMQU12UzH3ERnpRTlNIA=;
-        b=Bg5O3r+rUSHFezSrSozin/g+crW+X/TQyfCS8A40HjPt7lpnrxoX27edLpOF93lGNY
-         fzmkTeGYcGYG3LGUERYvsHaUhNUY9LmxvgF6fjH3nnT7cs49ckY9Y90BlO8gcjxs3FUg
-         pso9ebNbyTNkxbY6gXhKTS+W4/DpOHHw3O6aZFDaqhQ7Zth4sR9YFkiZ4NDJpc9A6tWU
-         7pWCVOl82ICIqEb4giqCuBCWutbirn5/y284x3EQDdYv85TkTopv52gexDzn3Av4kAXE
-         Te4TNB6BblpL7cf2/2Qzw775R12UfcR5ygX92BFajXlmAiM5PJUnmz7EJx2BrKaxSYGG
-         mRfA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bMcMgMN2h9pQ0++woqWQkTwB0DopoRxUXMW3C3/QKYc=;
+        b=Ux2ciHFIvGWO6NT3TSZYAB6S//IPXOwYcprwgpxHswK6KaMc8BZXeunVEogXWh2UVX
+         cJ7vCxBy+A263PXJ70ZbtZjgAmyvLdwt7weFf/UVBBNjX4smHNzB/59XIYJVLQ3XIoP7
+         7GSNKGdW6PADsCLBuyKlFAp43Bq3ExEYz5msECLnIZ32SAOdnbntxtFuqGIHHs0Np1qq
+         REWz9nqb/8tFhPn5GtWhYlo0C4IozI23vnHITkNfoQJgwE9uLbQQHHrspZ3mVMcsvtQ3
+         cncr9HpO6q2LVNT9YUsBWYX85zkBURmWzpQ3uZnbZ/c63qqjwwWkEEw1sFsbODfNY0wI
+         TpJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EAAwwDMIubbBE3gJZq8/7iTQMQU12UzH3ERnpRTlNIA=;
-        b=YrHXAMzJB2f7TiyvcfvJJ5zWJTbRoWrswkkk5OlFs1pGSkv0e7aMTJVZ9srS8bKYwp
-         5QrsT4W4R//bVn4pUoz6Oz8ddfSgRv9UKU5130LjRJqPCdIal6DvgVpaKV6cMiXx6mPK
-         YJqpXxPOSLUElUEVa0yjkLSHuPh5jBX9H/FLox/2U/jJncrC9lFNNRYPz+wGfH/QXrhr
-         luVV54/gfGfUEbDpr9EqdH3f4SjC6Hdvz9HjbKqH9ufZeH6RwjY7TH+zOHo5Gb3DNy1J
-         lDObJ8CugGJ8+11N0jm8ABAwLzJ0o/FKOIdrnzPkMY0e3SjhUBGs3L5dlW0bqrSWs0bZ
-         1KEA==
-X-Gm-Message-State: AFqh2kqWgf4sweYTxAaiRdn/h8xHCvWtfUZQ1sdIuijbciixikS5FxHy
-        WrwRSbY+91P45je1oqjb2rsrYg==
-X-Google-Smtp-Source: AMrXdXt1Eb0YDFNARb8Zg47TqsSCW9kfUXxzW6leI3UHZZ6Yx+SeFA+BkOCdFlLT/df186wTov8HtA==
-X-Received: by 2002:a05:6512:74:b0:4ca:fe23:7677 with SMTP id i20-20020a056512007400b004cafe237677mr13119631lfo.43.1673162756615;
-        Sat, 07 Jan 2023 23:25:56 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bMcMgMN2h9pQ0++woqWQkTwB0DopoRxUXMW3C3/QKYc=;
+        b=WrpMjLSWENh2LYtAQUscqFLX31cflRWTUcw/WX18ZQOocShqfm9+md0rJ38dDgG5Mg
+         CPfT3dDlA7VgJvqESQDXNriZnMS5glToQD43unT1Le+IFTokXfeGmRrXboOv9ZicQiEu
+         zYd0xe6rzqVhZIvoZU8JpsDpS+jJswNuvyYRk3YQT+XfHRKIRFvY7AXNwy/VYLuq4WMM
+         PLNrl+ueIkDRlWdgrsItkBNAdkCEZePVcBn6T8oSRzIgKY8jf/6lG9Lk43kCMr6J9THl
+         s3OOOJyXk33A5FSrI4G43/IOQdfMteJmQ4iCuSuRgUoUn8LyJGtTw95+1d192gUXC3mo
+         6/UA==
+X-Gm-Message-State: AFqh2kqIYCQF/8FvY8U7pDtaaLuZhGOcRO77Kq/DlerU6JGcRug2n7UX
+        xTvJOcqLyRXlTu1q0egh9h0Nuw==
+X-Google-Smtp-Source: AMrXdXuAxN4yqXdIZptsyDsJjG5Jcnv7P/pNVbSR10r89IK21J1NzuWq9lidrKNOTS4PfUYs3gfuUA==
+X-Received: by 2002:ac2:5975:0:b0:4b5:8f03:a2bc with SMTP id h21-20020ac25975000000b004b58f03a2bcmr15713088lfp.9.1673162757318;
+        Sat, 07 Jan 2023 23:25:57 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x2-20020a056512130200b004a8f824466bsm927414lfu.188.2023.01.07.23.25.55
+        by smtp.gmail.com with ESMTPSA id x2-20020a056512130200b004a8f824466bsm927414lfu.188.2023.01.07.23.25.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 07 Jan 2023 23:25:56 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -60,10 +61,12 @@ To:     Vinod Koul <vkoul@kernel.org>,
 Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 00/12] drm/bridge: lt9611: several fixes and improvements
-Date:   Sun,  8 Jan 2023 09:25:43 +0200
-Message-Id: <20230108072555.2905260-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 01/12] drm/bridge: lt9611: fix sleep mode setup
+Date:   Sun,  8 Jan 2023 09:25:44 +0200
+Message-Id: <20230108072555.2905260-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230108072555.2905260-1-dmitry.baryshkov@linaro.org>
+References: <20230108072555.2905260-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,27 +78,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A series of patches to fix mode programming for the Lontium lt9611
-DSI-to-HDMI bridge (found e.g. on the Thundercomm RB3/Dragonboard845c
-platform).
+On atomic_post_disable the bridge goes to the low power state. However
+the code disables too much of the chip, so the HPD event is not being
+detected and delivered to the host. Reduce the power saving in order to
+get the HPD event.
 
-Dmitry Baryshkov (12):
-  drm/bridge: lt9611: fix sleep mode setup
-  drm/bridge: lt9611: fix HPD reenablement
-  drm/bridge: lt9611: fix polarity programming
-  drm/bridge: lt9611: fix programming of video modes
-  drm/bridge: lt9611: fix clock calculation
-  drm/bridge: lt9611: pass a pointer to the of node
-  drm/bridge: lt9611: rework the mode_set function
-  drm/bridge: lt9611: attach to the next bridge
-  drm/bridge: lt9611: fix sync polarity for DVI output
-  drm/bridge: lt9611: simplify video timings programming
-  drm/bridge: lt9611: rework infoframes handling
-  drm/bridge: lt9611: stop filtering modes via the table
+Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
- drivers/gpu/drm/bridge/lontium-lt9611.c | 312 ++++++++++--------------
- 1 file changed, 124 insertions(+), 188 deletions(-)
-
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+index 7c0a99173b39..2714184cc53f 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -448,12 +448,11 @@ static void lt9611_sleep_setup(struct lt9611 *lt9611)
+ 		{ 0x8023, 0x01 },
+ 		{ 0x8157, 0x03 }, /* set addr pin as output */
+ 		{ 0x8149, 0x0b },
+-		{ 0x8151, 0x30 }, /* disable IRQ */
++
+ 		{ 0x8102, 0x48 }, /* MIPI Rx power down */
+ 		{ 0x8123, 0x80 },
+ 		{ 0x8130, 0x00 },
+-		{ 0x8100, 0x01 }, /* bandgap power down */
+-		{ 0x8101, 0x00 }, /* system clk power down */
++		{ 0x8011, 0x0a },
+ 	};
+ 
+ 	regmap_multi_reg_write(lt9611->regmap,
 -- 
 2.39.0
 
