@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 848FA661A7A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 23:41:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14BBB661A85
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 23:42:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbjAHWk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 17:40:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60348 "EHLO
+        id S233496AbjAHWmc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 17:42:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbjAHWk5 (ORCPT
+        with ESMTP id S233690AbjAHWmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 17:40:57 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC1DF022
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 14:40:55 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id f34so10336736lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 14:40:55 -0800 (PST)
+        Sun, 8 Jan 2023 17:42:24 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E72FF036
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 14:42:23 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id d30so5458264lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 14:42:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=04VPxodDj8VYqfXc+AO5iDAa0bDV0HeRkmLR4Sxbnw8=;
-        b=JGxoURkoihHFPGzdeL7AT0d0bJ+n0BJwTiUFG0q0xP758klKGYT7KZFxCbvFd5XxC9
-         Tsqd97ZaxIgAMko3zqiKWZx8kAMEtpURZEkYGavS6nNFcuHa8zLOAZAj96aO2FIDpKu4
-         PyBpgW1+YDBtkPtuDb02rPqv0LO4QIeaXA+m76hD1Tdp2VhE6uqU0YzhBxAJH9Des4Wg
-         romWKqe6fyeLJYY6nLRCnaosA/P5eteRiRZvjYOMAL0X0cuXVlu5+jR3tcHZ2+iYt43W
-         RyTMm14xjqSGaHgDUuq5L1nC/vPe+Ql4AFuFe0DtHfvxLdpE8KKb/FcKoRAX6Xf438vZ
-         uSqQ==
+        bh=U+gHbx+gCIi2HWumnpJEZuh617XPeArEnKugXGoN56U=;
+        b=Mbs1M7eoVfi549MvP93DkyztZl9K0GGdAor+b7LWFpAM9FiQ2jCmOMLEJIY41jlrsF
+         gVeO4HWLnnIz7G+J7NsfCpaAJWaqOtG3/btPP4HJzh5ltsArFV+DEMjGt/vsaDRymOb2
+         WMqeBzKBwbCk1kus/Eq5Qf7FIMnvlRa/tmi8jW07XJcaO0nJlrVu70epNCU2siF5PFiS
+         rJXHmLzUMLGM/HcYGO8gvOIZFvXZRzgUEtXhX+raFvB0eDng8LEcoIUX+OVy1I67eeQo
+         6kJ43JaQLc2IPxHqJlvhZ99plDtHWIWB5BwENRGzAkNB8g/oUw1rHdhH8SubJ4+4TtPy
+         l2BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=04VPxodDj8VYqfXc+AO5iDAa0bDV0HeRkmLR4Sxbnw8=;
-        b=er0WfcHO3MLa6gmHF7GxVblGQaDZyM/QeL1oWf2thCEFGPNwrr6SIKsNeuEazPnL0x
-         wvVWzx8sPJ35Udzlgboecomb2QB2A47pFuQUwNtIdkl7Hq9j9FG3+Gf068uNBOgaFE2A
-         og6gwiNx1zaMXP+0WI52jf6YL3yySEcoUBiw7sK/SeA68GtaKBYMPcz0LbT/RJGZXgpd
-         RQP6LegbnI/SkKNZraJGZcJH3FSLrTRBb84Iw4c34aGoghwkSBnqHvMj6bpO1PVPBrJj
-         eBlMPfM+At4n9jMpaf6VXyz8Oy7x3knG9yGnnEAjxrwSXYP6CICsGEMBY1U0bShM5ZHu
-         bRpg==
-X-Gm-Message-State: AFqh2kr+FZnIxSBDOneaHXR+TTlHXBZNDAg+RPzlhBFUN7864t1EPdAD
-        asVxUCDi59sr6gw3dQmUSCqBwQ==
-X-Google-Smtp-Source: AMrXdXsYBiFkCm6HkGiZyLtZo4tZyRsq3YwGKIk3T/55haEfYPzQzsx4FvI2H0FaYtQAIQfOSd/7dQ==
-X-Received: by 2002:ac2:5318:0:b0:4b5:7720:5fe4 with SMTP id c24-20020ac25318000000b004b577205fe4mr17346875lfh.67.1673217654007;
-        Sun, 08 Jan 2023 14:40:54 -0800 (PST)
+        bh=U+gHbx+gCIi2HWumnpJEZuh617XPeArEnKugXGoN56U=;
+        b=BMSdcFqnXkajZ4AaS1Y39yznwCa8Vwhc0oOL2f29HBM6tMiUOmVObEP+O7kKBevwSi
+         tqKx1XGQmj2eam9yKMr94RDvZmcU7m/PMwEjKZ67APafJCa9Ot3QL672yYPIIMBlyHJP
+         rAbT8d+tKnfgm64sOibYlGlfFdzSCc0HexdhX0YbXzYWnI3CLskONezRfSfmQ+g3AZGJ
+         pfOz2q/LuXbv+01Htfnfjc2LUaCVNYiL3SVxRTCkUrmexfKxnWu5sZ5n1rtm3jFlLkAo
+         M+JhSkE+ODbOuC/fQmw0vd4yn2U+0jf8aPFJNuUJmiCcqRVO2ISYJumT2SEj3zlyv8EU
+         OZLQ==
+X-Gm-Message-State: AFqh2kr4fyDV6OOPd+QO8oMj0p/DvQHY6JeU/evWhQ8aQZivR44TpJF2
+        GWjOr0VFtVOAC13lBR4ECpoKYTYP6pzXI7x9
+X-Google-Smtp-Source: AMrXdXsHFuuepdYa8vE9EqOF0qwKtR2eM1Dh7AEetug97Bc7kHio1DKYCB8SLj2r6PKpBI5rSoW9zA==
+X-Received: by 2002:a05:6512:130c:b0:4cb:e53:d54b with SMTP id x12-20020a056512130c00b004cb0e53d54bmr13981866lfu.25.1673217741957;
+        Sun, 08 Jan 2023 14:42:21 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id 1-20020ac25f41000000b004b590b0c084sm1253296lfz.3.2023.01.08.14.40.53
+        by smtp.gmail.com with ESMTPSA id bu31-20020a056512169f00b004b54ca56cf9sm1266258lfb.303.2023.01.08.14.42.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Jan 2023 14:40:53 -0800 (PST)
-Message-ID: <698a7082-84a5-b805-3e7b-9c72810580f3@linaro.org>
-Date:   Mon, 9 Jan 2023 00:40:53 +0200
+        Sun, 08 Jan 2023 14:42:21 -0800 (PST)
+Message-ID: <9f10957e-3c77-d5e5-107e-12fdb63c9a04@linaro.org>
+Date:   Mon, 9 Jan 2023 00:42:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/hdmi: Add missing check for
+Subject: Re: [PATCH] drm/msm/dsi: Add missing check for
  alloc_ordered_workqueue
 Content-Language: en-GB
 To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, robdclark@gmail.com,
         quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
-        johan+linaro@kernel.org
+        daniel@ffwll.ch, marijn.suijten@somainline.org, vkoul@kernel.org,
+        dianders@chromium.org, marex@denx.de, vladimir.lypak@gmail.com
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
+References: <20230106025609.29499-1-jiasheng@iscas.ac.cn>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
+In-Reply-To: <20230106025609.29499-1-jiasheng@iscas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,18 +78,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/01/2023 04:30, Jiasheng Jiang wrote:
+On 06/01/2023 04:56, Jiasheng Jiang wrote:
 > Add check for the return value of alloc_ordered_workqueue as it may return
-> NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
-> `hdmi_hpd.c`.
+> NULL pointer and cause NULL pointer dereference.
+> Moreover, change the "return ret" into "goto fail" in order to be
+> consistent with the others.
 > 
-> Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
+> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+> Fixes: 32d3e0feccfe ("drm/msm: dsi: Use OPP API to set clk/perf state")
 > Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 > ---
->   drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 89aadd3b3202..12239f628d5a 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1944,19 +1944,19 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   
+>   	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
+>   	if (ret)
+> -		return ret;
+> +		goto fail;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+fail: is just 'return ret', so these changes are not required. Instead 
+the fail label can be dropped.
+
+>   	/* OPP table is optional */
+>   	ret = devm_pm_opp_of_add_table(&pdev->dev);
+>   	if (ret && ret != -ENODEV) {
+>   		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+> -		return ret;
+> +		goto fail;
+>   	}
+>   
+>   	msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+>   	if (msm_host->irq < 0) {
+>   		ret = msm_host->irq;
+>   		dev_err(&pdev->dev, "failed to get irq: %d\n", ret);
+> -		return ret;
+> +		goto fail;
+>   	}
+>   
+>   	/* do not autoenable, will be enabled later */
+> @@ -1966,7 +1966,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   	if (ret < 0) {
+>   		dev_err(&pdev->dev, "failed to request IRQ%u: %d\n",
+>   				msm_host->irq, ret);
+> -		return ret;
+> +		goto fail;
+>   	}
+>   
+>   	init_completion(&msm_host->dma_comp);
+> @@ -1977,6 +1977,11 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   
+>   	/* setup workqueue */
+>   	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
+> +	if (!msm_host->workqueue) {
+> +		ret = -ENOMEM;
+> +		goto fail;
+> +	}
+> +
+>   	INIT_WORK(&msm_host->err_work, dsi_err_worker);
+>   
+>   	msm_dsi->id = msm_host->id;
 
 -- 
 With best wishes
