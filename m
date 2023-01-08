@@ -2,139 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7272E661A8D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 23:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7473A661A98
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 23:52:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbjAHWp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 17:45:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34492 "EHLO
+        id S231238AbjAHWwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 17:52:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233647AbjAHWpI (ORCPT
+        with ESMTP id S231378AbjAHWw2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 17:45:08 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E69FCD6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 14:45:07 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id cf42so10404455lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 14:45:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xNjDFq7jF6Xutyrz7TZXPQsfgSYhgyOTeZIcCQictVc=;
-        b=e8zj826Zagy7Wr+2jC7vyR1XimbGVyk4hS7mMWuWs5jS5BMhe4INZZPZZ3dqZGd4zW
-         vVuWxQoKEM2XVg1AJ1pcgxxZxdOmVRvTv6n/91dmCmyvQWOCv4w0hTImVuK4BUK86s0O
-         KIsslORjq5lajLYSh379zvq7zEUKgf0Wx2NeMGPciJ/W/W3IS6b0ICpuHi1WlLXLMQRH
-         P2ZwoeLK3bIf0AE1GtJdSaO4K/qofXQUK/AihEXhvsbAow2S5HtG3N558XOuEXrTX2h+
-         bFCWrkB2ARluw63iPTDc17QjyIKCcm7vZy1eGqwWusrs7OooTfKMoVqVarn+L5fLGiwo
-         bR0g==
+        Sun, 8 Jan 2023 17:52:28 -0500
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4A49FCD;
+        Sun,  8 Jan 2023 14:52:27 -0800 (PST)
+Received: by mail-qt1-f182.google.com with SMTP id s5so2190331qtx.6;
+        Sun, 08 Jan 2023 14:52:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xNjDFq7jF6Xutyrz7TZXPQsfgSYhgyOTeZIcCQictVc=;
-        b=akergOhkIXcxIFxSnWCZ1kxS7gvO45FH+xBa3fuYHs4fXjlBZ3B3AkPB+28yihjozn
-         98lweuqL29fbk8B/4YNvPyh7cs7nPSbxdR28xzEiyvPioqk9yeZiAuaYhFMlIkuxMXRK
-         ETb+563fqjU+bw4OMCI6D3t/Y1senHHYpnLzAM0jw7bT7SepMjeR9wxQ4u92T/IKO58t
-         6NvTuL/vp24D7mGVNcYuNFKUuJFz+0Pg0fDOJklMANNbN7tfIAIfQbwj6W7t0Ho8bTVJ
-         gNVDtckFEDY2AP/eoPi7hWBXbCDz3rmwjFNgAZyMVWH8j1RveICrBdUQLt2H62JQYRvA
-         CfZw==
-X-Gm-Message-State: AFqh2kqcjh+XMINzrY1iLpUJjhkFMpQhSaQAhPkFUKSqSlXWOO9yeNzY
-        6Xw6whjjCKq0xlc2KIvarmA0XQ==
-X-Google-Smtp-Source: AMrXdXvwzFkEAxmdB2Z6hlU44qt3jw6D5B4obR6CvQwIXBWaGQgM0nax26AbcjwKQIqDWuaHbP3Z5g==
-X-Received: by 2002:a05:6512:304a:b0:4b5:5098:e6f7 with SMTP id b10-20020a056512304a00b004b55098e6f7mr19827844lfb.68.1673217905625;
-        Sun, 08 Jan 2023 14:45:05 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n26-20020a05651203fa00b0049464d89e40sm1257366lfq.72.2023.01.08.14.45.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Jan 2023 14:45:05 -0800 (PST)
-Message-ID: <9b53d5f0-e1b1-1ecd-b9b9-efa20b11c916@linaro.org>
-Date:   Mon, 9 Jan 2023 00:45:04 +0200
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dgynu7nhsfTLikdDDiF3tR6jiexexiBETtRvoB73o5I=;
+        b=J0dH0lWiTYZCTD0WCMgFrOgCs3lMwueabihtVRW/4w5RDxlc1xRg6YhIb+yuzFnRys
+         XIEUuP8pVHVMfl8n5qDuiZ+PGtI64n+dRS9pz6a43zmTzIQivnowp2QL+9F2dIgNaZxp
+         yQbsW0F/CO+s1ZCrtmLaloIG5M05fGTcAAFZ4buCBBjSZvfrtwDK8llK56ldxINVHy9R
+         gz8u2bmBBlP6eSoVwC444n/LHaaeMSKJkyalvDFucS4zrnCHQkDlaObfFkooFKnqXUpq
+         x86evnT6FRr7iHM8jJIOZcns5IwC8mZVWBJ1ysbg+fUSK+933POey6stG/xY4Y7mY/0O
+         uIig==
+X-Gm-Message-State: AFqh2krkXo1B9Gkdw1hksAZK0DEkhZJpXyy+I04rvLqb9tm4IjtwgW5S
+        00B+BvM304kVz7WozHx3fg==
+X-Google-Smtp-Source: AMrXdXuq48EJT//TfqDk4EqRCxeeHkxc7XsrDFmnC+B99Ce5Ep8we86AG30gF1iNXJJ3KJ7islJCZw==
+X-Received: by 2002:ac8:4f16:0:b0:3a7:ec99:56e4 with SMTP id b22-20020ac84f16000000b003a7ec9956e4mr98611248qte.39.1673218346175;
+        Sun, 08 Jan 2023 14:52:26 -0800 (PST)
+Received: from robh_at_kernel.org ([2605:ef80:80a5:9b51:39ae:24d1:33f3:811e])
+        by smtp.gmail.com with ESMTPSA id b5-20020a05620a04e500b006ee8874f5fasm4308662qkh.53.2023.01.08.14.52.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 14:52:25 -0800 (PST)
+Received: (nullmailer pid 388493 invoked by uid 1000);
+        Sun, 08 Jan 2023 22:52:22 -0000
+Date:   Sun, 8 Jan 2023 16:52:22 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-pci@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: PCI: qcom: add oneOf to compatible
+ match
+Message-ID: <167321834112.388423.1847446372887431422.robh@kernel.org>
+References: <20230106081203.14118-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH RESEND] drm/msm: Add missing check and destroy for
- alloc_ordered_workqueue
-Content-Language: en-GB
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        sumit.semwal@linaro.org, christian.koenig@amd.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org, freedreno@lists.freedesktop.org
-References: <20230106084712.29675-1-jiasheng@iscas.ac.cn>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230106084712.29675-1-jiasheng@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230106081203.14118-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/01/2023 10:47, Jiasheng Jiang wrote:
-> Add check for the return value of alloc_ordered_workqueue as it may return
-> NULL pointer.
-> Moreover, use the destroy_workqueue in the later fails in order to avoid
-> memory leak.
+
+On Fri, 06 Jan 2023 09:12:01 +0100, Krzysztof Kozlowski wrote:
+> Prepare for extending compatible list by adding oneOf keyword.
+> No functional changes.
 > 
-> Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->   drivers/gpu/drm/msm/msm_drv.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 8b0b0ac74a6f..b82d938226ad 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -418,6 +418,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   	priv->dev = ddev;
->   
->   	priv->wq = alloc_ordered_workqueue("msm", 0);
-> +	if (!priv->wq)
-> +		return -ENOMEM;
->   
->   	INIT_LIST_HEAD(&priv->objects);
->   	mutex_init(&priv->obj_lock);
-> @@ -440,12 +442,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   
->   	ret = msm_init_vram(ddev);
->   	if (ret)
-> -		return ret;
-> +		goto err_destroy_workqueue;
->   
->   	/* Bind all our sub-components: */
->   	ret = component_bind_all(dev, ddev);
->   	if (ret)
-> -		return ret;
-> +		goto err_destroy_workqueue;
->   
->   	dma_set_max_seg_size(dev, UINT_MAX);
->   
-> @@ -540,6 +542,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   
->   err_msm_uninit:
->   	msm_drm_uninit(dev);
+> Changes since v1:
+> 1. Split from previous patch as Bjorn requested.
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 39 ++++++++++---------
+>  1 file changed, 20 insertions(+), 19 deletions(-)
+> 
 
-return ret is missing here. Your code will result in double free.
-
-However the intent was to unroll each and every action of msm_drm_init() 
-in msm_drm_uninit(). So in all your cases please goto err_msm_unit.
-
-> +err_destroy_workqueue:
-> +	destroy_workqueue(priv->wq);
->   	return ret;
->   }
->   
-
--- 
-With best wishes
-Dmitry
-
+Acked-by: Rob Herring <robh@kernel.org>
