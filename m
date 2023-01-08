@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 573C66617EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 19:13:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF2496617FA
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 19:18:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236230AbjAHSNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 13:13:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45398 "EHLO
+        id S230396AbjAHSSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 13:18:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236241AbjAHSNB (ORCPT
+        with ESMTP id S233790AbjAHSSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 13:13:01 -0500
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FB51247;
-        Sun,  8 Jan 2023 10:12:50 -0800 (PST)
-Received: by mail-il1-f178.google.com with SMTP id o13so3831504ilc.7;
-        Sun, 08 Jan 2023 10:12:50 -0800 (PST)
+        Sun, 8 Jan 2023 13:18:16 -0500
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027672E8;
+        Sun,  8 Jan 2023 10:18:14 -0800 (PST)
+Received: by mail-il1-f171.google.com with SMTP id o8so3850698ilo.1;
+        Sun, 08 Jan 2023 10:18:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=39Cf33NF2XNY12BKiXzVChtAPguuQUdKSv5dHZKLHLA=;
-        b=S9b7iYqV66lxeBfxb4TKbqAvzBOZUbSafTz2T8Kii6U1mQ7qRD1OOM4lFzteQapOM7
-         CsARQoNi/CbtldDjUd9MJNhJHJldusuKbY7RqjVtI3bLTpdiqDC7vUiug6kgiT0tCmfC
-         PHP1hua4rqBC518wMhUZkDN9XPplXnyN/7/oB0VM+JsSdPlphv4B6OoD2mIH0wcYEFfP
-         gnegGQ6xS0Se/+Q3HWgDNQvYWSaxCzFd5Q1Ah6vJl4WnyCaoSLRasgCjzFlYPyyzj7Al
-         GAz5hBydOl97hbdcLGayBCwJ3l/avTjuxBPpcDADvbFzcN29TGpGTlLHS2jcp++rSqe5
-         surA==
-X-Gm-Message-State: AFqh2krXQBNFUjccEIxWT7naudzQORlEORod5e4q3Q0YUH2pMCFvlhYc
-        fk9Y97uWN6c8DApnjXZOww==
-X-Google-Smtp-Source: AMrXdXsZAaxkb8liK9Eg0Agrzx+atp3rsTQ0A3RfwyhbgDjsL/zbZk+48rzHpF3zbcavFStPOlPcvg==
-X-Received: by 2002:a92:d382:0:b0:30b:c7fa:7492 with SMTP id o2-20020a92d382000000b0030bc7fa7492mr42504098ilo.12.1673201569672;
-        Sun, 08 Jan 2023 10:12:49 -0800 (PST)
+        bh=7qhxtUq7YNJ7bl3pCYJbfdTHCaAMCit6bh55+/X+rmU=;
+        b=4TwODypv1pnOx//3N5uVFxg7bNVq7BuCVVD7sudY2QTbTShsWblCdwpKFgx2M0YpXA
+         wfDRBsTh2DNdwU2yR35Oxvp9UvydQt0J6LGzNFABWm1svCyO9ycjfMdi2ZJkJrdTYLA0
+         yV20XMnTYxLF70fwjo4sz/h7ex8Sje+Xl3W4tx65M+EL/yTAhBM43Lw5BQ2GCsd5JJll
+         Crlj5l1PhQ/XuDVHAUH9KAcmcrBeyc9b5v2CUDjcNiTrXid7gf3Pc6tnqUWoxsHKeJK5
+         yIbaFd2ibA/UVo4qiYLr0R2T//dmVLkChFe4TzxyLjQ/g8QQkh+4IjPPk58yVFh5KWQ6
+         ZKsg==
+X-Gm-Message-State: AFqh2kpjhKoKynx5XWgbfEc2Alsf4kBuCRWCVDe8onLMWaw/1v5nJiYG
+        nTI1kPBjKdpW3TcXrvLNMqbYv2E2Fg==
+X-Google-Smtp-Source: AMrXdXuvuxlOZv43Hc7jd8DEjfpKrIPqUnXGxYvEFgPC7BV1GuYTYK2rTUEp1jqzy7R/MWzKXM/rdA==
+X-Received: by 2002:a92:cc92:0:b0:2ff:f702:e446 with SMTP id x18-20020a92cc92000000b002fff702e446mr38179990ilo.13.1673201893158;
+        Sun, 08 Jan 2023 10:18:13 -0800 (PST)
 Received: from robh_at_kernel.org ([2605:ef80:8069:516a:f2b0:691e:4315:7c0f])
-        by smtp.gmail.com with ESMTPSA id v8-20020a927a08000000b0030005ae9241sm2089906ilc.43.2023.01.08.10.12.47
+        by smtp.gmail.com with ESMTPSA id l14-20020a92700e000000b0030c27c9eea4sm2038878ilc.33.2023.01.08.10.18.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 10:12:49 -0800 (PST)
-Received: (nullmailer pid 157023 invoked by uid 1000);
-        Sun, 08 Jan 2023 18:12:46 -0000
-Date:   Sun, 8 Jan 2023 12:12:46 -0600
+        Sun, 08 Jan 2023 10:18:12 -0800 (PST)
+Received: (nullmailer pid 162937 invoked by uid 1000);
+        Sun, 08 Jan 2023 18:18:09 -0000
+Date:   Sun, 8 Jan 2023 12:18:09 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-phy@lists.infradead.org,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy:
- correct clocks per variants
-Message-ID: <167320156602.156895.4809121171592550942.robh@kernel.org>
-References: <20221225115944.55425-1-krzysztof.kozlowski@linaro.org>
- <20221225115944.55425-2-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Del Regno <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-media@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 1/8] media: dt-bindings: qcom,venus: cleanup
+Message-ID: <167320188857.162862.16846104706244476575.robh@kernel.org>
+References: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221225115944.55425-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221227144102.79391-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -74,20 +72,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sun, 25 Dec 2022 12:59:44 +0100, Krzysztof Kozlowski wrote:
-> Different variants of Qualcomm USB3 DP PHY take different clocks
-> (according to upstream DTS and Linux driver):
-> 
->   sc7280-herobrine-crd.dtb: phy-wrapper@88e9000: clocks: [[43, 151], [39, 0], [43, 153]] is too short
->   sc7280-herobrine-crd.dtb: phy-wrapper@88e9000: clock-names:1: 'cfg_ahb' was expected
->   ...
->   sm8250-hdk.dtb: phy@88e9000: clocks: [[46, 185], [44, 0], [46, 187]] is too short
->   sm8250-hdk.dtb: phy@88e9000: clock-names:1: 'cfg_ahb' was expected
+On Tue, 27 Dec 2022 15:40:55 +0100, Krzysztof Kozlowski wrote:
+> Cleanup the Qualcomm SoC Venus bindings:
+>  - Drop unneeded blank lines and quotes,
+>  - Fix indentation in example to 4-space (to match DT schema bindings
+>    style),
+>  - Add SoC name in each title.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      | 72 ++++++++++++++++---
->  1 file changed, 62 insertions(+), 10 deletions(-)
+>  .../bindings/media/qcom,msm8916-venus.yaml    |  51 ++++----
+>  .../bindings/media/qcom,msm8996-venus.yaml    | 103 ++++++++---------
+>  .../bindings/media/qcom,sc7180-venus.yaml     |  61 +++++-----
+>  .../bindings/media/qcom,sc7280-venus.yaml     |  93 ++++++++-------
+>  .../bindings/media/qcom,sdm660-venus.yaml     | 109 +++++++++---------
+>  .../bindings/media/qcom,sdm845-venus-v2.yaml  |  71 ++++++------
+>  .../bindings/media/qcom,sdm845-venus.yaml     |  69 ++++++-----
+>  .../bindings/media/qcom,sm8250-venus.yaml     |  83 +++++++------
+>  8 files changed, 316 insertions(+), 324 deletions(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
