@@ -2,75 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FB1D6613EE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 08:26:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FE6E661535
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 13:51:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230205AbjAHH0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 02:26:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
+        id S233071AbjAHMvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 07:51:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232564AbjAHH0H (ORCPT
+        with ESMTP id S230363AbjAHMvA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 02:26:07 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701FE1D0FD
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Jan 2023 23:26:06 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id cf42so8343700lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Jan 2023 23:26:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UqXevD+zn0cGW9m9k0kXGrlQ8TzoQsHyNoh291zM7dc=;
-        b=sUnuEPXHH6fUG1s9exm7c9Pc0/RHn7HCRH9+vByolQJongJmtjaY0OKDvVdIOJ3AaE
-         f80Y2XaALUaZ8zU8gmeXKfpPlRHMAHTDuRaYqDAtOICUbXm/0eltJDMuzxCmH4+12sLx
-         Ml55dKG8sI5tpUYMphFKnCQMsEFpSe3G1Q8fS97iOgjSFKrcbNszx9V5W8V7VxoyXDAO
-         abdIU29c5igez7JAcHKHvvOR/I8Y+T1dMvdBC1zzPV0dXN/pmUa+A/88y72JwnwaTlyS
-         mKmlaJVtGBZVjdJ146spWlzO68xq880u/BX42kt22f2IDOXpc/UO5lGYckE7fM6jtc8F
-         CcQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UqXevD+zn0cGW9m9k0kXGrlQ8TzoQsHyNoh291zM7dc=;
-        b=Ge5oKXqK2LKteAZAc6OtjKNwmvYfeYWn9iWrZ6DZqw816oVqYUaKPTQJTLyKHka9Ih
-         ewWsEp6FYHIjny2vrFuXfLA/o/UP2Z9PjXg9JIUfRcRCbRaml+QodoYJD0az17Czw/4N
-         7tmicOW8qo8+CbtnyPF3DSK8cyAaIWeA+Mg2PUGw2UTMGLGxSgKd8D+FLyU/Vr6mwhKL
-         AvmHNAHYq3ebi1U4gJLHO/apoiFuOOk3reph4QdU75ppiG5QcVolICLG7A86cHBuavSo
-         oZO9TezJlVs75WS/cpmzT03+dba8eKrHymkMcrRlDxO8iARQFU3xe6I7RVgddfP2MJVi
-         H9qA==
-X-Gm-Message-State: AFqh2kphXLBOGJ6eT9RH0ZefMHJzIrfBQusWXhtf5hLzWSsoOm5ImQis
-        12RdHDkbBr8F9OO8/ZWr+35xZA==
-X-Google-Smtp-Source: AMrXdXvU9lFIeEcTQXT7xd+gdplEDWKgKjlA32HvtX6wcC3eFNBqxngXu52ZKNxAwgDKo4DEFXwH3w==
-X-Received: by 2002:a05:6512:3901:b0:4a4:68b7:e71c with SMTP id a1-20020a056512390100b004a468b7e71cmr16493081lfu.6.1673162764842;
-        Sat, 07 Jan 2023 23:26:04 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x2-20020a056512130200b004a8f824466bsm927414lfu.188.2023.01.07.23.26.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 23:26:04 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 12/12] drm/bridge: lt9611: stop filtering modes via the table
-Date:   Sun,  8 Jan 2023 09:25:55 +0200
-Message-Id: <20230108072555.2905260-13-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230108072555.2905260-1-dmitry.baryshkov@linaro.org>
-References: <20230108072555.2905260-1-dmitry.baryshkov@linaro.org>
+        Sun, 8 Jan 2023 07:51:00 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A22B21AB;
+        Sun,  8 Jan 2023 04:50:59 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A947BB80976;
+        Sun,  8 Jan 2023 12:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41E7C433EF;
+        Sun,  8 Jan 2023 12:50:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673182256;
+        bh=rDIT6gOl0JO4Pi6BQxe7HUa29MorRTACERDszgVOHnE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=NvemCsLHeLLV+8PVO2pbhxbb52p3xtb96zE7/xXKTz1izmy3Rw0KxsxjRIFJn/SlS
+         oFXd4nidiwMNH23ZaBiUh6nxpg9P1mI2CYC2aQKuaYnCTnJ+BZocXBRtTUum4LhmK2
+         lCftg30KLGlQzvHx82O3xsXbGp7KvX4O0CKEXJVvex175baGrwtul/lzWabC67km8f
+         JPQU9cheLe38Cen77Wj5tFSIg38d9JIJPNq7Hm8wLfpEdMTgo+y3n2jo6MhuZWXScP
+         MasUqRGgcCAx5v9Wofq/ZbAEwj/GxGoTLz5Msdtto1NCPWB4BaRqz3EAv9zXRM+E0H
+         80I/jiXRfWrGA==
+Date:   Sun, 8 Jan 2023 13:04:22 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] iio: adc: qcom-spmi-adc5: define
+ ADC5_BAT_ID_100K_PU channel
+Message-ID: <20230108130422.76493bf8@jic23-huawei>
+In-Reply-To: <20230106-pm7250b-bat_id-v1-1-82ca8f2db741@fairphone.com>
+References: <20230106-pm7250b-bat_id-v1-0-82ca8f2db741@fairphone.com>
+        <20230106-pm7250b-bat_id-v1-1-82ca8f2db741@fairphone.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,83 +63,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The lt9611 bridge can support different modes, it makes no sense to list
-them in the table. Drop the table and check the number of interfaces
-using the fixed value.
+On Fri, 06 Jan 2023 16:39:41 +0100
+Luca Weiss <luca.weiss@fairphone.com> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/bridge/lontium-lt9611.c | 41 +++----------------------
- 1 file changed, 4 insertions(+), 37 deletions(-)
+> Define the ADC channel used for battery identification purposes so it
+> can be used in drivers.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Applied to the togreg branch of iio.git and pushed out as testing for
+0-day to take a look at it.
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 82af1f954cc6..5acee43f1547 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -84,24 +84,6 @@ static const struct regmap_config lt9611_regmap_config = {
- 	.num_ranges = ARRAY_SIZE(lt9611_ranges),
- };
- 
--struct lt9611_mode {
--	u16 hdisplay;
--	u16 vdisplay;
--	u8 vrefresh;
--	u8 lanes;
--	u8 intfs;
--};
--
--static struct lt9611_mode lt9611_modes[] = {
--	{ 3840, 2160, 30, 4, 2 }, /* 3840x2160 24bit 30Hz 4Lane 2ports */
--	{ 1920, 1080, 60, 4, 1 }, /* 1080P 24bit 60Hz 4lane 1port */
--	{ 1920, 1080, 30, 3, 1 }, /* 1080P 24bit 30Hz 3lane 1port */
--	{ 1920, 1080, 24, 3, 1 },
--	{ 720, 480, 60, 4, 1 },
--	{ 720, 576, 50, 2, 1 },
--	{ 640, 480, 60, 2, 1 },
--};
--
- static struct lt9611 *bridge_to_lt9611(struct drm_bridge *bridge)
- {
- 	return container_of(bridge, struct lt9611, bridge);
-@@ -603,21 +585,6 @@ static int lt9611_regulator_enable(struct lt9611 *lt9611)
- 	return 0;
- }
- 
--static struct lt9611_mode *lt9611_find_mode(const struct drm_display_mode *mode)
--{
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(lt9611_modes); i++) {
--		if (lt9611_modes[i].hdisplay == mode->hdisplay &&
--		    lt9611_modes[i].vdisplay == mode->vdisplay &&
--		    lt9611_modes[i].vrefresh == drm_mode_vrefresh(mode)) {
--			return &lt9611_modes[i];
--		}
--	}
--
--	return NULL;
--}
--
- static enum drm_connector_status lt9611_bridge_detect(struct drm_bridge *bridge)
- {
- 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
-@@ -832,12 +799,12 @@ static enum drm_mode_status lt9611_bridge_mode_valid(struct drm_bridge *bridge,
- 						     const struct drm_display_info *info,
- 						     const struct drm_display_mode *mode)
- {
--	struct lt9611_mode *lt9611_mode = lt9611_find_mode(mode);
- 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
- 
--	if (!lt9611_mode)
--		return MODE_BAD;
--	else if (lt9611_mode->intfs > 1 && !lt9611->dsi1)
-+	if (mode->hdisplay >= 3840 && drm_mode_vrefresh(mode) >= 31)
-+		return MODE_CLOCK_HIGH;
-+
-+	if (mode->hdisplay > 2000 && !lt9611->dsi1)
- 		return MODE_PANEL;
- 	else
- 		return MODE_OK;
--- 
-2.39.0
+If anyone else has comments, then there is still time as I won't push
+this out as a non-rebasing branch for a few days at least
+(and I'm aware I picked it up very quickly :)
+
+
+Thanks,
+
+Jonathan
+
+> ---
+>  drivers/iio/adc/qcom-spmi-adc5.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index 821fee60a765..8c33da9de257 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -543,6 +543,8 @@ static const struct adc5_channels adc5_chans_pmic[ADC5_MAX_CHANNEL] = {
+>  					SCALE_HW_CALIB_DEFAULT)
+>  	[ADC5_XO_THERM_100K_PU]	= ADC5_CHAN_TEMP("xo_therm", 0,
+>  					SCALE_HW_CALIB_XOTHERM)
+> +	[ADC5_BAT_ID_100K_PU]	= ADC5_CHAN_TEMP("bat_id", 0,
+> +					SCALE_HW_CALIB_DEFAULT)
+>  	[ADC5_AMUX_THM1_100K_PU] = ADC5_CHAN_TEMP("amux_thm1_100k_pu", 0,
+>  					SCALE_HW_CALIB_THERM_100K_PULLUP)
+>  	[ADC5_AMUX_THM2_100K_PU] = ADC5_CHAN_TEMP("amux_thm2_100k_pu", 0,
+> 
 
