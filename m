@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60107661829
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 19:31:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 524F8661837
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 19:41:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234377AbjAHSbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 13:31:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56098 "EHLO
+        id S233278AbjAHSlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 13:41:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236395AbjAHSbO (ORCPT
+        with ESMTP id S229520AbjAHSlv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 13:31:14 -0500
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEF7BC14;
-        Sun,  8 Jan 2023 10:31:13 -0800 (PST)
-Received: by mail-il1-f182.google.com with SMTP id a9so3229451ilp.6;
-        Sun, 08 Jan 2023 10:31:13 -0800 (PST)
+        Sun, 8 Jan 2023 13:41:51 -0500
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BE2D2CC;
+        Sun,  8 Jan 2023 10:41:50 -0800 (PST)
+Received: by mail-il1-f169.google.com with SMTP id o13so3853510ilc.7;
+        Sun, 08 Jan 2023 10:41:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nXBbO2P+g4sf54JRtHUcYoNVdaz5jhylNXMvr/njs6o=;
-        b=VfiJWhWFWAEMKi5MJbyMiRMA5XAF4YKghKA7g99hqznLtNFiv3HHZ1CkzmZOHy/70w
-         E5GOF8AG/rYtUROzHrfJe687fJBXpn10CCfsfbxEbtloKjmPs5NCftibJUcyEQflb8De
-         iRj25nNZb9L4aZBtINt66FAWcd+lDF/fPTiLA4cZnDxKxePW5w/WgRwEYMImS2l0fazB
-         F8b9DMngr4jlMLHJEuF1o+djjibDmPlvtPJFzO6E2ElmKgivncYCgStsy2bjGnYCvHbo
-         0c1AfBms4mXutSPyqFWoAGCQCx536Q/bpJx7DlWzjBdyt8qKiTgLfYIXjG3vQcygXHYZ
-         R3fg==
-X-Gm-Message-State: AFqh2kpibjrNWDV0dbJAHAcb8eDRFpcJPxHssldgB4FuuT2YKtnDzZ0w
-        qelr1Bkp0RjW5Cy5b2v6tA==
-X-Google-Smtp-Source: AMrXdXugH3E0ejS19Wkv/PJBMkYM23FfNcI74V9Fr5FWS9x0/SUgUUs+79aDicB6uQD5q0iMLDMMbA==
-X-Received: by 2002:a92:ce48:0:b0:30c:6616:6fb with SMTP id a8-20020a92ce48000000b0030c661606fbmr13768343ilr.2.1673202672349;
-        Sun, 08 Jan 2023 10:31:12 -0800 (PST)
+        bh=UJwSsdN78Mw/74fCf2IAdNqU5RKJJMT26secV+Cj7Jo=;
+        b=vqwa3DxC5EmhDa9EhyqKKmRCX/JnWwC/nZVMm6WZBWs9oMJ8Gsvsd5B+kCoMAPhdP5
+         TMcmcUZIfma+6GvIRaRntMbZiisWTAQMeFX8pBwH0UKprCSpTGDxkE3h/VPogWSth29U
+         +nUbaXeytpMKHvVTy63OWdrkwhdQabK/IpXUl5JJj0ijoPgJm3gxbGy+euYPUe7ARVCj
+         /cq1ZGg0eC+b8s5q0Ol1yZtq56z0+DSQNBmASHNne1895DqFtljCQAdD/fB9FyIBKfQw
+         TKTPfA1heTDYVjkolM8VgPe38YcwIOOpyDHtnuMgcnO0Tl6YCY1p6vDQWcUgpRGOKvZE
+         OEDQ==
+X-Gm-Message-State: AFqh2kpER0S+YfnqZvLZ0ouoXJe81BRVA4DxUoavrVraDlXKP49ml1Mw
+        Ji6sZfXC2/T5lrq1kIBe1w==
+X-Google-Smtp-Source: AMrXdXspwZ2mLgkCWVegw1f2MHlYfn3soxwbwdp9FqgJXfuiubLWO3mZt9Z4CWmZySB4ynG/BFClEQ==
+X-Received: by 2002:a92:cec4:0:b0:30b:e957:1e78 with SMTP id z4-20020a92cec4000000b0030be9571e78mr40237996ilq.29.1673203309380;
+        Sun, 08 Jan 2023 10:41:49 -0800 (PST)
 Received: from robh_at_kernel.org ([2605:ef80:8069:516a:f2b0:691e:4315:7c0f])
-        by smtp.gmail.com with ESMTPSA id 3-20020a056e020ca300b00304ae88ebebsm2104584ilg.88.2023.01.08.10.31.10
+        by smtp.gmail.com with ESMTPSA id g93-20020a028566000000b003781331d909sm2130451jai.9.2023.01.08.10.41.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 10:31:11 -0800 (PST)
-Received: (nullmailer pid 177585 invoked by uid 1000);
-        Sun, 08 Jan 2023 18:31:09 -0000
-Date:   Sun, 8 Jan 2023 12:31:09 -0600
+        Sun, 08 Jan 2023 10:41:48 -0800 (PST)
+Received: (nullmailer pid 188886 invoked by uid 1000);
+        Sun, 08 Jan 2023 18:41:46 -0000
+Date:   Sun, 8 Jan 2023 12:41:46 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, Rohit kumar <rohitkr@codeaurora.org>,
+        Taniya Das <quic_tdas@quicinc.com>, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org
-Subject: Re: [PATCH 3/3] ASoC: dt-bindings: qcom,lpass-cpu: Correct and
- constrain clocks, interrupts, reg
-Message-ID: <167320266826.177510.14546851275083337747.robh@kernel.org>
-References: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
- <20221227163135.102559-3-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 01/16] dt-bindings: clock: qcom,gcc-msm8998: drop
+ core_bi_pll_test_se
+Message-ID: <167320330549.188812.3791526731906955387.robh@kernel.org>
+References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org>
+ <20221228185237.3111988-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221227163135.102559-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221228185237.3111988-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -75,31 +72,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 27 Dec 2022 17:31:35 +0100, Krzysztof Kozlowski wrote:
-> The binding allowed multiple variations and number of
-> reg/interrupts/clocks properties for SC7180 and SC7280.  Maybe this was
-> done for different use-cases of LPASS CPU audio node, but DTS is
-> supposed to be a complete picture of the hardware.  The upstreamed
-> SC7180 and SC7280 DTSes contain the widest set of these
-> reg/interrupts/clocks, sometimes being even sum of these different
-> variations.
+On Wed, 28 Dec 2022 20:52:22 +0200, Dmitry Baryshkov wrote:
+> The test clock apparently it's not used by anyone upstream. Remove it.
 > 
-> Correct and narrow the reg, interrupts and clocks to match existing DTS:
-> 
->   sc7280-herobrine-evoker-lte.dtb: audio@3987000: clock-names: 'oneOf' conditional failed, one must be fixed:
->     ['aon_cc_audio_hm_h', 'audio_cc_ext_mclk0', 'core_cc_sysnoc_mport_core', 'core_cc_ext_if0_ibit', 'core_cc_ext_if1_ibit',
->      'audio_cc_codec_mem', 'audio_cc_codec_mem0', 'audio_cc_codec_mem1', 'audio_cc_codec_mem2', 'aon_cc_va_mem0'] is too long
->     'core_cc_sysnoc_mport_core' was expected
->     'audio_cc_codec_mem' was expected
->     'audio_cc_codec_mem0' was expected
->     'audio_cc_codec_mem1' was expected
->     'audio_cc_codec_mem2' was expected
->     'aon_cc_va_mem0' was expected
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/sound/qcom,lpass-cpu.yaml        | 131 +++++++++---------
->  1 file changed, 62 insertions(+), 69 deletions(-)
+>  .../devicetree/bindings/clock/qcom,gcc-msm8998.yaml         | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
