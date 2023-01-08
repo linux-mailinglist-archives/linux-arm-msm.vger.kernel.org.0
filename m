@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C61B96616FB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 17:57:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D911661708
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jan 2023 17:57:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234377AbjAHQ5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 11:57:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44106 "EHLO
+        id S235893AbjAHQ51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 11:57:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234558AbjAHQ5J (ORCPT
+        with ESMTP id S234683AbjAHQ5J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 8 Jan 2023 11:57:09 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D3560FF
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 08:57:07 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id d30so4621210lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 08:57:07 -0800 (PST)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6F9617B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 08:57:08 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id cf42so9556696lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 08:57:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wA5AiX0NaM0jBANyKexsBLsA+hCFuPZNSNXMRY2+crg=;
-        b=LOQ/BphYVdNvhnf/egBtgsBkeBq/iyUPPVmRYm/nO1Z2O/dLMm6P9a10dVL2LYVnhl
-         ZJaYQRLfGZl/djnZfUvvq/IVtjk6wRfCAj1YyhM/95zVXPyEgzEnKUTme9I+SMhOZ9VN
-         tqYXXkxjX/u2nBvR//SmiqFTaryGDHf3YJQTeg9FD4gShpUC1sMDNWs0Z21DtX0mthOm
-         9TscPQaDvJVIComZkNhN1l6r+58zIS6bs3Lgcr54urTVgsypGbicAoC+XXHkmXKmZPQS
-         0E/A4XmlBfPj4mMpIWhCrToNJ2cIJ3pOHxidxshz4NcgPlb6yfJkRMkeoBGOk7P/4Ygr
-         h1Cg==
+        bh=Jsw80iE4Bz5Oyb4Yui9qzxM/xJUIMCcqN7Ll6Uw4NDY=;
+        b=alH/lGvw0HcCLjFAslrqET+DjUrHL52unC6JngmkQo3R+u4GToTofXI41ORv5lGv3x
+         V6lJn+39OHyT5/6+l2VRTjDOV8APqJVdBOmtqskna7BCh+31sle2sstwtuPOApV10Vtb
+         2pTnwOmsuzCPUBnyDh6ZyuOU67os8gdzmNqeVTcZrECtTijODRYtMLJD26M2gH9Tan3H
+         Ko1KerXL7SWgPX5UN0kCSgkvBLQcpE8kHH44fDzM4rILX0Ep/BwtLhkgsDC56+WsYCRg
+         JHSQWRaZvVIE8xk6XoK5VJBrqS0DfVHbrfbmXSdeWSLIVD9Cgi99blLEw+R9W5f+E4HV
+         Ejow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wA5AiX0NaM0jBANyKexsBLsA+hCFuPZNSNXMRY2+crg=;
-        b=2sPnaQy/NIF/UD0qCuj3orRAi/dQR7yOrMIgkDAPd2e6M6VBG/+8VPeJfWoKswCbD5
-         Wcuv8oXBRobAIuohuMwwakxhn+/jO5m7YL6VmJD8b0/xLC0BWBIupZgNYHI9+OKtLRn8
-         OF+Vb0F2AJRDwQ88RxrTB/67t49ebPC++dpsMnTv8deONhs0ufBMEK14K5RBvY7r/0lE
-         M3TlCRcIGYDMNvgJeClzCzTnoe9qbcZlGT5AqxKLykzg1OzIEplF/vhrlGdGLOZQSzsF
-         mrUboFpN02s60tqsOd2ka5eFC4Ly/uvZOzPujlzsqEWvmD99uTWd/haVqFh0YXAR82WD
-         fvuw==
-X-Gm-Message-State: AFqh2kqx7zMWUIjk6YemVKe5pvhZ8rcMP4+bbqsRW8lUVcEVlX4YVhzj
-        Q3KgvdSFc+H85fJvzXBZ+A0Baw==
-X-Google-Smtp-Source: AMrXdXsBQvfRM2B1bpbJSaSfpXHViTtgbN+E0OM0dXWVg6QUFNkCB/niTh1efMBo9JZvIOLeeegg2g==
-X-Received: by 2002:a05:6512:1111:b0:4cc:7e0e:8d5c with SMTP id l17-20020a056512111100b004cc7e0e8d5cmr772906lfg.37.1673197026860;
-        Sun, 08 Jan 2023 08:57:06 -0800 (PST)
+        bh=Jsw80iE4Bz5Oyb4Yui9qzxM/xJUIMCcqN7Ll6Uw4NDY=;
+        b=i7W4Vo9uE3dXW278a5pm3UhQsDrt903Fb96IIuR5Qnjl7341C5LWDpI2XLeXaQ7s7u
+         FeZZe6IppgL88+c3b9UfrQ+RAU0qsUl0NNN5lfIFmo+kuolYkccAGYtjvng+4xVWa4DN
+         fZknA2o3IDPe9V7aDKPS6WR3n+f0QQM7xXC1eW9qfjwWBBl7XVWuIOyr4Ngraf2F+o1J
+         04p7im1g0fF0NwGTIalLvwwYx5FPgmuHpkhb9kBhvDMgTXDHdlE1CHmrT27laH3wC1N4
+         IFuESvWD8wHKA4DmRP2R9oe1ow3kf9QFSj5hPkhygD4KiGOGdPESICqh/0KwOTQZmqzs
+         sZGA==
+X-Gm-Message-State: AFqh2krQ0ytQ//vEhpDmiTgqFkxJhpCckMqgEWCdWTfo3C84a/OKcuax
+        zNsaKYiHu6cpGtGY3Qyp5UuCFQ==
+X-Google-Smtp-Source: AMrXdXtFKEVoP2iuRUwM0axgQM+w8vmZcyRa7+dy2pWh64vnZwOeWLem/37rL7Xv8qcFt0EsZpOOQA==
+X-Received: by 2002:a05:6512:3e1b:b0:4b5:5616:ecd2 with SMTP id i27-20020a0565123e1b00b004b55616ecd2mr21993729lfv.55.1673197027668;
+        Sun, 08 Jan 2023 08:57:07 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
         by smtp.gmail.com with ESMTPSA id s2-20020a056512202200b004b561b211adsm1138323lfs.254.2023.01.08.08.57.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 08:57:06 -0800 (PST)
+        Sun, 08 Jan 2023 08:57:07 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>,
         Andrzej Hajda <andrzej.hajda@intel.com>,
@@ -61,9 +61,9 @@ To:     Vinod Koul <vkoul@kernel.org>,
 Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 12/13] drm/bridge: lt9611: stop filtering modes via the table
-Date:   Sun,  8 Jan 2023 18:56:55 +0200
-Message-Id: <20230108165656.136871-13-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 13/13] drm/bridge: lt9611: properly program the dual host mode
+Date:   Sun,  8 Jan 2023 18:56:56 +0200
+Message-Id: <20230108165656.136871-14-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230108165656.136871-1-dmitry.baryshkov@linaro.org>
 References: <20230108165656.136871-1-dmitry.baryshkov@linaro.org>
@@ -78,83 +78,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The lt9611 bridge can support different modes, it makes no sense to list
-them in the table. Drop the table and check the number of interfaces
-using the fixed value.
+If the bridge is connected using both DSI ports, the driver should use
+both of them all the time. Correct programming sequence to always use
+dual-port mode if both dsi0 and dsi1 are connected.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 41 +++----------------------
- 1 file changed, 4 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 28 ++++++++++++-------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 82af1f954cc6..df9f015aa3a0 100644
+index df9f015aa3a0..561da6bd2698 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -84,24 +84,6 @@ static const struct regmap_config lt9611_regmap_config = {
- 	.num_ranges = ARRAY_SIZE(lt9611_ranges),
- };
+@@ -118,7 +118,7 @@ static int lt9611_mipi_input_digital(struct lt9611 *lt9611,
+ 		{ 0x8306, 0x0a },
+ 	};
  
--struct lt9611_mode {
--	u16 hdisplay;
--	u16 vdisplay;
--	u8 vrefresh;
--	u8 lanes;
--	u8 intfs;
--};
--
--static struct lt9611_mode lt9611_modes[] = {
--	{ 3840, 2160, 30, 4, 2 }, /* 3840x2160 24bit 30Hz 4Lane 2ports */
--	{ 1920, 1080, 60, 4, 1 }, /* 1080P 24bit 60Hz 4lane 1port */
--	{ 1920, 1080, 30, 3, 1 }, /* 1080P 24bit 30Hz 3lane 1port */
--	{ 1920, 1080, 24, 3, 1 },
--	{ 720, 480, 60, 4, 1 },
--	{ 720, 576, 50, 2, 1 },
--	{ 640, 480, 60, 2, 1 },
--};
--
- static struct lt9611 *bridge_to_lt9611(struct drm_bridge *bridge)
- {
- 	return container_of(bridge, struct lt9611, bridge);
-@@ -603,21 +585,6 @@ static int lt9611_regulator_enable(struct lt9611 *lt9611)
- 	return 0;
- }
+-	if (mode->hdisplay == 3840)
++	if (lt9611->dsi1_node)
+ 		reg_cfg[1].def = 0x03;
  
--static struct lt9611_mode *lt9611_find_mode(const struct drm_display_mode *mode)
--{
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(lt9611_modes); i++) {
--		if (lt9611_modes[i].hdisplay == mode->hdisplay &&
--		    lt9611_modes[i].vdisplay == mode->vdisplay &&
--		    lt9611_modes[i].vrefresh == drm_mode_vrefresh(mode)) {
--			return &lt9611_modes[i];
--		}
--	}
--
--	return NULL;
--}
--
- static enum drm_connector_status lt9611_bridge_detect(struct drm_bridge *bridge)
- {
- 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
-@@ -832,12 +799,12 @@ static enum drm_mode_status lt9611_bridge_mode_valid(struct drm_bridge *bridge,
- 						     const struct drm_display_info *info,
- 						     const struct drm_display_mode *mode)
- {
--	struct lt9611_mode *lt9611_mode = lt9611_find_mode(mode);
- 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+ 	return regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+@@ -191,16 +191,6 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
+ 		{ 0x832d, 0x38 },
+ 		{ 0x8331, 0x08 },
+ 	};
+-	const struct reg_sequence reg_cfg2[] = {
+-		{ 0x830b, 0x03 },
+-		{ 0x830c, 0xd0 },
+-		{ 0x8348, 0x03 },
+-		{ 0x8349, 0xe0 },
+-		{ 0x8324, 0x72 },
+-		{ 0x8325, 0x00 },
+-		{ 0x832a, 0x01 },
+-		{ 0x834a, 0x10 },
+-	};
+ 	u8 pol = 0x10;
  
--	if (!lt9611_mode)
--		return MODE_BAD;
--	else if (lt9611_mode->intfs > 1 && !lt9611->dsi1)
-+	if (mode->hdisplay >= 3840 && drm_mode_vrefresh(mode) >= 31)
-+		return MODE_CLOCK_HIGH;
+ 	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
+@@ -209,10 +199,18 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
+ 		pol |= 0x1;
+ 	regmap_write(lt9611->regmap, 0x831d, pol);
+ 
+-	if (mode->hdisplay == 3840)
+-		regmap_multi_reg_write(lt9611->regmap, reg_cfg2, ARRAY_SIZE(reg_cfg2));
+-	else
+-		regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
++	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
++	if (lt9611->dsi1_node) {
++		unsigned int hact = mode->hdisplay;
 +
-+	if (mode->hdisplay > 2000 && !lt9611->dsi1_node)
- 		return MODE_PANEL;
- 	else
- 		return MODE_OK;
++		hact >>= 2;
++		hact += 0x50;
++		hact = min(hact, 0x3e0U);
++		regmap_write(lt9611->regmap, 0x830b, hact / 256);
++		regmap_write(lt9611->regmap, 0x830c, hact % 256);
++		regmap_write(lt9611->regmap, 0x8348, hact / 256);
++		regmap_write(lt9611->regmap, 0x8349, hact % 256);
++	}
+ 
+ 	regmap_write(lt9611->regmap, 0x8326, pcr_m);
+ 
 -- 
 2.39.0
 
