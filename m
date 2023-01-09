@@ -2,72 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1837662880
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:30:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B2A5662889
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:31:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231586AbjAIOal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 09:30:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55982 "EHLO
+        id S232776AbjAIOaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 09:30:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231811AbjAIOak (ORCPT
+        with ESMTP id S232429AbjAIOar (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 09:30:40 -0500
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975E5A1A7;
-        Mon,  9 Jan 2023 06:30:39 -0800 (PST)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-1322d768ba7so8758398fac.5;
-        Mon, 09 Jan 2023 06:30:39 -0800 (PST)
+        Mon, 9 Jan 2023 09:30:47 -0500
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67FCAE4F;
+        Mon,  9 Jan 2023 06:30:46 -0800 (PST)
+Received: by mail-oi1-f175.google.com with SMTP id h185so7238764oif.5;
+        Mon, 09 Jan 2023 06:30:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Dw1mx8WSg2YN8QfEa/EeEF+6wNa6Dwq8nHk5GLyrbCA=;
-        b=qFj3PFfC4C9Q6c2VQ2G+0JbmW3bSJLrjAzTKO9KB/hQHXSrQWXWDtCNmWq49kOdtcl
-         7qzvCQKswpzqP9eY9n27WKPV8WX4Xx4wlf00oCQwZDhjqhBj3gDxoYr8uQusKOghbSYP
-         /9IHaV/SNxKVu2g6+H6F4963TLxOBb+1QGs9c3N03EVO6H8YARI30N0wVoveDSGYCNKG
-         9tzrtiG7carBXUxwsUeTkuVr+htNJZbQZ/OQLSxxrdJNhcphxA+M6GxImV4rCWEbCK+j
-         j4kPMqRdCBH/sfQ4WqxJ5vHnePpzovw3XYoxeqbKI6ROcrIEkKIApkArmZFgizwfT7fs
-         aSEg==
-X-Gm-Message-State: AFqh2kqbXZ19PIkxHSwboVzKlwPFmehIhVJ0NGWAFz2bVxHnTIB8Lyrg
-        VU2UuANRdiYsz42ynfogHf2CGk9XLw==
-X-Google-Smtp-Source: AMrXdXuhXryTUekpsWEZueO52n4IgWGu3chWGQzHGt/JQgLTSQ+mhMBV+oqTEtDmzBPk3PRplCEiHw==
-X-Received: by 2002:a05:6871:4497:b0:151:89b:a657 with SMTP id ne23-20020a056871449700b00151089ba657mr9629377oab.19.1673274638814;
-        Mon, 09 Jan 2023 06:30:38 -0800 (PST)
+        bh=CdKdj+hcNjpReSeZV+IRCHnqweaFjAm/lB18fZu7Ecs=;
+        b=srvxzlE+4kFF2VriB0DVJL/w03tP6hF8ib0+OA12Nmkm77qv5D7ZlTg5iZA29dT8Sa
+         Snvs6AqUbUzTcFzFOLF41ySDpzeo5zwfM4gB5AXFIEzknDdMfbxg3VqT1LjKeMd33Z94
+         xp0QWKcwiTNc9A1DD71YMF1uHg5jXK2rLHI95ppozPOG6+UQGBF8xrP9JDFdhfjUvtwN
+         e7gC8Z+sqfUxSm+kxQAkMiZmJ0UNTLoqUkWHEiG5Rz9MU2y4PA0V2oKaurhts98Wgli0
+         MuguUqGBRi/q+kKWIjKAUGuAhP5UQ4mcKFJ0MIEfSHOasB4rI6FG/57Gd30Zdqu0bQ9f
+         1aaA==
+X-Gm-Message-State: AFqh2kruZ3mbSl6NafmpCP6Phx+Gtyn2Ikibrh+GB/I6De3x5aEne8lx
+        k+H4x6edRTBZniod56MxfN6wXWRfOw==
+X-Google-Smtp-Source: AMrXdXvLsXaA1l+xawf29SNVTbGb1eFYw2xK7w2qEUU+ZI5opjQejHIQwtP2LLsB7Bt7cJaAHsg9ag==
+X-Received: by 2002:aca:2817:0:b0:363:b7d5:3efc with SMTP id 23-20020aca2817000000b00363b7d53efcmr13017160oix.53.1673274645844;
+        Mon, 09 Jan 2023 06:30:45 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id eq2-20020a056870a90200b0014fb4bdc746sm4235849oab.8.2023.01.09.06.30.37
+        by smtp.gmail.com with ESMTPSA id a18-20020a544e12000000b00363760f96dcsm3903203oiy.42.2023.01.09.06.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 06:30:38 -0800 (PST)
-Received: (nullmailer pid 237515 invoked by uid 1000);
+        Mon, 09 Jan 2023 06:30:45 -0800 (PST)
+Received: (nullmailer pid 237519 invoked by uid 1000);
         Mon, 09 Jan 2023 14:30:36 -0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     devicetree@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        Rob Clark <robdclark@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        dri-devel@lists.freedesktop.org
-In-Reply-To: <20230103-topic-sm8550-upstream-mdss-dsi-v3-2-660c3bcb127f@linaro.org>
-References: <20230103-topic-sm8550-upstream-mdss-dsi-v3-0-660c3bcb127f@linaro.org>
- <20230103-topic-sm8550-upstream-mdss-dsi-v3-2-660c3bcb127f@linaro.org>
-Message-Id: <167327376724.61122.3156617498910384494.robh@kernel.org>
-Subject: Re: [PATCH v3 2/7] dt-bindings: display/msm: document DPU on SM8550
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>
+In-Reply-To: <20230109005209.247356-2-dmitry.baryshkov@linaro.org>
+References: <20230109005209.247356-1-dmitry.baryshkov@linaro.org>
+ <20230109005209.247356-2-dmitry.baryshkov@linaro.org>
+Message-Id: <167327379921.67772.10477255081535965551.robh@kernel.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: add core clock to the
+ mdss bindings
 Date:   Mon, 09 Jan 2023 08:30:36 -0600
 X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -75,44 +69,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 09 Jan 2023 11:15:18 +0100, Neil Armstrong wrote:
-> Document the DPU hardware found on the Qualcomm SM8550 platform.
+On Mon, 09 Jan 2023 02:52:06 +0200, Dmitry Baryshkov wrote:
+> Add (optional) core clock to the mdss bindings to let the MDSS driver
+> access harware registers before MDP driver probes.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/display/msm/qcom,sm8550-dpu.yaml      | 134 +++++++++++++++++++++
->  1 file changed, 134 insertions(+)
+>  .../bindings/display/msm/qcom,mdss.yaml       | 34 ++++++++++++++-----
+>  1 file changed, 26 insertions(+), 8 deletions(-)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.example.dts:21:18: fatal error: dt-bindings/clock/qcom,sm8550-dispcc.h: No such file or directory
-   21 |         #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [scripts/Makefile.lib:434: Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1508: dt_binding_check] Error 2
+Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109005209.247356-2-dmitry.baryshkov@linaro.org
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230103-topic-sm8550-upstream-mdss-dsi-v3-2-660c3bcb127f@linaro.org
+mdss@1a00000: mdp@1a01000:compatible:0: 'qcom,mdp5' was expected
+	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+mdss@1a00000: mdp@1a01000:compatible: ['qcom,msm8953-mdp5', 'qcom,mdp5'] is too long
+	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+mdss@900000: phy@9a0600:compatible:0: 'qcom,hdmi-phy-8996' is not one of ['qcom,dsi-phy-14nm', 'qcom,dsi-phy-14nm-660', 'qcom,dsi-phy-14nm-8953', 'qcom,dsi-phy-20nm', 'qcom,dsi-phy-28nm-hpm', 'qcom,dsi-phy-28nm-lp']
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
+	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
+	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
+	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
+	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
 
