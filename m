@@ -2,101 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AD48662BA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 17:50:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4690662C1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 18:04:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231365AbjAIQun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 11:50:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42428 "EHLO
+        id S229557AbjAIRDy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 12:03:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237154AbjAIQuU (ORCPT
+        with ESMTP id S237470AbjAIRCz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 11:50:20 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED65517072;
-        Mon,  9 Jan 2023 08:49:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 43644CE10C2;
-        Mon,  9 Jan 2023 16:49:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E475C433F1;
-        Mon,  9 Jan 2023 16:49:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673282955;
-        bh=Zs1I9hWh8DgJCvcIXxrzn5p90o5lzJJFhhZ5y5LaxTE=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=p61IZ6WTpB8e8+dn4v8BtFUc7JGNi54Vd0i6Nvicq07pr7S8PtUqGbFAchDC4orhu
-         E8mmU3g9MlDmT42YSWtDkT2bgoAt/wOr5pcaVkv9fd9z8LD4eOeFq+YCjxWJ8AQ17s
-         X9L7TphpQvMvYmOI9IB/fYn6OfKL1hOefx0Ds2YRqw6mQ5iztpskoLD9O4XS+5vATP
-         7a4/2RWTsOGxGXiGBCLRJxZ368/JLx3Lx3+UyRRD+nnL9xttarHeO4CM/3heR70UyK
-         Lx1/H/m5hIKlN9Nc5hGCUXDT9YajYDeDJCf29kzkt2F/AITEBIi5NhAPvgP5G2+JAQ
-         gKfRUTUlAJerw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
-References: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/3] ASoC: dt-bindings: qcom,lpass-cpu: Document required-opps
-Message-Id: <167328295277.323147.12695338235961954458.b4-ty@kernel.org>
-Date:   Mon, 09 Jan 2023 16:49:12 +0000
+        Mon, 9 Jan 2023 12:02:55 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D2B40C18
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 09:02:41 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id v23so5270211plo.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 09:02:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nr//lLmsu+5fOQNN1eNl3Pyv0bUQYnhf+WLJs/mJAHU=;
+        b=kzBScnJ/PyPuu5Eq8Etlv8BjFlbNi0zTYLdPEipVJArsA9Pmdb2rekLFtesElFTdCq
+         nPAX11Ya8Ep4jBWvZEHnzwVpPY8CtPyLjW+xBiIUE2sQkln68RFlGs9ca0KFgoobJL3y
+         1F2BhONV/VqSaMUbhjnZoXiwCai//lzxVRE3jc3AllHfAzvwFeU/o9SCfkVYqcDpGiA0
+         4fjhgmrmKyrY7DfDjdiLcQXlwbD9EX3pjxxRO+Q/mMt2Fq0Hbm5gDnM5DrZoOiFvHW6K
+         fE/cnL/SCiyR5XcMserOkQPh4tv8Z3qilQk9OS2sa1bR5EJmK+7QgikBt9UXZ9j9VBDV
+         P++g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Nr//lLmsu+5fOQNN1eNl3Pyv0bUQYnhf+WLJs/mJAHU=;
+        b=fFYx3BeTQTtcuE+JBGyMGn26UMT56SK8y7V65zCIZ5zuP2ILIspvsPImS1MJOp1x3X
+         MAl9noQM0WxEfzdm0/p2H59khBPYWbRJEUDOZnausfCp5krrmrggEUr6vWG3lfUDobLj
+         qumOHcKgYSXKsE6VGsSqPjtvCl7SmXtZyElBLoGnFDUHtrdWES9qQZQD0wHyRBuPyudf
+         d9n5avPokCsCMwMxd2HXWuBmPYuGzpkNpd7Na5In7/dqdG5nlzqhb1ZzNT+XtwhrGU+l
+         7V9QOLlfGvfd59oayC9f29vVt4K+sKQmoLte2+pu/cbpnr4JdV9M80vj1H1a3ieuRBOc
+         58ig==
+X-Gm-Message-State: AFqh2kpfVlGkL5RWHJMYLnQ0W4rB3KMjhDI/JTQ7jP/W0sMGmpN1jfw3
+        Jo97g4PP92R8itZvLqBTVFQ1WlHjRnaOidg7S1KBCA==
+X-Google-Smtp-Source: AMrXdXtTfBIW85jiU1ZUsAeZoqqJKpTV6XQoUlKGw98Ak/vLMOXDXUyNzStoXh3SbqciAfp3lpfsaVp9OD7S8DpXJ1E=
+X-Received: by 2002:a17:902:ab45:b0:193:8c1:50d2 with SMTP id
+ ij5-20020a170902ab4500b0019308c150d2mr1487012plb.41.1673283760417; Mon, 09
+ Jan 2023 09:02:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12-dev-8b3d1
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230106164618.1845281-1-vincent.guittot@linaro.org> <20230106182849.kr47mdgokd4qa6zw@builder.lan>
+In-Reply-To: <20230106182849.kr47mdgokd4qa6zw@builder.lan>
+From:   Vincent Guittot <vincent.guittot@linaro.org>
+Date:   Mon, 9 Jan 2023 18:02:29 +0100
+Message-ID: <CAKfTPtBJHWfhXCGojZSvS_DM4+bJnQ9j1GwtE5_YYJFHq9cpRA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: correct dynamic power coefficients
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     dmitry.baryshkov@linaro.org, agross@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, danny@kdrag0n.dev
+Content-Type: multipart/mixed; boundary="000000000000263da105f1d7bc09"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Dec 2022 17:31:33 +0100, Krzysztof Kozlowski wrote:
-> SC7280 LPASS CPU device node comes with required-opps:
-> 
->   sc7280-herobrine-crd.dtb: audio@3987000: Unevaluated properties are not allowed ('required-opps' was unexpected)
-> 
-> 
+--000000000000263da105f1d7bc09
+Content-Type: text/plain; charset="UTF-8"
 
-Applied to
+On Fri, 6 Jan 2023 at 19:28, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Fri, Jan 06, 2023 at 05:46:18PM +0100, Vincent Guittot wrote:
+>
+> Seems like using get_maintainer.pl would have saved you some trouble ;)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+The worst is that I used it but only checked names and not emails
+when I reused the list of the original patch :-(
 
-Thanks!
+>
+> > While stressing EAS on my dragonboard RB3, I have noticed that LITTLE cores
+> > where never selected as the most energy efficient CPU whatever the
+> > utilization level of waking task.
+> >
+> > energy model framework uses its cost field to estimate the energy with
+> > the formula:
+> >
+> >   nrg = cost of the selected OPP * utilization / CPU's max capacity
+> >
+> > which ends up selecting the CPU with lowest cost / max capacity ration
+> > as long as the utilization fits in the OPP's capacity.
+> >
+> > If we compare the cost of a little OPP with similar capacity of a big OPP
+> > like :
+> >        OPP(kHz)   OPP capacity    cost     max capacity   cost/max capacity
+> > LITTLE 1766400    407             351114   407            863
+> > big    1056000    408             520267   1024           508
+> >
+> > This can be interpreted as the LITTLE core consumes 70% more than big core
+> > for the same compute capacity.
+> >
+> > According to [1], LITTLE consumes 10% less than big core for Coremark
+> > benchmark at those OPPs. If we consider that everything else stays
+> > unchanged, the dynamic-power-coefficient of LITTLE core should be
+> > only 53% of the current value: 290 * 53% = 154
+> >
+> > Set the dynamic-power-coefficient of CPU0-3 to 154 to fix the energy model.
+> >
+>
+> This is sounds reasonable.
+>
+> But if the math was wrong for SDM845, I would assume that sm8150 and
+> sm8250 are wrong as well, as that's what 0e0a8e35d725 is based on. And
+> should I assume that patches for other platforms are off by 53% as well?
 
-[1/3] ASoC: dt-bindings: qcom,lpass-cpu: Document required-opps
-      commit: a1df78540da20b9ce30a5b24b395d2b4a0f4319e
-[2/3] ASoC: dt-bindings: qcom,lpass-cpu: Fix DAI children pattern
-      commit: 5f9cd0f7c1499174b099a1bda67693df268e711e
-[3/3] ASoC: dt-bindings: qcom,lpass-cpu: Correct and constrain clocks, interrupts, reg
-      commit: ffb2bbdf79d7e712782fd5f44fc250f3e07b3b92
+I don't think that we can assume that there is an error and in
+particular the same 53% error for others.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>
+> Can you help me understand how to arrive at this number? (Without
+> considering everything else stays unchanged, if needed).
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+In order to do the full computation, we need the voltage of each OPP
+which I don't have as they are provided by the LUT at boot IIUC.
+Instead I have used the debugfs output of the energy model and
+compared the value of (perf_state->cost/cpu_max_capacity) with the
+energy and duration figures available in [1].
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+In the case of SDM845, it was pretty easy to compare the OPPs of big
+and LITTLE because the duration and the perf result were the same for
+2 OPPS so we should have :
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+(little OPP(1766400)->cost / little max capacity (407)) / (big
+OPP(1056000)->cost / big max capacity(1024)) = little OPP(1766400)
+energy / big OPP(1056000) energy
 
-Thanks,
-Mark
+(little OPP(1766400)->cost / little max capacity (407)) / (big
+OPP(1056000)->cost / big max capacity(1024)) = 0.90
+
+but current output gives:
+
+(little OPP(1766400)->cost / little max capacity (407)) / (big
+OPP(1056000)->cost / big max capacity(1024)) = 1.70
+
+As we consider everything else constant, it can be simplified by:
+
+correct_little_dynamic-power-coefficient *  const_A  = 0.90
+
+Whereas we currently have
+
+current_little_dynamic-power-coefficient * const_A = 1.70
+
+and we ends up with
+
+correct_little_dynamic-power-coefficient  = 0.90 / 1.70 *
+current_little_dynamic-power-coefficient = 154
+
+That being said, it can be simpler as the energy model provide the power figures
+
+little OPP(1766400)->power = 351114 uW
+big OPP(1056000)->power = 195991 uW
+ration = 1.79
+
+[1] results gives
+little OPP(1766400)->power = 193.281 mW
+big OPP(1056000)->power = 216.405 mW
+ratio = 0.89
+
+The ratios are a bit different and give a
+correct_little_dynamic-power-coefficient  = 144 which is different
+than when using ->cost. This probably comes from rounding and which
+figures have been used to compute the model.
+
+If you have Voltage of OPP, the formula used in energy model is power
+(uW) = dynamic-power-coefficient * uV^2 * Freq (Mhz) so you can
+compute dynamic-power-coefficient for each OPPs. They should be close
+and then you will have to decide which one is the "best"
+
+I don't have access to sdm8150 or sdm8250 boards but you can use the
+same process to check that the energy model is aligned with the
+figures in [1]
+
+[1] https://github.com/kdrag0n/freqbench/tree/master/results
+
+Regards,
+Vincent
+>
+> Regards,
+> Bjorn
+>
+> > [1] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
+> >
+> > Fixes: 0e0a8e35d725 ("arm64: dts: qcom: sdm845: correct dynamic power coefficients")
+> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > index 65032b94b46d..869bdb9bce6e 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > @@ -198,7 +198,7 @@ CPU0: cpu@0 {
+> >                       reg = <0x0 0x0>;
+> >                       enable-method = "psci";
+> >                       capacity-dmips-mhz = <611>;
+> > -                     dynamic-power-coefficient = <290>;
+> > +                     dynamic-power-coefficient = <154>;
+> >                       qcom,freq-domain = <&cpufreq_hw 0>;
+> >                       operating-points-v2 = <&cpu0_opp_table>;
+> >                       interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> > @@ -222,7 +222,7 @@ CPU1: cpu@100 {
+> >                       reg = <0x0 0x100>;
+> >                       enable-method = "psci";
+> >                       capacity-dmips-mhz = <611>;
+> > -                     dynamic-power-coefficient = <290>;
+> > +                     dynamic-power-coefficient = <154>;
+> >                       qcom,freq-domain = <&cpufreq_hw 0>;
+> >                       operating-points-v2 = <&cpu0_opp_table>;
+> >                       interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> > @@ -243,7 +243,7 @@ CPU2: cpu@200 {
+> >                       reg = <0x0 0x200>;
+> >                       enable-method = "psci";
+> >                       capacity-dmips-mhz = <611>;
+> > -                     dynamic-power-coefficient = <290>;
+> > +                     dynamic-power-coefficient = <154>;
+> >                       qcom,freq-domain = <&cpufreq_hw 0>;
+> >                       operating-points-v2 = <&cpu0_opp_table>;
+> >                       interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> > @@ -264,7 +264,7 @@ CPU3: cpu@300 {
+> >                       reg = <0x0 0x300>;
+> >                       enable-method = "psci";
+> >                       capacity-dmips-mhz = <611>;
+> > -                     dynamic-power-coefficient = <290>;
+> > +                     dynamic-power-coefficient = <154>;
+> >                       qcom,freq-domain = <&cpufreq_hw 0>;
+> >                       operating-points-v2 = <&cpu0_opp_table>;
+> >                       interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+> > --
+> > 2.34.1
+> >
+
+--000000000000263da105f1d7bc09
+Content-Type: image/png; name="image.png"
+Content-Disposition: attachment; filename="image.png"
+Content-Transfer-Encoding: base64
+Content-ID: <f_lcp16sd00>
+X-Attachment-Id: f_lcp16sd00
+
+iVBORw0KGgoAAAANSUhEUgAAAFUAAAARCAYAAACsPOAgAAACmklEQVR4nO2WTUhUURTHf+NoYwv7
+EhfTF2MafZAUQUWLiCzICKOij01gZYU1lZQ0RAZthFxEuQimLHBTEFgIlYugoFWbKImQSiiKoi+t
+NgM16TT9p/cGh8r3bpD4RubPe3Pnzrn/w7n/Ofecm58UwEcO/wtJ8kc6hNGInKjDAE+J2nMZGqLw
+8BG80/xaH2wIDNoHXkNTPVy8A5/yYME6aGmBJRMt++29sPoc/MjwuUz2u+LkGfDd7G7xpeEpUQuK
+ofoARHo1HvvNOACnNkHbdOh8CXMTEN0J63drk+0QtNvClDroPiNfNs1fYAnqyk+4+3eMLwOeErW0
+CvZojN+0hchA4gV0PIbt52G+nTn7GuFsJbS/goMh6zefdlRYOCiqKT/83d2/U3yZ8JSojkj+ev64
+qPj6oatbX0LWvFdZNacD+sfBomo4cRwqigz45Wb+TZA1ovpnwNpZOp4nYUsrzFbhvNAMz3WsK2LW
+mvLNcGWbRJ0MsWeqh0dg5VN4IJGnufBN/Jsia0RNneejV+HrIagq1RFUJq5SzVuhplI8yVoSqsxI
+KK1pHStx1qhGfoC6oAvfwL8pskdUIVAGzdf12vPYLTUUibFj4d/X58nm15hImPH/1f9Q8JaoOnJx
+NYy46liqwPV/Az2MCViN4X0XvBkPM0vg431o3K9ufxg2qiunuvuNSzB1uZJU9lgPnG6AvqXKvKDl
+3pFvYHeLLw1Pidrbptq3S0Hb860T9KGAo+rcdaqTffegpkl17jMUhXRH1J0yGla3Ty3WJp+oSdVH
+4O0X6/qzWI2qUzWyzG/5c+Qb2N3iS8NTopbU6p+vHdo+TxvsDg9h1DGNdOp18O/IN7C7xZeGp0Qd
+LciJOgzIiToMsEVNjmwUoww/AVS2H0CPoSu9AAAAAElFTkSuQmCC
+--000000000000263da105f1d7bc09--
