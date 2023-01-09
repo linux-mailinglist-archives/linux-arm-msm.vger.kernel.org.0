@@ -2,132 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B86C76622F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:18:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 446CD662322
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:24:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234129AbjAIKR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 05:17:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
+        id S236605AbjAIKX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 05:23:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237082AbjAIKQv (ORCPT
+        with ESMTP id S237181AbjAIKXh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:16:51 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFED86175
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:16:42 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id m6so12157272lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:16:42 -0800 (PST)
+        Mon, 9 Jan 2023 05:23:37 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C8D1928F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:22:33 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so6243277wms.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:22:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=z4C+uBeuYJaLIQOjHxSFx74inl8MleJj+0t84zKqd+U=;
-        b=gsKFgkaKO0UiC45NxDJvDWSRgSeF7zZQ/ZtxBmTJYSFZfUMKlWgJzDo/cSm5DTmvbq
-         SG8E/bTSrZlhJyw/Hzz8MMc8b5nyJaQY12hHE2ZPZxMx/ewOhjvUXBNQNN2XMk3S4viG
-         BQAdfq7jhud0o6Gz+xZBx1fnqDKM4FTJLylmaxVW2ZwegnGIQAeEJRXeyYDFrYORZyVN
-         HjPikM5ec2P1pSAQTVCTtNxJ+Jb4Rz8QKH81XrT7odQN7yXtTPpb2HnPrY9syMSFTUH7
-         8aFcccrjafWvAhCZLVgWo687NPoB/x3M/dfhJaPlnpGSZdhLkYhvQqWDLyUFYX9liYkx
-         QKnw==
+        bh=NGY2WfIMH5NbDK2UFtX7kYF6wj0td7t4Uuxyfu/a2lY=;
+        b=jRWsn90HOq4cs97PbbcUF8R/IEBTYbEMDPmQDemX+kuQE4QKg2cOYPCViC/8uQL5yK
+         kgPr0nbVFqlalhNEiGmjR9po/azhbEJVETY8bvqo8fnzJqd96tuc7Wojt0yx9nX3qLIE
+         xF1nFwVXDb8TJ2/vCESAAdmxO/bg28kX74JMWViD7HLOzP+2F2qhkzTq0y8lrbyHNNbh
+         jWHOL1WrvDDdRYYezXyI7YDVilZ6aEYslC8vrrM2pe27UiS8sUuq5Twv3Ha7CeO7p3vf
+         0uVEBVXnT5tyxI6IBv7OCTrqiAcp6xAqwm92kQtDYuVen6/XioPmpxqftV6Al5cD6K5B
+         2mMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z4C+uBeuYJaLIQOjHxSFx74inl8MleJj+0t84zKqd+U=;
-        b=RxUGFel/mtvVyALvPlAFe0NRzLX1gqEboVGDNmvAmHmd52DOP+c1PJcnKlK0Ln4NS9
-         xTUtCn//qs4p4aOzd+XDf11zeE93k/loeGCCUuTELvdIzUrQD1sYvy4HYAZEm5u1mIq4
-         MMFq5Y61zqSkQHD4j0k5CGA9TrGjomCxZNlbE1JQUSfi3ROHNkvDAxRQnkuwrdChGNj/
-         /iLoeX4VFb0BnkP+9zibaHjIxr6nZQVdAA9ugVHODVIU9v4iHY2PuiT8ThPXRVzSqY4k
-         sNa+qTMt1ezuIyJolw3IXHSTTteqkz8UYgvBqJPvHeY0bI4KX6ul7JdTyoKh35yc8hNm
-         cyNg==
-X-Gm-Message-State: AFqh2kpuUDk6XWxj7V23ehQ+nz4Ygt82G4799bMcy3CEG8PrLE16ZAho
-        vaswiFvqGnIe6bXeKpRICR6XXWLe5EZTyIWt
-X-Google-Smtp-Source: AMrXdXvjSeDYGDcKZPl8murhw+Uf5jtlCt6Syj74+J9xEW4u+aYleQcMPLSgokkqZLriQ30WgtgZ/Q==
-X-Received: by 2002:a05:6512:340d:b0:4b5:69f1:61b1 with SMTP id i13-20020a056512340d00b004b569f161b1mr18204040lfr.42.1673259401186;
-        Mon, 09 Jan 2023 02:16:41 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id b15-20020a05651c032f00b0027fd02c99d4sm848109ljp.75.2023.01.09.02.16.40
+        bh=NGY2WfIMH5NbDK2UFtX7kYF6wj0td7t4Uuxyfu/a2lY=;
+        b=w12gdrn5E2erRkJkleKaBQzXxOJMEO06/SPSWzM9aNOpcrSI6hUOuw22OInuCgnbTM
+         LvuOtvtc/OL3iTPnyNKRUYHi2yhYZaK/K4MHNisbQcVNyHLJESMtfFB5SDPaAJ6Og3pz
+         4e9q7SlyZat2iSlr3Z2B4+jeh1vgqLgklPHH65gmT92xa1IgVRP00tfJSHcMfp+mumQQ
+         7L3WSqdcomrnjum8IBfscxxENVYrzqLJ4BSnbr8fm9spZI2SF7SYRa1VkwlIjVegtL+H
+         rzOwmYPmpeLV6MY0M5zozO6pwzEJGGrUWzTqHyzMIRFsI3ijJGBnHWy3iawtY7dOi2Te
+         02BQ==
+X-Gm-Message-State: AFqh2krJt+qfbgMo7WOf8wPiBF81nce/r51/rDEhQFyBkb/iKKtYjhlQ
+        aSpwEBWWOi+FiXiYx2oUE6vKJQ==
+X-Google-Smtp-Source: AMrXdXtwhS/Hw81Hf42gN976U+RfMh+Em2M2OULImNjiCySdiWW8ppb0AHe2ByEiCDwPUU8MBLXThg==
+X-Received: by 2002:a05:600c:3b21:b0:3d9:bad8:4e9e with SMTP id m33-20020a05600c3b2100b003d9bad84e9emr18493818wms.40.1673259752038;
+        Mon, 09 Jan 2023 02:22:32 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id n9-20020a05600c4f8900b003d96b8e9bcasm16860567wmq.32.2023.01.09.02.22.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 02:16:40 -0800 (PST)
-Message-ID: <1ec4b446-b195-0277-90ba-4a8398fcd729@linaro.org>
-Date:   Mon, 9 Jan 2023 11:16:39 +0100
+        Mon, 09 Jan 2023 02:22:31 -0800 (PST)
+Message-ID: <a6330ecc-021a-9943-1bbd-61603f40f152@linaro.org>
+Date:   Mon, 9 Jan 2023 11:22:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v3 3/3] dt-bindings: firmware: qcom: scm: Separate VMIDs
- from header to bindings
+Subject: Re: [PATCH] dt-bindings: display/msm: qcom,sdm845-mdss: document the
+ DP device
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Loic Poulain <loic.poulain@linaro.org>
-References: <20230109093947.83394-1-konrad.dybcio@linaro.org>
- <20230109093947.83394-3-konrad.dybcio@linaro.org>
- <e64d22eb-4c42-b279-b493-972e4a1af1cd@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e64d22eb-4c42-b279-b493-972e4a1af1cd@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230109045458.316114-1-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230109045458.316114-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 09/01/2023 05:54, Dmitry Baryshkov wrote:
+> Document the DP controller added to the sdm845 display subsystem.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml   | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
-On 9.01.2023 10:54, Krzysztof Kozlowski wrote:
-> On 09/01/2023 10:39, Konrad Dybcio wrote:
->> With changes to the rmtfs binding, secure VMIDs will become useful to
->> have in device trees. Separate them out and add to include/dt-bindings.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->> v2 -> v3:
->> New patch
->>
->>  include/dt-bindings/firmware/qcom/scm.h | 16 ++++++++++++++++
->>  include/linux/qcom_scm.h                |  7 ++-----
->>  2 files changed, 18 insertions(+), 5 deletions(-)
->>  create mode 100644 include/dt-bindings/firmware/qcom/scm.h
->>
->> diff --git a/include/dt-bindings/firmware/qcom/scm.h b/include/dt-bindings/firmware/qcom/scm.h
->> new file mode 100644
->> index 000000000000..d66818cd57a8
->> --- /dev/null
->> +++ b/include/dt-bindings/firmware/qcom/scm.h
->> @@ -0,0 +1,16 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
-> 
-> Only Codeaurora folks contributed these numbers, thus we can relicense
-> it to dual-license, I believe.
-> 
-> The other topic is what do these numbers represent: hardware interface?
-> registers? offsets? firmware?
-Arguments for a SCM call, so firmware interface.
+Best regards,
+Krzysztof
 
-IOW, why bindings is the place for them?
-> (usefulness for DTS is not the reason)
-These defines correspond to mappings in a hardcoded, irreplaceable
-and un-omittable firmware which is (unless you steal engineering
-samples from the factory) always shipped with these SoCs and they
-help clarify some otherwise totally magic numbers.
-
-Konrad
-
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
