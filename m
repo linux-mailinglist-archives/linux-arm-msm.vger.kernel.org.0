@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89339662239
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:57:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1391866223E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:59:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234182AbjAIJ5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 04:57:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
+        id S234207AbjAIJ7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 04:59:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234478AbjAIJ4X (ORCPT
+        with ESMTP id S234355AbjAIJ6l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:56:23 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C14418E1A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:54:28 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id bi26-20020a05600c3d9a00b003d3404a89faso6634195wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:54:28 -0800 (PST)
+        Mon, 9 Jan 2023 04:58:41 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F32712AF4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:56:39 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d17so7572021wrs.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c8qXFIeMr9pMSyYWEYQkZme6Z9JhhjJGkjPasbJMQrE=;
-        b=SbkkmdM/kETAbEVUqrPXzULs7E59O0Yooxbvd173lH4Erp8AVkEKsQB+WB943x1WFE
-         kJq13h3GhogAXeODJ0FDDpswT3fa2mdqJOVV5g9NQsa8uCuPvHSk/sczoRXsHnv4i2sH
-         RtAPLpzbYSidlUwz78nGmrquPC3GebmH3XFNZCLXqe/phEKLy5Cbgl17mUhectGyaeLu
-         VhBZPYHHkfGCTshD3Kv1b1sruI5GxXAjVB2qAwnPv1N+wZRU+5luFkYLy7j2l5oCLiCg
-         jw3z4X15SJl9hjnYdFPGhzxliSLySnvhqZBomq+6YqTWThLfBdJAyBzOj28UEOGZ2Ytj
-         tjYw==
+        bh=Ucix0OBiv7pnws0HUkHG1wRxU3nrsuX1oLuRKY4B+x8=;
+        b=fFIqJhysPZBQjF5Q2s2pLaF5ZnkjewDhWpS4zmigf8XPRMfjOu2MudpAHwc1R/ytuj
+         yKxb0hofDuESI/zYMaxqmr2mIcCFNAfaACzAbUmV8qDnXgdV03ULerRB/4GS3rgahJc3
+         EuWSBAUaNhh76M+nvmggvt809b0yYhyDXYsGJvXK5HUrSV9zOGk0MYx0Fmjmw9R67P5m
+         FG2qgob40Vy5KbQS5PJY+LurkQBx6d1LXtFvFWLSOH2IVzejg1T2TZXeypZAvU/qZeBm
+         rgTa9NInAkxDAZVkni9HCy38hMUIXFqAyxofuWX8eFFWCgTaO7SOHCxdz3k1e1gLiwEq
+         0UYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c8qXFIeMr9pMSyYWEYQkZme6Z9JhhjJGkjPasbJMQrE=;
-        b=eCrh+NkuNlAodwBNSnpQQiwfdAHe87T6vIq9P0RPH5JTbeL0sepL1kMtmPa8X0zJVr
-         lJDObRohoy1SKHHWGy1+/7QYeSSy/0BbvUk1yR3dmsz2wJpcYWEGrdoUY4moGuln8ELS
-         ya4z0F6rtrcO/pzWeflBVxuZoDu+15+Kx5VNml0/19ko9jZvXsTULPmFQ5eDeTmOT6et
-         HtxEYche+281VPnLLfmL2EeH02wMt/hanrVMWnIm0lgBeTVlwRJ5F/aSXf4WFueJxb28
-         dJByg6QWbk62JmTXcnS1qbWLHprp66gPqPZK+9xfirCxXQiuHY6RR1RJ2ebWivraY8Id
-         yKbA==
-X-Gm-Message-State: AFqh2kqbirIhkDlC0QJJESg16y2I71nPYIIoSnnTj6lAZjrCg+iUARuo
-        7hzzAZxCB3zUay3DTgQl+AIC7iQHfEt/m5/l
-X-Google-Smtp-Source: AMrXdXtEL2qwGBtgcLfYF/pZACbKO4SmrSrPkCIo15Ern0RItHA2yVmSLZw0mXlWlmehrVYuYdbfXw==
-X-Received: by 2002:a05:600c:8507:b0:3d9:6c7d:c9ee with SMTP id gw7-20020a05600c850700b003d96c7dc9eemr41026101wmb.25.1673258067131;
-        Mon, 09 Jan 2023 01:54:27 -0800 (PST)
+        bh=Ucix0OBiv7pnws0HUkHG1wRxU3nrsuX1oLuRKY4B+x8=;
+        b=Ee2p6LNTAoqT2shv5tiu/TbhQtoPah0QFSMSBNuhSrpsggeXA/YGODNB5+CVWj7/YY
+         tSYE3LMzokrzgZNsHh6daQYYkrtJLPz53eQU6VPup+Km6fsx4yNz4j13UBSChkcBcg9e
+         KObGx2CvDjyca4oTFoFtXvBlRYiSIVVmPwDH+3NQscGj0f+p0LBIaZ4c2Cor3ONUDMDg
+         w9R9rEqQQKsSqBsEVxFDR7IuAWPJhljf8IH0fjUFCJMwQgsbuvXXv1znsl7UpiTmj16N
+         SvKqdJECaRwcIvtJR+eF+xO9eW/TFkeBFY3KAGnIm6o/7PBE7KpMK0C4ESZ5TXmatSJt
+         0RGw==
+X-Gm-Message-State: AFqh2kqWogaS+82BfLCvTHACg3jr6w/RUm/+miqFvSGdc4xlX+/m8VSy
+        cKo/q1CV0lziSXE4DvZRLhUYLQ==
+X-Google-Smtp-Source: AMrXdXsNcAUWJK52QwJi7qaNyyv/FChrpQExKc4D+1YAq9QLd9Nd5vrN1QV6/hyGYQ+76vm3eXFt3g==
+X-Received: by 2002:adf:fc4a:0:b0:27e:315e:d279 with SMTP id e10-20020adffc4a000000b0027e315ed279mr30765596wrs.32.1673258197651;
+        Mon, 09 Jan 2023 01:56:37 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id y15-20020adffa4f000000b002bbec19c8acsm2825931wrr.64.2023.01.09.01.54.25
+        by smtp.gmail.com with ESMTPSA id l7-20020a5d6747000000b002b57bae7174sm8178050wrw.5.2023.01.09.01.56.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 01:54:26 -0800 (PST)
-Message-ID: <e64d22eb-4c42-b279-b493-972e4a1af1cd@linaro.org>
-Date:   Mon, 9 Jan 2023 10:54:25 +0100
+        Mon, 09 Jan 2023 01:56:37 -0800 (PST)
+Message-ID: <e1404bf7-d793-7940-8d53-05023491991d@linaro.org>
+Date:   Mon, 9 Jan 2023 10:56:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
@@ -76,7 +76,8 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,26 +94,11 @@ On 09/01/2023 10:39, Konrad Dybcio wrote:
 > New patch
 > 
 >  include/dt-bindings/firmware/qcom/scm.h | 16 ++++++++++++++++
+
+Ah, and filename matching bindings file or compatible, so "qcom,scm.yaml".
+
 >  include/linux/qcom_scm.h                |  7 ++-----
 >  2 files changed, 18 insertions(+), 5 deletions(-)
->  create mode 100644 include/dt-bindings/firmware/qcom/scm.h
-> 
-> diff --git a/include/dt-bindings/firmware/qcom/scm.h b/include/dt-bindings/firmware/qcom/scm.h
-> new file mode 100644
-> index 000000000000..d66818cd57a8
-> --- /dev/null
-> +++ b/include/dt-bindings/firmware/qcom/scm.h
-> @@ -0,0 +1,16 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-
-Only Codeaurora folks contributed these numbers, thus we can relicense
-it to dual-license, I believe.
-
-The other topic is what do these numbers represent: hardware interface?
-registers? offsets? firmware? IOW, why bindings is the place for them?
-(usefulness for DTS is not the reason)
-
-
 Best regards,
 Krzysztof
 
