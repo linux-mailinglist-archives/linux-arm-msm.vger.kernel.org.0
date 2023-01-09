@@ -2,93 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFDF6662C6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 18:15:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93DE0662CD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 18:34:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237336AbjAIRPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 12:15:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
+        id S229979AbjAIRdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 12:33:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237321AbjAIRPI (ORCPT
+        with ESMTP id S234370AbjAIRc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 12:15:08 -0500
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A6D568A4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 09:14:22 -0800 (PST)
-Received: from SoMainline.org (unknown [89.205.226.190])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 51DBC3EF10;
-        Mon,  9 Jan 2023 18:14:20 +0100 (CET)
-Date:   Mon, 9 Jan 2023 18:14:18 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] dt-bindings: reserved-memory: rmtfs: Make
- qcom,vmid an array
-Message-ID: <20230109171418.kxz4jwwxrgamaylt@SoMainline.org>
-References: <20230109093947.83394-1-konrad.dybcio@linaro.org>
- <2bc5d781-499b-fe39-2dc5-92bc9ba8396d@linaro.org>
- <97dafa30-8b76-8bf9-4411-be6d10e4c71a@linaro.org>
+        Mon, 9 Jan 2023 12:32:59 -0500
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5554A47E;
+        Mon,  9 Jan 2023 09:32:57 -0800 (PST)
+Received: by mail-ot1-f52.google.com with SMTP id p17-20020a9d6951000000b00678306ceb94so5559832oto.5;
+        Mon, 09 Jan 2023 09:32:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Vt7DGUy1KFLtewCdpYO+kWiUzbW5gAuQvl+L5yBlJLE=;
+        b=zRW6h1FrGcT/RtZxhetriTbBWWfyM1qn+8fc3e/53flwkssqgXZrhemknrrdBuClj7
+         xJjFliZ6/68TYRQd0jdN2VeIlWKzHxb8/+9DP+LjhQH3sQn44a+XKfaLkJtAw2/gZqTO
+         rzfZXsKUrG5FHbSsv9E5IM5nDAXw78jZlHJ2YNHoRtvst5gxZIh2ph5AJq3INxYK0I7a
+         jmxBa1hDfBe8/EE/Pu0mK+mvuoKfNgnQHNCw3u1Quq9EdFTRZ7aW71HrmTzQWTGOeYxF
+         a7/IgOEQGWkHO7MBG3toDsqETPmvFUifJk0pUfDI/XVdpP0TJ+OEujFEo3DkmOFet5b8
+         Scag==
+X-Gm-Message-State: AFqh2kpc66u6C6lUbQczoG7UcvwIHl9MhY+/6ZlmzObcSasuOx4d/KLz
+        l2wTeJh3hVevJ7YbgBl+sA==
+X-Google-Smtp-Source: AMrXdXsB5bdrYW28/WMqpdBRZNzuh/dd8EtxEGTo5RAGR3aEt6h3yJn+AQWoPreURt1SOKrddRdd/A==
+X-Received: by 2002:a05:6830:612:b0:670:97e8:bb88 with SMTP id w18-20020a056830061200b0067097e8bb88mr39230591oti.28.1673285577072;
+        Mon, 09 Jan 2023 09:32:57 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k8-20020a9d7608000000b006708a6274afsm4847417otl.25.2023.01.09.09.32.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 09:32:56 -0800 (PST)
+Received: (nullmailer pid 1013201 invoked by uid 1000);
+        Mon, 09 Jan 2023 17:32:55 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <97dafa30-8b76-8bf9-4411-be6d10e4c71a@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski@linaro.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+In-Reply-To: <20230109135647.339224-2-konrad.dybcio@linaro.org>
+References: <20230109135647.339224-1-konrad.dybcio@linaro.org>
+ <20230109135647.339224-2-konrad.dybcio@linaro.org>
+Message-Id: <167328555792.1012753.8015526796598804432.robh@kernel.org>
+Subject: Re: [PATCH v3 1/4] dt-bindings: remoteproc: qcom,sm6375-pas: Document
+ remoteprocs
+Date:   Mon, 09 Jan 2023 11:32:55 -0600
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-09 12:41:00, Konrad Dybcio wrote:
-> 
-> 
-> On 9.01.2023 10:51, Krzysztof Kozlowski wrote:
-> > On 09/01/2023 10:39, Konrad Dybcio wrote:
-> >> Some SoCs mandate that the RMTFS is also assigned to the NAV VM, while
-> >> others really don't want that. Since it has to be conditional, turn
-> >> qcom,vmid into an u32 array so that we can handle the NAV case, as
-> >> well as other similar ones if they pop up in the future.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >> v2 -> v3:
-> >> Rewrite to accomodate for changes, don't pick up tags
-> >>
-> >>  .../devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml   | 4 ++--
-> >>  1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> >> index 2998f1c8f0db..cfc2fda30eba 100644
-> >> --- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> >> +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> >> @@ -27,9 +27,9 @@ properties:
-> >>        identifier of the client to use this region for buffers
-> >>  
-> >>    qcom,vmid:
-> >> -    $ref: /schemas/types.yaml#/definitions/uint32
-> >> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> >>      description: >
-> >> -      vmid of the remote processor, to set up memory protection
-> >> +      Array of vmids of the remote processors, to set up memory protection
-> > 
-> > You need now min and maxItems.
-> Hm, I tested it with and without:
-> 
-> minItems: 1
-> maxItems: 2
-> 
-> on DTs with either one or two VMIDs defined and neither complains..
 
-This sounds like a constraint, so it'd only fail on DTs with zero or
-more than two VMIDs (when min/maxItems is present, no complaints
-otherwise).
+On Mon, 09 Jan 2023 14:56:44 +0100, Konrad Dybcio wrote:
+> SM6375 hosts an ADSP, CDSP and modem as remote processors. Create
+> related bindings.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> v2 -> v3:
+> - Separate out 6375 bindings
+> 
+>  .../bindings/remoteproc/qcom,sm6375-pas.yaml  | 137 ++++++++++++++++++
+>  1 file changed, 137 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+> 
 
-- Marijn
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: False schema does not allow {'compatible': ['qcom,sm6375-adsp-pas'], 'reg': [[171966464, 256]], 'interrupts-extended': [[4294967295, 0, 282, 4], [4294967295, 0, 1], [4294967295, 1, 1], [4294967295, 2, 1], [4294967295, 3, 1]], 'interrupt-names': ['wdog', 'fatal', 'ready', 'handover', 'stop-ack'], 'clocks': [[4294967295, 0]], 'clock-names': ['xo'], 'power-domains': [[4294967295, 8], [4294967295, 9]], 'power-domain-names': ['lcx', 'lmx'], 'memory-region': [[4294967295]], 'qcom,smem-states': [[4294967295, 0]], 'qcom,smem-state-names': ['stop'], 'glink-edge': {'interrupts-extended': [[4294967295, 3, 0, 1]], 'mboxes': [[4294967295, 3, 0]], 'label': ['lpass'], 'qcom,remote-pid': [[2]]}, '$nodename': ['remoteproc@a400000']}
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: Unevaluated properties are not allowed ('glink-edge', 'memory-region', 'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109135647.339224-2-konrad.dybcio@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
