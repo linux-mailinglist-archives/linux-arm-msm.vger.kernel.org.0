@@ -2,557 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E32B1662104
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:09:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 067A0662110
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:11:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237038AbjAIJJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 04:09:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        id S236621AbjAIJLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 04:11:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237094AbjAIJIg (ORCPT
+        with ESMTP id S236907AbjAIJKP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:08:36 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 233AE1261E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:03:49 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id bt23so11887931lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:03:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=H89GO14xdEfY7YVwPWhRh+0U4YezjqJsTydwwui9fo8=;
-        b=Hqn+NOJCTpqoYuZ3JARu/DDZs556/8NVJ2iMgexTOivPDPRR1h+Vmgii8OufXLHDQ9
-         BPZiXlvGB46tzqLBtFnszNC+i3tmwpxPN6zdHzuXpjNygV1anKyLFof0bWvLZyfGz/dj
-         U+7nvrRxdPlmXO7OKQsBkVJtewjm22NlJ9wO8B5Kv+NYuVgNrfnXRQp/9A3gE7ZC1usS
-         GFNXTnS9gGE+Ocasz0mj/2esH2INv+I8ukDi25mHg4wJPl3YjjtGjofZJ2owIzm26ezm
-         4/+QztoPWJd3/4k9cBJTCBmaZ+rG++vcVaqt153rKzdATReB6zQNtxA0Vh0Za50TTIHF
-         iSGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H89GO14xdEfY7YVwPWhRh+0U4YezjqJsTydwwui9fo8=;
-        b=cjVSyze96XB01iV7JY6N04QwPum4a9BkpX8OTJDO2dT5HvyRP97KApqPBZ8OtsL80K
-         MT4hhfkeHMn8qk+9GQ2fdndQE8WsVr6lZoUN7s9vzt+r/Dj5RUD9Ag9h/7aH3H92nzO3
-         xh675p0QspPxUOe4IkUi0dtCcUtsPmWgp1sKG1eUtkTK+zLywJSveAodAfNzPWU9qtN0
-         ymGqWO9tCKIq74JAViaveWyw8E3fZkP2AGcgXmeGFN7n4YIjywAe2NFhR4nC3ptI10Zf
-         x5xWoHW/ay5Javek8R4LEIGV2GD32FHifJEQjPRtvp0z8pMbVwsZvsHqlNzoKLI1ojdx
-         0Mrw==
-X-Gm-Message-State: AFqh2kqf01pg5Cf5GyQyeIdCQWVB15PiwTdFHAc7DQnOODQoBlpupbz5
-        gF2XTXBD9DNttsKY5KLVVmK8Xw==
-X-Google-Smtp-Source: AMrXdXtm20nbvGDsorh2qVRvuAkMdJCxFp3r4uSRTZf7Gm0h0EGnmz/7J2RRp7n1iRD+WKlGjzptIQ==
-X-Received: by 2002:a05:6512:16a8:b0:4b5:a70f:8efc with SMTP id bu40-20020a05651216a800b004b5a70f8efcmr28800304lfb.64.1673255027284;
-        Mon, 09 Jan 2023 01:03:47 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id br35-20020a056512402300b004b5478d8222sm1502091lfb.184.2023.01.09.01.03.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 01:03:46 -0800 (PST)
-Message-ID: <80807961-1979-8f33-973d-2a6674bf742b@linaro.org>
-Date:   Mon, 9 Jan 2023 10:03:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: Add device tree for Samsung
- Galaxy Tab A 9.7 (2015)
-Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mon, 9 Jan 2023 04:10:15 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9624516495;
+        Mon,  9 Jan 2023 01:06:24 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3097r7Cv001816;
+        Mon, 9 Jan 2023 09:06:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=XxHuIQPh1jtnEpxWMwNDr1Y0CAe06b1+6mK5HGVQu5w=;
+ b=EVgqWEiYLZ3+ztYFCe27IWCHuT6TjM9JoUdIhwAU1VzVPhez43C14F9ngot+0olMkFlp
+ 11/AomqEJjq7b5aD5hOrz0cFkggHfD8AszKSDeitiFf/WjIRK31xKtXVzxInYAly8R12
+ xXYNx9XuAXRGc+Y/AwcwW5rqDaIfVB9AMLi9AVzWOJpEHX0RHxzJ4ynfh5eiX3u/96l6
+ 7TuWrwY0eh3NsUMWQGSJ1pe/D4zjJE9n8oubKB5Wt/aR8G9lYTiQlKVAIG9VdT8ELW8j
+ vV/pktMaZjxTzEg3qZoRzedPpqrX3o5gzNGHA1GSQN8nT2/ba+ouPnrzZrYxKMadFYEP fg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my02t2q55-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Jan 2023 09:06:06 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 309965Gk021644
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Jan 2023 09:06:05 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
+ 01:05:57 -0800
+Date:   Mon, 9 Jan 2023 14:35:53 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Siddharth Manthan <siddharth.manthan@gmail.com>,
-        Jasper Korten <jja2000@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Siddharth Manthan <siddharth_manthan@outlook.com>
-References: <20230107141911.47229-1-nikita@trvn.ru>
- <20230107141911.47229-3-nikita@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230107141911.47229-3-nikita@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-acpi@vger.kernel.org>
+Subject: Re: [PATCH v8 12/28] gunyah: vm_mgr: Introduce basic VM Manager
+Message-ID: <20230109090553.GA1737564@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <20221219225850.2397345-13-quic_eberman@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <20221219225850.2397345-13-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: AykUCM4ocXnB41CGW_xT6GSACgEI0PMz
+X-Proofpoint-ORIG-GUID: AykUCM4ocXnB41CGW_xT6GSACgEI0PMz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-09_03,2023-01-06_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 mlxlogscore=794 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301090064
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+* Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:33]:
 
+> +config GUNYAH_VM_MANAGER
 
-On 7.01.2023 15:19, Nikita Travkin wrote:
-> From: Jasper Korten <jja2000@gmail.com>
-> 
-> The Galaxy Tab A 9.7 (2015) is a Snapdragon 410 based tablet.
-> 
-> This commit introduces basic support for the tablet including the
-> following features:
-> - SDHCI (internal and external storage)
-> - USB Device Mode
-> - UART
-> - Regulators
-> - WCNSS (WiFi/BT)
-> - GPIO keys
-> - Fuel gauge
-> - Touchscreen
-> - Accelerometer
-> 
-> Part of the DT is split out into a common dtsi since the tablet shares
-> majority of the design with another variant having a different screen
-> size.
-> 
-> Signed-off-by: Jasper Korten <jja2000@gmail.com>
-> Co-developed-by: Siddharth Manthan <siddharth_manthan@outlook.com>
-> Signed-off-by: Siddharth Manthan <siddharth_manthan@outlook.com>
-> Co-developed-by: Nikita Travkin <nikita@trvn.ru>
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Any reason why this needs to be a separate config? IOW CONFIG_GUNYAH should
+enable VM management functionality also.
 
-Konrad
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/msm8916-samsung-gt5-common.dtsi  | 296 ++++++++++++++++++
->  .../boot/dts/qcom/msm8916-samsung-gt510.dts   | 113 +++++++
->  3 files changed, 410 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index b42362c7be1b..70e3b109aeff 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -19,6 +19,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-e5.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-e7.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-grandmax.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-gt510.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
-> new file mode 100644
-> index 000000000000..d920b7247d82
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
-> @@ -0,0 +1,296 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8916-pm8916.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +/ {
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	reserved-memory {
-> +		/* Additional memory used by Samsung firmware modifications */
-> +		tz-apps@85500000 {
-> +			reg = <0x0 0x85500000 0x0 0xb00000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +		pinctrl-names = "default";
-> +
-> +		label = "GPIO Buttons";
-> +
-> +		volume-up-button {
-> +			label = "Volume Up";
-> +			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +		};
-> +
-> +		home-button {
-> +			label = "Home";
-> +			gpios = <&msmgpio 109 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_HOMEPAGE>;
-> +		};
-> +	};
-> +
-> +	gpio-hall-sensor {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-0 = <&gpio_hall_sensor_default>;
-> +		pinctrl-names = "default";
-> +
-> +		label = "GPIO Hall Effect Sensor";
-> +
-> +		hall-sensor-switch {
-> +			label = "Hall Effect Sensor";
-> +			gpios = <&msmgpio 52 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <EV_SW>;
-> +			linux,code = <SW_LID>;
-> +			linux,can-disable;
-> +		};
-> +	};
-> +};
-> +
-> +&blsp_i2c4 {
-> +	status = "okay";
-> +
-> +	fuelgauge@36 {
-> +		compatible = "maxim,max77849-battery";
-> +		reg = <0x36>;
-> +
-> +		maxim,rsns-microohm = <10000>;
-> +		maxim,over-heat-temp = <600>;
-> +		maxim,over-volt = <4400>;
-> +
-> +		interrupt-parent = <&msmgpio>;
-> +		interrupts = <121 IRQ_TYPE_EDGE_FALLING>;
-> +
-> +		pinctrl-0 = <&fuelgauge_int_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
-> +&blsp_i2c2 {
-> +	status = "okay";
-> +
-> +	light-sensor@10 {
-> +		compatible = "capella,cm3323";
-> +		reg = <0x10>;
-> +	};
-> +
-> +	accelerometer@1d {
-> +		compatible = "st,lis2hh12";
-> +		reg = <0x1d>;
-> +
-> +		vdd-supply = <&pm8916_l17>;
-> +		vddio-supply = <&pm8916_l5>;
-> +
-> +		interrupt-parent = <&msmgpio>;
-> +		interrupts = <115 IRQ_TYPE_LEVEL_HIGH>;
-> +		interrupt-names = "INT1";
-> +
-> +		st,drdy-int-pin = <1>;
-> +		mount-matrix = "0", "1", "0",
-> +			      "-1", "0", "0",
-> +			       "0", "0", "1";
-> +
-> +		pinctrl-0 = <&accel_int_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&pm8916_resin {
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +	status = "okay";
-> +};
-> +
-> +/* FIXME: Replace with MAX77849 MUIC when driver is available */
-> +&pm8916_usbin {
-> +	status = "okay";
-> +};
-> +
-> +&pronto {
-> +	status = "okay";
-> +
-> +	iris {
-> +		compatible = "qcom,wcn3660b";
-> +	};
-> +};
-> +
-> +&sdhc_1 {
-> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
-> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_2 {
-> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	cd-gpios = <&msmgpio 38 GPIO_ACTIVE_LOW>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb {
-> +	dr_mode = "peripheral";
-> +	extcon = <&pm8916_usbin>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_hs_phy {
-> +	extcon = <&pm8916_usbin>;
-> +};
-> +
-> +&smd_rpm_regulators {
-> +	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-> +	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-> +	vdd_l7-supply = <&pm8916_s4>;
-> +
-> +	s3 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1300000>;
-> +	};
-> +
-> +	s4 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2100000>;
-> +	};
-> +
-> +	l1 {
-> +		regulator-min-microvolt = <1225000>;
-> +		regulator-max-microvolt = <1225000>;
-> +	};
-> +
-> +	l2 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +	};
-> +
-> +	l4 {
-> +		regulator-min-microvolt = <2050000>;
-> +		regulator-max-microvolt = <2050000>;
-> +	};
-> +
-> +	l5 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l6 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l7 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l8 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2900000>;
-> +	};
-> +
-> +	l9 {
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l10 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2800000>;
-> +	};
-> +
-> +	l11 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +		regulator-system-load = <200000>;
-> +		regulator-allow-set-load;
-> +	};
-> +
-> +	l12 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +	};
-> +
-> +	l13 {
-> +		regulator-min-microvolt = <3075000>;
-> +		regulator-max-microvolt = <3075000>;
-> +	};
-> +
-> +	l14 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l15 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l16 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l17 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +	};
-> +
-> +	l18 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2700000>;
-> +	};
-> +};
-> +
-> +&msmgpio {
-> +	accel_int_default: accel-int-default-state {
-> +		pins = "gpio115";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	fuelgauge_int_default: fuelgauge-int-default-state {
-> +		pins = "gpio121";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio107", "gpio109";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-> +		pins = "gpio52";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> new file mode 100644
-> index 000000000000..607a5dc8a534
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-> @@ -0,0 +1,113 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8916-samsung-gt5-common.dtsi"
-> +
-> +/ {
-> +	model = "Samsung Galaxy Tab A 9.7 (2015)";
-> +	compatible = "samsung,gt510", "qcom,msm8916";
-> +	chassis-type = "tablet";
-> +
-> +	clk_pwm: pwm {
-> +		compatible = "clk-pwm";
-> +		#pwm-cells = <2>;
-> +
-> +		clocks = <&gcc GCC_GP2_CLK>;
-> +
-> +		pinctrl-0 = <&motor_pwm_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	reg_motor_vdd: regulator-motor-vdd {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "motor_vdd";
-> +		regulator-min-microvolt = <3000000>;
-> +		regulator-max-microvolt = <3000000>;
-> +
-> +		gpio = <&msmgpio 76 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&motor_en_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	reg_tsp_1p8v: regulator-tsp-1p8v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "tsp_1p8v";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		gpio = <&msmgpio 73 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&tsp_en_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	reg_tsp_3p3v: regulator-tsp-3p3v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "tsp_3p3v";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&msmgpio 73 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +	};
-> +
-> +	vibrator {
-> +		compatible = "pwm-vibrator";
-> +
-> +		pwms = <&clk_pwm 0 100000>;
-> +		pwm-names = "enable";
-> +
-> +		vcc-supply = <&reg_motor_vdd>;
-> +	};
-> +};
-> +
-> +&blsp_i2c5 {
-> +	status = "okay";
-> +
-> +	touchscreen@4a {
-> +		compatible = "atmel,maxtouch";
-> +		reg = <0x4a>;
-> +		interrupt-parent = <&msmgpio>;
-> +		interrupts = <13 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		vdd-supply = <&reg_tsp_1p8v>;
-> +		vdda-supply = <&reg_tsp_3p3v>;
-> +
-> +		reset-gpios = <&msmgpio 114 GPIO_ACTIVE_LOW>;
-> +
-> +		pinctrl-0 = <&tsp_int_rst_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
-> +&msmgpio {
-> +	motor_en_default: motor-en-default-state {
-> +		pins = "gpio76";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	motor_pwm_default: motor-pwm-default-state {
-> +		pins = "gpio50";
-> +		function = "gcc_gp2_clk_a";
-> +	};
-> +
-> +	tsp_en_default: tsp-en-default-state {
-> +		pins = "gpio73";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	tsp_int_rst_default: tsp-int-rst-default-state {
-> +		pins = "gpio13", "gpio114";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +};
+> @@ -550,14 +580,29 @@ static int gh_rm_drv_probe(struct platform_device *pdev)
+>  	rsc_mgr->msgq_client.rx_callback = gh_rm_msgq_rx_data;
+>  	rsc_mgr->msgq_client.tx_done = gh_rm_msgq_tx_done;
+>  
+> -	return gh_msgq_init(&pdev->dev, &rsc_mgr->msgq, &rsc_mgr->msgq_client,
+> +	ret = gh_msgq_init(&pdev->dev, &rsc_mgr->msgq, &rsc_mgr->msgq_client,
+>  				&rsc_mgr->tx_ghrsc, &rsc_mgr->rx_ghrsc);
+
+Bail on error here.
+
+[snip]
+
+> +static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
+> +{
+> +	struct gunyah_vm *ghvm;
+> +	int vmid;
+> +
+> +	vmid = gh_rm_alloc_vmid(rm, 0);
+> +	if (vmid < 0)
+> +		return ERR_PTR(vmid);
+> +
+> +	ghvm = kzalloc(sizeof(*ghvm), GFP_KERNEL);
+> +	if (!ghvm)
+
+dealloc_vmid here (as well as few other error paths)?
+
+> +		return ghvm;
+> +
+> +	get_gh_rm(rm);
