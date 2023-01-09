@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95330663596
+	by mail.lfdr.de (Postfix) with ESMTP id E205B663598
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:44:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237912AbjAIXo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 18:44:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36410 "EHLO
+        id S237721AbjAIXo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:44:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237721AbjAIXoM (ORCPT
+        with ESMTP id S237967AbjAIXoM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 9 Jan 2023 18:44:12 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC373FC83
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC163FC86
         for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 15:44:05 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id bp15so15588944lfb.13
+Received: by mail-lf1-x136.google.com with SMTP id f34so15577366lfv.10
         for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 15:44:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U/freu+ZgmiBA4hrBK8o79X6HX9HTTyxAvA2ufrSoK0=;
-        b=ei8MTQp7vxUDhE4iKnFq1/ntIVOdVd6tuXdIpOwfrtvx6atVRVyyPKbWmpP1rvFscm
-         L/HdGhjbrE+c7TQb0HLPWkDmPusmKnPG+9MOnxpN3/Kf7+ZcxOf74CrMNZKh4weg2gn0
-         VAa2vJLjrJdKTjoZlopffsHF0cON4Oosur23OYVwDAeP7QV/D66IEuheo8TXkNSBuSiE
-         t4YdtaaGJMd7+GqNvB+m3/veyYEY64bKKMEoZMJ3L5/uN5rWfRg1YOdEMCW7OruZol2/
-         PzAjdWAqIKpW2myPiH8sn1TYfz6YIweA2qsyX9r1VZODVzIvPbIuiP31Ckl4nw1fgCr2
-         cXLQ==
+        bh=IJYCXzCwWlmnquQ5yNkG+nGz0jiVnLUqp4W9MaxrD4s=;
+        b=RIPP0LX1WVF/EwnvQtIj9jJQabFc2G1iyrCosOv6yvEXLxKIHVdJDa5nwzFlLU/isO
+         0xnLLL5EcOekI5uHkhLcnOZkUzGqP13Fl069NnVwv590tcKGPg3rMP2n6zpfmK3YDaJE
+         eGnaxtnchWCtqGKaR7uPRGw4kb7tdACQwLpKtFyBC1DWYDTAqRDvA+S7+tDj+oXg4mY3
+         v1iTvaAsh+tf7nI/gZsUcWZzWx/htWgqmh1ovXPig19o4FEoJuvEvoo2Q9SpbcWXGL9H
+         kYb169Z+TIdUuBIzLlqfhpKvwMDvzog7fpoE/POg+/+ckFqidCkW+15WFd1r42qEAkIk
+         Z2SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U/freu+ZgmiBA4hrBK8o79X6HX9HTTyxAvA2ufrSoK0=;
-        b=wpnFKuhefahRDnSt/+j2z4gHc9FJ3JDYvhuI63BCFtEoIZhnE0DhB9LQ/fEXdiu33t
-         OOVwQfzElPo7h+TmFlrn1FfCvJaGBIYLoZWvRAAohuxYw6mzILpBscwfqqiK/Fx9Dg22
-         IW5wShqpIm0EKKk/XzxaTwwO0U3Pd2vhyOISTbqChRSh6/NuwxqmEVOEAsJafy36bEtt
-         Wueu/sskdKlVPoEKb/5RLBQ5SoKB4ZgKJrptQQT77K5bc2HuxY8xBWNVO5+IZR2uYyAQ
-         D70PDvtZd6rSXOkKRrbdWcdHp8cp/UGN4MR2DGtc70ejZ9MHzZ02lVNQddyNGO9Gul9y
-         D+Qw==
-X-Gm-Message-State: AFqh2kqmwn8ElTd0ZC3Wu6tjho+JxjOsMQxk/zrtGsgIrjnCRY/wV2gi
-        szqHxwNRQSV8QPF010iVuhLdSg==
-X-Google-Smtp-Source: AMrXdXvTqLgwZKbMxDEd7mTBv9Kz2IZ//DCx8MFrgLL57L7EaiB/j8/l1Pzsuay0XCa3nvGoVipSxg==
-X-Received: by 2002:ac2:5231:0:b0:4a6:c596:6ff7 with SMTP id i17-20020ac25231000000b004a6c5966ff7mr16944972lfl.2.1673307843575;
-        Mon, 09 Jan 2023 15:44:03 -0800 (PST)
+        bh=IJYCXzCwWlmnquQ5yNkG+nGz0jiVnLUqp4W9MaxrD4s=;
+        b=nCnm25I77+4iekBpi88eVD0FNvOSeiw9Z3RIEm21vokAj4KZ7ba5R7UHGtJr+z+wWY
+         H3wpAbXRR7JgmITCRzhCe4iEAUY5DmVLYj8eFkFIYCa5i4W303iO6sf5SUuYDZo1HqTN
+         P6LFpsAC5guEm2XmMQKyvTXcrhEnKXrwyd4UGjz/E2fAu3US9Fi62y83gPKYWuNDxFbf
+         LuIVKgsFuBVk1Rao+ll0889yOediNIk8lgJR5OFBLAl9aLNyGWw16+O+NLqHki333uTS
+         VzdWOTDrOyQiUatsXNld/1TZYqPSEfo7wxZqO4m6fiWFECCE34Oq8LMpkK+XaWCP7ol5
+         KzSg==
+X-Gm-Message-State: AFqh2ko5kiIIn4ALx6tmMugfYDGTqkaSxJdcl7yefxG/sunmDtreHyYF
+        /8FEfZlrc5h/TqSsg+CyWjtJeQYZFT8gQ1Sz
+X-Google-Smtp-Source: AMrXdXvhuCtr9p3TaitJ7JU10h9BQxbrBE5HONX1QxhdjdTu1u8Jk5LG3EXWzIioN5/bOobU+UeVjg==
+X-Received: by 2002:a05:6512:3f0c:b0:4b5:2ef3:fd2b with SMTP id y12-20020a0565123f0c00b004b52ef3fd2bmr21828551lfa.18.1673307844326;
+        Mon, 09 Jan 2023 15:44:04 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s9-20020a056512214900b004b5a4cf69dfsm1835255lfr.261.2023.01.09.15.44.02
+        by smtp.gmail.com with ESMTPSA id s9-20020a056512214900b004b5a4cf69dfsm1835255lfr.261.2023.01.09.15.44.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 15:44:02 -0800 (PST)
+        Mon, 09 Jan 2023 15:44:03 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH v6 0/4] drm/msm: convet to drm_crtc_handle_vblank()
-Date:   Tue, 10 Jan 2023 01:43:47 +0200
-Message-Id: <167330408779.609993.9427004517463466813.b4-ty@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, swboyd@chromium.org,
+        quic_khsieh@quicinc.com, johan+linaro@kernel.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+Date:   Tue, 10 Jan 2023 01:43:48 +0200
+Message-Id: <167330408781.609993.12402793226257634056.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
-References: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
+References: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -78,26 +76,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sat, 18 Jun 2022 02:33:24 +0300, Dmitry Baryshkov wrote:
-> This patchseries replaces drm_handle_vblank() with
-> drm_crtc_handle_vblank(). As a bonus result of this conversion it is
-> possible to drop the stored array of allocated CRTCs and use the core
-> CRTC iterators.
+On Fri, 06 Jan 2023 10:30:11 +0800, Jiasheng Jiang wrote:
+> Add check for the return value of alloc_ordered_workqueue as it may return
+> NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
+> `hdmi_hpd.c`.
 > 
-> Changes since v5:
->  - Clean up the event_thread->worker in case of an error to fix possible
->    oops in msm_drm_uninit().
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] drm/msm: clean event_thread->worker in case of an error
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c79bb6b92def
-[2/4] drm/msm/mdp4: convert to drm_crtc_handle_vblank()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/6606a96ab1ce
-[3/4] drm/msm/mdp5: convert to drm_crtc_handle_vblank()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/e96c08e91726
+[1/1] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/afe4cb96153a
 
 Best regards,
 -- 
