@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68E36662368
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E24B662345
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:39:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233045AbjAIKqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 05:46:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56210 "EHLO
+        id S233738AbjAIKjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 05:39:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236912AbjAIKpt (ORCPT
+        with ESMTP id S233424AbjAIKjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:45:49 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1D027A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:35:50 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id z8-20020a05600c220800b003d33b0bda11so6884863wml.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:35:50 -0800 (PST)
+        Mon, 9 Jan 2023 05:39:10 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B4617891
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:39:02 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso1922970wms.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:39:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OrpVU4MZmc6u9aMkODiqxRcki11h8mfbJpfMuPKrKA8=;
-        b=aZF6KdQhr2X4RgS9TmMTwUVa6+052n9heGDLdsGxuO1McASL6DCbktA9Y7/IXXF/Ok
-         K0p6ghXkK55Q53GHwI53k1cCHs6m/qzLdu0oaC9xSdfnT+FSHEecwXGmk38VUlVJr3fu
-         A26KnD/IdGtq7xmoifTlUpvTfN5xMc80MUGlukOc+2OlNKB2tjW7MFpAq3KBX1UFialB
-         96c8rmi6z31pr+bTKYxCAhg1PazBse2QeDBahptI5DAL//0cOaRLRo6gTJjfCJC3m5k+
-         ApjqoUXAEeXMJPUsWSD7OV4jLID8ROh8r2fzaU59aatSgxuw9HrT/pc0vwJqJNHYAOku
-         PLdQ==
+        bh=ci3zY6Yv3EZIXzBWjrkV2Fk9lPgwnZ7+X4TdQnkpQoc=;
+        b=JDN1dR2xb6KGWi9FUAmZl8gcSxis+XX/Hr5Aej49kKgVMnDQGoFHhxzS+QNGDpxu1W
+         DP4YVpOZFWnoV/pQLEePS1OJYfMqB8Rv8amFlZ26V2yMQ3K5MvoG1KY7tDuRi7E8DAmY
+         0f/xEa8D1zenJ22oWa7jzBXfTIa7V8FTBpeVH+ChUHVrtSdBvN/dMBAYZKTH4eJQQXvC
+         hGdpvAk6Bqh8MBIEuKi2wegXWXW9hYRj8IHL/OApeq8AUKblldsZKfL0Sb6VE4lFPzgc
+         gexGhDG9OMxaWPp0NnxUMuCKVjDb4bWAaO0yIS7UPNV7PWHt1sFbl0KT1LjIm4j4bg/X
+         w9cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OrpVU4MZmc6u9aMkODiqxRcki11h8mfbJpfMuPKrKA8=;
-        b=RAaWTuFVAeOCB7nVYxYSByq1i6AI3VGW/ogGGE/NmxfOjj1OQLkkD1IQ47iH+SOYlR
-         vGGMseWfVuI/ld51lCHWbdv+Ot7Sba45snimRiV34sWmCdomo+a6wJd7FIMKudFhqdLN
-         FFf45q0aN16ew6jJpTAuYhEwwd38J61YepJe0tNKRChctDgvPi4CReWNPl4zHueaHMXh
-         LjCyWp6ub37bDGosMdwv67YAZ9Jg/pwpW/QfHk9ivtwD80tIqbCYNne5NcxMC+JvnoXn
-         yxbxH53YYdzKUIlog+34whptPKOQOXAUxSeJ+c1sY49VJLCm45BglzNdiZSorQOLQPM/
-         hsBg==
-X-Gm-Message-State: AFqh2kpOc6TmodjBFiTsBUSb8GxJCa58fzfn4jXsZ32MOp2xJpU/Pf70
-        mqKeEBB8zmipH08HZpkqV/o/Xw==
-X-Google-Smtp-Source: AMrXdXsjNN4d6Xoga/zvpCLRou4KpmfA/6zYaF1p5hGNOapZQ7rYUOsu/iLTnxEj70GtEpssJoBD/g==
-X-Received: by 2002:a05:600c:3b22:b0:3c6:e63e:814b with SMTP id m34-20020a05600c3b2200b003c6e63e814bmr45631533wms.2.1673260549039;
-        Mon, 09 Jan 2023 02:35:49 -0800 (PST)
+        bh=ci3zY6Yv3EZIXzBWjrkV2Fk9lPgwnZ7+X4TdQnkpQoc=;
+        b=eFV1obkIHdBkGQa97mRbIuky3/krYSf9qpI+5pyVJNq8GrykDWN3ldAoBddHJ7d9rc
+         Mn2ae0JhiPNBhzS8inAfBwiTpoNJwg/HST5a7Qi/wRKDNW1/3g5v88ESfEM32slE9MfH
+         V0xYiQVvI95qM3KXUKJ0JBwIGDQErSUJ8G2Iro9rkI6JvGickxogrOniWR61salF8c1w
+         EErPwyclHFVBiXNUp8Srx1Wv2h0FrfSex1awJRbcC0Agb/NZ9bEhN3p2GECB8hZhj43c
+         KVl3RJV9ljPumrm/EAXNxewd68fyDF+XFdKWqeMbMphlqJiEmKEemewolfdL8iUNyyVm
+         O1rw==
+X-Gm-Message-State: AFqh2krSh+llg+BegGEt0KuZi3blbF8Kr25mw0WOWchGgUewv1H9UdW+
+        GLp9e975/5U0WeLp/nRRx132ngbdNaODlVyW
+X-Google-Smtp-Source: AMrXdXsqbO+/iPXS6nWWXbJDiSzKzM9/wW0rYmLmkuC/N4ykRN/K+1QC1GFK05vglTCQdXh1iUEJEw==
+X-Received: by 2002:a05:600c:4e4f:b0:3cf:9d32:db67 with SMTP id e15-20020a05600c4e4f00b003cf9d32db67mr45411457wmq.3.1673260740898;
+        Mon, 09 Jan 2023 02:39:00 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id x14-20020a1c7c0e000000b003d9f15efcd5sm2188033wmc.6.2023.01.09.02.35.47
+        by smtp.gmail.com with ESMTPSA id v8-20020a05600c444800b003c21ba7d7d6sm11502586wmn.44.2023.01.09.02.38.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 02:35:48 -0800 (PST)
-Message-ID: <3414e686-9f8d-a29d-6cc1-f073b70a9f1c@linaro.org>
-Date:   Mon, 9 Jan 2023 11:35:46 +0100
+        Mon, 09 Jan 2023 02:39:00 -0800 (PST)
+Message-ID: <5caddeb2-bcea-43fc-ee00-7813f1d8a75f@linaro.org>
+Date:   Mon, 9 Jan 2023 11:38:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: add core clock to the
- mdss bindings
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: make DP node follow the schema
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -65,10 +64,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230109005209.247356-1-dmitry.baryshkov@linaro.org>
- <20230109005209.247356-2-dmitry.baryshkov@linaro.org>
+References: <20230109041728.308725-1-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230109005209.247356-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230109041728.308725-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,91 +78,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/01/2023 01:52, Dmitry Baryshkov wrote:
-> Add (optional) core clock to the mdss bindings to let the MDSS driver
-> access harware registers before MDP driver probes.
+On 09/01/2023 05:17, Dmitry Baryshkov wrote:
+> Drop the #clock-cells (leftover probably from the times before the DP
+> PHY split) and rename dp-opp-table to just opp-table.
 > 
+> Fixes: eaac4e55a6f4 ("arm64: dts: qcom: sdm845: add displayport node")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/display/msm/qcom,mdss.yaml       | 34 ++++++++++++++-----
->  1 file changed, 26 insertions(+), 8 deletions(-)
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> index ba0460268731..0647fc5a7d94 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> @@ -45,17 +45,11 @@ properties:
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 9e881e19b984..fa62479206ce 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -4593,7 +4593,6 @@ mdss_dp: displayport-controller@ae90000 {
+>  					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+>  				clock-names = "core_iface", "core_aux", "ctrl_link",
+>  					      "ctrl_link_iface", "stream_pixel";
+> -				#clock-cells = <1>;
+>  				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+>  						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+>  				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> @@ -4619,7 +4618,7 @@ port@1 {
+>  					};
+>  				};
 >  
->    clocks:
->      minItems: 1
-> -    items:
-> -      - description: Display abh clock
-> -      - description: Display axi clock
+> -				dp_opp_table: dp-opp-table {
+> +				dp_opp_table: opp-table {
 
-Not related to this patch, but it is a bit surprising to see AXI clock
-optional.
+Already done:
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20221225115844.55126-2-krzysztof.kozlowski@linaro.org/
 
-
-
-
-> -      - description: Display vsync clock
-> +    maxItems: 4
->  
->    clock-names:
->      minItems: 1
-> -    items:
-> -      - const: iface
-> -      - const: bus
-> -      - const: vsync
-> +    maxItems: 4
->  
->    "#address-cells":
->      const: 1
-> @@ -69,6 +63,30 @@ properties:
->      items:
->        - description: MDSS_CORE reset
->  
-> +oneOf:
-> +  - properties:
-> +      clocks:
-> +        minItems: 3
-> +        maxItems: 4
-> +
-> +      clock-names:
-> +        minItems: 3
-> +        items:
-> +          - const: iface
-> +          - const: bus
-
-BTW, sc7180-mdss uses here ahb name and calls it "AHB clock from dispcc".
-
-SM8250 won't match here either. Maybe this should be reworked to specify
-limits here but not the names and actual clocks? IOW, drop entire oneOf?
-
-There were a lot, a lot of changes to MDSS/DPU bindings recently, so I
-am really loosing track what is done where and when.
-
-There are also few separate patchsets from you on the lists. Could they
-be combined into one cleanup?
-
-I understand that sometimes new cleanup is needed after old cleanup
-finished (I had the same with pinctrl), so it is not a complain.
-
-Another problem (and this time I complain) is that several of your
-patchsets were sent, discussed and then without any notice applied. No
-message that a patchset was applied to some tree. Look:
-
-https://lore.kernel.org/all/20221124001708.25720-2-a39.skl@gmail.com/
-https://lore.kernel.org/all/09ed16e1-4af2-8fce-dab4-f6c0f09e688c@linaro.org/
-
-Nothing. Silent application. If you are the maintainer which picks up
-the patch, please always, always send message that they are applied.
-Patchwork does it automatically, b4 can do it easily as well. If you use
-other tools - use other tools for sending it. Otherwise things are
-discussed on mailing lists, receive several comments and there is never
-a resubmit but instead they show in the tree.
-
-
+Please rebase on top of my changes or just drop this part.
 
 Best regards,
 Krzysztof
