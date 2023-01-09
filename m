@@ -2,191 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60B2F661FCE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:18:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F031661FE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:21:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233424AbjAIISs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 03:18:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38232 "EHLO
+        id S229562AbjAIIVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 03:21:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233505AbjAIISq (ORCPT
+        with ESMTP id S236505AbjAIIU6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 03:18:46 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBF8D129
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 00:18:43 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id c8-20020a17090a4d0800b00225c3614161so11968301pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 00:18:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=s513E4dErzOS7TZdSXS86SQPydYzgshBqtf/+wa1x4E=;
-        b=L6mq5UmjA2YzxuvR0EpoEO1abZqE9g9ZP71jkxJRpO8UlcZi6AnlU07KnrUcRwQgdx
-         m0hNjXZDmVTgRgjChcNHJ09O6Oc/On6JwUs+jmAVSKt1C/qdfoZAf02SzxZ7LzkQpPgz
-         W/sf+zknQpuAY3LXRKDrwvXLCSGH/3a7/3epciI6s0S6DafB4hj8uhQLAkMmFdsEP2in
-         DboyVlktXhiMHL75W3fDNSg0mPh3Nvsv5YJsLRDUd9954cDm/9YqQ4XtNow1ZRmVxs8M
-         J3sbBIXW6GXyNzwR91p+p8+6a31Fkor776Aviw0VGKiJCYQxdFczA6VmwANJ7ype3Vtr
-         Oh8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s513E4dErzOS7TZdSXS86SQPydYzgshBqtf/+wa1x4E=;
-        b=y4udDS835GN9FN4a3xJECnmx8hgnH0VnUK7Rne3Q+jXLq5A5PeaypOhzW9Foh3dcoJ
-         Wl1vsJyAGYaHyZSRtIkpiQEd7WwAr95AaajHZurZOOc2RpvQsdX17fvf76aW/hQA2qSk
-         srWY8qYEh8ACW8yck/Pp3L8x2q8FzeWSxnRGx+FV7kOqJmJIXFTAwcr/uWPIxtbglX69
-         PUrzQO9Q5mcl5s7+o3pRjZQ0tw1VNSmiixPMCqx9EbK5wviJRomiDbl0cOmB1eTTPBrj
-         xXPZ18JF13hx9X+6yMEG2gteiewB+rhgV9oZQeYs3UblDhpnI78KN0XXPml6Z1juIEhe
-         wCzA==
-X-Gm-Message-State: AFqh2kq4jO8M0Z+ok0n9mSjLXCa92AZ6UOnW0X0J7CBa4ZBnZXRwKkC5
-        te9vjKTHKO1CTZT+54vrqYIn
-X-Google-Smtp-Source: AMrXdXs8AKMvnXxMrUQDy6esHiyJWQEv/AV0sLSY3/lKfqwIyYnflbG4wWhx8N/FOgcUqHVJ8uMytQ==
-X-Received: by 2002:a05:6a20:3a84:b0:b5:cc98:153c with SMTP id d4-20020a056a203a8400b000b5cc98153cmr3746328pzh.24.1673252322777;
-        Mon, 09 Jan 2023 00:18:42 -0800 (PST)
-Received: from thinkpad ([117.217.177.135])
-        by smtp.gmail.com with ESMTPSA id o9-20020a170902d4c900b00192cf87ed25sm5500117plg.35.2023.01.09.00.18.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 00:18:41 -0800 (PST)
-Date:   Mon, 9 Jan 2023 13:48:32 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        amit.pundir@linaro.org, regressions@leemhuis.info,
-        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com,
-        hch@lst.de
-Subject: Re: [PATCH V2 05/11] remoteproc: qcom_q6v5_mss: revert "map/unmap
- metadata region before/after use"
-Message-ID: <20230109081832.GA4966@thinkpad>
-References: <20230109034843.23759-1-quic_sibis@quicinc.com>
- <20230109034843.23759-6-quic_sibis@quicinc.com>
+        Mon, 9 Jan 2023 03:20:58 -0500
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0DB45F52;
+        Mon,  9 Jan 2023 00:20:57 -0800 (PST)
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 3098KEbE005525;
+        Mon, 9 Jan 2023 02:20:14 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1673252414;
+        bh=98nckAPo1vAa2VGOJss+hU8H+5NzLRli7Jdtq00XhZY=;
+        h=Date:Subject:To:CC:References:From:In-Reply-To;
+        b=q0acF1k/8t89ewEtD4TmAH1DhJ+uNyOhwCC3+3eOs+XyUeNukbiDcI8P+4TB3IKG9
+         kN+m4dRTxa+/HdnA0A8x4rThnpkpg+UzXS17O8eJhMS4IB9ho2Yy+SBsGOXBjdqpqG
+         WeMWjxNXqxjpBNgiV5d0bmOxQwlDIHaWbklT05L4=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 3098KE8X123160
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 9 Jan 2023 02:20:14 -0600
+Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Mon, 9
+ Jan 2023 02:20:13 -0600
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
+ Frontend Transport; Mon, 9 Jan 2023 02:20:13 -0600
+Received: from [10.24.69.26] (ileaxei01-snat.itg.ti.com [10.180.69.5])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 3098K8s1022473;
+        Mon, 9 Jan 2023 02:20:09 -0600
+Message-ID: <f7bf366a-dc32-47a2-79fc-c6f7f1f93ab7@ti.com>
+Date:   Mon, 9 Jan 2023 13:50:08 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230109034843.23759-6-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2] drm/msm/dsi: Add missing check for
+ alloc_ordered_workqueue
+To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <marijn.suijten@somainline.org>, <vkoul@kernel.org>,
+        <dianders@chromium.org>, <marex@denx.de>,
+        <vladimir.lypak@gmail.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230109025044.27766-1-jiasheng@iscas.ac.cn>
+Content-Language: en-US
+From:   Dhruva Gole <d-gole@ti.com>
+In-Reply-To: <20230109025044.27766-1-jiasheng@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Christoph
 
-Hi Sibi,
 
-On Mon, Jan 09, 2023 at 09:18:37AM +0530, Sibi Sankar wrote:
-> This reverts commit fc156629b23a21181e473e60341e3a78af25a1d4.
+On 09/01/23 08:20, Jiasheng Jiang wrote:
+> Add check for the return value of alloc_ordered_workqueue as it may return
+> NULL pointer and cause NULL pointer dereference.
+> Moreover, change the "goto fail" into "return ret" and drop the "fail"
+> label since they are the same.
 > 
-> The memory region allocated using dma_alloc_attr with no kernel mapping
-> attribute set would still be a part of the linear kernel map. Hence as a
-> precursor to using reserved memory for modem metadata region, revert back
-> to the simpler way of dynamic memory allocation.
-> 
-> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-
-Christoph already submitted a patch that reverts fc156629b23a:
-https://lore.kernel.org/linux-arm-msm/20221223092703.61927-2-hch@lst.de/
-
-Thanks,
-Mani
-
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 > ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++-------------------------
->  1 file changed, 6 insertions(+), 32 deletions(-)
+
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+
+> Changelog:
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 2f4027664a0e..e2f765f87ec9 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -10,7 +10,6 @@
->  #include <linux/clk.h>
->  #include <linux/delay.h>
->  #include <linux/devcoredump.h>
-> -#include <linux/dma-map-ops.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/interrupt.h>
->  #include <linux/kernel.h>
-> @@ -961,52 +960,27 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
->  static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  				const char *fw_name)
->  {
-> -	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
-> -	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
-> -	struct page **pages;
-> -	struct page *page;
-> +	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
->  	dma_addr_t phys;
->  	void *metadata;
->  	int mdata_perm;
->  	int xferop_ret;
->  	size_t size;
-> -	void *vaddr;
-> -	int count;
-> +	void *ptr;
->  	int ret;
-> -	int i;
->  
->  	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
->  	if (IS_ERR(metadata))
->  		return PTR_ERR(metadata);
->  
-> -	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> -	if (!page) {
-> +	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> +	if (!ptr) {
->  		kfree(metadata);
->  		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
->  		return -ENOMEM;
->  	}
->  
-> -	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-> -	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-> -	if (!pages) {
-> -		ret = -ENOMEM;
-> -		goto free_dma_attrs;
-> -	}
-> -
-> -	for (i = 0; i < count; i++)
-> -		pages[i] = nth_page(page, i);
-> -
-> -	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
-> -	kfree(pages);
-> -	if (!vaddr) {
-> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
-> -		ret = -EBUSY;
-> -		goto free_dma_attrs;
-> -	}
-> -
-> -	memcpy(vaddr, metadata, size);
-> -
-> -	vunmap(vaddr);
-> +	memcpy(ptr, metadata, size);
->  
->  	/* Hypervisor mapping to access metadata by modem */
->  	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-> @@ -1036,7 +1010,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  			 "mdt buffer not reclaimed system may become unstable\n");
->  
->  free_dma_attrs:
-> -	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-> +	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
->  	kfree(metadata);
->  
->  	return ret < 0 ? ret : 0;
-> -- 
-> 2.17.1
+> v1 -> v2:
 > 
+> 1. Change the "goto fail" into "return ret" and drop the "fail" label.
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 24 +++++++++++++-----------
+>   1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 89aadd3b3202..819f5be5fd77 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1884,7 +1884,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
+>   	if (!msm_host) {
+>   		ret = -ENOMEM;
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	msm_host->pdev = pdev;
+> @@ -1893,14 +1893,14 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   	ret = dsi_host_parse_dt(msm_host);
+>   	if (ret) {
+>   		pr_err("%s: failed to parse dt\n", __func__);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
+>   	if (IS_ERR(msm_host->ctrl_base)) {
+>   		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
+>   		ret = PTR_ERR(msm_host->ctrl_base);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	pm_runtime_enable(&pdev->dev);
+> @@ -1909,7 +1909,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   	if (!msm_host->cfg_hnd) {
+>   		ret = -EINVAL;
+>   		pr_err("%s: get config failed\n", __func__);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   	cfg = msm_host->cfg_hnd->cfg;
+>   
+> @@ -1917,7 +1917,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   	if (msm_host->id < 0) {
+>   		ret = msm_host->id;
+>   		pr_err("%s: unable to identify DSI host index\n", __func__);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	/* fixup base address by io offset */
+> @@ -1927,19 +1927,19 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   					    cfg->regulator_data,
+>   					    &msm_host->supplies);
+>   	if (ret)
+> -		goto fail;
+> +		return ret;
+>   
+>   	ret = dsi_clk_init(msm_host);
+>   	if (ret) {
+>   		pr_err("%s: unable to initialize dsi clks\n", __func__);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
+>   	if (!msm_host->rx_buf) {
+>   		ret = -ENOMEM;
+>   		pr_err("%s: alloc rx temp buf failed\n", __func__);
+> -		goto fail;
+> +		return ret;
+>   	}
+>   
+>   	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
+> @@ -1977,15 +1977,17 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   
+>   	/* setup workqueue */
+>   	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
+> +	if (!msm_host->workqueue) {
+> +		ret = -ENOMEM;
+> +		return ret;
+
+Why not simply return -ENOMEM;
+instead?
+
+> +	}
+> +
+>   	INIT_WORK(&msm_host->err_work, dsi_err_worker);
+>   
+>   	msm_dsi->id = msm_host->id;
+>   
+>   	DBG("Dsi Host %d initialized", msm_host->id);
+>   	return 0;
+> -
+> -fail:
+> -	return ret;
+>   }
+>   
+>   void msm_dsi_host_destroy(struct mipi_dsi_host *host)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Thanks and Regards,
+Dhruva Gole
