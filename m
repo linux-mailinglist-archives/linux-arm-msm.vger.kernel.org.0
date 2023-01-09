@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3ACB66277F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 14:44:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2FB666277C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 14:44:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237216AbjAINor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S237161AbjAINor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 9 Jan 2023 08:44:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55860 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbjAINny (ORCPT
+        with ESMTP id S237437AbjAINoA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 08:43:54 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BD5395FC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 05:43:33 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bf43so13024116lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 05:43:33 -0800 (PST)
+        Mon, 9 Jan 2023 08:44:00 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445721C435
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 05:43:55 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id b3so13036678lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 05:43:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ed8fh8WAClMFGv44FOKHg3vKLOHR3QsSfFjWFDv4P08=;
-        b=DXjmOp1i+dmSgXHIpv5nXhWeZdGlFj6UyRZN+TADdSilKKtSe3Zd2akOYBbjONWcVZ
-         VDtu1k+2CD9d0dowKCypPzFfEI2q4n0xUHrTuu5Pke0KhZzDVCwiW0wq/9bWFqAMBjRk
-         K7YWfS83cDKf6jfvwj8o/8xTe0Iyajd48NPSMRGClYPGe5NT4SFR9GdxgzmpVAlcKiFe
-         vs+dn0eLVUskNgW/QKUEiHuFwNJR3LBsbz8TEvDufcK4VdF7LO51JQKCqitDcaMqybGR
-         sVjQbk1u3OIY5jHDThpuye8u0uCe4vvcPvlpOEe/5Lf5WUK7cas+DwAsXKyXZHuDUo9R
-         U4RQ==
+        bh=rWl8UCfCUg60fJjNfhX7+lZo9Tp69LmtvnhMusTDvNs=;
+        b=e2uVmD2gTVdDiQ/o8CVBjNj0ZqdlkQ5V8xjQF3phVP/ZKAWEMs0yue/Vpj+yBm/tri
+         bRokMDB+cTmP4GLtI/B36CnUst2OIT9eLqpPqN86WT0eJEAxkrL69/QSlvd8aFXScgg2
+         1r+FVd/0GelAkea7rSaKWxaQ52Cmzxh+6y+WspRZvJAE0gNFTleEUWIwg/SyasXbrLRM
+         NFXi5bO19gBu6D6UnrCxSCsSrxhCF8wR7+DsFmClCeDIshG2Sexbn0mtYTdvTCW23DPE
+         WxIKrpBA4qaUf0E30Yo1UTU2zUycI3ZZr0aqrvVTcROrJv2qYfM5a/XRVBIfHppGV/DS
+         laLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ed8fh8WAClMFGv44FOKHg3vKLOHR3QsSfFjWFDv4P08=;
-        b=wv/oVxKJedz4qj/7CxFqVdm+Q8vYMpn7O5mTeX2UCEJeMh2VS0zv8/HtED09H9z/Uu
-         1AMuAe1CMvIBKKrIhidQr/vnHyeus2ikroRVoE77XywuTfKAl0moOG0RLF5bn+ziu1LO
-         lH38eIt7eA7yHzXdIh5sIxkwSTO6z4e8XA8RSH7hHy4BamoN5teCyybXhoQTjKmS7WNp
-         c7t1SkAsIr66GqdsfTDP9314OpywTdG/1fGbVmXB+40un164sIZVgWR1rF6v7uCEbH+0
-         VrJ6ncCoPUOwNnLDDX2F+gB9gDL0YCQ4SP3NXbXc7CqhrgD8f57iCoHvxIdghOQ93QzJ
-         7mJA==
-X-Gm-Message-State: AFqh2kp/Zl//Bw2PPeyAv5yIVO9dB1Z1TAD9wbfBMJ0V/ahaJsLheis3
-        I7XJU1T73QmxI553mrdpyuvE4Q==
-X-Google-Smtp-Source: AMrXdXsHbMYxf7SOINAAOhUzLfg3DTw/M7uwwicfxMZdrylyNuN+EfytEK/HhdWZDVv/jlQkKnbGxw==
-X-Received: by 2002:a05:6512:3083:b0:4cb:4326:682e with SMTP id z3-20020a056512308300b004cb4326682emr133363lfd.21.1673271812052;
-        Mon, 09 Jan 2023 05:43:32 -0800 (PST)
+        bh=rWl8UCfCUg60fJjNfhX7+lZo9Tp69LmtvnhMusTDvNs=;
+        b=OM1V/lelOwnoj+7LHTJQ2UIWJ76Rm61TOdJPMRLMZGcmTm+NZLeOnZq2mtgHGEZsU0
+         FyRU2vBYpcDbnUWgzamp3+knj3sTC+Ul01VAs+X/ZcWJk33ntLa2DNBWtfb2mRPJNLqM
+         lDVHfVWFdqoHztsNJ7xJVI/Y9PuA4Cz3a1aiHetEJjPabEQnZkVGO/AHM9+xGyUvurlr
+         rlPsemO3ZAevhH+7NrJaeX507AC/l9BL2bZaUtc92Hll/pbe0InpZsWH7qHX6bPKBn7m
+         tcS/rNp0MVFYB2Vk2METqNL16CzQM8haKao+TWbR2tXBvOqM4QNjNoj8gw1pkANGrS8u
+         XU5g==
+X-Gm-Message-State: AFqh2krbr+6540d6iFZLmrS5FyQc4dEGROdvWTEhlf6Nk0kF7rxMYp5s
+        D++hJ9kQtP113XMn7NpetigRRA==
+X-Google-Smtp-Source: AMrXdXuuwmZXRfVrYIvR4aFB8quO5/AwWXVjENPMlBK/Ld7vEdp8oFvN1cTzz/Bn9YABrA4d6vb5AQ==
+X-Received: by 2002:a05:6512:1111:b0:4b5:43ef:a552 with SMTP id l17-20020a056512111100b004b543efa552mr19663828lfg.16.1673271833659;
+        Mon, 09 Jan 2023 05:43:53 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id a23-20020a056512201700b004cb2a786cc6sm1627914lfb.105.2023.01.09.05.43.30
+        by smtp.gmail.com with ESMTPSA id f7-20020ac25327000000b004b4ea0f4e25sm1628259lfh.301.2023.01.09.05.43.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 05:43:31 -0800 (PST)
-Message-ID: <e3ea2a24-e7a5-1e04-a98d-c707e1153c83@linaro.org>
-Date:   Mon, 9 Jan 2023 14:43:30 +0100
+        Mon, 09 Jan 2023 05:43:53 -0800 (PST)
+Message-ID: <e9b0f691-82f6-d0a8-653e-a78470607588@linaro.org>
+Date:   Mon, 9 Jan 2023 14:43:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v3 01/12] interconnect: qcom: sdx55: drop IP0 remnants
+Subject: Re: [PATCH v3 02/12] interconnect: qcom: sc7180: drop IP0 remnants
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +70,9 @@ Cc:     Georgi Djakov <djakov@kernel.org>, Alex Elder <elder@linaro.org>,
         linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230109002935.244320-1-dmitry.baryshkov@linaro.org>
- <20230109002935.244320-2-dmitry.baryshkov@linaro.org>
+ <20230109002935.244320-3-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230109002935.244320-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230109002935.244320-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,38 +88,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 9.01.2023 01:29, Dmitry Baryshkov wrote:
-> Drop two defines leftover from the commit 2fb251c26560 ("interconnect:
-> qcom: sdx55: Drop IP0 interconnects"), which dropped handling of the IP0
-> resource in favour of handling it in the clk-rpmh driver.
+> Drop two defines leftover from the commit 2f3724930eb4 ("interconnect:
+> qcom: sc7180: Drop IP0 interconnects"), which dropped handling of the
+> IP0 resource in favour of handling it in the clk-rpmh driver.
 > 
-> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
+> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/interconnect/qcom/sdx55.h | 4 ++--
+>  drivers/interconnect/qcom/sc7180.h | 4 ++--
 >  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/sdx55.h b/drivers/interconnect/qcom/sdx55.h
-> index deff8afe0631..46cbabec8aa1 100644
-> --- a/drivers/interconnect/qcom/sdx55.h
-> +++ b/drivers/interconnect/qcom/sdx55.h
-> @@ -6,7 +6,7 @@
->  #ifndef __DRIVERS_INTERCONNECT_QCOM_SDX55_H
->  #define __DRIVERS_INTERCONNECT_QCOM_SDX55_H
->  
-> -#define SDX55_MASTER_IPA_CORE			0
-> +/* 0 was used by MASTER_IPA_CORE, now represented as RPMh clock */
->  #define SDX55_MASTER_LLCC			1
->  #define SDX55_MASTER_TCU_0			2
->  #define SDX55_MASTER_SNOC_GC_MEM_NOC		3
-> @@ -28,7 +28,7 @@
->  #define SDX55_MASTER_QDSS_ETR			19
->  #define SDX55_MASTER_SDCC_1			20
->  #define SDX55_MASTER_USB3			21
-> -#define SDX55_SLAVE_IPA_CORE			22
-> +/* 22 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
->  #define SDX55_SLAVE_EBI_CH0			23
->  #define SDX55_SLAVE_LLCC			24
->  #define SDX55_SLAVE_MEM_NOC_SNOC		25
+> diff --git a/drivers/interconnect/qcom/sc7180.h b/drivers/interconnect/qcom/sc7180.h
+> index c6212a10c2f6..7a2b3eb00923 100644
+> --- a/drivers/interconnect/qcom/sc7180.h
+> +++ b/drivers/interconnect/qcom/sc7180.h
+> @@ -11,7 +11,7 @@
+>  #define SC7180_MASTER_APPSS_PROC			0
+>  #define SC7180_MASTER_SYS_TCU				1
+>  #define SC7180_MASTER_NPU_SYS				2
+> -#define SC7180_MASTER_IPA_CORE				3
+> +/* 3 was used by MASTER_IPA_CORE, now represented as RPMh clock */
+>  #define SC7180_MASTER_LLCC				4
+>  #define SC7180_MASTER_A1NOC_CFG				5
+>  #define SC7180_MASTER_A2NOC_CFG				6
+> @@ -58,7 +58,7 @@
+>  #define SC7180_MASTER_USB3				47
+>  #define SC7180_MASTER_EMMC				48
+>  #define SC7180_SLAVE_EBI1				49
+> -#define SC7180_SLAVE_IPA_CORE				50
+> +/* 50 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
+>  #define SC7180_SLAVE_A1NOC_CFG				51
+>  #define SC7180_SLAVE_A2NOC_CFG				52
+>  #define SC7180_SLAVE_AHB2PHY_SOUTH			53
