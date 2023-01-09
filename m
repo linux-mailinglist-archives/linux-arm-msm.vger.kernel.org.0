@@ -2,104 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB6DC6629AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:19:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F29B56629BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:19:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235536AbjAIPSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 10:18:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33432 "EHLO
+        id S234965AbjAIPTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 10:19:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237074AbjAIPRt (ORCPT
+        with ESMTP id S237122AbjAIPSY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 10:17:49 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFFE1A231
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 07:17:03 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id o15so6506888wmr.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 07:17:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+PqgORacgkMDX01Q5NGqFzrod0OlQV05LXx05OG7/R8=;
-        b=sb5IJ/abZfkZqQuTH1bGGSF8GF1xPt1b4eT+3XTA1i+HoCZBJ1yYEVs98SWKk6ytM0
-         B6QEjLlmppj6MY2WeAoSmA1N289RS3BJ62L2PfXf6khhLfFC5+DxvFEp0DHZxjMA5D2E
-         XT+DmUzPDr9k+ISyMAIldOCybXDT3nLkx476KWq4tByFbSeG3qc9nOzs4ZyTANLj+kgh
-         hqLnDy855NR6z/mfxnZ4tw7gxX2BpmUbVbge+ulCzlyvFpKyVJzkQWf4BHtwzDhIbiEE
-         FfWHDsz1i1IxT5Ri11jguy7E70C0a6HKtBfwrCoYQIeayOC2mMVeti0Dl4yjWB0gDAML
-         crBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+PqgORacgkMDX01Q5NGqFzrod0OlQV05LXx05OG7/R8=;
-        b=4cfHl69TGvlbH5jG5C3IkKxmytlEEMuiTEt6NrOtb31m0FWxeM8kjsYGs9d5J8VeLn
-         7bg4NpU4lF1I7Zs9We7uSVP3U8MKyNM1jIDCXU/zgKY1iy9uhApGQNGA1NI1CgzYs/Is
-         ZYxpXV64t61FjmFBamkbKRL138b7+F5lc0GoriMrR3Ro1ls/gp+ZVqMHsFdhDFGxooas
-         yZYFP6/6lqOxVgZq1mSJ43vjzfiq/SoWMVFQyda7phl/cmcMWEWnpYIlHm3O15lVbYkH
-         exv+igG5L3ZLNSpPIyYICkjOstNVCEehjXlIjsDsLbfozY69AyPLAdnGUmgQVNcwNuK2
-         DEdA==
-X-Gm-Message-State: AFqh2kqrhkka3YXlxfVD9y7uDR9tXzo3LACoS95JHO+Yyhx472MTwhNO
-        +os5rbW4yguTR6xsLom4Lk8nxg==
-X-Google-Smtp-Source: AMrXdXutZdV1Q+q4tKTuHkHXJoGdv5KeBWCpgkPiZr1wIwhHSlQ2cfgYT6VUJUZRhXCbmDEpmm9I2Q==
-X-Received: by 2002:a05:600c:3d0e:b0:3d1:ee97:980 with SMTP id bh14-20020a05600c3d0e00b003d1ee970980mr57192263wmb.7.1673277422112;
-        Mon, 09 Jan 2023 07:17:02 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:a010:fe57:993c:4842? ([2a01:e0a:982:cbb0:a010:fe57:993c:4842])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b003cf5ec79bf9sm12796176wmo.40.2023.01.09.07.17.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 07:17:01 -0800 (PST)
-Message-ID: <129c1b6d-288f-d463-8c08-7c7f7e832cf0@linaro.org>
-Date:   Mon, 9 Jan 2023 16:16:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/3] qcom: add support for SPMI PMICs found on SM8550
- platforms
-Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 9 Jan 2023 10:18:24 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78226E34;
+        Mon,  9 Jan 2023 07:18:22 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 14C9E6118B;
+        Mon,  9 Jan 2023 15:18:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DF5C433EF;
+        Mon,  9 Jan 2023 15:18:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673277501;
+        bh=DmyreDlHArodCGsufBIpSI6aaNNSnNxkS4N5Bedx534=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZUPq8AUND2CUfjPFiGOdOPro3tV1Vf2y7VUWm/uNW8B/gXY949Tc6cMbh1MoQsGx6
+         BWIDhrHN297V2QOnVZHEeCmPIB3by4/K69slOM7cyhKpT9y34QfJWu3FINCrvUCL7B
+         B57jGIYhmgl9qSICopZ83ikq28x+CuixrVEImgso4BUznpJLn5MlX0s09F+JYm9yp3
+         B1qgEcMXe6BR11soaqCL/yenoOBqUT2mYLgCJVqYhWXQFPYWRhEt5NtvuCdHGtoTo+
+         xj14kROg4L0lACPFdtHgZkLFRWe17wYJ8xuGx4mIzcsLYlB0dV3g3bDZjUEI9IhcWA
+         SIjgSwj6x5VKw==
+Date:   Mon, 9 Jan 2023 09:18:18 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
- <CACRpkdby3KTakQXnmkSYsu3HreSYx9zhP0nWKQU3KOtmunA3Ew@mail.gmail.com>
-Organization: Linaro Developer Services
-In-Reply-To: <CACRpkdby3KTakQXnmkSYsu3HreSYx9zhP0nWKQU3KOtmunA3Ew@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Alex Elder <elder@ieee.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+Subject: Re: [PATCH V1 0/1] soc: qcom: dcc: Add QAD, Cti-trigger and
+ Bootconfig support for Data Capture and Compare(DCC)
+Message-ID: <20230109151818.hxpi2nleb53ibv7w@builder.lan>
+References: <cover.1673270769.git.quic_schowdhu@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1673270769.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/01/2023 15:18, Linus Walleij wrote:
-> On Fri, Nov 18, 2022 at 9:24 AM Neil Armstrong
-> <neil.armstrong@linaro.org> wrote:
+On Mon, Jan 09, 2023 at 07:32:25PM +0530, Souradeep Chowdhury wrote:
+> This patch adds the Bootconfig, QAD and CTI-Trigger support for DCC.
 > 
->>        dt-bindings: pinctrl: qcom,pmic-gpio: document pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550 & pmr735d
->>        pinctrl: qcom: spmi-gpio: add support for pm8550 & pmr735d gpio control
+
+As with the other patch, please move your motivation into the commit
+message of the patch.
+
+That said, this seems to be 3 different topics, and hence should be
+three different patches.
+
+> 1.Bootconfig
 > 
-> These two patches applied to the pinctrl tree!
+> Bootconfig parser has been added to DCC driver so that the register addresses
+> can be configured during boot-time. This is used to debug crashes that can happen
+> during boot-time. The expected format of a bootconfig is as follows:-
+> 
+> dcc_config {
+> 	link_list_0 {
+> 		qcom-curr-link-list = <The list number to configure>
+> 		qcom-link-list =  <Address as same format as dcc separated by '_'>,
+> 	}
+> }
+> 
+> Example:
+> 
+> dcc_config {
+> 	link_list_0 {
 
-Thanks !
+The name of the node does not seem to have any significance; this could
+be nice to mention. I also think it would set a good precedence if you
+used the number of the qcom-curr-link-list in the node name, rather than
+just an iterator...
+
+> 		qcom-curr-link-list = 6
+> 		qcom-link-list = R_0x1781005c_1_apb,
+> 				 R_0x1782005c_1_apb
+> 	}
+> 	link_list_1 {
+> 		qcom-curr-link-list = 5
+> 		qcom-link-list = R_0x1784005c_1_apb
+> 	}
+> }
+> 
+> 2.QAD
+> 
+> QAD can be enabled as a part of debugfs file under each individual list folder.
+> QAD is used to specify the access control for DCC configurations, on enabling
+> it the access control to dcc configuration space is restricted.
+> 
+
+Who is locked out from this restricted access? Please mention why this
+is a good thing.
+
+> 3.CTI-trigger
+> 
+> CTI trigger is used to enable the Cross trigger interface for DCC. On enabling
+> CTI trigger the dcc software trigger can be done by writing to CTI trig-out.
+> Also the hwtrigger debugfs file is created which needs to be disabled for enabling
+> CTI-trigger.
+> 
+
+Please mention why hwtrigger needs to be disabled, and why does it need
+to be disabled?
+
+> Changes in V1
+> 
+> *Fixed the W=1 warnings in V0 of the patch
+
+Please follow the standard practice of giving your first version of a
+patch version 1.
+
+Thanks,
+Bjorn
 
 > 
-> Yours,
-> Linus Walleij
-
+> Souradeep Chowdhury (1):
+>   soc: qcom: dcc: Add QAD, Ctitrigger and Bootconfig support for DCC
+> 
+>  Documentation/ABI/testing/debugfs-driver-dcc |  24 +++
+>  drivers/soc/qcom/dcc.c                       | 284 ++++++++++++++++++++++++++-
+>  2 files changed, 304 insertions(+), 4 deletions(-)
+> 
+> --
+> 2.7.4
+> 
