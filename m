@@ -2,218 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BE0266342C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 23:43:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78AF766350B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237792AbjAIWnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 17:43:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        id S237909AbjAIXQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:16:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237813AbjAIWnA (ORCPT
+        with ESMTP id S237841AbjAIXQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 17:43:00 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C2B34754
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 14:42:01 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id m15so5643105ilq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 14:42:01 -0800 (PST)
+        Mon, 9 Jan 2023 18:16:33 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE2F1DDD0;
+        Mon,  9 Jan 2023 15:16:31 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bt23so15494875lfb.5;
+        Mon, 09 Jan 2023 15:16:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TErLXK6Xw8NHk2rMZzxz1f1Mf6NRGAvKbG0LeKvkd80=;
-        b=HBfGUR2BKxXIVeDbpudbJRq9L23fs0sHUreqrbBXmmUUZbfH6VqskmyOg1iWjFi/rW
-         S9b+M0aSingPAzsb+yhQFYUUaRtGiL+OWRSYNpv/R+1hTEWJT5RJ8/+sRh9OgS3o6eCO
-         r/jHmUeGmniwWQx8K/O0M/odoYUr+ZbHaEC6g=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Fcv1oFN64qJbUFhacrhJqgn8l/kgjLzAdWsUtFoBwMI=;
+        b=nBdqaJGPr/nRqiCZKqfaB1HQdy85AAh1ZQqHWisT9yDwtkhoPZXkKF7qRcING1Gzup
+         Uwwla3Pj8/L696BkpNLVsLz7x6fei2MZy2fzk1P0wvqBSVqvT5sYt4feMLxjjjmLVEpJ
+         e13sfdL4Yg7pkuIDOQsGNRn4d0RLWivD8Y2vHOSAb02bJyq12Naag37tHw56u7SlphtW
+         vG8BhN0CmrFdC7wiB6Jijei+yfRFNGaMVHH/Hy5Bso8hQjsoT1Ezxgc4VA1wJh/avvIO
+         R8Qp6sw54FQBsCc9HJmLB8BNumhP/pcVSKefZUQ+AEWAMFhwKcGIV2kUxyNZ6WyT5k/r
+         1eug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TErLXK6Xw8NHk2rMZzxz1f1Mf6NRGAvKbG0LeKvkd80=;
-        b=zOgIIFPJs3RmNnWDChy5hB0SsPAUrQVj6KzaFV6wt2I3Nin3Mti6EkXsMeQHv8phBj
-         0sRbyDnoQadul6PDg80Po3AoJMRn3nRkB+AcBmZ7Jd8SOsDIrraId/ZcL8TY7W8ojHK7
-         vTAfOGFH7oSKRc8UkxFTkE1d76SI5KoplLCzral77bvSUcWF9tUs5XGZNepAVOqlV9Ma
-         rSQUgp5FWbPDXiG+yRr3G/NHQhjolH7PWXiyFvTXvKJAvsRTddp721ZB1LcTSyS1opkw
-         QtGHdvURVjvuy/6ojgOmTXw0jNXt0ABBQ6r7FiSgMMBiR2ZtIZi6SaPJnax4nEHsYm9S
-         gwkw==
-X-Gm-Message-State: AFqh2krbXmLrpcX8+DupPwu2BGI8Q2acjsOPRYEtPGOOq33+LzgcEGsj
-        UEpo+w/RhRTuzkObXlhFYL8Djw==
-X-Google-Smtp-Source: AMrXdXv53lQkwFkvTB+kkYDEjigCbYWERvXtgFXrS1GfLpNNaWI/Xjg7caGqk3Fha0dxNWaxxuzkIg==
-X-Received: by 2002:a92:c744:0:b0:30c:41cc:6978 with SMTP id y4-20020a92c744000000b0030c41cc6978mr22570638ilp.1.1673304120899;
-        Mon, 09 Jan 2023 14:42:00 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id 191-20020a021dc8000000b0039e07ca9ae5sm3109938jaj.113.2023.01.09.14.42.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 14:42:00 -0800 (PST)
-Date:   Mon, 9 Jan 2023 22:41:59 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Dhruva Gole <d-gole@ti.com>, lpieralisi@kernel.org,
-        robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org
-Subject: Re: [PATCH 1/1] PCI: qcom: Add support for system suspend and resume
-Message-ID: <Y7yYN1yGxqquR1FI@google.com>
-References: <20230103074907.12784-1-manivannan.sadhasivam@linaro.org>
- <20230103074907.12784-2-manivannan.sadhasivam@linaro.org>
- <dad3aba3-a40b-8b76-c689-3dc877800263@ti.com>
- <20230105133639.GC4463@thinkpad>
- <Y7hlr3x9IrT/Kg82@google.com>
- <20230106190252.GA485076@thinkpad>
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Fcv1oFN64qJbUFhacrhJqgn8l/kgjLzAdWsUtFoBwMI=;
+        b=jTUmwdwJPRv8WFkqr0/umi+t/rn2ODlfOmDphKB9dvCkudOC1rWInZNd6l3svlDG3R
+         LKty6nBWQ1rqZX9g5w/AyhA04+9KSv8ErzfwFc1J+8O1RATtPesec4HHtHWi83O9ZKd/
+         6JMbyeptG2ApQwY5XQ22+CCD2Z+NRE1svno2Mah4wAtVgeWoJixplr5a/eDtZWIrhPeN
+         ZSJtuOS3bStQXpvVI4cxK2KpbEHJIX6Nkuo9p3N6vSPwdgfoLxi5CjT2jhKDRJw311+i
+         Sb6FAgopWwI9r4WETo9aGazltxRnxecYzRSvePTKef9rov/okWHhIxMExJwRRILQyNcZ
+         i4Fw==
+X-Gm-Message-State: AFqh2kqsWwGI0AxpVtuhFgVdE28cWbql75WqB3MUI1nce2bHJma8++bc
+        ojHbHrWUT+RN8E8jVh9LPkU=
+X-Google-Smtp-Source: AMrXdXtXMWbO88qPnq745Od9/2z5JfHQSbibEexSfpksdpgkjdwJBwliMQal1f7GVguXLEPln76qHQ==
+X-Received: by 2002:ac2:52ba:0:b0:4cb:445c:dc7d with SMTP id r26-20020ac252ba000000b004cb445cdc7dmr5998193lfm.26.1673306191279;
+        Mon, 09 Jan 2023 15:16:31 -0800 (PST)
+Received: from localhost (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id br11-20020a056512400b00b0048a934168c0sm1831364lfb.35.2023.01.09.15.16.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 15:16:30 -0800 (PST)
+From:   Dmitry Baryshkov <dbaryshkov@gmail.com>
+X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        quic_jesszhan@quicinc.com,
+        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
+        vkoul@kernel.org, a39.skl@gmail.com, quic_khsieh@quicinc.com,
+        quic_vpolimer@quicinc.com, swboyd@chromium.org,
+        dianders@chromium.org, liushixin2@huawei.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
+        vinod.koul@linaro.org, Robert Foss <robert.foss@linaro.org>
+In-Reply-To: <20221230153554.105856-1-robert.foss@linaro.org>
+References: <20221230153554.105856-1-robert.foss@linaro.org>
+Subject: Re: [PATCH v4 00/11] Enable Display for SM8350
+Message-Id: <167330408775.609993.7646803775858639381.b4-ty@linaro.org>
+Date:   Tue, 10 Jan 2023 00:41:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230106190252.GA485076@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 07, 2023 at 12:32:52AM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Jan 06, 2023 at 06:17:19PM +0000, Matthias Kaehlcke wrote:
-> > On Thu, Jan 05, 2023 at 07:06:39PM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Jan 03, 2023 at 04:46:11PM +0530, Dhruva Gole wrote:
-> > > > 
-> > > > 
-> > > > On 03/01/23 13:19, Manivannan Sadhasivam wrote:
-> > > > > During the system suspend, vote for minimal interconnect bandwidth and
-> > > > > also turn OFF the resources like clock and PHY if there are no active
-> > > > > devices connected to the controller. For the controllers with active
-> > > > > devices, the resources are kept ON as removing the resources will
-> > > > > trigger access violation during the late end of suspend cycle as kernel
-> > > > > tries to access the config space of PCIe devices to mask the MSIs.
-> > > > > 
-> > > > > Also, it is not desirable to put the link into L2/L3 state as that
-> > > > > implies VDD supply will be removed and the devices may go into powerdown
-> > > > > state. This will affect the lifetime of storage devices like NVMe.
-> > > > > 
-> > > > > And finally, during resume, turn ON the resources if the controller was
-> > > > > truly suspended (resources OFF) and update the interconnect bandwidth
-> > > > > based on PCIe Gen speed.
-> > > > > 
-> > > > > Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > ---
-> > > > 
-> > > > Nice to have another driver added to the list of system suspend
-> > > > support!
-> > > > 
-> > > > Acked-by: Dhruva Gole <d-gole@ti.com>
-> > > > 
-> > > > >   drivers/pci/controller/dwc/pcie-qcom.c | 52 ++++++++++++++++++++++++++
-> > > > >   1 file changed, 52 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > index 5696e327795b..48810f1f2dba 100644
-> > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > @@ -227,6 +227,7 @@ struct qcom_pcie {
-> > > > >   	struct gpio_desc *reset;
-> > > > >   	struct icc_path *icc_mem;
-> > > > >   	const struct qcom_pcie_cfg *cfg;qcom_pcie_icc_update
-> > > > > +	bool suspended;
-> > > > >   };
-> > > > >   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> > > > > @@ -1835,6 +1836,52 @@ static int qcom_pcie_remove(struct platform_device *pdev)
-> > > > >   	return 0;
-> > > > >   }
-> > > > > +static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > > > +{
-> > > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > > > +	int ret;
-> > > > > +
-> > > > > +	ret = icc_set_bw(pcie->icc_mem, 0, 0);
-> > > > > +	if (ret) {
-> > > > > +		dev_err(pcie->pci->dev, "Failed to set interconnect bandwidth: %d\n", ret);
-> > > > > +		return ret;
-> > > > > +	}
-> > > > > +
-> > > > > +	/*
-> > > > > +	 * Turn OFF the resources only for controllers without active PCIe devices. For controllers
-> > > > > +	 * with active devices, the resources are kept ON and the link is expected to be in L0/L1
-> > > > > +	 * (sub)states.
-> > > > > +	 *
-> > > > > +	 * Turning OFF the resources for controllers with active PCIe devices will trigger access
-> > > > > +	 * violation during the end of the suspend cycle, as kernel tries to access the PCIe devices
-> > > > > +	 * config space for masking MSIs.
-> > > > > +	 *
-> > > > > +	 * Also, it is not desirable to put the link into L2/L3 state as that implies VDD supply
-> > > > > +	 * will be removed and the devices may go into powerdown state. This will affect the
-> > > > > +	 * lifetime of the storage devices like NVMe.
-> > > > > +	 */
-> > > > > +	if (!dw_pcie_link_up(pcie->pci)) {
-> > > > > +		qcom_pcie_host_deinit(&pcie->pci->pp);
-> > > > > +		pcie->suspended = true;
-> > > > > +	}
-> > > > > +
-> > > > > +	return 0;
-> > > > > +}
-> > > > > +
-> > > > > +static int qcom_pcie_resume_noirq(struct device *dev)
-> > > > > +{
-> > > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > > > +
-> > > > > +	if (pcie->suspended) {
-> > > > > +		qcom_pcie_host_init(&pcie->pci->pp);
-> > > > > +		pcie->suspended = false;
-> > > > > +	}
-> > > > > +
-> > > > > +	qcom_pcie_icc_update(pcie);
-> > > > > +
-> > > > > +	return 0;
-> > > > > +}
-> > > > > +
-> > > > >   static const struct of_device_id qcom_pcie_match[] = {
-> > > > >   	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
-> > > > >   	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> > > > > @@ -1870,12 +1917,17 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
-> > > > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
-> > > > >   DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> > > > > +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> > > > > +	NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq, qcom_pcie_resume_noirq)
-> > > > > +};
-> > > > > +
-> > > > >   static struct platform_driver qcom_pcie_driver = {
-> > > > >   	.probe = qcom_pcie_probe,
-> > > > >   	.remove = qcom_pcie_remove,
-> > > > >   	.driver = {
-> > > > >   		.name = "qcom-pcie",
-> > > > >   		.of_match_table = qcom_pcie_match,
-> > > > > +		.pm = &qcom_pcie_pm_ops,
-> > > > >   	},
-> > > > >   };
-> > > > >   module_platform_driver(qcom_pcie_driver);
-> > > > 
-> > > > Out of curiosity, were you able to measure how much power you were able
-> > > > to save after adding suspend support for PCIe? I don't know if clock
-> > > > gating really saves much amount of power, but yeah its true that we
-> > > > can't really cut off the power domain entirely in this case.
-> > > > 
-> > > 
-> > > I did not measure the power consumption and I agree that we won't save much
-> > > power with setting icc bandwidth to 0. But it is better to have something
-> > > than nothing. And in the coming days, I have plans to look into other power
-> > > saving measures also.
-> > 
-> > On a sc7280 system I see a reduction of ~30mW with this patch when no PCI
-> > card is plugged in. The reduction seems to come from powering the PHY down.
-> > 
-> 
-> Thanks a lot for testing!
-> 
-> > Interestingly on that system power consumption during suspend (without this
-> > patch) is ~30mW higher *without* a PCI card vs. with a card. Maybe the PHY
-> > doesn't enter a low power mode when no card is plugged in?
-> 
-> Yeah, both PHY and controllers are never put into low power mode even if there
-> are no devices connected. I don't know if the low power mode is possible at
-> all with PHY.
 
-It's still interesting that the PHY apparently at least enters a *lower* power
-mode when a card is plugged in, the extra 30mW are only seen without a card.
+On Fri, 30 Dec 2022 16:35:43 +0100, Robert Foss wrote:
+> Dependencies:
+> https://lore.kernel.org/all/20221102231309.583587-1-dmitry.baryshkov@linaro.org/
+> https://lore.kernel.org/all/20221024164225.3236654-1-dmitry.baryshkov@linaro.org/
+> https://lore.kernel.org/all/20221104130324.1024242-5-dmitry.baryshkov@linaro.org/
+> 
+> Branch:
+> https://git.linaro.org/people/robert.foss/linux.git/log/?h=sm8350_dsi_v4
+> 
+> [...]
+
+Applied, thanks!
+
+[01/11] dt-bindings: display: msm: Add qcom,sm8350-dpu binding
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/7a0c3d0025de
+[02/11] dt-bindings: display: msm: Add qcom,sm8350-mdss binding
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/ddcf30003b92
+[03/11] drm/msm/dpu: Add SM8350 to hw catalog
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/0a72f23f6ef8
+[04/11] drm/msm/dpu: Add support for SM8350
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/a596a6078586
+[05/11] drm/msm: Add support for SM8350
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/3d6287e64cbd
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
