@@ -2,65 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F42F663508
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B61766634FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237906AbjAIXQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 18:16:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46526 "EHLO
+        id S237781AbjAIXQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237850AbjAIXQe (ORCPT
+        with ESMTP id S237819AbjAIXQ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 18:16:34 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4351C186BA;
-        Mon,  9 Jan 2023 15:16:33 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id d30so10616931lfv.8;
-        Mon, 09 Jan 2023 15:16:33 -0800 (PST)
+        Mon, 9 Jan 2023 18:16:29 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A12193D0;
+        Mon,  9 Jan 2023 15:16:27 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id j17so15536351lfr.3;
+        Mon, 09 Jan 2023 15:16:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XHjEtNVaTqOtCpnB9ZP021rbETT/k+vzPdGSi2OKKbk=;
-        b=Dd9JqNQM4cUJM4TBXa5f4xvEAS9VPArJhWLDzOlCPE7UEAKXRhtW7VQ2cmdUTVVk0G
-         VYT6hox6yoL2bEvWBJuLKd86+3whBQaa1drVc97qUHLKzbzstPXGjAuZc4d/yr8bot84
-         8AUV1Y1SyZQUIbNPmu4uphSh85FxvRSVCB4n9nMbn+kPl2tQRlcVJYezP6JnIzfj59WG
-         8+j5WaBqQNdd4LQaJHBA8IYwnngzv4oqLlgOU7s8lB447GnMZEyskOkjNmT64wcSy8WH
-         4dHz1sURUjoigqOMejLb7fCuxJLGfbHoeB5SPaB+P+3FljuafV20y+8FvPWBE2bPGwfo
-         HKZg==
+        bh=TfEuuSwlBNCNhQ0V5aSlOKkpq1jL3HZF0gUtECm9ca4=;
+        b=H89n6zgg9/ccQW83NIXtgWreRJ1gThUzpqTRM46UyotjgGl289ZtSeYWxfwcJDA1io
+         2d2eBFAobUY0hgOv/1qLa2p0T0eDMoTT0p0odlKwnpozFdXS3DsZIyq1aAK9F66VnDn1
+         lYnGuIiYLNprPIGCYmAKwEkL3GUtFMIRtzeOxEOewO9fxEn2I+ZDYxhhiXtqYJx7Kw+E
+         I8iMnUaogrCKo1EmgN6md2a5m4oGq0MKl0RLMPajTXSbs2L+0mIVUglLO1YYaepiAztb
+         rif1zqFMFG9YtTgMFr03o+OC6R8mkG7ZQUinGmpfnBx6eg8cgH5wD/wb98AzEOplZSHE
+         KCJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XHjEtNVaTqOtCpnB9ZP021rbETT/k+vzPdGSi2OKKbk=;
-        b=rSuA0bDS1QZ4QMOhaqfOlZznVe12Xf+pNULmCROKdxLbTphNr/+ZMXSSj3H/9bgdXL
-         TlpzMRG675hST3u6flloiZcSH/e0LlQY9bWNciZRhbbAHDjoo+eVgE9IzUW4xSECdpN2
-         1od1jxbnFymkFymEvw6wD6f2fJcBb03rIzqXqqqKQaXp7pIozvPxhrFe3sbALCDehaYy
-         aOmzKuqiaHGXaYY7RRCTYQrwXAYlgYNUcSGxJaE4jsR1ULWP4O2AL7lROgV9Nyg4dOQ0
-         Gfa1YuUA1MPAS3wN2dZXHt6OODlnIi05CVfgpBlKmEzheiw4RqpbtXTw3fGGEXXk5p3z
-         dswA==
-X-Gm-Message-State: AFqh2krG8RV8miub5K1frOQv8x5DmmB+9IcKuhmjEYGvoIMaYL1eS1Om
-        wp8nr6x/wQlpHP890NPsQLM=
-X-Google-Smtp-Source: AMrXdXuq/b00HS8PUFGm6yKSVMLWmldR90yzJzqsS17SBf9hSgAklRD7ER40uVXxqYUX1Tv4Bcj7/A==
-X-Received: by 2002:a05:6512:25a0:b0:4b5:5dea:85ad with SMTP id bf32-20020a05651225a000b004b55dea85admr18729585lfb.12.1673306192837;
-        Mon, 09 Jan 2023 15:16:32 -0800 (PST)
+        bh=TfEuuSwlBNCNhQ0V5aSlOKkpq1jL3HZF0gUtECm9ca4=;
+        b=Yay6+QtWPo5Es0mGK0t96BDG98Mr5GB4h3yeIjfChQqCwLR1EjH0u2Klr/3mh6y7Tp
+         oogNeij8BBmsMPvJUwKeAOPhvwfPjNDOvxfoS3UvFhH4oZygQmllgRWCnnputtj2KJmy
+         EDznLPNCbhTsfe7M2rIXVCbeRrdEbgTsmX+xHEWJcTiDJndCLDGN1E3zy8XqIEY1iezt
+         eBGk63aTyS2IOHiw6SL0DNUeWKmbsT2uzSAv5Lv/KCM99vU+mV8NbFVUr6+YxvSxFzMf
+         tDQI6HOZ9OzBghCOV6Dp+1y8TjL7lzafXXGyX3w5IRLJsLFyXkl909B0rN2kvTELRL6x
+         U0Zw==
+X-Gm-Message-State: AFqh2komaHFNDr/RzBw7/ML95SgJuvLGW2NQCQCCtuXBbwbJ+uRqDi9D
+        wWAssnKsaDbk61pBsL8eaWU=
+X-Google-Smtp-Source: AMrXdXvprIeLayo9AFJx7FpojNZLkyqDF96Vsu4eBGirYDKXTe9iE/pZTVa/I66i+H3OiKDocm+NhA==
+X-Received: by 2002:a05:6512:10d6:b0:4b5:834b:9f75 with SMTP id k22-20020a05651210d600b004b5834b9f75mr20414337lfg.33.1673306185460;
+        Mon, 09 Jan 2023 15:16:25 -0800 (PST)
 Received: from localhost (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n2-20020a05651203e200b004bb8a796a6bsm1852983lfq.66.2023.01.09.15.16.31
+        by smtp.gmail.com with ESMTPSA id b9-20020a056512218900b004b57162edfasm1833530lft.117.2023.01.09.15.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 15:16:32 -0800 (PST)
+        Mon, 09 Jan 2023 15:16:24 -0800 (PST)
 From:   Dmitry Baryshkov <dbaryshkov@gmail.com>
 X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, airlied@gmail.com,
-        daniel@ffwll.ch, Hui Tang <tanghui20@huawei.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        yusongping@huawei.com
-In-Reply-To: <20221119055518.179937-1-tanghui20@huawei.com>
-References: <20221119055518.179937-1-tanghui20@huawei.com>
-Subject: Re: [PATCH] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
-Message-Id: <167330408783.609993.13860899129914018447.b4-ty@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20221207220012.16529-1-quic_bjorande@quicinc.com>
+References: <20221207220012.16529-1-quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v5 00/12] drm/msm: Add SC8280XP support
+Message-Id: <167330408782.609993.5872563380257036199.b4-ty@linaro.org>
 Date:   Tue, 10 Jan 2023 00:41:27 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -76,18 +88,39 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sat, 19 Nov 2022 13:55:18 +0800, Hui Tang wrote:
-> Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
-> be NULL and will cause null pointer derefrence later.
+On Wed, 07 Dec 2022 14:00:00 -0800, Bjorn Andersson wrote:
+> This introduces support for the SC8280XP platform in the MDSS, DPU and
+> DP driver. It reworks the HDP handling in the DP driver to support
+> external HPD sources - such as the dp-connector, or USB Type-C altmode.
 > 
-> Therefore, it might be better to check it and directly return -ENOMEM.
+> It then introduces the display clock controllers, mdss, dpu and
+> displayport controllers and link everything together, for both the MDSS
+> instances on the platform, and lastly enables EDP on the compute
+> reference device and 6 of the MiniDP outputs on the automotive
+> development platform.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/21e9a838f505
+[01/12] dt-bindings: display/msm: Add binding for SC8280XP MDSS
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/9ae2a57bdf9a
+[02/12] drm/msm/dpu: Introduce SC8280XP
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/f0a1bdf64dd7
+[03/12] drm/msm: Introduce SC8280XP MDSS
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/39bcdb416fb6
+[04/12] dt-bindings: msm/dp: Add SDM845 and SC8280XP compatibles
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/b6f8c4debc00
+[05/12] drm/msm/dp: Stop using DP id as index in desc
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/5d417b401146
+[06/12] drm/msm/dp: Add DP and EDP compatibles for SC8280XP
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/5bd69fd16198
+[07/12] drm/msm/dp: Add SDM845 DisplayPort instance
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/fa33f2aa9674
+[08/12] drm/msm/dp: Rely on hpd_enable/disable callbacks
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/cd198caddea7
+[09/12] drm/msm/dp: Implement hpd_notify()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/542b37efc20e
 
 Best regards,
 -- 
