@@ -2,216 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 268186623AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 12:02:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C67066240A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 12:19:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234910AbjAILCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 06:02:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
+        id S234863AbjAILT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 06:19:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236899AbjAILBv (ORCPT
+        with ESMTP id S234329AbjAILTD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 06:01:51 -0500
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26FED101E3;
-        Mon,  9 Jan 2023 03:01:48 -0800 (PST)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        Mon, 9 Jan 2023 06:19:03 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A595A140EF;
+        Mon,  9 Jan 2023 03:19:02 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id C1B7941D3E;
-        Mon,  9 Jan 2023 16:01:40 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1673262101; bh=P7mpxE92EkoFkC63xg4dENCjyWVrwvgwNJz5y5hDL3w=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vaYJrvPa4jSJsE7bb3X/mN6oiI/t9bHCwjq6nVEslJ51D8tT5tyUZf5vQCaLzd3/R
-         nmInZyOwlj+u5FJ/NtwxK4En6sitACoeO7jcgQ1iOUAuRomd4OmAjimy20xWV4Wjwf
-         6Ech6ZV9xopYfZed7Fe05hlNpO6kKrlBApDrQ7cQbBtW7Z6wpqyUxjK1rRHgM2LL9N
-         rBXK5MPDJDgqiG6mhWpJKpnDtcGd+jwyPz97h7d7e/LxjN7r5j2GxMH4yjSj2pYCOw
-         9M0SgARcZD69wTM6CBJkyjUxaBMlT5+wgW955IcXdNnan9ggJft3DTum8+CfbdEYex
-         lKzlcCMnjUTgQ==
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH 4/4] arm64: dts: qcom: msm/apq8x16-*: Reorder some regulator properties
-Date:   Mon,  9 Jan 2023 16:01:07 +0500
-Message-Id: <20230109110107.3016323-5-nikita@trvn.ru>
-In-Reply-To: <20230109110107.3016323-1-nikita@trvn.ru>
-References: <20230109110107.3016323-1-nikita@trvn.ru>
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6464EB80DBB;
+        Mon,  9 Jan 2023 11:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AA7C433D2;
+        Mon,  9 Jan 2023 11:18:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673263140;
+        bh=vuM0HgyNy913qx6seMOGLv71TojRqqNfpRL5/Z8I0H8=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=kOoPJp/32xqJMqgInI7+zwJby18/0R2VUzOBsUnVUFVLLq1Ha2NIkOSHBQFcmv8c0
+         3o074b9yvDZDfsVSVubzYGZ/7RO2HurhZFb1O/MS3Ex9qDA0TNDTQeQGfEQ4FJlGZs
+         44tABXTXvJb2j9wIS5OGcxDj7I5HrVNWg5zlXKptmV5SwzFOBeVaqOtkB8dZ3NH3p9
+         SBjtxV/3t+Yjl0RDdEXw7HC28RAnCi4NHVx0J46r51827yQ6I8c5kFr08jQDA71GBm
+         XbeKxM3Yb3N8hXw5JbtbK6na3ujqITQDFnt43jLJvhqV9DZ4QlT7++rwZqiLtd6P22
+         8oV64MnVlTCyA==
+Message-ID: <65880fc7-0b2e-befa-f024-558e97ee5a91@kernel.org>
+Date:   Mon, 9 Jan 2023 13:18:54 +0200
 MIME-Version: 1.0
+Subject: Re: [PATCH v2] dt-bindings: interconnect: qcom-bwmon: document SM8550
+ compatibles
+Content-Language: en-US
+To:     neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-bwmon-v2-0-20c555e3ba5d@linaro.org>
+ <655f4a05-5fed-7481-1d00-a6a4faf4c6d8@linaro.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <655f4a05-5fed-7481-1d00-a6a4faf4c6d8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's agreed that these properties should be ordered in the
-reverse-Christmas-tree order. Reorder them to give a better example.
+Hi Neil,
 
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts                   | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts       | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts             | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts             | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts       | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts            | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts     | 2 +-
- arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts      | 2 +-
- 10 files changed, 10 insertions(+), 10 deletions(-)
+On 9.01.23 12:09, Neil Armstrong wrote:
+> Hi Georgi,
+> 
+> On 18/11/2022 09:29, Neil Armstrong wrote:
+>> Document the compatibles used to describe the Bandwidth Monitors
+>> present on the SM8550 platform.
+>>
+>> A BWMON v4 IP monitors the CPU bandwidth, and a v5 does the LLCC
+>> bandwidth monitoring.
+>>
+>> This is described by adding "llcc" and "cpu" into the compatible
+>> strings to differentiate the BWMON IPs.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>> To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> To: Andy Gross <agross@kernel.org>
+>> To: Bjorn Andersson <andersson@kernel.org>
+>> To: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> To: Georgi Djakov <djakov@kernel.org>
+>> To: Rob Herring <robh+dt@kernel.org>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: linux-pm@vger.kernel.org
+>> Cc: devicetree@vger.kernel.org
+>> Cc: linux-kernel@vger.kernel.org
+>> ---
+>> Changes in v2:
+>> - Reworded commit message
+>> - Added Reviewed-by from Krzysztof
+>> - Link to v1: 
+>> https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-bwmon-v1-0-b6dd08927f35@linaro.org
+>> ---
+>>   .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml         | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+> 
+> <snip>
+> 
+> 
+> Gentle ping,
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 5adcc4426926..ec3959006a1f 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -510,8 +510,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1750000>;
- 		regulator-max-microvolt = <3337000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-index bc40721e4cbf..2555e920d7fd 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-@@ -254,8 +254,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-index 13b51d310940..c99aa80e52dc 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-@@ -223,8 +223,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
-index a4dfb2ce7893..b1d01f7cc316 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
-@@ -375,8 +375,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index 2596896e4a61..b0b2634b7f1d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -326,8 +326,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-index 135b38c67da1..fc5e846dad3b 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-@@ -193,8 +193,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index d59587d42c0a..11e0930b1764 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -346,8 +346,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-index 9d5d84c0f9f6..6a4a40ca9dca 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-@@ -158,8 +158,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-index 84a4713886c1..98e63d414974 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-@@ -383,8 +383,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
-index 9e3351ceb752..6610cd0f8a0b 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
-@@ -247,8 +247,8 @@ l10 {
- 	l11 {
- 		regulator-min-microvolt = <2950000>;
- 		regulator-max-microvolt = <2950000>;
--		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
- 	};
- 
- 	l12 {
--- 
-2.38.1
+Thanks for the patch! Could you please rebase and resend?
 
+BR,
+Georgi
