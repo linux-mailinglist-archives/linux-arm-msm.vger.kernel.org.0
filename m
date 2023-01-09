@@ -2,98 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C16B661B22
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 00:32:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4639661B5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 01:29:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjAHXcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 18:32:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46198 "EHLO
+        id S233920AbjAIA3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 19:29:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbjAHXcC (ORCPT
+        with ESMTP id S231226AbjAIA3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 18:32:02 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64A610043
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 15:32:00 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b3so10515464lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 15:32:00 -0800 (PST)
+        Sun, 8 Jan 2023 19:29:40 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F232CBC9A
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 16:29:37 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id o7so7004564ljj.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 16:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XMahuRHUyby9cTVuxiS45czpMUwY4cTgnEghJo22NtM=;
-        b=B/zmp25lbiHXTxa0KspeA4G9eLR4vSmqAyhrfaXFRjd3WVLbQRAe2lZfY5pJ4437A1
-         LcCrbGZ2uTfBcGW6PAxHJnh0d4YC/FkcoKM2x/lPFs52aTtPySUiC6Dk7w4uQjP02RcS
-         j5Bt/G1fw95wzs/SFoE0xKOCii56DHs65oM8TbdwooGdgO6vqaMGehI3gLUN57d2cFBj
-         65V82y669Y7JZbh/MDcRlmMAEbsDT0d7KeN3JHqC9u+OakcIAouKLJRvG5F2IcyOZL2X
-         Ws9j6AjM3YU+MAHK7E0TRgykek/OzpqESX9VmUGfyyxsKmnow40uSGf2r6JuKb5SiLEf
-         pDHQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FyO60+1ahxnZMeLVY7otQN3Vyc7r0+eEdWjJHYyzXHM=;
+        b=QaTLOCozXErPo9kask6wWLzoyG0h+4q1CKRhG6R43i2OugYNGLOk3PxKM/0N5aVT/2
+         nCrU/yhfvlVm88fV1xQ9jRCGZytzbEsCZPs+RkKrM4y5w15ksQ+RQUqk6U3z2bz4T0hE
+         OcJ8rSUGWgU8spsiPRbXiqwApQ12s3yKI8FPEmTo6suVV2zwEeB4UFqjAfoIUGU1QvIK
+         XKLzTUQXdQqCu8tfUDOPmJfIPrQsTir3DJKoBYvl1jTgdgQ9Hhh0aoMe6UQQW0vrv46y
+         MVBPKTZFq773J9Ozzie5WviOmV1Q8UyMzXMou8mVuxEKWp8gd+GrJPoWXzBiFgna2ZI/
+         6ybw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XMahuRHUyby9cTVuxiS45czpMUwY4cTgnEghJo22NtM=;
-        b=3yLxg8FS90uDSjBTBWGF4VMGfoXfANK4M60nIwTzAmV1fBXuQO2aolpvqtgWdpWQ+T
-         u25pp3abH/bg6/WT2gbidF2H+abmst5mF8goYKJ2/vdUAZoI9pUGKxaCjrDexlkAUjLi
-         UFSKsIHjNVXXd350VGoVsMD42VPgCz9WzUi386jpNK2pQplVclf8fs4qpOJqBpzxd6um
-         zHjUfnysEO7m2d5d3PKnwc/7piisfhulsGoYa6io6EoSRvhAWmSMTqjlhMQK69/brzL5
-         yY+WH1p4XAJp87JuT8Wbvw6fCc4FAspANouFIVlu1ToPpmfm/NSEl3YL9HBNnewtDuQJ
-         0gMw==
-X-Gm-Message-State: AFqh2kpFuANikKZC10+1Ltzgfs1sSAfE+w+/nts1qP6p+o5L/NhdCRSH
-        Af2ULRYTaeRQztYaKD0IMucX/w==
-X-Google-Smtp-Source: AMrXdXsAP/6HHrzQYlZxu6VJANy0ySDdGi0ykUte9WZ5AYM3cntDWvUcoLeugwDSlwNH2vdWcbCVWQ==
-X-Received: by 2002:a05:6512:e89:b0:4b5:b7be:136b with SMTP id bi9-20020a0565120e8900b004b5b7be136bmr18592394lfb.69.1673220719050;
-        Sun, 08 Jan 2023 15:31:59 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u15-20020a19790f000000b004cb344a8c77sm1286960lfc.54.2023.01.08.15.31.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Jan 2023 15:31:58 -0800 (PST)
-Message-ID: <42b45762-7fb9-2694-9fab-039ee09e4709@linaro.org>
-Date:   Mon, 9 Jan 2023 01:31:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 6/8] drm/msm/dpu: Remove num_enc from topology struct
- in favour of num_dsc
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        sunliming <sunliming@kylinos.cn>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221221231943.1961117-1-marijn.suijten@somainline.org>
- <20221221231943.1961117-7-marijn.suijten@somainline.org>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FyO60+1ahxnZMeLVY7otQN3Vyc7r0+eEdWjJHYyzXHM=;
+        b=B2r+EmCyutUleZnZ3AcP/OfiCYALPT4mRGuutZ/LMaTKCzqhJIMcEn9ta73WJstn/h
+         KfbO50TMNn7CmMqIBaacgs3GGm8BvYkMHqZxj435tl+XX7OXgAF9WJ4FffbTpa/C1UI0
+         0ITT3u3Gm3F6O4lopVJ32oSCwXd0xZN6qGHO3WBbTDeQbzVSo96BvGqgLBnyxwtxrzTU
+         Ho6jLIUjx7DDkz2gQq43vVgbqvKIbxV1v5zHC55fqoHUS8tRpxcAHrAdashGoBv46PTF
+         JYlFYr5CrKGeifkDBljLvwhy/KVMNGGBOwSA/u5B0ytKpe1hdNZkxqiTu426g4a/DwVZ
+         t/mA==
+X-Gm-Message-State: AFqh2kpipDIfnh/jXjBZQ+zD+LF9nXfbg+t2peG7Kpv3LCdZS6/rg9O9
+        x5XgMw127oGJwfU6BIbcWBEMeA==
+X-Google-Smtp-Source: AMrXdXs/wyYesCXijvkDtUnD3XBx/Fcih0q5zjrj9do8jkcsWkXXxqnbBBl+MxPO4JkemxIiWjleoQ==
+X-Received: by 2002:a2e:8344:0:b0:281:f44c:5dcb with SMTP id l4-20020a2e8344000000b00281f44c5dcbmr2563785ljh.32.1673224176375;
+        Sun, 08 Jan 2023 16:29:36 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id a22-20020a2e9816000000b0027fc54f8bf0sm706626ljj.35.2023.01.08.16.29.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 16:29:35 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221221231943.1961117-7-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     Georgi Djakov <djakov@kernel.org>, Alex Elder <elder@linaro.org>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 00/12] clk/interconnect: qcom: finish migration of IP0 to clocks
+Date:   Mon,  9 Jan 2023 02:29:23 +0200
+Message-Id: <20230109002935.244320-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -102,90 +78,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/12/2022 01:19, Marijn Suijten wrote:
-> Downstream calls this num_enc yet the DSC patches introduced a new
-> num_dsc struct member, leaving num_enc effectively unused.
-> 
-> Fixes: 7e9cc175b159 ("drm/msm/disp/dpu1: Add support for DSC in topology")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 ++++-----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 4 ++--
->   drivers/gpu/drm/msm/msm_drv.h               | 2 --
->   3 files changed, 6 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 9c6817b5a194..a158cd502d38 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -579,19 +579,18 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   			topology.num_dspp = topology.num_lm;
->   	}
->   
-> -	topology.num_enc = 0;
->   	topology.num_intf = intf_count;
->   
->   	if (dpu_enc->dsc) {
-> -		/* In case of Display Stream Compression (DSC), we would use
-> -		 * 2 encoders, 2 layer mixers and 1 interface
-> +		/*
-> +		 * In case of Display Stream Compression (DSC), we would use
-> +		 * 2 DSC encoders, 2 layer mixers and 1 interface
->   		 * this is power optimal and can drive up to (including) 4k
->   		 * screens
->   		 */
-> -		topology.num_enc = 2;
->   		topology.num_dsc = 2;
-> -		topology.num_intf = 1;
->   		topology.num_lm = 2;
-> +		topology.num_intf = 1;
+Commits 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+interconnects") and 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+interconnects") removed IP0 interconnects (and ipa-virt devices support)
+in favour of the RPMH clocks. Follow this example for other platforms
+defining IP0 RPMH resource. While we are at it, remove several leftover
+from the mentioned patches.
 
-Unless there is a reason, please move num_intf assignment back while 
-preparing v3.
+Changes since v2:
+- Fixed the stack frame size warning by moving the ignore_list out of
+  the function to the rodata section.
 
-With that fixed:
+Changes since v1:
+- Reorder patches to put clock patch after the interconnect patches
+  (Alex)
+- Add comments in place of removed defines (Alex)
+- Drop ipa-virt nodes from device trees
+- Add removed ipa-virt nodes to the blacklist in of_count_icc_providers
+  to let icc_sync_state work even with non-updated device trees.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Dmitry Baryshkov (12):
+  interconnect: qcom: sdx55: drop IP0 remnants
+  interconnect: qcom: sc7180: drop IP0 remnants
+  interconnect: move ignore_list out of of_count_icc_providers()
+  interconnect: qcom: sm8150: Drop IP0 interconnects
+  interconnect: qcom: sm8250: Drop IP0 interconnects
+  interconnect: qcom: sc8180x: Drop IP0 interconnects
+  interconnect: qcom: sc8280xp: Drop IP0 interconnects
+  dt-bindings: interconnect: qcom: Remove ipa-virt compatibles
+  dt-bindings: interconnect: qcom: drop IPA_CORE related defines
+  clk: qcom: rpmh: define IPA clocks where required
+  arm64: dts: qcom: sm8150: drop the virtual ipa-virt device
+  arm64: dts: qcom: sm8250: drop the virtual ipa-virt device
 
->   	}
->   
->   	return topology;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index dcbf03d2940a..5e7aa0f3a31c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -548,8 +548,8 @@ static int _dpu_rm_populate_requirements(
->   {
->   	reqs->topology = req_topology;
->   
-> -	DRM_DEBUG_KMS("num_lm: %d num_enc: %d num_intf: %d\n",
-> -		      reqs->topology.num_lm, reqs->topology.num_enc,
-> +	DRM_DEBUG_KMS("num_lm: %d num_dsc: %d num_intf: %d\n",
-> +		      reqs->topology.num_lm, reqs->topology.num_dsc,
->   		      reqs->topology.num_intf);
->   
->   	return 0;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index d4e0ef608950..74626a271f46 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -82,14 +82,12 @@ enum msm_event_wait {
->   /**
->    * struct msm_display_topology - defines a display topology pipeline
->    * @num_lm:       number of layer mixers used
-> - * @num_enc:      number of compression encoder blocks used
->    * @num_intf:     number of interfaces the panel is mounted on
->    * @num_dspp:     number of dspp blocks used
->    * @num_dsc:      number of Display Stream Compression (DSC) blocks used
->    */
->   struct msm_display_topology {
->   	u32 num_lm;
-> -	u32 num_enc;
->   	u32 num_intf;
->   	u32 num_dspp;
->   	u32 num_dsc;
+ .../bindings/interconnect/qcom,rpmh.yaml      |  3 --
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  7 ----
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  7 ----
+ drivers/clk/qcom/clk-rpmh.c                   |  4 ++
+ drivers/interconnect/core.c                   | 14 ++++---
+ drivers/interconnect/qcom/sc7180.h            |  4 +-
+ drivers/interconnect/qcom/sc8180x.c           | 38 -------------------
+ drivers/interconnect/qcom/sc8180x.h           |  4 +-
+ drivers/interconnect/qcom/sc8280xp.c          | 25 ------------
+ drivers/interconnect/qcom/sc8280xp.h          |  4 +-
+ drivers/interconnect/qcom/sdx55.h             |  4 +-
+ drivers/interconnect/qcom/sm8150.c            | 21 ----------
+ drivers/interconnect/qcom/sm8150.h            |  4 +-
+ drivers/interconnect/qcom/sm8250.c            | 21 ----------
+ drivers/interconnect/qcom/sm8250.h            |  4 +-
+ .../dt-bindings/interconnect/qcom,sc7180.h    |  3 --
+ .../dt-bindings/interconnect/qcom,sc8180x.h   |  3 --
+ .../dt-bindings/interconnect/qcom,sc8280xp.h  |  4 +-
+ include/dt-bindings/interconnect/qcom,sdx55.h |  2 -
+ .../dt-bindings/interconnect/qcom,sm8150.h    |  3 --
+ .../dt-bindings/interconnect/qcom,sm8250.h    |  3 --
+ 21 files changed, 27 insertions(+), 155 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.0
 
