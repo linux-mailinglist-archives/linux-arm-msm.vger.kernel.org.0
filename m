@@ -2,73 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CCED66350A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F42F663508
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237682AbjAIXQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 18:16:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46282 "EHLO
+        id S237906AbjAIXQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:16:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237700AbjAIXQP (ORCPT
+        with ESMTP id S237850AbjAIXQe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 18:16:15 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 223DABC84;
-        Mon,  9 Jan 2023 15:16:12 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bf43so15543179lfb.6;
-        Mon, 09 Jan 2023 15:16:12 -0800 (PST)
+        Mon, 9 Jan 2023 18:16:34 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4351C186BA;
+        Mon,  9 Jan 2023 15:16:33 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id d30so10616931lfv.8;
+        Mon, 09 Jan 2023 15:16:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TcrRX6H8xp5Sk/eiYa/8jSn58hXIIDs/40rFnvHatxM=;
-        b=Tuo/Gox1iTyeafNpXOZg0Z42lZIj8MiuNPQMOl7xakbXH1hJTRTDdDYfkhL1jo9rd1
-         /tIr30oMAT+jy6zH8LvzdLHhtArGDY1k1MWGfDQXnNgzlfloUGnEdVe/AuLF5hMWoWQS
-         Gq+6i/mwXjfFDZb8WRY7FUnq54Zr/S0t8aOdibGNFEXb4f0Rl7UhuvZ1tkPPkOk/wmkg
-         Hu7psyHnHOFDXVHsFE00hIZDogkZoYqF0xEvxTJ26iFXmoTF5lzV7IJjgKITD4GGszRP
-         HFQPhvHuWHS/dSZPAh2uEbMWMQ7JmoOGYaK2OWhpeOMt7fKzDeNQu9HpWqfvl5AdEJXl
-         z85g==
+        bh=XHjEtNVaTqOtCpnB9ZP021rbETT/k+vzPdGSi2OKKbk=;
+        b=Dd9JqNQM4cUJM4TBXa5f4xvEAS9VPArJhWLDzOlCPE7UEAKXRhtW7VQ2cmdUTVVk0G
+         VYT6hox6yoL2bEvWBJuLKd86+3whBQaa1drVc97qUHLKzbzstPXGjAuZc4d/yr8bot84
+         8AUV1Y1SyZQUIbNPmu4uphSh85FxvRSVCB4n9nMbn+kPl2tQRlcVJYezP6JnIzfj59WG
+         8+j5WaBqQNdd4LQaJHBA8IYwnngzv4oqLlgOU7s8lB447GnMZEyskOkjNmT64wcSy8WH
+         4dHz1sURUjoigqOMejLb7fCuxJLGfbHoeB5SPaB+P+3FljuafV20y+8FvPWBE2bPGwfo
+         HKZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TcrRX6H8xp5Sk/eiYa/8jSn58hXIIDs/40rFnvHatxM=;
-        b=6GYTY8gDSmCJ1/ZuvUNCWPzRtR4vCHg3mJv6RiGGrhFZkISNNTgOnrXF6FbmrtliKP
-         GkUqi26idgvxYaPjPKZDtur46lCXbySZF+08TFVbPM0u30ZFZF98I3kYQf7YChgKNH0p
-         fJVWIsDzwcZx/dniH/eQHWOnamTP+Ls4frt+WWHKO1RCK7CFoQ54L85QOziHjMnpjCnV
-         s4E/9TS/O1E2U+A4miyxU1ArxCPDyEUUGxryT2zuBtuIwKit/DjEUKeOKGCveu5fN4E0
-         +QUD+FCTsxAYAX3SzXjBTNMdJljWDYqsTT71LYDNvH+46GGIvAm+yXqv6tl84xRy6EkX
-         2h0g==
-X-Gm-Message-State: AFqh2kpdTPYHgbSmn8ztIH5Wd9z6vPz2qhTI7BjdGyY5rz3WB97vV8xd
-        tC0S7rhRWYNb0lgqzCtKGQA=
-X-Google-Smtp-Source: AMrXdXtQXEAnbQr/1v8NIUErWlyHAG56vSs4OyGVxT4mCFzLf8rCPDNeB+4HMUQoZzZxDe1tVJmqew==
-X-Received: by 2002:ac2:53ab:0:b0:4cb:145d:c407 with SMTP id j11-20020ac253ab000000b004cb145dc407mr12469600lfh.7.1673306170521;
-        Mon, 09 Jan 2023 15:16:10 -0800 (PST)
+        bh=XHjEtNVaTqOtCpnB9ZP021rbETT/k+vzPdGSi2OKKbk=;
+        b=rSuA0bDS1QZ4QMOhaqfOlZznVe12Xf+pNULmCROKdxLbTphNr/+ZMXSSj3H/9bgdXL
+         TlpzMRG675hST3u6flloiZcSH/e0LlQY9bWNciZRhbbAHDjoo+eVgE9IzUW4xSECdpN2
+         1od1jxbnFymkFymEvw6wD6f2fJcBb03rIzqXqqqKQaXp7pIozvPxhrFe3sbALCDehaYy
+         aOmzKuqiaHGXaYY7RRCTYQrwXAYlgYNUcSGxJaE4jsR1ULWP4O2AL7lROgV9Nyg4dOQ0
+         Gfa1YuUA1MPAS3wN2dZXHt6OODlnIi05CVfgpBlKmEzheiw4RqpbtXTw3fGGEXXk5p3z
+         dswA==
+X-Gm-Message-State: AFqh2krG8RV8miub5K1frOQv8x5DmmB+9IcKuhmjEYGvoIMaYL1eS1Om
+        wp8nr6x/wQlpHP890NPsQLM=
+X-Google-Smtp-Source: AMrXdXuq/b00HS8PUFGm6yKSVMLWmldR90yzJzqsS17SBf9hSgAklRD7ER40uVXxqYUX1Tv4Bcj7/A==
+X-Received: by 2002:a05:6512:25a0:b0:4b5:5dea:85ad with SMTP id bf32-20020a05651225a000b004b55dea85admr18729585lfb.12.1673306192837;
+        Mon, 09 Jan 2023 15:16:32 -0800 (PST)
 Received: from localhost (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id c14-20020a05651221ae00b004cb003c3b2dsm1834230lft.175.2023.01.09.15.16.09
+        by smtp.gmail.com with ESMTPSA id n2-20020a05651203e200b004bb8a796a6bsm1852983lfq.66.2023.01.09.15.16.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 15:16:09 -0800 (PST)
+        Mon, 09 Jan 2023 15:16:32 -0800 (PST)
 From:   Dmitry Baryshkov <dbaryshkov@gmail.com>
 X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-In-Reply-To: <20221207012231.112059-1-dmitry.baryshkov@linaro.org>
-References: <20221207012231.112059-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v6 00/11] drm/msm: add support for SM8450
-Message-Id: <167330408780.609993.1433336946810204585.b4-ty@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, airlied@gmail.com,
+        daniel@ffwll.ch, Hui Tang <tanghui20@huawei.com>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        yusongping@huawei.com
+In-Reply-To: <20221119055518.179937-1-tanghui20@huawei.com>
+References: <20221119055518.179937-1-tanghui20@huawei.com>
+Subject: Re: [PATCH] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
+Message-Id: <167330408783.609993.13860899129914018447.b4-ty@linaro.org>
 Date:   Tue, 10 Jan 2023 00:41:27 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -84,46 +76,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 07 Dec 2022 03:22:20 +0200, Dmitry Baryshkov wrote:
-> This adds support for the MDSS/DPU/DSI on the Qualcomm SM8450 platform.
+On Sat, 19 Nov 2022 13:55:18 +0800, Hui Tang wrote:
+> Because of the possilble failure of devm_kzalloc(), dpu_wb_conn might
+> be NULL and will cause null pointer derefrence later.
 > 
-> Change since v5:
-> - Added defines to be used for the MDP_PERIPH_TOP0 blackhole
+> Therefore, it might be better to check it and directly return -ENOMEM.
 > 
-> Change since v4:
-> - Fixed commit messages for the first two patches (Krzysztof)
-> - Dropped clock-names requirement patch
-> - Removed clock-names from qcom,sm8450-mdss.yaml schema
-> - Fixed the schema changes lost between v3 and v4 (thanks Krzysztof)
-> - Added kernel doc for DPU_MDP_PERIPH_0_REMOVED (Abhinav)
-> - Fixed build issue in dpu_kms_mdp_snapshot() (Niel)
 > 
-> [...]
 
 Applied, thanks!
 
-[01/11] dt-bindings: display/msm: *dpu.yaml: split required properties clauses
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/0f87fc933e0c
-[02/11] dt-bindings: display/msm: *mdss.yaml: split required properties clauses
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/e96150a6dc14
-[03/11] dt-bindings: display/msm: add sm8350 and sm8450 DSI PHYs
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/44a9f577a087
-[04/11] dt-bindings: display/msm: add support for the display on SM8450
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/f7463946c281
-[05/11] drm/msm/dsi/phy: rework register setting for 7nm PHY
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/1a1bd3f45000
-[06/11] drm/msm/dsi: add support for DSI-PHY on SM8350 and SM8450
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/e50c901f93e0
-[07/11] drm/msm/dsi: add support for DSI 2.6.0
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/1b55304af89c
-[08/11] drm/msm/dpu: merge all MDP TOP registers to dpu_hwio.h
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3bb86d2c6cba
-[09/11] drm/msm/dpu: add support for MDP_TOP blackhole
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/ae7459d07d8a
-[10/11] drm/msm/dpu: add support for SM8450
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/8cbbc3396065
-[11/11] drm/msm: mdss add support for SM8450
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/4d285825f1b7
+[1/1] drm/msm/dpu: check for null return of devm_kzalloc() in dpu_writeback_init()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/21e9a838f505
 
 Best regards,
 -- 
