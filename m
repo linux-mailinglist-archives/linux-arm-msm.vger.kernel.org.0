@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 745D966218B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:27:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A5166219B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:31:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237047AbjAIJ1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 04:27:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57898 "EHLO
+        id S230404AbjAIJbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 04:31:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236602AbjAIJ04 (ORCPT
+        with ESMTP id S237043AbjAIJbB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:26:56 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B7EF1137
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:26:48 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bi26-20020a05600c3d9a00b003d3404a89faso6595300wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:26:48 -0800 (PST)
+        Mon, 9 Jan 2023 04:31:01 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684AE6467
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:30:08 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so6113930wms.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:30:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0s4VZeBOMQpwWZj/4UqywYFSz3/oNjsiCGTdYmq+Ed4=;
-        b=J04hsYnIfObiB7uitaZtBveS7cW3lgxebEgkSl5zwlV9xX7YbGspbBRcZqo+qlCBZ1
-         gliZkxatwpn7AMUl9hiHnr90mqm9lgWR+rnVGWdhef1+SBQSwl3c8+BpGRSfHmHd0fD/
-         GtDVeK9TgIQUlPtaGspMJTJezyCDOFBFiuY44F6yNPrb/Rjyy+75chDNwC4Kn0hEREPv
-         YFC66Tfrxf27bPuFIt1w8OIfSP009QfPCnLJKWbSJ1qkC/1jGz8mYhg+aWUaMWTnlAT3
-         2bvHOgArSnr+mdqMa9IHxd18z/XI4IMB7Fc9fa+mpX17RvuD52UieNi1/gWY16PFCbQE
-         UWOw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gGEMDHLHYnrcaFvEu4QvBpxD5CV8NRVf54KR4uCbrnM=;
+        b=TqFn7SMxQJax+AzzmJ4lJdlgRdocs+VQr+DEn84XE2DU55VzWMtF6K+UHbT/VxzBRp
+         uuhn2WXj1/QeQp9dX/9ba5IZ+eoOvQqzZbUEYHDdPE+1jQdH1wa7A9oAZIKJ9AGMeR6P
+         tabYUA+02Pu9ZNYnOa1b+4sWQ956+Tz7p/RuKKrmbkx49/7zD5zKtFPsAZy0MIGGu59w
+         ss5rCP/swOMVk2XGuJQX85+cxnh5zORJMDLNpo64JBzBXNxGDmb1tMHfY3RpUwXH8ub6
+         UafOIOXFkGCCFx87y4K/RnvVJP7bXRNjUpvztoLy0a0SLQz61Pk60whE/SivI1uRWQyO
+         E5ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0s4VZeBOMQpwWZj/4UqywYFSz3/oNjsiCGTdYmq+Ed4=;
-        b=e/Xmroa3DaDCbIHXTvd3YiY88ltrdeb2R4jkphp1oDsgwMxNiprMfQHM4NeCtcW1/q
-         l3YJOXr8kMiGRzAOxMQ9AADTw0M4v/+Bu5zygoNshghAy8BKtGcL4mQoyXDp85SIlcDC
-         en2RZzWsTBoDWJsxdC7bI2b+oCuxhc2CW+3UT1LeaDajbBRbAlWii3zbgnWGyBuAKE/l
-         7biGI95g9X5ln7glDDdrFo6LgEIS0kUqJ3+AokF9Y8RAiH3pf70VhhAi9Hm2tzL0eM3N
-         /4cT2IL8hPk5lLe8iECviomf0xAMCTpdO/fQXoOuoUwhGpygQkWhml8KPGNL+EqWYxTJ
-         cbRg==
-X-Gm-Message-State: AFqh2kqKpMMPdtlym2e3qSpy/Bqiiwz5OYI0kUWToZrHkTtWWovMx7le
-        LyurkjyEN4PR0DhnPCIve2yvBwmzBME6TbbU
-X-Google-Smtp-Source: AMrXdXtHftT9T3EUOo9MBZwTkvKxl8P6P8DOxkWAyF+P8TH7z5OCLVuk/hlWpII3wha/xpEgsQ+04A==
-X-Received: by 2002:a05:600c:3550:b0:3d9:ed30:6a73 with SMTP id i16-20020a05600c355000b003d9ed306a73mr2888234wmq.9.1673256407211;
-        Mon, 09 Jan 2023 01:26:47 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id s23-20020a1cf217000000b003d1e3b1624dsm15195758wmc.2.2023.01.09.01.26.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 01:26:46 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 09 Jan 2023 10:26:39 +0100
-Subject: [PATCH v2 7/7] drm/msm/dsi: add support for DSI 2.7.0
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gGEMDHLHYnrcaFvEu4QvBpxD5CV8NRVf54KR4uCbrnM=;
+        b=oksO8rHoZAAa2wqzH5B9od272iQDjVfMD/8dBkj4rafIG1FGdog7ReB7d4yYQ4+EZo
+         6z1t4Aq1yGTenwBVpROshKwH79PKFD2lCfka5BhaJ3rLUR+ef/o8mwpW+Ic2bWvukqFI
+         oqhwniF9cct5HJFn2H5OWpMsV33Gy82vCF9pn3Kr6TUIzk5bRd4Cs115LC0pfVrtMRAN
+         s5ww5Tvs0SMq8BieEhOyN8dIAUMr+QncOtD6tY4kNHLrWQPBWdsGJzjg/A26JNco8JLC
+         rHsPvmzPq7cs+YjxBkK7uE9ndPPFB8Ecb0+886lgk74VA+2ZpWtqRqy6l28OQHohkSTy
+         1mjA==
+X-Gm-Message-State: AFqh2krm9dUhpAq+ATK0R88g1v0CBe/nuN6OFQdr31l9sueQ2n4Y/vVl
+        a1yX9D+E1PMGe7ZFrsXQlcIJDA==
+X-Google-Smtp-Source: AMrXdXspbWYZM83aPs7JQqmVF2zwjegRK3gDtccETa05r62+3m/rLfGTF/MWLDmtzoOoF2a491DtRg==
+X-Received: by 2002:a05:600c:601b:b0:3d3:56ce:5693 with SMTP id az27-20020a05600c601b00b003d356ce5693mr45201138wmb.17.1673256607024;
+        Mon, 09 Jan 2023 01:30:07 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id p9-20020a05600c358900b003cffd3c3d6csm11509655wmq.12.2023.01.09.01.30.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 01:30:06 -0800 (PST)
+Message-ID: <189e5ced-fea2-177b-fb7b-9bfc89b18d50@linaro.org>
+Date:   Mon, 9 Jan 2023 10:30:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230103-topic-sm8550-upstream-mdss-dsi-v2-7-87f1c16d7635@linaro.org>
-References: <20230103-topic-sm8550-upstream-mdss-dsi-v2-0-87f1c16d7635@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-mdss-dsi-v2-0-87f1c16d7635@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/4] soc: qcom: socinfo: Fix soc_id order
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230104115348.25046-1-stephan@gerhold.net>
+ <20230104115348.25046-2-stephan@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230104115348.25046-2-stephan@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,61 +81,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for DSI 2.7.0 (block used on sm8550).
+On 04/01/2023 12:53, Stephan Gerhold wrote:
+> The soc_id array is mostly ordered by the numeric "msm-id" defined in
+> qcom,ids.h but some recent entries were added at the wrong place.
+> 
+> While it does not make a functional difference it does make it harder
+> to regenerate the entire array after adding a bunch of new IDs.
+> 
+> Fixes: de320c07da3d ("soc: qcom: socinfo: Add MSM8956/76 SoC IDs to the soc_id table")
+> Fixes: 147f6534b8ff ("soc: qcom: socinfo: Add SM8550 ID")
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  drivers/soc/qcom/socinfo.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 10efdbcfdf05..7258527816b0 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -257,8 +257,6 @@ static const struct soc_id soc_id[] = {
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 16 ++++++++++++++++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
- 2 files changed, 17 insertions(+)
+Can you in the same or new patch add a comment that list is ordered by
+numerical ID, not by model name?
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index 59a4cc95a251..33884ebd2f86 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -181,6 +181,20 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
- 	.num_dsi = 2,
- };
- 
-+static const struct regulator_bulk_data sm8550_dsi_regulators[] = {
-+	{ .supply = "vdda", .init_load_uA = 16800 },	/* 1.2 V */
-+};
-+
-+static const struct msm_dsi_config sm8550_dsi_cfg = {
-+	.io_offset = DSI_6G_REG_SHIFT,
-+	.regulator_data = sm8550_dsi_regulators,
-+	.num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
-+	.bus_clk_names = dsi_sdm845_bus_clk_names,
-+	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
-+	.io_start = { 0xae94000, 0xae96000 },
-+	.num_dsi = 2,
-+};
-+
- static const struct regulator_bulk_data sc7180_dsi_regulators[] = {
- 	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
- };
-@@ -302,6 +316,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&sc7280_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_6_0,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_7_0,
-+		&sm8550_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- };
- 
- const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 95957fab499d..44be4a88aa83 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -26,6 +26,7 @@
- #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
- #define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
- #define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
-+#define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
- 
- #define MSM_DSI_V2_VER_MINOR_8064	0x0
- 
 
--- 
-2.34.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
