@@ -2,58 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5688F662914
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:53:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F795662970
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:11:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbjAIOwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 09:52:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41268 "EHLO
+        id S232796AbjAIPKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 10:10:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231310AbjAIOw3 (ORCPT
+        with ESMTP id S236152AbjAIPJz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 09:52:29 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B630725E1;
-        Mon,  9 Jan 2023 06:51:51 -0800 (PST)
+        Mon, 9 Jan 2023 10:09:55 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBBEFB94;
+        Mon,  9 Jan 2023 07:09:54 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 494A1B80DFB;
-        Mon,  9 Jan 2023 14:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77021C433EF;
-        Mon,  9 Jan 2023 14:51:46 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 87ABB61165;
+        Mon,  9 Jan 2023 15:09:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BACC433EF;
+        Mon,  9 Jan 2023 15:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673275909;
-        bh=rtqlm7a55WTBEGFP7RFDOv4Gy1EqcDD3WhvBsTOHcTU=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=SNC5IayHplZ7eClBcJG5kR8lFBMJ2iqOylUBkV66SfusUKCYAXfGrvzLHM8dRslgJ
-         tD0aerVmciqu7QCBsQUSDbW5wy803BF3D2ggVKidzBKOfk3qIEQqKJ2GKoLKUrQTOB
-         kCJbK5G4sPiHIu8BuGZCfyrMfUALJwoXdInB6UnAMlXUWW8XDflkA5EUBNLR2gAkjo
-         RNNgwwRn+Axo41AphGA/yZkfkSEzdBPfMkiBfGZEQXHLISCvnC9TpdYPtchRE3rBOz
-         uGYp3/X9PMJCxt/UNj7WI0J58zIB/Y79asi+jFFv2fDnK5VW0iXXMXIh+AXlVbcx7H
-         cyO7X1/OpgEbw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221225115907.55250-1-krzysztof.kozlowski@linaro.org>
-References: <20221225115907.55250-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct
- clocks on SM8250
-Message-Id: <167327590621.170440.11249846867635800211.b4-ty@kernel.org>
-Date:   Mon, 09 Jan 2023 14:51:46 +0000
+        s=k20201202; t=1673276993;
+        bh=2kIP3L1wWIjQqgSeLLlnsvTS3fRCyU9DXUFZ/TVnjuw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uxz94DM+mEx2aL2SgllefcbUc7VO+xh4J41AqR/r+FbyYqVKMqwZZ2k1XNXZNmb23
+         ZbaRpnU4h61VM6jhwqOOQsp7sruisQfql3o8/70L7pBNPj8yT0IZ3W4SRnBCc1uX46
+         z5cv7pfbwqJvVxCx/s9qIYu0gfp5SgEQILukmYtqdxtaOGB9frtlbn1cfeiRyVQxGD
+         NpHWSNa2NiTKHTbzhIkUO0dlUe6RMGPfRe/NZBF/FS9q0D1WDHPo5++nmH2AsA8OPk
+         xfeQRB7xdu35KElolRlRAzO/uhokgXBRg4EHUDq3TazpJ0eg7bR0RV1nRQn7MT4glP
+         MrTfwII91QT9w==
+Date:   Mon, 9 Jan 2023 09:09:51 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Masami Hiramatsu <mhiramat@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V0 1/1] bootconfig: Increase max size of bootconfig from
+ 32 KB to 256 KB for DCC support
+Message-ID: <20230109150951.ikdlkr6lmiapesmu@builder.lan>
+References: <cover.1673261071.git.quic_schowdhu@quicinc.com>
+ <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12-dev-8b3d1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,39 +59,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 25 Dec 2022 12:59:06 +0100, Krzysztof Kozlowski wrote:
-> SM8250 DTS uses additional "va" clock in WSA macro device node:
-> 
->   sm8250-sony-xperia-edo-pdx203.dtb: codec@3240000: clock-names: ['mclk', 'npl', 'macro', 'dcodec', 'va', 'fsgen'] is too long
-> 
+On Mon, Jan 09, 2023 at 08:01:05PM +0530, Souradeep Chowdhury wrote:
+> Increasing the memory size of bootconfig to be able to handle a max number of
+> 8192 nodes to be fitted in memory size of 256KB.
 > 
 
-Applied to
+This states what the patch does, but not why.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+The description you put in the cover letter does capture the why, but
+the cover-letter won't be part of the git history (and if it was,
+there's no reason to keep the motivation separate from the change). So
+please move the motivation into the commit message.
 
-Thanks!
+Also, there's generally no reason to have a cover-letter for a
+single patch "series". So please skip the --cover-letter.
 
-[1/2] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct clocks on SM8250
-      commit: 69568267c5b624eaa86afcafbca1c4765f63e112
-[2/2] ASoC: dt-bindings: qcom,lpass-tx-macro: correct clocks on SC7280
-      commit: c9fb35f685b2f8a2ead98e3f1b249a1d4e9c040e
+Regards,
+Bjorn
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  include/linux/bootconfig.h | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
+> index 1611f9d..64d233b 100644
+> --- a/include/linux/bootconfig.h
+> +++ b/include/linux/bootconfig.h
+> @@ -55,11 +55,11 @@ struct xbc_node {
+>  } __attribute__ ((__packed__));
+>  
+>  #define XBC_KEY		0
+> -#define XBC_VALUE	(1 << 15)
+> -/* Maximum size of boot config is 32KB - 1 */
+> +#define XBC_VALUE	(1 << 18)
+> +/* Maximum size of boot config is 256KB - 1 */
+>  #define XBC_DATA_MAX	(XBC_VALUE - 1)
+>  
+> -#define XBC_NODE_MAX	1024
+> +#define XBC_NODE_MAX	8192
+>  #define XBC_KEYLEN_MAX	256
+>  #define XBC_DEPTH_MAX	16
+>  
+> -- 
+> 2.7.4
+> 
