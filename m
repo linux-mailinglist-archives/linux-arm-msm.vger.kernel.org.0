@@ -2,101 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BBE166224B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:01:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 723E1662253
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:02:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233738AbjAIKBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 05:01:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
+        id S231777AbjAIKCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 05:02:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233614AbjAIKAf (ORCPT
+        with ESMTP id S234349AbjAIKBO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:00:35 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF70A17E25
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:59:36 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so3744253wma.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:59:36 -0800 (PST)
+        Mon, 9 Jan 2023 05:01:14 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C28125CE;
+        Mon,  9 Jan 2023 02:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+Cn4vLeVySoBtqVu3i41sS2U3Dt5cRoRgiGZVokmaYA=;
-        b=q4AYeeRaibX7fUgiXkPtELQBLJ0kUN05+wyCDe6L3i2eK7oPhTomiBOt6eT3u5F9Ld
-         1fuZ4+l3AgKXVPYUDY/08kPnKo94oALnGFF6UeF+5qiRcAUPjX2IqeQwtadDluJY1VL5
-         ndIAwNeUBRRqNTDwD5m/Eu/bQCy0CoRHSR2Qmf+YIrDK6+iqr9iZzOVKJJcZ5xstms5z
-         L74fDxuHfftSR/DFNqQG9rj4XQQ0Fe2k2DtwBskfQcgyrRWvInLRUY3MuyJSrQvZgZnD
-         fk/5djVGFzQPsHyPlw1/z4KUfVK4Y6BIw9y46Q9YgkxUaVlj4mYPa5FT7dVXHN6gYQ+t
-         8F6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Cn4vLeVySoBtqVu3i41sS2U3Dt5cRoRgiGZVokmaYA=;
-        b=4bsPSMB/PNeNOvvXNMWtfs1tOTLhRSeWguQT/A70EnQ+pAq1VduudNqUB5gIdGzRqA
-         6VfaqybVw4VijB4S6RN0F4XKdaWSBEmGeBw89I/cWkSNaYUXY7hiz/cf9ToJH6XpgdqQ
-         q7BfIlXlG7JqbyajicjN5PY7H8KQHON1O0NDFPS1OMR6YeqkTiz7XBohF1Vf0xWN0AiW
-         z+GFbeHITYmGoedTQD7IhEEktGP1Wv1Y0vkIRWn7yHpTdLEw1oWq79XwUM8N8sgSMuYy
-         IY/+bS6pQvhaE85E0bK2HUymrIZoQPAsZr8kT0Oy6twgeQtNENxAAXrHHm1hrZE0kpEd
-         HcXg==
-X-Gm-Message-State: AFqh2kqi3bP67IZ+kbXSGSf3beosgH1QakEsUvLdeY4SPOJrTPucu/gE
-        GxZ3ryIKXZtXB2w8tfihfNk+z98kUh5VBSUU
-X-Google-Smtp-Source: AMrXdXumq0LLDXjebDPOt/mbrfyEvhtsOKdsYIqeFv1T90LrZOYUbvJ/vcGt8U4kT2anrYBvrbe3cw==
-X-Received: by 2002:a05:600c:1d89:b0:3d3:58cb:f6a6 with SMTP id p9-20020a05600c1d8900b003d358cbf6a6mr45676516wms.41.1673258375373;
-        Mon, 09 Jan 2023 01:59:35 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id iv14-20020a05600c548e00b003b47b80cec3sm17318996wmb.42.2023.01.09.01.59.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 01:59:34 -0800 (PST)
-Message-ID: <1c2312e6-73cc-af77-3ce5-75de2bc70213@linaro.org>
-Date:   Mon, 9 Jan 2023 10:59:33 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1673258437; x=1704794437;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+fJR2sAedoWc7HqsxjvIU4JOVkW5oQW3/x8Cb8OtMLE=;
+  b=ViNRcoZi8CjB9qgBXa84Ga0hDMVCVYa+wTHtnatG4PppVppHb7J7Ms0c
+   WeJaYQYt0RRZV2QEopMqjUfGAe/DG5U1jd6PjgFIYrdPdfG0XFrVXlMEm
+   x1FLRVRan4HFxdJncoLR1H/Itc2nQuZJuOqxVccgvbEgZJlsvPKcvY229
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jan 2023 02:00:36 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2023 02:00:36 -0800
+Received: from [10.79.43.91] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
+ 02:00:31 -0800
+Message-ID: <92a32081-a521-33c7-72bd-fb8cb307c5bc@quicinc.com>
+Date:   Mon, 9 Jan 2023 15:30:22 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] dt-bindings: display/msm: gpu: add rbcpr clock
+ Thunderbird/102.2.2
+Subject: Re: [PATCH V2 05/11] remoteproc: qcom_q6v5_mss: revert "map/unmap
+ metadata region before/after use"
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <robin.murphy@arm.com>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
+        <amit.pundir@linaro.org>, <regressions@leemhuis.info>,
+        <sumit.semwal@linaro.org>, <will@kernel.org>,
+        <catalin.marinas@arm.com>, <hch@lst.de>
+References: <20230109034843.23759-1-quic_sibis@quicinc.com>
+ <20230109034843.23759-6-quic_sibis@quicinc.com>
+ <20230109081832.GA4966@thinkpad>
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230109054407.330839-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230109054407.330839-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20230109081832.GA4966@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/01/2023 06:44, Dmitry Baryshkov wrote:
-> Describe the RBCPR clock used on msm8996 (A530), MSM8998 (A540) and
-> SDM630/660 (A508/A512).
+Hey Mani,
+Thanks for taking time to review the series.
+
+On 1/9/23 13:48, Manivannan Sadhasivam wrote:
+> + Christoph
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/gpu.yaml | 2 ++
+> Hi Sibi,
+> 
+> On Mon, Jan 09, 2023 at 09:18:37AM +0530, Sibi Sankar wrote:
+>> This reverts commit fc156629b23a21181e473e60341e3a78af25a1d4.
+>>
+>> The memory region allocated using dma_alloc_attr with no kernel mapping
+>> attribute set would still be a part of the linear kernel map. Hence as a
+>> precursor to using reserved memory for modem metadata region, revert back
+>> to the simpler way of dynamic memory allocation.
+>>
+>> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> 
+> Christoph already submitted a patch that reverts fc156629b23a:
+> https://lore.kernel.org/linux-arm-msm/20221223092703.61927-2-hch@lst.de/
 
+Having ^^ revert as part of the this series makes more sense. I'll
+just replace my patch with ^^ in the next re-spin.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
-
+> 
+> Thanks,
+> Mani
+> 
+>> ---
+>>   drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++-------------------------
+>>   1 file changed, 6 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+>> index 2f4027664a0e..e2f765f87ec9 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+>> @@ -10,7 +10,6 @@
+>>   #include <linux/clk.h>
+>>   #include <linux/delay.h>
+>>   #include <linux/devcoredump.h>
+>> -#include <linux/dma-map-ops.h>
+>>   #include <linux/dma-mapping.h>
+>>   #include <linux/interrupt.h>
+>>   #include <linux/kernel.h>
+>> @@ -961,52 +960,27 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
+>>   static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>>   				const char *fw_name)
+>>   {
+>> -	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
+>> -	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
+>> -	struct page **pages;
+>> -	struct page *page;
+>> +	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
+>>   	dma_addr_t phys;
+>>   	void *metadata;
+>>   	int mdata_perm;
+>>   	int xferop_ret;
+>>   	size_t size;
+>> -	void *vaddr;
+>> -	int count;
+>> +	void *ptr;
+>>   	int ret;
+>> -	int i;
+>>   
+>>   	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
+>>   	if (IS_ERR(metadata))
+>>   		return PTR_ERR(metadata);
+>>   
+>> -	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+>> -	if (!page) {
+>> +	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+>> +	if (!ptr) {
+>>   		kfree(metadata);
+>>   		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+>>   		return -ENOMEM;
+>>   	}
+>>   
+>> -	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>> -	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+>> -	if (!pages) {
+>> -		ret = -ENOMEM;
+>> -		goto free_dma_attrs;
+>> -	}
+>> -
+>> -	for (i = 0; i < count; i++)
+>> -		pages[i] = nth_page(page, i);
+>> -
+>> -	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
+>> -	kfree(pages);
+>> -	if (!vaddr) {
+>> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
+>> -		ret = -EBUSY;
+>> -		goto free_dma_attrs;
+>> -	}
+>> -
+>> -	memcpy(vaddr, metadata, size);
+>> -
+>> -	vunmap(vaddr);
+>> +	memcpy(ptr, metadata, size);
+>>   
+>>   	/* Hypervisor mapping to access metadata by modem */
+>>   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+>> @@ -1036,7 +1010,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>>   			 "mdt buffer not reclaimed system may become unstable\n");
+>>   
+>>   free_dma_attrs:
+>> -	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
+>> +	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+>>   	kfree(metadata);
+>>   
+>>   	return ret < 0 ? ret : 0;
+>> -- 
+>> 2.17.1
+>>
+> 
