@@ -2,73 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5B8A663500
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18A2C6634F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:16:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237824AbjAIXQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 18:16:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46280 "EHLO
+        id S237768AbjAIXQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:16:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237709AbjAIXQP (ORCPT
+        with ESMTP id S237060AbjAIXQO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 18:16:15 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 096F0EB9;
-        Mon,  9 Jan 2023 15:16:11 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id b3so15549297lfv.2;
-        Mon, 09 Jan 2023 15:16:10 -0800 (PST)
+        Mon, 9 Jan 2023 18:16:14 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22442BF48
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 15:16:12 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id d30so10615803lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 15:16:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ctFTCfSoJjTZfY+rdJcn3BKR4sJeVp5aACYPINpXosE=;
-        b=kXzNDKMPeb5e6lJRcwwef0qDEXt9Kf/UfU1M+YcIBbkS3pXfnA+B4wWSrPGHCyskF9
-         Rsg1DqAQsfjQBh1td3BfPWXG8Hizai5plx0RmpEy0nVCZ2kgFyThGE4EkBsR4b+Mgodw
-         AKDHhkSjq0Q2xJQB8OWksF7b1U/YcKLm9RskjZAUMR+y3QDnukDHRukWoWpWoHnX2C8B
-         Zl/JvgDeyn/5cv2myxEmJNi+SFhuas+YcKJb8UxJthU0A863lh4yjhPfUn3CTQ06DvWn
-         8o84QlT+cscfbEAyLt7ARgnRXZS89/VWWpAk8gv48bgL2A7qpgzFRON46sbvWWgXHL6m
-         toEw==
+        bh=U/freu+ZgmiBA4hrBK8o79X6HX9HTTyxAvA2ufrSoK0=;
+        b=pZNIgPrqwP6vOIoXVyulw/nqaeul0R0XTQB95YxSJ9Stjz/bLmk6jl30L3/bWIsL+L
+         IA5SImpUOSxXSedgDlgjGsMtJVNAXVDl+SnyE33YWKe9in55w7A6NojBMlhlswnYxM1c
+         3z7N71B4UTcrbgInI1hfDz4IXxiJa+1NJxf+buyjVGqwSI4hnUkDNF9LMRakUrXgg9zF
+         F01H0sFlD5gT5lNRe4SFDJCAHOL7E15t1NkVy8uSUmE2cLkTiWVsLcUInypZQsGENu/y
+         PmZ5cyxKAnkZlJdS07DkNjP9akjznesMKbcHqtGVo2I35lu/C1cVaqh8RsO9SY/RMEO0
+         iBzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ctFTCfSoJjTZfY+rdJcn3BKR4sJeVp5aACYPINpXosE=;
-        b=7WfxFMD1I09Q29OAm+QAoEMuDuX5o+dqQZalO3UP8qoUCH6aaDHlSTin/Ae+S3Jaqb
-         zcmpTpHrzJdWknRl9ojxpV9yONQasBcRTqEja0ZwuGaWUWfQWwLATJH940P2Vgepi6ne
-         Y9mLgwKSOEQRC9S+oe54YZ4odtNWoo7rCltrdc5p/Dtc1Zz1HjAvMveNdGD+L45bEe0T
-         9HFyxkmYV7DdWrS9UNAM47uFhVp0HRqbqtb24V8H4VE3xmePNQDKNZDXUUOWSyF6yTpU
-         r4pjCRg2CWGCSI8KfqsF4iLbXtwXouUeGDOdZ80VJCcRrdNjQesEtJmjGltzFyl3OJry
-         4HDg==
-X-Gm-Message-State: AFqh2kqUziWXtTXavFtrPk9DXw5i6bn6hYqGCNQuSfv2+kX7BC2Vpj56
-        28ZoW5VFqIwo5ty4p0JYELg=
-X-Google-Smtp-Source: AMrXdXvsvMbJMxbVIOP7MhGcARYLYTaMj2qJsVj4hOLnwTk6gCkRAHlDRVLXezAOi1HZGO5X8RuPjw==
-X-Received: by 2002:a05:6512:2314:b0:4cb:4571:9efe with SMTP id o20-20020a056512231400b004cb45719efemr9847698lfu.35.1673306169077;
-        Mon, 09 Jan 2023 15:16:09 -0800 (PST)
+        bh=U/freu+ZgmiBA4hrBK8o79X6HX9HTTyxAvA2ufrSoK0=;
+        b=ZvUIQe1RaspuQH3U1tHAoxd1rC/x77WQTeyIZgmxlxnhVvGWoHLNxknFQLt7nbWsdG
+         3WglhRJrGKxlTFiZwAEstTx2rQB8tW4FxfpP3nyZsN5uskPFq4jqrqiZnXAh/KNHtFg2
+         j7OdFUFTSMaRUmNfhRk73l8XcP3q0/4t17KcCMRusxpwd5sKlf49FWBPHQ3keffkgby+
+         IwhAvjBfs1eDghdPypbEspst78APamC/S15wRhpSbtznjmxOkHjiS0kkgb2xfMhUM+yt
+         vaBwrdwXKy+iWn3a1jboGjUAvZfybotxgsivpMTdP4tc1Zh8FtkT2bD+HQXRuF3epMu+
+         nNeA==
+X-Gm-Message-State: AFqh2kqH51zIJ8RQR5jFhpvle7m5YJ1cDnvdat1zU+9ptqIhIh/vBor2
+        Cq00NlArP+3bcq6c07USD0A=
+X-Google-Smtp-Source: AMrXdXvcdxwsx1YSr7JXrjTTbxqbhA3fSc4tWI1dtLQpJSnCoN2laPR0M5rTWz3oTsB51H66XEQK6g==
+X-Received: by 2002:a05:6512:c1c:b0:4c3:3a78:eab6 with SMTP id z28-20020a0565120c1c00b004c33a78eab6mr23365024lfu.65.1673306172157;
+        Mon, 09 Jan 2023 15:16:12 -0800 (PST)
 Received: from localhost (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id m9-20020ac24ac9000000b004cafe65883dsm1847495lfp.122.2023.01.09.15.16.08
+        by smtp.gmail.com with ESMTPSA id a27-20020a056512201b00b004b373f61a60sm1829571lfb.96.2023.01.09.15.16.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 15:16:08 -0800 (PST)
+        Mon, 09 Jan 2023 15:16:11 -0800 (PST)
 From:   Dmitry Baryshkov <dbaryshkov@gmail.com>
 X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-In-Reply-To: <20230109045458.316114-1-dmitry.baryshkov@linaro.org>
-References: <20230109045458.316114-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] dt-bindings: display/msm: qcom,sdm845-mdss: document the DP device
-Message-Id: <167330408776.609993.17059327526924867379.b4-ty@linaro.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
+References: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v6 0/4] drm/msm: convet to drm_crtc_handle_vblank()
+Message-Id: <167330408779.609993.9427004517463466813.b4-ty@linaro.org>
 Date:   Tue, 10 Jan 2023 00:41:27 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -84,15 +79,26 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 09 Jan 2023 06:54:58 +0200, Dmitry Baryshkov wrote:
-> Document the DP controller added to the sdm845 display subsystem.
+On Sat, 18 Jun 2022 02:33:24 +0300, Dmitry Baryshkov wrote:
+> This patchseries replaces drm_handle_vblank() with
+> drm_crtc_handle_vblank(). As a bonus result of this conversion it is
+> possible to drop the stored array of allocated CRTCs and use the core
+> CRTC iterators.
 > 
+> Changes since v5:
+>  - Clean up the event_thread->worker in case of an error to fix possible
+>    oops in msm_drm_uninit().
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: display/msm: qcom,sdm845-mdss: document the DP device
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d26407788cc0
+[1/4] drm/msm: clean event_thread->worker in case of an error
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/c79bb6b92def
+[2/4] drm/msm/mdp4: convert to drm_crtc_handle_vblank()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/6606a96ab1ce
+[3/4] drm/msm/mdp5: convert to drm_crtc_handle_vblank()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/e96c08e91726
 
 Best regards,
 -- 
