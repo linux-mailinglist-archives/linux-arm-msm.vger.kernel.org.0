@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2FB666277C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 14:44:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 599EA662794
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 14:46:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237161AbjAINor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 08:44:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56284 "EHLO
+        id S234789AbjAINq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 08:46:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237437AbjAINoA (ORCPT
+        with ESMTP id S236991AbjAINoU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 08:44:00 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445721C435
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 05:43:55 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id b3so13036678lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 05:43:55 -0800 (PST)
+        Mon, 9 Jan 2023 08:44:20 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B762333D54
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 05:44:18 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id p25so2706467ljn.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 05:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rWl8UCfCUg60fJjNfhX7+lZo9Tp69LmtvnhMusTDvNs=;
-        b=e2uVmD2gTVdDiQ/o8CVBjNj0ZqdlkQ5V8xjQF3phVP/ZKAWEMs0yue/Vpj+yBm/tri
-         bRokMDB+cTmP4GLtI/B36CnUst2OIT9eLqpPqN86WT0eJEAxkrL69/QSlvd8aFXScgg2
-         1r+FVd/0GelAkea7rSaKWxaQ52Cmzxh+6y+WspRZvJAE0gNFTleEUWIwg/SyasXbrLRM
-         NFXi5bO19gBu6D6UnrCxSCsSrxhCF8wR7+DsFmClCeDIshG2Sexbn0mtYTdvTCW23DPE
-         WxIKrpBA4qaUf0E30Yo1UTU2zUycI3ZZr0aqrvVTcROrJv2qYfM5a/XRVBIfHppGV/DS
-         laLA==
+        bh=3v/urk97wKGi10t4zFr7GyX2Qd2Ark2mf3B1dwYMq4c=;
+        b=wWXKsZMJgoXaEU7yjmdmqDQv/D+v2BGIs3G1kWYcpuaoMob78JiBovZfqdSzsw3sk8
+         s32WRvevUOCb8n86qiblCFdG4SUplVM3HS5oIjNsWjLLKJNhy9dDeWh+TOY1TqO1PRxO
+         h5LpJt+qUkuWspSQk3mjF+zrPkzfioZHI38ZqXqguol6/TR7j0yus7m2yN9tnVfsFbs5
+         foPbhzqPPOORyQHuOI5dEFFWL2mz7MIjxWO6T5rtxRsjulXborxvRPRlhVwYQOG/Mk5a
+         rkTtxzM1bE/YJz4DLQHbZwVO2NrjxxMHYTELTDgcm54BJI2IYzqfMLaJnpeTcMoIBJqY
+         GdqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rWl8UCfCUg60fJjNfhX7+lZo9Tp69LmtvnhMusTDvNs=;
-        b=OM1V/lelOwnoj+7LHTJQ2UIWJ76Rm61TOdJPMRLMZGcmTm+NZLeOnZq2mtgHGEZsU0
-         FyRU2vBYpcDbnUWgzamp3+knj3sTC+Ul01VAs+X/ZcWJk33ntLa2DNBWtfb2mRPJNLqM
-         lDVHfVWFdqoHztsNJ7xJVI/Y9PuA4Cz3a1aiHetEJjPabEQnZkVGO/AHM9+xGyUvurlr
-         rlPsemO3ZAevhH+7NrJaeX507AC/l9BL2bZaUtc92Hll/pbe0InpZsWH7qHX6bPKBn7m
-         tcS/rNp0MVFYB2Vk2METqNL16CzQM8haKao+TWbR2tXBvOqM4QNjNoj8gw1pkANGrS8u
-         XU5g==
-X-Gm-Message-State: AFqh2krbr+6540d6iFZLmrS5FyQc4dEGROdvWTEhlf6Nk0kF7rxMYp5s
-        D++hJ9kQtP113XMn7NpetigRRA==
-X-Google-Smtp-Source: AMrXdXuuwmZXRfVrYIvR4aFB8quO5/AwWXVjENPMlBK/Ld7vEdp8oFvN1cTzz/Bn9YABrA4d6vb5AQ==
-X-Received: by 2002:a05:6512:1111:b0:4b5:43ef:a552 with SMTP id l17-20020a056512111100b004b543efa552mr19663828lfg.16.1673271833659;
-        Mon, 09 Jan 2023 05:43:53 -0800 (PST)
+        bh=3v/urk97wKGi10t4zFr7GyX2Qd2Ark2mf3B1dwYMq4c=;
+        b=c5Y+RnGQZOTWL9WuOgnfL7SERgkd+oZe6pIgFjwa607EUnMLcNAhlPDkgZOTEO2VSz
+         niXGDfrV3bes11IjC8c+SWYt9Qv31Q4dc5lZlgTsqB+moU8gbEIkSw2s+3di1+yl84Vg
+         9XHEn6C2pyO0Ei5x4bttWacximmV5Mp9ZFR8uE/78UQxub39E7ObkkesRJJt3AVEze1d
+         PkWgdE5b2tzeHjeKNUcmq5V2hf4XwmTY71vgQu2/ivszEihIAKK2Mj8CJlYk3COjw0Ca
+         TCYk5w/njwM8q0OuuTS2S5WhsHaLjTkRG0bgdSZaFCsL5tWj9uj6vMgUQ+u7OsHReW5j
+         dGag==
+X-Gm-Message-State: AFqh2krnZ+KPTqZvDnAjkbW1ypziuuqM7pzow1Pn0JMKszNBht0nvPSq
+        RJ6Y5wBb9l1eM/VeXtky+1rzxw==
+X-Google-Smtp-Source: AMrXdXvlruhAsfHw0sKgwKtCWKYeFjn0JSLjvermqiR4yxusPFxZLM0oK51UExFkctwIFWhJKuS9iw==
+X-Received: by 2002:a05:651c:1785:b0:280:9da3:1431 with SMTP id bn5-20020a05651c178500b002809da31431mr5819969ljb.27.1673271857108;
+        Mon, 09 Jan 2023 05:44:17 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id f7-20020ac25327000000b004b4ea0f4e25sm1628259lfh.301.2023.01.09.05.43.52
+        by smtp.gmail.com with ESMTPSA id y3-20020a2ebb83000000b002830d074c84sm694983lje.85.2023.01.09.05.44.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 05:43:53 -0800 (PST)
-Message-ID: <e9b0f691-82f6-d0a8-653e-a78470607588@linaro.org>
-Date:   Mon, 9 Jan 2023 14:43:51 +0100
+        Mon, 09 Jan 2023 05:44:16 -0800 (PST)
+Message-ID: <e8c56d1b-74ac-4285-2afa-ff4271766935@linaro.org>
+Date:   Mon, 9 Jan 2023 14:44:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v3 02/12] interconnect: qcom: sc7180: drop IP0 remnants
+Subject: Re: [PATCH v3 03/12] interconnect: move ignore_list out of
+ of_count_icc_providers()
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,11 +69,11 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     Georgi Djakov <djakov@kernel.org>, Alex Elder <elder@linaro.org>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
+        devicetree@vger.kernel.org, kernel test robot <lkp@intel.com>
 References: <20230109002935.244320-1-dmitry.baryshkov@linaro.org>
- <20230109002935.244320-3-dmitry.baryshkov@linaro.org>
+ <20230109002935.244320-4-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230109002935.244320-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230109002935.244320-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,38 +89,44 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 9.01.2023 01:29, Dmitry Baryshkov wrote:
-> Drop two defines leftover from the commit 2f3724930eb4 ("interconnect:
-> qcom: sc7180: Drop IP0 interconnects"), which dropped handling of the
-> IP0 resource in favour of handling it in the clk-rpmh driver.
+> Move the const ignore_list definition out of the
+> of_count_icc_providers() function. This prevents the following stack
+> frame size warnings if the list is expanded:
 > 
-> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+> drivers/interconnect/core.c:1082:12: warning: stack frame size (1216) exceeds limit (1024) in 'of_count_icc_providers' [-Wframe-larger-than]
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/interconnect/qcom/sc7180.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/interconnect/core.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/sc7180.h b/drivers/interconnect/qcom/sc7180.h
-> index c6212a10c2f6..7a2b3eb00923 100644
-> --- a/drivers/interconnect/qcom/sc7180.h
-> +++ b/drivers/interconnect/qcom/sc7180.h
-> @@ -11,7 +11,7 @@
->  #define SC7180_MASTER_APPSS_PROC			0
->  #define SC7180_MASTER_SYS_TCU				1
->  #define SC7180_MASTER_NPU_SYS				2
-> -#define SC7180_MASTER_IPA_CORE				3
-> +/* 3 was used by MASTER_IPA_CORE, now represented as RPMh clock */
->  #define SC7180_MASTER_LLCC				4
->  #define SC7180_MASTER_A1NOC_CFG				5
->  #define SC7180_MASTER_A2NOC_CFG				6
-> @@ -58,7 +58,7 @@
->  #define SC7180_MASTER_USB3				47
->  #define SC7180_MASTER_EMMC				48
->  #define SC7180_SLAVE_EBI1				49
-> -#define SC7180_SLAVE_IPA_CORE				50
-> +/* 50 was used by SLAVE_IPA_CORE, now represented as RPMh clock */
->  #define SC7180_SLAVE_A1NOC_CFG				51
->  #define SC7180_SLAVE_A2NOC_CFG				52
->  #define SC7180_SLAVE_AHB2PHY_SOUTH			53
+> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+> index 25debded65a8..df77d2f6215d 100644
+> --- a/drivers/interconnect/core.c
+> +++ b/drivers/interconnect/core.c
+> @@ -1079,15 +1079,16 @@ void icc_provider_del(struct icc_provider *provider)
+>  }
+>  EXPORT_SYMBOL_GPL(icc_provider_del);
+>  
+> +static const struct of_device_id __maybe_unused ignore_list[] = {
+> +	{ .compatible = "qcom,sc7180-ipa-virt" },
+> +	{ .compatible = "qcom,sdx55-ipa-virt" },
+> +	{}
+> +};
+> +
+>  static int of_count_icc_providers(struct device_node *np)
+>  {
+>  	struct device_node *child;
+>  	int count = 0;
+> -	const struct of_device_id __maybe_unused ignore_list[] = {
+> -		{ .compatible = "qcom,sc7180-ipa-virt" },
+> -		{ .compatible = "qcom,sdx55-ipa-virt" },
+> -		{}
+> -	};
+>  
+>  	for_each_available_child_of_node(np, child) {
+>  		if (of_property_read_bool(child, "#interconnect-cells") &&
