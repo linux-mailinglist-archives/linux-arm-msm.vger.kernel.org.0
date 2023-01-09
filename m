@@ -2,57 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23E2E6629C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:22:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49BC96629CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:22:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232796AbjAIPWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 10:22:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36394 "EHLO
+        id S229649AbjAIPW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 10:22:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234146AbjAIPWU (ORCPT
+        with ESMTP id S237065AbjAIPWi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 10:22:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C8041B1E8;
-        Mon,  9 Jan 2023 07:21:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CD4FC6118D;
-        Mon,  9 Jan 2023 15:21:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1A2C433EF;
-        Mon,  9 Jan 2023 15:21:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673277706;
-        bh=Pq2cqssVpv2um64tGuLW8CbA38OKeVtXW0pClp5ay+g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l3wlD0K7v7pv2RP/tIsMka1mZDkMyyvkl8rwEzIwf6+WQgWn21nF7TGFcf/bRXLjc
-         oQlHeBzOETkIE/+cf1fXuXDj86oFVYIjEiL8Jq2X9QX/azHJem1BmDEERBQWtjH1eD
-         oB/zIEjv0FURRBnvGGS7e6c6ml3LcZdrR3/Lx8HRTkPzkz1gSXoRa4Aq9tZQocE5fQ
-         l3eph/TjFanhg5RD3OwT4Fj+AQczySYWGaKaqKIB9EGpmrkP1SI6R1/XP21HI704DB
-         pYMfrTGygh1Brdim+1yWQs+ZDubeFt89sI57VwpA1SjyqybYOesVTVTqJx7ocG5FPL
-         7KPMPzpvgNSLg==
-Date:   Mon, 9 Jan 2023 16:21:43 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Yang Yingliang <yangyingliang@huawei.com>
-Cc:     linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        neil.armstrong@linaro.org
-Subject: Re: [PATCH -next] i2c: qcom-geni: change i2c_master_hub to static
-Message-ID: <Y7wxB7sLClQUAhgB@ninjato>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        neil.armstrong@linaro.org
-References: <20221228093403.3165722-1-yangyingliang@huawei.com>
+        Mon, 9 Jan 2023 10:22:38 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA5B1EC7C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 07:22:18 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so7115077wms.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 07:22:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2vOTKWnDZmwehJAU6Nl1hb49nz4Cs660rzRHE7sjmWA=;
+        b=AGc30VpVOrKwF+dKIvUbevde6oEnt0lII78VVfHLfyT53Wz0n1Yh/KCOEybIswI2zD
+         2xxjsJidh6GvzQ2K1+Oxy5V4RKPOVuLgTexEgK1e/MEJIMRqfTjWKjQvFVE7e1XEnxSA
+         Ns3U7whvAy8xH9apVcq6bypl6/NrOj1V1hz7bu0TVBxinqNgwQT7SUgoxl2RuYroxL0/
+         3QPhi9+xNcKCelo5p1EJ++1aQvXHGU80JKC7ZazNkAG+d/rlhmUzpqRtOinhTctxZEUm
+         l7BiIN0qNf9jrqlFznod+Yo1bi4BVSZav2FDu4G1YF6N1r3rHbJGTsrgki87TCzb8MXm
+         tUlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2vOTKWnDZmwehJAU6Nl1hb49nz4Cs660rzRHE7sjmWA=;
+        b=MQ9glMQ+WSGixRt+WDsJwyAdSeFKO2QcIj7OGvqABxJe2lJ3FvpZwufpv9O86Ukxr3
+         nMiQ+5boKf6DjRVldmM15zytN+gg8Wzd1ZA1XehRiH+Rp1ztwyZWNtVPPGT+onpL9Y9K
+         DUGQ+bIn8JtkbbA7Gpcm7dXi9jRFyLNqenpN1QibalEIVLmWb2NrF+1LjLemGrkr1+IC
+         22aqaAyB8yXeV9lPU+7D0i1cAtxN+cC1m6DZ6kbawCe0RubinB/atKJu6SPHWOQoD++D
+         Kc1eKsz94nl4W909h2jHElYzouLrO7J8IT+3PGoiEnJ2YJz0ucSVcRzZxmEjBZ3lTP+a
+         odcA==
+X-Gm-Message-State: AFqh2kok2Dxy0Mz9+LFeR5yakaroeSKXnp2Q5nab1kaWVKMyuqiNyWG4
+        3eowhgEypExNBjbvYzT/zmt+s+Sduwrq9zbh
+X-Google-Smtp-Source: AMrXdXtRAL3NMvlUqZrrkSZbPdNqDQn6dQLhR41NfSr1it0b0iJqWDDrRJBt7KxQZX/oUuox/jGqyA==
+X-Received: by 2002:a05:600c:1d20:b0:3d2:2aaf:316 with SMTP id l32-20020a05600c1d2000b003d22aaf0316mr47036944wms.36.1673277737004;
+        Mon, 09 Jan 2023 07:22:17 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id r10-20020a05600c458a00b003d35acb0fd7sm17314027wmo.34.2023.01.09.07.22.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 07:22:16 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] serial: msm: add lock annotation to msm_set_baud_rate()
+Date:   Mon,  9 Jan 2023 16:22:12 +0100
+Message-Id: <20230109152212.343476-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ovKzBLZyr3tb7Iae"
-Content-Disposition: inline
-In-Reply-To: <20221228093403.3165722-1-yangyingliang@huawei.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,41 +73,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+msm_set_baud_rate() releases and re-acquires the port->lock, thus add
+lock annotation for Sparse static code checks.
 
---ovKzBLZyr3tb7Iae
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/tty/serial/msm_serial.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On Wed, Dec 28, 2022 at 05:34:02PM +0800, Yang Yingliang wrote:
-> i2c_master_hub is only used in i2c-qcom-geni.c now,
-> change it to static.
->=20
-> Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub vari=
-ant")
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 7dd19a281579..44e1e83127ac 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1125,6 +1125,7 @@ msm_find_best_baud(struct uart_port *port, unsigned int baud,
+ 
+ static int msm_set_baud_rate(struct uart_port *port, unsigned int baud,
+ 			     unsigned long *saved_flags)
++	__must_hold(&port->lock)
+ {
+ 	unsigned int rxstale, watermark, mask;
+ 	struct msm_port *msm_port = to_msm_port(port);
+-- 
+2.34.1
 
-Applied to for-next, thanks!
-
-
---ovKzBLZyr3tb7Iae
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmO8MQcACgkQFA3kzBSg
-KbZd5g/+MosuuEWwiOezIqmcVLkH5TWR2DlPt5sGMINLD6kc7/q5FbZUYCHmebhP
-dYfdSRJZ0W1Hn4UKtJX3NUWe8aB0hHK5oKu0TKCQYGC5la82MboKVbJnuHH2qDNj
-Beues+aHtGD4qGjMwwgL2At0FWpvNxlKd9lelZUkziWkEeIRWoVETn07AIJdsiX+
-8wFG/1ZWDPPGig1hGsaBhdckLdc6s1m/7XqDYcJFUGwTew3stcGWmsbk5wAAwnmt
-Zt5iAz1BuWE6xXnpjeJu9nVNvrCZFJhyxtgTRO8tOIS7aWlGs4C5G87btt6EkGDk
-Dx93XGvP3ULlXPEKWzkLgEc5iLEFnUcx/+jDELySRo5b2321Qcz5FgGokmXga3Wa
-etTGRICyZdkKkE0sEPLsyFlZjId+S0dI6rsAISg2EDhfIsFXGf88OgzeGKPgs3Rl
-VTNgYM++r7WOipm6OWHlVeiAYmpWSaWAD42FdadLZEUGnIUTz/oZKFYpH9JYKS2b
-2NoBvgV5vu3jSZ9DEsRFKLGCEGAaH0SBq0WQjn4KSYBNqb9MribxE8AGjKnZm56o
-hJCWNd84RQqSZouDIPegJhvWYl17/KP0gL9rxEPKFWAeGteTYx9Soj1fiZx0G1CF
-tBHRNi/gfgbgR1DMGIZfeUHwET+WHCOUbLNGlMgN71GczsgqFZA=
-=/6EF
------END PGP SIGNATURE-----
-
---ovKzBLZyr3tb7Iae--
