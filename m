@@ -2,115 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6B4C661FEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:25:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F2F0662009
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:33:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236487AbjAIIZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 03:25:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40176 "EHLO
+        id S233173AbjAIIdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 03:33:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236592AbjAIIYG (ORCPT
+        with ESMTP id S233309AbjAIIct (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 03:24:06 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90EEC658C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 00:24:04 -0800 (PST)
-Received: from SoMainline.org (unknown [89.205.227.209])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id BA0103EE8C;
-        Mon,  9 Jan 2023 09:23:59 +0100 (CET)
-Date:   Mon, 9 Jan 2023 09:23:57 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        sunliming <sunliming@kylinos.cn>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Drew Davenport <ddavenport@chromium.org>
-Subject: Re: [PATCH v2 4/8] drm/msm/dpu: Disallow unallocated resources to be
- returned
-Message-ID: <20230109082357.meebk7udokdfvwle@SoMainline.org>
-References: <20221221231943.1961117-1-marijn.suijten@somainline.org>
- <20221221231943.1961117-5-marijn.suijten@somainline.org>
- <b415a91d-f804-1fec-52dd-4124d3f1e583@linaro.org>
- <1b872a47-6ffc-1fe9-f283-897dbc37d709@linaro.org>
+        Mon, 9 Jan 2023 03:32:49 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A113A637B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 00:32:48 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id a184so5538216pfa.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 00:32:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SHMUlyBLH0Q2xt7U2A19C6HrjxjXmZIvH2mKuIhnuV0=;
+        b=yHC47N7tRLOutov73Jd6WOaM3gkL1+6ZTDBuR8M7HMgchMCadgbrXUguT7G8/g6NAn
+         s1VQoqgcWL57F8HmoPRVahFU7t47R0GDTz3nNfIJR9njRu4JYpeaxhLNqnvD0sjM8Sdz
+         aLtYdY/vwJ89Y5/aQmPBGApLmrvMxtDK3NJoUQvrhIK6xwecf5bYGBqa/PQzo3rP/e86
+         wFKNuYLwvIpnjQxGDulSRWT2RzekA//ZtDJTk0Y/CApGwBA1HDE8ZMrbeH86cUyNwvRH
+         Ywbs62/z0FHs9/bk85293t8TDuHyOfupX/k5CMzT6pnQrRHPlPaR1ltkE2hJy6shq0yk
+         DFKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SHMUlyBLH0Q2xt7U2A19C6HrjxjXmZIvH2mKuIhnuV0=;
+        b=aJINM9v++IkULnX6Zp/6uWNtGtJGIm5QLsRB3LELsOuulaqu0FDZJE6iiL5RGhm+at
+         tRtVcUeWWBBdnDRN6H71JcHNdCqA0OnhNmFiwhrZrx9EvZHGXhDim28JmM/rBm79+uRd
+         wzjO5ON9W735TQutlThNgIhPF8Si5idJF4k6f46LTMyZ+39EEm/O5B39PEcT6JPY5eNo
+         7gj7c6E3EHt6KxmDOQQMKbWal7sseZwppWmeHwTThNqMUUtes3ryH+Sbfv76uP0J2uSb
+         TWcu+MZVVM8+XwbS6TgP5FLNEDPiKP6Hi4mmeyzvK9T5g5Yjc7pXnTqeqDQhst6ZwpBc
+         RMPA==
+X-Gm-Message-State: AFqh2kpOD7forVrTEhI3ZcWTqIAy8I0ji2QwSJuXow17LS5XwxDqULM3
+        VovuchpibgrIKuODmrkzW0gB
+X-Google-Smtp-Source: AMrXdXu+jYwZSGZTybimGhKGn+1dTrGicGL3lTyXesxruRNJFfO1HoZCGpPDD3lUoBOk+4taacoVGQ==
+X-Received: by 2002:a05:6a00:18a3:b0:582:197e:f6c1 with SMTP id x35-20020a056a0018a300b00582197ef6c1mr47346974pfh.4.1673253168084;
+        Mon, 09 Jan 2023 00:32:48 -0800 (PST)
+Received: from thinkpad ([117.217.177.135])
+        by smtp.gmail.com with ESMTPSA id j123-20020a62c581000000b00576d76c9927sm5488519pfg.106.2023.01.09.00.32.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 00:32:47 -0800 (PST)
+Date:   Mon, 9 Jan 2023 14:02:31 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        amit.pundir@linaro.org, regressions@leemhuis.info,
+        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com
+Subject: Re: [PATCH V2 06/11] remoteproc: qcom_q6v5_mss: Use a carveout to
+ authenticate modem headers
+Message-ID: <20230109083231.GB4966@thinkpad>
+References: <20230109034843.23759-1-quic_sibis@quicinc.com>
+ <20230109034843.23759-7-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1b872a47-6ffc-1fe9-f283-897dbc37d709@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230109034843.23759-7-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-09 01:30:29, Dmitry Baryshkov wrote:
-> On 09/01/2023 01:28, Dmitry Baryshkov wrote:
-> > On 22/12/2022 01:19, Marijn Suijten wrote:
-> >> In the event that the topology requests resources that have not been
-> >> created by the system (because they are typically not represented in
-> >> dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
-> >> blocks) remain NULL but will still be returned out of
-> >> dpu_rm_get_assigned_resources, where the caller expects to get an array
-> >> containing num_blks valid pointers (but instead gets these NULLs).
-> >>
-> >> To prevent this from happening, where null-pointer dereferences
-> >> typically result in a hard-to-debug platform lockup, num_blks shouldn't
-> >> increase past NULL blocks and will print an error and break instead.
-> >> After all, max_blks represents the static size of the maximum number of
-> >> blocks whereas the actual amount varies per platform.
-> >>
-> >> ^1: which can happen after a git rebase ended up moving additions to
-> >> _dpu_cfg to a different struct which has the same patch context.
-> >>
-> >> Fixes: bb00a452d6f7 ("drm/msm/dpu: Refactor resource manager")
-> >> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >> ---
-> >> � drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 5 +++++
-> >> � 1 file changed, 5 insertions(+)
-> > 
-> > I think the patch is not fully correct. Please check resource 
-> > availability during allocation. I wouldn't expect an error from 
-> > get_assigned_resources because of resource exhaustion.
+On Mon, Jan 09, 2023 at 09:18:38AM +0530, Sibi Sankar wrote:
+> Any access to the dynamically allocated metadata region by the application
+> processor after assigning it to the remote Q6 will result in a XPU
+> violation. Fix this by replacing the dynamically allocated memory region
+> with a no-map carveout and unmap the modem metadata memory region before
+> passing control to the remote Q6.
+> 
+> Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
+> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v2:
+>  * Revert no_kernel_mapping [Mani/Robin]
+> 
+>  drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++----
+>  1 file changed, 42 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index e2f765f87ec9..b7a158751cef 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -215,6 +215,7 @@ struct q6v5 {
+>  	size_t mba_size;
+>  	size_t dp_size;
+>  
+> +	phys_addr_t mdata_phys;
+>  	phys_addr_t mpss_phys;
+>  	phys_addr_t mpss_reloc;
+>  	size_t mpss_size;
+> @@ -973,15 +974,29 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>  	if (IS_ERR(metadata))
+>  		return PTR_ERR(metadata);
+>  
+> -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> -	if (!ptr) {
+> -		kfree(metadata);
+> -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> -		return -ENOMEM;
+> +	if (qproc->mdata_phys) {
+> +		phys = qproc->mdata_phys;
+> +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
+> +		if (!ptr) {
+> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+> +				&qproc->mdata_phys, size);
+> +			ret = -EBUSY;
+> +			goto free_dma_attrs;
 
-Theoretically patch 5/8 should take care of this, and we should never
-reach this failure condition.  Emphasis on /should/, this may happen
-again if/when another block type is added with sub-par resource
-allocation and assignment implementation.
+There is no memory to free at this point.
 
-> Another option, since allocation functions (except DSC) already have 
-> these safety checks: check error message to mention internal 
-> inconstency: allocated resource doesn't exist.
+Thanks,
+Mani
 
-Is this a suggestion for the wording of the error message?
+> +		}
+> +	} else {
+> +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> +		if (!ptr) {
+> +			kfree(metadata);
+> +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> +			return -ENOMEM;
+> +		}
+>  	}
+>  
+>  	memcpy(ptr, metadata, size);
+>  
+> +	if (qproc->mdata_phys)
+> +		memunmap(ptr);
+> +
+>  	/* Hypervisor mapping to access metadata by modem */
+>  	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+>  	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
+> @@ -1010,7 +1025,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>  			 "mdt buffer not reclaimed system may become unstable\n");
+>  
+>  free_dma_attrs:
+> -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+> +	if (!qproc->mdata_phys)
+> +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+>  	kfree(metadata);
+>  
+>  	return ret < 0 ? ret : 0;
+> @@ -1893,6 +1909,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+>  	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+>  	qproc->mpss_size = resource_size(&r);
+>  
+> +	if (!child) {
+> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+> +	} else {
+> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
+> +		node = of_parse_phandle(child, "memory-region", 0);
+> +		of_node_put(child);
+> +	}
+> +
+> +	if (!node)
+> +		return 0;
+> +
+> +	ret = of_address_to_resource(node, 0, &r);
+> +	of_node_put(node);
+> +	if (ret) {
+> +		dev_err(qproc->dev, "unable to resolve metadata region\n");
+> +		return ret;
+> +	}
+> +
+> +	qproc->mdata_phys = r.start;
+> +
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.17.1
+> 
 
-- Marijn
+-- 
+மணிவண்ணன் சதாசிவம்
