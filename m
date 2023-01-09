@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E700C661BAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 01:52:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADC65661BB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 02:06:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233243AbjAIAwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 19:52:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32948 "EHLO
+        id S230449AbjAIBGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 20:06:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233618AbjAIAwQ (ORCPT
+        with ESMTP id S232002AbjAIBGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 19:52:16 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A072E015
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 16:52:15 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id bp15so10646896lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 16:52:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4uu4F/k5vd4NQbSmvcQw6ut2k1ijXfUkjfwzgMFejyc=;
-        b=Bo46pHwPX69onKQZ8jx0IHLYKp37YqOGNF4eymdiZjGO4zBxlwJPVcSnSjShLTbTos
-         73e4VpgJqLoXB/6ZxGd7Na52CHuygcjfn25U374x64ewj6etfXBmEONV73XYRMtISHOk
-         MwyMe0ipylgor7p66EHO/n1NxyucSbPvGN52cVpOiN7L9jEovnLrXYVFhjHd9vxH/uOQ
-         FVf1q/QGsoAb1/SYk8wzAVpJY4WfHxM8EMnhyfcbEraUGUiMT/ySaqWw3aabWh35ZyT/
-         s7VvrQctWHFbruCV6MYujIGel04cn0sCkW9DJv1/MuE1eSaDY22/dwhkvTLA4OAnmiHC
-         axfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4uu4F/k5vd4NQbSmvcQw6ut2k1ijXfUkjfwzgMFejyc=;
-        b=Jcw0zd5I2TY55l2KvwNlZDGeVxL40tUO+OyXZDoyycITxV02fM9V8N6Fo8t7sL12Rp
-         NWJBk1uynPxmMCTZTbPphgi8qOUnIXPsUAi6E7EyaWLaLjycQE4yZLY4T2pW/UuGVvyz
-         M9c3DkQDNVw+s8gC3hNghs7lZkSfPnbhYuSRrrcy7/QCWws3r6m6wsL0hWmXhir8cedr
-         6hXNyPOm6PPM4U9YAgbTLBtNH5ZzvLmvks0/5kkxP1IAbRnjrS2reyR4LUU+XVT9wuW5
-         b00r8gNm3ygNosy6QLVhadH2O9js5DXbgsT9dCgBxYKx8rmi9geQtJUGunWRwHoqxIPd
-         cwLg==
-X-Gm-Message-State: AFqh2kpSMuLFneIxCg6F23JEA3x+TzBQIRstxD4KIBAEfjFqgZMMbUKq
-        MksCCErnJzoGSETngy4M9ZqFPg==
-X-Google-Smtp-Source: AMrXdXvgRtcDfuvPqFNuShwGXKIQ+MEm36OCL7bpDrS6dSfi3ewnByYxCtPGEy7VtToZkbwXqyNURg==
-X-Received: by 2002:a05:6512:110c:b0:4cc:586b:1837 with SMTP id l12-20020a056512110c00b004cc586b1837mr4526052lfg.16.1673225533458;
-        Sun, 08 Jan 2023 16:52:13 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac25f79000000b00494643db68fsm1317493lfc.81.2023.01.08.16.52.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 16:52:12 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 4/4] drm/msm/mdss: move is_mdp5 condition to msm_mdss_init
-Date:   Mon,  9 Jan 2023 02:52:09 +0200
-Message-Id: <20230109005209.247356-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230109005209.247356-1-dmitry.baryshkov@linaro.org>
-References: <20230109005209.247356-1-dmitry.baryshkov@linaro.org>
+        Sun, 8 Jan 2023 20:06:37 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EE1F2B;
+        Sun,  8 Jan 2023 17:06:33 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3C84760E1F;
+        Mon,  9 Jan 2023 01:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC8FC433D2;
+        Mon,  9 Jan 2023 01:06:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673226392;
+        bh=tlRZazSe1O2B8FEEg+HiuRZDrhfj2FBiyRjllnV96V0=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=VqWvfUJcpwRx+/3m8sVHTUGTC4vqXK1IrJ0sO2vZywZmUZigSNmSsL4PHgrjmvr6a
+         ULcWC+gtcGxjmtZK2OYxbDHOieGEP8DTp1sJj5V7UlF1oZFTBAvLmsP+sAv5Pa+1bs
+         wdG7Z3jBSglf7B4/1nnzLn0/WmqeRriOlBr+U6C7TGq2urhkjk0L+Q94FKLFZJEgcO
+         AcWq50PkPuBDiK3Rjw5WWHXsii9yXN2I7u7h2+OYuQFZY/GxOI4jgdEDmv+AMCCUsj
+         tfDSb8rAp31f4mnab1NK0tM7bcD2eg5H8cXFK1UpUayuZJR7kBh8oy+fOjrRxvPM//
+         n+2/oG82kLLcw==
+Received: by mail-vs1-f49.google.com with SMTP id v127so2732154vsb.12;
+        Sun, 08 Jan 2023 17:06:32 -0800 (PST)
+X-Gm-Message-State: AFqh2kq3wNUvzTYgTnlknUn5Lg5Psrkxaz8GeaUvEQsMDuEbLcxePJYa
+        p7eZhzpR+hzVoEs8rzGXGHxJyxqonW3tcqLJPg==
+X-Google-Smtp-Source: AMrXdXs9yLe8vmAfRKeC+qDk0q2CFms7XnXgDkSOXmN5uQqar3n7fHqlTLnhmdmCYS0BrbZQIQMODt3gjGX0jgH5xjg=
+X-Received: by 2002:a67:fbd4:0:b0:3c9:2ac0:5b0b with SMTP id
+ o20-20020a67fbd4000000b003c92ac05b0bmr6827189vsr.26.1673226391623; Sun, 08
+ Jan 2023 17:06:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20221005-mdm9615-pinctrl-yaml-v5-0-910019fb8b9b@linaro.org> <20221005-mdm9615-pinctrl-yaml-v5-1-910019fb8b9b@linaro.org>
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v5-1-910019fb8b9b@linaro.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Sun, 8 Jan 2023 19:06:20 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLrDGW118vEV9dnpTkeJmE+S79u0WXajuTOVi31WmF87Q@mail.gmail.com>
+Message-ID: <CAL_JsqLrDGW118vEV9dnpTkeJmE+S79u0WXajuTOVi31WmF87Q@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] dt-bindings: regulators: convert non-smd RPM
+ Regulators bindings to dt-schema
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lee Jones <lee@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,43 +69,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move is_mdp5 check to a more logical place, to the msm_mdss_init(),
-rather than getting it in the mdss_probe() and passing it then as an
-argument.
+On Thu, Nov 17, 2022 at 11:05 AM Neil Armstrong
+<neil.armstrong@linaro.org> wrote:
+>
+> Convert the non-SMD Regulators bindings to dt-schema, the old text based
+> bindings will be deleted later since the RPM bindings are not yet converted.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../bindings/regulator/qcom,rpm-regulator.yaml     | 128 +++++++++++++++++++++
+>  1 file changed, 128 insertions(+)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/msm_mdss.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Looks like patch 2 was applied, but this one still needs to be respun
+and applied as linux-next has warnings now.
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index ce554f2c2e02..c2ef50c3101b 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -396,8 +396,9 @@ static int mdp5_mdss_parse_clock(struct platform_device *pdev, struct clk_bulk_d
- 	return num_clocks;
- }
- 
--static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5)
-+static struct msm_mdss *msm_mdss_init(struct platform_device *pdev)
- {
-+	bool is_mdp5 = of_device_is_compatible(pdev->dev.of_node, "qcom,mdss");
- 	struct msm_mdss *msm_mdss;
- 	int ret;
- 	int irq;
-@@ -494,11 +495,10 @@ static const struct dev_pm_ops mdss_pm_ops = {
- static int mdss_probe(struct platform_device *pdev)
- {
- 	struct msm_mdss *mdss;
--	bool is_mdp5 = of_device_is_compatible(pdev->dev.of_node, "qcom,mdss");
- 	struct device *dev = &pdev->dev;
- 	int ret;
- 
--	mdss = msm_mdss_init(pdev, is_mdp5);
-+	mdss = msm_mdss_init(pdev);
- 	if (IS_ERR(mdss))
- 		return PTR_ERR(mdss);
- 
--- 
-2.39.0
-
+Rob
