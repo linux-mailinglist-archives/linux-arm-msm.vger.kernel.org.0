@@ -2,171 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92F25661C76
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 03:51:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04469661CE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 04:50:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbjAICvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 21:51:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57064 "EHLO
+        id S234362AbjAIDuk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 22:50:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233771AbjAICvm (ORCPT
+        with ESMTP id S236288AbjAIDua (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 21:51:42 -0500
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A4219FD09;
-        Sun,  8 Jan 2023 18:51:40 -0800 (PST)
-Received: from localhost.localdomain (unknown [124.16.138.125])
-        by APP-05 (Coremail) with SMTP id zQCowAAXOM0HgbtjSqnGCw--.10661S2;
-        Mon, 09 Jan 2023 10:50:50 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     dmitry.baryshkov@linaro.org, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, marijn.suijten@somainline.org, vkoul@kernel.org,
-        dianders@chromium.org, marex@denx.de, vladimir.lypak@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH v2] drm/msm/dsi: Add missing check for alloc_ordered_workqueue
-Date:   Mon,  9 Jan 2023 10:50:44 +0800
-Message-Id: <20230109025044.27766-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Sun, 8 Jan 2023 22:50:30 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B7CEB1F3;
+        Sun,  8 Jan 2023 19:50:28 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3093Cf3A004859;
+        Mon, 9 Jan 2023 03:50:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=5Y+xlhwayWmZ5koqedxSuXf7/vlQbYv6y4WCErg8OG4=;
+ b=RV3g6WPvZc5cu5dXaH7vDi9wl00s1Gbsmix48npJ+z2x2Vx1vxiB7twldoCEJz0s8ln/
+ j8x13lDTBqhn8Ubx4Odl1+cc+Yu+wL3TpGrqm7KQ3/dtomRBLOPM3t6Hi3bMQQqqQFzV
+ X5I5anUQPodEq1oiCsS9EfsiuOU7b4yNF1MWQDx9RvYtmYfODRcGERrM95bKS4XfOY8L
+ hz5H63JlUOV0FfvANIcIxg/vM4W7Mbl8DlZWWvZFxj9DP/CZjeT81JI/DWQ81WTUkeQN
+ LSqv0eOHP/Gov8NiOtWgD4MRcFuUU4FdJuSHfEmgRdi3moYa3XChKlUrvhwO9i6PG4++ 5Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my21ft65j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Jan 2023 03:50:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3093o6p4030780
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Jan 2023 03:50:06 GMT
+Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Sun, 8 Jan 2023 19:50:01 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <robin.murphy@arm.com>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <konrad.dybcio@somainline.org>, <amit.pundir@linaro.org>,
+        <regressions@leemhuis.info>, <sumit.semwal@linaro.org>,
+        <will@kernel.org>, <catalin.marinas@arm.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V2 00/11] Fix XPU violation during modem metadata authentication
+Date:   Mon, 9 Jan 2023 09:18:32 +0530
+Message-ID: <20230109034843.23759-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAAXOM0HgbtjSqnGCw--.10661S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxGw1xAw4xGrWDCw4rWryrCrg_yoW5AF18pr
-        WaqF4Dtr40yws7ArZrAF17Aw1rGF4fGa48G34ruwnrAw1ayw4DXr4q9a1FgFyrtryUWw4U
-        KFsayas8CF18tr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUvF14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-        1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-        6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r
-        4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
-        Yx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbV
-        WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7Cj
-        xVA2Y2ka0xkIwI1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxV
-        Aqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a
-        6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6x
-        kF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AK
-        xVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvj
-        fUoOJ5UUUUU
-X-Originating-IP: [124.16.138.125]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2Ppn45XVWOL_h-2HFQmVh1Qu--vMLaDK
+X-Proofpoint-GUID: 2Ppn45XVWOL_h-2HFQmVh1Qu--vMLaDK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-08_19,2023-01-06_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1011 adultscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301090025
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add check for the return value of alloc_ordered_workqueue as it may return
-NULL pointer and cause NULL pointer dereference.
-Moreover, change the "goto fail" into "return ret" and drop the "fail"
-label since they are the same.
+The memory region allocated using dma_alloc_attr with no kernel mapping
+attribute set would still be a part of the linear kernel map. Any access
+to this region by the application processor after assigning it to the
+remote Q6 will result in a XPU violation. Fix this by replacing the
+dynamically allocated memory region with a no-map carveout and unmap the
+modem metadata memory region before passing control to the remote Q6.
+The addition of the carveout and memunmap is required only on SoCs that
+mandate memory protection before transferring control to Q6, hence the
+driver falls back to dynamic memory allocation in the absence of the
+modem metadata carveout.
 
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
-Changelog:
+V2:
+ * Convert legacy bindings to yaml
+ * Revert no_kernel_mapping [Mani/Robin]
+ * Pad commit message to explain bindings break [Krzysztof]
+ * Split dt/bindings per SoC  [Krzysztof] 
 
-v1 -> v2:
+Sibi Sankar (11):
+  dt-bindings: remoteproc: qcom,q6v5: Move MSM8996 to schema
+  dt-bindings: remoteproc: qcom,msm8996-mss-pil: Update memory region
+  dt-bindings: remoteproc: qcom,sc7180-mss-pil: Update memory-region
+  dt-bindings: remoteproc: qcom,sc7280-mss-pil: Update memory-region
+  remoteproc: qcom_q6v5_mss: revert "map/unmap metadata region
+    before/after use"
+  remoteproc: qcom_q6v5_mss: Use a carveout to authenticate modem
+    headers
+  arm64: dts: qcom: msm8996: Add a carveout for modem metadata
+  arm64: dts: qcom: msm8998: Add a carveout for modem metadata
+  arm64: dts: qcom: sdm845: Add a carveout for modem metadata
+  arm64: dts: qcom: sc7180: Add a carveout for modem metadata
+  arm64: dts: qcom: sc7280: Add a carveout for modem metadata
 
-1. Change the "goto fail" into "return ret" and drop the "fail" label.
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ .../remoteproc/qcom,msm8996-mss-pil.yaml      | 382 ++++++++++++++++++
+ .../bindings/remoteproc/qcom,q6v5.txt         | 137 +------
+ .../remoteproc/qcom,sc7180-mss-pil.yaml       |   3 +-
+ .../remoteproc/qcom,sc7280-mss-pil.yaml       |   3 +-
+ .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   6 +
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   9 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   9 +
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |   7 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |   7 +-
+ .../dts/qcom/sc7280-herobrine-lte-sku.dtsi    |   7 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   9 +
+ drivers/remoteproc/qcom_q6v5_mss.c            |  78 ++--
+ 12 files changed, 486 insertions(+), 171 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 89aadd3b3202..819f5be5fd77 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1884,7 +1884,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
- 	if (!msm_host) {
- 		ret = -ENOMEM;
--		goto fail;
-+		return ret;
- 	}
- 
- 	msm_host->pdev = pdev;
-@@ -1893,14 +1893,14 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	ret = dsi_host_parse_dt(msm_host);
- 	if (ret) {
- 		pr_err("%s: failed to parse dt\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
- 	if (IS_ERR(msm_host->ctrl_base)) {
- 		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
- 		ret = PTR_ERR(msm_host->ctrl_base);
--		goto fail;
-+		return ret;
- 	}
- 
- 	pm_runtime_enable(&pdev->dev);
-@@ -1909,7 +1909,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	if (!msm_host->cfg_hnd) {
- 		ret = -EINVAL;
- 		pr_err("%s: get config failed\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 	cfg = msm_host->cfg_hnd->cfg;
- 
-@@ -1917,7 +1917,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	if (msm_host->id < 0) {
- 		ret = msm_host->id;
- 		pr_err("%s: unable to identify DSI host index\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	/* fixup base address by io offset */
-@@ -1927,19 +1927,19 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 					    cfg->regulator_data,
- 					    &msm_host->supplies);
- 	if (ret)
--		goto fail;
-+		return ret;
- 
- 	ret = dsi_clk_init(msm_host);
- 	if (ret) {
- 		pr_err("%s: unable to initialize dsi clks\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
- 	if (!msm_host->rx_buf) {
- 		ret = -ENOMEM;
- 		pr_err("%s: alloc rx temp buf failed\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
-@@ -1977,15 +1977,17 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 
- 	/* setup workqueue */
- 	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
-+	if (!msm_host->workqueue) {
-+		ret = -ENOMEM;
-+		return ret;
-+	}
-+
- 	INIT_WORK(&msm_host->err_work, dsi_err_worker);
- 
- 	msm_dsi->id = msm_host->id;
- 
- 	DBG("Dsi Host %d initialized", msm_host->id);
- 	return 0;
--
--fail:
--	return ret;
- }
- 
- void msm_dsi_host_destroy(struct mipi_dsi_host *host)
 -- 
-2.25.1
+2.17.1
 
