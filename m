@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5539E661E1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 06:02:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A96F5661E39
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 06:14:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234286AbjAIFCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 00:02:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50182 "EHLO
+        id S231446AbjAIFOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 00:14:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234298AbjAIFB7 (ORCPT
+        with ESMTP id S233187AbjAIFOF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 00:01:59 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABDDA445
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 21:01:58 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id b3so11267230lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 21:01:58 -0800 (PST)
+        Mon, 9 Jan 2023 00:14:05 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810D4BE34
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 21:14:04 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id n5so7208977ljc.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 21:14:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Mrb15vphKcBSHFcYnw0cLYDDRYFrhAD7+lVEbzPfwQ8=;
-        b=GzZgsr7ysm6Vahqhzw8OED4F8Mk1Iyje5Zw3eP0+IyXYt9Kx08093QrS5E/BrXg/gf
-         TgavSsHAjk//2Ijw9oY3op0NRX8Y9f/pnQ9AmO7auuTbGNbUb/2luSuNzICBM7ItFKxT
-         yOCxFWRYDU6IuMLOVyJjmpJOODHNjgdGIBvut4wIKKVpSGa2meTKFVJcRPqjRH/MtlNQ
-         e4OqwaaQWFkt03/3SlV72YaYBjsIKZCRnOSHFgv8ywjjvUW/N3oWaEJXTMLKJbH/joPR
-         Ysc9STYaTxhNMtztOIpVtib8n0fz+qNJmLJMIV5Lhn0G9a4zQhu99FqJpv6qQLscweUy
-         Lq3g==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PvdkWVVFT++i2HrXBK25wLmmBQIyNJvJJ78RUMtwfHQ=;
+        b=cMmJD80AQE5+uGOgBtAn20gwsELKhIR5IRx28DwD9gcV/j376g1au5p3+zmmlWRRoJ
+         ik5BtT0BPcSiCHxmJCPV3zFErCP/brX6c6gIGzCZbMnyGk7KD5hclqpxrZmee4mSO2za
+         YzNsWNh3pENDCfe3KqxSjl22TY/kKSe0E+BN0ZSgBVfbzcaW+EIgX6BQgBGmdXn6HbtX
+         KTm5AMr8S4HsVlNK0nPmZD8diV2d9jvlhnUMeTOCS59Zs12CTRBZpqxgtO7jGS1WlJcz
+         7XPoBH1YRvijCI8OxnoPKxWAoePIb1JpcoH/qzrnhqJvd+jsKcul6+PQDTJ3LOGyGYz2
+         ac6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Mrb15vphKcBSHFcYnw0cLYDDRYFrhAD7+lVEbzPfwQ8=;
-        b=ACvHW59FJVEhiJ/GxkC2zNs4U0CRX/qaobDAF3OPYar0odQaMLbmeoY0fFkudaqD4s
-         ABDeOlUs8av18L4NVpBZApyT7cezyj+APYMZZXLgPfZ4eehnc/qSVoRW41dT33fR0BGm
-         M5MMMT59B1GAFOx/wMf9EMQ+dID0uF4avZ83/nV3Ec9lIJPCBtO9lnZg00ztt5Snat6+
-         Xp++Bvl+AdQ1jW2agxPzdV2N/gQgpGYhvGo2kEzYA4hKMxIOfkfZdwVYPT0zruJLxRKB
-         U/4GG9Y1WHfWr8yF1UkVRIDHcu8Lr9YYzlc+7824zMut+Sh5ZNmHcWn8hnUQz48hVN7q
-         e3rQ==
-X-Gm-Message-State: AFqh2koii8yzSr8XDwQp7u2fPogECRyl82j+6dOuWyQWUxv1r+S4f8gy
-        1ShLmxHIutCg0jm6okNM4Dgb/Q==
-X-Google-Smtp-Source: AMrXdXtITLmpH6LgbBKxG+zPB+ftxYgfZLCr61fILYsSSkjME9qg74R5e0xyjYPafiiQJLiZPVG+Gg==
-X-Received: by 2002:ac2:4bd3:0:b0:4b4:a460:c995 with SMTP id o19-20020ac24bd3000000b004b4a460c995mr24853877lfq.5.1673240516885;
-        Sun, 08 Jan 2023 21:01:56 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PvdkWVVFT++i2HrXBK25wLmmBQIyNJvJJ78RUMtwfHQ=;
+        b=Wvxm0vxVoeQs/0122wdvuXDl8LExA6GuonqQsw3ZRYfL3qqw5Q4cIKYwJrZNlg6OBk
+         rxTu0JG6wfp9UDo1SPKXL//WPfgzhFjovr5xBLJNNQ83Zr6fVoFmslnR0fEIt5rwuDhS
+         /y/5nE+pyFRlJPYJYFVwr2S0GGpoIUA9RWW2kzyh9OOTzps6yjH6N7iHfrRtPssDU0Cp
+         hdjwMa4dmLrhIkmguwSVjW13fgr8Zl4hUpGRhONyxu+5eY9uFRUDmwOC5bKldQqc+3mO
+         i2WHBXC5qTFJy3sPEG+ybJFiXkDTGye7G3Ttykx+7ZcVPlIBOep514nt9rZvy8tU9159
+         WWpw==
+X-Gm-Message-State: AFqh2koKDbD4Pi1YOiJWYmnn/A8fXxn/E4O20pNz1Vam4wa5uSkJBQcy
+        vcEq3mMRoJUmioyTZ89lyDzT9A==
+X-Google-Smtp-Source: AMrXdXtdwSRQ4dPucdNAQqPmdkBsTj0C9tXRHKfE+ngpkDjMyh9Kw6hDCs2C7izQqkMAG/GiGql+5Q==
+X-Received: by 2002:a2e:92cf:0:b0:27f:a604:22b8 with SMTP id k15-20020a2e92cf000000b0027fa60422b8mr15051285ljh.40.1673241242904;
+        Sun, 08 Jan 2023 21:14:02 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id j12-20020a19f50c000000b004b59067142bsm1008257lfb.8.2023.01.08.21.01.56
+        by smtp.gmail.com with ESMTPSA id w4-20020a19c504000000b004b5812207dbsm1426880lfe.201.2023.01.08.21.14.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 21:01:56 -0800 (PST)
+        Sun, 08 Jan 2023 21:14:02 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,87 +62,50 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v5 4/4] arm64: dts: qcom: add SoC specific compat strings to mdp5 nodes
-Date:   Mon,  9 Jan 2023 07:01:52 +0200
-Message-Id: <20230109050152.316606-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/6] dt-bindings: display/msm: rename mdss and mdp nodes
+Date:   Mon,  9 Jan 2023 07:13:56 +0200
+Message-Id: <20230109051402.317577-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230109050152.316606-1-dmitry.baryshkov@linaro.org>
-References: <20230109050152.316606-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SoC-specific compat string to the MDP5 device nodes to ease
-distinguishing between various platforms.
+Finish the process of renaming display-related nodes on Qualcomm
+systems. Fix it in the schema that MDSS (Mobile Display SubSystem)
+devices are named `display-subsystem' and both MDP (Mobile Display
+Processor) and DPU (Display Processor Unit) nodes are named
+`display-controller'.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sdm660.dtsi  | 2 ++
- 4 files changed, 5 insertions(+), 3 deletions(-)
+Dmitry Baryshkov (6):
+  dt-bindings: display/msm: rename mdss nodes to display-sybsystem
+  dt-bindings: display/msm: rename mdp nodes to display-controller
+  arm64: dts: qcom: rename mdss nodes to display-subsystem
+  ARM: dts: qcom-msm8974: rename mdss node to display-subsystem
+  arm64: dts: qcom: rename mdp nodes to display-controller
+  ARM: dts: qcom: rename mdp nodes to display-controller
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 2ca8e977fc2a..0a23fb6efae8 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -989,7 +989,7 @@ mdss: mdss@1a00000 {
- 			ranges;
- 
- 			mdp: mdp@1a01000 {
--				compatible = "qcom,mdp5";
-+				compatible = "qcom,msm8916-mdp5", "qcom,mdp5";
- 				reg = <0x01a01000 0x89000>;
- 				reg-names = "mdp_phys";
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index d31464204f69..b5cd1bcad5eb 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -931,7 +931,7 @@ mdss: mdss@900000 {
- 			status = "disabled";
- 
- 			mdp: mdp@901000 {
--				compatible = "qcom,mdp5";
-+				compatible = "qcom,msm8996-mdp5", "qcom,mdp5";
- 				reg = <0x00901000 0x90000>;
- 				reg-names = "mdp_phys";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 13e6a4fbba27..65addd4c672e 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1498,7 +1498,7 @@ mdss: mdss@c900000 {
- 			status = "disabled";
- 
- 			mdp: mdp@c901000 {
--				compatible = "qcom,mdp5";
-+				compatible = "qcom,sdm630-mdp5", "qcom,mdp5";
- 				reg = <0x0c901000 0x89000>;
- 				reg-names = "mdp_phys";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
-index d52123cb5cd3..cdaa0d7a66f3 100644
---- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
-@@ -142,6 +142,8 @@ &gpucc {
- };
- 
- &mdp {
-+	compatible = "qcom,sdm660-mdp5", "qcom,mdp5";
-+
- 	ports {
- 		port@1 {
- 			reg = <1>;
+ .../devicetree/bindings/display/msm/dpu-common.yaml   |  8 ++++++++
+ .../devicetree/bindings/display/msm/mdss-common.yaml  |  8 ++++++++
+ .../devicetree/bindings/display/msm/qcom,mdp5.yaml    |  3 +++
+ .../devicetree/bindings/display/msm/qcom,mdss.yaml    | 11 +++++++----
+ arch/arm/boot/dts/qcom-apq8064.dtsi                   |  2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi                   |  4 ++--
+ arch/arm64/boot/dts/qcom/msm8916.dtsi                 |  4 ++--
+ arch/arm64/boot/dts/qcom/msm8953.dtsi                 |  4 ++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi                 |  4 ++--
+ arch/arm64/boot/dts/qcom/sc7180.dtsi                  |  2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi                  |  4 ++--
+ arch/arm64/boot/dts/qcom/sdm845.dtsi                  |  2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi                  |  2 +-
+ 13 files changed, 40 insertions(+), 18 deletions(-)
+
 -- 
 2.39.0
 
