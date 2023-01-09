@@ -2,103 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D0BB663072
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 20:34:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47C9166308B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 20:38:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237472AbjAITeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 14:34:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38800 "EHLO
+        id S237532AbjAITiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 14:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237582AbjAITeA (ORCPT
+        with ESMTP id S237526AbjAITiN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 14:34:00 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B8463B3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 11:33:59 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id h16so9291226wrz.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 11:33:59 -0800 (PST)
+        Mon, 9 Jan 2023 14:38:13 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14996171;
+        Mon,  9 Jan 2023 11:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9EGAARif97svm43WKQHpTah2AyhIqRbyKB8mnpK2KoM=;
-        b=FN24xWhjGLoTMj4wniz93gpIal1LKDyeNvlCERxakutz4BhNniu2K5kQxqw6wquK0t
-         G1cmo26HRw1BKyjaa/qfRWa06G1/1ZipE0RJTPXj+roz3L3mbTJKe3By8mD2VplCESEd
-         NTssJ+cfKGxpNWZ8X3a1fbc4Heqo/V+L9w1fcNgKIgvmVkqNEsoEbS0cIkRjnXrhlX+B
-         O+6n4QdtTkVuyaiTY2s3Ro3Po8Zadfgq3NXUv8CUFfxg9v0gPymTJteY+jKY9rRwtDky
-         aJlzLzWH5o2xh1VIporHV7OSSwnPs3QYyi9K6E5MufrHSQ/SLgyzcqw9VWeTnzA0eARV
-         c/wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9EGAARif97svm43WKQHpTah2AyhIqRbyKB8mnpK2KoM=;
-        b=2j/JAhjtxuW5yoJnUGEWnUI5U3Y5dJCc62TTts/OmPourEaK6mEX6rxjkX+oDur0Yd
-         371z/kxv1vfhhrVV3tYFzBwc0cFnt30wkcbC1b/fH5oY3GYgAJtryQFkKaJzOVfDsyFw
-         p9q1FT3tEwJGOE3jpuV8/MlVC8/8aKmaFNQOoOkDb6UPAcB/42su4WxksbStIDE4HgQz
-         nXyKrjys3jXWopR/kKSvasu6JyalQhMt4xRA3BCCdxgN1TFMD9iEi3vgiV8+r4HbqEA1
-         t8q6lVnKx5kzGVIcivQRRz8Hbf6rh3hXHDynMJLWmCAwMGKrMp/a4LU4nvbLVkuscVoe
-         hWIA==
-X-Gm-Message-State: AFqh2koqEJ3EXnHFOIV23I6ZXnwXxvXRf7mSTjgcPEYhkyY+/1bhQX0i
-        6Xm1Dvv2IcuzMn+Cz1VLcnZHsmAcs5KDdZHT
-X-Google-Smtp-Source: AMrXdXujuX4oRsEDqNPcClUhfWZ/stgeEBpG7Wkczu21BWmF8b0e0MO30sCiL8RFsHOkyhvZzZdqcw==
-X-Received: by 2002:a5d:69d0:0:b0:2ba:5ed7:543d with SMTP id s16-20020a5d69d0000000b002ba5ed7543dmr10402348wrw.52.1673292838124;
-        Mon, 09 Jan 2023 11:33:58 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id v14-20020adff68e000000b002365730eae8sm9274282wrp.55.2023.01.09.11.33.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 11:33:57 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1673293092; x=1704829092;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+nSkl3nf47aICAlHJic69nCJD7igzHmBHn2JiTZ1cJs=;
+  b=ZONG6QbuYRlWq29Ea9xnRprFFGp0CK8qBeEOdiS7FdMT+Dh7L7Evbime
+   ZyAIhTG7HupvXuWPl0YNRyRWVPkEBZlU3cigj4Y+ZlZeJ5Xlen+8lxpKl
+   azEGr7vl6uNG6VrHXaXrRgkO0zxcMRwd8k3OPNnY/3h6N4gfLYiqv3xgU
+   g=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jan 2023 11:38:11 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2023 11:38:11 -0800
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
+ 11:38:10 -0800
+Message-ID: <bea00abc-b137-945e-e0ad-67ba41e4d691@quicinc.com>
+Date:   Mon, 9 Jan 2023 11:38:10 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v8 12/28] gunyah: vm_mgr: Introduce basic VM Manager
+Content-Language: en-US
+To:     Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-vtdr6130-panel-v2-0-dd6200f47a76@linaro.org>
-References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v2-0-dd6200f47a76@linaro.org>
-Subject: Re: [PATCH v2 0/2] drm/panel: add support for the Visionox VTDR6130
- AMOLED DSI panel
-Message-Id: <167329283727.1538353.13855678312817983424.b4-ty@linaro.org>
-Date:   Mon, 09 Jan 2023 20:33:57 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-acpi@vger.kernel.org>
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <20221219225850.2397345-13-quic_eberman@quicinc.com>
+ <20230109090553.GA1737564@quicinc.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <20230109090553.GA1737564@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.11.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Mon, 09 Jan 2023 09:49:29 +0100, Neil Armstrong wrote:
-> Add support for the 1080x2400 Visionox VTDR6130 AMOLED DSI panel
-> found on the Qualcomm SM8550 MTP board.
+
+On 1/9/2023 1:05 AM, Srivatsa Vaddagiri wrote:
+> * Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:33]:
 > 
-> By default the the panel is configured to work with DSI compressed
-> streams, but can work in uncompressed video mode since 1080x2400 in
-> RGB888 fits in the 4 DSI lanes bandwidth.
+>> +config GUNYAH_VM_MANAGER
 > 
-> [...]
+> Any reason why this needs to be a separate config? IOW CONFIG_GUNYAH should
+> enable VM management functionality also.
+> 
+>> @@ -550,14 +580,29 @@ static int gh_rm_drv_probe(struct platform_device *pdev)
+>>   	rsc_mgr->msgq_client.rx_callback = gh_rm_msgq_rx_data;
+>>   	rsc_mgr->msgq_client.tx_done = gh_rm_msgq_tx_done;
+>>   
+>> -	return gh_msgq_init(&pdev->dev, &rsc_mgr->msgq, &rsc_mgr->msgq_client,
+>> +	ret = gh_msgq_init(&pdev->dev, &rsc_mgr->msgq, &rsc_mgr->msgq_client,
+>>   				&rsc_mgr->tx_ghrsc, &rsc_mgr->rx_ghrsc);
+> 
+> Bail on error here.
+> 
+> [snip]
+> 
+>> +static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
+>> +{
+>> +	struct gunyah_vm *ghvm;
+>> +	int vmid;
+>> +
+>> +	vmid = gh_rm_alloc_vmid(rm, 0);
+>> +	if (vmid < 0)
+>> +		return ERR_PTR(vmid);
+>> +
+>> +	ghvm = kzalloc(sizeof(*ghvm), GFP_KERNEL);
+>> +	if (!ghvm)
+> 
+> dealloc_vmid here (as well as few other error paths)?
+> 
+>> +		return ghvm;
+>> +
+>> +	get_gh_rm(rm);
 
-Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-next)
+Applied all of these.
 
-[1/2] dt-bindings: display: panel: document the Visionox VTDR6130 AMOLED DSI Panel bindings
-      https://cgit.freedesktop.org/drm/drm-misc/commit/?id=ef85db911134d103a7f713eae6689dbb15c3f96a
-[2/2] drm/panel: add visionox vtdr6130 DSI panel driver
-      https://cgit.freedesktop.org/drm/drm-misc/commit/?id=2349183d32d83a7635baa804934813bcad13fd62
-
--- 
-Neil
+Thanks,
+Elliot
