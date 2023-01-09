@@ -2,186 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 723E1662253
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:02:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B3A466225E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:02:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231777AbjAIKCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 05:02:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
+        id S236467AbjAIKC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 05:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234349AbjAIKBO (ORCPT
+        with ESMTP id S236348AbjAIKCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:01:14 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C28125CE;
-        Mon,  9 Jan 2023 02:00:37 -0800 (PST)
+        Mon, 9 Jan 2023 05:02:25 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C9630A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:02:20 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id 188so7983739ybi.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:02:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1673258437; x=1704794437;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+fJR2sAedoWc7HqsxjvIU4JOVkW5oQW3/x8Cb8OtMLE=;
-  b=ViNRcoZi8CjB9qgBXa84Ga0hDMVCVYa+wTHtnatG4PppVppHb7J7Ms0c
-   WeJaYQYt0RRZV2QEopMqjUfGAe/DG5U1jd6PjgFIYrdPdfG0XFrVXlMEm
-   x1FLRVRan4HFxdJncoLR1H/Itc2nQuZJuOqxVccgvbEgZJlsvPKcvY229
-   c=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jan 2023 02:00:36 -0800
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2023 02:00:36 -0800
-Received: from [10.79.43.91] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
- 02:00:31 -0800
-Message-ID: <92a32081-a521-33c7-72bd-fb8cb307c5bc@quicinc.com>
-Date:   Mon, 9 Jan 2023 15:30:22 +0530
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9fhCNkHD8R84SoJprEs3JUZC7/T4pbSbQNPTyFgf4Mk=;
+        b=haVBrLGAAw8RBM8DDoq/NYfhLGT3AQr+HDpqy55lprYj7DT2jCySVtSxw7KrqBnvNj
+         p3C/pv/7KzpIslQILpCkRuFYvlF0jLcju5l5ocI6UwqzLwzWNhRCFqzodR9RNFb9VI4v
+         HdEnRIfTQ7+p11jpYUsn7wFwGgHy4YgSCVb4pM0A7yY99R9s9jKim7KYuo8ROHN1aoxB
+         IRsD0viL7tZmoHykMhESoyGsL5UHuHENxhgHHlnsqimd4WipoS3urdr/EyFfLgvohaE9
+         eInJ1BTf/d9o4JeK+F5H90/EFUPUwzHZlBA3qTr6VA/th/JHVWz39xkut8vhFkRNAcox
+         j3aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9fhCNkHD8R84SoJprEs3JUZC7/T4pbSbQNPTyFgf4Mk=;
+        b=kIc0xMA9HFEcsnMH0gfhW0RYJVhqTc09j2UetWCx+i1Kwc/CetMifPeVHFYqiI1p+z
+         FRuNFdMatWk40tlMD43i3wqE/bpiUG07cjDWehqjHAnBvjARBHqrJT757YBsI6WoHbbq
+         Lf9X8g2800n43+8nlIKBl5Zo1XrBGzurLIFp/L5FqVDphRvxZpRzqIMkDodLI7LzavSz
+         3Emt9c018Je9fxQ+xYZdUudEGs5MZaShNNIEi1WFj3a6fNCpZK8Y+dFG2+Zqts3Hw87h
+         V9wraAQl+HRSdCDrM8qmkme3sox1bicDOh4O4Rg+nWM75sMRjuFo6k+KYv/XxYKb+2dg
+         fdcw==
+X-Gm-Message-State: AFqh2kqmwtTcwsPdgBGwyc1x8jOFgbStpxoNIP5cA63dowzAzGLlMtN6
+        a/JwJVo7OOitWQfkhArm5nHiswqkWefxXhpL3FD+ig==
+X-Google-Smtp-Source: AMrXdXutmkdZr1tZGgCofhg5egpYmyIguSqC+tRQCcIDkVre+FY2EQqw3dOrugo0Zgf8XYKSI8LzafLyL3PjcHm8g/k=
+X-Received: by 2002:a25:e90c:0:b0:73a:3b94:47fc with SMTP id
+ n12-20020a25e90c000000b0073a3b9447fcmr7050410ybd.152.1673258539540; Mon, 09
+ Jan 2023 02:02:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V2 05/11] remoteproc: qcom_q6v5_mss: revert "map/unmap
- metadata region before/after use"
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <robin.murphy@arm.com>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
-        <amit.pundir@linaro.org>, <regressions@leemhuis.info>,
-        <sumit.semwal@linaro.org>, <will@kernel.org>,
-        <catalin.marinas@arm.com>, <hch@lst.de>
-References: <20230109034843.23759-1-quic_sibis@quicinc.com>
- <20230109034843.23759-6-quic_sibis@quicinc.com>
- <20230109081832.GA4966@thinkpad>
-Content-Language: en-US
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20230109081832.GA4966@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230103-topic-sm8550-upstream-mdss-dsi-v2-0-87f1c16d7635@linaro.org>
+ <20230103-topic-sm8550-upstream-mdss-dsi-v2-6-87f1c16d7635@linaro.org> <b8e05110-e96d-0454-6990-27e2567c0e9a@linaro.org>
+In-Reply-To: <b8e05110-e96d-0454-6990-27e2567c0e9a@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 9 Jan 2023 12:02:08 +0200
+Message-ID: <CAA8EJppG5PeaZZ9j6D8aPn3K7ZO+D=pN6dzqKdDztPshGp+f5A@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] drm/msm/dsi: add support for DSI-PHY on SM8550
+To:     neil.armstrong@linaro.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Mani,
-Thanks for taking time to review the series.
+On Mon, 9 Jan 2023 at 11:38, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 09/01/2023 10:26, Neil Armstrong wrote:
+> > SM8550 use a 4nm DSI PHYs, which share register definitions
+> > with 7nm DSI PHYs. Rather than duplicating the driver, handle
+> > 4nm variant inside the common 5+7nm driver.
+> >
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/Kconfig               |  4 +-
+> >   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  2 +
+> >   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
+> >   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 88 ++++++++++++++++++++++++++-----
+> >   4 files changed, 79 insertions(+), 16 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> > index e7b100d97f88..949b18a29a55 100644
+> > --- a/drivers/gpu/drm/msm/Kconfig
+> > +++ b/drivers/gpu/drm/msm/Kconfig
+> > @@ -140,11 +140,11 @@ config DRM_MSM_DSI_10NM_PHY
+> >         Choose this option if DSI PHY on SDM845 is used on the platform.
+> >
+> >   config DRM_MSM_DSI_7NM_PHY
+> > -     bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
+> > +     bool "Enable DSI 7nm/5nm/4nm PHY driver in MSM DRM"
+> >       depends on DRM_MSM_DSI
+> >       default y
+> >       help
+> > -       Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
+> > +       Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SM8550/SC7280
+> >         is used on the platform.
+> >
+> >   config DRM_MSM_HDMI
+> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> > index 04126af74bb5..798cd3c86031 100644
+> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> > @@ -573,6 +573,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+> >         .data = &dsi_phy_5nm_8350_cfgs },
+> >       { .compatible = "qcom,sm8450-dsi-phy-5nm",
+> >         .data = &dsi_phy_5nm_8450_cfgs },
+> > +     { .compatible = "qcom,dsi-phy-4nm-8550",
+>
+> Forgot to change this... I can resend a v3 with this fixed.
 
-On 1/9/23 13:48, Manivannan Sadhasivam wrote:
-> + Christoph
-> 
-> Hi Sibi,
-> 
-> On Mon, Jan 09, 2023 at 09:18:37AM +0530, Sibi Sankar wrote:
->> This reverts commit fc156629b23a21181e473e60341e3a78af25a1d4.
->>
->> The memory region allocated using dma_alloc_attr with no kernel mapping
->> attribute set would still be a part of the linear kernel map. Hence as a
->> precursor to using reserved memory for modem metadata region, revert back
->> to the simpler way of dynamic memory allocation.
->>
->> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> 
-> Christoph already submitted a patch that reverts fc156629b23a:
-> https://lore.kernel.org/linux-arm-msm/20221223092703.61927-2-hch@lst.de/
+Yes, please.
 
-Having ^^ revert as part of the this series makes more sense. I'll
-just replace my patch with ^^ in the next re-spin.
+>
+> Neil
+>
+> > +       .data = &dsi_phy_4nm_8550_cfgs },
+> >   #endif
+> >       {}
+> >   };
+> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> > index f7a907ed2b4b..58f9e09f5224 100644
+> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> > @@ -59,6 +59,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+> >   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+> >   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+> >   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+> > +extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
+> >
+> >   struct msm_dsi_dphy_timing {
+> >       u32 clk_zero;
+> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > index 7b2c16b3a36c..af5c952c6ad0 100644
+> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > @@ -47,6 +47,8 @@
+> >   #define DSI_PHY_7NM_QUIRK_V4_2              BIT(2)
+> >   /* Hardware is V4.3 */
+> >   #define DSI_PHY_7NM_QUIRK_V4_3              BIT(3)
+> > +/* Hardware is V5.2 */
+> > +#define DSI_PHY_7NM_QUIRK_V5_2               BIT(4)
+> >
+> >   struct dsi_pll_config {
+> >       bool enable_ssc;
+> > @@ -124,14 +126,25 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+> >
+> >       if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
+> >               config->pll_clock_inverters = 0x28;
+> > -     else if (pll_freq <= 1000000000ULL)
+> > -             config->pll_clock_inverters = 0xa0;
+> > -     else if (pll_freq <= 2500000000ULL)
+> > -             config->pll_clock_inverters = 0x20;
+> > -     else if (pll_freq <= 3020000000ULL)
+> > -             config->pll_clock_inverters = 0x00;
+> > -     else
+> > -             config->pll_clock_inverters = 0x40;
+> > +     else if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> > +             if (pll_freq <= 1300000000ULL)
+> > +                     config->pll_clock_inverters = 0xa0;
+> > +             else if (pll_freq <= 2500000000ULL)
+> > +                     config->pll_clock_inverters = 0x20;
+> > +             else if (pll_freq <= 4000000000ULL)
+> > +                     config->pll_clock_inverters = 0x00;
+> > +             else
+> > +                     config->pll_clock_inverters = 0x40;
+> > +     } else {
+> > +             if (pll_freq <= 1000000000ULL)
+> > +                     config->pll_clock_inverters = 0xa0;
+> > +             else if (pll_freq <= 2500000000ULL)
+> > +                     config->pll_clock_inverters = 0x20;
+> > +             else if (pll_freq <= 3020000000ULL)
+> > +                     config->pll_clock_inverters = 0x00;
+> > +             else
+> > +                     config->pll_clock_inverters = 0x40;
+> > +     }
+> >
+> >       config->decimal_div_start = dec;
+> >       config->frac_div_start = frac;
+> > @@ -222,6 +235,13 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+> >                       vco_config_1 = 0x01;
+> >       }
+> >
+> > +     if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> > +             if (pll->vco_current_rate < 1557000000ULL)
+> > +                     vco_config_1 = 0x08;
+> > +             else
+> > +                     vco_config_1 = 0x01;
+> > +     }
+> > +
+> >       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
+> >                     analog_controls_five_1);
+> >       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
+> > @@ -860,7 +880,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >               pr_warn("PLL turned on before configuring PHY\n");
+> >
+> >       /* Request for REFGEN READY */
+> > -     if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> > +     if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
+> > +         (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >               dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
+> >               udelay(500);
+> >       }
+> > @@ -894,7 +915,19 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >               lane_ctrl0 = 0x1f;
+> >       }
+> >
+> > -     if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> > +     if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> > +             if (phy->cphy_mode) {
+> > +                     vreg_ctrl_0 = 0x45;
+> > +                     vreg_ctrl_1 = 0x45;
+> > +                     glbl_rescode_top_ctrl = 0x00;
+> > +                     glbl_rescode_bot_ctrl = 0x00;
+> > +             } else {
+> > +                     vreg_ctrl_0 = 0x44;
+> > +                     vreg_ctrl_1 = 0x19;
+> > +                     glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x03;
+> > +                     glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3c;
+> > +             }
+> > +     } else if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
+> >               if (phy->cphy_mode) {
+> >                       glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> >                       glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> > @@ -943,9 +976,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+> >       dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0x00);
+> >
+> >       /* program CMN_CTRL_4 for minor_ver 2 chipsets*/
+> > -     data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0);
+> > -     data = data & (0xf0);
+> > -     if (data == 0x20)
+> > +     if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2) ||
+> > +         (dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0) & (0xf0)) == 0x20)
+> >               dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_4, 0x04);
+> >
+> >       /* Configure PHY lane swap (TODO: we need to calculate this) */
+> > @@ -1058,7 +1090,8 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
+> >       dsi_phy_hw_v4_0_config_lpcdrx(phy, false);
+> >
+> >       /* Turn off REFGEN Vote */
+> > -     if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> > +     if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) ||
+> > +         (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+> >               dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
+> >               wmb();
+> >               /* Delay to ensure HW removes vote before PHY shut down */
+> > @@ -1092,6 +1125,10 @@ static const struct regulator_bulk_data dsi_phy_7nm_97800uA_regulators[] = {
+> >       { .supply = "vdds", .init_load_uA = 97800 },
+> >   };
+> >
+> > +static const struct regulator_bulk_data dsi_phy_7nm_98400uA_regulators[] = {
+> > +     { .supply = "vdds", .init_load_uA = 98400 },
+> > +};
+> > +
+> >   const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+> >       .has_phy_lane = true,
+> >       .regulator_data = dsi_phy_7nm_36mA_regulators,
+> > @@ -1201,3 +1238,26 @@ const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
+> >       .num_dsi_phy = 2,
+> >       .quirks = DSI_PHY_7NM_QUIRK_V4_3,
+> >   };
+> > +
+> > +const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs = {
+> > +     .has_phy_lane = true,
+> > +     .regulator_data = dsi_phy_7nm_98400uA_regulators,
+> > +     .num_regulators = ARRAY_SIZE(dsi_phy_7nm_98400uA_regulators),
+> > +     .ops = {
+> > +             .enable = dsi_7nm_phy_enable,
+> > +             .disable = dsi_7nm_phy_disable,
+> > +             .pll_init = dsi_pll_7nm_init,
+> > +             .save_pll_state = dsi_7nm_pll_save_state,
+> > +             .restore_pll_state = dsi_7nm_pll_restore_state,
+> > +             .set_continuous_clock = dsi_7nm_set_continuous_clock,
+> > +     },
+> > +     .min_pll_rate = 600000000UL,
+> > +#ifdef CONFIG_64BIT
+> > +     .max_pll_rate = 5000000000UL,
+> > +#else
+> > +     .max_pll_rate = ULONG_MAX,
+> > +#endif
+> > +     .io_start = { 0xae95000, 0xae97000 },
+> > +     .num_dsi_phy = 2,
+> > +     .quirks = DSI_PHY_7NM_QUIRK_V5_2,
+> > +};
+> >
+>
 
-> 
-> Thanks,
-> Mani
-> 
->> ---
->>   drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++-------------------------
->>   1 file changed, 6 insertions(+), 32 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
->> index 2f4027664a0e..e2f765f87ec9 100644
->> --- a/drivers/remoteproc/qcom_q6v5_mss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
->> @@ -10,7 +10,6 @@
->>   #include <linux/clk.h>
->>   #include <linux/delay.h>
->>   #include <linux/devcoredump.h>
->> -#include <linux/dma-map-ops.h>
->>   #include <linux/dma-mapping.h>
->>   #include <linux/interrupt.h>
->>   #include <linux/kernel.h>
->> @@ -961,52 +960,27 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
->>   static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->>   				const char *fw_name)
->>   {
->> -	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
->> -	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
->> -	struct page **pages;
->> -	struct page *page;
->> +	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
->>   	dma_addr_t phys;
->>   	void *metadata;
->>   	int mdata_perm;
->>   	int xferop_ret;
->>   	size_t size;
->> -	void *vaddr;
->> -	int count;
->> +	void *ptr;
->>   	int ret;
->> -	int i;
->>   
->>   	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
->>   	if (IS_ERR(metadata))
->>   		return PTR_ERR(metadata);
->>   
->> -	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
->> -	if (!page) {
->> +	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
->> +	if (!ptr) {
->>   		kfree(metadata);
->>   		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
->>   		return -ENOMEM;
->>   	}
->>   
->> -	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
->> -	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
->> -	if (!pages) {
->> -		ret = -ENOMEM;
->> -		goto free_dma_attrs;
->> -	}
->> -
->> -	for (i = 0; i < count; i++)
->> -		pages[i] = nth_page(page, i);
->> -
->> -	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
->> -	kfree(pages);
->> -	if (!vaddr) {
->> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
->> -		ret = -EBUSY;
->> -		goto free_dma_attrs;
->> -	}
->> -
->> -	memcpy(vaddr, metadata, size);
->> -
->> -	vunmap(vaddr);
->> +	memcpy(ptr, metadata, size);
->>   
->>   	/* Hypervisor mapping to access metadata by modem */
->>   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
->> @@ -1036,7 +1010,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->>   			 "mdt buffer not reclaimed system may become unstable\n");
->>   
->>   free_dma_attrs:
->> -	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
->> +	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
->>   	kfree(metadata);
->>   
->>   	return ret < 0 ? ret : 0;
->> -- 
->> 2.17.1
->>
-> 
+
+-- 
+With best wishes
+Dmitry
