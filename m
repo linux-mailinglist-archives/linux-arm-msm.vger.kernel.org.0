@@ -2,89 +2,367 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C43D661F38
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 08:30:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 405B0661F6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 08:50:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236133AbjAIHaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 02:30:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42012 "EHLO
+        id S233395AbjAIHt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 02:49:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236431AbjAIHaS (ORCPT
+        with ESMTP id S233321AbjAIHtz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 02:30:18 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EEC112769;
-        Sun,  8 Jan 2023 23:30:17 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 9 Jan 2023 02:49:55 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E617413D29
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 23:49:53 -0800 (PST)
+Received: from SoMainline.org (unknown [89.205.227.209])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DFADD60F3E;
-        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E0D2C433F0;
-        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673249416;
-        bh=VxWTfqxEMpBw9xSfv9/nyY3pYSejPi/tQPBKoL5xCQU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=jftJbAoo5F5Nm7ujNYHlKtwco0V3cDgQi1QKEhrBna/7F2OtE9OOUrYHkk2MaE8yK
-         1Gc3ZYiS2kkCt/tG0nrhvt9su40aIlkqxifz45nbUVnD6zEmOoJm0TZx+1qaSENMH3
-         HudXvQ9/3gLLFM2uhGcTw584HF+u0ZZ9Sla6GWO6f16Tgqwf+23c7DCVm/Jajw2W73
-         OgLi0OQQanHBvO6booLnbKXT5ky2g/LEsQjucqjn8HTVU2UofGDamuK8300mq52ZMA
-         ipo6ZRniHZUJJRm82yq3ESclOU/lBprD7CiL5CDQgj5CpfnHxol1KhLFNgt3WvQ9PH
-         B9gsIc1kWoFEA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1B823C395DF;
-        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 435653EE24;
+        Mon,  9 Jan 2023 08:49:49 +0100 (CET)
+Date:   Mon, 9 Jan 2023 08:49:47 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v5 1/4] dt-bindings: display/msm: convert MDP5 schema to
+ YAML format
+Message-ID: <20230109074947.5vnfrn6shzpm6iqi@SoMainline.org>
+References: <20230109050152.316606-1-dmitry.baryshkov@linaro.org>
+ <20230109050152.316606-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v2] net: ipa: correct IPA v4.7 IMEM offset
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <167324941610.24554.3662566736671862735.git-patchwork-notify@kernel.org>
-Date:   Mon, 09 Jan 2023 07:30:16 +0000
-References: <20230106132502.3307220-1-elder@linaro.org>
-In-Reply-To: <20230106132502.3307220-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, luca.weiss@fairphone.com,
-        konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230109050152.316606-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Fri,  6 Jan 2023 07:25:01 -0600 you wrote:
-> Commit b310de784bacd ("net: ipa: add IPA v4.7 support") was merged
-> despite an unresolved comment made by Konrad Dybcio.  Konrad
-> observed that the IMEM region specified for IPA v4.7 did not match
-> that used downstream for the SM7225 SoC.  In "lagoon.dtsi" present
-> in a Sony Xperia source tree, a ipa_smmu_ap node was defined with a
-> "qcom,additional-mapping" property that defined the IPA IMEM area
-> starting at offset 0x146a8000 (not 0x146a9000 that was committed).
+On 2023-01-09 07:01:49, Dmitry Baryshkov wrote:
+> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
+>  - MSM8996 has additional "iommu" clock, define it separately
+>  - Add new properties used on some of platforms:
+>    - interconnects, interconnect-names
+>    - iommus
+>    - power-domains
+>    - operating-points-v2, opp-table
 > 
-> [...]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
+>  .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
+>  2 files changed, 138 insertions(+), 132 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/mdp5.txt b/Documentation/devicetree/bindings/display/msm/mdp5.txt
+> deleted file mode 100644
+> index 65d03c58dee6..000000000000
+> --- a/Documentation/devicetree/bindings/display/msm/mdp5.txt
+> +++ /dev/null
+> @@ -1,132 +0,0 @@
+> -Qualcomm adreno/snapdragon MDP5 display controller
+> -
+> -Description:
+> -
+> -This is the bindings documentation for the MDP5 display
+> -controller found in SoCs like MSM8974, APQ8084, MSM8916, MSM8994 and MSM8996.
+> -
+> -MDP5:
+> -Required properties:
+> -- compatible:
+> -  * "qcom,mdp5" - MDP5
+> -- reg: Physical base address and length of the controller's registers.
+> -- reg-names: The names of register regions. The following regions are required:
+> -  * "mdp_phys"
+> -- interrupts: Interrupt line from MDP5 to MDSS interrupt controller.
+> -- clocks: device clocks. See ../clocks/clock-bindings.txt for details.
+> -- clock-names: the following clocks are required.
+> --   * "bus"
+> --   * "iface"
+> --   * "core"
+> --   * "vsync"
+> -- ports: contains the list of output ports from MDP. These connect to interfaces
+> -  that are external to the MDP hardware, such as HDMI, DSI, EDP etc (LVDS is a
+> -  special case since it is a part of the MDP block itself).
+> -
+> -  Each output port contains an endpoint that describes how it is connected to an
+> -  external interface. These are described by the standard properties documented
+> -  here:
+> -	Documentation/devicetree/bindings/graph.txt
+> -	Documentation/devicetree/bindings/media/video-interfaces.txt
+> -
+> -  The availability of output ports can vary across SoC revisions:
+> -
+> -  For MSM8974 and APQ8084:
+> -	 Port 0 -> MDP_INTF0 (eDP)
+> -	 Port 1 -> MDP_INTF1 (DSI1)
+> -	 Port 2 -> MDP_INTF2 (DSI2)
+> -	 Port 3 -> MDP_INTF3 (HDMI)
+> -
+> -  For MSM8916:
+> -	 Port 0 -> MDP_INTF1 (DSI1)
+> -
+> -  For MSM8994 and MSM8996:
+> -	 Port 0 -> MDP_INTF1 (DSI1)
+> -	 Port 1 -> MDP_INTF2 (DSI2)
+> -	 Port 2 -> MDP_INTF3 (HDMI)
+> -
+> -Optional properties:
+> -- clock-names: the following clocks are optional:
+> -  * "lut"
+> -  * "tbu"
+> -  * "tbu_rt"
+> -
+> -Example:
+> -
+> -/ {
+> -	...
+> -
+> -	mdss: mdss@1a00000 {
+> -		compatible = "qcom,mdss";
+> -		reg = <0x1a00000 0x1000>,
+> -		      <0x1ac8000 0x3000>;
+> -		reg-names = "mdss_phys", "vbif_phys";
+> -
+> -		power-domains = <&gcc MDSS_GDSC>;
+> -
+> -		clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> -			 <&gcc GCC_MDSS_AXI_CLK>,
+> -			 <&gcc GCC_MDSS_VSYNC_CLK>;
+> -		clock-names = "iface",
+> -			      "bus",
+> -			      "vsync"
+> -
+> -		interrupts = <0 72 0>;
+> -
+> -		interrupt-controller;
+> -		#interrupt-cells = <1>;
+> -
+> -		#address-cells = <1>;
+> -		#size-cells = <1>;
+> -		ranges;
+> -
+> -		mdp: mdp@1a01000 {
+> -			compatible = "qcom,mdp5";
+> -			reg = <0x1a01000 0x90000>;
+> -			reg-names = "mdp_phys";
+> -
+> -			interrupt-parent = <&mdss>;
+> -			interrupts = <0 0>;
+> -
+> -			clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> -				 <&gcc GCC_MDSS_AXI_CLK>,
+> -				 <&gcc GCC_MDSS_MDP_CLK>,
+> -				 <&gcc GCC_MDSS_VSYNC_CLK>;
+> -			clock-names = "iface",
+> -				      "bus",
+> -				      "core",
+> -				      "vsync";
+> -
+> -			ports {
+> -				#address-cells = <1>;
+> -				#size-cells = <0>;
+> -
+> -				port@0 {
+> -					reg = <0>;
+> -					mdp5_intf1_out: endpoint {
+> -						remote-endpoint = <&dsi0_in>;
+> -					};
+> -				};
+> -			};
+> -		};
+> -
+> -		dsi0: dsi@1a98000 {
+> -			...
+> -			ports {
+> -				...
+> -				port@0 {
+> -					reg = <0>;
+> -					dsi0_in: endpoint {
+> -						remote-endpoint = <&mdp5_intf1_out>;
+> -					};
+> -				};
+> -				...
+> -			};
+> -			...
+> -		};
+> -
+> -		dsi_phy0: dsi-phy@1a98300 {
+> -			...
+> -		};
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+> new file mode 100644
+> index 000000000000..cbcbe8b47e9b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+> @@ -0,0 +1,138 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,mdp5.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Adreno/Snapdragon Mobile Display controller (MDP5)
+> +
+> +description: >
+> +  MDP5 display controller found in SoCs like MSM8974, APQ8084, MSM8916, MSM8994
+> +  and MSM8996.
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +  - Rob Clark <robdclark@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,mdp5
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reg-names:
+> +    items:
+> +      - const: mdp_phys
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    minItems: 4
+> +    maxItems: 7
+> +
+> +  clock-names:
+> +    oneOf:
+> +      - minItems: 4
+> +        items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: core
+> +          - const: vsync
+> +          - const: lut
+> +          - const: tbu
+> +          - const: tbu_rt
+> +        #MSM8996 has additional iommu clock
+> +      - items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: core
+> +          - const: iommu
+> +          - const: vsync
+> +
+> +  interconnects:
+> +    minItems: 1
+> +    items:
+> +      - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
+> +      - description: Interconnect path from mdp1 port to the data bus
+> +      - description: Interconnect path from rotator port to the data bus
+> +
+> +  interconnect-names:
+> +    minItems: 1
+> +    items:
+> +      - const: mdp0-mem
+> +      - const: mdp1-mem
+> +      - const: rotator-mem
+> +
+> +  iommus:
+> +    items:
+> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
 
-Here is the summary with links:
-  - [net,v2] net: ipa: correct IPA v4.7 IMEM offset
-    https://git.kernel.org/netdev/net/c/60ea6f00c57d
+As Krzysztof has said many times, these documents describe the hardware,
+not the DT format.  Drop the "phandle" part.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +  opp-table:
+> +    type: object
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    description: |
 
+Should multiline descriptions be treated as a oneline string with `>`?
 
+> +      Contains the list of output ports from DPU device. These ports
+> +      connect to interfaces that are external to the DPU hardware,
+> +      such as DSI, DP etc. MDP5 devices support up to 4 ports::
+
+How do these double colons render?  Is this intentional?
+
+- Marijn
+
+> +      one or two DSI ports, HDMI and eDP.
+> +
+> +    patternProperties:
+> +      "^port@[0-3]+$":
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +    # at least one port is required
+> +    required:
+> +      - port@0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    display-controller@1a01000 {
+> +        compatible = "qcom,mdp5";
+> +        reg = <0x1a01000 0x90000>;
+> +        reg-names = "mdp_phys";
+> +
+> +        interrupt-parent = <&mdss>;
+> +        interrupts = <0>;
+> +
+> +        clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> +                 <&gcc GCC_MDSS_AXI_CLK>,
+> +                 <&gcc GCC_MDSS_MDP_CLK>,
+> +                 <&gcc GCC_MDSS_VSYNC_CLK>;
+> +        clock-names = "iface",
+> +                      "bus",
+> +                      "core",
+> +                      "vsync";
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@0 {
+> +                reg = <0>;
+> +                endpoint {
+> +                    remote-endpoint = <&dsi0_in>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> -- 
+> 2.39.0
+> 
