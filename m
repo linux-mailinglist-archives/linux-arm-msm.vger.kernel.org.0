@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB460661DE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 05:33:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF3E0661DE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 05:34:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234355AbjAIEdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 23:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42126 "EHLO
+        id S236539AbjAIEeh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 23:34:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236783AbjAIEcn (ORCPT
+        with ESMTP id S236744AbjAIEd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 23:32:43 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C650EBDB
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 20:20:49 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bf43so11169660lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 20:20:49 -0800 (PST)
+        Sun, 8 Jan 2023 23:33:58 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6797D1261B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 20:24:09 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id f34so11137272lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 20:24:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=voUxNI9zYlvcKPOUFsnogN+cXc4BBqk6mGhnSwGNM4g=;
-        b=Nzyiak3c+ggCgrOKSxh/EIF8OeDkFmjIbiqu3BQ3GwX8Uaiq1hGsh8fhzWn3RZi911
-         CPP9oxX2F920mnS2kCAHIaKJUfdV6x3fYUKJTgCGkLpiRf7zMadOWN0HMreNyD2WqMDw
-         vgLoW2qQxOUe9goJoB9WqPiVpDYtgOXSQS9+/4IjVmThSOoqRF0c01GZvPUUeRggxphB
-         00YkWDlFhhdOovv+ygkYeRlnTV5MgvhiE++ruLhDc9g3ISYW8HFbE9PfKszQvBhrBaka
-         iECN+Dh2qS/CcYH2mnTpbizuf+ehSWFVjmItH2DnBNoOlZKUGdwfqpyt841vT6axiUgx
-         ZlgA==
+        bh=iSgnTZAj4xXXYKclHjwMhiYJRK3FfRHoMz8ZytL1a14=;
+        b=iQ4F3dQeMcPvFYIZvDEtCAqg3hbibyyn3r/6DEDT6WOz/fT2RCEyIeq36w2DlvzUo7
+         yhvrbKzFdxNCEUIXkTmMWBaV65AZq41aAjjqMuGNc4wrzth6ymGp33b5rCAvcDu0lA8z
+         3mrkBVN/NKBsXgLfnyU7GU63CJUbnitpaNZH930O6hDMavX6y1eE5GLeJopWyBJN22p6
+         zqIFnqlDnFKGDFEM2BRdTdfvpL04qH2C2ZRyhz+Xk8n8ArxjPjMLcgZMt8Lm40izi3Ec
+         RkMVQTynIX9JJpvskzEB1M6txieXJNXOObVN2mXEEYm4H1xsRpJzJV5Yur1fO1T23m8T
+         XQUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=voUxNI9zYlvcKPOUFsnogN+cXc4BBqk6mGhnSwGNM4g=;
-        b=6jTv5L16ya4LVsg+qk5XUeE9AXGA4Cq5W6PzE/J12WzJktT9ajzOe/N20EygGFwHDD
-         GIYku43F2C4UGur59tCZuTOcMbEp7KuljyqUKU2MgQ0WpAOr2ZekNiWcm+YsM0J66w03
-         y30gndRjJ5pT68uU6Iw/jxJUx70Fd3M9yoSXOMjlW9kSnHzheqJTyWbo3bYvUgaV7Knt
-         OAIRnSt/PumCwHJ49h54TO2HXTQcRBUXmf/kk3dNX7o3WHDIqPDAel6WbPD+YY9TcFK4
-         AcZ+TkFB7wDD/qHBBb6VkoXPvPFaNQ5WsSEKlYegrvxU1GKMmLQ/D51Omakp6lK0St3X
-         qoIg==
-X-Gm-Message-State: AFqh2koJBOW81rsqitWps3vFFFz092TmlAvYU7PyAnTomMJyYK4pR345
-        cfw0h3KcRxrv6r9Ws8aBz3icaGb1ILXSrflH
-X-Google-Smtp-Source: AMrXdXuoDB7G1QMIGNdNpogmbcM/wY1UAVys4ETOQfkWB7upt4SG+A9X5Z7irKrbuEW1rDYgeUNMEQ==
-X-Received: by 2002:a05:6512:158d:b0:4b5:90c5:281c with SMTP id bp13-20020a056512158d00b004b590c5281cmr20149092lfb.19.1673238048201;
-        Sun, 08 Jan 2023 20:20:48 -0800 (PST)
+        bh=iSgnTZAj4xXXYKclHjwMhiYJRK3FfRHoMz8ZytL1a14=;
+        b=esWf5llQaFQKbK4RSC3/Lgho6weXa5BsqF0dcoz5eWtXUPl4elBnU4TPzruxDBw3/v
+         6KEP8oMIYyQZ9PQxNPxiP6nDWXtWOBgSgXrZvO1OHdOT0EzEd+/28LHNRviirHG4tINN
+         Zb76xek7iBrxXOrG4kne46uptiSLMmfSPwCqfNu2XNaKh0zKMKxx9XVYloPK95vhhnYK
+         pFBCDNrt0CMDnCw185J6SP1by1HpiTS7NsoIGTSFo32RhjlFyUtgWi96lfcuPFc6qD6u
+         ueSXPjy5/yPDksJjpoJILYMbMrvyagY/J18Cbvwipk1UZzOZy8C4oI/vZZXvCbYGW0PB
+         axJg==
+X-Gm-Message-State: AFqh2kpQqhJ/YAoilGS/Vw4Nb2iHUmUPzHuQDx2Bjdz8hLLo9nixNcl6
+        bNvG/krQhzEzNLXqfjEy7q6w350mf2C6ARAi
+X-Google-Smtp-Source: AMrXdXvIlyMmZYK11rKI1hpaJt/X3zKraAdNs4CRIFPBhskthGh20FwpWBq0MnBFaLW7fCXHK/1o+Q==
+X-Received: by 2002:a05:6512:c1b:b0:4cb:3e50:f5e3 with SMTP id z27-20020a0565120c1b00b004cb3e50f5e3mr8159877lfu.61.1673238247766;
+        Sun, 08 Jan 2023 20:24:07 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v8-20020a056512348800b004b4bae1a05asm1388029lfr.293.2023.01.08.20.20.47
+        by smtp.gmail.com with ESMTPSA id z1-20020a056512370100b004b584204b85sm1397141lfr.161.2023.01.08.20.24.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 20:20:47 -0800 (PST)
+        Sun, 08 Jan 2023 20:24:07 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: apq8064: drop the label from the DSI node
-Date:   Mon,  9 Jan 2023 06:20:47 +0200
-Message-Id: <20230109042047.309845-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: msm8996-oneplus-common: drop vdda-supply from DSI PHY
+Date:   Mon,  9 Jan 2023 06:24:06 +0200
+Message-Id: <20230109042406.312047-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -71,26 +71,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The upstream kernel doesn't use labels on the DSI nodes, drop one.
+14nm DSI PHY has the only supply, vcca. Drop the extra vdda-supply.
 
-Fixes: f078eac68e8d ("arm: dts: qcom: apq8064: Add dsi, gpu and iommu nodes")
+Fixes: 5a134c940cd3 ("arm64: dts: qcom: msm8996: add support for oneplus3(t)")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 1 -
+ arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 9134bc512cc8..5fdd78477666 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1278,7 +1278,6 @@ mmss_sfpb: syscon@5700000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+index 20f5c103c63b..2994337c6046 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
+@@ -179,7 +179,6 @@ &dsi0_out {
+ };
  
- 		dsi0: dsi@4700000 {
- 			compatible = "qcom,mdss-dsi-ctrl";
--			label = "MDSS DSI CTRL->0";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			interrupts = <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>;
+ &dsi0_phy {
+-	vdda-supply = <&vreg_l2a_1p25>;
+ 	vcca-supply = <&vreg_l28a_0p925>;
+ 	status = "okay";
+ };
 -- 
 2.39.0
 
