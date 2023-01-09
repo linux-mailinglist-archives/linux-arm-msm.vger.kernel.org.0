@@ -2,208 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7038B662276
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:07:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23F45662283
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 11:09:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234296AbjAIKHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 05:07:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53956 "EHLO
+        id S233399AbjAIKJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 05:09:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234306AbjAIKGs (ORCPT
+        with ESMTP id S233846AbjAIKIX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:06:48 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE881DC7;
-        Mon,  9 Jan 2023 02:05:55 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3098mLvX012979;
-        Mon, 9 Jan 2023 10:05:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=njzyDNi5DpxoyZkQbk7rKCG2fibPz6j5fRLlrKFQ0Lw=;
- b=pDzkpTDfu4nZNM3cuYpVvewnIvdE3ddFI9CkoZXUoEOJonmgJdl74AvN83QywnlrSG+M
- KG8q+5b9/etntKMjPR6XiwPWhd7fr3CVmDO8/ID5bpeKAPi/hYgQSssaPAjKIy+R8v6D
- m1kFR3D0/OB5OLjdqA7vOOt8v6v9S98jofpVDH5DQ4oamLtIONdW79xBADEl9LSwH3Ft
- K7qRVj0FOkqNY6RqSj+jDj3mEt8ufF6WlN00puerdZKJaRBn0TTeWMQQtvHF2FC+ps8G
- n3nRbwa5junK/J9PLSIxgw+9lsPsdsx6moEflDwcyGcEkpcchhdFwKKE3EUSxVQETPgp Uw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my0b92snr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Jan 2023 10:05:42 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 309A5fTS017793
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Jan 2023 10:05:41 GMT
-Received: from [10.79.43.91] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
- 02:05:35 -0800
-Message-ID: <7552f8a1-9503-de7c-a6d4-46452ef78ece@quicinc.com>
-Date:   Mon, 9 Jan 2023 15:35:31 +0530
+        Mon, 9 Jan 2023 05:08:23 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054A714010
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 02:08:20 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso1845467wms.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 02:08:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=z/+RvE1zUSvzhkjun8dKEVXgkB19UZ8DjPmUEsU3dsg=;
+        b=yecaOk6zXoJw/jb5YS9smcV2qzy3f/ol5OghdAeZIx0LZI3BMFInA5U4I7ICB9hQ3X
+         7vBTGVKSgthM2nIAdWXWaZi8/IwerZXSdkVLfaVjrYFH/kw7Vvn5ksuZE5XmNp/vSJGd
+         0SiSRNdhctOdLuCqswNIxgnUq6FErw4qj/bkb6zsWAPpiiiAA5wiw7tzPSkDZAUfiT+o
+         LkTEqifzy+TaZyHe2k4mQFaHxL5jdNg99VD4KxcH99sSBlkqmWkdGb7tN/i1TodvKxHk
+         0349xtvtPwZlMyHJ9/Cot4Iwe6bOK+vdai06PUQhACbMG+65WuRNP6ziEJcH3EgF3+Pv
+         PIyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z/+RvE1zUSvzhkjun8dKEVXgkB19UZ8DjPmUEsU3dsg=;
+        b=K0p3eb5563eop0Z6ux6W0aNpH+2FNXcbOv4C38g/X4sPfVSpA0rknBn4vo92FcFQch
+         8cC7QuIfQB5ehfhSn4beYxUOm6rcHIbLo2oAGVsd996RxtG3AM/ICwiuzH67qPMXtvNz
+         hPWzdSQo6ZkuwEDKvOGPPowlwOoMn3w+EqdlUurxvDCvLruFoalVrGnAHTbJIWSJAzq4
+         TtgQqsq+hQtvWhT4wh2WsOLIVCTQaGvz90PcCb9MIb7BlVFocuaYL7p+2r6QZzJuRlj6
+         bbwvyAA7r+xORrUHSvasVnLq8nAYnm4YgrNWyyQ7xqyQnlobGugX5xRHfyWyeqXMlvt/
+         9oHQ==
+X-Gm-Message-State: AFqh2ko9F7YTxlvCO8VWTW84jcimGJ1HciVI75/etxV0gpFRhH+t6RWL
+        fYZBL9sQ86UwMu7RfAMhDE7l7g==
+X-Google-Smtp-Source: AMrXdXsjwUvFqv7FUVFCq6eCQgr+Bke/YuyPH4PMJ7hVGkEi04Ga33xLbp4qHyhwsfRsqvvw8kHNTw==
+X-Received: by 2002:a05:600c:b99:b0:3d9:edd9:20ea with SMTP id fl25-20020a05600c0b9900b003d9edd920eamr2879640wmb.38.1673258899507;
+        Mon, 09 Jan 2023 02:08:19 -0800 (PST)
+Received: from [192.168.7.111] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id c7-20020a05600c0a4700b003c6bbe910fdsm18183901wmq.9.2023.01.09.02.08.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 02:08:19 -0800 (PST)
+Message-ID: <bdc6ba2f-7683-c7fe-f51a-1fc41bc805ce@linaro.org>
+Date:   Mon, 9 Jan 2023 11:08:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V2 06/11] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
+ Thunderbird/102.6.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 0/5] remoteproc: qcom_q6v5_pas: add support for SM8550
+ adsp, cdsp & mpss
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <robin.murphy@arm.com>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
-        <amit.pundir@linaro.org>, <regressions@leemhuis.info>,
-        <sumit.semwal@linaro.org>, <will@kernel.org>,
-        <catalin.marinas@arm.com>
-References: <20230109034843.23759-1-quic_sibis@quicinc.com>
- <20230109034843.23759-7-quic_sibis@quicinc.com>
- <20230109083231.GB4966@thinkpad>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20230109083231.GB4966@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        linux-kernel@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KSN7rH8A2GjzdGeXK9enMIAbm8MxEC5j
-X-Proofpoint-ORIG-GUID: KSN7rH8A2GjzdGeXK9enMIAbm8MxEC5j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-09_03,2023-01-06_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- clxscore=1015 adultscore=0 impostorscore=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301090071
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Mani,
+On 07/12/2022 20:23, Neil Armstrong wrote:
+> This patchsets adds support for the aDSP, cDSP and MPSS found in the
+> SM8550 SoC.
+> 
+> The aDSP, cDSP and MPSS boot process on SM8550 now requires a secondary
+> "Devicetree" firmware to be passed along the main Firmware, and the cDSP
+> a new power domain named "NSP".
+> 
+> In order to satisfy the load & authentication order required by the SM8550
+> SoC, the following is implemented:
+> - "Devicetree" firmware request & load in dedicated memory
+> - Q6V5 prepare
+> - Power Domain & Clocks enable
+> - "Devicetree" firmware authentication
+> - Main firmware load in dedicated memory
+> - Main firmware authentication
+> - Q6V5 startup
+> - "Devicetree" firmware metadata release
+> - Main metadata release
+> 
+> When booting older platforms, the "Devicetree" steps would be
+> bypassed and the load & authentication order would still be valid.
+> 
+> Bindings changes depends on:
+> - https://lore.kernel.org/all/20221124184333.133911-1-krzysztof.kozlowski@linaro.org/
+> 
+> To: Andy Gross <agross@kernel.org>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@somainline.org>
+> To: Mathieu Poirier <mathieu.poirier@linaro.org>
+> To: Rob Herring <robh+dt@kernel.org>
+> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> To: Manivannan Sadhasivam <mani@kernel.org>
+> To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> To: Amol Maheshwari <amahesh@qti.qualcomm.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-remoteproc@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> ---
+> Changes in v3:
+> - fix mpss matching in bindings, tested against DT
+> - Link to v2: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v2-0-12bc22255474@linaro.org
+> 
+> Changes in v2:
+> - Moved the SM8550 pas bindings on top of "split and reorganize PAS/PIL" v3 patchset
+> - Incorporated DSM memory support into pas bindings & driver
+> - Moved second DTB firmware into second entry of firmware-name
+> - Dropped applied "qcom,fastrpc: increase allowed iommus entries" patch
+> - Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org
+> 
+> ---
+> Neil Armstrong (5):
+>        dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common
+>        dt-bindings: remoteproc: qcom: adsp: document sm8550 adsp, cdsp & mpss compatible
+>        remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading
+>        remoteproc: qcom_q6v5_pas: add support for assigning memory to firmware
+>        remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss compatible & data
+> 
+>   .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |   4 +
+>   .../bindings/remoteproc/qcom,pas-common.yaml       |   8 -
+>   .../bindings/remoteproc/qcom,qcs404-pas.yaml       |   8 +
+>   .../bindings/remoteproc/qcom,sc7180-pas.yaml       |   8 +
+>   .../bindings/remoteproc/qcom,sc8180x-pas.yaml      |   8 +
+>   .../bindings/remoteproc/qcom,sc8280xp-pas.yaml     |   8 +
+>   .../bindings/remoteproc/qcom,sdx55-pas.yaml        |   8 +
+>   .../bindings/remoteproc/qcom,sm6350-pas.yaml       |   8 +
+>   .../bindings/remoteproc/qcom,sm8150-pas.yaml       |   8 +
+>   .../bindings/remoteproc/qcom,sm8350-pas.yaml       |   8 +
+>   .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 178 ++++++++++++++
+>   drivers/remoteproc/qcom_q6v5_pas.c                 | 271 ++++++++++++++++++++-
+>   12 files changed, 504 insertions(+), 21 deletions(-)
+> ---
+> base-commit: 268975e1af25cd83994d24c46ad0d95753291f64
+> change-id: 20221114-narmstrong-sm8550-upstream-remoteproc-804f3fbb34bf
+> 
+> Best regards,
 
-On 1/9/23 14:02, Manivannan Sadhasivam wrote:
-> On Mon, Jan 09, 2023 at 09:18:38AM +0530, Sibi Sankar wrote:
->> Any access to the dynamically allocated metadata region by the application
->> processor after assigning it to the remote Q6 will result in a XPU
->> violation. Fix this by replacing the dynamically allocated memory region
->> with a no-map carveout and unmap the modem metadata memory region before
->> passing control to the remote Q6.
->>
->> Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
->> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> v2:
->>   * Revert no_kernel_mapping [Mani/Robin]
->>
->>   drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++----
->>   1 file changed, 42 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
->> index e2f765f87ec9..b7a158751cef 100644
->> --- a/drivers/remoteproc/qcom_q6v5_mss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
->> @@ -215,6 +215,7 @@ struct q6v5 {
->>   	size_t mba_size;
->>   	size_t dp_size;
->>   
->> +	phys_addr_t mdata_phys;
->>   	phys_addr_t mpss_phys;
->>   	phys_addr_t mpss_reloc;
->>   	size_t mpss_size;
->> @@ -973,15 +974,29 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->>   	if (IS_ERR(metadata))
->>   		return PTR_ERR(metadata);
->>   
->> -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
->> -	if (!ptr) {
->> -		kfree(metadata);
->> -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
->> -		return -ENOMEM;
->> +	if (qproc->mdata_phys) {
->> +		phys = qproc->mdata_phys;
->> +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
->> +		if (!ptr) {
->> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
->> +				&qproc->mdata_phys, size);
->> +			ret = -EBUSY;
->> +			goto free_dma_attrs;
-> 
-> There is no memory to free at this point.
+Gentle ping,
 
-we would just free the metadata in the no-map carveout scenario since
-mdata_phys wouldn't be NULL. I can do a kfree(metadata) directly from
-this branch and return as well if you think it makes things more
-readable.
-
-> 
-> Thanks,
-> Mani
-> 
->> +		}
->> +	} else {
->> +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
->> +		if (!ptr) {
->> +			kfree(metadata);
->> +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
->> +			return -ENOMEM;
->> +		}
->>   	}
->>   
->>   	memcpy(ptr, metadata, size);
->>   
->> +	if (qproc->mdata_phys)
->> +		memunmap(ptr);
->> +
->>   	/* Hypervisor mapping to access metadata by modem */
->>   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
->>   	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
->> @@ -1010,7 +1025,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->>   			 "mdt buffer not reclaimed system may become unstable\n");
->>   
->>   free_dma_attrs:
->> -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
->> +	if (!qproc->mdata_phys)
->> +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
->>   	kfree(metadata);
->>   
->>   	return ret < 0 ? ret : 0;
->> @@ -1893,6 +1909,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
->>   	qproc->mpss_phys = qproc->mpss_reloc = r.start;
->>   	qproc->mpss_size = resource_size(&r);
->>   
->> +	if (!child) {
->> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
->> +	} else {
->> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
->> +		node = of_parse_phandle(child, "memory-region", 0);
->> +		of_node_put(child);
->> +	}
->> +
->> +	if (!node)
->> +		return 0;
->> +
->> +	ret = of_address_to_resource(node, 0, &r);
->> +	of_node_put(node);
->> +	if (ret) {
->> +		dev_err(qproc->dev, "unable to resolve metadata region\n");
->> +		return ret;
->> +	}
->> +
->> +	qproc->mdata_phys = r.start;
->> +
->>   	return 0;
->>   }
->>   
->> -- 
->> 2.17.1
->>
-> 
+Thanks,
+Neil
