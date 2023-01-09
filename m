@@ -2,237 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E9D1661F0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 08:13:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C43D661F38
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 08:30:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233629AbjAIHNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 02:13:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33790 "EHLO
+        id S236133AbjAIHaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 02:30:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233652AbjAIHNi (ORCPT
+        with ESMTP id S236431AbjAIHaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 02:13:38 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2606C655A;
-        Sun,  8 Jan 2023 23:13:37 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30952lm0009418;
-        Mon, 9 Jan 2023 07:13:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=+T3VIEWVegWplUGukrhykwFnwriNfkJ62nVMapRgGrM=;
- b=jXrP28WMz4c3qndcA3P40qMMezIc41FWg6h6xqFLqCWV0gmNiDnnJPSsygm5xGQUeCuh
- g3HN4+EdBR0YF80wvBghWtE4vbAll3XQ3Uwl/Bcl9kmyP1GJlXGON2MlkQDJ2HDQJJXh
- gIxUbE4sUlBUNnPxRvcle+Kbkknfh3TFXF3qtVS7VSm+xitmxf4VCJyh6K0wxNvJTjUa
- 2pDyAAV3Y4MVBVt4zWC6nrNoD+Oh1WCTb76x0QGoC87NbRoB2kYEiyBLzGiUezn8UJ8A
- gJ3Cr0ZxJIZ240O8FOQi32kIqBoXiH/dkUJseHxbJc+enveQaczSyDwzxi0EBDy/p6aJ Vg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my21ftf7x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Jan 2023 07:13:21 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3097DK0e011786
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Jan 2023 07:13:20 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 8 Jan 2023
- 23:13:13 -0800
-Date:   Mon, 9 Jan 2023 12:43:09 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-acpi@vger.kernel.org>
-Subject: Re: [PATCH v8 11/28] gunyah: rsc_mgr: Add VM lifecycle RPC
-Message-ID: <20230109071309.GA3480070@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-12-quic_eberman@quicinc.com>
+        Mon, 9 Jan 2023 02:30:18 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EEC112769;
+        Sun,  8 Jan 2023 23:30:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DFADD60F3E;
+        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E0D2C433F0;
+        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673249416;
+        bh=VxWTfqxEMpBw9xSfv9/nyY3pYSejPi/tQPBKoL5xCQU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=jftJbAoo5F5Nm7ujNYHlKtwco0V3cDgQi1QKEhrBna/7F2OtE9OOUrYHkk2MaE8yK
+         1Gc3ZYiS2kkCt/tG0nrhvt9su40aIlkqxifz45nbUVnD6zEmOoJm0TZx+1qaSENMH3
+         HudXvQ9/3gLLFM2uhGcTw584HF+u0ZZ9Sla6GWO6f16Tgqwf+23c7DCVm/Jajw2W73
+         OgLi0OQQanHBvO6booLnbKXT5ky2g/LEsQjucqjn8HTVU2UofGDamuK8300mq52ZMA
+         ipo6ZRniHZUJJRm82yq3ESclOU/lBprD7CiL5CDQgj5CpfnHxol1KhLFNgt3WvQ9PH
+         B9gsIc1kWoFEA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1B823C395DF;
+        Mon,  9 Jan 2023 07:30:16 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20221219225850.2397345-12-quic_eberman@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KmxXwIzcVN610P58UOSed39adOioGZLg
-X-Proofpoint-GUID: KmxXwIzcVN610P58UOSed39adOioGZLg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-09_02,2023-01-06_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=676 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301090051
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net v2] net: ipa: correct IPA v4.7 IMEM offset
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <167324941610.24554.3662566736671862735.git-patchwork-notify@kernel.org>
+Date:   Mon, 09 Jan 2023 07:30:16 +0000
+References: <20230106132502.3307220-1-elder@linaro.org>
+In-Reply-To: <20230106132502.3307220-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, luca.weiss@fairphone.com,
+        konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:32]:
+Hello:
 
-> +/* Call: CONSOLE_OPEN, CONSOLE_CLOSE, CONSOLE_FLUSH */
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-I think this struct is used by other calls as well?
-Also CONSOLE_** functions are not yet introduced in this patch
+On Fri,  6 Jan 2023 07:25:01 -0600 you wrote:
+> Commit b310de784bacd ("net: ipa: add IPA v4.7 support") was merged
+> despite an unresolved comment made by Konrad Dybcio.  Konrad
+> observed that the IMEM region specified for IPA v4.7 did not match
+> that used downstream for the SM7225 SoC.  In "lagoon.dtsi" present
+> in a Sony Xperia source tree, a ipa_smmu_ap node was defined with a
+> "qcom,additional-mapping" property that defined the IPA IMEM area
+> starting at offset 0x146a8000 (not 0x146a9000 that was committed).
+> 
+> [...]
 
-> +struct gh_vm_common_vmid_req {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
+Here is the summary with links:
+  - [net,v2] net: ipa: correct IPA v4.7 IMEM offset
+    https://git.kernel.org/netdev/net/c/60ea6f00c57d
 
-[snip]
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-> +int gh_rm_alloc_vmid(struct gh_rm_rpc *rm, u16 vmid)
-> +{
-> +	void *resp;
-> +	struct gh_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	struct gh_vm_common_vmid_req *resp_payload;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	if (vmid == GH_VMID_INVAL)
-> +		vmid = 0;
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_ALLOC_VMID, &req_payload, sizeof(req_payload), &resp,
-> +			&resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!vmid) {
-> +		if (resp_size != sizeof(*resp_payload)) {
-> +			ret = -EINVAL;
-> +		} else {
-> +			resp_payload = resp;
-> +			ret = resp_payload->vmid;
 
-Do we need a le_to_cpu() wrapper on the response here?
-
-> +int gh_rm_vm_stop(struct gh_rm_rpc *rm, u16 vmid)
-> +{
-> +	struct gh_vm_stop_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	void *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_STOP, &req_payload, sizeof(req_payload),
-> +			&resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +	kfree(resp);
-
-Why not use gh_rm_common_vmid_call() here as well?
-
-	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_STOP, vmid);
-
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_vm_stop);
-> +
-
-[snip]
-
-> +ssize_t gh_rm_get_hyp_resources(struct gh_rm_rpc *rm, u16 vmid,
-> +				struct gh_rm_hyp_resource **resources)
-> +{
-> +	struct gh_vm_get_hyp_resources_resp *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +	struct gh_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_HYP_RESOURCES,
-> +			 &req_payload, sizeof(req_payload),
-> +			 (void **)&resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (resp_size < sizeof(*resp) ||
-> +		(sizeof(*resp->entries) && (resp->n_entries > U32_MAX / sizeof(*resp->entries))) ||
-> +		(resp_size != sizeof(*resp) + (resp->n_entries * sizeof(*resp->entries)))) {
-> +		ret = -EIO;
-> +		goto out;
-> +	}
-> +
-> +	*resources = kmemdup(resp->entries, (resp->n_entries * sizeof(*resp->entries)), GFP_KERNEL);
-
-Consider NULL return value from kmemdup
-
-> +	ret = resp->n_entries;
-> +
-> +out:
-> +	kfree(resp);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_get_hyp_resources);
-> +
-> +/**
-> + * gh_rm_get_vmid() - Retrieve VMID of this virtual machine
-> + * @vmid: Filled with the VMID of this VM
-> + */
-> +int gh_rm_get_vmid(struct gh_rm_rpc *rm, u16 *vmid)
-> +{
-> +	static u16 cached_vmid = GH_VMID_INVAL;
-> +	void *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +	int payload = 0;
-> +
-> +	if (cached_vmid != GH_VMID_INVAL) {
-> +		*vmid = cached_vmid;
-> +		return 0;
-> +	}
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_VMID, &payload, sizeof(payload), &resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (resp_size != sizeof(*vmid))
-
-kfree(resp) in this case?
-
-> +		return -EIO;
-> +	*vmid = *(u16 *)resp;
-
-Do we need a le_to_cpu() wrapper on the response?
-Also update cached_vmid in success case.
-
-> +	kfree(resp);
-> +
-> +	return ret;
-> +}
