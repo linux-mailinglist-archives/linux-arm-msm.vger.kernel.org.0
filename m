@@ -2,105 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F795662970
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:11:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB6DC6629AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 16:19:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232796AbjAIPKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 10:10:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
+        id S235536AbjAIPSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 10:18:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236152AbjAIPJz (ORCPT
+        with ESMTP id S237074AbjAIPRt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 10:09:55 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBBEFB94;
-        Mon,  9 Jan 2023 07:09:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 87ABB61165;
-        Mon,  9 Jan 2023 15:09:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BACC433EF;
-        Mon,  9 Jan 2023 15:09:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673276993;
-        bh=2kIP3L1wWIjQqgSeLLlnsvTS3fRCyU9DXUFZ/TVnjuw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uxz94DM+mEx2aL2SgllefcbUc7VO+xh4J41AqR/r+FbyYqVKMqwZZ2k1XNXZNmb23
-         ZbaRpnU4h61VM6jhwqOOQsp7sruisQfql3o8/70L7pBNPj8yT0IZ3W4SRnBCc1uX46
-         z5cv7pfbwqJvVxCx/s9qIYu0gfp5SgEQILukmYtqdxtaOGB9frtlbn1cfeiRyVQxGD
-         NpHWSNa2NiTKHTbzhIkUO0dlUe6RMGPfRe/NZBF/FS9q0D1WDHPo5++nmH2AsA8OPk
-         xfeQRB7xdu35KElolRlRAzO/uhokgXBRg4EHUDq3TazpJ0eg7bR0RV1nRQn7MT4glP
-         MrTfwII91QT9w==
-Date:   Mon, 9 Jan 2023 09:09:51 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Masami Hiramatsu <mhiramat@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V0 1/1] bootconfig: Increase max size of bootconfig from
- 32 KB to 256 KB for DCC support
-Message-ID: <20230109150951.ikdlkr6lmiapesmu@builder.lan>
-References: <cover.1673261071.git.quic_schowdhu@quicinc.com>
- <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
+        Mon, 9 Jan 2023 10:17:49 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFFE1A231
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 07:17:03 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id o15so6506888wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 07:17:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+PqgORacgkMDX01Q5NGqFzrod0OlQV05LXx05OG7/R8=;
+        b=sb5IJ/abZfkZqQuTH1bGGSF8GF1xPt1b4eT+3XTA1i+HoCZBJ1yYEVs98SWKk6ytM0
+         B6QEjLlmppj6MY2WeAoSmA1N289RS3BJ62L2PfXf6khhLfFC5+DxvFEp0DHZxjMA5D2E
+         XT+DmUzPDr9k+ISyMAIldOCybXDT3nLkx476KWq4tByFbSeG3qc9nOzs4ZyTANLj+kgh
+         hqLnDy855NR6z/mfxnZ4tw7gxX2BpmUbVbge+ulCzlyvFpKyVJzkQWf4BHtwzDhIbiEE
+         FfWHDsz1i1IxT5Ri11jguy7E70C0a6HKtBfwrCoYQIeayOC2mMVeti0Dl4yjWB0gDAML
+         crBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+PqgORacgkMDX01Q5NGqFzrod0OlQV05LXx05OG7/R8=;
+        b=4cfHl69TGvlbH5jG5C3IkKxmytlEEMuiTEt6NrOtb31m0FWxeM8kjsYGs9d5J8VeLn
+         7bg4NpU4lF1I7Zs9We7uSVP3U8MKyNM1jIDCXU/zgKY1iy9uhApGQNGA1NI1CgzYs/Is
+         ZYxpXV64t61FjmFBamkbKRL138b7+F5lc0GoriMrR3Ro1ls/gp+ZVqMHsFdhDFGxooas
+         yZYFP6/6lqOxVgZq1mSJ43vjzfiq/SoWMVFQyda7phl/cmcMWEWnpYIlHm3O15lVbYkH
+         exv+igG5L3ZLNSpPIyYICkjOstNVCEehjXlIjsDsLbfozY69AyPLAdnGUmgQVNcwNuK2
+         DEdA==
+X-Gm-Message-State: AFqh2kqrhkka3YXlxfVD9y7uDR9tXzo3LACoS95JHO+Yyhx472MTwhNO
+        +os5rbW4yguTR6xsLom4Lk8nxg==
+X-Google-Smtp-Source: AMrXdXutZdV1Q+q4tKTuHkHXJoGdv5KeBWCpgkPiZr1wIwhHSlQ2cfgYT6VUJUZRhXCbmDEpmm9I2Q==
+X-Received: by 2002:a05:600c:3d0e:b0:3d1:ee97:980 with SMTP id bh14-20020a05600c3d0e00b003d1ee970980mr57192263wmb.7.1673277422112;
+        Mon, 09 Jan 2023 07:17:02 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a010:fe57:993c:4842? ([2a01:e0a:982:cbb0:a010:fe57:993c:4842])
+        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b003cf5ec79bf9sm12796176wmo.40.2023.01.09.07.17.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 07:17:01 -0800 (PST)
+Message-ID: <129c1b6d-288f-d463-8c08-7c7f7e832cf0@linaro.org>
+Date:   Mon, 9 Jan 2023 16:16:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/3] qcom: add support for SPMI PMICs found on SM8550
+ platforms
+Content-Language: en-US
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221114-narmstrong-sm8550-upstream-spmi-v2-0-b839bf2d558a@linaro.org>
+ <CACRpkdby3KTakQXnmkSYsu3HreSYx9zhP0nWKQU3KOtmunA3Ew@mail.gmail.com>
+Organization: Linaro Developer Services
+In-Reply-To: <CACRpkdby3KTakQXnmkSYsu3HreSYx9zhP0nWKQU3KOtmunA3Ew@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 09, 2023 at 08:01:05PM +0530, Souradeep Chowdhury wrote:
-> Increasing the memory size of bootconfig to be able to handle a max number of
-> 8192 nodes to be fitted in memory size of 256KB.
+On 09/01/2023 15:18, Linus Walleij wrote:
+> On Fri, Nov 18, 2022 at 9:24 AM Neil Armstrong
+> <neil.armstrong@linaro.org> wrote:
 > 
-
-This states what the patch does, but not why.
-
-The description you put in the cover letter does capture the why, but
-the cover-letter won't be part of the git history (and if it was,
-there's no reason to keep the motivation separate from the change). So
-please move the motivation into the commit message.
-
-Also, there's generally no reason to have a cover-letter for a
-single patch "series". So please skip the --cover-letter.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  include/linux/bootconfig.h | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>>        dt-bindings: pinctrl: qcom,pmic-gpio: document pm8550, pm8550b, pm8550ve, pm8550vs, pmk8550 & pmr735d
+>>        pinctrl: qcom: spmi-gpio: add support for pm8550 & pmr735d gpio control
 > 
-> diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
-> index 1611f9d..64d233b 100644
-> --- a/include/linux/bootconfig.h
-> +++ b/include/linux/bootconfig.h
-> @@ -55,11 +55,11 @@ struct xbc_node {
->  } __attribute__ ((__packed__));
->  
->  #define XBC_KEY		0
-> -#define XBC_VALUE	(1 << 15)
-> -/* Maximum size of boot config is 32KB - 1 */
-> +#define XBC_VALUE	(1 << 18)
-> +/* Maximum size of boot config is 256KB - 1 */
->  #define XBC_DATA_MAX	(XBC_VALUE - 1)
->  
-> -#define XBC_NODE_MAX	1024
-> +#define XBC_NODE_MAX	8192
->  #define XBC_KEYLEN_MAX	256
->  #define XBC_DEPTH_MAX	16
->  
-> -- 
-> 2.7.4
+> These two patches applied to the pinctrl tree!
+
+Thanks !
+
 > 
+> Yours,
+> Linus Walleij
+
