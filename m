@@ -2,203 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF6C6662B0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 17:22:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AD48662BA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 17:50:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231418AbjAIQWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 11:22:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53972 "EHLO
+        id S231365AbjAIQun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 11:50:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230032AbjAIQVv (ORCPT
+        with ESMTP id S237154AbjAIQuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 11:21:51 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2059.outbound.protection.outlook.com [40.107.21.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1EA7DF26
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 08:21:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eog4izySKgbxweSgxq1BBqh9T88N29z2DZpZxLJrlZ/vg1oaKDPYT6hVcr6S1ox/XcWjwzAtybvXnVG7bmu4bbgVVq2BzaPjOyLt7DzxaI9HBQwjziMwOG7iBZkTUwaog657bOr+oyV6MpVcWklqeIdxpTRqbPm1i7BNkwXVT4NawVT/PAjNmorFH8A39dJvdTru0GnJIxWJjS95qvm0yTZTJ2tRmaSo6aQ7k3x0l7B4eIa+rGpCeqi74fse/2LL27gJt4hNKdCEIKAXRN8H5w4QQW03guD8mVzRT5gG1tapIb607EFJEr51tYA7dWoF8iuWDGVsiW2//+zLmv7IGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VeLhaays3PUukQgNCgSoX/pYGu4CEYNNLZtRaq14+70=;
- b=Zjlpn+l6HMQWkj77rmtBgXOGLVggKLWD+fNqIkadg4GYzk5x+HrFGfBv4j9vOSW7eSL+IGYWVfxlzjxhRnlfz2FQHIQ4ONac2vsLTl51KSQguXK+9dn1nAbJy+9PFAEsgUkYX7EkXmjAXEG2vV+pUR818Aj8/8A/7hmYcPb5C6j2iIHUygcJe/R0JBq+NVG9NwceybT3b+6BHy/SaBHN0p2AOhZdcwF5/YH0wResNk92A+GowLaVI1UMEjQS4PTigZ/0ugYZ86FcPyvhDSN5ktFSOhXwwT+l3R2k6Z1gK4unq8VeJy5uqnsOhn4Ef+RwPFaqSTMB9jRnZue2hCIDTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector2-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VeLhaays3PUukQgNCgSoX/pYGu4CEYNNLZtRaq14+70=;
- b=ZSTQnFCE53053rRt9hEOzWgdOAIFWMvrV93OLRK3BkImEfcO2kJJUMOAKhfG5I2HM8IP7vfAG9FOXIer6sMs7KWAsZnuTIlHLpt67tqiwWEpAHTE+JKUvZacd0QHYe2U90nWqWjNwcml26fdzRiR8Oo3+P1KqdwscIME1T7fp1o=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
- (2603:10a6:803:22::27) by PA4PR04MB7840.eurprd04.prod.outlook.com
- (2603:10a6:102:ce::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Mon, 9 Jan
- 2023 16:21:45 +0000
-Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
- ([fe80::738c:a9cb:7b8b:4033]) by VI1PR0402MB3902.eurprd04.prod.outlook.com
- ([fe80::738c:a9cb:7b8b:4033%5]) with mapi id 15.20.5986.018; Mon, 9 Jan 2023
- 16:21:45 +0000
-Date:   Mon, 9 Jan 2023 18:21:40 +0200
-From:   Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-Message-ID: <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
-X-ClientProxiedBy: AS4P250CA0015.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:5df::14) To VI1PR0402MB3902.eurprd04.prod.outlook.com
- (2603:10a6:803:22::27)
+        Mon, 9 Jan 2023 11:50:20 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED65517072;
+        Mon,  9 Jan 2023 08:49:18 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 43644CE10C2;
+        Mon,  9 Jan 2023 16:49:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E475C433F1;
+        Mon,  9 Jan 2023 16:49:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673282955;
+        bh=Zs1I9hWh8DgJCvcIXxrzn5p90o5lzJJFhhZ5y5LaxTE=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=p61IZ6WTpB8e8+dn4v8BtFUc7JGNi54Vd0i6Nvicq07pr7S8PtUqGbFAchDC4orhu
+         E8mmU3g9MlDmT42YSWtDkT2bgoAt/wOr5pcaVkv9fd9z8LD4eOeFq+YCjxWJ8AQ17s
+         X9L7TphpQvMvYmOI9IB/fYn6OfKL1hOefx0Ds2YRqw6mQ5iztpskoLD9O4XS+5vATP
+         7a4/2RWTsOGxGXiGBCLRJxZ368/JLx3Lx3+UyRRD+nnL9xttarHeO4CM/3heR70UyK
+         Lx1/H/m5hIKlN9Nc5hGCUXDT9YajYDeDJCf29kzkt2F/AITEBIi5NhAPvgP5G2+JAQ
+         gKfRUTUlAJerw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
+References: <20221227163135.102559-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/3] ASoC: dt-bindings: qcom,lpass-cpu: Document required-opps
+Message-Id: <167328295277.323147.12695338235961954458.b4-ty@kernel.org>
+Date:   Mon, 09 Jan 2023 16:49:12 +0000
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI1PR0402MB3902:EE_|PA4PR04MB7840:EE_
-X-MS-Office365-Filtering-Correlation-Id: 35f3f63d-f181-4d55-4d32-08daf25d998c
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 7o7WMzGcIVcXiVdBn+PVZH7jyeKsP9Stkl46tLxN99ObZCJZhE4s1VRmDuc4A13m7/SvDMpXk78irIw1uE/V4GoZ/X2TNl+iXaBVzvvt6RdpC+VYCclDDP3cLITnGvtsuUxGdqRH5pInB3H78Ug40jnKkMQ4Jy3YanrBlBv/ZWGP5PSxdr9hr1ccDMfNt4KsGoCtNiw0HpqIB8bndUTHKBBs6+ASfs0SW+d5a4DVukUKlDnZOlHRWeNZYHJ5g0sZk51bJTxUBVOODFoTvQajLFpB8VBoWg0TVljRlBJBl+D3Je+yO3yrNecelMrFH7f9Uc0ZnhG0D02VQHF+KFgffh/S8xrBybqIMqoaHceuwKCr27Q212f3MZk0AvCNlh9/pdrUwoKy2IUAUZOf3vkVAgtyyW65eb05H9JyvZv8mBDm8nm9hAEo7dEiF19p7C89L4SQpa8fdk83Qbvn8uHjIqgvvivV9Uyjin9MEu98zqfGRjsEy4XIInQAiGKsELvl71KEi7AhKYXCNzyMWjVMIP2F9m5EayEpyVHczu8Nl5JtsGS7UBUPGXRvVFCpdFPk6BQtfAQpnTyFv0ndS4j9E38r9lBtxbmyd+YC0+Ck7hJV3W8Zk0slS3k7xseHQ30DRlS/CF1FzMdySNghW1Sopg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR0402MB3902.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(366004)(346002)(136003)(39860400002)(451199015)(478600001)(6506007)(6486002)(6666004)(1076003)(4326008)(9686003)(186003)(26005)(66476007)(66556008)(6512007)(8676002)(6916009)(54906003)(316002)(83380400001)(86362001)(38100700002)(41300700001)(66946007)(7416002)(5660300002)(2906002)(44832011)(8936002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/PjlJDxu8EWb7nfC9m0aRk5EngF10H2W8SU6KeN4SYtIW7gQ4fDYF56MchB5?=
- =?us-ascii?Q?beD0EEXQX065DB7mlpGGVd7DxwKgqv5p+X2VfjvXfipRoss1gd38rbAaWvkK?=
- =?us-ascii?Q?pOuHNPoBQ3pdkmHvp7S9qUGRl95/PZtqeeluxriVd+FThYx9I2w9NKCyIItL?=
- =?us-ascii?Q?HrIgkQqKSfJpkQ9eKcJFlcd/hEgDJLW076whROrl50jgfKa62oFR45Ybgb5q?=
- =?us-ascii?Q?nIC9kEhg2Z3FcP08hUlbdYTqc1wAGTAGPmJ1DYysS1t7K8cZ7D2V7hh+eKNi?=
- =?us-ascii?Q?9OdWzTPR7xd5IyHll1CBAeTOR1oabwlyQtLce5ulGCgVrd+t6zaODTwU8E+k?=
- =?us-ascii?Q?szaDxw4vtliL7O7CQQehJsimV773zaXYvnVbfWiBO40Y8ayJn9ELNr0gfjVO?=
- =?us-ascii?Q?N39KlyWzIHoRZWd6g5ckIMv23mvKQcqpSn+3YH+Gbfir2Qf0LjSEbyx6UtYJ?=
- =?us-ascii?Q?Qdry+hwpgaZQoBU35UcDVr4vjerqRIQ5yeUud5JL2NXJSTZFBB5tvhZu+FdA?=
- =?us-ascii?Q?7tlAjyZ0q8xcrRBFjtVFqWGK+6qSaWXug6wbuMk0uXiyjfiNXfoxnxwoua5D?=
- =?us-ascii?Q?EjODJvkDZ9UNedR9ACNL3QWE1WjpMXXcgAQqjFuaMVvCNZzAbd/d3N3WrqLV?=
- =?us-ascii?Q?aXhdN8lQaYwOtedMFeRHRXN0S17mfVeZxLqLvYGZA6feM4yNuFhjO5OH33yO?=
- =?us-ascii?Q?L9dmF81hFq/KvX4yUd1dA7zqK432WrTrFwmGGkegalmxPcD9sZ/+kTogwJD/?=
- =?us-ascii?Q?LDw5nJ1uP7rWpRCSm0BNarvlQazAKEnB3dVcD+32HQSEarMKrlM8TysNX7L7?=
- =?us-ascii?Q?RGo6S8HVF9qIkHrbDQADQxuEUnsjO0QVUDVHn4rfzH0rhSHUTUmEVHfc917M?=
- =?us-ascii?Q?DA6SSiD2BxKps3ja8S9x6cCLav/leYPEjFZqXY7P0DfwcmdA1D+7StC25Rdd?=
- =?us-ascii?Q?mwD/NHA+f/lOJ27cNfW5SVdLj8Wr8ikdw/fuT1eYCb5PFzrc0Yp0CTmsjV35?=
- =?us-ascii?Q?5oQIpdbGiX+JY4YnaIwXbtpziUN0PggCO6vgpGR6YSP9Ltenu4GdtcirEXqK?=
- =?us-ascii?Q?2CDm5uIJYJJZ/gBLxKFM3GkKkJfh7b8bAbdH3q+WVRh8x/FDGhno7UPQyUuJ?=
- =?us-ascii?Q?S3wpf0U5EeeS1ocjalVXj6NRk/9pa2OAZ+FtpgeY8mWTJklK5i2Sfua390sn?=
- =?us-ascii?Q?T99eaC4hQ2uPj6F/d2l8UC+D7UUaZaHVU07vvIMOUyhB36i94y8BkRJXtxl9?=
- =?us-ascii?Q?L/f1PWymNDeHywHv/KWWBfysz5r/u8FF+o82hVWQOHTDDu2XnBxF2puIljiD?=
- =?us-ascii?Q?PNWDSd08mUpuH2XDFX4nczJ4BTpZxWv+PFR+BrUBYmYh7EafrxTiPke+F/hs?=
- =?us-ascii?Q?X0AUZxyJvP2GLRZI6WReK6vIqVehe9OqZEGGxgbpfC1GRdjUEriqfmtqMu4R?=
- =?us-ascii?Q?/gKGtXjYDg5tX0iHw83D4ePhglhqAh1kE4Vv84RlS7H0cEq+c0f/iYo1e3QH?=
- =?us-ascii?Q?w6YIm15EXj60nryPpXJ+RkHIh+NUIzSda5/BHVeaQcv9LSJz308u5s1P42WT?=
- =?us-ascii?Q?WjFxf0oBStgW8LKXBXxhoyiqGnBsY347zLOvJr+1VdC0ZQxT5zeLWlQOAgox?=
- =?us-ascii?Q?uQ=3D=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 35f3f63d-f181-4d55-4d32-08daf25d998c
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR0402MB3902.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2023 16:21:45.3335
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jVqCVzmORgEZ59MhCxotsZdIQW+rk6iIJpF5SaQeEo9I2ak42+8tz+atjVyITWIGI9BvuT949iCLpbLbOQORgg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7840
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12-dev-8b3d1
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-It looks like there are some issues with this patchset... :/ I just
-fetched the drm-tip and, with these patches included, the "Hot plug
-detection already enabled" warning is back for i.MX DCSS.
-
-After a short investigation, it seems that we end up calling
-drm_bridge_hpd_enable() from both drm_kms_helper_poll_init() and
-drm_fbdev_generic_setup(), hence the warning.
-
-There are drivers using the drm_bridge_connector API that also call
-drm_kms_helper_poll_init() followed by drm_fbdev_generic_setup(). So,
-they might experience the same behavior, unless I'm missing something...
-:/
-
-Also, even if drm_fbdev_generic_setup() is not called in the driver
-initialization, the warning will still appear the first time the
-GETCONNECTOR ioctl is called, because that'll call
-drm_helper_probe_single_connector_modes() helper which will eventually
-call drm_bridge_hpd_enable().
-
-Any idea?
-
-Cheers,
-Laurentiu
-
-On Wed, Nov 02, 2022 at 09:06:58PM +0300, Dmitry Baryshkov wrote:
-> From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
-> DRM driver do a proper work of calling
-> drm_bridge_connector_en/disable_hpd() in right places. Rather than
-> teaching each and every driver how to properly handle
-> drm_bridge_connector's HPD, make that automatic.
+On Tue, 27 Dec 2022 17:31:33 +0100, Krzysztof Kozlowski wrote:
+> SC7280 LPASS CPU device node comes with required-opps:
 > 
-> Add two additional drm_connector helper funcs: enable_hpd() and
-> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
-> is the time where the drm_bridge_connector's functions are called by the
-> drivers too).
+>   sc7280-herobrine-crd.dtb: audio@3987000: Unevaluated properties are not allowed ('required-opps' was unexpected)
 > 
-> Changes since v2:
->  - Fixed a typo in the commit message of the second patch.
 > 
-> Changes since v1:
->  - Rebased on top of v6.1-rc1
->  - Removed the drm_bridge_connector_enable_hpd() from
->    drm_bridge_connector_init()
->  - Removed extra underscore prefix from
->    drm_bridge_connector_en/disable_hpd() helpers
-> 
-> Dmitry Baryshkov (7):
->   drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
->   drm/probe-helper: enable and disable HPD on connectors
->   drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
->   drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
->   drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
->   drm/omap: stop using drm_bridge_connector_en/disable_hpd()
->   drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
-> 
->  drivers/gpu/drm/drm_bridge_connector.c   | 27 +++-------------
->  drivers/gpu/drm/drm_probe_helper.c       | 40 ++++++++++++++++++-----
->  drivers/gpu/drm/imx/dcss/dcss-dev.c      |  4 ---
->  drivers/gpu/drm/imx/dcss/dcss-kms.c      |  2 --
->  drivers/gpu/drm/msm/hdmi/hdmi.c          |  2 --
->  drivers/gpu/drm/omapdrm/omap_drv.c       | 41 ------------------------
->  include/drm/drm_bridge_connector.h       |  2 --
->  include/drm/drm_modeset_helper_vtables.h | 22 +++++++++++++
->  8 files changed, 59 insertions(+), 81 deletions(-)
-> 
-> -- 
-> 2.35.1
-> 
+
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/3] ASoC: dt-bindings: qcom,lpass-cpu: Document required-opps
+      commit: a1df78540da20b9ce30a5b24b395d2b4a0f4319e
+[2/3] ASoC: dt-bindings: qcom,lpass-cpu: Fix DAI children pattern
+      commit: 5f9cd0f7c1499174b099a1bda67693df268e711e
+[3/3] ASoC: dt-bindings: qcom,lpass-cpu: Correct and constrain clocks, interrupts, reg
+      commit: ffb2bbdf79d7e712782fd5f44fc250f3e07b3b92
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
