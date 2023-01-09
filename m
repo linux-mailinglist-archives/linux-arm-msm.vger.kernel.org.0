@@ -2,122 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB8FA661D08
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 04:52:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2BFB661DDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 05:32:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236358AbjAIDwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Jan 2023 22:52:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47524 "EHLO
+        id S236800AbjAIEcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Jan 2023 23:32:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236538AbjAIDvy (ORCPT
+        with ESMTP id S234286AbjAIEcS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Jan 2023 22:51:54 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0715712083;
-        Sun,  8 Jan 2023 19:51:10 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3093aXV6024772;
-        Mon, 9 Jan 2023 03:50:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=irCZQ655pP3PtOVYmrfy/sVDGrj/3j/A/fVeyRtcm5Q=;
- b=JNwQmtqP5Qhi+sDixe2Ii3QoEKmBYeDhC1+2OsgDxcancOen+G5xiggBVhDt48lhlBpC
- Ssg4m8ZxqWUgr2IpeKgfyaiq/kjwtXKAHQd5s5cfKg/r8TWvv68LtoQILTWYAnRZ9wrr
- Tnd/tj657F4JpGWFLfHBB4jjRHDsXTKk94oK8a9dglNJK+E8j8TKawQFP0XlqzKCtBTE
- ooKki2xEHwB1dA823MS/yfhYfx29vGIzkS1N0wqtVAXe1XTOlEgvMEeXeUtVZCiUp5Rm
- Yz91S0QJnxDypiowJWE3vSRTxe0frTlMrIyIv96ssX80vxf9LCe/+nizRAGzkAhOmbsx 5w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3mxx3w2dk4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Jan 2023 03:50:59 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3093ovZW004771
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Jan 2023 03:50:57 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Sun, 8 Jan 2023 19:50:53 -0800
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <robin.murphy@arm.com>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <konrad.dybcio@somainline.org>, <amit.pundir@linaro.org>,
-        <regressions@leemhuis.info>, <sumit.semwal@linaro.org>,
-        <will@kernel.org>, <catalin.marinas@arm.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V2 11/11] arm64: dts: qcom: sc7280: Add a carveout for modem metadata
-Date:   Mon, 9 Jan 2023 09:18:43 +0530
-Message-ID: <20230109034843.23759-12-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230109034843.23759-1-quic_sibis@quicinc.com>
-References: <20230109034843.23759-1-quic_sibis@quicinc.com>
+        Sun, 8 Jan 2023 23:32:18 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2160EE0BA
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Jan 2023 20:17:31 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id bf43so11163046lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Jan 2023 20:17:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6pepYcOlbjq1Fb0Er9Jysoq0IZv827b0yywGLQA/9UU=;
+        b=Nb5Y935HdAir7vdoB+Zhez9YLUbhuwLxA+/NPY8CiCerWrEitZxANN9MolET7WN/b3
+         du4YLGbIG62nSVtlqIetJanmoXAMHmJbfxNVoy14ZIytALyK/V9+omPbG5GrA/f3Q8pl
+         UkcVCdAa7niotLFn/GzRcUXLxEWBgf0AvoE1tgVhlCO/86qefUj8sef46vaKy/CWGDK2
+         EQjTlSjB8hD/X++mjEvEo/IPK4iteLgUQXKNcYAqlo8vdZ5FzFVY31K7RelXQ1lk1Zvf
+         MZGkYCvSO136s4a0BdUewyWYtSGywzNP/+noym+Pu09nwYqz4oiH2EDR6GZUsnBzrYR6
+         eTdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6pepYcOlbjq1Fb0Er9Jysoq0IZv827b0yywGLQA/9UU=;
+        b=oEmv2jniBXKOkFQV80LCfcNmNRvL6gbPpBbIpCePSPdNdOOw6gqzz1Y9kcJWHLrXiT
+         oTUbhFuYs/2eZIkeKZF0//ZUlZbv1hmf6/ZejKFFfyUEDlRtt0bW4X+tL2zSUR3EqESw
+         jvGIqgLYv0ZgU/vHscB7TYskS62ZJiwcE5E0YpxPvqAKLFUrjIBQcxWdLT4yezQ4Knd8
+         Dw+Q11pZT+tJ6At1ARzdilWpYVU/TkPnuQxJB6jpVgdyjFbwk7L6qFkQPi/GrxM0qZeb
+         b6xhJoWDF25gtpngznllRMOjjEtUoXUxdrCEoUiaH/ZAikBdQwG8KNEFdRmTQSQ2PfdO
+         nuJA==
+X-Gm-Message-State: AFqh2ko8dGzlMLL0VAodLBxM1qqzL1AeEZ70S3MJRu4245M3fzxyVBIm
+        5ETLllgIaCMzSTCFlWtfkEqR9E5685JxpzhQ
+X-Google-Smtp-Source: AMrXdXvV02e4CGBP6DMQqSoNtB+DJhGxb5MWOcQnXZoEAN6yuYWCPusM8UnsPUoewZxK7psbONNpYQ==
+X-Received: by 2002:a05:6512:3e10:b0:4a4:68b8:f4f0 with SMTP id i16-20020a0565123e1000b004a468b8f4f0mr20390606lfv.54.1673237849397;
+        Sun, 08 Jan 2023 20:17:29 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id a15-20020ac25e6f000000b0049482adb3basm1397940lfr.63.2023.01.08.20.17.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 20:17:28 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sdm845: make DP node follow the schema
+Date:   Mon,  9 Jan 2023 06:17:28 +0200
+Message-Id: <20230109041728.308725-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _QvwmrwaSetmo942ySwUJVyC4VSXZNCh
-X-Proofpoint-GUID: _QvwmrwaSetmo942ySwUJVyC4VSXZNCh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-08_19,2023-01-06_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 suspectscore=0 mlxscore=0 phishscore=0
- impostorscore=0 mlxlogscore=991 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301090025
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a new carveout for modem metadata on SC7280 SoCs.
+Drop the #clock-cells (leftover probably from the times before the DP
+PHY split) and rename dp-opp-table to just opp-table.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Fixes: eaac4e55a6f4 ("arm64: dts: qcom: sdm845: add displayport node")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-v2:
- * Split dt/bindings per SoC  [Krzysztof] 
-
- arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-index efd513164501..3a4074d6e5b7 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
-@@ -17,6 +17,11 @@
- 			reg = <0x0 0x9c700000 0x0 0x200000>;
- 			no-map;
- 		};
-+
-+		mdata_mem: memory@9d100000 {
-+			reg = <0x0 0x9d100000 0x0 0x4000>;
-+			no-map;
-+		};
- 	};
- };
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 9e881e19b984..fa62479206ce 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4593,7 +4593,6 @@ mdss_dp: displayport-controller@ae90000 {
+ 					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+ 				clock-names = "core_iface", "core_aux", "ctrl_link",
+ 					      "ctrl_link_iface", "stream_pixel";
+-				#clock-cells = <1>;
+ 				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+ 						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+ 				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+@@ -4619,7 +4618,7 @@ port@1 {
+ 					};
+ 				};
  
-@@ -37,7 +42,7 @@
+-				dp_opp_table: dp-opp-table {
++				dp_opp_table: opp-table {
+ 					compatible = "operating-points-v2";
  
- 	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
- 	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
--	memory-region = <&mba_mem>, <&mpss_mem>;
-+	memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
- 	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
- 			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
- 
+ 					opp-162000000 {
 -- 
-2.17.1
+2.39.0
 
