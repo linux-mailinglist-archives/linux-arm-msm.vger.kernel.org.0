@@ -2,196 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F031661FE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:21:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AF66661FDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 09:20:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbjAIIVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 03:21:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39224 "EHLO
+        id S236358AbjAIIUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 03:20:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236505AbjAIIU6 (ORCPT
+        with ESMTP id S234293AbjAIIUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 03:20:58 -0500
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0DB45F52;
-        Mon,  9 Jan 2023 00:20:57 -0800 (PST)
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 3098KEbE005525;
-        Mon, 9 Jan 2023 02:20:14 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1673252414;
-        bh=98nckAPo1vAa2VGOJss+hU8H+5NzLRli7Jdtq00XhZY=;
-        h=Date:Subject:To:CC:References:From:In-Reply-To;
-        b=q0acF1k/8t89ewEtD4TmAH1DhJ+uNyOhwCC3+3eOs+XyUeNukbiDcI8P+4TB3IKG9
-         kN+m4dRTxa+/HdnA0A8x4rThnpkpg+UzXS17O8eJhMS4IB9ho2Yy+SBsGOXBjdqpqG
-         WeMWjxNXqxjpBNgiV5d0bmOxQwlDIHaWbklT05L4=
-Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 3098KE8X123160
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 9 Jan 2023 02:20:14 -0600
-Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE115.ent.ti.com
- (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Mon, 9
- Jan 2023 02:20:13 -0600
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE110.ent.ti.com
- (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Mon, 9 Jan 2023 02:20:13 -0600
-Received: from [10.24.69.26] (ileaxei01-snat.itg.ti.com [10.180.69.5])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 3098K8s1022473;
-        Mon, 9 Jan 2023 02:20:09 -0600
-Message-ID: <f7bf366a-dc32-47a2-79fc-c6f7f1f93ab7@ti.com>
-Date:   Mon, 9 Jan 2023 13:50:08 +0530
+        Mon, 9 Jan 2023 03:20:20 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05852DF40
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 00:20:19 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id h16so7297999wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 00:20:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CYyp5XDyMRmrPqmynKHIyJjVDqDm5Chh7Zml32+BipY=;
+        b=zTOCGwY56/f5Z1Eki0rfCFmDAHRfvpvEOGhKsUuiVnhIHF8TTAukLvemA8Rh1gH6iH
+         no9OCSVIsHO9GAp1dMmhukvQmYTsCwB+TtQIQkV73NFeuCNn0WR3g9N4gADoPNIT/Hlj
+         5yInInLZM+Iw7CSkSkRg3XoIOMbxRN2BR5PQpzTKDrMiHgOUTTwahxrKoo3RJ1CgJ8tG
+         DiVYxZUJDFr2orRWYQ0USmsHdvtJ1SmQWqwQq+mk53POs+rUSZVmtKEk0FrLtNpc0gG4
+         2hGN5/l4ivWEd5JZgCHwtCO0r0Ete2u0g7YeCoJQfwV2MgsAsqibVzY84Uiu7AdcrGVm
+         8fRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CYyp5XDyMRmrPqmynKHIyJjVDqDm5Chh7Zml32+BipY=;
+        b=oqJlv+jTkisyAQagdBrgzD1f/vl6al+DJpd8tF0CBfYi88fYyDxqe06+ah/sRUbivO
+         Sh3DkZzgDFW7dBqb8MlhJoduqs0Z4w8hdOMjQIzMjGoZOmRf4w7Txb6TwZwNaUrT+ps6
+         tT7nCTF+y3LSF3/KnF3n2x/Qc2h5VPaj9DeNG8lJWdx0LKxqWLMrkSXcJVgAC+94wPuh
+         AAAZN90f3zy5c7vCqvko9Sl4LY4jTZJcQgA6Ny53AQzhEeTYRc6P9dX5jcYgvfgeUKLG
+         DfoeopXVyLAWYG3yeviINrg9XA0RVkVJsLbQkh4LGOJp7SotOLBzXd4unyiLcFi2TCW7
+         jE9g==
+X-Gm-Message-State: AFqh2kpPPlaONvq82jNg7fXpMzZKX49cHlQrzKvBRS6ajONPqDIH1TJk
+        wJafNwSJ5olkWtIEyh3oMKHo4A==
+X-Google-Smtp-Source: AMrXdXuS4SsXEvDjtamC9p7y7+wI0Z3KLE2gqiRlvwPweAiNeB7fCc1XlwUcmftBZTJTntulUNozMg==
+X-Received: by 2002:adf:ea91:0:b0:2a3:44e9:4ebb with SMTP id s17-20020adfea91000000b002a344e94ebbmr11799768wrm.15.1673252417545;
+        Mon, 09 Jan 2023 00:20:17 -0800 (PST)
+Received: from [192.168.7.111] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id p16-20020a5d4590000000b0026fc5694a60sm7896542wrq.26.2023.01.09.00.20.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 00:20:17 -0800 (PST)
+Message-ID: <129fa2ba-2399-067a-bc04-49e08eee2f55@linaro.org>
+Date:   Mon, 9 Jan 2023 09:20:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2] drm/msm/dsi: Add missing check for
- alloc_ordered_workqueue
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <marijn.suijten@somainline.org>, <vkoul@kernel.org>,
-        <dianders@chromium.org>, <marex@denx.de>,
-        <vladimir.lypak@gmail.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230109025044.27766-1-jiasheng@iscas.ac.cn>
+ Thunderbird/102.6.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/6] dt-bindings: display/msm: document the SM8550 DSI PHY
 Content-Language: en-US
-From:   Dhruva Gole <d-gole@ti.com>
-In-Reply-To: <20230109025044.27766-1-jiasheng@iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org>
+ <20230103-topic-sm8550-upstream-mdss-dsi-v1-1-9ccd7e652fcd@linaro.org>
+ <f8c8076e-2ac3-f67b-7641-d0c324784cb5@linaro.org>
+ <5f1a846b-d536-f013-f311-2773945317bb@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <5f1a846b-d536-f013-f311-2773945317bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 09/01/23 08:20, Jiasheng Jiang wrote:
-> Add check for the return value of alloc_ordered_workqueue as it may return
-> NULL pointer and cause NULL pointer dereference.
-> Moreover, change the "goto fail" into "return ret" and drop the "fail"
-> label since they are the same.
+On 09/01/2023 00:09, Dmitry Baryshkov wrote:
+> On 06/01/2023 17:41, Krzysztof Kozlowski wrote:
+>> On 04/01/2023 10:08, Neil Armstrong wrote:
+>>> Document the SM8550 DSI PHY which is very close from the 7nm
+>>> and 5nm DSI PHYs found in earlier platforms.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>>> index bffd161fedfd..f72727f81076 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+>>> @@ -15,6 +15,7 @@ allOf:
+>>>   properties:
+>>>     compatible:
+>>>       enum:
+>>> +      - qcom,dsi-phy-4nm-8550
+>>>         - qcom,dsi-phy-5nm-8350
+>>>         - qcom,dsi-phy-5nm-8450
+>>
+>> Poor patterns once allowed like to keep growing... I commented here:
+>> https://lore.kernel.org/all/ccbb47e4-d780-0b1d-814e-27e86b6c369c@linaro.org/
+>>
+>> so let's wait for response about other compatibles.
 > 
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-> ---
+> I have fixed 8350 & 8450 while applying. Please rebase on top of msm-next-lumag-next with fixed compatibles.
 
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Ack
 
-> Changelog:
+Thanks,
+Neil
+
 > 
-> v1 -> v2:
+> Note: the DPU changes are not yet part of the msm-lumag-next.
 > 
-> 1. Change the "goto fail" into "return ret" and drop the "fail" label.
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 24 +++++++++++++-----------
->   1 file changed, 13 insertions(+), 11 deletions(-)
+>>
+>>>         - qcom,dsi-phy-7nm
+>>>
+>>
+>> Best regards,
+>> Krzysztof
+>>
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 89aadd3b3202..819f5be5fd77 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1884,7 +1884,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
->   	if (!msm_host) {
->   		ret = -ENOMEM;
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	msm_host->pdev = pdev;
-> @@ -1893,14 +1893,14 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   	ret = dsi_host_parse_dt(msm_host);
->   	if (ret) {
->   		pr_err("%s: failed to parse dt\n", __func__);
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
->   	if (IS_ERR(msm_host->ctrl_base)) {
->   		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
->   		ret = PTR_ERR(msm_host->ctrl_base);
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	pm_runtime_enable(&pdev->dev);
-> @@ -1909,7 +1909,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   	if (!msm_host->cfg_hnd) {
->   		ret = -EINVAL;
->   		pr_err("%s: get config failed\n", __func__);
-> -		goto fail;
-> +		return ret;
->   	}
->   	cfg = msm_host->cfg_hnd->cfg;
->   
-> @@ -1917,7 +1917,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   	if (msm_host->id < 0) {
->   		ret = msm_host->id;
->   		pr_err("%s: unable to identify DSI host index\n", __func__);
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	/* fixup base address by io offset */
-> @@ -1927,19 +1927,19 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   					    cfg->regulator_data,
->   					    &msm_host->supplies);
->   	if (ret)
-> -		goto fail;
-> +		return ret;
->   
->   	ret = dsi_clk_init(msm_host);
->   	if (ret) {
->   		pr_err("%s: unable to initialize dsi clks\n", __func__);
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
->   	if (!msm_host->rx_buf) {
->   		ret = -ENOMEM;
->   		pr_err("%s: alloc rx temp buf failed\n", __func__);
-> -		goto fail;
-> +		return ret;
->   	}
->   
->   	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
-> @@ -1977,15 +1977,17 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   
->   	/* setup workqueue */
->   	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
-> +	if (!msm_host->workqueue) {
-> +		ret = -ENOMEM;
-> +		return ret;
 
-Why not simply return -ENOMEM;
-instead?
-
-> +	}
-> +
->   	INIT_WORK(&msm_host->err_work, dsi_err_worker);
->   
->   	msm_dsi->id = msm_host->id;
->   
->   	DBG("Dsi Host %d initialized", msm_host->id);
->   	return 0;
-> -
-> -fail:
-> -	return ret;
->   }
->   
->   void msm_dsi_host_destroy(struct mipi_dsi_host *host)
-
--- 
-Thanks and Regards,
-Dhruva Gole
