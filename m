@@ -2,96 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB8A466305E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 20:30:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D0BB663072
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 20:34:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231290AbjAITax (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 14:30:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36034 "EHLO
+        id S237472AbjAITeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 14:34:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbjAITau (ORCPT
+        with ESMTP id S237582AbjAITeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 14:30:50 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA7F4567F;
-        Mon,  9 Jan 2023 11:30:49 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EDFEFB80F99;
-        Mon,  9 Jan 2023 19:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A82C433D2;
-        Mon,  9 Jan 2023 19:30:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673292646;
-        bh=D9h+LJE2T8SlbPty+fmHmTuaXHKl3hmksa7N6tUAx+E=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=kT5uNYV7Pts0HhI97BaftP14ZsQvh99iw1FkNIWveZIWCpbVgMvKA6qTKbjlLTTVR
-         RiC1DqdTPSG64NJ1FB50/CM99KzG9hYXdyWXRoJKShSeSZiwIig42xWUt+mP97vKqs
-         XWitwyiPWOE/XiwIp8t08uo9CKlm6wrAwgON8oub/bRsYJTtAHM2Oh46l/4Mdb0yHH
-         TXtG21dV8HVIV8yfbx2ZJbHCsqHRxqTemHnURyZHsz3KdjA1qEQrnD34upxvVxd4q9
-         QKQwDtskJQ+aFGkL15zxgkbW8ax+Fx/LVF5ePElrfGn77nDLWu+jzTY08yQeqE0XS9
-         V3K+Ve8YwLUrQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+        Mon, 9 Jan 2023 14:34:00 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B8463B3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 11:33:59 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id h16so9291226wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 11:33:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9EGAARif97svm43WKQHpTah2AyhIqRbyKB8mnpK2KoM=;
+        b=FN24xWhjGLoTMj4wniz93gpIal1LKDyeNvlCERxakutz4BhNniu2K5kQxqw6wquK0t
+         G1cmo26HRw1BKyjaa/qfRWa06G1/1ZipE0RJTPXj+roz3L3mbTJKe3By8mD2VplCESEd
+         NTssJ+cfKGxpNWZ8X3a1fbc4Heqo/V+L9w1fcNgKIgvmVkqNEsoEbS0cIkRjnXrhlX+B
+         O+6n4QdtTkVuyaiTY2s3Ro3Po8Zadfgq3NXUv8CUFfxg9v0gPymTJteY+jKY9rRwtDky
+         aJlzLzWH5o2xh1VIporHV7OSSwnPs3QYyi9K6E5MufrHSQ/SLgyzcqw9VWeTnzA0eARV
+         c/wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9EGAARif97svm43WKQHpTah2AyhIqRbyKB8mnpK2KoM=;
+        b=2j/JAhjtxuW5yoJnUGEWnUI5U3Y5dJCc62TTts/OmPourEaK6mEX6rxjkX+oDur0Yd
+         371z/kxv1vfhhrVV3tYFzBwc0cFnt30wkcbC1b/fH5oY3GYgAJtryQFkKaJzOVfDsyFw
+         p9q1FT3tEwJGOE3jpuV8/MlVC8/8aKmaFNQOoOkDb6UPAcB/42su4WxksbStIDE4HgQz
+         nXyKrjys3jXWopR/kKSvasu6JyalQhMt4xRA3BCCdxgN1TFMD9iEi3vgiV8+r4HbqEA1
+         t8q6lVnKx5kzGVIcivQRRz8Hbf6rh3hXHDynMJLWmCAwMGKrMp/a4LU4nvbLVkuscVoe
+         hWIA==
+X-Gm-Message-State: AFqh2koqEJ3EXnHFOIV23I6ZXnwXxvXRf7mSTjgcPEYhkyY+/1bhQX0i
+        6Xm1Dvv2IcuzMn+Cz1VLcnZHsmAcs5KDdZHT
+X-Google-Smtp-Source: AMrXdXujuX4oRsEDqNPcClUhfWZ/stgeEBpG7Wkczu21BWmF8b0e0MO30sCiL8RFsHOkyhvZzZdqcw==
+X-Received: by 2002:a5d:69d0:0:b0:2ba:5ed7:543d with SMTP id s16-20020a5d69d0000000b002ba5ed7543dmr10402348wrw.52.1673292838124;
+        Mon, 09 Jan 2023 11:33:58 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id v14-20020adff68e000000b002365730eae8sm9274282wrp.55.2023.01.09.11.33.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 11:33:57 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>,
         Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v6-1-6c913908bb85@linaro.org>
-References: <20221005-mdm9615-pinctrl-yaml-v6-1-6c913908bb85@linaro.org>
-Subject: Re: [PATCH v6] dt-bindings: regulators: convert non-smd RPM
- Regulators bindings to dt-schema
-Message-Id: <167329264402.368499.13674722738160556788.b4-ty@kernel.org>
-Date:   Mon, 09 Jan 2023 19:30:44 +0000
+Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230103-topic-sm8550-upstream-vtdr6130-panel-v2-0-dd6200f47a76@linaro.org>
+References: <20230103-topic-sm8550-upstream-vtdr6130-panel-v2-0-dd6200f47a76@linaro.org>
+Subject: Re: [PATCH v2 0/2] drm/panel: add support for the Visionox VTDR6130
+ AMOLED DSI panel
+Message-Id: <167329283727.1538353.13855678312817983424.b4-ty@linaro.org>
+Date:   Mon, 09 Jan 2023 20:33:57 +0100
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12-dev-8b3d1
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: b4 0.11.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 09 Jan 2023 11:47:42 +0100, Neil Armstrong wrote:
-> Convert the non-SMD Regulators bindings to dt-schema, the old text based
-> bindings will be deleted later since the RPM bindings are not yet converted.
+Hi,
+
+On Mon, 09 Jan 2023 09:49:29 +0100, Neil Armstrong wrote:
+> Add support for the 1080x2400 Visionox VTDR6130 AMOLED DSI panel
+> found on the Qualcomm SM8550 MTP board.
 > 
+> By default the the panel is configured to work with DSI compressed
+> streams, but can work in uncompressed video mode since 1080x2400 in
+> RGB888 fits in the 4 DSI lanes bandwidth.
 > 
+> [...]
 
-Applied to
+Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-next)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+[1/2] dt-bindings: display: panel: document the Visionox VTDR6130 AMOLED DSI Panel bindings
+      https://cgit.freedesktop.org/drm/drm-misc/commit/?id=ef85db911134d103a7f713eae6689dbb15c3f96a
+[2/2] drm/panel: add visionox vtdr6130 DSI panel driver
+      https://cgit.freedesktop.org/drm/drm-misc/commit/?id=2349183d32d83a7635baa804934813bcad13fd62
 
-Thanks!
-
-[1/1] dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
-      commit: fde0e25b71a90e798ce9a58525d5630c90f5aa27
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+Neil
