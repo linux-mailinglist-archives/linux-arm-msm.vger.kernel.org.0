@@ -2,67 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3344F66215F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:24:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A4EE662165
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 10:26:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234827AbjAIJYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 04:24:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
+        id S233318AbjAIJ0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 04:26:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236801AbjAIJYF (ORCPT
+        with ESMTP id S231219AbjAIJ0n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:24:05 -0500
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032ABEA3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:22:54 -0800 (PST)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-4c7d35b37e2so48905437b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:22:53 -0800 (PST)
+        Mon, 9 Jan 2023 04:26:43 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F38EF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 01:26:42 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id z8-20020a05600c220800b003d33b0bda11so6786768wml.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 01:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AHuKxKGiZd4+RCaj+Vge0k5qlq7ILtvQRLFdU3PXM68=;
-        b=aqnQr+w/cnvm6qQo32nFgvHm7mAD/6PZy5zTDke2X1ThQrMX9Y71SRXB2PQuKOq+Ch
-         D8tK4/K5uMrDOhsxsmQq9Ykhmm7vSGO7IS3LrW6vmQhk7x6uxcjhW2oU3xVytZaSIn3A
-         Dzlkubi0szkiPWBi0hcsdqtT3LlCaQUKg03vdBrW66ucICrTJqHCTp2dqmqXSJx73La9
-         mFkExzjXdwjAzR7lITTiNoyOiO942Y6QXub8sgnX18UKNufUE2TLTgfS4B5eChlxjnmG
-         NjKfzWlWLdOPPAZigfNUQjqwHa9BkXEjkcwCUFFc5t07GWolYlakWBa9X9ypwGap44mf
-         eSjA==
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MWvSqhjRDjdOGajMwI2MbXsT3YyWqCAWU/iLLKmUGh0=;
+        b=aZUhZeumnG/a5YiUl5oh2vro6tywv9/wTzDqxGjC7ZWgZxBX9ACQOoPQ4T7l9dFDd3
+         Zy8HEjc1ykRWUs8KEGyGrgoDZJd28FotIx7IQUWEEF5pmym3SgFRozT6v22LStJKiPLz
+         u3zMoh9iBX59UdYDGE8NPJNdpP32+b1pSjm4mFgndQFAKGNueDiXS4isFot8GNn+pBhO
+         yKOKvRlXmWz/BlAU2N8MQkk3GpKU20Jvph6PAlgpEZfvc8rlwaIxORwlGBOHefeh7QfX
+         PVPb1KeWKfv5iAHVLdgZOro2ilk/b0FMTJBhivpqo1KbpGo9VzBK2FJ8ND8BIaheE39S
+         awDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AHuKxKGiZd4+RCaj+Vge0k5qlq7ILtvQRLFdU3PXM68=;
-        b=HwzL67Ozun8SaHrBZNDQ6SRhEqPpmLlQFpn4lrNZ7nm+rO/qauuZm+acq+5npgoHIB
-         zhzThDLZ9yK3IHWlmT5nxB1il5YpMYaVo7afZRPeeTtm1bj8jWNdAZIlq6i6UzbFRx3e
-         grNHVaDppEaE8utRcnSk4/51/FuFYe/7BZkZ9fGEDvQBqH7TgCLQnVqpvzV6gy+0HhDP
-         POtRQBhWdsOE1bw7AukEdSAdagzxx1jZ2l/cNaXL6OYG1yMGwlDjqjBzk0NL6UQo2235
-         EiGK6qKqFq3hKoFCij5LiYGkb+QrQDMZriLAi6O1a3Obx/I0CCV7pNqjjAT8VdPb2HCt
-         M3MA==
-X-Gm-Message-State: AFqh2kqESZ4v1+Abnud8bG6uySY1XzfcukeVEFKQvtyd5fu0guMjLjM+
-        d84AvBlSQnEGZSXqU5QFZeIYcIcP0/2SylENNXmjJg==
-X-Google-Smtp-Source: AMrXdXt5UN1RutCZmrib8fF4cHaCArti0sLkNxLMJeoqmMJy3AztKyKrFV9yJgZB8ncMa7vxTjCN0W/DI7vHho/Hn6E=
-X-Received: by 2002:a81:c56:0:b0:490:89c3:21b0 with SMTP id
- 83-20020a810c56000000b0049089c321b0mr5440340ywm.132.1673256173194; Mon, 09
- Jan 2023 01:22:53 -0800 (PST)
+        bh=MWvSqhjRDjdOGajMwI2MbXsT3YyWqCAWU/iLLKmUGh0=;
+        b=vg4HXHg+x4/8YHBDPoAAkxHBMmClGhARNTraJDq6cahOfzKEpMamjXE0dy+0ZIKkMR
+         QTqAxITiafUOiywpHac0pFA1OHNL1u8LO0inYsGbJGYPC3xFHS5+EGZvjF6x6FstNMTV
+         mwenlOGSR6Zps0nuF9dhKnlIN1wK1r9j6fRgzyEZ8AXKqm57/NOUPbM2Kjv9EsS84A1l
+         AAYmlQ8zppNAqdzCK26gWlHJO9VvtFzop+cg7pOjkNJQP9c19FigUaywirMudQxeludD
+         +8fUxdZNEAEFKILEA6WFOKO4/ZKXph0dsHvmejHjYrUeUrIoX6+KQaDf7m5QOSel6qJw
+         MN6g==
+X-Gm-Message-State: AFqh2kpNHJOrxsPuQMFopryVAYlV+fCjZ9JtDJ/imh0nO9sAJ8dX75fd
+        rOK1nVofebtaILH3my3w3W/rhUEwnEy6utbI
+X-Google-Smtp-Source: AMrXdXs5NwhzuhuWP/h8r1XwoVrRdCWWlr7HPQR961uxYFaxPB6TQ1jo0ypS88EVkdsmREpg8/21Mg==
+X-Received: by 2002:a05:600c:1d0e:b0:3cf:7c8b:a7c7 with SMTP id l14-20020a05600c1d0e00b003cf7c8ba7c7mr45328512wms.39.1673256400815;
+        Mon, 09 Jan 2023 01:26:40 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id s23-20020a1cf217000000b003d1e3b1624dsm15195758wmc.2.2023.01.09.01.26.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 01:26:40 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/7] drm/msm: add support for SM8550
+Date:   Mon, 09 Jan 2023 10:26:33 +0100
+Message-Id: <20230103-topic-sm8550-upstream-mdss-dsi-v2-0-87f1c16d7635@linaro.org>
 MIME-Version: 1.0
-References: <20230108211113.200846-1-dmitry.baryshkov@linaro.org> <20230109083417.5drdfllpm4ythy42@SoMainline.org>
-In-Reply-To: <20230109083417.5drdfllpm4ythy42@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 9 Jan 2023 11:22:42 +0200
-Message-ID: <CAA8EJpoVC2OW4iKcq=C-D3hejVPZ1Bd+6Nb9vPk6DVVWP2_4rQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: sort entries in the HW catalog
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMndu2MC/42OQQ6CMBBFr0K6dkwpqYIr72FclOkAk0BLOkg0h
+ LtbOYHL9xb//U0JJSZRt2JTiVYWjiGDORUKBxd6AvaZldGm0qWuYIkzI8hUW6vhNcuSyE0weRHw
+ wlBZdLVDctY0Ko+0Tgja5AIOeSa8xjHLOVHH76P6eGYeWJaYPseJtfzZv3trCRoaRH+lizUd+vv
+ IwaV4jqlXz33fvxzCjoriAAAA
+To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.11.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,56 +82,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 9 Jan 2023 at 10:34, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2023-01-08 23:11:13, Dmitry Baryshkov wrote:
-> > Different entries into the catalog were added quite randomly. Enforce
-> > the sorting order of some kind. It is not alphabetic to prevent the
-> > patch from growing uncontrollably.
->
-> Why not sort these chronologically based on DPU hardware revision in the
-> match table at the end of this file?
+This adds support for the MDSS/DPU/DSI on the Qualcomm SM8550 platform.
 
-If we keep the SoC name as part of the symbolic name, we will end up
-in another semi-random order that is a pain to verify. Would you
-remember that sm6350 comes between sm6115 and qcm2290? I would not :-(
-And changing all names to dpu_6_5_0_lms would make it easy to add but
-nearly impossible to follow.
+This patchset is based on the SM8450 display support serie at [1].
 
-> Regardless, this patch is going to
-> make it hard to properly rebase DPU additions; see for example patch 4/8
-> and 5/8 in my second round of DSC fixes.
+In order to work, the following patchsets are required:
+- PM8550 LDO fix at [2]
+- DISPCC driver at [3]
 
-Yes, quite unfortunate. As I wrote, it's already late to apply this patch :-(
++ the DT changes.
 
->
-> At the same time we should find a solution to the wishy-washy reuse of
-> structs and defines, which may appear the same initially but become
-> mismatched as more features are added (see how I had to split out
-> multiple of these in the INTF TE enablement series).
+[1] https://lore.kernel.org/all/20221207012231.112059-1-dmitry.baryshkov@linaro.org/
+[2] https://lore.kernel.org/all/20230102-topic-sm8550-upstream-fixes-reg-l11b-nldo-v1-1-d97def246338@linaro.org/
+[3] https://lore.kernel.org/all/20230103-topic-sm8550-upstream-dispcc-v1-0-81bfcc26b2dc@linaro.org/
 
-It's a slightly different problem, but yes, I share the pain.
+To: Rob Clark <robdclark@gmail.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sean Paul <sean@poorly.run>
+To: David Airlie <airlied@gmail.com>
+To: Daniel Vetter <daniel@ffwll.ch>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Jonathan Marek <jonathan@marek.ca>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
->
-> > Thus SDM comes before SC and SM
-> > platforms and QCM is kept as the last one. There are no functional
-> > changes in this patch.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >
-> > Yes, I hate such mass-moves too. However the entries in this file are
-> > slowly becoming uncontrollable. Let's enforce some order now (while it's
-> > late already, but not _that_ late).
->
-> I agree that something should happen, contributing to this file is
-> unnecessarily tough.
+---
+Changes in v2:
+- Rebased on msm-next-lumag & msm-next-lumag-dpu
+- Fixed cover letter title to SM8550
+- Patch 1: renamed compatible to qcom,sm8550-dsi-phy-4nm 
+- Patch 2: split in 2 patches, switch to renamed qcom,sm8550-dsi-phy-4nm
+- Patch 3: switch CTL to use CTL_SC7280_MASK, Added Reviewed-by
+- Patch 4: Added Reviewed-by
+- Patch 5: fixed V5.2 quirk order
+- Patch 6: Added Reviewed-by
+- Link to v1: https://lore.kernel.org/r/20230103-topic-sm8550-upstream-mdss-dsi-v1-0-9ccd7e652fcd@linaro.org
 
-In the IRC conversation Rob suggested playing with includes, but I
-don't see a good way to implement that.
+---
+Neil Armstrong (7):
+      dt-bindings: display/msm: document the SM8550 DSI PHY
+      dt-bindings: display/msm: document DPU on SM8550
+      dt-bindings: display/msm: document MDSS on SM8550
+      drm/msm/dpu: add support for SM8550
+      drm/msm: mdss: add support for SM8550
+      drm/msm/dsi: add support for DSI-PHY on SM8550
+      drm/msm/dsi: add support for DSI 2.7.0
 
+ .../bindings/display/msm/dsi-phy-7nm.yaml          |   1 +
+ .../bindings/display/msm/qcom,sm8550-dpu.yaml      | 134 +++++++++
+ .../bindings/display/msm/qcom,sm8550-mdss.yaml     | 331 +++++++++++++++++++++
+ drivers/gpu/drm/msm/Kconfig                        |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 197 ++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  16 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  88 +++++-
+ drivers/gpu/drm/msm/msm_mdss.c                     |   2 +
+ 14 files changed, 765 insertions(+), 16 deletions(-)
+---
+base-commit: 58372c69004c06773cbe74a05f2c1a4a8b23db9c
+change-id: 20230103-topic-sm8550-upstream-mdss-dsi-35ca8acea529
 
---
-With best wishes
-Dmitry
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
