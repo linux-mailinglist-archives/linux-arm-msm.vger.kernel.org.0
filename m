@@ -2,113 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EEA9662895
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:31:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DA5C6628AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:38:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232953AbjAIObs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 09:31:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56768 "EHLO
+        id S229694AbjAIOif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 09:38:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233232AbjAIObn (ORCPT
+        with ESMTP id S233446AbjAIOie (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 09:31:43 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23414F46;
-        Mon,  9 Jan 2023 06:31:42 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 309CY0h6015630;
-        Mon, 9 Jan 2023 14:31:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=To2M7m8ifpIWIdwpFICEz3ryGg079W9y4tN8/QOGdV4=;
- b=C8hhFRcNZoSAPYaBcWSIn41fhcMKbBRPq0+XpDXrxiYoeFElBGJe7WXV2Wgrgv7ETwW1
- tFlpzy2g4immZDqO4v0U6sifj/Lb7pa7KJ0z6fozAR8C55omc+8jIW/E0FZ02eq79K4E
- eFOjxy07sm04gP2Br904yWKwUXgpOTTeh1CfEotCihmDtY+L9hwXu289h3fBJwoeAgw5
- jEfDT3H3VCyaBr3WFwkvOrPcyLO4FSwPwHGxR3cuM1hGJbURpG0P0q2O5OM5t34xl+DB
- OC7kmV+sZ1L82lhQ81kR0XX4xpG9GUvOJrKaz67rZpGqnRhIM5JXpXIE/Sk8fpd/1bZC nw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my0yab96p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Jan 2023 14:31:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 309EVYIk008829
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Jan 2023 14:31:34 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 9 Jan 2023 06:31:31 -0800
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Masami Hiramatsu <mhiramat@kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V0 1/1] bootconfig: Increase max size of bootconfig from 32 KB to 256 KB for DCC support
-Date:   Mon, 9 Jan 2023 20:01:05 +0530
-Message-ID: <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1673261071.git.quic_schowdhu@quicinc.com>
-References: <cover.1673261071.git.quic_schowdhu@quicinc.com>
+        Mon, 9 Jan 2023 09:38:34 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD171CB1C;
+        Mon,  9 Jan 2023 06:38:33 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 5788DCE0FBC;
+        Mon,  9 Jan 2023 14:38:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DCBC433F2;
+        Mon,  9 Jan 2023 14:38:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673275110;
+        bh=dOeSwMKGvRNuz4WJuRYWtXnG3/9WM48jAqD2wl4VfkQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Aj0vHOGgvle1zCfahAhr7spS9NcDdXwTm9CYuz/BwCs10p4bGGy5+i9/n734juKs+
+         1P3ZyUSvpZx4yRKaa+zZX0HJuTcdOKL/G/6MPDkj+J8EoJnCSCAgnZKiy2WY/bXcbb
+         GZGV4LQMzU5b53Nhr+p/KsW8x8OvEF8tN0QANWAR8tor7aiIZAe7n3f0pLlowZx/Ur
+         10DktQIHm41mtvwMavyrKF+uCH4vrZqHYrrvg26gE7DQN7xhEKWb1CW82LeZ/3XYKm
+         q4XxXfOhlPZFn8Txy6xAf2JVlzmTBi6qEpvQzCz4iZaVHhjbR3N5u+qtPTfE6MdF3S
+         JuWl5DFRVuvEw==
+Received: by mail-lf1-f49.google.com with SMTP id bu8so13280880lfb.4;
+        Mon, 09 Jan 2023 06:38:30 -0800 (PST)
+X-Gm-Message-State: AFqh2kr5ODL5+NIzIQRXW0I3czI1Va5boqvzvgDsWe9MSchtoj9tpKFw
+        SlCy0cHOvzRDteFG+xwSQIZ/Fp5dp7nWikwVlPA=
+X-Google-Smtp-Source: AMrXdXubWmp42AOnDDbvW893PnJh//psRIvKXySJgdZx2yOjMVMItn35U11hxuSFGhah+kWcS/UtCIYYozqISObsYwk=
+X-Received: by 2002:ac2:5e65:0:b0:4a2:740b:5b02 with SMTP id
+ a5-20020ac25e65000000b004a2740b5b02mr2602735lfr.122.1673275108696; Mon, 09
+ Jan 2023 06:38:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NsW1RMkj6V-w0IFwYdL-EqcGWixwojvg
-X-Proofpoint-ORIG-GUID: NsW1RMkj6V-w0IFwYdL-EqcGWixwojvg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-09_08,2023-01-09_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=988 adultscore=0
- malwarescore=0 clxscore=1015 phishscore=0 bulkscore=0 priorityscore=1501
- mlxscore=0 impostorscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301090104
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+References: <63bc16ce.IBWX7dhtPEB7dLIq%lkp@intel.com>
+In-Reply-To: <63bc16ce.IBWX7dhtPEB7dLIq%lkp@intel.com>
+From:   Ard Biesheuvel <ardb@kernel.org>
+Date:   Mon, 9 Jan 2023 15:38:17 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXGAf7ikEU5jLoik0xrOde0xBg0yJkOo5=PtEtNXoUxMXA@mail.gmail.com>
+Message-ID: <CAMj1kXGAf7ikEU5jLoik0xrOde0xBg0yJkOo5=PtEtNXoUxMXA@mail.gmail.com>
+Subject: Re: [linux-next:master] BUILD REGRESSION 543b9b2fe10b2e12b8d773af65314d322f91e479
+To:     kernel test robot <lkp@intel.com>
+Cc:     Andrew Morton <akpm@linux-foundation.org>,
+        speakup@linux-speakup.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Increasing the memory size of bootconfig to be able to handle a max number of
-8192 nodes to be fitted in memory size of 256KB.
+On Mon, 9 Jan 2023 at 14:31, kernel test robot <lkp@intel.com> wrote:
+>
+> tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+> branch HEAD: 543b9b2fe10b2e12b8d773af65314d322f91e479  Add linux-next specific files for 20230109
+>
+> Error/Warning: (recently discovered and may have been fixed)
+>
+> aarch64-linux-ld: ID map text too big or misaligned
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- include/linux/bootconfig.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This is caused by linker veneers ('stubs') that are emitted into the
+ID map text section:
 
-diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
-index 1611f9d..64d233b 100644
---- a/include/linux/bootconfig.h
-+++ b/include/linux/bootconfig.h
-@@ -55,11 +55,11 @@ struct xbc_node {
- } __attribute__ ((__packed__));
- 
- #define XBC_KEY		0
--#define XBC_VALUE	(1 << 15)
--/* Maximum size of boot config is 32KB - 1 */
-+#define XBC_VALUE	(1 << 18)
-+/* Maximum size of boot config is 256KB - 1 */
- #define XBC_DATA_MAX	(XBC_VALUE - 1)
- 
--#define XBC_NODE_MAX	1024
-+#define XBC_NODE_MAX	8192
- #define XBC_KEYLEN_MAX	256
- #define XBC_DEPTH_MAX	16
- 
--- 
-2.7.4
+ *(.idmap.text)
+ .idmap.text    0xffffffc018c04000       0x38 arch/arm64/kernel/hyp-stub.o
+ .idmap.text    0xffffffc018c04038       0x28 arch/arm64/kernel/sleep.o
+                0xffffffc018c04038                cpu_resume
+ .idmap.text    0xffffffc018c04060       0x38 arch/arm64/kernel/cpu-reset.o
+                0xffffffc018c04060                cpu_soft_restart
+ .idmap.text    0xffffffc018c04098      0x468 arch/arm64/kernel/head.o
+                0xffffffc018c04098                init_kernel_el
+                0xffffffc018c04290                secondary_holding_pen
+                0xffffffc018c042c8                secondary_entry
+                0xffffffc018c043c4                __enable_mmu
+                0xffffffc018c0440c                __cpu_secondary_check52bitva
+ .idmap.text    0xffffffc018c04500      0x3c4 arch/arm64/mm/proc.o
+                0xffffffc018c04500                cpu_do_resume
+                0xffffffc018c045a8                idmap_cpu_replace_ttbr1
+                0xffffffc018c045d4                idmap_kpti_install_ng_mappings
+                0xffffffc018c047bc                __cpu_setup
+ *fill*         0xffffffc018c048c4        0x4
+ .idmap.text.stub
+                0xffffffc018c048c8     0xf7c8 linker stubs
+                0xffffffc018c1c8c8                __idmap_text_end = .
 
+It seems unlikely that the entire .idmap.text.stub section is
+dedicated to veneers for code in .idmap.text, and the linker probably
+dumps them here because the next output section is non-executable.
+
+I have patches on the list that move the ID map out of the .text
+section altogether (among other things) and this seems like a suitable
+workaround for this issue as well.
+
+https://lore.kernel.org/all/20221129161418.1968319-3-ardb@kernel.org/
