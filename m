@@ -2,112 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACC12662892
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:31:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E88A9662894
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 15:31:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbjAIOau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 09:30:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56028 "EHLO
+        id S232369AbjAIObr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 09:31:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232000AbjAIOaq (ORCPT
+        with ESMTP id S232864AbjAIObn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 09:30:46 -0500
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8CC914020;
-        Mon,  9 Jan 2023 06:30:41 -0800 (PST)
-Received: by mail-ot1-f47.google.com with SMTP id k7-20020a056830168700b0067832816190so5260766otr.1;
-        Mon, 09 Jan 2023 06:30:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UE++8EdSaegTLJvzSEIrReUrSk6uUX3CF0ejl5VTJTI=;
-        b=ZPCr4kwXJPBysOnTuiZnQMPQGUVyZrKRjAihj7qBG+z+JX+Zm28xSVbsoA3tsZjcRb
-         ptb0obdtCxpCvJoBrNTlJjSNiEEGXk/L5w5T24uiGhiOoybGegmfu25cZ+KojYcQqfQe
-         XVUOqDUlG7BcTaIq5ZGG4lNgJKjW1JTzoEfi5BLikjmu7vibj0u8UcFmoMcKuegFiA7Q
-         LFe7qlhpM4h8XJ9UW8i3FOtKhgHFB525JqAS+0jH1ZyXbiU5rNDLRLnPU8EyygEPsf/K
-         E/FaXN9FrTdFdBJd0zn3YqWTxUkzDDIy7O7Bh43sXyD10LCwSEg0wLDPzewMsJfWQo03
-         eccA==
-X-Gm-Message-State: AFqh2krYhdyWUeSASOQUXJIXRoSnNg3ZGSX4+u/MnceOTxzmMfI1bWqq
-        Xx3P5Q8nSVDIFMQ0HMuYhw==
-X-Google-Smtp-Source: AMrXdXsMx6Hp7QO+rlvaMC7V61ifGq2ozMwS7h1TMz+wwTEzEqLkxvI56aVPEgKY0QSPaC7YYZhgzg==
-X-Received: by 2002:a05:6830:1da6:b0:670:a09e:c7d2 with SMTP id z6-20020a0568301da600b00670a09ec7d2mr41532583oti.30.1673274641141;
-        Mon, 09 Jan 2023 06:30:41 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l21-20020a9d7a95000000b0067c87f23476sm4554359otn.57.2023.01.09.06.30.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 06:30:39 -0800 (PST)
-Received: (nullmailer pid 237527 invoked by uid 1000);
-        Mon, 09 Jan 2023 14:30:36 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Mon, 9 Jan 2023 09:31:43 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B8D654E;
+        Mon,  9 Jan 2023 06:31:42 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 309DBCHM020698;
+        Mon, 9 Jan 2023 14:31:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=62HdukqYPMV75t04yPVpNh5jiURq5K9MvpCo7sCNlZQ=;
+ b=DPqgfHFGI7fDCt7lYbP6Y4HPfOF8lbJucZPfcY8xmkYAY0vRP0lMn3q60FsheMptK4gG
+ PHFi0ohHK2amoC4mGcO+E2fxFEDO280c1FFOQm5tdcM6untkk+jAqEhh52/X8iSuHDgD
+ mvPTCTy/Mz1XnRLTQawIAAq6V1NIhKa/7acHhiLEn7IMj0x+o97lefcJ6fGrAq8aEXlh
+ Nmf5T2MSLsgI8ypN7YM9OChs1XZNYvb2ykyBizvP6u3BXX2+1izS5cYe0p3V2y8x3h1n
+ 49v7oEhXaXsUUhnYcF217swIOgHx8ZLntACp1BI6O92yQLu1z7A3If+mNDzSdv5stwvv aA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my0yab96j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Jan 2023 14:31:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 309EVVj6007219
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Jan 2023 14:31:31 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 9 Jan 2023 06:31:28 -0800
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Masami Hiramatsu <mhiramat@kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V0 0/1] bootconfig: Increase size and node limit of bootconfig for DCC support
+Date:   Mon, 9 Jan 2023 20:01:04 +0530
+Message-ID: <cover.1673261071.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>
-In-Reply-To: <20230109050152.316606-2-dmitry.baryshkov@linaro.org>
-References: <20230109050152.316606-1-dmitry.baryshkov@linaro.org>
- <20230109050152.316606-2-dmitry.baryshkov@linaro.org>
-Message-Id: <167327380589.69610.9769499605356993935.robh@kernel.org>
-Subject: Re: [PATCH v5 1/4] dt-bindings: display/msm: convert MDP5 schema to
- YAML format
-Date:   Mon, 09 Jan 2023 08:30:36 -0600
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: c3wHp8IzG8SPi5K7vnZ1EoFFWxLyIkAo
+X-Proofpoint-ORIG-GUID: c3wHp8IzG8SPi5K7vnZ1EoFFWxLyIkAo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-09_08,2023-01-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=550 adultscore=0
+ malwarescore=0 clxscore=1011 phishscore=0 bulkscore=0 priorityscore=1501
+ mlxscore=0 impostorscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301090104
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Data Capture and Compare(DCC) is a debugging tool that uses the bootconfig
+for configuring the register values during boot-time. Increased the max size
+and nodes supported by bootconfig to catre to the needs of the Data Capture and
+Compare Driver. Further details on DCC is available on the below links:-
 
-On Mon, 09 Jan 2023 07:01:49 +0200, Dmitry Baryshkov wrote:
-> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
->  - MSM8996 has additional "iommu" clock, define it separately
->  - Add new properties used on some of platforms:
->    - interconnects, interconnect-names
->    - iommus
->    - power-domains
->    - operating-points-v2, opp-table
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
->  .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
->  2 files changed, 138 insertions(+), 132 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
-> 
+https://lore.kernel.org/linux-arm-kernel/20221228172825.r32vpphbdulaldvv@builder.lan/T/
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+https://lore.kernel.org/linux-arm-kernel/cover.1673247689.git.quic_schowdhu@quicinc.com/
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+Souradeep Chowdhury (1):
+  bootconfig: Increase max size of bootconfig from 32 KB to 256 KB for
+    DCC support
 
-Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109050152.316606-2-dmitry.baryshkov@linaro.org
+ include/linux/bootconfig.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-
-mdp@1a01000: compatible:0: 'qcom,mdp5' was expected
-	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
-
-mdp@1a01000: compatible: ['qcom,msm8953-mdp5', 'qcom,mdp5'] is too long
-	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
+--
+2.7.4
 
