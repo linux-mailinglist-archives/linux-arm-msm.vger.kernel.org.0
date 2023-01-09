@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC6E56634FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2717466350D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 00:17:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237807AbjAIXQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 18:16:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46520 "EHLO
+        id S237936AbjAIXQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 18:16:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237825AbjAIXQa (ORCPT
+        with ESMTP id S237739AbjAIXQR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 18:16:30 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73CFF186B7;
-        Mon,  9 Jan 2023 15:16:28 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id cf42so15552719lfb.1;
-        Mon, 09 Jan 2023 15:16:28 -0800 (PST)
+        Mon, 9 Jan 2023 18:16:17 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7462FBE22;
+        Mon,  9 Jan 2023 15:16:15 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id m6so15504679lfj.11;
+        Mon, 09 Jan 2023 15:16:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t/mDgzPnUXxALwSc77P9Iyw1b4SZpp1LqX9N2wGlWLw=;
-        b=B9m4CHmihRuEgTAs5tZdrZAp2YkSVYMp9hhXtVqPSGsJZsNcLaeAboG9f4nTdukK9p
-         Y1ZjFYzcPThHQHD8b1mtOqNz8k5ByfxT+HHPYTAStlbClZOKfq+bzW6jutvTNMXef70u
-         VBuA9bshNVdHboSaacxRpJjkCNMxooU9ncuKkRMAR9zaOq5iAAWRhZBgZaI3UjxfQUfT
-         T/JwXSJrFJXGGuYmeTCQObWPapGgN3ChggBX1xVvb0CpEFK0AQ0AT+wWL8EDpYKu5M4v
-         0QwuOwPg9Ioc0TEgjCxbhG1PSPv9DrFneXReAYGzJaqG1pZlP6w2ZpOFKwHh6Q5fUgjK
-         9vCw==
+        bh=IJYCXzCwWlmnquQ5yNkG+nGz0jiVnLUqp4W9MaxrD4s=;
+        b=YTI7W3G4y1L5rwesm0WF5z+DsXipiyuGioX3bnzpjRNpUysDgdGM+otXAgEBLyVaY6
+         pRsclm0+HmfVrySDdrkWNefV0vsp2ds+8TU7Kf/4Row5Jsc2YYP967SJlts5bM/090BB
+         18hHtVNVZPgzuISKTp6plNDiXjsbLtRPduh4gY2DC5mYpHvreu8Ekri0NmfR2ti76yoK
+         wD5faO4UmJtaeTQDqGjRT3ojvEpevC9CsZP+Pnunct7wAPNxfhJh73egSgXsnph2DMsx
+         NyA7C3vs1UcakHvqXMPnwHgz8hf8l+iPwNA9Nsnz8Y/hdFQF0rJp8L7SayU6JZ066Qlh
+         LPKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:date:message-id:subject
          :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t/mDgzPnUXxALwSc77P9Iyw1b4SZpp1LqX9N2wGlWLw=;
-        b=6BcGv8Zvk+3nW4sNZYZICvGvmDUXUmioZKoIiyqOqlWqxEbHqdGXBtYz5bLwFX+R12
-         XLoFFJV6CXhk//W9fSmXNprHFHr1VdMRW/fjuD+6kmLc4yNXgBkCN4AZvoijYiE8CVan
-         eONtaeurgfldSi2m/NvCbMdXBGYFhi44KRUSZxiWDUv3VdHABWk+XOEFc66DTbA+9/R9
-         08LeRG3p3j622y8gnhbu6cX/BAfK3anNEoNzr4YHXbRDM37WoStrse4fM+/2Xpck+lMH
-         dljwGfDHEZB9TTJ5IqAKL5Ylsr5Rdj0DrvERqUj98JoRpLlc5bGdVHQ7lUc4HCzkeSEt
-         Wi7w==
-X-Gm-Message-State: AFqh2korFBSQ1+s0IOXv+BjLIGynlUAjptI7SXNOsdfnCjSo8YAY2qCS
-        LG04moSUsqIFx/MBPH38ibs=
-X-Google-Smtp-Source: AMrXdXtPzJ3f1pblhBDPvSsW8oOxmBG4ZNuXw1pydRuDZV67dLZ7d4g4JIcTmwwjCI8J3zIceTrK1g==
-X-Received: by 2002:a05:6512:c14:b0:4b5:abe3:c63d with SMTP id z20-20020a0565120c1400b004b5abe3c63dmr22375060lfu.42.1673306186813;
-        Mon, 09 Jan 2023 15:16:26 -0800 (PST)
+        bh=IJYCXzCwWlmnquQ5yNkG+nGz0jiVnLUqp4W9MaxrD4s=;
+        b=vI+7zzCpdZV7sb+szrKSs2QuhRR6ZZpKxO8dVS1GgXBki6m3l2Uchk/8aKqnjDVGlb
+         KuNnzKCtS0HW7k+tBJmt0YCEDgycYik2yKy8bmo68Xss5hEtFcvST+1RhfImz7maXOQe
+         UFCH+dao2lNRhXEQWDiN/A9YdFumcLIPt8M9CtviGKvfbduzs5K4/U8c6RVy1s17Bf7c
+         ohRxD32Gps/kxOTkieGNGRp1wEUt+mPf1F8MwVaK+zP3oDZwP1cUAtH7jIf+aZy3mOHi
+         4/0fO2Hwrh5sSfParCptgWAO4LnfORrfl5FCIduga/QFOGqUd0FhnzM2nQBqjfRSYouR
+         0P5w==
+X-Gm-Message-State: AFqh2kqFFhag8MHPKCq+i9cxckUA9so3JFReo5EBlgAozXvQ1IQAMLAy
+        Fru/S6iCz2z/G+in0qOK2r4=
+X-Google-Smtp-Source: AMrXdXvXSiOF4gRJTLJ3TV58YDP0SSl7wPd+ZUlMGSvcU+i9HSGuoSykydyjYrIW2CK/p/5AMFd8bg==
+X-Received: by 2002:a05:6512:c1c:b0:4a4:68b9:60b0 with SMTP id z28-20020a0565120c1c00b004a468b960b0mr23307701lfu.59.1673306173615;
+        Mon, 09 Jan 2023 15:16:13 -0800 (PST)
 Received: from localhost (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w20-20020a05651234d400b004cb8de497ffsm1836363lfr.154.2023.01.09.15.16.25
+        by smtp.gmail.com with ESMTPSA id d7-20020ac25447000000b004b40c1f1c70sm1837407lfn.212.2023.01.09.15.16.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 15:16:25 -0800 (PST)
+        Mon, 09 Jan 2023 15:16:12 -0800 (PST)
 From:   Dmitry Baryshkov <dbaryshkov@gmail.com>
 X-Google-Original-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-In-Reply-To: <1669021695-4397-1-git-send-email-quic_kalyant@quicinc.com>
-References: <1669021695-4397-1-git-send-email-quic_kalyant@quicinc.com>
-Subject: Re: [PATCH v4 0/3] add color management support for the crtc
-Message-Id: <167330408778.609993.9217470869804308069.b4-ty@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, swboyd@chromium.org,
+        quic_khsieh@quicinc.com, johan+linaro@kernel.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
+References: <20230106023011.3985-1-jiasheng@iscas.ac.cn>
+Subject: Re: [PATCH] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+Message-Id: <167330408781.609993.12402793226257634056.b4-ty@linaro.org>
 Date:   Tue, 10 Jan 2023 00:41:27 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -77,25 +77,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 21 Nov 2022 01:08:12 -0800, Kalyan Thota wrote:
-> Add color management support for the crtc provided there are
-> enough dspps that can be allocated from the catalog
+On Fri, 06 Jan 2023 10:30:11 +0800, Jiasheng Jiang wrote:
+> Add check for the return value of alloc_ordered_workqueue as it may return
+> NULL pointer and cause NULL pointer dereference in `hdmi_hdcp.c` and
+> `hdmi_hpd.c`.
 > 
-> Kalyan Thota (3):
->   drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
->   drm/msm/disp/dpu1: add helper to know if display is builtin
->   drm/msm/disp/dpu1: add color management support for the crtc
 > 
-> [...]
 
 Applied, thanks!
 
-[1/3] drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/a4d6f8253645
-[2/3] drm/msm/disp/dpu1: add helper to know if display is builtin
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/4cb6b1eebb92
-[3/3] drm/msm/disp/dpu1: add color management support for the crtc
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c48c475bd75a
+[1/1] drm/msm/hdmi: Add missing check for alloc_ordered_workqueue
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/afe4cb96153a
 
 Best regards,
 -- 
