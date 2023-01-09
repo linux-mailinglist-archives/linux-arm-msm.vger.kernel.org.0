@@ -2,138 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E630662AB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 17:01:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF6C6662B0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jan 2023 17:22:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235060AbjAIQAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 11:00:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
+        id S231418AbjAIQWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 11:22:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236518AbjAIQAI (ORCPT
+        with ESMTP id S230032AbjAIQVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 11:00:08 -0500
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82983752E;
-        Mon,  9 Jan 2023 08:00:07 -0800 (PST)
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-14fb7fdb977so9032222fac.12;
-        Mon, 09 Jan 2023 08:00:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NmIlgEFtXavdJf8Lq/cH9FoF1zSgoXLLeAA66q8BH/Q=;
-        b=QhF9+MF97Qin3wRXeeATzE45LAiiX8LDMR5ZTzkWWL6legA/PbiU0D9D0q7yP4GcHz
-         DcPsPOnJTJTStyPnN8CIquZjUjgxtaQulMW1WOezA/b9f82d2V2UEzPemHoTGILmaO2E
-         PNfugrphmkPA7jfnCR4NDcHomd0e81vkjyuelcxmGUlWnlwg8SQNOA9zjHjrgTd9WrQ1
-         BLnUSBmuT7xD5UHVDEKK2pIsWnjn1wttkRJa+NjQyf15FV0WXQ689rQFcP/yqd5JX3ob
-         q1TQ+hwkesEO7dAVbWo5SQafioMzCwxiqS6tBwViiHx6WxPRzro0ONXqlfAZbc0d+CuV
-         6nQQ==
-X-Gm-Message-State: AFqh2kopHx2ogiZMTpsTtip54FRvh23rjgwZCNtMMmhi/f1TMkaAzevY
-        ZM3aIIJ0tL/hmoPq0xcBZg==
-X-Google-Smtp-Source: AMrXdXuXJvBT3dt96q3KMmD15McdlaQh3O3qs1191wR2cMHTCinqo+Y5JobLAeehoewg+Ou02LotoQ==
-X-Received: by 2002:a05:6871:891:b0:148:6804:e60c with SMTP id r17-20020a056871089100b001486804e60cmr37077630oaq.35.1673280006846;
-        Mon, 09 Jan 2023 08:00:06 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id h24-20020a056870171800b0014f9cc82421sm4366524oae.33.2023.01.09.08.00.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 08:00:06 -0800 (PST)
-Received: (nullmailer pid 722135 invoked by uid 1000);
-        Mon, 09 Jan 2023 16:00:05 -0000
-Date:   Mon, 9 Jan 2023 10:00:05 -0600
-From:   Rob Herring <robh@kernel.org>
+        Mon, 9 Jan 2023 11:21:51 -0500
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2059.outbound.protection.outlook.com [40.107.21.59])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1EA7DF26
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 08:21:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eog4izySKgbxweSgxq1BBqh9T88N29z2DZpZxLJrlZ/vg1oaKDPYT6hVcr6S1ox/XcWjwzAtybvXnVG7bmu4bbgVVq2BzaPjOyLt7DzxaI9HBQwjziMwOG7iBZkTUwaog657bOr+oyV6MpVcWklqeIdxpTRqbPm1i7BNkwXVT4NawVT/PAjNmorFH8A39dJvdTru0GnJIxWJjS95qvm0yTZTJ2tRmaSo6aQ7k3x0l7B4eIa+rGpCeqi74fse/2LL27gJt4hNKdCEIKAXRN8H5w4QQW03guD8mVzRT5gG1tapIb607EFJEr51tYA7dWoF8iuWDGVsiW2//+zLmv7IGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VeLhaays3PUukQgNCgSoX/pYGu4CEYNNLZtRaq14+70=;
+ b=Zjlpn+l6HMQWkj77rmtBgXOGLVggKLWD+fNqIkadg4GYzk5x+HrFGfBv4j9vOSW7eSL+IGYWVfxlzjxhRnlfz2FQHIQ4ONac2vsLTl51KSQguXK+9dn1nAbJy+9PFAEsgUkYX7EkXmjAXEG2vV+pUR818Aj8/8A/7hmYcPb5C6j2iIHUygcJe/R0JBq+NVG9NwceybT3b+6BHy/SaBHN0p2AOhZdcwF5/YH0wResNk92A+GowLaVI1UMEjQS4PTigZ/0ugYZ86FcPyvhDSN5ktFSOhXwwT+l3R2k6Z1gK4unq8VeJy5uqnsOhn4Ef+RwPFaqSTMB9jRnZue2hCIDTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector2-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VeLhaays3PUukQgNCgSoX/pYGu4CEYNNLZtRaq14+70=;
+ b=ZSTQnFCE53053rRt9hEOzWgdOAIFWMvrV93OLRK3BkImEfcO2kJJUMOAKhfG5I2HM8IP7vfAG9FOXIer6sMs7KWAsZnuTIlHLpt67tqiwWEpAHTE+JKUvZacd0QHYe2U90nWqWjNwcml26fdzRiR8Oo3+P1KqdwscIME1T7fp1o=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
+ (2603:10a6:803:22::27) by PA4PR04MB7840.eurprd04.prod.outlook.com
+ (2603:10a6:102:ce::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Mon, 9 Jan
+ 2023 16:21:45 +0000
+Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
+ ([fe80::738c:a9cb:7b8b:4033]) by VI1PR0402MB3902.eurprd04.prod.outlook.com
+ ([fe80::738c:a9cb:7b8b:4033%5]) with mapi id 15.20.5986.018; Mon, 9 Jan 2023
+ 16:21:45 +0000
+Date:   Mon, 9 Jan 2023 18:21:40 +0200
+From:   Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 1/6] dt-bindings: display/msm: rename mdss nodes to
- display-sybsystem
-Message-ID: <20230109160005.GA721066-robh@kernel.org>
-References: <20230109051402.317577-1-dmitry.baryshkov@linaro.org>
- <20230109051402.317577-2-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
+        Tomi Valkeinen <tomba@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
+ automatically
+Message-ID: <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230109051402.317577-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+X-ClientProxiedBy: AS4P250CA0015.EURP250.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5df::14) To VI1PR0402MB3902.eurprd04.prod.outlook.com
+ (2603:10a6:803:22::27)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1PR0402MB3902:EE_|PA4PR04MB7840:EE_
+X-MS-Office365-Filtering-Correlation-Id: 35f3f63d-f181-4d55-4d32-08daf25d998c
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 7o7WMzGcIVcXiVdBn+PVZH7jyeKsP9Stkl46tLxN99ObZCJZhE4s1VRmDuc4A13m7/SvDMpXk78irIw1uE/V4GoZ/X2TNl+iXaBVzvvt6RdpC+VYCclDDP3cLITnGvtsuUxGdqRH5pInB3H78Ug40jnKkMQ4Jy3YanrBlBv/ZWGP5PSxdr9hr1ccDMfNt4KsGoCtNiw0HpqIB8bndUTHKBBs6+ASfs0SW+d5a4DVukUKlDnZOlHRWeNZYHJ5g0sZk51bJTxUBVOODFoTvQajLFpB8VBoWg0TVljRlBJBl+D3Je+yO3yrNecelMrFH7f9Uc0ZnhG0D02VQHF+KFgffh/S8xrBybqIMqoaHceuwKCr27Q212f3MZk0AvCNlh9/pdrUwoKy2IUAUZOf3vkVAgtyyW65eb05H9JyvZv8mBDm8nm9hAEo7dEiF19p7C89L4SQpa8fdk83Qbvn8uHjIqgvvivV9Uyjin9MEu98zqfGRjsEy4XIInQAiGKsELvl71KEi7AhKYXCNzyMWjVMIP2F9m5EayEpyVHczu8Nl5JtsGS7UBUPGXRvVFCpdFPk6BQtfAQpnTyFv0ndS4j9E38r9lBtxbmyd+YC0+Ck7hJV3W8Zk0slS3k7xseHQ30DRlS/CF1FzMdySNghW1Sopg==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR0402MB3902.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(366004)(346002)(136003)(39860400002)(451199015)(478600001)(6506007)(6486002)(6666004)(1076003)(4326008)(9686003)(186003)(26005)(66476007)(66556008)(6512007)(8676002)(6916009)(54906003)(316002)(83380400001)(86362001)(38100700002)(41300700001)(66946007)(7416002)(5660300002)(2906002)(44832011)(8936002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/PjlJDxu8EWb7nfC9m0aRk5EngF10H2W8SU6KeN4SYtIW7gQ4fDYF56MchB5?=
+ =?us-ascii?Q?beD0EEXQX065DB7mlpGGVd7DxwKgqv5p+X2VfjvXfipRoss1gd38rbAaWvkK?=
+ =?us-ascii?Q?pOuHNPoBQ3pdkmHvp7S9qUGRl95/PZtqeeluxriVd+FThYx9I2w9NKCyIItL?=
+ =?us-ascii?Q?HrIgkQqKSfJpkQ9eKcJFlcd/hEgDJLW076whROrl50jgfKa62oFR45Ybgb5q?=
+ =?us-ascii?Q?nIC9kEhg2Z3FcP08hUlbdYTqc1wAGTAGPmJ1DYysS1t7K8cZ7D2V7hh+eKNi?=
+ =?us-ascii?Q?9OdWzTPR7xd5IyHll1CBAeTOR1oabwlyQtLce5ulGCgVrd+t6zaODTwU8E+k?=
+ =?us-ascii?Q?szaDxw4vtliL7O7CQQehJsimV773zaXYvnVbfWiBO40Y8ayJn9ELNr0gfjVO?=
+ =?us-ascii?Q?N39KlyWzIHoRZWd6g5ckIMv23mvKQcqpSn+3YH+Gbfir2Qf0LjSEbyx6UtYJ?=
+ =?us-ascii?Q?Qdry+hwpgaZQoBU35UcDVr4vjerqRIQ5yeUud5JL2NXJSTZFBB5tvhZu+FdA?=
+ =?us-ascii?Q?7tlAjyZ0q8xcrRBFjtVFqWGK+6qSaWXug6wbuMk0uXiyjfiNXfoxnxwoua5D?=
+ =?us-ascii?Q?EjODJvkDZ9UNedR9ACNL3QWE1WjpMXXcgAQqjFuaMVvCNZzAbd/d3N3WrqLV?=
+ =?us-ascii?Q?aXhdN8lQaYwOtedMFeRHRXN0S17mfVeZxLqLvYGZA6feM4yNuFhjO5OH33yO?=
+ =?us-ascii?Q?L9dmF81hFq/KvX4yUd1dA7zqK432WrTrFwmGGkegalmxPcD9sZ/+kTogwJD/?=
+ =?us-ascii?Q?LDw5nJ1uP7rWpRCSm0BNarvlQazAKEnB3dVcD+32HQSEarMKrlM8TysNX7L7?=
+ =?us-ascii?Q?RGo6S8HVF9qIkHrbDQADQxuEUnsjO0QVUDVHn4rfzH0rhSHUTUmEVHfc917M?=
+ =?us-ascii?Q?DA6SSiD2BxKps3ja8S9x6cCLav/leYPEjFZqXY7P0DfwcmdA1D+7StC25Rdd?=
+ =?us-ascii?Q?mwD/NHA+f/lOJ27cNfW5SVdLj8Wr8ikdw/fuT1eYCb5PFzrc0Yp0CTmsjV35?=
+ =?us-ascii?Q?5oQIpdbGiX+JY4YnaIwXbtpziUN0PggCO6vgpGR6YSP9Ltenu4GdtcirEXqK?=
+ =?us-ascii?Q?2CDm5uIJYJJZ/gBLxKFM3GkKkJfh7b8bAbdH3q+WVRh8x/FDGhno7UPQyUuJ?=
+ =?us-ascii?Q?S3wpf0U5EeeS1ocjalVXj6NRk/9pa2OAZ+FtpgeY8mWTJklK5i2Sfua390sn?=
+ =?us-ascii?Q?T99eaC4hQ2uPj6F/d2l8UC+D7UUaZaHVU07vvIMOUyhB36i94y8BkRJXtxl9?=
+ =?us-ascii?Q?L/f1PWymNDeHywHv/KWWBfysz5r/u8FF+o82hVWQOHTDDu2XnBxF2puIljiD?=
+ =?us-ascii?Q?PNWDSd08mUpuH2XDFX4nczJ4BTpZxWv+PFR+BrUBYmYh7EafrxTiPke+F/hs?=
+ =?us-ascii?Q?X0AUZxyJvP2GLRZI6WReK6vIqVehe9OqZEGGxgbpfC1GRdjUEriqfmtqMu4R?=
+ =?us-ascii?Q?/gKGtXjYDg5tX0iHw83D4ePhglhqAh1kE4Vv84RlS7H0cEq+c0f/iYo1e3QH?=
+ =?us-ascii?Q?w6YIm15EXj60nryPpXJ+RkHIh+NUIzSda5/BHVeaQcv9LSJz308u5s1P42WT?=
+ =?us-ascii?Q?WjFxf0oBStgW8LKXBXxhoyiqGnBsY347zLOvJr+1VdC0ZQxT5zeLWlQOAgox?=
+ =?us-ascii?Q?uQ=3D=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35f3f63d-f181-4d55-4d32-08daf25d998c
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR0402MB3902.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2023 16:21:45.3335
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jVqCVzmORgEZ59MhCxotsZdIQW+rk6iIJpF5SaQeEo9I2ak42+8tz+atjVyITWIGI9BvuT949iCLpbLbOQORgg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7840
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 09, 2023 at 07:13:57AM +0200, Dmitry Baryshkov wrote:
-> Follow the 'generic names' rule and rename mdss nodes to
-> display-subsystem.
+Hi Dmitry,
+
+It looks like there are some issues with this patchset... :/ I just
+fetched the drm-tip and, with these patches included, the "Hot plug
+detection already enabled" warning is back for i.MX DCSS.
+
+After a short investigation, it seems that we end up calling
+drm_bridge_hpd_enable() from both drm_kms_helper_poll_init() and
+drm_fbdev_generic_setup(), hence the warning.
+
+There are drivers using the drm_bridge_connector API that also call
+drm_kms_helper_poll_init() followed by drm_fbdev_generic_setup(). So,
+they might experience the same behavior, unless I'm missing something...
+:/
+
+Also, even if drm_fbdev_generic_setup() is not called in the driver
+initialization, the warning will still appear the first time the
+GETCONNECTOR ioctl is called, because that'll call
+drm_helper_probe_single_connector_modes() helper which will eventually
+call drm_bridge_hpd_enable().
+
+Any idea?
+
+Cheers,
+Laurentiu
+
+On Wed, Nov 02, 2022 at 09:06:58PM +0300, Dmitry Baryshkov wrote:
+> From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
+> DRM driver do a proper work of calling
+> drm_bridge_connector_en/disable_hpd() in right places. Rather than
+> teaching each and every driver how to properly handle
+> drm_bridge_connector's HPD, make that automatic.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/mdss-common.yaml      | 8 ++++++++
->  .../devicetree/bindings/display/msm/qcom,mdss.yaml        | 5 ++++-
->  2 files changed, 12 insertions(+), 1 deletion(-)
+> Add two additional drm_connector helper funcs: enable_hpd() and
+> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
+> is the time where the drm_bridge_connector's functions are called by the
+> drivers too).
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> index 59f17ac898aa..ccd7d6417523 100644
-> --- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> @@ -15,7 +15,15 @@ description:
->    Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
->    sub-blocks like DPU display controller, DSI and DP interfaces etc.
->  
-> +# Do not select this by default, otherwise it is also selected for qcom,mdss
-> +# devices.
-
-for NON qcom,mdss devices?
-
-> +select:
-> +  false
-
-select: false
-
-> +
->  properties:
-> +  $nodename:
-> +    pattern: "^display-subsystem@[0-9a-f]+$"
-> +
->    reg:
->      maxItems: 1
->  
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> index c218c9172608..47fde9b6779f 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> @@ -15,6 +15,9 @@ description:
->    encapsulates sub-blocks like MDP5, DSI, HDMI, eDP, etc.
->  
->  properties:
-> +  $nodename:
-> +    pattern: "^display-subsystem@[0-9a-f]+$"
-> +
->    compatible:
->      enum:
->        - qcom,mdss
-> @@ -153,7 +156,7 @@ examples:
->    - |
->      #include <dt-bindings/clock/qcom,gcc-msm8916.h>
->      #include <dt-bindings/interrupt-controller/arm-gic.h>
-> -    mdss@1a00000 {
-> +    display-subsystem@1a00000 {
->          compatible = "qcom,mdss";
->          reg = <0x1a00000 0x1000>,
->                <0x1ac8000 0x3000>;
+> Changes since v2:
+>  - Fixed a typo in the commit message of the second patch.
+> 
+> Changes since v1:
+>  - Rebased on top of v6.1-rc1
+>  - Removed the drm_bridge_connector_enable_hpd() from
+>    drm_bridge_connector_init()
+>  - Removed extra underscore prefix from
+>    drm_bridge_connector_en/disable_hpd() helpers
+> 
+> Dmitry Baryshkov (7):
+>   drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
+>   drm/probe-helper: enable and disable HPD on connectors
+>   drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
+>   drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
+>   drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
+>   drm/omap: stop using drm_bridge_connector_en/disable_hpd()
+>   drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
+> 
+>  drivers/gpu/drm/drm_bridge_connector.c   | 27 +++-------------
+>  drivers/gpu/drm/drm_probe_helper.c       | 40 ++++++++++++++++++-----
+>  drivers/gpu/drm/imx/dcss/dcss-dev.c      |  4 ---
+>  drivers/gpu/drm/imx/dcss/dcss-kms.c      |  2 --
+>  drivers/gpu/drm/msm/hdmi/hdmi.c          |  2 --
+>  drivers/gpu/drm/omapdrm/omap_drv.c       | 41 ------------------------
+>  include/drm/drm_bridge_connector.h       |  2 --
+>  include/drm/drm_modeset_helper_vtables.h | 22 +++++++++++++
+>  8 files changed, 59 insertions(+), 81 deletions(-)
+> 
 > -- 
-> 2.39.0
-> 
+> 2.35.1
 > 
