@@ -2,94 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B9B6663C2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 10:05:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A641A663C2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 10:05:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbjAJJFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 04:05:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51184 "EHLO
+        id S231537AbjAJJF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 04:05:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235378AbjAJJEa (ORCPT
+        with ESMTP id S231215AbjAJJEr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 04:04:30 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D4A18B0B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:03:05 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id p3-20020a05600c1d8300b003d9ee5f125bso4750099wms.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:03:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eCbWcTKCGm5qD2fgvuwpjbr3RuwzMsWs2+w6U8zAXpU=;
-        b=KOkvecqlb7PnPQTXhkYeWs4E6gLQAT6nK39f/LeQPFTS5UWuwL/ad1uCwrVBwrUzpt
-         dIJEr3JERtc6uPjO61oFF2tAd5yx0uDU1z6f46xiOR7rcnX4kLITntzpqZ8/YRROuscK
-         q6ENVsEyxniEGqPSayerXqrasCVMDulYxYDRabCocfi7etjsBJv6fSkZUs6dIVb92UNl
-         cBgcQyfqypy1eH6alU6Ny/ILoUPo4LTN6zHs+zjlbFI7cgllKJYwWzAkaEkVvjJWjU7E
-         9gvdi6GuzBmutHKiBj2Sh25dSMwh0zgtNWE0OKphc53dNKlA9l+wh1L6MCaxgvcXgWLL
-         xugg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eCbWcTKCGm5qD2fgvuwpjbr3RuwzMsWs2+w6U8zAXpU=;
-        b=BYVhTK2n5WB00XdHy/7LJxhVe7cOGPrCSQuvhfjOHpdoYxZg39K8IRxuVLBvtW2n5q
-         5PBpqL9RzMsqTXW0NuMklqmQLd6kx0aa1rriUlQSUnKh5VEfxJyaLG4Pb8Lu5rFkw2Kn
-         Xr1HW6socIVj+f8t2hTfADQVuVSuCpXZSY/YV1di21K5z9nKhDr/+dqhvnFawAHngclB
-         hG5RtSCoKaCaNEMhJsBwVY6eN0bcqnynznUeG5dp0HSnRW2cmTrNpdus0al+HcdWrHDW
-         CxCBv30xpm5RehZMutbMkAeW0RV2SI3aNR68607/R18LN4wMMuKLPB6jiIb3beG7t+U4
-         ObXA==
-X-Gm-Message-State: AFqh2ko8oUG2wLlLgeKm3yttHikTv6Sg1K+qkDxfjg4M82Sc10ZDsnBJ
-        4eGGLofa1GgH3VTfmqwELHJ2jA==
-X-Google-Smtp-Source: AMrXdXtU8mEiDtLQJ0tNMJ3nCmqtx3wjgcRMtOL0TOLfjM6kgdK5lrzqrlCe3CMFMsrtC0a44R+1Kw==
-X-Received: by 2002:a05:600c:4e07:b0:3d3:5319:b6d3 with SMTP id b7-20020a05600c4e0700b003d35319b6d3mr48793808wmq.38.1673341384307;
-        Tue, 10 Jan 2023 01:03:04 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id a11-20020a5d508b000000b002779dab8d85sm10519618wrt.8.2023.01.10.01.03.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 01:03:03 -0800 (PST)
-Message-ID: <786a8b67-272e-2c54-2af1-3fd60ab70a89@linaro.org>
-Date:   Tue, 10 Jan 2023 10:03:02 +0100
+        Tue, 10 Jan 2023 04:04:47 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F9C4D49A;
+        Tue, 10 Jan 2023 01:03:30 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id CAB7A6602B36;
+        Tue, 10 Jan 2023 09:03:28 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1673341409;
+        bh=fmZCtUW0HkZGmQJOBbUNGDaB7gq1MKXT27ZjTlNHUvg=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=AZUAASBSCWSP3voAmesJIm17oVaFZCS0lhdR8BQq/eFPSYxoqyLrgINeFrEXlNzhY
+         CS1n8jC5j7b0Yy1PZV6IrO7sVj41vKrz1f8WHMAsaOL7eY7R1WoI71FtQWfMOqwO9x
+         ynHOoG1XTMpFNZat6tnzluWrIHo8SOlFUT5Svpe1Pj3UD68Frm8L32MZouk4QrFCjV
+         0zTae3xWX+1EDBWX1/5449XV9649LKOkCEUUZyMy3yNbit5+0HR65bTqXM+KYRZQZB
+         U9aCGq/dLhCZ0mtPilmTru6L0mKrBzfzTBFUF6Khf9Q2wBhbX09H2YrKxWsMp3Cto1
+         vGRbo6WS2kOFQ==
+Message-ID: <61ae2f3a-0c2b-5e18-3040-e7ad08bbf08c@collabora.com>
+Date:   Tue, 10 Jan 2023 10:03:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845: make DP node follow the
- schema
+ Thunderbird/102.6.0
+Subject: Re: [PATCH] soc: qcom: ramp_controller: Make things static
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230110042126.702147-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230110042126.702147-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel test robot <lkp@intel.com>
+References: <20230110042004.2378444-1-quic_bjorande@quicinc.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20230110042004.2378444-1-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/01/2023 05:21, Dmitry Baryshkov wrote:
-> Drop the #clock-cells (probably a leftover from the times before the DP
-> PHY split)
+Il 10/01/23 05:20, Bjorn Andersson ha scritto:
+> The five msm8976_cfg_* objects ought to be static, as reported by LKP
+> and sparse, fix this.
 > 
-> Fixes: eaac4e55a6f4 ("arm64: dts: qcom: sdm845: add displayport node")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> drivers/soc/qcom/ramp_controller.c:235:27: sparse: sparse: symbol 'msm8976_cfg_dfs_sid' was not declared. Should it be static?
+> drivers/soc/qcom/ramp_controller.c:246:27: sparse: sparse: symbol 'msm8976_cfg_link_sid' was not declared. Should it be static?
+> drivers/soc/qcom/ramp_controller.c:250:27: sparse: sparse: symbol 'msm8976_cfg_lmh_sid' was not declared. Should it be static?
+> drivers/soc/qcom/ramp_controller.c:256:27: sparse: sparse: symbol 'msm8976_cfg_ramp_en' was not declared. Should it be static?
+> drivers/soc/qcom/ramp_controller.c:262:27: sparse: sparse: symbol 'msm8976_cfg_ramp_dis' was not declared. Should it be static?
+> 
+> Fixes: a723c95fa137 ("soc: qcom: Add Qualcomm Ramp Controller driver")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks for catching that and swiftly fixing it!
 
-Best regards,
-Krzysztof
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
+Cheers,
+Angelo
