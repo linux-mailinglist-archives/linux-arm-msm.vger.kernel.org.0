@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 954D2663CC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 10:25:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28FFA663CF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 10:33:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238103AbjAJJZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 04:25:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S229692AbjAJJdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 04:33:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238108AbjAJJZQ (ORCPT
+        with ESMTP id S238194AbjAJJdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 04:25:16 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25ABE544F4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:25:15 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id d17so11042796wrs.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:25:15 -0800 (PST)
+        Tue, 10 Jan 2023 04:33:25 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAEE83BE84
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:33:23 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id ay12-20020a05600c1e0c00b003d9ea12bafcso5911472wmb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 01:33:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cAers7RJkSbAqWZ/DY7+7hCFdFQyY7dh3A3KAt7bg78=;
-        b=VtvA+tzWqE8zMypNL2S+9CXEyJQCvIqlgLsR/ksThTScdxWGBQEDep0YDbI4/X/C7n
-         nDEbb4pkkLaB7HPPgiZvMyZMojFpg/vMYrw/hbyXoeyBJ8HHKlSI046R5gV28zsVB4hV
-         862O/H10egIBkpoHw+dxErtUAb/HrstuuCK/ZN+TXb8jLYkB55B8zYr3lcbYI8d4kbkx
-         RnAOwgUDjnOzKxNuFbJGTon7FGyNV0QYBbM1GgdxaEPi4finMugql75J/r2L+pQ19Xz9
-         l/h5dQ5k0qMdvDkBWbyQ9EN7fhLeV9ZG+bEWvp5b/fZ0XyZDVoQbStsjqvoMQbJhaQjK
-         e3IQ==
+        bh=2jfj9Vw3D8ZX4MdEbwgBQxtSlmIa3nYu0UGzCjpPfxE=;
+        b=oYX4A1yjy32A+H/doqG67qiVsZlLEdPONvs+SBSRCVWx5cSUjtFK/8rgmiuyjae6sk
+         nJuhXagDzHtelrZ9iB3JBVg6iTD0m+9b+ll+jCBacuXBr/BBmXGUshCa0kagL6bmpGbF
+         /vIWgucZBBok+dDcQNcb7acBY7S85Lp9BTgocflK/vSYRP/BT2iPqwHQiRYj6ozE41f3
+         99sOlBngfXghj9WfccyNzOl10FqhQbDYTDpxeCXIEWFL6yAdlQx2xUK+QfHzz+kGwi45
+         0ty3TCrXAToPvkEz7V+dOdDROJ0luLB8HFwP6Ob81Mvz3ePR63nCaYlIwdc2bwhFDh0G
+         2Wkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cAers7RJkSbAqWZ/DY7+7hCFdFQyY7dh3A3KAt7bg78=;
-        b=IC7D/n+1jQe57qYVP91Z2Pt22ZiWWip83kJdh6+AgnLJVBeaPmarkkevZvBRF5sdOy
-         rboP+ULMNCcp7r3tkqDO4UwEcFQTGNyIXKvHDQYp80zsrIDyzoV+aYa+3SyfiZwTF99u
-         qyVBQ8MBKPbRT9dKEnkEGooNmbLccLmk0wkV7qPfdL94DkELIiyqOj0d36bWdmI4yikD
-         UtMXD+vXw0SmHlMLrY5Bv79JoJSwMbSWa27x0NvxhB214myiaVU4isHECeiN3CzdHWZ7
-         5S5jf6O7JB4CYB9zZnWjvPZnhwNMMOhXvplwMIeVXjd9ZE8lxrXoUMZ0l+TlSbKzR3gb
-         dqTw==
-X-Gm-Message-State: AFqh2koMsDk3aY3qSMxTvKYr5TIEUYvOw9WUER8wdPskbhvS96gxRAwH
-        oR7Lbsq7hBZ+1TlYxF3NGU1d/w==
-X-Google-Smtp-Source: AMrXdXurdokXYHTX4nNY+VTIpNAOasrzVAkQZTCeQjZdpnZ0x4w2KMAxce6L5BYg2eiNlLTpQ5J4vw==
-X-Received: by 2002:a05:6000:1b0e:b0:28c:44b4:d8ec with SMTP id f14-20020a0560001b0e00b0028c44b4d8ecmr25395500wrz.7.1673342713686;
-        Tue, 10 Jan 2023 01:25:13 -0800 (PST)
+        bh=2jfj9Vw3D8ZX4MdEbwgBQxtSlmIa3nYu0UGzCjpPfxE=;
+        b=fSCOC/IGkSo1AODYA5ejaa9AgeF9bsiHLHDXRGZ7JqJ20P41C54pllIIG5ef8wDAvi
+         LiODcdvCuD1pfHPi479J7ult8bgxJ5KsU9n+qvJZ0PPgYx2XcY70gsLRi6PutrQiaKmk
+         HmqB36i7R46cMzeEnt+yIqlp7CqIILVfLg0UNpIkuLmgwVRlxRO/RW75phY+tsBWtxkN
+         Yw3T8skq9xabr1yQVc8mc/TzeNAbi5Ux8Sd9AHI9TSGfFrinOFbtpVqV4vQAylc7PLRZ
+         iAysBltvDVVFBXPPL23quMTdy2iTA0JfuLbD66wvpQBpnlfZ59vENBa51LmA/1cHOKmZ
+         E83A==
+X-Gm-Message-State: AFqh2ko8wF/DbOQns3zxMnSJnvpiTjOhWlOCri0vdQxTbkx6jsZmFtpm
+        bUH0OIBORsdpiLOPJ9AV8y26iQ==
+X-Google-Smtp-Source: AMrXdXsrih7nnKIOBXnnr50hxUBa1SIexlUteXct6oa/s4ma2nSLWJeKhPczJLVjIZL0WjLZRjh+yw==
+X-Received: by 2002:a05:600c:3b1c:b0:3d9:f0da:542c with SMTP id m28-20020a05600c3b1c00b003d9f0da542cmr4660166wms.28.1673343201715;
+        Tue, 10 Jan 2023 01:33:21 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id m10-20020a056000008a00b002683695bf97sm10561160wrx.58.2023.01.10.01.25.12
+        by smtp.gmail.com with ESMTPSA id j30-20020a05600c1c1e00b003cfa80443a0sm16052527wms.35.2023.01.10.01.33.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 01:25:13 -0800 (PST)
-Message-ID: <c71d5d68-e81b-048c-c97c-23b235ae377b@linaro.org>
-Date:   Tue, 10 Jan 2023 10:25:11 +0100
+        Tue, 10 Jan 2023 01:33:21 -0800 (PST)
+Message-ID: <a6dc4cd9-7008-7de3-f27d-7b82e5f51fbb@linaro.org>
+Date:   Tue, 10 Jan 2023 10:33:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v3 1/3] dt-bindings: clock: document SM8550 DISPCC clock
- controller
+Subject: Re: [PATCH V2 01/11] dt-bindings: remoteproc: qcom,q6v5: Move MSM8996
+ to schema
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230103-topic-sm8550-upstream-dispcc-v3-0-8a03d348c572@linaro.org>
- <20230103-topic-sm8550-upstream-dispcc-v3-1-8a03d348c572@linaro.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org, robin.murphy@arm.com
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
+        regressions@leemhuis.info, sumit.semwal@linaro.org,
+        will@kernel.org, catalin.marinas@arm.com
+References: <20230109034843.23759-1-quic_sibis@quicinc.com>
+ <20230109034843.23759-2-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230103-topic-sm8550-upstream-dispcc-v3-1-8a03d348c572@linaro.org>
+In-Reply-To: <20230109034843.23759-2-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,14 +82,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/01/2023 16:47, Neil Armstrong wrote:
-> Document device tree bindings for display clock controller for
-> Qualcomm SM8550 SoC.
+On 09/01/2023 04:48, Sibi Sankar wrote:
+> Convert MSM8996 and similar (MSM8998/SDM845) MSS PIL bindings to schema.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
+>  .../remoteproc/qcom,msm8996-mss-pil.yaml      | 370 ++++++++++++++++++
+>  .../bindings/remoteproc/qcom,q6v5.txt         | 137 +------
+>  2 files changed, 375 insertions(+), 132 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> new file mode 100644
+> index 000000000000..d3d3fb2fe91d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> @@ -0,0 +1,370 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,msm8996-mss-pil.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8996 MSS Peripheral Image Loader (and similar)
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Sibi Sankar <quic_sibis@quicinc.com>
+> +
+> +description:
+> +  This document describes the hardware for a component that loads and boots firmware
+> +  on the Qualcomm Technology Inc. MSM8996 Modem Hexagon Core (and similar).
+
+MSS Peripheral Image Loader loads and boots firmware
+on the Qualcomm Technology Inc. MSM8996 Modem Hexagon Core (and similar).
+
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+
+It's not oneOf. Just enum.
+
+
+> +      - enum:
+> +          - qcom,msm8996-mss-pil
+> +          - qcom,msm8998-mss-pil
+> +          - qcom,sdm845-mss-pil
+> +
+
+With both above:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
