@@ -2,134 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF1286641CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:29:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F21FC6641D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:29:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238301AbjAJN3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 08:29:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
+        id S238385AbjAJN3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 08:29:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238334AbjAJN3j (ORCPT
+        with ESMTP id S230432AbjAJN3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:29:39 -0500
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75094A469;
-        Tue, 10 Jan 2023 05:29:34 -0800 (PST)
-Received: by mail-oi1-f175.google.com with SMTP id o66so10002852oia.6;
-        Tue, 10 Jan 2023 05:29:34 -0800 (PST)
+        Tue, 10 Jan 2023 08:29:40 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F7F3B3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:29:39 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id t5so7333174wrq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:29:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tk4ngejoateTOnuRvuEbZaowxEstl1Mpo6A89AJMiP4=;
+        b=UT/elzAIsCF6Nf/bHS3Igb/5WnLu1BNKrS+zRE6zVnSagHAAKSUlquO5ALKSOfdUzI
+         L8/0pODUMjEgYAd44wZ5XDpEBDNgNE03QWnrzGAQcQ/CAmov3MsiS3KfnnDSPGAxdLFq
+         Oe1vM1mgN5sGsMsj4ONmDFrF0f3WGzNMcnEgzlH1Q3xrfytSzf9iX/lr2Q7IJkUtO7DU
+         ZyeWuFLodK5jio/TKuq4Nu90bXWOoJ7jTtKwV9DVJKz4EwaR3hWBMNViX05K3QNIcPQy
+         IT4emey/0akvvg+iYXNaK826XqDbDMCAryYfLXSaqZ8/ZaBOu7QR0ohaAfZqvo0vMCJV
+         Py9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ylhyb07nBatqigygjs/qnbUzW1F5v2uWBB/vpftxr7Y=;
-        b=fOL7T1IPZD6uNIME7YD7G5MBI/0zaflTOGRlbkP2MkZwPg9Xnu7MlCKmNdieOVkZXY
-         Wjl6rsFgxoPhDWVRB5Pb8xmBZIDeMQr7DOBuTlYC2zy2rIt53+p8xAK6uOGRtUCTWlwg
-         OOY6DDvQR+0Vz21lcPNZLBZDKQz7QSFo0oi8RqkSfntJNVq+iFMlxMGfgq5bTscg6U81
-         dQ3wimX3NmR0uMLnbbuv+xuM9VhgRH27bIxh2dkG788PiXvDSIWVUdcSFCwMSoyuxs6Z
-         Zrdq6YCeXRQgPKyUjgmsUdC710iFp/Mj5ts1UyDfyW3I0yhoA2Ztmu7zOARRGtkaF7VV
-         2IgA==
-X-Gm-Message-State: AFqh2kq42NO0UGGyRTZmN6P5veuwX7aQuRz/BucLbAaUoYKf1nInZyIt
-        cGQczCzCACdbv2DeSFblTw==
-X-Google-Smtp-Source: AMrXdXtwO/PhRlomM5A6dF6OoKCHg3+XXfeF06MGvncoUKF+PZZ9GgCaWBCAqc7Lt5F6ycb44BfNfg==
-X-Received: by 2002:aca:e0d4:0:b0:363:b22c:4c7 with SMTP id x203-20020acae0d4000000b00363b22c04c7mr14883792oig.7.1673357373663;
-        Tue, 10 Jan 2023 05:29:33 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id u23-20020a056808001700b0035e7c48d08esm5257608oic.15.2023.01.10.05.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 05:29:32 -0800 (PST)
-Received: (nullmailer pid 1984999 invoked by uid 1000);
-        Tue, 10 Jan 2023 13:29:30 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tk4ngejoateTOnuRvuEbZaowxEstl1Mpo6A89AJMiP4=;
+        b=FVaThpPvSzhIeo3bAMln5ICHBHCzRgVCBh9TXaQGjYUGE2Vqne4wETZ3eZ9gteucr/
+         kKm6fWhwvF9Nsx22soI3Zv1BwPmSjDpOKjXt8IcIZmE4pnxEgAoySSXRI5vzARPo4bQi
+         9v0zBM0E+Ku6kv694YaVfhc/LHiH9B+MY6eV3zqKwKisci7/bFhTIwyXfhLlxlG3/uCM
+         HpwiI8XilwA3tL8zvOyauOkISZe3mzBW7Vz2qSSZ4tlr6Xw1tIIEomwCTyXOg42qO39M
+         mQTb6DEeSaeuwGXpzhRJ2Hh9QEHtANlSVe2+uM3hO5EzJ6VRT3IZLtfnKVNuuoTPwZg2
+         Z+6g==
+X-Gm-Message-State: AFqh2koq9oicrBSivPO1s64kP2UMm4LApOvpS7ZzCztDB4XHWMey1kdX
+        mDZ5qmBEucVA5kxMul2AWKM36g==
+X-Google-Smtp-Source: AMrXdXve7gJlNkmy3N9h3WlImuuYFTrNoWz1rN1hGwiWIFHPVweWebtb5wlP/OLlvUBb5uE/CouA0A==
+X-Received: by 2002:a5d:4304:0:b0:2a1:328f:23aa with SMTP id h4-20020a5d4304000000b002a1328f23aamr14647892wrq.6.1673357377847;
+        Tue, 10 Jan 2023 05:29:37 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id l6-20020a5d6686000000b002bb3229a03csm10166325wru.34.2023.01.10.05.29.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 05:29:37 -0800 (PST)
+Message-ID: <9ede1521-1f2f-90ae-73a3-d81a926fe8b3@linaro.org>
+Date:   Tue, 10 Jan 2023 14:29:35 +0100
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     devi priya <quic_devipriy@quicinc.com>
-Cc:     tdas@codeaurora.org, quic_kathirav@quicinc.com,
-        dmitry.baryshkov@linaro.org, quic_gokulsri@quicinc.com,
-        nfraprado@collabora.com, linux-arm-msm@vger.kernel.org,
-        quic_poovendh@quicinc.com, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, arnd@arndb.de, sboyd@kernel.org,
-        broonie@kernel.org, will@kernel.org, quic_sjaganat@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, linux-clk@vger.kernel.org,
-        quic_srichara@quicinc.com, linux-gpio@vger.kernel.org,
-        p.zabel@pengutronix.de, catalin.marinas@arm.com,
-        marcel.ziswiler@toradex.com, linus.walleij@linaro.org,
-        konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        shawnguo@kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        agross@kernel.org
-In-Reply-To: <20230110121316.24892-2-quic_devipriy@quicinc.com>
-References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
- <20230110121316.24892-2-quic_devipriy@quicinc.com>
-Message-Id: <167335661700.1967953.6789968437095688240.robh@kernel.org>
-Subject: Re: [PATCH 1/7] dt-bindings: arm64: ipq9574: Add binding descriptions
- for clock and reset
-Date:   Tue, 10 Jan 2023 07:29:30 -0600
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V1 0/1] soc: qcom: dcc: Add QAD, Cti-trigger and
+ Bootconfig support for Data Capture and Compare(DCC)
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Alex Elder <elder@ieee.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1673270769.git.quic_schowdhu@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <cover.1673270769.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 10 Jan 2023 17:43:10 +0530, devi priya wrote:
-> Adding support for the global clock controller found on
-> IPQ9574 based devices
-> 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> ---
->  .../bindings/clock/qcom,gcc-other.yaml        |   4 +
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |   9 +-
->  include/dt-bindings/clock/qcom,gcc-ipq9574.h  | 226 ++++++++++++++++++
->  include/dt-bindings/reset/qcom,gcc-ipq9574.h  | 164 +++++++++++++
->  4 files changed, 402 insertions(+), 1 deletion(-)
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq9574.h
->  create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq9574.h
+On 09/01/2023 15:02, Souradeep Chowdhury wrote:
+> This patch adds the Bootconfig, QAD and CTI-Trigger support for DCC.
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-yamllint warnings/errors:
+(...)
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295, 0], [4294967295, 1], [4294967295, 2], [4294967295]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295, 1], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk', 'pcie_0_pipe_clk', 'pcie_1_pipe_clk', 'ufs_phy_rx_symbol_0_clk', 'ufs_phy_rx_symbol_1_clk', 'ufs_phy_tx_symbol_0_clk', 'usb3_phy_wrapper_gcc_usb30_pipe_clk'] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
+> Souradeep Chowdhury (1):
+>   soc: qcom: dcc: Add QAD, Ctitrigger and Bootconfig support for DCC
+> 
+>  Documentation/ABI/testing/debugfs-driver-dcc |  24 +++
+>  drivers/soc/qcom/dcc.c                       | 284 ++++++++++++++++++++++++++-
 
-doc reference errors (make refcheckdocs):
+No need to send the patch to unrelated people. Be sure to rebase it on
+latest kernel and then use scripts/get_maintainers.pl to get folks and
+lists necessary to CC.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230110121316.24892-2-quic_devipriy@quicinc.com
+Unless your code adds here DT properties, but then you miss bindings, so
+would have to be fixed.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
