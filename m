@@ -2,156 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2036F663E52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 11:34:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EF31663E6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 11:41:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237833AbjAJKes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 05:34:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57992 "EHLO
+        id S231558AbjAJKle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 05:41:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237825AbjAJKer (ORCPT
+        with ESMTP id S238018AbjAJKlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 05:34:47 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39FF64D4BD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:34:46 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id ja17so8429784wmb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:34:46 -0800 (PST)
+        Tue, 10 Jan 2023 05:41:19 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC278CE17
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:41:18 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id z5so10190525wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:41:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S8w8+O91x6kumEh4lF0ym7XFpPER6TCzGXKG5aX3JDw=;
-        b=aoBbi6sXhFzCmybRmWwEV1rhv1MxYXadF7W7dx0BjBynhzu9RQeaR9mZVwEW+ghPVx
-         puj2WM34WhsMwTPd+48dLY5tRv0UvfvbBV69pDLqz2Fb9PgGamos65X0tz+OimhWP4eX
-         3nRDEOHq3qH78eIc2MlkJGLnXu6p6wKEXVzzaeYQlr6z/me3qkQWIaVx1XqpDM2vpTxE
-         z1rsYntTDmu+ZGfxjVVJLOowBAxEkNPeL/ngswksFYGlQ17iO10frKh4dfAnBbsIR0cZ
-         dAmu2CB2EvYgvVds6/p08QU9Sjk5wSZ2HP441Y5583Q2r7j8MJI9fQx5TxmIxmVSCfjR
-         Z0CQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pmMrDaRkKSnc1qhodDZOnxZ9tfc0loduFNccFsKTnYg=;
+        b=Su1ZLTvGNvl9r12ssy25oZ59i8HIQ/nXC82zXIZtUj5BdcP2BmHJGZvWxonW6uzph1
+         QmeYBo2eVTMv1ljxUuu7O2ZApvreSMVpZ1kpFhmd2qD/rH3EumihmJLtJ6X3feZqcD4h
+         jW72O8vOudqRmZIoblg5745RteTgrMjga5W0OR6OWsEFbAUwqSwDxeyysMoEGEwHCYqG
+         glHduXbKnPl2orYK4qNVWla7o5qhE6coc1gGvA8Pq1v6fsRmlMOKKWQ+j41mV9OzoDUz
+         JiguqoJrCWpzr7rMVOLzhfTVY07SYmGmVl3HBvXnQQ+WbRbAnrGAkhLMomp1FSFduFEW
+         5T2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S8w8+O91x6kumEh4lF0ym7XFpPER6TCzGXKG5aX3JDw=;
-        b=Ek6LXz1fw1jUmE6UANtT0ro2XL+jiknFBIyGmswue1AYWukwAZB+pRTKID9pKS6ZRD
-         Xz1yxSMI9M7dRAmRZLcXgtMhZjpFZvEY6T0DnkbnRbSXuyQbetEpXzCqsgqKqpmZIO5+
-         i3Vozh14xvKoKjxY9hnq2AyvRV7fqSwdZt6E+tX4xVr5t7v3S5bQb6kq9O8PIZboAitq
-         Fwc+hH6JZ1rWP9od6STZjTNP96JORjWLqcGYeyGxddPzy+sTbTQBRQc+Q8jQ4onmiNxR
-         j7kddgkj77mndkzXGEtafcm30g0sZwxWmGrKmVnUZbFkh+3bWA8lJTXHMM5ZvrhVngLu
-         FpQA==
-X-Gm-Message-State: AFqh2kqS7vgiS7GmVx28AEgb+HPX2+ZrsQEQH4JpntW2OxCgXNZlu6DQ
-        kYU/JH5T5sV2tKoWKgmV+gh6EA==
-X-Google-Smtp-Source: AMrXdXsKZIF89HCTLwqLnN4QPrxdRDgUZhxST1pEsKbqms4h+NEyD0x16YKN/NnlBup8oC1yWqXcAA==
-X-Received: by 2002:a05:600c:35ca:b0:3d1:f2de:195a with SMTP id r10-20020a05600c35ca00b003d1f2de195amr52230532wmq.32.1673346884631;
-        Tue, 10 Jan 2023 02:34:44 -0800 (PST)
-Received: from mai.. (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05600c154c00b003d9fba3c7a4sm409366wmg.16.2023.01.10.02.34.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 02:34:44 -0800 (PST)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-X-Google-Original-From: Daniel Lezcano <daniel.lezcano@kernel.org>
-To:     daniel.lezcano@linaro.org, rafael@kernel.org,
-        dmitry.baryshkov@linaro.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] thermal/drivers/qcom: Remove duplicate set next trip point interrupt code
-Date:   Tue, 10 Jan 2023 11:34:20 +0100
-Message-Id: <20230110103420.2430518-1-daniel.lezcano@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pmMrDaRkKSnc1qhodDZOnxZ9tfc0loduFNccFsKTnYg=;
+        b=qIvuWo1/+GKZ6DYgtIXF0Yxz6OOQ/Pj/g0W7BJe4D6TSMcNOEHfnLnMFdudHO26WES
+         fLcnIexn0YDOKV5pm/2kDQVMfLONuPfO++FZewJW9uSjLexmSB5oo/m2BvsRivtiNImK
+         vJ2xC9A9R8ub93jGBOP8S6ltxtQZaqbCHGeBKAQYwgZwVSu3pZrqdG++6w9Zj8UGmTl9
+         Z5g0d3HL7MafKPNsDP0HNMYZeibYPG9mWlSCHe5VgWZHMEAwqVrNMObplgu3utD+Pwcy
+         uLAa/agtMMXc4eiL9WwlzJx+AJEqalkVM/PpW9+8PXc5kjrqAwIT7UXyshu6tz8KZUDx
+         IVcQ==
+X-Gm-Message-State: AFqh2krDIRG3an9zx5Ko9ve6zZ8ggLt0Rjv3L3wEjIP4l8TO/wP2AlKZ
+        lzuxSukKfOCQOJt9fH/hWx5+SA==
+X-Google-Smtp-Source: AMrXdXun7Qhne8LN25fn0zhY7FXb8AtvrkTpOTnpXr+zlJTPyur3hYr37jfZFi/8pJEcK9WkHsT/Jw==
+X-Received: by 2002:a05:6000:81:b0:2bc:1b58:8264 with SMTP id m1-20020a056000008100b002bc1b588264mr4869488wrx.49.1673347277313;
+        Tue, 10 Jan 2023 02:41:17 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id j17-20020adff011000000b002a64e575b4esm11017449wro.47.2023.01.10.02.41.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 02:41:16 -0800 (PST)
+Message-ID: <a690de32-522f-c777-241b-907bda8a14ba@linaro.org>
+Date:   Tue, 10 Jan 2023 11:41:14 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v4 01/10] dt-bindings: qcom,*-geni: move
+ #{address,size}-cells on i2c/spi nodes
+Content-Language: en-US
+To:     Brian Masney <bmasney@redhat.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     quic_shazhuss@quicinc.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.co
+References: <20230103182229.37169-1-bmasney@redhat.com>
+ <20230103182229.37169-2-bmasney@redhat.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230103182229.37169-2-bmasney@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+On 03/01/2023 19:22, Brian Masney wrote:
+> Move the #address-cells and #size-cells properties on the existing
+> i2c/spi example nodes below the reg property so that all of the
+> address-related properties are grouped together.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Link: https://lore.kernel.org/lkml/Y6Wnh+tXPhF6aC1b@hovoldconsulting.com/
 
-The tsens driver reprogram the next trip points in the irq
-handler. This function then call thermal_zone_device_update().
+We do not have conclusion where these should be, so don't make any changes.
 
-However, thermal_zone_device_update() calls thermal_zone_set_trips()
-and from there it calls the backend 'set_trips' ops. This one in turn
-reprogram the next trip points (low/high).
+https://github.com/konradybcio-work/dt_review
 
-Consequently, the code setting the next trip points interrupt in the
-interrupt handle is not needed and could be removed.
-
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
----
- drivers/thermal/qcom/tsens.c | 46 +-----------------------------------
- 1 file changed, 1 insertion(+), 45 deletions(-)
-
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index b5b136ff323f..58693ee8c430 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -472,52 +472,8 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
- 			continue;
- 		if (!tsens_threshold_violated(priv, hw_id, &d))
- 			continue;
--		ret = get_temp_tsens_valid(s, &temp);
--		if (ret) {
--			dev_err(priv->dev, "[%u] %s: error reading sensor\n",
--				hw_id, __func__);
--			continue;
--		}
- 
--		spin_lock_irqsave(&priv->ul_lock, flags);
--
--		tsens_read_irq_state(priv, hw_id, s, &d);
--
--		if (d.up_viol &&
--		    !masked_irq(hw_id, d.up_irq_mask, tsens_version(priv))) {
--			tsens_set_interrupt(priv, hw_id, UPPER, disable);
--			if (d.up_thresh > temp) {
--				dev_dbg(priv->dev, "[%u] %s: re-arm upper\n",
--					hw_id, __func__);
--				tsens_set_interrupt(priv, hw_id, UPPER, enable);
--			} else {
--				trigger = true;
--				/* Keep irq masked */
--			}
--		} else if (d.low_viol &&
--			   !masked_irq(hw_id, d.low_irq_mask, tsens_version(priv))) {
--			tsens_set_interrupt(priv, hw_id, LOWER, disable);
--			if (d.low_thresh < temp) {
--				dev_dbg(priv->dev, "[%u] %s: re-arm low\n",
--					hw_id, __func__);
--				tsens_set_interrupt(priv, hw_id, LOWER, enable);
--			} else {
--				trigger = true;
--				/* Keep irq masked */
--			}
--		}
--
--		spin_unlock_irqrestore(&priv->ul_lock, flags);
--
--		if (trigger) {
--			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
--				hw_id, __func__, temp);
--			thermal_zone_device_update(s->tzd,
--						   THERMAL_EVENT_UNSPECIFIED);
--		} else {
--			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
--				hw_id, __func__, temp);
--		}
-+		thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
- 
- 		if (tsens_version(priv) < VER_0_1) {
- 			/* Constraint: There is only 1 interrupt control register for all
--- 
-2.34.1
+Best regards,
+Krzysztof
 
