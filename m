@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 550C766461A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 17:32:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A44A8664626
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 17:33:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238703AbjAJQbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 11:31:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49036 "EHLO
+        id S238860AbjAJQcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 11:32:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238628AbjAJQbq (ORCPT
+        with ESMTP id S238922AbjAJQci (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 11:31:46 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE9F81D5C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 08:31:42 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id ay40so9249882wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 08:31:42 -0800 (PST)
+        Tue, 10 Jan 2023 11:32:38 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57BF84BFF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 08:32:35 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id j7so7378488wrn.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 08:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kgOd+VWxsnmKVu53YzWAVlTYBysrxAFnTfMj/8sDZDE=;
-        b=Kbq7XT8uNB0knbmfwL9Q1lihlhuGeO0201X31jmgqbpked5t9NliIEh8HYr21QVJuK
-         kXUdnGAEC/8oStNApzbVsOeHfgnqb3As8t9gom4QKl8qWCazPWRG2ljn2jEzfuw2auco
-         jtH0MtvSxJjzMNNl0Z7bicmkMIWCslhoGzveDOp8EmltPaiccb16fAmui1EoAFagJ6Iw
-         pNPHIJa3E9FBof9cI+5ccHxCJisJpOCZOEjWH3e7Su1LK+Qtb8WGpGlexbUVHqsRR1vi
-         xZlZUbaK1wT5u/iejFGfhQ+QQa0sCbqivEu2Ft1ktfa0T6ifjF4OxMkV+sS9XihY2F5H
-         FIXg==
+        bh=QuzbVCChpPx+rGaPIq8dHHS4EuNxVBGmVWr4Va3xo74=;
+        b=s7U+y5Oz7tIRvD972353bs+//bJkzJOJy8dEyT3V0seHT8faP05kCBKRkOOfLC/3Q2
+         khsrE/uvDOaL1cxhP4Nb2OEMNygi9QroDRkVeDbsKSn2hnXlvbMGwHOXBAzsVy38sJAO
+         QsAGB3T1fS8mjPzdfooRgf27bCITsXgW76dgMzTfZFOtq51YQjQfDdtbDd6XPBkNF2Dw
+         jGdXYRHZZmLVEM8FDcb+JhA2YzqNwfKbpGDpn8AYXltNZ/VtadTafumdA3uJX4vaxsiy
+         rrsTTMwfuQ/KFMX+32Za1yeKAJzX58yzI1ntgUO0uGrW1oDuN3PABfoGVoxSef+fdZBQ
+         nGRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kgOd+VWxsnmKVu53YzWAVlTYBysrxAFnTfMj/8sDZDE=;
-        b=OefVBt6ONZcc9kyelY57Kh5Zqjv2cqjP8VBIwmr6K5qcCS/DgBJJqMdtNS1HnWvVUQ
-         7ono7ILhvr5EyhopcJZy686NG0RAtaO+AGvyuJaEI4iAnolXQFG8ZTSL0UpGg7Mt8taJ
-         cAHgPxrCf/kgHRANrSdR2R3FnSedrkrG8Ig9qU29snbn/xfj/u1xU2AnAwyNKs7yOPix
-         xiYSm+6f6kpYW8q5yLidUeaQaZFbebSyOvpzF7G4F3olDTEuKUJvx02sXZWyV2aprSEP
-         i2crfU15cLmaj5RgzCmBN4mRzzIcikh1YQSC1+z7fxQP+r02H+bmCf8GZBFLIa+dwSPz
-         Ik7A==
-X-Gm-Message-State: AFqh2ko8VELiDa9yehO7Gt7A3YyLrfYiI8qQjOVfHuR1TUQ8Fv+MZ/ha
-        E93czrKj0TJNxxKxR3Ukc2kAGA==
-X-Google-Smtp-Source: AMrXdXv6olYMonryRGkx+SneUVIxO8RmSw0eLwPtZ0cqKL6w6ZyJfFtjunX//Vf2e2ZrSFajZZQjtg==
-X-Received: by 2002:a05:600c:5c8:b0:3d1:4145:b3b with SMTP id p8-20020a05600c05c800b003d141450b3bmr51162153wmd.9.1673368301362;
-        Tue, 10 Jan 2023 08:31:41 -0800 (PST)
+        bh=QuzbVCChpPx+rGaPIq8dHHS4EuNxVBGmVWr4Va3xo74=;
+        b=un1WvoIx7XGCxOxuNKehlYd0f4luvS0xcjG+rK68QnYjUsRfiDBBOlJsGYcf2HXjNI
+         zB/Pa6H73ADmNiGzOd2skYGitWXGJpuXDhIX3NOXSTvc7VxJhwakaH6WTHUe1pCMb14E
+         EgxJ6vcSZo/AIA8fxA9g2/r900wZ1YDEN00S4GkFqzYuAnraEk28LrDFXZus90GcVZ9c
+         1pDMWKHkSVPh0arslKsUXYjUwN8aVHE5aDopHP8BaIenUYYPQxSjlt8Z44DEcV8mU/cN
+         7HUPHPG11LxEP8G6V7PkJAVXMZyUPSOYbgrbefjBdbV3HzA8kjirjfQVkjwnUs96Jy/a
+         LDuw==
+X-Gm-Message-State: AFqh2kpNADOJFfkan3OYRSNg6oDM+SaHxQxp6c6kV2HG2/gJy9lRIn3b
+        BtFX9tXhQmw3sm/MUYGisFxuHA==
+X-Google-Smtp-Source: AMrXdXtSCGNwFYMKfMVzHWvbvChN4XjFuVYEwrUFK0U4mbHjX4GIFKntuwa8PQWIutEaY8g9EcHY3Q==
+X-Received: by 2002:a05:6000:910:b0:242:733b:af28 with SMTP id bz16-20020a056000091000b00242733baf28mr58796163wrb.5.1673368354494;
+        Tue, 10 Jan 2023 08:32:34 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id c18-20020a05600c0ad200b003d9c97d82f2sm15278312wmr.8.2023.01.10.08.31.39
+        by smtp.gmail.com with ESMTPSA id l6-20020a5d6686000000b002bb3229a03csm10562820wru.34.2023.01.10.08.32.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 08:31:40 -0800 (PST)
-Message-ID: <439c4aa1-2769-3c66-4d15-15729643c736@linaro.org>
-Date:   Tue, 10 Jan 2023 17:31:38 +0100
+        Tue, 10 Jan 2023 08:32:33 -0800 (PST)
+Message-ID: <9849e94a-abd6-37f2-8c49-e923bb554dee@linaro.org>
+Date:   Tue, 10 Jan 2023 17:32:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 2/3] dt-bindings: qcom: Ducument bindings for new
- msm8916-zhihe-uf896 and msm8916-zhihe-ufi001c
+Subject: Re: [PATCH 1/3] dt-bindings: vendor-prefixes: add zhihe
 Content-Language: en-US
 To:     Yang Xiwen <forbidden405@foxmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +69,9 @@ Cc:     Jaime Breva <jbreva@nayarsystems.com>,
         Nikita Travkin <nikita@trvn.ru>,
         ~postmarketos/upstreaming@lists.sr.ht
 References: <20230110155014.31664-1-forbidden405@foxmail.com>
- <tencent_5AB8DBF2B3CDE947BB84B3D6D2A0D7023F0A@qq.com>
+ <tencent_89603CF732FEF0B9A2E88CF0E45A62F42D07@qq.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <tencent_5AB8DBF2B3CDE947BB84B3D6D2A0D7023F0A@qq.com>
+In-Reply-To: <tencent_89603CF732FEF0B9A2E88CF0E45A62F42D07@qq.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,38 +84,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/01/2023 16:50, Yang Xiwen wrote:
-> Document the new zhihe,uf896/ufi001c device tree bindings used in
-> their device trees.
+> zhihe is a placeholder for various 4G USB dongles made by unknown
+> manufactures with similar design. It is widely used in China to refer to
+> these dongles.
 
-Subject: drop second/last, redundant "bindings for". The "dt-bindings"
-prefix is already stating that these are bindings.
-
-Subject: typo - Document
-
-Subject: shorten it, use some shorter user descriptive model name
-
-> 
-> Signed-off-by: Yang Xiwen <forbidden405@foxmail.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 65ef7e442da0d..efe5f6c384b69 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -210,6 +210,8 @@ properties:
->                - samsung,j5
->                - samsung,serranove
->                - wingtech,wt88047
-> +              - zhihe,uf896
-> +              - zhihe,ufi001c
-
-Real hardware, running real mainline OS cannot be called "placeholder".
-
->            - const: qcom,msm8916
->  
->        - items:
+No, it's not descriptive enough. If you bring support for specific
+device, this device is already known to you.
 
 Best regards,
 Krzysztof
