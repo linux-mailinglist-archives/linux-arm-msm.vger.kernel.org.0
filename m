@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01669663EBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 11:55:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C0EA663EC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 11:56:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238228AbjAJKzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 05:55:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41502 "EHLO
+        id S238252AbjAJK4q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 05:56:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238268AbjAJKzq (ORCPT
+        with ESMTP id S238257AbjAJK4k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 05:55:46 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20DD567BD3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:55:41 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id v2so286802wrw.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:55:41 -0800 (PST)
+        Tue, 10 Jan 2023 05:56:40 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57B4F7D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:55:59 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so11508645wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 02:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=steAEzh8bEsrRFaPtR5QEO7PwY+TRudVvhGkJEjyxrM=;
-        b=nkM28h88WcckND4JJdWLKnwnMGI7HvjWyoei7BfOUVO5rbzPCJNQQT8oVhvU/hfkZ0
-         Im4Bw75GhShlHBMIsHA9UlmLR6qIGBTYNsvGeEuxhWGQ4FEzUq86bP5bxdwhzmvHIHai
-         g5hzX7u9clSMTahY9oWaa+Ly6k/sel8soNjmQxUfm8+TF/XiWUhntfKgwvYcSxodAu+L
-         Wloxjj0dlecVgpgKP8vvsXNVAcIDBPMtkYhcSQvfFGWaIcZX1ymQ2IyH9HyFmZfnKoK8
-         Zo32R8jVe05037Wt3Wi9GpCov4CLScu8d3FpfPTahyF6i5hfO24U+4bx9OMMyHhyO4dp
-         yL/w==
+        bh=OK3dOcmC2316DPwk/bUPBybxOAI/IcJi2QhkVwXbWBQ=;
+        b=nZlsw+sfh6c8LjeTUYnN+a0bFqxtxwL5DIC1kOnceyEajUUdBKmOdAPp88zSPW6qdj
+         ftayDXefeigxCJcjVMr318t5v+tjJk3AJfoMXRlI7eE+j3K0LeX9j8FZ2BZccLnQcK31
+         ZACE+rsR9AN56x7XIGi0jl8eNSwHFzVCbrEde+MMSYnHW6LjR9aRwoiX5Slv2mAFW+Zz
+         5IYX42NjzePzX35hD+6v5I1tDHPFEVcbyLEhKcmj1lnDHiNgi56VLkamALYc0YRAWQmm
+         IYK9nylq+1Tgegu10hGd5HndoGaMB4xCiGEHTSNwn7CtII9QhiY91lresH5LJ5Hmv0k7
+         azkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=steAEzh8bEsrRFaPtR5QEO7PwY+TRudVvhGkJEjyxrM=;
-        b=UPBxHTSS+mKyC1AvsxQsO8RHielBVNagAsFlrV/uiY+p7+qUmft+i7cUw0y8FPCiUo
-         ipc4YUD1n6EmCub/kFiUokovlGtal3axeatzCJ4UaKwWKDQR5LXQF9eD8+Rl/UX3juJH
-         ClTfQK05wEg8GK37brbUxf1CrZb0AcWFiv6qNkGZpKE4QC1P447sgkzX4N8ktc2DI2fF
-         UAcOXsMgxD4ktQ76rylvjL/7IrmwXR4vEIhcPspQfWkc8o/DNfsd1IGkT881HmSMy1ne
-         T7yTPoN6Ut7mTVkVLbyEcj3vE5f8EiiZnKgjbbrYWsip41HRBXHfxQWCtLpwcwR1VU81
-         uxLQ==
-X-Gm-Message-State: AFqh2kq974mjPpzsZWkuLCXnxFNkBQgeYsH6BTt+j5sNdnoquTF7+CiE
-        fHe2YQbFePXfGUc2PZ98Y80pfg==
-X-Google-Smtp-Source: AMrXdXsWypeJy1KwetU1TKmnb3+brikmWgsmmvQUMmlaAG7xOOcZoLypIut/nX7oHHCRe/05wwxTeg==
-X-Received: by 2002:adf:eb09:0:b0:2aa:1121:1b79 with SMTP id s9-20020adfeb09000000b002aa11211b79mr13601321wrn.25.1673348139731;
-        Tue, 10 Jan 2023 02:55:39 -0800 (PST)
+        bh=OK3dOcmC2316DPwk/bUPBybxOAI/IcJi2QhkVwXbWBQ=;
+        b=xdMI8XRj5i+jAUJWHTNKqHW7PaqquMw8dU7/Nl9e+/2BksyYvPCptZkinp9tlOXEBc
+         ZL+AfH0UHF9816ZBYxnUaznB51I/WWzH7KuCjCAQJ9yq/DHXdZH0QWA/wCjauIRC3ZLF
+         B7IVgqU/21UV1ws3BAv96HfN4LxnD2BstK5g0bMm+ResskaKpvQ03JZzWNWyJASnkTEj
+         lktpz4n1XLK7SM10K+q8NV++3s5d580KMFGzHcBsabOrJoTN4q+0wbu3asKYEfU35whN
+         FOqRR7tgbvJjXje6FJHPUY2oPkJ/aYRhcK5l5m88jOOmVB7RDMy8LoYIwbxNI/b7296z
+         sjqg==
+X-Gm-Message-State: AFqh2kqA+9aoslxSO9VBtgWr4cMRyDvX8EUqMqSsMv6hQui2AGNvgMwI
+        eNAmJtP+bk+0/KPloyRqcfwOrg==
+X-Google-Smtp-Source: AMrXdXsvtDeUTfyYuTmn8t01Vc4ryVxBqJidLl7ljjVRGz8E1/5LG2Szn2MIuKI+e+NR5mw5c8WdPw==
+X-Received: by 2002:a05:600c:510b:b0:3d2:392e:905f with SMTP id o11-20020a05600c510b00b003d2392e905fmr49326298wms.24.1673348158158;
+        Tue, 10 Jan 2023 02:55:58 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t17-20020adff611000000b00236488f62d6sm10703537wrp.79.2023.01.10.02.55.38
+        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b003d9862ec435sm2256445wms.20.2023.01.10.02.55.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 02:55:39 -0800 (PST)
-Message-ID: <26589373-4ed5-10c5-9b49-3edfa78c71e6@linaro.org>
-Date:   Tue, 10 Jan 2023 11:55:37 +0100
+        Tue, 10 Jan 2023 02:55:57 -0800 (PST)
+Message-ID: <7d0f8886-4d7a-b05a-4ad3-6bcbbcddbcf3@linaro.org>
+Date:   Tue, 10 Jan 2023 11:55:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [RESEND v3 1/4] dt-bindings: clock: qcom,sc7280-lpasscc: Add
- qcom,adsp-pil-mode property
+Subject: Re: [RESEND v3 2/4] dt-bindings: clock: qcom,sc7280-lpasscc: Add
+ resets for audioreach
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
@@ -66,9 +66,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
 References: <1672849297-3116-1-git-send-email-quic_srivasam@quicinc.com>
- <1672849297-3116-2-git-send-email-quic_srivasam@quicinc.com>
+ <1672849297-3116-3-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1672849297-3116-2-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1672849297-3116-3-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,16 +82,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/01/2023 17:21, Srinivasa Rao Mandadapu wrote:
-> When this property is set, the remoteproc is used to boot the
-> LPASS and therefore qdsp6ss clocks would be used to bring LPASS
-> out of reset, hence they are directly controlled by the remoteproc.
-> 
-> This is a cleanup done to handle overlap of regmap of lpasscc
-> and adsp remoteproc blocks.
+> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
+> for audioreach based SC7280 platforms.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
+>  .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml       | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
