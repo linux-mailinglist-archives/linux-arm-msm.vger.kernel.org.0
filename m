@@ -2,109 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C8D0664FBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 00:15:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD1B7664FFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 00:37:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233498AbjAJXPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 18:15:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40430 "EHLO
+        id S234966AbjAJXhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 18:37:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233940AbjAJXOx (ORCPT
+        with ESMTP id S234960AbjAJXhA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 18:14:53 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF28C44344;
-        Tue, 10 Jan 2023 15:14:52 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id w3so14862988ply.3;
-        Tue, 10 Jan 2023 15:14:52 -0800 (PST)
+        Tue, 10 Jan 2023 18:37:00 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E790157927
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:36:58 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id co23so13392238wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:36:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xPPp4X1sBM/+EwXKJ1Udyn041rDe4dkPN+gbP+h2Yoc=;
-        b=q63uw3mNNlQVh6Is3bP4jmBTtBzK7jO+hnToC3uKeWKGgwDm8mExfNScSDJARhkjr7
-         FrGgbnqN4GOZPhYvVpKjig9VDS4kS/JL09ZRrq+1Y7/DeaLEx3LD3j1zMODLrpmFDyDX
-         K/qSExlx+Pn3kbupCI8BEzmL7S6fkRpmiLOSPqZLB2SIC5BUsZTbchcpgBQ/6a7IacoE
-         82Y4Y92sV3kTEjAKCt2hjgjuEASCkZ+7vq/ALtjcBxhFgvK3Lg+8m0cKvpEBZ+hsZyui
-         z3M14v21V+ZYKkfkLpUjB/ZMhJlBcNPWpySuxouahKrcemeGfpgWmGrXT5EVmlb69XOX
-         tX1A==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fxOjkVkboXRnISG7GaZo9vjhTrmTTUvqEXeMahatA7M=;
+        b=WjR2YnPJqFFObwyC0JtfVB5IfTk7/pOBxZoJx3koapx+PjfwufQCb/S8O89Ts8nHej
+         Z4jpnzoSjcV5USy/jnGO9utG98Hpc4tieOC+9LfAgzr4MtWXUUSrCOEQVG0jCCiChnn+
+         C9b9i8nVxRzHe76M9+HaZLOOUfmrqJido/mTt8roLyMIk0r+MQCSyQ3DkgwlEKPKFXPu
+         Gp/66WAU1048EX7Q7TE/S/yTScJxMnNJg8rxSKNS1yXBg6xtTWrRytzZmdji3NHww8Nu
+         jA6uf31OGyfHb+k9oKakjOu7eaSAsvVZWX/+euRLQn7g5iJVIuw3VcZyH5HTLbwf4UHX
+         sTcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xPPp4X1sBM/+EwXKJ1Udyn041rDe4dkPN+gbP+h2Yoc=;
-        b=ZtdiIMhYGKy2O2UCtK7OuXR8lcUDNr4g56DrRyQiNN6GX6HztAsMf/wTRmLEV09gbt
-         UCSujWVbbwjqHwdITSKhlgJS4PvyJarqsPChfV7g5HLlgIrl0+9anjAe2HDQVjzFBLhB
-         aw2T8Qe6m99iGGUAL6TlrWmXCeBkMEzdH9LbGvhsyTZoS8cBp3KcdHR1rn7317ZeEifY
-         Y3ChY17LrjXOeZPsQxS3ZGfMDxhtf1ZOHCcvYPqK8Vn2vClBWSqPJ+E4fMcUdbbOkujC
-         zJXx4KtGias62Wfwqx/fm0gy3ONSAP4230Dw+mma0M/TvvUxCDjhC2MDe7wwJHi1toUL
-         lvuA==
-X-Gm-Message-State: AFqh2kp3JjukMO68c/a+um0tiLuW3QKtkUTmKDm9UZIEMm3Gkw6728Rv
-        irJO6U0QcVmVzQNfhhrUV7E=
-X-Google-Smtp-Source: AMrXdXvCCByLHgBm0haGn8RFxyFWg/VpAsCup8jfefaHXVKuqOBYbiffTI0ZlkvCrwLLmKdjiXEAzg==
-X-Received: by 2002:a17:902:aa82:b0:193:2f1a:65b1 with SMTP id d2-20020a170902aa8200b001932f1a65b1mr457696plr.59.1673392492186;
-        Tue, 10 Jan 2023 15:14:52 -0800 (PST)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id u18-20020a170903125200b00189adf6770fsm8654086plh.233.2023.01.10.15.14.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 15:14:51 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/3] drm/msm/gpu: Add default devfreq thresholds
-Date:   Tue, 10 Jan 2023 15:14:44 -0800
-Message-Id: <20230110231447.1939101-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230110231447.1939101-1-robdclark@gmail.com>
-References: <20230110231447.1939101-1-robdclark@gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fxOjkVkboXRnISG7GaZo9vjhTrmTTUvqEXeMahatA7M=;
+        b=O3rpb5nAzzHr5RAkG7Rnz8B3g3VJHhv4tZvShX8N871l6F+idiijAgfI7fHwHGYogE
+         Lbw/drOM0ajVMOimqbWZD+1gJMql27mWtriftl9ZYKhE7br5B6E9u21i2lC0J5sZ75O5
+         jBctStoK/v8yEDK4UAh8WEBAw38YtV1z6Rjqf+UVq1ZYiRqr2zCKRpPa9SntctQNKoqq
+         4/chTdA8hPzvcuKFTwfHDgenZIHNquNsmCzm6XcexZjgsf8/bZXdZsPw2b7GcI2kxiQ+
+         vreNBYZ9EaXWaY70mFfJU+GUCK4wwvF+YJzla3zMu1DX1VC9eAgLuUQPQopO3y0hTwGN
+         Py+w==
+X-Gm-Message-State: AFqh2kp/gh5nTqVuy/R63LEMaYwqWA8wuhab8XlbjSLqEpVP0V5pkpHY
+        N3kEEYqr7ODrwHRy/XXNuBr87w==
+X-Google-Smtp-Source: AMrXdXv+YWValqJb6tVXeuld6jcHpgsCyBCn4r8Fp8XunPfyWjoD2u8VSVdiWKodErTXk7y5vAPqhA==
+X-Received: by 2002:adf:a4de:0:b0:2a9:89e:2b53 with SMTP id h30-20020adfa4de000000b002a9089e2b53mr15529548wrb.45.1673393817487;
+        Tue, 10 Jan 2023 15:36:57 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id t14-20020adfeb8e000000b002baa780f0fasm12191553wrn.111.2023.01.10.15.36.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 15:36:56 -0800 (PST)
+Message-ID: <49f02945-0f37-b046-dae7-417ab0148bff@linaro.org>
+Date:   Tue, 10 Jan 2023 23:36:56 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 03/10] interconnect: qcom: rpm: Always set QoS params
+ on QNoC
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
+ <20230110132202.956619-4-konrad.dybcio@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230110132202.956619-4-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 10/01/2023 13:21, Konrad Dybcio wrote:
+> On newer SoCs, QoS parameters and RPM bandwidth requests are wholly
+> separate. Setting one should only depend on the description of the
+> interconnect node and not whether the other is present. If we don't
+> vote through RPM, QoS parameters should be set regardless, as we're
+> requesting additional bandwidth by setting the interconnect clock
+> rates.
+> 
+> With NoC (the old-SoC bus type), this is not the case and they are
+> mutually exclusive (so, the current upstream logic is correct).
+> 
+> For BIMC however, newer SoCs expect QoS params to be always set
+> (like QNoC) whereas older ones (like MSM8998) hang up completely when
+> doing so, hence this will be addressed in the next commit.
+> 
+> The Fixes tag references the commit in which this logic was added, it
+> has since been shuffled around to a different file, but it's the one
+> where it originates from.
+> 
+> Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/interconnect/qcom/icc-rpm.c | 20 ++++++++++++++++----
+>   1 file changed, 16 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index cd1eab3d93ba..0516b74abdc7 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -246,15 +246,27 @@ static int qcom_icc_rpm_set(int mas_rpm_id, int slv_rpm_id, u64 sum_bw)
+>   static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
+>   			  u64 sum_bw)
+>   {
+> +	struct qcom_icc_provider *qp = to_qcom_provider(n->provider);
+> +	bool vote_ap, vote_rpm;
+>   	int ret;
+>   
+> -	if (!qn->qos.ap_owned) {
+> -		/* send bandwidth request message to the RPM processor */
+> +	if (qp->type == QCOM_ICC_QNOC) {
+> +		vote_ap = true;
+> +		vote_rpm = true;
+> +	} else {
+> +		vote_ap = qn->qos.ap_owned;
+> +		vote_rpm = !vote_ap;
+> +	}
+> +
+> +	if (vote_rpm) {
+> +		/* Send bandwidth request message to the RPM processor */
+>   		ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
+>   		if (ret)
+>   			return ret;
+> -	} else if (qn->qos.qos_mode != -1) {
+> -		/* set bandwidth directly from the AP */
+> +	}
+> +
+> +	if (vote_ap && qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
+> +		/* Set QoS params from the AP */
+>   		ret = qcom_icc_qos_set(n, sum_bw);
+>   		if (ret)
+>   			return ret;
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index e578d74d402f..1f31e72ca0cf 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -145,6 +145,15 @@ void msm_devfreq_init(struct msm_gpu *gpu)
- 	if (!gpu->funcs->gpu_busy)
- 		return;
- 
-+	/*
-+	 * Setup default values for simple_ondemand governor tuning.  We
-+	 * want to throttle up at 50% load for the double-buffer case,
-+	 * where due to stalling waiting for vblank we could get stuck
-+	 * at (for ex) 30fps at 50% utilization.
-+	 */
-+	priv->gpu_devfreq_config.upthreshold = 50;
-+	priv->gpu_devfreq_config.downdifferential = 10;
-+
- 	mutex_init(&df->lock);
- 
- 	dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
--- 
-2.38.1
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
