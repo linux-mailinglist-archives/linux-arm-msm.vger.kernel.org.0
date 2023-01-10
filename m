@@ -2,145 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74E2F664F34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 23:57:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BF6E664FAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 00:14:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231802AbjAJW46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 17:56:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58956 "EHLO
+        id S232021AbjAJXOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 18:14:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235250AbjAJW4c (ORCPT
+        with ESMTP id S231265AbjAJXNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 17:56:32 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C72E6338D;
-        Tue, 10 Jan 2023 14:55:26 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30AMqhbI021237;
-        Tue, 10 Jan 2023 22:55:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FnslzAltcK2Vf4x7yLy3vGWrYsR9oG+TmGbt1RNiTbA=;
- b=dDvCjD/0jz4NdH1/+fs0mlqd1EWGJtv9dGoEMl4Mv/kQqLFVX8h7WfNEDghYudNNDmD8
- gQpeVHO8jkIwE0NugYZwLGnIgT04I9Jb2XF+AKUZBML5K2IZmULc/o8pjAc3GrP+c9lF
- fiLEGUJMs81yS7PsfkgH7ekKHI+jhF/bbWfQlvh+8L69JxXunV8flEpLWh1eHwsaz8ry
- nnZ1R38n1uA55JE41oF4pmJCSSWy9h/E+cYfdbFVtpaSwKxMDUb5pO/3ScyIuLUhIX2N
- bUTPugpT0EFXJumEMdBEsd9axhvYdfg7gqv3pV6qtEH5+EVcGjPdjCi40GF0/78gJu+6 fA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1dbg8gt2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 22:55:10 +0000
-Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30AMt9bK020238
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 22:55:09 GMT
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 10 Jan
- 2023 14:55:09 -0800
-Message-ID: <560526fe-cd7b-575a-96c9-fe4f8d349e89@quicinc.com>
-Date:   Tue, 10 Jan 2023 14:55:08 -0800
+        Tue, 10 Jan 2023 18:13:44 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2948431A3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:13:38 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id ay40so9903048wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:13:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vZw5peRwdHJn1dRdNsBoZUOe3wdkZhRQX4woKdarIq8=;
+        b=RxZm+k5uTjKUm5C5bYL7u0H7/FusGTJ63UOPcrKto6/q4KJPOac3TeV9lYLtm2o2DK
+         D7o1HhG2PQtaVvJMFrsjZFu1BqbsdJR5zQ3yK/zfjQCeuMFPPMFzaJ15Vz9ycel0vGqx
+         jn1Gys/1VL2NzY5lL+1KHp2u0UzS2PbEFE2lXgSHMrT+moGvTXjHwO37LxE3WtFqNToA
+         O77d4W2AaPocPc5LmgUVaI8Psu0S4vd8Y1XIn+W7WmDOhTEi44KIheRtzb29aaabfeQQ
+         Alprt/F0PNcMLw9sO5T6zETnVfERXzjHX724IeoppSoXVtVxJAc4n4v1m/XkoPU/byhN
+         5PaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vZw5peRwdHJn1dRdNsBoZUOe3wdkZhRQX4woKdarIq8=;
+        b=wloPlZZTV+XYeJIyTEVG4rhIj7mN5KaCV55phBwnprXtUIsgXy3q3yeiGcisEF79iF
+         MU5cee+Cw+DmIEYfPkrq3+apjCKsNgDAnR+E7cZe58GebM1roGMU52uccYDpTNoVjCLO
+         iBPZie6fnEpVzLNNsYCisrvu+2KlLi5gYndPkq2VaYYO/6jNrbMbjcTWejfUKcSaWc07
+         OzrFGXXTb8/gKct2Bxm0H3TUESIdp4ZbFPJHUfiV86CouPdzR/2wVO2XDG5gG8Oldz4N
+         EV21FYEWhh0465tORnz22bQd5XhpkGm2iOXU3aiV344u12J7t4VcHP2mMP90dSUzrMBi
+         /9yg==
+X-Gm-Message-State: AFqh2kqS2WtaRy6WOmnByIoUsSo/tfU99R+FBt2v6n5+fJvR2lwrWxwC
+        7qWZO+X7VnAwicMepp4PL+MMiA==
+X-Google-Smtp-Source: AMrXdXthp2bk94VT355+bZ7rp3mumXfPG0F/g57cOjSw7okG3eN+qUkeJIliZQ4jRHGdgSCf64QDWw==
+X-Received: by 2002:a05:600c:5114:b0:3d9:fa37:e42d with SMTP id o20-20020a05600c511400b003d9fa37e42dmr2565547wms.17.1673392417298;
+        Tue, 10 Jan 2023 15:13:37 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h10-20020a1ccc0a000000b003d237d60318sm16657130wmb.2.2023.01.10.15.13.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 15:13:36 -0800 (PST)
+Message-ID: <d8a7e477-f612-19cb-8573-5cc0449df0fa@linaro.org>
+Date:   Tue, 10 Jan 2023 23:13:35 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v8 04/28] arm64: smccc: Include alternative-macros.h
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 02/10] interconnect: qcom: rpm: make QoS INVALID
+ default, separate out driver data
 Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Jun Nie <jun.nie@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-acpi@vger.kernel.org>
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-5-quic_eberman@quicinc.com>
- <f6bf5577-9a3a-e949-62b8-53f5fcdd3fa4@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <f6bf5577-9a3a-e949-62b8-53f5fcdd3fa4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qyhHMAiFyocYQdMtuahXfi9enDBktio1
-X-Proofpoint-ORIG-GUID: qyhHMAiFyocYQdMtuahXfi9enDBktio1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-10_09,2023-01-10_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- spamscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=843 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301100152
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
+ <20230110132202.956619-3-konrad.dybcio@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230110132202.956619-3-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 10/01/2023 13:21, Konrad Dybcio wrote:
+> +#define NOC_QOS_MODE_INVALID_VAL	-1
+> +#define NOC_QOS_MODE_FIXED_VAL		0x0
+> +#define NOC_QOS_MODE_BYPASS_VAL		0x2
 
+The basic fix you are applying here makes sense to me.
 
-On 1/9/2023 1:34 PM, Alex Elder wrote:
-> On 12/19/22 4:58 PM, Elliot Berman wrote:
->> Fix build error when CONFIG_ARM64_SVE is selected and
->> asm/alternative-macros.h wasn't implicitly included by another header.
->>
->> In file included from arch/arm64/gunyah/gunyah_hypercall.c:6:
->> arch/arm64/gunyah/gunyah_hypercall.c: In function 
->> `gh_hypercall_msgq_send':
->> ./include/linux/arm-smccc.h:387:25: error: expected string literal 
->> before `ALTERNATIVE'
->>    387 | #define SMCCC_SVE_CHECK ALTERNATIVE("nop \n",  "bl 
->> __arm_smccc_sve_check \n", \
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> 
-> If this is correct (and I presume it is), I think this patch should
-> be posted separate from (and before) the rest of the series.
-> 
+But why bother with an additional _VAL defintion, you have your enum.
 
-Ack, will send this separately.
++enum qos_mode {
++	NOC_QOS_MODE_INVALID = 0,
++	NOC_QOS_MODE_FIXED,
++	NOC_QOS_MODE_BYPASS,
++};
 
->                      -Alex
-> 
->> ---
->>   include/linux/arm-smccc.h | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
->> index 220c8c60e021..6a627cdbbdec 100644
->> --- a/include/linux/arm-smccc.h
->> +++ b/include/linux/arm-smccc.h
->> @@ -383,6 +383,7 @@ asmlinkage void __arm_smccc_hvc(unsigned long a0, 
->> unsigned long a1,
->>   /* nVHE hypervisor doesn't have a current thread so needs separate 
->> checks */
->>   #if defined(CONFIG_ARM64_SVE) && !defined(__KVM_NVHE_HYPERVISOR__)
->> +#include <asm/alternative-macros.h>
->>   #define SMCCC_SVE_CHECK ALTERNATIVE("nop \n",  "bl 
->> __arm_smccc_sve_check \n", \
->>                       ARM64_SVE)
-> 
+---
+bod
