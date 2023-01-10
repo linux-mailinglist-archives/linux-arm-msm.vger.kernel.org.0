@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6634663EDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 12:02:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0722E663F07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 12:11:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbjAJLCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 06:02:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42032 "EHLO
+        id S237824AbjAJLKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 06:10:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238640AbjAJLAk (ORCPT
+        with ESMTP id S238356AbjAJLIw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 06:00:40 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF0235F54
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:00:27 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id bn26so11330993wrb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:00:27 -0800 (PST)
+        Tue, 10 Jan 2023 06:08:52 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CBCD44C7E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:08:09 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id ay12-20020a05600c1e0c00b003d9ea12bafcso6128581wmb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:08:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/sqiSzZl7tdMGMHM9Gz+tcnXK/Rd5YLz0PHqdYF7LCk=;
-        b=ZQXKT4wkWx65R4H1mNwPG5BEVzRem0IDMqI+AVwmlowlMKW5cNVfe0PCv8FvPI+hqm
-         xESithyiznoZHNePFVUSFjYkRtcx0p6vPtxfBoWfgc/TRCDCQJFc9TZExuX3iFT9gnG2
-         J1MV4C8FUc+RC3TjxKLBi40x27e2bKyZHlXOUETWSotP+owHeCjisXY4PIU9xOfmtzqd
-         o2K9E63XyKMfKNWbXdODcXCDHscM9itobyiIwzaZKGpbwhI7Rbnrcz9h418QR+0EGLSY
-         i3hfAYcPKkm2dNLISuf13jPzs3b0aM84S1Hf+c/GHiURJ8KnXQHTSp0gCCUSxRPZGxNw
-         fXrg==
+        bh=FNeXgKnEbLZaArQRftAzM3xIXiNgl2iUGd6733GbOj0=;
+        b=MmLkHE2yVceezpoQ1aaNKn7d8ZTKwLVGinX9/nfAVSh5uvfSd+Pef+a0i1YSdpKjHI
+         KG4Ub6G9AbsK+8oU7yp8TX1iZvJCzzIoQqxI3EbtJTW/z9S3z8bttdyZrHHteiIOMq+Q
+         5AmfchTISh2ieCR6Ht5CqUlAYoK55y4NorO4ih+EvBqeNMLJnjbXemiUBbIHPIyN+VmO
+         ptjB0OHZ4nHKwEzn+th+f0YMa/9Opwx0y/jHHbagoFOyKolCFqj00MpD/DmDKY+uytGN
+         5IWsr9E9qclJumbAfv6Msa03c4ghUFMfcsaBoRGZIAasEYZAodgx5BNAMeq5zWF4weBu
+         j9Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/sqiSzZl7tdMGMHM9Gz+tcnXK/Rd5YLz0PHqdYF7LCk=;
-        b=plaH2doyW7+ncToFrd8CAvsg9N50C5HEJktIGsF/T8QQBs3iGwS67wom5RXtWrmrIZ
-         /lKMO/mmXwHBZFWlXsw5Cr5O+QdbvKIbC9Ul8r1y45E0KXxfsOyH8egMfApfg03zmK8f
-         xvORuC5wjMpGVZDJ6YqdmrbmPhUKR0FRCAn7iR2gsURq5W7BvPWo3ZTi5HmSTjPNCgGE
-         EuueWn3Jf5m57mbzooVMRHqj1Hu99M8XySbtNJXwoyWdqno5lLJE9SUEeYFYn3p2qcOv
-         PecH1wQk8fqKoJLMDLPL9bPpCVWGBqsQ2yqfg2YNKV1MvBdQ1j5rphY51OceCZXd+XZ8
-         JHGg==
-X-Gm-Message-State: AFqh2krDfaYZu4bc/ias/s1asMZHgkvkvQg9vkGkTqbLTR81mZ+PdlRE
-        YzH7BuASKQBfmYTSYOKIsWVZAg==
-X-Google-Smtp-Source: AMrXdXsOjHmSfpTkgnzh7bn9JY2hWvnUyty612zsqrepGkZwnB14MBwUC1NHz0RvAPFuLyPtpC2hqg==
-X-Received: by 2002:adf:e24d:0:b0:2a7:c412:ed22 with SMTP id bl13-20020adfe24d000000b002a7c412ed22mr14332009wrb.58.1673348426433;
-        Tue, 10 Jan 2023 03:00:26 -0800 (PST)
+        bh=FNeXgKnEbLZaArQRftAzM3xIXiNgl2iUGd6733GbOj0=;
+        b=y2etBIkM6766x8PT9wpkN6GLQ/iFEULKUpG9IOYhYx9AUVXtTTtqpAlg5btcYeVawO
+         WdBJKeLdWRyfdqeOaEqNQ1dwEH5o6r5rhaDZZzMqW9+sxB5XBfLJ9P19QnWjKXlet3eX
+         qwIl99JaZL02x1+8bWuh/57x38S1/6nlbW3Jz7HxMqAQV+II3KNhD6jaUq+cVNtAdLEB
+         Y3cozP+L/WHBmh0m6u0Yv5jdd88RzB5H6KIOlYMohMSNCs6rSrZdP+PkfANyN2pTiXdE
+         /WWYUlokNpyqvAF+RtAK2+x6WCbApXqIRLQihbH2zbukcGuhxVfPpLGiiw+8pXq1QPPK
+         zcTw==
+X-Gm-Message-State: AFqh2kq3281ovPAAWG4uulpFOW1TP3nJUoA+L4EdgKeVHI4ZN5/2grHe
+        BWaMCL8uDiUbk8VJbVpiVA8Arw==
+X-Google-Smtp-Source: AMrXdXt+uWAPTwOuu8nqh+Vyyvqd94lH9EYTp/akqONNCrL0L7vqsSAPKLeUuvXGzgvBtO45LZGkZA==
+X-Received: by 2002:a7b:c851:0:b0:3d9:f067:1c32 with SMTP id c17-20020a7bc851000000b003d9f0671c32mr4690647wml.29.1673348888039;
+        Tue, 10 Jan 2023 03:08:08 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g1-20020a056000118100b002755e301eeasm10664865wrx.100.2023.01.10.03.00.24
+        by smtp.gmail.com with ESMTPSA id o21-20020a1c7515000000b003d995a704fdsm14432787wmc.33.2023.01.10.03.08.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 03:00:25 -0800 (PST)
-Message-ID: <a6e0fce9-3a59-1014-9ae8-f07b50d122a2@linaro.org>
-Date:   Tue, 10 Jan 2023 12:00:24 +0100
+        Tue, 10 Jan 2023 03:08:07 -0800 (PST)
+Message-ID: <bc44d4fe-9ffc-0270-1c74-e6190ea063f2@linaro.org>
+Date:   Tue, 10 Jan 2023 12:08:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 2/8] arm64: dts: qcom: sc7280: audioreach: Add sound
- node
+Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: sc7280: audioreach: Add lpass
+ pil node
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
@@ -66,15 +66,14 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
         konrad.dybcio@linaro.org, mka@chromium.org
 References: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
- <1672925875-2107-3-git-send-email-quic_srivasam@quicinc.com>
+ <1672925875-2107-4-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1672925875-2107-3-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1672925875-2107-4-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,130 +81,216 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/01/2023 14:37, Srinivasa Rao Mandadapu wrote:
-> Add sound node for sc7280 based audioreach platforms.
-> 
-> Include audioreach dtsi into crd-rev3 platform specific dts file.
-> Also remove phandle to sound node, as audio routing is same as
-> audioreach specific dtsi file.
+> Add lpass pil node for sc7280 based audioreach platforms.
+
+LPASS PIL - these are acronyms.
 > 
 
-Thank you for your patch. There is something to discuss/improve.
+Subject: drop "audioreach" from every patch. Not a directory.
 
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +
-> +/{
-> +	/* BOARD-SPECIFIC TOP LEVEL NODES */
-> +	sound: sound {
-> +		compatible = "google,sc7280-herobrine";
-> +		model = "SC7280-AUDIOREACH";
-> +		adsp-mode;
+Both comments apply to all your patches.
 
-There is no such property. Test DTS against your schema, so make
-dtbs_check DT_SCHEMA_FILES=google,sc7280-herobrine
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-> +		audio-routing =
-> +			"IN1_HPHL", "HPHL_OUT",
-> +			"IN2_HPHR", "HPHR_OUT",
-> +			"AMIC1", "MIC BIAS1",
-> +			"AMIC2", "MIC BIAS2",
-> +			"VA DMIC0", "MIC BIAS1",
-> +			"VA DMIC1", "MIC BIAS1",
-> +			"VA DMIC2", "MIC BIAS3",
-> +			"VA DMIC3", "MIC BIAS3",
-> +			"TX SWR_ADC0", "ADC1_OUTPUT",
-> +			"TX SWR_ADC1", "ADC2_OUTPUT",
-> +			"TX SWR_ADC2", "ADC3_OUTPUT",
-> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+Your patchset (with dependency) does not apply. Please rebase.
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 90 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+
+There are several dtbs_check warnings:
+
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb:
+sound: '#sound-dai-cells', 'qcom,msm-mbhc-gnd-swh',
+'qcom,msm-mbhc-hphl-swh' do not match any of the regexes:
+'^dai-link@[0-9a-f]$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb:
+sound: dai-link@0: 'platform' does not match any of the regexes:
+'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb:
+sound: dai-link@1: 'platform' does not match any of the regexes:
+'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb:
+sound: dai-link@2: 'platform' does not match any of the regexes:
+'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb:
+sound: dai-link@3: 'platform' does not match any of the regexes:
+'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb:
+sound: '#sound-dai-cells', 'adsp-mode', 'qcom,msm-mbhc-gnd-swh',
+'qcom,msm-mbhc-hphl-swh' do not match any of the regexes:
+'^dai-link@[0-9a-f]$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb:
+sound: '#sound-dai-cells', 'qcom,msm-mbhc-gnd-swh',
+'qcom,msm-mbhc-hphl-swh' do not match any of the regexes:
+'^dai-link@[0-9a-f]$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb:
+sound: '#sound-dai-cells', 'qcom,msm-mbhc-gnd-swh',
+'qcom,msm-mbhc-hphl-swh' do not match any of the regexes:
+'^dai-link@[0-9a-f]$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+make[1]: Leaving directory '/home/krzk/dev/linux/linux/out'
+
+
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
+remoteproc@3000000: qcom,halt-regs:0: [228] is too short
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
+remoteproc@3000000: glink-edge:gpr: 'q6apm', 'q6prm' do not match any of
+the regexes: '^service@[1-9a-d]$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+/home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sc7280-idp.dtb:
+remoteproc@3000000: 'power-domain-names', 'reg-names', 'required-opps'
+do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+
+
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0adf133..f10a663 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -8,6 +8,7 @@
+>  #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
+> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
+>  #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> @@ -21,6 +22,7 @@
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/reset/qcom,sdm845-aoss.h>
+>  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+> +#include <dt-bindings/soc/qcom,gpr.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/sound/qcom,lpass.h>
+>  #include <dt-bindings/thermal/thermal.h>
+> @@ -3436,6 +3438,94 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		remoteproc_adsp: remoteproc@3000000 {
+> +			compatible = "qcom,sc7280-adsp-pil";
+> +			reg = <0 0x03000000 0 0x5000>, <0 0x0355b000 0 0x10>;
+> +			reg-names = "qdsp6ss_base", "lpass_efuse";
 > +
-> +		qcom,msm-mbhc-hphl-swh = <1>;
-> +		qcom,msm-mbhc-gnd-swh = <1>;
+> +			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&adsp_smp2p_in 0 IRQ_TYPE_NONE>,
+> +					      <&adsp_smp2p_in 1 IRQ_TYPE_NONE>,
+> +					      <&adsp_smp2p_in 2 IRQ_TYPE_NONE>,
+> +					      <&adsp_smp2p_in 3 IRQ_TYPE_NONE>,
+> +					      <&adsp_smp2p_in 7 IRQ_TYPE_NONE>;
 > +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		#sound-dai-cells = <0>;
+> +			interrupt-names = "wdog", "fatal", "ready",
+> +				"handover", "stop-ack",  "shutdown-ack";
 > +
-> +		dai-link@0 {
-> +			link-name = "WCD9385 Playback";
-> +			reg = <0>;
+> +			qcom,qmp = <&aoss_qmp>;
 > +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +			};
-> +			codec {
-> +				sound-dai = <&wcd9385 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-> +			};
-> +			platform {
-> +				sound-dai = <&q6apm>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_CFG_NOC_LPASS_CLK>;
+> +
+> +			clock-names = "xo", "gcc_cfg_noc_lpass";
+> +
+> +			iommus = <&apps_smmu 0x1800 0x0>;
+> +
+> +			power-domains =	<&rpmhpd SC7280_CX>;
+> +			power-domain-names = "cx";
+> +
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +
+> +			resets = <&pdc_reset PDC_AUDIO_SYNC_RESET>,
+> +				 <&aoss_reset AOSS_CC_LPASS_RESTART>;
+> +
+> +			reset-names =  "pdc_sync", "cc_lpass";
+> +			qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x8000 0x13000>;
+> +
+> +			memory-region = <&adsp_mem>;
+> +
+> +			qcom,smem-states = <&adsp_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			glink-edge {
+> +				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+> +						       IPCC_MPROC_SIGNAL_GLINK_QMP
+> +						       IRQ_TYPE_EDGE_RISING>;
+> +
+> +				mboxes = <&ipcc IPCC_CLIENT_LPASS
+> +					 IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +				label = "lpass";
+> +				qcom,remote-pid = <2>;
+> +
+> +				gpr {
+> +					compatible = "qcom,gpr";
+> +					qcom,glink-channels = "adsp_apps";
+> +					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +					qcom,intents = <512 20>;
+> +
+> +					q6apm: q6apm {
+
+This is for sure wrong. Please send your code based on newest
+submissions. Do not start work on some old DTS full of issues, but the
+new one with corrected.
+
+You also did not run automated tools which would point all this out -
+wrong name, missing unit address (you have address-cells above, right?)
+
+> +						reg = <GPR_APM_MODULE_IID>;
+> +						compatible = "qcom,q6apm";
+> +						#sound-dai-cells = <0>;
+
+Blank line
+
+> +						q6apmdai: dais {
+> +							compatible = "qcom,q6apm-dais";
+> +							#sound-dai-cells = <1>;
+> +							iommus = <&apps_smmu 0x1801 0x0>;
+> +						};
+> +
+> +						q6apmbedai: bedais {
+> +							compatible = "qcom,q6apm-lpass-dais";
+> +							#sound-dai-cells = <1>;
+> +						};
+> +					};
+> +
+> +					q6prm: q6prm {
+> +						reg = <GPR_PRM_MODULE_IID>;
+> +						compatible = "qcom,q6prm";
+> +						#clock-cells = <2>;
+> +						q6prmcc: cc {
+> +							compatible = "qcom,q6prm-lpass-clocks";
+> +							#clock-cells = <2>;
+> +						};
+> +					};
+> +				};
 > +			};
 > +		};
 > +
-> +		dai-link@1 {
-> +			link-name = "WCD9385 Capture";
-> +			reg = <1>;
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +			};
-> +			codec {
-> +				sound-dai = <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-> +			};
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		dai-link@2 {
-> +			link-name = "Amplifier Playback";
-> +			reg = <3>;
-
-Missing dtbs W=1 build.
-
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai SECONDARY_MI2S_RX>;
-> +			};
-> +
-
-Use consistent style. Either blank line or not between the
-cpu/codec/platform nodes.
-
-> +			codec {
-> +				sound-dai = <&max98360a>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		dai-link@3 {
-> +			link-name = "DMIC";
-> +			reg = <4>;
-
-Same problem, wrong reg.
-
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_va_macro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +	};
-> +};
+>  		remoteproc_wpss: remoteproc@8a00000 {
+>  			compatible = "qcom,sc7280-wpss-pil";
+>  			reg = <0 0x08a00000 0 0x10000>;
 
 Best regards,
 Krzysztof
