@@ -2,79 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EA3F6638DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 06:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 841C8663955
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 07:28:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjAJFyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 00:54:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57612 "EHLO
+        id S231509AbjAJG2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 01:28:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229861AbjAJFyj (ORCPT
+        with ESMTP id S234576AbjAJG2G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 00:54:39 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF699FFC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 21:54:38 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id cf42so16677454lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jan 2023 21:54:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J9V7IctxQhFjqqHOvM2m2n5NBsQdf9FVh6jp3d8ejZw=;
-        b=FKBjCgTMxGWGC2SnMZtgtilG9ExKqtnmPah5aZiRq038jV2T+JM8/bOsQG+15l3l/6
-         gIuk3NrAgotZYn0yHDXAHl7MxHnWk04Ca3ITsvkHfr8nH7slvwlDlcuDSzcFfmwQlDRd
-         R7ZZXdapDthIKaCyaas8O4j3X5D5NzdlNnpNmmkMs34IPSV0HFQr9csyl/yT6O2GlVzl
-         4M18QY10TKUH9uEjJGl61WPmOc6SPV2UyDX85JEif+jtWYVq06lWcXzyZhbSlrWOFO08
-         /vqqwWcR4dzBDZzWSYWoPQotQgnI6SlsJblOKpJMjRTYmarIux+ex0rbCCvQWnRbOPjX
-         7avA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J9V7IctxQhFjqqHOvM2m2n5NBsQdf9FVh6jp3d8ejZw=;
-        b=KfR6AlJhO0bHYSJOEaQEygrJ5oQz/P21rxCIEle0iV20Fh9QsCVzCVNb+6ri5doSeW
-         EikcJPijM+8gTjxvDuAj5TBKFN6JvcvFIulj0JSuWgtCK8HE4RraR5z1AZVdk2t4oX2X
-         /rMaVGBVjiHMB87VV2fwvkNWILr1AMjRnpFJhk//on/IOK1hrrlJa1ss8J+m62V2Kl9Y
-         cHOEnL1wUAWgwcBfhmfaTY87AsPOjqI2Cp4cdcYd52JJ0ni8rLJCSwrCPUnvLgtaybb4
-         4vECpUnriucCYj39GDbIB1BynW6BMrFk5WnkDLoMg4/LyiidXiX4+SgQu+4NJ99TLrcU
-         Fgqg==
-X-Gm-Message-State: AFqh2krNvukPlLGVN7HZeDaATI/7B+RKGdTatOyMyZeitMwDMmMNOe9e
-        FE69eDP1BAX8k4VsQ1HF2FePyg==
-X-Google-Smtp-Source: AMrXdXuBRJ6AoE5cMdln4pKXDM+GdLkXNO5wAWcrdtKsooiDYDw7hTF53AbF9itFsxzRM9IlZw/iLQ==
-X-Received: by 2002:ac2:5088:0:b0:4a4:7be4:9baf with SMTP id f8-20020ac25088000000b004a47be49bafmr18724211lfm.59.1673330076556;
-        Mon, 09 Jan 2023 21:54:36 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h37-20020a0565123ca500b004b52aea5ff8sm1987227lfv.30.2023.01.09.21.54.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 21:54:36 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8450: Add compat qcom,sm8450-dsi-ctrl
-Date:   Tue, 10 Jan 2023 07:54:33 +0200
-Message-Id: <20230110055433.734188-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230110055433.734188-1-dmitry.baryshkov@linaro.org>
-References: <20230110055433.734188-1-dmitry.baryshkov@linaro.org>
+        Tue, 10 Jan 2023 01:28:06 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA7CC395D1;
+        Mon,  9 Jan 2023 22:28:04 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30A44UGd023823;
+        Tue, 10 Jan 2023 06:27:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=p7LDM4ETC4g9nquHCDAtm666lp1vxWqVcTJq9/Y0Jgc=;
+ b=RjN3bopGd2Hjh8O9TruUew0mpVSIhRQCPHxtjyy6eInPvz2LIrjAHO7wjzPHccTNqYfY
+ 4GJJQoL463uTjFxR3GS+2H0/d0j4rdnlypyU9I8gQ/pO+DkKammQqvBGZBQhWlM618Jq
+ uocNgSIXZ7wEgQ1g/W2EZFPLxSHfy4N2oZPP/WJIgvp+WHIs8JCQ8woUZvqn4F+hB9Ey
+ TnhV/dV+LcBeXehXNgL4ICO8ExCv1kMiZ4M5HHibgn6gjmHuA77zx5x8EGSEVvvva4fR
+ 7Axb6q9h80pRbRZuGCq+ptud5anKNRKAt0wYQlIhM5zIQLG6KF0GuxvwCuU1yw4A7IvV Hw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n0x0jgh3u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 06:27:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30A6RKfT017257
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 06:27:20 GMT
+Received: from [10.216.32.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
+ 22:27:13 -0800
+Message-ID: <1c6ce9e4-b9a4-9252-566a-f48c8e675d6b@quicinc.com>
+Date:   Tue, 10 Jan 2023 11:57:10 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2] dt-bindings: remoteproc: qcom: sc7280-adsp-pil: Add
+ reg-names and power-domain-names
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
+        <mathieu.poirier@linaro.org>, <corbet@lwn.net>
+References: <1672991425-898-1-git-send-email-quic_srivasam@quicinc.com>
+ <c6ea3f37-fe5a-9a61-3a02-99bc036fd23e@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <c6ea3f37-fe5a-9a61-3a02-99bc036fd23e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -LDfi5XHiq2SAKxP_9qL3TafB4WSO33R
+X-Proofpoint-ORIG-GUID: -LDfi5XHiq2SAKxP_9qL3TafB4WSO33R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-10_01,2023-01-09_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 mlxscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301100041
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,37 +89,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add silicon specific compatible qcom,sm8450-dsi-ctrl to the
-mdss-dsi-ctrl block. This allows us to differentiate the specific bindings
-for sm8450 against the yaml documentation.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On 1/8/2023 9:06 PM, Krzysztof Kozlowski wrote:
+Thanks for Your Time Krzyszto!!!
+> On 06/01/2023 08:50, Srinivasa Rao Mandadapu wrote:
+>> Add reg-names and power-domain-names for remoteproc ADSP pheripheral
+>> loader. This is to make compatible with remoteproc ADSP PIL driver.
+> I don't understand the reasoning. Before binding was "incompatible"?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 0c13e9b428ce..52aa6f1f08f5 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2770,7 +2770,7 @@ opp-500000000 {
- 			};
- 
- 			mdss_dsi0: dsi@ae94000 {
--				compatible = "qcom,mdss-dsi-ctrl";
-+				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
- 				reg-names = "dsi_ctrl";
- 
-@@ -2862,7 +2862,7 @@ mdss_dsi0_phy: phy@ae94400 {
- 			};
- 
- 			mdss_dsi1: dsi@ae96000 {
--				compatible = "qcom,mdss-dsi-ctrl";
-+				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae96000 0 0x400>;
- 				reg-names = "dsi_ctrl";
- 
--- 
-2.39.0
+Yes. Previous bindings needs fixes. Will add fixes tag for the same. So 
+far corresponding device tree not
 
+mainlined and no user till now, hence these missing errors not found.
+
+>
+>> Also change power domain from LCX to CX.
+> Why? Hardware changed?
+
+No, basically it's a fix. The power domain name wrongly mentioned in 
+previous bindings.
+
+The fixes tag mentioned above will be applicable here also.
+
+>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> ---
+>> Changes Since v1:
+>>      -- Modify subject line to SoC specific.
+>>
+>>   .../devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 11 ++++++++++-
+>>   1 file changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+>> index 94ca7a0..b5bee2c 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+>> @@ -23,6 +23,11 @@ properties:
+>>         - description: qdsp6ss register
+>>         - description: efuse q6ss register
+>>   
+>> +  reg-names:
+>> +    items:
+>> +      - const: qdsp6ss_base
+>> +      - const: lpass_efuse
+>> +
+>>     iommus:
+>>       items:
+>>         - description: Phandle to apps_smmu node with sid mask
+>> @@ -57,7 +62,11 @@ properties:
+>>   
+>>     power-domains:
+>>       items:
+>> -      - description: LCX power domain
+>> +      - description: CX power domain
+>> +
+>> +  power-domain-names:
+>> +    items:
+>> +      - const: cx
+>>   
+>>     resets:
+>>       items:
+> Best regards,
+> Krzysztof
+>
