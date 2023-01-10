@@ -2,112 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0124C6643D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 15:58:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6C2C664415
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 16:06:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238716AbjAJO6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 09:58:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38222 "EHLO
+        id S233250AbjAJPG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 10:06:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233114AbjAJO6K (ORCPT
+        with ESMTP id S238855AbjAJPFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 09:58:10 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D53EF58D16;
-        Tue, 10 Jan 2023 06:58:09 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30AEAxZH026992;
-        Tue, 10 Jan 2023 14:57:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=s5RdigcnqpWa9X0ON9DHay8xt0hHTQGMwXDTYJsaZWk=;
- b=Ig+B7vNutkGL2c/byteZaHiVVBl5aKb0D+llyem6sSDiRL8MWIQ1cVnlwmgWM1U5mibl
- /FszAz5qltV9xp1xhm0ApFoaUIYrF6pOVOl7AchGAmMu+FbQ/SHNrUxmYKzPN+3TpK7x
- X0f89IvI3eYcpThyy4vxeVwDq+FB8S/bGanoiMZKWHfhv0caz2oXt6EEimS5DcCEQw4x
- yFY9jyUwLAXreglnUtD6wio1lqAw6R52bNjzvKjk6cVQUwMgoEJeNc0WyZ8EBpzOZlpM
- eyFk0CXLQQo/yiGj8hXCe3t+/xOzbvgC32e97wSZDeCXH/wMByRUsiNYOLE1vG0i594z tA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n0q28j8m4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 14:57:59 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30AEvwaR007679
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 14:57:58 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 10 Jan 2023 06:57:58 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH v6 4/4] arm64: defconfig: Enable SC8280XP Display Clock Controller
-Date:   Tue, 10 Jan 2023 06:57:51 -0800
-Message-ID: <20230110145751.2654795-5-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230110145751.2654795-1-quic_bjorande@quicinc.com>
-References: <20230110145751.2654795-1-quic_bjorande@quicinc.com>
+        Tue, 10 Jan 2023 10:05:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7836387904
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 07:04:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1673363059;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=fuGrtewPgChM6s8r8HaPPXXqLJt4Im2dJEr7Ryz5fP8=;
+        b=a7wXeGlsK29dx8UeB5ztRAcALxjh5uggZtgKws6a9gyaMZste6YVKjXqkDlkDGl1N2wSnY
+        VLjJZHgpJ62BLlQuZqviEbOGiu3lNkZRTum5x6iOLm+iEdaSU0QRFXq7uNjyw+405eBvPV
+        /OSVaVYYOHCsg1Q+6sT8ByRMfc8cfg4=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-595-6MADGyKpPPiA7JDqJaDGWA-1; Tue, 10 Jan 2023 10:04:18 -0500
+X-MC-Unique: 6MADGyKpPPiA7JDqJaDGWA-1
+Received: by mail-io1-f71.google.com with SMTP id s22-20020a6bdc16000000b006e2d7c78010so7107382ioc.21
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 07:04:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fuGrtewPgChM6s8r8HaPPXXqLJt4Im2dJEr7Ryz5fP8=;
+        b=iDV1L5FRAWNWGKiYS5yNMztZ3wJwqPmlayYO+Q3G/3LLxXMVJjYGxGQXc7T6OERPHw
+         G/CzWycFQYt0QjXfR3pXl/scLgOFVd91C9aduaAAGy1mpBFMaejvXlCezRO8aOFzs5Uc
+         Nrr7FnMGrO2sk3ZqlF+xto3NaBgw+JKOl7ny7G6dYxi0x/olCq12RCxXlyNdC1LLNlLz
+         8rUKBKnvgUxLSApzqYk0as7kRV5dGqEM1RytQIuFTlXc5IItSeE+5o5Z7SHs9i8DkORh
+         /8ROdJ91g//At6tb80GpkZLKeLPqVj4w5y+2PVz3YHhtaddDzhPX4FDvlNz3zX5bkbac
+         1zHQ==
+X-Gm-Message-State: AFqh2kofxcykX0p1EtAtK7TiC3BbxKCSC8cuzAqZocYYM1LmplwztQ8C
+        znrwVjO3/xRetBdMxagNxdmRsw6E53Chq+QgxJfMcqnerxXovBtw6iCr2NVnpC6WQRCeWcF3Z9V
+        u5MYbXyQwPpYFHbrHt1l8fU4jcA==
+X-Received: by 2002:a05:6e02:685:b0:30d:b78b:8a69 with SMTP id o5-20020a056e02068500b0030db78b8a69mr1659709ils.9.1673363057063;
+        Tue, 10 Jan 2023 07:04:17 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXtKJyVGmVMK2NhrWBpTjy7wmjgz+HOnm2oPnwubMoWdsPOheOgp2ggdA9UyYoHmI0f+r2tikA==
+X-Received: by 2002:a05:6e02:685:b0:30d:b78b:8a69 with SMTP id o5-20020a056e02068500b0030db78b8a69mr1659691ils.9.1673363056774;
+        Tue, 10 Jan 2023 07:04:16 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id u17-20020a022e51000000b0039d87a31de0sm3631897jae.116.2023.01.10.07.04.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 07:04:15 -0800 (PST)
+Date:   Tue, 10 Jan 2023 10:04:13 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        quic_shazhuss@quicinc.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.co
+Subject: Re: [PATCH v4 01/10] dt-bindings: qcom,*-geni: move
+ #{address,size}-cells on i2c/spi nodes
+Message-ID: <Y71+bXnNFq2g1jDf@x1>
+References: <20230103182229.37169-1-bmasney@redhat.com>
+ <20230103182229.37169-2-bmasney@redhat.com>
+ <a690de32-522f-c777-241b-907bda8a14ba@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SpktMfXcCR_d_iuWbNdylVyiEp-hzRk6
-X-Proofpoint-GUID: SpktMfXcCR_d_iuWbNdylVyiEp-hzRk6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-10_06,2023-01-10_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- adultscore=0 spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301100093
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a690de32-522f-c777-241b-907bda8a14ba@linaro.org>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Display Clock Controller provides clocks and power-domains for
-the display subsystem, enable this to enable display on the SC8280XP.
+On Tue, Jan 10, 2023 at 11:41:14AM +0100, Krzysztof Kozlowski wrote:
+> On 03/01/2023 19:22, Brian Masney wrote:
+> > Move the #address-cells and #size-cells properties on the existing
+> > i2c/spi example nodes below the reg property so that all of the
+> > address-related properties are grouped together.
+> > 
+> > Signed-off-by: Brian Masney <bmasney@redhat.com>
+> > Link: https://lore.kernel.org/lkml/Y6Wnh+tXPhF6aC1b@hovoldconsulting.com/
+> 
+> We do not have conclusion where these should be, so don't make any changes.
+> 
+> https://github.com/konradybcio-work/dt_review
 
-Now that power-domains can probe defer past late_initcall() this should
-be possible to leave as module.
+OK, let's just drop patches 1 and 2 in this series then. Patches 3-10
+should be ready for merge.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
-
-Changes since v5:
-- New patch
-
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 340199714874..43df50a044ce 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1100,6 +1100,7 @@ CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8996=y
- CONFIG_MSM_GCC_8998=y
- CONFIG_QCS_GCC_404=y
-+CONFIG_SC_DISPCC_8280XP=m
- CONFIG_SC_GCC_7180=y
- CONFIG_SC_GCC_7280=y
- CONFIG_SC_GCC_8180X=y
--- 
-2.37.3
+Brian
 
