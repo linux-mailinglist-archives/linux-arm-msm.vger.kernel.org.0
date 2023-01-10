@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2A05665016
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 00:55:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F96C66501C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 00:57:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233973AbjAJXz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 18:55:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57184 "EHLO
+        id S235300AbjAJX5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 18:57:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234903AbjAJXzz (ORCPT
+        with ESMTP id S235192AbjAJX5M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 18:55:55 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAA1355647
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:55:50 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id s22so14330668ljp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:55:50 -0800 (PST)
+        Tue, 10 Jan 2023 18:57:12 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8ABFE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:57:10 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id y25so20957479lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 15:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bxJysdNIrmRjvFROtnsTQyJodAB8veehuxuxefoCP2c=;
-        b=rnirWVpiSpr6VhSQDQNoXvUVHyHeD6YL7RiNWjVUPzCzzsLSz550ShP6bkCBgPAnXE
-         wZla1NaYrRHdDwOsR4FCEL70oxKgSUwchWimZR2Zp5JkFCr8B20Pbz6aZlr0KjnB9l9E
-         t63pNJYKu02yjJDXV4Zwt5yyOP0J178b7wGbe2lf6rJSMKZL3vKHrkdvS77i/lqEyLWJ
-         xFIOIu/+qvLa7WfAjhvWYVgAcYxhX96XmjwVEptuPUhGKGf/0HL5gBRhPdxrVy/hTaAO
-         qfxScAkoWpyglZhuhCqxOA7fJmIDWWYgDWK/T6u99x8Vhc84fLWpFYq84tDeJgYEHYyI
-         h5Pw==
+        bh=IkTOuzrzX6KwlgMjt2sPQWSPFLHsLIuRAugm3KiZhdQ=;
+        b=fbvbaRwRXvgjXAdD5bkv43z4u2CyFCahI0+D+LKLgT1AFAefgLUmTfDtYQeokf0uuP
+         vmnk/5X1k53hpZxhquMQiPrDnNUQfQEE8iBZ14YmIX3JH6WoSyvBkvlep+KFawq4TcUH
+         0KKcMt+ZyO8P/f6/AFUreLVc24oJBm9aHSSXBAEB+BzMmVn9iKrZWFu+iIxz7McbFALo
+         dzURtRh6eIwOBgoscLEtlE6jlWhDD4iLqepokoYmwgxJKMJu4Bi9xoougJ7rilhWaW2M
+         ubbN5VZL/HnnGo2sm3eIDEhPkUpWLQy/yPYHCMW1Gzc2GYm/0tu89ZukiHHsClOjoLVM
+         4OcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bxJysdNIrmRjvFROtnsTQyJodAB8veehuxuxefoCP2c=;
-        b=efiEmcT9+bIUSYO7mAuM4qzLsKzl936Y93RivjyQuaxoVI0hBqsqR+SZ8QlwlIu+8e
-         RMubKcOVzUOGYt7CBu1UasEUBnfUzpFiy/YeS6+DkxjZ4moP+CXoZIr6tRSQsMBG02KG
-         Y3Z7fEdjFBT81GqzB484yUdAZLqycOJ8Bevt/YG3WabGq0G+eQU9mHZidEwbiWJQO7Ye
-         Dq5M+fr9o2/m1t/ErnYqrXoIAXzrrj37DvACvbISmLDB0gSpFc6pUsplS6VClLtKcxs4
-         rvSlxhgHRksU1lp8gSMpJJM/XudZ52awNnoZUWsc9FC6BJqcsTOMn6IfVo+JO6YF7nvb
-         Ovsw==
-X-Gm-Message-State: AFqh2kqC+rfva2gx0QrGwoI/5glHYgf1YtcrqlVzGpy2ENqYg27r4dPr
-        bZfA2ALVn8+iX5+xfADlQhwaOw==
-X-Google-Smtp-Source: AMrXdXvWmU7sFzczcSVAcrS3tPmjKi3xby5j/0HDBfUoxMpFagyASGgQ61GU7Mn7Siaeag8qYSfcgA==
-X-Received: by 2002:a2e:3211:0:b0:27f:c428:c5ec with SMTP id y17-20020a2e3211000000b0027fc428c5ecmr18754489ljy.28.1673394949087;
-        Tue, 10 Jan 2023 15:55:49 -0800 (PST)
+        bh=IkTOuzrzX6KwlgMjt2sPQWSPFLHsLIuRAugm3KiZhdQ=;
+        b=I0tQf09cHkWC7OofJppSccvbLNh8Qww728YyzqFVqzZwVn2c6b/blTNRRTwrNe53FC
+         komQ/wysk+hNlhowGPWGQrhA1YcYlcQUop26yC/PiOxmKxDfB6Pvdb2uqvUH5XC1Qr/Q
+         UZiWMEAcCBNg66cLI+igbpTsRg5WIpDyh6Ur1BGuLEZktuljE6/sHr8b8CVG1p9ABi7u
+         8orNeNPlf4ISwhjnOFYf4lrgsPO/gT+oc9mSSA7EnHxbHDjUw9NBgNaMuC1kT6tGRVoS
+         FqknskLirWCU5BcLajgMTyUn2qxC7l6O7Rk5SJep+GPZTnfXKAYR6mB6M2ICTvZamtK4
+         qIYA==
+X-Gm-Message-State: AFqh2kq8M0OTnfx9TKiInV3qdfym6jw9m9oSknjiWfIDrZ1pUgtnjsXu
+        gEKGvbdiHZPdyX1sFUv6v81T0A==
+X-Google-Smtp-Source: AMrXdXsIeaG8B3rt97xF1l+QuLOENzWEnJCNuiCDWrac82PSXsBwU2ZebqJazF8pM/gK3dyRPOYx1A==
+X-Received: by 2002:ac2:5edc:0:b0:4cc:74ac:9b6d with SMTP id d28-20020ac25edc000000b004cc74ac9b6dmr3544306lfq.12.1673395028389;
+        Tue, 10 Jan 2023 15:57:08 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id a1-20020a2eb541000000b002770fb5722fsm1513208ljn.123.2023.01.10.15.55.47
+        by smtp.gmail.com with ESMTPSA id n27-20020a05651203fb00b004cb21eaf6e6sm2430361lfq.0.2023.01.10.15.57.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 15:55:48 -0800 (PST)
-Message-ID: <bdff84b5-0531-909e-43ed-5cc1eda64f17@linaro.org>
-Date:   Wed, 11 Jan 2023 00:55:47 +0100
+        Tue, 10 Jan 2023 15:57:07 -0800 (PST)
+Message-ID: <d90fe8dd-fc9d-fe2c-4b5e-cd7f32d747c9@linaro.org>
+Date:   Wed, 11 Jan 2023 00:57:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 04/10] interconnect: qcom: rpm: Add support for
- specifying channel num
+Subject: Re: [PATCH 1/2] arm64: defconfig: enable SM8550 DISPCC clock driver
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
- <20230110132202.956619-5-konrad.dybcio@linaro.org>
- <4a30931b-ef94-df2f-2e89-1028bf9510ce@linaro.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20230110-topic-sm8550-upstream-display-defconfig-v1-0-9941c8083f10@linaro.org>
+ <20230110-topic-sm8550-upstream-display-defconfig-v1-1-9941c8083f10@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <4a30931b-ef94-df2f-2e89-1028bf9510ce@linaro.org>
+In-Reply-To: <20230110-topic-sm8550-upstream-display-defconfig-v1-1-9941c8083f10@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,90 +78,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11.01.2023 00:44, Bryan O'Donoghue wrote:
-> On 10/01/2023 13:21, Konrad Dybcio wrote:
->> Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
->> one channel. This should be taken into account in bandwidth calcualtion,
-> calculation
+On 10.01.2023 20:34, Neil Armstrong wrote:
+> Build the Qualcomm SM8550 Display Clock Controller driver
 > 
->> as we're supposed to feed msmbus with the per-channel bandwidth. Add
->> support for specifying that and use it during bandwidth aggregation.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
->>   drivers/interconnect/qcom/icc-rpm.h | 2 ++
->>   2 files changed, 8 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->> index 0516b74abdc7..3207b4c99d04 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.c
->> +++ b/drivers/interconnect/qcom/icc-rpm.c
->> @@ -336,6 +336,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>   {
->>       struct icc_node *node;
->>       struct qcom_icc_node *qn;
->> +    u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>       int i;
->>         /* Initialise aggregate values */
->> @@ -353,7 +354,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->>       list_for_each_entry(node, &provider->nodes, node_list) {
->>           qn = node->data;
->>           for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
->> -            agg_avg[i] += qn->sum_avg[i];
->> +            if (qn->channels)
-> 
-> when do you actually populate channels ?
-> 
-> I had a quick scan of your series, I didn't see it..
-I use this field in the upcoming MSM8998 and SM6375 drivers,
-which both require some part of this series to be merged.
-
-If I'm not mistaken, this is essentially what downstream
-calls qcom,agg-ports. 8996 should also use it, but I think
-I'll add that in a separate series.
-
-Other SoCs that I can see have a non-1 value here in various
-downstream trees I have on my PC that don't necessarily have
-interconnect drivers at the moment:
-
-msm8976
-sdm660
-mdm9607
-msm8953/sdm429
-qcs405
-msm8952
-
-and a whole bunch of RPMh SoCs that already take care of this.
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
 > 
->> +                sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
->> +            else
->> +                sum_avg[i] = qn->sum_avg[i];
->> +            agg_avg[i] += sum_avg[i];
->>               agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
->>           }
->>       }
->> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
->> index 3762648f9d47..eb51680f890d 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.h
->> +++ b/drivers/interconnect/qcom/icc-rpm.h
->> @@ -66,6 +66,7 @@ struct qcom_icc_qos {
->>    * @id: a unique node identifier
->>    * @links: an array of nodes where we can go next while traversing
->>    * @num_links: the total number of @links
->> + * @channels: number of channels at this node (e.g. DDR channels)
->>    * @buswidth: width of the interconnect between a node and the bus (bytes)
->>    * @sum_avg: current sum aggregate value of all avg bw requests
->>    * @max_peak: current max aggregate value of all peak bw requests
->> @@ -78,6 +79,7 @@ struct qcom_icc_node {
->>       u16 id;
->>       const u16 *links;
->>       u16 num_links;
->> +    u16 channels;
->>       u16 buswidth;
->>       u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
->>       u64 max_peak[QCOM_ICC_NUM_BUCKETS];
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 851e8f9be06d..004c379eced7 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1107,6 +1107,7 @@ CONFIG_SDM_GPUCC_845=y
+>  CONFIG_SDM_VIDEOCC_845=y
+>  CONFIG_SDM_DISPCC_845=y
+>  CONFIG_SM_DISPCC_8250=y
+> +CONFIG_SM_DISPCC_8550=y
+>  CONFIG_SM_GCC_6115=y
+>  CONFIG_SM_GCC_8350=y
+>  CONFIG_SM_GCC_8450=y
 > 
