@@ -2,83 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E95E66637D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 04:31:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80A4F6637EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 04:52:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbjAJDbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Jan 2023 22:31:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51158 "EHLO
+        id S229735AbjAJDw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Jan 2023 22:52:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjAJDbQ (ORCPT
+        with ESMTP id S229576AbjAJDwZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Jan 2023 22:31:16 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4A11DDFD;
-        Mon,  9 Jan 2023 19:31:15 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30A3MRMo000359;
-        Tue, 10 Jan 2023 03:30:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OkY7mu9pdN8NmbL3lvH8cVGDqojl/7SParZy8RkcbCs=;
- b=nN2FqaE+MTzvTOznotXZvRGyt5REh99OMh5InY+6d6semsH7X7J8s0lCpyxtXodFm77Y
- uCa3vdYXqq7dmNak/4MiLwR9nfP0QdyfT+NSdGiuEwGRPsz6ne6OP6Vb889F2T/jErhm
- 6SHlaEyJ2L9ejPJtViwg6PDvYmF1dj1roc0Loplsm++15jGuDz373RssMzlDxq2ql1xQ
- sEjqu1SSdqPYZX0JgDeUm935lbPrQ2A5fyk1KtexvfXB23ZSjt1awF7bLoy3gky07HH4
- 50+WVPQPUHOlubxhdzjQG1FxtzsdOFtPKCsm6AApE/x6EVTLfLSxttRonb+lu7WW++xZ ug== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n0q28h0am-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 03:30:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30A3UawS006759
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 03:30:36 GMT
-Received: from [10.110.115.72] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 9 Jan 2023
- 19:30:35 -0800
-Message-ID: <b77b9426-a5cc-cdad-4cd5-a4fa97b32b04@quicinc.com>
-Date:   Mon, 9 Jan 2023 19:30:34 -0800
+        Mon, 9 Jan 2023 22:52:25 -0500
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1868FE9;
+        Mon,  9 Jan 2023 19:52:24 -0800 (PST)
+Received: by mail-ot1-f49.google.com with SMTP id v15-20020a9d69cf000000b006709b5a534aso6306467oto.11;
+        Mon, 09 Jan 2023 19:52:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Den6eVQxTXWgmQYL+6Gk2EvIgXPuCXvXEt4ZGf3AJys=;
+        b=eeeW1jgU9R6g28HVUHGMvrKpbnFm4pOp/oc4k1WixQDL2R3/eWcM4y8coTMyVjPfOb
+         wBP6666a2NmvdQJVUTJ7lCQ/c1EtVRzFRilrNQAwZff0qpBMu7dlWsJOfPODjuuReUG5
+         fszhRPPPpDa+9BMgjTEVBAnwQDlBlInE2NNpcWffHrz5s6DxLrr4koSz8EoVwYhnv7Aj
+         NkMhqkLSpfCWPrs3i1WKnjgc1s1mRex1jdmZQ1bwbTgKKIpwE8GAzvXVVO2s5ot1R7y+
+         2B182REKUweQyJVj4IXXZoDxsv4IrRT/r8BL1g7QGhu1LIAlTEkiDunH+BrsVnmm3PKm
+         V6jA==
+X-Gm-Message-State: AFqh2kpXa4vm0zB83+Lltg6oSLe1SbwtVedDEAoWwK+TUI13dlRm1rNv
+        gyC5wNgpQR6SO50/53uqvIEyQsfuSg==
+X-Google-Smtp-Source: AMrXdXsRMMiHDBIvv6ftgy15vU/Od0B99Vb17vvk1wdENPzm4pEPtH+MZZ4SoXh9P182kbJtokmM2A==
+X-Received: by 2002:a9d:17ac:0:b0:66e:a35c:c051 with SMTP id j41-20020a9d17ac000000b0066ea35cc051mr33771762otj.35.1673322743575;
+        Mon, 09 Jan 2023 19:52:23 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id f14-20020a9d5e8e000000b006705e35c4e2sm5475603otl.35.2023.01.09.19.52.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 19:52:22 -0800 (PST)
+Received: (nullmailer pid 785952 invoked by uid 1000);
+        Tue, 10 Jan 2023 03:52:21 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH v3] drm/msm/dsi: Add missing check for
- alloc_ordered_workqueue
-Content-Language: en-US
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-        <dmitry.baryshkov@linaro.org>, <d-gole@ti.com>
-CC:     <marex@denx.de>, <vkoul@kernel.org>, <sean@poorly.run>,
-        <vladimir.lypak@gmail.com>, <dri-devel@lists.freedesktop.org>,
-        <dianders@chromium.org>, <robdclark@gmail.com>, <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <airlied@gmail.com>,
-        <linux-kernel@vger.kernel.org>
-References: <20230110021651.12770-1-jiasheng@iscas.ac.cn>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230110021651.12770-1-jiasheng@iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PSQcSj4cwEIykNNT9_AiPEwmDSZJnxtQ
-X-Proofpoint-GUID: PSQcSj4cwEIykNNT9_AiPEwmDSZJnxtQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-09_16,2023-01-09_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- adultscore=0 spamscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301100020
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Danila Tikhonov <danila@jiaxyga.com>
+Cc:     robh+dt@kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@kernel.org,
+        David Wronek <davidwronek@gmail.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        mturquette@baylibre.com, konrad.dybcio@linaro.org,
+        agross@kernel.org, devicetree@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+In-Reply-To: <20230109193030.42764-2-danila@jiaxyga.com>
+References: <20230109193030.42764-1-danila@jiaxyga.com>
+ <20230109193030.42764-2-danila@jiaxyga.com>
+Message-Id: <167332272486.785431.16211599391425282320.robh@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: clock: Add SM7150 GCC clock binding
+Date:   Mon, 09 Jan 2023 21:52:21 -0600
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,39 +70,45 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Mon, 09 Jan 2023 22:30:29 +0300, Danila Tikhonov wrote:
+> Add device tree bindings for global clock subsystem clock
+> controller for Qualcomm Technology Inc's SM7150 SoCs.
+> 
+> Co-developed-by: David Wronek <davidwronek@gmail.com>
+> Signed-off-by: David Wronek <davidwronek@gmail.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  .../bindings/clock/qcom,sm7150-gcc.yaml       |  50 +++++
+>  include/dt-bindings/clock/qcom,sm7150-gcc.h   | 193 ++++++++++++++++++
+>  2 files changed, 243 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm7150-gcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm7150-gcc.h
+> 
 
-On 1/9/2023 6:16 PM, Jiasheng Jiang wrote:
-> Add check for the return value of alloc_ordered_workqueue as it may return
-> NULL pointer and cause NULL pointer dereference.
-> 
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
-> Changelog:
-> 
-> v2 -> v3:
-> 
-> 1. Simply return -ENOMEM instead of using ret.
-> 2. No change of the "goto fail".
-> 
-> v1 -> v2:
-> 
-> 1. Change the "goto fail" into "return ret" and drop the "fail" label.
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 89aadd3b3202..f167a45f1fbd 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1977,6 +1977,9 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->   
->   	/* setup workqueue */
->   	msm_host->workqueue = alloc_ordered_workqueue("dsi_drm_work", 0);
-> +	if (!msm_host->workqueue)
-> +		return -ENOMEM;
-> +
->   	INIT_WORK(&msm_host->err_work, dsi_err_worker);
->   
->   	msm_dsi->id = msm_host->id;
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/clock/qcom,sm7150-gcc.yaml:50:4: [error] no new line character at the end of file (new-line-at-end-of-file)
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm7150-gcc.example.dtb: clock-controller@100000: '#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm7150-gcc.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109193030.42764-2-danila@jiaxyga.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
